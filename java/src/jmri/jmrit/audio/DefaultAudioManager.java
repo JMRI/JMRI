@@ -1,10 +1,8 @@
 package jmri.jmrit.audio;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.ArrayList;
+
 import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.annotation.Nonnull;
@@ -43,11 +41,15 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     /**
-     * Reference to the currently active AudioFactory. 
+     * Reference to the currently active AudioFactory.
      * Because of underlying (external to Java) implementation details,
      * JMRI only ever has one AudioFactory, so we make this static.
      */
     private static AudioFactory activeAudioFactory = null;
+
+    private synchronized static void setActiveAudioFactory(AudioFactory factory){
+        activeAudioFactory = factory;
+    }
 
     private static boolean initialised = false;
 
@@ -116,20 +118,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
         return a;
     }
 
-    @Override
-    @Deprecated
-    @Nonnull
-    public List<String> getSystemNameList(char subType) {
-        Set<Audio> tempSet = getNamedBeanSet();
-        List<String> out = new ArrayList<>();
-        tempSet.stream().forEach((audio) -> {
-            if (audio.getSubType() == subType) {
-                out.add(audio.getSystemName());
-            }
-        });
-        return out;
-    }
-
     /** {@inheritDoc} */
     @Override
     @Nonnull
@@ -194,18 +182,18 @@ public class DefaultAudioManager extends AbstractAudioManager {
 //
         // Next try JOAL
         log.debug("Try to initialise JoalAudioFactory");
-        activeAudioFactory = new JoalAudioFactory();
-        if (activeAudioFactory.init()) return;
+        DefaultAudioManager.setActiveAudioFactory( new JoalAudioFactory());
+        if (DefaultAudioManager.activeAudioFactory.init()) return;
 
         // fall-back to JavaSound
         log.debug("Try to initialise JavaSoundAudioFactory");
-        activeAudioFactory = new JavaSoundAudioFactory();
-        if (activeAudioFactory.init()) return;
+        DefaultAudioManager.setActiveAudioFactory( new JavaSoundAudioFactory());
+        if (DefaultAudioManager.activeAudioFactory.init()) return;
 
         // Finally, if JavaSound fails, fall-back to a Null sound system
         log.debug("Try to initialise NullAudioFactory");
-        activeAudioFactory = new NullAudioFactory();
-        activeAudioFactory.init();
+        DefaultAudioManager.setActiveAudioFactory( new NullAudioFactory());
+        DefaultAudioManager.activeAudioFactory.init();
         // assumed to succeed.
     }
 
@@ -226,7 +214,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 Audio s = createNewAudio("IAL$", "Default Audio Listener");
                 register(s);
             } catch (AudioException ex) {
-                log.error("Error creating Default Audio Listener: {}", ex);
+                log.error("Error creating Default Audio Listener", ex);
             }
 
             // Register a shutdown task to ensure clean exit
@@ -304,19 +292,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
     @Override
     public AudioFactory getActiveAudioFactory() {
         return activeAudioFactory;
-    }
-
-    /**
-     * Get the current instance of this object.
-     * <p>
-     * If not existing, create a new instance.
-     *
-     * @return reference to currently active AudioManager
-     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static DefaultAudioManager instance() {
-        return InstanceManager.getDefault(DefaultAudioManager.class);
     }
 
     private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class);

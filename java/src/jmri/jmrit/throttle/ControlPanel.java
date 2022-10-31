@@ -8,12 +8,16 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import javax.swing.plaf.basic.BasicSliderUI;
 
 import jmri.*;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.MouseInputAdapterInstaller;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.transcoder.*;
@@ -34,6 +38,9 @@ import org.w3c.dom.Document;
  * @author Lionel Jeanson 2009-2021
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, AddressListener {
+
+    private final ThrottleManager throttleManager;
+
     private DccThrottle throttle;
 
     private JSlider speedSlider;
@@ -128,10 +135,15 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Constructor.
      */
     public ControlPanel() {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
+        this(InstanceManager.getDefault(ThrottleManager.class));
+    }
+
+    /**
+     * Constructor.
+     * @param tm the throttle manager
+     */
+    public ControlPanel(ThrottleManager tm) {
+        throttleManager = tm;
         initGUI();
         applyPreferences();
     }
@@ -686,11 +698,13 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.setOpaque(false);
         speedSlider.setValue(0);
         speedSlider.setFocusable(false);
+        speedSlider.addMouseListener(JmriMouseListener.adapt(new JSliderPreciseMouseAdapter()));
 
         speedSliderContinuous = new JSlider(-intSpeedSteps, intSpeedSteps);
         speedSliderContinuous.setValue(0);
         speedSliderContinuous.setOpaque(false);
         speedSliderContinuous.setFocusable(false);
+        speedSliderContinuous.addMouseListener(JmriMouseListener.adapt(new JSliderPreciseMouseAdapter()));
 
         speedSpinner = new JSpinner();
         speedSpinnerModel = new SpinnerNumberModel(0, 0, intSpeedSteps, 1);
@@ -723,7 +737,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinner.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "giveUpFocus");
         speedSpinner.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "giveUpFocus");
 
-        EnumSet<SpeedStepMode> speedStepModes = InstanceManager.throttleManagerInstance().supportedSpeedModes();
+        EnumSet<SpeedStepMode> speedStepModes = throttleManager.supportedSpeedModes();
         speedStepBox = new JComboBox<>(speedStepModes.toArray(new SpeedStepMode[speedStepModes.size()]));
 
         forwardButton = new JRadioButton();
@@ -795,7 +809,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 if (doIt) {
                     float newSpeed = (speedSlider.getValue() / (intSpeedSteps * 1.0f));
                     if (log.isDebugEnabled()) {
-                        log.debug("stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed);
+                        log.debug("stateChanged: slider pos: {} speed: {}", speedSlider.getValue(), newSpeed);
                     }
                     if (sliderPanel.isVisible() && throttle != null) {
                         throttle.setSpeedSetting(newSpeed);
@@ -843,7 +857,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     float newSpeed = (java.lang.Math.abs(speedSliderContinuous.getValue()) / (intSpeedSteps * 1.0f));
                     boolean newDir = (speedSliderContinuous.getValue() >= 0);
                     if (log.isDebugEnabled()) {
-                        log.debug("stateChanged: slider pos: " + speedSliderContinuous.getValue() + " speed: " + newSpeed + " dir: " + newDir);
+                        log.debug("stateChanged: slider pos: {} speed: {} dir: {}", speedSliderContinuous.getValue(), newSpeed, newDir);
                     }
                     if (speedSliderContinuousPanel.isVisible() && throttle != null) {
                         throttle.setSpeedSetting(newSpeed);
@@ -871,7 +885,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             if (!internalAdjust) {
                 float newSpeed = ((Integer) speedSpinner.getValue()).floatValue() / (intSpeedSteps * 1.0f);
                 if (log.isDebugEnabled()) {
-                    log.debug("stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed);
+                    log.debug("stateChanged: spinner pos: {} speed: {}", speedSpinner.getValue(), newSpeed);
                 }
                 if (throttle != null) {
                     if (spinnerPanel.isVisible()) {
@@ -1148,6 +1162,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
             float speed = ((Float) e.getNewValue());
+            log.debug("Throttle panel speed updated to {} increment {}", speed,
+                    throttle.getSpeedIncrement());
             setSpeedValues( throttle.getSpeedIncrement(), speed);
         } else if (e.getPropertyName().equals(Throttle.SPEEDSTEPS)) {
             SpeedStepMode steps = (SpeedStepMode)e.getNewValue();
@@ -1202,38 +1218,38 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * A PopupListener to handle mouse clicks and releases. Handles the popup
      * menu.
      */
-    private class PopupListener extends MouseAdapter {
+    private class PopupListener extends JmriMouseAdapter {
         /**
          * If the event is the popup trigger, which is dependent on the
          * platform, present the popup menu.
-         * @param e The MouseEvent causing the action.
+         * @param e The JmriMouseEvent causing the action.
          */
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseClicked(JmriMouseEvent e) {
             checkTrigger(e);
         }
 
         /**
          * If the event is the popup trigger, which is dependent on the
          * platform, present the popup menu.
-         * @param e The MouseEvent causing the action.
+         * @param e The JmriMouseEvent causing the action.
          */
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(JmriMouseEvent e) {
             checkTrigger( e);
         }
 
         /**
          * If the event is the popup trigger, which is dependent on the
          * platform, present the popup menu.
-         * @param e The MouseEvent causing the action.
+         * @param e The JmriMouseEvent causing the action.
          */
         @Override
-        public void mouseReleased(MouseEvent e) {
+        public void mouseReleased(JmriMouseEvent e) {
             checkTrigger( e);
         }
 
-        private void checkTrigger( MouseEvent e) {
+        private void checkTrigger( JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 initPopupMenu();
                 popupMenu.show(e.getComponent(), e.getX(), e.getY());
@@ -1294,7 +1310,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         try {
             this.setSpeedController(e.getAttribute("displaySpeedSlider").getIntValue());
         } catch (org.jdom2.DataConversionException ex) {
-            log.error("DataConverstionException in setXml: {}", ex);
+            log.error("DataConverstionException in setXml", ex);
             // in this case, recover by displaying the speed slider.
             this.setSpeedController(SLIDERDISPLAY);
         }
@@ -1450,6 +1466,29 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         @Override
         public void writeImage(BufferedImage bi, TranscoderOutput to) throws TranscoderException {
             //not required here, do nothing
+        }
+    }
+   
+    // this mouse adapter makes sure to move the slider cursor to precisely where the user clicks
+    // see https://jmri-developers.groups.io/g/jmri/message/7874
+    private static class JSliderPreciseMouseAdapter extends JmriMouseAdapter {
+
+        @Override
+        public void mousePressed(JmriMouseEvent e) {
+            if (e.getButton() == JmriMouseEvent.BUTTON1) {
+                JSlider sourceSlider = (JSlider) e.getSource();
+                if (!sourceSlider.isEnabled()) {
+                    return;
+                }
+                BasicSliderUI ui = (BasicSliderUI) sourceSlider.getUI();
+                int value;
+                if (sourceSlider.getOrientation() == JSlider.VERTICAL) {
+                    value = ui.valueForYPosition(e.getY());
+                } else {
+                    value = ui.valueForXPosition(e.getX());
+                }
+                sourceSlider.setValue(value);
+            }
         }
     }
 

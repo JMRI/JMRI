@@ -1,32 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Herv&#233; le 2012-01-23-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated by Blorec Herv&#233; le 2012-01-23-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Mini Serveur Web</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-      <h1>JMRI: Mini Serveur Web</h1>Le mini serveur web JMRI est
+      <h1>JMRI: Mini Serveur Web</h1>
+      <p>Le mini serveur web JMRI est
       cens&eacute; &ecirc;tre un moyen rapide et facile pour les
       mod&eacute;listes ferroviaires, pas de ma&icirc;trise du Web,
       pour obtenir une connexion Internet pour JMRI et fonctionner.
@@ -37,11 +24,12 @@
       &agrave; configurer ceux-ci, plut&ocirc;t que d'essayer
       d'obtenir beaucoup plus de performances hors du serveur mini
       web JMRI. Mais si vous devez le reconfigurer, cette page
-      fournit des informations suppl&eacute;mentaires.
+      fournit des informations suppl&eacute;mentaires.</p>
 
-      <h2>Configuration</h2>Plusieurs fichiers de
+      <h2>Configuration</h2>
+      <p>Plusieurs fichiers de
       propri&eacute;t&eacute;s configurent le mini serveur web JMRI
-      et ses fonctionnalit&eacute;s par d&eacute;faut.
+      et ses fonctionnalit&eacute;s par d&eacute;faut.</p>
 
       <dl>
         <dt>JMRI/web/miniserver/Services.properties</dt>
@@ -76,7 +64,8 @@
         bas&eacute; sur le suffixe du fichier.</dd>
       </dl>
 
-      <h2>S&eacute;curit&eacute;</h2>Par d&eacute;faut, JMRI permet
+      <h2>S&eacute;curit&eacute;</h2>
+      <p>Par d&eacute;faut, JMRI permet
       seulement un acc&egrave;s limit&eacute; &agrave; votre
       ordinateur. Seuls les fichiers qui sont situ&eacute;s dans le
       r&eacute;pertoire de distribution JMRI ou le
@@ -85,9 +74,11 @@
       une s&eacute;curit&eacute; &eacute;tanche , cependant, et
       vous devriez faire attention &agrave; ne pas mettre du
       contenu important dans ces r&eacute;pertoires ou de lien vers
-      d'autres parties de votre ordinateur. 
-      <!--#include virtual="/Footer.shtml" -->
+      d'autres parties de votre ordinateur.</p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

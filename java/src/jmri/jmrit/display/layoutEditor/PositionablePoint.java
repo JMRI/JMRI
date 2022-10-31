@@ -136,24 +136,24 @@ public class PositionablePoint extends LayoutTrack {
         type = PointType.ANCHOR;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
-                log.info("Elided handling of connect1 in setTypeAnchor");
+                log.debug("Elided handling of connect1 in setTypeAnchor");
                 //connect1.setArrowEndStart(false);   // temporary - is this being done in the view?
                 //connect1.setBumperEndStart(false);   // temporary - is this being done in the view?
             }
             if (connect1.getConnect2() == PositionablePoint.this) {
-                log.info("Elided handling of connect1 in setTypeAnchor");
+                log.debug("Elided handling of connect1 in setTypeAnchor");
                 //connect1.setArrowEndStop(false);   // temporary - is this being done in the view?
                 //connect1.setBumperEndStop(false);   // temporary - is this being done in the view?
             }
         }
         if (connect2 != null) {
             if (connect2.getConnect1() == PositionablePoint.this) {
-                log.info("Elided handling of connect2 in setTypeAnchor");
+                log.debug("Elided handling of connect2 in setTypeAnchor");
                 //connect2.setArrowEndStart(false);   // temporary - is this being done in the view?
                 //connect2.setBumperEndStart(false);   // temporary - is this being done in the view?
             }
             if (connect2.getConnect2() == PositionablePoint.this) {
-                log.info("Elided handling of connect2 in setTypeAnchor");
+                log.debug("Elided handling of connect2 in setTypeAnchor");
                 //connect2.setArrowEndStop(false);   // temporary - is this being done in the view?
                 //connect2.setBumperEndStop(false);   // temporary - is this being done in the view?
             }
@@ -165,12 +165,12 @@ public class PositionablePoint extends LayoutTrack {
         type = PointType.END_BUMPER;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
-                log.info("Elided handling of connect1 in setTypeEndBumper");
+                log.debug("Elided handling of connect1 in setTypeEndBumper");
                 //connect1.setArrowEndStart(false);   // temporary - is this being done in the view?
                 //connect1.setBumperEndStart(true);   // temporary - is this being done in the view?
             }
             if (connect1.getConnect2() == PositionablePoint.this) {
-                log.info("Elided handling of connect2 in setTypeEndBumper");
+                log.debug("Elided handling of connect2 in setTypeEndBumper");
                 //connect1.setArrowEndStop(false);   // temporary - is this being done in the view?
                 //connect1.setBumperEndStop(true);   // temporary - is this being done in the view?
             }
@@ -182,11 +182,11 @@ public class PositionablePoint extends LayoutTrack {
         type = PointType.EDGE_CONNECTOR;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
-                log.info("Elided handling of connect1 in setTypeEdgeConnector");
+                log.debug("Elided handling of connect1 in setTypeEdgeConnector");
                 //connect1.setBumperEndStart(false);   // temporary - is this being done in the view?
             }
             if (connect1.getConnect2() == PositionablePoint.this) {
-                log.info("Elided handling of connect2 in setTypeEdgeConnector");
+                log.debug("Elided handling of connect2 in setTypeEdgeConnector");
                 //connect1.setBumperEndStop(false);   // temporary - is this being done in the view?
             }
         }
@@ -262,7 +262,7 @@ public class PositionablePoint extends LayoutTrack {
                 oldLinkedPoint.getLayoutEditor().getLEAuxTools().setBlockConnectivityChanged();
                 ts.updateBlockInfo();
 
-                log.info("temporary - repaint was removed here, needs to be rescoped");
+                log.debug("temporary - repaint was removed here, needs to be rescoped");
                 // oldLinkedPoint.getLayoutEditor().repaint();
 
             }
@@ -270,7 +270,7 @@ public class PositionablePoint extends LayoutTrack {
                 models.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
 
-                log.info("temporary - repaint was removed here, needs to be rescoped");
+                log.debug("temporary - repaint was removed here, needs to be rescoped");
                 // models.repaint();
             }
         }
@@ -281,7 +281,7 @@ public class PositionablePoint extends LayoutTrack {
                 models.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
 
-                log.info("temporary - repaint was removed here, needs to be rescoped");
+                log.debug("temporary - repaint was removed here, needs to be rescoped");
                 // models.repaint();
             }
         }
@@ -844,7 +844,7 @@ public class PositionablePoint extends LayoutTrack {
                 TrackSegment ts = getConnect2();
                 getLinkedPoint().setLinkedPoint(null);
 
-                log.info("temporary - repaint was removed here, needs to be rescoped");
+                log.debug("temporary - repaint was removed here, needs to be rescoped");
                 // oldLinkedEditor.repaint();
 
                 oldLinkedEditor.getLEAuxTools().setBlockConnectivityChanged();

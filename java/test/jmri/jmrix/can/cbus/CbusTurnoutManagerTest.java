@@ -31,7 +31,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public String getSystemName(int i) {
         return "MTX0A;+N123E3" + i;
     }
-    
+
     @Override
     protected String getASystemNameWithNoPrefix() {
         return "+6";
@@ -64,7 +64,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // create
         Turnout t = l.provide("MT+123");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertTrue("system name correct ", t == l.getBySystemName("MT+123"));
     }
 
@@ -84,7 +84,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         } catch (IllegalArgumentException e) {
             JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: X;+N15E6");
         }
-        
+
         try {
             l.provideTurnout("MTX;+N15E6");
             Assert.fail("X hw name Should have thrown an exception");
@@ -251,7 +251,9 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
 
     @Test
-    public void testgetEntryToolTip() {
+    @Override
+    public void testGetEntryToolTip() {
+        super.testGetEntryToolTip();
         String x = l.getEntryToolTip();
         Assert.assertTrue(x.contains("<html>"));
 
@@ -277,7 +279,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertEquals("MT+0;-17", NameValidity.VALID, l.validSystemNameFormat("MT+0;-17"));
         Assert.assertEquals("MT+0", NameValidity.VALID, l.validSystemNameFormat("MT+0"));
         Assert.assertEquals("MT-0", NameValidity.VALID, l.validSystemNameFormat("MT-0"));
-        
+
         Assert.assertEquals("M", NameValidity.INVALID, l.validSystemNameFormat("M"));
         Assert.assertEquals("MT", NameValidity.INVALID, l.validSystemNameFormat("MT"));
         Assert.assertEquals("MT-65536", NameValidity.INVALID, l.validSystemNameFormat("MT-65536"));
@@ -286,64 +288,37 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertEquals("MT0;7", NameValidity.INVALID, l.validSystemNameFormat("MT0;7"));
     }
 
+
     @Test
-    public void testgetNextValidAddress() throws JmriException {
-        
-        Assert.assertEquals("+17", "+17", l.getNextValidAddress("+17", "M",false));
+    public void testSimpleNext() throws JmriException {
         Turnout t =  l.provideTurnout("MT+17");
-        Assert.assertNotNull("exists", t);
-        Assert.assertEquals("+18", "+18", l.getNextValidAddress("+17", "M",false));
-    
-        Assert.assertEquals("+N45E22", "+N45E22", l.getNextValidAddress("+N45E22", "M",false));
-        Turnout ta =  l.provideTurnout("MT+N45E22");
-        Assert.assertNotNull("exists", ta);
-        Assert.assertEquals("+N45E23", "+N45E23", l.getNextValidAddress("+N45E22", "M",false));        
-        
-        try {
-            Assert.assertNull("null", l.getNextValidAddress("", "M",false));
-        } catch (JmriException ex) {
-            Assert.assertEquals("System name \"MT\" is missing suffix.", ex.getMessage());
-        }
+        String next = l.getNextValidSystemName(t);
+        Assert.assertEquals("MT+18", next);
+
+        t =  l.provideTurnout("MT+N45E22");
+        next = l.getNextValidSystemName(t);
+        Assert.assertEquals("MT+N45E23", next);
+
     }
 
     @Test
-    public void testgetNextValidAddressPt2() throws JmriException {
-        Turnout t =  l.provideTurnout("MT+65535");
-        Assert.assertNotNull("exists", t);
-        Assert.assertThrows(JmriException.class, () -> l.getNextValidAddress("+65535", "M",false));        
+    public void testDoubleNext() throws JmriException {
+        Turnout t =  l.provideTurnout("MT+18;-21");
+        String next = l.getNextValidSystemName(t);
+        Assert.assertEquals( "MT+19;-22", next);
     }
-    
-    @Test
-    public void testgetNextValidAddressPt3() throws JmriException {
-        
-        Turnout t =  l.provideTurnout("MT+10");
-        Assert.assertNotNull("exists", t);
-            
-        Assert.assertEquals("+10", "+11", l.getNextValidAddress("+10", "M",false));
-    }
-    
-    @Test
-    public void testgetNextValidAddressPt4() throws JmriException {
 
-        Turnout t = l.provideTurnout("MT+9");
-        Turnout ta = l.provideTurnout("MT+10");
-        Assert.assertNotNull("exists", t);
-        Assert.assertNotNull("exists", ta);
-
-        Assert.assertEquals(" null +9 +10", "+11", l.getNextValidAddress("+9", "M",false));
-    }
-    
     @Test
     public void testcreateSystemName() throws JmriException {
-        
+
         Assert.assertEquals("MT+10", "MT+10", l.createSystemName("10", "M"));
         Assert.assertEquals("MT+N34E610", "MT+N34E610", l.createSystemName("+N34E610", "M"));
         Assert.assertEquals("MT5;6", "MT+5;-6", l.createSystemName("5;6", "M"));
-        
+
         Assert.assertEquals("M2T+10", "M2T+10", l.createSystemName("+10", "M2"));
 
         Assert.assertEquals("ZZZZZZZZZ2T+10", "ZZZZZZZZZT+10", l.createSystemName("+10", "ZZZZZZZZZ"));
-        
+
     }
 
     @Test
@@ -352,13 +327,14 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Turnout ta = l.provideTurnout("+4");
         Assert.assertTrue(t == ta);
     }
-    
+
     @Test
     @Override
     public void testAutoSystemNames() {
+        Assertions.assertNotNull(tcis);
         Assert.assertEquals("No auto system names",0,tcis.numListeners());
     }
-    
+
     @Test
     @Override
     public void testSetAndGetOutputInterval() {
@@ -371,10 +347,9 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertEquals("new outputInterval from manager", 50, l.getMemo().getOutputInterval()); // get from memo
     }
 
-    
-    private TrafficControllerScaffold tcis;
-    private CanSystemConnectionMemo memo;
-    
+    private TrafficControllerScaffold tcis = null;
+    private CanSystemConnectionMemo memo = null;
+
     @BeforeEach
     @Override
     public void setUp() {
@@ -387,9 +362,14 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(tcis);
+        Assertions.assertNotNull(memo);
+        if ( l!= null ) {
+            l.dispose();
+            l = null;
+        }
         tcis.terminateThreads();
         tcis = null;
-        l.dispose();
         memo.dispose();
         JUnitUtil.tearDown();
 

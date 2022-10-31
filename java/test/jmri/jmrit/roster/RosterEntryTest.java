@@ -115,7 +115,7 @@ public class RosterEntryTest {
 
     @Test
     public void testFromSchemaFile() throws JDOMException, IOException {
-        
+
         // Create a RosterEntry from a test xml file
         // This one references the Schema version
         RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
@@ -131,7 +131,7 @@ public class RosterEntryTest {
 
     @Test
     public void testFromDtdFile() throws JDOMException, IOException {
-        
+
         // Create a RosterEntry from a test xml file
         // This one references the DTD to make sure that still works
         // post migration
@@ -162,8 +162,8 @@ public class RosterEntryTest {
 
         r.setId("test Id");
         r.setDateUpdated("unparseable date");
-        
-        jmri.util.JUnitAppender.assertWarnMessage("Unable to parse \"unparseable date\" as a date in roster entry \"test Id\"."); 
+
+        jmri.util.JUnitAppender.assertWarnMessage("Unable to parse \"unparseable date\" as a date in roster entry \"test Id\".");
     }
 
     @Test
@@ -178,9 +178,9 @@ public class RosterEntryTest {
         } finally {
             TimeZone.setDefault(tz);
         }
-        
-        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog()); 
-        Assert.assertEquals("2015-10-03T18:19:12.000+0000", r.getDateUpdated());
+
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+        Assert.assertEquals("2015-10-03T18:19:12.000+00:00", r.getDateUpdated());
     }
 
     @Test
@@ -189,9 +189,21 @@ public class RosterEntryTest {
 
         r.setId("test Id");
         r.setDateUpdated("2018-03-05T02:34:55Z");
-        
-        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog()); 
-        Assert.assertEquals("2018-03-05T02:34:55.000+0000", r.getDateUpdated());
+
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+        Assert.assertEquals("2018-03-05T02:34:55.000+00:00", r.getDateUpdated());
+    }
+
+    @Test
+    public void testDateFormatPreviousJackson() {
+        RosterEntry r = new RosterEntry("file here");
+
+        r.setId("test Id");
+        r.setDateUpdated("2018-03-05T02:34:55.000+0000");
+
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+        Assert.assertEquals("2018-03-05T02:34:55.000+00:00", r.getDateUpdated());
+
     }
 
     @Test
@@ -199,7 +211,7 @@ public class RosterEntryTest {
         RosterEntry r = new RosterEntry("file here");
 
         r.setId("test Id");
-        
+
         TimeZone tz = TimeZone.getDefault();
         try {
             TimeZone.setDefault(TimeZone.getTimeZone("GMT-7"));
@@ -207,11 +219,11 @@ public class RosterEntryTest {
         } finally {
             TimeZone.setDefault(tz);
         }
-        
-        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog()); 
-        
+
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+
         // convert that same local time in ISO format and compare
-        Assert.assertEquals("2016-03-02T16:57:04.000+0000", r.getDateUpdated());
+        Assert.assertEquals("2016-03-02T16:57:04.000+00:00", r.getDateUpdated());
     }
 
     @Test
@@ -320,12 +332,12 @@ public class RosterEntryTest {
         Assert.assertEquals("initial ID ", "test Roster Entry 123456789ABC", r.getId());
         File f = new File(Roster.getDefault().getRosterFilesLocation() + "test_Roster_Entry_123456789ABC.xml");
         if (f.exists()) {
-            f.delete();
+            Assertions.assertTrue(f.delete());
         }
         r.ensureFilenameExists();
         Assert.assertEquals("final filename ", "test_Roster_Entry_123456789ABC.xml", r.getFileName());
         if (f.exists()) {
-            f.delete();  // clean up afterwards
+            Assertions.assertTrue(f.delete());  // clean up afterwards
         }
     }
 
@@ -338,25 +350,23 @@ public class RosterEntryTest {
         Assert.assertEquals("initial ID ", "test Roster Entry 123456789ABC", r.getId());
         File f1 = new File(Roster.getDefault().getRosterFilesLocation() + "test_Roster_Entry_123456789ABC.xml");
         if (!f1.exists()) {
-            // create a dummy
-            FileOutputStream f = new FileOutputStream(f1);
-            f.write(0);
-            f.close();
+            try ( FileOutputStream f = new FileOutputStream(f1)) { // create a dummy
+                f.write(0);
+            }
         }
         File f2 = new File(Roster.getDefault().getRosterFilesLocation() + "test_Roster_Entry_123456789ABC0.xml");
         if (!f2.exists()) {
-            // create a dummy
-            FileOutputStream f = new FileOutputStream(f2);
-            f.write(0);
-            f.close();
+            try ( FileOutputStream f = new FileOutputStream(f2)) { // create a dummy
+                f.write(0);
+            }
         }
         r.ensureFilenameExists();
         Assert.assertEquals("final filename ", "test_Roster_Entry_123456789ABC1.xml", r.getFileName());
         if (f1.exists()) {
-            f1.delete();  // clean up afterwards
+            Assertions.assertTrue(f1.delete());  // clean up afterwards
         }
         if (f2.exists()) {
-            f2.delete();
+            Assertions.assertTrue(f2.delete());
         }
     }
 

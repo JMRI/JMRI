@@ -36,7 +36,7 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
     protected ArrayList<CabSignalListListener> listListeners;
 
     // keep a list of listeners for block objects.
-    private ArrayList<PropertyChangeListener> mBlockListeners; 
+    private ArrayList<PropertyChangeListener> mBlockListeners;
     private boolean blockInit = false;
 
     public AbstractCabSignalManager(){
@@ -61,7 +61,7 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
            signalList.put(address, createCabSignal(address));
            notifyCabSignalListChanged();
         }
-        return signalList.get(address); 
+        return signalList.get(address);
     }
 
     /**
@@ -91,7 +91,7 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
      * @return list of cab signal addresses
      */
     @Override
-    public Set getCabSignalList(){
+    public Set<LocoAddress> getCabSignalList(){
        return signalList.keySet();
     }
 
@@ -166,7 +166,7 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
                  if(c.getBlock() == null){
                     c.setBlock(); // cause this cab signal to look for a block.
                  }
-              } 
+              }
            }
         }
    }

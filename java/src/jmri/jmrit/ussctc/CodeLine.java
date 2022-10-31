@@ -54,8 +54,8 @@ public class CodeLine {
     public static int CODE_SEND_DELAY = 2500; // mSec
     public static int INTER_INDICATION_DELAY = 500; // mSec
 
-    volatile Deque<Station> codeQueue = new ArrayDeque<>();
-    volatile Deque<Station> indicationQueue = new ArrayDeque<>();
+    volatile Deque<Station<?,?>> codeQueue = new ArrayDeque<>();
+    volatile Deque<Station<?,?>> indicationQueue = new ArrayDeque<>();
 
     volatile boolean active = false;
 
@@ -73,7 +73,7 @@ public class CodeLine {
         active = true;
 
         // indications have priority over code sends
-        final Station indicatorStation = indicationQueue.pollFirst();
+        final Station<?,?> indicatorStation = indicationQueue.pollFirst();
         if (indicatorStation != null) {
             // go inactive for just a bit before starting indication cycles
             jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{
@@ -81,7 +81,7 @@ public class CodeLine {
                 }, INTER_INDICATION_DELAY);
             return;
         }
-        Station codeStation = codeQueue.pollFirst();
+        Station<?,?> codeStation = codeQueue.pollFirst();
         if (codeStation != null) {
             startSendCode(codeStation);
             return;
@@ -96,7 +96,7 @@ public class CodeLine {
      * Request processing of an indication from the field
      * @param station Station being addressed.
      */
-    synchronized void requestSendCode(Station station) {
+    synchronized void requestSendCode(Station<?,?> station) {
         log.debug("requestSendCode queued from Station {}", station.getName());
         // remove if present
         while (codeQueue.contains(station)) {
@@ -107,8 +107,8 @@ public class CodeLine {
         checkForWork();
     }
 
-    void startSendCode(Station station) {
-        final Station s = station;
+    void startSendCode(Station<?,?> station) {
+        final Station<?,?> s = station;
         log.debug("CodeLine startSendCode - Tell hardware to start sending code");  // NOI18N
         logMemory.setValue("Sending Code: Station "+station.getName());  // NOI18N
         startSendExternalCodeLine();
@@ -141,7 +141,7 @@ public class CodeLine {
      * Request processing of an indication from the field.
      * @param station Station being addressed.
      */
-    synchronized void requestIndicationStart(Station station) {
+    synchronized void requestIndicationStart(Station<?,?> station) {
         log.debug("requestIndicationStart queued from Station {}", station.getName());
         // remove if present
         while (indicationQueue.contains(station)) {
@@ -152,8 +152,8 @@ public class CodeLine {
         checkForWork();
     }
 
-    void startSendIndication(Station station) {
-        final Station s = station;
+    void startSendIndication(Station<?,?> station) {
+        final Station<?,?> s = station;
         log.debug("CodeLine startSendIndication - process indication from field");
 
         // light code light and gather values

@@ -276,7 +276,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private final List<Section> sectionList = new ArrayList<>();
     private final List<Integer> direction = new ArrayList<>();
     private final List<Integer> sequence = new ArrayList<>();
-    @SuppressWarnings("unchecked")
     private final List<List<TransitSectionAction>> action = new ArrayList<>();
     private final List<Boolean> alternate = new ArrayList<>();
     private final List<Boolean> safe = new ArrayList<>();
@@ -1576,7 +1575,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             signalMastComboBox.setAllowNull(true);
             signalMastComboBox.addActionListener((ActionEvent e) -> {
                 if (signalMastComboBox.getSelectedIndex() > 0) {
-                    signalHeadComboBox.setSelectedIndex(0); // choose either a head or a mast
+                    signalHeadComboBox.setSelectedIndex(-1); // choose either a head or a mast
                 }
             });
             signalPanel.add(new JLabel(rbx.getString("HeadLabel")));
@@ -1585,7 +1584,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             signalHeadComboBox.setAllowNull(true);
             signalHeadComboBox.addActionListener((ActionEvent e) -> {
                 if (signalHeadComboBox.getSelectedIndex() > 0) {
-                    signalMastComboBox.setSelectedIndex(0); // choose either a head or a mast
+                    signalMastComboBox.setSelectedIndex(-1); // choose either a head or a mast
                 }
             });
             signalMastComboBox.setToolTipText(rbx.getString("HintSignalEntry"));
@@ -1827,6 +1826,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 }
                 signalPanel.setVisible(true);
                 break;
+            case TransitSectionAction.ESTOP:
             default:
                 log.debug("Unhandled transit section action: {}", code); // causes too much noise, no harm done hiding it
                 break;
@@ -2121,6 +2121,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 return rbx.getString("HoldSignal");
             case TransitSectionAction.RELEASESIGNAL:
                 return rbx.getString("ReleaseSignal");
+            case TransitSectionAction.ESTOP:
+                return rbx.getString("EStop");
             default:
                 log.warn("Unhandled transit section action code: {}", i);
                 break;
@@ -2299,6 +2301,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             case TransitSectionAction.RELEASESIGNAL:
                 return java.text.MessageFormat.format(rbx.getString("ReleaseSignalFull"),
                         new Object[]{tsa.getStringWhat()});
+            case TransitSectionAction.ESTOP:
+                return rbx.getString("EStopFull");
             default:
                 log.warn("Unhandled transit section action What code: {}", tsa.getWhatCode());
                 break;
@@ -2480,7 +2484,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     safe.set(row, val); // use checkbox to show Safe
                     break;
                 case STOPALLOCATING_SENSOR:
-                    JComboBox<?> cb = (JComboBox) value;
+                    JComboBox<?> cb = (JComboBox<?>) value;
                     if (cb.getSelectedIndex() < 0) {
                         sensorStopAllocation.set(row, "");
                     } else {

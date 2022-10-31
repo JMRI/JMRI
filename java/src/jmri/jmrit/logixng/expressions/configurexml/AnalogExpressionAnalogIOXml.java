@@ -4,6 +4,7 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.expressions.AnalogExpressionAnalogIO;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 
 import org.jdom2.Element;
 
@@ -17,7 +18,7 @@ public class AnalogExpressionAnalogIOXml extends jmri.managers.configurexml.Abst
 
     public AnalogExpressionAnalogIOXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -34,14 +35,12 @@ public class AnalogExpressionAnalogIOXml extends jmri.managers.configurexml.Abst
 
         storeCommon(p, element);
 
-        NamedBeanHandle analogIO = p.getAnalogIO();
-        if (analogIO != null) {
-            element.addContent(new Element("analogIO").addContent(analogIO.getName()));
-        }
-        
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<AnalogIO>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
         String sys = getSystemName(shared);
@@ -51,16 +50,13 @@ public class AnalogExpressionAnalogIOXml extends jmri.managers.configurexml.Abst
 
         loadCommon(h, shared);
 
-        Element analogIOName = shared.getChild("analogIO");
-        if (analogIOName != null) {
-            AnalogIO m = InstanceManager.getDefault(AnalogIOManager.class).getNamedBean(analogIOName.getTextTrim());
-            if (m != null) h.setAnalogIO(m);
-            else h.removeAnalogIO();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<AnalogIO>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "analogIO", null, null, null, null);
 
         InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionAnalogIOXml.class);
 }

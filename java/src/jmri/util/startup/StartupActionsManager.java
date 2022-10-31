@@ -1,5 +1,6 @@
 package jmri.util.startup;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.annotation.Nonnull;
 
 import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.configurexml.XmlAdapter;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -43,13 +45,8 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     public final static String NAMESPACE_OLD = "http://jmri.org/xml/schema/auxiliary-configuration/startup-2-9-6.xsd"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(StartupActionsManager.class);
 
-    @SuppressWarnings("deprecation") // apps.startup.StartupModelFactory
     public StartupActionsManager() {
         super();
-        for (apps.startup.StartupModelFactory factory : ServiceLoader.load(apps.startup.StartupModelFactory.class)) {
-            factory.initialize();
-            this.factories.put(factory.getModelClass(), factory);
-        }
         for (StartupModelFactory factory : ServiceLoader.load(StartupModelFactory.class)) {
             factory.initialize();
             this.factories.put(factory.getModelClass(), factory);
@@ -102,7 +99,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                         log.error("Unable to create {} for {}", adapter, action, ex);
                         this.addInitializationException(profile, new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsCreationError", adapter, name),
                                 Bundle.getMessage("StartupActionsCreationError", adapter, name))); // NOI18N
-                    } catch (Exception ex) {
+                    } catch (IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException | JmriConfigureXmlException ex) {
                         log.error("Unable to load {} into {}", action, adapter, ex);
                         this.addInitializationException(profile, new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsLoadError", adapter, name),
                                 Bundle.getMessage("StartupActionsLoadError", adapter, name))); // NOI18N
@@ -153,7 +150,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                 }
             } else {
                 // get an error with a stack trace if this occurs
-                log.error("model does not have a name.", new Exception());
+                log.error("model \"{}\" does not have a name.", action, new Exception());
             }
         });
         try {
@@ -165,7 +162,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     public StartupModel[] getActions() {
-        return this.actions.toArray(new StartupModel[this.actions.size()]);
+        return this.actions.toArray(StartupModel[]::new);
     }
 
     @SuppressWarnings("unchecked")

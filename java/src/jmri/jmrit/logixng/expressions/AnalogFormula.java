@@ -360,7 +360,7 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load analog expression " + socketSystemName);
+                            log.error("cannot load analog expression {}", socketSystemName);
                         }
                     }
                 } else {

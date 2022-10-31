@@ -134,7 +134,7 @@ public class FirstTimeStartUpWizard {
         p2.add(new JLabel(/*rb.getString("LabelDefaultOwner")*/"Default Owner"));
 
         owner.setText(InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
-        if (owner.getText().equals("")) {
+        if (owner.getText().isEmpty()) {
             owner.setText(System.getProperty("user.name"));
         }
         p2.add(owner);
@@ -275,7 +275,7 @@ public class FirstTimeStartUpWizard {
                     adp.connect();
                     adp.configure();
                 } catch (Exception ex) {
-                    log.error(ex.getLocalizedMessage(), ex);
+                    log.error("Exception: ", ex);
                     Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
                     parent.setCursor(normalCursor);
                     JOptionPane.showMessageDialog(null,

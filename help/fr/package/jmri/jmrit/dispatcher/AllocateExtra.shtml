@@ -1,23 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-19-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-19-->
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Allocate Extra Window Help</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content="JMRI help Dispatcher New Train"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Dispatcher New Train">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>Allouer une Fenêtre Supplémentaire</h1>
 
       <h2>Présentation</h2>
@@ -52,7 +48,7 @@
       <ol>
         <li>Cliquez sur le bouton <strong>Allouer extra ...</strong> dans la fenêtre
         <strong><a href="Dispatcher.shtml">Dispatcher</a></strong> Ceci fait apparaître la fenêtre
-        ci-dessous.<img src="AllocateExtraWindow.jpg" height="146" width="267" alt=""></li>
+        ci-dessous.<img src="images/AllocateExtraWindow.jpg" height="146" width="267" alt=""></li>
 
         <li>Sélectionnez un train Actif dans la boîte de sélection <strong>Train Actif:</strong>.
         Quand un Train Actif est sélectionné, la boîte de sélection <strong>Section à
@@ -77,8 +73,10 @@
       <p>Note: Si cette fenêtre devrait être laissée ouverte accidentellement, l'allocation d'une
       Section d'une autre manière fera automatiquement annuler l'opération dans cette fenêtre, et
       cette fenêtre disparaît.</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

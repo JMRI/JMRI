@@ -18,21 +18,22 @@ import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Preferences panel for LogixNG
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 @ServiceProvider(service = PreferencesPanel.class)
 public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel {
-    
+
     private final DefaultLogixNGPreferences preferences;
-    
+
     JCheckBox _startLogixNGOnLoadCheckBox;
     JCheckBox _installDebuggerCheckBox;
     JCheckBox _showSystemUserNamesCheckBox;
     JCheckBox _treeEditorHighlightRow;
+    JCheckBox _showSystemNameInException;
     private JComboBox<ErrorHandlingType> _errorHandlingComboBox;
-    
-    
+
+
     public LogixNGPreferencesPanel() {
         LogixNGPreferences prefs = InstanceManager.getDefault(LogixNGPreferences.class);
         if (!(prefs instanceof DefaultLogixNGPreferences)) {
@@ -48,14 +49,6 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         add(getStartupPanel());
         add(new JTitledSeparator(Bundle.getMessage("TitleTimeDiagramColorsPanel")));
         add(getTimeDiagramColorsPanel());
-//        add(new JTitledSeparator(Bundle.getMessage("TitleNetworkPanel")));
-//        add(networkPanel());
-//        add(new JTitledSeparator(Bundle.getMessage("TitleControllersPanel")));
-//        add(allowedControllers());
-        
-//        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-//        add(new JTitledSeparator(Bundle.getMessage("TitleRailroadNamePreferences")));
-//        add(getLogixNGPanel());
     }
 
     /**
@@ -71,9 +64,10 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         preferences.setShowSystemUserNames(_showSystemUserNamesCheckBox.isSelected());
         preferences.setTreeEditorHighlightRow(_treeEditorHighlightRow.isSelected());
         preferences.setErrorHandlingType(_errorHandlingComboBox.getItemAt(_errorHandlingComboBox.getSelectedIndex()));
+        preferences.setShowSystemNameInException(_showSystemNameInException.isSelected());
         return didSet;
     }
-    
+
     private JPanel getStartupPanel() {
         JPanel panel = new JPanel();
 
@@ -89,18 +83,23 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         _treeEditorHighlightRow = new JCheckBox(Bundle.getMessage("LabelTreeEditorHighlightRow"));
         _treeEditorHighlightRow.setToolTipText(Bundle.getMessage("ToolTipTreeEditorHighlightRow"));
 
+        _showSystemNameInException = new JCheckBox(Bundle.getMessage("LabelShowSystemNameInException"));
+        _showSystemNameInException.setToolTipText(Bundle.getMessage("ToolTipShowSystemNameInException"));
+
         JPanel gridPanel = new JPanel(new GridLayout(0, 1));
-        
+
         gridPanel.add(_startLogixNGOnLoadCheckBox);
         gridPanel.add(_installDebuggerCheckBox);
         gridPanel.add(_showSystemUserNamesCheckBox);
         gridPanel.add(_treeEditorHighlightRow);
-        
+        gridPanel.add(_showSystemNameInException);
+
         _startLogixNGOnLoadCheckBox.setSelected(preferences.getStartLogixNGOnStartup());
         _installDebuggerCheckBox.setSelected(preferences.getInstallDebugger());
         _showSystemUserNamesCheckBox.setSelected(preferences.getShowSystemUserNames());
         _treeEditorHighlightRow.setSelected(preferences.getTreeEditorHighlightRow());
-        
+        _showSystemNameInException.setSelected(preferences.getShowSystemNameInException());
+
         _errorHandlingComboBox = new JComboBox<>();
         for (ErrorHandlingType type : ErrorHandlingType.values()) {
             // ErrorHandlingType.Default cannot be used as default
@@ -113,7 +112,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         }
         JComboBoxUtil.setupComboBoxMaxRows(_errorHandlingComboBox);
         gridPanel.add(_errorHandlingComboBox);
-        
+
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
         panel.add(gridPanel);
 
@@ -123,7 +122,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
     private JPanel getTimeDiagramColorsPanel() {
         return new JPanel();
     }
-    
+
     @Override
     public String getPreferencesItem() {
         return "LOGIXNG"; // NOI18N

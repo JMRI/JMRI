@@ -16,7 +16,7 @@ Any value defined here will override the pom.xml file value but is only applicab
         <org-netbeans-modules-javascript2-requirejs.enabled>true</org-netbeans-modules-javascript2-requirejs.enabled>
         <netbeans.checkstyle.format>true</netbeans.checkstyle.format>
         <netbeans.compile.on.save>none</netbeans.compile.on.save>
-        <netbeans.hint.jdkPlatform>JDK_1.8</netbeans.hint.jdkPlatform>
+        <netbeans.hint.jdkPlatform>JDK_11</netbeans.hint.jdkPlatform>
         <com-junichi11-netbeans-changelf.enable>true</com-junichi11-netbeans-changelf.enable>
         <com-junichi11-netbeans-changelf.use-project>true</com-junichi11-netbeans-changelf.use-project>
         <com-junichi11-netbeans-changelf.use-global>false</com-junichi11-netbeans-changelf.use-global>

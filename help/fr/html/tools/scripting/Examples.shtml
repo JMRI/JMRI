@@ -1,27 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Blorec Herv&#233; le 2013-09-26 -->
 
   <title>JMRI: Scripting Examples</title>
-  <!-- Style -->
-  <meta http-equiv="content-type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-  <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
   <div id="mainContent">
     <!-- Page Body -->
 
@@ -81,7 +71,7 @@
       "../../../../../jython/AutomatonExample.py">AutomatonExample.py</a></p>
 
       <p>Ceci est un exemple de script pour un "Automat" JMRI dans
-      Python Il &eacute;coute deux capteurs, la course d'une
+      Python. Il &eacute;coute deux capteurs, la course d'une
       locomotive va-et-vient entre eux par des changements de
       direction quand un capteur d&eacute;tecte la machine. Vous
       avez besoin de r&eacute;gler la vitesse du moteur en
@@ -91,7 +81,7 @@
       "../../../../../jython/BackAndForth.py">BackAndForth.py</a></p>
 
       <p>Ceci est un exemple de script pour un "Automat" JMRI dans
-      Python Il est bas&eacute; sur l'AutomatonExample. Il
+      Python. Il est bas&eacute; sur l'AutomatonExample. Il
       &eacute;coute par deux capteurs, la course d'une locomotive
       en va-et-vient entre eux par des changements de direction
       quand un capteur d&eacute;tecte la machine.</p>
@@ -160,15 +150,16 @@
       "../../../../../jython/JButtonComplexExample.py">JButtonComplexExample.py</a></p>
 
       <p>Exemple de script pour montrer une JFrame de saisie de
-      donn&eacute;es. L' cadre contient deux JTextFields, et un
+      donn&eacute;es. L'cadre contient deux JTextFields, et un
       bouton qui est inactif tant qu'aucune donn&eacute;e n'a
       &eacute;t&eacute; saisie. Une fois activ&eacute;, le bouton
       permet d'imprimer un petit message de diagnostic quand on
       clique dessus. L'instruction print peut &ecirc;tre
       modifi&eacute;e pour y inclure ce que d&eacute;sir&eacute;,
       par exemple d&eacute;vier un aiguillage, programmer un CV,
-      etc</p>Ce script cr&eacute;e un panneau intitul&eacute; "
-      saisie des Donn&eacute;es" avec deux champs ou les
+      etc</p>
+      <p>Ce script cr&eacute;e un panneau intitul&eacute;
+      "saisie des Donn&eacute;es" avec deux champs ou les
       donn&eacute;es sont saisies. Le script attend que quelque
       chose soit entr&eacute;e dans les deux champs et permet
       ensuite "Entrer valeurs". Lorsque le bouton "Entrer valeurs"
@@ -176,7 +167,7 @@
       s'affiche sur la console Java et le "Data Entry" du panneau
       de dispara&icirc;tre. Pour voir sur la console Java, vous
       devez ouvrir la console Java ou s&eacute;lectionnez "sortie
-      du script" du "Panneaux" du menu JMRI .
+      du script" du "Panneaux" du menu JMRI.</p>
 
       <p><a href=
       "../../../../../jython/JButtonExample.py">JButtonExample.py</a></p>
@@ -331,7 +322,7 @@
       cela doit devenir une structure plus complexe de
       donn&eacute;es qui sont par exemple index&eacute;es par
       carte. Notez &eacute;galement que si plusieurs sections
-      &agrave; la fois et que vous utilisez la commande "parler" ,
+      &agrave; la fois et que vous utilisez la commande "parler",
       les annonces peuvent se chevaucher.</p>
 
       <p><a href=
@@ -379,7 +370,7 @@
       chose qui donne un sens pour votre r&eacute;seau en premier,
       d&eacute;finir la classe auditeur. Cela obtient les messages
       du journal, les utilise pour garder une trace des
-      d&eacute;codeurs dans un cantons, et &eacute;crit cette liste
+      d&eacute;codeurs dans un canton, et &eacute;crit cette liste
       dans une m&eacute;moire pour l'affichage.</p>
 
       <p><a href=
@@ -510,9 +501,10 @@
       <p>Ce r&eacute;pertoire contient les scripts qui ont d'abord
       &eacute;t&eacute; cr&eacute;&eacute;s pour les tests JavaOne
       du r&eacute;seau.</p>
-    </div>
 
-  <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

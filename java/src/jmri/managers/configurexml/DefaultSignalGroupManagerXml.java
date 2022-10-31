@@ -46,9 +46,7 @@ public class DefaultSignalGroupManagerXml
 
                 Element e = new Element("signalgroup");
                 e.addContent(new Element("systemName").addContent(sgName));
-                e.addContent(new Element("userName").addContent(sg.getUserName()));
-                // storeCommon(sg, e); previously would store comment, now a separate element
-                storeComment(sg, e);
+                storeCommon(sg, e);
                 groups.addContent(e);
                 for (int x = 0; x < sg.getNumSignalMastAspects(); x++) {
                     Element app = new Element("aspect").setAttribute("valid", sg.getSignalMastAspectByIndex(x));

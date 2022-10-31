@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 import jmri.util.FileUtil;
@@ -26,15 +28,14 @@ import org.jdom2.JDOMException;
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusNodeBackupManager {
-    
+
     public final SimpleDateFormat xmlDateStyle = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss"); // NOI18N
     private int _nodeNum = 0;
     private final CbusBasicNodeWithManagers _node;
     private ArrayList<CbusNodeFromBackup> _backupInfos;
-    private final CbusPreferences preferences;
     private boolean backupInit; // node details loaded from file
     private boolean backupStarted; // auto startup backup started
-    
+
     /**
      * Create a new CbusNodeBackupManager
      * @param node the CbusNode which the xml is associated with
@@ -42,14 +43,14 @@ public class CbusNodeBackupManager {
     public CbusNodeBackupManager(CbusBasicNodeWithManagers node) {
         _nodeNum = node.getNodeNumber();
         _node = node;
-        _backupInfos = new ArrayList<>();
-        preferences = jmri.InstanceManager.getNullableDefault(CbusPreferences.class);
+        _backupInfos = new ArrayList<>(5);
+        
         backupInit = false;
         backupStarted = false;
         // doLoad();
         
     }
-    
+
     /**
      * Get a list of all of the backups currently in the xml file
      * @return may be zero length if no backups
@@ -57,7 +58,7 @@ public class CbusNodeBackupManager {
     public ArrayList<CbusNodeFromBackup> getBackups() {
         return _backupInfos;
     }
-    
+
     public int getNumCompleteBackups() {
         int i=0;
         for (int j = 0; j <_backupInfos.size() ; j++) {
@@ -67,7 +68,7 @@ public class CbusNodeBackupManager {
         }
         return i;
     }
-    
+
     /**
      * Get the time of first full backup for the Node.
      *
@@ -82,7 +83,7 @@ public class CbusNodeBackupManager {
         }
         return null;
     }
-    
+
     /**
      * Get the time of last full backup for the Node.
      *
@@ -97,7 +98,7 @@ public class CbusNodeBackupManager {
         }
         return null;
     }
-    
+
     /**
      * Get number of backups in arraylist that are complete, do no have a comment
      * and could potentially be deleted.
@@ -112,16 +113,22 @@ public class CbusNodeBackupManager {
         }
         return i;
     }
-    
+
     /**
      * Delete older backups depending on user pref. number
      */
     private void trimBackups(){
-        
+        CbusPreferences preferences;
+        CanSystemConnectionMemo memo = _node.getMemo();
+        if ( memo != null ) {
+            preferences = memo.get(CbusPreferences.class);
+        } else {
+            preferences = jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class).get(CbusPreferences.class);
+        }
         if (preferences==null) {
             return;
         }
-        
+
         // note size-2 means we never delete the oldest one
         for (int i = _backupInfos.size()-2; i >-1 ; i--) {
             if ( numAutoBackups()<=preferences.getMinimumNumBackupsToKeep()){
@@ -132,27 +139,27 @@ public class CbusNodeBackupManager {
             }
         }
     }
-    
+
     /**
      * Full XML load.
      * Searches for XML file for the node and reads info
      * Sets internal flag so can only be triggered once
      */
     public final void doLoad(){
-        CbusNodeBackupFile x = new CbusNodeBackupFile();
-        
+        CbusNodeBackupFile x = new CbusNodeBackupFile(_node.getMemo());
+
         if (!( _node instanceof CbusNode)){
             return;
         }
-        
+
         if (backupInit) {
             return;
         }
-        
+
         backupInit = true;
-        
+
         ThreadingUtil.runOnLayout( () -> {
-            
+
             File file = x.getFile(_node.getNodeNumber(),true);
 
             if (file == null) {
@@ -204,7 +211,7 @@ public class CbusNodeBackupManager {
                             try {
                                 Date newDate = xmlDateStyle.parse(info.getAttributeValue("dateTimeStamp")); // NOI18N
                                 nodeBackup.setBackupTimeStamp( newDate ); // temp
-                            } catch (java.text.ParseException e) { 
+                            } catch (java.text.ParseException e) {
                                 log.error("Unable to parse date {}",info.getAttributeValue("dateTimeStamp")); // NOI18N
                                 _sortOnLoad = false;
                                 _backupInfoError = true;
@@ -293,10 +300,10 @@ public class CbusNodeBackupManager {
 
 
         });
-        
-        
+
+
     }
-    
+
     /**
      * Save the xml to user profile
      * trims backup list as per user pref.
@@ -305,41 +312,41 @@ public class CbusNodeBackupManager {
      * @return true if all OK, else false if error occurred
      */
     public boolean doStore( boolean createNew, boolean seenErrors) {
-        
+
         if (!( _node instanceof CbusNode)){
             return false;
         }
-        
+
         setBackupStarted(true);
-      
+
         Date thisBackupDate = new Date();
-        CbusNodeBackupFile x = new CbusNodeBackupFile();
+        CbusNodeBackupFile x = new CbusNodeBackupFile(_node.getMemo());
         File file = x.getFile(_node.getNodeNumber(),true);
-        
+
         if (file == null) {
             log.error("Unable to get backup file prior to save");  // NOI18N
             return false;
         }
-        
+
         doRotate();
-        
+
         if ( createNew ) {
             _backupInfos.add(0,new CbusNodeFromBackup((CbusNode) _node,thisBackupDate));
             if (seenErrors){
                 _backupInfos.get(0).setBackupResult(BackupType.COMPLETEDWITHERROR);
             }
         }
-        
+
         // now we trim the number of backups in the list
         trimBackups();
-        
+
         // Create root element
         Element root = new Element("CbusNode");  // NOI18N
         root.setAttribute("noNamespaceSchemaLocation", // NOI18N
             "https://raw.githubusercontent.com/MERG-DEV/JMRI/master/schema/MergCBUSNodeBackup.xsd",  // NOI18N
             org.jdom2.Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance")); // NOI18N
         root.setAttribute("NodeNum", ""+_node.getNodeNumber() );  // NOI18N
-        
+
         if (!((CbusNode) _node).getUserName().isEmpty()) {
             root.addContent(new Element("UserName").addContent(((CbusNode) _node).getUserName() )); // NOI18N
         }
@@ -350,7 +357,7 @@ public class CbusNodeBackupManager {
             root.addContent(new Element("FreeText").addContent( // NOI18N
                 ((CbusNode) _node).getUserComment().replaceAll("\r\n|\n|\r", "\\\\n")));
         }
-        
+
         Document doc = new Document(root);
         Element values = new Element("Backups");
         root.addContent(values);  // NOI18N
@@ -370,7 +377,7 @@ public class CbusNodeBackupManager {
             if (node.getNodeEventManager().getTotalNodeEvents()>0) {
                 // log.info("events on backup node");
                 Element bupev = new Element("NodeEvents"); // NOI18N
-                
+
                 ArrayList<CbusNodeEvent> _tmpArr = node.getNodeEventManager().getEventArray();
                 if ( _tmpArr!=null ) {
                     _tmpArr.forEach((bupndev) -> {
@@ -401,24 +408,24 @@ public class CbusNodeBackupManager {
         _node.notifyPropertyChangeListener("BACKUPS", null, null);
         return true;
     }
-    
+
     /**
      * Add an xml entry advising Node Not on Network
      */
     protected void nodeNotOnNetwork(){
-        if (_node instanceof CbusNode) { 
+        if (_node instanceof CbusNode) {
             CbusNodeFromBackup newBup = new CbusNodeFromBackup((CbusNode)_node,new Date());
             newBup.setBackupResult(BackupType.NOTONNETWORK);
             _backupInfos.add(0,newBup);
             doStore(false, false);
         }
     }
-    
+
     /**
      * Add an xml entry advising Node in SLiM Mode
      */
     protected void nodeInSLiM(){
-        if (_node instanceof CbusNode) { 
+        if (_node instanceof CbusNode) {
             CbusNodeFromBackup newBup = new CbusNodeFromBackup((CbusNode)_node,new Date());
             newBup.setBackupResult(BackupType.SLIM);
             _backupInfos.add(0,newBup);
@@ -432,7 +439,7 @@ public class CbusNodeBackupManager {
      * @return true on success, else false
      */
     protected boolean removeNode( boolean rotate){
-        CbusNodeBackupFile x = new CbusNodeBackupFile();
+        CbusNodeBackupFile x = new CbusNodeBackupFile(_node.getMemo());
         if (rotate) {
             doRotate();
         }
@@ -442,42 +449,42 @@ public class CbusNodeBackupManager {
         }
         return true;
     }
-    
+
     private void doRotate(){
-        CbusNodeBackupFile x = new CbusNodeBackupFile();
+        CbusNodeBackupFile x = new CbusNodeBackupFile(_node.getMemo());
         File file = x.getFile(_node.getNodeNumber(),false);
         if (file == null){
             return;
         }
         try {
             Element roots = x.rootFromFile(file);
-            log.debug("File exists {}",roots);
+            if ( roots == null ) return;
             FileUtil.rotate(file, 5, "bup");  // NOI18N
         } catch (IOException ex) {
             // the file might not exist
             log.debug("Backup Rotate failed {}",file);  // NOI18N
-        } catch (JDOMException | NullPointerException ex) {
+        } catch (JDOMException ex) {
             // file might not exist
-            log.debug("File invalid: {}", ex);  // NOI18N
+            log.debug("File invalid: {}", file);  // NOI18N
         }
     }
-    
+
     /**
      * Get the XML File Location
      * @return Location of the file, creating new if required
      */
     protected File getFileLocation() {
-        return new CbusNodeBackupFile().getFile(_node.getNodeNumber(),true);
+        return new CbusNodeBackupFile(_node.getMemo()).getFile(_node.getNodeNumber(),true);
     }
-    
+
     /**
      * Reset the backup array for testing
      */
     protected void resetBupArray() {
-        _backupInfos = new ArrayList<>();
+        _backupInfos = new ArrayList<>(5);
         backupInit = false;
     }
-    
+
     /**
      * Get the current backup status for the Node.
      *
@@ -485,7 +492,7 @@ public class CbusNodeBackupManager {
      */
     @Nonnull
     public BackupType getSessionBackupStatus() {
-        if (backupStarted && getBackups().size() >0 ) {
+        if (backupStarted && !getBackups().isEmpty() ) {
             return getBackups().get(0).getBackupResult();
         } else {
             return BackupType.OUTSTANDING;
@@ -500,11 +507,11 @@ public class CbusNodeBackupManager {
     protected void setBackupStarted( boolean started) {
         backupStarted = started;
     }
-    
+
     protected boolean getBackupStarted(){
         return backupStarted;
     }
-    
+
     protected void setNodeInSlim() {
         log.info("Node {} in SLiM mode",_node);
         if (getBackupStarted()) { // 1st time in this session

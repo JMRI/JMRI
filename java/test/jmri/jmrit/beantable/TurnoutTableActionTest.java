@@ -2,12 +2,7 @@ package jmri.jmrit.beantable;
 
 import jmri.util.gui.GuiLafPreferencesManager;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.annotation.Nonnull;
-import javax.swing.JFrame;
-import javax.swing.JPopupMenu;
-import javax.swing.JTextField;
 
 import jmri.InstanceManager;
 import jmri.Turnout;
@@ -16,15 +11,14 @@ import jmri.jmrit.beantable.turnout.TurnoutTableDataModel;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.internal.InternalTurnoutManager;
 import jmri.swing.ManagerComboBox;
+import jmri.util.ThreadingUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
@@ -66,10 +60,13 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
      *
      * @since 4.7.4
      */
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddAndInvoke() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        a.actionPerformed(null); // show table
+
+        ThreadingUtil.runOnGUI(() -> {
+            a.actionPerformed(null); // show table
+        });
 
         // create 2 turnouts and see if they exist
         Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
@@ -80,39 +77,46 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         // set graphic state column display preference to false, read by createModel()
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(false);
 
-        TurnoutTableAction _tTable;
-        _tTable = new TurnoutTableAction();
+        TurnoutTableAction _tTable = new TurnoutTableAction();
         Assert.assertNotNull("found TurnoutTable frame", _tTable);
         // prevent there are 2 menubars with the same name
         _tTable.dispose();
 
         // set to true, use icons
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(true);
-        TurnoutTableAction _t1Table;
-        _t1Table = new TurnoutTableAction();
+        TurnoutTableAction _t1Table = new TurnoutTableAction();
         Assert.assertNotNull("found TurnoutTable1 frame", _t1Table);
-        JFrame t1Frame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleTurnoutTable"), true, true);
+        JFrameOperator t1Frame = new JFrameOperator(Bundle.getMessage("TitleTurnoutTable"));
 
         // test Add pane
-        _t1Table.addPressed(null);
-        JFrame af = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddTurnout"), true, true);
+        ThreadingUtil.runOnGUI(() -> {
+            _t1Table.addPressed(null);
+        });
+        JFrameOperator af = new JFrameOperator(Bundle.getMessage("TitleAddTurnout"));
         Assert.assertNotNull("found Add frame", af);
         // close Add pane
-        _t1Table.cancelPressed(null);
+        ThreadingUtil.runOnGUI(() -> {
+            _t1Table.cancelPressed(null);
+        });
+        af.waitClosed();
         // more Turnout Add pane tests are in TurnoutTableWindowTest
+        
+        _t1Table.dispose();
 
-        // Open Automation pane to test Automation menu
-        jmri.jmrit.turnoutoperations.TurnoutOperationFrame tof = new jmri.jmrit.turnoutoperations.TurnoutOperationFrame(null);
-        // create dialog (bypassing menu)
-        JDialogOperator am = new JDialogOperator("Turnout Operation Editor"); // TODO I18N using Bundle
-        Assert.assertNotNull("found Automation menu dialog", am);
-        // close pane
-        JButtonOperator jbo = new JButtonOperator(am, "OK");
-        jbo.pushNoBlock(); // instead of .push();
-        am.dispose();
+        t1Frame.requestClose();
+        t1Frame.waitClosed();
+    }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testSpeedsMenu() {
+
+        ThreadingUtil.runOnGUI(() -> {
+            a.actionPerformed(null); // show table
+        });
+        
         // Open Speed pane to test Speed menu, which displays a JOptionPane
-        log.debug("Speed pane started at {}", java.time.LocalTime.now()); // debug
+        // log.debug("Speed pane started at {}", java.time.LocalTime.now()); // debug
         JFrameOperator main = new JFrameOperator(Bundle.getMessage("TitleTurnoutTable")); 
         // Use GUI menu to open Speeds pane:
 
@@ -123,7 +127,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
             } catch (org.netbeans.jemmy.TimeoutExpiredException tee) {
                 // we're waiting for this thread to finish in the main method,
                 // so any exception here means we failed.
-                log.error("caught timeout exception while waiting for modal dialog", tee);
+                Assert.fail("caught timeout exception while waiting for modal dialog" + tee.getMessage());
             }
         });
         t.setName("Default Speeds Dialog Close Thread");
@@ -132,9 +136,8 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         JMenuBarOperator mainbar = new JMenuBarOperator(main);
         mainbar.pushMenu(Bundle.getMessage("SpeedsMenu")); // stops at top level
         JMenuOperator jmo = new JMenuOperator(mainbar, Bundle.getMessage("SpeedsMenu"));
-        JPopupMenu jpm = jmo.getPopupMenu();
-        JMenuItemOperator jmio = new JMenuItemOperator(new JPopupMenuOperator(jpm), Bundle.getMessage("SpeedsMenuItemDefaults"));
-        jmio.pushNoBlock();
+        JPopupMenuOperator jpmo = new JPopupMenuOperator(jmo.getPopupMenu());
+        new JMenuItemOperator(jpmo, Bundle.getMessage("SpeedsMenuItemDefaults")).pushNoBlock();
 
         // wait for the dismiss thread to finish
         JUnitUtil.waitFor(() -> {
@@ -142,11 +145,8 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         }, "Dismiss Default Speeds Thread finished");
 
         // clean up
-        JUnitUtil.dispose(af);
-        //as.dispose(); // uncomment when test is Speeds menu activated
-        JUnitUtil.dispose(tof);
-        _t1Table.dispose();
-        JUnitUtil.dispose(t1Frame);
+        main.requestClose();
+        main.waitClosed();
     }
 
     @Override
@@ -154,56 +154,71 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         return Bundle.getMessage("TitleAddTurnout");
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     @Override
     public void testAddButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
-        a.actionPerformed(null);
-        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        Assert.assertTrue(a.includeAddButton());
+        ThreadingUtil.runOnGUI(() -> {
+            a.actionPerformed(null); // show table
+        });
+        JFrameOperator f = new JFrameOperator(getTableFrameName());
 
         // find the "Add... " button and press it.
-        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
-        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
-        JUnitUtil.dispose(f1);
-        JUnitUtil.dispose(f);
+        JemmyUtil.pressButton(f, Bundle.getMessage("ButtonAdd"));
+        JFrameOperator f1 = new JFrameOperator(getAddFrameName());
+        JemmyUtil.pressButton(f1, Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
+        f1.waitClosed();
+
+        f.requestClose();
+        f.waitClosed();
+
     }
-    
+
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddFailureCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        InstanceManager.setDefault(TurnoutManager.class, new CreateNewTurnoutAlwaysException());
+
+        InstanceManager.setDefault(TurnoutManager.class, new AlwaysExceptionCreateNewTurnout());
         
         a = new TurnoutTableAction();
-        Assume.assumeTrue(a.includeAddButton());
-        
-        a.actionPerformed(null);
-        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+        Assert.assertTrue(a.includeAddButton());
+
+        ThreadingUtil.runOnGUI(() -> {
+            a.actionPerformed(null); // show table
+        });
+        JFrameOperator f = new JFrameOperator(getTableFrameName());
         // find the "Add... " button and press it.
-        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
-        
-        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
-        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+        JemmyUtil.pressButton(f, Bundle.getMessage("ButtonAdd"));
+
+        JFrameOperator f1 = new JFrameOperator(getAddFrameName());
+        JTextFieldOperator jtfo = new JTextFieldOperator(f1, new NameComponentChooser("hwAddressTextField"));
+        Assert.assertNotNull("hwAddressTextField", jtfo);
         // set to "1"
-        new JTextFieldOperator(hwAddressField).setText("1");
+        jtfo.setText("1");
         Thread add1 = JemmyUtil.createModalDialogOperatorThread(
             Bundle.getMessage("ErrorBeanCreateFailed", "Turnout","IT1"), Bundle.getMessage("ButtonOK"));  // NOI18N
         
         //and press create
-        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCreate"));
+        JemmyUtil.pressButton(f1, Bundle.getMessage("ButtonCreate"));
+        f1.getQueueTool().waitEmpty();
         JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "dialog finished");  // NOI18N
         
-        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
-        JUnitUtil.dispose(f1);
-        JUnitUtil.dispose(f);
+        f1.getQueueTool().waitEmpty();
+        
+        JemmyUtil.pressButton(f1, Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
+        f1.getQueueTool().waitEmpty();
+        f1.waitClosed();
+
+        f.requestClose();
+        f.waitClosed();
+
     }
     
-    private class CreateNewTurnoutAlwaysException extends InternalTurnoutManager {
+    private static class AlwaysExceptionCreateNewTurnout extends InternalTurnoutManager {
 
-        public CreateNewTurnoutAlwaysException() {
+        protected AlwaysExceptionCreateNewTurnout() {
             super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 
@@ -216,38 +231,42 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     @Override
     public void testEditButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
-        a.actionPerformed(null);
-        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+
+        Assert.assertTrue(a.includeAddButton());
+        ThreadingUtil.runOnGUI(() -> {
+            a.actionPerformed(null); // show table
+        });
+        JFrameOperator jfo = new JFrameOperator(getTableFrameName());
 
         // find the "Add... " button and press it.
-        JFrameOperator jfo = new JFrameOperator(f);
-        jmri.util.swing.JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
-        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
+        jfo.getQueueTool().waitEmpty();
+        
+        JFrameOperator f1 = new JFrameOperator(getAddFrameName());
         //Enter 1 in the text field labeled "Hardware address:"
-        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
+        JTextFieldOperator hwAddressField = new JTextFieldOperator(f1, new NameComponentChooser("hwAddressTextField"));
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
-        new JTextFieldOperator(hwAddressField).typeText("1");
+        hwAddressField.typeText("1");
 
         //and press create 
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCreate"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JemmyUtil.pressButton(f1, Bundle.getMessage("ButtonCreate"));
+        f1.getQueueTool().waitEmpty();
 
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
         tbl.clickOnCell(0, TurnoutTableDataModel.EDITCOL);
-        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
-        JUnitUtil.dispose(f2);
-        JUnitUtil.dispose(f1);
-        JUnitUtil.dispose(f);
+        JFrameOperator f2 = new JFrameOperator(getEditFrameName());
+        JemmyUtil.pressButton(f2, Bundle.getMessage("ButtonCancel"));
+        f2.waitClosed();
+        
+        f1.requestClose();
+        f1.waitClosed();
     }
 
     @Test
@@ -283,7 +302,5 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         a = null;
         JUnitUtil.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(TurnoutTableActionTest.class);
 
 }

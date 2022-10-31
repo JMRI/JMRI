@@ -1,16 +1,14 @@
 package jmri.managers;
 
-import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrix.internal.InternalStringIOManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the ProxyStringIOManager.
@@ -18,22 +16,10 @@ import org.junit.Before;
  * @author  Bob Jacobsen 2003, 2006, 2008
  * @author  Daniel Bergqvist Copyright (C) 2020
  */
-public class ProxyStringIOManagerTest {
+public class ProxyStringIOManagerTest extends AbstractProxyManagerTestBase<ProxyStringIOManager, StringIO> {
 
     public String getSystemName(int i) {
         return "JC" + i;
-    }
-
-    protected StringIOManager l = null;     // holds objects under test
-
-    static protected boolean listenerResult = false;
-
-    protected class Listen implements PropertyChangeListener {
-
-        @Override
-        public void propertyChange(java.beans.PropertyChangeEvent e) {
-            listenerResult = true;
-        }
     }
 
     private StringIO newStringIO(String sysName, String userName) {
@@ -87,7 +73,7 @@ public class ProxyStringIOManagerTest {
 
     @Test
     public void testInstanceManagerIntegration() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
         Assert.assertNotNull(InstanceManager.getDefault(StringIOManager.class));
 
 //        jmri.util.JUnitUtil.initInternalStringIOManager();
@@ -127,25 +113,31 @@ public class ProxyStringIOManagerTest {
         return 7;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
-        l = new InternalStringIOManager(new InternalSystemConnectionMemo("J", "Juliet"));
-        jmri.InstanceManager.setStringIOManager(l);
+        StringIOManager siom = new InternalStringIOManager(new InternalSystemConnectionMemo("J", "Juliet"));
+        InstanceManager.setStringIOManager(siom);
+        StringIOManager irman = InstanceManager.getDefault(StringIOManager.class);
+        if ( irman instanceof ProxyStringIOManager ) {
+            l = (ProxyStringIOManager) irman;
+        } else {
+            Assertions.fail("StringIOManager is not a ProxyStringIOManager");
+        }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
 
     
-    private class MyStringIO extends AbstractNamedBean implements StringIO {
+    private static class MyStringIO extends AbstractNamedBean implements StringIO {
 
         String _value = "";
         
-        public MyStringIO(String sys, String userName) {
+        MyStringIO(String sys, String userName) {
             super(sys, userName);
         }
         

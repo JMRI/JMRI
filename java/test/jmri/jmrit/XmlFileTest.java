@@ -1,15 +1,11 @@
 package jmri.jmrit;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 
-import org.jdom2.DocType;
-import org.jdom2.Document;
-import org.jdom2.Element;
+import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
@@ -95,7 +91,7 @@ public class XmlFileTest {
                         xf.setValidate(validate);
                         xf.rootFromInputStream(new java.io.ByteArrayInputStream(content.getBytes(java.nio.charset.StandardCharsets.UTF_8)));
                         result = true;
-                    } catch (Exception ex) {
+                    } catch (IOException | JDOMException ex) {
                         result = false;
                         log.debug(ex.toString());
                     }

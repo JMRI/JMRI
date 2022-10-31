@@ -46,8 +46,8 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         Assert.assertNotNull("exists", t);
 
         // try to get nonexistant turnouts
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        Assert.assertNull( l.getByUserName("foo"));
+        Assert.assertNull( l.getBySystemName("bar"));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         lnis.sendTestMessage(m1);
 
         // see if sensor exists
-        Assert.assertTrue(null != l.getBySystemName("LS44"));
+        Assert.assertNotNull( l.getBySystemName("LS44"));
     }
 
     @Test
@@ -75,18 +75,14 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         if (log.isDebugEnabled()) {
             log.debug("received sensor value {}", o);
         }
-        Assert.assertTrue(null != (LnSensor) o);
+        
+        Assert.assertNotNull(o);
+        Assert.assertTrue(o instanceof LnSensor );
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: {}", t.getBySystemName("LS21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   {}", t.getByUserName("my name"));
-        }
 
-        Assert.assertTrue(null != t.getBySystemName("LS21"));
-        Assert.assertTrue(null != t.getByUserName("my name"));
+        Assert.assertNotNull( t.getBySystemName("LS21"));
+        Assert.assertNotNull( t.getByUserName("my name"));
 
     }
 
@@ -134,7 +130,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         Assert.assertNotNull("exists", lnis);
 
         // create and register the manager object
-        l = new LnSensorManager(memo);
+        l = new LnSensorManager(memo, false);
         jmri.InstanceManager.setSensorManager(l);
     }
     

@@ -12,9 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.routes.Route;
@@ -140,6 +138,9 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             updateCarsComboBox();
         }
         updateRoute();
+        if (ae.getSource().equals(trainsComboBox)) {
+            pack();
+        }
     }
 
     private void updateRoute() {
@@ -220,7 +221,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                 addItemLeft(pRoute, op, 2, y++);
                 if (!_train.isTypeNameAccepted(carType)) {
                     op.setText(Bundle.getMessage("X(TrainType)"));
-                } else if (_car != null && !_train.isRoadNameAccepted(_car.getRoadName())) {
+                } else if (_car != null && !_train.isCarRoadNameAccepted(_car.getRoadName())) {
                     op.setText(Bundle.getMessage("X(TrainRoad)"));
                 } // TODO need to do the same tests for caboose changes in the
                   // train's route
@@ -249,7 +250,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     op.setText(Bundle.getMessage("X(TrainLoad)"));
                 } else if (_car != null && !_train.isBuiltDateAccepted(_car.getBuilt())) {
                     op.setText(Bundle.getMessage("X(TrainBuilt)"));
-                } else if (_car != null && !_train.isOwnerNameAccepted(_car.getOwner())) {
+                } else if (_car != null && !_train.isOwnerNameAccepted(_car.getOwnerName())) {
                     op.setText(Bundle.getMessage("X(TrainOwner)"));
                 } else if (_train.isLocationSkipped(rl.getId())) {
                     op.setText(Bundle.getMessage("X(TrainSkips)"));

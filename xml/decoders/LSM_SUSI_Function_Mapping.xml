@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI All rights reserved -->
+<!-- $Id: LSM_SUSI_Function_Mapping.xml ,v 1.0 2022/04/24 Alain CARASSO $       -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain CARASSO" version="1.0" lastUpdated="20220424"/>
+  <!--  LSM SUSI CVs output mapping to Fkeys definition (SUSI Range2) -->
+  <decoder>
+    <family name="LS Models Function Mapping definitions" mfg="LS Models Sprl">
+      <model model="LS Models SUSI Outputs Function Mapping"/>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="yes"/>
+    <variables>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+       <variable item="SUSI-range" CV="897" readOnly="yes" default="2" tooltip="Will not read/write properly if multiple SUSI modules attached">
+        <enumVal>
+          <enumChoice choice="Not used"/>
+          <enumChoice choice="Range I (CVs 900-939)"/>
+          <enumChoice choice="Range II (CVs 940-979)"/>
+          <enumChoice choice="Range III (CVs 980-1019)"/>
+        </enumVal>
+        <label>SUSI-range</label>
+      </variable>
+      <variable CV="940" readOnly="yes" default="77" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+        <decVal/>
+       <label>Manufacturer ID</label>
+      </variable>
+      <variable CV="941" readOnly="yes" item="Decoder Version" tooltip="The decoder version number (read only)">
+        <decVal/>
+        <label>Software Version Number</label>
+      </variable>
+<!-- only the CVs shown in manual are available, unused Cvs removed-->
+      <variable item="Fkey for headlights" CV="943" default="0" tooltip="0=F0, 1=F1 up to 28=F28">
+        <decVal min="0" max="28"/>
+        <label>Fkey for headlights</label>
+      </variable>
+      <variable item="Fkey for Driver cab" CV="945" default="5" tooltip="0=F0, 1=F1 up to 28=F28">
+        <decVal min="0" max="28"/>
+        <label>Fkey for Driver cab</label>
+      </variable>
+      <variable item="Fkey for Yard Lights" CV="946" default="6" tooltip="0=F0, 1=F1 up to 28=F28">
+        <decVal min="0" max="28"/>
+        <label>Fkey for Yard Lights</label>
+      </variable>
+      <variable item="Fkey for Safety Light" CV="947" default="10" tooltip="0=F0, 1=F1 up to 28=F28">
+        <decVal min="0" max="28"/>
+        <label>Fkey for Safety Light</label>
+      </variable>
+      <variable item="Fkey for Side1 Light" CV="948" default="7" tooltip="0=F0, 1=F1 up to 28=F28">
+        <decVal min="0" max="28"/>
+        <label>Fkey for Side1 Light</label>
+      </variable>
+      <variable item="Fkey for Side2 Light" CV="949" default="8" tooltip="0=F0, 1=F1 up to 28=F28">
+        <decVal min="0" max="28"/>
+        <label>Fkey for Side2 Light</label>
+      </variable>
+      <variable item="Fkey for Interior Light" CV="950" default="3" tooltip="0=F0, 1=F1 up to 28=F28">
+        <decVal min="0" max="28"/>
+        <label>Fkey for Interior Light</label>
+      </variable>
+      <variable item="Fkey for Warnings" CV="951" default="9" tooltip="0=F0, 1=F1 up to 28=F28">
+        <decVal min="0" max="28"/>
+        <label>Fkey for Warnings</label>
+      </variable>
+     <variable item="Driver Cab Dimming" CV="968" default="20" tooltip="Driver Cab intensity 0 to 63" >
+        <decVal min="1" max="63"/>
+        <label>Driver Cab Dimming</label>
+     </variable>
+     <variable item="Safety Light Dimming" CV="969" default="5" tooltip="Safety Light intensity 0 to 63" >
+        <decVal min="1" max="63"/>
+        <label>Safety Light Dimming</label>
+     </variable>
+     <variable item="Analog Light settings" CV="970" default="0" tooltip="0=auto, 1= Side1 Off, 2=Side2 Off, 3=All Off" >
+        <decVal min="0" max="63"/>
+        <label>Analog Light settings</label>
+     </variable>
+      <variable item="SUSI Detection setting" CV="977" default="0" tooltip="0=Autodetect, 1=DCC SUSI On, 2=Analog Modef">
+        <decVal min="0" max="2"/>
+        <label>SUSI Detection setting</label>
+     </variable>
+   </variables>
+  </decoder>
+
+  <pane>
+    <name>CVs</name>
+    <column>
+      <cvtable/>
+    </column>
+  </pane>
+  <pane>
+    <name>SUSI Defined Outputs to Fkey mapping</name>
+    <column>
+       <label>
+        <text> ================================================================================================= </text>
+      </label>
+      <label>
+        <text> ========================= LS Models specific SUSI Range 2 CV definitions ========================= </text>
+      </label>
+      <label>
+        <text> ===  As SUSI is an addition to an existing decoder used to drive SUSI, the real decoder reset is not available === </text>
+      </label>
+      <label>
+        <text> ============= if available, the CV to reset the SUSI module can be found in the SUSI module manual ============ </text>
+      </label>
+       <label>
+        <text> ================================================================================================= </text>
+      </label>
+      <label>
+        <text> select the F key you want to use for each available SUSI output by entering </text>
+      </label>
+      <label>
+        <text> its number: 0 for F0, 1 for F1, 2 for F2...../...... up to 28 for F28                             </text>
+      </label>
+       <label>
+        <text> ================================================================================================= </text>
+      </label>
+      <display item="SUSI-range"/>
+      <display item="Manufacturer"/>
+      <display item="Decoder Version"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Fkey for headlights"/>
+      <display item="Fkey for Driver cab" />
+      <display item="Fkey for Yard Lights"/>
+      <display item="Fkey for Safety Light"/>
+      <display item="Fkey for Side1 Light"/>
+      <display item="Fkey for Side2 Light"/>
+      <display item="Fkey for Interior Light"/>
+      <display item="Fkey for Warnings"/>
+      <display item="Driver Cab Dimming"/>
+      <display item="Safety Light Dimming"/>
+      <display item="Analog Light settings"/>
+      <display item="SUSI Detection setting"/>
+    </column>
+  </pane>
+</decoder-config>

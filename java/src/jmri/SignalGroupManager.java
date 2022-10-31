@@ -45,22 +45,6 @@ public interface SignalGroupManager extends Manager<SignalGroup> {
      * User GUI, to allow the auto generation of systemNames, where the user can
      * optionally supply a username.
      *
-     * @deprecated since 4.25.2, use #newSignalGroupWithUserName(@Nonnull String userName)
-     * @param userName User name for the new group
-     * @return a Signal Group with the same userName if already exists
-     * @throws IllegalArgumentException if there is trouble creating a new Group
-     */
-    @Deprecated // 4.25.2
-    @Nonnull
-    public SignalGroup newSignaGroupWithUserName(@Nonnull String userName) throws IllegalArgumentException;
-    
-    /**
-     * Create a new Signal group if the group does not exist.
-     * <p>
-     * Intended for use with
-     * User GUI, to allow the auto generation of systemNames, where the user can
-     * optionally supply a username.
-     *
      * @param userName User name for the new group
      * @return a Signal Group with the same userName if already exists
      * @throws IllegalArgumentException if there is trouble creating a new Group

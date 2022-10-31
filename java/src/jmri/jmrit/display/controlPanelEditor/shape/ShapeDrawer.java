@@ -4,12 +4,15 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,7 +133,7 @@ public class ShapeDrawer {
      * @param pos   the item to check
      * @return true if creating or editing; false otherwise
      */
-    public boolean doMousePressed(MouseEvent event, Positionable pos) {
+    public boolean doMousePressed(JmriMouseEvent event, Positionable pos) {
         log.debug("Mouse Pressed _drawFrame= {}, _currentSelection= {}",
                (_drawFrame==null ? "null" : _drawFrame.getTitle()),
                (_currentSelection == null ? "null" :_currentSelection.getClass().getName()));
@@ -164,7 +167,7 @@ public class ShapeDrawer {
      * creation of the PositionablePolygon, and the above actions are done at doMouseClicked
      *
      */
-    public boolean doMouseReleased(Positionable selection, MouseEvent event, Editor ed) {
+    public boolean doMouseReleased(Positionable selection, JmriMouseEvent event, Editor ed) {
         log.debug("Mouse Released _drawFrame= {}", (_drawFrame==null ? "null" : _drawFrame.getTitle()));
         if (_drawFrame != null && _drawFrame._shape == null && _drawFrame._create) {
             if (_drawFrame instanceof DrawPolygon) {
@@ -195,7 +198,7 @@ public class ShapeDrawer {
         return false;
     }
 
-    public boolean doMouseClicked(MouseEvent event, Editor ed) {
+    public boolean doMouseClicked(JmriMouseEvent event, Editor ed) {
         log.debug("Mouse Clicked _drawFrame= {}", (_drawFrame==null ? "null" : _drawFrame.getTitle()));
         if (_drawFrame != null && _drawFrame._create) {
             PositionableShape shape;
@@ -220,7 +223,7 @@ public class ShapeDrawer {
         return false;
     }
 
-    public boolean doMouseDragged(MouseEvent event) {
+    public boolean doMouseDragged(JmriMouseEvent event) {
         log.debug("Mouse Dragged _drawFrame= {}, _currentSelection= {}",
                 (_drawFrame==null ? "null" : _drawFrame.getTitle()),
                 (_currentSelection == null ? "null" :_currentSelection.getClass().getName()));
@@ -236,7 +239,7 @@ public class ShapeDrawer {
     /*
      * Make rubber band line
      */
-    public boolean doMouseMoved(MouseEvent event) {
+    public boolean doMouseMoved(JmriMouseEvent event) {
         if (_drawFrame instanceof DrawPolygon) {
             ((DrawPolygon) _drawFrame).moveTo(event.getX(), event.getY());
             return true;     // no dragging when editing

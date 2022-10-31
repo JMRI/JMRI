@@ -78,14 +78,15 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         e.setAttribute(Xml.OUT_OF_SERVICE, Xml.FALSE);
         e.setAttribute(Xml.BLOCKING, "5");
         e.setAttribute(Xml.COMMENT, "Test Comment");
+        Car rs1 = null;
         try {
-            Car rs1 = new Car(e);
+            rs1 = new Car(e);
             Assert.assertNotNull("Xml Element Constructor", rs1);
         } catch (java.lang.NullPointerException npe) {
             Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
         }
-
-        jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 not found");
+        Assert.assertNotNull(rs1);
+        Assert.assertEquals("Tag 12345", "ID12345", rs1.getRfid() );
     }
 
     // test creation
@@ -103,7 +104,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         rs1.setWeight("TESTWEIGHT");
         rs1.setWeightTons("TESTWEIGHTTONS");
         rs1.setBuilt("TESTBUILT");
-        rs1.setOwner("TESTOWNER");
+        rs1.setOwnerName("TESTOWNER");
         rs1.setComment("TESTCOMMENT");
         // make sure the ID tags exist before we
         // try to add it to a car.
@@ -122,7 +123,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("Car WeightTons", "TESTWEIGHTTONS", rs1.getWeightTons());
 
         Assert.assertEquals("Car Built", "TESTBUILT", rs1.getBuilt());
-        Assert.assertEquals("Car Owner", "TESTOWNER", rs1.getOwner());
+        Assert.assertEquals("Car Owner", "TESTOWNER", rs1.getOwnerName());
         Assert.assertEquals("Car Comment", "TESTCOMMENT", rs1.getComment());
         Assert.assertEquals("Car Rfid", "IDTESTRFID", rs1.getRfid());
         Assert.assertEquals("Car Moves", 5, rs1.getMoves());

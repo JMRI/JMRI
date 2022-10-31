@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Digitrax Command Station Configuration</title>
   <meta name="keywords" content=
-  "Digitrax Command Station DCS100 DCS200 DCS240 DCS210 DCS50 DCS51 DCS52 DB150 JMRI">
+  "Digitrax Command Station DCS100 DCS200 DCS240 DCS210 DCS210+ DCS50 DCS51 DCS52 DB150 JMRI">
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -94,20 +94,21 @@
         in the same way in which Digitrax command stations are configured. Supported command
         stations include:
           <ul>
-            <li>DCS50 (Zephyr™)</li>
+            <li>DCS50 (Zephyr&trade;)</li>
 
-            <li>DCS51 (Zephyr Xtra™)</li>
+            <li>DCS51 (Zephyr Xtra&trade;)</li>
 
-            <li>DCS52 (Zephyr Express™)</li>
+            <li>DCS52 (Zephyr Express&trade;)</li>
 
-            <li>DB150 (Empire Builder™, Empire Builder II™, Super Empire Builder™, Super Empire
-            Builder Xtra™, Genesis™)</li>
+            <li>DB150 (Empire Builder&trade;, Empire Builder II&trade;, Super Empire Builder&trade;, Super Empire
+            Builder Xtra&trade;, Genesis&trade;)</li>
 
-            <li>DCS100, DCS200 (Chief™, Chief II™, Super Chief™, Super Chief Xtra™)</li>
+            <li>DCS100, DCS200 (Chief&trade;, Chief II&trade;, Super Chief&trade;, Super Chief Xtra&trade;)</li>
 
-            <li>DCS210 (Evolution™)</li>
+            <li>DCS210 (Evolution&trade;)</li>
+            <li>DCS210+ (Evolution Express&trade;)</li>
 
-            <li>DCS240 (Advanced™)</li>
+            <li>DCS240 (Advanced&trade;)</li>
           </ul>
         </li>
 
@@ -202,9 +203,9 @@
       "http://www.digitrax.com/support/manuals/">here</a>. Note that Digitrax does not provide
       support for JMRI software.</p>
 
-      <p>LocoNet® is a registered trademark, and Zephyr™, Zephyr Xtra™, Empire Builder™, Empire
-      Builder II™, Super Empire Builder™, Super Empire Builder Xtra™, Genesis™, Chief™, Chief II™,
-      Super Chief™, Super Chief Xtra™, Evolution™,and Advanced™ are trademarks of <a href=
+      <p>LocoNet&reg; is a registered trademark, and Zephyr&trade;, Zephyr Xtra&trade;, Empire Builder&trade;, Empire
+      Builder II&trade;, Super Empire Builder&trade;, Super Empire Builder Xtra&trade;, Genesis&trade;, Chief&trade;, Chief II&trade;,
+      Super Chief&trade;, Super Chief Xtra&trade;, Evolution&trade;,and Advanced&trade; are trademarks of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

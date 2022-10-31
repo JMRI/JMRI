@@ -2,8 +2,11 @@ package jmri.jmrit.operations.locations;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import jmri.InstanceManager;
+import jmri.Reporter;
+import jmri.implementation.decorators.TimeoutReporter;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -159,6 +162,33 @@ public class LocationManagerTest extends OperationsTestCase {
         Assert.assertFalse(lm.hasDivisions());
         boston.setDivision(new Division("testId", "testName"));
         Assert.assertTrue(lm.hasDivisions());
+    }
+
+    @Test
+    void getTrackByReporter() {
+        JUnitOperationsUtil.initOperationsData();
+        LocationManager lm = InstanceManager.getDefault(LocationManager.class);
+        Reporter baseReporter= Mockito.mock(Reporter.class);
+        Mockito.when(baseReporter.getSystemName()).thenReturn("foo");
+        TimeoutReporter timeoutReporter = new TimeoutReporter(baseReporter);
+        Location expectedLocation = lm.getLocationByName("North Industries");
+        Track expected = expectedLocation.getTracksList().get(0);
+        expected.setReporter(timeoutReporter);
+        Assert.assertEquals(expected,lm.getTrackByReporter(timeoutReporter));
+        Assert.assertEquals(expected,lm.getTrackByReporter(baseReporter));
+    }
+
+    @Test
+    void getLocationByReporter() {
+        JUnitOperationsUtil.initOperationsData();
+        LocationManager lm = InstanceManager.getDefault(LocationManager.class);
+        Reporter baseReporter= Mockito.mock(Reporter.class);
+        Mockito.when(baseReporter.getSystemName()).thenReturn("foo");
+        Location expected = lm.getLocationByName("North Industries");
+        TimeoutReporter timeoutReporter = new TimeoutReporter(baseReporter);
+        expected.setReporter(timeoutReporter);
+        Assert.assertEquals(expected,lm.getLocationByReporter(timeoutReporter));
+        Assert.assertEquals(expected,lm.getLocationByReporter(baseReporter));
     }
 
 }

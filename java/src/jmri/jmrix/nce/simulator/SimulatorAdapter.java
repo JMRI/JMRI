@@ -254,22 +254,20 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
             NceMessage m = readMessage();
             if (log.isDebugEnabled()) {
                 StringBuilder buf = new StringBuilder();
-                buf.append("Nce simulator received message: ");
                 for (int i = 0; i < m.getNumDataElements(); i++) {
                     buf.append(Integer.toHexString(0xFF & m.getElement(i)).toUpperCase()).append(" ");
                 }
-                log.debug(buf.toString());
+                log.debug("Nce simulator received message: {}", buf );
             }
             if (m != null) {
                 NceReply r = generateReply(m);
                 writeReply(r);
                 if (log.isDebugEnabled() && r != null) {
                     StringBuilder buf = new StringBuilder();
-                    buf.append("Nce simulator sent reply: ");
                     for (int i = 0; i < r.getNumDataElements(); i++) {
                         buf.append(Integer.toHexString(0xFF & r.getElement(i)).toUpperCase()).append(" ");
                     }
-                    log.debug(buf.toString());
+                    log.debug("Nce simulator sent reply: {}", buf.toString());
                 }
             }
         }

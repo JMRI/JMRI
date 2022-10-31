@@ -1,33 +1,33 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; le 2016-08-15-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; le 2016-08-15-->
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Cartographie Technologique</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI technical code road map"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI technical code road map">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI: Cartographie Technologique</h1>
-      Cette page est la feuille de route pour le développement futur de JMRI, incluant les
+
+      <p class="important">D'information le plus actuelle se trouve <a
+              href="/help/en/html/doc/Technical/TechRoadMap.shtml">ici</a> (en Anglais).</p>
+
+      <p>Cette page est la feuille de route pour le développement futur de JMRI, incluant les
       changements de notre utilisation des Technologies Java. Elle est maintenue et mise à jour par
       le biais de la poursuite de la discussion sur la <a href=
       "http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers">liste de diffusion
-      des développeurs-jmri</a> .
+      des développeurs-jmri</a>.</p>
       <p>Il y a aussi une <a href="TechRoadMapOlder.shtml">page contenant l'historique</a>,
       particulièrement la saga de la façon dont nous nous sommes déplacés vers l'avant pour Java
       1.6 et Java 1.8 à travers une série de changements liés à la plate-forme.</p>
@@ -163,12 +163,16 @@ num&#233;rotation peut &#234;tre utilis&#233; &#224; nouveau.-->
         <li>Le formatage de sortie par défaut est différent, demandant des changements mineurs dans
         la classe XmlFile des routines de sortie par exemple.</li>
       </ul>
-      En plus, JDOM 2 utilise des génériques dans ses paramètres d'entrée et les valeurs
+
+      <p>En plus, JDOM 2 utilise des génériques dans ses paramètres d'entrée et les valeurs
       retournées. Ceci signifie que vous pouvez supprimer cats ( maintenant redondant ) dans de
-      nombreux emplacements. Jenkins vale signaler. <!--#include virtual="/Footer.shtml" -->
+      nombreux emplacements. Jenkins vale signaler.</p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

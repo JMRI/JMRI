@@ -11,6 +11,7 @@
   <name xml:lang="fr">Tableau de vitesse</name>
   <name xml:lang="it">Tabella Velocità</name>
   <name xml:lang="nl">Snelheidsgrafiek</name>
+  <name xml:lang="es">Tabla de velocidad</name>
   <column>
     <row>
       <column>
@@ -21,6 +22,7 @@
           <label xml:lang="de">Um die Geschwindigkeitskennlinie zu benutzen, diesen Knopf markieren</label>
           <label xml:lang="it">Seleziona questo Pulsante per usare la Tabella Velocità per il controllo Velocità</label>
           <label xml:lang="nl">Selecteer deze knop om de Snelheidsgrafiek toe te passen</label>
+          <label xml:lang="es">Seleccione este botón para usar una tabla de velocidad para el control de velocidad</label>
         </display>
         <label>
           <qualifier>
@@ -35,6 +37,7 @@
           <text xml:lang="fr">       Pour désactiver, utiliser le panneau de contrôle basique de vitesse</text>
           <text xml:lang="it">            per disabilitare, Usa il pannello di controllo Basic</text>
           <text xml:lang="nl">         Om uit te schakelen, het tabblad Snelheid activeren</text>
+          <text xml:lang="es">            Para deshabilitar use el panel de control básico de velocidad</text>
         </label>
       </column>
     </row>
@@ -60,6 +63,7 @@
           <tooltip xml:lang="fr">Selectionner la table des vitesses du constructeur ou la table personnalisée</tooltip>
           <tooltip xml:lang="it">Seleziona Tabella Velocità del Costruttore o Tabella Personalizzata</tooltip>
           <tooltip xml:lang="nl">De Snelheidsgrafiek van de fabrikant of van de gebruiker toepassen</tooltip>
+          <tooltip xml:lang="es">Seleccione la tabla de velocidad del fabricante o la tabla ajustable por el usuario</tooltip>
         </display>
       </column>
     </row>
@@ -83,6 +87,7 @@
         <tooltip xml:lang="fr">Réglage fin du niveau de tension de la vitesse avant</tooltip>
         <tooltip xml:lang="it">Impostazione Fine della tensione motore in Avanti</tooltip>
         <tooltip xml:lang="nl">Details voor de snelheidsgrafiek "Vooruit"</tooltip>
+        <tooltip xml:lang="es">Ajuste fino del nivel de voltaje hacia adelante</tooltip>
       </display>
       <label>
         <text> </text>
@@ -104,6 +109,7 @@
         <tooltip xml:lang="fr">Réglage fin du niveau de tension de la vitesse arrière</tooltip>
         <tooltip xml:lang="it">Impostazione Fine della tensione motore in Indietro</tooltip>
         <tooltip xml:lang="nl">Details voor de snelheidsgrafiek "Achteruit"</tooltip>
+        <tooltip xml:lang="es">Ajuste fino del nivel de voltaje en reversa</tooltip>
       </display>
       <label>
         <text> </text>

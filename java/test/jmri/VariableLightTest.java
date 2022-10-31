@@ -2,7 +2,8 @@ package jmri;
 
 import jmri.implementation.AbstractVariableLight;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the VariableLight class
@@ -43,7 +44,7 @@ public class VariableLightTest {
 
     private jmri.Timebase clock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
@@ -52,7 +53,7 @@ public class VariableLightTest {
         clock.setTime(java.time.Instant.EPOCH);  // just a specific time
      }
 
-    @After
+    @AfterEach
     public void tearDown() {
           jmri.util.JUnitUtil.tearDown();
 

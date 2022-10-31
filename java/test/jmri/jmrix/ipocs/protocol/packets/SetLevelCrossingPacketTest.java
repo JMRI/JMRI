@@ -5,9 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteBuffer;
 
-import org.junit.Test;
-
 import jmri.jmrix.ipocs.protocol.enums.RqLevelCrossingCommand;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
 
 public class SetLevelCrossingPacketTest {
   private final byte[] testPacket = {RqLevelCrossingCommand.Close.value, 0x00, 0x10, 0x01};
@@ -34,4 +35,15 @@ public class SetLevelCrossingPacketTest {
     pkt.setTrack((byte)0x01);
     assertArrayEquals(testPacket, pkt.serializeSpecific());
   }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

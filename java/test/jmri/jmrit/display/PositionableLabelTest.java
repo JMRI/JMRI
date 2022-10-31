@@ -8,11 +8,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,7 +28,7 @@ import jmri.util.JmriJFrame;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -48,21 +46,19 @@ import org.netbeans.jemmy.operators.JLabelOperator;
  *
  * @author Bob Jacobsen Copyright 2015
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class PositionableLabelTest extends PositionableTestBase {
 
     PositionableLabel to = null;
 
     @Test
     public void testSmallPanel() throws Positionable.DuplicateIdException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        editor = new EditorScaffold("PositionableLabel Test Panel");
 
         JFrame jf = new JFrame();
-        JPanel p = new JPanel();
-        jf.getContentPane().add(p);
-        p.setPreferredSize(new Dimension(200, 200));
-        p.setLayout(null);
+        JPanel jpanel = new JPanel();
+        jf.getContentPane().add(jpanel);
+        jpanel.setPreferredSize(new Dimension(200, 200));
+        jpanel.setLayout(null);
 
         // test button in upper left
         JButton doButton = new JButton("change label");
@@ -74,15 +70,15 @@ public class PositionableLabelTest extends PositionableTestBase {
             }
         });
         doButton.setBounds(0, 0, 120, 40);
-        p.add(doButton);
+        jpanel.add(doButton);
 
         to = new PositionableLabel("one", editor);
         to.setBounds(80, 80, 40, 40);
         editor.putItem(to);
         to.setDisplayLevel(Editor.LABELS);
-        Assert.assertEquals("Display Level ", to.getDisplayLevel(), Editor.LABELS);
+        Assertions.assertEquals(Editor.LABELS, to.getDisplayLevel(), "Display Level ");
 
-        p.add(to);
+        jpanel.add(to);
 
         jf.pack();
         jf.setVisible(true);
@@ -92,7 +88,6 @@ public class PositionableLabelTest extends PositionableTestBase {
     // The file used was written with 4.0.1, and behaves as expected from panel names
     @Test
     public void testBackgroundColorFile() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // make four windows
         InstanceManager.getDefault(ConfigureManager.class)
@@ -153,7 +148,6 @@ public class PositionableLabelTest extends PositionableTestBase {
     // Explicit tests of PositionableLabel features
     @Test
     public void testDisplayTransparent() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -161,7 +155,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
 
-        PositionableLabel label = new PositionableLabel(icon, null);
+        PositionableLabel label = new PositionableLabel(icon, editor);
 
         f.add(label);
         f.pack();
@@ -179,9 +173,9 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         // now check that background shows through
         // Need to find the icon location first
-        Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
+        Point point = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = getDisplayedContent(f.getContentPane(), label.getSize(), point);
 
         Assert.assertEquals("frame arraylength", 13 * 13, val.length);
 
@@ -195,7 +189,6 @@ public class PositionableLabelTest extends PositionableTestBase {
 
     @Test
     public void testDisplayTransparent45degrees() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -203,7 +196,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
 
-        PositionableLabel label = new PositionableLabel(icon, null);
+        PositionableLabel label = new PositionableLabel(icon, editor);
 
         f.add(label);
         f.pack();
@@ -229,9 +222,9 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         // now check that background shows through
         // Need to find the icon location first
-        Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
+        Point point = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = getDisplayedContent(f.getContentPane(), label.getSize(), point);
 
         Assert.assertEquals("frame arraylength", 19 * 19, val.length);
         assertImageNinePoints("icon", val, label.getSize(),
@@ -242,174 +235,8 @@ public class PositionableLabelTest extends PositionableTestBase {
         JUnitUtil.dispose(f);
     }
 
-    // test with an RGB animated 13x13 GIF, 0.1 sec per frame
-    @Test
-    public void testDisplayAnimatedRGB() throws IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
-            log.info("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
-            return;
-        }
-
-        if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
-            log.warn("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
-            return;
-        }
-
-        JFrame f = new JFrame();
-        f.getContentPane().setBackground(Color.blue);
-        f.setUndecorated(true); // skip frame decoration, which can force a min size.
-
-        NamedIcon icon = new NamedIcon("resources/icons/RGB-animated-once-Square.gif", "box"); // 13x13
-
-        PositionableLabel label = new PositionableLabel(icon, null);
-
-        f.add(label);
-        f.pack();
-        new QueueTool().waitEmpty(100);
-        Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
-
-        // wait for a bit
-        f.setVisible(true); // needed to get initial animation contents
-        new QueueTool().waitEmpty(100);
-
-        // check for initial red
-        int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
-
-        Assert.assertEquals("icon arraylength", 13 * 13, val.length);
-
-        assertImageNinePoints("icon", val, label.getSize(),
-                Pixel.RED, Pixel.RED, Pixel.RED,
-                Pixel.RED, Pixel.RED, Pixel.RED,
-                Pixel.RED, Pixel.RED, Pixel.RED);
-
-        // Need to find the icon location in frame first
-        Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
-
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
-
-        Assert.assertEquals("frame arraylength", 13 * 13, val.length);
-
-        assertImageNinePoints("icon", val, label.getSize(),
-                Pixel.RED, Pixel.RED, Pixel.RED,
-                Pixel.RED, Pixel.RED, Pixel.RED,
-                Pixel.RED, Pixel.RED, Pixel.RED);
-
-        // wait for long enough to reach final red, skipping intermediate green as timing too fussy
-        new QueueTool().waitEmpty(250);
-
-        val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
-
-        Assert.assertEquals("icon arraylength", 13 * 13, val.length);
-
-        assertImageNinePoints("icon", val, label.getSize(),
-                Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
-                Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
-                Pixel.BLUE, Pixel.BLUE, Pixel.BLUE);
-
-        // now check that background shows through
-        // Need to find the icon location first
-        p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
-
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
-
-        Assert.assertEquals("frame arraylength", 13 * 13, val.length);
-        assertImageNinePoints("icon", val, label.getSize(),
-                Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
-                Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
-                Pixel.BLUE, Pixel.BLUE, Pixel.BLUE);
-
-        // finally done
-        JUnitUtil.dispose(f);
-    }
-
-    // test with an RGB animated 13x13 GIF, 0.1 sec per frame, rotate
-    @Test
-    public void testDisplayAnimatedRGBrotated45degrees() throws IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
-            log.info("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
-            return;
-        }
-
-        JFrame f = new JFrame();
-        f.getContentPane().setBackground(Color.green);
-        f.setUndecorated(true); // skip frame decoration, which can force a min size.
-
-        NamedIcon icon = new NamedIcon("resources/icons/RGB-animated-once-Square2.gif", "box"); // 13x13
-
-        PositionableLabel label = new PositionableLabel(icon, null);
-
-        f.add(label);
-        f.pack();
-        new QueueTool().waitEmpty(100);
-        Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
-
-        // do the rotation, which transforms 13x13 to sqrt(2) bigger, 19x19
-        label.rotate(45);
-        Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
-
-        f.pack();
-        new QueueTool().waitEmpty(100);
-        Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
-
-        // wait for a bit
-        f.setVisible(true); // needed to get initial animation contents
-        new QueueTool().waitEmpty(100);
-
-        // and check
-        int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
-
-        Assert.assertEquals("icon arraylength", 19 * 19, val.length);
-
-        assertImageNinePoints("icon", val, label.getSize(),
-                Pixel.TRANSPARENT, Pixel.RED, Pixel.TRANSPARENT,
-                Pixel.RED, Pixel.RED, Pixel.RED,
-                Pixel.TRANSPARENT, Pixel.RED, Pixel.TRANSPARENT);
-
-        // now check that background shows through
-        // Need to find the icon location first
-        Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
-
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
-
-        Assert.assertEquals("frame arraylength", 19 * 19, val.length);
-        assertImageNinePoints("icon", val, label.getSize(),
-                Pixel.GREEN, Pixel.RED, Pixel.GREEN,
-                Pixel.RED, Pixel.RED, Pixel.RED,
-                Pixel.GREEN, Pixel.RED, Pixel.GREEN);
-
-        // wait for long enough to reach final blue, skipping intermediate green as timing too fussy
-        new QueueTool().waitEmpty(250);
-
-        // and check
-        val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
-
-        Assert.assertEquals("icon arraylength", 19 * 19, val.length);
-        assertImageNinePoints("icon", val, label.getSize(),
-                Pixel.TRANSPARENT, Pixel.BLUE, Pixel.TRANSPARENT,
-                Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
-                Pixel.TRANSPARENT, Pixel.BLUE, Pixel.TRANSPARENT);
-
-        // now check that background shows through
-        // Need to find the icon location first
-        p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
-
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
-
-        Assert.assertEquals("frame arraylength", 19 * 19, val.length);
-        assertImageNinePoints("icon", val, label.getSize(),
-                Pixel.GREEN, Pixel.BLUE, Pixel.GREEN,
-                Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
-                Pixel.GREEN, Pixel.BLUE, Pixel.GREEN);
-
-        JUnitUtil.dispose(f);
-    }
-
     // c.f. http://www.ssec.wisc.edu/~tomw/java/unicode.html#x2580
-    final String sampleText = "  \u25CF  "; // note spaces
+    final static String SAMPLE_TEXT_U25CF = "  \u25CF  "; // note spaces
 
     // FULL BLOCK \u2588
     // BLACK SQUARE \u25A0
@@ -419,13 +246,12 @@ public class PositionableLabelTest extends PositionableTestBase {
     // HEAVY MULTIPLICATION X \u2716
     @Test
     public void testDisplayText() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
 
-        PositionableLabel label = new PositionableLabel(sampleText, null);
+        PositionableLabel label = new PositionableLabel(SAMPLE_TEXT_U25CF, editor);
         label.setForeground(Color.black); // this is a direct set, not through the UI
         label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
@@ -446,9 +272,9 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         // now check that background shows through
         // Need to find the icon location first
-        Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
+        Point point = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = getDisplayedContent(f.getContentPane(), label.getSize(), point);
 
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
@@ -460,13 +286,12 @@ public class PositionableLabelTest extends PositionableTestBase {
 
     @Test
     public void testDisplayTextRotated90() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
 
-        PositionableLabel label = new PositionableLabel(sampleText, null);
+        PositionableLabel label = new PositionableLabel(SAMPLE_TEXT_U25CF, editor);
         label.setForeground(Color.black); // this is a direct set, not through the UI
         label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
@@ -492,9 +317,9 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         // now check that background shows through
         // Need to find the icon location first
-        Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
+        Point point = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = getDisplayedContent(f.getContentPane(), label.getSize(), point);
 
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
@@ -506,13 +331,12 @@ public class PositionableLabelTest extends PositionableTestBase {
 
     @Test
     public void testDisplayTextRotated45() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
 
-        PositionableLabel label = new PositionableLabel(sampleText, null);
+        PositionableLabel label = new PositionableLabel(SAMPLE_TEXT_U25CF, editor);
         label.setForeground(Color.black); // this is a direct set, not through the UI
         label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
@@ -535,9 +359,9 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         // now check that background shows through
         // Need to find the icon location first
-        Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
+        Point point = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = getDisplayedContent(f.getContentPane(), label.getSize(), point);
 
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
@@ -553,12 +377,12 @@ public class PositionableLabelTest extends PositionableTestBase {
         super.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initDefaultUserMessagePreferences();
-        if (!GraphicsEnvironment.isHeadless()) {
-            editor = new EditorScaffold();
-            p = to = new PositionableLabel("one", editor);
-            NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
-            to.setIcon(icon);
-        }
+
+        editor = new EditorScaffold("PositionableLabel Test Panel");
+        p = to = new PositionableLabel("one", editor);
+        NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+        to.setIcon(icon);
+
     }
 
     @Override
@@ -568,5 +392,5 @@ public class PositionableLabelTest extends PositionableTestBase {
         super.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableLabelTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableLabelTest.class);
 }

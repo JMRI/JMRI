@@ -12,6 +12,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -181,7 +182,9 @@ public class WarrantTest {
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
 
         warrant.getSpeedUtil().setAddress("999(L)");
+        warrant.setBlockOrders(orders);
         String msg = warrant.allocateRoute(false, orders);
+        Assert.assertNull("allocateRoute - " + msg, msg);
 
         warrant.setTrainName("TestTrain");
         PropertyChangeListener listener = new WarrantListener(warrant);
@@ -190,38 +193,44 @@ public class WarrantTest {
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - " + msg, msg);
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             String m = warrant.getRunningMessage();
             return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
         }, "Train starts to move after 2nd command");
-        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
+//        JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sWest.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Unexpected Exception: " + e);
-            }
-        });
-        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
+        try {
+            sWest.setState(Sensor.ACTIVE);
+        } catch ( JmriException e) {
+            Assert.fail("Unexpected Exception: " + e);
+        }
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sSouth.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Unexpected Exception: " + e);
-            }
-        });
-        jmri.util.JUnitUtil.releaseThread(this, 100);
+        JUnitUtil.waitFor(() -> {
+            return bWest.isOccupied() == true;
+
+        }, "South not occupied");
+
+        try {
+            sSouth.setState(Sensor.ACTIVE);
+        } catch ( JmriException e) {
+            Assert.fail("Unexpected Exception: " + e);
+        }
+
+        JUnitUtil.waitFor(() -> {
+            return bSouth.isOccupied() == true;
+
+        }, "South not occupied");
 
         // wait for done
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return warrant.getRunningMessage().equals("Idle");
+        JUnitUtil.waitFor(() -> {
+            return Bundle.getMessage("Idle").equals(warrant.getRunningMessage());
         }, "warrant not done");
+
+        JUnitAppender.assertWarnMessageStartingWith("block: West Path distance or SpeedProfile unreliable! pathDist= 200.0,");
 
     }
 
-    static class WarrantListener implements PropertyChangeListener {
+    protected static class WarrantListener implements PropertyChangeListener {
 
         Warrant warrant;
 
@@ -241,9 +250,9 @@ public class WarrantTest {
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initRosterConfigManager();
 
@@ -294,6 +303,7 @@ public class WarrantTest {
         path = new OPath("SouthToWest", south, null, south.getPortalByName("SouthWest"), settings);
         south.addPath(path);
 
+        Assertions.assertNotNull(bSouth);
         bSouth.setLength(100);
 
         settings = new ArrayList<>();
@@ -311,8 +321,11 @@ public class WarrantTest {
         sEast = _sensorMgr.newSensor("IS2", "EastSensor");
         sNorth = _sensorMgr.newSensor("IS3", "NorthSensor");
         sSouth = _sensorMgr.newSensor("IS4", "SouthSensor");
+        Assertions.assertNotNull(bWest);
         bWest.setSensor("WestSensor");
+        Assertions.assertNotNull(bEast);
         bEast.setSensor("IS2");
+        Assertions.assertNotNull(bNorth);
         bNorth.setSensor("NorthSensor");
         bSouth.setSensor("IS4");
         warrant = new Warrant("IW0", "AllTestWarrant");

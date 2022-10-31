@@ -5,6 +5,8 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionDispatcher;
+import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -37,6 +39,8 @@ public class ActionDispatcherXml extends jmri.managers.configurexml.AbstractName
 
         storeCommon(p, element);
 
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionDispatcher.DirectOperation>();
+
         String trainInfoFileName = p.getTrainInfoFileName();
         if (trainInfoFileName != null) {
             element.addContent(new Element("trainInfoFileName").addContent(trainInfoFileName));
@@ -47,11 +51,7 @@ public class ActionDispatcherXml extends jmri.managers.configurexml.AbstractName
         element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
         element.addContent(new Element("formula").addContent(p.getFormula()));
 
-        element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
-        element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
-        element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
-        element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
-        element.addContent(new Element("operationFormula").addContent(p.getOperFormula()));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "operation"));
 
         element.addContent(new Element("dataAddressing").addContent(p.getDataAddressing().name()));
         element.addContent(new Element("dataReference").addContent(p.getDataReference()));
@@ -73,6 +73,17 @@ public class ActionDispatcherXml extends jmri.managers.configurexml.AbstractName
 
         loadCommon(h, shared);
 
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionDispatcher.DirectOperation>();
+
+        selectEnumXml.load(shared.getChild("operation"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "operationAddressing",
+                "operationDirect",
+                "operationReference",
+                "operationLocalVariable",
+                "operationFormula");
+
         try {
             Element elem = shared.getChild("trainInfoFileName");
             if (elem != null) {
@@ -92,26 +103,6 @@ public class ActionDispatcherXml extends jmri.managers.configurexml.AbstractName
 
             elem = shared.getChild("formula");
             if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("operationAddressing");
-            if (elem != null) {
-                h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("operationDirect");
-            if (elem != null) {
-                h.setOperationDirect(ActionDispatcher.DirectOperation.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("operationReference");
-            if (elem != null) h.setOperationReference(elem.getTextTrim());
-
-            elem = shared.getChild("operationLocalVariable");
-            if (elem != null) h.setOperationLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("operationFormula");
-            if (elem != null) h.setOperationFormula(elem.getTextTrim());
 
 
             elem = shared.getChild("dataAddressing");

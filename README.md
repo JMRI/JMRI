@@ -8,13 +8,11 @@ For development information, see [Technical Info](https://www.jmri.org/help/en/h
 
 User discussions are on the [JMRI users Groups.io group](https://groups.io/g/jmriusers)
 
-Infrastructure status available at [status.jmri.org](https://status.jmri.org)
-
 Test:
 [![Test release](https://img.shields.io/github/release/JMRI/JMRI.svg)](https://www.jmri.org/download/index.shtml#test-rel)
 [![Test release](https://img.shields.io/github/downloads/JMRI/JMRI/latest/total.svg)](https://www.jmri.org/download/index.shtml#test-rel)
 Production:
-[![Production release](https://img.shields.io/github/downloads/JMRI/JMRI/v4.26/total.svg)](https://www.jmri.org/download/index.shtml#prod-rel)
+[![Production release](https://img.shields.io/github/downloads/JMRI/JMRI/v5.0/total.svg)](https://www.jmri.org/download/index.shtml#prod-rel)
 Total (since 9/2017):
 [![Totals since 9/2017](https://img.shields.io/github/downloads/JMRI/JMRI/total.svg)](https://www.jmri.org/download/index.shtml)
 

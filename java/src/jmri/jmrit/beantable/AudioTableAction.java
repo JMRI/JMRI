@@ -1,7 +1,8 @@
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JMenu;
@@ -11,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.MenuElement;
+
 import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;
@@ -18,6 +20,8 @@ import jmri.NamedBean;
 import jmri.jmrit.audio.swing.AudioBufferFrame;
 import jmri.jmrit.audio.swing.AudioListenerFrame;
 import jmri.jmrit.audio.swing.AudioSourceFrame;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -300,7 +304,6 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
          *
          * @param subType Audio sub-type to update
          */
-        @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
         protected synchronized void updateSpecificNameList(char subType) {
             // first, remove listeners from the individual objects
             if (sysNameList != null) {
@@ -312,7 +315,17 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
                     }
                 }
             }
-            sysNameList = getManager().getSystemNameList(subType);
+
+            // recreate the list of system names
+            var tempSet = getManager().getNamedBeanSet();
+            var out = new ArrayList<String>();
+            tempSet.stream().forEach((audio) -> {
+                if (audio.getSubType() == subType) {
+                    out.add(audio.getSystemName());
+                }
+            });
+            sysNameList = out;
+
             // and add them back in
             sysNameList.stream().forEach((sysName) -> {
                 getBySystemName(sysName).addPropertyChangeListener(this);
@@ -462,7 +475,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
         }
 
         @Override
-        protected void showPopup(MouseEvent e) {
+        protected void showPopup(JmriMouseEvent e) {
             // Do nothing - disable pop-up menu for AudioListener
         }
     }

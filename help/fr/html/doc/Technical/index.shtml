@@ -1,21 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233;  2016-08-28-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233;  2016-08-28-->
 <head>
-    <title>
- 	JMRI: Technical Info
-    </title>
+    <title>JMRI: Technical Info</title>
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code ">
-
     <!--#include virtual="/Style.shtml" -->
 </head>
+
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-	<!--#include virtual="Sidebar" -->
-	<div id="mainContent">
-		<!-- Page Body -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+	  <!--#include virtual="Sidebar.shtml" -->
+	  <div id="mainContent">
+		  <!-- Page Body -->
 
 	    <h1>JMRI: Info Technique </h1>
 
@@ -263,8 +261,9 @@ et dynamique repr&#233;sentation visuelle du changement pour que les d&#233;velo
 modifications dans les fichiers qui composent un projet. Plus d'informations sont disponibles sur
 <a href="/community/visuals/codeswarm.shtml"> Code Swarm </a>.</p>
 
-<!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

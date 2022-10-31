@@ -57,8 +57,8 @@ public class DccLocoAddressSelector extends JPanel {
         configureBox(protocols);
     }
 
-    void configureBox(String[] protocols) {
-        box = new JComboBox<String>(protocols);
+    private void configureBox(String[] protocols) {
+        box = new JComboBox<>(protocols);
         box.setSelectedIndex(0);
         text = new JTextField();
         text.setColumns(4);
@@ -88,7 +88,7 @@ public class DccLocoAddressSelector extends JPanel {
      */
     public DccLocoAddress getAddress() {
         // no object if no address
-        if (text.getText().equals("")) {
+        if (text.getText().isEmpty()) {
             return null;
         }
 
@@ -193,7 +193,7 @@ public class DccLocoAddressSelector extends JPanel {
         if (!varFontSize) {
             return;
         }
-        double fieldWidth = text.getSize().width;
+        int fieldWidth = text.getSize().width;
         int stringWidth = text.getFontMetrics(text.getFont()).stringWidth(LONGEST_STRING) + 8;
         int fontSize = text.getFont().getSize();
         if (stringWidth > fieldWidth) { // component has shrunk horizontally
@@ -212,7 +212,7 @@ public class DccLocoAddressSelector extends JPanel {
             }
         }
         // also fit vertically
-        double fieldHeight = text.getSize().height;
+        int fieldHeight = text.getSize().height;
         int stringHeight = text.getFontMetrics(text.getFont()).getHeight();
         while ((stringHeight > fieldHeight) && (fontSize >= FONT_SIZE_MIN + FONT_INCREMENT)) {  // component has shrunk vertically
             fontSize -= FONT_INCREMENT;
@@ -266,6 +266,8 @@ public class DccLocoAddressSelector extends JPanel {
         return text;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="Error String needs to be evaluated unchanged.")
     void reportError(String msg) {
         log.error(msg, new Exception("traceback"));
     }

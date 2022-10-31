@@ -21,7 +21,7 @@
 
       <p class="im"><img src="images/TurnoutTableColumnList.jpg" alt=
       "Turnout Table Columns (Rel 4.20)" style="float:right" height="438" width="150"> Contents of
-      the Turnout Table are displayed by selecting it under <strong>Tools⇒Tables</strong>. As with
+      the Turnout Table are displayed by selecting it under <strong>Tools&rArr;Tables</strong>. As with
       all JMRI tool tables, you can add or remove columns from the display by right-clicking
       anywhere in the column header and selecting or deselecting the desired columns from the menu
       that appears (see picture at right). You can change the order of the columns by dragging
@@ -570,7 +570,7 @@
       <h4>Locking Routes</h4>
       To help you select a set of Turnouts to lock, a Route can also be locked. All Turnouts that
       are being monitored by the JMRI program and are included in the Route will be locked. See the
-      <a href="RouteTable.shtml">Routes help page</a> for more information. 
+      <a href="RouteTable.shtml">Routes help page</a> for more information.
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

@@ -31,7 +31,6 @@ public class LayoutEditorHorizontalToolBarPanelTest {
     @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorHorizontalToolBarPanelTest.class);

@@ -279,13 +279,13 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
         }
         return name;
     }
-    
+
     /**
      * Convenience implementation of
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
      * that verifies name has has at least 1 number in the String.
      * <p>
-     * 
+     *
      *
      * @param name   the system name to validate
      * @param locale the locale for a localized exception; this is needed for
@@ -301,13 +301,13 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
         }
         return name;
     }
-    
+
     /**
      * Convenience implementation of
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
      * that verifies name String is purely numeric.
      * <p>
-     * 
+     *
      *
      * @param name   the system name to validate
      * @param locale the locale for a localized exception; this is needed for
@@ -325,7 +325,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
         }
         return name;
     }
-    
+
     /**
      * Convenience implementation of
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
@@ -506,43 +506,6 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
 
     /**
      * Provide an
-     * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List of
-     * system names.
-     * <p>
-     * Note: this is ordered by the underlying NamedBeans, not on the Strings
-     * themselves.
-     * <p>
-     * Note: Access via {@link #getNamedBeanSet()} is faster.
-     * <p>
-     * Note: This is not a live list; the contents don't stay up to date
-     *
-     * @return Unmodifiable access to a list of system names
-     * @deprecated 4.11.5 - use direct access via {@link #getNamedBeanSet()}
-     */
-    @Deprecated // 4.11.5
-    @CheckReturnValue
-    @Nonnull
-    public List<String> getSystemNameList();
-
-    /**
-     * Provide an
-     * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List of
-     * NamedBeans in system-name order.
-     * <p>
-     * Note: Access via {@link #getNamedBeanSet()} is faster.
-     * <p>
-     * Note: This is not a live list; the contents don't stay up to date
-     *
-     * @return Unmodifiable access to a List of NamedBeans
-     * @deprecated 4.11.5 - use direct access via {@link #getNamedBeanSet()}
-     */
-    @Deprecated // 4.11.5
-    @CheckReturnValue
-    @Nonnull
-    public List<E> getNamedBeanList();
-
-    /**
-     * Provide an
      * {@linkplain java.util.Collections#unmodifiableSet unmodifiable} SortedSet
      * of NamedBeans in system-name order.
      * <p>
@@ -556,41 +519,6 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     @CheckReturnValue
     @Nonnull
     public SortedSet<E> getNamedBeanSet();
-
-    /**
-     * Deprecated form to locate an existing instance based on a system name.
-     *
-     * @param systemName System Name of the required NamedBean
-     * @return requested NamedBean object or null if none exists
-     * @throws IllegalArgumentException if provided name is invalid
-     * @deprecated since 4.19.1
-     */
-    @CheckReturnValue
-    @CheckForNull
-    @Deprecated // 4.19.1
-    public default E getBeanBySystemName(@Nonnull String systemName) {
-        jmri.util.LoggingUtil.deprecationWarning(deprecatedManagerLogger, "getBeanBySystemName");
-        return getBySystemName(systemName);
-    }
-
-    /**
-     * Deprecated form to locate an existing instance based on a user name.
-     *
-     * @param userName System Name of the required NamedBean
-     * @return requested NamedBean object or null if none exists
-     * @deprecated since 4.19.1
-     */
-    @CheckReturnValue
-    @CheckForNull
-    @Deprecated // 4.19.1
-    public default E getBeanByUserName(@Nonnull String userName) {
-        jmri.util.LoggingUtil.deprecationWarning(deprecatedManagerLogger, "getBeanByUserName");
-        return getByUserName(userName);
-    }
-
-    // needed for deprecationWarning calls above, remove with them
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",justification="Private not available in interface; just needed for deprecation")
-    static final org.slf4j.Logger deprecatedManagerLogger = org.slf4j.LoggerFactory.getLogger(Manager.class);
 
     /**
      * Locate an existing instance based on a system name.
@@ -709,10 +637,11 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static final int ENTRYEXIT = PANELFILES + 10;
     // All LogixNG beans share the "Q" letter. For example, a digital expression
     // has a system name like "IQDE001".
-    public static final int LOGIXNGS = ENTRYEXIT + 10;                          // LogixNG
-    public static final int LOGIXNG_CONDITIONALNGS = LOGIXNGS + 10;             // LogixNG ConditionalNG
-    public static final int LOGIXNG_MODULES = LOGIXNG_CONDITIONALNGS + 10;      // LogixNG Modules
-    public static final int LOGIXNG_TABLES = LOGIXNG_MODULES + 10;              // LogixNG Tables (not bean tables)
+    public static final int LOGIXNGS = ENTRYEXIT + 10;                              // LogixNG
+    public static final int LOGIXNG_GLOBAL_VARIABLES = LOGIXNGS + 10;               // LogixNG Global Variables
+    public static final int LOGIXNG_CONDITIONALNGS = LOGIXNG_GLOBAL_VARIABLES + 10; // LogixNG ConditionalNG
+    public static final int LOGIXNG_MODULES = LOGIXNG_CONDITIONALNGS + 10;          // LogixNG Modules
+    public static final int LOGIXNG_TABLES = LOGIXNG_MODULES + 10;                  // LogixNG Tables (not bean tables)
     public static final int LOGIXNG_DIGITAL_EXPRESSIONS = LOGIXNG_TABLES + 10;          // LogixNG Expression
     public static final int LOGIXNG_DIGITAL_ACTIONS = LOGIXNG_DIGITAL_EXPRESSIONS + 10; // LogixNG Action
     public static final int LOGIXNG_DIGITAL_BOOLEAN_ACTIONS = LOGIXNG_DIGITAL_ACTIONS + 10;   // LogixNG Digital Boolean Action
@@ -774,8 +703,8 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * parsed out without knowledge of the type of NamedBean involved.
      *
      * @param inputName System Name to provide the prefix
-     * @throws NamedBean.BadSystemNameException If the inputName can't be
-     *                                          converted to normalized form
+     * @throws NamedBean.BadSystemNameException If the inputName is not
+     *                                          in normalized form
      * @return The length of the system-prefix part of the system name in
      *         standard normalized form
      */
@@ -804,8 +733,8 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * parsed out without knowledge of the type of NamedBean involved.
      *
      * @param inputName System name to provide the prefix
-     * @throws NamedBean.BadSystemNameException If the inputName can't be
-     *                                          converted to normalized form
+     * @throws NamedBean.BadSystemNameException If the inputName is not
+     *                                          in normalized form
      * @return The system-prefix part of the system name in standard normalized
      *         form
      */
@@ -814,6 +743,41 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static String getSystemPrefix(@Nonnull String inputName) {
         return inputName.substring(0, getSystemPrefixLength(inputName));
     }
+
+    /**
+     * Provides the type letter of the given system name.
+     * <p>
+     * This is a common operation across JMRI, as the system prefix can be
+     * parsed out without knowledge of the type of NamedBean involved.
+     *
+     * @param inputName System name to provide the type letter
+     * @throws NamedBean.BadSystemNameException If the inputName is not
+     *                                          in normalized form
+     * @return The type letter of the system name
+     */
+    @CheckReturnValue
+    @Nonnull
+    public static String getTypeLetter(@Nonnull String inputName) {
+        return inputName.substring(getSystemPrefixLength(inputName), getSystemPrefixLength(inputName)+1);
+    }
+
+    /**
+     * Provides the suffix (part after the type letter) of the given system name.
+     * <p>
+     * This is a common operation across JMRI, as the system prefix can be
+     * parsed out without knowledge of the type of NamedBean involved.
+     *
+     * @param inputName System name to provide the suffix
+     * @throws NamedBean.BadSystemNameException If the inputName is not
+     *                                          in normalized form
+     * @return The suffix part of the system name
+     */
+    @CheckReturnValue
+    @Nonnull
+    public static String getSystemSuffix(@Nonnull String inputName) {
+        return inputName.substring(getSystemPrefixLength(inputName)+1);
+    }
+
 
     /**
      * Get a manager-specific tool tip for adding an entry to the manager.
@@ -851,19 +815,6 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * @param muted true if notifications should be suppressed; false otherwise
      */
     public default void setDataListenerMute(boolean muted) {
-    }
-
-    /**
-     * Suppress sending {@link PropertyChangeEvent}s for the named property.
-     *
-     * @param propertyName the name of the property to mute
-     * @param muted        true if events are to be suppressed; false otherwise
-     * @deprecated since 4.21.1; use
-     * {@link #setPropertyChangesSilenced(String, boolean)} instead
-     */
-    @Deprecated
-    public default void setPropertyChangesMuted(@Nonnull String propertyName, boolean muted) {
-        setPropertyChangesSilenced(propertyName, muted);
     }
 
     /**

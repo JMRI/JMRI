@@ -87,7 +87,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it.
     // Note that dispose() doesn't act on these.  Its not clear whether it should...
-    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     static final public String schemaVersion = ""; // NOI18N
     private String defaultRosterGroup = null;
     private final HashMap<String, RosterGroup> rosterGroups = new HashMap<>();
@@ -1031,7 +1031,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         try {
             this.writeFile(this.getRosterIndexPath());
         } catch (IOException e) {
-            log.error("Exception while writing the new roster file, may not be complete: {}", e);
+            log.error("Exception while writing the new roster file, may not be complete", e);
             try {
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ErrorSavingText") + "\n" + e.getMessage(),
@@ -1066,7 +1066,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         try {
             roster.writeFile(this.getRosterIndexPath());
         } catch (IOException ex) {
-            log.error("Exception while writing the new roster file, may not be complete: {}", ex);
+            log.error("Exception while writing the new roster file, may not be complete", ex);
         }
         this.reloadRosterFile();
         log.info("Roster rebuilt, stored in {}", this.getRosterIndexPath());
@@ -1447,7 +1447,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         if (log.isDebugEnabled()) {
             log.debug("filename list:");
             for (i = 0; i < sbox.length; i++) {
-                log.debug("      {}", sbox[i]);
+                log.debug("     name: {}", sbox[i]);
             }
         }
         return sbox;
@@ -1459,6 +1459,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      *
      * @return the rosterGroups
      */
+    @Nonnull
     public HashMap<String, RosterGroup> getRosterGroups() {
         return new HashMap<>(rosterGroups);
     }

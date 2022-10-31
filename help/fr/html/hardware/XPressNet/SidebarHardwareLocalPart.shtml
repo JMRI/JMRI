@@ -1,0 +1,14 @@
+<!-- Sidebar local part for XPressNet files in French -->
+
+<dt><a href="index.shtml">XPressNet</a></dt>
+		<dd>
+		    <ul>
+            <li><a href="XNetAddressing.shtml">XPressNet Bus Adressant</a>
+            <li><a href="LI101Configurationtool.shtml">Outil LI101 Config</a>
+            <li><a href="LZV100Configurationtool.shtml">Outil LZV100 Config</a>
+            <li><a href="XNetSystemInformationtool.shtml">Syst&egrave;me d'information</a>
+            <li><a href="CreateXNetLogFile.shtml">Fichier Journal XPressNet</a>
+        </ul>
+    </dd>
+
+    <!-- /SidebarHardwareLocalPart.shtml -->

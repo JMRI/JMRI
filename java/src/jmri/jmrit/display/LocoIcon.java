@@ -3,19 +3,22 @@ package jmri.jmrit.display;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.util.List;
+
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
+
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -214,7 +217,7 @@ public class LocoIcon extends PositionableLabel {
     public static String[] getLocoColors() {
         return new String[]{WHITE, GREEN, GRAY, RED, BLUE, YELLOW};
     }
-    
+
     public Color getLocoColor() {
         return _locoColor;
     }
@@ -313,7 +316,7 @@ public class LocoIcon extends PositionableLabel {
      * Set display attributes for Tracker
      */
     @Override
-    public void doMouseReleased(MouseEvent event) {
+    public void doMouseReleased(JmriMouseEvent event) {
         List<Positionable> selections = _editor.getSelectedItems(event);
         for (Positionable selection : selections) {
             if (selection instanceof IndicatorTrack) {

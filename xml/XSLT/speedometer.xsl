@@ -8,7 +8,7 @@
 <!-- This is just a basic implementation for debugging purposes, without    -->
 <!-- any real attempt at formatting                                         -->
 
-<!-- This file is part of JMRI.  Copyright 2011, 2018.                            -->
+<!-- This file is part of JMRI.  Copyright 2011, 2022.                      -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -19,7 +19,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
+
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
@@ -32,7 +32,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
@@ -40,7 +40,7 @@
      elements, which is what the apply-templates instruction does.
      We can also pick some stuff out explicitly in the head section using
      value-of instructions.
--->     
+-->
 <xsl:template match='speedometer-config'>
 <html>
 <head>

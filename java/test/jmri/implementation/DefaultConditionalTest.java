@@ -29,7 +29,8 @@ public class DefaultConditionalTest {
      */
     @Test
     public void createInstance() {
-        new DefaultConditional("IXIC 0");
+        DefaultConditional t = new DefaultConditional("IXIC 0");
+        Assertions.assertNotNull(t);
     }
 
     @Test
@@ -153,7 +154,6 @@ public class DefaultConditionalTest {
     }
 
     @Test
-    @SuppressWarnings("unused") // test building in progress
     public void testCalculate() {
         ConditionalVariable[] conditionalVariables_Empty = { };
         List<ConditionalVariable> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
@@ -365,15 +365,16 @@ public class DefaultConditionalTest {
         PropertyChangeEvent event = new PropertyChangeEvent(new Object(), "PropertyName", "OldValue", "NewValue") {
             @Override
             public Object getSource() {
-                throw new RuntimeException();
+                Assertions.fail("Property change event should not be triggered");
+                throw new IllegalStateException();
             }
         };
         boolean success = false;
         try {
             ix1.calculate(false, event);
             success = true;
-        } catch (RuntimeException ex) {
-            // Do nothing
+        } catch (IllegalStateException ex) {
+            Assertions.fail("Property change event should not be triggered ", ex );
         }
         Assert.assertTrue("trigger has not been checked", success);
 
@@ -395,7 +396,7 @@ public class DefaultConditionalTest {
         testConditionalAction._deviceName = null;
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue", "NewValue"));
         Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
-        jmri.util.JUnitAppender.assertErrorMessageStartsWith("IXIC 1 - invalid memory name in action - ");
+        jmri.util.JUnitAppender.assertErrorMessageStartsWith(" error: IXIC 1 - invalid memory name in action - ");
 
         // Test trigger event with system name.
         // This action wants to trigger the event.
@@ -820,12 +821,11 @@ public class DefaultConditionalTest {
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
 
-    private final class ConditionalVariableStatic extends ConditionalVariable {
+    private static class ConditionalVariableStatic extends ConditionalVariable {
 
         ConditionalVariableStatic(Conditional.State state) {
             super();
@@ -853,7 +853,7 @@ public class DefaultConditionalTest {
     }
 
 
-    private class TestConditionalAction extends DefaultConditionalAction {
+    private static class TestConditionalAction extends DefaultConditionalAction {
 
         Conditional.Action _type = Conditional.Action.NONE;
         int _option = Conditional.ACTION_OPTION_ON_CHANGE;
@@ -990,13 +990,26 @@ public class DefaultConditionalTest {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
+        @Override
+        public boolean equals(Object o){
+            if ( o instanceof TestConditionalAction ) {
+                return super.equals(o);
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode(){
+            return 2* super.hashCode();
+        } 
+
     }
 
 
 
-    private class MyNamedBean extends AbstractNamedBean {
+    private static class MyNamedBean extends AbstractNamedBean {
 
-        public MyNamedBean(String systemName, String userName) {
+        MyNamedBean(String systemName, String userName) {
             super(systemName);
             setUserName(userName);
         }
@@ -1018,7 +1031,7 @@ public class DefaultConditionalTest {
     }
 
 
-    private class MySound extends Sound {
+    private static class MySound extends Sound {
 
         boolean hasPlayed = false;
 

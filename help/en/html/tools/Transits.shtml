@@ -51,7 +51,7 @@
       traveling in a given direction using JMRI <a href=
       "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>. A Section may be in
       multiple Transits, and may be in a given Transit multiple times. Sections are kept in
-      order—the first Section is connected to the second, the second is connected to the third,
+      order&mdash;the first Section is connected to the second, the second is connected to the third,
       etc. That means a Section in a Transit must be connected to the Section before it (if there
       is one) and to the Section after it (if there is one). The order of the Sections determines
       the direction of travel in the Transit. Trains travel from Sections with lower sequence

@@ -48,25 +48,18 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         print();
     }
-    
+
     private void print() {
         // obtain a HardcopyWriter
-        HardcopyWriter writer;
-        try {
-            writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleLocationsByType"), Control.reportFontSize,
-                    .5, .5, .5, .5, isPreview);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
-            return;
-        }
+        try ( HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleLocationsByType"),
+            Control.reportFontSize, .5, .5, .5, .5, isPreview); ) {
+            
+            // Loop through the car types showing which locations and tracks will
+            // service that car type
+            String carTypes[] = InstanceManager.getDefault(CarTypes.class).getNames();
+            
+            List<Location> locations = InstanceManager.getDefault(LocationManager.class).getLocationsByNameList();
 
-        // Loop through the car types showing which locations and tracks will
-        // service that car type
-        String carTypes[] = InstanceManager.getDefault(CarTypes.class).getNames();
-
-        List<Location> locations = InstanceManager.getDefault(LocationManager.class).getLocationsByNameList();
-
-        try {
             // title line
             String s = Bundle.getMessage(
                     "Type") + TAB + Bundle.getMessage("Location") + TAB + Bundle.getMessage("Track") + NEW_LINE;
@@ -91,11 +84,13 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
                     }
                 }
             }
+            // and force completion of the printing
+//            writer.close(); not needed when using try / catch
+        } catch (HardcopyWriter.PrintCanceledException we) {
+            log.debug("Print cancelled");
         } catch (IOException we) {
-            log.error("Error printing PrintLocationAction: {}", we);
+            log.error("Error printing PrintLocationAction", we);
         }
-        // and force completion of the printing
-        writer.close();
     }
 
     private final static Logger log = LoggerFactory.getLogger(PrintLocationsByCarTypesAction.class);

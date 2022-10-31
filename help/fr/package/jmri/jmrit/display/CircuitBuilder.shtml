@@ -1,26 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+<html lang="fr">
 <!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22-->
-<html LANG="fr">
 <head>
-<title>JMRI: Item Palette Help</title>
-<META CONTENT="Pete Cressman" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Item Palette">
-
-<!-- Style -->
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Item Palette Help</title>
+  <meta name="author" content="Pete Cressman" >
+  <meta name="keywords" content="JMRI help Item Palette">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-<h1>G&#233;n&#233;rateur de Circuit</h1>
+      <h1>G&#233;n&#233;rateur de Circuit</h1>
 <p>
 <b>Le G&#233;n&#233;rateur Circuit</b> est une vue d'un <b>&#201;diteur de Panneau de Configuration</b> Panneau utilis&#233; pour cr&#233;er des circuits de voie qui sont mis en &oelig;uvre dans JMRI par
 OCantonss, Portails et OChemins. Le nom d'une voie ayant un appareil qui peut d&#233;tecter l'occupation est le
@@ -71,15 +64,15 @@ Vous pouvez facilement aller et venir entre les &#233;diteurs et les modes d'&#2
 <h3>Le Menu Ajouter/Modifier Circuits</h3>
 <p>Cr&#233;e et Modifier OCantons, Portails et OChemins et leurs ic&#244;nes de l'&#233;cran. Le menu a les sous-menus suivants:</p>
  <ul>
-  <li> <b>Ajouter Circuit de D&#233;tection</b>-Cr&#233;er un circuit de voie OCanton et assigner les ic&#244;nes qui les affiche.
+  <li><b>Ajouter Circuit de D&#233;tection</b>-Cr&#233;er un circuit de voie OCanton et assigner les ic&#244;nes qui les affiche.
          Vous serez invit&#233; &#224; fournir les noms syst&#232;me et utilisateur pour cr&#233;er un nouveau OCanton. Puis
          vous serez en mode <b>&#233;dition de circuit</b>.</li>
-  <li> <b>Modifier Circuit Canton</b>-Modifier un circuit existant (OCanton). Vous serez invit&#233; &#224; s&#233;lectionner un OCanton
+  <li><b>Modifier Circuit Canton</b>-Modifier un circuit existant (OCanton). Vous serez invit&#233; &#224; s&#233;lectionner un OCanton
          dans une liste de choix. Ensuite, vous serez en mode <b>&#233;dition de circuit</b>.</li>
-  <li> <b>Modifier Circuit Portails</b>-Cr&#233;er ou modifier la connexion de deux portails de circuits de voie. Vous serez
+  <li><b>Modifier Circuit Portails</b>-Cr&#233;er ou modifier la connexion de deux portails de circuits de voie. Vous serez
          invit&#233; &#224; s&#233;lectionner un OCanton dans une liste de choix. Ensuite, vous serez en mode <b>&#233;dition de portail</b>.</li>
-  <li> <b>Modifier Circuit Chemins</b>-Cr&#233;ez ou modifiez les chemins (OChemin) &#224; travers un circuit de voie. Vous serez invit&#233; &#224;
-   s&#233;lectionner un OCanton dans une liste de choix. Ensuite, vous serez dans le mode <b>&#233;dition de chemin</b>.
+  <li><b>Modifier Circuit Chemins</b>-Cr&#233;ez ou modifiez les chemins (OChemin) &#224; travers un circuit de voie. Vous serez invit&#233; &#224;
+  s&#233;lectionner un OCanton dans une liste de choix. Ensuite, vous serez dans le mode <b>&#233;dition de chemin</b>.
   </li>
  </ul>
 
@@ -113,17 +106,20 @@ Vous pouvez facilement aller et venir entre les &#233;diteurs et les modes d'&#2
 <h2> Comment faire les OCantonss, Portails et OPortails </h2>
 <p>La cr&#233;ation et l'&#233;dition de ces objets sont faits, avec trois modes d'&#233;dition des G&#233;n&#233;rateurs de Circuits.
 <h3>OCantons-mode d'&#201;dition Circuit</h3>
+
 <h4>Cr&#233;ation de OCantons </h4>
 <p>
- Depuis le menu <b>Ajouter/Modifier Circuits</b>, s&#233;lectionnez l'&#233;l&#233;ment de menu <b>Ajouter</b> Circuit de D&#233;tection.
- Cela ouvre une bo&#238;te de dialogue pour vous permettre de cr&#233;er un circuit de OCanton en fournissant son nom syst&#232;me et nom utilisateur. Cr&#233;er l'OCanton ouvre la  fen&#234;tre <b>Ajouter Circuit D&#233;tecteur</b>.
+  Depuis le menu <b>Ajouter/Modifier Circuits</b>, s&#233;lectionnez l'&#233;l&#233;ment de menu <b>Ajouter</b> Circuit de D&#233;tection.
+  Cela ouvre une bo&#238;te de dialogue pour vous permettre de cr&#233;er un circuit de OCanton en
+  fournissant son nom syst&#232;me et nom utilisateur. Cr&#233;er l'OCanton ouvre la  fen&#234;tre
+  <b>Ajouter Circuit D&#233;tecteur</b>.
 <br>
  La fen&#234;tre Ajouter Circuit D&#233;tecteur est identique &#224; la fen&#234;tre Edition Circuit. Voir la section ci-dessous mode d'&#201;dition de Circuit pour plus d'informations sur cette fen&#234;tre.
 </p>
 
 <h4>Modification OCantons</h4>
 <p>
- 1. Dans le  menu <b>Ajouter/Modifier Circuits</b>, s&#233;lectionnez l'&#233;l&#233;ment de menu <b>Modifier Circuit Canton</b>.
+ 1. Dans le menu <b>Ajouter/Modifier Circuits</b>, s&#233;lectionnez l'&#233;l&#233;ment de menu <b>Modifier Circuit Canton</b>.
  Ceci ouvre une liste de choix pour vous permettre de s&#233;lectionner un circuit de OCanton &#224; modifier.
  S&#233;lection d'une ligne et en appuyant sur le bouton [Ouvrer Circuit] ouvre <b>Modifier Circuit</b>
 </p>
@@ -199,7 +195,10 @@ Il y a un compromis ici sur l'apparence.
   Le champ de texte peut &#234;tre utilis&#233; pour changer le nom d'un portail avec le
   [Changement de nom] pour accomplir le changement de nom.
  <li>
-  Les portails sont cr&#233;&#233;s en les nommant dans le champ de texte et faites glisser l'ic&#244;ne du cercle rouge &#224; sa position entre les deux circuits de voie qu'il  connecte. Apr&#232;s avoir fait glisser l'ic&#244;ne &#224; sa position, le portail est r&#233;pertori&#233; dans la Liste Portail.
+  Les portails sont cr&#233;&#233;s en les nommant dans le champ de texte et faites glisser l'ic&#244;ne
+  du cercle rouge &#224; sa position entre les deux circuits de voie qu'il
+  connecte. Apr&#232;s avoir fait glisser l'ic&#244;ne &#224; sa position, le portail est
+  r&#233;pertori&#233; dans la Liste Portail.
  <li>
   Les Portails qui ont &#233;t&#233; cr&#233;&#233;s dans les <b>tableaux d'occupation</b> n'ont pas d'ic&#244;nes cercle rouge.
   Pour tout portail dans la liste Portail qui ne poss&#232;de pas une ic&#244;ne, le s&#233;lectionner dans la liste et
@@ -251,8 +250,9 @@ Il y a un compromis ici sur l'apparence.
  Pour supprimer un chemin, le s&#233;lectionner dans la liste et appuyez sur le bouton <b>Supprimer le Chemin</b>
 </ol>
 
-<!--#include virtual="/Footer.shtml" -->
-     </div>
-   </div>
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div>
+  </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

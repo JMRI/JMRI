@@ -34,7 +34,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         f.initComponents();
         EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
         Engine e3 = eManager.getByRoadAndNumber("PC", "5016");
-        f.loadEngine(e3);
+        f.load(e3);
         JUnitUtil.dispose(f);
     }
     
@@ -73,7 +73,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         Thread load = new Thread(new Runnable() {
             @Override
             public void run() {
-                f.loadEngine(e1);
+                f.load(e1);
             }
         });
         load.setName("engine set frame"); // NOI18N
@@ -115,5 +115,6 @@ public class EngineSetFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(Bundle.getMessage("enginePartConsist"), Bundle.getMessage("ButtonYes"));
         JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 }

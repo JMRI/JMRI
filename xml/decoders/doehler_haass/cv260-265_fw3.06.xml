@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- Copyright (C) JMRI 2014, 2020, 2022 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +15,7 @@
 <!-- in the function map selection pane -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2014</year>
+    <year>2022</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -56,6 +56,12 @@
       <date>2020-12-12</date>
       <authorinitials>WK</authorinitials>
       <revremark>Added ID SD05A and Dutch translating inserted</revremark>
+    </revision>
+    <revision>
+      <revnumber>4</revnumber>
+      <date>2022-04-16</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Added PD10MU</revremark>
     </revision>
    </revhistory>
     <variable item="Manufacturer 2" CV="260" readOnly="yes" default="97">
@@ -102,7 +108,7 @@
             <enumChoice choice="FH18A" value ="170"/>
             <enumChoice choice="FH22A" value ="192"/>
             <enumChoice choice="PD05A" value ="131"/>
-            <enumChoice choice="PD12A" value ="130"/>
+            <enumChoice choice="PD10MU/PD12A" value ="130"/>
             <enumChoice choice="SD05A" value ="205"/>
             <enumChoice choice="SD10A" value ="210"/>
             <enumChoice choice="SD16A" value ="216"/>
@@ -142,6 +148,6 @@
         <label>Date</label>
         <label xml:lang="de">Datum</label>
         <label xml:lang="ca">Data</label>
-        <label xml:lang="nl">Datum</label> 
+        <label xml:lang="nl">Datum</label>
     </variable>
 </variables>

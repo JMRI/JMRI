@@ -721,40 +721,6 @@ public interface AudioSource extends Audio {
     public int getFadeOut();
 
     /**
-     * Set the doppler factor of this source
-     * <p>
-     * Default value = 1.0f
-     * <p>
-     * Only calculated for JoalAudioSources
-     * <p>
-     * Applies only to sub-types:
-     * <ul>
-     * <li>Source
-     * </ul>
-     *
-     * @param dopplerFactor factor to apply in doppler calculations
-     */
-    @Deprecated
-    default public void setDopplerFactor(float dopplerFactor) {}
-
-    /**
-     * Retrieve the doppler factor of this source
-     * <p>
-     * Default value = 1.0f
-     * <p>
-     * Only calculated for JoalAudioSources
-     * <p>
-     * Applies only to sub-types:
-     * <ul>
-     * <li>Source
-     * </ul>
-     *
-     * @return factor to apply in doppler calculations
-     */
-    @Deprecated
-    default public float getDopplerFactor() { return 1.0f; }
-
-    /**
      * Method to start playing this AudioSource Object
      * <p>
      * If this AudioSource is already playing, this command is ignored.
@@ -858,5 +824,5 @@ public interface AudioSource extends Audio {
     default public String getDebugString() {
         return toString();
     }
-    
+
 }

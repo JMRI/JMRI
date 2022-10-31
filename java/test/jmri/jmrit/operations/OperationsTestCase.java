@@ -1,18 +1,17 @@
 package jmri.jmrit.operations;
 
-import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.netbeans.jemmy.QueueTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
-import jmri.ShutDownTask;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
@@ -86,15 +85,15 @@ public class OperationsTestCase {
         }
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-            List<ShutDownTask> list = sm.tasks();
+            var list = sm.getCallables();
             while (list.size() > 0) {
-                ShutDownTask task = list.get(0);
+                var task = list.get(0);
                 sm.deregister(task);
+                list = sm.getCallables();
                 if (checkShutDownTask) {
-                    Assert.fail("Shutdown task found: " + task.getName());
+                    Assert.fail("Shutdown task found: " + task);
                 }
             }
         }

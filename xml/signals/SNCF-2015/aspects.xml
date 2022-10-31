@@ -1,0 +1,1198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>SNCF-2015</name>
+  <date>2020-07-25</date>
+  <reference>Signaling definitions corresponding to the Wikipedia French signaling page - n° des articles du journal officiel du 12 septembre 2015 Annexe VII.</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>JC</firstname>
+        <surname>JANISZEWSKI</surname>
+      </personname>
+      <email>jcjani95@free.fr</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.00</revnumber>
+      <date>2020-07-25</date>
+      <authorinitials>JCJ</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+<aspects>
+ <aspect>
+      <name>Stop</name>
+      <rule>Article 101</rule>
+      <indication>ARRET/Stop</indication>
+      <description>CARRE D'ARRET ROUGE-ABSOLUTE RED STOP SIGNAL> commande l'arrêt </description>
+      <comment>commande l'arrêt avant le signal.C'est un signal de protection non franchissable.oeilleton éteint.</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Stop Purple</name>
+      <rule>Article 102</rule>
+      <indication>ARRET/Stop</indication>
+      <description>CARRE D'ARRET VIOLET-ABSOLUTE PURPLE STOP SIGNAL> commande l'arrêt </description>
+      <comment>commande l'arrêt avant le signal Violet.C'est un signal de protection non franchissable.oeilleton éteint.</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>1</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Semaphore</name>
+      <rule>Article 201</rule>
+      <indication>Sémaphore</indication>
+      <description>signal d'espacement / Spacing signal</description>
+      <comment>C'est un signal d'espacement qui permet d'éviter le rattrapage des trains.oeilleton allumé</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>2</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Disque</name>
+      <rule>Article 207</rule>
+      <indication>Disque</indication>
+      <description>Le disque fermé commande au conducteur de se mettre aussitôt que possible en marche à vue à 30Km/ max./Caution signal</description>
+      <comment>Le conducteur doit s’il n’a pas rencontré jusque là de signal lui commandant l’arrêt, marquer un arrêt avant le premier appareil de voie ou bien au poste</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>3</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Restricted</name>
+      <rule>Articles 202</rule>
+      <indication>Rouge clignotant red flashing</indication>
+      <comment>15km/h ou feu rouge clignotant avec arrêt non obligatoire.oeilleton allumé.</comment>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>4</dccAspect>
+ </aspect>
+ <aspect>
+      <name>RestrictedSlow</name>
+      <rule>Articles 404</rule>
+      <indication>Feu blanc clignotant</indication>
+      <comment>Feu Blanc Clignotant pour manoeuvre réduite 15km/h .oeilleton éteint pour Manoeuvre réduite.</comment>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>5</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Slow</name>
+      <rule>Article 403</rule>
+      <indication>Manoeuvre</indication>
+      <description>Feu Blanc-White</description>
+      <comment>Le feu blanc commande ou confirme au mécanicien d'observer la marche en manoeuvre (30km/h). oeilleton éteint</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>6</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Clear</name>
+      <rule>Article 401</rule>
+      <indication>Proceed</indication>
+      <description>Voie Libre</description>
+      <comment>Le feu vert indique au mécanicien que la voie est libre, et que la marche normale est autorisée si rien ne s'y oppose.oeilleton allumé.</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>7</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ClearSlow</name>
+      <rule>Article 402</rule>
+      <indication>Proceed</indication>
+      <description>Voie Libre avec limitation 160Km/h pour travaux-Clear with limit 160km/h on real railway when men at work.oeilleton allumé.</description>
+      <comment>Vert clignotant</comment>
+	<comment>Change SignalSpeeds.xml values with caution : Set speed NORMAL to 200Km/h-Sixty set to 160-set Cab speed for TGV</comment>
+      <speed>Sixty</speed>
+      <speed2>Sixty</speed2>
+      <route>Normal</route>
+      <dccAspect>8</dccAspect>
+ </aspect>
+ <aspect>
+      <name>RRestrict30</name>
+      <rule>article ?</rule>
+      <indication>RR30</indication>
+      <description>Rappel Ralentissement R30</description>
+      <comment>.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+      <dccAspect>09</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Restrict30</name>
+      <rule>article 501</rule>
+      <indication>R30</indication>
+      <description>Ralentissement R30</description>
+      <comment>.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+      <dccAspect>10</dccAspect>
+ </aspect>
+ <aspect>
+      <name>RRestrict60</name>
+      <rule>article ?</rule>
+      <indication>RR60</indication>
+      <description>Rappel Ralentissement R60</description>
+      <comment>.</comment>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>11</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Restrict60</name>
+      <rule>article 501</rule>
+      <indication>R60</indication>
+      <description>Ralentissement R60</description>
+      <comment>oeilleton allumé.</comment>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>12</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Approach</name>
+      <rule>Article 301</rule>
+      <indication>Avertissement</indication>
+      <description>Arrêt ou 15km/h au prochain signal-stop or 15km/h at next signal</description>
+      <comment>L'Avertissement commande au mécanicien de pouvoir s'arrêter avant le signal suivant ou d'être en mesure de respecter un rouge clignotant.oeilleton allumé.</comment>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>13</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Advanced Approach</name>
+      <rule>Article 302</rule>
+      <indication>under BAL system, used when block is short</indication>
+      <description>Avertissement clignotant, feu suivant avertissement</description>
+      <comment>Le feu jaune clignotant commande au mécanicien d'être en mesure de s'arrêter avant le signal annoncé à distance réduite par l'avertissement suivant.Ce signal est implanté lorsque la distance entre l'avertissement (signal jaune) et le signal d'arrêt (signal rouge) est insuffisante pour permettre l'arrêt du train (canton court).oeilleton allumé.</comment>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>14</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Approach RRestrict30</name>
+      <rule>Article 302</rule>
+      <indication>under BAL system, used when block is short</indication>
+      <description>Avertissement clignotant, feu suivant avertissement</description>
+      <comment>Le feu jaune clignotant commande au mécanicien d'être en mesure de s'arrêter avant le signal annoncé à distance réduite par l'avertissement suivant.Ce signal est implanté lorsque la distance entre l'avertissement  (signal jaune) et le signal d'arrêt (signal rouge) est insuffisante pour permettre l'arrêt du train (canton court).oeilleton allumé.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+      <dccAspect>15</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Approach Restrict30</name>
+      <rule>articles 301 et 501</rule>
+      <indication>Avertissement et R30</indication>
+      <description>Avertissement et R30</description>
+      <comment>oeilleton allumé.</comment>
+      <speed>Slow</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>16</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Advanced Approach RRestrict30</name>
+      <rule>Article 302</rule>
+      <indication>under BAL system, used when block is short</indication>
+      <description>Avertissement clignotant, feu suivant avertissement</description>
+      <comment>Le feu jaune clignotant commande au mécanicien d'être en mesure de s'arrêter avant le signal annoncé à distance réduite par l'avertissement suivant.Ce signal est implanté lorsque la distance entre l'avertissement (signal jaune) et le signal d'arrêt (signal rouge) est insuffisante pour permettre l'arrêt du train (canton court).oeilleton allumé.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+      <dccAspect>17</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Advanced Approach Restrict30</name>
+      <rule>Article 302</rule>
+      <indication>under BAL system, used when block is short</indication>
+      <description>Avertissement clignotant, feu suivant avertissement</description>
+      <comment>Le feu jaune clignotant commande au mécanicien d'être en mesure de s'arrêter avant le signal annoncé à distance réduite par l'avertissement suivant.Ce signal est implanté lorsque la distance entre l'avertissement (signal jaune) et le signal d'arrêt (signal rouge) est insuffisante pour permettre l'arrêt du train (canton court).oeilleton allumé.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+      <dccAspect>18</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Approach RRestrict60</name>
+      <rule>articles 301 et 502</rule>
+      <indication>Avertissement et RR60</indication>
+      <description>Avertissement et RR60</description>
+      <comment>oeilleton allumé.</comment>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>19</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Approach Restrict60</name>
+      <rule>articles 301 et 502</rule>
+      <indication>Avertissement et R60</indication>
+      <description>Avertissement et R60</description>
+      <comment>oeilleton allumé.</comment>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>20</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Advanced Approach RRestrict60</name>
+      <rule>articles 302 et 502</rule>
+      <indication>Avertissement clignotant et RR60</indication>
+      <description>Avertissement clignotant, feu suivant avertissement</description>
+      <comment>oeilleton allumé.</comment>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>21</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Advanced Approach Restrict60</name>
+      <rule>articles 302 et 502</rule>
+      <indication>Avertissement clignotant et RR60</indication>
+      <description>Avertissement clignotant, feu suivant avertissement</description>
+      <comment>oeilleton allumé.</comment>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>22</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIDDL</name>
+      <rule>Article 602</rule>
+      <indication>Tableau Indicateur de Direction</indication>
+      <description>tableau fixe ou mobile, lumineux.</description>
+      <comment>Indique que la direction géographique donnée est la première à partir de la gauche.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>23</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIDDR</name>
+      <rule>Article 602</rule>
+      <indication>Tableau Indicateur de Direction</indication>
+      <description>tableau fixe ou mobile, lumineux.</description>
+      <comment>Indique que la direction géographique donnée est la deuxième à partir de la gauche.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>24</dccAspect>
+ </aspect>
+ <aspect>
+      <name>IDDark3</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction éteint</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>15</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ID1_3</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>16</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ID2_3</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>17</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ID3_3</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>18</dccAspect>
+ </aspect>
+ <aspect>
+      <name>IDDark_4</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction éteint</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>19</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ID1_4</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>20</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ID2_4</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>21</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ID3_4</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>22</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ID4_4</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>23</dccAspect>
+ </aspect>
+ <aspect>
+      <name>IDDark_5</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction éteint</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>32</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ID1_5</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>25</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ID2_5</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>26</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ID3_5</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>27</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ID4_5</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>28</dccAspect>
+ </aspect>
+ <aspect>
+      <name>ID5_5</name>
+      <rule>Article ?</rule>
+      <indication>Indicateur de Direction</indication>
+      <description>tableau fixe lumineux.</description>
+      <comment>Indique la direction géographique.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>29</dccAspect>
+ </aspect>
+
+ <aspect>
+      <name>SLMall</name>
+      <rule>Article 1001</rule>
+      <indication>signal lumineux de manoeuvre</indication>
+      <description>Fin d'utilisation du signal - Allumage des 3 feux pendant 15 secondes (à programmer).</description>
+      <comment>Afin de faciliter les manoeuvres sur les voies de service, dans le cas de garage par refoulement ou lors du passage à une butte de débranchement, on utilise un signal lumineux de manoeuvre (S.L.M.). Ce signal est constitué par trois feux blancs </comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>20</dccAspect>
+ </aspect>
+ <aspect>
+      <name>SLMtirer</name>
+      <rule>Article 1001</rule>
+      <indication>signal lumineux de manoeuvre</indication>
+      <description>Tirez - Allumage alterné de deux feux blancs sur une ligne verticale.</description>
+      <comment>Afin de faciliter les manoeuvres sur les voies de service, dans le cas de garage par refoulement ou lors du passage à une butte de débranchement, on utilise un signal lumineux de manoeuvre (S.L.M.). Ce signal est constitué par trois feux blancs </comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>21</dccAspect>
+ </aspect>
+ <aspect>
+      <name>SLMRefouler</name>
+      <rule>Article 1001</rule>
+      <indication>signal lumineux de manoeuvre</indication>
+      <description>Refoulez - Allumage alterné de deux feux blancs sur une ligne horizontale.</description>
+      <comment>Afin de faciliter les manoeuvres sur les voies de service, dans le cas de garage par refoulement ou lors du passage à une butte de débranchement, on utilise un signal lumineux de manoeuvre (S.L.M.). Ce signal est constitué par trois feux blancs </comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>22</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TLC Stop</name>
+      <rule>Article 609</rule>
+      <indication>tableau lumineux de correspondance pour voies convergentes</indication>
+      <description>voyant à damier rouge et blanc ayant la même signification que le jalon d’arrêt à damier rouge et blanc visé à l'article 401.</description>
+      <comment>CARRE ROUGE représenté</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>23</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TLC autorise</name>
+      <rule>Article 605</rule>
+      <indication>tableau lumineux de correspondance pour voies convergentes</indication>
+      <description>signal lumineux de départ</description>
+      <comment>constitué par la présentation d’un voyant clignotant mi-blanc, mi-vert.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>24</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TLC T</name>
+      <rule>Article 609</rule>
+      <indication>tableau lumineux de correspondance pour voies convergentes</indication>
+      <description>signal lumineux de départ</description>
+      <comment>la lettre "T", en blanc sur fond noir, pour indiquer au conducteur ayant à exécuter un mouvement en direction d’une voie pouvant être en impasse que rien ne s’oppose à l’exécution de ce mouvement</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>25</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TLC FlashT</name>
+      <rule>Article 609</rule>
+      <indication>tableau lumineux de correspondance pour voies convergentes</indication>
+      <description>signal lumineux d'arrêt</description>
+      <comment>Lorsque la sortie du faisceau est commandée par un signal de groupe, la lettre T clignote si le signal de groupe est fermé lorsqu’elle est présentée</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>26</dccAspect>
+ </aspect>
+ <aspect>
+      <name>BLJ</name>
+      <rule>Article 212</rule>
+      <indication>Stop voie courte en gare- short stop at station</indication>
+      <description>Dans certaines gares, en complément de l’avertissement présenté sur le panneau portant le carré d’entrée, il est fait usage d’une bande lumineuse jaune horizontalek</description>
+      <comment> Cette bande indique au conducteur que la voie de réception correspondante est une voie à quai de courte longueur, ou bien que sa longueur se trouve réduite, soit par la présence de véhicules en stationnement aux abords du point habituel d’arrêt des trains longs, soit par la fermeture d’un signal d’arrêt intermédiaire (protection d’une jonction, par exemple). </comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>27</dccAspect>
+ </aspect>
+ <aspect>
+      <name>GuidonLF</name>
+      <rule>Article 205</rule>
+      <indication>guidon d’arrêt-Stop</indication>
+      <description>Le guidon d’arrêt fermé présente en signalisation lumineuse, une bande lumineuse rouge horizontale </description>
+      <comment> le guidon d’arrêt fermé commande au conducteur l’arrêt avant le signal.</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>18</dccAspect>
+ </aspect>
+ <aspect>
+      <name>GuidonMF</name>
+      <rule>Article 205</rule>
+      <indication>guidon d’arrêt-Stop</indication>
+      <description>Le guidon d’arrêt fermé présente en signalisation mécanique, une petite aile rectangulaire rouge étendue horizontalement à gauche du mât et associée, pour observation de nuit, à un feu rouge.</description>
+      <comment>le guidon d’arrêt fermé commande au conducteur l’arrêt avant le signal.</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>19</dccAspect>
+ </aspect>
+ <aspect>
+      <name>GuidonLO</name>
+      <rule>Article 205</rule>
+      <indication>ouverture guidon d’arrêt-Clear</indication>
+      <description>Le guidon d’arrêt ne présente aucune indication particulière en position d’ouverture.</description>
+      <comment> celle-ci étant seulement caractérisée en signalisation lumineuse, par l’extinction de la bande rouge. </comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>20</dccAspect>
+ </aspect>
+ <aspect>
+      <name>GuidonMO</name>
+      <rule>Article 205</rule>
+      <indication>ouverture guidon d’arrêt-Clear</indication>
+      <description>Le guidon d’arrêt ne présente aucune indication particulière en position d’ouverture</description>
+      <comment>en signalisation mécanique, par l’effacement de l’aile qui se trouve alors masquée, et l’extinction du feu rouge associé.</comment>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>21</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Depot</name>
+      <rule>Article 607</rule>
+      <indication>Depot</indication>
+      <description>tableau fixe ou mobile, lumineux.</description>
+      <comment>Indique que la direction correspondante est une voie de dépôt. tableau mobile: ce tableau est en principe groupé avec le signal carré précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>22</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Garage</name>
+      <rule>Article 607</rule>
+      <indication>Garage</indication>
+      <description>tableau fixe ou mobile, lumineux.</description>
+      <comment>Indique que la direction correspondante est une voie de service.tableau mobile: ce tableau est en principe groupé avec le signal carré précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>23</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Heurtoir</name>
+      <rule>Article 607</rule>
+      <indication>Heurtoir</indication>
+      <description>tableau fixe ou mobile, lumineux.</description>
+      <comment>Indique que la direction correspondante est une voie en impasse.tableau mobile: ce tableau est en principe groupé avec le signal carré précédant l’aiguille en pointe. Les heurtoirs, sont, s’il y a lieu, repérés de nuit par un feu violet ou un feu rouge.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>24</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Impasse</name>
+      <rule>Article 607</rule>
+      <indication>Impasse</indication>
+      <description>tableau fixe ou mobile, lumineux.</description>
+      <comment>Indique que la direction correspondante est une voie en impasse.tableau mobile: ce tableau est en principe groupé avec le signal carré précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>25</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Sas</name>
+      <rule>Article 607</rule>
+      <indication>SAS</indication>
+      <description>tableau fixe ou mobile, lumineux.</description>
+      <comment>Indique que la direction correspondante est une voie en Sas.tableau mobile: ce tableau est en principe groupé avec le signal carré précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>26</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVPDark</name>
+      <rule>.</rule>
+      <indication>TIV Rappel éteint</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>17</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVP</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>18</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVRDark</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>19</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR30</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>10</dccAspect>
+  </aspect>
+  <aspect>
+      <name>TIVR40</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>11</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR50</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>12</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR60</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>13</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR70</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>14</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR80</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>15</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR90</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>16</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR100</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>17</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR110</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>18</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR120</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>19</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR130</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>20</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR140</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>21</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR150</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>22</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVR160</name>
+      <rule>.</rule>
+      <indication>TIV Rappel</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>indique la vitesse à respecter au niveau de l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>23</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVADark</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>14</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA30</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>15</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA40</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>16</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA50</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>17</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA60</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>18</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA70</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>19</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA80</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>20</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA90</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>21</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA100</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>22</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA110</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>23</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA120</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>24</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA130</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>25</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA140</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>26</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA150</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>27</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIVA160</name>
+      <rule>.</rule>
+      <indication>TIV annonce</indication>
+      <description>tableau mobile lumineux.</description>
+      <comment>Indique que la vitesse à respecter au niveau du TIV de Rappel précédant l’aiguille en pointe.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>28</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIPDark</name>
+      <rule>Article ?</rule>
+      <indication>Tableau indicateur de provenance groupé</indication>
+      <description>Tableau indicateur de provenance groupé avec le signal de groupe éteint.</description>
+      <comment>Eteint si non utilisé.</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>19</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIP1</name>
+      <rule>Article ?</rule>
+      <indication>Tableau indicateur de provenance groupé</indication>
+      <description>Tableau indicateur de provenance groupé avec le signal de groupe à 1.</description>
+      <comment>indiquant au mécanicien de la voie 1 que rien ne s'oppose à ce qu'il franchisse le chevron en vue de l'exécution du mouvement</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>20</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIP2</name>
+      <rule>Article ?</rule>
+      <indication>Tableau indicateur de provenance groupé</indication>
+      <description>Tableau indicateur de provenance groupé avec le signal de groupe à 2.</description>
+      <comment>indiquant au mécanicien de la voie 2 que rien ne s'oppose à ce qu'il franchisse le chevron en vue de l'exécution du mouvement</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>21</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIP3</name>
+      <rule>Article ?</rule>
+      <indication>Tableau indicateur de provenance groupé</indication>
+      <description>Tableau indicateur de provenance groupé avec le signal de groupe à 3.</description>
+      <comment>indiquant au mécanicien de la voie 3 que rien ne s'oppose à ce qu'il franchisse le chevron en vue de l'exécution du mouvement</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>22</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIP4</name>
+      <rule>Article ?</rule>
+      <indication>Tableau indicateur de provenance groupé</indication>
+      <description>Tableau indicateur de provenance groupé avec le signal de groupe à 4.</description>
+      <comment>indiquant au mécanicien de la voie 4 que rien ne s'oppose à ce qu'il franchisse le chevron en vue de l'exécution du mouvement</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>23</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIP5</name>
+      <rule>Article ?</rule>
+      <indication>Tableau indicateur de provenance groupé</indication>
+      <description>Tableau indicateur de provenance groupé avec le signal de groupe à 5.</description>
+      <comment>indiquant au mécanicien de la voie 5 que rien ne s'oppose à ce qu'il franchisse le chevron en vue de l'exécution du mouvement</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>24</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIP6</name>
+      <rule>Article ?</rule>
+      <indication>Tableau indicateur de provenance groupé</indication>
+      <description>Tableau indicateur de provenance groupé avec le signal de groupe à 6.</description>
+      <comment>indiquant au mécanicien de la voie 6 que rien ne s'oppose à ce qu'il franchisse le chevron en vue de l'exécution du mouvement</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>25</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIP7</name>
+      <rule>Article ?</rule>
+      <indication>Tableau indicateur de provenance groupé</indication>
+      <description>Tableau indicateur de provenance groupé avec le signal de groupe à 7.</description>
+      <comment>indiquant au mécanicien de la voie 7 que rien ne s'oppose à ce qu'il franchisse le chevron en vue de l'exécution du mouvement</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>26</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIP8</name>
+      <rule>Article ?</rule>
+      <indication>Tableau indicateur de provenance groupé</indication>
+      <description>Tableau indicateur de provenance groupé avec le signal de groupe à 8.</description>
+      <comment>indiquant au mécanicien de la voie 8 que rien ne s'oppose à ce qu'il franchisse le chevron en vue de l'exécution du mouvement</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>27</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIP9</name>
+      <rule>Article ?</rule>
+      <indication>Tableau indicateur de provenance groupé</indication>
+      <description>Tableau indicateur de provenance groupé avec le signal de groupe à 9.</description>
+      <comment>indiquant au mécanicien de la voie 9 que rien ne s'oppose à ce qu'il franchisse le chevron en vue de l'exécution du mouvement</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>28</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TIP10</name>
+      <rule>Article ?</rule>
+      <indication>Tableau indicateur de provenance groupé</indication>
+      <description>Tableau indicateur de provenance groupé avec le signal de groupe à 10.</description>
+      <comment>indiquant au mécanicien de la voie 10 que rien ne s'oppose à ce qu'il franchisse le chevron en vue de l'exécution du mouvement</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>29</dccAspect>
+ </aspect>
+ <aspect>
+      <name>TECS</name>
+      <rule>Article ?</rule>
+      <indication>Tableau d'Entrée à Contre Sens</indication>
+      <description>Indique une entrée à contre sens</description>
+      <comment> Indique au mécanicien une entrée à contre sens d'une installations Permanentes de Contre Sens</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>10</dccAspect>
+ </aspect>
+  <aspect>
+      <name>TSCS</name>
+      <rule>Article ?</rule>
+      <indication>Tableau de Sortie du Contre Sens</indication>
+      <description>Indique une sortie du contre sens</description>
+      <comment> Indique au mécanicien une sortie du contre sens de l'installations Permanentes de Contre Sens</comment>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>11</dccAspect>
+ </aspect>
+ <aspect>
+      <name>Not Lit</name>
+      <rule> Sans </rule>
+      <indication> Dark </indication>
+      <description>Dark</description>
+      <comment>Dark</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>31</dccAspect>
+ </aspect>
+
+</aspects>
+
+  <imagetypes>
+    <imagetype type="large" />
+    <imagetype type="small" />
+    <imagetype type="aspects" />
+  </imagetypes>
+
+ <appearancefiles>
+    <appearancefile href="appearance-2F.xml" />
+    <appearancefile href="appearance-Manual-GUIDON.xml" />
+    <appearancefile href="appearance-Light-GUIDON.xml" />
+    <appearancefile href="appearance-CibleA.xml" />
+    <appearancefile href="appearance-CibleB.xml" />
+    <appearancefile href="appearance-CibleD.xml" />
+    <appearancefile href="appearance-CibleF.xml" />
+    <appearancefile href="appearance-CibleH.xml" />
+    <appearancefile href="appearance-CMeca-A.xml" />
+    <appearancefile href="appearance-Disque.xml" />
+    <appearancefile href="appearance-DisqueMeca.xml" />
+    <appearancefile href="appearance-ID3.xml" />
+    <appearancefile href="appearance-ID4.xml" />
+    <appearancefile href="appearance-ID5.xml" />
+    <appearancefile href="appearance-Manoeuvre.xml" />
+    <appearancefile href="appearance-Meca.xml" />
+    <appearancefile href="appearance-Pancarte.xml" />
+    <appearancefile href="appearance-SLM.xml" />
+    <appearancefile href="appearance-SMeca.xml" />
+    <appearancefile href="appearance-TIDD.xml" />
+    <appearancefile href="appearance-TIP.xml" />
+    <appearancefile href="appearance-TIVA.xml" />
+    <appearancefile href="appearance-TIVP.xml" />
+    <appearancefile href="appearance-TIVR.xml" />
+    <appearancefile href="appearance-TLC.xml" />
+  </appearancefiles>
+</aspecttable>

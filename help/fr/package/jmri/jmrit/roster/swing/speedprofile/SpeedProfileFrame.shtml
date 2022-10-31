@@ -1,30 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!--Translated by Herv&#233; Blorec bzh56420@yahoo.fr 2013/11/11 -->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!--Translated by Herv&#233; Blorec bzh56420@yahoo.fr 2013/11/11 -->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Power Control</title>
+  <title>JMRI: Profils de vitesse</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content="JMRI help Roster Speed Profiling">
-  <!--Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!--/Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Liste profils de vitesse</h1>
 
@@ -74,11 +61,12 @@
         <li><b>Annuler</b>-Annule le profilage ou le test</li>
 
         <li><b>profil</b>-D&eacute;marre le profilage</li>
-      </ul>Pour le profil de la loco, remplissez les d&eacute;tails
+      </ul>
+      <p>Pour le profil de la loco, remplissez les d&eacute;tails
       ci-dessus dans la fen&ecirc;tre, placez la locomotive dans la
       section de d&eacute;part vers l'avant vers (mais pas sur ) la
       section de la voie o&ugrave; le chronom&eacute;trage sera
-      fait, puis appuyez sur le bouton "profil".
+      fait, puis appuyez sur le bouton "profil".</p>
 
       <p>Ce qui arrive est que l'outil va r&eacute;gler la loco
       pour rouler vers l'avant au cran 1, lorsqu'il active le
@@ -113,11 +101,14 @@
       l'extr&eacute;mit&eacute;. Les r&eacute;sultats peuvent
       varier en particulier aux vitesses plus
       &eacute;lev&eacute;es, o&ugrave; vous aurez plus de chances
-      de constater un d&eacute;passement.</p>Ceci est la page
-      d'aide
-      help/fr/package/jmri/jmrit/roster/swing/speedprofile/speedProfileFrame.shtml
-      <!--#include virtual="/Footer.shtml" -->
+      de constater un d&eacute;passement.</p>
+
+      <p>Ceci est la page d'aide
+      help/fr/package/jmri/jmrit/roster/swing/speedprofile/speedProfileFrame.shtml</p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

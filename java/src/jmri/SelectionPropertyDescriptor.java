@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.swing.JComboBox;
 
 /**
  * Implementation of NamedBeanPropertyDescriptor for multiple choice properties.
@@ -32,18 +31,7 @@ public abstract class SelectionPropertyDescriptor extends NamedBeanPropertyDescr
         values = options;
         valueToolTips = optionTips;
     }
-    
-    /** 
-     * Get the Class of the property.
-     * <p>
-     * SelectionPropertyDescriber uses JComboBox.class
-     * @return JComboBox.class.
-     */
-    @Override
-    public Class<?> getValueClass() {
-        return JComboBox.class;
-    }
-    
+
     /**
      * Get the property options.
      * Should be same length as getOptionToolTips()

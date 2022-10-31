@@ -37,7 +37,7 @@ public class LocationsTableFrame extends OperationsFrame {
     javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(Bundle.getMessage("Id"));
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    JButton addButton = new JButton(Bundle.getMessage("AddLocation"));
 
     public LocationsTableFrame() {
         super(Bundle.getMessage("TitleLocationsTable"));
@@ -72,6 +72,9 @@ public class LocationsTableFrame extends OperationsFrame {
 
         addRadioButtonAction(sortByName);
         addRadioButtonAction(sortById);
+        
+        // tool tips
+        addButton.setToolTipText(Bundle.getMessage("AddLocationTip"));
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -83,9 +86,12 @@ public class LocationsTableFrame extends OperationsFrame {
         toolMenu.add(new ModifyLocationsCarLoadsAction());
         toolMenu.add(new ShowCarsByLocationAction(false, null, null));
         toolMenu.add(new ExportLocationsRosterAction());
+        toolMenu.add(new ImportLocationsRosterAction() );
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(null));
         }
+        toolMenu.addSeparator();
+        toolMenu.add(new ShowTrainsServingLocationAction(null, null));
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false));
         toolMenu.add(new PrintLocationsAction(true));

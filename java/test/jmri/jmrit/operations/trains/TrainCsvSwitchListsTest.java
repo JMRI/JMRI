@@ -1,25 +1,17 @@
 package jmri.jmrit.operations.trains;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 
@@ -65,14 +57,14 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
         Assert.assertTrue(switchListFileDepart.exists());
 
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(switchListFileDepart);
-        Assert.assertEquals("confirm number of lines in switch list", 26, in.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 29, in.lines().count());
 
         File switchListFileTerminate = InstanceManager.getDefault(TrainManagerXml.class)
                 .getCsvSwitchListFile(terminate_location.getName());
         Assert.assertTrue(switchListFileTerminate.exists());
 
         in = JUnitOperationsUtil.getBufferedReader(switchListFileTerminate);
-        Assert.assertEquals("confirm number of lines in switch list", 22, in.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 25, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();

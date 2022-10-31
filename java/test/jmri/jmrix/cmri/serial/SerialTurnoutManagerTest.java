@@ -3,10 +3,7 @@ package jmri.jmrix.cmri.serial;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.cmri.SerialTurnoutManager class
@@ -28,17 +25,15 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(stcs);
         // create and register the turnout manager object
-        l = new SerialTurnoutManager(memo) {
-            @Override
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {
-            }
-        };
+        l = new SerialTurnoutManager(memo);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
     @AfterEach
     public void tearDown() {
-        if (stcs != null) stcs.terminateThreads();
+        if (stcs != null) {
+            stcs.terminateThreads();
+        }
         stcs = null;
         memo = null;
 
@@ -56,24 +51,14 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("CT21", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value {}", o);
-        }
-        Assert.assertTrue(null != (SerialTurnout) o);
+        Assertions.assertNotNull( o);
+        Assertions.assertTrue(o instanceof SerialTurnout);
 
-        // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: {}", l.getBySystemName("CT21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   {}", l.getByUserName("my name"));
-        }
-
-        Assert.assertTrue(null != l.getBySystemName("CT21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assertions.assertNotNull( l.getBySystemName("CT21"));
+        Assertions.assertNotNull( l.getByUserName("my name"));
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
 
 }

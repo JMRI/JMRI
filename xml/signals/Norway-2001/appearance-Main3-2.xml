@@ -26,24 +26,19 @@
     </revision>
   </revhistory>
   
-  <aspecttable>Norway2001</aspecttable>
+  <aspecttable>Norway-2001</aspecttable>
 
   <name>Main 3-lamp over 2 lamp distant Signal</name>
   
-  <description>This uses a head with green, red and green and a head with flashing orange and green</description>
+  <description>This uses a head with green, red and green and a head with flashing orange and flashing green</description>
+  <description>Used in station area/exit on newer systems</description>
   
   <appearances>
 
     <appearance>
-      <aspectname>BlockStop</aspectname>
-      <show>flashred</show>  
-      <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/3and2-20A.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/NorwegianSignals/Aspects/20A.gif</imagelink>
-    </appearance>
-    <appearance>
       <aspectname>Stop</aspectname>
-      <show>red</show>  
-      <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/3and2-20B.gif</imagelink>
+      <show>flashred</show>  
+      <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/3and2-20b.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/NorwegianSignals/Aspects/20B.gif</imagelink>
     </appearance>
     <appearance>
@@ -126,7 +121,7 @@
     <held>
       <aspect>Stop</aspect>
     </held>
-	<dark>
+    <dark>
       <aspect>Off</aspect>
     </dark>
   </specificappearances>
@@ -149,13 +144,35 @@
    </aspectMapping>   
    <aspectMapping>
      <advancedAspect>Off</advancedAspect>
-     <ourAspect>BlockStop</ourAspect>
      <ourAspect>Stop</ourAspect>
    </aspectMapping>
 
 
+   <aspectMapping>
+     <advancedAspect>Clear Expect Stop</advancedAspect>
+     <ourAspect>Clear Expect Clear</ourAspect>
+   </aspectMapping>
+   <aspectMapping>
+     <advancedAspect>Clear Expect Diverging</advancedAspect>
+     <ourAspect>Clear Expect Clear</ourAspect>
+   </aspectMapping>   
+   <aspectMapping>
+     <advancedAspect>Clear Expect Clear</advancedAspect>
+     <ourAspect>Clear Expect Clear</ourAspect>
+   </aspectMapping>   
 
-   <!-- we need to have all possible advanced aspects even though they have nothing to do with our aspect !!!???  -->
+   <aspectMapping>
+     <advancedAspect>Diverging Expect Stop</advancedAspect>
+     <ourAspect>Clear Expect Diverging</ourAspect>
+   </aspectMapping>
+   <aspectMapping>
+     <advancedAspect>Diverging Expect Diverging</advancedAspect>
+     <ourAspect>Clear Expect Diverging</ourAspect>
+   </aspectMapping>   
+   <aspectMapping>
+     <advancedAspect>Diverging Expect Clear</advancedAspect>
+     <ourAspect>Clear Expect Diverging</ourAspect>
+   </aspectMapping>   
 
 
   </aspectMappings>

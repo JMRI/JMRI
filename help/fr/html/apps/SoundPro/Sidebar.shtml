@@ -1,0 +1,35 @@
+<!-- Sidebar.shtml -->
+<!-- Common sidebar for html/apps/[subdirectory] pages, mimics html/apps/Sidebar.shtml -->
+<!-- NOTE: each subdirectory MUST have a SidebarAppLocalPart.shtml -->
+
+<hr class="hide">
+
+    <div id="side"> <!-- Block of text on left side of page -->
+        <div style="text-align: center">JMRI&reg; is...</div>
+        <dl>
+
+           <!-- To include specific sidebar info for this subdirectory... -->
+           <!--#include virtual="SidebarAppLocalPart.shtml" -->
+
+            <!--#include virtual="/help/fr/parts/SidebarApplications.shtml" -->
+
+            <!--#include virtual="/help/fr/parts/SidebarTools.shtml" -->
+
+            <!--#include virtual="/help/fr/parts/SidebarLayoutAutomation.shtml" -->
+
+          <dt><a href="/help/fr/html/hardware/index.shtml">Materiel pris en Charge</a></dt>
+          <dd>JMRI prend en charge un large &#233;ventail de "Centrale" DCC produits par
+            diff&#233;rents fournisseurs pour l'automatisation de r&#233;seaux miniatures.</dd>
+	  <!-- If someday we want to show the whole list, use #include virtual="/help/fr/parts/SidebarSupportedHardware.shtml" -->
+
+   	    <!--#include virtual="/help/fr/parts/SidebarInstall.shtml" -->
+
+         </dl>
+
+    <!--#include virtual="/help/fr/parts/SidebarTail.shtml" -->
+
+</div> <!-- close #side -->
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
+<!-- /Sidebar.shtml -->
+

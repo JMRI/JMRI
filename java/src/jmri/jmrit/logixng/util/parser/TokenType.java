@@ -2,7 +2,7 @@ package jmri.jmrit.logixng.util.parser;
 
 /**
  * Types of tokens.
- * 
+ *
  * https://introcs.cs.princeton.edu/java/11precedence/
  */
 
@@ -29,6 +29,7 @@ public enum TokenType {
     TERNARY_QUESTION_MARK,   // ?
     TERNARY_COLON,           // :
     BOOLEAN_OR,         // ||
+    BOOLEAN_XOR,        // ^^  (Requested by Bob M)
     BOOLEAN_AND,        // &&
     BINARY_OR,          // |
     BINARY_XOR,         // ^

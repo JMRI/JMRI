@@ -178,11 +178,11 @@ public class IBLnPacketizer extends LnPacketizer {
                     // done with this one
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
-                    log.warn("run: unexpected LocoNetMessageException: {}", e);
+                    log.warn("run: unexpected LocoNetMessageException", e);
                 } // normally, we don't catch the unnamed Exception, but in this
                 // permanently running loop it seems wise.
                 catch (Exception e) {
-                    log.warn("run: unexpected Exception: {}", e);
+                    log.warn("run: unexpected Exception", e);
                 }
             } // end of permanent loop
         }
@@ -263,7 +263,7 @@ public class IBLnPacketizer extends LnPacketizer {
         if (xmtHandler == null) {
             xmtHandler = new XmtHandler();
         }
-        Thread xmtThread = new Thread(xmtHandler, "LocoNet Intellibox transmit handler");
+        xmtThread = new Thread(xmtHandler, "LocoNet Intellibox transmit handler");
         log.debug("Xmt thread starts at priority {}", xmtpriority);
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
@@ -273,7 +273,7 @@ public class IBLnPacketizer extends LnPacketizer {
         if (rcvHandler == null) {
             rcvHandler = new RcvHandler(this);
         }
-        Thread rcvThread = new Thread(rcvHandler, "LocoNet Intellibox receive handler");
+        rcvThread = new Thread(rcvHandler, "LocoNet Intellibox receive handler");
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();

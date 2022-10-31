@@ -49,21 +49,21 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (getDisabled()) {
             return null;
         }
-        return (LnPr2PowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class c) -> new LnPr2PowerManager(this));
+        return (LnPr2PowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class<?> c) -> new LnPr2PowerManager(this));
     }
 
     public LnPr2ThrottleManager getPr2ThrottleManager() {
         if (getDisabled()) {
             return null;
         }
-        return (LnPr2ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class c) -> new LnPr2ThrottleManager(this));
+        return (LnPr2ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class<?> c) -> new LnPr2ThrottleManager(this));
     }
 
     @Override
     public void dispose() {
         InstanceManager.deregister(this, PR2SystemConnectionMemo.class);
 
-        LnPr2PowerManager powerPr2Manager = get(PowerManager.class);
+        LnPr2PowerManager powerPr2Manager = (LnPr2PowerManager) get(PowerManager.class);
         if (powerPr2Manager != null) {
             powerPr2Manager.dispose();
             InstanceManager.deregister(powerPr2Manager, LnPowerManager.class);

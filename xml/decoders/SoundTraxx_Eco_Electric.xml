@@ -35,6 +35,12 @@
                 <surname>Heap</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>James</firstname>
+                <surname>Exler</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -102,12 +108,18 @@
             <date>2018-01-05</date>
             <authorinitials>ALM</authorinitials>
             <revremark>Separate ECO CVs file for Extended Function Map. Add labels to Extended Function map CVs.</revremark>
-         </revision>
-		<revision>
+        </revision>
+        <revision>
             <revnumber>5</revnumber>
             <date>2021-06-28</date>
             <authorinitials>DH</authorinitials>
             <revremark>Correct Handling of PI (CV31) and SI (CV32)</revremark>
+        </revision>
+        <revision>
+            <revnumber>6</revnumber>
+            <date>2022-08-16</date>
+            <authorinitials>JE</authorinitials>
+            <revremark>chg includes TSU2PaneLighting, TSU2PaneASCdiesel</revremark>
         </revision>
     </revhistory>
     <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
@@ -718,6 +730,9 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Coupler</label>
             </variable>
+            <!-- Lighting Configuration follows
+            see includes: ECOCV, ECOCVLightEffect -->
+            <!-- Sound Selection follows -->
             <variable CV="114" mask="XXXVXXXX" item="Sound Option 2" default="0" tooltip="Decoder will ignore throttle commands and the locomotive will remain stopped until the pantograph function is turned on">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <label>Pantograph Interlock</label>
@@ -726,7 +741,6 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <label>Auto Start Enable</label>
             </variable>
-            <!-- Sound Selection follows -->
             <variable CV="120" mask="XXXXVVVV" item="Sound Option 6" default="0" tooltip="Selects which airhorn to use">
                 <enumVal>
                     <enumChoice>
@@ -1204,9 +1218,9 @@
         </resets>
     </decoder>
     <!-- References to external Pane format definitions below -->
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneLighting.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCdiesel.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneASCdiesel.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneID.xml"/>

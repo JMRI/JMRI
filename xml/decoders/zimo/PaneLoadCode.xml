@@ -9,6 +9,10 @@
   <name xml:lang="de">Ladecode</name>
   <column>
     <display item="Decoder ID 1"/>
+    <display item="Decoder ID 1 Text" label=""/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Decoder ID 2"/>
     <display item="Decoder ID 3"/>
     <display item="Decoder ID 4"/>

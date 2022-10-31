@@ -26,7 +26,7 @@ import java.util.logging.Level;
  */
 public class BrowserFactory {
 
-    private static Map<String, EventFiringWebDriver> drivers = new HashMap<String, EventFiringWebDriver>();
+    private final static Map<String, EventFiringWebDriver> drivers = new HashMap<>();
 
     /**
      * Factory method for getting browsers
@@ -81,8 +81,8 @@ public class BrowserFactory {
     /**
      * close all currently open web browsers.
      */
-    public static void CloseAllDriver() {
-        drivers.keySet().forEach(o -> drivers.get(o).close());
+    public static void closeAllDrivers() {
+        drivers.forEach((name, o) -> o.close());
     }
 
     // initialize logging

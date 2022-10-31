@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: SPROG CBUS® Simple Mode Switcher Tool</title>
+  <title>JMRI: SPROG CBUS&reg; Simple Mode Switcher Tool</title>
   <meta name="author" content="Andrew Crosland">
   <meta name="keywords" content="JMRI SPROG CBUS Simple Mode Switcher Tool">
   <!--#include virtual="/Style.shtml" -->
@@ -30,7 +30,7 @@
       <p>The Decoder Pro main window status bar shows the currently available programmers.<br>
       <br></p>
       <img src="images/StatusBar.PNG" alt="DP3 status bar">
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

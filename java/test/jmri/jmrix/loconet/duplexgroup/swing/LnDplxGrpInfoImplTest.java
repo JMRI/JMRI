@@ -1,13 +1,13 @@
 package jmri.jmrix.loconet.duplexgroup.swing;
 
-import jmri.util.JUnitUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.duplexgroup.DuplexGroupMessageType;
+import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LnDplxGrpInfoImpl
@@ -17,15 +17,13 @@ import jmri.jmrix.loconet.duplexgroup.DuplexGroupMessageType;
  */
 public class LnDplxGrpInfoImplTest {
 
-    jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis;
-    jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo;
-    LnDplxGrpInfoImpl dpxGrpInfoImpl;
-    boolean propChangeQueryFlag;
-    boolean propChangeReportFlag;
-    boolean propChangeFlag;
-    int propChangeCount;
-    public javax.swing.Timer pacingTimer = null;
-    public boolean initialWaitIsDone;
+    private jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis;
+    private jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo;
+    private LnDplxGrpInfoImpl dpxGrpInfoImpl;
+    private boolean propChangeQueryFlag;
+    private boolean propChangeReportFlag;
+    private boolean propChangeFlag;
+    private int propChangeCount;
 
     @Test
     public void testCtor() {
@@ -707,7 +705,7 @@ public class LnDplxGrpInfoImplTest {
     @Test
     public void testCreateSetUr92GroupPasswordPacket() {
         LocoNetMessage m = new LocoNetMessage(20);
-        String testString = new String("1234");
+        String testString;
         char c0, c1, c2, c3;
         char[] conversion = new char[13];
         conversion[0] = '0';
@@ -871,7 +869,7 @@ public class LnDplxGrpInfoImplTest {
         for (int index = 4; index < 20; ++index) {
             m.setElement(index-1, 0);
             for (int i = 0; i < 16; ++i) {
-                int val = (int)(256*Math.random());
+                int val = JUnitUtil.getRandom().nextInt(256);
                 m.setElement(index, val);
 
                 Assert.assertTrue("checking isDuplexGroupMessge for byte "+index+
@@ -1103,25 +1101,25 @@ public class LnDplxGrpInfoImplTest {
             }
         }
     }
+
     
     @Test
     public void testHandleMessageDuplexInfoReport() {
-        java.beans.PropertyChangeListener l = new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if (((e.getPropertyName().equals("DPLXPCK_STAT_LN_UPDATE")))) {
-//                    log.warn("prop change query seen");
+        java.beans.PropertyChangeListener l = (java.beans.PropertyChangeEvent e) -> {
+            switch (e.getPropertyName()) {
+                case "DPLXPCK_STAT_LN_UPDATE":
+                    // log.warn("prop change query seen");
                     propChangeQueryFlag = true;
-                } else if ((e.getPropertyName().equals("DPLXPCK_NAME_UPDATE"))) {
-//                    log.warn("prop change update seen");
+                    break;
+                case "DPLXPCK_NAME_UPDATE": // prop change update seen
+                case "DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR": // prop change update if not currently error seen
                     propChangeReportFlag = true;
-                } else if (e.getPropertyName().equals("DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR")) {
-//                    log.warn("prop change update if not currently error seen");
-                    propChangeReportFlag = true;
-                }
-                propChangeFlag = true;
-                propChangeCount++;
+                    break;
+                default:
+                    break;
             }
+            propChangeFlag = true;
+            propChangeCount++;
         };
 
         dpxGrpInfoImpl.addPropertyChangeListener(l);
@@ -1141,7 +1139,7 @@ public class LnDplxGrpInfoImplTest {
 
 
         Assert.assertTrue("did see initial property change Report flag", propChangeReportFlag);
-        Assert.assertEquals("Did see a bunch of invalidation prop changes", 8, propChangeCount);
+        Assert.assertEquals("Did see a bunch of invalidation prop changes", 9, propChangeCount);
 
         propChangeCount = 0;
         propChangeReportFlag = false;
@@ -1149,18 +1147,17 @@ public class LnDplxGrpInfoImplTest {
         LocoNetMessage rcvMsg = lnis.outbound.get(0);
         dpxGrpInfoImpl.message(rcvMsg); // echo the transmitted message back to the sender
 
-        LocoNetMessage m = new LocoNetMessage(20);
         int ch = 4;
         int id = 131;
         String name = "\231\032\033\034\035\036\237\140";
         String pass="0200";
-        m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket(name, pass, ch, id);
+        LocoNetMessage m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket(name, pass, ch, id);
         Assert.assertTrue("Now waiting (2) for Duplex Group Name, etc. Report", dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage());
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
+        JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
         Assert.assertFalse("No longer waiting for Duplex Group Name, etc. Report", dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage());
-        Assert.assertEquals("Expected exactly one prop change event", 11, propChangeCount);
+        Assert.assertEquals("Expected 11 prop change events", 12, propChangeCount);
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1169,8 +1166,8 @@ public class LnDplxGrpInfoImplTest {
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
         Assert.assertFalse("No longer (2) waiting for Duplex Group Name, etc. Report", dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage());
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly one prop change event", 1, propChangeCount);
+        JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
+        Assert.assertEquals("Expected exactly 2 prop change events, one count, one detail", 2, propChangeCount);
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1180,8 +1177,8 @@ public class LnDplxGrpInfoImplTest {
         m.setElement(6, m.getElement(6)^1);
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly one prop change event", 2, propChangeCount);
+        JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
+        Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1193,7 +1190,7 @@ public class LnDplxGrpInfoImplTest {
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
         jmri.util.JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly one prop change event", 2, propChangeCount);
+        Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1204,8 +1201,8 @@ public class LnDplxGrpInfoImplTest {
         m.setElement(17, m.getElement(17)^1);
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly one prop change event", 2, propChangeCount);
+        JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
+        Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1216,8 +1213,8 @@ public class LnDplxGrpInfoImplTest {
         m.setElement(18, m.getElement(18)^1);
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly one prop change event", 2, propChangeCount);
+        JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
+        Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
 
         try {
             Thread.sleep(1300);
@@ -1233,8 +1230,8 @@ public class LnDplxGrpInfoImplTest {
         m.setElement(18, m.getElement(18)^1);
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly two prop change event", 2, propChangeCount);
+        JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
+        Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1246,8 +1243,8 @@ public class LnDplxGrpInfoImplTest {
         m.setElement(6, m.getElement(6)^1);
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly two prop change event", 2, propChangeCount);
+        JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
+        Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
         Assert.assertFalse("Query Timer no longer running",dpxGrpInfoImpl.isIplQueryTimerRunning());
 
         propChangeCount = 0;
@@ -1257,7 +1254,7 @@ public class LnDplxGrpInfoImplTest {
 
         m.setElement(0, m.getElement(0) ^ 1);
         dpxGrpInfoImpl.message(m);  // transmit the reply
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return propChangeFlag == false;},"message received");
+        JUnitUtil.fasterWaitFor(()->{return propChangeFlag == false;},"message received");
 
     }
 
@@ -1497,28 +1494,29 @@ public class LnDplxGrpInfoImplTest {
 
     }
 
-//
+    @ToDo("Fix test, JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 2;}); ")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "DB_DUPLICATE_SWITCH_CLAUSES",
+        justification = "keep seperate property changes")
     @Test
     public void testCountAndQuery() {
     
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return (!dpxGrpInfoImpl.isDuplexGroupQueryRunning());});
+        JUnitUtil.fasterWaitFor(()->{return (!dpxGrpInfoImpl.isDuplexGroupQueryRunning());},"dpxGrpInfoImpl not running");
 
-        java.beans.PropertyChangeListener l = new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if (((e.getPropertyName().equals("DPLXPCK_STAT_LN_UPDATE")))) {
-//                    log.warn("prop change query seen");
+        java.beans.PropertyChangeListener l = (java.beans.PropertyChangeEvent e) -> {
+            // log.warn("prop change query seen[{}]", e.getPropertyName());
+            switch (e.getPropertyName()) {
+                case "DPLXPCK_STAT_LN_UPDATE":
                     propChangeQueryFlag = true;
-                } else if ((e.getPropertyName().equals("DPLXPCK_NAME_UPDATE"))) {
-//                    log.warn("prop change update seen");
+                    break;
+                case "DPLXPCK_NAME_UPDATE":
+                case "DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR":
                     propChangeReportFlag = true;
-                } else if (e.getPropertyName().equals("DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR")) {
-//                    log.warn("prop change update if not currently error seen");
-                    propChangeReportFlag = true;
-                }
-                propChangeFlag = true;
-                propChangeCount++;
+                    break;
+                default:
+                    break;
             }
+            propChangeFlag = true;
+            propChangeCount++;
         };
 
         dpxGrpInfoImpl.addPropertyChangeListener(l);
@@ -1537,10 +1535,10 @@ public class LnDplxGrpInfoImplTest {
         Assert.assertEquals("LNIS outbound queue is empty", 0, lnis.outbound.size());
         Assert.assertEquals("propChangeCount is reset to 0", 0, propChangeCount);
         dpxGrpInfoImpl.countUr92sAndQueryDuplexIdentityInfo();
-        Assert.assertEquals("propChangeCount is now 18", 18, propChangeCount);
-        jmri.util.JUnitUtil.waitFor(()->{return lnis.outbound.size() > 0;}, "UR92 IPL query not received");
+        Assert.assertEquals("propChangeCount is now 21", 21, propChangeCount);
+        JUnitUtil.waitFor(()->{return !lnis.outbound.isEmpty();}, "UR92 IPL query not received");
 
-        Assert.assertEquals("propChangeCount is now 18", 18, propChangeCount);
+        Assert.assertEquals("propChangeCount is now 21", 21, propChangeCount);
         Assert.assertEquals("LNIS outbound queue has one message", 1, lnis.outbound.size());
 
         Assert.assertTrue("LDGII is not yet waiting for second UR92 Group report (2)", dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport());
@@ -1557,7 +1555,7 @@ public class LnDplxGrpInfoImplTest {
         }
         lnis.sendTestMessage(m2);
 
-        Assert.assertEquals("expect propChangeCount of 18", 18, propChangeCount);
+        Assert.assertEquals("expect propChangeCount of 21", 21, propChangeCount);
         propChangeCount = 0;
 
         m = new LocoNetMessage(20);
@@ -1595,10 +1593,10 @@ public class LnDplxGrpInfoImplTest {
 
         Assert.assertFalse("LDGII is no longer waiting for second UR92 IPL report (3)", dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport());
 
-        jmri.util.JUnitUtil.waitFor(()->{return lnis.outbound.size() == 3;}, "UR92 group query not received?");
+        JUnitUtil.waitFor(()->{return lnis.outbound.size() == 3;}, "UR92 group query not received?");
 
         Assert.assertFalse("LDGII is no longer waiting for UR92 IPL replies (4)", dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport());
-        jmri.util.JUnitUtil.waitFor(()->{return lnis.outbound.size() == 3;});
+        JUnitUtil.waitFor(()->{return lnis.outbound.size() == 3;},"wait for lnis outbound 3");
         Assert.assertEquals("message is Duplex Group Info Query - opcode", 0xe5, lnis.outbound.elementAt(2).getOpCode());
         Assert.assertEquals("message is Duplex Group Info Query - b1", 0x14, lnis.outbound.elementAt(2).getElement(1));
         Assert.assertEquals("message is Duplex Group Info Query - b2", 3, lnis.outbound.elementAt(2).getElement(2));
@@ -1607,54 +1605,54 @@ public class LnDplxGrpInfoImplTest {
         dpxGrpInfoImpl.message(lnis.outbound.elementAt(2));  // echo the Duplex Group Info Query message
         Assert.assertFalse("LDGII is no longer waiting for UR92 IPL replies (5)", dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport());
 
-        Assert.assertEquals("expect propChangeCount of 12", 12, propChangeCount);
+        Assert.assertEquals("expect propChangeCount of 13", 13, propChangeCount);
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1234", 12, 65);
         lnis.sendTestMessage(m);
 
-        Assert.assertEquals("expect propChangeCount of 22", 22, propChangeCount);
+        Assert.assertEquals("expect propChangeCount of 24", 24, propChangeCount);
 
         Assert.assertEquals("num outbound",3, lnis.outbound.size());
 
         Assert.assertEquals("got the UR92 reply info", 1,  dpxGrpInfoImpl.getNumUr92s() );
 
         lnis.sendTestMessage(m);
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 2;});
-        Assert.assertEquals("expect propChangeCount of 24", 24, propChangeCount);
+        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 2;}); // 2022 June - does not get to 2
+        Assert.assertEquals("expect propChangeCount of 27", 27, propChangeCount);
 
         lnis.sendTestMessage(m);
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 3;});
+        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 3;});
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Dcgitrax", "1234", 12, 65);
         lnis.sendTestMessage(m);
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 4;});
-        Assert.assertEquals("expect propChangeCount of 27", 27, propChangeCount);
+        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 4;});
+        Assert.assertEquals("expect propChangeCount of 32", 32, propChangeCount);
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1034", 12, 65);
 
         lnis.sendTestMessage(m);
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 5;});
-        Assert.assertEquals("expect propChangeCount of 29", 29, propChangeCount);
+        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 5;});
+        Assert.assertEquals("expect propChangeCount of 35", 35, propChangeCount);
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1234", 13, 65);
 
         lnis.sendTestMessage(m);
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 6;});
-        Assert.assertEquals("expect propChangeCount of 31", 31, propChangeCount);
+        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 6;});
+        Assert.assertEquals("expect propChangeCount of 38", 38, propChangeCount);
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1234", 12, 7);
 
         lnis.sendTestMessage(m);
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 7;});
-        Assert.assertEquals("expect propChangeCount of 33", 33, propChangeCount);
+        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 7;});
+        Assert.assertEquals("expect propChangeCount of 41", 41, propChangeCount);
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1234", 12, 65);
 
         lnis.sendTestMessage(m);
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 8;});
+        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 8;});
 
-        Assert.assertEquals("expect propChangeCount of 34", 34, propChangeCount);
+        Assert.assertEquals("expect propChangeCount of 43", 43, propChangeCount);
 
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return (!dpxGrpInfoImpl.isDuplexGroupQueryRunning());});
+        JUnitUtil.fasterWaitFor(()->{return (!dpxGrpInfoImpl.isDuplexGroupQueryRunning());},"dpxGrpInfoImpl not running");
 
         propChangeCount = 0;
         propChangeReportFlag = false;
@@ -1662,9 +1660,9 @@ public class LnDplxGrpInfoImplTest {
 
         Assert.assertEquals("propChangeCount is reset to 0", 0, propChangeCount);
         dpxGrpInfoImpl.countUr92sAndQueryDuplexIdentityInfo();
-        Assert.assertEquals("propChangeCount is now 18", 18, propChangeCount);
+        Assert.assertEquals("propChangeCount is now 21", 21, propChangeCount);
         dpxGrpInfoImpl.countUr92sAndQueryDuplexIdentityInfo();
-        Assert.assertEquals("propChangeCount is now 18", 19, propChangeCount);
+        Assert.assertEquals("propChangeCount is now 22", 22, propChangeCount);
 
 
     }
@@ -2163,7 +2161,7 @@ public class LnDplxGrpInfoImplTest {
         lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
 
-        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
         // memo.configureManagers(); // Skip this step, else autonomous loconet traffic is generated!
         jmri.InstanceManager.store(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
 
@@ -2182,5 +2180,5 @@ public class LnDplxGrpInfoImplTest {
         JUnitUtil.tearDown();
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImplTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImplTest.class);
 }

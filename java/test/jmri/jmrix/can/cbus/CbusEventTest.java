@@ -99,6 +99,8 @@ public class CbusEventTest {
     }
     
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "EC_UNRELATED_TYPES",
+        justification = "CanReply and CanMessage are CanFrame with custom equals")
     @SuppressWarnings("unlikely-arg-type")
     public void testEquals(){
     

@@ -79,6 +79,10 @@
       selection and again save your new train information, before clicking the
       <strong>Create</strong> button.</p>
 
+      <p class="noted">If the transit assigned to a train info file is changed, such as adding or
+      removing sections, the train info file will need to be updated.  This can done by loading and
+      then saving the affected train info file.</p>
+
       <p>To permanently remove an unneeded Train Info file from the <strong>dispatcher</strong>
       folder in your user preferences area, click the <strong>Delete...</strong> button, then
       select the train information file to be deleted.</p>

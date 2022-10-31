@@ -1,41 +1,19 @@
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
  * @author Randall Wood Copyright 2018
  */
 public class NamedBeanExpectedStateTest {
-
-    public NamedBeanExpectedStateTest() {
-    }
-
-    @BeforeAll
-    public static void setUpClass() {
-    }
-
-    @AfterAll
-    public static void tearDownClass() {
-    }
-
-    @BeforeEach
-    public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.initInternalSensorManager();
-    }
-
-    @AfterEach
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
 
     /**
      * Test of getExpectedState method, of class NamedBeanExpectedState.
@@ -49,23 +27,29 @@ public class NamedBeanExpectedStateTest {
 
     /**
      * Test of setExpectedState method, of class NamedBeanExpectedState.
+     * @throws java.lang.Exception on test error.
      */
     @Test
-    public void testSetExpectedState() {
+    public void testSetExpectedState() throws Exception {
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         NamedBeanExpectedState<Sensor> instance = new NamedBeanExpectedState<>(sm.provideSensor("IS12"), 3);
         Assert.assertEquals(3, instance.getExpectedState().intValue());
-        boolean thrown = false;
-        try {
-        instance.setExpectedState(null);
-        Assert.assertNull(instance.getExpectedState());
-        } catch (NullPointerException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("NPE thrown setting null state", thrown);
+
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
+            setStateToNull(instance);
+        });
+        Assertions.assertNotNull(ex,"NPE thrown setting null state");
+
         Assert.assertEquals(3, instance.getExpectedState().intValue());
         instance.setExpectedState(5);
         Assert.assertEquals(5, instance.getExpectedState().intValue());
+    }
+
+    @SuppressWarnings("null")
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
+        justification = "testing passing null to create exception ")
+    private void setStateToNull(NamedBeanExpectedState<?> instance){
+        instance.setExpectedState(null);
     }
 
     /**
@@ -85,7 +69,7 @@ public class NamedBeanExpectedStateTest {
     public void testGetName() {
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         NamedBeanExpectedState<Sensor> instance = new NamedBeanExpectedState<>(sm.provideSensor("IS12"), 3);
-        Assert.assertEquals(sm.getSensor("IS12").getDisplayName(), instance.getName());
+        Assert.assertEquals(sm.provideSensor("IS12").getDisplayName(), instance.getName());
     }
 
     /**
@@ -93,21 +77,40 @@ public class NamedBeanExpectedStateTest {
      */
     @Test
     public void testNullNamedBean() {
-        // JUnit 5 Assert.throwsException() would be nice...
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-        boolean thrown = false;
-        try {
-            new NamedBeanExpectedState<>(null, 3);
-        } catch (NullPointerException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("NPE thrown for null bean", thrown);
-        thrown = false;
-        try {
-            new NamedBeanExpectedState<>(sm.provideSensor("IS12"), null);
-        } catch (NullPointerException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("NPE thrown for null value", thrown);
+
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
+            cTorNpeNullBean();
+        });
+        Assertions.assertNotNull(ex,"NPE thrown for null bean");
+
+        ex = Assertions.assertThrows(NullPointerException.class, () -> {
+            provideValidSensorNullState(sm);
+        });
+        Assertions.assertNotNull(ex,"NPE thrown for null state value");
     }
+
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
+        justification = "testing passing null to create exception ")
+    private void cTorNpeNullBean() {
+        Assertions.assertNotNull(new NamedBeanExpectedState<>(null, 3));
+    }
+
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
+        justification = "testing passing null to create exception ")
+    private void provideValidSensorNullState(SensorManager sm){
+        Assertions.assertNotNull(new NamedBeanExpectedState<>(sm.provideSensor("IS12"), null));
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.initInternalSensorManager();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

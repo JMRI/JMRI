@@ -499,7 +499,9 @@ public interface Conditional extends NamedBean {
         SET_TRAIN_ID(ACTION_SET_TRAIN_ID, ItemType.WARRANT, rbx.getString("ActionSetTrainId")), // NOI18N
         SET_TRAIN_NAME(ACTION_SET_TRAIN_NAME, ItemType.WARRANT, rbx.getString("ActionSetTrainName")), // NOI18N
         SET_SIGNALMAST_ASPECT(ACTION_SET_SIGNALMAST_ASPECT, ItemType.SIGNALMAST, rbx.getString("ActionSetSignalMastAspect")), // NOI18N
-        THROTTLE_FACTOR(ACTION_THROTTLE_FACTOR, ItemType.WARRANT, rbx.getString("ActionSetThrottleFactor")), // NOI18N
+        GET_TRAIN_LOCATION(ACTION_GET_TRAIN_LOCATION, ItemType.WARRANT, rbx.getString("ActionSetTrainLocation")), // NOI18N
+        GET_BLOCK_WARRANT(ACTION_GET_BLOCK_WARRANT, ItemType.OBLOCK, rbx.getString("ActionGetBlockWarrant")), // NOI18N
+        GET_BLOCK_TRAIN_NAME(ACTION_GET_BLOCK_TRAIN_NAME, ItemType.OBLOCK, rbx.getString("ActionGetBlockTrainName")), // NOI18N
         SET_SIGNALMAST_HELD(ACTION_SET_SIGNALMAST_HELD, ItemType.SIGNALMAST, rbx.getString("ActionSetSignalMastHeld")), // NOI18N
         CLEAR_SIGNALMAST_HELD(ACTION_CLEAR_SIGNALMAST_HELD, ItemType.SIGNALMAST, rbx.getString("ActionClearSignalMastHeld")), // NOI18N
         SET_SIGNALMAST_DARK(ACTION_SET_SIGNALMAST_DARK, ItemType.SIGNALMAST, rbx.getString("ActionSetSignalMastDark")), // NOI18N
@@ -552,7 +554,7 @@ public interface Conditional extends NamedBean {
 
             Action[] typeArray4 = {ALLOCATE_WARRANT_ROUTE, DEALLOCATE_WARRANT_ROUTE,
                 SET_ROUTE_TURNOUTS, AUTO_RUN_WARRANT, MANUAL_RUN_WARRANT, CONTROL_TRAIN,
-                SET_TRAIN_ID, SET_TRAIN_NAME, THROTTLE_FACTOR};
+                SET_TRAIN_ID, SET_TRAIN_NAME, GET_TRAIN_LOCATION};
             warrantItemsList = Collections.unmodifiableList(Arrays.asList(typeArray4));
 
             Action[] typeArray5 = {SET_MEMORY, COPY_MEMORY};
@@ -579,7 +581,7 @@ public interface Conditional extends NamedBean {
 
             Action[] typeArray11 = {DEALLOCATE_BLOCK, SET_BLOCK_VALUE,
                 SET_BLOCK_ERROR, CLEAR_BLOCK_ERROR, SET_BLOCK_OUT_OF_SERVICE,
-                SET_BLOCK_IN_SERVICE};
+                SET_BLOCK_IN_SERVICE, GET_BLOCK_TRAIN_NAME, GET_BLOCK_WARRANT};
             oblockItemsList = Collections.unmodifiableList(Arrays.asList(typeArray11));
 
             Action[] typeArray12 = {PLAY_SOUND, CONTROL_AUDIO};
@@ -805,7 +807,7 @@ public interface Conditional extends NamedBean {
     static final int ACTION_CONTROL_TRAIN = 35;
     static final int ACTION_SET_TRAIN_ID = 36;
     static final int ACTION_SET_SIGNALMAST_ASPECT = 37;
-    static final int ACTION_THROTTLE_FACTOR = 38;
+    static final int ACTION_GET_TRAIN_LOCATION = 38;
     static final int ACTION_SET_SIGNALMAST_HELD = 39;
     static final int ACTION_CLEAR_SIGNALMAST_HELD = 40;
     static final int ACTION_SET_SIGNALMAST_DARK = 41;
@@ -822,6 +824,9 @@ public interface Conditional extends NamedBean {
     static final int ACTION_SET_NXPAIR_ENABLED = 51;
     static final int ACTION_SET_NXPAIR_DISABLED = 52;
     static final int ACTION_SET_NXPAIR_SEGMENT = 53;
+
+    static final int ACTION_GET_BLOCK_WARRANT = 54;
+    static final int ACTION_GET_BLOCK_TRAIN_NAME = 55;
 
     /**
      * ***********************************************************************************

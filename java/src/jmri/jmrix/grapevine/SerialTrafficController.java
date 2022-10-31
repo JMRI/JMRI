@@ -377,7 +377,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         }
     }
 
-    void loadBuffer(AbstractMRReply msg) {
+    protected void loadBuffer(AbstractMRReply msg) {
         msg.setElement(0, buffer[0]);
         msg.setElement(1, buffer[1]);
         msg.setElement(2, buffer[2]);

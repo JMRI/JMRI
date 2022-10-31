@@ -6,6 +6,9 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
  * Interface for the User Preferences Manager.
  * <p>
@@ -153,6 +156,7 @@ public interface UserPreferencesManager {
      * @param n        the position in an array
      * @return the name of the preference or null if non-existent
      */
+    @CheckForNull
     public String getPreferenceItemName(String strClass, int n);
 
     /**
@@ -162,6 +166,7 @@ public interface UserPreferencesManager {
      * @param item     the name of the item
      * @return the description of the preference
      */
+    @CheckForNull
     public String getPreferenceItemDescription(String strClass, String item);
 
     /**
@@ -268,6 +273,7 @@ public interface UserPreferencesManager {
      * @param comboBoxName the combo box name
      * @return the selected value
      */
+    @CheckForNull
     public String getComboBoxLastSelection(String comboBoxName);
 
     /**
@@ -315,6 +321,7 @@ public interface UserPreferencesManager {
      * @param strClass the class name
      * @return the description
      */
+    @Nonnull
     public String getClassDescription(String strClass);
 
     /**
@@ -322,6 +329,7 @@ public interface UserPreferencesManager {
      *
      * @return the list of class names
      */
+    @Nonnull
     public ArrayList<String> getPreferencesClasses();
 
     /**
@@ -551,102 +559,101 @@ public interface UserPreferencesManager {
 
      final UserPreferencesManager p;
      p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-     if (p.getRouteSaveMsg()){
-     final JDialog dialog = new JDialog();
-     dialog.setTitle("Reminder");
-     dialog.setLocationRelativeTo(null);
-     dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-     JPanel container = new JPanel();
-     container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-     container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+     if (p.getProperty("thisClass", "routeSaveMsg") { // NOI18N
+         final JDialog dialog = new JDialog();
+         dialog.setTitle(Bundle.getMessage(""ReminderTitle")); // I18N
+         dialog.setLocationRelativeTo(null);
+         dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+         JPanel container = new JPanel();
+         container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
-     JLabel question = new JLabel("Remember to save your Route information.", JLabel.CENTER);
-     question.setAlignmentX(Component.CENTER_ALIGNMENT);
-     container.add(question);
+         JLabel question = new JLabel("Remember to save your Route information.", JLabel.CENTER); // I18N
+         question.setAlignmentX(Component.CENTER_ALIGNMENT);
+         container.add(question);
 
-     JButton okButton = new JButton("Okay");
-     JPanel button = new JPanel();
-     button.setAlignmentX(Component.CENTER_ALIGNMENT);
-     button.add(okButton);
-     container.add(button);
+         JButton okButton = new JButton(Bundle.getMessage("ButtonOK");
+         JPanel buttons = new JPanel();
+         button.setAlignmentX(Component.CENTER_ALIGNMENT);
+         buttons.add(okButton);
+         container.add(buttons);
 
-     final JCheckBox remember = new JCheckBox("Do not remind me again?");
-     remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-     remember.setFont(remember.getFont().deriveFont(10f));
-     container.add(remember);
+         final JCheckBox remember = new JCheckBox(Bundle.getMessage("DontRemind");
+         remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+         remember.setFont(remember.getFont().deriveFont(10f));
+         container.add(remember);
 
-     okButton.addActionListener(new ActionListener(){
-     public void actionPerformed(ActionEvent e) {
-     if(remember.isSelected()){
-     p.setRouteSaveMsg(false);
-     }
-     dialog.dispose();
-     }
-     });
+         okButton.addActionListener(new ActionListener() {
+             public void actionPerformed(ActionEvent e) {
+                 p.setProperty("thisClass", "routeSaveMsg", remember.isSelected()) // NOI18N
+             }
+             dialog.dispose();
+         }
+         });
 
-
-     dialog.getContentPane().add(container);
-     dialog.pack();
-     dialog.setModal(true);
-     dialog.setVisible(true);
+         dialog.getContentPane().add(container);
+         dialog.pack();
+         dialog.setModal(true);
+         dialog.setVisible(true);
      }
 
-     */
+ */
 
  /*
      Example question message dialog box.
 
      final DefaultUserMessagePreferences p;
      p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-     if (p.getQuitAfterSave()==0x00){
-     final JDialog dialog = new JDialog();
-     dialog.setTitle(rb.getString("MessageShortQuitWarning"));
-     dialog.setLocationRelativeTo(null);
-     dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-     JPanel container = new JPanel();
-     container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-     container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+     if (p.getProperty("thisClass", "QuitAfterSave") == 0x00) { // NOI18N
+         final JDialog dialog = new JDialog();
+         dialog.setTitle(Bundle.getMessage("MessageShortQuitWarning")); // I18N
+         dialog.setLocationRelativeTo(null);
+         dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+         JPanel container = new JPanel();
+         container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
-     JLabel question = new JLabel(rb.getString("MessageLongQuitWarning"));
-     question.setAlignmentX(Component.CENTER_ALIGNMENT);
-     container.add(question);
+         JLabel question = new JLabel(Bundle.getMessage("MessageLongQuitWarning")); // resource is in # AppsConfigBundle.properties
+         question.setAlignmentX(Component.CENTER_ALIGNMENT);
+         container.add(question);
 
-     final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
-     remember.setFont(remember.getFont().deriveFont(10f));
-     remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+         final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting")); // I18N
+         remember.setFont(remember.getFont().deriveFont(10f));
+         remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-     JButton yesButton = new JButton("Yes");
-     JButton noButton = new JButton("No");
-     JPanel button = new JPanel();
-     button.setAlignmentX(Component.CENTER_ALIGNMENT);
-     button.add(yesButton);
-     button.add(noButton);
-     container.add(button);
+         JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+         JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
+         JPanel buttons = new JPanel();
+         buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
+         buttons.add(yesButton);
+         buttons.add(noButton);
+         container.add(buttons);
 
-     noButton.addActionListener(new ActionListener(){
-     public void actionPerformed(ActionEvent e) {
-     if(remember.isSelected()){
-     p.setQuitAfterSave(0x01);
-     }
-     dialog.dispose();
-     }
-     });
+         noButton.addActionListener(new ActionListener(){
+             public void actionPerformed(ActionEvent e) {
+                 if (remember.isSelected()) {
+                    p.setProperty("thisClass", "QuitAfterSave", 0x01) // NOI18N
+                 }
+                 dialog.dispose();
+             }
+         });
 
-     yesButton.addActionListener(new ActionListener(){
-     public void actionPerformed(ActionEvent e) {
-     if(remember.isSelected()) {
-     p.setQuitAfterSave(0x02);
-     }
-     dialog.dispose();
-     }
-     });
-     container.add(remember);
-     container.setAlignmentX(Component.CENTER_ALIGNMENT);
-     container.setAlignmentY(Component.CENTER_ALIGNMENT);
-     dialog.getContentPane().add(container);
-     dialog.pack();
-     dialog.setModal(true);
-     dialog.setVisible(true);
+         yesButton.addActionListener(new ActionListener(){
+             public void actionPerformed(ActionEvent e) {
+                 if (remember.isSelected()) {
+                    p.setProperty("thisClass", "QuitAfterSave", 0x02); // NOI18N
+                 }
+                 dialog.dispose();
+             }
+         });
+         container.add(remember);
+         container.setAlignmentX(Component.CENTER_ALIGNMENT);
+         container.setAlignmentY(Component.CENTER_ALIGNMENT);
+         dialog.getContentPane().add(container);
+         dialog.pack();
+         dialog.setModal(true);
+         dialog.setVisible(true);
      }
      */
+
 }

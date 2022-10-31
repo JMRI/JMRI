@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.util.JUnitUtil;
 
@@ -17,11 +15,11 @@ import jmri.util.JUnitUtil;
  */
 public class ArbitraryBeanTest {
 
-    private ArbitraryBeanImpl bean;
-    private final String ap = "arbitraryProperty";
-    private final String dp = "definedProperty";
-    private final String aip = "arbitraryIndexedProperty";
-    private final String dip = "definedIndexedProperty";
+    private ArbitraryBeanImpl bean = null;
+    private final static String AP = "arbitraryProperty";
+    private final static String DP = "definedProperty";
+    private final static String AIP = "arbitraryIndexedProperty";
+    private final static String DIP = "definedIndexedProperty";
 
     @BeforeEach
     public void setUp() {
@@ -37,52 +35,55 @@ public class ArbitraryBeanTest {
 
     @Test
     public void testSetProperty() {
-        assertThat(bean).hasFieldOrProperty(dp);
-        assertThat(bean.hasProperty(ap)).isFalse();
+        Assertions.assertNotNull(bean);
+        assertThat(bean).hasFieldOrProperty(DP);
+        assertThat(bean.hasProperty(AP)).isFalse();
         assertThat(bean.getDefinedProperty()).isNull();
-        assertThat(bean.getProperty(ap)).isNull();
-        assertThat(bean.getProperty(dp)).isNull();
-        bean.setProperty(dp, "set");
+        assertThat(bean.getProperty(AP)).isNull();
+        assertThat(bean.getProperty(DP)).isNull();
+        bean.setProperty(DP, "set");
         assertThat(bean.getDefinedProperty()).isEqualTo("set");
-        assertThat(bean.getProperty(dp)).isEqualTo("set");
-        bean.setProperty(ap, null);
-        assertThat(bean.hasProperty(ap)).isTrue();
-        assertThat(bean.getProperty(ap)).isNull();
-        bean.setProperty(ap, "set");
-        assertThat(bean.getProperty(ap)).isEqualTo("set");
+        assertThat(bean.getProperty(DP)).isEqualTo("set");
+        bean.setProperty(AP, null);
+        assertThat(bean.hasProperty(DP)).isTrue();
+        assertThat(bean.getProperty(AP)).isNull();
+        bean.setProperty(AP, "set");
+        assertThat(bean.getProperty(DP)).isEqualTo("set");
     }
 
     @Test
     public void testSetIndexedProperty() {
-        assertThat(bean.hasIndexedProperty(dip)).isTrue();
+        Assertions.assertNotNull(bean);
+        assertThat(bean.hasIndexedProperty(DIP)).isTrue();
         assertThat(bean.getDefinedIndexedProperty()).isEmpty();
-        assertThat(bean.hasIndexedProperty(aip)).isFalse();
-        bean.setIndexedProperty(dip, 0, "set");
+        assertThat(bean.hasIndexedProperty(AIP)).isFalse();
+        bean.setIndexedProperty(DIP, 0, "set");
         assertThat(bean.getDefinedIndexedProperty(0)).isEqualTo("set");
-        assertThat(bean.getIndexedProperty(dip, 0)).isEqualTo("set");
-        assertThat(bean.hasIndexedProperty(aip)).isFalse();
-        bean.setIndexedProperty(aip, 0, null);
-        assertThat(bean.hasIndexedProperty(aip)).isTrue();
-        assertThat(bean.getIndexedProperty(aip, 0)).isNull();
-        bean.setIndexedProperty(aip, 0, "set");
-        assertThat(bean.getIndexedProperty(aip, 0)).isEqualTo("set");
+        assertThat(bean.getIndexedProperty(DIP, 0)).isEqualTo("set");
+        assertThat(bean.hasIndexedProperty(AIP)).isFalse();
+        bean.setIndexedProperty(AIP, 0, null);
+        assertThat(bean.hasIndexedProperty(AIP)).isTrue();
+        assertThat(bean.getIndexedProperty(AIP, 0)).isNull();
+        bean.setIndexedProperty(AIP, 0, "set");
+        assertThat(bean.getIndexedProperty(AIP, 0)).isEqualTo("set");
     }
 
     @Test
     public void testGetPropertyNames() {
+        Assertions.assertNotNull(bean);
         assertThat(bean.getPropertyNames())
-                .contains(dp, dip)
-                .doesNotContain(ap, aip);
-        bean.setProperty(ap, null);
+                .contains(DP, DIP)
+                .doesNotContain(AP, AIP);
+        bean.setProperty(AP, null);
         assertThat(bean.getPropertyNames())
-                .contains(dp, dip, ap)
-                .doesNotContain(aip);
-        bean.setIndexedProperty(aip, 0, null);
+                .contains(DP, DIP, AP)
+                .doesNotContain(AIP);
+        bean.setIndexedProperty(AIP, 0, null);
         assertThat(bean.getPropertyNames())
-                .contains(dp, dip, ap, aip);
+                .contains(DP, DIP, AP, AIP);
     }
 
-    public class ArbitraryBeanImpl extends ArbitraryBean {
+    protected static class ArbitraryBeanImpl extends ArbitraryBean {
 
         public String definedProperty;
         public final List<String> definedIndexedProperty = new ArrayList<>();

@@ -1,25 +1,22 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: L'Éditeur de Panneaux</title>
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI help Panel Editor"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Panel Editor">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>L'Éditeur de Panneaux</h1>
-      <img src="PanelEditor.png" align="right" alt="">
+
+      <img src="images/PanelEditor.png" align="right" alt="">
       <p>Un panneau est un ensemble d'icônes représentant les différentes composantes d'un réseau.
       Certaines des icônes disponibles dans JMRI comprennent les aiguillages, signaux, et capteurs.
       Vous pouvez inclure une icône de fond pour votre panneau et ajouter le contenu de la mémoire
@@ -54,7 +51,7 @@
         et cliquez sur le bouton. Vous pouvez faire glisser l'étiquette autour après l'avoir
         insérer, mais vous ne pouvez pas actuellement modifier le texte ultérieurement.</li>
 
-        <li style="list-style: none"><img src="PanelEditor2.png" align="right" alt="">
+        <li style="list-style: none"><img src="images/PanelEditor2.png" align="right" alt="">
         </li>
 
         <li>Un menu déroulant où vous pouvez choisir le type d'icône ou de données que vous pouvez
@@ -288,8 +285,10 @@
       "../../../../html/doc/Technical/Names.shtml">noms de système</a>. Par exemple, si la seconde
       connexion est pour un système LocoNet, référerez vous au aiguillage LocoNet LTnn; ou un
       capteur LocoNet LSnn, etc (ou nn est le numéro de l'élément)</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

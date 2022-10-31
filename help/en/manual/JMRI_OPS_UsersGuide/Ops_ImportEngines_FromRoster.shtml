@@ -18,7 +18,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">Using JMRI® to Operate Trains</h1>
+      <h1 id="Top">Using JMRI&reg; to Operate Trains</h1>
 
       <h2>OperationsPro: Importing Locomotives from Roster</h2>
 
@@ -35,7 +35,7 @@
       <h3>Import locomotives from roster</h3>
 
       <p>This menu opens a system Import dialog box. If you already have a <span style=
-      "font-weight: bold;">DecoderPro® locomotive roster</span> created eg. when programming
+      "font-weight: bold;">DecoderPro&reg; locomotive roster</span> created eg. when programming
       decoders, you may import this roster into the OperationsPro Roster. All Locomotives that are
       not already in your OperationsPro Roster will be imported and a message will be displayed
       informing you of how many locomotives were imported:</p>
@@ -44,8 +44,8 @@
       src="images/Ops_Successful_Import.png">
       </div>
 
-      <p>This way you can use this tool any time you add Locomotives to your DecoderPro® locomotive
-      roster. The DecoderPro® locomotive roster doesn't have the locomotive's length, so a default
+      <p>This way you can use this tool any time you add Locomotives to your DecoderPro&reg; locomotive
+      roster. The DecoderPro&reg; locomotive roster doesn't have the locomotive's length, so a default
       length is entered for you. You should manually correct the Locomotive Length in OperationsPro
       if you want the program to correctly calculate your Train lengths.</p>
 

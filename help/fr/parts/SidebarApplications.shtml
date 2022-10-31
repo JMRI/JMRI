@@ -1,0 +1,17 @@
+<!-- SidebarApplications.shtml -->
+<!-- This is a sidebar page for French Applications, adapted from en/parts/SidebarApplications.shtml -->
+	<dt><a href="/help/fr/html/apps/">Applications</a></dt>
+	<dd>Par la communauté JMRI.org:
+		  <ul>
+          <li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+          <li><a href="../PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
+          <li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+          <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+          <li><a href="../SoundPro/SoundPro.shtml">SoundPro&trade;</a></li>
+          <li><i><a href="/community/connections/CommunityConnectionsIndex.shtml">Apps connectant á
+            JMRI...</a></i></li>
+          <li><i><a href="/help/fr/html/tools/scripting/JythonApps.shtml">Apps Jython pour JMRI...</a></i></li>
+          <li><a href="/help/en/html/FAQ.shtml">Questions</a></li>
+        </ul>
+  </dd>
+<!-- /SidebarApplications.shtml -->

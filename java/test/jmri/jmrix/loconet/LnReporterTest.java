@@ -73,7 +73,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
         LnReporter a1 = new LnReporter(1, tc, "L");
         LocoNetMessage l = new LocoNetMessage(new int[]{0xE4, 0x08, 0x00, 0x60, 0x01, 0x42, 0x35, 0x05});
         a1.messageFromManager(l);
-        Assert.assertEquals("Lissy message 1", "8501 seen southbound", ((Reportable) a1.getLastReport()).toReportString());
+        Assert.assertEquals("Lissy message 1", "8501:1 seen southbound", ((Reportable) a1.getLastReport()).toReportString());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
         LnReporter a3 = new LnReporter(3, tc, "L");
         LocoNetMessage l = new LocoNetMessage(new int[]{0xE4, 0x08, 0x00, 0x40, 0x03, 0x42, 0x35, 0x05});
         a3.messageFromManager(l);
-        Assert.assertEquals("Lissy message 2", "8501 seen northbound", ((Reportable) a3.getLastReport()).toReportString());
+        Assert.assertEquals("Lissy message 2", "8501:1 seen northbound", ((Reportable) a3.getLastReport()).toReportString());
     }
 
     @Test
@@ -120,8 +120,8 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
 
     @Test
     public void testGetBeanPhysicalLocation() {
-        // NOTE: it is unclear how JMRI makes use of the "physical location" 
-        // feature with respect to Reporters and IdTags, so testing here is 
+        // NOTE: it is unclear how JMRI makes use of the "physical location"
+        // feature with respect to Reporters and IdTags, so testing here is
         // sketchy at best.
         LocoNetMessage m = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2E, 0x08, 0x20, 0x04});
         ((LnReporter) r).messageFromManager(m);
@@ -305,8 +305,8 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
 
     @Test
     public void testGetPhysicalLocationAndAddress() {
-//        Assert.assertEquals("initial physical location", 
-//            PhysicalLocationReporter.Direction.UNKNOWN, 
+//        Assert.assertEquals("initial physical location",
+//            PhysicalLocationReporter.Direction.UNKNOWN,
 //            ((LnReporter)r).getDirection(((Reportable)r.getLastReport()).toReportString()));
 
         LocoNetMessage m = new LocoNetMessage(new int[]{0xe5, 0x09, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00});

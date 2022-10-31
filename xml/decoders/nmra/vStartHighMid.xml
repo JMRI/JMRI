@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
@@ -66,11 +66,13 @@
     <label xml:lang="cs">Rozjezdová rychlost</label>
     <label xml:lang="de">Abfahrgeschwindigkeit</label>
     <label xml:lang="nl">Startsnelheid</label>
+    <label xml:lang="es">Velocidad de arranque</label>
     <comment>A value of 255 corresponds to 100%</comment>
     <comment xml:lang="it">Un Valore di 255 corrisponde al 100%</comment>
     <comment xml:lang="de">Der Wert 255 entspricht 100%</comment>
     <comment xml:lang="cs">Hodnota 255 odpovídá 100 %</comment>
     <comment xml:lang="nl">Een waarde van 255 betekent 100%</comment>
+    <comment xml:lang="es">Un valor de 255 corresponde al 100%</comment>
   </variable>
   <variable item="Vhigh" CV="5">
     <decVal/>
@@ -79,6 +81,7 @@
     <label xml:lang="fr">Vmax</label>
     <label xml:lang="de">Höchstgeschwindigkeit</label>
     <label xml:lang="nl">Max. snelheid</label>
+    <label xml:lang="es">Velocidad máxima</label>
     <label xml:lang="cs">Maximální rychlost</label>
   </variable>
   <variable item="Vmid" CV="6">
@@ -88,6 +91,7 @@
     <label xml:lang="fr">Vmoy</label>
     <label xml:lang="de">Mittengeschwindigkeit</label>
     <label xml:lang="nl">Min. snelheid</label>
+    <label xml:lang="es">Velocidad intermedia</label>
     <label xml:lang="cs">Střední rychlost</label>
   </variable>
 </variables>

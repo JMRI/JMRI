@@ -55,7 +55,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
             return null;
         }
         return (MrcProgrammerManager)classObjectMap.computeIfAbsent(MrcProgrammerManager.class,
-                (Class c) -> new MrcProgrammerManager(new MrcProgrammer(this), this));
+                (Class<?> c) -> new MrcProgrammerManager(new MrcProgrammer(this), this));
     }
 
     public void setProgrammerManager(MrcProgrammerManager p) {
@@ -96,19 +96,19 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
     }
 
     public MrcPowerManager getPowerManager() {
-        return get(PowerManager.class);
+        return (MrcPowerManager)get(PowerManager.class);
     }
 
     public MrcTurnoutManager getTurnoutManager() {
-        return get(TurnoutManager.class);
+        return (MrcTurnoutManager)get(TurnoutManager.class);
     }
 
     public MrcThrottleManager getThrottleManager() {
-        return get(ThrottleManager.class);
+        return (MrcThrottleManager)get(ThrottleManager.class);
     }
 
     public MrcClockControl getClockControl() {
-        return get(ClockControl.class);
+        return (MrcClockControl)get(ClockControl.class);
     }
 
     @Override

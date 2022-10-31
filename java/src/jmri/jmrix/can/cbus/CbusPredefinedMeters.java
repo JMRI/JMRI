@@ -24,7 +24,7 @@ import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
  * @author Andrew Crosland 2021
  * Added extra current meter for systems with two track outputs
 */
-public class CbusPredefinedMeters implements CanListener {
+public class CbusPredefinedMeters implements CanListener, Disposable {
 
     private final TrafficController tc;
     private int _nodeToListen;
@@ -105,6 +105,7 @@ public class CbusPredefinedMeters implements CanListener {
     public void message(CanMessage m) {
     }
     
+    @Override
     public void dispose() {
         updateTask.disable(currentMeter);
         updateTask.disable(currentMeterExtra);
@@ -120,7 +121,7 @@ public class CbusPredefinedMeters implements CanListener {
     
     private class UpdateTask extends MeterUpdateTask {
     
-        public UpdateTask(int interval) {
+        protected UpdateTask(int interval) {
             super(interval);
         }
     
@@ -135,7 +136,7 @@ public class CbusPredefinedMeters implements CanListener {
             _eventToListenCurrent = 1; // hard coded at present
             _eventToListenVoltage = 2; // hard coded at present
             _eventToListenCurrentExtra = 3; // hard coded at present
-            CbusNodeTableDataModel cs =  jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
+            CbusNodeTableDataModel cs =  _memo.get(CbusNodeTableDataModel.class);
             if (cs != null) {
                 CbusNode csnode = cs.getCsByNum(0);
                 if (csnode!=null) {

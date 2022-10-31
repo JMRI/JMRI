@@ -27,7 +27,7 @@ public class CtcEditorSignalMastsTest {
 
     JFrameOperator _jfo = null;
 
-    static final int DELAY = 0;
+    static int DELAY = 0;  // if this is final, get dead code warnings
     static final boolean PAUSE = false;
 
     @Test
@@ -594,7 +594,6 @@ public class CtcEditorSignalMastsTest {
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

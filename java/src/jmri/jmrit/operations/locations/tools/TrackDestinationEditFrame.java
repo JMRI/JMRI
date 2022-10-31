@@ -1,22 +1,10 @@
 package jmri.jmrit.operations.locations.tools;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.text.MessageFormat;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,15 +12,9 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -78,11 +60,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
     public void initComponents(Track track) {
         _track = track;
 
-        // property changes
         // the following code sets the frame's initial state
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        // Set up the panels
         // Layout the panel by rows
         // row 1
         JPanel p1 = new JPanel();
@@ -120,7 +100,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
         p3.add(pRadioButtons);
         
-        // row 4 only for interchange / classification tracks
+        // row 4 only for C/I and Staging
         JPanel pFD = new JPanel();
         pFD.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
         pFD.add(onlyCarsWithFD);
@@ -164,7 +144,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
             _track.addPropertyChangeListener(this);
             trackName.setText(_track.getName());
             onlyCarsWithFD.setSelected(_track.isOnlyCarsWithFinalDestinationEnabled());
-            pFD.setVisible(_track.isInterchange());
+            pFD.setVisible(_track.isInterchange() || _track.isStaging());
             enableButtons(true);
         } else {
             enableButtons(false);
@@ -438,11 +418,11 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                     // must test in match mode
                                     track.setScheduleMode(Track.MATCH);
                                     String itemId = track.getScheduleItemId();
-                                    testDest = car.testDestination(destination, track);
+                                    testDest = car.checkDestination(destination, track);
                                     track.setScheduleMode(Track.SEQUENTIAL);
                                     track.setScheduleItemId(itemId);
                                 } else {
-                                    testDest = car.testDestination(destination, track);
+                                    testDest = car.checkDestination(destination, track);
                                 }
                                 if (testDest.equals(Track.OKAY)) {
                                     break; // done
@@ -498,8 +478,12 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
-        if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.DESTINATIONS_CHANGED_PROPERTY)) {
             updateDestinations();
+        }
+        if (e.getPropertyName().equals(Track.ROUTED_CHANGED_PROPERTY)) {
+            onlyCarsWithFD.setSelected((boolean) e.getNewValue());
         }
     }
 

@@ -118,7 +118,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
             InstanceManager.getDefault(ModuleManager.class).deleteBean(bean, "DoDelete");
         } catch (PropertyVetoException e) {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
-            log.error(e.getMessage());
+            log.error("{} : Could not Delete.", e.getMessage());
         }
     }
 
@@ -127,6 +127,11 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         StringWriter writer = new StringWriter();
         _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
         return writer.toString();
+    }
+
+    @Override
+    protected String getBrowserTitle() {
+        return Bundle.getMessage("LogixNG_Module_Browse_Title");
     }
 
     @Override

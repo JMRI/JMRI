@@ -52,5 +52,6 @@
     <label xml:lang="it">Abilita RailCom</label>
     <label xml:lang="cs">Povolit RailCom</label>
     <label xml:lang="nl">RailCom</label>
+    <label xml:lang="es">Habilitar RailCom</label>
   </variable>
 </variables>

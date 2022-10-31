@@ -37,8 +37,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/digital_expression_root.png"><img src=
-        "images/chapter10/digital_expression_root.png" alt="Chapter 10 digital expression root"
-        width="500" height="108"></a>
+        "images/chapter10/digital_expression_root.png" alt="Chapter 10 digital expression root"></a>
       </div>
 
       <p>This is a digital action socket. This can be used to create an action only module or
@@ -47,8 +46,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/digital_action_root.png"><img src=
-        "images/chapter10/digital_action_root.png" alt="Chapter 10 digital action root" width="500"
-        height="96"></a>
+        "images/chapter10/digital_action_root.png" alt="Chapter 10 digital action root"></a>
       </div>
 
       <h3>Inputs and Outputs</h3>
@@ -58,8 +56,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/parameters_dialog.png"><img src=
-        "images/chapter10/parameters_dialog.png" alt="Chapter 10 parameters dialog" width="617"
-        height="387"></a>
+        "images/chapter10/parameters_dialog.png" alt="Chapter 10 parameters dialog"></a>
       </div>
 
       <p>Click on the <strong>Add parameters</strong> button. Enter a name and select whether it is
@@ -68,15 +65,14 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/parameters_sample.png"><img src=
-        "images/chapter10/parameters_sample.png" alt="Chapter 10 parameters sample" width="617"
-        height="387"></a>
+        "images/chapter10/parameters_sample.png" alt="Chapter 10 parameters sample"></a>
       </div>
 
       <p>The first row is updated to show the inputs and outputs.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/definitions.png"><img src="images/chapter10/definitions.png" alt=
-        "Chapter 10 module definitions" width="589" height="108"></a>
+        "Chapter 10 module definitions"></a>
       </div>
       <a id="DigitalExpressionModule"></a>
       <h3>Calling a Digital Expression Module</h3>
@@ -84,12 +80,11 @@
       <p>Expression modules are called from ConditionalNG expressions and return
       <strong>true</strong> or <strong>false</strong>.</p>
 
-      <p>Use the <strong>Call module</strong> type in the <strong>Other</strong> category.</p>
+      <p>Use the <strong>Call module</strong> type in the <strong>Flow Control</strong> category.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/add_expression_call.png"><img src=
-        "images/chapter10/add_expression_call.png" alt="Chapter 10 add expression call" width="303"
-        height="185"></a>
+        "images/chapter10/add_expression_call.png" alt="Chapter 10 add expression call"></a>
       </div>
 
       <p>After clicking Create, the Module detail window will open. Select the module from the
@@ -97,8 +92,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/expression_list.png"><img src=
-        "images/chapter10/expression_list.png" alt="Chapter 10 call expression list" width="244"
-        height="96"></a>
+        "images/chapter10/expression_list.png" alt="Chapter 10 call expression list"></a>
       </div>
 
       <p>If there are parameters that need configuration, edit the newly added row and the
@@ -107,18 +101,16 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/call_expression_module.png"><img src=
-        "images/chapter10/call_expression_module.png" alt="Chapter 10 call expression module"
-        width="499" height="144"></a>
+        "images/chapter10/call_expression_module.png" alt="Chapter 10 call expression module"></a>
       </div>
       <a id="DigitalActionModule"></a>
       <h3>Calling a Digital Action Module</h3>
 
-      <p>Use the <strong>Call module</strong> type in the <strong>Other</strong> category.</p>
+      <p>Use the <strong>Call module</strong> type in the <strong>Flow Control</strong> category.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/add_action_call.png"><img src=
-        "images/chapter10/add_action_call.png" alt="Chapter 10 add action call" width="303" height=
-        "185"></a>
+        "images/chapter10/add_action_call.png" alt="Chapter 10 add action call"></a>
       </div>
 
       <p>After clicking Create, the Module detail window will open. Select the module from the
@@ -126,7 +118,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/action_list.png"><img src="images/chapter10/action_list.png" alt=
-        "Chapter 10 call action list" width="244" height="96"></a>
+        "Chapter 10 call action list"></a>
       </div>
 
       <p>If there are parameters that need configuration, edit the newly added row and the
@@ -138,8 +130,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/parameters_window.png"><img src=
-        "images/chapter10/parameters_window.png" alt="Chapter 10 parameters window" width="476"
-        height="316"></a>
+        "images/chapter10/parameters_window.png" alt="Chapter 10 parameters window"></a>
       </div>
 
       <p>For <strong>Input types</strong> there are a variety of sources. They range from literals
@@ -148,7 +139,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/input_types.png"><img src="images/chapter10/input_types.png" alt=
-        "Chapter 10 input types" width="425" height="189"></a>
+        "Chapter 10 input types"></a>
       </div>
 
       <p>For <strong>Output types</strong> there are two choices. The <strong>Output data</strong>
@@ -156,23 +147,21 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/output_types.png"><img src="images/chapter10/output_types.png"
-        alt="Chapter 10 output types" width="421" height="100"></a>
+        alt="Chapter 10 output types"></a>
       </div>
 
       <p>The selections in this example are local variables.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/call_parameters.png"><img src=
-        "images/chapter10/call_parameters.png" alt="Chapter 10 call parameters" width="490" height=
-        "424"></a>
+        "images/chapter10/call_parameters.png" alt="Chapter 10 call parameters"></a>
       </div>
 
       <p>The resulting ConditionalNG with the local variables and a comment on the module call.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter10/call_action_module.png"><img src=
-        "images/chapter10/call_action_module.png" alt="Chapter 10 call action module" width="500"
-        height="184"></a>
+        "images/chapter10/call_action_module.png" alt="Chapter 10 call action module"></a>
       </div>
 
       <hr>

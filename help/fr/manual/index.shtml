@@ -1,19 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Manual: Index</title><!-- translated by Herv&#233; BLOREC on 2016-06-13 -->
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="Sidebar.shtml" -->
 
   <div id="mainContent">
     <div>
@@ -247,10 +243,9 @@ fin de l'ancienne liste, &#224; supprimer -->
         "../html/tools/Audio.shtml">SoundPro™</a>)</li>
       </ul>
 
-      <p>Si ceci est votre première visite de notre manuel, nous suggérons que vous alliez visiter
-      DecoderPro® à <a href=
-      "https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
-
+      <p>Si ceci est votre première visite de notre manuel, nous suggérons que vous fassiez
+      notre <a href=
+      "https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">Tour DecoderPro®</a>
       pour avoir une vue d'ensemble du domaine que nous couvrons.</p>
 
       <p>Toute cette capacité est contenue dans une seule <a href=
@@ -258,25 +253,27 @@ fin de l'ancienne liste, &#224; supprimer -->
 
       <h2>Système Requis</h2>
 
-      <p>JMRI® demande que Java soit installé, si votre ordinateur est basé sur <a href=
-      "https://jmri.org/install/MacOSX.shtml">Mac</a>, <a href=
-      "https://jmri.org/install/WindowsNew.shtml">Windows</a>, or <a href=
-      "https://jmri.org/install/Linux.shtml">Linux</a> .</p>
+      <p>JMRI® demande que <a href="/java/index.shtml">Java</a> soit installé,
+      si votre ordinateur est basé sur <a href=
+      "/install/MacOSX.shtml">Mac</a>, <a href=
+      "/install/WindowsNew.shtml">Windows</a>, ou <a href=
+      "/install/Linux.shtml">Linux</a>.</p>
 
-      <p>La Version 2.12 peut s'exécuter sur tous les ordinateurs qui exploite Java 1.5 ou plu
-      tard.<br>
-      La Version 2.14.1 demande Java 1.5 ( ou 1.6 si vous souhaitez glisser et déposer )<br>
-      La Version 3.10.1 demande Java 1.7 ou plus tard.<br>
-      La Version 4.2 demande Java 1.8.</p>
+      <ul>
+        <li>Version 2.12: Java 1.5</li>
+        <li>Version 2.14.1: Java 1.5 (ou 1.6 si vous voulez glissez et d&#233;poser)</li>
+        <li>Version 3.10.1: Java 1.7 ou plus r&#233;cent.</li>
+        <li>Version 4.2: Java 1.8.</li>
+        <li>Les Versions 4.2 - 4.25.5: Java 8 (pas release 311) ou Java 11 (recommendé)</li>
+        <li>Les Version 4.25.6 - 4.26: Java 8 ou Java 11 (recommendé)</li>
+        <li>Les Versions 4.99 - 5.x: Java 11</li>
+      </ul>
 
-      <p>Plus de renseignements sur<a href="https://www.java.com/en/download/help/sysreq.xml">les
-      versions Java et les Exigences matérielles</a>.<br>
-      Obtenir la dernière version de Java en téléchargement libre l'adresse: <a href=
-      "http://java.com/download/" target="_blank">java.com/download</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

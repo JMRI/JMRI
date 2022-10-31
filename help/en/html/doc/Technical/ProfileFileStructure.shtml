@@ -174,7 +174,7 @@
           Program Location. You should never store user-created files anywhere within your Program
           Location, they are likely to be lost in a JMRI upgrade.
           <p>If you are creating your own scripts you may wish to change the Scripts Location
-          (Preferences-&gt;Locations).</p>
+          (Preferences-&gt;File Locations).</p>
         </dd>
 
         <dt>Program Location (portable name = "program:")</dt>

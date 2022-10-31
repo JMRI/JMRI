@@ -492,6 +492,8 @@
 
    <tocitem text="Jython Apps for JMRI " target="html.tools.scripting.JythonApps"/>
 
+   <tocitem text="Python 3 Introduction" target="html.tools.scripting.Python3"/>
+
    <tocitem text="Open Scripting Arch (Apple) " target="html.tools.scripting.AppleScript"/>
 
   </tocitem>
@@ -581,6 +583,9 @@
    <tocitem text="Simple Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
 
   </tocitem>
+
+  <tocitem text="Virtual Sound Decoder " target="html.tools.vsd.index"/>
+
   <tocitem text="Warrants " target="html.tools.WarrantsIntro">
    <tocitem text="Warrants Overview and Getting Started " target="package.jmri.jmrit.logix.Warrant"/>
 

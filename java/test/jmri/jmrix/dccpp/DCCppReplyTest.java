@@ -3,6 +3,7 @@ package jmri.jmrix.dccpp;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 
+import jmri.util.JUnitAppender;
 import java.util.LinkedHashMap;
 
 import org.junit.Assert;
@@ -169,8 +170,14 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         r = DCCppReply.parseDCCppReply("c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0"); //bad meter type 'X' passed
         Assert.assertTrue( r.isMeterReply());
         Assert.assertFalse(r.isMeterTypeCurrent());
+        JUnitAppender.assertWarnMessageStartingWith("Meter Type 'X' is not valid type in message 'c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0'");
+        
         Assert.assertFalse(r.isMeterTypeVolt());
+        JUnitAppender.assertWarnMessageStartingWith("Meter Type 'X' is not valid type in message 'c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0'");
+        
         Assert.assertEquals("", r.getMeterType()); //invalid meter types returned as empty string
+        JUnitAppender.assertWarnMessageStartingWith("Meter Type 'X' is not valid type in message 'c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0'");
+        
         Assert.assertEquals(jmri.Meter.Unit.NoPrefix, r.getMeterUnit());
 
     }
@@ -354,7 +361,13 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringDiagReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("* This is a test *");
-        Assert.assertEquals("Monitor string", "DIAG: This is a test", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "DIAG: This is a test ", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("*This is a test with a \nnewline*");
+        Assert.assertEquals("Monitor string", "DIAG: This is a test with a \nnewline", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("**");
+        Assert.assertEquals("Monitor string", "DIAG: ", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("*****");
+        Assert.assertEquals("Monitor string", "DIAG: ***", l.toMonitorString());
     }
 
     @Test
@@ -502,13 +515,35 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringCVWriteByteReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("r 1234|4321|5 123");
-        Assert.assertEquals("Monitor string", "Program Reply: Callback Num: 1234, Callback Sub: 4321, CV: 5, Value: 123", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Program Reply: CallbackNum:1234, Sub:4321, CV:5, Value:123", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("r 5 123"); // <r cv value>
+        Assert.assertEquals("Monitor string", "Program Reply: CV:5, Value:123", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("r 3 -1"); // <r cv value>
+        Assert.assertEquals("Monitor string", "Program Reply: CV:3, Value:-1", l.toMonitorString());
+    }
+
+    @Test
+    public void testMonitorStringLocoIdReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("r 456"); // <r locoId>
+        Assert.assertEquals("Monitor string", "Program LocoId Reply: LocoId:456", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("r -1"); // <r locoId> (-1 for error)
+        Assert.assertEquals("Monitor string", "Program LocoId Reply: LocoId:-1", l.toMonitorString());
+    }
+
+    @Test
+    public void testMonitorStringVerifyReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("v 78 99"); // <v cv byteValue>
+        Assert.assertEquals("Monitor string", "Prog Verify Reply: CV: 78, Value: 99", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("v 90 -1"); // <v cv byteValue>
+        Assert.assertEquals("Monitor string", "Prog Verify Reply: CV: 90, Value: -1", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringBitWriteReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("r 1234|4321|5 3 1");
-        Assert.assertEquals("Monitor string", "Program Bit Reply: Callback Num: 1234, Callback Sub: 4321, CV: 5, CV Bit: 3, Value: 1", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Program Bit Reply: CallbackNum:1234, Sub:4321, CV:5, Bit:3, Value:1", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("r 5 3 1"); // <r cv bit value>
+        Assert.assertEquals("Monitor string", "Program Bit Reply: CV:5, Bit:3, Value:1", l.toMonitorString());
     }
 
     @Test
@@ -530,6 +565,7 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new DCCppReply();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = msg = null;

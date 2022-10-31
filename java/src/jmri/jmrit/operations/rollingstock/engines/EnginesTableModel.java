@@ -474,7 +474,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case BUILT_COLUMN:
                 return eng.getBuilt();
             case OWNER_COLUMN:
-                return eng.getOwner();
+                return eng.getOwnerName();
             case VALUE_COLUMN:
                 return eng.getValue();
             case RFID_COLUMN:
@@ -510,7 +510,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 engine.setBuilt(value.toString());
                 break;
             case OWNER_COLUMN:
-                engine.setOwner(value.toString());
+                engine.setOwnerName(value.toString());
                 break;
             case VALUE_COLUMN:
                 engine.setValue(value.toString());
@@ -527,7 +527,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 SwingUtilities.invokeLater(() -> {
                     engineSetFrame = new EngineSetFrame();
                     engineSetFrame.initComponents();
-                    engineSetFrame.loadEngine(engine);
+                    engineSetFrame.load(engine);
                 });
                 break;
             case EDIT_COLUMN:

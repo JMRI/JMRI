@@ -18,6 +18,8 @@ public class CanSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Ca
         // without knowing which system is connected via can, there is no
         // way to provide a consist manager.
         Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
+        scm.setProtocol(ConfigurationManager.SPROGCBUS);
+        Assert.assertTrue("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override

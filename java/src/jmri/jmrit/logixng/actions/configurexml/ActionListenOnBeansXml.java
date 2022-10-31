@@ -63,7 +63,7 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
         loadCommon(h, shared);
         
         List<Element> parameterList = shared.getChild("References").getChildren();  // NOI18N
-        log.debug("Found " + parameterList.size() + " references");  // NOI18N
+        log.debug("Found {} references", parameterList.size() );  // NOI18N
         
         for (Element e : parameterList) {
             Element elementName = e.getChild("name");

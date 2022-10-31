@@ -35,11 +35,6 @@ public class LnStreamPortPacketizer extends LnPacketizer {
         super(m);
     }
 
-    @Deprecated
-    public LnStreamPortPacketizer() {
-        this(new LocoNetSystemConnectionMemo());
-    }
-
     public LnStreamPortController streamController = null;
 
     @Override
@@ -146,7 +141,7 @@ public class LnStreamPortPacketizer extends LnPacketizer {
         if (xmtHandler == null) {
             xmtHandler = new XmtHandler();
         }
-        Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+        xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
         log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
@@ -156,7 +151,7 @@ public class LnStreamPortPacketizer extends LnPacketizer {
         if (rcvHandler == null) {
             rcvHandler = new RcvHandler(this);
         }
-        Thread rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
+        rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();

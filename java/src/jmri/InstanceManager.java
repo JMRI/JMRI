@@ -104,6 +104,36 @@ public final class InstanceManager {
         getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), l.indexOf(item), null, item);
     }
 
+
+    /**
+     * Store an object of a particular type for later retrieval via
+     * {@link #getDefault} or {@link #getList}.
+     *<p>
+     * {@link #store} is preferred to this method because it does type
+     * checking at compile time.  In (rare) cases that's not possible,
+     * and run-time checking is required.
+     *
+     * @param <T>  The type of the class
+     * @param item The object of type T to be stored
+     * @param type The class Object for the item's type. This will be used as
+     *             the key to retrieve the object later.
+     */
+    public static <T> void storeUnchecked(@Nonnull Object item, @Nonnull Class<T> type) {
+        log.debug("Store item of type {}", type.getName());
+        if (item == null) {
+            NullPointerException npe = new NullPointerException();
+            log.error("Should not store null value of type {}", type.getName());
+            throw npe;
+        }
+        List<T> l = getList(type);
+        try {
+            l.add(type.cast(item));
+            getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), l.indexOf(item), null, item);
+        } catch (ClassCastException ex) {
+            log.error("Attempt to do unchecked store with invalid type {}", type, ex);
+        }
+    }
+
     /**
      * Retrieve a list of all objects of type T that were registered with
      * {@link #store}.
@@ -117,6 +147,24 @@ public final class InstanceManager {
     public static <T> List<T> getList(@Nonnull Class<T> type) {
         return getDefault().getInstances(type);
     }
+
+    /**
+     * Retrieve a list of all objects of a specific type that were registered with
+     * {@link #store}.
+     *
+     * Intended for use with i.e. scripts where access to the class type is inconvenient.
+     * In Java code where typing is enforced, use {@link #getList(Class)}.
+     *
+     * @param className Fully qualified class name
+     * @return A list of type Objects registered with the manager or an empty
+     *         list.
+     * @throws IllegalArgumentException if the named class doesn't exist
+     */
+    @Nonnull
+    public static List<Object> getList(@Nonnull String className) {
+        return getDefault().getInstances(className);
+    }
+
 
     /**
      * Deregister all objects of a particular type.
@@ -209,6 +257,43 @@ public final class InstanceManager {
     }
 
     /**
+     * Retrieve the last object of specific type that was registered with
+     * {@link #store(java.lang.Object, java.lang.Class) }.
+     *
+     * Intended for use with i.e. scripts where access to the class type is inconvenient.
+     * In Java code where typing is enforced, use {@link #getDefault(Class)}.
+     *
+     * <p>
+     * Unless specifically set, the default is the last object stored, see the
+     * {@link #setDefault(java.lang.Class, java.lang.Object) } method.
+     * <p>
+     * In some cases, InstanceManager can create the object the first time it's
+     * requested. For more on that, see the class comment.
+     * <p>
+     * In most cases, system configuration assures the existence of a default
+     * object, so this method will log and throw an exception if one doesn't
+     * exist. Use {@link #getNullableDefault(java.lang.Class)} or
+     * {@link #getOptionalDefault(java.lang.Class)} if the default is not
+     * guaranteed to exist.
+     *
+     * @param className Fully qualified class name
+     * @return The default object for type
+     * @throws NullPointerException if no default object for type exists
+     * @throws IllegalArgumentException if the named class doesn't exist
+     * @see #getNullableDefault(java.lang.Class)
+     * @see #getOptionalDefault(java.lang.Class)
+     */
+    @Nonnull
+    public static Object getDefault(@Nonnull String className) {
+        log.trace("getDefault of type {}", className);
+        Object object = InstanceManager.getNullableDefault(className);
+        if (object == null) {
+            throw new NullPointerException("Required nonnull default for " + className + " does not exist.");
+        }
+        return object;
+    }
+
+    /**
      * Retrieve the last object of type T that was registered with
      * {@link #store(java.lang.Object, java.lang.Class) }.
      * <p>
@@ -230,6 +315,41 @@ public final class InstanceManager {
      */
     @CheckForNull
     public static <T> T getNullableDefault(@Nonnull Class<T> type) {
+        return getDefault().getInstance(type);
+    }
+
+    /**
+     * Retrieve the last object of type T that was registered with
+     * {@link #store(java.lang.Object, java.lang.Class) }.
+     *
+     * Intended for use with i.e. scripts where access to the class type is inconvenient.
+     * In Java code where typing is enforced, use {@link #getNullableDefault(Class)}.
+     * <p>
+     * Unless specifically set, the default is the last object stored, see the
+     * {@link #setDefault(java.lang.Class, java.lang.Object) } method.
+     * <p>
+     * In some cases, InstanceManager can create the object the first time it's
+     * requested. For more on that, see the class comment.
+     * <p>
+     * In most cases, system configuration assures the existence of a default
+     * object, but this method also handles the case where one doesn't exist.
+     * Use {@link #getDefault(java.lang.Class)} when the object is guaranteed to
+     * exist.
+     *
+     * @param className Fully qualified class name
+     * @return The default object for type.
+     * @throws IllegalArgumentException if the named class doesn't exist
+     * @see #getOptionalDefault(java.lang.Class)
+     */
+    @CheckForNull
+    public static Object getNullableDefault(@Nonnull String className) {
+        Class<?> type;
+        try {
+            type = Class.forName(className);
+        } catch (ClassNotFoundException ex) {
+            log.error("No class found: {}", className);
+            throw new IllegalArgumentException(ex);
+        }
         return getDefault().getInstance(type);
     }
 
@@ -412,7 +532,7 @@ public final class InstanceManager {
     /**
      * Check if a default has been set for the given type.
      * <p>
-     * As a side-effect, then (a) ensures that the list for the given 
+     * As a side-effect, then (a) ensures that the list for the given
      * type exists, though it may be empty, and (b) if it had to create
      * the list, a PropertyChangeEvent is fired to denote that.
      *
@@ -429,7 +549,7 @@ public final class InstanceManager {
     /**
      * Check if a particular type has been initialized without
      * triggering an automatic initialization. The existence or
-     * non-existence of the corresponding list is not changed, and 
+     * non-existence of the corresponding list is not changed, and
      * no PropertyChangeEvent is fired.
      *
      * @param <T>  The type of the class
@@ -743,6 +863,39 @@ public final class InstanceManager {
         }
     }
 
+
+    /**
+     * Get a list of all registered objects of a specific type.
+     *
+     * Intended for use with i.e. scripts where access to the class type is inconvenient.
+     *
+     * @param <T>  type of the class
+     * @param className Fully qualified class name
+     * @return a list of registered instances with the manager or an empty
+     *         list
+     * @throws IllegalArgumentException if the named class doesn't exist
+     */
+    @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
+    @Nonnull
+    public <T> List<T> getInstances(@Nonnull String className) {
+        Class<?> type;
+        try {
+            type = Class.forName(className);
+        } catch (ClassNotFoundException ex) {
+            log.error("No class found: {}", className);
+            throw new IllegalArgumentException(ex);
+        }
+        log.trace("Get list of type {}", type.getName());
+        synchronized (type) {
+            if (managerLists.get(type) == null) {
+                managerLists.put(type, new ArrayList<>());
+                pcs.fireIndexedPropertyChange(getListPropertyName(type), 0, null, null);
+            }
+            return (List<T>) managerLists.get(type);
+        }
+    }
+
+
     /**
      * Call {@link jmri.Disposable#dispose()} on the passed in Object if and
      * only if the passed in Object is not held in any lists.
@@ -773,10 +926,10 @@ public final class InstanceManager {
     public void clearAll() {
         log.debug("Clearing InstanceManager");
         if (traceFileActive) traceFileWriter.println("clearAll");
-        
+
         // reset the instance manager, so future calls will invoke the new one
         LazyInstanceManager.resetInstanceManager();
-        
+
         // continue to clean up this one
         new HashSet<>(managerLists.keySet()).forEach(this::clear);
         managerLists.keySet().forEach(type -> {

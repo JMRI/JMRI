@@ -5,9 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.Component;
 import java.util.HashSet;
+
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
 import jmri.Light;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -18,10 +20,9 @@ import jmri.jmrix.can.cbus.CbusSensorManager;
 import jmri.jmrix.can.cbus.CbusTurnoutManager;
 import jmri.jmrix.can.cbus.eventtable.CbusEventBeanData;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.junit.jupiter.api.Test;
 
 /**
  * Test simple functioning of CbusEventBeanCellRenderer
@@ -35,7 +36,7 @@ public class CbusEventBeanCellRendererTest  {
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testInitComponents() throws Exception{
         // for now, just makes sure there isn't an exception.
-        assertThat(new CbusEventBeanCellRenderer(null,20)).isNotNull();
+        assertThat(new CbusEventBeanCellRenderer(new JTextField(),20)).isNotNull();
     }
     
     @Test
@@ -159,7 +160,7 @@ public class CbusEventBeanCellRendererTest  {
     }
     
     
-    private CanSystemConnectionMemo memo;
+    private CanSystemConnectionMemo memo = null;
 
     @BeforeEach
     public void setUp() {
@@ -169,6 +170,7 @@ public class CbusEventBeanCellRendererTest  {
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         JUnitUtil.tearDown();

@@ -1,14 +1,9 @@
 package jmri.jmris.simpleserver;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.Assume;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleServerAction class
@@ -17,23 +12,27 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class SimpleServerActionTest {
 
-    @Test public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    public void testCtor() {
         SimpleServerAction a = new SimpleServerAction();
-        assertThat(a).isNotNull();
+        Assertions.assertNotNull(a);
     }
 
-    @Test public void testStringCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    public void testSimpleServerActionStringCtor() {
         SimpleServerAction a = new SimpleServerAction("Hello World");
-        assertThat(a).isNotNull();
+        Assertions.assertNotNull(a);
     }
 
-    @BeforeEach public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @AfterEach public void tearDown() {
+    @AfterEach
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

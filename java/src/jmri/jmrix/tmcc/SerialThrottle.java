@@ -40,34 +40,34 @@ public class SerialThrottle extends AbstractThrottle {
     private final DccLocoAddress address;
     private final SerialTrafficController tc;
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
-    
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void setFunction(int func, boolean value) {
         updateFunction(func, value);
-        if (func>=0 && func<22) {
+        if (func>=0 && func<28) {
             sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 128);
         }
         else {
             super.setFunction(func, value);
         }
     }
-    
+
     private final static int[] SERIAL_FUNCTION_CODES = new int[] {
         0x000D, 0x001D, 0x001C, 0x0005, 0x0006, /* 0-4 */
         0x0010, 0x0011, 0x0012, 0x0013, 0x0014, /* 5-9 */
         0x0015, 0x0016, 0x0017, 0x0018, 0x0019, /* 10-14 */
         0x0009, 0x001E, 0x0000, 0x0003, 0x0001, /* 15-19 */
-        0x0004, 0x0007, 0x0047, 0x0043, 0x0028, /* 20-24 */
+        0x0004, 0x0007, 0x0047, 0x0042, 0x0028, /* 20-24 */
         0x0029, 0x002A, 0x002B, /* 25-27 */
     };
 
@@ -108,7 +108,7 @@ public class SerialThrottle extends AbstractThrottle {
         record(speed);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -148,7 +148,7 @@ public class SerialThrottle extends AbstractThrottle {
     public void setSpeedStepMode(jmri.SpeedStepMode Mode) {
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

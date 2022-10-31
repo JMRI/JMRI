@@ -5,10 +5,12 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the SerialTrafficController class.
@@ -16,19 +18,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2007
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
-
-    private boolean waitForReply() {
-        // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (rcvdReply == null && i++ < 100) {
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-            }
-        }
-        log.debug("past loop, i={} reply={}", i, rcvdReply);
-        return i < 100;
-    }
 
     @Test
     public void testAddListener() {
@@ -77,6 +66,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         Assert.assertEquals("Byte 1", 0x21, 0xFF & tostream.readByte());
         Assert.assertEquals("Byte 2", 0x44, 0xFF & tostream.readByte());
         Assert.assertEquals("remaining ", 0, tostream.available());
+
+        Assert.assertTrue( m == rcvdMsg );
     }
 
     @Test
@@ -94,6 +85,11 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             @Override
             protected void portWarn(Exception e) {
             }
+
+            @Override
+            protected void unexpectedReplyStateError(int State, String msgString) {
+            }
+
         };
         scm.setTrafficController(c);
 
@@ -119,15 +115,16 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         tistream.write(0x02);
 
         // wait for state transition
-        synchronized (this) {
-            wait(100);
-        }
+        JUnitUtil.waitFor(100);
 
         // drive the mechanism
         c.handleOneIncomingReply();
-        Assert.assertTrue("reply received ", waitForReply());
+        JUnitUtil.waitFor(() -> {
+            return rcvdReply != null;
+        }, "reply received");
         Assert.assertEquals("first char of reply ", 0xFE, rcvdReply.getOpCode() & 0xFF);
         Assert.assertEquals("length of reply ", 3, rcvdReply.getNumDataElements());
+        c.terminateThreads();
     }
 
     @Test
@@ -145,6 +142,11 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             @Override
             protected void portWarn(Exception e) {
             }
+
+            @Override
+            protected void unexpectedReplyStateError(int State, String msgString) {
+            }
+            
         };
         scm.setTrafficController(c);
 
@@ -168,22 +170,23 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         tistream.write(0xF0);
 
         // wait for state transition
-        synchronized (this) {
-            wait(100);
-        }
+        JUnitUtil.waitFor(100);
 
         // drive the mechanism
         c.handleOneIncomingReply();
-        Assert.assertTrue("reply received ", waitForReply());
+        JUnitUtil.waitFor(() -> {
+            return rcvdReply != null;
+        }, "reply received");
         Assert.assertEquals("first char of reply ", 0xF0, rcvdReply.getOpCode() & 0xFF);
         Assert.assertEquals("length of reply ", 1, rcvdReply.getNumDataElements());
         jmri.util.JUnitAppender.assertWarnMessage("return short message as 1st byte is 240");
+        c.terminateThreads();
     }
 
     // internal class to simulate a Listener
-    class SerialListenerScaffold implements jmri.jmrix.tmcc.SerialListener {
+    private class SerialListenerScaffold implements jmri.jmrix.tmcc.SerialListener {
 
-        public SerialListenerScaffold() {
+        protected SerialListenerScaffold() {
             rcvdReply = null;
             rcvdMsg = null;
         }
@@ -202,7 +205,18 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     SerialMessage rcvdMsg;
 
     // internal class to simulate a PortController
-    class SerialPortControllerScaffold extends SerialPortController {
+    private class SerialPortControllerScaffold extends SerialPortController {
+
+        SerialPortControllerScaffold() throws java.io.IOException {
+            super(scm);
+            PipedInputStream tempPipe;
+            tempPipe = new PipedInputStream();
+            tostream = new DataInputStream(tempPipe);
+            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+            tempPipe = new PipedInputStream();
+            istream = new DataInputStream(tempPipe);
+            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+        }
 
         @Override
         public java.util.Vector<String> getPortNames() {
@@ -229,17 +243,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             return new int[] {};
         }
 
-        protected SerialPortControllerScaffold() throws Exception {
-            super(scm);
-            PipedInputStream tempPipe;
-            tempPipe = new PipedInputStream();
-            tostream = new DataInputStream(tempPipe);
-            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
-            tempPipe = new PipedInputStream();
-            istream = new DataInputStream(tempPipe);
-            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
-        }
-
         // returns the InputStream from the port
         @Override
         public DataInputStream getInputStream() {
@@ -258,16 +261,17 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             return true;
         }
     }
-    static DataOutputStream ostream;  // Traffic controller writes to this
-    static DataInputStream tostream;  // so we can read it from this
 
-    static DataOutputStream tistream; // Tests write to this
-    static DataInputStream istream;   // so the traffic controller can read from this
+    private DataOutputStream ostream;  // Traffic controller writes to this
+    private DataInputStream tostream;  // so we can read it from this
+
+    private DataOutputStream tistream; // Tests write to this
+    private DataInputStream istream;   // so the traffic controller can read from this
 
     @BeforeEach
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         scm = new TmccSystemConnectionMemo("T", "TMCC Test"); // use a common memo to prevent T2, T3 unconnected instances
         tc = new SerialTrafficController(scm); // TrafficController for tests in super (AbstractMRTrafficControllerTest)
         c = null;
@@ -279,11 +283,14 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     @AfterEach
     @Override
     public void tearDown() {
-        if (c != null) c.terminateThreads();
-        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        jmri.util.JUnitUtil.tearDown();
+        if (c != null) { 
+            c.terminateThreads();
+        }
+        scm.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

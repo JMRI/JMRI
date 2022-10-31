@@ -1,15 +1,13 @@
 package apps.swing;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JFrame;
 
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
@@ -20,8 +18,8 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 public class AboutDialogTest {
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a frame to be the dialog parent so that nothing attempts to
         // remove the SwingUtilities$SharedOwnerFrame instance
         JFrame frame = new JFrame();
@@ -32,8 +30,8 @@ public class AboutDialogTest {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testShowAndClose() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame frame = new JFrame();
         AboutDialog dialog = new AboutDialog(frame, true);
 

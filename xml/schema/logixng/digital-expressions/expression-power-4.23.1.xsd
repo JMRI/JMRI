@@ -41,17 +41,25 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-			  <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="powerState" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
                     <xs:enumeration value="On"/>
                     <xs:enumeration value="Off"/>
+                    <xs:enumeration value="Idle"/>
+                    <xs:enumeration value="Unknown"/>
+                    <xs:enumeration value="OnOrOff"/>
+
+					<!-- for backward compatibility before 5.1.6 -->
                     <xs:enumeration value="Other"/>
+					<!-- for backward compatibility before 5.1.6 -->
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+
+              <xs:element name="ignoreUnknownState" type="yesNoType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

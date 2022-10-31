@@ -3,11 +3,16 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 import java.text.MessageFormat;
 import java.util.List;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockAttributeEditFrame;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.setup.Control;
 
@@ -42,6 +47,13 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
 
         setTitle(MessageFormat.format(Bundle.getMessage("TitleEngineEditAtrribute"), new Object[] { attribute }));
 
+        // build menu
+        JMenuBar menuBar = new JMenuBar();
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+        toolMenu.add(new EngineAttributeAction(this));
+        toolMenu.add(new EngineDeleteAttributeAction(this));
+        menuBar.add(toolMenu);
+        setJMenuBar(menuBar);
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true); // NOI18N
     }
@@ -136,6 +148,72 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
         if (_attribute.equals(CONSIST)) {
             comboBox = InstanceManager.getDefault(ConsistManager.class).getComboBox();
             InstanceManager.getDefault(ConsistManager.class).addPropertyChangeListener(this);
+        }
+    }
+    
+    @Override
+    protected void updateAttributeQuanity() {
+        if (!showQuanity) {
+            return;
+        }
+        int number = 0;
+        String item = (String) comboBox.getSelectedItem();
+        log.debug("Selected item {}", item);
+        for (Engine eng : engineManager.getList()) {
+            if (_attribute.equals(ROAD)) {
+                if (eng.getRoadName().equals(item)) {
+                    number++;
+                }
+            }
+            if (_attribute.equals(MODEL)) {
+                if (eng.getModel().equals(item)) {
+                    number++;
+                }
+            }
+            if (_attribute.equals(CONSIST)) {
+                if (eng.getConsistName().equals(item)) {
+                    number++;
+                }
+            }
+            if (_attribute.equals(TYPE)) {
+                if (eng.getTypeName().equals(item)) {
+                    number++;
+                }
+            }
+            if (_attribute.equals(LENGTH)) {
+                if (eng.getLength().equals(item)) {
+                    number++;
+                }
+            }
+            if (_attribute.equals(OWNER)) {
+                if (eng.getOwnerName().equals(item)) {
+                    number++;
+                }
+            }
+        }
+        quanity.setText(Integer.toString(number));
+        // Tool to delete all attributes that haven't been assigned to a car
+        if (number == 0 && deleteUnused) {
+            // need to check if a car is using the road name
+            if (_attribute.equals(ROAD)) {
+                for (RollingStock rs : InstanceManager.getDefault(CarManager.class).getList()) {
+                    if (rs.getRoadName().equals(item)) {
+                        log.info("Car ({} {}) is assigned road name ({})", rs.getRoadName(), rs.getNumber(), item); // NOI18N
+                        return;
+                    }
+                }
+            }
+            // need to check if a car is using the road name
+            if (_attribute.equals(OWNER)) {
+                for (RollingStock rs : InstanceManager.getDefault(CarManager.class).getList()) {
+                    if (rs.getOwnerName().equals(item)) {
+                        log.info("Car ({} {}) is assigned owner name ({})", rs.getRoadName(), rs.getNumber(), item); // NOI18N
+                        return;
+                    }
+                }
+            }
+            // confirm that attribute is to be deleted
+            confirmDelete(item);
         }
     }
 

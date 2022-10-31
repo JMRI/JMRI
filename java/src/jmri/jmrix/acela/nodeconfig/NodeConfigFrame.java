@@ -106,6 +106,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     protected boolean changedNode = false;  // true if a node was changed, deleted, or added
     protected boolean editMode = false;     // true if in edit mode
+    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     protected AcelaNode curNode = null;    // Acela Node being editted
     protected int nodeAddress = 0;          // Node address
@@ -1489,7 +1490,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             nodeTypeStatic.setVisible(true);
             nodeTypeBox.setVisible(false);
         }
-        if (changedNode) {
+        if (changedNode && !checkEnabled) {
             // Remind user to Save new configuration
             javax.swing.JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ReminderNode1") + "\n" + Bundle.getMessage("Reminder2"),

@@ -9,7 +9,7 @@ import jmri.jmrit.logixng.*;
 
 /**
  * Every DigitalActionBean has an DefaultMaleDigitalActionSocket as its parent.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public class DefaultMaleDigitalActionSocket
@@ -18,31 +18,34 @@ public class DefaultMaleDigitalActionSocket
 //    private final DigitalActionBean ((DigitalActionBean)getObject());
     private DebugConfig _debugConfig = null;
     private boolean _enabled = true;
-    
-    
+
+
     public DefaultMaleDigitalActionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull DigitalActionBean action) {
         super(manager, action);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
         if (! _enabled) {
             return;
         }
-        
+
         if ((_debugConfig != null)
                 && ((DigitalActionDebugConfig)_debugConfig)._dontExecute) {
             return;
         }
-        
+
         ConditionalNG conditionalNG = getConditionalNG();
-        
+
         int currentStackPos = conditionalNG.getStack().getCount();
-        
+
         try {
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             ((DigitalActionBean)getObject()).execute();
+        } catch (PassThruException e) {
+            // Pass thru this exception
+            throw e;
         } catch (JmriException e) {
             if (e.getErrors() != null) {
                 handleError(this, Bundle.getMessage("ExceptionExecuteMulti"), e.getErrors(), e, log);
@@ -69,7 +72,7 @@ public class DefaultMaleDigitalActionSocket
     public void registerListenersForThisClass() {
         ((DigitalActionBean)getObject()).registerListeners();
     }
-    
+
     /**
      * Register listeners if this object needs that.
      */
@@ -77,7 +80,7 @@ public class DefaultMaleDigitalActionSocket
     public void unregisterListenersForThisClass() {
         ((DigitalActionBean)getObject()).unregisterListeners();
     }
-    
+
     @Override
     public void setState(int s) throws JmriException {
         ((DigitalActionBean)getObject()).setState(s);
@@ -161,37 +164,37 @@ public class DefaultMaleDigitalActionSocket
             unregisterListeners();
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setEnabledFlag(boolean enable) {
         _enabled = enable;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isEnabled() {
         return _enabled;
     }
-    
-    
+
+
     public static class DigitalActionDebugConfig implements MaleSocket.DebugConfig {
-        
+
         // If true, the socket is not executing the action.
         // It's useful if you want to test the LogixNG without affecting the
         // layout (turnouts, sensors, and so on).
         public boolean _dontExecute = false;
-        
+
         @Override
         public DebugConfig getCopy() {
             DigitalActionDebugConfig config = new DigitalActionDebugConfig();
             config._dontExecute = _dontExecute;
             return config;
         }
-        
+
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleDigitalActionSocket.class);
 
 }

@@ -11,7 +11,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 
 import javax.servlet.http.HttpServletResponse;
@@ -35,8 +34,8 @@ import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerPreferences;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -56,7 +55,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         JUnitUtil.initZeroConfServiceManager();
     }
 
-    @SuppressWarnings("deprecation")
     @AfterEach
     @Override
     public void tearDown() throws Exception {
@@ -96,17 +94,17 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         ZeroConfService zcs = ZeroConfService.create(JSON.ZEROCONF_SERVICE_TYPE, 9999);
         JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == false;
-        });
+        }, "zcs.isPublished did not go false");
         zcs.publish();
-        Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == true;
-        }));
+        }, "Published ZeroConf Service");
         assertEquals(service.getNetworkService(JSON.ZEROCONF_SERVICE_TYPE, new JsonRequest (locale, JSON.V5, JSON.GET, 42)), service.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE,
                         NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42)));
         zcs.stop();
         JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == false;
-        });
+        },"zcs.isPublished did not go false after stop");
     }
 
     /**
@@ -219,11 +217,11 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         ZeroConfService zcs = ZeroConfService.create(JSON.ZEROCONF_SERVICE_TYPE, 9999);
         JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == false;
-        });
+        },"zcs.isPublished did not go false");
         zcs.publish();
-        Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == true;
-        }));
+        }, "Published ZeroConf Service");
         result = service.getNetworkServices(new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(1, result.size());
@@ -239,7 +237,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         zcs.stop();
         JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == false;
-        });
+        },"zcs.isPublished did not go false after stop");
     }
 
     /**
@@ -307,11 +305,11 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
      */
     @Test
     public void testGetNetworkService() throws JsonException {
-        JsonNode result = null;
+        JsonNode result;
         // non-existent service
         try {
             result = service.getNetworkService("non-existant-service", new JsonRequest(locale, JSON.V5, JSON.GET, 42)); // NOI18N
-            fail("Expected exception not thrown");
+            fail("Expected exception not thrown " + result);
         } catch (JsonException ex) {
             assertEquals(HttpServletResponse.SC_NOT_FOUND, ex.getCode());
         }
@@ -319,11 +317,11 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         ZeroConfService zcs = ZeroConfService.create(JSON.ZEROCONF_SERVICE_TYPE, 9999);
         JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == false;
-        });
+        },"zcs.isPublished did not go false");
         zcs.publish();
-        Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == true;
-        }));
+        }, "Published ZeroConf Service");
         result = service.getNetworkService(JSON.ZEROCONF_SERVICE_TYPE, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JSON.NETWORK_SERVICE, result.path(JSON.TYPE).asText());
@@ -338,7 +336,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         zcs.stop();
         JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == false;
-        });
+        },"zcs.isPublished did not go false after stop");
     }
 
     /**
@@ -361,8 +359,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
      * @throws jmri.server.json.JsonException if the result cannot be validated
      */
     @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testGetPanel() throws JsonException {
-        Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
         ObjectNode result = service.getPanel(editor, JSON.XML, 42);
         validate(result);
@@ -376,8 +374,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
      * @throws jmri.server.json.JsonException if the result cannot be validated
      */
     @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testGetPanels_Locale_String() throws JsonException {
-        Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
         JsonNode result = service.getPanels(JSON.XML, 42);
         validate(result);
@@ -391,8 +389,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
      * @throws jmri.server.json.JsonException if the result cannot be validated
      */
     @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testGetPanels_Locale() throws JsonException {
-        Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
         JsonNode result = service.getPanels(42);
         validate(result);
@@ -401,7 +399,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     }
 
     /**
-     * Test of getConfigProfile method, of class JsonUtilHttpService. 
+     * Test of getConfigProfile method, of class JsonUtilHttpService.
      * only runs negative test that a profile is not found
      *
      */
@@ -414,7 +412,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         } catch (JsonException ex) {
             assertEquals(HttpServletResponse.SC_NOT_FOUND, ex.getCode());
         }
-        
+
     }
 
     /**

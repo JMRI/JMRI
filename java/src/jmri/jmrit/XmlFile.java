@@ -279,7 +279,7 @@ public abstract class XmlFile {
      */
     static public void dumpElement(@Nonnull Element name) {
         name.getChildren().forEach((element) -> {
-            System.out.println(" Element: " + element.getName() + " ns: " + element.getNamespace());
+            log.info(" Element: {} ns: {}", element.getName(), element.getNamespace());
         });
     }
 
@@ -425,33 +425,14 @@ public abstract class XmlFile {
      */
     private String getDate() {
         Calendar now = Calendar.getInstance();
-        int month = now.get(Calendar.MONTH) + 1;
-        String m = Integer.toString(month);
-        if (month < 10) {
-            m = "0" + Integer.toString(month);
-        }
-        int day = now.get(Calendar.DATE);
-        String d = Integer.toString(day);
-        if (day < 10) {
-            d = "0" + Integer.toString(day);
-        }
-        int hour = now.get(Calendar.HOUR);
-        String h = Integer.toString(hour);
-        if (hour < 10) {
-            h = "0" + Integer.toString(hour);
-        }
-        int minute = now.get(Calendar.MINUTE);
-        String min = Integer.toString(minute);
-        if (minute < 10) {
-            min = "0" + Integer.toString(minute);
-        }
-        int second = now.get(Calendar.SECOND);
-        String sec = Integer.toString(second);
-        if (second < 10) {
-            sec = "0" + Integer.toString(second);
-        }
-        String date = "" + now.get(Calendar.YEAR) + m + d + h + min + sec;
-        return date;
+        return String.format("%d%02d%02d%02d%02d%02d",
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH) + 1,
+                now.get(Calendar.DATE),
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                now.get(Calendar.SECOND)
+        );
     }
 
     /**
@@ -614,7 +595,7 @@ public abstract class XmlFile {
         defaultDtdLocation = v;
     }
 
-    static public String defaultDtdLocation = "/xml/DTD/";
+    static String defaultDtdLocation = "/xml/DTD/";
 
     /**
      * Get the location for DTDs in this XML document.
@@ -662,14 +643,17 @@ public abstract class XmlFile {
         return fc;
     }
 
-    @SuppressWarnings("deprecation") // wait for updated Xerxes before coding substitute for SAXBuilder(String, boolean)
+    @SuppressWarnings("deprecation") // org.jdom2.input.SAXBuilder(java.lang.String saxDriverClass, boolean validate)
+    //{@see http://www.jdom.org/docs/apidocs/org/jdom2/input/SAXBuilder.html}
+    //{@see http://www.jdom.org/docs/apidocs/org/jdom2/input/sax/XMLReaders.html#NONVALIDATING}
+    // Validate.CheckDtdThenSchema may not be available readily
     public static SAXBuilder getBuilder(Validate validate) {  // should really be a Verify enum
         SAXBuilder builder;
 
         boolean verifyDTD = (validate == Validate.CheckDtd) || (validate == Validate.CheckDtdThenSchema);
         boolean verifySchema = (validate == Validate.RequireSchema) || (validate == Validate.CheckDtdThenSchema);
 
-        // old style 
+        // old style
         builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser", verifyDTD);  // argument controls DTD validation
 
         // insert local resolver for includes, schema, DTDs

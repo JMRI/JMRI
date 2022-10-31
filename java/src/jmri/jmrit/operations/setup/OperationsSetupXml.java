@@ -2,18 +2,14 @@ package jmri.jmrit.operations.setup;
 
 import java.io.File;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.trains.TrainManifestHeaderText;
-import jmri.jmrit.operations.trains.TrainManifestText;
-import jmri.jmrit.operations.trains.TrainSwitchListText;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Loads and stores the operation setup using xml files.
@@ -83,6 +79,9 @@ public class OperationsSetupXml extends OperationsXml implements InstanceManager
         TrainSwitchListText.load(root);
         // load control settings
         Control.load(root);
+        
+        // clear dirty bit
+        setDirty(false);
     }
 
     @Override

@@ -806,21 +806,6 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Used to set the profile path, but now does nothing.
-     *
-     * @see #getProfilePath()
-     * @param path The path to the profile directory using system-specific
-     *             separators. If null, this will cause
-     *             {@link #getProfilePath()} to provide the preferences
-     *             directory via {@link #getPreferencesPath()}.
-     * @deprecated since 4.17.3 without replacement
-     */
-    @Deprecated
-    public void setProfilePath(@CheckForNull String path) {
-        // does nothing
-    }
-
-    /**
      * Get the preferences directory. This directory is set based on the OS and
      * is not normally settable by the user.
      * <ul>
@@ -940,18 +925,43 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Get the JMRI program directory. If the program directory has not been
-     * previously sets, first sets the program directory to the value specified
-     * in the Java System property <code>jmri.path.program</code>, or
-     * <code>.</code> if that property is not set.
+     * Get the JMRI program directory.
+     * <p>
+     * If the program directory has not been
+     * previously set, first sets the program directory to the value specified
+     * in the Java System property <code>jmri.path.program</code>
+     * <p>
+     * If this property is unset, finds from jar or class files location.
+     * <p>
+     * If this fails, returns <code>.</code> .
      *
      * @return JMRI program directory as a String.
      */
     @Nonnull
     @CheckReturnValue
     public String getProgramPath() {
+        // As this method is called in Log4J setup, should not
+        // contain standard logging statements.
         if (programPath == null) {
-            this.setProgramPath(System.getProperty("jmri.path.program", ".")); // NOI18N
+            if (System.getProperty("jmri.path.program") == null) {
+                // find from jar or class files location
+                String path1 = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+                String path2 = (new File(path1)).getParentFile().getPath();
+                path2 = path2.replaceAll("\\+", "%2B"); // convert + chars to UTF-8 to get through the decode
+                try {
+                    String loadingDir = java.net.URLDecoder.decode(path2, "UTF-8");
+                    if (loadingDir.endsWith("target")) {
+                        loadingDir = loadingDir.substring(0, loadingDir.length()-6);
+                    }
+                     this.setProgramPath(loadingDir); // NOI18N
+               } catch (java.io.UnsupportedEncodingException e) {
+                    System.err.println("Unsupported URL when trying to locate program directory: " + path2 );
+                    // best guess
+                    this.setProgramPath("."); // NOI18N
+                }
+            } else {
+                this.setProgramPath(System.getProperty("jmri.path.program", ".")); // NOI18N
+            }
         }
         return programPath;
     }
@@ -1174,7 +1184,7 @@ public class FileUtilSupport extends Bean {
             try {
                 return file.openStream();
             } catch (IOException ex) {
-                log.error(ex.getLocalizedMessage(), ex);
+                log.error("findInputStream IOException", ex);
             }
         }
         return null;
@@ -1445,7 +1455,7 @@ public class FileUtilSupport extends Bean {
             try {
                 return file.toURL();
             } catch (MalformedURLException ex) {
-                log.error(ex.getLocalizedMessage(), ex);
+                log.error("findURL MalformedURLException", ex);
             }
         }
         return null;
@@ -1781,6 +1791,8 @@ public class FileUtilSupport extends Bean {
      * @since 2.7.2
      */
     private String pathFromPortablePath(@CheckForNull Profile profile, @Nonnull String path) {
+        // As this method is called in Log4J setup, should not
+        // contain standard logging statements.
         if (path.startsWith(PROGRAM)) {
             if (new File(path.substring(PROGRAM.length())).isAbsolute()) {
                 path = path.substring(PROGRAM.length());
@@ -1822,10 +1834,9 @@ public class FileUtilSupport extends Bean {
         }
         try {
             // if path cannot be converted into a canonical path, return null
-            log.debug("Using {}", path);
             return new File(path.replace(SEPARATOR, File.separatorChar)).getCanonicalPath();
         } catch (IOException ex) {
-            log.warn("Cannot convert {} into a usable filename.", path, ex);
+            System.err.println("Cannot convert " + path + " into a usable filename. " + ex.getMessage());
             return null;
         }
     }

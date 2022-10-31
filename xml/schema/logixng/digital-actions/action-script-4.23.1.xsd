@@ -47,7 +47,11 @@
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
                     <xs:enumeration value="RunScript"/>
+                    <xs:enumeration value="SingleLineCommand"/>
+
+                    <!-- For backwards compatibility pre 4.99.9 -->
                     <xs:enumeration value="JythonCommand"/>
+                    <!-- For backwards compatibility pre 4.99.9 -->
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -62,11 +66,13 @@
               <xs:element name="scriptLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="scriptFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
-              <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="scriptLanguage" type="ScriptEngineSelectorType" minOccurs="0" maxOccurs="1" />
+
+			  <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
             
-			<xs:attribute name="class" type="classType" use="required"/>
+            <xs:attribute name="class" type="classType" use="required"/>
         
     </xs:complexType>
 

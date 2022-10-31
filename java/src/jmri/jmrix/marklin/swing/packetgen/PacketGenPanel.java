@@ -76,12 +76,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
         add(packetReplyField);
         add(Box.createVerticalGlue());
 
-        sendButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendButtonActionPerformed(e);
-            }
-        });
+        sendButton.addActionListener(this::sendButtonActionPerformed);
     }
 
     /** 
@@ -106,6 +101,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
     @Override
     public void initComponents(MarklinSystemConnectionMemo memo) {
         super.initComponents(memo);
+        memo.getTrafficController().addMarklinListener(this);
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -128,7 +124,9 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
                 }
 
                 MarklinMessage m = new MarklinMessage(msgArray);
-                memo.getTrafficController().sendMarklinMessage(m, this);
+                if ( memo != null ) {
+                    memo.getTrafficController().sendMarklinMessage(m, this);
+                }
             } else {
                 log.error("Only hex commands are supported");
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("HexOnlyDialog"),
@@ -147,11 +145,18 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
 
     /** 
      * {@inheritDoc}
-     * Ignore replies
      */
     @Override
     public void reply(MarklinReply r) {
         packetReplyField.setText(r.toString());
+    }
+    
+    @Override
+    public void dispose() {
+        if ( memo != null ) {
+            memo.getTrafficController().removeMarklinListener(this);
+        }
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class);

@@ -35,7 +35,7 @@ import javax.annotation.Nonnull;
  * @see jmri.Reporter
  * @see jmri.InstanceManager
  */
-public interface ReporterManager extends ProvidingManager<Reporter> {
+public interface ReporterManager extends ProvidingManager<Reporter>, NameIncrementingManager {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -138,45 +138,6 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
     public Reporter newReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     /**
-     * Determine if it is possible to add a range of reporters in numerical
-     * order.
-     *
-     * @param systemName the system name
-     * @return true if multiple reporters can be added
-     */
-    public boolean allowMultipleAdditions(@Nonnull String systemName);
-
-    /**
-     * Determine if the address supplied is valid and free, if not then it shall
-     * return the next free valid address up to a maximum of 10 addresses away
-     * from the initial address.
-     *
-     * @param prefix     system prefix used to make up the systemName
-     * @param curAddress hardware address of the turnout to check
-     * @return the next available address
-     * @throws jmri.JmriException if unable to create a system name for the
-     *                            given address, possibly due to invalid address
-     *                            format or no free addresses 10 away.
-     * @deprecated since 4.21.3; use #getNextValidAddress(String, String, boolean) instead.
-     */
-    @Deprecated
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
-
-    /**
-     * Get the Next valid Reporter address.
-     * <p>
-     * @param curAddress the starting hardware address to get the next valid from.
-     * @param prefix system prefix, just system name, not type letter.
-     * @param ignoreInitialExisting false to return the starting address if it 
-     *                          does not exist, else true to force an increment.
-     * @return the next valid system name not already in use, excluding both system name prefix and type letter.
-     * @throws JmriException    if unable to get the current / next address, 
-     *                          or more than 10 next addresses in use.
-     */
-    @Nonnull
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException;
-    
-    /**
      * Get a system name for a given hardware address and system prefix.
      *
      * @param curAddress desired hardware address
@@ -189,7 +150,7 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      */
     @Nonnull
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
-    
+
     /**
      * {@inheritDoc}
      */

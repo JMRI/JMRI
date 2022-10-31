@@ -63,7 +63,6 @@ public class LnCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
         cs.dispose(); // verify no exceptions
         cs = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -40,8 +40,46 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="variable" type="beanNameType" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="variable" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="memoryNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="blockNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="listenToBlock" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="reporterNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="listenToReporter" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+
+              <!-- These are for backwards compability up until JMRI 4.99.5 -->
+              <xs:element name="memory" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="beanNameType">
+                      <xs:attribute name="listen" type="yesNoType"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="block" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="beanNameType">
+                      <xs:attribute name="listen" type="yesNoType"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="reporter" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="beanNameType">
+                      <xs:attribute name="listen" type="yesNoType"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <!-- These are for backwards compability up until JMRI 4.99.5 -->
 
               <xs:element name="variableOperation" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
@@ -50,7 +88,10 @@
                     <xs:enumeration value="SetToString"/>
                     <xs:enumeration value="CopyVariableToVariable"/>
                     <xs:enumeration value="CopyMemoryToVariable"/>
+                    <xs:enumeration value="CopyReferenceToVariable"/>
                     <xs:enumeration value="CopyTableCellToVariable"/>
+                    <xs:enumeration value="CopyBlockToVariable"/>
+                    <xs:enumeration value="CopyReporterToVariable"/>
                     <xs:enumeration value="CalculateFormula"/>
                   </xs:restriction>
                 </xs:simpleType>
@@ -59,13 +100,16 @@
               <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="otherTableCell" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
 
-			<xs:attribute name="class" type="classType" use="required"/>
+            <xs:attribute name="class" type="classType" use="required"/>
 
     </xs:complexType>
 

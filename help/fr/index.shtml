@@ -1,25 +1,25 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!DOCTYPE html>
+<html lang="fr">
 <!-- Translated by Blorec Herv&#233; le 2011-22-05 -->
 
-<html>
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta name="author" content="Bob Jacobsen, JMRI">
-
   <title>Page d'Aide JMRI</title>
+  <meta name="generator" content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="author" content="Bob Jacobsen, JMRI">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <h1>JMRI Syst&Atilde;&uml;me d'Aide</h1>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mainContent" class="no-sidebar">
 
-  <p>Ceci est la page d'aide de haut niveau JMRI.</p>
+    <h1>JMRI Système d'Aide</h1>
+
+    <p>Ceci est la page d'aide de haut niveau JMRI.</p>
 
   <p>La <a href="Acknowledgements.shtml">page de remerciements</a>
-  montre que beaucoup de personnes ont
-  &Atilde;&copy;t&Atilde;&copy; en mesure de contribuer.</p>
+  montre que beaucoup de personnes ont été en mesure de contribuer.</p>
 
 <!--
   <h2>Utilisation du Syst&Atilde;&uml;me d'Aide</h2>Si vous voyez
@@ -41,27 +41,30 @@
 
   <h2>Information future</h2>La page web principale de JMRI
   <a href="https://jmri.org">https://jmri.org</a> est un bon point de
-  d&Atilde;&copy;part pour obtenir des renseignements sur
-  l'&Atilde;&copy;tat actuel, les mises &Atilde;  jour, etc (en
-  fonction sur votre ordinateur, vous pourriez avoir &Atilde;
-  copier ce lien dans votre navigateur Web pour &Atilde;&ordf;tre
-  en mesure de voir des sites ext&Atilde;&copy;rieurs correctement)
+  départ pour obtenir des renseignements sur
+  l'état actuel, les mises à jour, etc (en
+  fonction sur votre ordinateur, vous pourriez avoir á
+  copier ce lien dans votre navigateur Web pour être
+  en mesure de voir des sites extérieurs correctement)
 
   <p>Nous avons un groupe "JMRI utilisateurs" pour une
-  discussion g&Atilde;&copy;n&Atilde;&copy;rale. Si vous souhaitez
+  discussion générale. Si vous souhaitez
   poser une question, obtenir des d'aide, ou de
-  sugg&Atilde;&copy;rer des am&Atilde;&copy;liorations, ce groupe
+  suggérer des améliorations, ce groupe
   de discussion est un bon endroit. Vous pouvez abonner, voir les
-  messages, etc, &Atilde;  <a href=
+  messages, etc, á <a href=
   "https://groups.io/g/jmriusers">https://groups.io/g/jmriusers</a>.</p>
 
-  <p>Nos<a href=
+  <p>Nos <a href=
   "https://jmri.org/help/en/html/doc/Technical/index.shtml">pages
-  techniques</a> sont encore en cours d'&Atilde;&copy;criture.
-  C'est encore un stade pr&Atilde;&copy;coce, et nous sommes
-  &Atilde;  court de documentation. Mais si vous &Atilde;&ordf;tes
-  int&Atilde;&copy;ress&Atilde;&copy;s en travaillant avec le code,
-  nous serions ravis de vous aider &Atilde;  d&Atilde;&copy;marrer
+  techniques</a> sont encore en cours d'écriture.
+  C'est encore un stade précoce, et nous sommes
+  à court de documentation. Mais si vous êtes
+  intéressés en travaillant avec le code,
+  nous serions ravis de vous aider á démarrer
   par e-mail, etc.</p>
+
+  </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

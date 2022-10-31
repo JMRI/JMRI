@@ -34,7 +34,7 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener {
     Timebase _fastClock;
     int _currentMinutes;
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getTime
     JmriClockPropertyListener(String propName, int type, String name, Conditional.Type varType,
             Conditional client, int beginTime, int endTime) {
         super(propName, type, name, varType, client);
@@ -77,7 +77,7 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener {
      * <p>
      * This method is invoked when the minute listener fires.
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation")  // Date.getHours, getMinutes, getSeconds
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Date currentTime = _fastClock.getTime();

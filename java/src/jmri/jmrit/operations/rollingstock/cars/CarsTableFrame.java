@@ -70,7 +70,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     ButtonGroup group = new ButtonGroup();
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    JButton addButton = new JButton(Bundle.getMessage("TitleCarAdd"));
     JButton findButton = new JButton(Bundle.getMessage("Find"));
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
@@ -117,8 +117,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         destp.add(sortByFinalDestination);
         destp.add(sortByRwe);
         destp.add(sortByRwl);
-        destp.add(sortByDivision);
         cp1.add(destp);
+        cp1.add(sortByDivision);
         cp1.add(sortByTrain);
 
         JPanel movep = new JPanel();
@@ -145,6 +145,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
         JPanel cp2Add = new JPanel();
         cp2Add.setBorder(BorderFactory.createTitledBorder(""));
+        addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         cp2Add.add(numCars);
         cp2Add.add(textCars);
         cp2Add.add(textSep1);

@@ -61,12 +61,12 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    StringBuilder f = new StringBuilder("formatted message: ");
+                    StringBuilder f = new StringBuilder();
                     for (byte b : msg) {
                         f.append(Integer.toHexString(0xFF & b));
                         f.append(" ");
                     }
-                    log.debug(f.toString());
+                    log.debug("formatted message: {}", f);
                 }
                 while (m.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
@@ -75,9 +75,7 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
                         log.debug("written, msg timeout: {} mSec", m.getTimeout());
                         break;
                     } else if (m.getRetries() >= 0) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Retry message: '{}' attempts remaining: {}", m, m.getRetries());
-                        }
+                        log.debug("Retry message: '{}' attempts remaining: {}", m, m.getRetries());
                         m.setRetries(m.getRetries() - 1);
                         try {
                             int timeOut = m.getTimeout();

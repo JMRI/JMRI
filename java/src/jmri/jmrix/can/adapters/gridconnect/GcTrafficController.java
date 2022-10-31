@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Traffic controller for the GridConnect protocol.
  * <p>
  * GridConnect uses messages transmitted as an ASCII string of up to 24
- * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; 
+ * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7;
  * <p>
  * The S indicates a standard
  * CAN frame hhhh is the two byte header (11 useful bits) N or R indicates a
@@ -48,7 +48,12 @@ public class GcTrafficController extends TrafficController {
      */
     @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
-        ((CanListener) client).reply((CanReply) r);
+        if (r != null) {
+            ((CanListener) client).reply((CanReply) r);
+        } else {
+            // null shouldn't happen, but we've seen it; try to track if down
+            log.error("Found unexpected null message", new Exception("traceback") );
+        }
     }
 
     // Current state
@@ -109,7 +114,7 @@ public class GcTrafficController extends TrafficController {
     }
 
     /**
-     * Determine how much many bytes the entire message will take, 
+     * Determine how much many bytes the entire message will take,
      * including space for header and trailer.
      *
      * @param m The message to be sent
@@ -127,8 +132,7 @@ public class GcTrafficController extends TrafficController {
     @Override
     protected AbstractMRMessage newMessage() {
         log.debug("New GridConnectMessage created");
-        GridConnectMessage msg = new GridConnectMessage();
-        return msg;
+        return new GridConnectMessage();
     }
 
     /**
@@ -155,9 +159,7 @@ public class GcTrafficController extends TrafficController {
     @Override
     public AbstractMRMessage encodeForHardware(CanMessage m) {
         //log.debug("Encoding for hardware");
-        GridConnectMessage ret = new GridConnectMessage(m);
-
-        return ret;
+        return new GridConnectMessage(m);
     }
 
     /**
@@ -167,8 +169,7 @@ public class GcTrafficController extends TrafficController {
     @Override
     protected AbstractMRReply newReply() {
         log.debug("New GridConnectReply created");
-        GridConnectReply reply = new GridConnectReply();
-        return reply;
+        return new GridConnectReply();
     }
 
     /*
@@ -187,7 +188,7 @@ public class GcTrafficController extends TrafficController {
     /**
      * Detect if the reply buffer ends with ";".
      * @param r Reply
-     * @return true if contais end, else false.
+     * @return true if contains end, else false.
      */
     boolean endNormalReply(AbstractMRReply r) {
         int num = r.getNumDataElements() - 1;

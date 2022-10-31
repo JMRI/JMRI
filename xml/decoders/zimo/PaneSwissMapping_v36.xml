@@ -57,7 +57,7 @@
 
         <label>
           <text>The threshold for speed dependent main-beam is set below the mapping table.</text>
-          <text xml:lang="cs">Práh pro hlavní paprsek závislý na rychlosti se nestavuje pod mapovací tabulkou.</text>
+          <text xml:lang="cs">Práh pro dálkové světlo závislé na rychlosti se nestavuje pod mapovací tabulkou.</text>
           <text xml:lang="de">Die Schwelle für geschwindigkeitsabhängiges Fernlicht wird unterhalb der Mapping-Tabelle eingestellt.</text>
         </label>
         <label>

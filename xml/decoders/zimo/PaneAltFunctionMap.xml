@@ -3,13 +3,14 @@
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
 <!-- version 2 - Ronald Kuhn - merged "Alt Funkction Map's" for v39 -->
+<!-- version 2.1 - Nigel Cliffe - added MS series version numbers to include statements --> 
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Alt Function Map</name>
   <name xml:lang="it">Mappa Funzioni Speciali</name>
   <name xml:lang="cs">Alternativní přiřazení funkcí</name>
   <name xml:lang="de">Alt. Funktionszuordnung</name>
   <!-- for 6 functions -->
- <group include="190,225,246,253">
+ <group include="2,3,5,8,10,190,225,246,253">
   <column>
     <display item="FO3 + FO4 directional setting"/>
     <label>
@@ -933,7 +934,7 @@
   </column>
  </group>
   <!-- for 8+ functions -->
- <group include="221">
+ <group include="4,6,221">
   <column>
     <display item="FO3 + FO4 directional setting"/>
     <display item="FO9 directional setting"/>

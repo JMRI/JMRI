@@ -10,8 +10,7 @@ import javax.swing.event.TableModelEvent;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import static jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel.NV_SELECT_COLUMN;
-import jmri.jmrix.can.cbus.swing.modules.AbstractEditNVPane;
-import jmri.jmrix.can.cbus.swing.modules.CbusModulesCommon.*;
+import jmri.jmrix.can.cbus.swing.modules.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,6 +101,7 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
                 // 
                 return;
             }
+            log.debug("servo gui table changed NV: {} Value: {}", nv, value);
             if (nv == Servo8BasePaneProvider.CUTOFF) {
                 //log.debug("Update cutoff to {}", value);
                 for (int i = 1; i <= OUTPUTS; i++) {
@@ -132,12 +132,12 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
                     servo[sv].offPosSlider.setValue(value);
                 } else if (((nv - Servo8BasePaneProvider.OUT1_ON_SPD) % 4) == 0) {
                     // ON speed, this will trigger the spinner change listener to call updateOnSpd
-                    //log.debug("Update ON spd NV {} output {} to {}", nv, sv, value);
-                    servo[sv].onSpdSpinner.getModel().setValue(value & 7);
+                    log.debug("Update ON spd NV {} output {} to {}", nv, sv, value);
+                    servo[sv].onSpdSpinner.setValue(value & 7);
                 } else {
                     // OFF speed, this will trigger the spinner change listener to call updateOffSpd
-                    //log.debug("Update OFF spd NV {} output {} to {}", nv, sv, value);
-                    servo[sv].offSpdSpinner.getModel().setValue(value & 7);
+                    log.debug("Update OFF spd NV {} output {} to {}", nv, sv, value);
+                    servo[sv].offSpdSpinner.setValue(value & 7);
                 }
             } else {
                 // row was -1, do nothing
@@ -158,7 +158,7 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int pos = servo[index].onPosSlider.getValue();
             // Four NVs per output
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_ON;
-            //log.debug("UpdateOnPos() index {} nv {} pos {}", index, nv_index, pos);
+            log.debug("UpdateOnPos() index {} nv {} pos {}", index, nv_index, pos);
             _dataModel.setValueAt(pos, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             if (_node.getliveUpdate()) {
                 // Send to module immediately in live update mode
@@ -180,7 +180,7 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             int pos = servo[index].offPosSlider.getValue();
             // Four NVs per output
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_OFF;
-            //log.debug("UpdateOffPos() index {} nv {} pos {}", index, nv_index, pos);
+            log.debug("UpdateOffPos() index {} nv {} pos {}", index, nv_index, pos);
             _dataModel.setValueAt(pos, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             if (_node.getliveUpdate()) {
                 // Send to module immediately in live update mode
@@ -199,10 +199,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int spd = ((SpinnerNumberModel)servo[index].onSpdSpinner.getModel()).getNumber().intValue();
+            int spd = servo[index].onSpdSpinner.getIntegerValue();
             // Four NVs per output
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_ON_SPD;
-            //log.debug("UpdateOnSpeed() index {} nv {} spd {}", index, nv_index, spd);
+            log.debug("UpdateOnSpeed() index {} nv {} spd {}", index, nv_index, spd);
             // Note that changing the data model will result in tableChanged() being called
             _dataModel.setValueAt(spd, nv_index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             if (_node.getliveUpdate()) {
@@ -222,7 +222,7 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int spd = ((SpinnerNumberModel)servo[index].offSpdSpinner.getModel()).getNumber().intValue();
+            int spd = servo[index].offSpdSpinner.getIntegerValue();
             // Four NVs per output
             int nv_index = (index - 1)*4 + Servo8BasePaneProvider.OUT1_OFF_SPD;
             //log.debug("UpdateOffSpeed index {} nv {} spd {}", index, nv_index, spd);

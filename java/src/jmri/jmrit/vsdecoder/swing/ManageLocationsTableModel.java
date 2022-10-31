@@ -11,14 +11,14 @@ import jmri.util.PhysicalLocation;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Klaus Killinger Copyright (C) 2020
@@ -64,16 +64,16 @@ class ManageLocationsTableModel {
             HashMap<String, PhysicalLocation> retv = new HashMap<>();
             for (Object[] row : rowData) {
                 if ((Boolean) row[USECOL + 1]) {
-                    if (row[XCOL + 1] == null) { 
+                    if (row[XCOL + 1] == null) {
                         row[XCOL + 1] = 0.0f;
                     }
-                    if (row[YCOL + 1] == null) { 
+                    if (row[YCOL + 1] == null) {
                         row[YCOL + 1] = 0.0f;
                     }
-                    if (row[ZCOL + 1] == null) { 
+                    if (row[ZCOL + 1] == null) {
                         row[ZCOL + 1] = 0.0f;
                     }
-                    retv.put((String) row[SYSNAMECOL], 
+                    retv.put((String) row[SYSNAMECOL],
                             new PhysicalLocation((Float) row[XCOL + 1], (Float) row[YCOL + 1], (Float) row[ZCOL + 1], (Boolean) row[TUNNELCOL + 1]));
                 }
             }
@@ -155,16 +155,16 @@ class ManageLocationsTableModel {
             HashMap<String, PhysicalLocation> retv = new HashMap<>();
             for (Object[] row : rowData) {
                 if ((Boolean) row[USECOL]) {
-                    if (row[XCOL] == null) { 
+                    if (row[XCOL] == null) {
                         row[XCOL] = 0.0f;
                     }
-                    if (row[YCOL] == null) { 
+                    if (row[YCOL] == null) {
                         row[YCOL] = 0.0f;
                     }
-                    if (row[ZCOL] == null) { 
+                    if (row[ZCOL] == null) {
                         row[ZCOL] = 0.0f;
                     }
-                    retv.put((String) row[NAMECOL], 
+                    retv.put((String) row[NAMECOL],
                             new PhysicalLocation((Float) row[XCOL], (Float) row[YCOL], (Float) row[ZCOL], (Boolean) row[TUNNELCOL]));
                 }
             }
@@ -241,7 +241,6 @@ class ManageLocationsTableModel {
             rowData = dataMap;
         }
 
-        @SuppressWarnings("unused")
         public HashMap<String, ListeningSpot> getDataMap() {
             // Includes only the ones with the checkbox made
             HashMap<String, ListeningSpot> retv = new HashMap<>();

@@ -2,9 +2,7 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -12,9 +10,7 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.Disposable;
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
@@ -146,6 +142,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String KERNEL = Bundle.getMessage("Kernel");
     public static final String KERNEL_SIZE = Bundle.getMessage("Kernel_Size");
     public static final String OWNER = Bundle.getMessage("Owner");
+    public static final String DIVISION = Bundle.getMessage("Division");
     public static final String RWE = Bundle.getMessage("RWE");
     public static final String COMMENT = Bundle.getMessage("Comment");
     public static final String DROP_COMMENT = Bundle.getMessage("SetOut_Msg");
@@ -175,7 +172,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String METER_ABV = Bundle.getMessage("MeterAbbreviation");
 
     private static final String[] CAR_ATTRIBUTES = { ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS,
-            COLOR, KERNEL, KERNEL_SIZE, OWNER, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK,
+            COLOR, KERNEL, KERNEL_SIZE, OWNER, DIVISION, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK,
             COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE };
     private static final String[] ENGINE_ATTRIBUTES = { ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, CONSIST, OWNER,
             TRACK, LOCATION, DESTINATION, COMMENT };
@@ -2102,7 +2099,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String dir = a.getValue();
                 log.debug("direction: {}", dir);
                 try {
-                    setTrainDirection(Integer.parseInt(dir));
+                    getDefault().traindir = Integer.parseInt(dir);
                 } catch (NumberFormatException ee) {
                     log.error("Train direction ({}) isn't a valid number", a.getValue());
                 }

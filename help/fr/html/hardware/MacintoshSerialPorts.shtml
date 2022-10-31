@@ -1,27 +1,20 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec 2017-01-11-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec 2017-01-11-->
 <head>
- <title>JMRI Hardware Setup Support - MacOS Serial Port connections</title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="author" content="Dick Bronson">
-    <meta name="author" content="Walter Thompson">
-    <meta name="author" content="John Plocher">
-    <meta name="keywords" content="java model railroad JMRI install windows">
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI Hardware Setup Support - MacOS Serial Port connections</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="Dick Bronson">
+  <meta name="author" content="Walter Thompson">
+  <meta name="author" content="John Plocher">
+  <meta name="keywords" content="java model railroad JMRI install windows">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 <h1>Prise en charge de la configuration mat&#233;rielle: connexions du port s&#233;rie MacOS</h1>
@@ -66,10 +59,9 @@ communication-rs232-basics/#SerialTerm</a></li>
 <h2>Credits</h2>
 <p> Les informations sur cette page ont &#233;t&#233; fournies par Dick Bronson et Walter Thompson.</p>
 
-   <hr class="hide">
-
-<!--#include virtual="/Footer.shtml" -->
-  </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+    <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

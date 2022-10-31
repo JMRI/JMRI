@@ -195,7 +195,7 @@ public class LocoNetBluetoothAdapter extends LnPortController {
         // do the common manager config
 
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation

@@ -1,7 +1,6 @@
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
@@ -11,12 +10,15 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
+
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.util.ThreadingUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.XTableColumnModel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -485,7 +487,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             }
 
             @Override
-            protected void showPopup(MouseEvent e) {
+            protected void showPopup(JmriMouseEvent e) {
 
             }
 
@@ -589,7 +591,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                         log.error("interrupted while notifying of problem with automaticallyDiscoverSignallingPairs", ex);
                     }
                 }
-                
+
                 // process complete, update GUI
                 try {
                     SwingUtilities.invokeAndWait(() -> {

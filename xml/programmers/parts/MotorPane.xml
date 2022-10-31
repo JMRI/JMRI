@@ -6,6 +6,7 @@
   <name xml:lang="fr">Moteur</name>
   <name xml:lang="it">Motore</name>
   <name xml:lang="nl">Motor</name>
+  <name xml:lang="es">Motor</name>
   <column>
     <display item="Kick Start" tooltip="Provides an initial higher voltage spike to loco to overcome starting friction">
       <tooltip xml:lang="ca">DÛna un voltatge inicial major per superar la fricciÛ inicial</tooltip>
@@ -13,6 +14,7 @@
       <tooltip xml:lang="de">Anfänglicher (höherer) Spannungspuls um das Anfahrmoment zu überwinden</tooltip>
       <tooltip xml:lang="fr">Fournit une impulsion initiale de tension plus élevée à la loco pour surmonter la friction de départ</tooltip>
       <tooltip xml:lang="it">Fornisce un impulso di tensione iniziale per ovviare alla frizione in partenza</tooltip>
+      <tooltip xml:lang="es">Proporciona un pico de voltaje inicial más alto a la locomotora para superar la fricción inicial</tooltip>
     </display>
     <display item="Accel" tooltip="Sets the acceleration rate (delay)">
       <tooltip xml:lang="ca">Estableix la taxa d'acceleració (retard)</tooltip>
@@ -20,6 +22,7 @@
       <tooltip xml:lang="de">Anfahrverzögerung einstellen</tooltip>
       <tooltip xml:lang="fr">Régle le taux d'accélération (retard)</tooltip>
       <tooltip xml:lang="it">Imposta grado di accellerazione (ritardo)</tooltip>
+      <tooltip xml:lang="es">Establece la tasa de aceleración (retraso)</tooltip>
     </display>
     <display item="Decel" tooltip="Sets the deceleration rate (delay)">
       <tooltip xml:lang="ca">Estableix la taxa de desacceleració (retard)</tooltip>
@@ -27,6 +30,7 @@
       <tooltip xml:lang="de">Bremsverzögerung einstellen</tooltip>
       <tooltip xml:lang="fr">Régle le taux de décélération (retard)</tooltip>
       <tooltip xml:lang="it">Imposta grado di decellerazione (ritardo)</tooltip>
+      <tooltip xml:lang="es">Establece la tasa de desaceleración (retraso)</tooltip>
     </display>
     <label>
       <text> </text>
@@ -37,6 +41,7 @@
       <tooltip xml:lang="de">Die Reaktion der Lok beim Befahren eines analogen (DC) Gleisabschnittes einstellen</tooltip>
       <tooltip xml:lang="fr">Détermine comment la loco réagit en entrant dans un canton alimenté en analogique</tooltip>
       <tooltip xml:lang="it">Stabilisce come la loco risponde in in blocco Analogico (DC)</tooltip>
+      <tooltip xml:lang="es">Determina cómo responde la locomotora en el bloque de vía alimentado por CC</tooltip>
     </display>
     <label>
       <text> </text>
@@ -47,6 +52,7 @@
       <tooltip xml:lang="de">Wiederholrate einstellen</tooltip>
       <tooltip xml:lang="fr">Régle la période d'impulsion du moteur</tooltip>
       <tooltip xml:lang="it">Imposta periodo impulsi al Motore</tooltip>
+      <tooltip xml:lang="es">Establece el periodo de impulso del motor</tooltip>
     </display>
     <display item="Motor PWM Frequency" tooltip="Sets the motor drive frequency">
       <tooltip xml:lang="ca">Estableix la freqüència de control del motor</tooltip>
@@ -54,6 +60,7 @@
       <tooltip xml:lang="de">Wiederholrate einstellen</tooltip>
       <tooltip xml:lang="fr">Régle la fréquence d'impulsion du moteur</tooltip>
       <tooltip xml:lang="it">Imposta frequenza impulsi al Motore</tooltip>
+      <tooltip xml:lang="es">Establece la frecuencia de pulso del motor</tooltip>
     </display>
     <display item="Dither frequency" tooltip="Sets the frequency of starting voltage pulses">
       <tooltip xml:lang="ca">Estableix la freqüència del voltatge inicial</tooltip>
@@ -61,6 +68,7 @@
       <tooltip xml:lang="de">Frequenz des Startimpulses einstellen</tooltip>
       <tooltip xml:lang="fr">Régle la fréquence de l'impulsion de démarrage du moteur</tooltip>
       <tooltip xml:lang="it">Imposta frequenza impulsi al Motore in partenza</tooltip>
+      <tooltip xml:lang="es">Establece la frecuencia de los pulsos de tensión de arranque</tooltip>
     </display>
     <display item="Dither option" tooltip="Sets the amplitude of the starting voltage pulses">
       <tooltip xml:lang="ca">Estableix l'amplitud dels pulsos del voltatge inicial</tooltip>
@@ -68,6 +76,7 @@
       <tooltip xml:lang="de">Höhe des Startimpulses einstellen</tooltip>
       <tooltip xml:lang="fr">Régle l'amplitude de l'impulsion de démarrage du moteur</tooltip>
       <tooltip xml:lang="it">Imposta ampiezza impulsi al Motore in Partenza</tooltip>
+      <tooltip xml:lang="es">Establece la amplitud de los pulsos de tensión de arranque</tooltip>
     </display>
     <label>
       <text> </text>
@@ -80,6 +89,7 @@
       <tooltip xml:lang="de">Verkleinern, falls die Lok nicht ihre Höchstgeschwindigkeit erreicht value</tooltip>
       <tooltip xml:lang="fr">Si la loco n'atteint pas sa vitese maximum, baisser cette valeur</tooltip>
       <tooltip xml:lang="it">Se la loco non raggiunge la massima Velocità, diminuire questo Valore</tooltip>
+      <tooltip xml:lang="es">Si la locomotora no alcanza la velocidad máxima, reduzca este valor</tooltip>
     </display>
     <display item="EMF Static Config" tooltip="EMF Static Config">
       <tooltip xml:lang="ca">Configuració estàtica EMF</tooltip>
@@ -87,6 +97,7 @@
       <tooltip xml:lang="de">EMK statische Konfiguration</tooltip>
       <tooltip xml:lang="fr">Configuration Statique de la FEM</tooltip>
       <tooltip xml:lang="it">Configurazione Statica EMF</tooltip>
+      <tooltip xml:lang="es">Configuración estática de EMF</tooltip>
     </display>
     <display item="EMF Dynamic Config" tooltip="EMF Dynamic Config">
       <tooltip xml:lang="ca">Configuració dinàmica EMF</tooltip>
@@ -94,6 +105,7 @@
       <tooltip xml:lang="de">EMK dynamische Konfiguration</tooltip>
       <tooltip xml:lang="fr">Configuration Dynamique de la FEM</tooltip>
       <tooltip xml:lang="it">Configurazione Dinamica EMF</tooltip>
+      <tooltip xml:lang="es">Configuración dinámica de EMF</tooltip>
     </display>
     <display item="EMF Droop Config" tooltip="EMF Droop Config">
       <tooltip xml:lang="ca">Caiguda de la EMF</tooltip>
@@ -101,6 +113,7 @@
       <tooltip xml:lang="de">EMK Droop Konfiguration</tooltip>
       <tooltip xml:lang="fr">Configuration de la Réduction de la FEM</tooltip>
       <tooltip xml:lang="it">Configurazione Riduzione EMF</tooltip>
+      <tooltip xml:lang="es">Configuración de caída de EMF</tooltip>
     </display>
     <display item="EMF Feedback Cutout" tooltip="Sets the speed step above which the back EMF motor control cuts off">
       <tooltip xml:lang="ca">Estableix a quin pas es desconnecta la compensació de càrrega</tooltip>
@@ -108,6 +121,7 @@
       <tooltip xml:lang="de">Fahrstufe einstellen, oberhalb derer EMK abgeschaltet ist</tooltip>
       <tooltip xml:lang="fr">Détermine le pas de vitesse à partir duquel le contrôle FEM du moteur s'interrompt</tooltip>
       <tooltip xml:lang="it">Imposta il valore di velocità oltre il quale il controllo di Back-EMF viene tagliato</tooltip>
+      <tooltip xml:lang="es">Establece el paso de velocidad por encima del cual se corta el control back EMF del motor</tooltip>
     </display>
     <display item="EMF Option 1"/>
     <display item="EMF Option 2"/>

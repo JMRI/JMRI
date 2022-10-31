@@ -58,10 +58,6 @@ public class JemmyUtil {
             jbo.push();
         });
         t.start();
-        
-//        jmri.util.JUnitUtil.waitFor(() -> {
-//            return t.getState().equals(Thread.State.WAITING);
-//        }, "wait for dialog window to appear");
     }
 
     static public void enterClickAndLeave(JCheckBox comp) {
@@ -136,14 +132,14 @@ public class JemmyUtil {
     }
     
     static public void waitFor(JmriJFrame f) {
-        int count = 3;
+        int count = 5;
         f.requestFocus();
         while (!f.isActive() && count > 0) {
             jmri.util.JUnitUtil.waitFor(() -> {
                 return f.isActive();
             });
             count--;
-            f.requestFocus();
+            f.requestFocusInWindow();
         }
         Assert.assertTrue("frame should be active", f.isActive());
     }

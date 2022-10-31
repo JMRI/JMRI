@@ -234,7 +234,6 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
     public void tearDown() {
         a = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

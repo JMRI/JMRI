@@ -8,19 +8,13 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.IdTag;
-import jmri.IdTagManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
-import jmri.jmrit.operations.rollingstock.cars.CarColors;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -538,7 +532,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public String setDestination(Location destination, Track track, boolean force) {
         // first determine if rolling stock can be move to the new destination
         if (!force) {
-            String status = rsTestDestination(destination, track);
+            String status = rsCheckDestination(destination, track);
             if (!status.equals(Track.OKAY)) {
                 return status;
             }
@@ -597,11 +591,11 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      *
      * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK
      */
-    public String testDestination(Location destination, Track track) {
-        return rsTestDestination(destination, track);
+    public String checkDestination(Location destination, Track track) {
+        return rsCheckDestination(destination, track);
     }
 
-    private String rsTestDestination(Location destination, Track track) {
+    private String rsCheckDestination(Location destination, Track track) {
         // first perform a code check
         if (destination != null && !destination.isTrackAtLocation(track)) {
             return ERROR_TRACK;
@@ -850,18 +844,14 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             _rfid = id;
             if (!id.equals(NONE)) {
                 try {
-                    IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id);
-                    if (tag != null) {
-                        log.debug("Tag {} found", tag);
-                        setIdTag(tag);
-                    } else {
-                        log.error("Tag {} not found", id);
-                    }
-                } catch (NullPointerException e) {
-                    log.error("Tag manager not found");
+                    IdTag tag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(id);
+                    setIdTag(tag);
+                    setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
+                } catch (IllegalArgumentException e) {
+                    log.error("Exception recording tag {} - exception value {}", id, e.getMessage());
                 }
             }
-            setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
+
         }
     }
 
@@ -1131,7 +1121,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return NONE;
     }
 
-    public void setOwner(String owner) {
+    public void setOwnerName(String owner) {
         String old = _owner;
         _owner = owner;
         if (!old.equals(owner)) {
@@ -1139,7 +1129,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
     }
 
-    public String getOwner() {
+    public String getOwnerName() {
         return _owner;
     }
 
@@ -1391,7 +1381,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         addPropertyChangeListeners();
     }
 
-    boolean verboseStore = false;
+//    boolean verboseStore = false;
 
     /**
      * Add XML elements to represent this Entry.
@@ -1442,12 +1432,12 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if (!getLastRouteId().equals(NONE)) {
             e.setAttribute(Xml.LAST_ROUTE_ID, getLastRouteId());
         }
-        if (verboseStore) {
-            e.setAttribute(Xml.LOCATION, getLocationName());
-            e.setAttribute(Xml.TRACK, getTrackName());
-            e.setAttribute(Xml.DESTINATION, getDestinationName());
-            e.setAttribute(Xml.DES_TRACK, getDestinationTrackName());
-        }
+//        if (verboseStore) {
+//            e.setAttribute(Xml.LOCATION, getLocationName());
+//            e.setAttribute(Xml.TRACK, getTrackName());
+//            e.setAttribute(Xml.DESTINATION, getDestinationName());
+//            e.setAttribute(Xml.DES_TRACK, getDestinationTrackName());
+//        }
         e.setAttribute(Xml.MOVES, Integer.toString(getMoves()));
         e.setAttribute(Xml.DATE, getLastDate());
         e.setAttribute(Xml.SELECTED, isSelected() ? Xml.TRUE : Xml.FALSE);
@@ -1458,8 +1448,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             e.setAttribute(Xml.TRAIN, getTrainName());
             e.setAttribute(Xml.TRAIN_ID, getTrain().getId());
         }
-        if (!getOwner().equals(NONE)) {
-            e.setAttribute(Xml.OWNER, getOwner());
+        if (!getOwnerName().equals(NONE)) {
+            e.setAttribute(Xml.OWNER, getOwnerName());
         }
         if (!getValue().equals(NONE)) {
             e.setAttribute(Xml.VALUE, getValue());
@@ -1548,10 +1538,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             }
         }
         if (e.getPropertyName().equals(CarOwners.CAROWNERS_NAME_CHANGED_PROPERTY)) {
-            if (e.getOldValue().equals(getOwner())) {
+            if (e.getOldValue().equals(getOwnerName())) {
                 log.debug("Rolling stock ({}) sees owner name change from ({}) to ({})", this, e.getOldValue(),
                         e.getNewValue()); // NOI18N
-                setOwner((String) e.getNewValue());
+                setOwnerName((String) e.getNewValue());
             }
         }
         if (e.getPropertyName().equals(CarColors.CARCOLORS_NAME_CHANGED_PROPERTY)) {

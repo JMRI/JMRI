@@ -72,7 +72,7 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
                     log.debug("skip updateLAF as already has className=={}", className);
                 }
             } catch (Exception ex) {
-                log.error("Exception while setting GUI look & feel: {}", ex);
+                log.error("Exception while setting GUI look & feel", ex);
                 result = false;
             }
         }
@@ -91,16 +91,16 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
             // Set the new look and feel, and update the sample message to reflect it.
             UIManager.setLookAndFeel(className);
         } catch (Exception e) {
-            String errMsg = "The " + name + " look-and-feel ";
+            String errMsg;
             if (e instanceof UnsupportedLookAndFeelException) {
-                errMsg += "is not supported on this platform.";
+                errMsg = "is not supported on this platform.";
             } else if (e instanceof ClassNotFoundException) {
-                errMsg += "could not be found.";
+                errMsg = "could not be found.";
             } else {
-                errMsg += "could not be loaded.";
+                errMsg = "could not be loaded.";
             }
 
-            log.error(errMsg);
+            log.error("The {} look-and-feel {}",name,errMsg);
 
         }
     }

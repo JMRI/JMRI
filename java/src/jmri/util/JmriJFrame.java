@@ -190,7 +190,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                 log.debug("Initial window location & size: {}", window);
 
                 log.debug("Detected {} screens.",GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices().length);
-                log.debug(windowFrameRef);
+                log.debug("windowFrameRef: {}", windowFrameRef);
                 if (reuseFrameSavedPosition) {
                     log.debug("setFrameLocation 1st clause sets \"{}\" location to {}", getTitle(), prefsMgr.getWindowLocation(windowFrameRef));
                     window.setLocation(prefsMgr.getWindowLocation(windowFrameRef));
@@ -517,7 +517,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         };
         getRootPane().getActionMap().put("close", act);
 
-        int stdMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int stdMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
         InputMap im = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         // We extract the modifiers as a string, then add the I18N string, and
@@ -878,7 +878,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         if (getModifiedFlag()) {
             this.setVisible(true);
             int result = javax.swing.JOptionPane.showOptionDialog(this, Bundle.getMessage("WarnChangedMsg"),
-                    Bundle.getMessage("WarnChangedTitle"), javax.swing.JOptionPane.YES_NO_OPTION,
+                    Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.YES_NO_OPTION,
                     javax.swing.JOptionPane.WARNING_MESSAGE, null, // icon
                     new String[]{Bundle.getMessage("WarnYesSave"), Bundle.getMessage("WarnNoClose")}, Bundle
                     .getMessage("WarnYesSave"));

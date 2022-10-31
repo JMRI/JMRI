@@ -175,7 +175,7 @@ public class SerialDriverAdapter extends SprogPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: {}", e);
+            log.error("getOutputStream exception", e);
         }
         return null;
     }
@@ -205,11 +205,13 @@ public class SerialDriverAdapter extends SprogPortController {
     InputStream serialStream = null;
 
     protected int numSlots = 1;
-    
+
     /**
      * Set up all of the other objects to operate with an Sprog command station
      * connected to this port.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification = "passing exception text")
     @Override
     public void configure() {
         // connect to the traffic controller

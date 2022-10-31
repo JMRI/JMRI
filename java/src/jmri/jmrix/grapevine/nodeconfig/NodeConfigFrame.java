@@ -48,6 +48,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     protected boolean changedNode = false;  // true if a node was changed, deleted, or added
     protected boolean editMode = false;     // true if in edit mode
+    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     protected SerialNode curNode = null;    // Serial Node being editted
     protected int nodeAddress = 0;          // Node address
@@ -372,7 +373,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public void doneButtonActionPerformed() {
         if (editMode) {
-            // Reset 
+            // Reset
             editMode = false;
             curNode = null;
             // Switch buttons
@@ -385,7 +386,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             nodeAddrSpinner.setVisible(true);
             nodeAddrStatic.setVisible(false);
         }
-        if (changedNode) {
+        if (changedNode && !checkEnabled) {
             // Remind user to Save new configuration
             javax.swing.JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ReminderNode1") + "\n" + Bundle.getMessage("Reminder2"),
@@ -402,7 +403,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     public void updateButtonActionPerformed() {
         // update node information
         nodeType = nodeTypeBox.getSelectedIndex();
-        log.debug("update performed: was {] request {}", curNode.getNodeType(), nodeType);
+        log.debug("update performed: was {} request {}", curNode.getNodeType(), nodeType);
         if (curNode.getNodeType() != nodeType) {
             // node type has changed
             curNode.setNodeType(nodeType);
@@ -419,7 +420,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again 
+        // make node address editable again
         nodeAddrSpinner.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
@@ -435,7 +436,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Handle Cancel button.
      */
     public void cancelButtonActionPerformed() {
-        // Reset 
+        // Reset
         editMode = false;
         curNode = null;
         // Switch buttons
@@ -445,7 +446,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again 
+        // make node address editable again
         nodeAddrSpinner.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel

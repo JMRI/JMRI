@@ -1,20 +1,17 @@
 package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.PropertyChangeListener;
 import java.util.*;
-
-import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
@@ -23,20 +20,16 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionAudio extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionAudio extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<Audio> _audioHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
-    private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private Operation _operation = Operation.Play;
-    private String _operationReference = "";
-    private String _operationLocalVariable = "";
-    private String _operationFormula = "";
-    private ExpressionNode _operationExpressionNode;
+    private final LogixNG_SelectNamedBean<Audio> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Audio.class, InstanceManager.getDefault(AudioManager.class), this);
+
+    private final LogixNG_SelectEnum<Operation> _selectEnum =
+            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.Play, this);
+
 
     public ActionAudio(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -51,174 +44,17 @@ public class ActionAudio extends AbstractDigitalAction implements VetoableChange
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionAudio copy = new ActionAudio(sysName, userName);
         copy.setComment(getComment());
-        if (_audioHandle != null) copy.setAudio(_audioHandle);
-        copy.setOperation(_operation);
-        copy.setAddressing(_addressing);
-        copy.setFormula(_formula);
-        copy.setLocalVariable(_localVariable);
-        copy.setReference(_reference);
-        copy.setOperationAddressing(_operationAddressing);
-        copy.setOperationFormula(_operationFormula);
-        copy.setOperationLocalVariable(_operationLocalVariable);
-        copy.setOperationReference(_operationReference);
+        _selectNamedBean.copy(copy._selectNamedBean);
+        _selectEnum.copy(copy._selectEnum);
         return manager.registerAction(copy);
     }
 
-    public void setAudio(@Nonnull String audioName) {
-        assertListenersAreNotRegistered(log, "setAudio");
-        Audio audio = InstanceManager.getDefault(AudioManager.class).getAudio(audioName);
-        if (audio != null) {
-            setAudio(audio);
-        } else {
-            removeAudio();
-            log.warn("audio \"{}\" is not found", audioName);
-        }
+    public LogixNG_SelectNamedBean<Audio> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
-    public void setAudio(@Nonnull NamedBeanHandle<Audio> handle) {
-        assertListenersAreNotRegistered(log, "setAudio");
-        _audioHandle = handle;
-        InstanceManager.getDefault(AudioManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setAudio(@Nonnull Audio audio) {
-        assertListenersAreNotRegistered(log, "setAudio");
-        setAudio(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(audio.getDisplayName(), audio));
-    }
-
-    public void removeAudio() {
-        assertListenersAreNotRegistered(log, "setAudio");
-        if (_audioHandle != null) {
-            InstanceManager.getDefault(AudioManager.class).removeVetoableChangeListener(this);
-            _audioHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Audio> getAudio() {
-        return _audioHandle;
-    }
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
-    }
-
-    public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _operationAddressing = addressing;
-        parseOperationFormula();
-    }
-
-    public NamedBeanAddressing getOperationAddressing() {
-        return _operationAddressing;
-    }
-
-    public void setOperation(Operation state) {
-        _operation = state;
-    }
-
-    public Operation getOperation() {
-        return _operation;
-    }
-
-    public void setOperationReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _operationReference = reference;
-    }
-
-    public String getOperationReference() {
-        return _operationReference;
-    }
-
-    public void setOperationLocalVariable(@Nonnull String localVariable) {
-        _operationLocalVariable = localVariable;
-    }
-
-    public String getOperationLocalVariable() {
-        return _operationLocalVariable;
-    }
-
-    public void setOperationFormula(@Nonnull String formula) throws ParserException {
-        _operationFormula = formula;
-        parseOperationFormula();
-    }
-
-    public String getOperationFormula() {
-        return _operationFormula;
-    }
-
-    private void parseOperationFormula() throws ParserException {
-        if (_operationAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _operationExpressionNode = parser.parseExpression(_operationFormula);
-        } else {
-            _operationExpressionNode = null;
-        }
-    }
-
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Audio) {
-                if (evt.getOldValue().equals(getAudio().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Audio_AudioInUseAudioActionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Audio) {
-                if (evt.getOldValue().equals(getAudio().getBean())) {
-                    removeAudio();
-                }
-            }
-        }
+    public LogixNG_SelectEnum<Operation> getSelectEnum() {
+        return _selectEnum;
     }
 
     /** {@inheritDoc} */
@@ -227,84 +63,14 @@ public class ActionAudio extends AbstractDigitalAction implements VetoableChange
         return Category.ITEM;
     }
 
-    private String getNewState() throws JmriException {
-
-        switch (_operationAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(getConditionalNG().getSymbolTable(), _operationReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_operationLocalVariable), false);
-
-            case Formula:
-                return _operationExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _operationExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        Audio audio;
+        Audio audio = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
-//        System.out.format("ActionAudio.execute: %s%n", getLongDescription());
+        if (audio == null) return;
 
-        switch (_addressing) {
-            case Direct:
-                audio = _audioHandle != null ? _audioHandle.getBean() : null;
-                break;
-
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                audio = InstanceManager.getDefault(AudioManager.class)
-                        .getNamedBean(ref);
-                break;
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                audio = InstanceManager.getDefault(AudioManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                audio = _expressionNode != null ?
-                        InstanceManager.getDefault(AudioManager.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-//        System.out.format("ActionAudio.execute: audio: %s%n", audio);
-
-        if (audio == null) {
-//            log.warn("audio is null");
-            return;
-        }
-
-        String name = (_operationAddressing != NamedBeanAddressing.Direct)
-                ? getNewState() : null;
-
-        Operation operation;
-        if ((_operationAddressing == NamedBeanAddressing.Direct)) {
-            operation = _operation;
-        } else {
-            operation = Operation.valueOf(name);
-        }
+        Operation operation = _selectEnum.evaluateEnum(getConditionalNG());
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (audio.getSubType() == Audio.SOURCE) {
@@ -373,56 +139,8 @@ public class ActionAudio extends AbstractDigitalAction implements VetoableChange
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
-        String operation;
-
-        switch (_addressing) {
-            case Direct:
-                String audioName;
-                if (_audioHandle != null) {
-                    audioName = _audioHandle.getBean().getDisplayName();
-                } else {
-                    audioName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", audioName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-        switch (_operationAddressing) {
-            case Direct:
-                operation = Bundle.getMessage(locale, "AddressByDirect", _operation._text);
-                break;
-
-            case Reference:
-                operation = Bundle.getMessage(locale, "AddressByReference", _operationReference);
-                break;
-
-            case LocalVariable:
-                operation = Bundle.getMessage(locale, "AddressByLocalVariable", _operationLocalVariable);
-                break;
-
-            case Formula:
-                operation = Bundle.getMessage(locale, "AddressByFormula", _operationFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _operationAddressing.name());
-        }
+        String namedBean = _selectNamedBean.getDescription(locale);
+        String operation = _selectEnum.getDescription(locale);
 
         return Bundle.getMessage(locale, "ActionAudio_Long", operation, namedBean);
     }
@@ -436,11 +154,15 @@ public class ActionAudio extends AbstractDigitalAction implements VetoableChange
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectNamedBean.registerListeners();
+        _selectEnum.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectNamedBean.unregisterListeners();
+        _selectEnum.unregisterListeners();
     }
 
     /** {@inheritDoc} */
@@ -477,12 +199,15 @@ public class ActionAudio extends AbstractDigitalAction implements VetoableChange
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ActionAudio: bean = {}, report = {}", cdl, report);
-        if (getAudio() != null && bean.equals(getAudio().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionAudio.class);
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
+    }
+
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionAudio.class);
 
 }

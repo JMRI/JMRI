@@ -27,6 +27,7 @@
     <decVal/>
     <label>Switch input 2 Sound Sample</label>
     <label xml:lang="de">Sample Nummer für S2</label>
+    <label xml:lang="cs">Zvukový vzorek spínací vstup 2</label>
   </variable>
   <variable CV="741" item="Zimo Sound Setting 52" include="208,210,224,227,230">
     <decVal/>
@@ -39,6 +40,7 @@
     <decVal/>
     <label>Switch input 3 Sound Sample</label>
     <label xml:lang="de">Sample Nummer für S3</label>
+    <label xml:lang="cs">Zvukový vzorek spínací vstup 3</label>
   </variable>
   <variable CV="743" item="Zimo Sound Setting 53" include="208,224,227,230">
     <decVal/>

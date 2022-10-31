@@ -5,34 +5,29 @@ import java.awt.GraphicsEnvironment;
 import jmri.*;
 import jmri.jmrit.roster.*;
 import jmri.util.*;
-import jmri.util.junit.rules.RetryRule;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of RosterFrame
  *
  * @author Paul Bender Copyright (C) 2015, 2016
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@Timeout(20) // This test class was periodically stalling and causing the CI run to time out. Limit its duration.
 public class RosterFrameTest {
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
-
-    @Rule // This test class was periodically stalling and causing the CI run to time out. Limit its duration.
-    public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(20);
 
     private RosterFrame frame = null;
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", frame);
     }
 
     @Test
     public void testIdentifyEnabled() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setVisible(true);
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
         Assert.assertTrue("Identify Button Enabled", operator.isIdentifyButtonEnabled());
@@ -40,14 +35,13 @@ public class RosterFrameTest {
 
     @Test
     public void testIdentify3NotPresent() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         frame.pack();
         frame.setVisible(true);
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
         jmri.progdebugger.ProgDebugger prog = (jmri.progdebugger.ProgDebugger) InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        assert prog != null;
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
 
@@ -61,7 +55,6 @@ public class RosterFrameTest {
 
     @Test
     public void testIdentify3Present() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // add entry to Roster
         Roster roster = Roster.getDefault();
@@ -84,6 +77,7 @@ public class RosterFrameTest {
 
         // set some CV values
         jmri.progdebugger.ProgDebugger prog = (jmri.progdebugger.ProgDebugger) InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
 
@@ -101,7 +95,6 @@ public class RosterFrameTest {
     @Test
     public void testIdentify3WithDecoderTypeMismatch() {
         // match on address if unique, even if decoder type not right
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // add entry to Roster
         Roster roster = Roster.getDefault();
@@ -126,6 +119,7 @@ public class RosterFrameTest {
 
         // set some CV values
         jmri.progdebugger.ProgDebugger prog = (jmri.progdebugger.ProgDebugger) InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
         prog.resetCv(7, 45); // Dual Mode (not Four Function Dual Mode)
@@ -147,11 +141,10 @@ public class RosterFrameTest {
     }
 
     @Test
-    @Ignore("RosterFrame doesn't do multiple selection properly yet")
+    @Disabled("RosterFrame doesn't do multiple selection properly yet")
     public void testIdentify3Multiple() {
 
         // this is a test of what happens when multiples are selectable
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // add entry to Roster
         Roster roster = Roster.getDefault();
@@ -174,6 +167,7 @@ public class RosterFrameTest {
 
         // set some CV values
         jmri.progdebugger.ProgDebugger prog = (jmri.progdebugger.ProgDebugger) InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
 
@@ -193,7 +187,6 @@ public class RosterFrameTest {
 
     @Test
     public void testIdentify3ViaDecoderId() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // add entry to Roster
         Roster roster = Roster.getDefault();
@@ -220,6 +213,7 @@ public class RosterFrameTest {
 
         // set some CV values
         jmri.progdebugger.ProgDebugger prog = (jmri.progdebugger.ProgDebugger) InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
         prog.resetCv(7, 45); // Dual Mode (not Four Function Dual Mode)
@@ -238,9 +232,9 @@ public class RosterFrameTest {
     }
 
     @Test
-    @Ignore("does not find and close dialog as expected")
+    @Disabled("does not find and close dialog as expected")
     public void testCheckIfEntrySelected() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         frame.setVisible(true);
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
         Thread t = new Thread(() -> {
@@ -255,7 +249,6 @@ public class RosterFrameTest {
 
     @Test
     public void testGetandSetAllowQuit() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setVisible(true);
         frame.allowQuit(false);
         Assert.assertFalse("Quit Not Allowed", frame.isAllowQuit());
@@ -263,7 +256,7 @@ public class RosterFrameTest {
         Assert.assertTrue("Quit Allowed", frame.isAllowQuit());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -280,7 +273,7 @@ public class RosterFrameTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (frame != null) {
             JUnitUtil.dispose(frame);

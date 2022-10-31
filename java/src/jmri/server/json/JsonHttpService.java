@@ -44,7 +44,7 @@ public abstract class JsonHttpService {
 
     /**
      * Create an HTTP handler for a JSON service.
-     * 
+     *
      * @param mapper the ObjectMapper to create new JSON nodes
      */
     protected JsonHttpService(@Nonnull ObjectMapper mapper) {
@@ -75,34 +75,6 @@ public abstract class JsonHttpService {
             throws JsonException;
 
     /**
-     * Respond to an HTTP GET request for the requested name.
-     * <p>
-     * If name is null, return a list of all objects for the given type, if
-     * appropriate.
-     * <p>
-     * This method should throw a 500 Internal Server Error if type is not
-     * recognized.
-     *
-     * @param type   the type of the requested object
-     * @param name   the system name of the requested object
-     * @param data   JSON data set of attributes of the requested object
-     * @param locale the requesting client's Locale
-     * @param id     the message id set by the client
-     * @return a JSON description of the requested object
-     * @throws JsonException if the named object does not exist or other error
-     *                       occurs
-     * @deprecated since 4.19.2; use
-     *             {@link #doGet(String, String, JsonNode, JsonRequest)} instead
-     */
-    @Deprecated
-    @Nonnull
-    public JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data,
-            @Nonnull Locale locale, int id)
-            throws JsonException {
-        return doGet(type, name, data, new JsonRequest(locale, JSON.V5, JSON.GET, id));
-    }
-
-    /**
      * Respond to an HTTP POST request for the requested name.
      * <p>
      * This method should throw a 400 Invalid Request error if the named object
@@ -121,33 +93,6 @@ public abstract class JsonHttpService {
     @Nonnull
     public abstract JsonNode doPost(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data,
             @Nonnull JsonRequest request) throws JsonException;
-
-    /**
-     * Respond to an HTTP POST request for the requested name.
-     * <p>
-     * This method should throw a 400 Invalid Request error if the named object
-     * does not exist.
-     *
-     * @param type   the type of the requested object
-     * @param name   the system name of the requested object
-     * @param data   JSON data set of attributes of the requested object to be
-     *               updated
-     * @param locale the requesting client's Locale
-     * @param id     the message id set by the client
-     * @return a JSON description of the requested object after updates have
-     *         been applied
-     * @throws JsonException if the named object does not exist or other error
-     *                       occurs
-     * @deprecated since 4.19.2; use
-     *             {@link #doPost(String, String, JsonNode, JsonRequest)}
-     *             instead
-     */
-    @Deprecated
-    @Nonnull
-    public JsonNode doPost(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data,
-            @Nonnull Locale locale, int id) throws JsonException {
-        return doPost(type, name, data, new JsonRequest(locale, JSON.V5, JSON.POST, id));
-    }
 
     /**
      * Respond to an HTTP PUT request for the requested name.
@@ -172,31 +117,6 @@ public abstract class JsonHttpService {
     }
 
     /**
-     * Respond to an HTTP PUT request for the requested name.
-     * <p>
-     * Throw an HTTP 405 Method Not Allowed exception if new objects of the type
-     * are not intended to be addable.
-     *
-     * @param type   the type of the requested object
-     * @param name   the system name of the requested object
-     * @param data   JSON data set of attributes of the requested object to be
-     *               created or updated
-     * @param locale the requesting client's Locale
-     * @param id     the message id set by the client
-     * @return a JSON description of the requested object
-     * @throws JsonException if the method is not allowed or other error occurs
-     * @deprecated since 4.19.2; use
-     *             {@link #doPut(String, String, JsonNode, JsonRequest)} instead
-     */
-    @Deprecated
-    @Nonnull
-    public JsonNode doPut(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale,
-            int id)
-            throws JsonException {
-        return doPut(type, name, data, new JsonRequest(locale, JSON.V5, JSON.PUT, id));
-    }
-
-    /**
      * Respond to an HTTP DELETE request for the requested name.
      * <p>
      * Throw an HTTP 405 Method Not Allowed exception if the object is not
@@ -215,31 +135,6 @@ public abstract class JsonHttpService {
             throws JsonException {
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
                 Bundle.getMessage(request.locale, "DeleteNotAllowed", type), request.id);
-    }
-
-    /**
-     * Respond to an HTTP DELETE request for the requested name.
-     * <p>
-     * Throw an HTTP 405 Method Not Allowed exception if the object is not
-     * intended to be removable.
-     * <p>
-     * Do not throw an error if the requested object does not exist.
-     *
-     * @param type   the type of the deleted object
-     * @param name   the system name of the deleted object
-     * @param data   additional data
-     * @param locale the requesting client's Locale
-     * @param id     the message id set by the client
-     * @throws JsonException if this method is not allowed or other error occurs
-     * @deprecated since 4.19.2; use
-     *             {@link #doDelete(String, String, JsonNode, JsonRequest)}
-     *             instead
-     */
-    @Deprecated
-    public void doDelete(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale,
-            int id)
-            throws JsonException {
-        doDelete(type, name, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, id));
     }
 
     /**
@@ -262,33 +157,6 @@ public abstract class JsonHttpService {
     @Nonnull
     public abstract JsonNode doGetList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull JsonRequest request)
             throws JsonException;
-
-    /**
-     * Respond to an HTTP GET request for a list of items of type.
-     * <p>
-     * This is called by the {@link jmri.web.servlet.json.JsonServlet} to handle
-     * get requests for a type, but no name. Services that do not have named
-     * objects, such as the {@link jmri.server.json.time.JsonTimeHttpService}
-     * should respond to this with a list containing a single JSON object.
-     * Services that can't return a list may throw a 400 Bad Request
-     * JsonException in this case.
-     *
-     * @param type   the type of the requested list
-     * @param data   JSON data set of attributes of the requested objects
-     * @param locale the requesting client's Locale
-     * @param id     the message id set by the client
-     * @return a JSON list or message containing type {@value JSON#LIST}, the
-     *         list as data, and the passed in id
-     * @throws JsonException may be thrown by concrete implementations
-     * @deprecated since 4.19.2; use
-     *             {@link #doGetList(String, JsonNode, JsonRequest)} instead
-     */
-    @Deprecated
-    @Nonnull
-    public JsonNode doGetList(@Nonnull String type, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
-            throws JsonException {
-        return doGetList(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, id));
-    }
 
     /**
      * Get the JSON Schema for the {@code data} property of the requested type
@@ -319,42 +187,6 @@ public abstract class JsonHttpService {
     @Nonnull
     public abstract JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull JsonRequest request)
             throws JsonException;
-
-    /**
-     * Get the JSON Schema for the {@code data} property of the requested type
-     * of JSON object. It is a invalid for implementations to not return a valid
-     * schema that clients can use to validate a request to or response from the
-     * JSON services.
-     * <p>
-     * Note that a schema must be contained in a standard object as:
-     * <p>
-     * {@code {"type":"schema", "data":{"schema":<em>schema</em>,
-     * "server":boolean}} }
-     * <p>
-     * If using {@link #doSchema(String, boolean, String, String, int)}, an
-     * implementation can be as simple as: {@code
-     * return doSchema(type, server, "path/to/client/schema.json", "path/to/server/schema.json", id);
-     * }
-     *
-     * @param type   the type for which a schema is requested
-     * @param server true if the schema is for a message from the server; false
-     *               if the schema is for a message from the client
-     * @param locale the requesting client's Locale
-     * @param id     the message id set by the client
-     * @return a JSON Schema valid for the type
-     * @throws JsonException if an error occurs preparing schema; if type is is
-     *                       not a type handled by this service, this must be
-     *                       thrown with an error code of 500 and the localized
-     *                       message ERROR_UNKNOWN_TYPE
-     * @deprecated since 4.19.2; use
-     *             {@link #doSchema(String, boolean, JsonRequest)} instead
-     */
-    @Deprecated
-    @Nonnull
-    public JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull Locale locale, int id)
-            throws JsonException {
-        return doSchema(type, server, new JsonRequest(locale, JSON.V5, JSON.GET, id));
-    }
 
     /**
      * Helper to make implementing
@@ -422,7 +254,7 @@ public abstract class JsonHttpService {
     /**
      * Verify a deletion token. If the token is not valid any pending deletion
      * tokens for the type and name are also deleted.
-     * 
+     *
      * @param type  the type of object pending deletion
      * @param name  the name of object pending deletion
      * @param token the token previously provided to client
@@ -440,7 +272,7 @@ public abstract class JsonHttpService {
      * deleted and it is in use. This exception will include a token that can be
      * used to force deletion by the client and may include a JSON list of the
      * objects using the object for which deletion was requested.
-     * 
+     *
      * @param type      the type of object in conflicting state
      * @param name      the name of the object in conflicting state
      * @param conflicts the using objects of this object; may be empty
@@ -460,31 +292,8 @@ public abstract class JsonHttpService {
     }
 
     /**
-     * Throw an HTTP CONFLICT (409) exception when an object is requested to be
-     * deleted and it is in use. This exception will include a token that can be
-     * used to force deletion by the client and may include a JSON list of the
-     * objects using the object for which deletion was requested.
-     * 
-     * @param type      the type of object in conflicting state
-     * @param name      the name of the object in conflicting state
-     * @param conflicts the using objects of this object; may be empty
-     * @param locale    the client locale
-     * @param id        the message id set by the client
-     * @throws JsonException the exception
-     * @deprecated since 4.19.2; use
-     *             {@link #throwDeleteConflictException(String, String, ArrayNode, JsonRequest)}
-     *             instead
-     */
-    @Deprecated
-    public final void throwDeleteConflictException(@Nonnull String type, @Nonnull String name,
-            @Nonnull ArrayNode conflicts,
-            @Nonnull Locale locale, int id) throws JsonException {
-        throwDeleteConflictException(type, name, conflicts, new JsonRequest(locale, JSON.V5, JSON.DELETE, id));
-    }
-
-    /**
      * Create a message node from an array.
-     * 
+     *
      * @param data the array
      * @param id   the message id provided by the client or its additive inverse
      * @return if id is a positive, non-zero integer, return a message of type
@@ -501,7 +310,7 @@ public abstract class JsonHttpService {
 
     /**
      * Create a message node without an explicit method.
-     * 
+     *
      * @param type the message type
      * @param data the message data
      * @param id   the message id provided by the client or its additive inverse
@@ -518,7 +327,7 @@ public abstract class JsonHttpService {
 
     /**
      * Create a message node.
-     * 
+     *
      * @param type   the message type
      * @param data   the message data
      * @param method the message method
@@ -536,7 +345,7 @@ public abstract class JsonHttpService {
 
     /**
      * Create a message node from an array.
-     * 
+     *
      * @param mapper the ObjectMapper to use to construct the message
      * @param data   the array
      * @param method the message method
@@ -557,7 +366,7 @@ public abstract class JsonHttpService {
 
     /**
      * Create a message node.
-     * 
+     *
      * @param mapper the ObjectMapper to use to construct the message
      * @param type   the message type
      * @param data   the message data
