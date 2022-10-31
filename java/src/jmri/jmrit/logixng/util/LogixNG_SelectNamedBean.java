@@ -135,6 +135,14 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         }
     }
 
+    public E getBean() {
+        if (_handle != null) {
+            return _handle.getBean();
+        } else {
+            return null;
+        }
+    }
+
     public NamedBeanHandle<E> getNamedBean() {
         return _handle;
     }
