@@ -1381,6 +1381,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
                     LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                             .createLogixNG(null, true);
                     logixNG.setPositionable(p);
+                    logixNG.activate();
                     logixNG.setEnabled(true);
                     p.setLogixNG(logixNG);
                 }
