@@ -3,9 +3,11 @@ package jmri.jmrit.logix;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
+import javax.swing.JFrame;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.logix.Bundle;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -53,31 +55,54 @@ public class WarrantFrameTest {
         jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
-        WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
+        JUnitUtil.waitFor(100);
 
         Warrant startW = _warrantMgr.getWarrant("WestBoundStart");
         Warrant endW = _warrantMgr.getWarrant("WestBoundFinish");
 
-//        JFrameOperator jfo = new JFrameOperator(tableFrame);
-//        JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("stopAtBlock", startW.getLastOrder().getBlock().getDisplayName()));
-//        JButtonOperator jbo = new JButtonOperator(jdo, Bundle.getMessage("ButtonYes"));
-//        jbo.push();
-        /*       
         new Thread(() -> {
-            JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("QuestionTitle"));
-            JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("stopAtBlock", startW.getLastOrder().getBlock().getDisplayName()));
+            JFrameOperator jfo = new JFrameOperator(WarrantTableFrame.getDefault());
+            JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("QuestionTitle"));
             JButtonOperator jbo = new JButtonOperator(jdo, Bundle.getMessage("ButtonYes"));
             jbo.push();
-        }).start();*/
-/*
-        QuestionFrame question = new QuestionFrame(Bundle.getMessage("ButtonYes"), startW.getLastOrder().getBlock().getDisplayName());
-        question.start();*/
-
-        QuestionFrame question = new QuestionFrame(tableFrame, Bundle.getMessage("ButtonYes"), startW.getLastOrder().getBlock().getDisplayName());
-        question.start();
+        }).start();
         
         WarrantFrame warrantFrame= new WarrantFrame(startW, endW);
-        System.out.println("return WarrantFrame");
+        assertThat(warrantFrame).withFailMessage("JoinWFrame exits").isNotNull();
+
+        warrantFrame._userNameBox.setText("WestBoundLocal");
+        JFrameOperator editFrame = new JFrameOperator(warrantFrame);
+        JemmyUtil.pressButton(editFrame, Bundle.getMessage("ButtonSave"));
+
+        Warrant w = _warrantMgr.getWarrant("WestBoundLocal");
+        assertThat(w).withFailMessage("Concatenated Warrant exits").isNotNull();
+
+        warrantFrame.close();
+        warrantFrame.dispose();
+    }
+
+    @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    public void testJoinWarrantsNoStop() throws Exception {
+        // load and display
+        File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
+        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+        JUnitUtil.waitFor(100);
+
+        Warrant startW = _warrantMgr.getWarrant("WestBoundStart");
+        Warrant endW = _warrantMgr.getWarrant("WestBoundFinish");
+
+        new Thread(() -> {
+            JFrameOperator jfo = new JFrameOperator(WarrantTableFrame.getDefault());
+            JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("QuestionTitle"));
+            JButtonOperator jbo = new JButtonOperator(jdo, Bundle.getMessage("ButtonNo"));
+            jbo.push();
+        }).start();
+        
+        WarrantFrame warrantFrame= new WarrantFrame(startW, endW);
         assertThat(warrantFrame).withFailMessage("JoinWFrame exits").isNotNull();
 
         warrantFrame._userNameBox.setText("WestBound");
@@ -89,33 +114,6 @@ public class WarrantFrameTest {
 
         warrantFrame.close();
         warrantFrame.dispose();
-    }
-
-    private class QuestionFrame extends Thread {
-        String answer;
-        String blockName;
-        JFrameOperator jfo;
-        JDialogOperator jdo;
-        JButtonOperator jbo;
-        WarrantTableFrame f;
-       QuestionFrame(WarrantTableFrame tableFrame, String ans, String name) {
-            ans = answer;
-            name = blockName;
-//            jfo = o;
-            f=tableFrame;
-        }
-       @Override
-        public void run() {
-            while (true) {
-                JUnitUtil.waitFor(100);
-//                jfo = new JFrameOperator(Bundle.getMessage("QuestionTitle"));
-                jfo = new JFrameOperator(f);
-                jdo = new JDialogOperator(jfo, Bundle.getMessage("stopAtBlock", blockName));
-                jbo = new JButtonOperator(jdo, answer);
-                jbo.push();
-                break;
-            }
-        }
     }
 
     @BeforeEach

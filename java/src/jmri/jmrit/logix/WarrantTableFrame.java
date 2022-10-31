@@ -337,7 +337,18 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
         _concatDialog.dispose();
     }
 
+    protected boolean askStopQuestion(String blockName) {
+        boolean includeAllCmds = false;
+        if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("stopAtBlock", blockName),
+                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            includeAllCmds = true;
+        }
+        return includeAllCmds;
+    }
+
     public void showWarning(String msg) {
+        setVisible(true);
         JOptionPane.showMessageDialog(this, Bundle.getMessage(msg, _startWarrant.getText(), _endWarrant.getText()),
                 Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
     }

@@ -121,13 +121,16 @@ public class WarrantFrame extends WarrantRoute {
         _warrant = new Warrant(sName, null);
         if (startW != null) {
             if (endW != null) { // concatenate warrants
-                boolean includeAllCmds = false;
-                if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("stopAtBlock",
+                WarrantTableFrame tf = WarrantTableFrame.getDefault();
+                tf.setVisible(true);
+                boolean includeAllCmds = tf.askStopQuestion(startW.getLastOrder().getBlock().getDisplayName());
+                /*
+                if (JOptionPane.showConfirmDialog(f, Bundle.getMessage("stopAtBlock",
                         startW.getLastOrder().getBlock().getDisplayName()),
                         Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                     includeAllCmds = true;
-                }
+                }*/
                 float entranceSpeed = setup(startW, !includeAllCmds);
                 List<BlockOrder> orders = endW.getBlockOrders();
                 BlockOrder bo = orders.get(0);    // block order of common midblock
@@ -204,10 +207,11 @@ public class WarrantFrame extends WarrantRoute {
             _TTP = ((SCWarrant) warrant).getTimeToPlatform();
             _forward = ((SCWarrant) warrant).getForward();
         }
-        NamedBean bean = list.get(list.size()-1).getBlock();
+
         float entranceSpeed = 0;
         for (ThrottleSetting ts : warrant.getThrottleCommands()) {
-            if (omitLastBlockCmds) {
+            if (omitLastBlockCmds && list.size() > 0) {
+                NamedBean bean = list.get(list.size()-1).getBlock();
                 Command cmd = ts.getCommand();
                 if (cmd.equals(Command.SPEED)) {
                     entranceSpeed = ts.getValue().getFloat();
