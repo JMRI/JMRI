@@ -22,8 +22,8 @@ import jmri.util.swing.JComboBoxUtil;
 public class InlineLogixNGsTableModel extends AbstractTableModel {
 
     public static final int COLUMN_SYSTEM_NAME = 0;
-//    public static final int COLUMN_USER_NAME = COLUMN_SYSTEM_NAME + 1;
-    public static final int COLUMN_PANEL_NAME = COLUMN_SYSTEM_NAME + 1;
+    public static final int COLUMN_USER_NAME = COLUMN_SYSTEM_NAME + 1;
+    public static final int COLUMN_PANEL_NAME = COLUMN_USER_NAME + 1;
     public static final int COLUMN_POSITIONABLE_NAME = COLUMN_PANEL_NAME + 1;
     public static final int COLUMN_POS_X = COLUMN_POSITIONABLE_NAME + 1;
     public static final int COLUMN_POS_Y = COLUMN_POS_X + 1;
@@ -69,8 +69,8 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
         switch (col) {
             case COLUMN_SYSTEM_NAME:
                 return Bundle.getMessage("ColumnSystemName");
-//            case COLUMN_USER_NAME:
-//                return Bundle.getMessage("ColumnUserName");
+            case COLUMN_USER_NAME:
+                return Bundle.getMessage("ColumnUserName");
             case COLUMN_PANEL_NAME:
                 return Bundle.getMessage("InlineLogixNGsTableModel_ColumnPanelName");
             case COLUMN_POSITIONABLE_NAME:
@@ -91,7 +91,7 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case COLUMN_SYSTEM_NAME:
-//            case COLUMN_USER_NAME:
+            case COLUMN_USER_NAME:
             case COLUMN_PANEL_NAME:
             case COLUMN_POSITIONABLE_NAME:
                 return String.class;
@@ -148,8 +148,8 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
         switch (columnIndex) {
             case COLUMN_SYSTEM_NAME:
                 return logixNG.getSystemName();
-//            case COLUMN_USER_NAME:
-//                return logixNG.getUserName();
+            case COLUMN_USER_NAME:
+                return logixNG.getUserName();
             case COLUMN_PANEL_NAME:
                 return logixNG.getPositionable().getEditor().getName();
             case COLUMN_POSITIONABLE_NAME:
