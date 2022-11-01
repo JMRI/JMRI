@@ -1,0 +1,75 @@
+#  Grand Reset
+#     Delete all transits
+#     Delete all sections
+#     Delete all Signal Mast Logics
+#     Remove all saved paths
+
+#  Caution:
+#      Only use this script if you have built a valid representation
+#      of your railroad with Layout Edit.
+
+#
+#  This script (if you respond "OK" to the confirmation dialog) removes
+#     all transits, sections and SignalMastLogics.
+#     To be effective, you must do a "Store" operation, quit the application
+#     and restart it.
+#  You can then go to the Signal Mast Logic table
+#     and select Tools "Auto Generate Signaling Pairs".
+#     If you know all the pairs are already correct, you can select the
+#     option to "Generate Sections from Mast Pairs".
+#  Finally you can rebuild Transits right click signals on your
+#     Layout Editor panel and using "Create Transit from here".
+#     Follow that by right clicking the next signal and selecting "Add to Transit".
+#     Continue and end with "Add to Transit and Complete"
+#
+
+import jmri
+import java
+from javax.swing import JOptionPane
+
+#  verify that we REALLY want to do this:
+msg = 'Are you SURE that you want do this?\n- Deletes Transits\n- Deletes Sections\n- Deletes SML\n- Deletes Block Paths'
+msg = msg + '\nNote: Do Store and Quit when done.'
+
+response = JOptionPane.showConfirmDialog(None, msg, 'Grand Reset', JOptionPane.OK_CANCEL_OPTION)
+if response == 0 :
+    # if the user doesn't click "OK", we want to leave the script
+    print response
+
+    #  get the transitManger and the sectionManager
+    #     these are two Objects that are not automatically
+    #     created by JMRI scripting as "turnouts" and "sensors" are
+    #
+    transitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
+    sectionManager = jmri.InstanceManager.getDefault(jmri.SectionManager)
+
+    #   make a copy of section list (you can't modify the list itself when looping through it
+    #   attempting to use the original list results in ConcurrentModificationException
+    transitList = []
+    for trans in transits.getNamedBeanSet() :
+        transitList.append(trans)
+    # remove all transits
+    for trans in transitList :
+        transitManager.deleteTransit(trans)
+
+    sectionList = sections.getNamedBeanSet()
+    #   make a copy of section list (you can't modify the list itself when looping through it
+    #   attempting to use the original list results in ConcurrentModificationException
+    newList = []
+    for section in sectionList:
+        newList.append(section)
+    # remove all sections
+    for section in newList:
+        sectionManager.deleteSection(section)
+
+    mastManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
+    mastList = mastManager.getSignalMastLogicList()
+    # remove all Signal Mast Logics
+    # this call removes all logics from the specified mast, regardless of destination mast
+    for mast in mastList:
+        mastManager.removeSignalMastLogic(mast)
+
+    # remove all saved paths from the Block menu (not effective until a Save and Quit)
+    jmri.InstanceManager.getDefault(jmri.BlockManager).setSavedPathInfo(False)
+else :
+    print "Script aborted"
