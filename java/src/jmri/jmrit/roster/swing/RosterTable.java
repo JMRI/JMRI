@@ -397,7 +397,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
-    private class DateTimeCellEditor extends RosterCellEditor {
+    private static class DateTimeCellEditor extends RosterCellEditor {
 
         public DateTimeCellEditor() {
             super();
