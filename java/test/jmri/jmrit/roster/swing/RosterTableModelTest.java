@@ -177,8 +177,8 @@ public class RosterTableModelTest {
         // hard-coded value is number of columns expected
         // 11 normal columns + 2 attribute columns
         Assert.assertEquals(13, t.getColumnCount());
-        Assert.assertEquals(java.util.Date.class,(Class)t.getColumnClass(RosterTableModel.NUMCOL));
-        
+        Assert.assertTrue(java.util.Date.class == t.getColumnClass(RosterTableModel.NUMCOL));
+
         Assert.assertNotNull(t.getValueAt(0, RosterTableModel.NUMCOL));
         Assert.assertNull(t.getValueAt(1, RosterTableModel.NUMCOL));
         Assert.assertNull(t.getValueAt(2, RosterTableModel.NUMCOL));
