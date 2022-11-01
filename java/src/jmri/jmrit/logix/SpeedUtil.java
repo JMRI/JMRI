@@ -811,26 +811,19 @@ public class SpeedUtil {
                 if (time > 0) {
                     calcDist += getDistanceOfSpeedChange(intStartSpeed, intEndSpeed, time);
                 }               
-                boolean trace = false;
-                if (calcDist<= 0) {
-                    log.warn("block: {} Path distance or SpeedProfile unreliable! pathDist= {}, calcDist={}!", blkName, pathDist, calcDist);
-                    trace = true;
-                }
-                if (blkOrderIdx > 0 && blkOrderIdx < commands.size() - 1) {
+                float ratio = 1;
+                if (calcDist > 0 && blkOrderIdx > 0 && blkOrderIdx < commands.size() - 1) {
                     pathDist = orders.get(blkOrderIdx).getPathLength();
-                    float ratio = pathDist / calcDist;
-                    if (Math.abs(ratio) > 2.0f || Math.abs(ratio) < 0.5f) {
-                        log.warn("block: {} Path distance or SpeedProfile unreliable! pathDist= {}, calcDist={}!", blkName, pathDist, calcDist);
-                        trace = true;
-                    }
+                    ratio = pathDist / calcDist;
                 } else {
-                    BlockOrder bo = orders.get(blkOrderIdx);
-                    pathDist = bo.getPathLength() / 2;
+                    pathDist = orders.get(blkOrderIdx).getPathLength() / 2;
                 }
                 _speedInfo.add(new BlockSpeedInfo(blkName, firstSpeed, speed, blkTime, pathDist, calcDist, firstIdx, i));
-                if (trace || log.isDebugEnabled()) {
-                   log.debug("\"{}\" Speeds: enter= {}, exit= {}. time= {}ms, pathDist= {}, calcDist= {}. index {} to {}",
-                            blkName, firstSpeed, speed, blkTime, pathDist, calcDist, firstIdx, i);
+                if (Warrant._trace || log.isDebugEnabled()) {
+                    if (calcDist <= 0 || Math.abs(ratio) > 2.0f || Math.abs(ratio) < 0.5f) {
+                        log.debug("\"{}\" Speeds: enter= {}, exit= {}. time= {}ms, pathDist= {}, calcDist= {}. index {} to {}",
+                                blkName, firstSpeed, speed, blkTime, pathDist, calcDist, firstIdx, i);
+                    }
                 }
                 blkOrderIdx++;
                 blk = (OBlock)ts.getNamedBeanHandle().getBean();

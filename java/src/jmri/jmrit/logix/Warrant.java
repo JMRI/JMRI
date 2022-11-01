@@ -129,7 +129,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             "RunningLate", "WaitingForStart", "RecordingScript", "StopPending"};
 
     static final float BUFFER_DISTANCE = 50*12*25.4F / WarrantPreferences.getDefault().getLayoutScale(); // 50 scale feet for safety distance
-    protected boolean _trace = WarrantPreferences.getDefault().getTrace();
+    static protected boolean _trace = WarrantPreferences.getDefault().getTrace();
 
     // Speed states: steady, increasing, decreasing
     static final int AT_SPEED = 1;

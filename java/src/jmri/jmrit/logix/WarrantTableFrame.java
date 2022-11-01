@@ -31,6 +31,8 @@ import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * The WarrantTableFrame lists the existing Warrants and has controls to set
  * their routes, train IDs launch them and control their running (halt, resume,
@@ -297,6 +299,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
         _concatDialog.setVisible(true);
     }
 
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
     private void concatenate(String startName, String endName) {
         WarrantManager manager = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class);
         Warrant startW = manager.getWarrant(startName.trim());

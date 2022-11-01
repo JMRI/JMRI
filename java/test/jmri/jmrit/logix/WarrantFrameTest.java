@@ -48,7 +48,7 @@ public class WarrantFrameTest {
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testJoinWarrants() throws Exception {
+    public void testJoinWarrantsStop() throws Exception {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
