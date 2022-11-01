@@ -386,7 +386,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
-    private class DateTimeCellRenderer extends DefaultTableCellRenderer {
+    private static class DateTimeCellRenderer extends DefaultTableCellRenderer {
         @Override
         protected void setValue(Object value) {
             if ( value instanceof Date) {
@@ -397,12 +397,12 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
-    private static class DateTimeCellEditor extends RosterCellEditor {
+    private class DateTimeCellEditor extends RosterCellEditor {
 
         public DateTimeCellEditor() {
             super();
         }
-        
+
         private final static String EDITOR_DATE_FORMAT =  "yyyy-MM-dd hh:mm";
         private Date startDate = new Date();
 
