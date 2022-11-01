@@ -47,6 +47,7 @@ public class InlineLogixNGsFrame extends JmriJFrame {
         table.setDefaultEditor(InlineLogixNGsTableModel.Menu.class,
                 new InlineLogixNGsTableModel.MenuCellEditor(table, inlineLogixNGsTableModel));
         inlineLogixNGsTableModel.setColumnForMenu(table);
+        table.setAutoCreateRowSorter(true);
         JScrollPane scrollpane = new JScrollPane(table);
         scrollpane.setPreferredSize(new Dimension(600, 400));
         contentPanel.add(scrollpane);
