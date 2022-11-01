@@ -458,14 +458,11 @@ public class WarrantFrame extends WarrantRoute {
         _parameterPanel.setPreferredSize(_parameterPanel.getPreferredSize());
         tab2.add(_parameterPanel);
 
-        _isSCWarrant.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setPanelEnabled(scParamPanel, true);
-                setPanelEnabled(learnPanel, false);
-                setPanelEnabled(paramsPanel, false);
-                setPanelEnabled(runPanel, false);
-            }
+        _isSCWarrant.addActionListener((ActionEvent e) -> {
+            setPanelEnabled(scParamPanel, true);
+            setPanelEnabled(learnPanel, false);
+            setPanelEnabled(paramsPanel, false);
+            setPanelEnabled(runPanel, false);
         });
         if (_saveWarrant != null && _saveWarrant instanceof SCWarrant) {
             setPanelEnabled(scParamPanel, true);
@@ -475,14 +472,11 @@ public class WarrantFrame extends WarrantRoute {
             _isSCWarrant.setVisible(true);
         }
 
-        _isWarrant.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setPanelEnabled(scParamPanel, false);
-                setPanelEnabled(learnPanel, true);
-                setPanelEnabled(paramsPanel, true);
-                setPanelEnabled(runPanel, true);
-            }
+        _isWarrant.addActionListener((ActionEvent e) -> {
+            setPanelEnabled(scParamPanel, false);
+            setPanelEnabled(learnPanel, true);
+            setPanelEnabled(paramsPanel, true);
+            setPanelEnabled(runPanel, true);
         });
 
         JPanel panel = new JPanel();
@@ -501,12 +495,11 @@ public class WarrantFrame extends WarrantRoute {
 
         Component[] components = panel.getComponents();
 
-        for (int i = 0; i < components.length; i++) {
-            if ("javax.swing.JPanel".equals(components[i].getClass().getName())) {
-                setPanelEnabled((JPanel) components[i], isEnabled);
+        for (Component component : components) {
+            if ("javax.swing.JPanel".equals(component.getClass().getName())) {
+                setPanelEnabled((JPanel) component, isEnabled);
             }
-
-            components[i].setEnabled(isEnabled);
+            component.setEnabled(isEnabled);
         }
     }
 
@@ -575,7 +568,7 @@ public class WarrantFrame extends WarrantRoute {
         JPanel ttpPanel = new JPanel();
         ttpPanel.setLayout(new BoxLayout(ttpPanel, BoxLayout.LINE_AXIS));
         JLabel ttp_l = new JLabel(Bundle.getMessage("TTP"));
-        _TTPtextField.setValue(Long.valueOf(_TTP));
+        _TTPtextField.setValue(_TTP);
         _TTPtextField.setColumns(6);
         ttp_l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         _TTPtextField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
@@ -588,7 +581,7 @@ public class WarrantFrame extends WarrantRoute {
         JPanel sfPanel = new JPanel();
         sfPanel.setLayout(new BoxLayout(sfPanel, BoxLayout.LINE_AXIS));
         JLabel sf_l = new JLabel(Bundle.getMessage("SF"));
-        _speedFactorTextField.setValue(Long.valueOf((long) (100 * _speedFactor)));
+        _speedFactorTextField.setValue((long) (100 * _speedFactor));
         _speedFactorTextField.setColumns(3);
         sf_l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         _speedFactorTextField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
@@ -613,21 +606,15 @@ public class WarrantFrame extends WarrantRoute {
         startStopPanel.setLayout(new BoxLayout(startStopPanel, BoxLayout.PAGE_AXIS));
         startStopPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         JButton startButton = new JButton(Bundle.getMessage("Start"));
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clearTempWarrant();
-                _tabbedPane.setSelectedIndex(1);
-                showCommands(true);
-                runLearnModeTrain();
-            }
+        startButton.addActionListener((ActionEvent e) -> {
+            clearTempWarrant();
+            _tabbedPane.setSelectedIndex(1);
+            showCommands(true);
+            runLearnModeTrain();
         });
         JButton stopButton = new JButton(Bundle.getMessage("Stop"));
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stopRunTrain(false);
-            }
+        stopButton.addActionListener((ActionEvent e) -> {
+            stopRunTrain(false);
         });
         startButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         stopButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -690,35 +677,20 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(abort);
         runPanel.add(panel);
 
-        run.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                runTrain();
-            }
+        run.addActionListener((ActionEvent e) -> {
+            runTrain();
         });
-        halt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doControlCommand(Warrant.HALT);
-            }
+        halt.addActionListener((ActionEvent e) -> {
+            doControlCommand(Warrant.HALT);
         });
-        resume.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doControlCommand(Warrant.RESUME);
-            }
+        resume.addActionListener((ActionEvent e) -> {
+            doControlCommand(Warrant.RESUME);
         });
-        eStop.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doControlCommand(Warrant.ESTOP);
-            }
+        eStop.addActionListener((ActionEvent e) -> {
+            doControlCommand(Warrant.ESTOP);
         });
-        abort.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doControlCommand(Warrant.ABORT);
-            }
+        abort.addActionListener((ActionEvent e) -> {
+            doControlCommand(Warrant.ABORT);
         });
         runPanel.add(panel);
         return runPanel;
@@ -744,17 +716,11 @@ public class WarrantFrame extends WarrantRoute {
         boolean show = (!_throttleCommands.isEmpty());
         showCommands(show);
         _showScript.setSelected(show);
-        _showRoute.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showCommands(false);
-            }
+        _showRoute.addActionListener((ActionEvent e) -> {
+            showCommands(false);
         });
-        _showScript.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showCommands(true);
-            }
+        _showScript.addActionListener((ActionEvent e) -> {
+            showCommands(true);
         });
 
         if (_saveWarrant != null && _saveWarrant instanceof SCWarrant) {
@@ -762,19 +728,13 @@ public class WarrantFrame extends WarrantRoute {
             showCommands(false);
             setPanelEnabled(buttonPanel, false);
         }
-        _isSCWarrant.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _showRoute.setSelected(true);
-                showCommands(false);
-                setPanelEnabled(buttonPanel, false);
-            }
+        _isSCWarrant.addActionListener((ActionEvent e) -> {
+            _showRoute.setSelected(true);
+            showCommands(false);
+            setPanelEnabled(buttonPanel, false);
         });
-        _isWarrant.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setPanelEnabled(buttonPanel, true);
-            }
+        _isWarrant.addActionListener((ActionEvent e) -> {
+            setPanelEnabled(buttonPanel, true);
         });
 
         midPanel.add(buttonPanel);
@@ -839,7 +799,7 @@ public class WarrantFrame extends WarrantRoute {
             columnModel.getColumn(i).setPreferredWidth(width);
         }
         TableColumn cmdColumn = columnModel.getColumn(ThrottleTableModel.COMMAND_COLUMN);
-        cmdColumn.setCellEditor(new CommandCellEditor(new JComboBox<Command>()));
+        cmdColumn.setCellEditor(new CommandCellEditor(new JComboBox<>()));
         cmdColumn.setCellRenderer(new CommandCellRenderer());
         cmdColumn.setMinWidth(40);
 
@@ -857,21 +817,15 @@ public class WarrantFrame extends WarrantRoute {
         buttonPanel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
 
         JButton insertButton = new JButton(Bundle.getMessage("buttonInsertRow"));
-        insertButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                insertRow();
-            }
+        insertButton.addActionListener((ActionEvent e) -> {
+            insertRow();
         });
         buttonPanel.add(insertButton);
         buttonPanel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
 
         JButton deleteButton = new JButton(Bundle.getMessage("buttonDeleteRow"));
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                deleteRow();
-            }
+        deleteButton.addActionListener((ActionEvent e) -> {
+            deleteRow();
         });
         buttonPanel.add(deleteButton);
         buttonPanel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
@@ -962,12 +916,9 @@ public class WarrantFrame extends WarrantRoute {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (save()) {
-                    WarrantTableAction.getDefault().closeWarrantFrame();
-                }
+        saveButton.addActionListener((ActionEvent e) -> {
+            if (save()) {
+                WarrantTableAction.getDefault().closeWarrantFrame();
             }
         });
         panel.add(saveButton);
@@ -978,11 +929,8 @@ public class WarrantFrame extends WarrantRoute {
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton copyButton = new JButton(Bundle.getMessage("ButtonCopy"));
-        copyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                WarrantTableAction.getDefault().makeWarrantFrame(_saveWarrant, null);
-            }
+        copyButton.addActionListener((ActionEvent e) -> {
+            WarrantTableAction.getDefault().makeWarrantFrame(_saveWarrant, null);
         });
         panel.add(copyButton);
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -992,11 +940,8 @@ public class WarrantFrame extends WarrantRoute {
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                close();
-            }
+        cancelButton.addActionListener((ActionEvent e) -> {
+            close();
         });
         panel.add(cancelButton);
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -1224,7 +1169,7 @@ public class WarrantFrame extends WarrantRoute {
             return;
         }
 
-        if (_throttleCommands.size() > 0) {
+        if (!_throttleCommands.isEmpty()) {
             if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("deleteCommand"),
                     Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
@@ -1348,7 +1293,6 @@ public class WarrantFrame extends WarrantRoute {
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
                 clearWarrant();
                 setStatus(msg, Color.red);
-                return;
             } else {
                 setStatus(_warrant.getRunningMessage(), myGreen);
             }
@@ -1472,8 +1416,8 @@ public class WarrantFrame extends WarrantRoute {
                         }
                     } else if (property.equals("abortLearn")) {
                         stopRunTrain(true);
-                        int oldIdx = ((Integer) e.getOldValue()).intValue();
-                        int newIdx = ((Integer) e.getNewValue()).intValue();
+                        int oldIdx = ((Integer) e.getOldValue());
+                        int newIdx = ((Integer) e.getNewValue());
                         if (oldIdx > newIdx) {
                             msg = Bundle.getMessage("LearnAbortOccupied",
                                     _warrant.getBlockAt(oldIdx),
@@ -1538,7 +1482,7 @@ public class WarrantFrame extends WarrantRoute {
                                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                         }
                     } else if (e.getPropertyName().equals("controlChange")) {
-                        int newCntrl = ((Integer) e.getNewValue()).intValue();
+                        int newCntrl = ((Integer) e.getNewValue());
                         msg = Bundle.getMessage("controlChange",
                                 _warrant.getTrainName(),
                                 Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl]),
@@ -1610,11 +1554,8 @@ public class WarrantFrame extends WarrantRoute {
      * @return true if this warrant or its pre-editing version is running
      */
     protected boolean isRunning() {
-        if (_warrant._runMode != Warrant.MODE_NONE ||
-                (_saveWarrant != null && _saveWarrant._runMode != Warrant.MODE_NONE)) {
-            return true;
-        }
-        return false;
+        return _warrant._runMode != Warrant.MODE_NONE ||
+            (_saveWarrant != null && _saveWarrant._runMode != Warrant.MODE_NONE);
     }
 
     /**
@@ -1770,7 +1711,6 @@ public class WarrantFrame extends WarrantRoute {
         private ComboDialog editorDialog;
         private TextDialog textDialog;
         private String currentText;
-        private JTextField editorComponent;
 
         ValueCellEditor(JTextField textField) {
             super(textField);
@@ -1850,7 +1790,7 @@ public class WarrantFrame extends WarrantRoute {
                 super((JFrame) null, false);
                 _this = this;
                 _textField = new JTextField();
-                _textField.addFocusListener(this);
+                _textField.addFocusListener(TextDialog.this);
                 _textField.setForeground(Color.RED);
                 getContentPane().add(_textField);
                 setUndecorated(true);
@@ -1863,7 +1803,7 @@ public class WarrantFrame extends WarrantRoute {
             @Override
             public void focusLost(FocusEvent e) {
                 currentText = _textField.getText();
-                editorComponent.setText(currentText);
+                ((JTextField)editorComponent).setText(currentText);
                 fireEditingStopped();
                 _this.dispose();
             }
@@ -1901,9 +1841,9 @@ public class WarrantFrame extends WarrantRoute {
             ComboDialog(String[] items) {
                 super((JFrame) null, false);
                 _this = this;
-                _comboBox = new JComboBox<String>();
-                _comboBox.addItemListener(this);
-                _comboBox.addFocusListener(this);
+                _comboBox = new JComboBox<>();
+                _comboBox.addItemListener(ComboDialog.this);
+                _comboBox.addFocusListener(ComboDialog.this);
                 _comboBox.setForeground(Color.RED);
                 for (String item : items) {
                     _comboBox.addItem(item);
@@ -1916,7 +1856,7 @@ public class WarrantFrame extends WarrantRoute {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 currentText = (String) _comboBox.getSelectedItem();
-                editorComponent.setText(currentText);
+                ((JTextField)editorComponent).setText(currentText);
                 fireEditingStopped();
                 _this.dispose();
             }
@@ -1928,7 +1868,7 @@ public class WarrantFrame extends WarrantRoute {
             @Override
             public void focusLost(FocusEvent e) {
                 currentText = (String) _comboBox.getSelectedItem();
-                editorComponent.setText(currentText);
+                ((JTextField)editorComponent).setText(currentText);
                 fireEditingStopped();
                 _this.dispose();
             }
@@ -1977,14 +1917,18 @@ public class WarrantFrame extends WarrantRoute {
                 boolean isSelected, boolean hasFocus, int row, int column) {
             Command cmd = (Command) value;
             int key = _throttleCommands.get(row).getKeyNum();
-            if (cmd == null) {
+            if (null == cmd) {
                 setText(null);
-            } else if (Command.FKEY.equals(cmd)) {
-                setText(Bundle.getMessage("FKey", key));
-            } else if (Command.LATCHF.equals(cmd)) {
-                setText(Bundle.getMessage("FKeyMomemtary", key));
-            } else {
-                setText(cmd.toString());
+            } else switch (cmd) {
+                case FKEY:
+                    setText(Bundle.getMessage("FKey", key));
+                    break;
+                case LATCHF:
+                    setText(Bundle.getMessage("FKeyMomemtary", key));
+                    break;
+                default:
+                    setText(cmd.toString());
+                    break;
             }
             return this;
         }
@@ -2100,10 +2044,7 @@ public class WarrantFrame extends WarrantRoute {
 
         @Override
         public boolean isCellEditable(int row, int col) {
-            if (col == ROW_NUM || col == SPEED_COLUMN) {
-                return false;
-            }
-            return true;
+            return !(col == ROW_NUM || col == SPEED_COLUMN);
         }
 
         @Override
@@ -2149,7 +2090,7 @@ public class WarrantFrame extends WarrantRoute {
             }
             switch (col) {
                 case ROW_NUM:
-                    return Integer.valueOf(row + 1);
+                    return row + 1;
                 case TIME_COLUMN:
                     return ts.getTime();
                 case COMMAND_COLUMN:
@@ -2180,9 +2121,8 @@ public class WarrantFrame extends WarrantRoute {
             String msg = null;
             switch (col) {
                 case TIME_COLUMN:
-                    long time = 0;
                     try {
-                        time = Long.parseLong((String) value);
+                        long time = Long.parseLong((String) value);
                         if (time < 0) {
                             msg = Bundle.getMessage("InvalidTime", (String) value);
                         } else {

@@ -175,22 +175,23 @@ public class TreePane extends JPanel implements PropertyChangeListener {
     }
 
     protected void updateTree(FemaleSocket currentFemaleSocket, Object[] currentPath) {
+        TreeModelEvent tme = new TreeModelEvent(currentFemaleSocket,currentPath);
         for (TreeModelListener l : femaleSocketTreeModel.listeners) {
-            TreeModelEvent tme = new TreeModelEvent(
-                    currentFemaleSocket,
-                    currentPath
-            );
             l.treeNodesChanged(tme);
         }
         _tree.updateUI();
+        FemaleSocket femaleSocket = (FemaleSocket) _tree.getLastSelectedPathComponent();
+        if (!femaleSocket.existsInTree()) {
+            _tree.getSelectionModel().clearSelection();
+        }
     }
 
     public void updateTree(Base item) {
-            List<FemaleSocket> list = new ArrayList<>();
-            getPath(item, list);
+        List<FemaleSocket> list = new ArrayList<>();
+        getPath(item, list);
 
-            FemaleSocket femaleSocket = list.get(list.size()-1);
-            updateTree(femaleSocket, list.toArray());
+        FemaleSocket femaleSocket = list.get(list.size()-1);
+        updateTree(femaleSocket, list.toArray());
     }
 
     public void dispose() {

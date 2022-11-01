@@ -136,7 +136,44 @@ public interface Table {
      * @throws ColumnNotFoundException if the column is not found
      */
     public int getColumnNumber(String columnName) throws ColumnNotFoundException;
-    
+
+    /**
+     * The available types of CSV from which to load a table
+     * The default is TABBED, as that was previously the only choice
+     * TABBED results in parsing the CSV file with tabs as the delimiters
+     * COMMA uses csvFormat of RFC-4180, which is the standard Comma
+     * Seperated Value format, but does not allow empty lines
+     */
+    public enum CsvType {
+
+        TABBED(Bundle.getMessage("CsvType_Tabbed")),
+        COMMA(Bundle.getMessage("CsvType_Comma"));
+
+        private final String _text;
+
+        private CsvType(String text) {
+            this._text = text;
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
+
+    }
+
+    public default boolean isCsvTypeSupported() {
+        return false;
+    }
+
+    public default void setCsvType(CsvType csvType) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    public default CsvType getCsvType() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
     /**
      * Store the table to a CSV file.
      * @param file the CSV file

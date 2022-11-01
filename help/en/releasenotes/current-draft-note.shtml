@@ -76,7 +76,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Slot Monitor Table can be saved to CSV File via new File Menu.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -411,6 +411,14 @@
           <li>The ConditionalNG editor and the Module editor now have the option
           <i>Paste copy</i>. With it, you can paste from the clipboard as many times
           as needed.</li>
+          <li>The action <i>Request update of all sensors</i> has been added. It requests
+          that all sensors gets updated from the layout.</li>
+          <li>The action <i>Create beans from table</i> has been added.</li>
+          <li>The action <i>Find table row or column</i> has been added.</li>
+          <li>Adds support of multiple types of CSV files to LogixNG Tables.
+          Tab separated files are the default, but you may choose Comma
+          as the separator. This allows you load CSV files created by
+          spreadsheet programs.</li>
           <li>The expression <i>Power</i> now supports the <i>Idle</i> and <i>Unknown</i>
           states. Therefore the option <i>Other</i> has been renamed to <i>On or Off</i>.
           A Power expression that had the state <i>Other</i> now has the state <i>On or Off</i>,
@@ -418,6 +426,14 @@
           <li>The expression <i>Power</i> can now ignore the <i>Unknown</i> state. Most
           power managers in JMRI sets the state to Unknown before changing the state. This might
           cause problems when using the expression Power with IfThenElse with ExecuteOnChange.</li>
+          <li>Additional shortcut keys have been added to the ConditionalNG editor.
+            <ul>
+              <li>Ctrl + Shift + R: Remove socket</li>
+              <li>Ctrl + Shift + D: Enable</li>
+              <li>Ctrl + D: Disable</li>
+              <li>For macOS, use Cmd instead of Ctrl.</li>
+            </ul>
+          </li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

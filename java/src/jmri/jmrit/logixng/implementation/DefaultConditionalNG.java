@@ -378,6 +378,11 @@ public class DefaultConditionalNG extends AbstractBase
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public boolean existsInTree() {
+        return true;
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNG.class);
 
 }
