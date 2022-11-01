@@ -443,27 +443,12 @@ class processPanels():
     # remove Sections
     # **************************************************
     def removeSections(self):
-
-        #remove sections
         deleteList = []     # Prevent concurrent modification
         for section in sections.getNamedBeanSet():
             deleteList.append(section)
 
         for item in deleteList:
             sections.deleteBean(item, 'DoDelete')
-
-        deleteList = []
-
-        #remove section direction sensors
-        deleteList = []
-        for sensor in sensors.getNamedBeanSet():
-            name = sensor.getUserName()
-            if name != None:
-                if name.startswith("IY:AUTO:"):
-                    deleteList.append(sensor)
-
-        for item in deleteList:
-            sensors.deleteBean(item, 'DoDelete')
 
     # **************************************************
     # remove signal mast logic
@@ -498,23 +483,6 @@ class processPanels():
 
         for item in deleteList:
             #print 'remove sensor {}'.format(item.getDisplayName())
-            sensors.deleteBean(item, 'DoDelete')
-
-        #remove unused sensors (might not be needed now but was at one stage)
-        deleteList = []
-        for sensor in sensors.getNamedBeanSet():
-            sysname = sensor.getSystemName()
-
-            if sysname.startswith("IS:DSMP:"):
-                username = sensor.getUserName()
-                if username == None:
-                    deleteList.append(sensor)
-            if sysname.startswith("IS:DSMT:") :
-                username = sensor.getUserName()
-                if username == None:
-                    deleteList.append(sensor)
-
-        for item in deleteList:
             sensors.deleteBean(item, 'DoDelete')
 
     # ***********************************************************
