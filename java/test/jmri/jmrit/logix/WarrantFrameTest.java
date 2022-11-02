@@ -7,8 +7,6 @@ import javax.swing.JFrame;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.jmrit.logix.Bundle;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 

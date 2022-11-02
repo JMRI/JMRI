@@ -62,7 +62,7 @@ public class RampData {
             momentumTime = _speedUtil.getMomentumTime(throttleIncre, _upRamp);
             if (momentumTime < _timeInterval) {
                 throttleIncre *= INCRE_RATE;
-            }	// if time of momentum change exceeds _throttleInterval, don't increase throttleIncre
+            }  // if time of momentum change exceeds _throttleInterval, don't increase throttleIncre
         }
         _settings.add(Float.valueOf(highSetting));
     }
