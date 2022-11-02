@@ -34,23 +34,15 @@ msg = msg + '\nNote: Do a Store and Quit when done.'
 response = JOptionPane.showConfirmDialog(None, msg, 'Grand Reset', JOptionPane.OK_CANCEL_OPTION)
 if response == 0 :
     # if the user doesn't click "OK", we want to leave the script
-    print response
 
-    #  get the transitManger and the sectionManager
-    #     these are two Objects that are not automatically
-    #     created by JMRI scripting as "turnouts" and "sensors" are
-    #
-    transitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
-    sectionManager = jmri.InstanceManager.getDefault(jmri.SectionManager)
-
-    #   make a copy of section list (you can't modify the list itself when looping through it
+    #   make a copy of transit list (you can't modify the list itself when looping through it
     #   attempting to use the original list results in ConcurrentModificationException
     transitList = []
     for trans in transits.getNamedBeanSet() :
         transitList.append(trans)
     # remove all transits
     for trans in transitList :
-        transitManager.deleteTransit(trans)
+        transits.deleteTransit(trans)
 
     sectionList = sections.getNamedBeanSet()
     #   make a copy of section list (you can't modify the list itself when looping through it
@@ -60,7 +52,7 @@ if response == 0 :
         newList.append(section)
     # remove all sections
     for section in newList:
-        sectionManager.deleteSection(section)
+        sections.deleteSection(section)
 
     mastManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
     mastList = mastManager.getSignalMastLogicList()
