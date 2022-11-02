@@ -136,34 +136,49 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
     /** {@inheritDoc} */
     @Override
     public boolean isCellEditable(int row, int col) {
-        return col == COLUMN_MENU;
+        return col == COLUMN_USER_NAME || col == COLUMN_MENU;
     }
 
     /** {@inheritDoc} */
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
-/*
-        if (columnIndex == COLUMN_MENU) return;
+        if (columnIndex == COLUMN_USER_NAME) {
+            if (value.equals("")) value = null;
 
-        SymbolTable.VariableData variable = _logixNGs.get(rowIndex);
+            LogixNG logixNG = _logixNGs.get(rowIndex);
+            if (value == null && logixNG.getUserName() == null) return;
+            if (value != null && value.equals(logixNG.getUserName())) return;
 
-        switch (columnIndex) {
-            case COLUMN_NAME:
-                variable._name = (String) value;
-                break;
-            case COLUMN_TYPE:
-                variable._initialValueType = (SymbolTable.InitialValueType) value;
-                break;
-            case COLUMN_DATA:
-                variable._initialValueData = (String) value;
-                break;
-            case COLUMN_MENU:
-                // Do nothing
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid column");
+            LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
+            LogixNG otherLogixNG = logixNG_Manager.getByUserName((String) value);
+            if (otherLogixNG != null) {
+                log.error("User name is not unique {}", value);
+                String msg = Bundle.getMessage("WarningUserName", "" + value);
+                JOptionPane.showMessageDialog(null, msg,
+                        Bundle.getMessage("WarningTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
+
+            logixNG.setUserName((String) value);
+            if (nbMan.inUse(logixNG.getSystemName(), logixNG)) {
+                String msg = Bundle.getMessage("UpdateToUserName", logixNG.getBeanType(), value, logixNG.getSystemName());
+                int optionPane = JOptionPane.showConfirmDialog(null,
+                        msg, Bundle.getMessage("UpdateToUserNameTitle"),
+                        JOptionPane.YES_NO_OPTION);
+                if (optionPane == JOptionPane.YES_OPTION) {
+                    //This will update the bean reference from the systemName to the userName
+                    try {
+                        nbMan.updateBeanFromSystemToUser(logixNG);
+                    } catch (JmriException ex) {
+                        //We should never get an exception here as we already check that the username is not valid
+                        log.error("Impossible exception setting user name", ex);
+                    }
+                }
+            }
         }
-*/
     }
 
     /** {@inheritDoc} */
