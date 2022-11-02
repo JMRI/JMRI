@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import javax.swing.*;
@@ -25,30 +26,54 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
     public static final int COLUMN_USER_NAME = COLUMN_SYSTEM_NAME + 1;
     public static final int COLUMN_PANEL_NAME = COLUMN_USER_NAME + 1;
     public static final int COLUMN_POSITIONABLE_NAME = COLUMN_PANEL_NAME + 1;
-    public static final int COLUMN_POS_X = COLUMN_POSITIONABLE_NAME + 1;
+    public static final int COLUMN_NAMED_BEAN = COLUMN_POSITIONABLE_NAME + 1;
+    public static final int COLUMN_POS_X = COLUMN_NAMED_BEAN + 1;
     public static final int COLUMN_POS_Y = COLUMN_POS_X + 1;
     public static final int COLUMN_MENU = COLUMN_POS_Y + 1;
     public static final int NUM_COLUMNS = COLUMN_MENU + 1;
 
     private final List<LogixNG> _logixNGs = new ArrayList<>();
     private boolean _inEditLogixNGMode = false;
-    private jmri.jmrit.logixng.tools.swing.LogixNGEditor _logixNGEditor;
+    private LogixNGEditor _logixNGEditor;
+    private Predicate<LogixNG> _filter;
 
 
-    public InlineLogixNGsTableModel() {
+    public void init() {
         updateList();
         InstanceManager.getDefault(LogixNG_Manager.class)
-                .addPropertyChangeListener("length", (evt) -> {
-                    updateList();
-                    fireTableDataChanged();
-                });
+                .addPropertyChangeListener("length", (evt) -> { updateList(); });
+    }
+
+    public List<LogixNG> getLogixNGList() {
+        return InstanceManager.getDefault(LogixNG_Manager.class)
+                .getNamedBeanSet().stream().filter((LogixNG t) -> t.isInline())
+                .collect(java.util.stream.Collectors.toList());
     }
 
     private void updateList() {
         Stream<LogixNG> stream = InstanceManager.getDefault(LogixNG_Manager.class)
                 .getNamedBeanSet().stream().filter((LogixNG t) -> t.isInline());
         _logixNGs.clear();
+        if (_filter != null) stream = stream.filter(_filter);
         _logixNGs.addAll(stream.collect(java.util.stream.Collectors.toList()));
+        fireTableDataChanged();
+    }
+
+    /**
+     * Set the filter to select which beans to include in the table.
+     * @param filter the filter
+     */
+    public void setFilter(Predicate<LogixNG> filter) {
+        this._filter = filter;
+        updateList();
+    }
+
+    /**
+     * Get the filter to select which beans to include in the table.
+     * @return the filter
+     */
+    public Predicate<LogixNG> getFilter() {
+        return _filter;
     }
 
     /** {@inheritDoc} */
@@ -75,6 +100,8 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
                 return Bundle.getMessage("InlineLogixNGsTableModel_ColumnPanelName");
             case COLUMN_POSITIONABLE_NAME:
                 return Bundle.getMessage("InlineLogixNGsTableModel_ColumnPositionableName");
+            case COLUMN_NAMED_BEAN:
+                return Bundle.getMessage("InlineLogixNGsTableModel_ColumnNamedBean");
             case COLUMN_POS_X:
                 return Bundle.getMessage("InlineLogixNGsTableModel_ColumnPosX");
             case COLUMN_POS_Y:
@@ -94,6 +121,7 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             case COLUMN_USER_NAME:
             case COLUMN_PANEL_NAME:
             case COLUMN_POSITIONABLE_NAME:
+            case COLUMN_NAMED_BEAN:
                 return String.class;
             case COLUMN_POS_X:
             case COLUMN_POS_Y:
@@ -141,7 +169,8 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
     /** {@inheritDoc} */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if (rowIndex >= _logixNGs.size()) throw new IllegalArgumentException("Invalid row");
+        if (rowIndex >= _logixNGs.size()) throw new IllegalArgumentException(
+                String.format("Invalid row index: %s. Num rows: %s", rowIndex, _logixNGs.size()));
 
         LogixNG logixNG = _logixNGs.get(rowIndex);
 
@@ -154,6 +183,9 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
                 return logixNG.getPositionable().getEditor().getName();
             case COLUMN_POSITIONABLE_NAME:
                 return logixNG.getPositionable().getNameString();
+            case COLUMN_NAMED_BEAN:
+                NamedBean nb = logixNG.getPositionable().getNamedBean();
+                return nb != null ? nb.getBeanType() : "";
             case COLUMN_POS_X:
                 return logixNG.getPositionable().getX();
             case COLUMN_POS_Y:
