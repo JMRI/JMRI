@@ -29,7 +29,7 @@ from javax.swing import JOptionPane
 
 #  verify that we REALLY want to do this:
 msg = 'Are you SURE that you want do this?\n- Deletes Transits\n- Deletes Sections\n- Deletes SML\n- Deletes Block Paths'
-msg = msg + '\nNote: Do Store and Quit when done.'
+msg = msg + '\nNote: Do a Store and Quit when done.'
 
 response = JOptionPane.showConfirmDialog(None, msg, 'Grand Reset', JOptionPane.OK_CANCEL_OPTION)
 if response == 0 :

@@ -503,7 +503,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>A new script <a href="../../../../../jython/GrandReset.py">GrandReset.py</a> has been added. The
+            <li>A new script GrandReset.py</a> has been added. The
             script deletes all Transits, Sections and SignalMastLogics.</li>
         </ul>
 
