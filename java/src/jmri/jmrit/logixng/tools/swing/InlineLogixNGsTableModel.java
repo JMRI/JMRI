@@ -284,9 +284,9 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             if (! (event.getSource() instanceof JComboBox)) {
                 throw new IllegalArgumentException("value is not an InitialValueType: " + event.getSource().getClass().getName());
             }
-            JComboBox<Menu> menuComboBox =
-                    (JComboBox<Menu>) event.getSource();
-            int row = _table.getSelectedRow();
+            JComboBox<Menu> menuComboBox = (JComboBox<Menu>) event.getSource();
+
+            int row = _table.getRowSorter().convertRowIndexToModel(_table.getSelectedRow());
             Menu menu = menuComboBox.getItemAt(menuComboBox.getSelectedIndex());
 
             switch (menu) {
@@ -299,8 +299,6 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
                 default:
                     // Do nothing
             }
-            // Remove focus from combo box
-//            if (_tableModel._variables.size() > 0) _table.editCellAt(row, COLUMN_NAME);
         }
 
         /**
