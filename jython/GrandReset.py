@@ -6,7 +6,7 @@
 
 #  Caution:
 #      Only use this script if you have built a valid representation
-#      of your railroad with Layout Edit.
+#      of your railroad with Layout Editor.
 
 #
 #  This script (if you respond "OK" to the confirmation dialog) removes
