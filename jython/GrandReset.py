@@ -37,11 +37,11 @@ if response == 0 :
 
     #   make a copy of transit list (you can't modify the list itself when looping through it
     #   attempting to use the original list results in ConcurrentModificationException
-    transitList = []
+    newList = []
     for trans in transits.getNamedBeanSet() :
-        transitList.append(trans)
+        newList.append(trans)
     # remove all transits
-    for trans in transitList :
+    for trans in newList :
         transits.deleteTransit(trans)
 
     sectionList = sections.getNamedBeanSet()
