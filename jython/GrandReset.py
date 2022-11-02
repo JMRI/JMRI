@@ -44,11 +44,10 @@ if response == 0 :
     for trans in newList :
         transits.deleteTransit(trans)
 
-    sectionList = sections.getNamedBeanSet()
     #   make a copy of section list (you can't modify the list itself when looping through it
     #   attempting to use the original list results in ConcurrentModificationException
     newList = []
-    for section in sectionList:
+    for section in sections.getNamedBeanSet():
         newList.append(section)
     # remove all sections
     for section in newList:
