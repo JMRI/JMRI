@@ -71,5 +71,7 @@ if response == 0 :
 
     # remove all saved paths from the Block menu (not effective until a Save and Quit)
     jmri.InstanceManager.getDefault(jmri.BlockManager).setSavedPathInfo(False)
+    msg = 'Grand reset done\nDo a Store and Quit'
+    JOptionPane.showMessageDialog(None, msg, 'Grand Reset', JOptionPane.INFORMATION_MESSAGE)
 else :
     print "Script aborted"
