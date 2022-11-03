@@ -67,8 +67,8 @@ class processPanels():
             self.removeIconsAndLabels()
             self.removeLogix()
             self.removeTransits()
+            self.removeSML()            # do before removeSections in case direction sensors have been added to the SML
             self.removeSections()
-            self.removeSML()
             self.show_progress(20)
             self.removeSensors()
             self.show_progress(40)
@@ -446,24 +446,26 @@ class processPanels():
 
         #remove sections
         deleteList = []     # Prevent concurrent modification
+        directionSensorDeleteList = []
         for section in sections.getNamedBeanSet():
             deleteList.append(section)
+
+            forward_sensor = section.getForwardBlockingSensor()
+            if forward_sensor is not None:
+                directionSensorDeleteList.append(forward_sensor)
+
+            reverse_sensor = section.getReverseBlockingSensor()
+            if reverse_sensor is not None:
+                directionSensorDeleteList.append(reverse_sensor)
 
         for item in deleteList:
             sections.deleteBean(item, 'DoDelete')
 
-        deleteList = []
-
-        #remove section direction sensors
-        deleteList = []
-        for sensor in sensors.getNamedBeanSet():
-            name = sensor.getUserName()
-            if name != None:
-                if name.startswith("IY:AUTO:"):
-                    deleteList.append(sensor)
-
-        for item in deleteList:
+        for item in directionSensorDeleteList:
             sensors.deleteBean(item, 'DoDelete')
+
+        deleteList = []
+        directionSensorDeleteList = []
 
     # **************************************************
     # remove signal mast logic
@@ -490,6 +492,7 @@ class processPanels():
         deleteList = []     # Prevent concurrent modification
         for sensor in sensors.getNamedBeanSet():
             userName = sensor.getUserName()
+            sysName = sensor.getSystemName()
             if userName is not None:
                 if 'MoveTo' in userName or 'MoveInProgress' in userName:
                     deleteList.append(sensor)
@@ -498,23 +501,6 @@ class processPanels():
 
         for item in deleteList:
             #print 'remove sensor {}'.format(item.getDisplayName())
-            sensors.deleteBean(item, 'DoDelete')
-
-        #remove unused sensors (might not be needed now but was at one stage)
-        deleteList = []
-        for sensor in sensors.getNamedBeanSet():
-            sysname = sensor.getSystemName()
-
-            if sysname.startswith("IS:DSMP:"):
-                username = sensor.getUserName()
-                if username == None:
-                    deleteList.append(sensor)
-            if sysname.startswith("IS:DSMT:") :
-                username = sensor.getUserName()
-                if username == None:
-                    deleteList.append(sensor)
-
-        for item in deleteList:
             sensors.deleteBean(item, 'DoDelete')
 
     # ***********************************************************
