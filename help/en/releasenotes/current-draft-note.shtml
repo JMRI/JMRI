@@ -508,7 +508,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>A new script GrandReset.py</a> has been added. The
+            script deletes all Transits, Sections and SignalMastLogics.</li>
         </ul>
 
     <h3>Signals</h3>
