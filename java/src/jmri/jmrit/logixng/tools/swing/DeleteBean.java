@@ -164,7 +164,7 @@ public class DeleteBean<E extends NamedBean> {
             dialog.setModal(true);
             dialog.setVisible(true);
         }
-        return reference.get();
+        return reference.get() != null && reference.get();
     }
 
 
