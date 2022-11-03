@@ -635,7 +635,7 @@ public class LayoutTurntableView extends LayoutTrackView {
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (layoutEditor.removeTurntable(turntable)) {
+                if (removeInlineLogixNG() && layoutEditor.removeTurntable(turntable)) {
                     // Returned true if user did not cancel
                     remove();
                     dispose();

@@ -13,6 +13,7 @@ import javax.swing.*;
 
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.Reference;
 
 /**
  * Helper class for deleting a bean
@@ -35,7 +36,18 @@ public class DeleteBean<E extends NamedBean> {
             DeleteTask<E> deleteTask,
             GetListenersRef<E> getListenersRef,
             String className) {
+        delete(x, hasChildren, deleteTask, getListenersRef, className, false);
+    }
 
+    public boolean delete(
+            final E x,
+            boolean hasChildren,
+            DeleteTask<E> deleteTask,
+            GetListenersRef<E> getListenersRef,
+            String className,
+            boolean modal) {
+
+        final Reference<Boolean> reference = new Reference<>(false);
         final jmri.UserPreferencesManager p;
         p = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
 
@@ -49,7 +61,7 @@ public class DeleteBean<E extends NamedBean> {
                 JOptionPane.showMessageDialog(null, message.toString(),
                         Bundle.getMessage("QuestionTitle"),
                         JOptionPane.ERROR_MESSAGE);
-                return;
+                return false;
             }
             message.append(e.getMessage());
         }
@@ -60,7 +72,7 @@ public class DeleteBean<E extends NamedBean> {
         if (p != null && p.getMultipleChoiceOption(className, "delete") == 0x02 && message.toString().isEmpty()) {
             deleteTask.deleteBean(x);
         } else {
-            final JDialog dialog = new JDialog();
+            final JDialog dialog = new JDialog((JFrame)null, modal);
             dialog.setTitle(Bundle.getMessage("QuestionTitle"));
             dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             JPanel container = new JPanel();
@@ -122,6 +134,7 @@ public class DeleteBean<E extends NamedBean> {
             noButton.addActionListener((ActionEvent e) -> {
                 //there is no point in remembering this the user will never be
                 //able to delete a bean!
+                reference.set(false);
                 dialog.dispose();
             });
 
@@ -130,6 +143,7 @@ public class DeleteBean<E extends NamedBean> {
                     p.setMultipleChoiceOption(className, "delete", 0x02);  // NOI18N
                 }
                 deleteTask.deleteBean(x);
+                reference.set(true);
                 dialog.dispose();
             });
             container.add(remember);
@@ -150,6 +164,7 @@ public class DeleteBean<E extends NamedBean> {
             dialog.setModal(true);
             dialog.setVisible(true);
         }
+        return reference.get();
     }
 
 

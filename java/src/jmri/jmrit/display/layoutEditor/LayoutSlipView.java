@@ -525,7 +525,8 @@ public class LayoutSlipView extends LayoutTurnoutView {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (canRemove() && layoutEditor.removeLayoutSlip(slip)) {
+                    if (canRemove() && removeInlineLogixNG()
+                            && layoutEditor.removeLayoutSlip(slip)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();

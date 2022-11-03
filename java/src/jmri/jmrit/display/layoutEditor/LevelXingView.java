@@ -785,7 +785,8 @@ public class LevelXingView extends LayoutTrackView {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (canRemove() && layoutEditor.removeLevelXing(xing)) {
+                    if (canRemove() && removeInlineLogixNG()
+                            && layoutEditor.removeLevelXing(xing)) {
                         // Returned true if user did not cancel
                         xing.remove();
                         dispose();

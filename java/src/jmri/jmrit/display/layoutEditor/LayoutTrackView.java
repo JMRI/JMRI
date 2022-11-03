@@ -767,5 +767,21 @@ abstract public class LayoutTrackView implements InlineLogixNG {
      */
     abstract public void setAllLayoutBlocks(LayoutBlock layoutBlock);
 
+    protected boolean removeInlineLogixNG() {
+        LogixNG logixNG = getLogixNG();
+
+        if (logixNG == null) return true;
+
+        DeleteBean<LogixNG> deleteBean = new DeleteBean<>(
+                InstanceManager.getDefault(LogixNG_Manager.class));
+
+        boolean hasChildren = logixNG.getNumConditionalNGs() > 0;
+
+        return deleteBean.delete(logixNG, hasChildren, (t)->{deleteLogixNG_Internal(t);},
+                (t,list)->{logixNG.getListenerRefsIncludingChildren(list);},
+                jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName(),
+                true);
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackView.class);
 }

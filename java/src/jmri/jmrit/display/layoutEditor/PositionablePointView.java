@@ -1200,7 +1200,8 @@ public class PositionablePointView extends LayoutTrackView {
             @Override
             public void actionPerformed(ActionEvent e
             ) {
-                if (canRemove() && layoutEditor.removePositionablePoint(positionablePoint)) {
+                if (canRemove() && removeInlineLogixNG()
+                        && layoutEditor.removePositionablePoint(positionablePoint)) {
                     // user is serious about removing this point from the panel
                     clearPossibleSelection();
                     remove();

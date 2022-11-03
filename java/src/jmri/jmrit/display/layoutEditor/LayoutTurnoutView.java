@@ -1771,7 +1771,8 @@ public class LayoutTurnoutView extends LayoutTrackView {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (canRemove() && layoutEditor.removeLayoutTurnout(turnout)) {
+                    if (canRemove() && removeInlineLogixNG()
+                            && layoutEditor.removeLayoutTurnout(turnout)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();

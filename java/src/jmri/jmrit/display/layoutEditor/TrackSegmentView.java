@@ -1295,7 +1295,7 @@ public class TrackSegmentView extends LayoutTrackView {
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (canRemove()) {
+                if (canRemove() && removeInlineLogixNG()) {
                     layoutEditor.removeTrackSegment(trackSegment);
                     remove();
                     dispose();
