@@ -150,7 +150,8 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             if (value != null && value.equals(logixNG.getUserName())) return;
 
             LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
-            LogixNG otherLogixNG = logixNG_Manager.getByUserName((String) value);
+            LogixNG otherLogixNG = value != null
+                    ? logixNG_Manager.getByUserName((String) value) : null;
             if (otherLogixNG != null) {
                 log.error("User name is not unique {}", value);
                 String msg = Bundle.getMessage("WarningUserName", "" + value);
