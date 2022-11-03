@@ -119,8 +119,10 @@ public class InlineLogixNGsFrame extends JmriJFrame {
         String filterOnIconValue = _filterOnIcon.getItemAt(_filterOnIcon.getSelectedIndex());
 
         Predicate<LogixNG> filter = (LogixNG logixNG) -> {
-            String editorName = logixNG.getInlineLogixNG().getEditorName();
-            String typeName = logixNG.getInlineLogixNG().getTypeName();
+            String editorName = logixNG.getInlineLogixNG() != null
+                    ? logixNG.getInlineLogixNG().getEditorName() : "";
+            String typeName = logixNG.getInlineLogixNG() != null
+                    ? logixNG.getInlineLogixNG().getTypeName() : "";
             if (!filterOnPanelValue.equals("")) {
                 if (editorName == null || !filterOnPanelValue.equals(editorName)) {
                     return false;
