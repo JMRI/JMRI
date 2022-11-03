@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyVetoException;
 import java.util.Objects;
 
 import javax.annotation.CheckForNull;
@@ -29,6 +30,7 @@ import jmri.jmrit.display.palette.IconItemPanel;
 import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.display.palette.TextItemPanel;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.tools.swing.DeleteBean;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
 import jmri.util.ThreadingUtil;
@@ -1085,6 +1087,35 @@ public class PositionableLabel extends JLabel implements Positionable {
      */
     @Override
     public void remove() {
+        // If this Positionable has an Inline LogixNG, that LogixNG might be in use.
+        LogixNG logixNG = getLogixNG();
+        if (logixNG != null) {
+            DeleteBean<LogixNG> deleteBean = new DeleteBean<>(
+                    InstanceManager.getDefault(LogixNG_Manager.class));
+
+            boolean hasChildren = logixNG.getNumConditionalNGs() > 0;
+
+            deleteBean.delete(logixNG, hasChildren, (t)->{deleteLogixNG(t);},
+                    (t,list)->{logixNG.getListenerRefsIncludingChildren(list);},
+                    jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName());
+        } else {
+            doRemove();
+        }
+    }
+
+    private void deleteLogixNG(LogixNG logixNG) {
+        logixNG.setEnabled(false);
+        try {
+            InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
+            setLogixNG(null);
+            doRemove();
+        } catch (PropertyVetoException e) {
+            //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
+            log.error("{} : Could not Delete.", e.getMessage());
+        }
+    }
+
+    private void doRemove() {
         if (_editor.removeFromContents(this)) {
             // Modified to support conditional delete for NX sensors
             // remove from persistance by flagging inactive
