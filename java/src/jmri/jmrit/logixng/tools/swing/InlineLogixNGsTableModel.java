@@ -304,6 +304,9 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             int row = _table.getRowSorter().convertRowIndexToModel(_table.getSelectedRow());
             Menu menu = menuComboBox.getItemAt(menuComboBox.getSelectedIndex());
 
+            // Cancel editing before doing the change to the table.
+            _table.editingCanceled(null);
+
             switch (menu) {
                 case Edit:
                     edit(row);
@@ -341,7 +344,20 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             LogixNGEditor logixNGEditor =
                     new LogixNGEditor(null, logixNG.getSystemName());
             logixNGEditor.addEditorEventListener((HashMap<String, String> data) -> {
-                _tableModel._inEditLogixNGMode = false;
+                data.forEach((key, value) -> {
+                    if (key.equals("Finish")) {                  // NOI18N
+                        _tableModel._inEditLogixNGMode = false;
+                    } else if (key.equals("Delete")) {           // NOI18N
+                        _tableModel._inEditLogixNGMode = false;
+                        delete(row);
+                    } else if (key.equals("chgUname")) {         // NOI18N
+                        logixNG.setUserName(value);
+                        _tableModel.fireTableDataChanged();
+                    }
+                });
+                if (logixNG.getNumConditionalNGs() == 0) {
+                    deleteBean(logixNG);
+                }
             });
             logixNGEditor.bringToFront();
             _tableModel._inEditLogixNGMode = true;
@@ -379,7 +395,6 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             try {
                 InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
                 logixNG.getPositionable().setLogixNG(null);
-                _tableModel.fireTableDataChanged();
             } catch (PropertyVetoException e) {
                 //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
                 log.error("{} : Could not Delete.", e.getMessage());

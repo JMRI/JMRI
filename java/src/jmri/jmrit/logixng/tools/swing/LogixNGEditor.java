@@ -388,7 +388,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     // LogixNG with this user name already exists
                     log.error("Failure to update LogixNG with Duplicate User Name: {}", uName); // NOI18N
                     JOptionPane.showMessageDialog(_editLogixNGFrame,
-                            Bundle.getMessage("Error6"),
+                            Bundle.getMessage("Error_UserNameInUse"),
                             Bundle.getMessage("ErrorTitle"), // NOI18N
                             JOptionPane.ERROR_MESSAGE);
                     return;
