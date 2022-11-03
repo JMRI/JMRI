@@ -200,8 +200,8 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             case COLUMN_POSITIONABLE_NAME:
                 return logixNG.getInlineLogixNG().getNameString();
             case COLUMN_NAMED_BEAN:
-                NamedBean nb = logixNG.getInlineLogixNG().getNamedBean();
-                return nb != null ? nb.getBeanType() : "";
+                String typeName = logixNG.getInlineLogixNG().getTypeName();
+                return typeName != null ? typeName : "";
             case COLUMN_POS_X:
                 return logixNG.getInlineLogixNG().getX();
             case COLUMN_POS_Y:

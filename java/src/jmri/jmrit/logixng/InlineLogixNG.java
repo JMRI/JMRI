@@ -33,10 +33,10 @@ public interface InlineLogixNG {
     public String getEditorName();
 
     /**
-     * Get the NamedBean of this InlineLogixNG.
-     * @return the NamedBean or null if it has no NamedBean
+     * Get the type of item of this InlineLogixNG.
+     * @return the type
      */
-    public NamedBean getNamedBean();
+    public String getTypeName();
 
     /**
      * Get the X position of this InlineLogixNG.

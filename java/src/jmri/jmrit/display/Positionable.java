@@ -12,6 +12,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
 
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.InlineLogixNG;
 import jmri.util.swing.JmriMouseEvent;
 
@@ -128,6 +129,15 @@ public interface Positionable extends Cloneable, InlineLogixNG {
      */
     @Override
     String getNameString();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public default String getTypeName() {
+        NamedBean nb = getNamedBean();
+        return nb != null ? nb.getBeanType() : null;
+    }
 
     /**
      * Add additional menu items to the menu.

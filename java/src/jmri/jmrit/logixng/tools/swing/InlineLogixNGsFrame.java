@@ -98,9 +98,9 @@ public class InlineLogixNGsFrame extends JmriJFrame {
         Set<String> icons = new HashSet<>();
         for (LogixNG logixNG : _inlineLogixNGsTableModel.getLogixNGList()) {
             String editorName = logixNG.getInlineLogixNG().getEditorName();
-            NamedBean namedBean = logixNG.getInlineLogixNG().getNamedBean();
+            String typeName = logixNG.getInlineLogixNG().getTypeName();
             if (editorName != null && !editorName.isBlank()) panels.add(editorName);
-            if (namedBean != null) icons.add(namedBean.getBeanType());
+            if (typeName != null && !typeName.isBlank()) icons.add(typeName);
         }
 
         _filterOnPanel.addItem("");
@@ -120,15 +120,14 @@ public class InlineLogixNGsFrame extends JmriJFrame {
 
         Predicate<LogixNG> filter = (LogixNG logixNG) -> {
             String editorName = logixNG.getInlineLogixNG().getEditorName();
-            NamedBean namedBean = logixNG.getInlineLogixNG().getNamedBean();
+            String typeName = logixNG.getInlineLogixNG().getTypeName();
             if (!filterOnPanelValue.equals("")) {
                 if (editorName == null || !filterOnPanelValue.equals(editorName)) {
                     return false;
                 }
             }
             if (!filterOnIconValue.equals("")) {
-                if (namedBean == null
-                        || !filterOnIconValue.equals(namedBean.getBeanType())) {
+                if (typeName == null || !filterOnIconValue.equals(typeName)) {
                     return false;
                 }
             }

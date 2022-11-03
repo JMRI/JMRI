@@ -510,8 +510,8 @@ abstract public class LayoutTrackView implements InlineLogixNG {
     }
 
     @Override
-    public NamedBean getNamedBean() {
-        return null;    // Not implemented yet
+    public String getTypeName() {
+        return layoutTrack.getTypeName();
     }
 
     /**
@@ -605,6 +605,7 @@ abstract public class LayoutTrackView implements InlineLogixNG {
      * Get the LogixNG of this Positionable.
      * @return the LogixNG or null if it has no LogixNG
      */
+    @Override
     public LogixNG getLogixNG() {
         return _logixNG;
     }
@@ -613,6 +614,7 @@ abstract public class LayoutTrackView implements InlineLogixNG {
      * Set the LogixNG of this Positionable.
      * @param logixNG the LogixNG or null if remove the LogixNG from the Positionable
      */
+    @Override
     public void setLogixNG(LogixNG logixNG) {
         this._logixNG = logixNG;
     }
