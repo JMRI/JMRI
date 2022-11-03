@@ -53,13 +53,13 @@
           <li>SignalMasts</li>
           <li>No SignalMast Logic (if there is any they will be deleted and replaced)</li>
           <li>No Transits (if there are any they will be deleted and replaced)</li>
-          <li>No Train Info Files (if there are any they will be  and replaced)</li>
+          <li>No Train Info Files (if there are any they will be deleted and replaced)</li>
           <li>SignalMasts</li>
         </ul>
         <p>In addition the block table should have been edited to indicate the blocks where the train should stop</p>
       </li>
       <li>Bring up the Dispatcher System Panel</li>
-      <li>Run Stage1 To generate everything to run Dispatcher between stations</li>
+      <li>Run Stage1 to generate everything to run Dispatcher between stations</li>
       <li>Run Stage2 to check the dispatcher options</li>
       <li>Run the trains using the commands on a newly produced command panel</li>
     </ul>
@@ -74,7 +74,7 @@
         </ul>
       </li>
       <li>the required stopping places (blocks) should be indicated by entering stop in the comments field for the appropriate block</li>
-      <li>Provision is made for a station announcement to be made when a train departs from a station.</li>
+      <li>Provision is made for a station announcement to be made when a train enters a station.</li>
       <li>If the block name is unpronounceable, a good stop name can be entered in the comments field for the departure announcements</li>
       <li>Typical blocks comments would be</li>
       <li><img src="images/NewItem31.png" alt="" /></li>

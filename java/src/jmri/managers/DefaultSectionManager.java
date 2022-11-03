@@ -267,18 +267,24 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
     }
 
     /**
-     * Generate Block Sections in stubs/sidings. Called after generating signal logic.
+     * Generate Block Sections in stubs/sidings. Called after generating SML based sections.
      */
 
+    /**
+     * A list of blocks that will be used to create a block based section.
+     */
+    List<Block> blockList;
 
+    /**
+     * Find stub end blocks.
+     */
     public void generateBlockSections() {
         //find blocks with no paths through i.e. stub (siding)
-        LayoutBlockManager LayoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
-        //print "Layout Block"
-        for (LayoutBlock layoutBlock : LayoutBlockManager.getNamedBeanSet()){
+        LayoutBlockManager layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
+
+        for (LayoutBlock layoutBlock : layoutBlockManager.getNamedBeanSet()){
             if (layoutBlock.getNumberOfThroughPaths() == 0){
                 if (!blockSectionExists(layoutBlock)){
-                    //create block section"
                     createBlockSection(layoutBlock);
                 }
             }
@@ -286,76 +292,184 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
     }
 
     /**
-     * Check if Block Section already exists
+     * Check if a block based section has a first block that matches.
      * @param layoutBlock
      * @return true or false
      */
     private boolean blockSectionExists(LayoutBlock layoutBlock){
-
         for (Section section : getNamedBeanSet()){
-            if (section.getNumBlocks() == 1
-                    && section.getSectionType() != Section.SIGNALMASTLOGIC
-                    && layoutBlock.getBlock().equals(section.getEntryBlock())){
-                return true;
+            if (section.getNumBlocks() > 0 && section.getSectionType() != Section.SIGNALMASTLOGIC) {
+                if (layoutBlock.getBlock().equals(section.getBlockList().get(0))) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
+    /**
+     * Create a block section that has one or more blocks.  The initial block is one that has
+     * no through paths, which will normally be track segments that end at an end bumper (EB).
+     * Incomplete track arrangements can also mimmic this behavior.
+     * <p>
+     * The first phase calls a recursive method to build a list of blocks.
+     * The second phase creates the section with an entry point from the next section.
+     * @param layoutBlock The starting layout block.
+     */
     private void createBlockSection(LayoutBlock layoutBlock){
-        Section section;
-        try {
-            section = createNewSection(layoutBlock.getUserName());
-        }
-        catch (IllegalArgumentException ex){
-            log.error("Could not create Section from LayoutBlock {}",layoutBlock.getDisplayName());
+        blockList = new ArrayList<>();
+        var block = layoutBlock.getBlock();
+        createSectionBlockList(block);
+
+        if (blockList.isEmpty()) {
+            log.error("No blocks found for layout block '{}'", layoutBlock.getDisplayName());
             return;
         }
-        section.addBlock(layoutBlock.getBlock());
-        ArrayList<EntryPoint> entryPointList = new ArrayList<>();
-        Block sb = layoutBlock.getBlock();
-        List <Path> paths = sb.getPaths();
-        for (int j=0; j<paths.size(); j++){
-            Path p = paths.get(j);
-            if (p.getBlock() != sb){
-                //this is path to an outside block, so need an Entry Point
-                String pbDir = Path.decodeDirection(p.getFromBlockDirection());
-                EntryPoint ep = new EntryPoint(sb, p.getBlock(), pbDir);
-                entryPointList.add(ep);
+
+        // Create a new section using the block name(s) as the section name.
+        var sectionName = blockList.get(0).getDisplayName();
+        if (blockList.size() > 1) {
+            sectionName = sectionName + ":::" + blockList.get(blockList.size() - 1).getDisplayName();
+        }
+
+        Section section;
+        try {
+            section = createNewSection(sectionName);
+        }
+        catch (IllegalArgumentException ex){
+            log.error("Could not create Section for layout block '{}'",layoutBlock.getDisplayName());
+            return;
+        }
+
+        blockList.forEach((blk) -> {
+            section.addBlock(blk);
+        });
+
+        // Create entry point
+        Block lastBlock = blockList.get(blockList.size() - 1);
+        Block nextBlock = null;
+        String pathDirection = "";
+
+        for (Path path : lastBlock.getPaths()) {
+            var checkBlock = path.getBlock();
+            if (!blockList.contains(checkBlock)) {
+                nextBlock = checkBlock;
+                pathDirection = Path.decodeDirection(path.getFromBlockDirection());
+                break;
             }
         }
 
-        Block beginBlock = sb;
-        // Set directions where possible
-        List <EntryPoint> epList = getBlockEntryPointsList(beginBlock,entryPointList);
-        if (epList.size() == 1) {
-            (epList.get(0)).setTypeForward();
+        if (nextBlock == null) {
+            log.error("Unable to find a next block after block '{}'", lastBlock.getDisplayName());
+            return;
         }
-        Block endBlock = sb;
-        epList = getBlockEntryPointsList(endBlock, entryPointList);
-        if (epList.size() == 1) {
-            (epList.get(0)).setTypeReverse();
-        }
+        log.debug("last = {}, next = {}", lastBlock.getDisplayName(), nextBlock.getDisplayName());
 
-        for (int j=0; j<entryPointList.size(); j++){
-            EntryPoint ep = entryPointList.get(j);
-            if (ep.isForwardType()){
-                section.addToForwardList(ep);
-            }else if (ep.isReverseType()){
-                section.addToReverseList(ep);
+        EntryPoint ep = new EntryPoint(lastBlock, nextBlock, pathDirection);
+        ep.setTypeReverse();
+        section.addToReverseList(ep);
+    }
+
+    /**
+     * Recursive calls to find a block that is a facing block for SML, a block that has more than
+     * 2 neighbors, or the recursion limit of 100 is reached
+     * @param block The current block being processed.
+     */
+    private void createSectionBlockList(@Nonnull Block block) {
+        blockList.add(block);
+        if (blockList.size() < 100) {
+            var nextBlock = getNextBlock(block);
+            if (nextBlock != null) {
+                createSectionBlockList(nextBlock);
             }
         }
     }
 
-    private List <EntryPoint> getBlockEntryPointsList(Block b, List <EntryPoint> entryPointList) {
-        List <EntryPoint> list = new ArrayList<>();
-        for (int i=0; i<entryPointList.size(); i++) {
-            EntryPoint ep = entryPointList.get(i);
-            if (ep.getBlock().equals(b)) {
-                list.add(ep);
+    /**
+     * Get the next block if this one is not the last block.  The last block is one that
+     * is a SML facing block.  The other restriction is only 1 or 2 neighbors.
+     * @param block The block to be checked.
+     * @return the next block or null if it is the last block.
+     */
+    private Block getNextBlock(@Nonnull Block block) {
+        var lbmManager = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        var smlManager = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
+        var layoutBlock = lbmManager.getLayoutBlock(block);
+
+        if (layoutBlock == null) {
+            return null;
+        }
+
+        // If the current block is a SML facing block, the next block is not needed.
+        for (jmri.SignalMastLogic sml : smlManager.getSignalMastLogicList()) {
+            if (sml.getFacingBlock().equals(layoutBlock)) {
+                return null;
             }
         }
-        return list;
+
+        Block nextBlock = null;
+        switch (layoutBlock.getNumberOfNeighbours()) {
+            case 0:
+                log.debug("No neighbors for layout block '{}'", layoutBlock.getDisplayName());
+                break;
+
+            case 1:
+                nextBlock = layoutBlock.getNeighbourAtIndex(0);
+                break;
+
+            case 2:
+                nextBlock = layoutBlock.getNeighbourAtIndex(0);
+                if (blockList.contains(nextBlock)) {
+                    nextBlock = layoutBlock.getNeighbourAtIndex(1);
+                }
+                break;
+
+            default:
+                log.debug("More than 2 neighbors for layout block '{}'", layoutBlock.getDisplayName());
+                nextBlock = getNextConnectedBlock(layoutBlock);
+        }
+        return nextBlock;
+    }
+
+    /**
+     * Attempt to find the next block when there are multiple connections.  Track segments have
+     * two connections but blocks with turnouts can have any number of connections.
+     * <p>
+     * The checkValidDest method in getLayoutBlockConnectivityTools is used to find the first valid
+     * connection between the current block, its facing block and the possible destination blocks.
+     * @param currentBlock The layout block with more than 2 connections.
+     * @return the next block or null.
+     */
+    private Block getNextConnectedBlock(LayoutBlock currentBlock) {
+        var lbmManager = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        var lbTools = lbmManager.getLayoutBlockConnectivityTools();
+        var pathMethod = jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.Routing.NONE;
+
+        // The facing block is the one before the current block or the first block.
+        var index = blockList.size() - 2;
+        if (index < 0) {
+            index = 0;
+        }
+        var facingBlock = lbmManager.getLayoutBlock(blockList.get(index));
+        if (facingBlock == null) {
+            log.error("The facing block not found for current block '{}'", currentBlock.getDisplayName());
+            return null;
+        }
+
+        for (int i = 0; i < currentBlock.getNumberOfNeighbours(); i++) {
+            var dest = currentBlock.getNeighbourAtIndex(i);
+            var destBlock = lbmManager.getLayoutBlock(dest);
+            try {
+                boolean valid = lbTools.checkValidDest(facingBlock, currentBlock, destBlock, new ArrayList<LayoutBlock>(), pathMethod);
+                if (valid) {
+                    return dest;
+                }
+            } catch (JmriException ex) {
+                log.error("getNextConnectedBlock exeption: {}", ex.getMessage());
+            }
+        }
+
+        return null;
     }
 
     @Override
