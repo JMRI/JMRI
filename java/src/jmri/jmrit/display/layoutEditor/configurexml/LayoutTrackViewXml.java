@@ -24,15 +24,14 @@ public abstract class LayoutTrackViewXml extends AbstractXmlAdapter {
     }
 
     public void loadLogixNG_Data(LayoutTrackView ltv, Element element) {
-        LayoutTrackView pl = (LayoutTrackView)ltv;
         Element logixNG_Element = element.getChild("LogixNG");
         if (logixNG_Element == null) return;
         Element inlineLogixNG = logixNG_Element.getChild("InlineLogixNG_SystemName");
         if (inlineLogixNG != null) {
             String systemName = inlineLogixNG.getTextTrim();
-            pl.setLogixNG_SystemName(systemName);
+            ltv.setLogixNG_SystemName(systemName);
             InstanceManager.getDefault(LogixNG_Manager.class).registerSetupTask(() -> {
-                pl.setupLogixNG();
+                ltv.setupLogixNG();
             });
         }
     }
