@@ -153,33 +153,18 @@ public class DefaultConditionalNG extends AbstractBase
 
                 conditionalNG.setSymbolTable(newSymbolTable);
 
-                Positionable positionable = conditionalNG.getLogixNG().getPositionable();
-                if (positionable != null) {
+                InlineLogixNG inlineLogixNG = conditionalNG.getLogixNG().getInlineLogixNG();
+                if (inlineLogixNG != null) {
                     List<SymbolTable.VariableData> localVariables = new ArrayList<>();
                     localVariables.add(new SymbolTable.VariableData(
-                            "__Positionable__", SymbolTable.InitialValueType.String,
-                            positionable.getNameString()));
-                    localVariables.add(new SymbolTable.VariableData(
-                            "__PositionableId__", SymbolTable.InitialValueType.String,
-                            positionable.getId()));
+                            "__InlineLogixNG__", SymbolTable.InitialValueType.String,
+                            inlineLogixNG.getNameString()));
+//                    localVariables.add(new SymbolTable.VariableData(
+//                            "__PositionableId__", SymbolTable.InitialValueType.String,
+//                            inlineLogixNG.getId()));
                     localVariables.add(new SymbolTable.VariableData(
                             "__Editor__", SymbolTable.InitialValueType.String,
-                            positionable.getEditor().getName()));
-                    newSymbolTable.createSymbols(localVariables);
-                }
-
-                LayoutTrackView layoutTrackView = conditionalNG.getLogixNG().getLayoutTrackView();
-                if (layoutTrackView != null) {
-                    List<SymbolTable.VariableData> localVariables = new ArrayList<>();
-                    localVariables.add(new SymbolTable.VariableData(
-                            "__LayoutTrackView__", SymbolTable.InitialValueType.String,
-                            layoutTrackView.getName()));
-                    localVariables.add(new SymbolTable.VariableData(
-                            "__LayoutTrackViewId__", SymbolTable.InitialValueType.String,
-                            layoutTrackView.getId()));
-                    localVariables.add(new SymbolTable.VariableData(
-                            "__LayoutEditor__", SymbolTable.InitialValueType.String,
-                            layoutTrackView.getLayoutEditor().getName()));
+                            inlineLogixNG.getEditorName()));
                     newSymbolTable.createSymbols(localVariables);
                 }
 

@@ -11,6 +11,7 @@ import javax.annotation.*;
 import javax.swing.*;
 
 import jmri.*;
+import jmri.jmrit.logixng.InlineLogixNG;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.tools.swing.DeleteBean;
@@ -36,7 +37,7 @@ import jmri.util.swing.JmriMouseEvent;
  * @author Bob Jacobsen Copyright (c) 2020
  *
  */
-abstract public class LayoutTrackView {
+abstract public class LayoutTrackView implements InlineLogixNG {
 
     /**
      * Constructor method.
@@ -488,6 +489,31 @@ abstract public class LayoutTrackView {
         setLogixNGPositionableMenu(popup);
     }
 
+    @Override
+    public String getNameString() {
+        return getName();
+    }
+
+    @Override
+    public String getEditorName() {
+        return getLayoutEditor().getName();
+    }
+
+    @Override
+    public int getX() {
+        return (int) center.getX();
+    }
+
+    @Override
+    public int getY() {
+        return (int) center.getY();
+    }
+
+    @Override
+    public NamedBean getNamedBean() {
+        return null;    // Not implemented yet
+    }
+
     /**
      * Check if edit of a conditional is in progress.
      *
@@ -523,7 +549,7 @@ abstract public class LayoutTrackView {
                 if (getLogixNG() == null) {
                     LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                             .createLogixNG(null, true);
-                    logixNG.setLayoutTrackView(LayoutTrackView.this);
+                    logixNG.setInlineLogixNG(LayoutTrackView.this);
                     logixNG.activate();
                     logixNG.setEnabled(true);
                     setLogixNG(logixNG);
@@ -568,7 +594,7 @@ abstract public class LayoutTrackView {
         logixNG.setEnabled(false);
         try {
             InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
-            logixNG.getLayoutTrackView().setLogixNG(null);
+            logixNG.getInlineLogixNG().setLogixNG(null);
         } catch (PropertyVetoException e) {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
             log.error("{} : Could not Delete.", e.getMessage());
@@ -603,7 +629,7 @@ abstract public class LayoutTrackView {
                     "LogixNG %s is not found for LayoutTrackView %s in panel %s",
                     _logixNG_SystemName, getName(), layoutEditor.getName()));
         }
-        _logixNG.setLayoutTrackView(this);
+        _logixNG.setInlineLogixNG(this);
     }
 
     /**

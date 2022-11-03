@@ -196,70 +196,20 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             case COLUMN_USER_NAME:
                 return logixNG.getUserName();
             case COLUMN_PANEL_NAME:
-                return getEditorName(logixNG);
+                return logixNG.getInlineLogixNG().getEditorName();
             case COLUMN_POSITIONABLE_NAME:
-                return getItemName(logixNG);
+                return logixNG.getInlineLogixNG().getNameString();
             case COLUMN_NAMED_BEAN:
-                NamedBean nb = getNamedBean(logixNG);
+                NamedBean nb = logixNG.getInlineLogixNG().getNamedBean();
                 return nb != null ? nb.getBeanType() : "";
             case COLUMN_POS_X:
-                return getX(logixNG);
+                return logixNG.getInlineLogixNG().getX();
             case COLUMN_POS_Y:
-                return getY(logixNG);
+                return logixNG.getInlineLogixNG().getY();
             case COLUMN_MENU:
                 return Menu.Edit;
             default:
                 throw new IllegalArgumentException("Invalid column");
-        }
-    }
-
-    public static String getItemName(LogixNG logixNG) {
-        if (logixNG.getPositionable() != null) {
-            return logixNG.getPositionable().getNameString();
-        } else if (logixNG.getLayoutTrackView() != null) {
-            return logixNG.getLayoutTrackView().getName();
-        } else {
-            throw new RuntimeException("Unknown inline LogixNG");
-        }
-    }
-
-    public static String getEditorName(LogixNG logixNG) {
-        if (logixNG.getPositionable() != null) {
-            return logixNG.getPositionable().getEditor().getName();
-        } else if (logixNG.getLayoutTrackView() != null) {
-            return logixNG.getLayoutTrackView().getLayoutEditor().getName();
-        } else {
-            throw new RuntimeException("Unknown inline LogixNG");
-        }
-    }
-
-    public static NamedBean getNamedBean(LogixNG logixNG) {
-        if (logixNG.getPositionable() != null) {
-            return logixNG.getPositionable().getNamedBean();
-        } else if (logixNG.getLayoutTrackView() != null) {
-            return null;    // Not supported now
-        } else {
-            throw new RuntimeException("Unknown inline LogixNG");
-        }
-    }
-
-    public static int getX(LogixNG logixNG) {
-        if (logixNG.getPositionable() != null) {
-            return logixNG.getPositionable().getX();
-        } else if (logixNG.getLayoutTrackView() != null) {
-            return (int) logixNG.getLayoutTrackView().getCoordsCenter().getX();
-        } else {
-            throw new RuntimeException("Unknown inline LogixNG");
-        }
-    }
-
-    public static int getY(LogixNG logixNG) {
-        if (logixNG.getPositionable() != null) {
-            return logixNG.getPositionable().getY();
-        } else if (logixNG.getLayoutTrackView() != null) {
-            return (int) logixNG.getLayoutTrackView().getCoordsCenter().getY();
-        } else {
-            throw new RuntimeException("Unknown inline LogixNG");
         }
     }
 
@@ -445,13 +395,7 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             logixNG.setEnabled(false);
             try {
                 InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
-                if (logixNG.getPositionable() != null) {
-                    logixNG.getPositionable().setLogixNG(null);
-                } else if (logixNG.getLayoutTrackView() != null) {
-                    logixNG.getLayoutTrackView().setLogixNG(null);
-                } else {
-                    throw new RuntimeException("Unknown inline LogixNG");
-                }
+                logixNG.getInlineLogixNG().setLogixNG(null);
             } catch (PropertyVetoException e) {
                 //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
                 log.error("{} : Could not Delete.", e.getMessage());

@@ -27,9 +27,9 @@ import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.Bundle;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.tools.swing.DeleteBean;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
 import jmri.jmrit.operations.trains.TrainIcon;
@@ -1382,7 +1382,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
                 if (p.getLogixNG() == null) {
                     LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                             .createLogixNG(null, true);
-                    logixNG.setPositionable(p);
+                    logixNG.setInlineLogixNG(p);
                     logixNG.activate();
                     logixNG.setEnabled(true);
                     p.setLogixNG(logixNG);
@@ -1427,7 +1427,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
         logixNG.setEnabled(false);
         try {
             InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
-            logixNG.getPositionable().setLogixNG(null);
+            logixNG.getInlineLogixNG().setLogixNG(null);
         } catch (PropertyVetoException e) {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
             log.error("{} : Could not Delete.", e.getMessage());

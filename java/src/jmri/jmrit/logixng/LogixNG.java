@@ -29,32 +29,18 @@ public interface LogixNG extends Base, NamedBean {
     public boolean isInline();
 
     /**
-     * Set the positionable that owns this LogixNG, if the LogixNG is inline.
+     * Set the InlineLogixNG that owns this LogixNG, if the LogixNG is inline.
      *
-     * @param pos the positionable that owns this LogixNG, if the LogixNG is inline.
+     * @param inlineLogixNG the InlineLogixNG that owns this LogixNG, if the LogixNG is inline.
      */
-    public void setPositionable(Positionable pos);
+    public void setInlineLogixNG(InlineLogixNG inlineLogixNG);
 
     /**
-     * Get the positionable that owns this LogixNG, if the LogixNG is inline.
+     * Get the InlineLogixNG that owns this LogixNG, if the LogixNG is inline.
      *
-     * @return the Positionable
+     * @return the InlineLogixNG
      */
-    public Positionable getPositionable();
-
-    /**
-     * Set the positionable that owns this LogixNG, if the LogixNG is inline.
-     *
-     * @param pos the positionable that owns this LogixNG, if the LogixNG is inline.
-     */
-    public void setLayoutTrackView(LayoutTrackView pos);
-
-    /**
-     * Get the positionable that owns this LogixNG, if the LogixNG is inline.
-     *
-     * @return the Positionable
-     */
-    public LayoutTrackView getLayoutTrackView();
+    public InlineLogixNG getInlineLogixNG();
 
     /**
      * Set whenether this LogixNG is enabled or disabled.

@@ -28,8 +28,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.IconItemPanel;
 import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.display.palette.TextItemPanel;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.*;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
 import jmri.util.ThreadingUtil;
@@ -1266,7 +1265,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                     "LogixNG %s is not found for positional %s in panel %s",
                     _logixNG_SystemName, getNameString(), getEditor().getName()));
         }
-        _logixNG.setPositionable(this);
+        _logixNG.setInlineLogixNG(this);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class);

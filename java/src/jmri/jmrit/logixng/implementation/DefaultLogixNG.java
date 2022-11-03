@@ -13,14 +13,7 @@ import jmri.NamedBeanUsageReport;
 // import jmri.implementation.JmriSimplePropertyListener;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.layoutEditor.LayoutTrackView;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.*;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -35,8 +28,7 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     private final LogixNG_Manager _manager = InstanceManager.getDefault(LogixNG_Manager.class);
     private boolean _inline = false;
-    private Positionable _positionable = null;
-    private LayoutTrackView _layoutTrackView = null;
+    private InlineLogixNG _inlineLogixNG = null;
     private boolean _enabled = false;
     private boolean _isActive = false;
     private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
@@ -158,26 +150,14 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
-    public void setPositionable(Positionable pos) {
-        _positionable = pos;
+    public void setInlineLogixNG(InlineLogixNG inlineLogixNG) {
+        _inlineLogixNG = inlineLogixNG;
     }
 
     /** {@inheritDoc} */
     @Override
-    public Positionable getPositionable() {
-        return _positionable;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setLayoutTrackView(LayoutTrackView ltv) {
-        _layoutTrackView = ltv;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public LayoutTrackView getLayoutTrackView() {
-        return _layoutTrackView;
+    public InlineLogixNG getInlineLogixNG() {
+        return _inlineLogixNG;
     }
 
     /** {@inheritDoc} */
