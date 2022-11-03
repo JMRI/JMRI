@@ -34,7 +34,7 @@
       <id>0</id>
       <name>LogixNG thread</name>
     </Thread>
-    <LogixNG enabled="yes">
+    <LogixNG enabled="yes" inline="no">
       <systemName>IQ:AUTO:0001</systemName>
       <ConditionalNGs>
         <systemName>IQC:AUTO:0001</systemName>

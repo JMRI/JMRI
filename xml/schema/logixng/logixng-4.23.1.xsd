@@ -76,6 +76,7 @@
 
             </xs:sequence>
             <xs:attribute name="enabled" type="yesNoType" />
+            <xs:attribute name="inline" type="yesNoType" />
 <!--            <xs:attribute name="order" type="xs:nonNegativeInteger" /> -->
           </xs:complexType>
         </xs:element>

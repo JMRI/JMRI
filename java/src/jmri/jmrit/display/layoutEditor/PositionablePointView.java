@@ -255,11 +255,6 @@ public class PositionablePointView extends LayoutTrackView {
     }
 
     @CheckReturnValue
-    protected LayoutEditor getLayoutEditor() {
-        return layoutEditor;
-    }
-
-    @CheckReturnValue
     @Nonnull
     public String getEastBoundSignal() {
         SignalHead h = getEastBoundSignalHead();
@@ -1205,7 +1200,8 @@ public class PositionablePointView extends LayoutTrackView {
             @Override
             public void actionPerformed(ActionEvent e
             ) {
-                if (canRemove() && layoutEditor.removePositionablePoint(positionablePoint)) {
+                if (canRemove() && removeInlineLogixNG()
+                        && layoutEditor.removePositionablePoint(positionablePoint)) {
                     // user is serious about removing this point from the panel
                     clearPossibleSelection();
                     remove();
@@ -1319,6 +1315,8 @@ public class PositionablePointView extends LayoutTrackView {
         }
 
         layoutEditor.setShowAlignmentMenu(popup);
+
+        addCommonPopupItems(mouseEvent, popup);
 
         popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
 

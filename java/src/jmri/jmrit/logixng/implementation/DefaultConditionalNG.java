@@ -9,6 +9,8 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
+import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
@@ -150,6 +152,22 @@ public class DefaultConditionalNG extends AbstractBase
                 conditionalNG.setCurrentConditionalNG(conditionalNG);
 
                 conditionalNG.setSymbolTable(newSymbolTable);
+
+                InlineLogixNG inlineLogixNG = conditionalNG.getLogixNG().getInlineLogixNG();
+                if (inlineLogixNG != null) {
+                    List<SymbolTable.VariableData> localVariables = new ArrayList<>();
+                    localVariables.add(new SymbolTable.VariableData(
+                            "__InlineLogixNG__", SymbolTable.InitialValueType.String,
+                            inlineLogixNG.getNameString()));
+//                    localVariables.add(new SymbolTable.VariableData(
+//                            "__PositionableId__", SymbolTable.InitialValueType.String,
+//                            inlineLogixNG.getId()));
+                    localVariables.add(new SymbolTable.VariableData(
+                            "__Editor__", SymbolTable.InitialValueType.String,
+                            inlineLogixNG.getEditorName()));
+                    newSymbolTable.createSymbols(localVariables);
+                }
+
                 if (femaleSocket != null) {
                     femaleSocket.execute();
                 } else {
@@ -293,6 +311,7 @@ public class DefaultConditionalNG extends AbstractBase
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    @Override
     public void setSocketSystemName(String systemName) {
         if ((systemName == null) || (!systemName.equals(_socketSystemName))) {
             _femaleSocket.disconnect();
@@ -300,6 +319,7 @@ public class DefaultConditionalNG extends AbstractBase
         _socketSystemName = systemName;
     }
 
+    @Override
     public String getSocketSystemName() {
         return _socketSystemName;
     }
