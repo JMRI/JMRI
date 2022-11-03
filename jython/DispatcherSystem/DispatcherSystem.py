@@ -396,19 +396,26 @@ row0.add(Box.createRigidArea(Dimension(20, 0)))
 
 rowTitle_22 = JPanel()
 rowTitle_22.setLayout(BoxLayout(rowTitle_22, BoxLayout.X_AXIS))
+rowTitle_23 = JPanel()
+rowTitle_23.setLayout(BoxLayout(rowTitle_23, BoxLayout.X_AXIS))
 rowStage1Title_1 = JLabel("Stage1: ")
 get_start_filename()
 get_backup_filename()
 rowStage1Title_1 = JLabel("    Modifies: " + start_filename + "  Creates backup: " + backup_filename)
 rowStage1Title_1.add(Box.createHorizontalGlue());
 rowStage1Title_1.setAlignmentX(rowStage1Title_1.LEFT_ALIGNMENT)
-rowStage1Title_2 = JLabel("")     #start_filename + "_icons"
+rowStage1Title_2 = JLabel("")
+rowStage1Title_3 = JLabel("    Read Help to see how system works")     #start_filename + "_icons"
 
 rowTitle_22.add(Box.createVerticalGlue())
 rowTitle_22.add(Box.createRigidArea(Dimension(20, 0)))
 rowTitle_22.add(rowStage1Title_1)
 rowTitle_22.add(Box.createRigidArea(Dimension(20, 0)))
 rowTitle_22.add(rowStage1Title_2)
+
+rowTitle_23.add(Box.createVerticalGlue())
+rowTitle_23.add(Box.createRigidArea(Dimension(20, 0)))
+rowTitle_23.add(rowStage1Title_3)
 
 rowStage2Title = JPanel()
 rowStage2Title.setLayout(BoxLayout(rowStage2Title, BoxLayout.X_AXIS))
@@ -477,7 +484,7 @@ rowStage1Separator.add(rowStage1Separator_2)
 
 rowStage1Button = JPanel()
 rowStage1Button.setLayout(BoxLayout(rowStage1Button, BoxLayout.X_AXIS))
-rowrowStage1Button_2 = JLabel("Sets Up everything to run trains using dispatcher")
+rowrowStage1Button_2 = JLabel("Sets Up everything to run trains using Dispatcher")
 rowrowStage1Button_2.setFont(rowTitle_2_1.getFont().deriveFont(Font.BOLD, 13));
 
 rowrowStage1Button_2.add(Box.createHorizontalGlue());
@@ -520,6 +527,7 @@ initialise_panel_location(stage1Button, stage2Button)
 #Title
 panel.add(leftJustify(rowTitle_2))
 panel.add(leftJustify(rowTitle_22))
+panel.add(leftJustify(rowTitle_23))
 panel.add(leftJustify(row_Title_3))
 
 #stage1
