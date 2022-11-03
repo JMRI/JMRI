@@ -255,11 +255,6 @@ public class PositionablePointView extends LayoutTrackView {
     }
 
     @CheckReturnValue
-    protected LayoutEditor getLayoutEditor() {
-        return layoutEditor;
-    }
-
-    @CheckReturnValue
     @Nonnull
     public String getEastBoundSignal() {
         SignalHead h = getEastBoundSignalHead();
@@ -1319,6 +1314,8 @@ public class PositionablePointView extends LayoutTrackView {
         }
 
         layoutEditor.setShowAlignmentMenu(popup);
+
+        addCommonPopupItems(mouseEvent, popup);
 
         popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
 

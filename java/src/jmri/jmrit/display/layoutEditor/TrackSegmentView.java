@@ -1370,6 +1370,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 }
             });
         }
+        addCommonPopupItems(mouseEvent, popupMenu);
         popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         return popupMenu;
     }   // showPopup
@@ -1625,6 +1626,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 }
             });
         }
+        addCommonPopupItems(e, popupMenu);
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
 

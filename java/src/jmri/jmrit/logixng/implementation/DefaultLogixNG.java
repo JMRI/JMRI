@@ -13,6 +13,7 @@ import jmri.NamedBeanUsageReport;
 // import jmri.implementation.JmriSimplePropertyListener;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
@@ -35,6 +36,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     private final LogixNG_Manager _manager = InstanceManager.getDefault(LogixNG_Manager.class);
     private boolean _inline = false;
     private Positionable _positionable = null;
+    private LayoutTrackView _layoutTrackView = null;
     private boolean _enabled = false;
     private boolean _isActive = false;
     private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
@@ -164,6 +166,18 @@ public class DefaultLogixNG extends AbstractNamedBean
     @Override
     public Positionable getPositionable() {
         return _positionable;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setLayoutTrackView(LayoutTrackView ltv) {
+        _layoutTrackView = ltv;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LayoutTrackView getLayoutTrackView() {
+        return _layoutTrackView;
     }
 
     /** {@inheritDoc} */

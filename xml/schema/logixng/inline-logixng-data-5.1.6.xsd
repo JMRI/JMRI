@@ -23,10 +23,10 @@
             "
         >
 
-    <xs:complexType name="PositionableLogixNGType">
+    <xs:complexType name="InlineLogixNGType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML structure for storing LogixNG data in a Positionable.
+          Define the XML structure for storing LogixNG data in a Positionable or a LayoutTrackView.
         </xs:documentation>
 <!--
         <xs:appinfo>

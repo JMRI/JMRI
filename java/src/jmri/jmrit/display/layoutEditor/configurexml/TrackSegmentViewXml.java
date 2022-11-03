@@ -6,14 +6,11 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This module handles configuration for display.TrackSegment objects for a
@@ -23,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2019
  */
-public class TrackSegmentViewXml extends AbstractXmlAdapter {
+public class TrackSegmentViewXml extends LayoutTrackViewXml {
 
     public TrackSegmentViewXml() {
     }
@@ -197,6 +194,8 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         //element.setAttribute("class", getClass().getName());
         log.debug("storing old fixed class name for TrackSegment");
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml");
+
+        storeLogixNG_Data(view, element);
 
         return element;
     }   // store
@@ -551,6 +550,8 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         if (a != null) {
             lt.tLayoutBlockName = a.getValue();
         }
+
+        loadLogixNG_Data(lv, element);
 
         p.addLayoutTrack(lt, lv);
     }

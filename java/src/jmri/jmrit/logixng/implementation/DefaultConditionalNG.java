@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
@@ -164,6 +165,21 @@ public class DefaultConditionalNG extends AbstractBase
                     localVariables.add(new SymbolTable.VariableData(
                             "__Editor__", SymbolTable.InitialValueType.String,
                             positionable.getEditor().getName()));
+                    newSymbolTable.createSymbols(localVariables);
+                }
+
+                LayoutTrackView layoutTrackView = conditionalNG.getLogixNG().getLayoutTrackView();
+                if (layoutTrackView != null) {
+                    List<SymbolTable.VariableData> localVariables = new ArrayList<>();
+                    localVariables.add(new SymbolTable.VariableData(
+                            "__LayoutTrackView__", SymbolTable.InitialValueType.String,
+                            layoutTrackView.getName()));
+                    localVariables.add(new SymbolTable.VariableData(
+                            "__LayoutTrackViewId__", SymbolTable.InitialValueType.String,
+                            layoutTrackView.getId()));
+                    localVariables.add(new SymbolTable.VariableData(
+                            "__LayoutEditor__", SymbolTable.InitialValueType.String,
+                            layoutTrackView.getLayoutEditor().getName()));
                     newSymbolTable.createSymbols(localVariables);
                 }
 

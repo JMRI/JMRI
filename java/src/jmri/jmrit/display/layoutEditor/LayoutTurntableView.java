@@ -643,6 +643,7 @@ public class LayoutTurntableView extends LayoutTrackView {
             }
         });
         layoutEditor.setShowAlignmentMenu(popupMenu);
+        addCommonPopupItems(mouseEvent, popupMenu);
         popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         return popupMenu;
     }

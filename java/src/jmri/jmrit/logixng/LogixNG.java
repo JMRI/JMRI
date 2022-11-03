@@ -2,6 +2,7 @@ package jmri.jmrit.logixng;
 
 import jmri.NamedBean;
 import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 
 /**
  * LogixNG.
@@ -40,6 +41,20 @@ public interface LogixNG extends Base, NamedBean {
      * @return the Positionable
      */
     public Positionable getPositionable();
+
+    /**
+     * Set the positionable that owns this LogixNG, if the LogixNG is inline.
+     *
+     * @param pos the positionable that owns this LogixNG, if the LogixNG is inline.
+     */
+    public void setLayoutTrackView(LayoutTrackView pos);
+
+    /**
+     * Get the positionable that owns this LogixNG, if the LogixNG is inline.
+     *
+     * @return the Positionable
+     */
+    public LayoutTrackView getLayoutTrackView();
 
     /**
      * Set whenether this LogixNG is enabled or disabled.

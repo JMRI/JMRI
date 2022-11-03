@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 
+import jmri.NamedBean;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.util.JmriJFrame;
@@ -93,14 +94,13 @@ public class InlineLogixNGsFrame extends JmriJFrame {
         scrollpane.setPreferredSize(new Dimension(600, 400));
         contentPanel.add(scrollpane);
 
-        Set<String> panels = new HashSet<String>();
-        Set<String> icons = new HashSet<String>();
+        Set<String> panels = new HashSet<>();
+        Set<String> icons = new HashSet<>();
         for (LogixNG logixNG : _inlineLogixNGsTableModel.getLogixNGList()) {
-            Positionable p = logixNG.getPositionable();
-            if (p != null) {
-                if (p.getEditor() != null) panels.add(p.getEditor().getName());
-                if (p.getNamedBean() != null) icons.add(p.getNamedBean().getBeanType());
-            }
+            String editorName = InlineLogixNGsTableModel.getEditorName(logixNG);
+            NamedBean namedBean = InlineLogixNGsTableModel.getNamedBean(logixNG);
+            if (editorName != null && !editorName.isBlank()) panels.add(editorName);
+            if (namedBean != null) icons.add(namedBean.getBeanType());
         }
 
         _filterOnPanel.addItem("");
@@ -119,16 +119,16 @@ public class InlineLogixNGsFrame extends JmriJFrame {
         String filterOnIconValue = _filterOnIcon.getItemAt(_filterOnIcon.getSelectedIndex());
 
         Predicate<LogixNG> filter = (LogixNG logixNG) -> {
-            Positionable p = logixNG.getPositionable();
+            String editorName = InlineLogixNGsTableModel.getEditorName(logixNG);
+            NamedBean namedBean = InlineLogixNGsTableModel.getNamedBean(logixNG);
             if (!filterOnPanelValue.equals("")) {
-                if (p.getEditor() == null
-                        || !filterOnPanelValue.equals(p.getEditor().getName())) {
+                if (editorName == null || !filterOnPanelValue.equals(editorName)) {
                     return false;
                 }
             }
             if (!filterOnIconValue.equals("")) {
-                if (p.getNamedBean() == null
-                        || !filterOnIconValue.equals(p.getNamedBean().getBeanType())) {
+                if (namedBean == null
+                        || !filterOnIconValue.equals(namedBean.getBeanType())) {
                     return false;
                 }
             }
