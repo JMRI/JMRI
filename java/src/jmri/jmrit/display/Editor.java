@@ -27,7 +27,6 @@ import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.Bundle;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.tools.swing.DeleteBean;
