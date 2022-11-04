@@ -230,7 +230,7 @@ public class ActionOBlock extends AbstractDigitalAction
                         } else {
                             memory.setValue("");
                         }
-             } else {
+                    } else {
                         throw new JmriException("Memory for GetBlockValue is null for oblock - " + oblock.getDisplayName());  // NOI18N
                     }
                     break;
