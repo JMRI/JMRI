@@ -209,7 +209,7 @@ public class ActionOBlock extends AbstractDigitalAction
                     oblock.setOutOfService(false);
                     break;
                 case GetBlockWarrant:
-                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(conditionalNG);
                     if (memory != null) {
                         Warrant w = oblock.getWarrant();
                         if (w != null) {
@@ -222,7 +222,7 @@ public class ActionOBlock extends AbstractDigitalAction
                     }
                     break;
                 case GetBlockValue:
-                    memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    memory = _selectMemoryNamedBean.evaluateNamedBean(conditionalNG);
                     if (memory != null) {
                         Object obj = oblock.getValue();
                         if (obj instanceof String) {
