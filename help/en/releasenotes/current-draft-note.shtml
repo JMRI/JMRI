@@ -409,6 +409,17 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>LogixNGs can now be inline in panels. Right-click on a icon on a panel and
+          select <i>LogixNG -> Inline</i> to add a LogixNG to a icon on a panel. Inline
+          LogixNGs can be viewed by menu item <i>Tools -> LogixNG -> Inline LogixNGs</i>.
+          When a ConditionalNG is executed that's inline, two special local variables will
+          be defined:
+            <ul>
+              <li>__InlineLogixNG__ : The name of the icon</li>
+              <li>__Editor__ : The name of the editor of the icon</li>
+              <li>Note that these two has two underlines at the beginning and end of the name.</li>
+            </ul>
+          </li>
           <li>Fixes a serious bug when deleting a LogixNG. Not all ConditionalNGs of
           that LogixNG was deleted but that's fixed now.</li>
           <li>Update the Global Variable table browser to provide detail information.</li>

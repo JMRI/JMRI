@@ -71,6 +71,9 @@ public class MemoryIconXml extends PositionableLabelXml {
                 element.addContent(e2);
             }
         }
+
+        storeLogixNG_Data(p, element);
+
         return element;
     }
 
@@ -157,6 +160,9 @@ public class MemoryIconXml extends PositionableLabelXml {
         } catch (Positionable.DuplicateIdException e) {
             throw new JmriConfigureXmlException("Positionable id is not unique", e);
         }
+
+        loadLogixNG_Data(l, element);
+
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MEMORIES, element);
         int x = 0;
