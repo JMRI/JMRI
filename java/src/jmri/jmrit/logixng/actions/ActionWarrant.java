@@ -197,16 +197,17 @@ public class ActionWarrant extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        Warrant warrant = _selectNamedBean.evaluateNamedBean(getConditionalNG());
+        final ConditionalNG conditionalNG = getConditionalNG();
+        Warrant warrant = _selectNamedBean.evaluateNamedBean(conditionalNG);
 
         if (warrant == null) {
             return;
         }
 
-        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+        SymbolTable symbolTable = conditionalNG.getSymbolTable();
 
         // Variables used in lambda must be effectively final
-        DirectOperation theOper = _selectEnum.evaluateEnum(getConditionalNG());
+        DirectOperation theOper = _selectEnum.evaluateEnum(conditionalNG);
 
         if (!theOper.equals(DirectOperation.GetTrainLocation)) {
             if (warrant.getRunMode() == Warrant.MODE_RUN && !theOper.equals(DirectOperation.ControlAutoTrain)) {
@@ -302,7 +303,7 @@ public class ActionWarrant extends AbstractDigitalAction
                     break;
 
                 case GetTrainLocation:
-                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(conditionalNG);
                     if (memory != null) {
                         memory.setValue(warrant.getCurrentBlockName());
                     } else {
