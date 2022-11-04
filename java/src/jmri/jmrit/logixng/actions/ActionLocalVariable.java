@@ -199,11 +199,11 @@ public class ActionLocalVariable extends AbstractDigitalAction
     public void execute() throws JmriException {
         if (_localVariable == null) return;
 
-        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+        final ConditionalNG conditionalNG = getConditionalNG();
+
+        SymbolTable symbolTable = conditionalNG.getSymbolTable();
 
         AtomicReference<JmriException> ref = new AtomicReference<>();
-
-        final ConditionalNG conditionalNG = getConditionalNG();
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
 
