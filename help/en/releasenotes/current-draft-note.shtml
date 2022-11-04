@@ -434,6 +434,8 @@
               <li>For macOS, use Cmd instead of Ctrl.</li>
             </ul>
           </li>
+          <li>Fixes a bug that crashed the LogixNG debugger when debugging a ConditionalNG
+          that calls LogixNG Modules.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
