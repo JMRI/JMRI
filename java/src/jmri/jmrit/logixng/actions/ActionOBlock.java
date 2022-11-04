@@ -177,16 +177,16 @@ public class ActionOBlock extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        OBlock oblock = _selectNamedBean.evaluateNamedBean(getConditionalNG());
+        final ConditionalNG conditionalNG = getConditionalNG();
+
+        OBlock oblock = _selectNamedBean.evaluateNamedBean(conditionalNG);
 
         if (oblock == null) return;
 
-        DirectOperation oper = _selectEnum.evaluateEnum(getConditionalNG());
+        DirectOperation oper = _selectEnum.evaluateEnum(conditionalNG);
 
         // Variables used in lambda must be effectively final
         DirectOperation theOper = oper;
-
-        final ConditionalNG conditionalNG = getConditionalNG();
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch (theOper) {
