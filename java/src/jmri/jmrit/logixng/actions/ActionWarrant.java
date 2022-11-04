@@ -160,7 +160,8 @@ public class ActionWarrant extends AbstractDigitalAction
     }
 
 
-    private String getNewData(DirectOperation theOper) throws JmriException {
+    private String getNewData(DirectOperation theOper, SymbolTable symbolTable)
+            throws JmriException {
 
         switch (_dataAddressing) {
             case Direct:
@@ -175,19 +176,16 @@ public class ActionWarrant extends AbstractDigitalAction
                 }
 
             case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _dataReference);
+                return ReferenceUtil.getReference(symbolTable, _dataReference);
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 return TypeConversionUtil
                         .convertToString(symbolTable.getValue(_dataLocalVariable), false);
 
             case Formula:
                 return _dataExpressionNode != null
                         ? TypeConversionUtil.convertToString(
-                                _dataExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
+                                _dataExpressionNode.calculate(symbolTable), false)
                         : null;
 
             default:
@@ -204,6 +202,8 @@ public class ActionWarrant extends AbstractDigitalAction
         if (warrant == null) {
             return;
         }
+
+        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
 
         // Variables used in lambda must be effectively final
         DirectOperation theOper = _selectEnum.evaluateEnum(getConditionalNG());
@@ -292,13 +292,13 @@ public class ActionWarrant extends AbstractDigitalAction
                     break;
 
                 case SetTrainId:
-                    if(!warrant.getSpeedUtil().setAddress(getNewData(theOper))) {
+                    if(!warrant.getSpeedUtil().setAddress(getNewData(theOper, symbolTable))) {
                         throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
                     }
                     break;
 
                 case SetTrainName:
-                    warrant.setTrainName(getNewData(theOper));
+                    warrant.setTrainName(getNewData(theOper, symbolTable));
                     break;
 
                 case GetTrainLocation:
