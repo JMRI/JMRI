@@ -360,7 +360,7 @@ If you're developing any additional (post-5.1.6) changes that you want in the JM
 ================================================================================
 ## Put Files Out For Checking
 
-- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](https://builds.jmri.org/jenkins/job/website/job/website-repository/) button). Confirm visible on web.
+- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](https://builds.jmri.org/jenkins/job/website/job/website-repository/) button). Confirm [visible on web](https://www.jmri.org/releasenotes/jmri5.1.6.shtml).
 
 - Announce the file set via [email to jmri@jmri-developers.groups.io](mailto:jmri@jmri-developers.groups.io?subject=First%205.1.6%20files%20available) with a subject line
 
@@ -374,7 +374,7 @@ https://builds.jmri.org/jenkins/job/testreleases/job/5.1.6/
 
 Feedback appreciated. I would like to release this later today or tomorrow morning if the files are OK.
 
-Note that the purpose of this check is to make sure that the _files_ were built OK.  If you find any new problems in the code, great, let's fix those for the next test release.  (Or even better, let's learn to better functional checking of the development releases leading up to the test release build)
+Note that the purpose of this check is to make sure that the _files_ were built OK.  If you find any new problems in the code, great, let's fix those for the next test release.  (Or even better, let's learn to do better functional checking of the development releases leading up to the test release build)
 
 ```
 
@@ -484,9 +484,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.1.6+Rb1b4a78a89.dmg](https://github.com/JMRI/JMRI/releases/download/v5.1.6/JMRI.5.1.6+Rb1b4a78a89.dmg) | 3a7bd549ce21174a2df5a50f5aef6f9956b067565878baaad9dd60c514f25fbd
-[JMRI.5.1.6+Rb1b4a78a89.exe](https://github.com/JMRI/JMRI/releases/download/v5.1.6/JMRI.5.1.6+Rb1b4a78a89.exe) | ffe78a9723ffa55d46dad3f3d971bddd67f400cab93eef8a136d5c44fba8a63a
-[JMRI.5.1.6+Rb1b4a78a89.tgz](https://github.com/JMRI/JMRI/releases/download/v5.1.6/JMRI.5.1.6+Rb1b4a78a89.tgz) | 411e83743fc297956b9cc746cb345d0934db4ecc8326605b3b85ad4412267371
+[JMRI.5.1.6+R4c05a03807.dmg](https://github.com/JMRI/JMRI/releases/download/v5.1.6/JMRI.5.1.6+R4c05a03807.dmg) | c9618cd4387845aec94886c8da1b7f28bdb0f8cb2d2306b803cb40192b67e49c
+[JMRI.5.1.6+R4c05a03807.exe](https://github.com/JMRI/JMRI/releases/download/v5.1.6/JMRI.5.1.6+R4c05a03807.exe) | 7c213f1539bccde704f8fc92af8f41d88c9be2d37daeee7c2b64794da50a765b
+[JMRI.5.1.6+R4c05a03807.tgz](https://github.com/JMRI/JMRI/releases/download/v5.1.6/JMRI.5.1.6+R4c05a03807.tgz) | b443148e487714771bda45cab8c92c3b20fb4eb41eabeb0a0f20ef076f114d01
 
 
 ```
