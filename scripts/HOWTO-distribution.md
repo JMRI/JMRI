@@ -253,13 +253,13 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i .bak s/5.1.4-SNAPSHOT/5.1.6-SNAPSHOT/g pom.xml
+        sed -i .bak s/5.1.5-SNAPSHOT/5.1.6-SNAPSHOT/g pom.xml
         git commit -m"5.1.6 until next release" pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i .bak s/release.build=4/release.build=5/g release.properties
+        sed -i .bak s/release.build=5/release.build=6/g release.properties
         git commit -m"5.1.6 until next release" release.properties
         git push github
 ```
