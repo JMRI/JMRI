@@ -181,7 +181,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
         }
         _tree.updateUI();
         FemaleSocket femaleSocket = (FemaleSocket) _tree.getLastSelectedPathComponent();
-        if (!femaleSocket.existsInTree()) {
+        if (femaleSocket != null && !femaleSocket.existsInTree()) {
             _tree.getSelectionModel().clearSelection();
         }
     }
