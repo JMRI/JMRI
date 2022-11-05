@@ -239,7 +239,8 @@ public class StoreAndCompare extends AbstractAction {
                 "<layout-config",   // Linux seems to put attributes in different order
                 "<?xml-stylesheet", // Linux seems to put attributes in different order
                 "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
-                "    <modifier>This line ignored</modifier>"
+                "    <modifier>This line ignored</modifier>",
+                "    <memory"       // Ignore memory variable value changes, including to/from null.
             };
             for (String startsWithString : startsWithStrings) {
                 if (line1.startsWith(startsWithString) && line2.startsWith(startsWithString)) {
@@ -277,17 +278,6 @@ public class StoreAndCompare extends AbstractAction {
                 }
             }
 
-            // Time will vary when written out
-            if (!match) {
-                String memory_value = "<memory value";
-                if (line1.contains(memory_value) && line2.contains(memory_value)) {
-                    String imcurrenttime = "<systemName>IMCURRENTTIME</systemName>";
-                    if (next1.contains(imcurrenttime) && next2.contains(imcurrenttime)) {
-                        match = true;
-                    }
-                }
-            }
-
             // Dates can vary when written out
             String date_string = "<date>";
             if (!match && line1.contains(date_string) && line2.contains(date_string)) {
@@ -302,11 +292,11 @@ public class StoreAndCompare extends AbstractAction {
             }
 
             if (!match && !line1.equals(line2)) {
-                log.error("match failed in StoreAndCompare:");
-                log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
-                log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
-                log.error("  comparing file1:\"{}\"", inFile1.getPath());
-                log.error("         to file2:\"{}\"", inFile2.getPath());
+                log.info("Match failed in StoreAndCompare:");
+                log.info("    file1:line {}: \"{}\"", lineNumber1, line1);
+                log.info("    file2:line {}: \"{}\"", lineNumber2, line2);
+                log.info("  comparing file1:\"{}\"", inFile1.getPath());
+                log.info("         to file2:\"{}\"", inFile2.getPath());
                 result = true;
                 break;
             }
