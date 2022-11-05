@@ -81,7 +81,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     }
 
     @Override
-    protected AbstractLogixNGEditor<NamedTable> getEditor(BeanTableFrame<NamedTable> f, BeanTableDataModel<NamedTable> m, String sName) {
+    protected AbstractLogixNGEditor<NamedTable> getEditor(BeanTableDataModel<NamedTable> m, String sName) {
         return new TableEditor(m, sName);
     }
 

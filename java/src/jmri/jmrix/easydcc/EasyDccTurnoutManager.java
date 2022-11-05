@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager implements EasyDccListener {
 
     private EasyDccTrafficController trafficController = null;
-    public final static int MAX_ACC_DECODER_ADDRESS = 511;
+    public final static int MAX_ACC_DECODER_ADDRESS = 2044;
 
     /**
      * Create an new EasyDCC TurnoutManager.

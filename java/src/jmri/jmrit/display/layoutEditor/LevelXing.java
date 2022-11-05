@@ -78,7 +78,7 @@ public class LevelXing extends LayoutTrack {
     private LayoutTrack connectB = null;
     private LayoutTrack connectC = null;
     private LayoutTrack connectD = null;
-    
+
     public enum Geometry {
         POINTA, POINTB, POINTC, POINTD
     }
@@ -1189,6 +1189,14 @@ public class LevelXing extends LayoutTrack {
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         setLayoutBlockAC(layoutBlock);
         setLayoutBlockBD(layoutBlock);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTypeName() {
+        return Bundle.getMessage("TypeName_LevelXing");
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXing.class);

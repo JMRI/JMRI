@@ -1,16 +1,21 @@
 package jmri.jmrit.roster.swing;
 
-import jmri.util.gui.GuiLafPreferencesManager;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
+import java.awt.Component;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
+
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBoxMenuItem;
@@ -28,11 +33,13 @@ import javax.swing.event.RowSorterEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
+
 import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.JmriMouseAdapter;
 import jmri.util.swing.JmriMouseEvent;
@@ -96,41 +103,15 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         dataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         dataTable.setColumnModel(columnModel);
-        dataModel.setColumnModel(columnModel);
+        // dataModel.setColumnModel(columnModel);
         dataTable.createDefaultColumnsFromModel();
         dataTable.setAutoCreateColumnsFromModel(false);
 
-        // format the last updated date time
-        columnModel.getColumnByModelIndex(RosterTableModel.DATEUPDATECOL).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            protected void setValue(Object value) {
-                if (value != null && value instanceof Date) {
-                    super.setValue(DateFormat.getDateTimeInstance().format((Date) value));
-                } else {
-                    super.setValue(value);
-                }
-            }
-        });
+        // format the last updated date time, last operated date time.
+        dataTable.setDefaultRenderer(Date.class, new DateTimeCellRenderer());
 
         TableColumn tc = columnModel.getColumnByModelIndex(RosterTableModel.PROTOCOL);
         columnModel.setColumnVisible(tc, false);
-
-        for (String s : Roster.getDefault().getAllAttributeKeys()) {
-            if (!s.contains("RosterGroup") && !s.toLowerCase().startsWith("sys") && !s.toUpperCase().startsWith("VSD")) { // NOI18N
-                String[] r = s.split("(?=\\p{Lu})"); // NOI18N
-                StringBuilder sb = new StringBuilder();
-                sb.append(r[0].trim());
-                for (int j = 1; j < r.length; j++) {
-                    sb.append(" ");
-                    sb.append(r[j].trim());
-                }
-                TableColumn c = new TableColumn(dataModel.getColumnCount());
-                c.setHeaderValue((sb.toString()).trim());
-                dataTable.addColumn(c);
-                dataModel.addColumn(c.getHeaderValue());
-                columnModel.setColumnVisible(c, false);
-            }
-        }
 
         // resize columns as requested
         resetColumnWidths();
@@ -154,6 +135,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         dataTable.getTableHeader().addMouseListener(JmriMouseListener.adapt(mouseHeaderListener));
 
         dataTable.setDefaultEditor(Object.class, new RosterCellEditor());
+        dataTable.setDefaultEditor(Date.class, new DateTimeCellEditor());
 
         tableSelectionListener = (ListSelectionEvent e) -> {
             if (!e.getValueIsAdjusting()) {
@@ -196,6 +178,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             dataModel.dispose();
         }
         dataModel = null;
+        dataTable.getSelectionModel().removeListSelectionListener(tableSelectionListener);
         dataTable = null;
         super.dispose();
     }
@@ -402,4 +385,54 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             return re.getId().equals(dataModel.getValueAt(sorter.convertRowIndexToModel(dataTable.getSelectedRow()), RosterTableModel.IDCOL));
         }
     }
+
+    private static class DateTimeCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        protected void setValue(Object value) {
+            if ( value instanceof Date) {
+                super.setValue(DateFormat.getDateTimeInstance().format((Date) value));
+            } else {
+                super.setValue(value);
+            }
+        }
+    }
+
+    private class DateTimeCellEditor extends RosterCellEditor {
+
+        public DateTimeCellEditor() {
+            super();
+        }
+
+        private final static String EDITOR_DATE_FORMAT =  "yyyy-MM-dd hh:mm";
+        private Date startDate = new Date();
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int col) {
+            if (!(value instanceof Date) ) {
+                value = new Date(); // field pre-populated if currently empty to show entry format
+            }
+            startDate = (Date)value;
+            String formatted = new SimpleDateFormat(EDITOR_DATE_FORMAT).format((Date)value);
+            ((JTextField)editorComponent).setText(formatted);
+            editorComponent.setToolTipText("e.g. 2022-12-25 12:34");
+            return editorComponent;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            String o = (String)super.getCellEditorValue();
+            if ( o.isBlank() ) { // user cancels the date / time
+                return null;
+            }
+            SimpleDateFormat fm = new SimpleDateFormat(EDITOR_DATE_FORMAT);
+            try {
+                // get Date in local time before passing to StdDateFormat
+                startDate = fm.parse(o.trim());
+            } catch (ParseException e) {
+            } // return value unchanged in case of user mis-type
+            return new StdDateFormat().format(startDate);
+        }
+
+    }
+
 }

@@ -12,13 +12,8 @@ import jmri.NamedBean;
 import jmri.NamedBeanUsageReport;
 // import jmri.implementation.JmriSimplePropertyListener;
 import jmri.implementation.AbstractNamedBean;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.display.Positionable;
+import jmri.jmrit.logixng.*;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -32,6 +27,8 @@ public class DefaultLogixNG extends AbstractNamedBean
         implements LogixNG {
 
     private final LogixNG_Manager _manager = InstanceManager.getDefault(LogixNG_Manager.class);
+    private boolean _inline = false;
+    private InlineLogixNG _inlineLogixNG = null;
     private boolean _enabled = false;
     private boolean _isActive = false;
     private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
@@ -39,6 +36,18 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     public DefaultLogixNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
+
+        // Do this test here to ensure all the tests are using correct system names
+        Manager.NameValidity isNameValid = InstanceManager.getDefault(LogixNG_Manager.class).validSystemNameFormat(mSystemName);
+        if (isNameValid != Manager.NameValidity.VALID) {
+            throw new IllegalArgumentException("system name is not valid");
+        }
+    }
+
+    public DefaultLogixNG(String sys, String user, boolean inline) throws BadUserNameException, BadSystemNameException  {
+        super(sys, user);
+
+        _inline = inline;
 
         // Do this test here to ensure all the tests are using correct system names
         Manager.NameValidity isNameValid = InstanceManager.getDefault(LogixNG_Manager.class).validSystemNameFormat(mSystemName);
@@ -123,6 +132,32 @@ public class DefaultLogixNG extends AbstractNamedBean
                 entry._conditionalNG.setup();
             }
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setInline(boolean inline) {
+        boolean old = _inline;
+        _inline = inline;
+        firePropertyChange(LogixNG.PROPERTY_INLINE, old, _inline);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isInline() {
+        return _inline;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setInlineLogixNG(InlineLogixNG inlineLogixNG) {
+        _inlineLogixNG = inlineLogixNG;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public InlineLogixNG getInlineLogixNG() {
+        return _inlineLogixNG;
     }
 
     /** {@inheritDoc} */
