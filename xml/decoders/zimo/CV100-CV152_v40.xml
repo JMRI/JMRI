@@ -16,6 +16,7 @@
 <!-- version 1.9 25 Jun 2019 Ronald Kuhn -  CV114 & CV152 tooltip correction -->
 <!-- version 1.10 8 Mar 2021 Nigel Cliffe -  CV112 bit 5 tooltip correction -->
 <!-- version 1.11 1 Dec 2021 Ronald Kuhn -  Choice-Light4_v40 for v40.x -->
+<!-- version 1.12 31 Oct 2022 Ronald Kuhn -  decVal for CV#115 to max -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
@@ -705,7 +706,26 @@
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="115" item="Uncoupler" default="0">
+    <qualifier>
+      <variableref>Product Number</variableref>
+      <relation>le</relation>
+      <value>5</value>
+    </qualifier>
     <decVal max="99"/>
+    <label>Uncoupler</label>
+    <label xml:lang="it">Sganciatore</label>
+    <label xml:lang="cs">Rozpojovač</label>
+    <label xml:lang="de">Kupplung</label>
+    <tooltip xml:lang="de">Einschaltzeit für digitale Kupplung (Einheit 0,1 sek d.h. 60 = 6 sek)</tooltip>
+    <tooltip xml:lang="cs">Čas sepnutí digitálního spřáhla (jednotka 0,1 s, t.j. 60 = 6 s)</tooltip>
+  </variable>
+  <variable CV="115" item="Uncoupler gt5" default="0">
+    <qualifier>
+      <variableref>Product Number</variableref>
+      <relation>ge</relation>
+      <value>18</value>
+    </qualifier>
+    <decVal max="255"/>
     <label>Uncoupler</label>
     <label xml:lang="it">Sganciatore</label>
     <label xml:lang="cs">Rozpojovač</label>
