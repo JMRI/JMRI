@@ -239,13 +239,21 @@ public class StoreAndCompare extends AbstractAction {
                 "<layout-config",   // Linux seems to put attributes in different order
                 "<?xml-stylesheet", // Linux seems to put attributes in different order
                 "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
-                "    <modifier>This line ignored</modifier>",
-                "    <memory"       // Ignore memory variable value changes, including to/from null.
+                "    <modifier>This line ignored</modifier>"
             };
             for (String startsWithString : startsWithStrings) {
                 if (line1.startsWith(startsWithString) && line2.startsWith(startsWithString)) {
                     match = true;
                     break;
+                }
+            }
+
+            // Memory variables have a value attribute for non-null values or no attribute.
+            if (!match) {
+                var mem1 = line1.startsWith("    <memory value") || line1.startsWith("    <memory>");
+                var mem2 = line2.startsWith("    <memory value") || line2.startsWith("    <memory>");
+                if (mem1 && mem2) {
+                    match = true;
                 }
             }
 
