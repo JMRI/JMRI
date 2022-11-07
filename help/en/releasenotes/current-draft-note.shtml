@@ -76,7 +76,13 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>You can now select separate defaults (in the Preferences -> Defaults pane)
+                for PR2, PR3 and PR4 connections.
+                <p>
+                Note: Existing PR2, PR3 and PR4 connections might give a "The Defaults preferences are invalid"
+                warning when saving preferences.  In that case, click "yes" and then go set
+                all the default radio buttons on the "Defaults" pane to the LocoNet connection.  (You can also
+                click "no", but you'll get the message next time you store too)</li>
             </ul>
 
         <h4>Maple</h4>
