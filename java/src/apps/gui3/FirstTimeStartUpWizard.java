@@ -270,12 +270,14 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
         log.error("Exception: ", ex);
         Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
         parent.setCursor(normalCursor);
-        JOptionPane.showMessageDialog(parent,
-            "<html>An error occurred while trying to connect to " + connectionConfigPane.getCurrentObject().getConnectionName()
-                + ", <br>press the back button and check the connection details.<br>"
-                + ex.getLocalizedMessage() + "</html>",
-            "Error Opening Connection",
-            JOptionPane.ERROR_MESSAGE);
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            JOptionPane.showMessageDialog(parent,
+                "<html>An error occurred while trying to connect to " + connectionConfigPane.getCurrentObject().getConnectionName()
+                    + ", <br>press the back button and check the connection details.<br>"
+                    + ex.getLocalizedMessage() + "</html>",
+                "Error Opening Connection",
+                JOptionPane.ERROR_MESSAGE);
+        });
     }
 
     //The connection process is placed into its own thread so that it doens't hog the swingthread while waiting for the connections to open.
