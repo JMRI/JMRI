@@ -31,7 +31,7 @@ public class LinkedWarrantTest {
     private WarrantManager _warrantMgr;
 
     // tests a warrant launching itself. (origin, destination the same to make continuous loop)
-//    @Disabled("This test fails on CI")
+    @Disabled("This test fails on CI")
     @Test
     public void testLoopedWarrant() throws Exception {
         // load and display

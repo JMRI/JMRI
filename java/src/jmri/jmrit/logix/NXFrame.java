@@ -863,7 +863,7 @@ public class NXFrame extends WarrantRoute {
                             SpeedStepMode.UNKNOWN, 0, blockName, _speedUtil.getTrackSpeed(curThrottle)));
                     if (log.isDebugEnabled()) {
                         log.debug("cmd#{}. Ramp Up done at block \"{}\" noopTime= {}, blockLen= {}, sumBlkLen= {}, curDist= {}",
-                                cmdNum++, blockName, noopTime, speedTime, blockLen, sumBlkLen, curDistance);
+                                cmdNum++, blockName, noopTime, blockLen, sumBlkLen, curDistance);
                     }
                     curDistance = sumBlkLen;
                 } else {
