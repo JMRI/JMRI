@@ -489,7 +489,11 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li></li>
+                <li>"Single Output" signal heads had their Thrown and Reversed
+                positions
+                <a href="https://groups.io/g/jmriusers/message/210041">reversed in the "Add..." dialog</a>.
+                This is now corrected.
+                </li>
             </ul>
 
         <h4>Signal Masts</h4>
