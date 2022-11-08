@@ -130,6 +130,12 @@
       <p>Sample script to navigate through the GUI and disable the Ops Mode button on the main
       DecoderPro window.</p>
 
+      <p><a href="../../../../../jython/GrandReset.py">GrandReset.py</a>
+      </p>
+
+      <p>A script to remove <strong>All</strong> Transits, Sections, SignalMastLogics and
+      remove all saved paths from the Block Table. Requires confirmation when you run it.</p>
+
       <p><a href="../../../../../jython/InitTurnouts.py">InitTurnouts.py</a>
       </p>
 

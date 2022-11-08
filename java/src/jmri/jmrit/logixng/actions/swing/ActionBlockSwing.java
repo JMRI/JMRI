@@ -70,6 +70,9 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
             _tabbedPaneOperation = _selectOperationSwing.createPanel(null, DirectOperation.values());
         }
 
+        _selectOperationSwing.addAddressingListener((evt) -> { setDataPanelState(); });
+        _selectOperationSwing.addEnumListener((evt) -> { setDataPanelState(); });
+
 
         // Right section
         _tabbedPaneData = new JTabbedPane();

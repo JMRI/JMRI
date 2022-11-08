@@ -1,7 +1,5 @@
 package jmri.jmrit.roster.swing;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.*;
 import jmri.jmrit.roster.*;
 import jmri.util.*;
@@ -268,9 +266,8 @@ public class RosterFrameTest {
         JUnitUtil.initDebugProgrammerManager();
         JUnitUtil.initRosterConfigManager();
         Roster.getDefault(); // ensure exists
-        if (!GraphicsEnvironment.isHeadless()) {
-            frame = new RosterFrame();
-        }
+        frame = new RosterFrame();
+
     }
 
     @AfterEach

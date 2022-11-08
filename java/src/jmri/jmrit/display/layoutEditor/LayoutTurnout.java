@@ -2884,5 +2884,13 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTypeName() {
+        return Bundle.getMessage("TypeName_Turnout");
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnout.class);
 }

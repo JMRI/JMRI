@@ -1,16 +1,21 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.geom.*;
+import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.*;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
+import javax.annotation.*;
 import javax.swing.*;
 
-import jmri.JmriException;
-import jmri.Turnout;
+import jmri.*;
+import jmri.jmrit.logixng.InlineLogixNG;
+import jmri.jmrit.logixng.LogixNG;
+import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.tools.swing.DeleteBean;
+import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
 import jmri.util.*;
 import jmri.util.swing.JmriMouseEvent;
 
@@ -32,7 +37,7 @@ import jmri.util.swing.JmriMouseEvent;
  * @author Bob Jacobsen Copyright (c) 2020
  *
  */
-abstract public class LayoutTrackView {
+abstract public class LayoutTrackView implements InlineLogixNG {
 
     /**
      * Constructor method.
@@ -62,6 +67,12 @@ abstract public class LayoutTrackView {
 
     final protected LayoutEditor layoutEditor;
 
+    private LogixNG _logixNG;
+    private String _logixNG_SystemName;
+
+    private boolean _inEditInlineLogixNGMode = false;
+    private LogixNGEditor _inlineLogixNGEdit;
+
     // Accessor Methods
 
     @Nonnull
@@ -72,6 +83,12 @@ abstract public class LayoutTrackView {
     @Nonnull
     final public String getName() {
         return layoutTrack.getName();
+    }
+
+    @Nonnull
+    @CheckReturnValue
+    public LayoutEditor getLayoutEditor() {
+        return layoutEditor;
     }
 
     final protected void setIdent(@Nonnull String ident) {
@@ -464,6 +481,161 @@ abstract public class LayoutTrackView {
     abstract protected JPopupMenu showPopup(@Nonnull JmriMouseEvent mouseEvent);
 
     /**
+     * Att items to the popup menu that's common to all implementing classes.
+     * @param mouseEvent  the mouse down event that triggered this popup
+     * @param popup       the popup menu
+     */
+    protected void addCommonPopupItems(@Nonnull JmriMouseEvent mouseEvent, @Nonnull JPopupMenu popup) {
+        popup.addSeparator();
+        setLogixNGPositionableMenu(popup);
+    }
+
+    @Override
+    public String getNameString() {
+        return getName();
+    }
+
+    @Override
+    public String getEditorName() {
+        return getLayoutEditor().getName();
+    }
+
+    @Override
+    public int getX() {
+        return (int) center.getX();
+    }
+
+    @Override
+    public int getY() {
+        return (int) center.getY();
+    }
+
+    @Override
+    public String getTypeName() {
+        return layoutTrack.getTypeName();
+    }
+
+    /**
+     * Check if edit of a conditional is in progress.
+     *
+     * @return true if this is the case, after showing dialog to user
+     */
+    private boolean checkEditConditionalNG() {
+        if (_inEditInlineLogixNGMode) {
+            // Already editing a LogixNG, ask for completion of that edit
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("Error_InlineLogixNGInEditMode"), // NOI18N
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            _inlineLogixNGEdit.bringToFront();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Add a menu entry to edit Id of the Positionable item
+     *
+     * @param popup the menu to add the entry to
+     */
+    public void setLogixNGPositionableMenu(JPopupMenu popup) {
+        JMenu logixNG_Menu = new JMenu("LogixNG");
+        popup.add(logixNG_Menu);
+
+        logixNG_Menu.add(new AbstractAction(Bundle.getMessage("LogixNG_Inline")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (checkEditConditionalNG()) return;
+
+                if (getLogixNG() == null) {
+                    LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                            .createLogixNG(null, true);
+                    logixNG.setInlineLogixNG(LayoutTrackView.this);
+                    logixNG.activate();
+                    logixNG.setEnabled(true);
+                    setLogixNG(logixNG);
+                }
+                LogixNGEditor logixNGEditor = new LogixNGEditor(null, getLogixNG().getSystemName());
+                logixNGEditor.addEditorEventListener((HashMap<String, String> data) -> {
+                    _inEditInlineLogixNGMode = false;
+                    data.forEach((key, value) -> {
+                        if (key.equals("Finish")) {                  // NOI18N
+                            _inlineLogixNGEdit = null;
+                            _inEditInlineLogixNGMode = false;
+                        } else if (key.equals("Delete")) {           // NOI18N
+                            _inEditInlineLogixNGMode = false;
+                            deleteLogixNG(getLogixNG());
+                        } else if (key.equals("chgUname")) {         // NOI18N
+                            getLogixNG().setUserName(value);
+                        }
+                    });
+                    if (getLogixNG() != null && getLogixNG().getNumConditionalNGs() == 0) {
+                        deleteLogixNG_Internal(getLogixNG());
+                    }
+                });
+                logixNGEditor.bringToFront();
+                _inEditInlineLogixNGMode = true;
+                _inlineLogixNGEdit = logixNGEditor;
+            }
+        });
+    }
+
+    private void deleteLogixNG(LogixNG logixNG) {
+        DeleteBean<LogixNG> deleteBean = new DeleteBean<>(
+                InstanceManager.getDefault(LogixNG_Manager.class));
+
+        boolean hasChildren = logixNG.getNumConditionalNGs() > 0;
+
+        deleteBean.delete(logixNG, hasChildren, (t)->{deleteLogixNG_Internal(t);},
+                (t,list)->{logixNG.getListenerRefsIncludingChildren(list);},
+                jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName());
+    }
+
+    private void deleteLogixNG_Internal(LogixNG logixNG) {
+        logixNG.setEnabled(false);
+        try {
+            InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
+            logixNG.getInlineLogixNG().setLogixNG(null);
+        } catch (PropertyVetoException e) {
+            //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
+            log.error("{} : Could not Delete.", e.getMessage());
+        }
+    }
+
+    /**
+     * Get the LogixNG of this Positionable.
+     * @return the LogixNG or null if it has no LogixNG
+     */
+    @Override
+    public LogixNG getLogixNG() {
+        return _logixNG;
+    }
+
+    /**
+     * Set the LogixNG of this Positionable.
+     * @param logixNG the LogixNG or null if remove the LogixNG from the Positionable
+     */
+    @Override
+    public void setLogixNG(LogixNG logixNG) {
+        this._logixNG = logixNG;
+    }
+
+    public void setLogixNG_SystemName(String systemName) {
+        this._logixNG_SystemName = systemName;
+    }
+
+    public void setupLogixNG() {
+        _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .getBySystemName(_logixNG_SystemName);
+        if (_logixNG == null) {
+            throw new RuntimeException(String.format(
+                    "LogixNG %s is not found for LayoutTrackView %s in panel %s",
+                    _logixNG_SystemName, getName(), layoutEditor.getName()));
+        }
+        _logixNG.setInlineLogixNG(this);
+    }
+
+    /**
      * show the popup menu for this layout track
      *
      * @param where to show the popup
@@ -596,5 +768,21 @@ abstract public class LayoutTrackView {
      */
     abstract public void setAllLayoutBlocks(LayoutBlock layoutBlock);
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackView.class);
+    protected boolean removeInlineLogixNG() {
+        LogixNG logixNG = getLogixNG();
+
+        if (logixNG == null) return true;
+
+        DeleteBean<LogixNG> deleteBean = new DeleteBean<>(
+                InstanceManager.getDefault(LogixNG_Manager.class));
+
+        boolean hasChildren = logixNG.getNumConditionalNGs() > 0;
+
+        return deleteBean.delete(logixNG, hasChildren, (t)->{deleteLogixNG_Internal(t);},
+                (t,list)->{logixNG.getListenerRefsIncludingChildren(list);},
+                jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName(),
+                true);
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackView.class);
 }

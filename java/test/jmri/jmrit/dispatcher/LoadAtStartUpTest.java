@@ -54,7 +54,7 @@ public class LoadAtStartUpTest {
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/TestTrainDispatcherOptions.xml");
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-        
+
         // signal mast managerls -l
         SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
 
@@ -69,11 +69,11 @@ public class LoadAtStartUpTest {
         sm.provideSensor("Occ South Platform").setState(Sensor.ACTIVE);
         JUnitUtil.waitFor(TRAIN_MOVE_TIME);
         sm.provideSensor("Occ West Platform Switch").setState(Sensor.ACTIVE); // set blocker
-        
+
         // and load. only one of 2 trains will load
         d.loadAtStartup();
         assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
-        
+
         sm.provideSensor("Occ West Platform Switch").setState(Sensor.INACTIVE); // release blocker
 
         // trains loads and runs, 4 allocated sections, the one we are in and 3 ahead.
@@ -171,7 +171,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("7 East End Throat Signal Red").isEqualTo("Stop");
         speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
-        
+
 
         sm.provideSensor("Occ South Platform").setState(Sensor.ACTIVE);
         // signals no change, speed changes
@@ -179,6 +179,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("8 West To South  Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("8 South To East Signal Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("8 East End Throat Signal Red").isEqualTo("Stop");
+        JUnitUtil.waitFor(() -> { return aat.getThrottle().getSpeedSetting() == speedRestricted; }, "Speed is correct");
         speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
         JUnitUtil.waitFor(TRAIN_MOVE_TIME);
@@ -243,7 +244,7 @@ public class LoadAtStartUpTest {
         // cleanup window
         JUnitUtil.dispose(d);
     }
-    
+
     private float speedStopping = 0.0f;
     private float speedSlow = 0.0f;
     private float speedRestrictedSlow = 0.0f;
@@ -324,7 +325,7 @@ public class LoadAtStartUpTest {
             throw e;
         }
     }
-    
+
     @AfterAll
     public static void unDoOnce() {
         try {

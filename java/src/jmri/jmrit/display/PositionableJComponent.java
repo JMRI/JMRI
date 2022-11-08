@@ -7,6 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import jmri.jmrit.logixng.LogixNG;
 import jmri.util.swing.JmriMouseEvent;
 
 import org.slf4j.Logger;
@@ -360,6 +361,18 @@ public class PositionableJComponent extends JComponent implements Positionable {
     @Override
     public jmri.NamedBean getNamedBean() {
         return null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LogixNG getLogixNG() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setLogixNG(LogixNG logixNG) {
+        throw new UnsupportedOperationException("Not supported");
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableJComponent.class);

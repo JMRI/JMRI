@@ -352,7 +352,7 @@ public class LayoutSlipView extends LayoutTurnoutView {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@CheckForNull JmriMouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@Nonnull JmriMouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -525,7 +525,8 @@ public class LayoutSlipView extends LayoutTurnoutView {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (canRemove() && layoutEditor.removeLayoutSlip(slip)) {
+                    if (canRemove() && removeInlineLogixNG()
+                            && layoutEditor.removeLayoutSlip(slip)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -633,9 +634,11 @@ public class LayoutSlipView extends LayoutTurnoutView {
             }
             setAdditionalEditPopUpMenu(popup);
             layoutEditor.setShowAlignmentMenu(popup);
+            addCommonPopupItems(mouseEvent, popup);
             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         } else if (!viewAdditionalMenu.isEmpty()) {
             setAdditionalViewPopUpMenu(popup);
+            addCommonPopupItems(mouseEvent, popup);
             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         }
         return popup;

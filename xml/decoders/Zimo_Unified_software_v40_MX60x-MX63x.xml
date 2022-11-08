@@ -25,6 +25,8 @@
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!-- V 1 new file for decoder with FW v40                                                  -->
   <!--                                                                                       -->
+  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.1" lastUpdated="2022/10/30"/>
+  <!-- v1.1,  add Fade-in and Fade-out for effect 88,89,90 -->
   <decoder>
     <family name="Zimo Unified software (version 40+)" mfg="Zimo">
       <model model="MX600 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166,199">
@@ -2133,6 +2135,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV190-CV191.xml"/>
      <!-- CV7 set to default 40 to allow Swiss Mapping Groups 11 to 17 if creating a brand new decoder from scratch -->
       <variable CV="7" item="Decoder Version" readOnly="yes" default="40">
         <decVal/>

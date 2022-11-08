@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
@@ -747,6 +749,11 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         for (int i=0; i < getChildCount(); i++) {
             getChild(i).getListenerRefsIncludingChildren(list);
         }
+    }
+
+    @Override
+    public boolean hasChild(@Nonnull Base b) {
+        return getObject() == b;
     }
 
     /** {@inheritDoc} */

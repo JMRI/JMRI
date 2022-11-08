@@ -34,6 +34,8 @@ public class ReporterIconXml extends PositionableLabelXml {
 
         storeTextInfo(p, element);
 
+        storeLogixNG_Data(p, element);
+
         element.setAttribute("class", "jmri.jmrit.display.configurexml.ReporterIconXml");
 
         return element;
@@ -63,6 +65,9 @@ public class ReporterIconXml extends PositionableLabelXml {
         } catch (Positionable.DuplicateIdException e) {
             throw new JmriConfigureXmlException("Positionable id is not unique", e);
         }
+
+        loadLogixNG_Data(l, element);
+
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.REPORTERS, element);
     }
