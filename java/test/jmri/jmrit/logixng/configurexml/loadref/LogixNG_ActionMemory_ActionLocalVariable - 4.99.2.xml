@@ -34,7 +34,7 @@
       <id>0</id>
       <name>LogixNG thread</name>
     </Thread>
-    <LogixNG enabled="yes">
+    <LogixNG enabled="yes" inline="no">
       <systemName>IQ:AUTO:0001</systemName>
       <ConditionalNGs>
         <systemName>IQC:AUTO:0001</systemName>
@@ -63,6 +63,7 @@
     <CsvTable class="jmri.jmrit.logixng.implementation.configurexml.DefaultCsvNamedTableXml">
       <systemName>IQT:AUTO:0001</systemName>
       <fileName>program:java/test/jmri/jmrit/logixng/configurexml/LogixNG_ActionMemory_ActionLocalVariable.csv</fileName>
+      <csvType>TABBED</csvType>
     </CsvTable>
   </LogixNGTables>
   <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">

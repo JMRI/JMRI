@@ -14,6 +14,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.InstanceManager;
 import jmri.Manager;
+import jmri.jmrit.logixng.Table;
+import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
@@ -37,6 +39,7 @@ import jmri.jmrit.logixng.tools.swing.TableEditor;
  * @author Dave Sand copyright (c) 2017 (LogixTableAction)
  * @author Daniel Bergqvist copyright (c) 2019
  * @author Dave Sand copyright (c) 2021
+ * @author J. Scott Walton (c) 2022 (Csv types)
  */
 public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTable> {
 
@@ -45,6 +48,11 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     ButtonGroup _buttonGroup = new ButtonGroup();
     JTextField _csvFileName = new JTextField(50);
 
+    ButtonGroup _csvGroup = new ButtonGroup();
+    JRadioButton _csvTabbed = new JRadioButton(Table.CsvType.TABBED.toString());
+    JRadioButton _csvComma = new JRadioButton(Table.CsvType.COMMA.toString());
+
+    JLabel _csvLabel = new JLabel(Bundle.getMessage("LogixNG_CsvType") + ":");
     /**
      * Create a LogixNGTableAction instance.
      *
@@ -73,7 +81,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     }
 
     @Override
-    protected AbstractLogixNGEditor<NamedTable> getEditor(BeanTableFrame<NamedTable> f, BeanTableDataModel<NamedTable> m, String sName) {
+    protected AbstractLogixNGEditor<NamedTable> getEditor(BeanTableDataModel<NamedTable> m, String sName) {
         return new TableEditor(m, sName);
     }
 
@@ -113,8 +121,12 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                         JOptionPane.ERROR_MESSAGE);
                 return null;
             }
-            return InstanceManager.getDefault(NamedTableManager.class)
-                    .newCSVTable(systemName, userName, fileName);
+            if (_csvTabbed.isSelected()) {
+                return InstanceManager.getDefault(NamedTableManager.class)
+                        .newCSVTable(systemName, userName, fileName, Table.CsvType.TABBED);
+            } else if (_csvComma.isSelected()) {
+                return InstanceManager.getDefault(NamedTableManager.class).newCSVTable(systemName, userName, fileName, Table.CsvType.COMMA);
+            }
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
         } else {
@@ -208,18 +220,13 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         selectFileButton.setToolTipText(Bundle.getMessage("LogixNG_FileButtonHint"));  // NOI18N
         selectFileButton.addActionListener((ActionEvent e) -> {
             JFileChooser csvFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-            csvFileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv", "txt")); // NOI18N
+            csvFileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv", "txt", "tsv")); // NOI18N
             csvFileChooser.rescanCurrentDirectory();
             int retVal = csvFileChooser.showOpenDialog(null);
             // handle selection or cancel
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 // set selected file location
-                try {
-                    _csvFileName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
-                } catch (java.io.IOException ex) {
-                    log.error("exception setting file location", ex);  // NOI18N
-                    _csvFileName.setText("");
-                }
+                _csvFileName.setText(csvFileChooser.getSelectedFile().toString());
             }
         });
         return selectFileButton;
@@ -260,6 +267,19 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         p.add(_userNameLabel, c);
         _userNameLabel.setLabelFor(_addUserName);
         c.gridy = 2;
+        _csvLabel.setLabelFor(null);
+        p.add(_csvLabel, c);
+        JPanel csvPanel = new JPanel();
+        csvPanel.setLayout(new FlowLayout());
+        _csvGroup.add(_csvTabbed);
+        _csvGroup.add(_csvComma);
+        _csvTabbed.setSelected(true);
+        csvPanel.add(_csvTabbed);
+        csvPanel.add(_csvComma);
+        c.gridx = 1;
+        p.add(csvPanel,c);
+        c.gridx = 0;
+        c.gridy = 3;
         p.add(new JLabel(Bundle.getMessage("LogixNG_CsvFileName")), c);
 
         c.gridx = 1;
@@ -271,7 +291,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         c.gridy = 1;
         p.add(_addUserName, c);
 
-        c.gridy = 2;
+        c.gridy = 3;
         createFileChooser();
         p.add(createFileChooser(), c);
 

@@ -1,5 +1,7 @@
 package jmri.jmrit.symbolicprog;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -38,6 +40,8 @@ public class LokProgImporter {
     private static final String CV_SEPARATOR = " = ";
     private static final String NOWARN_THESE_CVs = "(1\\.1\\.\\d+|1\\.0\\.2(58|59|60))";
 
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION",
+        justification = "string not kept between iterations, reduces object creation on each iteration")
     public LokProgImporter(File file, CvTableModel cvModel) throws IOException {
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;

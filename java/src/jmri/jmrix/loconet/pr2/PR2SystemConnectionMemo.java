@@ -63,7 +63,7 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
     public void dispose() {
         InstanceManager.deregister(this, PR2SystemConnectionMemo.class);
 
-        LnPr2PowerManager powerPr2Manager = get(PowerManager.class);
+        LnPr2PowerManager powerPr2Manager = (LnPr2PowerManager) get(PowerManager.class);
         if (powerPr2Manager != null) {
             powerPr2Manager.dispose();
             InstanceManager.deregister(powerPr2Manager, LnPowerManager.class);

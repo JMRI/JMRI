@@ -33,7 +33,7 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
      * @see #provides(java.lang.Class)
      */
     @OverridingMethodsMustInvokeSuper
-    <T> T get(Class<?> type);
+    <T> T get(Class<T> type);
 
     public static final String DISABLED = "ConnectionDisabled";
     public static final String USER_NAME = "ConnectionNameChanged";

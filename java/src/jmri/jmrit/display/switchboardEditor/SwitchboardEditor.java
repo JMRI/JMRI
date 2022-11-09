@@ -591,7 +591,7 @@ public class SwitchboardEditor extends Editor {
             switch (beanType) {
                 case 0:
                     try {
-                        name = ((TurnoutManager)memo.get(TurnoutManager.class)).createSystemName(i + "", prefix);
+                        name = memo.get(TurnoutManager.class).createSystemName(i + "", prefix);
                     } catch (JmriException ex) {
                         log.error("Error creating range at turnout {}", i);
                         return;
@@ -600,7 +600,7 @@ public class SwitchboardEditor extends Editor {
                     break;
                 case 1:
                     try { // was: InstanceManager.getDefault(SensorManager.class)
-                        name = ((SensorManager)memo.get(SensorManager.class)).createSystemName(i + "", prefix);
+                        name = memo.get(SensorManager.class).createSystemName(i + "", prefix);
                     } catch (JmriException | NullPointerException ex) {
                         log.trace("Error creating range at sensor {}. Connection {}", i, memo.getUserName(), ex);
                         return;
@@ -609,7 +609,7 @@ public class SwitchboardEditor extends Editor {
                     break;
                 case 2:
                     try {
-                        name = ((LightManager)memo.get(LightManager.class)).createSystemName(i + "", prefix);
+                        name = memo.get(LightManager.class).createSystemName(i + "", prefix);
                     } catch (JmriException ex) {
                         log.error("Error creating range at light {}", i);
                         return;

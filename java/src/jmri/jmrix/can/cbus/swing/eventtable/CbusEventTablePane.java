@@ -39,12 +39,12 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     protected JTable eventTable;
 
     private final UserPreferencesManager p;
-    
+
     private CbusCreateBeanPane newBeanPanel;
     protected CbusNewEventPane neweventcontainer;
     private CbusSendEventPane sendPane;
     protected JPanel filterpanel;
-    
+
     public CbusEventTable cbEvTable;
 
     protected final JTextField filterText = new JTextField("",8);
@@ -54,7 +54,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     protected final JMenu evStatMenu = new JMenu(Bundle.getMessage("evStatMenuName")); // NOI18N
     protected final JMenu evJmMenu = new JMenu(Bundle.getMessage("latestEvCols")); // NOI18N
     protected final JMenu buttonMenu = new JMenu(Bundle.getMessage("buttonCols")); // NOI18N
-    
+
     private final StayOpenCheckBoxItem showfilterpanel;
     private final StayOpenCheckBoxItem shownewevent;
     private final StayOpenCheckBoxItem showNewBeanPanel;
@@ -62,7 +62,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     private final StayOpenCheckBoxItem saveRestoreEventTableItem;
 
     private final XTableColumnModel tcm;
-    
+
     public CbusEventTablePane() {
         super();
         tcm = new XTableColumnModel();
@@ -73,42 +73,42 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         saveRestoreEventTableItem = new StayOpenCheckBoxItem(Bundle.getMessage("SaveEvSession")); // NOI18N
         p = InstanceManager.getDefault(UserPreferencesManager.class);
     }
-    
+
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
 
         CbusPreferences preferences = memo.get(CbusPreferences.class);
-        
+
         saveRestoreEventTableItem.setSelected( preferences.getSaveRestoreEventTable() );
         saveRestoreEventTableItem.addActionListener((ActionEvent e) ->
             preferences.setSaveRestoreEventTable(saveRestoreEventTableItem.isSelected()) );
 
-        eventModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class)).provide(CbusEventTableDataModel.class);
-        
+        eventModel = memo.get(CbusConfigurationManager.class).provide(CbusEventTableDataModel.class);
+
         eventTable = new JTableWithColumnToolTips(eventModel, CbusEventTableDataModel.CBUS_EV_TABLE_COL_TOOLTIPS);
 
         // Use XTableColumnModel so we can control which columns are visible
         eventTable.setColumnModel(tcm);
-        
+
         init();
     }
-    
+
     public final void init() {
-        
+
         setLayout(new BorderLayout());
-        
+
         JPanel _toppanelcontainer = new JPanel();
         _toppanelcontainer.setLayout(new BoxLayout(_toppanelcontainer, BoxLayout.X_AXIS));
-        
+
         JPanel _topToppanelcontainer = new JPanel();
         _topToppanelcontainer.setLayout(new BoxLayout(_topToppanelcontainer, BoxLayout.Y_AXIS));
-        
+
         neweventcontainer = new CbusNewEventPane(this);
         cbEvTable = new CbusEventTable(this);
-        newBeanPanel = new CbusCreateBeanPane(this);        
+        newBeanPanel = new CbusCreateBeanPane(this);
         sendPane = new CbusSendEventPane(this);
-        
+
         _toppanelcontainer.add(newBeanPanel);
         _toppanelcontainer.add(getFilterPanel());
         _toppanelcontainer.add(neweventcontainer);
@@ -116,27 +116,27 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         _topToppanelcontainer.add(newBeanPanel);
         _topToppanelcontainer.add(sendPane);
         add(_topToppanelcontainer, BorderLayout.PAGE_START);
-        
+
         add(cbEvTable, BorderLayout.CENTER);
         setVisible(true);
         setPanesVisibleFromSettings();
         cbEvTable.tableChanged(null);
-        
+
     }
-    
+
     private void setPanesVisibleFromSettings() {
-        
+
         if ( p.getSimplePreferenceState(this.getClass().getName() + ".Notfirstrun") ) { // NOI18N
             showfilterpanel.setSelected(p.getSimplePreferenceState(getClass().getName() + ".Showfilterpanel")); // NOI18N
             shownewevent.setSelected(p.getSimplePreferenceState(getClass().getName() + ".Shownewevent")); // NOI18N
             showNewBeanPanel.setSelected(p.getSimplePreferenceState(getClass().getName() + ".ShowNewBeanPanel")); // NOI18N
             showSendEventPanel.setSelected(p.getSimplePreferenceState(getClass().getName() + ".ShowSendEventPanel")); // NOI18N
-            
+
             filterpanel.setVisible(p.getSimplePreferenceState(getClass().getName() + ".Showfilterpanel")); // NOI18N
             neweventcontainer.setVisible(p.getSimplePreferenceState(getClass().getName() + ".Shownewevent")); // NOI18N
             newBeanPanel.setVisible(p.getSimplePreferenceState(getClass().getName() + ".ShowNewBeanPanel")); // NOI18N
             sendPane.setVisible(p.getSimplePreferenceState(getClass().getName() + ".ShowSendEventPanel")); // NOI18N
-            
+
         } else {
             // set virgin load view
             showfilterpanel.setSelected(true);
@@ -147,27 +147,27 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
             sendPane.setVisible(false);
         }
     }
-    
+
     private JPanel getFilterPanel(){
-        
+
         filterpanel = new JPanel();
         filterpanel.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder(), Bundle.getMessage("FilterSurround"))); // NOI18N
-        
+
         clearfilterButton = new JButton(Bundle.getMessage("ClearFilter")); // NOI18N
         clearfilterButton.setEnabled(false);
         clearfilterButton.addActionListener((ActionEvent e) -> filterText.setText("") );
-        
+
         filterText.setMaximumSize( filterText.getPreferredSize() );
-        
+
         filterpanel.add(filterText);
         filterpanel.add(clearfilterButton);
-        
+
         cbEvTable.addFilterListener(filterText);
-        
+
         return filterpanel;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -175,7 +175,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     public String getHelpTarget() {
         return "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"; // NOI18N
     }
-    
+
     /**
      * Creates a Menu List
      * <p>
@@ -185,7 +185,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     @Override
     public List<JMenu> getMenus() {
         List<JMenu> menuList = new ArrayList<>();
-        
+
         menuList.add(getFileMenu());
         menuList.add(getDisplayMenu());
         menuList.add(evColMenu);
@@ -194,9 +194,9 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         menuList.add(evStatMenu);
         return menuList;
     }
-    
+
     private JMenu getFileMenu(){
-    
+
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile")); // NOI18N
 
         fileMenu.add(saveRestoreEventTableItem);
@@ -205,40 +205,40 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
             null, eventModel, "myevents.csv", CbusEventTableDataModel.BUTTON_COLUMNS)); // NOI18N
         fileMenu.add(new JTableToCsvAction(Bundle.getMessage("ExportCsvView"),
             eventTable, eventModel, "myevents.csv", CbusEventTableDataModel.BUTTON_COLUMNS)); // NOI18N
-        
+
         // add print menu items
         fileMenu.add( new JSeparator() );
         fileMenu.add(new CbusEventTablePrintAction(Bundle.getMessage("PrintTable"),eventModel,getTitle(),false)); // NOI18N
         fileMenu.add(new CbusEventTablePrintAction(Bundle.getMessage("PreviewTable"),eventModel,getTitle(),true)); // NOI18N
         return fileMenu;
-    
+
     }
-    
+
     private JMenu getDisplayMenu(){
-    
+
         JMenu displayMenu = new JMenu(Bundle.getMessage("Display")); // NOI18N
-        
+
         showNewBeanPanel.addActionListener((ActionEvent e) ->
             newBeanPanel.setVisible(showNewBeanPanel.isSelected()) );
-        
+
         shownewevent.addActionListener((ActionEvent e) ->
             neweventcontainer.setVisible(shownewevent.isSelected()) );
-        
-        showfilterpanel.addActionListener((ActionEvent e) -> 
+
+        showfilterpanel.addActionListener((ActionEvent e) ->
             filterpanel.setVisible(showfilterpanel.isSelected()) );
 
         showSendEventPanel.addActionListener((ActionEvent e) ->
             sendPane.setVisible(showSendEventPanel.isSelected()) );
 
-        displayMenu.add(showfilterpanel);        
+        displayMenu.add(showfilterpanel);
         displayMenu.add(shownewevent);
         displayMenu.add(showNewBeanPanel);
         displayMenu.add(showSendEventPanel);
-        
+
         return displayMenu;
-    
+
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -246,20 +246,20 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     public String getTitle() {
         return prependConnToString(Bundle.getMessage("EventTableTitle")); // NOI18N
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void dispose() {
-        
+
         if(cbEvTable != null) {
             cbEvTable.dispose();
         }
         InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
             tpm.stopPersisting(eventTable);
         });
-        
+
         p.setSimplePreferenceState(getClass().getName() + ".Notfirstrun", true); // NOI18N
         p.setSimplePreferenceState(getClass().getName() + ".Showfilterpanel", showfilterpanel.isSelected()); // NOI18N
         p.setSimplePreferenceState(getClass().getName() + ".Shownewevent", shownewevent.isSelected()); // NOI18N

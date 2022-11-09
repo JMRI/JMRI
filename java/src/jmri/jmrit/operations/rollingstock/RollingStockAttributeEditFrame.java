@@ -13,9 +13,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
@@ -25,7 +23,7 @@ import jmri.jmrit.operations.trains.TrainCommon;
  *
  * @author Daniel Boudreau Copyright (C) 2020
  */
-public class RollingStockAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public abstract class RollingStockAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     // labels
     public JLabel textAttribute = new JLabel();
@@ -51,7 +49,8 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("MS_CANNOT_BE_FINAL") // needs access in subpackage
     protected static boolean showDialogBox = true;
-    public boolean showQuanity = false;
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("MS_CANNOT_BE_FINAL") // needs access in subpackage
+    protected static boolean showQuanity = false;
 
     // property change
     public static final String DISPOSE = "dispose"; // NOI18N
@@ -92,6 +91,10 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
         addButtonAction(addButton);
         addButtonAction(deleteButton);
         addButtonAction(replaceButton);
+        
+        addComboBoxAction(comboBox);
+        
+        updateAttributeQuanity();
 
         deleteButton.setToolTipText(
                 MessageFormat.format(Bundle.getMessage("TipDeleteAttributeName"), new Object[] { attribute }));
@@ -201,7 +204,6 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
         }
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void addAttributeName(String addItem) {
         if (_attribute.equals(ROAD)) {
             InstanceManager.getDefault(CarRoads.class).addName(addItem);
@@ -288,6 +290,56 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
         }
         return addItem;
     }
+    
+    @Override
+    protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+        log.debug("Combo box action");
+        updateAttributeQuanity();
+    }
+    
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    public void toggleShowQuanity() {
+        showQuanity = !showQuanity;
+        quanity.setVisible(showQuanity);
+        updateAttributeQuanity();
+    }
+    
+    protected boolean deleteUnused = false;
+    protected boolean cancel = false;
+
+    public void deleteUnusedAttributes() {
+        if (!showQuanity) {
+            toggleShowQuanity();
+        }
+        deleteUnused = true;
+        cancel = false;
+        int items = comboBox.getItemCount() - 1;
+        for (int i = items; i >= 0; i--) {
+            comboBox.setSelectedIndex(i);
+        }
+        deleteUnused = false; // done
+        comboBox.setSelectedIndex(0);
+    }
+    
+    protected void confirmDelete(String item) {
+        if (!cancel) {
+            int results = JOptionPane.showOptionDialog(this,
+                    MessageFormat
+                            .format(Bundle.getMessage("ConfirmDeleteAttribute"), new Object[] { _attribute, item }),
+                    Bundle.getMessage("DeleteAttribute?"), JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null, new Object[] { Bundle.getMessage("ButtonYes"),
+                            Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonCancel") },
+                    Bundle.getMessage("ButtonYes"));
+            if (results == JOptionPane.YES_OPTION) {
+                deleteAttributeName((String) comboBox.getSelectedItem());
+            }
+            if (results == JOptionPane.CANCEL_OPTION || results == JOptionPane.CLOSED_OPTION) {
+                cancel = true;
+            }
+        }
+    }
+    
+    protected abstract void updateAttributeQuanity();
 
     @Override
     public void dispose() {

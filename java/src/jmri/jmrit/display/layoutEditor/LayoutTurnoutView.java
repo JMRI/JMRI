@@ -1544,7 +1544,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@CheckForNull JmriMouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@Nonnull JmriMouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -1771,7 +1771,8 @@ public class LayoutTurnoutView extends LayoutTrackView {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (canRemove() && layoutEditor.removeLayoutTurnout(turnout)) {
+                    if (canRemove() && removeInlineLogixNG()
+                            && layoutEditor.removeLayoutTurnout(turnout)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -1883,9 +1884,11 @@ public class LayoutTurnoutView extends LayoutTrackView {
             }   // getBlockName().isEmpty()
             setAdditionalEditPopUpMenu(popup);
             layoutEditor.setShowAlignmentMenu(popup);
+            addCommonPopupItems(mouseEvent, popup);
             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         } else if (!viewAdditionalMenu.isEmpty()) {
             setAdditionalViewPopUpMenu(popup);
+            addCommonPopupItems(mouseEvent, popup);
             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         }
         return popup;

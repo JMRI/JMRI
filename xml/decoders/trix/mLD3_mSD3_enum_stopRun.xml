@@ -19,15 +19,18 @@
     <choice>Both</choice>
     <choice xml:lang="de">Beide</choice>
     <choice xml:lang="fr">Les deux</choice>
+    <choice xml:lang="cs">Obojí</choice>
   </enumChoice>  
   <enumChoice value="1">
     <choice>Stopped</choice>
     <choice xml:lang="de">im Stand</choice>
     <choice xml:lang="fr">Arrêté</choice>
+    <choice xml:lang="cs">Zastaveno</choice>
   </enumChoice>
   <enumChoice value="2">
     <choice>Running</choice>
     <choice xml:lang="de">bei Fahrt</choice>
     <choice xml:lang="fr">en Marche</choice>
+    <choice xml:lang="cs">Běžící</choice>
   </enumChoice>
 </enumVal>

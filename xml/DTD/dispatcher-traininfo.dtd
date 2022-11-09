@@ -30,6 +30,7 @@
     <!ATTLIST traininfo trainfromroster         CDATA #REQUIRED>
     <!ATTLIST traininfo trainfromtrains	   	CDATA #REQUIRED>
     <!ATTLIST traininfo trainfromuser	   	CDATA #REQUIRED>
+    <!ATTLIST traininfo trainfromsetlater       CDATA #REQUIRED>
     <!ATTLIST traininfo priority        	CDATA #REQUIRED>
     <!ATTLIST traininfo resetwhendone        	CDATA #REQUIRED>
     <!ATTLIST traininfo delayedrestart        	CDATA "no">
@@ -56,8 +57,9 @@
     <!ATTLIST traininfo terminatewhendone     	CDATA "yes">
     <!ATTLIST traininfo loadatstartup        	CDATA "no">
     <!ATTLIST traininfo allocationmethod      	CDATA "3">
+    <!ATTLIST traininfo nexttrain              CDATA #IMPLIED>
     <!ATTLIST traininfo allocatealltheway     	CDATA "no">
     <!ATTLIST traininfo usespeedprofile        	CDATA "no">
     <!ATTLIST traininfo stopbyspeedprofile      CDATA "no">
     <!ATTLIST traininfo stopbyspeedprofileadjust CDATA "1500">
-
+    <!ATTLIST traininfo waittime                CDATA "0">

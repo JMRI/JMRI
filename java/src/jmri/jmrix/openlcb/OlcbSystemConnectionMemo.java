@@ -55,7 +55,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(Class<?> T) {
+    public <T> T get(Class<T> T) {
         if (getDisabled()) {
             return null;
         }
@@ -78,7 +78,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         if (T.equals(OlcbInterface.class)) {
             return (T) getInterface();
         }
-        return super.get(T); 
+        return super.get(T);
     }
 
     /**
@@ -189,7 +189,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
 
     /**
      * See {@link jmri.NamedBean#compareSystemNameSuffix} for background.
-     * This is a common implementation for OpenLCB Sensors and Turnouts 
+     * This is a common implementation for OpenLCB Sensors and Turnouts
      * of the comparison method.
      *
      * @param suffix1 1st suffix to compare.
@@ -198,7 +198,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
      */
     @CheckReturnValue
     public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
-        
+
         // extract addresses
         OlcbAddress[] array1 = new OlcbAddress(suffix1).split();
         OlcbAddress[] array2 = new OlcbAddress(suffix2).split();

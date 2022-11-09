@@ -332,13 +332,13 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
         // DccLocoAddress rcvdDccAddr = new DccLocoAddress(rcvdIntAddr, rcvdIsLong);
         int errCode = m.getElement(3);
-        
+
         boolean responseForUs = ((_handleExpected) && new DccLocoAddress(rcvdIntAddr, rcvdIsLong).equals(_dccAddr));
 
         switch (errCode) {
             case CbusConstants.ERR_LOCO_STACK_FULL:
             case CbusConstants.ERR_LOCO_ADDRESS_TAKEN:
-                
+
                 String errStr;
                 if ( errCode == CbusConstants.ERR_LOCO_STACK_FULL ){
                     errStr = Bundle.getMessage("ERR_LOCO_STACK_FULL") + " " + rcvdIntAddr;
@@ -367,7 +367,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                     boolean steal = false;
                     boolean share = false;
 
-                    CbusCommandStation cs = memo.get(CommandStation.class);
+                    CbusCommandStation cs = (CbusCommandStation) memo.get(CommandStation.class);
 
                     if ( cs != null ) {
                         log.debug("cs says can steal {}, can share {}", cs.isStealAvailable(), cs.isShareAvailable() );
@@ -428,19 +428,19 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
             case CbusConstants.ERR_CAN_BUS_ERROR:
                 log.error("{}",Bundle.getMessage("ERR_CAN_BUS_ERROR"));
                 if (!GraphicsEnvironment.isHeadless() && !canErrorDialogVisible ) {
-                    
+
                     ThreadingUtil.runOnGUI(() -> {
                         canErrorDialogVisible = true;
                         JOptionPane pane = new JOptionPane(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
                         pane.setMessageType(JOptionPane.ERROR_MESSAGE);
                         JDialog canErrorDialog = pane.createDialog(null, Bundle.getMessage("CBUS_ERROR"));
-                        
+
                         pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, ignored -> {
                             canErrorDialog.dispose();
                             canErrorDialogVisible = false;
                         });
-                        
-                        
+
+
                         canErrorDialog.setModal(false);
                         canErrorDialog.setVisible(true);
                     });
@@ -518,7 +518,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         boolean steal = false;
         boolean share = false;
 
-        CbusCommandStation cs = memo.get(CommandStation.class);
+        CbusCommandStation cs = (CbusCommandStation) memo.get(CommandStation.class);
         if ( cs != null ) {
             log.debug("cs says can steal {}, can share {}", cs.isStealAvailable(), cs.isShareAvailable() );
             steal = cs.isStealAvailable();

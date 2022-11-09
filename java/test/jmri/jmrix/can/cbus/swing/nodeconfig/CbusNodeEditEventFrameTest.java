@@ -23,7 +23,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  */
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
- 
+
     @Test
     public void testInitComponentsWithMainPaneAndMemo() {
 
@@ -33,32 +33,32 @@ public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
         // short event 7 on node 256, no index, 4 ev vars
         CbusNodeEvent eventToEdit = new CbusNodeEvent(memo,0,7,256,-1,4);
         nodeWithEventToEdit.getNodeEventManager().addNewEvent(eventToEdit);
-        
+
         ((CbusNodeEditEventFrame)frame).initComponents(memo,nodeWithEventToEdit.getNodeEventManager().getNodeEventByArrayID(0)); // memo, event to edit
-        
+
         Assert.assertEquals("title","Edit Event EN:7 on Node 256",frame.getTitle());
         Assert.assertFalse("node / event select spinners not dirty",((CbusNodeEditEventFrame)frame).spinnersDirty() );
         Assert.assertTrue("event 7 ",((CbusNodeEditEventFrame)frame).getEventVal()==7);
         Assert.assertTrue("node 0 ",((CbusNodeEditEventFrame)frame).getNodeVal()==0);
-        
-        
+
+
         // Find new window by name
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
-        
+
         Assert.assertFalse(getEditButtonEnabled(jfo));
         Assert.assertTrue(getDeleteButtonEnabled(jfo));
-        
-        
+
+
     }
-    
+
     private boolean getEditButtonEnabled( JFrameOperator jfo ){
         return ( new JButtonOperator(jfo,Bundle.getMessage("EditEvent")).isEnabled() );
     }
-    
+
     private boolean getDeleteButtonEnabled( JFrameOperator jfo ){
         return ( new JButtonOperator(jfo,Bundle.getMessage("ButtonDelete")).isEnabled() );
     }
-    
+
     private CanSystemConnectionMemo memo = null;
     private TrafficControllerScaffold tcis = null;
     private NodeConfigToolPane mainpane = null;
@@ -69,15 +69,15 @@ public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        
+
         memo = new CanSystemConnectionMemo();
 
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
         memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
 
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
-        nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        nodeModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
         mainpane = new NodeConfigToolPane();
         mainpane.initComponents(memo);

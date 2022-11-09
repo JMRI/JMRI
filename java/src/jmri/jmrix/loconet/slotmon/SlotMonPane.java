@@ -2,22 +2,18 @@ package jmri.jmrix.loconet.slotmon;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.RowFilter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
+
 import jmri.InstanceManager;
 import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.swing.JmriJTablePersistenceManager;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
+import jmri.util.table.*;
 
 /**
  * Frame providing a command station slot manager.
@@ -213,6 +209,24 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
             }
         };
         sorter.setRowFilter(rf);
+    }
+
+    @Override
+    public List<JMenu> getMenus() {
+        List<JMenu> menuList = new ArrayList<>();
+        menuList.add(getFileMenu());
+        return menuList;
+    }
+
+    private JMenu getFileMenu(){
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile")); // NOI18N
+        fileMenu.add(new JTableToCsvAction((Bundle.getMessage("ExportCsvAll")),
+            null, slotModel, "Slot_Monitor_All.csv", new int[]{
+            SlotMonDataModel.ESTOPCOLUMN})); // NOI18N
+        fileMenu.add(new JTableToCsvAction((Bundle.getMessage("ExportCsvView")),
+            slotTable, slotModel, "Slot_Monitor_View.csv", new int[]{
+            SlotMonDataModel.ESTOPCOLUMN})); // NOI18N
+        return fileMenu;
     }
 
 }

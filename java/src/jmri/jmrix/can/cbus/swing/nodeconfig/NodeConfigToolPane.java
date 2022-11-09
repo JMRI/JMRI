@@ -290,7 +290,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
      */
     private void setMenuOptions(){
 
-        nodeNumRequestMenuItem.setSelected( 
+        nodeNumRequestMenuItem.setSelected(
                 preferences.getAllocateNNListener() );
         backgroundDisabled.setSelected(false);
         backgroundSlow.setSelected(false);
@@ -355,26 +355,26 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
         JMenu optionsMenu = new JMenu("Options");
 
-        
+
 
         JMenuItem sendSysResetMenuItem = new JMenuItem("Send System Reset");
 
         searchForNodesMenuItem.setToolTipText(("Timeout set to " + NODE_SEARCH_TIMEOUT + "ms."));
 
-        
+
         nodeNumRequestMenuItem.setToolTipText("Also adds a check for any node already awaiting a number when performing node searches.");
 
-        
+
 
         JMenu backgroundFetchMenu = new JMenu("Node Info Fetch Speed");
         ButtonGroup backgroundFetchGroup = new ButtonGroup();
 
-        
+
 
         JMenu numBackupsMenu = new JMenu("Min. Auto Backups to retain");
         ButtonGroup minNumBackupsGroup = new ButtonGroup();
 
-        
+
 
         minNumBackupsGroup.add(zeroBackups);
         minNumBackupsGroup.add(fiveBackups);
@@ -514,7 +514,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         tenBackups.addActionListener(minBackupsListener);
         twentyBackups.addActionListener(minBackupsListener);
 
-        
+
         return menuList;
     }
 
@@ -846,7 +846,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         if ( memo == null ) {
             throw new IllegalStateException("No System Connection Set, call initComponents(memo)");
         }
-        return ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+        return memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
     }
 

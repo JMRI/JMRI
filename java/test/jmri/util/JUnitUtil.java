@@ -369,6 +369,9 @@ public class JUnitUtil {
      */
     public static void tearDown() {
 
+        // Stop all LogixNG threads
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+
         // check that no LogixNG threads is still running
         jmri.jmrit.logixng.util.LogixNG_Thread.assertLogixNGThreadNotRunning();
 

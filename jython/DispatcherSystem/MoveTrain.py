@@ -1,7 +1,7 @@
 ###############################################################################
 #
 # class MoveTrain
-# Calls dispatcher to move train from one station to another
+# Calls dispatcher to e train from one station to another
 # given engine and start and end positions
 #
 ###############################################################################
@@ -9,6 +9,7 @@
 import os
 import java
 import jmri
+import math
 #import platform
 
 class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
@@ -59,10 +60,11 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         count_path = 0
 
         if paths == None or paths == []:
-            print "1Error cannot find shortest path. restart the system. The stop dipatcher system routine does not work properly with multiple layout panels. Sorry"
+            print "1Error cannot find shortest path. restart the system. " + \
+                  "The stop dispatcher system routine does not work properly with multiple layout panels. Sorry"
             return
-        for e in paths:
 
+        for e in paths:
             # need to check whether:
             #   last block of previous edge and current first block
             #   are the same
@@ -85,6 +87,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             if count_path == 0:
                 # we are on a new path and must determine the direction
                 [transit_direction, transit_instruction]  = self.set_direction(previous_block, current_block, next_block, previous_direction)
+                self.announce1(e, transit_direction, transit_instruction, train)
             else:
                 # if there are several edges in a path, then we are on an express route, and there is a change in direction at each junction
                 if previous_block.getUserName() == next_block.getUserName() : #we are at a stub/siding
@@ -95,6 +98,19 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                     transit_instruction = "stub"
                 else:
                     [transit_direction, transit_instruction] = self.set_direction(previous_block, current_block, next_block, previous_direction)
+
+                speech_reqd = self.speech_required_flag()
+                # make announcement as train enters platform
+                print "making announcement"
+                self.announce1(e, transit_direction, transit_instruction, train)
+                time_to_stop_in_station = self.get_time_to_stop_in_station(e, transit_direction)
+                t = time_to_stop_in_station / 1000
+                msg = "started waiting for " + str(int(t)) + " seconds"
+                if self.logLevel > 0: self.speak(msg)
+                self.waitMsec(int(time_to_stop_in_station))
+                msg = "finished waiting for " + str(t) + " seconds"
+                if self.logLevel > 0: self.speak(msg)
+
             result = self.move(e, transit_direction, transit_instruction,  train_name)
             if self.logLevel > 1: print "returned from self.move, result = ", result
             if result == False:
@@ -127,6 +143,37 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             transit_direction = previous_direction
         return [transit_direction, transit_instruction]
 
+
+    def get_time_to_stop_in_station(self, edge, direction):
+
+        if direction == "forward":
+            filename_fwd = self.get_filename(edge, "fwd")
+            trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
+            station_wait_time = trainInfo_fwd.getWaitTime()
+        else:
+            filename_fwd = self.get_filename(edge, "rvs")
+            trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
+            station_wait_time = trainInfo_fwd.getWaitTime()
+        if station_wait_time != None:
+            return math.floor(float(station_wait_time+0)) * 1000  # set in milli secs
+        else:
+            return 0
+
+    def is_integer(self, n):
+        try:
+            if n == None: return False
+            float(n)
+        except ValueError:
+            return False
+        else:
+            return float(n).is_integer()
+
+    def announce1(self, e, direction, instruction, train):
+        to_name = e.getTarget()
+        from_name = e.getSource()
+        speech_reqd = self.speech_required_flag()
+        self.announce( from_name, to_name, speech_reqd, direction, instruction)
+
     def move(self, e, direction, instruction, train):
         if self.logLevel > 1: print "++++++++++++++++++++++++"
         if self.logLevel > 1: print e, "Target", e.getTarget()
@@ -139,7 +186,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
         self.set_sensor(sensor_move_name, "active")
         speech_reqd = self.speech_required_flag()
-        self.announce( from_name, to_name, speech_reqd, direction, instruction)
+        #self.announce( from_name, to_name, speech_reqd, direction, instruction)  # now done when train arrives in platfor instead of when leaving
         if self.logLevel > 1: print "***************************"
         result = self.call_dispatch(e, direction, train)
         if self.logLevel > 1: print "______________________"
@@ -164,7 +211,6 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 1: print "!!!!!!!! train = ", train, "active_train_names_list", active_train_names_list
             self.set_sensor(sensor_move_name, "inactive")
             if self.logLevel > 1: print ("+++++ sensor " + sensor_move_name + " inactive")
-            #self.waitMsec(time_to_stop_in_station)
         else:
             self.set_sensor(sensor_move_name, "inactive")
         return result
@@ -321,8 +367,12 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         to_station = self.get_station_name(toblockname)
 
         if speak_on == True:
-            #self.speak("The train in "+ from_station + " is due to depart to " + to_station + " " + direction + " " + instruction )
-            self.speak("The train in "+ from_station + " is due to depart to " + to_station )
+            if direction == "forward":
+                platform = " platform 1 "
+            else:
+                platform = " platform 2 "
+            self.speak("The train in" + platform + " is due to depart to " + to_station)
+            #self.speak("The train in "+ from_station + " is due to depart to " + to_station )
 
     def get_station_name(self, block_name):
         BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
@@ -420,7 +470,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                                     if self.od.CLOSED_OPTION == False:
                                         if new_train_name not in trains_allocated:
                                             trains_allocated.append(new_train_name)
-                                        print "*****", "new_train_name", new_train_name, "new_section_name", new_section_name
+                                        #print "*****", "new_train_name", new_train_name, "new_section_name", new_section_name
                                         self.add_to_train_list_and_set_new_train_location(new_train_name, new_section_name)
                                         if self.od.CLOSED_OPTION == False:  #only do this if have not closed a frame in add_to_train_list_and_set_new_train_location
                                             self.set_blockcontents(new_section_name, new_train_name)
@@ -483,7 +533,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                         else:
                             new_train_name = self.od.List(msg, trains_to_choose)
                             if self.od.CLOSED_OPTION == False:
-                                print "need to find the direction of train", new_train_name
+                                #print "need to find the direction of train", new_train_name
                                 self.check_train_direction(new_train_name, new_section_name)
 
         return True
@@ -493,7 +543,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         if train_name in trains:
             train = trains[train_name]
             direction = train["direction"]
-            print direction
+            #print direction
             penultimate_layout_block = self.get_penultimate_layout_block(station_block_name)
 
             saved_state = penultimate_layout_block.getUseExtraColor()

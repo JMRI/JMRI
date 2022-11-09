@@ -105,6 +105,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         if (decodePane!=null) {
             decodePane.dispose();
         }
+        displayPane.dispose();
         super.dispose();
     }
 
@@ -126,7 +127,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         tc = memo.getTrafficController();
         decodePane = new CbusConsoleDecodeOptionsPane(this);
         if (launchEvTable){
-            ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class)).provide(CbusEventTableDataModel.class);
+            memo.get(CbusConfigurationManager.class).provide(CbusEventTableDataModel.class);
         }
         init();
     }
@@ -153,6 +154,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         add(displayPane, BorderLayout.NORTH);
         add(historyPane, BorderLayout.CENTER);
         add(getAllBottomPanes(), BorderLayout.SOUTH);
+        displayPane.matchVisisbleToCheckBoxes(null);
 
     }
 

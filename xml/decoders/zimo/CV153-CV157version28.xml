@@ -4,6 +4,7 @@
 <!-- version 1.1, Nigel Cliffe - correcting naming of CV's 155 and 156  -->
 <!-- version 1.2, Ronald Kuhn - add german translation  -->
 <!-- version 1.3, Nigel Cliffe, extended function options in CV155 and 156 to F28 -->
+<!-- version 1.4, Ronald Kuhn - add CV156 bit7 for FW ≥ 40.18  -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable CV="153" item="Packet Time-out Value" default="0">
     <decVal min="0" max="255"/>
@@ -206,7 +207,7 @@
     <label xml:lang="cs">Rozšíření funkční klávesy poloviční rychlost</label>
     <label xml:lang="de">Halbgeschwindigkeit mit Taste</label>
   </variable>
-  <variable CV="156" item="Shunt Function Key Extension" default="0">
+  <variable CV="156" mask="XXXVVVVV" item="Shunt Function Key Extension" default="0">
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
@@ -303,6 +304,20 @@
     <label xml:lang="it">Estensione tasto funzione Manovra</label>
     <label xml:lang="cs">Rozšíření funkční klávesy posun</label>
     <label xml:lang="de">ABV deaktivieren</label>
+  </variable>
+  <variable CV="156" mask="VXXXXXXX" item="Suppression automatic light change" default="0">
+    <qualifier>
+      <variableref>Product Number</variableref>
+      <relation>ge</relation>
+      <value>18</value>
+    </qualifier>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Suppression of the automatic light change</label>
+    <label xml:lang="it">Soppressione del cambio automatico della luce</label>
+    <label xml:lang="cs">Potlačení automatické změny světla</label>
+    <label xml:lang="de">Lichtwechsel unterdrücken</label>
+    <tooltip>Activate the suppression of the automatic light change when the shunting button is active</tooltip>
+    <tooltip xml:lang="de">bei aktiver Rangiertaste wird der automatische Lichtwechsel unterdrückt</tooltip>
   </variable>
   <variable CV="157" item="MAN Key Extension (Disable HLU or ABC signal control)" default="0" tooltip="Disables ABC and HLU Signal Control">
     <enumVal>
