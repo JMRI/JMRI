@@ -486,10 +486,10 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
-##### spotbugs-annotations-3.1.7.jar
-- From SpotBugs 3.1.7
+##### spotbugs-annotations-4.7.3.jar
+- From SpotBugs 4.7.3
 - Only needed at compile/build time, not runtime
-- http://repo1.maven.org/maven2/com/github/spotbugs/spotbugs-annotations/3.1.7/
+- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.7.3
 
 ##### picocontainer-2.15.jar
 - version 2.15
