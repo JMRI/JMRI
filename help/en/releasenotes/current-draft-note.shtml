@@ -347,8 +347,8 @@
 
         <h4>Viessmann</h4>
             <ul>
-                <li><li>New decoder definition for Viessmann 4567 TT Motorized point machine</li>
-		<li>New decoder definition for Tillig 08335 TT Motor-driven double crossing point</li></li>
+                <li>New decoder definition for Viessmann 4567 TT Motorized point machine</li>
+		<li>New decoder definition for Tillig 08335 TT Motor-driven double crossing point</li>
             </ul>
 
         <h4>Wangrow</h4>
