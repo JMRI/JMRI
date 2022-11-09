@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,22 +14,11 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Alain Le Marchand" version="1" lastUpdated="20170107"/>
 	<!-- Version 1 (Alain Le Marchand) Initial version
-	     Added 4557, 4558, 4559 and 4560, 4567								-->
+	     Version 2 (Ulrich Gerlach) Adapted version 
+		 TT Double point motor for Tillig double slip turnout	   			-->
 	<decoder>
-		<family name="Point Motor Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="2" highVersionID="15" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom">
-			<model model="4557" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="TT" connector="other" productID="4557" comment="TT Point motor for Tillig road bed point">
-				<size length="68.4" width="24.5" height="5.3" units="mm"/>
-			</model>
-			<model model="4558" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="HO" connector="other" productID="4558" comment="H0 Point motor for Märklin/Trix C track">
-				<size length="104.9" width="24.5" height="5.3" units="mm"/>
-			</model>
-			<model model="4559" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="HO" connector="other" productID="4559" comment="H0 Point motor for Roco geo-Line points">
-				<size length="68.4" width="24.2" height="5.3" units="mm"/>
-			</model>
-			<model model="4560" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="all" connector="other" productID="4560" comment="Motorized point and universal drive (scale independent)">
-				<size length="50" width="20.2" height="5.8" units="mm"/>
-			</model>
-			<model model="4567" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="TT" connector="other" productID="4567" comment="TT Point motor for Tillig road bed point">
+		<family name="Point Motor Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="2" highVersionID="15" comment="NMRA DCC &amp; RailCom">
+			<model model="Tillig DKW 08335" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="TT" connector="other" productID="08335" comment="TT Double point motor for Tillig double slip turnout">
 				<size length="68.4" width="24.5" height="5.3" units="mm"/>
 			</model>
 		</family>
@@ -39,10 +28,17 @@
 				<splitVal highCV="9" upperMask="XXXXXVVV"/>
 				<label>Address</label>
 				<label xml:lang="de">Adresse</label>
-				<tooltip>&lt;html&gt;DCC format: 1-2047&lt;br&gt;Motorola format: 1- 320 (1020 with appropriate command station)&lt;/html&gt;</tooltip>
-				<tooltip xml:lang="de">&lt;html&gt;DCC format: 1-2047&lt;br&gt;Motorola format: 1- 320 (1020 bei entsprechender Zentrale)&lt;/html&gt;</tooltip>
+				<tooltip>&lt;html&gt;DCC format: 1-2047&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;DCC format: 1-2047&lt;/html&gt;</tooltip>
 			</variable>
-			<variable item="Decoder Version" CV="7" readOnly="yes" default="14">
+			<variable CV="41" item="Long Address" default="2">
+				<splitVal highCV="49" upperMask="XXXXXVVV"/>
+				<label>Address</label>
+				<label xml:lang="de">Adresse</label>
+				<tooltip>&lt;html&gt;DCC format: 1-2047&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;DCC format: 1-2047&lt;/html&gt;</tooltip>
+			</variable>
+			<variable item="Decoder Version" CV="7" readOnly="yes" default="2">
 				<decVal/>
 				<label>Manufacturer Version No: </label>
 				<label xml:lang="it">Versione Decoder: </label>
@@ -117,7 +113,7 @@
 				<tooltip xml:lang="de">&lt;html&gt;Laufzeit des Antriebs in Schritten von 0,1 Sekunden (max 5s).&lt;br&gt; Abhängig von der Weichenmechanik werden sehr kleine oder sehr große Werte&lt;br&gt; auf die möglichst schnellsten bzw. langsamsten Bewegungen begrenzt.&lt;/html&gt;</tooltip>
 			</variable>
 			<!-- Function output -->
-			<variable CV="38" item="Function Map Option 1" default="1">
+			<variable CV="38" item="Function Map Option 1" default="9">
 				<enumVal>
 					<enumChoice value="0">
 						<choice>Inactive</choice>
@@ -170,7 +166,7 @@
 				<tooltip xml:lang="de">&lt;html&gt;Die Schaltausgänge können auf verschiedene Funktionalitäten konfiguriert werden.&lt;br&gt;Sie sind vorgesehen zum Schalten von Relais, können aber auch kleine Verbraucher wie LEDs direkt schalten.&lt;br&gt;Bei "Zeigt aktuellen Zustand" gibt der Status in Klammern () den Wert während der Bewegung an.&lt;/html&gt;</tooltip>
 			</variable>
 			<!-- Protocol -->
-			<variable CV="40" mask="XXXXXXXV" item="User Id #2" default="0">
+			<variable CV="40" mask="XXXXXXXV" item="User Id #2" readOnly="yes" default="0">
 				<!-- Utilizing basic pane with different information, as regular one not used -->
 				<enumVal>
 					<enumChoice value="0">
@@ -188,35 +184,36 @@
 				<tooltip xml:lang="de">Protokoll</tooltip>
 			</variable>
 			<!-- Motor Control -->
-			<variable item="EMF Static Config" CV="51" default="75">
-				<decVal max="255"/>
-				<label>Motor regulation P Constant</label>
-				<label xml:lang="de">Motorregelung P-Konstante</label>
-			</variable>
-			<variable item="EMF Dynamic Config" CV="52" default="40">
-				<decVal max="255"/>
-				<label>Motor regulation I Constant</label>
-				<label xml:lang="de">Motorregelung I-Konstante</label>
-			</variable>
-			<variable item="EMF Droop Config" CV="53" default="10">
-				<decVal max="255"/>
-				<label>Motor regulation D Constant</label>
-				<label xml:lang="de">Motorregelung D-Konstante</label>
-			</variable>
-			<variable item="EMF Option 1" CV="54" default="8">
-				<decVal max="255"/>
-				<label>EMF measurements</label>
-				<label xml:lang="de">EMK Messungen</label>
-				<tooltip>&lt;html&gt;Number of EMF measurements per cycle.&lt;br&gt; The first two measurements will be automatically ignored.&lt;/html&gt;</tooltip>
-				<tooltip xml:lang="de">&lt;html&gt;Anzahl von EMK Messungen, je Zyklus.&lt;br&gt; Die ersten 2 Messungen werden automatisch ignoriert.&lt;/html&gt;</tooltip>
-			</variable>
-			<variable item="EMF Option 2" CV="55" default="8">
-				<decVal max="255"/>
-				<label>Motor control period</label>
-				<label xml:lang="de">Motorregelung Periode</label>
-				<tooltip>&lt;html&gt;Entire control period in 0.5 msec.&lt;/html&gt;</tooltip>
-				<tooltip xml:lang="de">&lt;html&gt;Gesamte Reglerperiode in 0,5 ms.&lt;/html&gt;</tooltip>
-			</variable>
+			
+			<!--       <variable item="EMF Static Config" CV="51" default="75">
+          <decVal max="255"/>
+          <label>Motor regulation P Constant</label>
+          <label xml:lang="de">Motorregelung P-Konstante</label>
+        </variable>
+            <variable item="EMF Dynamic Config" CV="52" default="40">
+          <decVal max="255"/>
+          <label>Motor regulation I Constant</label>
+          <label xml:lang="de">Motorregelung I-Konstante</label>
+        </variable>
+        <variable item="EMF Droop Config" CV="53" default="10">
+          <decVal max="255"/>
+          <label>Motor regulation D Constant</label>
+          <label xml:lang="de">Motorregelung D-Konstante</label>
+        </variable>
+            <variable item="EMF Option 1" CV="54" default="8">
+          <decVal max="255"/>
+          <label>EMF measurements</label>
+          <label xml:lang="de">EMK Messungen</label>
+          <tooltip>&lt;html&gt;Number of EMF measurements per cycle.&lt;br&gt; The first two measurements will be automatically ignored.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Anzahl von EMK Messungen, je Zyklus.&lt;br&gt; Die ersten 2 Messungen werden automatisch ignoriert.&lt;/html&gt;</tooltip>
+        </variable>-->
+			<!--        <variable item="EMF Option 2" CV="55" default="8">
+          <decVal max="255"/>
+          <label>Motor control period</label>
+          <label xml:lang="de">Motorregelung Periode</label>
+          <tooltip>&lt;html&gt;Entire control period in 0.5 msec.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Gesamte Reglerperiode in 0,5 ms.&lt;/html&gt;</tooltip>
+        </variable>-->
 			<variable item="EMF Option 3" CV="56" default="100">
 				<decVal max="255"/>
 				<label>Blocking detection time</label>
@@ -284,12 +281,12 @@
 			<factReset label="Reset All CVs except address" CV="8" default="9">
 				<label xml:lang="de">Setzt alle Werte außer Lokadresse auf Auslieferungszustand zurück</label>
 			</factReset>
-			<factReset label="Motor calibration (CV 62)" CV="62" default="206">
-				<label xml:lang="de">Motorkalibrierung (CV 62)</label>
-			</factReset>
-			<factReset label="Point calibration (CV 63)" CV="63" default="0">
-				<label xml:lang="de">Weichenkalibrierung (CV 63)</label>
-			</factReset>
+			<!--      <factReset label="Motor calibration (CV 62)" CV="62" default="206">
+         <label xml:lang="de">Motorkalibrierung (CV 62)</label>
+      </factReset>
+      <factReset label="Point calibration (CV 63)" CV="63" default="0">
+         <label xml:lang="de">Weichenkalibrierung (CV 63)</label>
+      </factReset>-->
 		</resets>
 	</decoder>
 </decoder-config>
