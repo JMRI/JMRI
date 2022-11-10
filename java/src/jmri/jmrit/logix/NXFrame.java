@@ -1010,7 +1010,6 @@ public class NXFrame extends WarrantRoute {
                     }
                     prevThrottle = curThrottle;
                     curThrottle = nextThrottle;
-//                    speedTime = timeInterval;
                 }
             }
             if (nextIdx != orders.size()) {
@@ -1022,8 +1021,8 @@ public class NXFrame extends WarrantRoute {
         if (log.isDebugEnabled()) {
             sumBlkLen += _stopDist;
             curDistance += _speedUtil.getDistanceOfSpeedChange(prevThrottle, curThrottle, speedTime);
-            log.debug("Ramp down done at block \"{}\", curDistance= {}, sumBlkLen= {}, totalLen= {},",
-                    blockName, curDistance, sumBlkLen, totalLen);
+            log.debug("Ramp down done at block \"{}\", blockLen= {}, BlkDist= {}, curDistance= {}, sumBlkLen= {}, totalLen= {},",
+                    blockName, blockLen, blkDistance, curDistance, sumBlkLen, totalLen);
         }
         if (!_noSound.isSelected()) {
             w.addThrottleCommand(new ThrottleSetting(500, Command.FKEY, 1, ValueType.VAL_OFF, SpeedStepMode.UNKNOWN, 0, blockName));
