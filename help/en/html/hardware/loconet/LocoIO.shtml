@@ -396,24 +396,24 @@
       <p>The "Hex Value1,Value2" column sets the address that the LocoIO board will use for LocoNet
       communications. This contains a hexadecimal representation of the two configuration values
       described in John Jabour's LocoIO programming guide. You generally won't need to figure out
-      these addresses, as the <span class="button">capture</span> buttons will find them for
+      these addresses, as the <strong class="button">capture</strong> buttons will find them for
       you.</p>
 
-      <p>The <span class="button">Read</span> button reads from the LocoIO board via the LocoNet
-      and shows the current configuration for that pin. The <span class="button">Write</span>
+      <p>The <strong class="button">Read</strong> button reads from the LocoIO board via the LocoNet
+      and shows the current configuration for that pin. The <strong class="button">Write</strong>
       button stores the current settings to the LocoIO board.</p>
 
-      <p>The <span class="button">Capture</span> button provides an easier way to find a needed
+      <p>The <strong class="button">Capture</strong> button provides an easier way to find a needed
       LocoNet address. Configure the input and output for a particular pin, then press the
-      <span class="button">Capture</span> button. The address in the next LocoNet message of the
+      <strong class="button">Capture</strong> button. The address in the next LocoNet message of the
       right type will be put in the address column.</p>
 
       <p>For example, if you have a channel set to act when a "Turnout closed status message" is
-      received, press the <span class="button">Capture</span> button and use your throttle to
+      received, press the <strong class="button">Capture</strong> button and use your throttle to
       command the correct turnout Closed.</p>
 
       <p>As another example, if the channel is configured to send a "Send throw turnout command",
-      press the <span class="button">Capture</span> button and use your throttle to command the
+      press the <strong class="button">Capture</strong> button and use your throttle to command the
       correct turnout Thrown.</p>
 
       <p>At the bottom of the table are some general controls. The LocoIO address field sets the
@@ -421,11 +421,11 @@
       programmed; see below for how to change that. Address "0" is a global address which any
       LocoIO board will respond to; make sure you have only one connected when you use that!</p>
 
-      <p>The <span class="button">Set address</span> button will use the global address to
+      <p>The <strong class="button">Set address</strong> button will use the global address to
       configure a specific address into a LocoIO board. Again, make sure you have only one
       connected.</p>
 
-      <p>The <span class="button">Read All</span> and <span class="button">Write All</span> buttons
+      <p>The <strong class="button">Read All</strong> and <strong class="button">Write All</strong> buttons
       read or write all of the channels, and are just a convenience.</p>
 
       <p>Status messages during capture/read/write are displayed at the bottom of the window. If no

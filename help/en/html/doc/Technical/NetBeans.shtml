@@ -199,7 +199,7 @@
           </li>
 
           <li>
-            <p>Click <span class="button">Settings</span></p>
+            <p>Click <strong class="button">Settings</strong></p>
           </li>
 
           <li>
@@ -207,7 +207,7 @@
           </li>
 
           <li>
-            <p>Click <span class="button">Available Plugins</span></p>
+            <p>Click <strong class="button">Available Plugins</strong></p>
           </li>
 
           <li>
@@ -215,7 +215,7 @@
           </li>
 
           <li>
-            <p>Click <span class="button">Install</span></p>
+            <p>Click <strong class="button">Install</strong></p>
           </li>
 
           <li>
@@ -241,11 +241,11 @@
         </li>
 
         <li>
-          <p>Click <span class="button">Editor</span></p>
+          <p>Click <strong class="button">Editor</strong></p>
         </li>
 
         <li>
-          <p>Click the <span class="button">Line Endings</span> tab</p>
+          <p>Click the <strong class="button">Line Endings</strong> tab</p>
         </li>
 
         <li>
@@ -262,7 +262,7 @@
         </li>
 
         <li>
-          <p>Click <span class="button">OK</span>.        </p></li>
+          <p>Click <strong class="button">OK</strong>.        </p></li>
       </ol>
 
       <p>You can check that the plug-in is properly installed by going to go to <code>Tools
@@ -426,11 +426,11 @@
             <p><a href="images/netbeans-resolve-project-problems.png"><span class=
             "image related right"><img src="images/netbeans-resolve-project-problems.png"
             alt="Resolve Project Problems dialog"></span></a></p>
-            Click <span class="button">Resolve...</span>
+            Click <strong class="button">Resolve...</strong>
           </li>
 
           <li>
-            <p>Click <span class="button">Close</span> once the warning icon changes to
+            <p>Click <strong class="button">Close</strong> once the warning icon changes to
             an OK icon</p>
           </li>
         </ol>
@@ -487,9 +487,9 @@
 
         <p>
           Tip:<br>
-          A new JMRI checkout should build cleanly. If not, please check with the
-          <a href="https://jmri-developers.groups.io">developers group</a> or <a href=
-          "https://github.com/JMRI/JMRI/issues">project</a> for help.
+          A new JMRI checkout should build cleanly. If not, please share your configuration on
+          <a href="https://jmri-developers.groups.io">jmri-developers groups.io</a> or on GitHub create an
+          <a href="https://github.com/JMRI/JMRI/issues">issue</a> applying for assistance.
         </p>
 
       <h3 id="debug_an_application">Debug an Application</h3>
@@ -568,7 +568,7 @@
           </li>
 
           <li>
-            <p>Click <span class="button">Add Catalog...</span></p>
+            <p>Click <strong class="button">Add Catalog...</strong></p>
           </li>
 
           <li>
@@ -576,7 +576,7 @@
           </li>
 
           <li>
-            <p>Click <span class="button">Browse...</span></p>
+            <p>Click <strong class="button">Browse...</strong></p>
           </li>
 
           <li>
@@ -584,15 +584,15 @@
           </li>
 
           <li>
-            <p>Click <span class="button">OK</span></p>
+            <p>Click <strong class="button">OK</strong></p>
           </li>
 
           <li>
-            <p>Click <span class="button">OK</span></p>
+            <p>Click <strong class="button">OK</strong></p>
           </li>
 
           <li>
-            <p>Click <span class="button">Close</span></p>
+            <p>Click <strong class="button">Close</strong></p>
           </li>
         </ol>
 
@@ -691,7 +691,7 @@
         "caret">&rsaquo;</strong> <strong class="submenu">Checkout</strong>&nbsp;<strong class=
         "caret">&rsaquo;</strong> <strong class="menuitem">Checkout Revision...</strong></span>,
         type <code>master</code> in the <em>Checkout Selected Revision</em> box, and
-        click <span class="button">Checkout</span>.
+        click <strong class="button">Checkout</strong>.
         </p>
 
       <div id="footer-text">
