@@ -1,70 +1,72 @@
 package jmri.jmrix.can.cbus.swing;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
+
 import java.util.ArrayList;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private class FtTestConsole extends jmri.jmrix.can.cbus.swing.console.CbusConsolePane {
-        
+
         public FtTestConsole() {
             super();
         }
-        
+
         @Override
         public void nextLine(String lineOne, String lineTwo, int filterId){ 
             stringOutputList.add(lineOne);
         }
-        
     }
-    
+
     private FtTestConsole _testConsole;
     private ArrayList<String> stringOutputList;
-    
+
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCanFrames(){
         frame.initComponents();
-        assertThat(frame).isNotNull();
-        
+        assertNotNull(frame);
+
         frame.setVisible(true);
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
-        
+
         CbusFilterFrame cff = (CbusFilterFrame) frame;
         
         CanMessage m = new CanMessage(0x12);
         m.setNumDataElements(1);
         m.setElement(0, CbusConstants.CBUS_RTON);
-        assertThat(cff.filter(m)).isFalse();
-        
+        assertFalse(cff.filter(m));
+
         CanReply r = new CanReply(0x12);
         r.setNumDataElements(1);
         r.setElement(0, CbusConstants.CBUS_TON);
-        assertThat(cff.filter(r)).isFalse();
+        assertFalse(cff.filter(r));
         
         new JToggleButtonOperator(jfo,0).clickMouse(); // Filter Incoming
         JUnitUtil.waitFor(()->{ return(stringOutputList.size()>1); }, "Not all increments passed" + stringOutputList.size());
         assertEquals("Filter Window Active \n",stringOutputList.get(0),"Filter Active sent to console");
         assertEquals("Incoming: Filter \n",stringOutputList.get(1),"Filter Change sent to console");
         
-        assertThat(cff.filter(r)).isTrue();
-        assertThat(cff.filter(m)).isFalse();
+        assertTrue(cff.filter(r));
+        assertFalse(cff.filter(m));
         
         new JToggleButtonOperator(jfo,0).clickMouse(); // Pass Incoming
         new JToggleButtonOperator(jfo,1).clickMouse(); // Filter Outgoing
@@ -73,8 +75,8 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         assertEquals("Incoming: Pass \n",stringOutputList.get(2),"Filter Active sent to console");
         assertEquals("Outgoing: Filter \n",stringOutputList.get(3),"Filter Change sent to console");
                
-        assertThat(cff.filter(m)).isTrue();
-        assertThat(cff.filter(r)).isFalse();
+        assertTrue(cff.filter(m));
+        assertFalse(cff.filter(r));
         
         new JToggleButtonOperator(jfo,2).clickMouse(); // event children
         
@@ -103,13 +105,11 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         new JToggleButtonOperator(jfo,4).clickMouse(); // Min Event Filter
         JUnitUtil.waitFor(()->{ return(stringOutputList.size()>6); }, "Not all increments passed " + stringOutputList.size());
 
-        
         assertEquals("Mixed ( 0 / 0 ) ",
             new JToggleButtonOperator(jfo,3).getText(),"text says mixed");
         
         
         // Outgoing event
-        
         CanReply mEvent = new CanReply(0x12);
         mEvent.setNumDataElements(5);
         mEvent.setElement(0, CbusConstants.CBUS_ACON);
@@ -118,14 +118,14 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         mEvent.setElement(3, 0x00); // Event > 123
         mEvent.setElement(4, 0xff); // Event > 123
 
-        assertThat(cff.filter(mEvent)).isFalse();
-        
+        assertFalse(cff.filter(mEvent));
+
         assertEquals("Filter ( 1 / 0 ) ",
             new JToggleButtonOperator(jfo,4).getText(),"text says pass");
-        
+
         mEvent.setElement(4, 0x01); // Event < 123
-        
-        assertThat(cff.filter(mEvent)).isTrue();
+
+        assertTrue(cff.filter(mEvent));
         assertEquals("Filter ( 1 / 1 ) ",
             new JToggleButtonOperator(jfo,4).getText(),"text says pass");
         
@@ -134,25 +134,31 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         // JemmyUtil.pressButton(jfo,("Pause Test"));
         
     }
-    
+
+    @TempDir
+    protected File tempDir;
+
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()){
-            stringOutputList = new ArrayList<>();
-            _testConsole = new FtTestConsole();
-            frame = new CbusFilterFrame(_testConsole,null);
+        try {
+            JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
+        } catch ( IOException ex ) {
+            Assertions.fail("Could not init new Null Profile", ex);
         }
+        stringOutputList = new ArrayList<>();
+        _testConsole = new FtTestConsole();
+        frame = new CbusFilterFrame(_testConsole,null);
     }
 
     @AfterEach
     @Override
     public void tearDown() {
-        if(!GraphicsEnvironment.isHeadless() &&_testConsole !=null){
+        if( _testConsole !=null){
             _testConsole.dispose();
         }
-        super.tearDown();
+        super.tearDown(); // disposes frame, calls JUnitUtil.shutDown
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusEventFilterTest.class);

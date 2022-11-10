@@ -169,12 +169,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <id>54</id>
       <name>My other logixng thread</name>
     </Thread>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0001</systemName>
       <userName>An empty logixNG</userName>
       <ConditionalNGs />
     </LogixNG>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0002</systemName>
       <userName>A logixNG with an empty conditionlNG</userName>
       <ConditionalNGs>
@@ -184,21 +184,21 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <systemName>IQC:AUTO:0004</systemName>
       </ConditionalNGs>
     </LogixNG>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0003</systemName>
       <userName>A logixNG in the initialization table</userName>
       <ConditionalNGs>
         <systemName>IQC:AUTO:0005</systemName>
       </ConditionalNGs>
     </LogixNG>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0004</systemName>
       <userName>Another logixNG in the initialization table</userName>
       <ConditionalNGs>
         <systemName>IQC:AUTO:0006</systemName>
       </ConditionalNGs>
     </LogixNG>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0005</systemName>
       <userName>A logixNG</userName>
       <ConditionalNGs>

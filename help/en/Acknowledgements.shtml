@@ -324,6 +324,8 @@
 
         <li>Robert Doss, who provided ID information for the MRC 330 decoder</li>
 
+        <li>Graham Dredge, who diagnosed a problem with single output signal heads.</li>
+
         <li>David Duchamp, who has added diagnostics to the C/MRI code, did much of the
         customization work for the fast clock, created the C/MRI light controls, added Light
         support, updated the Route functionality, created Logix and the Layout Editor, added "two

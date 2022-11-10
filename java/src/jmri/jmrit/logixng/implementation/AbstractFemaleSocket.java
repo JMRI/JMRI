@@ -506,6 +506,11 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         }
     }
 
+    @Override
+    public boolean hasChild(@Nonnull Base b) {
+        return isConnected() && getConnectedSocket() == b;
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);
 
 }

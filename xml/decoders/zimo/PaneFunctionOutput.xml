@@ -6,6 +6,7 @@
 -->
 <!-- version 1.2 - Ronald Kuhn - add german translation -->
 <!-- version 1.3 - Ronald Kuhn - add options for v37+ -->
+<!-- version 1.4 - Ronald Kuhn - add Fade-in and Fade-Out options -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <name>Function Output</name>
     <name xml:lang="it">Funzione Uscita</name>
@@ -216,6 +217,54 @@
        <label>
         <text> </text>
        </label>
+
+<!-- Original Start -->
+
+       <row>
+       <column>
+       <display item="Fade-in time"/>
+       <label>
+        <text> </text>
+       </label>
+       <display item="Fade-out time"/>
+       </column>
+       <column>
+       <display item="Fade-in time" format="hslider" label=""/>
+       <label>
+        <text> </text>
+       </label>
+       <display item="Fade-out time" format="hslider" label=""/>
+       </column>
+       </row>
+
+
+<!-- Original Ende -->
+
+<!-- Test Start
+
+       <row>
+       <display item="Fade-in time"/>
+       <label>
+        <text> </text>
+       </label>
+       <display item="Fade-in time" format="hslider" label=""/>
+       <column>
+       <label>
+        <text> leer </text>
+       </label>
+       </column>
+       <display item="Fade-out time"/>
+       <label>
+        <text> </text>
+       </label>
+       <display item="Fade-out time" format="hslider" label=""/>
+       </row>
+
+ Test Ende -->
+
+       <label>
+        <text> </text>
+       </label>
        <display item="Global lighting option 2"/>
        <label>
         <text> </text>
@@ -239,6 +288,12 @@
        </label>
     </column>
     <column>
+       <label>
+        <text> </text>
+       </label>
+       <label>
+        <text> </text>
+       </label>
        <label>
         <text> </text>
        </label>

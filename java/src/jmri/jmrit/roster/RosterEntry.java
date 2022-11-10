@@ -96,6 +96,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String SHUNTING_FUNCTION = "IsShuntingOn"; // NOI18N
     public static final String SPEED_PROFILE = "speedprofile"; // NOI18N
     public static final String SOUND_LABEL = "soundlabel"; // NOI18N
+    public static final String ATTRIBUTE_OPERATING_DURATION = "OperatingDuration"; // NOI18N
+    public static final String ATTRIBUTE_LAST_OPERATED = "LastOperated"; // NOI18N
 
     // members to remember all the info
     protected String _fileName = null;
@@ -1489,7 +1491,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         try {
             //int textSpace = w.getCharactersPerLine() - 1; // could be used to truncate line.
             // for now, text just flows to next line
-            String thisText = "";
+            String thisText;
             String thisLine = "";
 
             // start each entry on a new line
@@ -1798,9 +1800,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             } else {
                 //Piece too long to fit. Extract a piece the size of the textSpace
                 //and check for farthest right space for word wrapping.
-                if (log.isDebugEnabled()) {
-                    log.debug("token: /{}/", commentToken);
-                }
+                log.debug("token: /{}/", commentToken);
+
                 while (startIndex < commentToken.length()) {
                     String tokenPiece = commentToken.substring(startIndex, startIndex + textSpace);
                     if (log.isDebugEnabled()) {
@@ -1816,9 +1817,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                         //If there is at least one space, extract up to and including the
                         //last space and put in the vector as well as a line feed
                         endIndex = tokenPiece.lastIndexOf(" ") + 1;
-                        if (log.isDebugEnabled()) {
-                            log.debug("tokenPiece /{}/ {} {}", tokenPiece, startIndex, endIndex);
-                        }
+                        log.debug("tokenPiece /{}/ {} {}", tokenPiece, startIndex, endIndex);
+
                         textVector.addElement(tokenPiece.substring(0, endIndex));
                         textVector.addElement(newLine);
                         startIndex += endIndex;

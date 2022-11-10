@@ -10,12 +10,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -24,10 +24,12 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.annotation.CheckForNull;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
+
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -116,7 +118,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         this.buildWindow();
     }
 
-    int clickDelay = 0;
     final JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(Bundle.getMessage("EditOnly"));
     final JRadioButtonMenuItem contextOps = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingOnMain"));
     final JRadioButtonMenuItem contextService = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingTrack"));
@@ -491,12 +492,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         });
         JmriMouseListener rosterMouseListener = new RosterPopupListener();
         rtable.getTable().addMouseListener(JmriMouseListener.adapt(rosterMouseListener));
-        try {
-            clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval"));
-        } catch (RuntimeException e) {
-            clickDelay = 500;
-            log.debug("Unable to get the double click speed, Using JMRI default of half a second {}", e.getMessage());
-        }
 
         // assemble roster/groups splitpane
         rosterGroupSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, groups, rosters);
@@ -1128,7 +1123,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, Integer.toString(dccAddress), null, null, null, null);
         log.debug("selectLoco found {} matches", l.size());
-        if (l.size() > 0) {
+        if (!l.isEmpty()) {
             if (l.size() > 1) {
                 //More than one possible loco, so check long flag
                 List<RosterEntry> l2 = new ArrayList<>();
@@ -1675,11 +1670,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      */
     private class RosterPopupListener extends JmriMouseAdapter {
 
-        // does clickTimer still actually do anything in this code?
-        // it looks like it just starts and stops, without
-        // invoking anything
-        javax.swing.Timer clickTimer = null;
-
         @Override
         public void mousePressed(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
@@ -1700,16 +1690,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 showPopup(e);
                 return;
             }
-            if (clickTimer == null) {
-                clickTimer = new Timer(clickDelay, (ActionEvent e1) -> {
-                    //Single click item is handled else where.
-                });
-                clickTimer.setRepeats(false);
-            }
-            if (e.getClickCount() == 1) {
-                clickTimer.start();
-            } else if (e.getClickCount() == 2) {
-                clickTimer.stop();
+            if (e.getClickCount() == 2) {
                 startProgrammer(null, re, programmer1);
             }
         }

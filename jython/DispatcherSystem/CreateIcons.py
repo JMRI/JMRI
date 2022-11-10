@@ -67,8 +67,8 @@ class processPanels():
             self.removeIconsAndLabels()
             self.removeLogix()
             self.removeTransits()
+            self.removeSML()            # do before removeSections in case direction sensors have been added to the SML
             self.removeSections()
-            self.removeSML()
             self.show_progress(20)
             self.removeSensors()
             self.show_progress(40)
@@ -443,12 +443,29 @@ class processPanels():
     # remove Sections
     # **************************************************
     def removeSections(self):
+
+        #remove sections
         deleteList = []     # Prevent concurrent modification
+        directionSensorDeleteList = []
         for section in sections.getNamedBeanSet():
             deleteList.append(section)
 
+            forward_sensor = section.getForwardBlockingSensor()
+            if forward_sensor is not None:
+                directionSensorDeleteList.append(forward_sensor)
+
+            reverse_sensor = section.getReverseBlockingSensor()
+            if reverse_sensor is not None:
+                directionSensorDeleteList.append(reverse_sensor)
+
         for item in deleteList:
             sections.deleteBean(item, 'DoDelete')
+
+        for item in directionSensorDeleteList:
+            sensors.deleteBean(item, 'DoDelete')
+
+        deleteList = []
+        directionSensorDeleteList = []
 
     # **************************************************
     # remove signal mast logic
@@ -475,6 +492,7 @@ class processPanels():
         deleteList = []     # Prevent concurrent modification
         for sensor in sensors.getNamedBeanSet():
             userName = sensor.getUserName()
+            sysName = sensor.getSystemName()
             if userName is not None:
                 if 'MoveTo' in userName or 'MoveInProgress' in userName:
                     deleteList.append(sensor)

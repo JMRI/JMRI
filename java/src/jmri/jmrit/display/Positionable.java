@@ -12,6 +12,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
 
 import jmri.JmriException;
+import jmri.NamedBean;
+import jmri.jmrit.logixng.InlineLogixNG;
 import jmri.util.swing.JmriMouseEvent;
 
 /**
@@ -40,7 +42,7 @@ import jmri.util.swing.JmriMouseEvent;
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
  */
-public interface Positionable extends Cloneable {
+public interface Positionable extends Cloneable, InlineLogixNG {
 
     /**
      * Sets the Id of this Positionable
@@ -125,7 +127,17 @@ public interface Positionable extends Cloneable {
      *
      * @return the name to display
      */
+    @Override
     String getNameString();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public default String getTypeName() {
+        NamedBean nb = getNamedBean();
+        return nb != null ? nb.getBeanType() : null;
+    }
 
     /**
      * Add additional menu items to the menu.
@@ -289,6 +301,10 @@ public interface Positionable extends Cloneable {
 
     boolean requestFocusInWindow();
 
+    @Override
+    public default String getEditorName() {
+        return getEditor().getName();
+    }
 
 
     public static class DuplicateIdException extends JmriException {
