@@ -423,9 +423,17 @@
 
         <li><strong>Off:</strong> Evaluate to true if the power state is off.</li>
 
-        <li><strong>Other:</strong> Evaluate to true if the power state is unknown or
-        inconsistent.</li>
+        <li><strong>Idle:</strong> Evaluate to true if the power state is idle.</li>
+
+        <li><strong>Unknown:</strong> Evaluate to true if the power state is unknown.</li>
+
+        <li><strong>On or Off:</strong> Evaluate to true if the power state is on or
+        off.  Previously this was the <strong>Other</strong> state.</li>
       </ul>
+
+      <p>The <strong>Ignore unknown state</strong> option is used to bypass the the unknown state.
+      This can occur when transitioning between the <strong>on</strong> and <strong>off</strong>
+      states.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

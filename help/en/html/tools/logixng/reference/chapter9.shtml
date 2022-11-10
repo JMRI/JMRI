@@ -132,11 +132,16 @@
           </tr>
 
           <tr>
-            <td>&amp;&</td>
+            <td>&amp;&amp;</td>
             <td>logical AND</td>
             <td>left to right</td>
           </tr>
 
+          <tr>
+            <td>^^</td>
+            <td>boolean XOR</td>
+            <td>left to right</td>
+          </tr>
           <tr>
             <td>||</td>
             <td>logical OR</td>
