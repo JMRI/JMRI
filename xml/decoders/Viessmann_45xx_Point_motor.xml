@@ -14,7 +14,10 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Alain Le Marchand" version="1" lastUpdated="20170107"/>
 	<!-- Version 1 (Alain Le Marchand) Initial version
-	     Added 4557, 4558, 4559 and 4560, 4567								-->
+	     Added 4557, 4558, 4559 and 4560				     -->
+	<version author="Ulrich Gerlach" version="2" lastUpdated="2022-11-08"/>
+	<!-- Version 2 (Ulrich Gerlach)
+	     Added 4567							     -->		
 	<decoder>
 		<family name="Point Motor Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="2" highVersionID="15" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom">
 			<model model="4557" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="TT" connector="other" productID="4557" comment="TT Point motor for Tillig road bed point">
