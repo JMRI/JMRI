@@ -21,6 +21,17 @@ public interface InlineLogixNG {
     public void setLogixNG(LogixNG logixNG);
 
     /**
+     * Set the system name for the LogixNG of this InlineLogixNG.
+     * @param systemName the system name
+     */
+    public void setLogixNG_SystemName(String systemName);
+
+    /**
+     * Setup the LogixNG of this InlineLogixNG.
+     */
+    public void setupLogixNG();
+
+    /**
      * Get the name of this InlineLogixNG.
      * @return the name
      */
