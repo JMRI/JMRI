@@ -171,6 +171,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initLogixNGManager();
 
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)

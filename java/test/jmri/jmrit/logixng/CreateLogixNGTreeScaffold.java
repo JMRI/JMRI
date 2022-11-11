@@ -1725,6 +1725,13 @@ public class CreateLogixNGTreeScaffold {
 
         actionThrottle = new ActionThrottle(digitalActionManager.getAutoSystemName(), null);
         actionThrottle.setComment("A comment");
+        actionThrottle.setMemo(_locoNetMemo);
+        maleSocket = digitalActionManager.registerAction(actionThrottle);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionThrottle = new ActionThrottle(digitalActionManager.getAutoSystemName(), null);
+        actionThrottle.setComment("A comment");
+        actionThrottle.setMemo(null);
         maleSocket = digitalActionManager.registerAction(actionThrottle);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -4768,6 +4775,7 @@ public class CreateLogixNGTreeScaffold {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugPowerManager();
+        JUnitUtil.initDebugThrottleManager();
 
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDefaultSignalMastManager();
@@ -4778,6 +4786,7 @@ public class CreateLogixNGTreeScaffold {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         SlotManager sm = new SlotManager(lnis);
         _locoNetMemo = new LocoNetSystemConnectionMemo(lnis, sm);
+        _locoNetMemo.setThrottleManager(new LnThrottleManager(_locoNetMemo));
         sm.setSystemConnectionMemo(_locoNetMemo);
         InstanceManager.setDefault(LocoNetSystemConnectionMemo.class, _locoNetMemo);
         InstanceManager.store(_locoNetMemo, SystemConnectionMemo.class);

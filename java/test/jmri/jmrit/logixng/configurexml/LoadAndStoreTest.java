@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
+import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,6 +59,8 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     @Override
     public void setUp(@TempDir java.io.File tempDir) throws IOException  {
         super.setUp(tempDir);
+
+        JUnitUtil.initDebugThrottleManager();
 
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         SlotManager sm = new SlotManager(lnis);
