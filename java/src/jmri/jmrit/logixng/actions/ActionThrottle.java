@@ -57,6 +57,8 @@ public final class ActionThrottle extends AbstractDigitalAction
                 .createFemaleSocket(this, this, Bundle.getMessage("ActionThrottle_SocketName_Function"));
         _locoFunctionOnOffSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, Bundle.getMessage("ActionThrottle_SocketName_FunctionOnOff"));
+
+        // Set the _throttleManager variable
         setMemo(null);
     }
 
