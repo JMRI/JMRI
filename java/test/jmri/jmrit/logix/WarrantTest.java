@@ -223,7 +223,8 @@ public class WarrantTest {
 
         // wait for done
         JUnitUtil.waitFor(() -> {
-            return Bundle.getMessage("Idle").equals(warrant.getRunningMessage());
+            String runningMsg = warrant.getRunningMessage();
+            return ( runningMsg==null?false:Bundle.getMessage("Idle").equals(runningMsg));
         }, "warrant not done");
 
         JUnitAppender.assertWarnMessageStartingWith("block: West Path distance or SpeedProfile unreliable! pathDist= 200.0,");
