@@ -585,19 +585,23 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
     /** {@inheritDoc} */
     @Override
     public LogixNG getLogixNG() {
-        throw new UnsupportedOperationException("Not supported");
+        return _logixNG;
     }
 
     /** {@inheritDoc} */
     @Override
     public void setLogixNG(LogixNG logixNG) {
-        throw new UnsupportedOperationException("Not supported");
+        this._logixNG = logixNG;
     }
 
+    /** {@inheritDoc} */
+    @Override
     public void setLogixNG_SystemName(String systemName) {
         this._logixNG_SystemName = systemName;
     }
 
+    /** {@inheritDoc} */
+    @Override
     public void setupLogixNG() {
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .getBySystemName(_logixNG_SystemName);
