@@ -1,10 +1,12 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
+import java.util.List;
+
 import jmri.InstanceManager;
+import jmri.SystemConnectionMemo;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.actions.ActionThrottle;
 
-import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 import jmri.jmrit.logixng.MaleSocket;
@@ -33,7 +35,7 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         Element element = new Element("Throttle");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
         Element e2 = new Element("LocoAddressSocket");
@@ -102,39 +104,44 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         }
         element.addContent(e2);
 
+        if (p.getMemo() != null) {
+            element.addContent(new Element("systemConnection")
+                    .addContent(p.getMemo().getSystemPrefix()));
+        }
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
-        
+
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         ActionThrottle h = new ActionThrottle(sys, uname);
 
         loadCommon(h, shared);
-        
+
         Element socketName = shared.getChild("LocoAddressSocket").getChild("socketName");
         h.getLocoAddressSocket().setName(socketName.getTextTrim());
         Element socketSystemName = shared.getChild("LocoAddressSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setLocoAddressSocketSystemName(socketSystemName.getTextTrim());
         }
-        
+
         socketName = shared.getChild("LocoSpeedSocket").getChild("socketName");
         h.getLocoSpeedSocket().setName(socketName.getTextTrim());
         socketSystemName = shared.getChild("LocoSpeedSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setLocoSpeedSocketSystemName(socketSystemName.getTextTrim());
         }
-        
+
         socketName = shared.getChild("LocoDirectionSocket").getChild("socketName");
         h.getLocoDirectionSocket().setName(socketName.getTextTrim());
         socketSystemName = shared.getChild("LocoDirectionSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setLocoDirectionSocketSystemName(socketSystemName.getTextTrim());
         }
-        
+
         Element locoFunctionSocket = shared.getChild("LocoFunctionSocket");
         if (locoFunctionSocket != null) {
             socketName = locoFunctionSocket.getChild("socketName");
@@ -144,7 +151,7 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
                 h.setLocoFunctionSocketSystemName(socketSystemName.getTextTrim());
             }
         }
-        
+
         Element locoFunctionOnOffSocket = shared.getChild("LocoFunctionOnOffSocket");
         if (locoFunctionOnOffSocket != null) {
             socketName = locoFunctionOnOffSocket.getChild("socketName");
@@ -154,10 +161,24 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
                 h.setLocoFunctionOnOffSocketSystemName(socketSystemName.getTextTrim());
             }
         }
-        
+
+        Element systemConnection = shared.getChild("systemConnection");
+        if (systemConnection != null) {
+            String systemConnectionName = systemConnection.getTextTrim();
+            List<SystemConnectionMemo> systemConnections =
+                    jmri.InstanceManager.getList(SystemConnectionMemo.class);
+
+            for (SystemConnectionMemo memo : systemConnections) {
+                if (memo.getSystemPrefix().equals(systemConnectionName)) {
+                    h.setMemo(memo);
+                    break;
+                }
+            }
+        }
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottleXml.class);
 }
