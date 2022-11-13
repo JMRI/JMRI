@@ -728,6 +728,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -852,6 +853,10 @@
           jmri.jmrit.display.configurexml.FastClockXml
         </xs:appinfo>
       </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="x" type="xs:int" use="required"></xs:attribute>
@@ -1972,6 +1977,8 @@
         <xs:element name="upperWestToLowerEast" type="EditorIconTextType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
 
       </xs:sequence>
 
