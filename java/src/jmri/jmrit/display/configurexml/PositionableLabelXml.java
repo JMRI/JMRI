@@ -620,18 +620,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     }
 
     public void loadLogixNG_Data(Positionable p, Element element) {
-        if (!(p instanceof PositionableLabel)) {
-            throw new RuntimeException("p is not a PositionableLabel");
-        }
-        PositionableLabel pl = (PositionableLabel)p;
         Element logixNG_Element = element.getChild("LogixNG");
         if (logixNG_Element == null) return;
         Element inlineLogixNG = logixNG_Element.getChild("InlineLogixNG_SystemName");
         if (inlineLogixNG != null) {
             String systemName = inlineLogixNG.getTextTrim();
-            pl.setLogixNG_SystemName(systemName);
+            p.setLogixNG_SystemName(systemName);
             InstanceManager.getDefault(LogixNG_Manager.class).registerSetupTask(() -> {
-                pl.setupLogixNG();
+                p.setupLogixNG();
             });
         }
     }

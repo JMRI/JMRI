@@ -196,21 +196,47 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             case COLUMN_USER_NAME:
                 return logixNG.getUserName();
             case COLUMN_PANEL_NAME:
-                return logixNG.getInlineLogixNG().getEditorName();
+                return getEditorName(logixNG.getInlineLogixNG());
             case COLUMN_POSITIONABLE_NAME:
-                return logixNG.getInlineLogixNG().getNameString();
+                return getPositionableName(logixNG.getInlineLogixNG());
             case COLUMN_NAMED_BEAN:
-                String typeName = logixNG.getInlineLogixNG().getTypeName();
+                String typeName = getTypeName(logixNG.getInlineLogixNG());
                 return typeName != null ? typeName : "";
             case COLUMN_POS_X:
-                return logixNG.getInlineLogixNG().getX();
+                return getX(logixNG.getInlineLogixNG());
             case COLUMN_POS_Y:
-                return logixNG.getInlineLogixNG().getY();
+                return getY(logixNG.getInlineLogixNG());
             case COLUMN_MENU:
                 return Menu.Edit;
             default:
                 throw new IllegalArgumentException("Invalid column");
         }
+    }
+
+    public static String getEditorName(InlineLogixNG inlineLogixNG) {
+        return inlineLogixNG != null
+                ? inlineLogixNG.getEditorName()
+                : Bundle.getMessage("InlineLogixNGsTableModel_Error");
+    }
+
+    public static String getTypeName(InlineLogixNG inlineLogixNG) {
+        return inlineLogixNG != null
+                ? inlineLogixNG.getTypeName()
+                : Bundle.getMessage("InlineLogixNGsTableModel_Error");
+    }
+
+    public static String getPositionableName(InlineLogixNG inlineLogixNG) {
+        return inlineLogixNG != null
+                ? inlineLogixNG.getNameString()
+                : Bundle.getMessage("InlineLogixNGsTableModel_Error");
+    }
+
+    public static int getX(InlineLogixNG inlineLogixNG) {
+        return inlineLogixNG != null ? inlineLogixNG.getX() : 0;
+    }
+
+    public static int getY(InlineLogixNG inlineLogixNG) {
+        return inlineLogixNG != null ? inlineLogixNG.getY() : 0;
     }
 
     public void setColumnForMenu(JTable table) {
@@ -395,7 +421,9 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
             logixNG.setEnabled(false);
             try {
                 InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
-                logixNG.getInlineLogixNG().setLogixNG(null);
+                if (logixNG.getInlineLogixNG() != null) {
+                    logixNG.getInlineLogixNG().setLogixNG(null);
+                }
             } catch (PropertyVetoException e) {
                 //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
                 log.error("{} : Could not Delete.", e.getMessage());
