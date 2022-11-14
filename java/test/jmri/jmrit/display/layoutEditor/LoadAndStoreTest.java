@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import jmri.InstanceManager;
 import jmri.util.*;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.logixng.LogixNG_Manager;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -89,6 +90,8 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
             log.debug(" nor now");
         }
+
+        InstanceManager.getDefault(LogixNG_Manager.class).setupAllLogixNGs();
     }
 
     /**
@@ -153,7 +156,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     }
 
     protected void findAndComparePngFiles(String name, File inFile, File outFile, int index, String subdir) throws IOException {
-        File parent = inFile.getCanonicalFile().getParentFile(); 
+        File parent = inFile.getCanonicalFile().getParentFile();
         Assertions.assertNotNull(parent);
         String filepath = parent.getParent();
         Assertions.assertNotNull(filepath);
