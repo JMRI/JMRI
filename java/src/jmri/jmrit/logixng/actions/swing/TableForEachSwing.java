@@ -164,27 +164,29 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
     }
 
     private void setupRowOrColumnNameComboBox(String rowOrColumnName) {
-        _rowOrColumnNameComboBox.removeAllItems();
-        NamedTable table = _selectNamedBeanSwing.getBean();
-        if (table != null) {
-            if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
-                for (int column=0; column <= table.numColumns(); column++) {
-                    // If the header is null or empty, treat the row as a comment
-                    Object header = table.getCell(0, column);
-                    if ((header != null) && (!header.toString().isEmpty())) {
-                        _rowOrColumnNameComboBox.addItem(header.toString());
+        if (_selectNamedBeanSwing.getAddressing() == NamedBeanAddressing.Direct) {
+            _rowOrColumnNameComboBox.removeAllItems();
+            NamedTable table = _selectNamedBeanSwing.getBean();
+            if (table != null) {
+                if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
+                    for (int column=0; column <= table.numColumns(); column++) {
+                        // If the header is null or empty, treat the row as a comment
+                        Object header = table.getCell(0, column);
+                        if ((header != null) && (!header.toString().isEmpty())) {
+                            _rowOrColumnNameComboBox.addItem(header.toString());
+                        }
+                    }
+                } else {
+                    for (int row=0; row <= table.numRows(); row++) {
+                        // If the header is null or empty, treat the row as a comment
+                        Object header = table.getCell(row, 0);
+                        if ((header != null) && (!header.toString().isEmpty())) {
+                            _rowOrColumnNameComboBox.addItem(header.toString());
+                        }
                     }
                 }
-            } else {
-                for (int row=0; row <= table.numRows(); row++) {
-                    // If the header is null or empty, treat the row as a comment
-                    Object header = table.getCell(row, 0);
-                    if ((header != null) && (!header.toString().isEmpty())) {
-                        _rowOrColumnNameComboBox.addItem(header.toString());
-                    }
-                }
+                _rowOrColumnNameComboBox.setSelectedItem(rowOrColumnName);
             }
-            _rowOrColumnNameComboBox.setSelectedItem(rowOrColumnName);
         }
     }
 
