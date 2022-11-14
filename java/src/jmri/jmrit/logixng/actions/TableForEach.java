@@ -149,7 +149,13 @@ public class TableForEach extends AbstractDigitalAction
                 if ((header != null) && (!header.toString().isEmpty())) {
                     symbolTable.setValue(_variableName, table.getCell(row, column));
 //                    System.out.format("Variable: %s, value: %s%n", _variableName, table.getCell(row, column));
-                    _socket.execute();
+                    try {
+                        _socket.execute();
+                    } catch (BreakException e) {
+                        break;
+                    } catch (ContinueException e) {
+                        // Do nothing, just catch it.
+                    }
                 }
             }
         }
