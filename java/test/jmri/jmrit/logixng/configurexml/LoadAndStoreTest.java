@@ -64,6 +64,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         super.setUp(tempDir);
 
         JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initDebugCommandStation();
 
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         SlotManager sm = new SlotManager(lnis);

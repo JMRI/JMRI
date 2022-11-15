@@ -1,0 +1,1667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <jmriversion>
+    <major>5</major>
+    <minor>1</minor>
+    <test>6</test>
+    <modifier>plus</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS1</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS5</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS7</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS9</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1</systemName>
+      <comment>SignalHead:IH1:Green</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT2</systemName>
+      <comment>SignalHead:IH1:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT3</systemName>
+      <comment>SignalHead:IH2:Green</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT4</systemName>
+      <comment>SignalHead:IH2:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT5</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT6</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT7</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT8</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT11</systemName>
+    </turnout>
+  </turnouts>
+  <lights class="jmri.jmrix.internal.configurexml.InternalLightManagerXml">
+    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>IL1</systemName>
+    </light>
+    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>IL2</systemName>
+    </light>
+  </lights>
+  <reporters class="jmri.jmrix.internal.configurexml.InternalReporterManagerXml">
+    <reporter>
+      <systemName>IR1</systemName>
+    </reporter>
+    <reporter>
+      <systemName>IR2</systemName>
+    </reporter>
+  </reporters>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="Abc">
+      <systemName>IM:AUTO:0001</systemName>
+    </memory>
+    <memory value="Def">
+      <systemName>IM:AUTO:0002</systemName>
+    </memory>
+    <memory value="0">
+      <systemName>IM:AUTO:0003</systemName>
+    </memory>
+    <memory value="0">
+      <systemName>IM:AUTO:0004</systemName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0005</systemName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0006</systemName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0007</systemName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0008</systemName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0009</systemName>
+    </memory>
+    <memory>
+      <systemName>IM:AUTO:0010</systemName>
+    </memory>
+    <memory value="10:51 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml">
+      <systemName>IH1</systemName>
+      <turnoutname defines="green">IT1</turnoutname>
+      <turnoutname defines="red">IT2</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml">
+      <systemName>IH2</systemName>
+      <turnoutname defines="green">IT3</turnoutname>
+      <turnoutname defines="red">IT4</turnoutname>
+    </signalhead>
+  </signalheads>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml">
+      <systemName>IF$dsm:AAR-1946:CPL(1)</systemName>
+      <userName>Mast1</userName>
+      <unlit allowed="no" />
+      <packetsendcount>3</packetsendcount>
+      <aspect defines="Clear">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Medium Approach Slow">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Slow Clear">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Slow Approach">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Permissive">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Permissive Medium">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Stop and Proceed">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Stop and Proceed Medium">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Stop">
+        <number>-1</number>
+      </aspect>
+    </dccsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml">
+      <systemName>IF$dsm:AAR-1946:CPL(2)</systemName>
+      <userName>Mast2</userName>
+      <unlit allowed="no" />
+      <packetsendcount>3</packetsendcount>
+      <aspect defines="Clear">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Medium Approach Slow">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Slow Clear">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Slow Approach">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Permissive">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Permissive Medium">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Stop and Proceed">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Stop and Proceed Medium">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Stop">
+        <number>-1</number>
+      </aspect>
+    </dccsignalmast>
+  </signalmasts>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB:AUTO:0001">
+      <systemName>IB:AUTO:0001</systemName>
+    </block>
+    <block systemName="IB:AUTO:0002">
+      <systemName>IB:AUTO:0002</systemName>
+    </block>
+    <block systemName="IB:AUTO:0003">
+      <systemName>IB:AUTO:0003</systemName>
+    </block>
+    <block systemName="IB:AUTO:0004">
+      <systemName>IB:AUTO:0004</systemName>
+    </block>
+    <block systemName="IB:AUTO:0005">
+      <systemName>IB:AUTO:0005</systemName>
+    </block>
+    <block systemName="IB:AUTO:0006">
+      <systemName>IB:AUTO:0006</systemName>
+    </block>
+    <block systemName="IB:AUTO:0007">
+      <systemName>IB:AUTO:0007</systemName>
+    </block>
+    <block systemName="IB:AUTO:0008">
+      <systemName>IB:AUTO:0008</systemName>
+    </block>
+    <block systemName="IB:AUTO:0009">
+      <systemName>IB:AUTO:0009</systemName>
+    </block>
+    <block systemName="IB:AUTO:0010">
+      <systemName>IB:AUTO:0010</systemName>
+    </block>
+    <block systemName="IB:AUTO:0001" length="0.0" curve="0">
+      <systemName>IB:AUTO:0001</systemName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB:AUTO:0002" length="0.0" curve="0">
+      <systemName>IB:AUTO:0002</systemName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB:AUTO:0003" length="0.0" curve="0">
+      <systemName>IB:AUTO:0003</systemName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB:AUTO:0004" length="0.0" curve="0">
+      <systemName>IB:AUTO:0004</systemName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB:AUTO:0005" length="0.0" curve="0">
+      <systemName>IB:AUTO:0005</systemName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB:AUTO:0006" length="0.0" curve="0">
+      <systemName>IB:AUTO:0006</systemName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB:AUTO:0007" length="0.0" curve="0">
+      <systemName>IB:AUTO:0007</systemName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB:AUTO:0008" length="0.0" curve="0">
+      <systemName>IB:AUTO:0008</systemName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB:AUTO:0009" length="0.0" curve="0">
+      <systemName>IB:AUTO:0009</systemName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB:AUTO:0010" length="0.0" curve="0">
+      <systemName>IB:AUTO:0010</systemName>
+      <permissive>no</permissive>
+    </block>
+  </blocks>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Nov 13 11:29:44 CET 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
+    <Thread>
+      <id>0</id>
+      <name>LogixNG thread</name>
+    </Thread>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0001</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0001</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0002</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0002</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0003</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0003</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0004</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0004</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0005</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0005</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0006</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0006</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0007</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0007</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0008</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0008</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0009</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0009</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0010</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0010</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0011</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0011</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0012</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0012</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0013</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0013</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0014</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0014</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0015</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0015</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0016</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0016</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0017</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0017</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0018</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0018</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0019</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0019</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0020</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0020</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0021</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0021</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0022</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0022</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0023</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0023</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0024</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0024</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0025</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0025</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0026</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0026</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0027</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0027</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0028</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0028</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0029</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0029</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0030</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0030</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0031</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0031</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0032</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0032</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0033</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0033</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0034</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0034</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0036</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0036</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0037</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0037</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <LogixNG enabled="yes" inline="yes">
+      <systemName>IQ:AUTO:0040</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0039</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <InitializationTable />
+    <Clipboard>
+      <Many class="jmri.jmrit.logixng.implementation.configurexml.ClipboardManyXml">
+        <Socket>
+          <socketName>X1</socketName>
+        </Socket>
+      </Many>
+    </Clipboard>
+  </LogixNGs>
+  <LogixNGConditionalNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultConditionalNGManagerXml">
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0001</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0002</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0003</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0004</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0005</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0006</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0007</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0008</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0009</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0010</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0011</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0012</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0013</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0014</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0015</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0016</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0017</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0018</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0019</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0020</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0021</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0022</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0023</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0024</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0025</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0026</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0027</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0028</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0029</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0030</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0031</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0032</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0033</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0034</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0036</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0037</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0039</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+      </Socket>
+    </ConditionalNG>
+  </LogixNGConditionalNGs>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="0" y="0" windowheight="1009" windowwidth="1889" panelheight="444" panelwidth="1197" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="My Layout" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>2</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>1</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <multisensoricon x="1053" y="8" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
+      <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0" sensor="IS1">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="IS2">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/l-right.gif" degrees="0" scale="1.0" sensor="IS3">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/l-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/l-inactive.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/l-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+    </multisensoricon>
+    <sensoricon sensor="IS1" x="1137" y="29" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <signalmasticon signalmast="Mast1" x="52" y="89" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalheadicon signalhead="IH1" x="136" y="102" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <positionablelabel x="227" y="104" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="409" y="105" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Some label" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <memoryicon memory="IM:AUTO:0001" x="532" y="107" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <BlockContentsIcon blockcontents="IB:AUTO:0001" x="607" y="107" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.BlockContentsIconXml" />
+    <multisensoricon x="1044" y="276" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
+      <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0" sensor="IS4">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="IS5">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/l-right.gif" degrees="0" scale="1.0" sensor="IS6">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/l-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/l-inactive.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/l-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0014</InlineLogixNG_SystemName>
+      </LogixNG>
+    </multisensoricon>
+    <sensoricon sensor="IS7" x="1135" y="295" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0015</InlineLogixNG_SystemName>
+      </LogixNG>
+    </sensoricon>
+    <signalmasticon signalmast="Mast2" x="48" y="346" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0016</InlineLogixNG_SystemName>
+      </LogixNG>
+    </signalmasticon>
+    <signalheadicon signalhead="IH2" x="135" y="369" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0017</InlineLogixNG_SystemName>
+      </LogixNG>
+    </signalheadicon>
+    <positionablelabel x="217" y="370" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0018</InlineLogixNG_SystemName>
+      </LogixNG>
+    </positionablelabel>
+    <positionablelabel x="406" y="364" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Other label" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0019</InlineLogixNG_SystemName>
+      </LogixNG>
+    </positionablelabel>
+    <memoryicon memory="IM:AUTO:0002" x="527" y="363" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0020</InlineLogixNG_SystemName>
+      </LogixNG>
+    </memoryicon>
+    <BlockContentsIcon blockcontents="IB:AUTO:0002" x="607" y="366" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.BlockContentsIconXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0021</InlineLogixNG_SystemName>
+      </LogixNG>
+    </BlockContentsIcon>
+    <layoutturnout ident="TO1" type="RH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="53.0" ycen="52.0" xa="33.0" ya="52.0" xb="73.0" yb="52.0" xc="73.0" yc="62.0" xd="33.0" yd="52.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml" />
+    <layoutturnout ident="TO2" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="148.0" ycen="47.0" xa="128.0" ya="47.0" xb="168.0" yb="47.0" xc="168.0" yc="37.0" xd="128.0" yd="47.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" />
+    <layoutturnout ident="TO3" type="WYE_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="242.0" ycen="38.0" xa="222.0" ya="38.0" xb="262.0" yb="43.0" xc="262.0" yc="33.0" xd="222.0" yd="33.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutWyeXml" />
+    <layoutturnout ident="TO4" type="DOUBLE_XOVER" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="335.0" ycen="42.0" xa="305.0" ya="32.0" xb="365.0" yb="32.0" xc="365.0" yc="52.0" xd="305.0" yd="52.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleXOverXml" />
+    <layoutturnout ident="TO5" type="RH_XOVER" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="439.0" ycen="34.0" xa="409.0" ya="24.0" xb="448.99999" yb="24.0" xc="469.0" yc="44.0" xd="429.00001" yd="44.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHXOverXml" />
+    <layoutturnout ident="TO6" type="LH_XOVER" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="522.0" ycen="31.0" xa="512.0" ya="21.0" xb="552.0" yb="21.0" xc="532.0" yc="41.0" xd="492.0" yd="41.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHXOverXml" />
+    <layoutturnout ident="TO7" type="RH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="63.0" ycen="298.0" xa="43.0" ya="298.0" xb="83.0" yb="298.0" xc="83.0" yc="308.0" xd="43.0" yd="298.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0001</InlineLogixNG_SystemName>
+      </LogixNG>
+    </layoutturnout>
+    <layoutturnout ident="TO8" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="139.0" ycen="301.0" xa="119.0" ya="301.0" xb="159.0" yb="301.0" xc="159.0" yc="291.0" xd="119.0" yd="301.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0002</InlineLogixNG_SystemName>
+      </LogixNG>
+    </layoutturnout>
+    <layoutturnout ident="TO9" type="WYE_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="229.0" ycen="304.0" xa="209.0" ya="304.0" xb="249.0" yb="309.0" xc="249.0" yc="299.0" xd="209.0" yd="299.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutWyeXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0003</InlineLogixNG_SystemName>
+      </LogixNG>
+    </layoutturnout>
+    <layoutturnout ident="TO10" type="DOUBLE_XOVER" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="326.0" ycen="303.0" xa="296.0" ya="293.0" xb="356.0" yb="293.0" xc="356.0" yc="313.0" xd="296.0" yd="313.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleXOverXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0004</InlineLogixNG_SystemName>
+      </LogixNG>
+    </layoutturnout>
+    <layoutturnout ident="TO11" type="RH_XOVER" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="426.0" ycen="303.0" xa="396.0" ya="293.0" xb="435.99999" yb="293.0" xc="456.0" yc="313.0" xd="416.00001" yd="313.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHXOverXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0005</InlineLogixNG_SystemName>
+      </LogixNG>
+    </layoutturnout>
+    <layoutturnout ident="TO12" type="LH_XOVER" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="521.0" ycen="301.0" xa="511.0" ya="291.0" xb="551.0" yb="291.0" xc="531.0" yc="311.0" xd="491.0" yd="311.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHXOverXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0006</InlineLogixNG_SystemName>
+      </LogixNG>
+    </layoutturnout>
+    <tracksegment ident="T1" connect1name="SL2" type1="SLIP_C" connect2name="X1" type2="LEVEL_XING_A" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" connect1name="SL4" type1="SLIP_C" connect2name="X2" type2="LEVEL_XING_A" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0009</InlineLogixNG_SystemName>
+      </LogixNG>
+    </tracksegment>
+    <positionablepoint ident="EB1" type="END_BUMPER" x="883.0" y="29.0" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A1" type="ANCHOR" x="942.0" y="31.0" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC1" type="EDGE_CONNECTOR" x="1001.0" y="29.0" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="END_BUMPER" x="873.0" y="297.0" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0011</InlineLogixNG_SystemName>
+      </LogixNG>
+    </positionablepoint>
+    <positionablepoint ident="A2" type="ANCHOR" x="928.0" y="298.0" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0012</InlineLogixNG_SystemName>
+      </LogixNG>
+    </positionablepoint>
+    <positionablepoint ident="EC2" type="EDGE_CONNECTOR" x="991.0" y="300.0" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0013</InlineLogixNG_SystemName>
+      </LogixNG>
+    </positionablepoint>
+    <levelxing ident="X1" connectaname="T1" xcen="812.0" ycen="33.0" xa="792.0" ya="33.0" xb="798.0" yb="47.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml" />
+    <levelxing ident="X2" connectaname="T2" xcen="801.0" ycen="298.0" xa="781.0" ya="298.0" xb="787.0" yb="312.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0010</InlineLogixNG_SystemName>
+      </LogixNG>
+    </levelxing>
+    <layoutSlip ident="SL1" slipType="SINGLE_SLIP" hidden="no" disabled="no" disableWhenOccupied="no" xcen="620.0" ycen="28.0" xa="600.0" ya="28.0" xb="606.0" yb="42.0" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutSingleSlipXml">
+      <states>
+        <A-C>
+          <turnout>2</turnout>
+          <turnoutB>2</turnoutB>
+        </A-C>
+        <A-D>
+          <turnout>2</turnout>
+          <turnoutB>4</turnoutB>
+        </A-D>
+        <B-D>
+          <turnout>4</turnout>
+          <turnoutB>4</turnoutB>
+        </B-D>
+      </states>
+    </layoutSlip>
+    <layoutSlip ident="SL2" slipType="DOUBLE_SLIP" hidden="no" disabled="no" disableWhenOccupied="no" xcen="702.1922607421875" ycen="28.86200523376465" xa="682.1922607421875" ya="28.86200523376465" xb="688.1922607421875" yb="42.862003326416016" connectcname="T1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleSlipXml">
+      <states>
+        <A-C>
+          <turnout>2</turnout>
+          <turnoutB>2</turnoutB>
+        </A-C>
+        <A-D>
+          <turnout>2</turnout>
+          <turnoutB>4</turnoutB>
+        </A-D>
+        <B-D>
+          <turnout>4</turnout>
+          <turnoutB>4</turnoutB>
+        </B-D>
+        <B-C>
+          <turnout>4</turnout>
+          <turnoutB>2</turnoutB>
+        </B-C>
+      </states>
+    </layoutSlip>
+    <layoutSlip ident="SL3" slipType="SINGLE_SLIP" hidden="no" disabled="no" disableWhenOccupied="no" xcen="604.2883911132812" ycen="300.2929992675781" xa="584.2883911132812" ya="300.2929992675781" xb="590.2883911132812" yb="314.2929992675781" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutSingleSlipXml">
+      <states>
+        <A-C>
+          <turnout>2</turnout>
+          <turnoutB>2</turnoutB>
+        </A-C>
+        <A-D>
+          <turnout>2</turnout>
+          <turnoutB>4</turnoutB>
+        </A-D>
+        <B-D>
+          <turnout>4</turnout>
+          <turnoutB>4</turnoutB>
+        </B-D>
+      </states>
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0007</InlineLogixNG_SystemName>
+      </LogixNG>
+    </layoutSlip>
+    <layoutSlip ident="SL4" slipType="DOUBLE_SLIP" hidden="no" disabled="no" disableWhenOccupied="no" xcen="693.0961303710938" ycen="299.4309997558594" xa="673.0961303710938" ya="299.4309997558594" xb="679.0961303710938" yb="313.4309997558594" connectcname="T2" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleSlipXml">
+      <states>
+        <A-C>
+          <turnout>2</turnout>
+          <turnoutB>2</turnoutB>
+        </A-C>
+        <A-D>
+          <turnout>2</turnout>
+          <turnoutB>4</turnoutB>
+        </A-D>
+        <B-D>
+          <turnout>4</turnout>
+          <turnoutB>4</turnoutB>
+        </B-D>
+        <B-C>
+          <turnout>4</turnout>
+          <turnoutB>2</turnoutB>
+        </B-C>
+      </states>
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0008</InlineLogixNG_SystemName>
+      </LogixNG>
+    </layoutSlip>
+    <layoutShape ident="S1" type="Open" level="3" linewidth="3" lineColor="#000000" fillColor="#404040" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutShapeXml">
+      <points>
+        <point type="Straight" x="334.0" y="111.0" />
+      </points>
+    </layoutShape>
+    <layoutShape ident="S1" type="Open" level="3" linewidth="3" lineColor="#000000" fillColor="#404040" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutShapeXml">
+      <points>
+        <point type="Straight" x="335.0" y="372.0" />
+      </points>
+    </layoutShape>
+  </LayoutEditor>
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="960" y="540" height="380" width="434" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255" />
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Untitled(Control Panel)" x="786" y="37" height="794" width="1053" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+    <turnouticon turnout="IT1" x="14" y="47" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT2" x="81" y="52" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <sensoricon sensor="IS1" x="176" y="58" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <turnouticon turnout="IT3" x="29" y="393" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0022</InlineLogixNG_SystemName>
+      </LogixNG>
+    </turnouticon>
+    <turnouticon turnout="IT4" x="92" y="386" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0023</InlineLogixNG_SystemName>
+      </LogixNG>
+    </turnouticon>
+    <sensoricon sensor="IS2" x="187" y="399" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0024</InlineLogixNG_SystemName>
+      </LogixNG>
+    </sensoricon>
+    <signalheadicon signalhead="IH1" x="241" y="60" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="IH2" x="254" y="393" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0025</InlineLogixNG_SystemName>
+      </LogixNG>
+    </signalheadicon>
+    <signalmasticon signalmast="Mast1" x="295" y="38" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Mast2" x="321" y="377" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0026</InlineLogixNG_SystemName>
+      </LogixNG>
+    </signalmasticon>
+    <memoryicon memory="IM:AUTO:0001" x="364" y="53" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IM:AUTO:0002" x="387" y="383" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0027</InlineLogixNG_SystemName>
+      </LogixNG>
+    </memoryicon>
+    <BlockContentsIcon blockcontents="IB:AUTO:0001" x="553" y="49" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.BlockContentsIconXml" />
+    <BlockContentsIcon blockcontents="IB:AUTO:0002" x="581" y="374" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.BlockContentsIconXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0030</InlineLogixNG_SystemName>
+      </LogixNG>
+    </BlockContentsIcon>
+    <reportericon reporter="IR1" x="659" y="52" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.ReporterIconXml" />
+    <reportericon reporter="IR2" x="685" y="374" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.ReporterIconXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0031</InlineLogixNG_SystemName>
+      </LogixNG>
+    </reportericon>
+    <LightIcon light="IL1" x="767" y="40" level="8" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.LightIconXml">
+      <icons>
+        <on url="program:resources/icons/smallschematics/lights/cross-off.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </on>
+        <off url="program:resources/icons/smallschematics/lights/cross-on.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </off>
+        <unknown url="program:resources/icons/smallschematics/lights/cross-unknown.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/lights/cross-inconsistent.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+    </LightIcon>
+    <LightIcon light="IL2" x="793" y="369" level="8" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.LightIconXml">
+      <icons>
+        <on url="program:resources/icons/smallschematics/lights/cross-off.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </on>
+        <off url="program:resources/icons/smallschematics/lights/cross-on.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </off>
+        <unknown url="program:resources/icons/smallschematics/lights/cross-unknown.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/lights/cross-inconsistent.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0032</InlineLogixNG_SystemName>
+      </LogixNG>
+    </LightIcon>
+    <multisensoricon x="831" y="29" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
+      <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0" sensor="IS1">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="IS2">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/l-right.gif" degrees="0" scale="1.0" sensor="IS3">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/l-inactive.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/l-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/l-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+    </multisensoricon>
+    <multisensoricon x="858" y="360" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
+      <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0" sensor="IS4">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="IS5">
+        <rotation>0</rotation>
+      </active>
+      <active url="program:resources/icons/USS/plate/levers/l-right.gif" degrees="0" scale="1.0" sensor="IS6">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/plate/levers/l-inactive.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/plate/levers/l-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/plate/levers/l-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0033</InlineLogixNG_SystemName>
+      </LogixNG>
+    </multisensoricon>
+    <sensoricon x="911" y="367" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" momentary="false" sxscale="0.0" syscale="0.0" sxorigin="0" syorigin="0" showid="false" class="jmri.jmrit.display.configurexml.RpsPositionIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <error url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </error>
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0034</InlineLogixNG_SystemName>
+      </LogixNG>
+    </sensoricon>
+    <sensoricon x="894" y="49" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" momentary="false" sxscale="0.0" syscale="0.0" sxorigin="0" syorigin="0" showid="false" class="jmri.jmrit.display.configurexml.RpsPositionIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <error url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </error>
+    </sensoricon>
+    <fastclock x="17" y="116" scale="1.0" color="black" class="jmri.jmrit.display.configurexml.AnalogClock2DisplayXml" />
+    <fastclock x="29" y="447" scale="1.0" color="black" class="jmri.jmrit.display.configurexml.AnalogClock2DisplayXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0040</InlineLogixNG_SystemName>
+      </LogixNG>
+    </fastclock>
+    <positionablelabel x="257" y="508" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0036</InlineLogixNG_SystemName>
+      </LogixNG>
+    </positionablelabel>
+    <positionablelabel x="247" y="182" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <slipturnouticon turnoutType="doubleSlip" x="328" y="156" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" class="jmri.jmrit.display.configurexml.SlipTurnoutIconXml">
+      <turnoutEast>IT6</turnoutEast>
+      <turnoutWest>IT5</turnoutWest>
+      <lowerWestToLowerEast url="program:resources/icons/smallschematics/tracksegments/os-slip-lower-west-lower-east.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+        <text>Lower West To Lower East</text>
+      </lowerWestToLowerEast>
+      <upperWestToUpperEast url="program:resources/icons/smallschematics/tracksegments/os-slip-upper-west-upper-east.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+        <text>Upper West To Upper East</text>
+      </upperWestToUpperEast>
+      <lowerWestToUpperEast url="program:resources/icons/smallschematics/tracksegments/os-slip-lower-west-upper-east.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+        <text>Lower West To Upper East</text>
+      </lowerWestToUpperEast>
+      <upperWestToLowerEast url="program:resources/icons/smallschematics/tracksegments/os-slip-upper-west-lower-east.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+        <text>Upper West To Lower East</text>
+      </upperWestToLowerEast>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/os-slip-unknown-full.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-slip-error-full.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+    </slipturnouticon>
+    <slipturnouticon turnoutType="doubleSlip" x="339" y="479" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" class="jmri.jmrit.display.configurexml.SlipTurnoutIconXml">
+      <turnoutEast>IT8</turnoutEast>
+      <turnoutWest>IT7</turnoutWest>
+      <lowerWestToLowerEast url="program:resources/icons/smallschematics/tracksegments/os-slip-lower-west-lower-east.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+        <text>Lower West To Lower East</text>
+      </lowerWestToLowerEast>
+      <upperWestToUpperEast url="program:resources/icons/smallschematics/tracksegments/os-slip-upper-west-upper-east.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+        <text>Upper West To Upper East</text>
+      </upperWestToUpperEast>
+      <lowerWestToUpperEast url="program:resources/icons/smallschematics/tracksegments/os-slip-lower-west-upper-east.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+        <text>Lower West To Upper East</text>
+      </lowerWestToUpperEast>
+      <upperWestToLowerEast url="program:resources/icons/smallschematics/tracksegments/os-slip-upper-west-lower-east.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+        <text>Upper West To Lower East</text>
+      </upperWestToLowerEast>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/os-slip-unknown-full.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-slip-error-full.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0037</InlineLogixNG_SystemName>
+      </LogixNG>
+    </slipturnouticon>
+    <memoryInputIcon colWidth="3" memory="IM:AUTO:0001" x="414" y="52" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" fontname="Dialog.plain" size="12" style="0" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
+    <memoryInputIcon colWidth="3" memory="IM:AUTO:0002" x="427" y="383" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" fontname="Dialog.plain" size="12" style="0" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0028</InlineLogixNG_SystemName>
+      </LogixNG>
+    </memoryInputIcon>
+    <memoryicon memory="IM:AUTO:0003" x="473" y="51" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemorySpinnerIconXml" />
+    <memoryicon memory="IM:AUTO:0004" x="487" y="382" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemorySpinnerIconXml">
+      <LogixNG>
+        <InlineLogixNG_SystemName>IQ:AUTO:0029</InlineLogixNG_SystemName>
+      </LogixNG>
+    </memoryicon>
+  </paneleditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Nov 13 22:50:22 CET 2022</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Nov 13 22:50:28 CET 2022</date>
+      <filename>/C:/Users/daniel/JMRI/CI_Tests.jmri/PositionableLogixNG.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Sun Nov 13 20:33:05 CET 2022</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Nov 13 20:33:11 CET 2022</date>
+          <filename>/C:/Users/daniel/JMRI/CI_Tests.jmri/PositionableLogixNG.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Sun Nov 13 20:28:53 CET 2022</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sun Nov 13 20:29:02 CET 2022</date>
+              <filename>/C:/Users/daniel/JMRI/CI_Tests.jmri/PositionableLogixNG.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Sun Nov 13 20:19:56 CET 2022</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Sun Nov 13 20:20:03 CET 2022</date>
+                  <filename>/C:/Users/daniel/JMRI/CI_Tests.jmri/PositionableLogixNG.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Sun Nov 13 20:11:42 CET 2022</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Sun Nov 13 20:11:48 CET 2022</date>
+                      <filename>/C:/Users/daniel/JMRI/CI_Tests.jmri/PositionableLogixNG.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Sun Nov 13 15:48:56 CET 2022</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Sun Nov 13 15:49:02 CET 2022</date>
+                          <filename>/C:/Users/daniel/JMRI/CI_Tests.jmri/PositionableLogixNG.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Sun Nov 13 15:58:29 CET 2022</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Sun Nov 13 20:15:05 CET 2022</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Sun Nov 13 20:21:33 CET 2022</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Sun Nov 13 20:30:16 CET 2022</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Nov 13 20:33:23 CET 2022</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Nov 13 22:51:09 CET 2022</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 5.1.6plus+daniel+2022-11-13T21:50:04Z+Rd0c6494 on Sun Nov 13 22:51:09 CET 2022-->
+</layout-config>
