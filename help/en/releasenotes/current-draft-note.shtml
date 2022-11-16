@@ -417,6 +417,8 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>The Throttle action supports multiple throttle connections.</li>
+          <li>The Table now stores the filename in relative form if
+          the file is in JMRI preferences location.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
