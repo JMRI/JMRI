@@ -226,7 +226,12 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             // handle selection or cancel
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 // set selected file location
-                _csvFileName.setText(csvFileChooser.getSelectedFile().toString());
+       //         _csvFileName.setText(csvFileChooser.getSelectedFile().toString());
+                try {
+                    _csvFileName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
+                } catch  (java.io.IOException ex) {
+
+                }
             }
         });
         return selectFileButton;
