@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 import java.awt.geom.Point2D;
 import java.util.List;
 import jmri.Turnout;
-import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LayoutTurntableView;
@@ -11,8 +10,6 @@ import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This module handles configuration for display.LayoutTurntable objects for a
@@ -22,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2018
  * @author Bob Jacobsen  Copyright (c) 2020
  */
-public class LayoutTurntableViewXml extends AbstractXmlAdapter {
+public class LayoutTurntableViewXml extends LayoutTrackViewXml {
 
     public LayoutTurntableViewXml() {
     }
@@ -77,6 +74,7 @@ public class LayoutTurntableViewXml extends AbstractXmlAdapter {
             }
             element.addContent(rElem);
         }
+        storeLogixNG_Data(pv, element);
         return element;
     }
 
@@ -117,7 +115,7 @@ public class LayoutTurntableViewXml extends AbstractXmlAdapter {
 
         lv.setCoordsCenter(new Point2D.Double(x, y));
         log.trace("LayoutTurntable at {}, {}", x, y);
-        
+
         lt.setRadius(radius);
 
         // get remaining attribute
@@ -172,6 +170,8 @@ public class LayoutTurntableViewXml extends AbstractXmlAdapter {
                 }
             }
         }
+
+        loadLogixNG_Data(lv, element);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableViewXml.class);

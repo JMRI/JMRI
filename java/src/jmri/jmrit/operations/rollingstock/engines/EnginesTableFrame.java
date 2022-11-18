@@ -52,6 +52,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     public JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
     JRadioButton sortByDcc = new JRadioButton(Bundle.getMessage("DccAddress"));
     JRadioButton sortByLast = new JRadioButton(Bundle.getMessage("Last"));
+    JRadioButton sortByComment = new JRadioButton(Bundle.getMessage("Comment"));
     ButtonGroup group = new ButtonGroup();
 
     // major buttons
@@ -104,6 +105,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         }
         movep.add(sortByDcc);
         movep.add(sortByLast);
+        movep.add(sortByComment);
         cp1.add(movep);
 
         // row 2
@@ -166,6 +168,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         addRadioButtonAction(sortByRfid);
         addRadioButtonAction(sortByDcc);
         addRadioButtonAction(sortByLast);
+        addRadioButtonAction(sortByComment);
 
         group.add(sortByNumber);
         group.add(sortByRoad);
@@ -181,6 +184,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         group.add(sortByRfid);
         group.add(sortByDcc);
         group.add(sortByLast);
+        group.add(sortByComment);
         
         sortByDcc.setToolTipText(Bundle.getMessage("TipDccAddressFromRoster"));
 
@@ -248,6 +252,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         }
         if (ae.getSource() == sortByDcc) {
             enginesModel.setSort(enginesModel.SORTBY_DCC_ADDRESS);
+        }
+        if (ae.getSource() == sortByComment) {
+            enginesModel.setSort(enginesModel.SORTBY_COMMENT);
         }
     }
 

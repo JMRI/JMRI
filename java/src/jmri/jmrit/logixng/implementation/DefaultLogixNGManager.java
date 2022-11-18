@@ -32,6 +32,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     private final Map<String, Manager<? extends MaleSocket>> _managers = new HashMap<>();
     private final Clipboard _clipboard = new DefaultClipboard();
     private boolean _isActive = false;
+    private final List<Runnable> _setupTasks = new ArrayList<>();
 
 
     public DefaultLogixNGManager() {
@@ -77,6 +78,19 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     @Override
     public LogixNG createLogixNG(String systemName, String userName)
             throws IllegalArgumentException {
+        return createLogixNG(systemName, userName, false);
+    }
+
+    /**
+     * Method to create a new LogixNG if the LogixNG does not exist.
+     * <p>
+     * Returns null if
+     * a Logix with the same systemName or userName already exists, or if there
+     * is trouble creating a new LogixNG.
+     */
+    @Override
+    public LogixNG createLogixNG(String systemName, String userName, boolean inline)
+            throws IllegalArgumentException {
 
         // Check that LogixNG does not already exist
         LogixNG x;
@@ -95,7 +109,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             throw new IllegalArgumentException("SystemName " + systemName + " is not in the correct format");
         }
         // LogixNG does not exist, create a new LogixNG
-        x = new DefaultLogixNG(systemName, userName);
+        x = new DefaultLogixNG(systemName, userName, inline);
         // save in the maps
         register(x);
 
@@ -108,6 +122,12 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     @Override
     public LogixNG createLogixNG(String userName) throws IllegalArgumentException {
         return createLogixNG(getAutoSystemName(), userName);
+    }
+
+    @Override
+    public LogixNG createLogixNG(String userName, boolean inline)
+            throws IllegalArgumentException {
+        return createLogixNG(getAutoSystemName(), userName, inline);
     }
 
     @Override
@@ -149,6 +169,9 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             result = result && module.setParentForAllChildren(errors);
         }
         _clipboard.setup();
+        for (Runnable r : _setupTasks) {
+            r.run();
+        }
         if (errors.size() > 0) {
             messageDialog("SetupErrorsTitle", errors, null);
         }
@@ -435,6 +458,31 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         if (property.equals("DoDelete")) { // NOI18N
             deregister(logixNG);
             logixNG.dispose();
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void registerSetupTask(Runnable task) {
+        _setupTasks.add(task);
+    }
+
+    /**
+     * The PropertyChangeListener interface in this class is intended to keep
+     * track of user name changes to individual NamedBeans. It is not completely
+     * implemented yet. In particular, listeners are not added to newly
+     * registered objects.
+     *
+     * @param e the event
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void propertyChange(PropertyChangeEvent e) {
+        super.propertyChange(e);
+        if (LogixNG.PROPERTY_INLINE.equals(e.getPropertyName())) {
+            // If a LogixNG changes its "inline" state, the number of items
+            // listed in the LogixNG table might change.
+            firePropertyChange("length", null, _beans.size());
         }
     }
 

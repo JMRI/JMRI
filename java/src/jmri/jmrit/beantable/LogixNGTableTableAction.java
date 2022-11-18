@@ -81,7 +81,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     }
 
     @Override
-    protected AbstractLogixNGEditor<NamedTable> getEditor(BeanTableFrame<NamedTable> f, BeanTableDataModel<NamedTable> m, String sName) {
+    protected AbstractLogixNGEditor<NamedTable> getEditor(BeanTableDataModel<NamedTable> m, String sName) {
         return new TableEditor(m, sName);
     }
 
@@ -226,7 +226,12 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             // handle selection or cancel
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 // set selected file location
-                _csvFileName.setText(csvFileChooser.getSelectedFile().toString());
+                try {
+                    _csvFileName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
+                } catch (java.io.IOException ex) {
+                    log.error("exception setting file location", ex);  // NOI18N
+                    _csvFileName.setText("");
+                }
             }
         });
         return selectFileButton;

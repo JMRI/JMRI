@@ -477,8 +477,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
             Car car = _carList.get(_carIndex);
             // second pass deals with cars that have a final destination equal
-            // to this
-            // location.
+            // to this location.
             // therefore a local move can be made. This causes "off spots" to be
             // serviced.
             if (isSecondPass && !car.getFinalDestinationName().equals(rl.getName())) {

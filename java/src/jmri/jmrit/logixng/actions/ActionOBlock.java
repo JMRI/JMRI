@@ -177,16 +177,16 @@ public class ActionOBlock extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        OBlock oblock = _selectNamedBean.evaluateNamedBean(getConditionalNG());
+        final ConditionalNG conditionalNG = getConditionalNG();
+
+        OBlock oblock = _selectNamedBean.evaluateNamedBean(conditionalNG);
 
         if (oblock == null) return;
 
-        DirectOperation oper = _selectEnum.evaluateEnum(getConditionalNG());
+        DirectOperation oper = _selectEnum.evaluateEnum(conditionalNG);
 
         // Variables used in lambda must be effectively final
         DirectOperation theOper = oper;
-
-        final ConditionalNG conditionalNG = getConditionalNG();
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch (theOper) {
@@ -209,7 +209,7 @@ public class ActionOBlock extends AbstractDigitalAction
                     oblock.setOutOfService(false);
                     break;
                 case GetBlockWarrant:
-                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(conditionalNG);
                     if (memory != null) {
                         Warrant w = oblock.getWarrant();
                         if (w != null) {
@@ -222,7 +222,7 @@ public class ActionOBlock extends AbstractDigitalAction
                     }
                     break;
                 case GetBlockValue:
-                    memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    memory = _selectMemoryNamedBean.evaluateNamedBean(conditionalNG);
                     if (memory != null) {
                         Object obj = oblock.getValue();
                         if (obj instanceof String) {
@@ -230,7 +230,7 @@ public class ActionOBlock extends AbstractDigitalAction
                         } else {
                             memory.setValue("");
                         }
-             } else {
+                    } else {
                         throw new JmriException("Memory for GetBlockValue is null for oblock - " + oblock.getDisplayName());  // NOI18N
                     }
                     break;

@@ -12,7 +12,7 @@
         <name xml:lang="cs">Nové okno PanelPro</name>
     <adapter>apps.gui3.paned.PanelProAction</adapter>
   </node>
-  <node><icon>resources/icons/throttles/PowerRed24.png</icon>
+  <node><icon>resources/icons/throttles/power_red.png</icon>
     <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
   </node>
   <node><name>Preferences</name>

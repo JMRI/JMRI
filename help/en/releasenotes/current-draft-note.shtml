@@ -46,7 +46,7 @@
 
         <h4>EasyDCC</h4>
             <ul>
-                <li>Now able to use turnout numbers up to and including 2044.</li>
+                <li>Now allows adding multiple new turnouts at the same time.</li>
             </ul>
 
         <h4>ESU</h4>
@@ -81,7 +81,13 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Slot Monitor Table can be saved to CSV File via new File Menu.</li>
+                <li>You can now select separate defaults (in the Preferences -> Defaults pane)
+                for additional types of LocoNet connections.
+                <p>
+                Note: Existing LocoNet connections might give a "The Defaults preferences are invalid"
+                warning when saving preferences.  In that case, click "yes" and then go set
+                all the default radio buttons on the "Defaults" pane to the LocoNet connection.  (You can also
+                click "no", but you'll get the message next time you store too)</li>
             </ul>
 
         <h4>Maple</h4>
@@ -121,7 +127,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Added connection-specific titles to the menu apps. </li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -341,7 +347,8 @@
 
         <h4>Viessmann</h4>
             <ul>
-                <li></li>
+                <li>New decoder definition for Viessmann 4567 TT Motorized point machine</li>
+		<li>New decoder definition for Tillig 08335 TT Motor-driven double crossing point</li>
             </ul>
 
         <h4>Wangrow</h4>
@@ -351,7 +358,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>New decoder definitions for Firmware 40.18</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -409,37 +416,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Fixes a serious bug when deleting a LogixNG. Not all ConditionalNGs of
-          that LogixNG was deleted but that's fixed now.</li>
-          <li>Update the Global Variable table browser to provide detail information.</li>
-          <li>LogixNG Formula now supports the boolean XOR operator <i>^^</i>.</li>
-          <li>The ConditionalNG editor and the Module editor now have the option
-          <i>Paste copy</i>. With it, you can paste from the clipboard as many times
-          as needed.</li>
-          <li>The action <i>Request update of all sensors</i> has been added. It requests
-          that all sensors gets updated from the layout.</li>
-          <li>The action <i>Create beans from table</i> has been added.</li>
-          <li>The action <i>Find table row or column</i> has been added.</li>
-          <li>Adds support of multiple types of CSV files to LogixNG Tables.
-          Tab separated files are the default, but you may choose Comma
-          as the separator. This allows you load CSV files created by
-          spreadsheet programs.</li>
-          <li>The expression <i>Power</i> now supports the <i>Idle</i> and <i>Unknown</i>
-          states. Therefore the option <i>Other</i> has been renamed to <i>On or Off</i>.
-          A Power expression that had the state <i>Other</i> now has the state <i>On or Off</i>,
-          with <i>Is/IsNot</i> inverted.</li>
-          <li>The expression <i>Power</i> can now ignore the <i>Unknown</i> state. Most
-          power managers in JMRI sets the state to Unknown before changing the state. This might
-          cause problems when using the expression Power with IfThenElse with ExecuteOnChange.</li>
-          <li>Additional shortcut keys have been added to the ConditionalNG editor.
-            <ul>
-              <li>Ctrl + Shift + R: Remove socket</li>
-              <li>Ctrl + Shift + D: Enable</li>
-              <li>Ctrl + D: Disable</li>
-              <li>For macOS, use Cmd instead of Ctrl.</li>
-            </ul>
-          </li>
-          <li>The Formula function <i>writeMemory</i> is added. It's in the <i>NamedBean</i> category.</li>
+          <li>The Throttle action supports multiple throttle connections.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -509,8 +486,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>A new script GrandReset.py</a> has been added. The
-            script deletes all Transits, Sections and SignalMastLogics.</li>
+            <li>Updated ControlPanel.py sample script to show the panel windows
+            instead of the panel editor windows.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -525,7 +502,11 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li></li>
+                <li>"Single Output" signal heads had their Thrown and Reversed
+                positions
+                <a href="https://groups.io/g/jmriusers/message/210041">reversed in the "Add..." dialog</a>.
+                This is now corrected.
+                </li>
             </ul>
 
         <h4>Signal Masts</h4>
@@ -616,6 +597,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>SpotBugs has been updated to 4.7.3</li>
         </ul>
 
