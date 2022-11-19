@@ -898,7 +898,6 @@ public class SpeedUtil {
         if (fromSpeed < 0) {
             fromSpeed = 0;
         }
-        boolean increasing = (fromSpeed <= toSpeed);
         float momentumTime = getMomentumTime(fromSpeed, toSpeed);
         float dist;
         // assume a linear change of speed
