@@ -334,20 +334,23 @@ public class SpeedUtil {
     }
 
     /** ms momentum time to change speed for a throttle amount
-     * @param delta throttle change
-     * @param increasing  is acceleration
+     * @param fromSpeed throttle change
+     * @param toSpeed throttle change
      * @return momentum time
      */
-    protected float getMomentumTime(float delta, boolean increasing) {
+    protected float getMomentumTime(float fromSpeed, float toSpeed) {
         float incr = getThrottleSpeedStepIncrement();  // step amount
         float time;
-        if (increasing) {
-            time = _ma * Math.abs(delta) / incr;   // accelerating
+        float delta;
+        if (fromSpeed < toSpeed) {
+            delta = toSpeed - fromSpeed;
+            time = _ma * delta / incr;   // accelerating
         } else {
-            time = _md * Math.abs(delta) / incr;
+            delta = fromSpeed - toSpeed;
+            time = _md * delta / incr;
         }
         if (time < 50) {
-            time = 50;  // Even with CV == 0, there must be some time to change speed
+            time += delta * 500;  // Even with CV == 0, there must be some time to change speed
         }
         return time;
     }
@@ -881,30 +884,31 @@ public class SpeedUtil {
      * Return the distance traveled at current speed after a speed change was made.
      * Takes into account the momentum configured for the decoder to change from
      * the previous speed to the current speed.  Assumes the velocity change is linear.
+     * Does not return a distance greater than that needed by momentum time.
      *
-     * @param prevSpeed throttle setting when speed changed to currSpeed
-     * @param currSpeed throttle setting being set
+     * @param fromSpeed throttle setting when speed changed to toSpeed
+     * @param toSpeed throttle setting being set
      * @param speedTime elapsed time from when the speed change was made to now
      * @return distance traveled
      */
-    protected float getDistanceOfSpeedChange(float prevSpeed, float currSpeed, long speedTime) {
-        if (currSpeed < 0) {
-            currSpeed = 0;
+    protected float getDistanceOfSpeedChange(float fromSpeed, float toSpeed, long speedTime) {
+        if (toSpeed < 0) {
+            toSpeed = 0;
         }
-        if (prevSpeed < 0) {
-            prevSpeed = 0;
+        if (fromSpeed < 0) {
+            fromSpeed = 0;
         }
-        boolean increasing = (prevSpeed <= currSpeed);
-        float momentumTime = getMomentumTime(currSpeed - prevSpeed, increasing);
+        boolean increasing = (fromSpeed <= toSpeed);
+        float momentumTime = getMomentumTime(fromSpeed, toSpeed);
         float dist;
         // assume a linear change of speed
         if (speedTime <= momentumTime ) {
-            // perhaps will be too far since currSpeed may not be attained
-            dist = getTrackSpeed((prevSpeed + currSpeed)/2) * speedTime;
+            // perhaps will be too far since toSpeed may not be attained
+            dist = getTrackSpeed((fromSpeed + toSpeed)/2) * speedTime;
         } else {
-            dist = getTrackSpeed((prevSpeed + currSpeed)/2) * momentumTime;
+            dist = getTrackSpeed((fromSpeed + toSpeed)/2) * momentumTime;
             if (speedTime > momentumTime) { // time remainder at changed speed
-                dist += getTrackSpeed(currSpeed) * (speedTime - momentumTime);
+                dist += getTrackSpeed(toSpeed) * (speedTime - momentumTime);
             }
         }
 //      log.debug("momentumTime = {}, speedTime= {} moDist= {}", momentumTime, speedTime, dist);

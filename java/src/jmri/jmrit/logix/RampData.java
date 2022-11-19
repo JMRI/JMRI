@@ -59,7 +59,7 @@ public class RampData {
         while (lowSetting < highSetting) {
             _settings.add(Float.valueOf(lowSetting));
             lowSetting += throttleIncre;
-            momentumTime = _speedUtil.getMomentumTime(throttleIncre, _upRamp);
+            momentumTime = _speedUtil.getMomentumTime(_fromSpeed, _toSpeed);
             if (momentumTime < _timeInterval) {
                 throttleIncre *= INCRE_RATE;
             }  // if time of momentum change exceeds _throttleInterval, don't increase throttleIncre
@@ -70,29 +70,43 @@ public class RampData {
     protected float getRampLength() {
         float rampLength = 0;
         float nextSetting;
+        float prevSetting;
+        float throttleIncre = _throttleInterval;
+        float momentumTime = 0;
         if (_upRamp) {
-            ListIterator<Float> iter = speedIterator(true);
-            float prevSetting = 0.0f;
-            if (iter.hasNext()) {
-                prevSetting = iter.next();
+            float low = 0;
+            while (low < _fromSpeed ) {
+                throttleIncre *= INCRE_RATE;
+                low += throttleIncre;
             }
+            ListIterator<Float> iter = speedIterator(true);
+            prevSetting = iter.next(); // first setting is current speed
+            nextSetting = prevSetting;
             while (iter.hasNext()) {
                 nextSetting = iter.next().floatValue();
                 rampLength += _speedUtil.getDistanceOfSpeedChange(prevSetting, nextSetting, _timeInterval);
+                momentumTime = _speedUtil.getMomentumTime(prevSetting, nextSetting);
                 prevSetting = nextSetting;
             }
         } else {
-            ListIterator<Float> iter =speedIterator(false);
-            float prevSetting = 1.0f;
-            if (iter.hasPrevious()) {
-                prevSetting = iter.previous();
-            }
+            ListIterator<Float> iter = speedIterator(false);
+            prevSetting = iter.previous(); // first setting is current speed
+            nextSetting = prevSetting;
             while (iter.hasPrevious()) {
                 nextSetting = iter.previous().floatValue();
                 rampLength += _speedUtil.getDistanceOfSpeedChange(prevSetting, nextSetting, _timeInterval);
+                momentumTime = _speedUtil.getMomentumTime(prevSetting, nextSetting);
                 prevSetting = nextSetting;
             }
+            float low = nextSetting;
+            while (low > _toSpeed) {
+                throttleIncre *= INCRE_RATE;
+                low += throttleIncre;
+            }
         }
+        // distance of the last speed increment is only distance needed for momentum.
+        // _speedUtil.getDistanceOfSpeedChange will not return a distance greater than that needed by momentum
+        rampLength -= _speedUtil.getTrackSpeed(nextSetting) * (_timeInterval - momentumTime);  
         return rampLength;
     }
 

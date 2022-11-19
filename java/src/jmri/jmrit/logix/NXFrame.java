@@ -584,6 +584,9 @@ public class NXFrame extends WarrantRoute {
 
         try {
             _stopDist = getDistance(_destDist, _orders.get(_orders.size()-1));
+            if (_stopDist <= 0) {
+                _stopDist = 10; // enter block by at least a centimeter - cannot be 0
+            }
         } catch (JmriException je) {
             return je.getMessage();
         }
@@ -631,16 +634,16 @@ public class NXFrame extends WarrantRoute {
         if (_units.equals(Display.IN)){
             distance *= 25.4f;  // convert inches to millimeters
             if (distance < 0 || distance > pathLen) {
-                field.setText(formatter.format(pathLen * 12.07));
+                field.setText(formatter.format(pathLen * 25.4f));
                 throw new JmriException(Bundle.getMessage(
                         "BadLengthIn", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen*0.039701f, text));                                        
             }
         } else {
             distance *= 10f;  // convert centimeters to millimeters
             if (distance < 0 || distance > pathLen) {
-                field.setText(formatter.format(pathLen * 5));
+                field.setText(formatter.format(pathLen * 10));
                 throw new JmriException(Bundle.getMessage(
-                        "BadLengthCm", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen*0.5f, text));                                        
+                        "BadLengthCm", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen*0.1f, text));                                        
             }
         }
         return distance;
@@ -724,22 +727,31 @@ public class NXFrame extends WarrantRoute {
             return je.getMessage();
         }
 
-        RampData upRamp;
-        RampData downRamp;
-        ListIterator<Float> downIter;
-        float intervalDist;
-        do {
+        RampData upRamp = _speedUtil.getRampForSpeedChange(0f, _maxThrottle);
+        RampData downRamp = _speedUtil.getRampForSpeedChange(_maxThrottle, 0f);
+        float upRampLength = upRamp.getRampLength();
+        float dnRampLength = downRamp.getRampLength();
+        int timeInterval = downRamp.getRampTimeIncrement();
+        float intervalDist = totalLen - (upRampLength + dnRampLength);
+        while (intervalDist < 0) {
+            log.debug("Route length= {}, upRampLength= {}, dnRampLength= {}, intervalDist= {}, _maxThrottle= {}",
+                    totalLen, upRampLength, dnRampLength, intervalDist, _maxThrottle);
+            ListIterator<Float> downIter = downRamp.speedIterator(false);
+            float prevSetting = downIter.previous().floatValue();   // top value is _maxThrottle
+            if (downIter.hasPrevious()) { // if none, empty ramp
+                prevSetting = downIter.previous().floatValue();
+                _maxThrottle = prevSetting;    // last throttle increment
+            } else {
+                _maxThrottle = _speedUtil.getThrottleSettingForSpeed(totalLen/(timeInterval*2));
+            }
             upRamp = _speedUtil.getRampForSpeedChange(0f, _maxThrottle);
             downRamp = _speedUtil.getRampForSpeedChange(_maxThrottle, 0f);
-            downIter = downRamp.speedIterator(false);
-            float prevSetting = downIter.previous().floatValue();   // top value is _maxThrottle 
-            _maxThrottle -= prevSetting  - downIter.previous().floatValue();    // last throttle increment
-            // distance attaining final speed
-            intervalDist = _speedUtil.getDistanceOfSpeedChange(_maxThrottle, prevSetting, downRamp.getRampTimeIncrement());
-            log.debug("Route length= {}, upRampLength= {}, dnRampLength= {}",
-                    totalLen, upRamp.getRampLength(), downRamp.getRampLength());
-        } while ((upRamp.getRampLength() + intervalDist + downRamp.getRampLength()) > totalLen);
-        _maxThrottle = downRamp.getMaxSpeed();
+            upRampLength = upRamp.getRampLength();
+            dnRampLength = downRamp.getRampLength();
+            intervalDist = totalLen - (upRampLength + dnRampLength);
+        }
+        log.debug("Route length= {}, upRampLength= {}, dnRampLength= {}, intervalDist= {}, _maxThrottle= {}",
+                totalLen, upRampLength, dnRampLength, intervalDist, _maxThrottle);
 
         float blockLen = _startDist;    // length of path in current block
         float sumBlkLen = 0;    // sum of path lengths at NOOP
@@ -752,9 +764,6 @@ public class NXFrame extends WarrantRoute {
         float prevThrottle = 0;
         float curDistance = 0;  // current distance traveled up to issuing next command
         float blkDistance = 0;  // distance traveled in current block up to issuing next command
-        float upRampLength = upRamp.getRampLength();
-        float dnRampLength = downRamp.getRampLength();
-        int timeInterval = downRamp.getRampTimeIncrement();
         float dist = 0f;    // increment to accumulate curDistance and blkDistance
 
         if (log.isDebugEnabled()) {
