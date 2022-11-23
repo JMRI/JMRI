@@ -1201,78 +1201,14 @@
 
       <h4>Create beans from table<span class="since">since 5.1.6</span></h4>
 
-      <p>A spreadsheet can be used to create some of the standard table entries in PanelPro, such as
-      sensors and turnouts.  The spreadsheet is exported as a CSV file and loaded as a LogixNG
-      Table.  See <a href="chapter11.shtml">LogixNG Tables</a>.</p>
-
-      <p>The system names have to be valid based on the connection and the bean type.  For example,
-      a LocoNet sensor would be <code>LS101</code>.  The user names are free format but must be
-      unique.  If the user names match existing user names, the move user name option needs to be
-      enabled.</p>
-
-      <div style="margin-left: 2em">
-        <a href="images/chapter5/create_beans_from_table.png">
-        <img class="image-border" src="images/chapter5/create_beans_from_table.png"
-        alt="Chapter 5 create beans from table"></a>
-      </div>
-
-      <p>Options:</p>
-
-      <dl>
-        <dt>Move the user name to the new bean</dt>
-        <dd><p>If the user name matches an existing user name, the new item is created with its system
-        name and then the user name is <strong>Moved</strong> from the original item.  For example,
-        turnouts were defined using internal system names and user names.  When the real turnout
-        names have been identified, this option can be used to create the real turnouts and move the
-        names from the internal turnouts.</p>
-
-        <p class="noted">After the user names have been moved, it is necessary to store the current
-        PanelPro state, quit and restart PanelPro, and load the xml data file.</p>
-
-        </dd>
-
-        <dt>Update beans to user name</dt>
-        <dd>When the move user name option is enabled, the references will be changed from the
-        system name to the user name.</dd>
-
-        <dt>Remove old bean</dt>
-        <dd>When the move user name option is enabled, the orignal item will be removed if
-        possible.</dd>
-      </dl>
+      <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4>Find table row or column<span class="since">since 5.1.6</span></h4>
 
-      <p>Search table cells for a cell that contains the string value in the bean local variable.
-      When a match is found, a <strong>map</strong> of the cells for the row or column is in the row
-      local variable.  See <a href="chapter8#variableTypes">Local Variable Types</a>.</p>
+      <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
 
-      <div style="margin-left: 2em">
-        <a href="images/chapter5/find_table_row_col.png">
-        <img class="image-border" src="images/chapter5/find_table_row_col.png"
-        alt="Chapter 5 find table row column"></a>
-      </div>
-
-      <p>A LogixNG table is selected from the <strong>Table</strong> list.</p>
-
-      <p>If <strong>Row or column</strong> is set to <strong><em>Row</em></strong>, a row is
-      selected from the <strong>Row or column name</strong> list.  If a match is found, the row
-      local variable will contain a map of the cells in the column.</p>
-
-      <p>If <strong>Row or column</strong> is set to <strong><em>Column</em></strong>, a column is
-      selected from the <strong>Row or column name</strong> list.  If a match is found, the row
-      local variable will contain a map of the cells in the row.</p>
-
-      <p>The <strong>Local variable for the bean</strong> is the name of a local variable that
-      contains the string value for the search.  In spite of the name, the value can be any text
-      that occurs in the table.</p>
-
-      <p>The <strong>Local variable for the row</strong> is the name of a local variable that will
-      contain the map of the row or column if match is found.  If a match is not found, the row
-      local variable will have a null value.</p>
-
-      <p class="noted">The match process stops when the first cell match occurs.</p>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4>Listen on beans</h4>
