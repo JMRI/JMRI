@@ -1303,7 +1303,7 @@
         <echo>I18N Consistency Check - use modulefilter property if you want to see errors only from one module</echo>
         <taskdef classname="org.i18nchecker.I18nChecker" name="i18nConsistencyCheck" classpathref="i18n.class.path"/>
         <!-- check includes all .properties files including ones we use for non-translatable files -->
-        <i18nConsistencyCheck srcdir="${basedir}" topdirs="." allProperties="true" logger="${i18n.logger}" loggerMethods="${i18n.loggerMethods}" modulefilter="${i18n.modulefilter}"/>
+        <i18nConsistencyCheck srcdir="${basedir}" topdirs="." modulefilter="${i18n.modulefilter}"/>
     </target>
 
     <!-- end of I18N test targets -->
