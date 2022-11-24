@@ -347,7 +347,8 @@
 
         <h4>Viessmann</h4>
             <ul>
-                <li></li>
+                <li>New decoder definition for Viessmann 4567 TT Motorized point machine</li>
+		<li>New decoder definition for Tillig 08335 TT Motor-driven double crossing point</li>
             </ul>
 
         <h4>Wangrow</h4>
@@ -415,7 +416,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The Throttle action supports multiple throttle connections.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -485,7 +486,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Updated ControlPanel.py sample script to show the panel windows
+            instead of the panel editor windows.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -595,6 +597,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>SpotBugs has been updated to 4.7.3</li>
         </ul>
 

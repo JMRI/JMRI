@@ -2,7 +2,6 @@ package jmri.jmrit.display.configurexml;
 
 import java.awt.Color;
 
-import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.display.*;
 import jmri.util.ColorUtil;
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Howard G. Penny Copyright (c) 2005
  */
 public class AnalogClock2DisplayXml
-        extends AbstractXmlAdapter {
+        extends PositionableLabelXml {
 
     public AnalogClock2DisplayXml() {
     }
@@ -51,6 +50,8 @@ public class AnalogClock2DisplayXml
 
         element.setAttribute("class",
                 "jmri.jmrit.display.configurexml.AnalogClock2DisplayXml");
+
+        storeLogixNG_Data(p, element);
 
         return element;
     }
@@ -121,6 +122,8 @@ public class AnalogClock2DisplayXml
         } catch (Positionable.DuplicateIdException e) {
             throw new JmriConfigureXmlException("Positionable id is not unique", e);
         }
+
+        loadLogixNG_Data(l, element);
     }
 
     private static final Logger log = LoggerFactory.getLogger(AnalogClock2DisplayXml.class);

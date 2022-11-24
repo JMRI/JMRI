@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
@@ -34,7 +32,9 @@ import jmri.util.davidflanagan.HardcopyWriter;
 public class PrintEngineRosterAction extends AbstractAction {
 
     private int numberCharPerLine = 90;
-    final int ownerMaxLen = 5; // Only show the first 5 characters of the owner's name
+    final int ownerMaxLen = 5; // Only show the first 5 characters of the
+                               // owner's name
+    private int commentMaxLen;
 
     EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
@@ -69,6 +69,8 @@ public class PrintEngineRosterAction extends AbstractAction {
     JComboBox<Integer> fontSizeComboBox = new JComboBox<>();
 
     public void printEngines() {
+        
+        commentMaxLen = getMaxCommentLength();
 
         boolean landscape = false;
         if (manifestOrientationComboBox.getSelectedItem() != null &&
@@ -79,8 +81,8 @@ public class PrintEngineRosterAction extends AbstractAction {
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
         // obtain a HardcopyWriter to do this
-        try ( HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"),
-            fontSize, .5, .5, .5, .5, _isPreview, "", landscape, true, null);) {
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"),
+                fontSize, .5, .5, .5, .5, _isPreview, "", landscape, true, null);) {
 
             numberCharPerLine = writer.getCharactersPerLine();
 
@@ -102,12 +104,14 @@ public class PrintEngineRosterAction extends AbstractAction {
             String value = "";
             String rfid = "";
             String last = "";
-            String location ="";
+            String comment = "";
+            String location = "";
 
             List<Engine> engines = panel.enginesModel.getEngineList(sortByComboBox.getSelectedIndex());
             for (Engine engine : engines) {
 
-                // engine number, road, model, type, and length are always printed
+                // engine number, road, model, type, and length are always
+                // printed
                 number = padAttribute(engine.getNumber(), Control.max_len_string_print_road_number);
                 road = padAttribute(engine.getRoadName(),
                         InstanceManager.getDefault(CarRoads.class).getMaxNameLength());
@@ -137,15 +141,32 @@ public class PrintEngineRosterAction extends AbstractAction {
                     value = padAttribute(engine.getValue(), Control.max_len_string_attibute);
                 } else if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_RFID) {
                     rfid = padAttribute(engine.getRfid(), Control.max_len_string_attibute);
-                } else {
+                } else if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_BUILT) {
                     built = padAttribute(engine.getBuilt(), Control.max_len_string_built_name);
+                } else {
+                    comment = padAttribute(engine.getComment(), commentMaxLen);
                 }
 
                 if (!engine.getLocationName().equals(Engine.NONE)) {
                     location = engine.getLocationName() + " - " + engine.getTrackName();
                 }
 
-                String s = number + road + model + type + length + consist + train + moves + owner + value + rfid + dccAddress + built + last + location;
+                String s = number +
+                        road +
+                        model +
+                        type +
+                        length +
+                        consist +
+                        train +
+                        moves +
+                        owner +
+                        value +
+                        rfid +
+                        dccAddress +
+                        built +
+                        last +
+                        comment +
+                        location;
                 if (s.length() > numberCharPerLine) {
                     s = s.substring(0, numberCharPerLine);
                 }
@@ -158,27 +179,26 @@ public class PrintEngineRosterAction extends AbstractAction {
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
         }
-        
     }
 
     private String createHeader() {
         StringBuffer header = new StringBuffer();
 
         header.append(padAttribute(Bundle.getMessage("Number"), Control.max_len_string_print_road_number) +
-                        padAttribute(Bundle.getMessage("Road"),
-                                InstanceManager.getDefault(CarRoads.class).getMaxNameLength()) +
-                        padAttribute(Bundle.getMessage("Model"),
-                                InstanceManager.getDefault(EngineModels.class).getMaxNameLength()) +
-                        padAttribute(Bundle.getMessage("Type"),
-                                InstanceManager.getDefault(EngineTypes.class).getMaxNameLength()) +
-                        padAttribute(Bundle.getMessage("Len"), Control.max_len_string_length_name));
+                padAttribute(Bundle.getMessage("Road"),
+                        InstanceManager.getDefault(CarRoads.class).getMaxNameLength()) +
+                padAttribute(Bundle.getMessage("Model"),
+                        InstanceManager.getDefault(EngineModels.class).getMaxNameLength()) +
+                padAttribute(Bundle.getMessage("Type"),
+                        InstanceManager.getDefault(EngineTypes.class).getMaxNameLength()) +
+                padAttribute(Bundle.getMessage("Len"), Control.max_len_string_length_name));
 
         if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_TRAIN) {
             header.append(padAttribute(Bundle.getMessage("Train"), Control.max_len_string_train_name / 2));
         } else {
             header.append(padAttribute(Bundle.getMessage("Consist"), Control.max_len_string_attibute));
         }
-
+        // one of eight user selections
         if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_OWNER) {
             header.append(padAttribute(Bundle.getMessage("Owner"), ownerMaxLen));
         } else if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_MOVES) {
@@ -191,13 +211,14 @@ public class PrintEngineRosterAction extends AbstractAction {
             header.append(padAttribute(Setup.getRfidLabel(), Control.max_len_string_attibute));
         } else if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_DCC_ADDRESS) {
             header.append(padAttribute(Bundle.getMessage("DccAddress"), 5));
-        } else {
+        } else if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_BUILT) {
             header.append(padAttribute(Bundle.getMessage("Built"), Control.max_len_string_built_name));
+        } else {
+            header.append(padAttribute(Bundle.getMessage("Comment"), commentMaxLen));
         }
         header.append(Bundle.getMessage("Location") + NEW_LINE);
         return header.toString();
     }
-
 
     private String padAttribute(String attribute, int length) {
         attribute = attribute.trim();
@@ -209,6 +230,17 @@ public class PrintEngineRosterAction extends AbstractAction {
             buf.append(" ");
         }
         return buf.toString();
+    }
+    
+    private int getMaxCommentLength() {
+        int length = 10; // set the minimum;
+        List<Engine> engines = panel.enginesModel.getEngineList(sortByComboBox.getSelectedIndex());
+        for (Engine engine : engines) {
+            if (engine.getComment().length() > length) {
+                length = engine.getComment().length();
+            }
+        }
+        return length;
     }
 
     public class EnginePrintOptionFrame extends OperationsFrame {
@@ -266,7 +298,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 
         private void loadSortByComboBox(JComboBox<String> box) {
             box.removeAllItems();
-            for (int i = panel.enginesModel.SORTBY_NUMBER; i <= panel.enginesModel.SORTBY_DCC_ADDRESS; i++) {
+            for (int i = panel.enginesModel.SORTBY_NUMBER; i <= panel.enginesModel.SORTBY_COMMENT; i++) {
                 box.addItem(panel.enginesModel.getSortByName(i));
             }
             box.setSelectedItem(panel.enginesModel.getSortByName());
