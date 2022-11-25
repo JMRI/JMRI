@@ -45,8 +45,7 @@
         <dd>The first row in the clipboard is pasted to the empty row and removed from the clipboard.</dd>
 
         <dt>Paste copy</dt>
-        <dd>The first row in the clipboard is pasted to the empty row but it is not removed from the
-        clipboard.</dd>
+        <dd>The first row in the clipboard is copied and then pasted to the empty row.</dd>
       </dl>
 
       <h3>Working with the clipboard</h3>
