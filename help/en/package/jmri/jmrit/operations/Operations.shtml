@@ -1560,7 +1560,7 @@
 
       <p>The loco parameters for pick up loco (PL) and set out loco (SL) are: road, number,
         model, length, type, hp, location name, track name, destination name, destination track
-        name, owner name, consist name, is lead loco in consist, loco comment, IDTag.</p>
+        name, owner name, consist name, is lead loco in consist, loco comment, IDTag, DCC address.</p>
 
       <p>
         You can find some examples of custom manifests at <a
