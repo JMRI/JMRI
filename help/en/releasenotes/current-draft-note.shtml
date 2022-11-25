@@ -359,6 +359,8 @@
         <h4>ZIMO</h4>
             <ul>
                 <li>New decoder definitions for Firmware 40.18</li>
+                <li>Nigel Cliffe did a
+                <a href="https://github.com/JMRI/JMRI/issues/11608">large update to the Zimo definitions</a></li>
             </ul>
 
         <h4>Miscellaneous</h4>
