@@ -153,7 +153,7 @@ public class ActionsAndExpressionsTest {
             Assert.assertNotNull(lastMaleSocket);
             Base base = socket;
             Assert.assertNotNull(base);
-            
+
             while ((base instanceof MaleSocket)) {
                 lastMaleSocket = (MaleSocket) base;
                 base = ((MaleSocket)base).getObject();
@@ -313,6 +313,7 @@ public class ActionsAndExpressionsTest {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initLogixNGManager();
 
         // Get the list of languages LogixNG has been translated to

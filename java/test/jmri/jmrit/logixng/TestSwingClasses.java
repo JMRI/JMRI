@@ -116,6 +116,7 @@ public class TestSwingClasses {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initLogixNGManager();
 
         InstanceManager.getDefault(MemoryManager.class).provide("IM1");

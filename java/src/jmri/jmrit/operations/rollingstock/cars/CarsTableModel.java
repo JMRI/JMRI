@@ -4,9 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 
 import org.slf4j.Logger;
@@ -59,8 +57,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int WAIT_COLUMN = 24;
     private static final int PICKUP_COLUMN = 25;
     private static final int LAST_COLUMN = 26;
-    private static final int SET_COLUMN = 27;
-    private static final int EDIT_COLUMN = 28;
+    private static final int COMMENT_COLUMN = 27;
+    private static final int SET_COLUMN = 28;
+    private static final int EDIT_COLUMN = 29;
 
     private static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -84,7 +83,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public final int SORTBY_VALUE = 17;
     public final int SORTBY_WAIT = 18;
     public final int SORTBY_PICKUP = 19;
-    public final int SORTBY_LAST = 20; // also used by PrintCarRosterAction
+    public final int SORTBY_LAST = 20;
+    public final int SORTBY_COMMENT = 21; // also used by PrintCarRosterAction
 
     private int _sort = SORTBY_NUMBER;
 
@@ -155,7 +155,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 sort == SORTBY_RFID ||
                 sort == SORTBY_WAIT ||
                 sort == SORTBY_PICKUP ||
-                sort == SORTBY_LAST) {
+                sort == SORTBY_LAST || 
+                sort == SORTBY_COMMENT) {
             tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), sort == SORTBY_MOVES);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), sort == SORTBY_BUILT);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(OWNER_COLUMN), sort == SORTBY_OWNER);
@@ -166,6 +167,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), sort == SORTBY_WAIT);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), sort == SORTBY_PICKUP);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBY_LAST);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), sort == SORTBY_COMMENT);
         }
         fireTableDataChanged();
     }
@@ -218,6 +220,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return Bundle.getMessage("Pickup");
             case SORTBY_LAST:
                 return Bundle.getMessage("Last");
+            case SORTBY_COMMENT:
+                return Bundle.getMessage("Comment");
             default:
                 return "Error"; // NOI18N
         }
@@ -380,6 +384,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case SORTBY_LAST:
                 list = carManager.getByLastDateList();
                 break;
+            case SORTBY_COMMENT:
+                list = carManager.getByCommentList();
+                break;
             default:
                 list = carManager.getByNumberList();
         }
@@ -420,7 +427,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     // Cars frame table column widths, starts with Select column and ends with Edit
     private final int[] tableColumnWidths = { 60, 60, 60, 65, 35, 75, 75, 75, 75, 65, 190, 190, 140, 190, 190, 190, 190,
-            190, 65, 50, 50, 50, 50, 100, 50, 100, 100, 65, 70 };
+            190, 65, 50, 50, 50, 50, 100, 50, 100, 100, 100, 65, 70 };
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -461,6 +468,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), false);
 
         // turn on defaults
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), true);
@@ -535,6 +543,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return Bundle.getMessage("Pickup");
             case LAST_COLUMN:
                 return Bundle.getMessage("LastMoved");
+            case COMMENT_COLUMN:
+                return Bundle.getMessage("Comment");
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
@@ -673,6 +683,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return car.getPickupScheduleName();
             case LAST_COLUMN:
                 return car.getLastDate();
+            case COMMENT_COLUMN:
+                return car.getComment();
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:

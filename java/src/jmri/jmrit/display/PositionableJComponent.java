@@ -7,7 +7,9 @@ import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import jmri.InstanceManager;
 import jmri.jmrit.logixng.LogixNG;
+import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.swing.JmriMouseEvent;
 
 import org.slf4j.Logger;
@@ -36,6 +38,9 @@ public class PositionableJComponent extends JComponent implements Positionable {
 
     JMenuItem lock = null;
     JCheckBoxMenuItem showTooltipItem = null;
+
+    private LogixNG _logixNG;
+    private String _logixNG_SystemName;
 
     public PositionableJComponent(Editor editor) {
         _editor = editor;
@@ -366,13 +371,32 @@ public class PositionableJComponent extends JComponent implements Positionable {
     /** {@inheritDoc} */
     @Override
     public LogixNG getLogixNG() {
-        throw new UnsupportedOperationException("Not supported");
+        return _logixNG;
     }
 
     /** {@inheritDoc} */
     @Override
     public void setLogixNG(LogixNG logixNG) {
-        throw new UnsupportedOperationException("Not supported");
+        this._logixNG = logixNG;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setLogixNG_SystemName(String systemName) {
+        this._logixNG_SystemName = systemName;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setupLogixNG() {
+        _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .getBySystemName(_logixNG_SystemName);
+        if (_logixNG == null) {
+            throw new RuntimeException(String.format(
+                    "LogixNG %s is not found for positional %s in panel %s",
+                    _logixNG_SystemName, getNameString(), getEditor().getName()));
+        }
+        _logixNG.setInlineLogixNG(this);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableJComponent.class);

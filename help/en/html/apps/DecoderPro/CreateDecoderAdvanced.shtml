@@ -956,6 +956,8 @@ delay is 500 milliseconds.
 
       <p>You can also use the include mechanism to specify the default value of a variable.</p>
 
+      <p>Note: &lt;defaultItem&gt; must be the first element inside the &lt;variable&gt; element body.</p>
+
       <p>Example:</p>
 
       <pre style="font-family: monospace;">

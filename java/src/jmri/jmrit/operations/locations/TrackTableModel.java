@@ -2,17 +2,10 @@ package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.TableColumnModelEvent;
-import javax.swing.event.TableColumnModelListener;
+import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 
@@ -148,14 +141,17 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
     // "Pool" "Alternate" "Order" "Reporter" "Moves" if they are needed
     private void setColumnsVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(SCHEDULE_COLUMN), _location.hasSchedules() && _trackType.equals(Track.SPUR));
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(SCHEDULE_COLUMN),
+                _location.hasSchedules() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RESTRICTION_COLUMN), _location.hasServiceRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), _location.hasLoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(SHIP_COLUMN), _location.hasShipLoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), _location.hasRoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), _location.hasDestinationRestrictions());
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(ROUTED_COLUMN), _trackType.equals(Track.INTERCHANGE) || _trackType.equals(Track.STAGING));
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(HOLD_COLUMN), _location.hasSchedules() && _trackType.equals(Track.SPUR));
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(ROUTED_COLUMN), _trackType.equals(Track.INTERCHANGE) ||
+                (_trackType.equals(Track.STAGING) && Setup.isCarRoutingViaStagingEnabled()));
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(HOLD_COLUMN),
+                _location.hasSchedules() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PLANPICKUP_COLUMN), _location.hasPlannedPickups());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(POOL_COLUMN), _location.hasPools());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ALT_TRACK_COLUMN), _location.hasAlternateTracks());
@@ -302,6 +298,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case ROUTED_COLUMN:
+                Track track = _tracksList.get(row);
+                return !track.isModifyLoadsEnabled();
             case HOLD_COLUMN:
             case EDIT_COLUMN:
             case MOVES_COLUMN:
@@ -502,7 +500,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             updateList();
             fireTableDataChanged();
         }
-        if (e.getPropertyName().equals(Setup.SHOW_TRACK_MOVES_PROPERTY_CHANGE)) {
+        if (e.getPropertyName().equals(Setup.SHOW_TRACK_MOVES_PROPERTY_CHANGE)
+                || e.getPropertyName().equals(Setup.ROUTING_STAGING_PROPERTY_CHANGE)) {
             setColumnsVisible();
         }
         if (e.getSource().getClass().equals(Track.class) &&

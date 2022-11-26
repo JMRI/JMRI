@@ -373,7 +373,9 @@ public class LocationEditFrameTest extends OperationsTestCase {
 
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
-
+        
+        Setup.setCarRoutingViaStagingEnabled(true);
+        
         Assert.assertEquals("Confirm number of columns", 11, tbl.getColumnCount());
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Moves")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Hold")));
@@ -436,6 +438,10 @@ public class LocationEditFrameTest extends OperationsTestCase {
         track.setShipLoadOption(Track.INCLUDE_LOADS);
         Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
         Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Ship")));
+        
+        // remove routed
+        Setup.setCarRoutingViaStagingEnabled(false);
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Routed")));
 
         JUnitUtil.dispose(f);
     }

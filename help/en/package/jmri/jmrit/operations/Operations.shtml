@@ -370,6 +370,7 @@
           <ul>
             <li><a href="#TrainEdit">Add or Edit Train</a>
               <ul>
+                <li><a href="#TrainRollingStock">Train Rolling Stock</a></li>
                 <li><a href="#TrainRequires">Optional Train Requirements (Add Locomotives,
                     Caboose or FRED)</a></li>
               </ul></li>
@@ -398,7 +399,7 @@
                   <ul>
                     <li><a href="#ShowCarsInTrain">Show Cars in Train</a></li>
                   </ul></li>
-                  
+
                 <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced
                     (Diagnostic Tool)</a></li>
 
@@ -438,7 +439,7 @@
                 <li><a href="#ExportTimetable">Export Timetable Data</a></li>
 
                 <li><a href="#ExportTrainLineups">Export Train Lineups</a></li>
-                
+
                 <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced
                     (Diagnostic Tool)</a></li>
               </ul></li>
@@ -1559,7 +1560,7 @@
 
       <p>The loco parameters for pick up loco (PL) and set out loco (SL) are: road, number,
         model, length, type, hp, location name, track name, destination name, destination track
-        name, owner name, consist name, is lead loco in consist, loco comment, IDTag.</p>
+        name, owner name, consist name, is lead loco in consist, loco comment, IDTag, DCC address.</p>
 
       <p>
         You can find some examples of custom manifests at <a
@@ -2749,6 +2750,11 @@
         you specify which trains or routes can pull cars, all cars that the train can service are
         available to the train, even cars that were delivered by the same train or route.</p>
 
+      <p>Since you can specify that a train can set out and pull cars from a C/I track, it can
+        be used to capture a set of cars for a specific train. For example if you had a set of cars
+        that you only wanted a "turn" to use, you could create a C/I track that can only be accessed
+        by the turn.</p>
+
       <p>
         You can if you wish control which destinations your C/I track can service. You can access <a
           href="#TrackDestinations">Track Destinations</a> from the "Tools" menu. The track
@@ -3528,7 +3534,8 @@
       length. For example, a forty foot boxcar has a length of 40 feet. The program when calculating
       lengths will add two feet to each end of a car for the couplers. Therefore when you place a
       forty foot car at a spur, it will consume 44 feet of track.
-      <h4>Car subType</h4>
+      
+      <h4 id="CarSubType">Car subType</h4>
 
       <p>OperationsPro&trade; supports the ability to add a subType to a car's type field using
         the "hyphen" feature. Adding a "-subType" to your car type will create a new type of car.
@@ -4512,9 +4519,17 @@
 
       <h4 id="TrainRollingStock">Train Rolling Stock</h4>
 
-      <p>You can decide what type of cars and locomotives the train will service. Select the
-        rolling stock the train will carry by clicking on the appropriate checkboxes. A checked box
-        means the train will service this type of rolling stock.</p>
+      <p>
+        You can decide what type of cars and locomotives the train will service. Select the rolling
+        stock the train will carry by clicking on the appropriate checkboxes. A checked box means
+        the train will service this type of rolling stock. If you wanted certain cars to be only
+        serviced by a single train or trains, you can <a href="#CarSubType">create unique car
+          types</a>. For example if you had a set of boxcars that you only want one train to carry, you
+        could create a new boxcar type "Boxcar-special" and assign that type to the set of boxcars, and
+        only allow the train or trains to service that type of car. Your Manifest would in this case
+        only print "Boxcar" for the special cars. You can use this feature to control any type of
+        car including Cabooses, Passenger, Buffer and MOW cars.
+      </p>
 
       <h4 id="TrainRequires">Optional Train Requirements (Add Locomotives, Caboose or FRED)</h4>
       You can control the number of locomotives that will be assigned to this train, and optionally,
@@ -4772,6 +4787,11 @@
       <p>To build a list of roads that the train will not service, select the "Exclude" radio
         button. Then use the menu of roads and the "Add Road" button to build a list of roads that
         this train will not service.</p>
+
+      <p>You can use the "hyphen" feature to create unique road names. For example, say you
+        wanted a certain SP caboose to only ride this train. You could create a new road name, for
+        example "SP-special", assign that road name to the caboose, and exclude the road name from
+        the other trains. Your Manifest would continue to show the caboose road name as "SP".</p>
 
       <h3 id="TrainManifestOptions">Train Manifest Options</h3>
 

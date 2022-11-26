@@ -139,6 +139,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String FINAL_DEST_TRACK = Bundle.getMessage("FD&Track");
     public static final String LOCATION = Bundle.getMessage("Location");
     public static final String CONSIST = Bundle.getMessage("Consist");
+    public static final String DCC_ADDRESS = Bundle.getMessage("DCC_Address");
     public static final String KERNEL = Bundle.getMessage("Kernel");
     public static final String KERNEL_SIZE = Bundle.getMessage("Kernel_Size");
     public static final String OWNER = Bundle.getMessage("Owner");
@@ -175,15 +176,15 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             COLOR, KERNEL, KERNEL_SIZE, OWNER, DIVISION, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK,
             COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE };
     private static final String[] ENGINE_ATTRIBUTES = { ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, CONSIST, OWNER,
-            TRACK, LOCATION, DESTINATION, COMMENT };
+            TRACK, LOCATION, DESTINATION, COMMENT, DCC_ADDRESS };
     /*
      * The print Manifest and switch list user selectable options are stored in the
      * xml file using the English translation.
      */
-    private static final String[] KEYS = { "Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type",
-            "Color", // NOI18N
-            "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", // NOI18N
-            "Kernel_Size", "Owner", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab", "Tab2", "Tab3" }; // NOI18N
+    private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type",
+            "Color", "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel",
+            "DCC_Address", "Kernel_Size", "Owner", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab",
+            "Tab2", "Tab3"};
 
     private int scale = HO_SCALE; // Default scale
     private int ratio = HO_RATIO;
@@ -333,6 +334,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; // NOI18N
     public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; // NOI18N
     public static final String TRAIN_DIRECTION_PROPERTY_CHANGE = "setupTrainDirectionChange"; // NOI18N
+    public static final String ROUTING_STAGING_PROPERTY_CHANGE = "setupRoutingStagingChange"; // NOI18N
 
     public static boolean isMainMenuEnabled() {
         InstanceManager.getDefault(OperationsSetupXml.class); // load file
@@ -435,7 +437,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     public static void setCarRoutingViaStagingEnabled(boolean enabled) {
+        boolean old = isCarRoutingViaStagingEnabled();
         getDefault().carRoutingStaging = enabled;
+        setDirtyAndFirePropertyChange(ROUTING_STAGING_PROPERTY_CHANGE, old, enabled);
     }
 
     public static boolean isForwardToYardEnabled() {

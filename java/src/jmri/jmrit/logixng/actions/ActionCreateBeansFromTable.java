@@ -295,14 +295,16 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
             throws JmriException {
 
         NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
+
+        if (nbMan.inUse(oldNameBean.getSystemName(), oldNameBean)) {
+            if (_updateToUserName) {
+                nbMan.updateBeanFromSystemToUser(oldNameBean);
+            }
+        }
+
         oldNameBean.setUserName(null);
         newNameBean.setUserName(userName);
         nbMan.moveBean(oldNameBean, newNameBean, userName);
-        if (nbMan.inUse(newNameBean.getSystemName(), newNameBean)) {
-            if (_updateToUserName) {
-                nbMan.updateBeanFromSystemToUser(newNameBean);
-            }
-        }
     }
 
     /** {@inheritDoc} */
