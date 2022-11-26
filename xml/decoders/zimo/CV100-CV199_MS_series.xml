@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- version 1 - for Unified Software -->
-<!-- version 1.1 15 Aug 11 JES
-                 - added different includes for CV 133 depending on decoder
-                 - added CV107-108
-                 - tweaked some "minOut"s in CVs 114,118,119,120,130,131,152
--->
-<!-- version 1.2 27 Jan 12 JES  - fixed bug in diesel steam effect enum value -->
-<!-- version 1.3 18 Jan 2015 Mark Waters -  fixed errors in CV114 and CV152 include href, added more includes for CV133 for newer decoders -->
-<!-- version 1.4 5 jan 2015 Mark Waters   - fixed dimming mask inverted -->
-<!-- version 1.5 23 Jan 2015 Mark Waters -  added more includes for CV133 for newer decoders -->
-<!-- version 1.6 14 Dec 2016 Ronald Kuhn -  added german translation and Function Decoder-->
-<!-- version 1.7 15 Apr 2019 Ronald Kuhn -  added some german translation -->
-<!-- version 1.8 06 May 2019 Ronald Kuhn -  added CV144 Bit4 & Bit5 -->
-<!-- version 1.9 25 Jun 2019 Ronald Kuhn -  CV114 & CV152 tooltip correction -->
-<!-- version 1.10 8 Mar 2021 Nigel Cliffe -  CV112 bit 5 tooltip correction -->
-<!-- version 1.11 1 Dec 2021 Ronald Kuhn -  Choice-Light4_v40 for v40.x -->
-<!-- version 1.12 29 Jul 2022 Nigel Cliffe - fork from old MX series for new MS series sound decoders. -->
+<!-- version 1.0   24 Nov 2022  Nigel Cliffe.   Merging various MX and MS series files to single file for CVs 100-199.  -->
 <!--                  Removed CV113,150, altered labels on CV147,148,149 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
@@ -497,7 +481,214 @@
     <label xml:lang="cs">Vypnutí funkčních výstupů vzad lokomotivy</label>
     <label xml:lang="de">Lrück zusätzlich aus</label>
   </variable>
-  <variable CV="112" item="Smoke Characteristic" mask="XXXXXXXV" exclude="228,226,232,235,247,MX689_v30">
+    <variable CV="109" item="Function F0F option 3" mask="XXXXXVVV">
+    <enumVal>
+      <enumChoice choice="None">
+        <choice>None</choice>
+        <choice xml:lang="it">Nessuna</choice>
+        <choice xml:lang="cs">Žádný</choice>
+        <choice xml:lang="de">keine</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 1">
+        <choice>Function output 1</choice>
+        <choice xml:lang="it">Uscita Funzione 1</choice>
+        <choice xml:lang="cs">Funkční výstup 1</choice>
+        <choice xml:lang="de">FA 1</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 2">
+        <choice>Function output 2</choice>
+        <choice xml:lang="it">Uscita Funzione 2</choice>
+        <choice xml:lang="cs">Funkční výstup 2</choice>
+        <choice xml:lang="de">FA 2</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 3">
+        <choice>Function output 3</choice>
+        <choice xml:lang="it">Uscita Funzione 3</choice>
+        <choice xml:lang="cs">Funkční výstup 3</choice>
+        <choice xml:lang="de">FA 3</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 4">
+        <choice>Function output 4</choice>
+        <choice xml:lang="it">Uscita Funzione 4</choice>
+        <choice xml:lang="cs">Funkční výstup 4</choice>
+        <choice xml:lang="de">FA 4</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 5">
+        <choice>Function output 5</choice>
+        <choice xml:lang="it">Uscita Funzione 5</choice>
+        <choice xml:lang="cs">Funkční výstup 5</choice>
+        <choice xml:lang="de">FA 5</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 6">
+        <choice>Function output 6</choice>
+        <choice xml:lang="it">Uscita Funzione 6</choice>
+        <choice xml:lang="cs">Funkční výstup 6</choice>
+        <choice xml:lang="de">FA 6</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco front additional 2 function off</label>
+    <label xml:lang="de">Lvor zusätzlich 2 aus</label>
+    <label xml:lang="cs">Vypnutí funkčních výstupů 2 vpřed lokomotivy</label>
+  </variable>
+  
+    <variable CV="109" item="Function F0F option 4" mask="XXVVVXXX">
+    <enumVal>
+      <enumChoice choice="None">
+        <choice>None</choice>
+        <choice xml:lang="it">Nessuna</choice>
+        <choice xml:lang="cs">Žádný</choice>
+        <choice xml:lang="de">keine</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 1">
+        <choice>Function output 1</choice>
+        <choice xml:lang="it">Uscita Funzione 1</choice>
+        <choice xml:lang="cs">Funkční výstup 1</choice>
+        <choice xml:lang="de">FA 1</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 2">
+        <choice>Function output 2</choice>
+        <choice xml:lang="it">Uscita Funzione 2</choice>
+        <choice xml:lang="cs">Funkční výstup 2</choice>
+        <choice xml:lang="de">FA 2</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 3">
+        <choice>Function output 3</choice>
+        <choice xml:lang="it">Uscita Funzione 3</choice>
+        <choice xml:lang="cs">Funkční výstup 3</choice>
+        <choice xml:lang="de">FA 3</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 4">
+        <choice>Function output 4</choice>
+        <choice xml:lang="it">Uscita Funzione 4</choice>
+        <choice xml:lang="cs">Funkční výstup 4</choice>
+        <choice xml:lang="de">FA 4</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 5">
+        <choice>Function output 5</choice>
+        <choice xml:lang="it">Uscita Funzione 5</choice>
+        <choice xml:lang="cs">Funkční výstup 5</choice>
+        <choice xml:lang="de">FA 5</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 6">
+        <choice>Function output 6</choice>
+        <choice xml:lang="it">Uscita Funzione 6</choice>
+        <choice xml:lang="cs">Funkční výstup 6</choice>
+        <choice xml:lang="de">FA 6</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco front additional 3 function off</label>
+    <label xml:lang="de">Lvor zusätzlich 3 aus</label>
+    <label xml:lang="cs">Vypnutí funkčních výstupů 3 vpřed lokomotivy</label>
+  </variable>
+  
+  <variable CV="110" item="Function F0R option 3" mask="XXXXXVVV">
+    <enumVal>
+      <enumChoice choice="None">
+        <choice>None</choice>
+        <choice xml:lang="it">Nessuna</choice>
+        <choice xml:lang="cs">Žádný</choice>
+        <choice xml:lang="de">keine</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 1">
+        <choice>Function output 1</choice>
+        <choice xml:lang="it">Uscita Funzione 1</choice>
+        <choice xml:lang="cs">Funkční výstup 1</choice>
+        <choice xml:lang="de">FA 1</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 2">
+        <choice>Function output 2</choice>
+        <choice xml:lang="it">Uscita Funzione 2</choice>
+        <choice xml:lang="cs">Funkční výstup 2</choice>
+        <choice xml:lang="de">FA 2</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 3">
+        <choice>Function output 3</choice>
+        <choice xml:lang="it">Uscita Funzione 3</choice>
+        <choice xml:lang="cs">Funkční výstup 3</choice>
+        <choice xml:lang="de">FA 3</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 4">
+        <choice>Function output 4</choice>
+        <choice xml:lang="it">Uscita Funzione 4</choice>
+        <choice xml:lang="cs">Funkční výstup 4</choice>
+        <choice xml:lang="de">FA 4</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 5">
+        <choice>Function output 5</choice>
+        <choice xml:lang="it">Uscita Funzione 5</choice>
+        <choice xml:lang="cs">Funkční výstup 5</choice>
+        <choice xml:lang="de">FA 5</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 6">
+        <choice>Function output 6</choice>
+        <choice xml:lang="it">Uscita Funzione 6</choice>
+        <choice xml:lang="cs">Funkční výstup 6</choice>
+        <choice xml:lang="de">FA 6</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco rear additional 2 function off</label>
+    <label xml:lang="de">Lrück zusätzlich 2 aus</label>
+    <label xml:lang="cs">Vypnutí funkčních výstupů 2 vzad lokomotivy</label>
+  </variable>
+  <variable CV="110" item="Function F0R option 4" mask="XXVVVXXX">
+    <enumVal>
+      <enumChoice choice="None">
+        <choice>None</choice>
+        <choice xml:lang="it">Nessuna</choice>
+        <choice xml:lang="cs">Žádný</choice>
+        <choice xml:lang="de">keine</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 1">
+        <choice>Function output 1</choice>
+        <choice xml:lang="it">Uscita Funzione 1</choice>
+        <choice xml:lang="cs">Funkční výstup 1</choice>
+        <choice xml:lang="de">FA 1</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 2">
+        <choice>Function output 2</choice>
+        <choice xml:lang="it">Uscita Funzione 2</choice>
+        <choice xml:lang="cs">Funkční výstup 2</choice>
+        <choice xml:lang="de">FA 2</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 3">
+        <choice>Function output 3</choice>
+        <choice xml:lang="it">Uscita Funzione 3</choice>
+        <choice xml:lang="cs">Funkční výstup 3</choice>
+        <choice xml:lang="de">FA 3</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 4">
+        <choice>Function output 4</choice>
+        <choice xml:lang="it">Uscita Funzione 4</choice>
+        <choice xml:lang="cs">Funkční výstup 4</choice>
+        <choice xml:lang="de">FA 4</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 5">
+        <choice>Function output 5</choice>
+        <choice xml:lang="it">Uscita Funzione 5</choice>
+        <choice xml:lang="cs">Funkční výstup 5</choice>
+        <choice xml:lang="de">FA 5</choice>
+      </enumChoice>
+      <enumChoice choice="Function output 6">
+        <choice>Function output 6</choice>
+        <choice xml:lang="it">Uscita Funzione 6</choice>
+        <choice xml:lang="cs">Funkční výstup 6</choice>
+        <choice xml:lang="de">FA 6</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Loco rear additional 3 function off</label>
+    <label xml:lang="de">Lrück zusätzlich 3 aus</label>
+    <label xml:lang="cs">Vypnutí funkčních výstupů 3 vzad lokomotivy</label>
+  </variable>
+  <variable CV="111" item="Emergency Delay" default="0">
+    <decVal/>
+    <label>Emergency Delay</label>
+    <label xml:lang="de">Emergency Verzögerungszeit</label>
+    <label xml:lang="cs">Nouzové zpoždění</label>
+    <tooltip>This CV is for Emergency Stopp instead CV #4</tooltip>
+    <tooltip xml:lang="de">Dieser CV-Wert gilt bei Emergency Stopp anstelle der CV #4, also bei Einzelstopp und Sammelstopp emerg.</tooltip>
+    <tooltip xml:lang="de">Toto CV je pro nouzové zastavení místo CV4.</tooltip>
+  </variable>
+  <variable CV="112" item="Smoke Characteristic" mask="XXXXXXXV" exclude="">
     <enumVal>
       <enumChoice choice="Speed dependent">
         <choice>Speed dependent</choice>
@@ -569,7 +760,7 @@
     <label xml:lang="cs">Rozpoznání řetězců impulsů (LGB)</label>
     <label xml:lang="de">F1-Pulskettenempfang (LGB)</label>
   </variable>
-  <!-- not in MS series decoders <variable CV="112" item="DC Brake Momentum" mask="XXVXXXXX" default="0" exclude="228,226,232,235,247,MX689_v30">
+  <!-- not in MS series decoders <variable CV="112" item="DC Brake Momentum" mask="XXVXXXXX" default="0" exclude="">
     <enumVal>
       <enumChoice choice="20kHz">
         <choice>20kHz</choice>
@@ -587,7 +778,7 @@
     <tooltip>See CV9=0</tooltip>
     <tooltip xml:lang="de">See CV9=0</tooltip>
    </variable>  -->
-  <variable CV="112" item="Secondary Address Format" mask="XXVXXXXX" default="0" include="228,226,232,235,247,MX689_v30">
+  <variable CV="112" item="Secondary Address Format" mask="XXVXXXXX" default="0" include="">
     <enumVal>
       <enumChoice choice="short address">
         <choice>Basisadresse</choice>
@@ -677,7 +868,7 @@
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
-  <variable CV="114" item="Dim function output 5" mask="XVXXXXXX" default="0" minOut="7" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="114" item="Dim function output 5" mask="XVXXXXXX" default="0" minOut="7" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 5</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 5</label>
@@ -687,7 +878,7 @@
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
-  <variable CV="114" item="Dim function output 6" mask="VXXXXXXX" default="0" minOut="8" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="114" item="Dim function output 6" mask="VXXXXXXX" default="0" minOut="8" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 6</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 6</label>
@@ -896,7 +1087,7 @@
     <comment xml:lang="cs">Přidá exponenciální zpomalení</comment>
     <comment xml:lang="de">Bremsverlauf nach einer annähernden Exponentialfunktion</comment>
   </variable>
-  <variable CV="123" item="Adaptive Acceleration/Deceleration" default="0" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="123" item="Adaptive Acceleration/Deceleration" default="0" exclude="">
     <decVal max="99"/>
     <label>Adaptive Acceleration/Deceleration</label>
     <label xml:lang="it">Accell./Decell.adattabile</label>
@@ -979,7 +1170,7 @@
     <label xml:lang="cs">Metoda DC zastavení v závislosti na polaritě</label>
     <label xml:lang="de">polaritätsabhängige DC-Bremsabschnitte</label>
   </variable>
-  <variable CV="124" item="SUSI" mask="VXXXXXXX" default="0" minOut="6" exclude="177,195,197,228,226,232,235,247,MX689_v30">
+  <variable CV="124" item="SUSI" mask="VXXXXXXX" default="0" minOut="6" exclude="">
     <!-- value 0 => Susi,  value 1 => normal function outputs -->
     <enumVal>
       <enumChoice choice="SUSI Serial interface for sound board">
@@ -1223,7 +1414,7 @@
     <label xml:lang="de">Asymmetrie-Schwelle</label>
     <label xml:lang="cs">Práh asymetrického DCC</label>
   </variable>
-  <variable CV="135" item="km/h speed regulation control and range" opsOnly="yes" default="0"  mask="XXXVVVVV" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="135" item="km/h speed regulation control and range" opsOnly="yes" default="0"  mask="XXXVVVVV" exclude="">
     <enumVal>
       <enumChoice choice="Not Active">
         <choice>Not Active</choice>
@@ -1317,35 +1508,44 @@
     <label xml:lang="cs">Regulace rychlosti km/h, aktivace, řízení a meze</label>
     <label xml:lang="de">km/h–Geschwindigkeitsregelung</label>
   </variable>
-  <variable CV="136" item="km/h speed regulation control number readout" readOnly="yes" exclude="228,226,232,235,247,MX689_v30">
+   <variable CV="135" item="CV136Bit9" default="0" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Supplement to CV#136</label>
+    <label xml:lang="de">Ergänzung zu CV#136</label>
+    <label xml:lang="cs">Dodatek k CV136</label>
+    <tooltip>Bit 6 of the CV 135 is the "9th Bit" for the speed feedback in CV 136</tooltip>
+    <tooltip xml:lang="de">Bit 6 der CV 135 ist das "9. Bit“ für die Geschwindigkeits-Rückmeldung in CV 136</tooltip>
+    <tooltip xml:lang="cs">Bit 6 v CV135 je "9. Bit" pro zpětnou vazbu rychlosti v CV136</tooltip>
+  </variable>
+  <variable CV="136" item="km/h speed regulation control number readout" readOnly="yes" exclude="">
     <decVal/>
     <label>km/h speed regulation control number readout</label>
     <label xml:lang="it">Lettura valori Regolazione velocità e km/h</label>
     <label xml:lang="cs">Regulace rychlosti km/h, odečet kontrolního čísla</label>
     <label xml:lang="de">km/h–Geschwindigkeitsregelung - Kontrollzahl</label>
   </variable>
-  <variable CV="137" item="Smoke PWM at standstill" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="137" item="Smoke PWM at standstill" exclude="">
     <decVal/>
     <label>Smoke PWM at standstill</label>
     <label xml:lang="it">Impulsi Fumo da fermo</label>
     <label xml:lang="cs">PWM kouře v klidu</label>
     <label xml:lang="de">Rauch im Stillstand</label>
   </variable>
-  <variable CV="138" item="Smoke PWM at minimum speed" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="138" item="Smoke PWM at minimum speed" exclude="">
     <decVal/>
     <label>Smoke PWM at minimum speed</label>
     <label xml:lang="it">Impulsi Fumo velocità minima</label>
     <label xml:lang="cs">PWM kouře při minimální rychlosti</label>
     <label xml:lang="de">Rauch bei Fahrt</label>
   </variable>
-  <variable CV="139" item="Smoke PWM at max speed" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="139" item="Smoke PWM at max speed" exclude="">
     <decVal/>
     <label>Smoke PWM at max speed</label>
     <label xml:lang="it">Impulsi Fumo velocità massima</label>
     <label xml:lang="cs">PWM kouře při maximální rychlosti</label>
     <label xml:lang="de">Rauch bei Beschleunigung</label>
   </variable>
-  <variable CV="140" item="Distance controlled stopping" default="0" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="140" item="Distance controlled stopping" default="0" exclude="">
     <enumVal>
       <enumChoice choice="not active">
         <choice>not active</choice>
@@ -1395,28 +1595,38 @@
     <label xml:lang="cs">Zastavení řízené vzdáleností</label>
     <label xml:lang="de">Distanzgesteuerter Halt</label>
   </variable>
-  <variable CV="141" item="Distance controlled stopping Distance" default="0" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="141" item="Distance controlled stopping Distance" default="0" exclude="">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping Distance</label>
     <label xml:lang="it">Controllo Distanza di Fermata</label>
     <label xml:lang="cs">Konstantní brzdná dráha</label>
     <label xml:lang="de">Distanzgesteuerter Halt - konstanter Bremsweg</label>
   </variable>
-  <variable CV="142" item="Distance controlled stopping speed correction (ABC)" default="12" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="142" item="Distance controlled stopping speed correction (ABC)" default="12" exclude="">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping speed correction (ABC)</label>
     <label xml:lang="it">Correzione velocità Distanza di Fermata (ABC)</label>
     <label xml:lang="cs">Rychlostní korekce pro zastavení řízené vzdáleností (ABC)</label>
     <label xml:lang="de">Distanzgesteuerter Halt - Schnellfahr-Kompensation (ABC)</label>
   </variable>
-  <variable CV="143" item="Distance controlled stopping speed correction (HLU)" default="0" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="143" item="Distance controlled stopping speed correction (HLU)" default="0" exclude="">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping speed correction (HLU)</label>
     <label xml:lang="it">Correzione velocità Distanza di Fermata (HLU)</label>
     <label xml:lang="cs">Rychlostní korekce pro zastavení řízené vzdáleností (HLU)</label>
     <label xml:lang="de">Distanzgesteuerter Halt - Schnellfahr-Kompensation (HLU)</label>
   </variable>
-  <variable CV="144" item="Jingle Sound CV Write" mask="XXXVXXXX" default="0" include="190,221,222,225,246,253">
+  <variable CV="144" item="CV-Prog Locked" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>complete CV-Prog Locked (SERV and OP)</label>
+    <label xml:lang="de">Komplette Sperre CV-Prog (SERV und OP)</label>
+    <label xml:lang="cs">Kompletní programování CV zamčeno (Servisní a Provozní)</label>
+    <tooltip>In intensive analog operation, the UPDATE LOCK should be engaged to avoid disturbances and poorer handling!</tooltip>
+    <tooltip xml:lang="de">Bei intensivem Analogbetrieb sollte die UPDATESPERRE eingelegt werden, um Störungen und schlechteres Fahrverhalten zu vermeiden!</tooltip>
+    <tooltip xml:lang="cs">Při intenzivním analogovém provozu by měl být aktivován Zámek úprav, aby nedocházelo k rušení a horší manipulaci.!</tooltip>
+  </variable>
+  
+  <variable CV="144" item="Jingle Sound CV Write" mask="XXXVXXXX" default="0" >
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Jingle Sound CV Write</label>
     <label xml:lang="de">Jingle-Sound CV-Schreiben Bestätigung</label>
@@ -1453,7 +1663,7 @@
     <tooltip>Lock the software update</tooltip>
     <tooltip xml:lang="cs">Softwarové aktualizace jsou uzamčeny</tooltip>
   </variable>
-  <!-- not present in MS-series decoders       <variable CV="145" item="Kick Start" default="0" exclude="228,226,232,235,247,MX689_v30">
+  <!-- not present in MS-series decoders       <variable CV="145" item="Kick Start" default="0" exclude="">
     <enumVal>
       <enumChoice choice="Normal (DC and Coreless)" value="0">
         <choice>Normal (DC and Coreless)</choice>
@@ -1498,7 +1708,7 @@
     <label xml:lang="de">Motor-Regelung</label>
   </variable>   -->
   
-  <variable CV="146" default="0" item="Load Control" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="146" default="0" item="Load Control" exclude="">
     <decVal min="0" max="255"/>
     <label>Motor Backlash Control</label>
     <label xml:lang="it">Controllo rinculo motore</label>
@@ -1511,22 +1721,19 @@
   <variable CV="147" default="0" item="EMF Option 3">
     <decVal min="0" max="255"/>
     <label>Integral Value of PID regulation</label>
-    <label xml:lang="cs">Hodnota Integrační složky PID regulátoru</label>
   </variable>
   <variable CV="148" default="0" item="EMF Option 4">
     <decVal min="0" max="255"/>
     <label>Differential value of PID regulation</label>
-    <label xml:lang="cs">Hodnota Derivační složky PID regulátoru</label>
   </variable>
   <variable CV="149" default="0" item="EMF Option 5">
     <decVal min="0" max="255"/>
     <label>Proportional value of PID regulation</label>
-    <label xml:lang="cs">Hodnota Proporcionální složky PID regulátoru</label>
   </variable>
 
   
   
-  <variable CV="151" item="Advanced Group 1 Option 1" default="0" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="151" item="Advanced Group 1 Option 1" default="0" exclude="">
     <enumVal>
       <enumChoice choice="No Braking">
         <choice>No Braking</choice>
@@ -1677,4 +1884,754 @@
     <label xml:lang="cs">Směrové nastavení pro funkční výstupy 3 a 4</label>
     <label xml:lang="de">FA3+FA4 als Richtungs-Ausgänge</label>
   </variable>
+  <variable CV="153" item="Packet Time-out Value" default="0">
+    <decVal min="0" max="255"/>
+    <label>Max drive Time after signal loss</label>
+    <label xml:lang="it">Tempo massimo percorrenza dopo perdita segnale</label>
+    <label xml:lang="cs">Maximální doba jízdy po ztrátě signálu</label>
+    <label xml:lang="de">Weiterfahrt ohne Signal</label>
+    <tooltip>When Energy storage cct connected, 0-255 (0-25 sec)</tooltip>
+    <tooltip xml:lang="de">Anhalten nach Nicht-mehr-DCC-Empfang (Zehntel-sec)</tooltip>
+  </variable>
+  <variable CV="154" item="Special Output Configuration" mask="XXXXXXXV" default="0">
+    <enumVal>
+      <enumChoice choice="No Special Configuration">
+        <choice>No Special Configuration</choice>
+        <choice xml:lang="it">Nessuna configurazione Speciale</choice>
+        <choice xml:lang="cs">Bez speciální konfigurace</choice>
+        <choice xml:lang="de">keine spezielle Einstellung</choice>
+      </enumChoice>
+      <enumChoice choice="Pantograph Operation (Zimo/Roco BR110)">
+        <choice>Pantograph Operation (Zimo/Roco BR110)</choice>
+        <choice xml:lang="it">Pantografo (Zimo/Roco BR110)(</choice>
+        <choice xml:lang="cs">Ovládání sběrače (Zimo/Roco BR110)</choice>
+        <choice xml:lang="de">Pantograph (Zimo/Roco BR110)(</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Special Output Configuration</label>
+    <label xml:lang="it">Configurazione Speciale Uscita</label>
+    <label xml:lang="cs">Speciální konfigurace výstupu</label>
+    <label xml:lang="de">Diverse Spezialbits</label>
+  </variable>
+  <variable CV="154" item="Drive Away if Startup sound still playing" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Drive Away if Startup sound still playing</label>
+    <label xml:lang="it">Partenza anche se suono accensione ancora attivo</label>
+    <label xml:lang="cs">Odjet když se ještě přehrává zvuk startování</label>
+    <label xml:lang="de">&lt;html&gt;DIESEL: Sofort abfahren, auch wenn Stand-&lt;br&gt;geräusch noch nicht zu Ende abgespielt&lt;/html&gt;</label>
+  </variable>
+  <variable CV="154" item="Two Stage Air Compressor" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Two Stage Air Compressor</label>
+    <label xml:lang="it">Compressore aria a due stadi</label>
+    <label xml:lang="de">DAMPF: Zweistufige Luftpumpe</label>
+    <label xml:lang="cs">Dvoustupňový kompresor</label>
+    <tooltip>Z1=fast, Z2=slow</tooltip>
+    <tooltip xml:lang="de">Z1 nach Stehenbleiben, Z2 während Stehens</tooltip>
+  </variable>
+  <variable CV="154" mask="XXVXXXXX" default="0" item="Advanced Group 1 Option 2">
+    <enumVal>
+      <enumChoice choice="Normal">
+        <choice>Enabled</choice>
+        <choice xml:lang="fr">Activé</choice>
+        <choice xml:lang="it">Abilitato</choice>
+        <choice xml:lang="cs">Zpřístupněno</choice>
+        <choice xml:lang="de">Aktiviert</choice>
+      </enumChoice>
+      <enumChoice choice="Forward Only">
+        <choice>Disabled</choice>
+        <choice xml:lang="fr">Désactivé</choice>
+        <choice xml:lang="it">Disabilitato</choice>
+        <choice xml:lang="cs">Znepřístupněno</choice>
+        <choice xml:lang="de">Deaktiviert</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Acnowledgement Pulse 'Forward only'</label>
+    <label xml:lang="it">Impulso ACK 'Solo in Avanti'</label>
+    <label xml:lang="cs">Potvrzovací impuls 'Pouze vpřed'</label>
+    <label xml:lang="de">ACKnoledgement Pulse 'nur Vorwärts'</label>
+  </variable>
+  <variable CV="154" mask="XVXXXXXX" default="0" item="Advanced Group 1 Option 3">
+    <enumVal>
+      <enumChoice choice="Normal">
+        <choice>Enabled</choice>
+        <choice xml:lang="fr">Activé</choice>
+        <choice xml:lang="it">Abilitato</choice>
+        <choice xml:lang="cs">Zpřístupněno</choice>
+        <choice xml:lang="de">Aktiviert</choice>
+      </enumChoice>
+      <enumChoice choice="Reverse Only">
+        <choice>Disabled</choice>
+        <choice xml:lang="fr">Désactivé</choice>
+        <choice xml:lang="it">Disabilitato</choice>
+        <choice xml:lang="cs">Znepřístupněno</choice>
+        <choice xml:lang="de">Deaktiviert</choice>
+      </enumChoice>
+    </enumVal>
+    <label>ACKnowledgement Pulse 'Reverse only'</label>
+    <label xml:lang="it">Impulso ACK 'Solo in Retro'</label>
+    <label xml:lang="cs">Potvrzovací impuls 'Pouze vzad'</label>
+    <label xml:lang="de">ACKnoledgement Pulse 'nur Rückwärts'</label>
+  </variable>
+  <variable CV="154" mask="XXXXVXXX" default="0" item="Advanced Group 1 Option 5">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label>Second Motorola Address</label>
+    <label xml:lang="it">Secondo Indirizzo Motorola</label>
+    <label xml:lang="cs">Druhá adresa Motorola</label>
+    <label xml:lang="de">Zweite Motorola Adresse</label>
+  </variable>
+  <variable CV="154" item="Delay Shutdown untill end of Starting Whistle" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Delay Shutdown</label>
+    <label xml:lang="it">Ritardo Spegnimento</label>
+    <label xml:lang="cs">Zpoždění vypnutí</label>
+    <label xml:lang="de">&lt;html&gt;DAMPF: Anfahrt verzögern, bis&lt;br&gt;„Anfahrpfiff“ vollständig abgespielt.&lt;/html&gt;</label>
+  </variable>
+  <variable CV="155" mask="XXXVVVVV" item="Half Speed Key Extension" default="0">
+    <enumVal>
+      <enumChoice choice="Use Setting in CV124 above">
+        <choice>Setting in CV124</choice>
+        <choice xml:lang="it">parametri in CV124</choice>
+        <choice xml:lang="cs">Nastavení v CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+      <enumChoice choice="F20">
+        <choice>F20</choice>
+      </enumChoice>
+      <enumChoice choice="F21">
+        <choice>F21</choice>
+      </enumChoice>
+      <enumChoice choice="F22">
+        <choice>F22</choice>
+      </enumChoice>
+      <enumChoice choice="F23">
+        <choice>F23</choice>
+      </enumChoice>
+      <enumChoice choice="F24">
+        <choice>F24</choice>
+      </enumChoice>
+      <enumChoice choice="F25">
+        <choice>F25</choice>
+      </enumChoice>
+      <enumChoice choice="F26">
+        <choice>F26</choice>
+      </enumChoice>
+      <enumChoice choice="F27">
+        <choice>F27</choice>
+      </enumChoice>
+      <enumChoice choice="F28">
+        <choice>F28</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Half Speed Key Extension</label>
+    <label xml:lang="it">Estensione tasto funzione Mezza velocità</label>
+    <label xml:lang="cs">Rozšíření funkční klávesy poloviční rychlost</label>
+    <label xml:lang="de">Halbgeschwindigkeit mit Taste</label>
+  </variable>
+  <variable CV="155" item="Half Speed" mask="VVVXXXXX">
+     <enumVal>
+      <enumChoice choice="0.625 (default)">
+        <choice>0.625 (default)</choice>
+        <choice xml:lang="de">0,625 (Standard)</choice>
+        <choice xml:lang="cs">0,625 (Výchozí)</choice>
+      </enumChoice>
+      <enumChoice choice="0.125">
+        <choice>0.125</choice>
+        <choice xml:lang="de">0,125</choice>
+        <choice xml:lang="cs">0,125</choice>
+      </enumChoice>
+      <enumChoice choice="0.250">
+        <choice>0.250</choice>
+        <choice xml:lang="de">0,250</choice>
+        <choice xml:lang="cs">0,250</choice>
+      </enumChoice>
+      <enumChoice choice="0.375">
+        <choice>0.375</choice>
+        <choice xml:lang="de">0,375</choice>
+        <choice xml:lang="cs">0,375</choice>
+      </enumChoice>
+      <enumChoice choice="0.5">
+        <choice>0.5</choice>
+        <choice xml:lang="de">0,5</choice>
+        <choice xml:lang="cs">0,5</choice>
+      </enumChoice>
+      <enumChoice choice="0.625">
+        <choice>0.625</choice>
+        <choice xml:lang="de">0,625</choice>
+        <choice xml:lang="cs">0,625</choice>
+      </enumChoice>
+      <enumChoice choice="0.75">
+        <choice>0.75</choice>
+        <choice xml:lang="de">0,75</choice>
+        <choice xml:lang="cs">0,75</choice>
+      </enumChoice>
+      <enumChoice choice="0.875">
+        <choice>0.875</choice>
+        <choice xml:lang="de">0,875</choice>
+        <choice xml:lang="cs">0,875</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Half Speed</label>
+    <label xml:lang="de">Halbgeschwindigkeit</label>
+    <label xml:lang="cs">Poloviční rychlost</label>
+  </variable>
+  <variable CV="156" item="Shunt Function Key Extension" default="0">
+    <enumVal>
+      <enumChoice choice="Use Setting in CV124 above">
+        <choice>Setting in CV124</choice>
+        <choice xml:lang="it">parametri in CV124</choice>
+        <choice xml:lang="cs">Nastavení v CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+      <enumChoice choice="F20">
+        <choice>F20</choice>
+      </enumChoice>
+      <enumChoice choice="F21">
+        <choice>F21</choice>
+      </enumChoice>
+      <enumChoice choice="F22">
+        <choice>F22</choice>
+      </enumChoice>
+      <enumChoice choice="F23">
+        <choice>F23</choice>
+      </enumChoice>
+      <enumChoice choice="F24">
+        <choice>F24</choice>
+      </enumChoice>
+      <enumChoice choice="F25">
+        <choice>F25</choice>
+      </enumChoice>
+      <enumChoice choice="F26">
+        <choice>F26</choice>
+      </enumChoice>
+      <enumChoice choice="F27">
+        <choice>F27</choice>
+      </enumChoice>
+      <enumChoice choice="F28">
+        <choice>F28</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Shunt Function Key Extension</label>
+    <label xml:lang="it">Estensione tasto funzione Manovra</label>
+    <label xml:lang="cs">Rozšíření funkční klávesy posun</label>
+    <label xml:lang="de">ABV deaktivieren</label>
+  </variable>
+  <variable CV="157" item="MAN Key Extension (Disable HLU or ABC signal control)" default="0" tooltip="Disables ABC and HLU Signal Control">
+    <enumVal>
+      <enumChoice choice="MAN (Zimo)">
+        <choice>Setting in CV124</choice>
+        <choice xml:lang="it">parametri in CV124</choice>
+        <choice xml:lang="cs">Nastavení v CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+    </enumVal>
+    <label>MAN Key Extension (Disable HLU or ABC signal control)</label>
+    <label xml:lang="it">Estensione tasto funzione MAN (disabilita controllo segnale HLU o ABC)</label>
+    <label xml:lang="cs">Rozšíření funkční klávesy MAN (zakázání řízení signálem HLU nebo ABC)</label>
+    <label xml:lang="de">Auswahl der MAN-Taste (Abschalten von HLU bzw. ABC)</label>
+  </variable>
+    <variable CV="158" item="RailCom speed reporting method" mask="XXXXXVXX" default="0">
+    <enumVal>
+      <enumChoice choice="Zimo for MX31ZL" value="0">
+      <choice>Zimo for MX31ZL</choice>
+      <choice xml:lang="cs">Zimo pro MX31ZL</choice>
+      <choice xml:lang="de">„alte“ Variante (für MX31ZL)</choice>
+      </enumChoice>
+      <enumChoice choice="Standard Reporting" value="1">
+      <choice>Standard Reporting</choice>
+      <choice xml:lang="cs">Standardní zprávy</choice>
+      <choice xml:lang="de">Rückmeldung nach NMRA</choice>
+      </enumChoice>
+    </enumVal>
+    <label>RailCom speed reporting method</label>
+    <label xml:lang="de">RailCom Geschwindigkeits-Rückmeldung</label>
+    <label xml:lang="cs">Metoda hlášení rychlosti RailCom</label>
+  </variable>
+  <variable CV="158" item="Standing Sound on premature shutdown" mask="XXXXVXXX" default="0" exclude="">
+    <enumVal>
+      <enumChoice choice="Present" value="0">
+        <choice>Present</choice>
+        <choice xml:lang="it">Presente</choice>
+        <choice xml:lang="cs">Přítomný</choice>
+        <choice xml:lang="de">Nein</choice>
+      </enumChoice>
+      <enumChoice choice="Disappear" value="1">
+        <choice>Disappear</choice>
+        <choice xml:lang="it">Sparisce</choice>
+        <choice xml:lang="cs">Zmizí</choice>
+        <choice xml:lang="de">Ja</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Standing Sound on premature shutdown</label>
+    <label xml:lang="it">Suono distinto per arresto prematuro</label>
+    <label xml:lang="cs">Zvuk stání při předčasném vypnutí</label>
+    <label xml:lang="de">Standgeräusch vorzeitig abbrechen</label>
+  </variable>
+  <variable CV="158" item="Chuff rate at higher speed steps" mask="XXXVXXXX" default="0" exclude="">
+    <enumVal>
+      <enumChoice choice="Normal" value="0">
+        <choice>Normal</choice>
+        <choice xml:lang="it">Normale</choice>
+        <choice xml:lang="cs">Normální</choice>
+        <choice xml:lang="de">Normal</choice>
+      </enumChoice>
+      <enumChoice choice="Reduced" value="1">
+        <choice>Reduced</choice>
+        <choice xml:lang="it">Ridotta</choice>
+        <choice xml:lang="cs">Snížená</choice>
+        <choice xml:lang="de">Geringer</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Chuff rate at higher speed steps</label>
+    <label xml:lang="it">Frequenza di Chuff a velocità massima</label>
+    <label xml:lang="cs">Frekvence výfuků páry při vyšších rychlostech</label>
+    <label xml:lang="de">&lt;html&gt;DAMPFschlag Häufigkeit steigt&lt;br&gt;beim Schnellfahren unterproportional&lt;/html&gt;</label>
+  </variable>
+  <variable CV="158" item="Drop one speed step to lower turbocharger" mask="XXVXXXXX" default="0" exclude="">
+    <enumVal>
+      <enumChoice choice="Off (default)" value="0">
+        <choice>Normal</choice>
+        <choice xml:lang="it">Normale</choice>
+        <choice xml:lang="cs">Normální</choice>
+        <choice xml:lang="de">Normal</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="1">
+        <choice>Reduced</choice>
+        <choice xml:lang="it">Ridotta</choice>
+        <choice xml:lang="cs">Snížený</choice>
+        <choice xml:lang="de">Absenken</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Drop one speed step to lower turbocharger</label>
+    <label xml:lang="it">Diminiusci di uno step di velocità per diminuire il Turbocompressore</label>
+    <label xml:lang="cs">Snížení jednoho rychlostního stupně sníží turbodmychadlo</label>
+    <label xml:lang="de">Absenkung Diesel-Sound und Turbolader Sound</label>
+  </variable>
+    <variable CV="159" mask="VVVVVVXX" item="Output 9 effect generated" minOut="9">
+     <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
+    </enumVal>
+    <label>Function output 7 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 7</label>
+    <label xml:lang="cs">Generátor efektů funkční výstup 7</label>
+    <label xml:lang="de">FA7 Effekt</label>
+  </variable>
+  <variable CV="159" mask="XXXXXXVV" item="Output 9 behavior" minOut="9">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
+    <label>Function output 7 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 7</label>
+    <label xml:lang="cs">Chování funkční výstup 7</label>
+    <label xml:lang="de">FA7 Verhalten</label>
+  </variable>
+  
+  <variable CV="160" mask="VVVVVVXX" item="Output 10 effect generated" minOut="10">
+     <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
+    </enumVal>
+    <label>Function output 8 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 8</label>
+    <label xml:lang="cs">Generátor efektů funkční výstup 8</label>
+    <label xml:lang="de">FA8 Effekt</label>
+  </variable>
+  <variable CV="160" mask="XXXXXXVV" item="Output 10 behavior" minOut="10">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
+    <label>Function output 8 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 8</label>
+    <label xml:lang="cs">Chování funkční výstup 8</label>
+    <label xml:lang="de">FA8 Verhalten</label>
+  </variable>
+ <variable item="Servo Protocol" CV="161" mask="XXXXXXXV" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NegPosPulse.xml"/>
+    <label>Servo Protocol</label>
+    <label xml:lang="it">Protocollo Servo</label>
+    <label xml:lang="cs">Protokol serva</label>
+    <label xml:lang="de">Servo Protokoll</label>
+  </variable>
+  <variable item="Servo Control Signal" CV="161" mask="XXXXXXVX" default="0" exclude="">
+    <enumVal>
+      <enumChoice choice="Only Active for movement" value="0">
+        <choice>Only Active for movement</choice>
+        <choice xml:lang="it">Solo durante movimento</choice>
+        <choice xml:lang="cs">Aktivní pouze během pohybu</choice>
+        <choice xml:lang="de">aktiv während Bewegung</choice>
+      </enumChoice>
+      <enumChoice choice="Allways Active" value="1">
+        <choice>Allways Active</choice>
+        <choice xml:lang="it">Attivo sempre</choice>
+        <choice xml:lang="cs">Aktivní vždy</choice>
+        <choice xml:lang="de">immer aktiv</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Servo Control Signal</label>
+    <label xml:lang="it">Segnale controllo Servo</label>
+    <label xml:lang="cs">Řídící signál serva</label>
+    <label xml:lang="de">Servo Steuersignal</label>
+  </variable>
+  <variable item="Servo Centering" CV="161" mask="XXXXXVXX" default="0" exclude="">
+    <enumVal>
+      <enumChoice choice="Moves to centre in dual key if both Fn's off">
+        <choice>Moves to centre in dual key if both Fn's off</choice>
+        <choice xml:lang="it">Muove al centro se entrambe le Funz. in Off</choice>
+        <choice xml:lang="cs">Při dvouklávesovém ovládání jsou obě Fn vypnuté potom se přesune do středové polohy</choice>
+        <choice xml:lang="de">bei Zweitastenbedienung: Mittelstellung, wenn beide Funktionen 0.</choice>
+      </enumChoice>
+      <enumChoice choice="Only moves if function key pressed">
+        <choice>Only moves if function key pressed</choice>
+        <choice xml:lang="it">Muove solo se tasto Funz. premuto</choice>
+        <choice xml:lang="cs">Servo se přestavuje pouze pokud je funkční klávesa stisknuta</choice>
+        <choice xml:lang="de">nur wenn Taste gedrückt ist</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Servo Centering</label>
+    <label xml:lang="it">Centraggio Servo</label>
+    <label xml:lang="cs">Středová poloha serva</label>
+    <label xml:lang="de">Servo Mittelstellung</label>
+  </variable>
+  <variable item="Servo 1 Left Stop" CV="162" default="49" exclude="">
+    <decVal/>
+    <label>Servo 1 Left Stop</label>
+    <label xml:lang="it">Servo 1 Stop Sinistro</label>
+    <label xml:lang="cs">Koncová poloha vlevo servo 1</label>
+    <label xml:lang="de">Endstellung links</label>
+  </variable>
+  <variable item="Servo 1 Right Stop" CV="163" default="205" exclude="">
+    <decVal/>
+    <label>Servo 1 Right Stop</label>
+    <label xml:lang="it">Servo 1 Stop Destro</label>
+    <label xml:lang="cs">Koncová poloha vpravo servo 1</label>
+    <label xml:lang="de">Endstellung rechts</label>
+  </variable>
+  <variable item="Servo 1 Centre" CV="164" default="127" exclude="">
+    <decVal/>
+    <label>Servo 1 Centre</label>
+    <label xml:lang="it">Servo 1 Centro</label>
+    <label xml:lang="cs">Středová poloha servo 1</label>
+    <label xml:lang="de">Mittelstellung</label>
+  </variable>
+  <variable item="Servo 1 Rotation Speed" CV="165" default="30" exclude="">
+    <decVal/>
+    <label>Servo 1 Rotation Speed</label>
+    <label xml:lang="it">Servo 1 Velocità rotazione</label>
+    <label xml:lang="cs">Rychlost přestavování servo 1</label>
+    <label xml:lang="de">Umlaufzeit</label>
+  </variable>
+  <variable item="Servo 2 Left Stop" CV="166" default="49" exclude="">
+    <decVal/>
+    <label>Servo 2 Left Stop</label>
+    <label xml:lang="it">Servo 2 Stop Sinistro</label>
+    <label xml:lang="cs">Koncová poloha vlevo servo 2</label>
+    <label xml:lang="de">Endstellung links</label>
+  </variable>
+  <variable item="Servo 2 Right Stop" CV="167" default="205" exclude="">
+    <decVal/>
+    <label>Servo 2 Right Stop</label>
+    <label xml:lang="it">Servo 2 Stop Destro</label>
+    <label xml:lang="cs">Koncová poloha vpravo servo 2</label>
+    <label xml:lang="de">Endstellung rechts</label>
+  </variable>
+  <variable item="Servo 2 Centre" CV="168" default="127" exclude="">
+    <decVal/>
+    <label>Servo 2 Centre</label>
+    <label xml:lang="it">Servo 2 Centro</label>
+    <label xml:lang="cs">Středová poloha servo 2</label>
+    <label xml:lang="de">Mittelstellung</label>
+  </variable>
+  <variable item="Servo 2 Rotation Speed" CV="169" default="30" exclude="">
+    <decVal/>
+    <label>Servo 2 Rotation Speed</label>
+    <label xml:lang="it">Servo 2 Velocità rotazione</label>
+    <label xml:lang="cs">Rychlost přestavování servo 2</label>
+    <label xml:lang="de">Umlaufzeit</label>
+  </variable>
+  <variable item="Servo 3 Left Stop" CV="170" default="49" >
+    <decVal/>
+    <label>Servo 3 Left Stop</label>
+    <label xml:lang="it">Servo 3 Stop Sinistro</label>
+    <label xml:lang="cs">Koncová poloha vlevo servo 3</label>
+    <label xml:lang="de">Endstellung links</label>
+  </variable>
+  <variable item="Servo 3 Right Stop" CV="171" default="205" >
+    <decVal/>
+    <label>Servo 3 Right Stop</label>
+    <label xml:lang="it">Servo 3 Stop Destro</label>
+    <label xml:lang="cs">Koncová poloha vpravo servo 3</label>
+    <label xml:lang="de">Endstellung rechts</label>
+  </variable>
+  <variable item="Servo 3 Centre" CV="172" default="127" >
+    <decVal/>
+    <label>Servo 3 Centre</label>
+    <label xml:lang="it">Servo 3 Centro</label>
+    <label xml:lang="cs">Středová poloha servo 3</label>
+    <label xml:lang="de">Mittelstellung</label>
+  </variable>
+  <variable item="Servo 3 Rotation Speed" CV="173" default="30" >
+    <decVal/>
+    <label>Servo 3 Rotation Speed</label>
+    <label xml:lang="it">Servo 3 Velocità rotazione</label>
+    <label xml:lang="cs">Rychlost přestavování servo 3</label>
+    <label xml:lang="de">Umlaufzeit</label>
+  </variable>
+  <variable item="Servo 4 Left Stop" CV="174" default="49" >
+    <decVal/>
+    <label>Servo 4 Left Stop</label>
+    <label xml:lang="it">Servo 4 Stop Sinistro</label>
+    <label xml:lang="cs">Koncová poloha vlevo servo 4</label>
+    <label xml:lang="de">Endstellung links</label>
+  </variable>
+  <variable item="Servo 4 Right Stop" CV="175" default="205" >
+    <decVal/>
+    <label>Servo 4 Right Stop</label>
+    <label xml:lang="it">Servo 4 Stop Destro</label>
+    <label xml:lang="cs">Koncová poloha vpravo servo 4</label>
+    <label xml:lang="de">Endstellung rechts</label>
+  </variable>
+  <variable item="Servo 4 Centre" CV="176" default="127" >
+    <decVal/>
+    <label>Servo 4 Centre</label>
+    <label xml:lang="it">Servo 4 Centro</label>
+    <label xml:lang="cs">Středová poloha servo 4</label>
+    <label xml:lang="de">Mittelstellung</label>
+  </variable>
+  <variable item="Servo 4 Rotation Speed" CV="177" default="30" >
+    <decVal/>
+    <label>Servo 4 Rotation Speed</label>
+    <label xml:lang="it">Servo 4 Velocità rotazione</label>
+    <label xml:lang="cs">Rychlost přestavování servo 4</label>
+    <label xml:lang="de">Umlaufzeit</label>
+  </variable>
+  <variable CV="178" item="Analog Vstart" default="0">
+    <decVal min="0" max="255"/>
+    <label>Analog Vstart</label>
+    <label xml:lang="de">Anfahrspannung Analog</label>
+    <label xml:lang="cs">Analog Rozjezdové napětí</label>
+  </variable>
+  <variable CV="179" item="Analog Vhigh" default="0">
+    <decVal min="0" max="255"/>
+    <label>Analog Vhigh</label>
+    <label xml:lang="de">Geschwindigkeit Analog</label>
+    <label xml:lang="cs">Analog Maximální napětí</label>
+  </variable>
+  <variable item="Servo 1 Function Allocation" CV="181" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
+    <label>Servo 1 Function Allocation</label>
+    <label xml:lang="it">Servo 1 allocaz.Funzioni</label>
+    <label xml:lang="cs">Přiřazení funkcí servo 1</label>
+    <label xml:lang="de">Funktionszuordnung</label>
+  </variable>
+  <variable item="Servo 2 Function Allocation" CV="182" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
+    <label>Servo 2 Function Allocation</label>
+    <label xml:lang="it">Servo 2 allocaz.Funzioni</label>
+    <label xml:lang="cs">Přiřazení funkcí servo 2</label>
+    <label xml:lang="de">Funktionszuordnung</label>
+  </variable>
+  <variable item="Servo 3 Function Allocation" CV="183" default="0" >
+    <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
+    <label>Servo 3 Function Allocation</label>
+    <label xml:lang="it">Servo 3 allocaz.Funzioni</label>
+    <label xml:lang="cs">Přiřazení funkcí servo 3</label>
+    <label xml:lang="de">Funktionszuordnung</label>
+  </variable>
+  <variable item="Servo 4 Function Allocation" CV="184" default="0" >
+    <xi:include href="http://jmri.org/xml/decoders/zimo/enum-Fx_servo.xml"/>
+    <label>Servo 4 Function Allocation</label>
+    <label xml:lang="it">Servo 4 allocaz.Funzioni</label>
+    <label xml:lang="cs">Přiřazení funkcí servo 4</label>
+    <label xml:lang="de">Funktionszuordnung</label>
+  </variable>
+  <variable CV="190" item="Global lighting option 5">
+    <decVal min="0" max="9"/>
+    <label>Slow Fade, Fade In Time</label>  
+  </variable>
+  <variable CV="191" item="Global lighting option 6">
+    <decVal min="0" max="9"/>
+    <label>Slow Fade, Fade Out Time</label>  
+  </variable>  
+  <variable CV="193" item="ABC Shuttle Wait Time" default="0">
+    <decVal min="0" max="255"/>
+    <label>Shuttle Terminus Wait Time</label>
+  </variable>
+  <variable CV="194" item="ABC Shuttle Intermediate Wait Time" default="0">
+    <decVal min="0" max="255"/>
+    <label>Shuttle Intermediate Stops Wait Time (0=no stop)</label>
+  </variable>  
 </variables>

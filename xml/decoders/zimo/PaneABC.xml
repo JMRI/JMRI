@@ -22,28 +22,65 @@
     </label>
     <row>
       <column>
-        <display item="Distance controlled stopping Distance"/>
-        <display item="Distance controlled stopping speed correction (ABC)"/>
-        <display item="Distance controlled stopping speed correction (HLU)"/>
+        <row>
+          <display item="Distance controlled stopping Distance"/>
+          <display item="Distance controlled stopping Distance" format="hslider" label=""/>
+        </row>
+        <row>
+          <display item="Distance controlled stopping speed correction (ABC)"/>
+          <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label=""/>
+        </row>
+        <row>
+          <display item="Distance controlled stopping speed correction (HLU)"/>
+          <display item="Distance controlled stopping speed correction (HLU)" label="" format="hslider"/>
+        </row>
         <label>
           <text> </text>
         </label>
-      </column>
-      <column>
-        <display item="Distance controlled stopping Distance" format="hslider" label="">
-          <label/>
-        </display>
-        <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label="">
-          <label/>
-        </display>
-        <display item="Distance controlled stopping speed correction (HLU)" label="" format="hslider">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
+        <row>
+          <display item="stopping distance fwd high">
+           <label>Alternative Stopping Distance Fwd High Byte</label>
+          </display>
+          <display item="stopping distance fwd high" label="" format="hslider">
+            <label> </label>
+          </display>
+          </row>
+        <row>
+          <display item="stopping distance fwd low">
+           <label>Alternative Stopping Distance Fwd Low Byte</label>
+          </display>
+          <display item="stopping distance fwd low" label="" format="hslider">
+            <label/>
+          </display>
+        </row>
+        <row>
+          <display item="stopping distance rev high">
+           <label>Alternative Stopping Distance Rev High Byte</label>
+          </display>
+          <display item="stopping distance rev high" label="" format="hslider">
+            <label/>
+          </display>
+        </row>
+        <row>
+          <display item="stopping distance rev low">
+           <label>Alternative Stopping Distance Rev Low Byte</label>
+          </display>
+          <display item="stopping distance rev low" label="" format="hslider">
+            <label/>
+          </display>
+        </row>
       </column>
     </row>
+    <row>
+
+      <column>
+
+      </column>
+      <column>
+
+      </column>
+    </row>
+    
     <row>
       <column>
         <label>
@@ -145,6 +182,9 @@
       </column>
     </row>
     <separator/>
+    <label>
+          <text> </text>
+    </label>
     <row>
       <column>
         <display item="Signal Dependent Reaction Time"/>
@@ -152,11 +192,17 @@
           <text> </text>
         </label>
       </column>
-      <column>
-        <display item="Activate Residence Time"/>
-        <label>
+      
+    </row>
+        <separator/>
+    <label>
           <text> </text>
-        </label>
+    </label>
+    <row>
+      <column>
+         <display item="Asymmetric DCC shuttle"/>
+         <display item="ABC Shuttle Wait Time"/>
+         <display item="ABC Shuttle Intermediate Wait Time"/>
       </column>
     </row>
   </column>
