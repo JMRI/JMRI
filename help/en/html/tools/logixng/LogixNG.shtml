@@ -183,22 +183,28 @@
       <dl>
         <dt>Start LogixNGs on load</dt>
 
-        <dd>If checked, the <strong>enabled</strong> LogixNG definitions will be active after the
-        completion of the PanelPro xml data file loading. If not checked, the LogixNGs will be
-        inactive until <strong>Tools &rArr; LogixNG &rArr; Start LogixNG</strong> is selected. The default
-        setting is checked.</dd>
+        <dd>
+          <p>If checked, the <strong>enabled</strong> LogixNG definitions will be active after the
+          completion of the PanelPro xml data file loading. If not checked, the LogixNGs will be
+          inactive until <strong>Tools &rArr; LogixNG &rArr; Start LogixNG</strong> is selected.
+          The default setting is checked.</p>
+        </dd>
 
         <dt>Install Debugger</dt>
 
-        <dd>LogixNG has a built in debugger. This option needs to be enabled during start up for the
-        debugger to work. See <a href="../../../package/jmri/jmrit/logixng/ConditionalNGDebugger.shtml">
-        LogixNG Debugger</a> for information about the debugger.</dd>
+        <dd>
+          <p>LogixNG has a built in debugger. This option needs to be enabled during start up for the
+          debugger to work. See <a href="../../../package/jmri/jmrit/logixng/ConditionalNGDebugger.shtml">
+          LogixNG Debugger</a> for information about the debugger.</p>
+        </dd>
 
         <dt>Show system names and user names</dt>
 
-        <dd>The LogixNG expressions and actions have names. These names are used internally by
-        LogixNG. In certain developer situations, making the names visible can be helpful. The
-        default is unchecked.</dd>
+        <dd>
+          <p>The LogixNG expressions and actions have names. These names are used internally by
+          LogixNG. In certain developer situations, making the names visible can be helpful. The
+          default is unchecked.</p>
+        </dd>
 
         <dt>Highlight row in ConditionalNG editor</dt>
 
@@ -216,16 +222,31 @@
             <li>Ctrl + X: Cut</li>
             <li>Ctrl + C: Copy</li>
             <li>Ctrl + V: Paste</li>
+            <li>Shift + Ctrl + V: Paste copy</li>
+            <li>Shift + Ctrl + R: Remove socket</li>
+            <li>Ctrl + D: Disable</li>
+            <li>Shift + Ctrl + D: Enable</li>
           </ul>
 
           <p>For macOS, use Cmd instead of Ctrl.</p>
         </dd>
 
+        <dt>Show system names in exceptions<span class="since">since 5.1.6</span></dt>
+
+        <dd>
+          <p>When this option is enabled, the system name of the LogixNG item will be included in the
+          exception dialog.  This will help with finding the LogixNG and ConditionalNG that created
+          the error.  A related change to the LogixNG browser is the option to include the system
+          name on the browser report.</p>
+        </dd>
+
         <dt>Error Handling Options</dt>
 
-        <dd>LogixNG has robust error handling. The combo box selection provides the default setting.
-        Individual expressions and actions can override the default setting. For details, see
-        <a href="ErrorHandling.shtml">Error Handling</a></dd>
+        <dd>
+          <p>LogixNG has robust error handling. The combo box selection provides the default setting.
+          Individual expressions and actions can override the default setting. For details, see
+          <a href="ErrorHandling.shtml">Error Handling</a></p>
+        </dd>
 
         <dd>
         </dd>
@@ -237,7 +258,7 @@
 
       <h2 id="tools">LogixNG Tools</h2>
 
-      <p>LogixNG has four system level tools at Tools &rArr; LogixNG.</p>
+      <p>LogixNG has five system level tools at <strong>Tools &rArr; LogixNG</strong>.</p>
 
       <p><strong>Start LogixNG</strong> and <strong>Stop LogixNG</strong> are used to control the
       processing of LogixNG ConditionalNG defintions. When LogixNG is <strong>active</strong> ,
@@ -253,6 +274,10 @@
 
       <p>Logix definitions can be be imported into LogixNG using <a href=
       "../../../package/jmri/jmrit/logixng/LogixImport.shtml">Import Logix</a>.</p>
+
+      <p>The <strong>Inline LogixNG</strong> tool displays the LogixNG definitions that have been
+      attached to panel items.  For details, see
+      <a href="../../../package/jmri/jmrit/logixng/InlineLogixNG.shtml">Inline LogixNG</a>.</p>
 
       <h2>Documentation</h2>
 
