@@ -2,6 +2,8 @@ package jmri.jmrit.dispatcher;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -59,9 +61,39 @@ public class AutoTrainAction {
     private ArrayList<TransitSection> _activeTransitSectionList = new ArrayList<TransitSection>();
     private ArrayList<TransitSectionAction> _activeActionList = new ArrayList<TransitSectionAction>();
 
+    // this method is called by AutoActiveTrain when target speed goes from 0 to
+    // a greater value.and the train is currently stopped
+    protected synchronized boolean isDelayedStart(float speed) {
+        for (TransitSectionAction t: _activeActionList) {
+            if (t.getWhenCode() == TransitSectionAction.PRESTARTDELAY
+                    && t.getTargetTransitSection().getSection() == _autoActiveTrain.getCurrentAllocatedSection().getSection()) {
+                log.debug("Start Internal resume task delay[{}] resume target speed[{}] Existing Thread[{}], Section:[{}]",
+                        t.getDataWhen(), speed,t.getWaitingThread(), t.getTargetTransitSection().getSectionName());
+                if (t.getWaitingThread() == null) {
+                    log.trace("Adding actions");
+                    t.setDataWhat1Float(speed);
+                    checkDelay(t);
+                    // now
+                    Iterator<TransitSectionAction> itrA = _activeActionList.iterator();
+                    while (itrA.hasNext()) {
+                        TransitSectionAction tA = itrA.next();
+                        if (tA.getWhenCode() == TransitSectionAction.PRESTARTACTION) {
+                           checkDelay(tA);
+                        }
+                    }
+                } else {
+                    log.debug("Ignored, Prestart Process already running.");
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     // this method is called when an AutoActiveTrain enters a Section
     protected synchronized void addTransitSection(TransitSection ts) {
         _activeTransitSectionList.add(ts);
+        log.debug("Adding TransitSection[{}]",ts.getSectionName());
         ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
         // set up / execute Transit Section Actions if there are any
         if (tsaList.size() > 0) {
@@ -78,7 +110,13 @@ public class AutoTrainAction {
                     _activeActionList.add(tsa);
                     tsa.initialize();
                 }
+                tsa.setTargetTransitSection(ts); // indicate which section this action is for.
                 switch (tsa.getWhenCode()) {
+                    case TransitSectionAction.PRESTARTDELAY:
+                    case TransitSectionAction.PRESTARTACTION:
+                        // Do nothing, the PRESTARTACTIONS are only given to checkDay
+                        // When and if the prestartdelay begins.
+                        break;
                     case TransitSectionAction.ENTRY:
                         // on entry to Section - if here Section was entered
                         checkDelay(tsa);
@@ -86,7 +124,6 @@ public class AutoTrainAction {
                     case TransitSectionAction.EXIT:
                         // on exit from Section
                         tsa.setWaitingForSectionExit(true);
-                        tsa.setTargetTransitSection(ts);
                         break;
                     case TransitSectionAction.BLOCKENTRY:
                         // on entry to specified Block in the Section
@@ -199,6 +236,7 @@ public class AutoTrainAction {
 
     // this method is called when an AutoActiveTrain exits a section
     protected synchronized void removeTransitSection(TransitSection ts) {
+        log.debug("Remove TransitSection[{}]",ts.getSectionName());
         for (int i = _activeTransitSectionList.size() - 1; i >= 0; i--) {
             if (_activeTransitSectionList.get(i) == ts) {
                 _activeTransitSectionList.remove(i);
@@ -212,6 +250,18 @@ public class AutoTrainAction {
                 checkDelay(_activeActionList.get(i));
             }
         }
+        // cancel any O/S actions not triggered.
+        for (int ix = _activeActionList.size()-1; ix > -1; ix--) {
+            TransitSectionAction t = _activeActionList.get(ix);
+            if ( t.getTargetTransitSection() == ts) {
+                if (t.getWaitingThread() != null) {
+                    // kill any task still waiting
+                    t.getWaitingThread().interrupt();
+                }
+                _activeActionList.remove(ix);
+                t=null;
+            }
+        }
     }
 
     // this method is called when an action has been completed
@@ -220,14 +270,13 @@ public class AutoTrainAction {
         if (tsa.getWaitingForSensor()) {
             tsa.disposeSensorListener();
         }
-        tsa.initialize();
-        // remove from active list if not continuous running
-        if (!_activeTrain.getResetWhenDone()) {
-            for (int i = _activeActionList.size() - 1; i >= 0; i--) {
-                if (_activeActionList.get(i) == tsa) {
-                    _activeActionList.remove(i);
-                    return;
-                }
+
+        Iterator<TransitSectionAction> itr = _activeActionList.iterator();
+        while (itr.hasNext()) {
+            TransitSectionAction t = itr.next();
+            if (t == tsa) {
+                itr.remove();
+                return;
             }
         }
     }
@@ -241,6 +290,7 @@ public class AutoTrainAction {
             Thread t = tsa.getWaitingThread();
             if (t != null) {
                 // interrupting an Action thread will cause it to terminate
+                log.trace("Interrupting [{}] Code[{}] Section[{}]",t.getName(),tsa.getWhatCode(),tsa.getTargetTransitSection().getSection().getDisplayName());
                 t.interrupt();
             }
             if (tsa.getWaitingForSensor()) {
@@ -320,6 +370,7 @@ public class AutoTrainAction {
         float temp = 0.0f;
         switch (tsa.getWhatCode()) {
             case TransitSectionAction.PAUSE:
+                log.trace("Pause Started Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 // pause for a number of fast minutes--e.g. station stop
                 if (_autoActiveTrain.getCurrentAllocatedSection().getNextSection() != null) {
                     // pause train if this is not the last Section
@@ -329,12 +380,20 @@ public class AutoTrainAction {
                 break;
             case TransitSectionAction.SETMAXSPEED:
                 // set maximum train speed to value
+                log.trace("Set Max Speed Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 temp = tsa.getDataWhat1();
                 _autoActiveTrain.setMaxSpeed(temp * 0.01f);
                 completedAction(tsa);
                 break;
+            case TransitSectionAction.PRESTARTRESUME:
+                // set current speed either higher or lower than current value
+                log.trace("Resume After Prestart Setting Target[{}] Section:[{}]",tsa.getDataWhat1Float(),tsa.getTargetTransitSection().getSectionName());
+                _autoActiveTrain.setTargetSpeedByPass (tsa.getDataWhat1Float());
+                completedAction(tsa);
+                break;
             case TransitSectionAction.SETCURRENTSPEED:
                 // set current speed either higher or lower than current value
+                log.trace("Set Current Speed Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 temp = tsa.getDataWhat1();
                 float spd = temp * 0.01f;
                 if (spd > _autoActiveTrain.getMaxSpeed()) {
@@ -345,6 +404,7 @@ public class AutoTrainAction {
                 break;
             case TransitSectionAction.RAMPTRAINSPEED:
                 // set current speed to target using specified ramp rate
+                log.trace("Set Ramp Speed Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 temp = tsa.getDataWhat1();
                 float spdx = temp * 0.01f;
                 if (spdx > _autoActiveTrain.getMaxSpeed()) {
@@ -355,6 +415,7 @@ public class AutoTrainAction {
                 break;
             case TransitSectionAction.TOMANUALMODE:
                 // drop out of automated mode and allow manual throttle control
+                log.trace("Goto Manual Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 _autoActiveTrain.initiateWorking();
                 if ((tsa.getStringWhat() != null) && (!tsa.getStringWhat().equals(""))) {
                     // optional Done sensor was provided, listen to it
@@ -364,8 +425,9 @@ public class AutoTrainAction {
                 break;
             case TransitSectionAction.SETLIGHT:
                 // set light on or off
+                log.trace("Set Light Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 if (_autoActiveTrain.getAutoEngineer() != null) {
-                    log.debug("{}: setting light (F0) to {}", _activeTrain.getTrainName(), tsa.getStringWhat());
+                    log.trace("{}: setting light (F0) to {}", _activeTrain.getTrainName(), tsa.getStringWhat());
                     if (tsa.getStringWhat().equals("On")) {
                         _autoActiveTrain.getAutoEngineer().setFunction(0, true);
                     } else if (tsa.getStringWhat().equals("Off")) {
@@ -378,16 +440,18 @@ public class AutoTrainAction {
                 break;
             case TransitSectionAction.STARTBELL:
                 // start bell (only works with sound decoder)
+                log.trace("Set Start Bell Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 if (_autoActiveTrain.getSoundDecoder() && (_autoActiveTrain.getAutoEngineer() != null)) {
-                    log.debug("{}: starting bell (F1)", _activeTrain.getTrainName());
+                    log.trace("{}: starting bell (F1)", _activeTrain.getTrainName());
                     _autoActiveTrain.getAutoEngineer().setFunction(1, true);
                 }
                 completedAction(tsa);
                 break;
             case TransitSectionAction.STOPBELL:
                 // stop bell (only works with sound decoder)
+                log.trace("Set Stop Bell Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 if (_autoActiveTrain.getSoundDecoder() && (_autoActiveTrain.getAutoEngineer() != null)) {
-                    log.debug("{}: stopping bell (F1)", _activeTrain.getTrainName());
+                    log.trace("{}: stopping bell (F1)", _activeTrain.getTrainName());
                     _autoActiveTrain.getAutoEngineer().setFunction(1, false);
                 }
                 completedAction(tsa);
@@ -396,8 +460,9 @@ public class AutoTrainAction {
             // sound horn for specified number of milliseconds - done in separate thread
             case TransitSectionAction.SOUNDHORNPATTERN:
                 // sound horn according to specified pattern - done in separate thread
+                log.trace("Sound Horn or Pattern Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 if (_autoActiveTrain.getSoundDecoder()) {
-                    log.debug("{}: sounding horn as specified in action", _activeTrain.getTrainName());
+                    log.trace("{}: sounding horn as specified in action", _activeTrain.getTrainName());
                     Runnable rHorn = new HornExecution(tsa);
                     Thread tHorn = jmri.util.ThreadingUtil.newThread(rHorn);
                     tsa.setWaitingThread(tHorn);
@@ -408,8 +473,9 @@ public class AutoTrainAction {
                 break;
             case TransitSectionAction.LOCOFUNCTION:
                 // execute the specified decoder function
+                log.trace("Set Loco Function Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 if (_autoActiveTrain.getAutoEngineer() != null) {
-                    log.debug("{}: setting function {} to {}", _activeTrain.getTrainName(),
+                    log.trace("{}: setting function {} to {}", _activeTrain.getTrainName(),
                             tsa.getDataWhat1(), tsa.getStringWhat());
                     int fun = tsa.getDataWhat1();
                     if (tsa.getStringWhat().equals("On")) {
@@ -422,6 +488,7 @@ public class AutoTrainAction {
                 break;
             case TransitSectionAction.SETSENSORACTIVE:
                 // set specified sensor active
+                log.trace("Set Sensor Active Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 s = InstanceManager.sensorManagerInstance().getSensor(tsa.getStringWhat());
                 if (s != null) {
                     // if sensor is already active, set it to inactive first
@@ -445,6 +512,7 @@ public class AutoTrainAction {
                 break;
             case TransitSectionAction.SETSENSORINACTIVE:
                 // set specified sensor inactive
+                log.trace("Set Sensor Inactive Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 s = InstanceManager.sensorManagerInstance().getSensor(tsa.getStringWhat());
                 if (s != null) {
                     if (s.getKnownState() == Sensor.ACTIVE) {
@@ -467,6 +535,7 @@ public class AutoTrainAction {
                 break;
             case TransitSectionAction.HOLDSIGNAL:
                 // set specified signalhead or signalmast to HELD
+                log.trace("Set Hold Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 SignalMast sm = null;
                 SignalHead sh = null;
                 String sName = tsa.getStringWhat();
@@ -476,17 +545,18 @@ public class AutoTrainAction {
                     if (sh == null) {
                         log.error("{}: Could not find SignalMast or SignalHead named '{}'", _activeTrain.getTrainName(), sName);
                     } else {
-                        log.debug("{}: setting signalHead '{}' to HELD", _activeTrain.getTrainName(), sName);
+                        log.trace("{}: setting signalHead '{}' to HELD", _activeTrain.getTrainName(), sName);
                         sh.setHeld(true);
                     }
                 } else {
-                    log.debug("{}: setting signalMast '{}' to HELD", _activeTrain.getTrainName(), sName);
+                    log.trace("{}: setting signalMast '{}' to HELD", _activeTrain.getTrainName(), sName);
                     sm.setHeld(true);
                 }
                 break;
             case TransitSectionAction.RELEASESIGNAL:
                 // set specified signalhead or signalmast to NOT HELD
-                sm = null;
+                log.trace("Set Release Hold Section:[{}]",tsa.getTargetTransitSection().getSectionName());
+               sm = null;
                 sh = null;
                 sName = tsa.getStringWhat();
                 sm = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(sName);
@@ -495,19 +565,21 @@ public class AutoTrainAction {
                     if (sh == null) {
                         log.error("{}: Could not find SignalMast or SignalHead named '{}'", _activeTrain.getTrainName(), sName);
                     } else {
-                        log.debug("{}: setting signalHead '{}' to NOT HELD", _activeTrain.getTrainName(), sName);
+                        log.trace("{}: setting signalHead '{}' to NOT HELD", _activeTrain.getTrainName(), sName);
                         sh.setHeld(false);
                     }
                 } else {
-                    log.debug("{}: setting signalMast '{}' to NOT HELD", _activeTrain.getTrainName(), sName);
+                    log.trace("{}: setting signalMast '{}' to NOT HELD", _activeTrain.getTrainName(), sName);
                     sm.setHeld(false);
                 }
                 break;
             case TransitSectionAction.ESTOP:
+                log.trace("EStop Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 _autoActiveTrain.getAutoEngineer().setSpeedImmediate(-1);
                 break;
             default:
-                log.error("illegal What code - {} - in call to executeAction", tsa.getWhatCode());
+                log.error("illegal What code - {} - in call to executeAction  Section:[{}]",
+                        tsa.getWhatCode(),tsa.getTargetTransitSection().getSectionName());
                 break;
         }
     }
@@ -520,6 +592,8 @@ public class AutoTrainAction {
         public TSActionDelay(TransitSectionAction tsa, int delay) {
             _tsa = tsa;
             _delay = delay;
+            log.debug("Delay Starting for Code [{}] in Section [{}] for [{}]",
+                    tsa.getWhatCode(),tsa.getTargetTransitSection().getSectionName(),delay);
         }
 
         @Override
@@ -635,8 +709,9 @@ public class AutoTrainAction {
                         // interrupting will cause termination without executing the action
                     }
                 } else if (_tsa.getWhenCode() == TransitSectionAction.TRAINSTART) {
-                    if ((_autoActiveTrain.getAutoEngineer() != null)
-                            && (!_autoActiveTrain.getAutoEngineer().isStopped())) {
+                    if ( _autoActiveTrain.getThrottle() != null
+                            && _autoActiveTrain.getAutoEngineer() != null
+                            && !_autoActiveTrain.getAutoEngineer().isStopped()) {
                         // if train is not currently stopped, wait for it to stop
                         boolean waitingForStop = true;
                         try {
@@ -655,8 +730,9 @@ public class AutoTrainAction {
                     // train is stopped, wait for it to start
                     try {
                         while (waitingOnTrain) {
-                            if ((_autoActiveTrain.getAutoEngineer() != null)
-                                    && (!_autoActiveTrain.getAutoEngineer().isStopped())) {
+                            if ( _autoActiveTrain.getThrottle() != null
+                                    && _autoActiveTrain.getAutoEngineer() != null
+                                    && !_autoActiveTrain.getAutoEngineer().isStopped()) {
                                 waitingOnTrain = false;
                             } else {
                                 Thread.sleep(_delay);
