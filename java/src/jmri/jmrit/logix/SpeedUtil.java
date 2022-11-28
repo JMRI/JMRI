@@ -55,12 +55,11 @@ public class SpeedUtil {
     private boolean _isForward = true;
     private float _rampThrottleIncrement;   // user specified throttle increment for ramping
     private int _rampTimeIncrement; // user specified time for ramp step increment
-    private float _speedIncrement;  // throttle's minimum speed step
 
     private RosterSpeedProfile _sessionProfile; // speeds measured in the session
     private SignalSpeedMap _signalSpeedMap;
-    private float _ma;  // milliseconds needed to increase speed by throttle step amount
-    private float _md;  // milliseconds needed to decrease speed by throttle step amount
+    private int _ma;  // milliseconds needed to increase speed by throttle step amount
+    private int _md;  // milliseconds needed to decrease speed by throttle step amount
     private ArrayList<BlockSpeedInfo> _speedInfo; // map max speeds and occupation times of each block in route
 
     // A SCALE_FACTOR of 44.704 divided by _scale, computes a scale speed of 100mph at full throttle.
@@ -349,8 +348,13 @@ public class SpeedUtil {
             delta = fromSpeed - toSpeed;
             time = _md * delta / incr;
         }
-        if (time < 50) {
-            time += delta * 500;  // Even with CV == 0, there must be some time to change speed
+        // delta / incr ought to be number of speed steps
+        if (time < 2 * delta / incr) {
+            time = 2 * delta / incr;  // Even with CV == 0, there must be some time to change speed
+        }
+        if (log.isTraceEnabled()) {
+            log.debug("getMomentumTime for {}, addr={}. fromSpeed={}, toSpeed= {}, time= {}ms for {} steps",
+                    _rosterId, getAddress(), fromSpeed, toSpeed, time, delta / incr);
         }
         return time;
     }
@@ -360,12 +364,9 @@ public class SpeedUtil {
      * @return speed step amount
      */
     protected float getThrottleSpeedStepIncrement() {
+        // JMRI throttles don't seem to get actual values
         if (_throttle != null) {
-            _speedIncrement = _throttle.getSpeedIncrement();
-            return _speedIncrement;
-        }
-        if (_speedIncrement > .001f) {
-            return _speedIncrement;
+            return _throttle.getSpeedIncrement();
         }
         return 1.0f / 126.0f;
     }
@@ -456,15 +457,15 @@ public class SpeedUtil {
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("makeRampParameters for {}, addr={}. _ma= {}ms/step, _md= {}ms/step. rampStepIncr= {} timeIncr= {} throttleStep= {}",
+            log.debug("makeRampParameters for {}, addr={}. _ma= {}ms/step, _md= {}ms/step. rampThrottleIncr= {} rampTimeIncr= {} throttleStep= {}",
                     _rosterId, getAddress(), _ma, _md, _rampThrottleIncrement, _rampTimeIncrement, getThrottleSpeedStepIncrement());
         }
     }
 
     // return milliseconds per one speed step
-    private float getMomentumFactor(Element cv) {
+    private int getMomentumFactor(Element cv) {
         Attribute attr = cv.getAttribute("value");
-        float num = 0;
+        int num = 0;
         if (attr != null) {
             try {
                  /*  .896sec per (throttle Speed Step Increment) is NMRA spec for each CV value
@@ -476,7 +477,8 @@ public class SpeedUtil {
                  Same for CV#24
                  */
                 num = Integer.parseInt( attr.getValue());
-                num = num * 896 * getThrottleSpeedStepIncrement();     // milliseconds per step
+                // reciprocal of getThrottleSpeedStepIncrement() is number of steps in use
+                num = Math.round(num * 896 * getThrottleSpeedStepIncrement());     // milliseconds per step
             } catch (NumberFormatException nfe) {
                 num = 0;
             }
@@ -487,7 +489,7 @@ public class SpeedUtil {
     }
 
     // return milliseconds per one speed step
-    private float getMomentumAdustment(Element cv) {
+    private int getMomentumAdustment(Element cv) {
         /*  .896sec per  is NMRA spec for each CV value
         CV#23
         This Configuration Variable contains additional acceleration rate information that is to be added to or 
@@ -499,7 +501,7 @@ public class SpeedUtil {
         Same for CV#24
         */
         Attribute attr = cv.getAttribute("value");
-        float num = 0;
+        int num = 0;
         if (attr != null) {
             try {
                 int val = Integer.parseInt(attr.getValue());
