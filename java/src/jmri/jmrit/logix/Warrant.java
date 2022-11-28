@@ -603,7 +603,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
-    protected String getRunningMessage() {
+    protected synchronized String getRunningMessage() {
         if (_delayStart) {
             return Bundle.getMessage("waitForDelayStart", _trainName, getBlockAt(0).getDisplayName());
         }

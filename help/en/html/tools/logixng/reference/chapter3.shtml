@@ -7,9 +7,6 @@
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference sockets">
   <!--#include virtual="/Style.shtml" -->
-  <style>
-    .add_sub {border: solid thin black !important;}
-  </style>
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -31,7 +28,7 @@
       <p>The right click context menu, introduced in chapter 1, is used to manage sockets.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter3/editor_context_menu.png"><img class="add_sub" src=
+        <a href="images/chapter3/editor_context_menu.png"><img class="image-border" src=
         "images/chapter3/editor_context_menu.png" alt="Chapter 3 editor context menu"></a>
       </div>
 
@@ -71,7 +68,7 @@
         "images/chapter3/remove_confirmation.png" alt="Chapter 3 remove confirmation"></a>
       </div>
 
-      <h3>Cut / Copy / Paste</h3>
+      <h3>Cut / Copy / Paste / Paste copy</h3>
 
       <p>These are covered in <a href="chapter2.shtml">chapter 2 - The clipboard</a>.</p>
 
@@ -94,13 +91,13 @@
       order to be A and D and (B or C).</p>
 
       <div style="margin-left: 2em; float: left;">
-        <a href="images/chapter3/move_before.png"><img src="images/chapter3/move_before.png" alt=
-        "Chapter 3 move before"></a>
+        <a href="images/chapter3/move_before.png"><img class="image-border"
+        src="images/chapter3/move_before.png" alt="Chapter 3 move before"></a>
       </div>
 
       <div style="margin-left: 2em; float: left;">
-        <a href="images/chapter3/move_after.png"><img src="images/chapter3/move_after.png" alt=
-        "Chapter 3 move after"></a>
+        <a href="images/chapter3/move_after.png"><img class="image-border"
+        src="images/chapter3/move_after.png" alt="Chapter 3 move after"></a>
       </div>
 
       <div style="clear: both">
@@ -116,8 +113,8 @@
       effectively disabled. The text for the row is displayed using a strikethrough format.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter3/disabled_item.png"><img src="images/chapter3/disabled_item.png"
-        alt="Chapter 3 disabled item"></a>
+        <a href="images/chapter3/disabled_item.png"><img class="image-border"
+        src="images/chapter3/disabled_item.png" alt="Chapter 3 disabled item"></a>
       </div>
 
       <h3>Lock / Unlock</h3>
@@ -141,12 +138,12 @@
       <h3>Change user name</h3>
 
       <p>When <strong>Change user name</strong> is enabled, a name can be assigned to the row. The
-      user name is used by <a href="chapter6.shtml#LastResult">Chapter 3 - Last result of digital
+      user name is used by <a href="chapter6.shtml#LastResult">Chapter 6 - Last result of digital
       expression</a>.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter3/user_name.png"><img src="images/chapter3/user_name.png" alt=
-        "Chapter 3 user name"></a>
+        <a href="images/chapter3/user_name.png"><img class="image-border"
+        src="images/chapter3/user_name.png" alt="Chapter 3 user name"></a>
       </div>
 
       <h3>Evaluate</h3>

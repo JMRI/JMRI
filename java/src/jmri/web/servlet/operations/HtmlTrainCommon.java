@@ -239,6 +239,9 @@ public class HtmlTrainCommon extends TrainCommon {
         if (attribute.equals(Setup.CONSIST)) {
             return engine.getConsistName();
         }
+        if (attribute.equals(Setup.DCC_ADDRESS)) {
+            return engine.getDccAddress();
+        }
         return getRollingStockAttribute(engine, attribute, isPickup, false);
     }
 

@@ -142,7 +142,7 @@ public class LinkedWarrantTest {
         JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return m.endsWith("Cmd #8.");
-        }, "Train starts to move at 8th command");
+        }, "Train starts to move at 8th command, but running message was " + warrant.getRunningMessage());
 
        // OBlock of route
         String[] route1 = {"OB12", "OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11", "OB12"};

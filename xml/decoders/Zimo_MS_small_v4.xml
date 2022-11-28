@@ -17,9 +17,9 @@
   <!--  Initial version, created from copy of Zimo Unified Software (version 40+) for the MX-series decoders -->
   <!-- v1  Nigel Cliffe. 29th July 2022, initial version to get most panes functioning   -->  
   <!--             noted in Zimo manual on Page 3 for differences to the MX series, Motor Control largely done -->
-  <!--             NOT YET DONE - Appears to be some new features around consists, and function keys to jump from consist to loco control -->
+  <!-- v1.1  24 Nov 2022.  Nigel Cliffe   Rationalisation of sub-component files, now grouped in blocks of CVs, rather than fairly random groupings -->
 
-  <version author="Nigel Cliffe" version="1.0" lastUpdated="2022/07/29"/>
+  <version author="Nigel Cliffe" version="1.1" lastUpdated="2022/11/24"/>
 
   <decoder>
     <family name="MS Sound (version 4+)" mfg="Zimo">
@@ -34,27 +34,27 @@
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
-          <label xml:lang="cs">FV 1</label>
+          <label xml:lang="cs">Funkční výstup 1</label>
         </output>
         <output name="4" label="FO 2">
           <label xml:lang="de">FA2</label>
-          <label xml:lang="cs">FV 2</label>
+          <label xml:lang="cs">Funkční výstup 2</label>
         </output>
         <output name="5" label="FO 3">
           <label xml:lang="de">FA3</label>
-          <label xml:lang="cs">FV 3</label>
+          <label xml:lang="cs">Funkční výstup 3</label>
         </output>
         <output name="6" label="FO 4">
           <label xml:lang="de">FA4</label>
-          <label xml:lang="cs">FV 4</label>
+          <label xml:lang="cs">Funkční výstup 4</label>
         </output>
         <output name="7" label="FO 5">
           <label xml:lang="de">FA5</label>
-          <label xml:lang="cs">FV 5</label>
+          <label xml:lang="cs">Funkční výstup 5</label>
         </output>
         <output name="8" label="FO 6">
           <label xml:lang="de">FA6</label>
-          <label xml:lang="cs">FV 6</label>
+          <label xml:lang="cs">Funkční výstup 6</label>
         </output>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
@@ -112,30 +112,14 @@
       </model>
 
       <model model="MS480 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="8" numFns="14" productID="2">
-        <output name="1" label="Front Light">
-          <label xml:lang="cs">Přední světla</label>
-        </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="cs">Zadní světla</label>
-        </output>
-        <output name="3" label="FO 1">
-          <label xml:lang="cs">FV 1</label>
-        </output>
-        <output name="4" label="FO 2">
-          <label xml:lang="cs">FV 2</label>
-        </output>
-        <output name="5" label="FO 3">
-          <label xml:lang="cs">FV 3</label>
-        </output>
-        <output name="6" label="FO 4">
-          <label xml:lang="cs">FV 4</label>
-        </output>
-        <output name="7" label="FO 5 (+5v)">
-          <label xml:lang="cs">FV 5 (+5V)</label>
-        </output>
-        <output name="8" label="FO 6 (+5v)">
-          <label xml:lang="cs">FV 6 (+5V)</label>
-        </output>
+        <output name="1" label="Front Light"/>
+        <output name="2" label="Rear Light"/>
+        <output name="3" label="FO 1"/>
+        <output name="4" label="FO 2"/>
+        <output name="5" label="FO 3"/>
+        <output name="6" label="FO 4"/>
+        <output name="7" label="FO 5 (+5v)"/>
+        <output name="8" label="FO 6 (+5v)"/>
         <size length="19" width="11" height="3.1" units="mm"/>
       </model>
 
@@ -259,12 +243,9 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99_MS_series.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV20.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152_MS_series.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
-      <!-- CV158 has both sound and Railcom information -->
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV199_MS_series.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV200-CV249_MS_series.xml"/>
+ 
      
       <variable CV="7" item="Decoder Version" readOnly="yes" default="4">
         <decVal/>
@@ -272,95 +253,81 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
-        <label xml:lang="cs">Verze dekodéru </label>
+        <label xml:lang="cs">Verze dekodéru: </label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="189" readOnly="yes" include="1">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Typ dekodéru</label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="190" readOnly="yes" include="2">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Typ dekodéru</label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="221" readOnly="yes" include="3">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Typ dekodéru</label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="222" readOnly="yes" include="4">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Typ dekodéru</label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="225" readOnly="yes" include="5">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Typ dekodéru</label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="246" readOnly="yes" include="6">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Typ dekodéru</label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="253" readOnly="yes" include="8">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Typ dekodéru</label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="253" readOnly="yes" include="10">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Typ dekodéru</label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
       </variable>
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>
         <label xml:lang="it">ID 2 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 2</label>
+        <label xml:lang="cs">Dekodér ID 2:</label>
       </variable>
       <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
         <label xml:lang="it">ID 3 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 3</label>
+        <label xml:lang="cs">Dekodér ID 3:</label>
       </variable>
       <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
         <label xml:lang="it">ID 4 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 4</label>
+        <label xml:lang="cs">Dekodér ID 4:</label>
       </variable>
-      <!-- Begin sound-only variables -->
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound_MS_series.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV356.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV357-CV365sound_version28.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV366-CV371sound.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV372-CV399sound_MS_series.xml"/>
-      <!-- End sound-only variables -->
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_MS_series.xml"/>
-      <!-- more sound variables -->
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV603.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV739-CV744.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV745-CV768.xml"/>
-      <!-- end of more sound variables -->
-      <!-- Begin constant stopping distance variables -->
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV830-CV833.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV835.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CVs_version37.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CVs_version39.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CVs_version40.xml"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV399_MS_series.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV499_MS_series.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV603_MS_series.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699_MS_series.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV700-CV899_MS_series.xml"/>
+
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
 

@@ -177,7 +177,8 @@ public class SCWarrant extends Warrant {
     }
 
     /**
-     * Generate status message to show in warrant table
+     * Generate status message to show in warrant table.
+     * {@inheritDoc}
      **/
     @Override
     protected synchronized String getRunningMessage() {

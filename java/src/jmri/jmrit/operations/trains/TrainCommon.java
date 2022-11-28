@@ -1367,6 +1367,9 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.CONSIST)) {
             return padAndTruncateIfNeeded(engine.getConsistName(),
                     InstanceManager.getDefault(ConsistManager.class).getMaxNameLength());
+        } else if (attribute.equals(Setup.DCC_ADDRESS)) {
+            return padAndTruncateIfNeeded(engine.getDccAddress(),
+                    TrainManifestHeaderText.getStringHeader_DCC_Address().length());
         }
         return getRollingStockAttribute(engine, attribute, isPickup, false);
     }
@@ -1770,6 +1773,9 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.CONSIST)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Consist(),
                         InstanceManager.getDefault(ConsistManager.class).getMaxNameLength()) + SPACE);
+            } else if (attribute.equals(Setup.DCC_ADDRESS)) {
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_DCC_Address(),
+                        TrainManifestHeaderText.getStringHeader_DCC_Address().length()) + SPACE);
             } else if (attribute.equals(Setup.KERNEL)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Kernel(),
                         InstanceManager.getDefault(KernelManager.class).getMaxNameLength()) + SPACE);
