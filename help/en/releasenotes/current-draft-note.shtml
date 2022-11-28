@@ -565,7 +565,9 @@
         <ul>
             <li>Fix bug making NXWarrants over very short blocks.</li>
             <li>New concatenation option (Warrant Table menu Warrants->Concatenate Warrants). 
-               Concatenated warrant may either stop or continue at speed through the connecting block.
+               Concatenated warrant may either stop or continue at speed through the connecting
+               block. It is no longer required to match paths at the connecting block.
+               Concatenation will find the connecting path if it exists.
                This method is preferred rather than linking warrants of the same DCC address.</li>
         </ul>
 
