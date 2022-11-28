@@ -851,7 +851,7 @@ public class NXFrame extends WarrantRoute {
 
         if (blkDistance < 0.01) {   // no increase of speed in this block
             dist = _speedUtil.getDistanceOfSpeedChange(prevThrottle, curThrottle, speedTime);
-            log.debug("No speed increase in block \"{}\" speedTime= {} dist= {}, blkDist= {}, curDist= {} upRampLength=",
+            log.debug("No speed increase in block \"{}\" speedTime= {} dist= {}, blkDist= {}, curDist= {} upRampLength={}",
                     blockName, speedTime, dist, blkDistance, curDistance, upRampLength);
             blkDistance += dist;
             curDistance += dist;    // curDistance ought to equal upRampLength
