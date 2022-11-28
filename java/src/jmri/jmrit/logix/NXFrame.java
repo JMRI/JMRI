@@ -104,6 +104,7 @@ public class NXFrame extends WarrantRoute {
 
         _autoRunPanel = makeAutoRunPanel();
         _switchPanel = makeSwitchPanel();
+        _maxSpeedBox.setEnabled(false);
         
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
@@ -242,7 +243,8 @@ public class NXFrame extends WarrantRoute {
     }
     // convert to units change
     private void setFieldText(JButton button, JTextField field) {
-        NumberFormat formatter = NumberFormat.getNumberInstance(); 
+        NumberFormat formatter = NumberFormat.getNumberInstance();
+        formatter.setMaximumFractionDigits(2);
         float num = 0;
         try {
             num =  formatter.parse(field.getText()).floatValue();
@@ -250,9 +252,9 @@ public class NXFrame extends WarrantRoute {
             // errors reported later
         }
         if (_units.equals(Display.IN)) {
-            num = Math.round(num * 0.393701f);  // convert centimeters to inches
+            num *= 0.393701f;
         } else {
-            num = Math.round(num * 2.54f);  // convert inches to centimeters
+            num *= 2.54f;
         }
         button.setText(_units.toString());
         field.setText(formatter.format(num));
@@ -270,6 +272,7 @@ public class NXFrame extends WarrantRoute {
 
         _maxSpeedBox.addActionListener((ActionEvent evt)-> {
             NumberFormat formatter = NumberFormat.getNumberInstance(); 
+            formatter.setMaximumFractionDigits(2);
             float num = 0;
             try {
                 num =  formatter.parse(_maxSpeedBox.getText()).floatValue();
