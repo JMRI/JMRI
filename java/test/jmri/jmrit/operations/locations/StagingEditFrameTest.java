@@ -8,6 +8,10 @@ import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -158,6 +162,235 @@ public class StagingEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(fl);
     }
+    
+    @Test
+    public void testRouteComboboxes() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        Track t = l.addTrack("Test staging track", Track.STAGING);
+        t.setLength(44);
+        Assert.assertNotNull(t);
+        
+        StagingEditFrame f = new StagingEditFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents(t);  
+        
+        JemmyUtil.enterClickAndLeave(f.routeDrop);
+        JemmyUtil.enterClickAndLeave(f.routePickup);
+        
+        Assert.assertEquals("Route combobox updated", 2, f.comboBoxDropRoutes.getItemCount());
+        Assert.assertEquals("Route combobox updated", 2, f.comboBoxPickupRoutes.getItemCount());
+        
+        // create a new route
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route route = routeManager.newRoute("New Route Train A");
+        route.addLocation(l);
+        
+        Location locB = lManager.getLocationByName("Test Loc B");     
+        Route routeB = routeManager.newRoute("New Route B");
+        routeB.addLocation(locB);
+        routeB.addLocation(l);
+        
+        Route routeC = routeManager.newRoute("New Route C");
+        routeC.addLocation(l);
+        routeC.addLocation(locB);
+       
+        // a route not serviced by this location
+        Route routeD = routeManager.newRoute("New Route D");
+        routeD.addLocation(locB);
+        
+        JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
+        JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
+        
+        // confirm 
+        Assert.assertEquals("Route combobox updated", 4, f.comboBoxDropRoutes.getItemCount());
+        Assert.assertEquals("Route combobox updated", 4, f.comboBoxPickupRoutes.getItemCount());
+        
+        JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
+        
+        // confirm 
+        Assert.assertEquals("Route combobox updated", 6, f.comboBoxDropRoutes.getItemCount());
+        Assert.assertEquals("Route combobox updated", 4, f.comboBoxPickupRoutes.getItemCount());
+
+        JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
+        
+        // confirm 
+        Assert.assertEquals("Route combobox updated", 6, f.comboBoxDropRoutes.getItemCount());
+        Assert.assertEquals("Route combobox updated", 6, f.comboBoxPickupRoutes.getItemCount());
+        
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testTrainComboboxes() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        Track t = l.addTrack("Test staging track", Track.STAGING);
+        t.setLength(44);
+        Assert.assertNotNull(t);
+        
+        StagingEditFrame f = new StagingEditFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents(t);  
+        
+        JemmyUtil.enterClickAndLeave(f.trainDrop);
+        JemmyUtil.enterClickAndLeave(f.trainPickup);
+        
+        Assert.assertEquals("Train combobox updated", 2, f.comboBoxDropTrains.getItemCount());
+        Assert.assertEquals("Train combobox updated", 2, f.comboBoxPickupTrains.getItemCount());
+        
+        // create a new route and train
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route route = routeManager.newRoute("New Route A");
+        route.addLocation(l);
+        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+        Train trainA = trainManager.newTrain("New Test Train A");
+        trainA.setRoute(route);
+        
+        // this train terminates
+        Location locB = lManager.getLocationByName("Test Loc B");     
+        Route routeB = routeManager.newRoute("New Route B");
+        routeB.addLocation(locB);
+        routeB.addLocation(l);
+        Train trainB = trainManager.newTrain("New Test Train B");
+        trainB.setRoute(routeB);
+        
+        // this train departs
+        Route routeC = routeManager.newRoute("New Route C");
+        routeC.addLocation(l);
+        routeC.addLocation(locB);  
+        Train trainC = trainManager.newTrain("New Test Train C");
+        trainC.setRoute(routeC);
+        
+        // a route not serviced by this location
+        Route routeD = routeManager.newRoute("New Route D");
+        routeD.addLocation(locB);
+        Train trainD = trainManager.newTrain("New Test Train D");
+        trainD.setRoute(routeD);
+        
+        JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
+        JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
+        
+        // confirm 
+        Assert.assertEquals("Train combobox updated", 4, f.comboBoxDropTrains.getItemCount());
+        Assert.assertEquals("Train combobox updated", 4, f.comboBoxPickupTrains.getItemCount());
+        
+        JemmyUtil.enterClickAndLeave(f.autoDropCheckBox);
+        
+        // confirm 
+        Assert.assertEquals("Train combobox updated", 6, f.comboBoxDropTrains.getItemCount());
+        Assert.assertEquals("Train combobox updated", 4, f.comboBoxPickupTrains.getItemCount());
+
+        JemmyUtil.enterClickAndLeave(f.autoPickupCheckBox);
+        
+        // confirm 
+        Assert.assertEquals("Train combobox updated", 6, f.comboBoxDropTrains.getItemCount());
+        Assert.assertEquals("Train combobox updated", 6, f.comboBoxPickupTrains.getItemCount());
+        
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCheckboxes() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        Track t = l.addTrack("Test staging track", Track.STAGING);
+        t.setLength(44);
+        Assert.assertNotNull(t);
+        
+        StagingEditFrame f = new StagingEditFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents(t);  
+           
+        Assert.assertFalse(t.isBlockCarsEnabled());
+        JemmyUtil.enterClickAndLeave(f.blockCarsCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        Assert.assertTrue("Car blocking enabled", t.isBlockCarsEnabled());
+        
+        // check defaults
+        Assert.assertFalse(t.isAddCustomLoadsAnySpurEnabled());
+        Assert.assertFalse(t.isAddCustomLoadsEnabled());
+        Assert.assertFalse(t.isAddCustomLoadsAnyStagingTrackEnabled());
+        Assert.assertFalse(t.isLoadEmptyEnabled());
+        Assert.assertFalse(t.isLoadSwapEnabled());
+        
+        JemmyUtil.enterClickAndLeave(f.loadAnyCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        
+        Assert.assertTrue(t.isAddCustomLoadsAnySpurEnabled());
+        Assert.assertFalse(t.isAddCustomLoadsEnabled());
+        Assert.assertFalse(t.isAddCustomLoadsAnyStagingTrackEnabled());
+        Assert.assertFalse("Car blocking disabled", t.isBlockCarsEnabled());
+        
+        JemmyUtil.enterClickAndLeave(f.loadCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        
+        Assert.assertFalse(t.isAddCustomLoadsAnySpurEnabled());
+        Assert.assertTrue(t.isAddCustomLoadsEnabled());
+        Assert.assertFalse(t.isAddCustomLoadsAnyStagingTrackEnabled());
+
+        JemmyUtil.enterClickAndLeave(f.loadAnyStagingCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        
+        Assert.assertFalse(t.isAddCustomLoadsAnySpurEnabled());
+        Assert.assertTrue(t.isAddCustomLoadsEnabled());
+        Assert.assertTrue(t.isAddCustomLoadsAnyStagingTrackEnabled());
+        
+        // test block cars checkbox enable
+        Assert.assertFalse(f.blockCarsCheckBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.loadAnyStagingCheckBox);
+        Assert.assertFalse(f.blockCarsCheckBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.loadCheckBox);
+        Assert.assertTrue(f.blockCarsCheckBox.isEnabled());
+        
+        JemmyUtil.enterClickAndLeave(f.loadAnyStagingCheckBox);
+        Assert.assertFalse(f.blockCarsCheckBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.loadAnyStagingCheckBox);
+        Assert.assertTrue(f.blockCarsCheckBox.isEnabled());
+        
+        JemmyUtil.enterClickAndLeave(f.loadAnyCheckBox);
+        Assert.assertFalse(f.blockCarsCheckBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.loadAnyCheckBox);
+        Assert.assertTrue(f.blockCarsCheckBox.isEnabled());
+        
+        // test empty load and swap checkboxes
+        JemmyUtil.enterClickAndLeave(f.emptyCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        
+        Assert.assertTrue(t.isLoadEmptyEnabled());
+        Assert.assertFalse(t.isLoadSwapEnabled());
+       
+        JemmyUtil.enterClickAndLeave(f.swapLoadsCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        
+        Assert.assertFalse(t.isLoadEmptyEnabled());
+        Assert.assertTrue(t.isLoadSwapEnabled());
+        
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testBlockCheckbox() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        Track t = l.addTrack("Test staging track", Track.STAGING);
+        t.setLength(44);
+        Assert.assertNotNull(t);
+        
+        // blocking should be disabled if any of the generate feature is enabled
+        t.setAddCustomLoadsEnabled(true);
+        t.setBlockCarsEnabled(true);
+        
+        StagingEditFrame f = new StagingEditFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents(t);  
+           
+        Assert.assertFalse(f.blockCarsCheckBox.isEnabled());
+        Assert.assertFalse(f.blockCarsCheckBox.isSelected());
+        
+        JUnitUtil.dispose(f);
+    }
+        
 
     // Ensure minimal setup for log4J
     @Override

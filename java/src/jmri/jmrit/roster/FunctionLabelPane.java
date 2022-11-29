@@ -66,6 +66,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         cL.weighty = 1.0;
         int nextx = 0;
 
+        // column labels
         // first column
         add(new JLabel(Bundle.getMessage("FunctionButtonN")), cL);
         cL.gridx++;
@@ -79,6 +80,9 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         cL.gridx++;
         add(new JLabel(Bundle.getMessage("FunctionButtonShunterFn")), cL);
         cL.gridx++;
+        // divider
+        add(new JLabel("|"));
+        cL.gridx++;
         // second column
         add(new JLabel(Bundle.getMessage("FunctionButtonN")), cL);
         cL.gridx++;
@@ -91,10 +95,10 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         add(new JLabel(Bundle.getMessage("FunctionButtonImageOn")), cL);
         cL.gridx++;
         add(new JLabel(Bundle.getMessage("FunctionButtonShunterFn")), cL);
-        cL.gridx++;
 
         cL.gridx = 0;
         cL.gridy = 1;
+        // add function rows
         for (int i = 0; i <= maxfunction; i++) {
             // label the row
             add(new JLabel("" + i), cL);
@@ -138,14 +142,18 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             if (("F" + i).compareTo(re.getShuntingFunction()) == 0) {
                 shunterMode[i].setSelected(true);
             }
+            shunterMode[i].setToolTipText(Bundle.getMessage("ShuntButtonToolTip"));
             add(shunterMode[i], cL);
-            cL.gridx++;
-
+            if (cL.gridx == 5) {
+                cL.gridx++;
+                // add divider
+                add(new JLabel("|"), cL);
+            }
             // advance position
             cL.gridy++;
             if (cL.gridy == ((maxfunction + 2) / 2) + 1) {
                 cL.gridy = 1;  // skip titles
-                nextx = nextx + 6;
+                nextx = nextx + 7;
             }
             cL.gridx = nextx;
         }
@@ -251,9 +259,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
     }
 
     public boolean includeInPrint() {
@@ -268,7 +274,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     public void printPane(HardcopyWriter w) {
         // if pane is empty, don't print anything
         //if (varList.size() == 0 && cvList.size() == 0) return;
-        // future work needed her to print indexed CVs
+        // future work needed here to print indexed CVs
 
         // Define column widths for name and value output.
         // Make col 2 slightly larger than col 1 and reduce both to allow for

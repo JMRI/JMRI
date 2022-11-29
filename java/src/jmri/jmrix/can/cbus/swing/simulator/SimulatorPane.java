@@ -4,9 +4,11 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 
 // import org.slf4j.Logger;
@@ -37,17 +39,9 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
      * {@inheritDoc}
      */
     @Override
-    public void initComponents(CanSystemConnectionMemo memo) {
+    public void initComponents(@Nonnull CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        
-        // todo - run on memo, not instance
-        _sim = jmri.InstanceManager.getNullableDefault(CbusSimulator.class);
-         
-        if ( _sim == null ) {
-            jmri.util.ThreadingUtil.runOnLayout( ()->{
-                _sim = new CbusSimulator(memo);
-            });
-        }
+        _sim = memo.get(CbusSimulator.class);
         init();
     }
 
@@ -62,16 +56,16 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     public SimulatorPane() {
         super();
     }
-    
+
     private void init() {
-        
+
         _disposeSimOnWindowClose=false;
-        
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
-        p1 = new JPanel();        
+
+        p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
-        
+
         _csPanes = new JPanel();
         _evPanes = new JPanel();
         _ndPanes = new JPanel();
@@ -82,7 +76,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         _csPanes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CmndStations")));
         _evPanes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ResponseEvents")));
         _ndPanes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CbusNodes")));
-        
+
         for ( int i=0 ; ( i < _sim.getNumCS() ) ; i++ ) {
             CsPane thispane = new CsPane(_sim.getCS(i)); // id , type
             _csPanes.add(thispane);
@@ -98,16 +92,16 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         NdPane thispanend = new NdPane(null, memo); // id , type
         _ndPanes.add(thispanend);
         thispanend.setVisible(true);
-        
+
         for ( int i=0 ; ( i < _sim.getNumEv() ) ; i++ ) {
             EvResponderPane thispane = new EvResponderPane(_sim.getEv(i)); // id , mode
             _evPanes.add(thispane);
             thispane.setVisible(true);
         }
-        
+
         _csPanes.setVisible(true);
         _evPanes.setVisible(true);
-        _ndPanes.setVisible(true);        
+        _ndPanes.setVisible(true);
 
         p1.add(_csPanes);
         p1.add(_ndPanes);
@@ -116,7 +110,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         mainScroll = new JScrollPane (p1);
         this.add(mainScroll);
     }
-    
+
     /**
      * Creates a Menu List
      */
@@ -125,13 +119,13 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         List<JMenu> menuList = new ArrayList<>();
         JMenu optionsMenu = new JMenu(Bundle.getMessage("OptionsMenu"));
         JMenu addMenu = new JMenu(Bundle.getMessage("MenuAdd"));
-        
+
         JCheckBoxMenuItem closeSimOnDispose = new JCheckBoxMenuItem(Bundle.getMessage("StopSimWinClose"));
         closeSimOnDispose.setSelected(false);
         closeSimOnDispose.addActionListener ((ActionEvent e) -> {
             _disposeSimOnWindowClose = closeSimOnDispose.isSelected();
         });
-        
+
         JMenuItem newCs = new JMenuItem(Bundle.getMessage("CommandStation"));
         newCs.addActionListener ((ActionEvent e) -> {
             CsPane thispane = new CsPane(_sim.getNewCS());
@@ -158,12 +152,12 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         addMenu.add(newCs);
         addMenu.add(newEv);
         addMenu.add(newNd);
-        
+
         menuList.add(optionsMenu);
         menuList.add(addMenu);
         return menuList;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -178,8 +172,9 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     @Override
     public void dispose() {
         super.dispose();
-        if ( _disposeSimOnWindowClose ) {
-            _sim.dispose();
+        if ( memo != null && _disposeSimOnWindowClose ) {
+            memo.get(CbusConfigurationManager.class)
+                .disposeOf(_sim, CbusSimulator.class);
         }
     }
 

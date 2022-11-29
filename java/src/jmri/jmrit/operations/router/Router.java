@@ -2,24 +2,18 @@ package jmri.jmrit.operations.router;
 
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Router for car movement. This code attempts to find a way (a route) to move a
@@ -138,7 +132,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         // want.
         // Also ignores spur schedule since the car's destination is already
         // set.
-        _status = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
+        _status = clone.checkDestination(clone.getDestination(), clone.getDestinationTrack());
         if (!_status.equals(Track.OKAY)) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
                     new Object[]{car.toString(), car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
@@ -375,7 +369,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSpurFull"),
                     new Object[]{clone.getDestinationTrackName(), clone.getDestinationName()}));
             Location dest = clone.getDestination();
-            List<Track> yards = dest.getTracksByMovesList(Track.YARD);
+            List<Track> yards = dest.getTracksByMoves(Track.YARD);
             log.debug("Found {} yard(s) at destination ({})", yards.size(), clone.getDestinationName());
             for (Track track : yards) {
                 String status = car.setDestination(dest, track);
@@ -444,9 +438,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      */
     private boolean setCarDestinationTwoTrainsStaging(Car car) {
         if (Setup.isCarRoutingViaStagingEnabled()) {
-            addLine(_buildReport, SEVEN, BLANK_LINE);
             addLine(_buildReport, SEVEN,
-                    MessageFormat.format(Bundle.getMessage("RouterAttemptStaging"), new Object[]{car.toString()}));
+                    MessageFormat.format(Bundle.getMessage("RouterAttemptStaging"), new Object[]{car.toString(),
+                            car.getFinalDestinationName(), car.getFinalDestinationTrackName()}));
             return setCarDestinationTwoTrains(car, Track.STAGING);
         }
         return false;
@@ -475,6 +469,12 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         for (Track track : tracks) {
             if (car.getTrack() == track) {
                 continue; // don't use car's current track
+            }
+            // can't use staging if car's load can be modified
+            if (trackType.equals(Track.STAGING) && track.isModifyLoadsEnabled()) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterStagingExcluded"),
+                        new Object[]{track.getLocation().getName(), track.getName()}));
+                continue;
             }
             String status = track.isRollingStockAccepted(testCar);
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
@@ -602,7 +602,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 tracks = new ArrayList<>(Arrays.asList(track));
                 showRoute(car, trains, tracks);
 
-                _status = car.testDestination(track.getLocation(), track);
+                _status = car.checkDestination(track.getLocation(), track);
                 if (_status.startsWith(Track.LENGTH)) {
                     // if the issue is length at the interim track, add message
                     // to build report
@@ -712,10 +712,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             List<Track> allStaging = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
             tracks.clear();
             for (Track staging : allStaging) {
-                if (staging.isModifyLoadsEnabled()) {
-                    addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterStagingExcluded"),
-                            new Object[]{staging.getLocation().getName(), staging.getName()}));
-                } else {
+                if (!staging.isModifyLoadsEnabled()) {
                     tracks.add(staging);
                 }
             }
@@ -1167,7 +1164,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 continue; // track doesn't accept this car
             }
             if (debugFlag) {
-                log.debug("Found {} track ({}, {}) for car ({})", track.getTrackType(), track.getLocation().getName(),
+                log.debug("Found {} track ({}, {}) for car ({})", track.getTrackTypeName(), track.getLocation().getName(),
                         track.getName(), car);
             }
             // test to see if there's a train that can deliver the car to this
@@ -1197,7 +1194,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             if (train != null) {
                 if (debugFlag) {
                     log.debug("Train ({}) can service car ({}) from {} ({}, {}) to destination ({}, {})",
-                            train.getName(), car, track.getTrackType(), testCar.getLocationName(),
+                            train.getName(), car, track.getTrackTypeName(), testCar.getLocationName(),
                             testCar.getTrackName(), testCar.getDestinationName(), testCar.getDestinationTrackName());
                 }
                 _nextLocationTracks.add(track);

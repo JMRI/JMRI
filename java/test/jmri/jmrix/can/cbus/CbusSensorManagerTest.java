@@ -392,17 +392,21 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.assertEquals("System name \"S\" contains invalid character \"S\".", ex.getMessage());
         }
 
-        boolean contains = Assert.assertThrows(JmriException.class,
-            ()->{
-                l.createSystemName("+10", "M2");
-            }).getMessage().contains("System name must start with \"MS\"");
-        Assert.assertTrue("Exception message relevant", contains);
+        Exception ex = Assertions.assertThrows(JmriException.class, ()->{
+            l.createSystemName("+10", "M2");
+        });
+        Assertions.assertNotNull(ex);
+        String msg = ex.getMessage();
+        Assertions.assertNotNull(msg);
+        Assert.assertTrue("Exception message relevant", msg.contains("System name must start with \"MS\""));
 
-        contains = Assert.assertThrows(JmriException.class,
-            ()->{
-                l.createSystemName("+10", "ZZZZZZZZZ");
-            }).getMessage().contains("System name must start with \"MS\"");
-        Assert.assertTrue("Exception message relevant", contains);
+        ex = Assertions.assertThrows(JmriException.class, ()->{
+            l.createSystemName("+10", "ZZZZZZZZZ");
+        });
+        Assertions.assertNotNull(ex);
+        msg = ex.getMessage();
+        Assertions.assertNotNull(msg);
+        Assert.assertTrue("Exception message relevant", msg.contains("System name must start with \"MS\""));
 
     }
 

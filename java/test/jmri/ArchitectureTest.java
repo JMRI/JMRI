@@ -7,8 +7,6 @@ import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
-import jmri.util.swing.BeanSelectPanel;
-
 /**
  * Check the architecture of the JMRI library
  * <p>
@@ -22,6 +20,7 @@ import jmri.util.swing.BeanSelectPanel;
  * Note that this only checks the classes in target/classes, which come from java/src, not
  * the ones in target/test-classes, which come from java/test.  It's relying on the common
  * build procedure to make this distinction.
+ * See {@link TestArchitectureTest}
  *
  * See examples in the <a href='https://github.com/TNG/ArchUnit-Examples/tree/master/example-plain/src/test/java/com/tngtech/archunit/exampletest">ArchUnit sample code</a>.
  *
@@ -78,9 +77,10 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.jython.JynstrumentPopupMenu$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logix.WarrantRoute$RouteLocation").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.ConditionalNGDebugger$PopupMenu$1").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.TreeEditor$PopupMenu$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.TreeEditor$5").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$2").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$3").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.roster.swing.RosterGroupsPanel$MouseAdapter").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.roster.swing.RosterTable$RosterCellEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.symbolicprog.CombinedLocoSelTreePane$1").and()
@@ -109,6 +109,7 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseMotionListener$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.swing.TriStateJCheckBox$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.table.JTableWithColumnToolTips$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.table.ButtonEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.table.ToggleButtonEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.web.servlet.frameimage.JmriJFrameServlet")
 
@@ -272,30 +273,30 @@ public class ArchitectureTest {
             .should().dependOnClassesThat().resideInAPackage("org.apache.log4j");
 
     /**
-     * (Try to) confine JDOM to configurexml packages.
-     * (Is this working right? Seems to not flag anything)
-     *  Probably not working because the JDOM classes are not part of initially-read set
+     * Confine JDOM to configurexml packages.
      */
-    @ArchTest // Not complete
-    public static final ArchRule checkJdomOutsideConfigurexml = classes()
-            .that().resideInAPackage("org.jdom2..")
-            .should().onlyBeAccessed().byAnyPackage("..configurexml..");
+    @ArchTest
+    @ArchIgnore // 5792 flags September 2022
+    public static final ArchRule checkJdomOutsideConfigurexml = noClasses()
+        .that().resideOutsideOfPackage("..configurexml..")
+        .should().accessClassesThat().resideInAPackage("org.jdom2..");
 
     /**
-     * (Try to) confine purejavacomm to jmri.jmrix packages.
-     * (Is this working right? Seems to not flag anything; note jmri.jmrit as a test below)
-     *  Probably not working because the purejavacomm classes are not part of initially-read set
+     * Confine purejavacomm to jmri.jmrix packages.
      */
-    @ArchTest // Not complete
-    public static final ArchRule checkPurejavacoomOutsideConfigurexml = classes()
-            .that().resideInAPackage("purejavacomm..")
-            .should().onlyBeAccessed().byAnyPackage("jmri.jmrit");
+    @ArchTest
+    public static final ArchRule checkPurejavacoomOutsideConfigurexml = noClasses()
+        .that().resideOutsideOfPackage("jmri.jmrix..").and()
+        .doNotHaveFullyQualifiedName("apps.util.issuereporter.SystemInfo").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrit.mailreport.ReportContext")
+        .should().accessClassesThat().resideInAPackage("purejavacomm..");
 
     /**
      * Check that *Bundle classes inherit from their parent.
      * (not done yet, not sure how to do it)
      */
-    @ArchTest // Not complete
+    @ArchTest
+    @ArchIgnore // Not complete
     public static final ArchRule checkBundleInheritance = classes()
             .that().areAssignableTo(jmri.Bundle.class)
             .should().haveSimpleNameEndingWith("Bundle");

@@ -6,6 +6,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 
 import jmri.spi.JmriServiceProviderInterface;
@@ -47,7 +48,7 @@ public abstract class CbusSimulatedModuleProvider implements JmriServiceProvider
      * This may include Node Parameters, Node Variables, events and event variables.
      * @param node the Node to set to.
      */
-    public abstract void configureDummyNode(@Nonnull CbusDummyNode node);
+    public abstract void configureDummyNode(@Nonnull CbusNode node);
     
     /**
      * Descriptive String of Module Type.

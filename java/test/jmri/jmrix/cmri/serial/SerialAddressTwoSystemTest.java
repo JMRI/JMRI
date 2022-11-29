@@ -41,6 +41,8 @@ public class SerialAddressTwoSystemTest {
         // create 1st nodes
         c10 = new SerialNode(10, SerialNode.SMINI, stcs1);
         c18 = new SerialNode(18, SerialNode.SMINI, stcs1);
+        Assertions.assertNotNull(c10);
+        Assertions.assertNotNull(c18);
         // create and register the 1st manager objects
         jmri.TurnoutManager l1 = new SerialTurnoutManager(memo1);
         jmri.InstanceManager.setTurnoutManager(l1);
@@ -56,6 +58,8 @@ public class SerialAddressTwoSystemTest {
         // create 2nd nodes
         k10 = new SerialNode(10, SerialNode.SMINI, stcs2);
         k20 = new SerialNode(20, SerialNode.SMINI, stcs2);
+        Assertions.assertNotNull(k10);
+        Assertions.assertNotNull(k20);
         // create and register the 1st manager objects
         jmri.TurnoutManager l2 = new SerialTurnoutManager(memo2);
         jmri.InstanceManager.setTurnoutManager(l2);

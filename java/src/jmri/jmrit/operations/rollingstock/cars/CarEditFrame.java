@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
+import java.text.*;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -14,9 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import jmri.jmrit.operations.rollingstock.RollingStockEditFrame;
+import jmri.jmrit.operations.rollingstock.*;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
 import jmri.jmrit.operations.setup.Setup;
@@ -235,7 +231,6 @@ public class CarEditFrame extends RollingStockEditFrame {
                 carLoadEditFrame.dispose();
             }
             carLoadEditFrame = new CarLoadEditFrame();
-            carLoadEditFrame.setLocationRelativeTo(this);
             carLoadEditFrame.initComponents((String) typeComboBox.getSelectedItem(),
                     (String) loadComboBox.getSelectedItem());
         }
@@ -482,7 +477,6 @@ public class CarEditFrame extends RollingStockEditFrame {
             carAttributeEditFrame.dispose();
         }
         carAttributeEditFrame = new CarAttributeEditFrame();
-        carAttributeEditFrame.setLocationRelativeTo(this);
         carAttributeEditFrame.addPropertyChangeListener(this);
 
         if (ae.getSource() == editRoadButton) {
@@ -526,6 +520,17 @@ public class CarEditFrame extends RollingStockEditFrame {
             _rs.removePropertyChangeListener(this);
         }
         super.removePropertyChangeListeners();
+    }
+    
+    @Override
+    public void dispose() {
+        if (carLoadEditFrame != null) {
+            carLoadEditFrame.dispose();
+        }
+        if (carAttributeEditFrame != null) {
+            carAttributeEditFrame.dispose();
+        }
+        super.dispose();
     }
 
     @Override

@@ -1,15 +1,16 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
 
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
-import org.junit.*;
-import org.junit.rules.Timeout;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -20,56 +21,18 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
  *
  * @author George Warner Copyright (C) 2019
  */
+@Timeout(10)
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class EnterGridSizesDialogTest {
-
-    private static LayoutEditor layoutEditor = null;
-    private static EnterGridSizesDialog enterGridSizesDialog = null;
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule    // allow 2 retries of intermittent tests
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
-
-    /*
-     * This is called before each test
-     */
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            layoutEditor = new LayoutEditor();
-            enterGridSizesDialog = new EnterGridSizesDialog(layoutEditor);
-            layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
-            layoutEditor.setVisible(true);
-        }
-    }
-
-    /*
-     * This is called after each test
-     */
-    @After
-    public void tearDown() {
-        if (!GraphicsEnvironment.isHeadless()) {
-            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
-            efo.closeFrameWithConfirmations();
-            layoutEditor = null;
-            enterGridSizesDialog = null;
-        }
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
-    }
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("layoutEditor exists", layoutEditor);
         Assert.assertNotNull("EnterGridSizesDialog exists", enterGridSizesDialog);
     }
 
     @Test
     public void testEnterGridSizesCanceled() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         enterGridSizesDialog.enterGridSizes();
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SetGridSizes"));
@@ -80,7 +43,6 @@ public class EnterGridSizesDialogTest {
 
     @Test
     public void testEnterGridSizes() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         enterGridSizesDialog.enterGridSizes();
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SetGridSizes"));
@@ -139,4 +101,37 @@ public class EnterGridSizesDialogTest {
         layoutEditor.gContext.setGridSize2nd(oldGridSize2nd);
         Assert.assertEquals("old grid size 2nd", oldGridSize2nd, layoutEditor.gContext.getGridSize2nd());
     }
+
+    private LayoutEditor layoutEditor = null;
+    private EnterGridSizesDialog enterGridSizesDialog = null;
+
+    /*
+     * This is called before each test
+     */
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+
+        layoutEditor = new LayoutEditor(this.getClass().getName());
+        enterGridSizesDialog = new EnterGridSizesDialog(layoutEditor);
+        layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
+        layoutEditor.setVisible(true);
+
+    }
+
+    /*
+     * This is called after each test
+     */
+    @AfterEach
+    public void tearDown() {
+
+        // new EditorFrameOperator(layoutEditor).closeFrameWithConfirmations();
+        layoutEditor.dispose();
+        layoutEditor = null;
+        enterGridSizesDialog = null;
+
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
+    }
+
 }

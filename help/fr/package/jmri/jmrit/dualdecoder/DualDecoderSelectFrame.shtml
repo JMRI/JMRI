@@ -1,32 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02-->
-
   <title>JMRI: Multi-Decoder Control</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h2>JMRI: Commandes Multi-d&eacute;codeur</h2>A l'origine,
+      <h2>JMRI: Commandes Multi-d&eacute;codeur</h2>
+      <p>A l'origine,
       DCC n'a pas fourni un moyen commode de programmer Les valeurs
       de configuration des (CV) quand vous avez plus d'un
       d&eacute;codeur install&eacute; dans une locomotive. Par
@@ -35,7 +22,7 @@
       fournir du son, et ils ont tous deux utiliser les m&ecirc;mes
       CV, la programmation d'un d&eacute;codeur fera modifier les
       param&egrave;tres de l'autre, g&eacute;n&eacute;ralement
-      d'une mani&egrave;re ind&eacute;sirable.
+      d'une mani&egrave;re ind&eacute;sirable.</p>
 
       <p>Il y a diff&eacute;rentes astuces qui peuvent &ecirc;tre
       utilis&eacute;es avec des adresses longues et courtes et la
@@ -134,8 +121,10 @@
       la voie principale), vous aurez &eacute;galement besoin de
       sp&eacute;cifier l'adresse de la locomotive en cours de
       programmation.</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,27 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
  <!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-08-22 -->
 <head>
-    <title>
- 	JMRI: Getting the OLD CVS Code - no longer supported
-    </title>
+  <title>JMRI: Getting the OLD CVS Code - no longer supported</title>
 	<meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code CVS download">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-    <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI technical code CVS download">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
- <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
@@ -125,9 +115,9 @@ les actualiser, s&#233;lectionnez les tous et Clic Droit et
 s&#233;lectionnez "CVS Update", Vous pouvez aussi juste actualiser un simple dossier en le s&#233;lectionnant, etc.
 </p>
 
-<!--#include virtual="/Footer.shtml" -->
-
+    <!--#include virtual="/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

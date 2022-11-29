@@ -61,9 +61,10 @@
           that provided by the XML routines in the JDOM libraries used by JMRI and DecoderPro.</p>
 
           <p>Note that Explorer needs to see both the .xml file, plus the definition information in
-          the .dtd file. If you get a message like "error in system resource", you need to put a
-          copy of the associated .dtd file (e.g. decoder-config.dtd) in the directory with your new
-          file. DTD's can be found in the dtd subdirectory of the xml directory.</p>
+          the .xsd Schema file. If you get a message like "error in system resource", you need to put a
+          copy of the associated .xsd file (e.g. decoder-config.xsd; see the top few lines of your file)
+          in the directory with your new
+          file. Schema .xsd's can be found in the Schema subdirectory of the xml directory.</p>
         </dd>
       </dl>
       <!--#include virtual="/Footer.shtml" -->

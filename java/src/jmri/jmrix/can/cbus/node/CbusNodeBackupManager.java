@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 import jmri.util.FileUtil;
@@ -31,7 +33,6 @@ public class CbusNodeBackupManager {
     private int _nodeNum = 0;
     private final CbusBasicNodeWithManagers _node;
     private ArrayList<CbusNodeFromBackup> _backupInfos;
-    private final CbusPreferences preferences;
     private boolean backupInit; // node details loaded from file
     private boolean backupStarted; // auto startup backup started
 
@@ -42,12 +43,12 @@ public class CbusNodeBackupManager {
     public CbusNodeBackupManager(CbusBasicNodeWithManagers node) {
         _nodeNum = node.getNodeNumber();
         _node = node;
-        _backupInfos = new ArrayList<>();
-        preferences = jmri.InstanceManager.getNullableDefault(CbusPreferences.class);
+        _backupInfos = new ArrayList<>(5);
+        
         backupInit = false;
         backupStarted = false;
         // doLoad();
-
+        
     }
 
     /**
@@ -117,7 +118,13 @@ public class CbusNodeBackupManager {
      * Delete older backups depending on user pref. number
      */
     private void trimBackups(){
-
+        CbusPreferences preferences;
+        CanSystemConnectionMemo memo = _node.getMemo();
+        if ( memo != null ) {
+            preferences = memo.get(CbusPreferences.class);
+        } else {
+            preferences = jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class).get(CbusPreferences.class);
+        }
         if (preferences==null) {
             return;
         }
@@ -139,7 +146,7 @@ public class CbusNodeBackupManager {
      * Sets internal flag so can only be triggered once
      */
     public final void doLoad(){
-        CbusNodeBackupFile x = new CbusNodeBackupFile();
+        CbusNodeBackupFile x = new CbusNodeBackupFile(_node.getMemo());
 
         if (!( _node instanceof CbusNode)){
             return;
@@ -313,7 +320,7 @@ public class CbusNodeBackupManager {
         setBackupStarted(true);
 
         Date thisBackupDate = new Date();
-        CbusNodeBackupFile x = new CbusNodeBackupFile();
+        CbusNodeBackupFile x = new CbusNodeBackupFile(_node.getMemo());
         File file = x.getFile(_node.getNodeNumber(),true);
 
         if (file == null) {
@@ -432,7 +439,7 @@ public class CbusNodeBackupManager {
      * @return true on success, else false
      */
     protected boolean removeNode( boolean rotate){
-        CbusNodeBackupFile x = new CbusNodeBackupFile();
+        CbusNodeBackupFile x = new CbusNodeBackupFile(_node.getMemo());
         if (rotate) {
             doRotate();
         }
@@ -444,19 +451,19 @@ public class CbusNodeBackupManager {
     }
 
     private void doRotate(){
-        CbusNodeBackupFile x = new CbusNodeBackupFile();
+        CbusNodeBackupFile x = new CbusNodeBackupFile(_node.getMemo());
         File file = x.getFile(_node.getNodeNumber(),false);
         if (file == null){
             return;
         }
         try {
             Element roots = x.rootFromFile(file);
-            log.debug("File exists {}",roots);
+            if ( roots == null ) return;
             FileUtil.rotate(file, 5, "bup");  // NOI18N
         } catch (IOException ex) {
             // the file might not exist
             log.debug("Backup Rotate failed {}",file);  // NOI18N
-        } catch (JDOMException | NullPointerException ex) {
+        } catch (JDOMException ex) {
             // file might not exist
             log.debug("File invalid: {}", file);  // NOI18N
         }
@@ -467,14 +474,14 @@ public class CbusNodeBackupManager {
      * @return Location of the file, creating new if required
      */
     protected File getFileLocation() {
-        return new CbusNodeBackupFile().getFile(_node.getNodeNumber(),true);
+        return new CbusNodeBackupFile(_node.getMemo()).getFile(_node.getNodeNumber(),true);
     }
 
     /**
      * Reset the backup array for testing
      */
     protected void resetBupArray() {
-        _backupInfos = new ArrayList<>();
+        _backupInfos = new ArrayList<>(5);
         backupInit = false;
     }
 
@@ -485,7 +492,7 @@ public class CbusNodeBackupManager {
      */
     @Nonnull
     public BackupType getSessionBackupStatus() {
-        if (backupStarted && getBackups().size() >0 ) {
+        if (backupStarted && !getBackups().isEmpty() ) {
             return getBackups().get(0).getBackupResult();
         } else {
             return BackupType.OUTSTANDING;

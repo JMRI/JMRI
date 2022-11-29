@@ -69,9 +69,12 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     @Override
     public String getTitle() {
+        if (memo != null) {
+            return (memo.getUserName() + " Monitor");
+        }
         return Bundle.getMessage("MonitorTitle");
     }
-
+    
     @Override
     protected void init() {
     }
@@ -95,7 +98,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     protected void addCustomControlPanes(JPanel parent) {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-                
+
         nodeNameCheckBox.setText(Bundle.getMessage("CheckBoxShowNodeName"));
         nodeNameCheckBox.setVisible(true);
         nodeNameCheckBox.setSelected(pm.getSimplePreferenceState(nodeNameCheck));
@@ -172,6 +175,38 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                             break;
                         default:
                             formatted = prefix + ": SNIP Reply unknown";
+                            break;
+                    }
+                } else if (((header & 0x0FFFF000) == 0x095EB000) && (content.length > 0)) {
+                    // Traction Control Command multi frame reply
+                    switch (content[0] & 0xF0) {
+                        case 0x10:
+                            formatted = prefix + ": Traction Control Command 1st frame";
+                            break;
+                        case 0x20:
+                            formatted = prefix + ": Traction Control Command last frame";
+                            break;
+                        case 0x30:
+                            formatted = prefix + ": Traction Control Command middle frame";
+                            break;
+                        default:
+                            formatted = prefix + ": Traction Control Command unknown";
+                            break;
+                    }
+                } else if (((header & 0x0FFFF000) == 0x091E9000) && (content.length > 0)) {
+                    // Traction Control Reply multi frame reply
+                    switch (content[0] & 0xF0) {
+                        case 0x10:
+                            formatted = prefix + ": Traction Control Reply 1st frame";
+                            break;
+                        case 0x20:
+                            formatted = prefix + ": Traction Control Reply last frame";
+                            break;
+                        case 0x30:
+                            formatted = prefix + ": Traction Control Reply middle frame";
+                            break;
+                        default:
+                            formatted = prefix + ": Traction Control Reply unknown";
                             break;
                     }
                 } else {

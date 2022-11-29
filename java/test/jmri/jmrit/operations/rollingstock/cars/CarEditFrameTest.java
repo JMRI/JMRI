@@ -3,20 +3,17 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -125,6 +122,46 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
+    
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testWeightCalculation() {
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        Assert.assertTrue(f.isShowing());
+
+        JemmyUtil.enterClickAndLeave(f.fillWeightButton);
+        Assert.assertEquals("Calculated weight for 32 foot car", "64", f.weightTonsTextField.getText());
+        
+        // weight for caboose is reduced
+        JemmyUtil.enterClickAndLeave(f.cabooseCheckBox);
+        JemmyUtil.enterClickAndLeave(f.fillWeightButton);
+        Assert.assertEquals("Calculated weight for 32 foot caboose", "28", f.weightTonsTextField.getText());
+
+        JUnitUtil.dispose(f);
+    }
+    
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testWeightPassengerCalculation() {
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        Assert.assertTrue(f.isShowing());
+        
+        // weight for passenger is reduced
+        JemmyUtil.enterClickAndLeave(f.passengerCheckBox);
+        JemmyUtil.enterClickAndLeave(f.fillWeightButton);
+        Assert.assertEquals("Calculated weight for 32 foot caboose", "28", f.weightTonsTextField.getText());
+        
+        JemmyUtil.enterClickAndLeave(f.passengerCheckBox);
+        JemmyUtil.enterClickAndLeave(f.fillWeightButton);
+        Assert.assertEquals("Calculated weight for 32 foot car", "64", f.weightTonsTextField.getText());
+
+        JUnitUtil.dispose(f);
+    }
+
 
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
@@ -142,8 +179,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
         Assert.assertEquals("Check attribute", CarAttributeEditFrame.TYPE, f.carAttributeEditFrame._attribute);
 
-        JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);
+        Assert.assertNull(f.carAttributeEditFrame);
     }
 
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
@@ -228,6 +265,10 @@ public class CarEditFrameTest extends OperationsTestCase {
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
 
+        JemmyUtil.enterClickAndLeave(f.editLoadButton);
+        Assert.assertTrue(f.carLoadEditFrame.isShowing());
+        
+        // for test coverage
         JemmyUtil.enterClickAndLeave(f.editLoadButton);
         Assert.assertTrue(f.carLoadEditFrame.isShowing());
 
@@ -456,6 +497,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         Car car = cManager.getByRoadAndNumber("CP", "888");
         // confirm car id
         Assert.assertEquals("car id", "CP888", car.getId());
+        // improve test coverage
+        car.setKernel(new Kernel("One car"));
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -463,6 +506,8 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         Assert.assertEquals("car road", "CP", f.roadComboBox.getSelectedItem());
         Assert.assertEquals("car number", "888", f.roadNumberTextField.getText());
+        // cars in a kernel have blocking numbers
+        Assert.assertTrue(f.pBlocking.isVisible());
 
         // change road number for this car
         f.roadNumberTextField.setText("54321");

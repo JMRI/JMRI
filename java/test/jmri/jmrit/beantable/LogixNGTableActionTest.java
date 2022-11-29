@@ -149,7 +149,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JFrameOperator editConditionalNGFrameOperator = new JFrameOperator("Edit ConditionalNG " + logixNG.getConditionalNG(0));
         new JMenuBarOperator(editConditionalNGFrameOperator).pushMenu("File|Close Window", "|");
         editConditionalNGFrameOperator.waitClosed();
-        
+
         JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonDone"));
         jf.requestClose();
         jf.waitClosed();
@@ -576,17 +576,12 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         TreePath tp = jto.getPathForRow(0);
 
         JPopupMenu jpm = jto.callPopupOnPath(tp);
-        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add");
+        // Select IfThenElse
+        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add|Flow control|If then else", "|");
 
-        // First, we get a dialog that lets us select which action to add
-        JDialogOperator addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
-        new JComboBoxOperator(addItemDialog, 0).setSelectedItem(Category.COMMON);
-        new JComboBoxOperator(addItemDialog, 1).selectItem("If then else");
-        new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
-
-        // Then we get a dialog that lets us set the system name, user name
+        // We get a dialog that lets us set the system name, user name
         // and configure the action
-        addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
+        JDialogOperator addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
 
         JUnitUtil.waitFor(() -> {return conditionalNG.getChild(0).isConnected();});
@@ -603,16 +598,10 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         tp = jto.getPathForRow(1);
 
         jpm = jto.callPopupOnPath(tp);
-        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add");
-
-        // First, we get a dialog that lets us select which action to add
-        addItemDialog = new JDialogOperator("Add ? ");  // NOI18N
         // Select ExpressionSensor
-        new JComboBoxOperator(addItemDialog, 0).setSelectedItem(Category.ITEM);
-        new JComboBoxOperator(addItemDialog, 1).selectItem("Sensor");
-        new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
+        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add|Item|Sensor", "|");
 
-        // Then we get a dialog that lets us set the system name, user name
+        // We get a dialog that lets us set the system name, user name
         // and configure the expression
         addItemDialog = new JDialogOperator("Add ? ");  // NOI18N
 
@@ -639,20 +628,14 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
         jpm = jto.callPopupOnPath(tp);
         Assert.assertNotNull(jpm);
-        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add");
+        // Select ExpressionTurnout
+        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add|Item|Turnout", "|");
 
-        // First, we get a dialog that lets us select which action to add
-        addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
-        // Select ExpressionSensor
-        new JComboBoxOperator(addItemDialog, 0).setSelectedItem(Category.ITEM);
-        new JComboBoxOperator(addItemDialog, 1).selectItem("Turnout");
-        new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
-
-        // Then we get a dialog that lets us set the system name, user name
+        // We get a dialog that lets us set the system name, user name
         // and configure the action
         addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
 
-        // Select to use sensor IS1
+        // Select to use turnout IT1
         new JComboBoxOperator(addItemDialog, 0).setSelectedIndex(1);
         new JComboBoxOperator(addItemDialog, 1).setSelectedItem(ActionTurnout.TurnoutState.Thrown);
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N

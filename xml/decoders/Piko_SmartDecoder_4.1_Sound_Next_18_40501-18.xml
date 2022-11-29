@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2020 All rights reserved -->
+<!-- Copyright (C) JMRI 2020, 2022 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,7 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <version author="Konrad MAlkowski" version="1" lastUpdated="20201222"/>
+    <version author="Konrad Malkowski" version="1" lastUpdated="20201222"/>
+    <version author="Egbert Broerse" version="1.1" lastUpdated="20220929"/>
     <!-- Version 1 - For Piko 40501-18 decoders. Copied and adapted from Uhlenbrock_76560.xml Uses common parts -->
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
     <decoder>
@@ -51,7 +52,7 @@
                 <label xml:lang="fr">Version décodeur: </label>
                 <label xml:lang="de">Decoder Version: </label>
                 <label xml:lang="nl">Versie van decoder: </label>
-                <label xml:lang="cs">Verze dekodéru: </label>
+                <label xml:lang="cs">Verze dekodéru </label>
             </variable>
             <variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO40501"><!-- Piko -->
                 <decVal/>
@@ -60,7 +61,7 @@
                 <label xml:lang="fr">ID constructeur: </label>
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
-                <label xml:lang="cs">ID výrobce: </label>
+                <label xml:lang="cs">ID výrobce </label>
             </variable>
             <variable item="DC Operation" CV="12" default="1" mask="XXXXXXXV">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -393,7 +394,7 @@
                 <tooltip xml:lang="nl">gebruikt de volgende CV's 103-106</tooltip>
                 <tooltip xml:lang="cs">použije VC103-106 níže</tooltip>
             </variable>
-            <variable CV="102" item="Analog Control check 1" default="1" mask="XXXVXXXX">
+            <variable item="Analog Control check 1" CV="102" default="1" mask="XXXVXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Dynamic repeat rate</label>
                 <label xml:lang="de">dynamische Wiederholrate</label>
@@ -639,7 +640,7 @@
                 <tooltip xml:lang="nl">Welke remmethoden activeren constante Remweg?</tooltip>
                 <tooltip xml:lang="cs">Vyberte která (nebo kombinace) metoda aktivuje konstantní brždění</tooltip>
             </variable>
-            <variable CV="144" item="Accel2" default="12" comment="Range 0-255">
+            <variable item="Accel2" CV="144" default="12" comment="Range 0-255">
                 <decVal/>
                 <label>Acceleration Rate 2</label>
                 <label xml:lang="it">Accellerazione 2</label>
@@ -654,7 +655,7 @@
                 <comment xml:lang="de">Wert 0-255</comment>
                 <comment xml:lang="nl">Waarde van 0-255</comment>
             </variable>
-            <variable CV="145" item="Decel2" default="12" comment="Range 0-255">
+            <variable item="Decel2" CV="145" default="12" comment="Range 0-255">
                 <decVal/>
                 <label>Deceleration Rate 2</label>
                 <label xml:lang="it">Decellerazione 2</label>
@@ -669,7 +670,7 @@
                 <comment xml:lang="de">Wert 0-255</comment>
                 <comment xml:lang="nl">Waarde van 0-255</comment>
             </variable>
-            <variable CV="146" item="Accel3" default="24" comment="Range 0-255">
+            <variable item="Accel3" CV="146" default="24" comment="Range 0-255">
                 <decVal/>
                 <label>Acceleration Rate 3</label>
                 <label xml:lang="it">Accellerazione 3</label>
@@ -684,7 +685,7 @@
                 <comment xml:lang="de">Wert 0-255</comment>
                 <comment xml:lang="nl">Waarde van 0-255</comment>
             </variable>
-            <variable CV="147" item="Decel3" default="24" comment="Range 0-255">
+            <variable item="Decel3" CV="147" default="24" comment="Range 0-255">
                 <decVal/>
                 <label>Deceleration Rate 3</label>
                 <label xml:lang="it">Decellerazione 3</label>
@@ -1088,25 +1089,25 @@
                 <tooltip xml:lang="cs">Nastavení programování banky A - E. Po dokončení obnovte na Normální CV!</tooltip>
             </variable>
             <!-- Bank A variables -->
-            <variable item="Bank A Manufacturer ID" CV="900.1021=0" readOnly="yes" default="85">
+            <variable item="Bank A Manufacturer ID" CV="900.0" readOnly="yes" default="85">
                 <decVal/>
                 <label>Manufacturer ID: </label>
                 <label xml:lang="it">ID Costruttore: </label>
                 <label xml:lang="fr">ID constructeur: </label>
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
-                <label xml:lang="cs">ID výrobce: </label>
+                <label xml:lang="cs">ID výrobce </label>
             </variable>
-            <variable item="Bank A Software version" CV="901.1021=0" readOnly="yes">
+            <variable item="Bank A Software version" CV="901.0" readOnly="yes">
                 <decVal/>
                 <label>Manufacturer Version No: </label>
                 <label xml:lang="it">Versione Decoder: </label>
                 <label xml:lang="fr">Version décodeur: </label>
                 <label xml:lang="de">Decoder Version: </label>
                 <label xml:lang="nl">Versie van decoder: </label>
-                <label xml:lang="cs">Verze dekodéru: </label>
+                <label xml:lang="cs">Verze dekodéru </label>
             </variable>
-            <variable item="Bank A Reset" CV="905.1021=0" readOnly="no">
+            <variable item="Bank A Reset" CV="905.0" readOnly="no">
                 <decVal/>
                 <label>Reset to factory settings: </label>
                 <label xml:lang="de">Rücksetzen der CVs: </label>
@@ -1118,14 +1119,14 @@
             </variable>
             <!-- Bank B variables -->
             <!--CVs 900.1 - 901.1-->
-            <variable item="Bank B Hardware ID" CV="900.1021=1" readOnly="yes">
+            <variable item="Bank B Hardware ID" CV="900.1" readOnly="yes">
                 <decVal/>
                 <label>Hardware ID: </label>
                 <label xml:lang="de">Hardwarekennung: </label>
                 <label xml:lang="nl">Hardware-ID: </label>
                 <label xml:lang="cs">ID hardware: </label>
             </variable>
-            <variable item="Bank B Subversion ID" CV="901.1021=1" readOnly="yes">
+            <variable item="Bank B Subversion ID" CV="901.1" readOnly="yes">
                 <decVal/>
                 <label>Sub Version Number: </label>
                 <label xml:lang="de">Unterversionsnummer: </label>
@@ -1134,14 +1135,14 @@
             </variable>
             <!-- Bank C variables -->
             <!--CVs 900.2, 905.2-911.2-->
-            <variable item="Bank C Sound Setting 1" CV="900.1021=2" default="255" tooltip="0-255">
+            <variable item="Bank C Sound Setting 1" CV="900.2" default="255" tooltip="0-255">
                 <decVal/>
                 <label>Master Sound Volume</label>
                 <label xml:lang="de">Gesamtlautstärke</label>
                 <label xml:lang="nl">Geluidsvolume</label>
                 <label xml:lang="cs">Hlasitost zvuku</label>
             </variable>
-            <variable item="Bank C Sound Setting 2" CV="905.1021=2">
+            <variable item="Bank C Sound Setting 2" CV="905.2">
                 <decVal/>
                 <label>Minimum Random Period</label>
                 <label xml:lang="de">Minimale Zufallszeit</label>
@@ -1151,7 +1152,7 @@
                 <tooltip xml:lang="de">ab welcher Mindestzeit soll ein Zufallsgeräusch abgespielt werden?</tooltip>
                 <tooltip xml:lang="cs">Od jaké minimální doby mají být přehrávány náhodné zvuky.</tooltip>
             </variable>
-            <variable item="Bank C Sound Setting 3" CV="906.1021=2">
+            <variable item="Bank C Sound Setting 3" CV="906.2">
                 <decVal/>
                 <label>Maximum Random Period</label>
                 <label xml:lang="de">Maximale Zufallszeit</label>
@@ -1161,21 +1162,21 @@
                 <tooltip xml:lang="de">bis zu welcher Zeit soll ein Zufallsgeräusch abgespielt werden? (wie häufig - Kombination mit Mind. Zufallszeit)</tooltip>
                 <tooltip xml:lang="cs">Do jaké maximální doby mají být přehrávány náhodné zvuky. (jak často = kombinace s minimální náhodnou dobou)</tooltip>
             </variable>
-            <variable item="Bank C Sound Setting 4" CV="907.1021=2">
+            <variable item="Bank C Sound Setting 4" CV="907.2">
                 <decVal/>
                 <label>Steam-/Rail-Trigger Param 1</label>
                 <label xml:lang="de">Dampfstoß-/Schienenstoß-Trigger Param 1</label>
                 <label xml:lang="nl">Dampfstoß-/Schienenstoß-Trigger Param 1</label>
                 <label xml:lang="cs">Pára/Koleje - Spouštěč Parametr 1</label>
             </variable>
-            <variable item="Bank C Sound Setting 5" CV="908.1021=2">
+            <variable item="Bank C Sound Setting 5" CV="908.2">
                 <decVal/>
                 <label>Steam-/Rail-Trigger Param 2</label>
                 <label xml:lang="de">Dampfstoß-/Schienenstoß-Trigger Param 2</label>
                 <label xml:lang="nl">Stoom-/Rails-trigger Param 2</label>
                 <label xml:lang="cs">Pára/Koleje - Spouštěč Parametr 2</label>
             </variable>
-            <variable item="Bank C Sound Setting 6" CV="910.1021=2">
+            <variable item="Bank C Sound Setting 6" CV="910.2">
                 <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
                 <label>Soundfader Function</label>
                 <label xml:lang="de">Funktionstaste für Soundfader</label>
@@ -1184,7 +1185,7 @@
                 <tooltip>Function mapping for Soundfader</tooltip>
                 <tooltip xml:lang="cs">Mapování funkcí pro ztišení zvuku</tooltip>
             </variable>
-            <variable item="Bank C Sound Setting 7" CV="911.1021=2">
+            <variable item="Bank C Sound Setting 7" CV="911.2">
                 <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
                 <label>Volume Control Function</label>
                 <label xml:lang="de">Funktion für Soundfader</label>
@@ -1196,328 +1197,328 @@
             <!-- CV 900.3-939.3-->
             <!-- Piko Info: Fahrstufenschwellen 0-255 für Schaltgeräusche, z.B. das Getriebeschalten eines -->
             <!-- Schienenbusses o. die Schützschaltung für eine Altbau E-Lok/speed steps for sound effects in the model-->
-            <variable item="Bank D Sound Setting 1" CV="900.1021=3">
+            <variable item="Bank D Sound Setting 1" CV="900.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 1</label>
                 <tooltip>At which Speed Step should Switch Sound #1 be activated?</tooltip>
                 <tooltip xml:lang="de">Bei welchen Fahrstufe soll Schaltgeräusch #1 abgespielt werden?</tooltip>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #1.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 2" CV="901.1021=3">
+            <variable item="Bank D Sound Setting 2" CV="901.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 2</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #2.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 3" CV="902.1021=3">
+            <variable item="Bank D Sound Setting 3" CV="902.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 3</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #3.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 4" CV="903.1021=3">
+            <variable item="Bank D Sound Setting 4" CV="903.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 4</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #4.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 5" CV="904.1021=3">
+            <variable item="Bank D Sound Setting 5" CV="904.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 5</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #5.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 6" CV="905.1021=3">
+            <variable item="Bank D Sound Setting 6" CV="905.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 6</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #6.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 7" CV="906.1021=3">
+            <variable item="Bank D Sound Setting 7" CV="906.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 7</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #7.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 8" CV="907.1021=3">
+            <variable item="Bank D Sound Setting 8" CV="907.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 8</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #8.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 9" CV="908.1021=3">
+            <variable item="Bank D Sound Setting 9" CV="908.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 9</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #9.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 10" CV="909.1021=3">
+            <variable item="Bank D Sound Setting 10" CV="909.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 10</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #10.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 11" CV="910.1021=3">
+            <variable item="Bank D Sound Setting 11" CV="910.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 11</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #11.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 12" CV="911.1021=3">
+            <variable item="Bank D Sound Setting 12" CV="911.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 12</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #12.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 13" CV="912.1021=3">
+            <variable item="Bank D Sound Setting 13" CV="912.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 13</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #13.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 14" CV="913.1021=3">
+            <variable item="Bank D Sound Setting 14" CV="913.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 14</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #14.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 15" CV="914.1021=3">
+            <variable item="Bank D Sound Setting 15" CV="914.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 15</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #15.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 16" CV="915.1021=3">
+            <variable item="Bank D Sound Setting 16" CV="915.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 16</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #16.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 17" CV="916.1021=3">
+            <variable item="Bank D Sound Setting 17" CV="916.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 17</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #17.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 18" CV="917.1021=3">
+            <variable item="Bank D Sound Setting 18" CV="917.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 18</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #18.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 19" CV="918.1021=3">
+            <variable item="Bank D Sound Setting 19" CV="918.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 19</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #19.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 20" CV="919.1021=3">
+            <variable item="Bank D Sound Setting 20" CV="919.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 20</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #20.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 21" CV="920.1021=3">
+            <variable item="Bank D Sound Setting 21" CV="920.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 21</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #21.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 22" CV="921.1021=3">
+            <variable item="Bank D Sound Setting 22" CV="921.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 22</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #22.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 23" CV="922.1021=3">
+            <variable item="Bank D Sound Setting 23" CV="922.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 23</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #23.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 24" CV="923.1021=3">
+            <variable item="Bank D Sound Setting 24" CV="923.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 24</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #24.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 25" CV="924.1021=3">
+            <variable item="Bank D Sound Setting 25" CV="924.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 25</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #25.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 26" CV="925.1021=3">
+            <variable item="Bank D Sound Setting 26" CV="925.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 26</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #26.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 27" CV="926.1021=3">
+            <variable item="Bank D Sound Setting 27" CV="926.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 27</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #27.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 28" CV="927.1021=3">
+            <variable item="Bank D Sound Setting 28" CV="927.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 28</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #28.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 29" CV="928.1021=3">
+            <variable item="Bank D Sound Setting 29" CV="928.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 29</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #29.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 30" CV="929.1021=3">
+            <variable item="Bank D Sound Setting 30" CV="929.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 30</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #30.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 31" CV="930.1021=3">
+            <variable item="Bank D Sound Setting 31" CV="930.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 31</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #31.</tooltip>
             </variable>
-            <variable item="Bank D Sound Setting 32" CV="931.1021=3">
+            <variable item="Bank D Sound Setting 32" CV="931.3">
                 <decVal/>
                 <label xml:lang="cs">Banka D nastavení zvuku 32</label>
                 <tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #32.</tooltip>
             </variable>
             <!-- CV 900.4-931.4-->
             <!-- Piko Info: Lautstärken 0-255 der Einzelgeräusche -->
-            <variable item="Bank E Sound Setting 1" CV="900.1021=4">
+            <variable item="Bank E Sound Setting 1" CV="900.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 1</label>
                 <tooltip>Sound Slot #1 Volume</tooltip>
                 <tooltip xml:lang="de">Sound Slot #1 Lautstärke</tooltip>
                 <tooltip xml:lang="cs">Zvukový slot #1 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 2" CV="901.1021=4">
+            <variable item="Bank E Sound Setting 2" CV="901.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 2</label>
                 <tooltip xml:lang="cs">Zvukový slot #2 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 3" CV="902.1021=4">
+            <variable item="Bank E Sound Setting 3" CV="902.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 3</label>
                 <tooltip xml:lang="cs">Zvukový slot #3 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 4" CV="903.1021=4">
+            <variable item="Bank E Sound Setting 4" CV="903.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 4</label>
                 <tooltip xml:lang="cs">Zvukový slot #4 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 5" CV="904.1021=4">
+            <variable item="Bank E Sound Setting 5" CV="904.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 5</label>
                 <tooltip xml:lang="cs">Zvukový slot #5 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 6" CV="905.1021=4">
+            <variable item="Bank E Sound Setting 6" CV="905.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 6</label>
                 <tooltip xml:lang="cs">Zvukový slot #6 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 7" CV="906.1021=4">
+            <variable item="Bank E Sound Setting 7" CV="906.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 7</label>
                 <tooltip xml:lang="cs">Zvukový slot #7 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 8" CV="907.1021=4">
+            <variable item="Bank E Sound Setting 8" CV="907.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 8</label>
                 <tooltip xml:lang="cs">Zvukový slot #8 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 9" CV="908.1021=4">
+            <variable item="Bank E Sound Setting 9" CV="908.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 9</label>
                 <tooltip xml:lang="cs">Zvukový slot #9 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 10" CV="909.1021=4">
+            <variable item="Bank E Sound Setting 10" CV="909.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 10</label>
                 <tooltip xml:lang="cs">Zvukový slot #10 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 11" CV="910.1021=4">
+            <variable item="Bank E Sound Setting 11" CV="910.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 11</label>
                 <tooltip xml:lang="cs">Zvukový slot #11 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 12" CV="911.1021=4">
+            <variable item="Bank E Sound Setting 12" CV="911.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 12</label>
                 <tooltip xml:lang="cs">Zvukový slot #12 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 13" CV="912.1021=4">
+            <variable item="Bank E Sound Setting 13" CV="912.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 13</label>
                 <tooltip xml:lang="cs">Zvukový slot #13 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 14" CV="913.1021=4">
+            <variable item="Bank E Sound Setting 14" CV="913.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 14</label>
                 <tooltip xml:lang="cs">Zvukový slot #14 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 15" CV="914.1021=4">
+            <variable item="Bank E Sound Setting 15" CV="914.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 15</label>
                 <tooltip xml:lang="cs">Zvukový slot #15 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 16" CV="915.1021=4">
+            <variable item="Bank E Sound Setting 16" CV="915.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 16</label>
                 <tooltip xml:lang="cs">Zvukový slot #16 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 17" CV="916.1021=4">
+            <variable item="Bank E Sound Setting 17" CV="916.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 17</label>
                 <tooltip xml:lang="cs">Zvukový slot #17 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 18" CV="917.1021=4">
+            <variable item="Bank E Sound Setting 18" CV="917.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 18</label>
                 <tooltip xml:lang="cs">Zvukový slot #18 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 19" CV="918.1021=4">
+            <variable item="Bank E Sound Setting 19" CV="918.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 19</label>
                 <tooltip xml:lang="cs">Zvukový slot #19 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 20" CV="919.1021=4">
+            <variable item="Bank E Sound Setting 20" CV="919.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 20</label>
                 <tooltip xml:lang="cs">Zvukový slot #20 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 21" CV="920.1021=4">
+            <variable item="Bank E Sound Setting 21" CV="920.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 21</label>
                 <tooltip xml:lang="cs">Zvukový slot #21 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 22" CV="921.1021=4">
+            <variable item="Bank E Sound Setting 22" CV="921.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 22</label>
                 <tooltip xml:lang="cs">Zvukový slot #22 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 23" CV="922.1021=4">
+            <variable item="Bank E Sound Setting 23" CV="922.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 23</label>
                 <tooltip xml:lang="cs">Zvukový slot #23 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 24" CV="923.1021=4">
+            <variable item="Bank E Sound Setting 24" CV="923.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 24</label>
                 <tooltip xml:lang="cs">Zvukový slot #24 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 25" CV="924.1021=4">
+            <variable item="Bank E Sound Setting 25" CV="924.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 25</label>
                 <tooltip xml:lang="cs">Zvukový slot #25 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 26" CV="925.1021=4">
+            <variable item="Bank E Sound Setting 26" CV="925.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 26</label>
                 <tooltip xml:lang="cs">Zvukový slot #26 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 27" CV="926.1021=4">
+            <variable item="Bank E Sound Setting 27" CV="926.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 27</label>
                 <tooltip xml:lang="cs">Zvukový slot #27 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 28" CV="927.1021=4">
+            <variable item="Bank E Sound Setting 28" CV="927.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 28</label>
                 <tooltip xml:lang="cs">Zvukový slot #28 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 29" CV="928.1021=4">
+            <variable item="Bank E Sound Setting 29" CV="928.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 29</label>
                 <tooltip xml:lang="cs">Zvukový slot #29 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 30" CV="929.1021=4">
+            <variable item="Bank E Sound Setting 30" CV="929.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 30</label>
                 <tooltip xml:lang="cs">Zvukový slot #30 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 31" CV="930.1021=4">
+            <variable item="Bank E Sound Setting 31" CV="930.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 31</label>
                 <tooltip xml:lang="cs">Zvukový slot #31 Hlasitost.</tooltip>
             </variable>
-            <variable item="Bank E Sound Setting 32" CV="931.1021=4">
+            <variable item="Bank E Sound Setting 32" CV="931.4">
                 <decVal/>
                 <label xml:lang="cs">Banka E nastavení zvuku 32</label>
                 <tooltip xml:lang="cs">Zvukový slot #32 Hlasitost.</tooltip>
@@ -1530,203 +1531,203 @@
                     <!--<value>8</value>-->
                 <!--</qualifier>-->
                 <!--PIKO41BR82 sounds-->
-                <variable item="Bank F F0 activated sound" CV="900.1021=8" default="1" include="PIKO41BR82">
+                <variable item="Bank F F0 activated sound" CV="900.8" default="1" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F0 activated sound</label>
                     <label xml:lang="de">F0 activiert Sound</label>
                     <label xml:lang="nl">F0 speelt geluid:</label>
                     <label xml:lang="cs">F0 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F1 activated sound" CV="901.1021=8" default="2" include="PIKO41BR82">
+                <variable item="Bank F F1 activated sound" CV="901.8" default="2" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F1 activated sound</label>
                     <label xml:lang="de">F1 activiert Sound</label>
                     <label xml:lang="nl">F1 speelt geluid:</label>
                     <label xml:lang="cs">F1 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F2 activated sound" CV="902.1021=8" default="3" include="PIKO41BR82">
+                <variable item="Bank F F2 activated sound" CV="902.8" default="3" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F2 activated sound</label>
                     <label xml:lang="de">F2 activiert Sound</label>
                     <label xml:lang="nl">F2 speelt geluid:</label>
                     <label xml:lang="cs">F2 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F3 activated sound" CV="903.1021=8" default="4" include="PIKO41BR82">
+                <variable item="Bank F F3 activated sound" CV="903.8" default="4" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F3 activated sound</label>
                     <label xml:lang="de">F3 activiert Sound</label>
                     <label xml:lang="nl">F3 speelt geluid:</label>
                     <label xml:lang="cs">F3 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F4 activated sound" CV="904.1021=8" default="5" include="PIKO41BR82">
+                <variable item="Bank F F4 activated sound" CV="904.8" default="5" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F4 activated sound</label>
                     <label xml:lang="de">F4 activiert Sound</label>
                     <label xml:lang="nl">F4 speelt geluid:</label>
                     <label xml:lang="cs">F4 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F5 activated sound" CV="905.1021=8" default="6" include="PIKO41BR82">
+                <variable item="Bank F F5 activated sound" CV="905.8" default="6" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F5 activated sound</label>
                     <label xml:lang="de">F5 activiert Sound</label>
                     <label xml:lang="nl">F5 speelt geluid:</label>
                     <label xml:lang="cs">F5 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F6 activated sound" CV="906.1021=8" default="7" include="PIKO41BR82">
+                <variable item="Bank F F6 activated sound" CV="906.8" default="7" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F6 activated sound</label>
                     <label xml:lang="de">F6 activiert Sound</label>
                     <label xml:lang="nl">F6 speelt geluid:</label>
                     <label xml:lang="cs">F6 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F7 activated sound" CV="907.1021=8" default="8" include="PIKO41BR82">
+                <variable item="Bank F F7 activated sound" CV="907.8" default="8" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F7 activated sound</label>
                     <label xml:lang="de">F7 activiert Sound</label>
                     <label xml:lang="nl">F7 speelt geluid:</label>
                     <label xml:lang="cs">F7 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F8 activated sound" CV="908.1021=8" default="9" include="PIKO41BR82">
+                <variable item="Bank F F8 activated sound" CV="908.8" default="9" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F8 activated sound</label>
                     <label xml:lang="de">F8 activiert Sound</label>
                     <label xml:lang="nl">F8 speelt geluid:</label>
                     <label xml:lang="cs">F8 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F9 activated sound" CV="909.1021=8" default="10" include="PIKO41BR82">
+                <variable item="Bank F F9 activated sound" CV="909.8" default="10" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F9 activated sound</label>
                     <label xml:lang="de">F9 activiert Sound</label>
                     <label xml:lang="nl">F9 speelt geluid:</label>
                     <label xml:lang="cs">F9 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F10 activated sound" CV="910.1021=8" default="11" include="PIKO41BR82">
+                <variable item="Bank F F10 activated sound" CV="910.8" default="11" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F10 activated sound</label>
                     <label xml:lang="de">F10 activiert Sound</label>
                     <label xml:lang="nl">F10 speelt geluid:</label>
                     <label xml:lang="cs">F10 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F11 activated sound" CV="911.1021=8" default="12" include="PIKO41BR82">
+                <variable item="Bank F F11 activated sound" CV="911.8" default="12" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F11 activated sound</label>
                     <label xml:lang="de">F11 activiert Sound</label>
                     <label xml:lang="nl">F11 speelt geluid:</label>
                     <label xml:lang="cs">F11 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F12 activated sound" CV="912.1021=8" default="13" include="PIKO41BR82">
+                <variable item="Bank F F12 activated sound" CV="912.8" default="13" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F12 activated sound</label>
                     <label xml:lang="de">F12 activiert Sound</label>
                     <label xml:lang="nl">F12 speelt geluid:</label>
                     <label xml:lang="cs">F12 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F13 activated sound" CV="913.1021=8" default="14" include="PIKO41BR82">
+                <variable item="Bank F F13 activated sound" CV="913.8" default="14" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F13 activated sound</label>
                     <label xml:lang="de">F13 activiert Sound</label>
                     <label xml:lang="nl">F13 speelt geluid:</label>
                     <label xml:lang="cs">F13 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F14 activated sound" CV="914.1021=8" default="15" include="PIKO41BR82">
+                <variable item="Bank F F14 activated sound" CV="914.8" default="15" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F14 activated sound</label>
                     <label xml:lang="de">F14 activiert Sound</label>
                     <label xml:lang="nl">F14 speelt geluid:</label>
                     <label xml:lang="cs">F14 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F15 activated sound" CV="915.1021=8" default="16" include="PIKO41BR82">
+                <variable item="Bank F F15 activated sound" CV="915.8" default="16" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F15 activated sound</label>
                     <label xml:lang="de">F15 activiert Sound</label>
                     <label xml:lang="nl">F15 speelt geluid:</label>
                     <label xml:lang="cs">F15 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F16 activated sound" CV="916.1021=8" default="17" include="PIKO41BR82">
+                <variable item="Bank F F16 activated sound" CV="916.8" default="17" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F16 activated sound</label>
                     <label xml:lang="de">F16 activiert Sound</label>
                     <label xml:lang="nl">F16 speelt geluid:</label>
                     <label xml:lang="cs">F16 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F17 activated sound" CV="917.1021=8" default="18" include="PIKO41BR82">
+                <variable item="Bank F F17 activated sound" CV="917.8" default="18" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F17 activated sound</label>
                     <label xml:lang="de">F17 activiert Sound</label>
                     <label xml:lang="nl">F17 speelt geluid:</label>
                     <label xml:lang="cs">F17 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F18 activated sound" CV="918.1021=8" default="19" include="PIKO41BR82">
+                <variable item="Bank F F18 activated sound" CV="918.8" default="19" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F18 activated sound</label>
                     <label xml:lang="de">F18 activiert Sound</label>
                     <label xml:lang="nl">F18 speelt geluid:</label>
                     <label xml:lang="cs">F18 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F19 activated sound" CV="919.1021=8" default="20" include="PIKO41BR82">
+                <variable item="Bank F F19 activated sound" CV="919.8" default="20" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F19 activated sound</label>
                     <label xml:lang="de">F19 activiert Sound</label>
                     <label xml:lang="nl">F19 speelt geluid:</label>
                     <label xml:lang="cs">F19 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F20 activated sound" CV="920.1021=8" default="21" include="PIKO41BR82">
+                <variable item="Bank F F20 activated sound" CV="920.8" default="21" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F20 activated sound</label>
                     <label xml:lang="de">F20 activiert Sound</label>
                     <label xml:lang="nl">F20 speelt geluid:</label>
                     <label xml:lang="cs">F20 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F21 activated sound" CV="921.1021=8" default="22" include="PIKO41BR82">
+                <variable item="Bank F F21 activated sound" CV="921.8" default="22" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F21 activated sound</label>
                     <label xml:lang="de">F21 activiert Sound</label>
                     <label xml:lang="nl">F21 speelt geluid:</label>
                     <label xml:lang="cs">F21 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F22 activated sound" CV="922.1021=8" default="23" include="PIKO41BR82">
+                <variable item="Bank F F22 activated sound" CV="922.8" default="23" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F22 activated sound</label>
                     <label xml:lang="de">F22 activiert Sound</label>
                     <label xml:lang="nl">F22 speelt geluid:</label>
                     <label xml:lang="cs">F22 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F23 activated sound" CV="923.1021=8" default="24" include="PIKO41BR82">
+                <variable item="Bank F F23 activated sound" CV="923.8" default="24" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F23 activated sound</label>
                     <label xml:lang="de">F23 activiert Sound</label>
                     <label xml:lang="nl">F23 speelt geluid:</label>
                     <label xml:lang="cs">F23 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F24 activated sound" CV="924.1021=8" default="25" include="PIKO41BR82">
+                <variable item="Bank F F24 activated sound" CV="924.8" default="25" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F24 activated sound</label>
                     <label xml:lang="de">F24 activiert Sound</label>
                     <label xml:lang="nl">F24 speelt geluid:</label>
                     <label xml:lang="cs">F24 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F25 activated sound" CV="925.1021=8" default="0" include="PIKO41BR82">
+                <variable item="Bank F F25 activated sound" CV="925.8" default="0" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F25 activated sound</label>
                     <label xml:lang="de">F25 activiert Sound</label>
                     <label xml:lang="nl">F25 speelt geluid:</label>
                     <label xml:lang="cs">F25 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F26 activated sound" CV="926.1021=8" default="0" include="PIKO41BR82">
+                <variable item="Bank F F26 activated sound" CV="926.8" default="0" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F26 activated sound</label>
                     <label xml:lang="de">F26 activiert Sound</label>
                     <label xml:lang="nl">F26 speelt geluid:</label>
                     <label xml:lang="cs">F26 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F27 activated sound" CV="927.1021=8" default="0" include="PIKO41BR82">
+                <variable item="Bank F F27 activated sound" CV="927.8" default="0" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F27 activated sound</label>
                     <label xml:lang="de">F27 activiert Sound</label>
                     <label xml:lang="nl">F27 speelt geluid:</label>
                     <label xml:lang="cs">F27 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F28 activated sound" CV="928.1021=8" default="0" include="PIKO41BR82">
+                <variable item="Bank F F28 activated sound" CV="928.8" default="0" include="PIKO41BR82">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
                     <label>F28 activated sound</label>
                     <label xml:lang="de">F28 activiert Sound</label>
@@ -1736,203 +1737,203 @@
                 <!--end BR82-->
 
                 <!--PIKO41RH2400 sounds-->
-                <variable item="Bank F F0 activated sound" CV="900.1021=8" default="1" include="PIKO41RH2400">
+                <variable item="Bank F F0 activated sound" CV="900.8" default="1" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F0 activated sound</label>
                     <label xml:lang="de">F0 activiert Sound</label>
                     <label xml:lang="nl">F0 speelt geluid:</label>
                     <label xml:lang="cs">F0 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F1 activated sound" CV="901.1021=8" default="2" include="PIKO41RH2400">
+                <variable item="Bank F F1 activated sound" CV="901.8" default="2" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F1 activated sound</label>
                     <label xml:lang="de">F1 activiert Sound</label>
                     <label xml:lang="nl">F1 speelt geluid:</label>
                     <label xml:lang="cs">F1 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F2 activated sound" CV="902.1021=8" default="3" include="PIKO41RH2400">
+                <variable item="Bank F F2 activated sound" CV="902.8" default="3" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F2 activated sound</label>
                     <label xml:lang="de">F2 activiert Sound</label>
                     <label xml:lang="nl">F2 speelt geluid:</label>
                     <label xml:lang="cs">F2 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F3 activated sound" CV="903.1021=8" default="4" include="PIKO41RH2400">
+                <variable item="Bank F F3 activated sound" CV="903.8" default="4" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F3 activated sound</label>
                     <label xml:lang="de">F3 activiert Sound</label>
                     <label xml:lang="nl">F3 speelt geluid:</label>
                     <label xml:lang="cs">F3 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F4 activated sound" CV="904.1021=8" default="5" include="PIKO41RH2400">
+                <variable item="Bank F F4 activated sound" CV="904.8" default="5" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F4 activated sound</label>
                     <label xml:lang="de">F4 activiert Sound</label>
                     <label xml:lang="nl">F4 speelt geluid:</label>
                     <label xml:lang="cs">F4 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F5 activated sound" CV="905.1021=8" default="6" include="PIKO41RH2400">
+                <variable item="Bank F F5 activated sound" CV="905.8" default="6" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F5 activated sound</label>
                     <label xml:lang="de">F5 activiert Sound</label>
                     <label xml:lang="nl">F5 speelt geluid:</label>
                     <label xml:lang="cs">F5 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F6 activated sound" CV="906.1021=8" default="7" include="PIKO41RH2400">
+                <variable item="Bank F F6 activated sound" CV="906.8" default="7" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F6 activated sound</label>
                     <label xml:lang="de">F6 activiert Sound</label>
                     <label xml:lang="nl">F6 speelt geluid:</label>
                     <label xml:lang="cs">F6 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F7 activated sound" CV="907.1021=8" default="8" include="PIKO41RH2400">
+                <variable item="Bank F F7 activated sound" CV="907.8" default="8" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F7 activated sound</label>
                     <label xml:lang="de">F7 activiert Sound</label>
                     <label xml:lang="nl">F7 speelt geluid:</label>
                     <label xml:lang="cs">F7 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F8 activated sound" CV="908.1021=8" default="9" include="PIKO41RH2400">
+                <variable item="Bank F F8 activated sound" CV="908.8" default="9" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F8 activated sound</label>
                     <label xml:lang="de">F8 activiert Sound</label>
                     <label xml:lang="nl">F8 speelt geluid:</label>
                     <label xml:lang="cs">F8 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F9 activated sound" CV="909.1021=8" default="10" include="PIKO41RH2400">
+                <variable item="Bank F F9 activated sound" CV="909.8" default="10" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F9 activated sound</label>
                     <label xml:lang="de">F9 activiert Sound</label>
                     <label xml:lang="nl">F9 speelt geluid:</label>
                     <label xml:lang="cs">F9 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F10 activated sound" CV="910.1021=8" default="11" include="PIKO41RH2400">
+                <variable item="Bank F F10 activated sound" CV="910.8" default="11" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F10 activated sound</label>
                     <label xml:lang="de">F10 activiert Sound</label>
                     <label xml:lang="nl">F10 speelt geluid:</label>
                     <label xml:lang="cs">F10 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F11 activated sound" CV="911.1021=8" default="12" include="PIKO41RH2400">
+                <variable item="Bank F F11 activated sound" CV="911.8" default="12" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F11 activated sound</label>
                     <label xml:lang="de">F11 activiert Sound</label>
                     <label xml:lang="nl">F11 speelt geluid:</label>
                     <label xml:lang="cs">F11 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F12 activated sound" CV="912.1021=8" default="13" include="PIKO41RH2400">
+                <variable item="Bank F F12 activated sound" CV="912.8" default="13" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F12 activated sound</label>
                     <label xml:lang="de">F12 activiert Sound</label>
                     <label xml:lang="nl">F12 speelt geluid:</label>
                     <label xml:lang="cs">F12 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F13 activated sound" CV="913.1021=8" default="14" include="PIKO41RH2400">
+                <variable item="Bank F F13 activated sound" CV="913.8" default="14" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F13 activated sound</label>
                     <label xml:lang="de">F13 activiert Sound</label>
                     <label xml:lang="nl">F13 speelt geluid:</label>
                     <label xml:lang="cs">F13 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F14 activated sound" CV="914.1021=8" default="15" include="PIKO41RH2400">
+                <variable item="Bank F F14 activated sound" CV="914.8" default="15" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F14 activated sound</label>
                     <label xml:lang="de">F14 activiert Sound</label>
                     <label xml:lang="nl">F14 speelt geluid:</label>
                     <label xml:lang="cs">F14 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F15 activated sound" CV="915.1021=8" default="16" include="PIKO41RH2400">
+                <variable item="Bank F F15 activated sound" CV="915.8" default="16" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F15 activated sound</label>
                     <label xml:lang="de">F15 activiert Sound</label>
                     <label xml:lang="nl">F15 speelt geluid:</label>
                     <label xml:lang="cs">F15 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F16 activated sound" CV="916.1021=8" default="17" include="PIKO41RH2400">
+                <variable item="Bank F F16 activated sound" CV="916.8" default="17" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F16 activated sound</label>
                     <label xml:lang="de">F16 activiert Sound</label>
                     <label xml:lang="nl">F16 speelt geluid:</label>
                     <label xml:lang="cs">F16 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F17 activated sound" CV="917.1021=8" default="18" include="PIKO41RH2400">
+                <variable item="Bank F F17 activated sound" CV="917.8" default="18" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F17 activated sound</label>
                     <label xml:lang="de">F17 activiert Sound</label>
                     <label xml:lang="nl">F17 speelt geluid:</label>
                     <label xml:lang="cs">F17 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F18 activated sound" CV="918.1021=8" default="19" include="PIKO41RH2400">
+                <variable item="Bank F F18 activated sound" CV="918.8" default="19" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F18 activated sound</label>
                     <label xml:lang="de">F18 activiert Sound</label>
                     <label xml:lang="nl">F18 speelt geluid:</label>
                     <label xml:lang="cs">F18 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F19 activated sound" CV="919.1021=8" default="20" include="PIKO41RH2400">
+                <variable item="Bank F F19 activated sound" CV="919.8" default="20" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F19 activated sound</label>
                     <label xml:lang="de">F19 activiert Sound</label>
                     <label xml:lang="nl">F19 speelt geluid:</label>
                     <label xml:lang="cs">F19 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F20 activated sound" CV="920.1021=8" default="21" include="PIKO41RH2400">
+                <variable item="Bank F F20 activated sound" CV="920.8" default="21" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F20 activated sound</label>
                     <label xml:lang="de">F20 activiert Sound</label>
                     <label xml:lang="nl">F20 speelt geluid:</label>
                     <label xml:lang="cs">F20 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F21 activated sound" CV="921.1021=8" default="22" include="PIKO41RH2400">
+                <variable item="Bank F F21 activated sound" CV="921.8" default="22" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F21 activated sound</label>
                     <label xml:lang="de">F21 activiert Sound</label>
                     <label xml:lang="nl">F21 speelt geluid:</label>
                     <label xml:lang="cs">F21 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F22 activated sound" CV="922.1021=8" default="23" include="PIKO41RH2400">
+                <variable item="Bank F F22 activated sound" CV="922.8" default="23" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F22 activated sound</label>
                     <label xml:lang="de">F22 activiert Sound</label>
                     <label xml:lang="nl">F22 speelt geluid:</label>
                     <label xml:lang="cs">F22 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F23 activated sound" CV="923.1021=8" default="24" include="PIKO41RH2400">
+                <variable item="Bank F F23 activated sound" CV="923.8" default="24" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F23 activated sound</label>
                     <label xml:lang="de">F23 activiert Sound</label>
                     <label xml:lang="nl">F23 speelt geluid:</label>
                     <label xml:lang="cs">F23 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F24 activated sound" CV="924.1021=8" default="25" include="PIKO41RH2400">
+                <variable item="Bank F F24 activated sound" CV="924.8" default="25" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F24 activated sound</label>
                     <label xml:lang="de">F24 activiert Sound</label>
                     <label xml:lang="nl">F24 speelt geluid:</label>
                     <label xml:lang="cs">F24 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F25 activated sound" CV="925.1021=8" default="26" include="PIKO41RH2400">
+                <variable item="Bank F F25 activated sound" CV="925.8" default="26" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F25 activated sound</label>
                     <label xml:lang="de">F25 activiert Sound</label>
                     <label xml:lang="nl">F25 speelt geluid:</label>
                     <label xml:lang="cs">F25 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F26 activated sound" CV="926.1021=8" default="0" include="PIKO41RH2400">
+                <variable item="Bank F F26 activated sound" CV="926.8" default="0" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F26 activated sound</label>
                     <label xml:lang="de">F26 activiert Sound</label>
                     <label xml:lang="nl">F26 speelt geluid:</label>
                     <label xml:lang="cs">F26 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F27 activated sound" CV="927.1021=8" default="0" include="PIKO41RH2400">
+                <variable item="Bank F F27 activated sound" CV="927.8" default="0" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F27 activated sound</label>
                     <label xml:lang="de">F27 activiert Sound</label>
                     <label xml:lang="nl">F27 speelt geluid:</label>
                     <label xml:lang="cs">F27 spustí zvuk</label>
                 </variable>
-                <variable item="Bank F F28 activated sound" CV="928.1021=8" default="0" include="PIKO41RH2400">
+                <variable item="Bank F F28 activated sound" CV="928.8" default="0" include="PIKO41RH2400">
                     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
                     <label>F28 activated sound</label>
                     <label xml:lang="de">F28 activiert Sound</label>

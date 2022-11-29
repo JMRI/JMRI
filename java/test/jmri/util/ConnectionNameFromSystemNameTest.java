@@ -1,6 +1,5 @@
 package jmri.util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -9,10 +8,14 @@ import org.junit.jupiter.api.*;
  */
 public class ConnectionNameFromSystemNameTest {
 
+    // no testCtor as tested class only supplies static methods
+
     @Test
-    public void testCTor() {
-        ConnectionNameFromSystemName t = new ConnectionNameFromSystemName();
-        Assert.assertNotNull("exists",t);
+    public void testMethodsExist() {
+        Assertions.assertNull(ConnectionNameFromSystemName.getConnectionName("NOTAPREFIX"));
+        Assertions.assertNull(ConnectionNameFromSystemName.getPrefixFromName("Not a User Name"));
+        Assertions.assertNull(ConnectionNameFromSystemName.getSystemConnectionMemoFromSystemPrefix("NOTAPREFIX"));
+        Assertions.assertNull(ConnectionNameFromSystemName.getSystemConnectionMemoFromUserName("Not a User Name"));
     }
 
     @BeforeEach

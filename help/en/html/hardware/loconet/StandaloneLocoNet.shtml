@@ -205,7 +205,7 @@
       "RailSync" signal, LocoNet Data signal termination, and fast clock master. The table below
       shows some LocoNet devices and their requirements.</p>
 
-      <table border="3">
+      <table class="wide">
         <tr>
           <th colspan="5">Command Stations and Boosters</th>
         </tr>
@@ -274,7 +274,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Uhlenbrock Daisy System (Daisy<br>throttle plus Power2 booster)</td>
+          <td>Uhlenbrock Daisy System (Daisy<br>throttle plus Powerxx booster<br>or Daisy II Zentrale<br>)</td>
           <td>Provides</td>
           <td>Can provide a DCC signal *</td>
           <td>Provides</td>
@@ -619,40 +619,38 @@
           <td>
           </td>
         </tr>
-
-        <tr class="ctr">
-          <td colspan="5">
-            <p>* Some circuitry may be required to generate the RailSync signals from a non-LocoNet
-            booster. See <a href="#rsfromnondtcs">RailSync from a non-Digitrax command station</a>,
-            below.</p>
-
-            <p>** LocoNet devices with an isolated LocoNet interfaces must take power from the
-            LocoNet RailSync wires to power the LocoNet side of their isolation hardware. These
-            devices may not require that the RailSync wires have a copy of the DCC track signal,
-            but they do require sufficient voltage and current. A DC power supply, as shown below
-            in <a href="#rspowersupply">RailSync power from a DC power supply</a>, is sufficient to
-            meet the power needs of the LocoBuffer-II, the LocoBuffer-USB, the LocoBuffer-USB
-            Rev-n, and the TC-64. If the RailSync wires do not provide sufficient voltage and
-            current, these devices will be unable to communicate reliably with LocoNet.</p>
-
-            <p>*** Some versions of the LocoBuffer design can provide LocoNet termination if
-            additional components are installed on the LocoBuffer board. Other versions of the
-            original LocoBuffer design do not have places for the additional components to be
-            installed. These comments do not apply to the LocoBuffer-II or LocoBuffer-USB
-            designs.</p>
-
-            <p>**** Intellibox documentation notes that only opto-isolated boosters may be
-            connected to its LocoNet connection. It is unclear whether any device using the signal
-            on the RailSync lines from the Intellibox must have opto-isolation circuitry.</p>
-
-            <p>***** PR4 devices require either a low-power copy of the DCC Track Signal or DC
-            power on the "RailSync" wires. The PR4 uses the signal on the RailSync wires to power
-            its LocoNet isolation and interface circuitry. Failure to provide sufficient power on
-            the RailSync wires will prevent the PR4 from communicating with LocoNet or result in
-            unreliable communication.</p>
-          </td>
-        </tr>
       </table>
+
+      <p>Notes:</p>
+
+      <p>* Some circuitry may be required to generate the RailSync signals from a non-LocoNet
+      booster. See <a href="#rsfromnondtcs">RailSync from a non-Digitrax command station</a>,
+      below.</p>
+
+      <p>** LocoNet devices with an isolated LocoNet interfaces must take power from the
+      LocoNet RailSync wires to power the LocoNet side of their isolation hardware. These
+      devices may not require that the RailSync wires have a copy of the DCC track signal,
+      but they do require sufficient voltage and current. A DC power supply, as shown below
+      in <a href="#rspowersupply">RailSync power from a DC power supply</a>, is sufficient to
+      meet the power needs of the LocoBuffer-II, the LocoBuffer-USB, the LocoBuffer-USB
+      Rev-n, and the TC-64. If the RailSync wires do not provide sufficient voltage and
+      current, these devices will be unable to communicate reliably with LocoNet.</p>
+
+      <p>*** Some versions of the LocoBuffer design can provide LocoNet termination if
+      additional components are installed on the LocoBuffer board. Other versions of the
+      original LocoBuffer design do not have places for the additional components to be
+      installed. These comments do not apply to the LocoBuffer-II or LocoBuffer-USB
+      designs.</p>
+
+      <p>**** Intellibox documentation notes that only opto-isolated boosters may be
+      connected to its LocoNet connection. It is unclear whether any device using the signal
+      on the RailSync lines from the Intellibox must have opto-isolation circuitry.</p>
+
+      <p>***** PR4 devices require either a low-power copy of the DCC Track Signal or DC
+      power on the "RailSync" wires. The PR4 uses the signal on the RailSync wires to power
+      its LocoNet isolation and interface circuitry. Failure to provide sufficient power on
+      the RailSync wires will prevent the PR4 from communicating with LocoNet or result in
+      unreliable communication.</p>
 
       <h3 id="dataterm">LocoNet Data Signal "Termination"</h3>
 
@@ -725,7 +723,7 @@
         <li>
           <p id="PR3config">The PR3 provides two different operating modes which may be useful when
           the PR3 is used to interface to a standalone LocoNet. One useful mode provides <a href=
-          "#dataterm">LocoNet Data Signal "Termination"</a> in it's MS100 mode, while the other
+          "#dataterm">LocoNet Data Signal "Termination"</a> in its MS100 mode, while the other
           mode does not provide LocoNet Data Signal termination.</p>
 
           <ul>
@@ -735,9 +733,12 @@
               its "Power" jack, JMRI should be configured in a way which will automatically set the
               PR3 to its "MS100 mode with termination" mode at JMRI program start-up time. This can
               be accomplished by configuring the JMRI connection settings for the PR3 so that the
-              "<code><strong>Command Station type</strong></code>" is set to
-              "<code><strong>Stand-alone LocoNet; interface device 'terminates' the LocoNet Data
-              signal</strong></code> ".</p>
+              "<code>Command Station type:</code>" is set to
+              <span class="wide">
+              "<code>Stand-alone LocoNet; interface device 'terminates' the LocoNet Data signal</code>"
+              </span>
+              (currently the Terminate option is not available)
+              </p>
 
               <p>Note that this PR3 operating mode is not recommended when there is some other
               source of "LocoNet Data Signal Termination" connected to LocoNet, and it is not
@@ -749,9 +750,13 @@
               provides <a href="#dataterm">LocoNet Data Signal "Termination"</a>, then it is more
               appropriate to use the PR3 in its MS100 mode <em>without</em> enabling the PR3's Data
               signal termination feature. In this case, it is appropriate to configure the PR3
-              connection for a "<code><strong>Command Station type</strong></code>" of
-              "<code><strong>Stand-alone LocoNet; interface device does not 'terminate' the LocoNet
-              Data signal</strong></code>".</p>
+              connection for a "<code>Command Station type:</code>" of
+                <span class="wide">
+              "<code>Stand-alone LocoNet; interface device does not 'terminate' the LocoNet
+              Data signal</code>"
+              </span>
+              (currently the Terminate option is not available)
+              </p>
             </li>
           </ul>
         </li>

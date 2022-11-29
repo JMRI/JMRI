@@ -1,25 +1,23 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; le 2017-01-06-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; le 2017-01-06-->
 <head>
   <title>
- 	JMRI: Sensors Documentation
+ 	  JMRI: Sensors Documentation
   </title>
-
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="sensor model railroad JMRI decoderpro panelpro">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>JMRI:Documentation Capteur</h1>
+      <h1>JMRI:Documentation Capteur</h1>
 
 <h2>Que sont les capteurs? </h2>
 
@@ -54,7 +52,7 @@ que l'entr&#233;e mat&#233;riel sur le r&#233;seau change de valeur.
 
 <h3><A NAME="Debounce"> </a> Capteur Anti-Rebonds</h3>
 <p>L'installation de Capteur Antirebond est l&#224; pour aider &#224; pr&#233;venir les faux d&#233;clenchements d'un capteur
- passant dans le syst&#232;me et d&#233;clenchant d'autres &#233;v&#233;nements dans le syst&#232;me. <br>
+passant dans le syst&#232;me et d&#233;clenchant d'autres &#233;v&#233;nements dans le syst&#232;me. <br>
 Ces faux d&#233;clenchements pourraientt &#234;tre d&#251; &#224; un z&#244;ne sale de la voie ou des interf&#233;rences &#233;lectriques.
 
 <p>L'installation vous permet d'assigner une dur&#233;e en millisecondes avant que le changement
@@ -136,11 +134,13 @@ dans le menu <b>Panneau</b>.
     message d'avertissement ou d'erreur sera affich&#233; dans la zone des notes; vous devez alors
     corriger l'erreur et cliquez sur <b>OK </b> &#224; nouveau.</li>
     <li> Retour au Tableau du Capteur princi pale, vous pouvez alors voir
-        l'&#233;tat actuel du Capteur.</li>
+    l'&#233;tat actuel du Capteur.</li>
+
 </ol>
 
-<!--#include virtual="/Footer.shtml" -->
-      </div><!-- closes #mainContent-->
-    </div><!-- closes #mBody-->
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

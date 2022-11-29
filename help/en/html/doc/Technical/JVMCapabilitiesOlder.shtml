@@ -559,7 +559,7 @@ the box is editable, and somebody enters some other type).<br>
 -Xdoclint:all,-missing,-accessibility,-html,-syntax
 </pre>to drop tests for missing Javadoc tags and certain benign HTML errors. (For now)
       <h2 id="extension">JVM and JDK Extensions</h2>
-      It's possible to extend the JVM and/or JDK installed on your machine via <a href=
+      <p>It's possible to extend the JVM and/or JDK installed on your machine via <a href=
       "http://docs.oracle.com/javase/8/docs/technotes/guides/standards/index.html">the
       endorsed-standards override mechanism</a> and the <a href=
       "http://docs.oracle.com/javase/8/docs/technotes/guides/extensions/index.html">extension
@@ -571,7 +571,9 @@ the box is editable, and somebody enters some other type).<br>
       the following from the command line: <code>java -XX:+CheckEndorsedAndExtDirs</code> If you
       get a message about a specific directory, look there for conflicting Jar files. You should
       probably consult the JMRIusers or jmri-developers mailing list for help before changing that
-      directory! <!--#include virtual="/Footer.shtml" -->
+      directory!</p>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

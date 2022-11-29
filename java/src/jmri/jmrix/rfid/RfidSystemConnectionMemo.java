@@ -76,11 +76,11 @@ public class RfidSystemConnectionMemo extends DefaultSystemConnectionMemo {
     }
 
     public RfidSensorManager getSensorManager() {
-        return get(SensorManager.class);
+        return (RfidSensorManager)get(SensorManager.class);
     }
 
     public RfidReporterManager getReporterManager() {
-        return get(ReporterManager.class);
+        return (RfidReporterManager)get(ReporterManager.class);
     }
 
     @Override

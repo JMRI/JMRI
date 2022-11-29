@@ -1,6 +1,7 @@
 package apps.gui3;
 
 import jmri.util.gui.GuiLafPreferencesManager;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -12,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
+
 import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -34,10 +37,11 @@ import jmri.jmrix.PortAdapter;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FirstTimeStartUpWizard {
+public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
 
     Image splashIm;
 
@@ -244,6 +248,7 @@ public class FirstTimeStartUpWizard {
             Thread connectThread = new Thread(r);
             connectThread.start();
             connectThread.setName("Start-Up Wizard Connect");
+            connectThread.setUncaughtExceptionHandler(this);
         });
 
         buttonPanel.add(previous);
@@ -254,6 +259,25 @@ public class FirstTimeStartUpWizard {
         previous.setEnabled(false);
 
         return buttonPanel;
+    }
+
+    @Override
+    public void uncaughtException(Thread t, Throwable e) {
+        showDialogue(e);
+    }
+
+    private void showDialogue(Throwable ex) {
+        log.error("Exception: ", ex);
+        Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+        parent.setCursor(normalCursor);
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            JOptionPane.showMessageDialog(parent,
+                "<html>An error occurred while trying to connect to " + connectionConfigPane.getCurrentObject().getConnectionName()
+                    + ", <br>press the back button and check the connection details.<br>"
+                    + ex.getLocalizedMessage() + "</html>",
+                "Error Opening Connection",
+                JOptionPane.ERROR_MESSAGE);
+        });
     }
 
     //The connection process is placed into its own thread so that it doens't hog the swingthread while waiting for the connections to open.
@@ -275,13 +299,7 @@ public class FirstTimeStartUpWizard {
                     adp.connect();
                     adp.configure();
                 } catch (Exception ex) {
-                    log.error("Exception: ", ex);
-                    Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
-                    parent.setCursor(normalCursor);
-                    JOptionPane.showMessageDialog(null,
-                            "An error occurred while trying to connect to " + connect.getConnectionName() + ", press the back button and check the connection details",
-                            "Error Opening Connection",
-                            JOptionPane.ERROR_MESSAGE);
+                    showDialogue(ex);
                     return;
                 }
             }

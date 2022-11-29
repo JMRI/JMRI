@@ -1,35 +1,24 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; le 2013-10-09-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; le 2013-10-09-->
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Preferences Window</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help preferences">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>JMRI: Fen&ecirc;tre Principale</h1>La fen&ecirc;tre
-      principale JMRI est celle o&ugrave; vous obtenez acc&egrave;s
-      &agrave; toutes les fonctionnalit&eacute;s JMRI.
+      <h1>JMRI: Fen&ecirc;tre Principale</h1>
+
+      <p>La fen&ecirc;tre principale JMRI est celle o&ugrave; vous obtenez acc&egrave;s
+      &agrave; toutes les fonctionnalit&eacute;s JMRI.</p>
 
       <p>Aide pour les fen&ecirc;tres principales
       particuli&egrave;res:</p>
@@ -100,8 +89,9 @@
         </li>
       </ul>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

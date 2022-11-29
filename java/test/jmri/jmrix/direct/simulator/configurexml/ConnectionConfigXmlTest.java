@@ -24,8 +24,8 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.tearDown();
     }
 }

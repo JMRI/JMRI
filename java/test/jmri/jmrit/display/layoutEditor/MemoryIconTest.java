@@ -12,6 +12,8 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS",
+    justification = "see comment in tested class, this file needs to use the tested class name.")
 public class MemoryIconTest extends jmri.jmrit.display.MemoryIconTest {
 
     @Test

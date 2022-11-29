@@ -147,7 +147,7 @@
         <li>A <a href=
         "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/swing/SampleConfigPane.java">
           swing.SampleConfigPane</a> class to provide the basis of a cGUI configuration pane. This
-          one just shows a label in it's window, but you can build it out with whatever else is
+          one just shows a label in its window, but you can build it out with whatever else is
           needed. It's connected to the rest of JMRI so that you can access configure connections
           to it in the Preferences.
         </li>

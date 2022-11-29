@@ -1,23 +1,16 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- Translated  by Blorec Herv&#233; le 2011-09-22-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated  by Blorec Herv&#233; le 2011-09-22-->
 <head>
-   <title>Measurements on power leads of Digitrax components</title>
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <title>Measurements on power leads of Digitrax components</title>
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
 <h1>Mesures de la puissance sur les fils des composants Digitrax</h1>
@@ -28,8 +21,8 @@ mesures sur mon réseau, et ce que je retiens d'elles.
 
 <h2>Conclusions</h2>
 
-Le DCS100 et PM4 semblent utiliser un redressement double alternance pour l'
-alimentations, tandis que la DS54 utilise une alimentation redresseur simple alternance.
+Le DCS100 et PM4 semblent utiliser un redressement double alternance pour l'alimentations, tandis que la DS54 utilise
+une alimentation redresseur simple alternance.
 Ces deux types nécessitent différents décalages entre la masse et le système de conducteur du transformateur, ce qui explique pourquoi ces trois types de composants ne peuvent pas partager les alimentations AC auxiliaires.
 
 <h2>Mesures Spécifiques</h2>
@@ -37,7 +30,7 @@ Ces deux types nécessitent différents décalages entre la masse et le système
 Dans cette section, je décris les mesures menant à mes conclusions.
 
 <p>Les mesures suivantes ont été faites sur un réseau en exploitation. Il est alimenté
-par une seul centrale DCS100 (Chief), avec unités de puissance PM4 pour alimenter des sous-districts et des unités
+par une seule centrale DCS100 (Chief), avec unités de puissance PM4 pour alimenter des sous-districts et des unités
 DS54 pour divers contrôles. L'alimentation de la voie était sur On, et le DCS100 était en mode «RUN», c'est à dire envoi de paquets sur les rails.
 A propos  1.2A  était tirée de la sortie de  DCS100. Pendant les mesures,
 aucune commande LocoNet n'a été envoyés, ni de sections inversées n'ont été traversées.
@@ -123,8 +116,8 @@ que le décalage par rapport à la masse du système change légèrement le poul
 pour un fonctionnement analogue se déplace d'un extrême à l'autre. (Notez que
 ces photos sont à 1V/division, avec la masse du système au centre.
 <br>
-<CENTER>
-<TABLE BORDER="0">
+
+<table>
 <tr>
 <td WIDTH="120" HEIGHT="120" ALIGN="CENTER"><a href="./images/DS54ConnAna-99.jpg"><IMG SRC="./images/DS54ConnAna-99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet connected, analog at -99</a></td>
 
@@ -141,16 +134,16 @@ ces photos sont à 1V/division, avec la masse du système au centre.
 
 <td WIDTH="120" HEIGHT="120" ALIGN="CENTER"><a href="./images/DS54DiscAna0.jpg"><IMG SRC="./images/DS54DiscAna0-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet disconnected, analog at +99</a></td>
 </tr>
-</TABLE>
-</CENTER>
-<br>
+</table>
 
-Les gens sur la liste de diffusion Digitrax ont recommandé que toutes les unités DS54 sur un réseau doivent être câblés sur les rails et l'alimentation électrique commune avec
-la même polarité. (Les miens sont aussi.) Les décalages visibles ci-dessus montrent pourquoi vous avez besoin de faire cela; si deux unités DS54
-ont été connectée de fa&ccedil;on opposée , elles seraient incapables de créer une référence de masse cohérente..
+<p>Les gens sur la liste de diffusion Digitrax ont recommandé que toutes les unités DS54 sur un réseau doivent être
+câblés sur les rails et l'alimentation électrique commune avec la même polarité. (Les miens sont aussi.) Les décalages
+visibles ci-dessus montrent pourquoi vous avez besoin de faire cela; si deux unités DS54
+ont été connectée de fa&ccedil;on opposée, elles seraient incapables de créer une référence de masse cohérente.</p>
 
-<!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

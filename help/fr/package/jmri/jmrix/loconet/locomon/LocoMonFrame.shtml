@@ -1,54 +1,40 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Translated  by Blorec Herv&#233; le 2011-10-30-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated  by Blorec Herv&#233; le 2011-10-30-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Monitor LocoNet Traffic</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help monitor loconet traffic message packet">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help monitor loconet traffic message packet">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Moniteur de Trafic LocoNet</h1><a href=
       "../../../../../html/apps/LocoTools/images/LocoMonFrame.gif"><img src="../../../../../html/apps/LocoTools/images/LocoMonFrame.gif"
-      width="300" height="150" alt="Command slot station Monitor"
-      align="right"></a><br>
+      height="150" alt="Command slot station Monitor"
+      align="right"></a>
+      <p>
       L'outil Moniteur LocoNet affiche le trafic LocoNet dans un
       une forme lisible. Les 20 derniers messages sont disponibles
-      dans une fen&Atilde;&ordf;tre de d&Atilde;&copy;filement. En
-      option, vous pouvez inclure le moment o&Atilde;&sup1; le
-      message a &Atilde;&copy;t&Atilde;&copy; re&Atilde;&sect;u,
-      et/ou le paquet octets brut . Les informations du journal
-      peuvent &Atilde;&copy;galement &Atilde;&ordf;tre
-      stock&Atilde;&copy;es dans un texte fichier.
+      dans une fen&ecirc;tre de d&eacute;filement. En
+      option, vous pouvez inclure le moment o&ugrave; le
+      message a &eacute;t&eacute; re&ccedil;u,
+      et/ou le paquet octets brut. Les informations du journal
+      peuvent &eacute;galement &ecirc;tre stock&eacute;es dans un texte fichier.</p>
 
-      <p>Pour plus d'informations sur les diff&Atilde;&copy;rents
-      contr&Atilde;&acute;les et les options, s'il vous
-      pla&Atilde;&reg;t voir la <a href=
-      "../../AbstractMonFrame.shtml">page Fen&Atilde;&ordf;tre
+      <p>Pour plus d'informations sur les diff&eacute;rents
+      contr&ocirc;les et les options, s'il vous
+      pla&icirc;t voir la <a href=
+      "../../AbstractMonFrame.shtml">page Fen&ecirc;tre
       Moniteur de Communications</a></p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

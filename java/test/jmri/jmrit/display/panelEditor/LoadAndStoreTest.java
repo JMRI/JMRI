@@ -9,6 +9,7 @@ import jmri.jmrit.display.Editor;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -43,7 +44,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         super(SaveType.User, true);
     }
 
-    static boolean done;
+    private boolean done;
 
     /**
      * Also writes out image files from these for later offline checking.This
@@ -59,7 +60,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
         done = false;
         ThreadingUtil.runOnGUIDelayed(() -> done = true, 2000);
-        JUnitUtil.waitFor(() -> done);
+        JUnitUtil.waitFor(() -> done,"2secs GUI wait did not complete");
 
         storeAndCompareImage(file);
     }
@@ -166,8 +167,8 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     @BeforeEach
     @Override
-    public void setUp() {
-        super.setUp();
+    public void setUp(@TempDir java.io.File tempDir) throws IOException  {
+        super.setUp(tempDir);
         JUnitUtil.initLayoutBlockManager();
     }
 

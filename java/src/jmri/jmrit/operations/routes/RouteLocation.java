@@ -141,6 +141,10 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         return _comment;
     }
 
+    /**
+     * Sets the text color for the route comment
+     * @param color The color of the text
+     */
     public void setCommentColor(Color color) {
         Color old = _commentColor;
         _commentColor = color;

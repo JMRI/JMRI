@@ -47,7 +47,7 @@ public class SprogCSThrottle extends AbstractThrottle {
         //@see AbstractThrottleManager.supportedSpeedModes()
         // Find our command station
         if ((memo != null) && (memo.get(jmri.CommandStation.class) != null)) {
-            commandStation = memo.get(jmri.CommandStation.class);
+            commandStation = (SprogCommandStation) memo.get(jmri.CommandStation.class);
         } else {
             commandStation = (SprogCommandStation) jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class);
         }
@@ -145,14 +145,14 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup6() {
         commandStation.function29Through36Packet(address,
-                getFunction(29), getFunctionMomentary(29),
-                getFunction(30), getFunctionMomentary(30),
-                getFunction(31), getFunctionMomentary(32),
-                getFunction(32), getFunctionMomentary(32),
-                getFunction(33), getFunctionMomentary(33),
-                getFunction(34), getFunctionMomentary(34),
-                getFunction(35), getFunctionMomentary(35),
-                getFunction(36), getFunctionMomentary(36));
+                getFunctionNoWarn(29), getFunctionMomentaryNoWarn(29),
+                getFunctionNoWarn(30), getFunctionMomentaryNoWarn(30),
+                getFunctionNoWarn(31), getFunctionMomentaryNoWarn(32),
+                getFunctionNoWarn(32), getFunctionMomentaryNoWarn(32),
+                getFunctionNoWarn(33), getFunctionMomentaryNoWarn(33),
+                getFunctionNoWarn(34), getFunctionMomentaryNoWarn(34),
+                getFunctionNoWarn(35), getFunctionMomentaryNoWarn(35),
+                getFunctionNoWarn(36), getFunctionMomentaryNoWarn(36));
     }
 
     /**
@@ -162,14 +162,14 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup7() {
         commandStation.function37Through44Packet(address,
-                getFunction(37), getFunctionMomentary(37),
-                getFunction(38), getFunctionMomentary(38),
-                getFunction(39), getFunctionMomentary(39),
-                getFunction(40), getFunctionMomentary(40),
-                getFunction(41), getFunctionMomentary(41),
-                getFunction(42), getFunctionMomentary(42),
-                getFunction(43), getFunctionMomentary(43),
-                getFunction(44), getFunctionMomentary(44));
+                getFunctionNoWarn(37), getFunctionMomentaryNoWarn(37),
+                getFunctionNoWarn(38), getFunctionMomentaryNoWarn(38),
+                getFunctionNoWarn(39), getFunctionMomentaryNoWarn(39),
+                getFunctionNoWarn(40), getFunctionMomentaryNoWarn(40),
+                getFunctionNoWarn(41), getFunctionMomentaryNoWarn(41),
+                getFunctionNoWarn(42), getFunctionMomentaryNoWarn(42),
+                getFunctionNoWarn(43), getFunctionMomentaryNoWarn(43),
+                getFunctionNoWarn(44), getFunctionMomentaryNoWarn(44));
     }
 
     /**
@@ -179,14 +179,14 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup8() {
         commandStation.function45Through52Packet(address,
-                getFunction(45), getFunctionMomentary(45),
-                getFunction(46), getFunctionMomentary(46),
-                getFunction(47), getFunctionMomentary(47),
-                getFunction(48), getFunctionMomentary(48),
-                getFunction(49), getFunctionMomentary(49),
-                getFunction(50), getFunctionMomentary(50),
-                getFunction(51), getFunctionMomentary(51),
-                getFunction(52), getFunctionMomentary(52));
+                getFunctionNoWarn(45), getFunctionMomentaryNoWarn(45),
+                getFunctionNoWarn(46), getFunctionMomentaryNoWarn(46),
+                getFunctionNoWarn(47), getFunctionMomentaryNoWarn(47),
+                getFunctionNoWarn(48), getFunctionMomentaryNoWarn(48),
+                getFunctionNoWarn(49), getFunctionMomentaryNoWarn(49),
+                getFunctionNoWarn(50), getFunctionMomentaryNoWarn(50),
+                getFunctionNoWarn(51), getFunctionMomentaryNoWarn(51),
+                getFunctionNoWarn(52), getFunctionMomentaryNoWarn(52));
     }
 
     /**
@@ -196,14 +196,14 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup9() {
         commandStation.function53Through60Packet(address,
-                getFunction(53), getFunctionMomentary(53),
-                getFunction(54), getFunctionMomentary(54),
-                getFunction(55), getFunctionMomentary(55),
-                getFunction(56), getFunctionMomentary(56),
-                getFunction(57), getFunctionMomentary(57),
-                getFunction(58), getFunctionMomentary(58),
-                getFunction(59), getFunctionMomentary(59),
-                getFunction(60), getFunctionMomentary(60));
+                getFunctionNoWarn(53), getFunctionMomentaryNoWarn(53),
+                getFunctionNoWarn(54), getFunctionMomentaryNoWarn(54),
+                getFunctionNoWarn(55), getFunctionMomentaryNoWarn(55),
+                getFunctionNoWarn(56), getFunctionMomentaryNoWarn(56),
+                getFunctionNoWarn(57), getFunctionMomentaryNoWarn(57),
+                getFunctionNoWarn(58), getFunctionMomentaryNoWarn(58),
+                getFunctionNoWarn(59), getFunctionMomentaryNoWarn(59),
+                getFunctionNoWarn(60), getFunctionMomentaryNoWarn(60));
     }
 
     /**
@@ -213,14 +213,14 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup10() {
         commandStation.function61Through68Packet(address,
-                getFunction(61), getFunctionMomentary(61),
-                getFunction(62), getFunctionMomentary(62),
-                getFunction(63), getFunctionMomentary(63),
-                getFunction(64), getFunctionMomentary(64),
-                getFunction(65), getFunctionMomentary(65),
-                getFunction(66), getFunctionMomentary(66),
-                getFunction(67), getFunctionMomentary(67),
-                getFunction(68), getFunctionMomentary(68));
+                getFunctionNoWarn(61), getFunctionMomentaryNoWarn(61),
+                getFunctionNoWarn(62), getFunctionMomentaryNoWarn(62),
+                getFunctionNoWarn(63), getFunctionMomentaryNoWarn(63),
+                getFunctionNoWarn(64), getFunctionMomentaryNoWarn(64),
+                getFunctionNoWarn(65), getFunctionMomentaryNoWarn(65),
+                getFunctionNoWarn(66), getFunctionMomentaryNoWarn(66),
+                getFunctionNoWarn(67), getFunctionMomentaryNoWarn(67),
+                getFunctionNoWarn(68), getFunctionMomentaryNoWarn(68));
     }
 
     /**

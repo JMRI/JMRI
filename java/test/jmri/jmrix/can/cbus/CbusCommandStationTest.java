@@ -1,17 +1,11 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.InstanceManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.can.TrafficControllerScaffoldLoopback;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,40 +15,32 @@ import org.junit.jupiter.api.*;
  */
 public class CbusCommandStationTest {
 
-    private CbusCommandStation t;
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold lnis;
+    private CbusCommandStation t = null;
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold lnis = null;
 
     @Test
-    public void testCTor() {
+    public void testCtor() {
         Assert.assertNotNull("exists",t);
     }
 
     @Test
-    public void testgetSystemPrefix() {
+    public void testgetCanSystemPrefix() {
+        Assert.assertNotNull(t);
         Assert.assertEquals("sys prefix", "M", t.getSystemPrefix());
     }
 
     @Test
-    public void testgetUserName() {
+    public void testgetCanUserName() {
+        Assert.assertNotNull(t);
         Assert.assertEquals("user name obtainable", "CAN", t.getUserName());
     }
     
-    @Test
-    public void testgetSimLoopbacktc() {
-        TrafficControllerScaffoldLoopback tc = new TrafficControllerScaffoldLoopback();
-        memo.setTrafficController(tc);
-        CbusCommandStation ta = new CbusCommandStation(memo);
-        Assert.assertNotNull("exists",ta);
-        Assert.assertNotNull(InstanceManager.getDefault(CbusSimulator.class));
-        
-        tc.terminateThreads();
-    }
-
     // test originates from loconet
     @Test
     public void testSendPacket() {
-        
+        Assert.assertNotNull(t);
+        Assert.assertNotNull(lnis);
         byte msg[] = jmri.NmraPacket.accDecPktOpsMode(1, 4, 53);
         t.sendPacket(msg, 1);
         Assert.assertEquals("nmra packet 1",
@@ -198,14 +184,16 @@ public class CbusCommandStationTest {
 
     @AfterEach
     public void tearDown() {
-        memo.dispose();
+        Assertions.assertNotNull(lnis);
         lnis.terminateThreads();
+        lnis = null;
+        Assertions.assertNotNull(memo);
+        memo.dispose();
         memo = null;
         t = null;
-        lnis = null;
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusCommandStationTest.class);
+    // private final static org.slf4j.Logger.Logger log = org.slf4j.Logger.LoggerFactory.getLogger(CbusCommandStationTest.class);
 
 }

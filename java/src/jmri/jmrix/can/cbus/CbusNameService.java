@@ -1,15 +1,14 @@
 package jmri.jmrix.can.cbus;
 
 import java.util.HashSet;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.eventtable.CbusEventBeanData;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class to lookup CBUS event names via the event table
@@ -119,14 +118,19 @@ public class CbusNameService {
     
     @CheckForNull
     private CbusNodeTableDataModel getNodeModel(){
-        log.debug("memo: {}",_memo);
+        if ( _memo != null ) {
+            return _memo.get(CbusNodeTableDataModel.class);
+        }
         return jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
     }
-    
+
     @CheckForNull
     private CbusEventTableDataModel getEventModel(){
+        if ( _memo != null ) {
+            return _memo.get(CbusEventTableDataModel.class);
+        }
         return jmri.InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusNameService.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNameService.class);
 }

@@ -1,33 +1,30 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-31-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-31-->
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: L'Éditeur de Réseau</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content="JMRI help Layout Editor panel"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Layout Editor panel">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>L'Éditeur de Réseau</h1>
       <a name="contents" id="contents"></a>
       <h2>Contenu</h2>
-      Ce document décrit L'Éditeur de Réseau et comment l'utiliser pour faire des panneaux
+
+      <p>Ce document décrit L'Éditeur de Réseau et comment l'utiliser pour faire des panneaux
       PanelPro. Le document est divisé en sections; cliquez ci-dessous pour sauter à la section
       nommée. La lecture minimum pour commencer est <a href="#intro">Présentation du panneau
       Éditeur de Réseau</a> et <a href="#start">Débuter avec L'Éditeur de Réseau</a>. Ensuite, vous
       voudrez peut-être sauter à <a href="#finish">Apportant la Touche de Finale à votre
       Panneau</a> pour voir plus de ce qui est possible avant de lire les différents sections en
-      détail.
+      détail.</p>
       <ul>
         <li><a href="#intro">Introduction au panneau Éditeur de Réseau</a>
         </li>
@@ -1444,8 +1441,10 @@
       Pour ceux qui envisagent d'installer des signaux, La mise en place d'un panneau avec des
       cantons définis et signaux placés peuvent aider à décider où placer les cantons et les
       signaux avant de les installer sur votre réseau.</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

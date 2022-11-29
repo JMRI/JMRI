@@ -1,31 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Translated by Blorec Herv&#233; le 2012-01-25-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated by Blorec Herv&#233; le 2012-01-25-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Configure Digitrax DS64o</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help configure loconet DS64">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="homoe" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Configurer Digitrax DS64</h1><a href=
       "../../../../../html/apps/LocoTools/images/DS64.jpg"><img src="../../../../../html/apps/LocoTools/images/DS64.jpg"
@@ -34,36 +20,38 @@
 
       <p>L'outil de programmation JMRI DS64 vous permet de
       configurer les options internes d'une DS64 directement
-      &Atilde;  partir de votre ordinateur.</p>
+      &agrave; partir de votre ordinateur.</p>
 
-      <p>Pour ouvrir cet outil &Atilde;  partir de la page de
-      d&Atilde;&copy;marrage JMRI s&Atilde;&copy;lectionnez
-      l'onglet LocoNet puis de trouver l'outil sur la liste
-      d&Atilde;&copy;roulante.</p>
+      <p>Pour ouvrir cet outil &agrave; partir de la page de
+      d&eacute;marrage JMRI s&eacute;lectionnez
+      l&apos;onglet LocoNet puis de trouver l&apos;outil sur la liste
+      d&eacute;roulante.</p>
 
       <p>Pour l'utiliser, vous mettez l'adresse d'une carte DS64
       dans le champ texte et cliquez sur "Lire depuis DS64".
-      L'outil relira les &Atilde;&copy;tat actuels des
-      diff&Atilde;&copy;rentes options et d&Atilde;&copy;finira les
-      cases &Atilde;  cocher pour correspondre &Atilde; &Acirc; 
+      L'outil relira les &eacute;tat actuels des
+      diff&eacute;rentes options et d&eacute;finira les
+      cases &agrave; cocher pour correspondre &agrave;
       leurs valeurs actuelles.</p>
 
       <p>Vous pouvez alors, si vous le souhaitez, modifier les
-      cases et cliquez sur "&Atilde;&permil;crire dans DS64" pour
+      cases et cliquez sur &quot;&Eacute;crire dans DS64" pour
       rendre vos modifications permanentes.</p>
 
-      <h3>Limitations</h3>En raison de la fa&Atilde;&sect;on dont
+      <h3>Limitations</h3>
+      <p>En raison de la fa&ccedil;on dont
       fonctionne la carte DS64, cet outil ne peut pas changer
-      l'adresse de base de l'unit&Atilde;&copy;.
+      l&apos;adresse de base de l&apos;unit&eacute;.</p>
 
-      <p>A l'heure actuelle, les itin&Atilde;&copy;raires DS64 ne
-      peuvent pas &Atilde;&ordf;tre programm&Atilde;&copy; par cet
-      outil. C'est possible, mais personne n'a &Atilde;&copy;crit
-      le code pour le moment car les itin&Atilde;&copy;raires JMRI
-      sont plus puissant et facile &Atilde;  utiliser.</p>
+      <p>A l'heure actuelle, les itin&eacute;raires DS64 ne
+      peuvent pas &ecirc;tre programm&eacute; par cet
+      outil. C&apos;est possible, mais personne n&apos;a &eacute;crit
+      le code pour le moment car les itin&eacute;raires JMRI
+      sont plus puissant et facile &agrave; utiliser.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

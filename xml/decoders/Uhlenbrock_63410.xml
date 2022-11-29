@@ -456,7 +456,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <!-- CV 21-40: Settings outputs 1-20 On -->
 
             <variable CV="6341.21" mask="1" item="Output 1 On Type" default="1">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Ein: </label>
               <label xml:lang="nl">Instructie Aan: </label>
               <label>On Command: </label>
@@ -476,7 +476,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
           <variable CV="6341.22" mask="1" item="Output 2 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -496,7 +496,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.23" mask="1" item="Output 3 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -516,7 +516,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.24" mask="1" item="Output 4 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -536,7 +536,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.25" mask="1" item="Output 5 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -556,7 +556,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.26" mask="1" item="Output 6 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -576,7 +576,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.27" mask="1" item="Output 7 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -596,7 +596,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.28" mask="1" item="Output 8 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -616,7 +616,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.29" mask="1" item="Output 9 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -636,7 +636,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.30" mask="1" item="Output 10 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -656,7 +656,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.31" mask="1" item="Output 11 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -676,7 +676,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.32" mask="1" item="Output 12 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -696,7 +696,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.33" mask="1" item="Output 13 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -716,7 +716,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.34" mask="1" item="Output 14 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -736,7 +736,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.35" mask="1" item="Output 15 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -756,7 +756,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.36" mask="1" item="Output 16 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -776,7 +776,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.37" mask="1" item="Output 17 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -796,7 +796,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.38" mask="1" item="Output 18 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -816,7 +816,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.39" mask="1" item="Output 19 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -836,7 +836,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           </variable>
 
           <variable CV="6341.40" mask="1" item="Output 20 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
@@ -858,7 +858,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <!-- CV 41-60: Settings outputs 1-20 Off -->
 
             <variable CV="6341.41" mask="1" item="Output 1 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -873,7 +873,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.42" mask="1" item="Output 2 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -888,7 +888,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.43" mask="1" item="Output 3 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -903,7 +903,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.44" mask="1" item="Output 4 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -918,7 +918,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.45" mask="1" item="Output 5 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -933,7 +933,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.46" mask="1" item="Output 6 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -948,7 +948,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.47" mask="1" item="Output 7 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -963,7 +963,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.48" mask="1" item="Output 8 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -978,7 +978,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.49" mask="1" item="Output 9 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -993,7 +993,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.50" mask="1" item="Output 10 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -1008,7 +1008,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.51" mask="1" item="Output 11 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -1023,7 +1023,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.52" mask="1" item="Output 12 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -1038,7 +1038,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.53" mask="1" item="Output 13 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -1053,7 +1053,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.54" mask="1" item="Output 14 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -1068,7 +1068,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.55" mask="1" item="Output 15 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -1083,7 +1083,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.56" mask="1" item="Output 16 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -1098,7 +1098,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.57" mask="1" item="Output 17 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -1113,7 +1113,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.58" mask="1" item="Output 18 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -1128,7 +1128,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.59" mask="1" item="Output 19 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
@@ -1143,7 +1143,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.60" mask="1" item="Output 20 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>

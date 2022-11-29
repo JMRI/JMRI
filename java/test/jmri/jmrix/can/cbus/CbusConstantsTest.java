@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +10,11 @@ import org.junit.jupiter.api.*;
  */
 public class CbusConstantsTest {
 
+    // no testCtor as class only supplies static methods
+
     @Test
-    public void testCTor() {
-        CbusConstants t = new CbusConstants();
-        Assert.assertNotNull("exists",t);
+    public void testExists() {
+        Assertions.assertEquals(0x90, CbusConstants.CBUS_ACON);
     }
 
     @BeforeEach

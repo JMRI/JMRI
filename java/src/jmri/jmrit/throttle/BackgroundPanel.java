@@ -8,9 +8,6 @@ import jmri.LocoAddress;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.ResizableImagePanel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A panel to be used as background for JMRI throttle frames 
  * 
@@ -24,10 +21,6 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
 
     public BackgroundPanel() {
         super();
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         initGUI();
         applyPreferences();
     }
@@ -87,5 +80,5 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BackgroundPanel.class);    
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BackgroundPanel.class);    
 }

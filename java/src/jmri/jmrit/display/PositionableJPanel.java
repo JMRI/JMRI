@@ -16,11 +16,15 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 
+import jmri.InstanceManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.display.palette.TextItemPanel;
+import jmri.jmrit.logixng.LogixNG;
+import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.JmriMouseMotionListener;
@@ -47,6 +51,9 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
 
     JMenuItem lock = null;
     JCheckBoxMenuItem showTooltipItem = null;
+
+    private LogixNG _logixNG;
+    private String _logixNG_SystemName;
 
     public PositionableJPanel(Editor editor) {
         _editor = editor;
@@ -573,6 +580,37 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
     @Override
     public jmri.NamedBean getNamedBean() {
         return null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LogixNG getLogixNG() {
+        return _logixNG;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setLogixNG(LogixNG logixNG) {
+        this._logixNG = logixNG;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setLogixNG_SystemName(String systemName) {
+        this._logixNG_SystemName = systemName;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setupLogixNG() {
+        _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .getBySystemName(_logixNG_SystemName);
+        if (_logixNG == null) {
+            throw new RuntimeException(String.format(
+                    "LogixNG %s is not found for positional %s in panel %s",
+                    _logixNG_SystemName, getNameString(), getEditor().getName()));
+        }
+        _logixNG.setInlineLogixNG(this);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableJPanel.class);

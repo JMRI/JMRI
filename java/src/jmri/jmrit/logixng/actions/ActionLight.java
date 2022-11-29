@@ -142,7 +142,7 @@ public class ActionLight extends AbstractDigitalAction
         return Category.ITEM;
     }
 
-    private int getNewData() throws JmriException {
+    private int getNewData(SymbolTable symbolTable) throws JmriException {
         String newValue = "";
 
         switch (_dataAddressing) {
@@ -150,12 +150,10 @@ public class ActionLight extends AbstractDigitalAction
                 return _lightValue;
 
             case Reference:
-                newValue = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _dataReference);
+                newValue = ReferenceUtil.getReference(symbolTable, _dataReference);
                 break;
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 newValue = TypeConversionUtil
                         .convertToString(symbolTable.getValue(_dataLocalVariable), false);
                 break;
@@ -163,8 +161,7 @@ public class ActionLight extends AbstractDigitalAction
             case Formula:
                 newValue = _dataExpressionNode != null
                         ? TypeConversionUtil.convertToString(
-                                _dataExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
+                                _dataExpressionNode.calculate(symbolTable), false)
                         : "";
                 break;
 
@@ -190,6 +187,8 @@ public class ActionLight extends AbstractDigitalAction
 
         LightState state = _selectEnum.evaluateEnum(getConditionalNG());
 
+        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             if (state == LightState.Toggle) {
                 if (light.getKnownState() == Turnout.CLOSED) {
@@ -200,13 +199,13 @@ public class ActionLight extends AbstractDigitalAction
 
             } else if (state == LightState.Intensity) {
                 if (light instanceof VariableLight) {
-                    ((VariableLight)light).setTargetIntensity(getNewData() / 100.0);
+                    ((VariableLight)light).setTargetIntensity(getNewData(symbolTable) / 100.0);
                 } else {
-                    light.setCommandedState(getNewData() > 50 ? Light.ON : Light.OFF);
+                    light.setCommandedState(getNewData(symbolTable) > 50 ? Light.ON : Light.OFF);
                 }
             } else if (state == LightState.Interval) {
                 if (light instanceof VariableLight) {
-                    ((VariableLight)light).setTransitionTime(getNewData());
+                    ((VariableLight)light).setTransitionTime(getNewData(symbolTable));
                 }
             } else {
                 light.setCommandedState(state.getID());

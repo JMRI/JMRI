@@ -40,7 +40,7 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="variable" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="variable" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="memoryNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
               <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1"/>
@@ -88,6 +88,7 @@
                     <xs:enumeration value="SetToString"/>
                     <xs:enumeration value="CopyVariableToVariable"/>
                     <xs:enumeration value="CopyMemoryToVariable"/>
+                    <xs:enumeration value="CopyReferenceToVariable"/>
                     <xs:enumeration value="CopyTableCellToVariable"/>
                     <xs:enumeration value="CopyBlockToVariable"/>
                     <xs:enumeration value="CopyReporterToVariable"/>
@@ -99,6 +100,7 @@
               <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="otherTableCell" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>

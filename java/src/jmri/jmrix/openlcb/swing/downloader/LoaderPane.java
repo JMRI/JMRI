@@ -113,6 +113,9 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     @Override
     public String getTitle() {
+        if (memo != null) {
+            return (memo.getUserName() + " Firmware Downloader");
+        }
         return getTitle(Bundle.getMessage("TitleLoader"));
     }
 

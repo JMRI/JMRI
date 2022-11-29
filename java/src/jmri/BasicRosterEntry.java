@@ -12,7 +12,7 @@ import org.jdom2.Element;
  * Primarily this only deals as a method to provide other packages with access
  * to the information rather than being able set or create items. However access
  * to set and get Attributes is allowed so that attributes like running duration
- * can be recorded, with the store option also avaiable.
+ * can be recorded, with the store option also available.
  * <p>
  * This interface should probably be called RosterEntry, but this would result in another class 
  * with the same name; refactoring of that class would be a big job and would potentially cause issue

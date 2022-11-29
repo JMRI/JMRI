@@ -36,9 +36,34 @@ public class CbusNodeConstants {
      * Para 15 CPU manufacturer's id as read from the chip config space, 4 bytes
      * Para 19 CPU manufacturer code
      * Para 20 Beta revision (numeric), or 0 if release
-     *                
+     * Para 21 - 24 Zero filled spare
+     * Not readable by index:
+     * Para 25 - 26 Number of paranmeters can be read as parameter 0
+     * Para 27 - 30 Name string base address
+     * Para 31 - 32 Checksum. Para 1 - 32 must sum to zero
      */
-
+    public static final int NUM_PARAM_IDX = 0;      // Para 0 Number of parameters
+    public static final int MANU_ID_IDX = 1;        // Para 1 The manufacturer ID
+    public static final int MINOR_VER_IDX = 2;      // Para 2 Minor code version as an alphabetic character (ASCII)
+    public static final int MODULE_ID_IDX = 3;      // Para 3 Manufacturer module identifier as a HEX numeric
+    public static final int NUM_EV_IDX = 4;         // Para 4 Number of supported events as a HEX numeric
+    public static final int EV_PER_EN_IDX = 5;      // Para 5 Number of Event Variables per event as a HEX numeric
+    public static final int NUM_NV_IDX = 6;         // Para 6 Number of supported Node Variables as a HEX numeric
+    public static final int MAJOR_VER_IDX = 7;      // Para 7 Major version
+    public static final int FLAGS_IDX = 8;          // Para 8 Node flags
+    public static final int PROC_TYPE_IDX = 9;      // Para 9 Processor type
+    public static final int BUS_TYPE_IDX = 10;      // Para 10 Bus type
+    public static final int LOAD_ADDR_IDX = 11;     // Para 11 load address, 4 bytes
+    public static final int CPU_ID_IDX = 15;        // Para 15 CPU manufacturer's id as read from the chip config space, 4 bytes, only firs two used for PIC18
+    public static final int CPU_CODE_IDX = 19;      // Para 19 CPU manufacturer code
+    public static final int BETA_REV_IDX = 20;      // Para 20 Beta revision (numeric), or 0 if release
+    public static final int SPARE_IDX = 21;         // Para 21 - 24 
+    // Following are available from hex data but not readable by index
+    public static final int PARAM_COUNT_IDX = 25;    // Para 25 - 26 parameter count high byte
+    public static final int NAME_STRING_BASE_IDX = 27; // Para 27 - 30 parameter count high byte
+    public static final int PARAM_CHECK_IDX = 31;    // Para 31 - 32 parameter count high byte
+   
+    
     /**
      * Set traits for a node where there is a minor deviance to MERG CBUS protocol
      * or provide extra info. which is missing for a known module firmware.
@@ -612,7 +637,7 @@ public class CbusNodeConstants {
     
     
     /*
-     * Populate hashmap with rocrail module support links
+     * Populate hashmap with SPROG module support links
      */
     private static Map<Integer, String> createLink44Map() {
         Map<Integer, String> result = new HashMap<>();
@@ -621,6 +646,10 @@ public class CbusNodeConstants {
         result.put(3, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         result.put(4, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         result.put(5, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(6, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(7, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(8, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(9, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         return Collections.unmodifiableMap(result);
     }
     

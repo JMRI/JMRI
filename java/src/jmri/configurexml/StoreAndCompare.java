@@ -118,16 +118,24 @@ public class StoreAndCompare extends AbstractAction {
             systemPrefix = mMgr.getSystemPrefix();
         }
 
-        if (tMgr == null || sMgr == null || mMgr == null) result = true;
+        if (tMgr == null || sMgr == null || mMgr == null) {
+            log.debug("triple manager test sets true");
+            result = true;
+        }
 
-        if (!result && tMgr != null && tMgr.getNamedBeanSet().size() > 0) result = true;
+        if (!result && tMgr != null && tMgr.getNamedBeanSet().size() > 0) {
+            log.debug("turnout manager test sets true");
+            result = true;
+        }
 
         if (!result && sMgr != null) {
             var sensorSize = sMgr.getNamedBeanSet().size();
             if (sensorSize > 1) {
+                log.debug("sensor > 1 sets true");
                 result = true;
             } else if (sensorSize == 1) {
                 if (sMgr.getBySystemName(systemPrefix + "SCLOCKRUNNING") == null) {
+                    log.debug("sensor == 1 sets true");
                     result = true;  // One sensor but it is not ISCLOCKRUNNING
                 }
             }
@@ -136,12 +144,15 @@ public class StoreAndCompare extends AbstractAction {
         if (!result && mMgr != null) {
             var memSize = mMgr.getNamedBeanSet().size();
             if (memSize > 2) {
+                log.debug("memory > 2 sets true");
                 result = true;
             } else if (memSize != 0) {
                 if (mMgr.getBySystemName(systemPrefix + "MCURRENTTIME") == null) {
+                    log.debug("memory no MCURRENTTIME sets true");
                     result = true;  // Two memories but one is not IMCURRENTTIME
                 }
                 if (mMgr.getBySystemName(systemPrefix + "MRATEFACTOR") == null) {
+                    log.debug("memory no MRATEFACTOR sets true");
                     result = true;  // Two memories but one is not IMRATEFACTOR
                 }
             }
@@ -149,6 +160,7 @@ public class StoreAndCompare extends AbstractAction {
 
         if (!result) {
             if (InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getList().size() > 0) {
+                log.debug("panel check sets true");
                 result = true;  // One or more panels have been added.
             }
         }
@@ -236,6 +248,15 @@ public class StoreAndCompare extends AbstractAction {
                 }
             }
 
+            // Memory variables have a value attribute for non-null values or no attribute.
+            if (!match) {
+                var mem1 = line1.startsWith("    <memory value") || line1.startsWith("    <memory>");
+                var mem2 = line2.startsWith("    <memory value") || line2.startsWith("    <memory>");
+                if (mem1 && mem2) {
+                    match = true;
+                }
+            }
+
             // Screen size will vary when written out
             if (!match) {
                 if (line1.contains("  <LayoutEditor")) {
@@ -265,17 +286,6 @@ public class StoreAndCompare extends AbstractAction {
                 }
             }
 
-            // Time will vary when written out
-            if (!match) {
-                String memory_value = "<memory value";
-                if (line1.contains(memory_value) && line2.contains(memory_value)) {
-                    String imcurrenttime = "<systemName>IMCURRENTTIME</systemName>";
-                    if (next1.contains(imcurrenttime) && next2.contains(imcurrenttime)) {
-                        match = true;
-                    }
-                }
-            }
-
             // Dates can vary when written out
             String date_string = "<date>";
             if (!match && line1.contains(date_string) && line2.contains(date_string)) {
@@ -290,11 +300,11 @@ public class StoreAndCompare extends AbstractAction {
             }
 
             if (!match && !line1.equals(line2)) {
-                log.error("match failed in StoreAndCompare:");
-                log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
-                log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
-                log.error("  comparing file1:\"{}\"", inFile1.getPath());
-                log.error("         to file2:\"{}\"", inFile2.getPath());
+                log.info("Match failed in StoreAndCompare:");
+                log.info("    file1:line {}: \"{}\"", lineNumber1, line1);
+                log.info("    file2:line {}: \"{}\"", lineNumber2, line2);
+                log.info("  comparing file1:\"{}\"", inFile1.getPath());
+                log.info("         to file2:\"{}\"", inFile2.getPath());
                 result = true;
                 break;
             }

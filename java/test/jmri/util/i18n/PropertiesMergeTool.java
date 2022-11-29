@@ -58,20 +58,20 @@ class PropertiesMergeTool {
                         String key = part1.trim();
                         var lookUpKey = key.replace("\\", "");
                         String part2 = line.substring(index+1);
-                        String pad = "";
+                        StringBuilder pad = new StringBuilder();
                         // pad with same number of leading spaces
                         while (part2.startsWith(" ") || part2.startsWith("\t")) {
-                            pad = pad+part2.substring(0,1);
+                            pad.append(part2.substring(0,1));
                             part2 = part2.substring(1);
                         }
 
                         // check if translation in 2nd file
                         if (bundle2.containsKey(key)) {
                             // write translated value
-                            writeOutLine(part1+"="+pad+bundle2.getString(lookUpKey));
+                            writeOutLine(part1+"="+pad.toString()+bundle2.getString(lookUpKey));
                         } else {
                             // write untranslated value
-                            writeOutLine(part1+"="+pad+bundle1.getString(lookUpKey));
+                            writeOutLine(part1+"="+pad.toString()+bundle1.getString(lookUpKey));
                         }
                     } else if (isBlankLine(line)) {
                         // blank line
@@ -86,9 +86,12 @@ class PropertiesMergeTool {
             // done, flush and close output
             outWriter.close();
 
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             System.err.println("Exception: "+e);
             e.printStackTrace();
+        } finally {
             try {
                 if (outWriter != null) outWriter.close();
             } catch (IOException ex) {

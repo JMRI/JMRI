@@ -32,7 +32,7 @@
       French, "de" is German, and "de_CH" is German as spoken in Switzerland.</p>
 
       <p>When Java looks for resources (see <a href="#resourcebundles">below</a>), it searches
-      first for a file with the complete current Locale at the end of it's name (e.g.
+      first for a file with the complete current Locale at the end of its name (e.g.
       foo_de_CH.properties). If that fails, it tries for a file ending in just the current Locale's
       language: foo_de.properties. And if that fails, it goes to the defaults with no suffix:
       foo.properties. A similar mechanism is used within XML files.</p>
@@ -237,6 +237,7 @@ string; to the right of the equals sign is the String that will be displayed.
       </ul>
 
       <h2 id="dev">Internationalization for Developers</h2>
+
       For internationalization to work, you have to do a few things in the code you write. Some web
       references on how to do this:
       <ul>
@@ -286,14 +287,15 @@ string; to the right of the equals sign is the String that will be displayed.
       different places, and supporting that is important. That's handled by putting a placeholder
       in the message definition:</p>
 
-      <pre style="font-family: monospace;">
+<pre>
 Error123 = System name {0} is already in use
 </pre>(You can have more than one insertion, called {1}, {2}, etc)
       <p>Next, format the final message by inserting the content into it:</p>
 
-      <pre style="font-family: monospace;">
-  String msg = Bundle.getMessage("Error123", badName);
+<pre>
+String msg = Bundle.getMessage("Error123", badName);
 </pre>
+
       <p>The first argument is the message key followed by one or more strings to be inserted into
       the message. (This is better than creating your own output string using e.g. String.format()
       because it allows the inserted terms to appear in different orders in different
@@ -309,20 +311,18 @@ Error123 = System name {0} is already in use
       the logging system. Keys for the translation bundles should also stay in English. In the Java
       code, these strings can be marked with a "<code>// NOI18N</code>" comment at the end of the
       line. If needed, put that after another comment:</p>
+<pre>
+Sensor thisSensorVariableNameIsInEnglish;
 
-      <pre style="font-family: monospace;">
-           Sensor thisSensorVariableNameIsInEnglish;
+String message = "THAT_ONE_MESSAGE";  // NOI18N
+JLabel jl1 = new JLabel(Bundle.getMessage(message));
 
-           String message = "THAT_ONE_MESSAGE";  // NOI18N
-           JLabel jl1 = new JLabel(Bundle.getMessage(message));
+JLabel jl2 = new JLabel(Bundle.getMessage("LABELKEY"));  // NOI18N
 
-           JLabel jl2 = new JLabel(Bundle.getMessage("LABELKEY"));  // NOI18N
-
-           log.debug("The process failed account of user error"); // NOI18N
-
-           // This comment is in English and need not be annotated w.r.t. internationalization
-
+log.debug("The process failed account of user error"); // NOI18N
+// This comment is in English and need not be annotated w.r.t. internationalization
 </pre>
+
       <h3>Adding a new Bundle</h3>
 
       <p>If your package does not already have a Bundle class, you can add it by:</p>
@@ -395,15 +395,18 @@ attribute. "Null" will be returned if nothing is found.
 
       <p>JMRI provides a helpful utility for handling this on input:</p>
 
-      <pre style="font-family: monospace;">
-   double d = jmri.util.IntlUtilities.doubleValue("1,002.3");
-   float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
-</pre>Note that this can throw a <code>java.text.ParseException</code> if the input is unparsable,
+<div class="wide">
+  <pre>
+double d = jmri.util.IntlUtilities.doubleValue("1,002.3");
+float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
+</pre>
+</div>
+
+      <p>Note that this can throw a <code>java.text.ParseException</code> if the input is unparsable,
 so handling that is part of your user-error handling.
       <p>For output:</p>
-
-      <pre style="font-family: monospace;">
-   String s = jmri.util.IntlUtilities.valueOf(1002.3);
+<pre>
+String s = jmri.util.IntlUtilities.valueOf(1002.3);
 </pre>
       <p><strong>Note: You should still store and load values in XML files in Java's default
       coding, without using these formatting tools. That way, the files can be moved from one user
@@ -411,18 +414,18 @@ so handling that is part of your user-error handling.
       </p>
 
       <h3 id="testing">Testing</h3>
-      You should check that you've properly internationalized your code. We provide a tool for
+      <p>You should check that you've properly internationalized your code. We provide a tool for
       doing this which creates an automatically translated version of your properties files,
       following the ideas of Harry Robinson and Arne Thormodsen (Their <a href=
-      "http://www.oocities.org/harry_robinson_testing/klingon.htm">paper on this</a> is recommended
-      reading!). To use it:
+      "https://www.mistakeproofing.com/software.html">paper on this</a> is recommended
+      reading!). To use it:</p>
       <ul>
         <li>Make sure your code compiles and builds OK in your <a href="index.shtml#buildyourcopy">
           IDE</a>. We'll be modifying the compiled version.
         </li>
 
-        <li>Run the "translate.sh" script in your java/ build directory. This creates new,
-        temporary .properties files in the classes/ directory tree. You will have to redo this
+        <li>Run the "translate.sh" script in your <code>java/</code> build directory. This creates new,
+        temporary <code>.properties</code> files in the classes/ directory tree. You will have to redo this
         every time the classes/ tree is removed by e.g. "ant clean" or a clean <a href=
         "index.shtml#buildyourcopy">IDE</a> build.
         </li>
@@ -430,7 +433,7 @@ so handling that is part of your user-error handling.
         <li>Delete the JMRI Preference file, or edit it to remove the GUI definition line.</li>
 
         <li>Run DecoderPro via "ant locale", which starts the DecoderPro program using the new
-        .properties files.</li>
+        <code>.properties</code> files.</li>
       </ul>
 
       <p>If all is well, all the message text will have been translated to UPPER CASE. Anything you

@@ -3,7 +3,7 @@ package jmri.jmrix.can.cbus.simulator.moduletypes;
 import javax.annotation.Nonnull;
 
 import jmri.jmrix.can.cbus.simulator.CbusSimulatedModuleProvider;
-import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
+import jmri.jmrix.can.cbus.node.CbusNode;
 
 import static jmri.jmrix.can.cbus.CbusConstants.MANU_MERG;
 
@@ -27,7 +27,7 @@ public class MergCanmiosvo extends CbusSimulatedModuleProvider {
     }
     
     @Override
-    public void configureDummyNode(@Nonnull CbusDummyNode node) {
+    public void configureDummyNode(@Nonnull CbusNode node) {
         int[] _params = new int[]{
             20, /* 0 num parameters   */
             MANU_MERG, /* 1 manufacturer ID   */

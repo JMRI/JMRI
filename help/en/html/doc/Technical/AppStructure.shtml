@@ -57,19 +57,19 @@
 
       <p>The startup sequence for e.g. DecoderPro, starting with <code>DecoderPro#main(..)</code>
       is quite short:</p>
-
+      <div class="wide">
       <pre>
-    public static void main(String args[]) {
-        preInit(args);
-        DecoderPro3 app = new DecoderPro3(args);
-        app.start();
-    }
+public static void main(String args[]) {
+    preInit(args);
+    DecoderPro3 app = new DecoderPro3(args);
+    app.start();
+}
 
-    static public void preInit(String[] args) {
-        apps.gui3.Apps3.preInit(applicationName);
-        setConfigFilename("DecoderProConfig3.xml", args);
-    }
-</pre>
+static public void preInit(String[] args) {
+    apps.gui3.Apps3.preInit(applicationName);
+    setConfigFilename("DecoderProConfig3.xml", args);
+}
+</pre></div>
       <ul>
         <li><code><a href=
         "https://jmri.org/JavaDoc/doc/apps/gui3/Apps3.html#preInit-java.lang.String-">apps.gui3.Apps3.preInit</a></code>
@@ -94,10 +94,14 @@
 
         <dd>
           The Gui3 support (see the <a href="Swing.shtml">JMRI Swing page</a>) is used to define
-          toolsbars and menus. For example, apps.gui3.dp3.DecoderPro3#getMenuFile() loads from
-          xml/config/parts/jmri/jmrit/roster/swing/RosterFrameMenu.xml and
-          apps.gui3.dp3.DecoderPro3#getToolbarFile() loads from
-          xml/config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
+          toolsbars and menus. For example,
+          <span class="wide"><code>apps.gui3.dp3.DecoderPro3#getMenuFile()</code></span>
+          loads from
+          <span class="wide"><code>xml/config/parts/jmri/jmrit/roster/swing/RosterFrameMenu.xml</code></span>
+          and
+          <span class="wide"><code>apps.gui3.dp3.DecoderPro3#getToolbarFile()</code></span>
+          loads from
+          <span class="wide"><code>xml/config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml</code></span>
         </dd>
 
         <dt>Load configuration</dt>
@@ -152,6 +156,7 @@
 
       <p>The JMRI applications themselves use a more powerful "profile" mechanism that's inherited
       from the apps.Apps and apps.AppsBase classes.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

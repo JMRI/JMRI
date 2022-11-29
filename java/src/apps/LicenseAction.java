@@ -1,14 +1,14 @@
 package apps;
 
+import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
+import java.nio.charset.StandardCharsets;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
@@ -33,21 +33,30 @@ public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     @Override
-    public jmri.util.swing.JmriPanel makePanel() {
-        jmri.util.swing.JmriPanel p = new JmriPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+    public void actionPerformed(ActionEvent ev) {
+        // here we can set a title
 
-        JScrollPane jScrollPane = new JScrollPane();
+        JFrame frame = new jmri.util.JmriJFrame(); // to ensure fits
+        frame.setTitle(Bundle.getMessage("TitleLicense"));
+
+        JPanel pane = new JPanel();
+        // pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+
+        // insert stuff from makePanel() here
+        pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
+
         JTextPane textPane = new JTextPane();
+        pane.add(textPane);
+        JScrollPane scroll = new JScrollPane(pane);
+        scroll.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         // get the file
         InputStream is = FileUtil.findInputStream("resources/COPYING", FileUtil.Location.INSTALLED); // NOI18N
 
         String t;
 
-        try (   InputStreamReader isr = new InputStreamReader(is, "US-ASCII");    // file stored as ASCII // NOI18N
-                BufferedReader r = new BufferedReader(isr);
-            ){
+        try (InputStreamReader isr = new InputStreamReader(is, StandardCharsets.US_ASCII); // file stored as ASCII // NOI18N
+             BufferedReader r = new BufferedReader(isr)) {
             StringBuilder buf = new StringBuilder();
             while (r.ready()) {
                 buf.append(r.readLine());
@@ -58,17 +67,22 @@ public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
             t = "JMRI is distributed under a license. For license information, see the JMRI website http://jmri.org";
         }
         textPane.setText(t);
-
         // set up display
         textPane.setEditable(false);
-        jScrollPane.getViewport().add(textPane);
-        p.add(jScrollPane);
-
         // start scrolled to top
-        JScrollBar b = jScrollPane.getVerticalScrollBar();
-        b.setValue(b.getMaximum());
+        textPane.setCaretPosition(0);
 
-        return p;
+        frame.getContentPane().add(scroll);
+
+        frame.pack();
+        frame.setVisible(true);
     }
+
+        @Override
+        public JmriPanel makePanel() {
+            // do nothing
+            return null;
+        }
+
 }
 

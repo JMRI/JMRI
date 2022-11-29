@@ -4,12 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.concurrent.ConcurrentLinkedDeque;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
 import jmri.jmrix.can.cbus.swing.CbusSendEventPane;
@@ -102,6 +105,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         if (decodePane!=null) {
             decodePane.dispose();
         }
+        displayPane.dispose();
         super.dispose();
     }
 
@@ -123,7 +127,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         tc = memo.getTrafficController();
         decodePane = new CbusConsoleDecodeOptionsPane(this);
         if (launchEvTable){
-            CbusEventTableDataModel.checkCreateNewEventModel(memo);
+            memo.get(CbusConfigurationManager.class).provide(CbusEventTableDataModel.class);
         }
         init();
     }
@@ -150,6 +154,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         add(displayPane, BorderLayout.NORTH);
         add(historyPane, BorderLayout.CENTER);
         add(getAllBottomPanes(), BorderLayout.SOUTH);
+        displayPane.matchVisisbleToCheckBoxes(null);
 
     }
 
@@ -267,7 +272,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     }
 
     private void processLogBuffer() {
-        while (logBuffer.size()>0){
+        while (!logBuffer.isEmpty()){
             CbusConsoleLogEntry next = logBuffer.removeFirst();
 
             final int start = monTextPaneCbus.getText().length();
@@ -306,7 +311,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
 
     // A private subclass of the default highlight painter
     private class CbusHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
-        public CbusHighlightPainter(Color color) {
+        protected CbusHighlightPainter(Color color) {
             super(color);
         }
     }

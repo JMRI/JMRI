@@ -1,40 +1,38 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+<html lang="fr">
 <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14 -->
 <!-- Copyright Bob Jacobsen 2008 -->
-<html lang="en">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI OpenLCB: Browse Configuration</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI OpenLCB"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI OpenLCB">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>OpenLCB: Parcourir la Configuration</h1>
-      L'outil "Configurer Noeuds" OpenLCB vous permet de voir directement les noeuds de votre
+
+      <p>L'outil "Configurer Nœuds" OpenLCB vous permet de voir directement les nœuds de votre
       réseau OpenLCB et de faire quelques manipulations. Il fonctionne avec votre L'installation
       OpenLCB pour recueillir les informations que vous avez besoin pour exécuter l'outil, il n'y a
-      pas de fichiers locaux de configuration sur votre ordinateur.
-      <table summary="">
+      pas de fichiers locaux de configuration sur votre ordinateur.</p>
+
+      <table>
         <tr>
-          <td>La première fois que vous ouvrez la fenêtre de l'outil, il montre un arbre des Noeuds
-          OpenLCB accessibles. Pour la plupart des installations, il s'agit juste justela liste de
+          <td>La première fois que vous ouvrez la fenêtre de l'outil, il montre un arbre des Nœuds
+          OpenLCB accessibles. Pour la plupart des installations, il s'agit juste la liste de
           ce qui est déterminé par l'intermédiaire d'un adaptateur CAN.</td>
           <td><a href="StartWindow.png"><img src="StartWindow.png" alt="image de départ"></a>
           </td>
         </tr>
 
         <tr>
-          <td>Vous pouvez cliquer pour ouvrir chaque noeud et en savoir plus sur lui.</td>
+          <td>Vous pouvez cliquer pour ouvrir chaque nœud et en savoir plus sur lui.</td>
           <td><a href="OpenNodeInfo.png"><img src="OpenNodeInfo.png" alt=
           "Après avoir cliquer pour ouvrir"></a>
           </td>
@@ -42,16 +40,16 @@
 
         <tr>
           <td>Ouverture de la rubrique "Protocoles pris en charge", par exemple, va vous montrer
-          les capacités de ce nÅ"ud particulier.</td>
+          les capacités de ce nœud particulier.</td>
           <td><a href="OpenProtocol.png"><img src="OpenProtocol.png" alt=""></a>
           </td>
         </tr>
 
         <tr>
-          <td>Si vous cliquez sur la rubrique "CDI" , pour Configuration Description Information,
-          vous aurez un outil de configuration DecoderPro - comme pour le noeud. Notez que ceci est
-          entièrement pris à partir du noeud OpenLCB lui-même. Il n'est pas nécessaire de trouver
-          un fichier de configuration décodeur, sélectionner le type de carte à droite , etc</td>
+          <td>Si vous cliquez sur la rubrique "CDI", pour Configuration Description Information,
+          vous aurez un outil de configuration DecoderPro - comme pour le nœud. Notez que ceci est
+          entièrement pris à partir du nœud OpenLCB lui-même. Il n'est pas nécessaire de trouver
+          un fichier de configuration décodeur, sélectionner le type de carte à droite, etc</td>
           <td><a href="StartConfigWindow.png"><img src="StartConfigWindow.png" alt=""></a>
           </td>
         </tr>
@@ -59,23 +57,25 @@
         <tr>
           <td>Vous pouvez le remplir et cliquez sur "Write" pour configurer le noeud. Les premiers
           champs sont utilisés pour lui donner un nom et une description choisi par l'utilisateur,
-          de sorte que vous pouvez vous rappeler de ce noeud plus tard. Vous pouvez définir les
+          de sorte que vous pouvez vous rappeler de ce nœud plus tard. Vous pouvez définir les
           événements qui correspondent aux différentes entrées et sorties, et même de donner des
-          noms utilisateur commodes. C'est tout stocké en permanence dans le noeud.</td>
+          noms utilisateur commodes. C'est tout stocké en permanence dans le nœud.</td>
           <td><a href="FilledOutConfigWindow.png"><img src="FilledOutConfigWindow.png" alt=""></a>
           </td>
         </tr>
 
         <tr>
           <td>Après un redémarrage, cette information est alors montree puis dans l'arbre de
-          configuration pour vous aider à reconnaître vos noeuds.</td>
+          configuration pour vous aider à reconnaître vos nœuds.</td>
           <td><a href="NodeWithID.png"><img src="NodeWithID.png" alt=
           "fenêtre de configuration Filled-out "></a>
           </td>
         </tr>
       </table>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

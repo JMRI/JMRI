@@ -27,7 +27,7 @@
       tags.</p>
 
       <p>This is made a bit tricky because of overlap between "tags as part of XML structure of
-      decoder file" and "HTML tags included in the decoder file". All of the HTML tags need to be
+      decoder file" and "HTML tags included in the decoder file". All HTML tags need to be
       quoted, with their &lt; and &gt; characters replaced by the &amp;lt; and &amp;gt; strings and
       any embedded double quotes being replaced by &amp;quot;.</p>
 
@@ -267,7 +267,9 @@
 
       <h4>Empty Panes</h4>
       Empty panes are defined as those with no active variable elements to display for the selected
-      decoder. They may still contain text content. <a id="pane_visibility"></a>
+      decoder. They may still contain text content.
+
+      <a id="pane_visibility"></a>
       <h4 id="visibility">Pane Visibility</h4>
       Pane visibility is governed by a complex set of rules:
       <ul>
@@ -309,7 +311,7 @@
         </li>
       </ul>
 
-      <h4 id="pane_best_practice">Best Pactice</h4>
+      <h4 id="pane_best_practice">Best Practice</h4>
       Advanced users may choose to hide empty panes, but Show Empty Tabs is enabled by default so
       beginner users need to see why panes are empty or where to find items not on the expected
       panes.
@@ -745,7 +747,7 @@ delay is 500 milliseconds.
   &lt;/variable&gt;</pre>
       A Radix mask can handle CVs that are coded in bases other than binary: Ones that store their parts
       as decimal digits (as our example), or even base 3 or 5. That's a bit more technical, it's rarely
-      needed, but if you do need it refer to the <a
+      needed, but if you do need it, refer to the <a
       href="https://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc</a> for
       more details. The <a href="xml/decoders/Uhlenbrock_63410.xml">Uhlenbrock_63410</a> definition
       provides an example on CV1. The decoder definition using a Radix mask should point to /schema/decoder-4-15-2.xsd.
@@ -894,9 +896,9 @@ delay is 500 milliseconds.
         significant bits of the accessory decoder's address in bits 0-3.</li>
       </ul>
 
-      <h4>splitVal/splitHexVal - optional "factor" and "offset" attributes</h4>
+      <h4>decVal/splitVal/splitHexVal - optional "factor" and "offset" attributes</h4>
 
-      <p>For special purposes, splitVal and splitHexVal have two optional parameters, a "factor"
+      <p>For special purposes, decVal, splitVal and splitHexVal have two optional parameters, a "factor"
       and an "offset":</p>
 
       <ul>
@@ -954,6 +956,8 @@ delay is 500 milliseconds.
 
       <p>You can also use the include mechanism to specify the default value of a variable.</p>
 
+      <p>Note: &lt;defaultItem&gt; must be the first element inside the &lt;variable&gt; element body.</p>
+
       <p>Example:</p>
 
       <pre style="font-family: monospace;">
@@ -963,8 +967,10 @@ delay is 500 milliseconds.
   &lt;/variable&gt;
 </pre>
       <p>This will set the default (initial) value of the CV to 12 if the "815" matches, and
-      otherwise use the default-default of 3. You can have as many defaultItem elements as needed;
+      otherwise use the default-default of 3. You can have as many &lt;defaultItem&gt; elements as needed;
       the first one that matches is used.</p>
+
+      <p>Note: any &lt;defaultItem&gt; elements must come before other elements inside the &lt;variable&gt; element.</p>
 
       <h4 id="pane_include">Include/Exclude During Pane Creation</h4>
       Whether a pane (or part of a pane) is created can be made conditional on the decoder type

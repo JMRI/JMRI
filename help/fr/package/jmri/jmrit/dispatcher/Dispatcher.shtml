@@ -1,23 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-19-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-19-->
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Dispatcher Help</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content="JMRI help Dispatcher"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Dispatcher">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>Dispatcheur</h1>
       <a name="contents" id="contents"></a>
       <h2>Contenus</h2>
@@ -290,7 +286,7 @@
 
       <p>Une fenêtre typique de Trains Actifs au début d'une session de train est indiquée
       ci-dessous.</p>
-      <img src="DispatcherWindow.jpg" height="586" width="802" alt="">
+      <img src="images/DispatcherWindow.jpg" height="586" width="802" alt="">
       <p>Dans la fenêtre exemple ci-dessus, trois trains actifs ont été créés. Le Train Actif, GTW
       6418, a été alloué une Section et est exécuté en Mode AUTOMATIQUE. Le second Train Actif,
       Amtrak 515 est en ATTENTE de sa première affectation, après son affectation initiale quand il
@@ -356,7 +352,7 @@
 
       <p>Le Tableau Train Actif depuis l'exemple du fenêtre de Dispatcheur ci-dessus est présenté
       ci-dessous.</p>
-      <img src="ActiveTrainsTable.jpg" height="118" width="802" alt="">
+      <img src="images/ActiveTrainsTable.jpg" height="118" width="802" alt="">
       <p>Chaque rangée du Tableau <strong>Trains Actifs</strong> correspond à un train Actif. Les
       colonnes sont expliquées ci-dessous.</p>
 
@@ -468,12 +464,13 @@
         l'attribution OCCUPéE à la Section est appropriée, de sorte que le répartiteur n'est pas
         interrogé.</li>
       </ul>
+
       <a name="arequests" id="arequests"></a>
       <h2>Le Tableau Allocations Demandées</h2>
 
       <p>L'exemple de Tableau Allocations Demandées dans la fenêtre de Dispatcher ci-dessus est
       présenté ci-dessous.</p>
-      <img src="RequestedAllocationsTable.jpg" height="101" width="802" alt="">
+      <img src="images/RequestedAllocationsTable.jpg" height="101" width="802" alt="">
       <p>Cette Tableau, intitulée<strong>Allocations Demandées en attente d'Attribution</strong>,
       affiche les <strong>Allocations Demandées</strong> en attente. Chaque ligne correspond à une
       <strong>Demande d'Allocation</strong>. Les colonnes sont expliquées ci-dessous.</p>
@@ -576,7 +573,7 @@
           Allouées sont attribuées et à quels Trains Actifs, et il permet au répartiteur de
           <em>libérer</em> une Section allouée pour une utilisation par un Train Actif
           différent.</p>
-          <img src="AllocatedSectionsTable.jpg" height="177" width="746" alt="">
+          <img src="images/AllocatedSectionsTable.jpg" height="177" width="746" alt="">
           <p>Les colonnes du Tableau sont les suivantes:</p>
 
           <ul>
@@ -860,7 +857,7 @@
             fortement recommandées</strong> pour tous les Trains Actif Auto. Si elles ne sont pas
             présentes, le <em>mécanicien virtuel</em> n'a aucun moyen de savoir quand la dernière
             voiture a quitté un Canton. Sans que le train soit pleinement décelable sur toute sa
-            longueur, le Train Actif Auto ne s'arrêtera pas à des endroits acceptable.</li>
+            longueur, le Train Actif Auto ne s'arrêtera pas à des endroits acceptables.</li>
           </ul>
 
           <p>Même si les exigences ci-dessus sont remplies, l'exécution automatique ne sera pas un
@@ -870,10 +867,12 @@
           heurts, surtout à basse vitesse.Les problèmes de voies doivent avoir été résolus.
           <strong>Un train devrait fonctionner sans problème en mode manuel, avant de tenter de le
           lancer en automatique.</strong></p>
-          <!--#include virtual="/Footer.shtml" -->
         </li>
       </ul>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

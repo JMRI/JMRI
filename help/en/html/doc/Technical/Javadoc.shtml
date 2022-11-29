@@ -44,13 +44,13 @@
       "http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html">annotations</a> you
       want to apply to all classes in the package. If you don't have any annotations you want to
       include, please include</p>
-
-      <pre style="font-family: monospace;">
-      @edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
-</pre>which helps some of our build systems minimize recompilation. (For more on that annotation,
-see <a href=
+      <div class="wide">
+        <code>@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})</code>
+      </div>
+      <p>which helps some
+      of our build systems minimize recompilation. (For more on that annotation, see <a href=
 "https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/edu/umd/cs/findbugs/annotations/DefaultAnnotation.html">
-      here</a>)
+      here</a>)</p>
       <p>Previously, we used <code>package.html</code> files for this. It's not a high priority to
       replace existing <code>package.html</code> files, but new packages should include a
       <code>package-info.java</code> copied from <code>java/package-info.java</code> instead, see
@@ -77,8 +77,8 @@ see <a href=
 
       <p>You have to properly escape the &gt;, & and &lt; characters, e.g. to show a generic type.
       To do that, either escape them individually by writing &amp;gt;, &amp;amp; and &amp;lt; (note
-      the trailing semi-colon) or place the entire bit of text in {@literal ...} or {@code ...}
-      blocks.</p>
+      the trailing semi-colon) or place the entire bit of text in <code>{@literal ...}</code> or
+      <code>{@code ...}</code> blocks.</p>
 
       <p>Some error messages that can result from this and their translations:</p>
 
@@ -87,25 +87,25 @@ see <a href=
 
         <dt>"bad HTML entity"</dt>
 
-        <dd>Probably use of &amp;, &lt; or &gt; characters on the indicated line</dd>
+        <dd>Probable use of &amp;, &lt; or &gt; characters on the indicated line</dd>
 
         <dt>"bad use of '&gt;'"</dt>
 
         <dd>
           Probably using '&gt;' as a character, e.g. A -&gt; B. If so, replace with "&amp;gt;" or
-          wrap it with @literal as in
+          wrap it with <code>@literal</code> as in
 
           <pre style="font-family: monospace;">
-        {@literal 0.0 -&gt; 1.0.}
-</pre>and
+ {@literal 0.0 -&gt; 1.0.}
+</pre> and
 
           <pre style="font-family: monospace;">
-        opcodes {@code &lt;opc, string description&gt;} via
+ opcodes {@code &lt;opc, string description&gt;} via
 </pre>
         </dd>
       </dl>
 
-      <p>Definitely use @code{...} in Javadoc comments instead of trying to provide HTML-style
+      <p>Definitely use <code>@code{...}</code> in Javadoc comments instead of trying to provide HTML-style
       elements like &lt;tt&gt; and &lt;code&gt;, as they won't format correctly.</p>
 
       <p>You also have to (sometimes) end your paragraph tags to start another type of element,
@@ -125,7 +125,7 @@ a list inside a paragraph.
       <p>Finally, note that this Javadoc line is malformed:</p>
 
       <pre style="font-family: monospace;">
-  * @param foo
+ * @param foo
 </pre>because it doesn't include any explanatory text. The line should include explanatory text:
 
       <pre style="font-family: monospace;">
@@ -134,42 +134,43 @@ a list inside a paragraph.
       <h3 id="inherit">Inheriting Javadoc comments</h3>
 
       <p>When you write a method that overrides a method (or signature) in a superclass, you should
-      always use the <code>@Overrides</code> annotation to indicate that:</p>
+      always use the <code>@Override</code> annotation to indicate that:</p>
 
       <pre style="font-family: monospace;">
-  @Override
-  public void methodName() {
-    // doing something
-  }
+@Override
+public void methodName() {
+  // doing something
+}
 </pre>
       <p>If the method is similar enough to the superclass method, you can just "inherit" the
       Javadoc from the superclass:</p>
 
       <pre style="font-family: monospace;">
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void methodName() {
-    // doing something
-  }
+/**
+ * {@inheritDoc}
+ */
+@Override
+public void methodName() {
+  // doing something
+}
 </pre>
       <p>(If there's no Javadoc in the superclass, consider adding your comments there instead of
       on your new method and inheriting them; that kills two birds with one stone!)</p>
 
       <p>You can add or replace some of the documentation, e.g.</p>
 
-      <pre style="font-family: monospace;">
-  /**
-   * {@inheritDoc}
-   *
-   * This implementation uses the ReallyMarvelous algorithm for improved speed.
-   */
-  @Override
-  public void methodName() {
-    // doing something
-  }
-</pre>
+      <div class="wide"><pre style="font-family: monospace;">
+/**
+ * {@inheritDoc}
+ *
+ * This implementation uses the ReallyMarvelous algorithm for improved speed.
+ */
+@Override
+public void methodName() {
+  // doing something
+}
+</pre></div>
+
       <p>General comments add to the documentation from the superclass; @param and @return tags
       replace the documentation from the superclass.</p>
 
@@ -185,14 +186,14 @@ a list inside a paragraph.
       Jenkins job</a>.</p>
 
       <h2>UML and UmlGraph for Developers</h2>
-      UML is a broad and deep language for describing the structure, design and behavior of
+      <p>UML is a broad and deep language for describing the structure, design and behavior of
       computing systems. JMRI primarly uses UML class diagrams for documenting its structure. Many
       UML tutorials are available on the web. In particular, a good starting point is the <a href=
       "http://www.objectmentor.com/resources/articles/umlClassDiagrams.pdf">Object Mentor
       introduction to class diagrams</a>. For more detail, please see <a href=
       "http://web.archive.org/web/20110704185440/http://atlas.kennesaw.edu/~dbraun/csis4650/A&amp;D/UML_tutorial/class.htm">
       Atlas UML course</a> or <a href="http://edn.embarcadero.com/article/31863">Embarcadero
-      Software introduction</a>.
+      Software introduction</a>.</p>
       <p>Our Ant Javadoc processing makes basic UML class diagrams automatically. For an example,
       see the <a href="https://jmri.org/JavaDoc/doc/jmri/Sensor.html">Sensor interface Javadoc</a>,
       then click the "Show UML Class Diagram link" to see the <a href=
@@ -204,18 +205,23 @@ a list inside a paragraph.
       embedded in it</a>.</p>
 
       <p>You can also define custom UML diagrams using <a href="http://plantuml.com">PlantUML</a>.
-      For an example of the source syntax to define state and sequence diagrams, see the <a href=
+      For an example of the source syntax to define state and sequence diagrams, see the</p>
+      <div class="wide"><code>
+        <a href=
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/lenz/XNetProgrammer.java#L32">java/src/jmri/jmrix/lenz/XNetProgrammer.java</a>
-      file. The resulting diagrams are visible in the <a href=
+        </code>
+      </div>
+      <p>file. The resulting diagrams are visible in its <a href=
       "https://jmri.org/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">Javadoc output</a>.</p>
 
-      <p>PlantUml can also be used for standalone diagrams, c.f. <a href=
+      <p>PlantUML can also be used for standalone diagrams, c.f. <a href=
       "SystemStructure.shtml">the connection sequence diagram</a>. To do this, create a .txt file,
       and then manually process with</p>
+      <div class="wide">
+        <code>java -jar lib/plantuml.jar help/en/my/file/path/name</code>
+      </div>
+      <p>A .png with the diagram will be created alongside the source.</p>
 
-      <pre>
-      java -jar lib/plantuml.jar help/en/my/file/path/name
-      </pre>A .png with the diagram will be created alongside the source.
       <h2>Processing</h2>
       The standard JMRI Ant build provides three documentation targets:
       <dl>

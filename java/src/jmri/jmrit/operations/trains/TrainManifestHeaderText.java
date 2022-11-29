@@ -28,8 +28,10 @@ public class TrainManifestHeaderText {
     private static String final_dest_track = Bundle.getMessage("FD&Track");
     private static String location = Bundle.getMessage("Location");
     private static String consist = Bundle.getMessage("Consist");
+    private static String dcc_address = Bundle.getMessage("DCC_Address");
     private static String kernel = Bundle.getMessage("Kernel");
     private static String owner = Bundle.getMessage("Owner");
+    private static String division = Bundle.getMessage("Division");
     private static String rwe = Bundle.getMessage("RWELabel"); // add "RWE:" in Switch List
     private static String comment = Bundle.getMessage("Comment");
     private static String drop_comment = Bundle.getMessage("SetOut_Msg");
@@ -187,6 +189,14 @@ public class TrainManifestHeaderText {
     public static void setStringHeader_Owner(String s) {
         owner = s;
     }
+    
+    public static String getStringHeader_Division() {
+        return division;
+    }
+
+    public static void setStringHeader_Division(String s) {
+        division = s;
+    }
 
     public static String getStringHeader_RWE() {
         return rwe;
@@ -226,6 +236,14 @@ public class TrainManifestHeaderText {
 
     public static void setStringHeader_Hazardous(String s) {
         hazardous = s;
+    }
+    
+    public static String getStringHeader_DCC_Address() {
+        return dcc_address;
+    }
+    
+    public static void setStringHeader_DCC_Address(String s) {
+        dcc_address = s;
     }
 
     // must synchronize changes with operation-config.dtd
@@ -301,6 +319,10 @@ public class TrainManifestHeaderText {
             e.addContent(values = new Element(Xml.CONSIST));
             values.setAttribute(Xml.TEXT, getStringHeader_Consist());
         }
+        if (!getStringHeader_DCC_Address().equals(Bundle.getMessage("DCC_Address"))) {
+            e.addContent(values = new Element(Xml.DCC_ADDRESS));
+            values.setAttribute(Xml.TEXT, getStringHeader_DCC_Address());
+        }
         if (!getStringHeader_Kernel().equals(Bundle.getMessage("Kernel"))) {
             e.addContent(values = new Element(Xml.KERNEL));
             values.setAttribute(Xml.TEXT, getStringHeader_Kernel());
@@ -308,6 +330,10 @@ public class TrainManifestHeaderText {
         if (!getStringHeader_Owner().equals(Bundle.getMessage("Owner"))) {
             e.addContent(values = new Element(Xml.OWNER));
             values.setAttribute(Xml.TEXT, getStringHeader_Owner());
+        }
+        if (!getStringHeader_Division().equals(Bundle.getMessage("Division"))) {
+            e.addContent(values = new Element(Xml.DIVISION));
+            values.setAttribute(Xml.TEXT, getStringHeader_Division());
         }
         if (!getStringHeader_RWE().equals(Bundle.getMessage("RWELabel"))) {
             e.addContent(values = new Element(Xml.RWE));
@@ -424,6 +450,11 @@ public class TrainManifestHeaderText {
                 setStringHeader_Consist(a.getValue());
             }
         }
+        if (emts.getChild(Xml.DCC_ADDRESS) != null) {
+            if ((a = emts.getChild(Xml.DCC_ADDRESS).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_DCC_Address(a.getValue());
+            }
+        }
         if (emts.getChild(Xml.KERNEL) != null) {
             if ((a = emts.getChild(Xml.KERNEL).getAttribute(Xml.TEXT)) != null) {
                 setStringHeader_Kernel(a.getValue());
@@ -432,6 +463,11 @@ public class TrainManifestHeaderText {
         if (emts.getChild(Xml.OWNER) != null) {
             if ((a = emts.getChild(Xml.OWNER).getAttribute(Xml.TEXT)) != null) {
                 setStringHeader_Owner(a.getValue());
+            }
+        }
+        if (emts.getChild(Xml.DIVISION) != null) {
+            if ((a = emts.getChild(Xml.DIVISION).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Division(a.getValue());
             }
         }
         if (emts.getChild(Xml.RWE) != null) {

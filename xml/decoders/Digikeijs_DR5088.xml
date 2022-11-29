@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 
-<!-- Copyright (C) JMRI 2020 All rights reserved   -->
+<!-- Copyright (C) JMRI 2022 All rights reserved   -->
 <!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
 1. Article Number (aka type/class ID) = decoder model productID (integer)
 2. Module Address (optional, see below)
 3. CV number
 For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
 Uhlenbrock and Digikeijs/Digirails publish the Article number for each (new) device.
-The  DR5088RC DigiDetect has Article number 5088, which was registered with Uhlenbrock.
-Older LNCV devices may not have their own address, or even no article. They can be programmed using
-Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
-programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+The DR5088RC DigiDetect has Article number 5088, which was registered with Uhlenbrock.
+See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
     <version author="Egbert Broerse" version="1.0" lastUpdated="20220721"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 or later -->
-
+    <version author="Egbert Broerse" version="1.1" lastUpdated="20220810"/>
+    <!-- version 1.1 - use decVal offset to simplify user input of addresses (wich are stored as val - 1). Requires decoder-4-15-2.xsd -->
     <decoder>
         <family name="Feedback (Inputs)" mfg="Digikeijs" type="stationary">
             <model model="DR5088RC" productID="5088" formFactor="Stationary" comment="16 port LocoNet Feedback module with RailCom">
@@ -226,7 +225,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 
           <!-- CV 5088.100 to .117 feedback addresses per output -->
           <variable CV="5088.100" item="Quick setup feedback addresses" mask="VVVVVVVVVVVV" writeOnly="yes">
-            <decVal min="0" max="2047"/>
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Schnelles Setup:</label>
             <label xml:lang="nl">Snelinstelling:</label>
             <label xml:lang="cs">Quick setup:</label>
@@ -237,8 +236,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <tooltip xml:lang="nl">Snelinstelling Terugmelders met automatisch nummeren vanaf het ingevoerde beginadres</tooltip>
             <tooltip xml:lang="fr">Configuration rapide des adresses de retrosignalisation avec une numérotation automatique</tooltip>
           </variable>
-          <variable CV="5088.101" item="Feedback address input 1" mask="VVVVVVVVVVVV" default="0">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.101" item="Feedback address input 1" mask="VVVVVVVVVVVV" default="1">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 1:</label>
             <label xml:lang="nl">Ingang 1:</label>
             <label xml:lang="cs">Input 1:</label>
@@ -246,128 +245,128 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label>Input 1:</label>
             <tooltip>Enter as address - 1</tooltip>
           </variable>
-          <variable CV="5088.102" item="Feedback address input 2" mask="VVVVVVVVVVVV" default="1">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.102" item="Feedback address input 2" mask="VVVVVVVVVVVV" default="2">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 2:</label>
             <label xml:lang="nl">Ingang 2:</label>
             <label xml:lang="cs">Input 2:</label>
             <label xml:lang="fr">Entrée 2:</label>
             <label>Input 2:</label>
           </variable>
-          <variable CV="5088.103" item="Feedback address input 3" mask="VVVVVVVVVVVV" default="2">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.103" item="Feedback address input 3" mask="VVVVVVVVVVVV" default="3">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 3:</label>
             <label xml:lang="nl">Ingang 3:</label>
             <label xml:lang="cs">Input 3:</label>
             <label xml:lang="fr">Entrée 3:</label>
             <label>Input 3:</label>
           </variable>
-          <variable CV="5088.104" item="Feedback address input 4" mask="VVVVVVVVVVVV" default="3">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.104" item="Feedback address input 4" mask="VVVVVVVVVVVV" default="4">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 4:</label>
             <label xml:lang="nl">Ingang 4:</label>
             <label xml:lang="cs">Input 4:</label>
             <label xml:lang="fr">Entrée 4:</label>
             <label>Input 4:</label>
           </variable>
-          <variable CV="5088.105" item="Feedback address input 5" mask="VVVVVVVVVVVV" default="4">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.105" item="Feedback address input 5" mask="VVVVVVVVVVVV" default="5">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 5:</label>
             <label xml:lang="nl">Ingang 5:</label>
             <label xml:lang="cs">Input 5:</label>
             <label xml:lang="fr">Entrée 5:</label>
             <label>Input 5:</label>
           </variable>
-          <variable CV="5088.106" item="Feedback address input 6" mask="VVVVVVVVVVVV" default="5">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.106" item="Feedback address input 6" mask="VVVVVVVVVVVV" default="6">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 6:</label>
             <label xml:lang="nl">Ingang 6:</label>
             <label xml:lang="cs">Input 6:</label>
             <label xml:lang="fr">Entrée 6:</label>
             <label>Input 6:</label>
           </variable>
-          <variable CV="5088.107" item="Feedback address input 7" mask="VVVVVVVVVVVV" default="6">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.107" item="Feedback address input 7" mask="VVVVVVVVVVVV" default="7">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 7:</label>
             <label xml:lang="nl">Ingang 7:</label>
             <label xml:lang="cs">Input 7:</label>
             <label xml:lang="fr">Entrée 7:</label>
             <label>Input 7:</label>
           </variable>
-          <variable CV="5088.108" item="Feedback address input 8" mask="VVVVVVVVVVVV" default="7">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.108" item="Feedback address input 8" mask="VVVVVVVVVVVV" default="8">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 8:</label>
             <label xml:lang="nl">Ingang 8:</label>
             <label xml:lang="cs">Input 8:</label>
             <label xml:lang="fr">Entrée 8:</label>
             <label>Input 8:</label>
           </variable>
-          <variable CV="5088.109" item="Feedback address input 9" mask="VVVVVVVVVVVV" default="8">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.109" item="Feedback address input 9" mask="VVVVVVVVVVVV" default="9">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 9:</label>
             <label xml:lang="nl">Ingang 9:</label>
             <label xml:lang="cs">Input 9:</label>
             <label xml:lang="fr">Entrée 9:</label>
             <label>Input 9:</label>
           </variable>
-          <variable CV="5088.110" item="Feedback address input 10" mask="VVVVVVVVVVVV" default="9">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.110" item="Feedback address input 10" mask="VVVVVVVVVVVV" default="10">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 10:</label>
             <label xml:lang="nl">Ingang 10:</label>
             <label xml:lang="cs">Input 10:</label>
             <label xml:lang="fr">Entrée 10:</label>
             <label>Input 10:</label>
           </variable>
-          <variable CV="5088.111" item="Feedback address input 11" mask="VVVVVVVVVVVV" default="10">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.111" item="Feedback address input 11" mask="VVVVVVVVVVVV" default="11">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 11:</label>
             <label xml:lang="nl">Ingang 11:</label>
             <label xml:lang="cs">Input 11:</label>
             <label xml:lang="fr">Entrée 11:</label>
             <label>Input 11:</label>
           </variable>
-          <variable CV="5088.112" item="Feedback address input 12" mask="VVVVVVVVVVVV" default="11">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.112" item="Feedback address input 12" mask="VVVVVVVVVVVV" default="12">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 12:</label>
             <label xml:lang="nl">Ingang 12:</label>
             <label xml:lang="cs">Input 12:</label>
             <label xml:lang="fr">Entrée 12:</label>
             <label>Input 12:</label>
           </variable>
-          <variable CV="5088.113" item="Feedback address input 13" mask="VVVVVVVVVVVV" default="12">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.113" item="Feedback address input 13" mask="VVVVVVVVVVVV" default="13">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 13:</label>
             <label xml:lang="nl">Ingang 13:</label>
             <label xml:lang="cs">Input 13:</label>
             <label xml:lang="fr">Entrée 13:</label>
             <label>Input 13:</label>
           </variable>
-          <variable CV="5088.114" item="Feedback address input 14" mask="VVVVVVVVVVVV" default="13">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.114" item="Feedback address input 14" mask="VVVVVVVVVVVV" default="14">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 14:</label>
             <label xml:lang="nl">Ingang 14:</label>
             <label xml:lang="cs">Input 14:</label>
             <label xml:lang="fr">Entrée 14:</label>
             <label>Input 14:</label>
           </variable>
-          <variable CV="5088.115" item="Feedback address input 15" mask="VVVVVVVVVVVV" default="14">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.115" item="Feedback address input 15" mask="VVVVVVVVVVVV" default="15">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 15:</label>
             <label xml:lang="nl">Ingang 15:</label>
             <label xml:lang="cs">Input 15:</label>
             <label xml:lang="fr">Entrée 15:</label>
             <label>Input 15:</label>
           </variable>
-          <variable CV="5088.116" item="Feedback address input 16" mask="VVVVVVVVVVVV" default="15">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.116" item="Feedback address input 16" mask="VVVVVVVVVVVV" default="16">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 16:</label>
             <label xml:lang="nl">Ingang 16:</label>
             <label xml:lang="cs">Input 16:</label>
             <label xml:lang="fr">Entrée 16:</label>
             <label>Input 16:</label>
           </variable>
-          <variable CV="5088.117" item="Feedback address input globalRC" mask="VVVVVVVVVVVV" default="1000">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.117" item="Feedback address input globalRC" mask="VVVVVVVVVVVV" default="1001">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Globaler Detektor:</label>
             <label xml:lang="nl">Global Terugmelder:</label>
             <label xml:lang="fr">Détecteur Global:</label>
@@ -378,19 +377,19 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 
           <!-- CV 5088.200 to .217 block addresses per output -->
           <variable CV="5088.200" item="Quick setup block addresses" mask="VVVVVVVVVVVV" writeOnly="yes">
-            <decVal min="0" max="2047"/>
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Schnelles Setup:</label>
             <label xml:lang="nl">Snelinstelling:</label>
             <label xml:lang="cs">Quick setup:</label>
             <label xml:lang="fr">Configuration rapide:</label>
             <label>Quick setup:</label>
-            <tooltip>Quick setup for block addresses with autonumbering starting from this value + 1</tooltip>
+            <tooltip>Quick setup for block addresses with autonumbering starting from this value</tooltip>
             <tooltip xml:lang="de">Schnelles Setup für Blockadressen mit automatischer Nummerierung ab</tooltip>
-            <tooltip xml:lang="nl">Snelinstelling voor Blokadressen met autonummering vanaf het ingevoerde getal + 1</tooltip>
+            <tooltip xml:lang="nl">Snelinstelling voor Blokadressen met autonummering vanaf het ingevoerde adres</tooltip>
             <tooltip xml:lang="fr">Configuration rapide pour l’adressage des blocs avec une numérotation automatique</tooltip>
           </variable>
-          <variable CV="5088.201" item="Block address input 1" mask="VVVVVVVVVVVV" default="0">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.201" item="Block address input 1" mask="VVVVVVVVVVVV" default="1">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 1:</label>
             <label xml:lang="nl">Ingang 1:</label>
             <label xml:lang="cs">Input 1:</label>
@@ -398,120 +397,120 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label>Input 1:</label>
             <tooltip>Enter as address - 1</tooltip>
           </variable>
-          <variable CV="5088.202" item="Block address input 2" mask="VVVVVVVVVVVV" default="1">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.202" item="Block address input 2" mask="VVVVVVVVVVVV" default="2">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 2:</label>
             <label xml:lang="nl">Ingang 2:</label>
             <label xml:lang="cs">Input 2:</label>
             <label xml:lang="fr">Entrée 2:</label>
             <label>Input 2:</label>
           </variable>
-          <variable CV="5088.203" item="Block address input 3" mask="VVVVVVVVVVVV" default="2">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.203" item="Block address input 3" mask="VVVVVVVVVVVV" default="3">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 3:</label>
             <label xml:lang="nl">Ingang 3:</label>
             <label xml:lang="cs">Input 3:</label>
             <label xml:lang="fr">Entrée 3:</label>
             <label>Input 3:</label>
           </variable>
-          <variable CV="5088.204" item="Block address input 4" mask="VVVVVVVVVVVV" default="3">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.204" item="Block address input 4" mask="VVVVVVVVVVVV" default="4">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 4:</label>
             <label xml:lang="nl">Ingang 4:</label>
             <label xml:lang="cs">Input 4:</label>
             <label xml:lang="fr">Entrée 4:</label>
             <label>Input 4:</label>
           </variable>
-          <variable CV="5088.205" item="Block address input 5" mask="VVVVVVVVVVVV" default="4">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.205" item="Block address input 5" mask="VVVVVVVVVVVV" default="5">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 5:</label>
             <label xml:lang="nl">Ingang 5:</label>
             <label xml:lang="cs">Input 5:</label>
             <label xml:lang="fr">Entrée 5:</label>
             <label>Input 5:</label>
           </variable>
-          <variable CV="5088.206" item="Block address input 6" mask="VVVVVVVVVVVV" default="5">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.206" item="Block address input 6" mask="VVVVVVVVVVVV" default="6">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 6:</label>
             <label xml:lang="nl">Ingang 6:</label>
             <label xml:lang="cs">Input 6:</label>
             <label xml:lang="fr">Entrée 6:</label>
             <label>Input 6:</label>
           </variable>
-          <variable CV="5088.207" item="Block address input 7" mask="VVVVVVVVVVVV" default="6">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.207" item="Block address input 7" mask="VVVVVVVVVVVV" default="7">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 7:</label>
             <label xml:lang="nl">Ingang 7:</label>
             <label xml:lang="cs">Input 7:</label>
             <label xml:lang="fr">Entrée 7:</label>
             <label>Input 7:</label>
           </variable>
-          <variable CV="5088.208" item="Block address input 8" mask="VVVVVVVVVVVV" default="7">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.208" item="Block address input 8" mask="VVVVVVVVVVVV" default="8">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 8:</label>
             <label xml:lang="nl">Ingang 8:</label>
             <label xml:lang="cs">Input 8:</label>
             <label xml:lang="fr">Entrée 8:</label>
             <label>Input 8:</label>
           </variable>
-          <variable CV="5088.209" item="Block address input 9" mask="VVVVVVVVVVVV" default="8">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.209" item="Block address input 9" mask="VVVVVVVVVVVV" default="9">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 9:</label>
             <label xml:lang="nl">Ingang 9:</label>
             <label xml:lang="cs">Input 9:</label>
             <label xml:lang="fr">Entrée 9:</label>
             <label>Input 9:</label>
           </variable>
-          <variable CV="5088.210" item="Block address input 10" mask="VVVVVVVVVVVV" default="9">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.210" item="Block address input 10" mask="VVVVVVVVVVVV" default="10">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 10:</label>
             <label xml:lang="nl">Ingang 10:</label>
             <label xml:lang="cs">Input 10:</label>
             <label xml:lang="fr">Entrée 10:</label>
             <label>Input 10:</label>
           </variable>
-          <variable CV="5088.211" item="Block address input 11" mask="VVVVVVVVVVVV" default="10">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.211" item="Block address input 11" mask="VVVVVVVVVVVV" default="11">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 11:</label>
             <label xml:lang="nl">Ingang 11:</label>
             <label xml:lang="cs">Input 11:</label>
             <label xml:lang="fr">Entrée 11:</label>
             <label>Input 11:</label>
           </variable>
-          <variable CV="5088.212" item="Block address input 12" mask="VVVVVVVVVVVV" default="11">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.212" item="Block address input 12" mask="VVVVVVVVVVVV" default="12">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 12:</label>
             <label xml:lang="nl">Ingang 12:</label>
             <label xml:lang="cs">Input 12:</label>
             <label xml:lang="fr">Entrée 12:</label>
             <label>Input 12:</label>
           </variable>
-          <variable CV="5088.213" item="Block address input 13" mask="VVVVVVVVVVVV" default="12">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.213" item="Block address input 13" mask="VVVVVVVVVVVV" default="13">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 13:</label>
             <label xml:lang="nl">Ingang 13:</label>
             <label xml:lang="cs">Input 13:</label>
             <label xml:lang="fr">Entrée 13:</label>
             <label>Input 13:</label>
           </variable>
-          <variable CV="5088.214" item="Block address input 14" mask="VVVVVVVVVVVV" default="13">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.214" item="Block address input 14" mask="VVVVVVVVVVVV" default="14">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 14:</label>
             <label xml:lang="nl">Ingang 14:</label>
             <label xml:lang="cs">Input 14:</label>
             <label xml:lang="fr">Entrée 14:</label>
             <label>Input 14:</label>
           </variable>
-          <variable CV="5088.215" item="Block address input 15" mask="VVVVVVVVVVVV" default="14">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.215" item="Block address input 15" mask="VVVVVVVVVVVV" default="15">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 15:</label>
             <label xml:lang="nl">Ingang 15:</label>
             <label xml:lang="cs">Input 15:</label>
             <label xml:lang="fr">Entrée 15:</label>
             <label>Input 15:</label>
           </variable>
-          <variable CV="5088.216" item="Block address input 16" mask="VVVVVVVVVVVV" default="15">
-            <decVal min="0" max="2047"/>
+          <variable CV="5088.216" item="Block address input 16" mask="VVVVVVVVVVVV" default="16">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Detektor 16:</label>
             <label xml:lang="nl">Ingang 16:</label>
             <label xml:lang="cs">Input 16:</label>
@@ -519,8 +518,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label>Input 16:</label>
           </variable>
 
-          <variable CV="5088.217" item="Block address input globalRC" mask="VVVVVVVVVVVV" default="1000">
-            <decVal min="1" max="2048"/>
+          <variable CV="5088.217" item="Block address input globalRC" mask="VVVVVVVVVVVV" default="1001">
+            <decVal min="1" max="2048" offset="1"/>
             <label xml:lang="de">Globaler Detektor:</label>
             <label xml:lang="nl">Global Terugmelder:</label>
             <label xml:lang="fr">Détecteur Global:</label>

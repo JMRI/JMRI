@@ -64,7 +64,7 @@
         <li style="list-style: none">
           <ul>
             <li>
-              <a href="#AssertJ">AssertJ tools</a>
+              <a href="#Assertions">Test Assertions</a>
             </li>
 
             <li>
@@ -91,24 +91,14 @@
               <a href="#tempFileCreation">Temporary File Creation in Tests</a>
             </li>
 
-            <li>
-              <a href="#J4rules">JUnit Rules</a>
-            </li>
-
-            <li style="list-style: none">
-              <ul>
-                <li>
-                  <a href="#TimeoutRule">Timeout rule</a>
-                </li>
-
-                <li>
-                  <a href="#RetryRule">RetryRule</a>
-                </li>
-              </ul>
-            </li>
 
             <li>
               <a href="#control">Controlling JUnit Tests</a>
+            </li>
+          
+
+            <li>
+              <a href="#AssertJ">AssertJ tools</a>
             </li>
           </ul>
         </li>
@@ -142,6 +132,10 @@
         </li>
 
         <li>
+          <a href="#testingTheTests">Testing the Tests</a>
+        </li>
+
+        <li>
           <a href="#issues">Issues</a>
         </li>
       </ul>
@@ -150,15 +144,11 @@
       to do. In a distributed project like JMRI, where there are lots of developers in only loose
       communication with each other, unit tests are a good way to make sure that the code hasn't
       been broken by a change.
-      <p>For more information on JUnit, see <a href="http://www.junit.org">the JUnit home page</a>.
+      <p>For more information on JUnit, see <a href="https://junit.org/">the JUnit home page</a>.
       We now use JUnit version 5 (JUnit5), although a lot of JMRI code originally had tests written
       in the previous versions, JUnit3 and Junit4.</p>
 
-      <p>A very interesting example of test-based development is available from <a href=
-      "http://www.objectmentor.com/publications/xpepisode.htm">Robert Martin</a>'s book.</p>
-
-      <p>All of the JMRI classes have JUnit tests available; we have decided that our <a href=
-      "ContinuousIntegration.shtml">Continuous Integration system</a> will insist on that. It's
+      <p>All of the JMRI classes should have JUnit tests available.  It's
       good to add JUnit tests as you make changes to classes (they test your new functionality to
       make sure that it is working, and keeps working as other people change it later), when you
       have to figure out what somebody's code does (the test documents exactly what should
@@ -186,6 +176,15 @@ suite.<br>
       to put the menu on the main-screen menu bar, which makes JMRI apps look more like a
       Mac application.  This will interfere with
       <a href="#jemmy">Jemmy</a> based tests of the GUI.
+
+    <p>You can also call the ant task directly with :
+    <pre style="font-family: monospace;">    ant test-single -Dtest.includes=jmri.jmrit.powerpanel.PowerPanelTest</pre>
+    <p>or for all tests in the powerpanel class :
+    <pre style="font-family: monospace;">    ant test-single -Dtest.includes=jmri.jmrit.powerpanel.*</pre>
+
+    <p>To run the tests and generate a code coverage report ( presuming all tests pass ) :
+    <pre style="font-family: monospace;">    ant single-test-coveragereport -Dtest.includes=jmri.jmrit.beantable.*</pre>
+    In your main JMRI directory, check the coveragereport folder for the index.html file.
 
       <p>There is also a PowerShell (Core) script available to help running tests with maven,</p>
 
@@ -339,6 +338,7 @@ suite.<br>
    export JMRI_OPTIONS="-Duser.language=en -Duser.region=US"
 </pre>depending on what kind of OS and shell you're using. For more on how this works, see the page
 on <a href="StartUpScripts.shtml">startup scripts</a>.
+
       <h2 id="Continuous">Continuous Integration Test Execution</h2>
       The <a href="ContinuousIntegration.shtml">continuous integration environment</a> senses
       changes in the code repository, rebuilds the code, performs a variety of checks. If no fatal
@@ -440,23 +440,17 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
     package jmri.jmrix.foo;
 
     import jmri.util.JUnitUtil;
-    import org.junit.jupiter.api.BeforeEach;
-    import org.junit.jupiter.api.AfterEach;
-    import org.junit.jupiter.api.Test;
+    import org.junit.jupiter.api.*;
 
-    import static org.assertj.core.api.Assertions.assertThat;
-
-    /*
+    /**
      * Tests for the Foo Class
-     * @author  Your Name   Copyright (C) 2021
+     * @author  Your Name   Copyright (C) 2022
      */
     public class FooTest {
 
         @Test
         public void testCtor() {
-            assertThat("Foo Constructor Return", new foo()).isNotNull();
-            // Before JUnit5 with "import org.junit.Assert;" this written as:
-            // Assert.AssertNotNull("Foo Constructor Return", new foo());
+            Assertions.AssertNotNull( new foo(), "Foo Constructor Return");
         }
 
         @BeforeEach
@@ -477,7 +471,7 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       is because JUnit keeps the test class objects around until <em>all</em> the tests are
       complete, so any memory you allocate in one class can't be garbage collected until all the
       tests are done. Setting the references to null allows the objects to be collected. (If the
-      allocated objects have a dispose() method or similar, you should call that too). You should
+      allocated objects have a dispose() method or similar, you should call that too).<br/>You should
       <u>not</u> <a href="#ResetInstMgr">reset the InstanceManager</a> or other managers in the
       tearDown method; any necessary manager resets will be done automatically, and duplicating
       those wastes test time.</p>
@@ -486,34 +480,37 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       needs of your new class.</p>
 
       <h3 id="Write4NewPackage">Writing Tests for a New Package</h3>
-      To write tests for an entirely new package, create a director in the jmri/tests tree that's
+      To write tests for an entirely new package, create a directory in the jmri/tests tree that's
       in the analogous place to your new code directory. For example, if you're creating
       java/src/jmri/jmrit/foo, create a java/test/jmri/jmrit/foo directory and place your *Test
       classes there.
       <h2 id="keyMetaphors">Key Test Metaphors</h2>
-
-      <h3 id="AssertJ">AssertJ Tools</h3>
-      The <a href="https://assertj.github.io/doc/">fluent assertions</a> in the <a href=
-      "https://www.javadoc.io/doc/org.assertj/assertj-core/latest/org/assertj/core/api/Assertions.html">
-      AssertJ core Assertions</a> classes can tooling for many useful idioms that go well beyond
-      the simple <a href="https://junit.org/junit4/javadoc/latest/org/junit/Assert.html">JUnit
-      Assert class</a> tools:
-      <ul>
-        <li>Checking of file contents</li>
-
-        <li>Checking that the correct exception is thrown:
-
-          <pre style="font-family: monospace;">
-      Throwable thrown = catchThrowable(() -&gt; { testObject.throwAnException() });
-          assertThat(thrown).isInstanceOf(NullPointerException.class)
-                          .hasNoCause()
-      }
+      
+      <h3 id="Assertions">Test Assertions</h3>
+      
+      <p><a href="https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html"
+      >JUnit 5 Assertions</a> can be used to ensure that code outputs as expected.</p>
+      
+      <pre style="font-family: monospace;">
+    @Test
+    public void testExceptionThrowing() throws Exception {
+        
+        Exception ex = Assertions.assertThrows( NullPointerException.class, () -&gt; {
+            runCodeThatThrowsException();
+        } );
+        Assertions.assertNotNull(ex);
+        Assertions.assertEquals("Expected NullPointer Exception Message Text", ex.getMessage());
+    }
       </pre>
-        </li>
-      </ul>
-      See below for info on using AssertJ with Swing.
+      
+      <p>Assertions can be loaded as a static class, eg.</p>
+      <pre style="font-family: monospace;">import static org.junit.jupiter.api.Assertions.*;</pre>
+
+      <p>Many tests use the Assertions from
+      <pre style="font-family: monospace;">import org.junit.Assert;</pre>
+      
       <h3 id="HandlingLogOutput">Handling Log4J Output FromTests</h3>
-      JMRI uses <a href="http://logging.apache.org/log4j/2.x/index.html">Log4j</a> to <a href=
+      JMRI uses <a href="https://logging.apache.org/log4j/2.x/index.html">Log4j</a> to <a href=
       "Logging.shtml">handle logging of various conditions</a>, including error messages and
       debugging information. Tests are intended to run without error or warning output, so that
       it's immediately apparent from an empty standard log that they ran cleanly.
@@ -602,7 +599,7 @@ line:<br>
       although you can run your tests successfully on your own computer if they're emitting ERROR
       messages, but you won't be able to merge your code into the common repository until those are
       handled. It's currently OK to emit WARN-level messages during CI testing, but that will also
-      be restricted (cause the test to fail) during tne 4.15.* development series, so please
+      be restricted (cause the test to fail) during the 5.* development series, so please
       suppress or handle those messages too.</p>
 
       <h3 id="ResetInstMgr">Resetting the InstanceManager</h3>
@@ -792,24 +789,26 @@ a bit time-intensive, so we don't leave it on all the time.
         File randomNameDir = folder.newFolder();
 </pre>JUnit will make sure the file or folder is removed afterwards regardless of whether the test
 succeeds or fails. For more information on this, see the <a href=
-"https://junit.org/junit5/docs/5.4.0/api/org/junit/jupiter/api/io/TempDir.html">Javadoc for
+"https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/io/TempDir.html">Javadoc for
 TemporaryDir</a>.
+
+
       <h3 id="J5extensions">JUnit 5 Extensions</h3>
-      JUnit 4 used <a href="#J4rules">Rules</a> to provide special behavior required in certain
-      test extensions. JUnit 5 has replaced rules with annotation based extensions. Extensions may
+      JUnit 5 has replaced <a href="https://github.com/junit-team/junit4/wiki/rules">JUnit 4 Rules</a>
+      with annotation based extensions. Extensions may
       be applied at the class level, the method level, and sometimes to individual fields. The
       following is a list of a few extensions we have utilized in testing JMRI.
       <ol>
         <li>
           <a href=
-          "https://junit.org/junit5/docs/5.4.0/api/org/junit/jupiter/api/io/TempDir.html"><code>@org.junit.jupiter.api.io.Tempdir</code></a>
+          "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/io/TempDir.html"><code>@org.junit.jupiter.api.io.Tempdir</code></a>
           which is used to create temporary folders and files as <a href=
           "#tempFileCreation">described previously</a>
         </li>
 
         <li>
           <a href=
-          "https://junit.org/junit5/docs/5.5.0-RC2/api/org/junit/jupiter/api/Timeout.html"><code>@org.junit.jupiter.api.Timeout</code></a>
+          "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Timeout.html"><code>@org.junit.jupiter.api.Timeout</code></a>
           which is used to set a timeout. the <code>@Timeout</code> annotation takes a time as a
           parameter and can optionally takes units for the given time. The default time unit is
           seconds, so <code>@Timeout (2)</code> creates a 2 second timeout. The
@@ -820,67 +819,7 @@ TemporaryDir</a>.
         </li>
       </ol>
 
-      <h3 id="J4rules">JUnit Rules</h3>
-      JUnit4 added the concept of "<a href=
-      "https://github.com/junit-team/junit4/wiki/rules">Rules</a>" that can modify the execution of
-      tests. They work at the class or test level to modify the context JUnit uses for running the
-      classes tests. Generally, you start by creating one:
-
-      <pre style="font-family: monospace;">
-    @Rule
-    public final TemporaryFolder tempFolder = new TemporaryFolder();
-</pre>
-      <p>Some standard JUnit4 rules you might find useful:</p>
-
-      <ul>
-        <li>
-          <a href=
-          "https://github.com/junit-team/junit4/wiki/rules#temporaryfolder-rule">TemporaryFolder</a>
-          - work with temporary files and folders, ensuring they're cleaned up at the end. See the
-          <a href="#tempFileCreation">above section</a> for more on using that.
-        </li>
-
-        <li>
-          <a href=
-          "https://github.com/junit-team/junit4/wiki/rules#expectedexception-rules">ExpectedException</a>
-          - handles test methods that are expected to throw exceptions
-        </li>
-      </ul>
-
-      <h4 id="TimeoutRule">Timeout - limit duration</h4>
-      The <a href="https://github.com/junit-team/junit4/wiki/rules#timeout-rule">Timeout rule</a>
-      imposes a timeout on all test methods in a class.
-
-      <pre style="font-family: monospace;">
-    @Rule
-    public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(10);
-</pre>
-      <p>Note that you can also add a timeout option to an individual test via an argument to the
-      @Test annotation. For example,</p>
-
-      <pre style="font-family: monospace;">
-    @Test(timeout=2000)
-</pre>will put a 2 second (2,000 milliseconds) timeout on that test. If you use both the rule and
-the option, the option will control the behavior. For a bit more info, see the <a href=
-"https://github.com/junit-team/junit4/wiki/Timeout-for-tests">JUnit Timeouts for Tests page</a>.
-      <h4 id="RetryRule">RetryRule - run test several times ( JUnit4 Only )</h4>
-      JMRI has <code><a href=
-      "https://github.com/JMRI/JMRI/tree/master/java/test/jmri/util/junit/rules/RetryRule.java">jmri.util.junit.rules.RetryRule</a></code>
-      which can rerun a test multiple times until it reaches a limit or finally passes. Although
-      it's better to write reliable tests, this can be a way to make the CI system more reliable
-      while you try to find out why a test isn't reliable.
-      <p>For a working example, see <a href=
-      "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/junit/rules/RetryRuleTest.java">java/test/jmri/util/junit/rules/RetryRuleTest.java</a></p>
-
-      <p>Briefly, you just add the lines</p>
-
-      <pre style="font-family: monospace;">
-    import jmri.util.junit.rules.RetryRule;
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
-</pre>to your test class. This will modify how JUnit4 handles errors during all of the tests in that
-class.
+      
       <h3 id="control">Tools for Controlling JUnit tests</h3>
 
       <ul>
@@ -892,20 +831,20 @@ class.
         </li>
 
         <li>JUnit 5 provides a collection of <a href=
-        "https://junit.org/junit5/docs/5.1.0/api/org/junit/jupiter/api/condition/package-summary.html">
+        "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/condition/package-summary.html">
           conditional annotations</a>. JMRI makes extensive use of <a href=
-          "https://junit.org/junit5/docs/5.1.0/api/org/junit/jupiter/api/condition/DisabledIfSystemProperty.html">
+          "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/condition/DisabledIfSystemProperty.html">
           <code>@DisabledIfSystemProperty</code></a> to conditionally ignore a test. For example, a
           test that would fail in a headless environment should be ignored in headless mode. Adding
           the following annotation to the test method<br>
-          <code>@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")</code><br>
+          <code>@DisabledIfSystemProperty( named = "java.awt.headless", matches = "true")</code><br>
           will cause the test to be ignored in headless mode. If a whole class is to be disabled in
           headless mode, this same annotation may be applied to the test class.
         </li>
 
         <li>
           <a href=
-          "https://junit.org/junit5/docs/5.0.0-M2/api/org/junit/jupiter/api/Disabled.html">@Disabled</a>
+          "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Disabled.html">@Disabled</a>
           - mark a test to be unconditionally ignored. For example, a test that fails because it
           isn't fully implemented yet can be marked to be ignored:<br>
 
@@ -949,6 +888,13 @@ error.
           details.</p>
         </li>
       </ul>
+      
+      <h3 id="AssertJ">AssertJ Tools</h3>
+      The <a href="https://assertj.github.io/doc/">fluent assertions</a> in the <a href=
+      "https://www.javadoc.io/doc/org.assertj/assertj-core/latest/org/assertj/core/api/Assertions.html">
+      AssertJ core Assertions</a> classes can tooling for many useful idioms that go well beyond
+      the simple <a href="https://junit.org/junit4/javadoc/latest/org/junit/Assert.html">JUnit 4
+      Assert</a> class tools.
 
       <h2 id="testSwingCode">Testing Swing Code</h2>
       AWT and Swing code runs on a separate thread from JUnit tests. Once a Swing or AWT object has
@@ -963,8 +909,8 @@ error.
       "ContinuousIntegration.shtml">continuous integration builds</a>, it's important that tests
       needing access to the screen are annotated with:</p>
 
-      <pre><code>@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")</code></pre>
-      <p>This will run the test only when a display is available.</p>
+      <pre><code>@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")</code></pre>
+      <p>This will only run the setUp, test and tearDown methods when a display is available.<br/>
 
       <p>GUI tests should close windows when they're done, and in general clean up after
       themselves. If you want to keep windows around so you can manipulate them, e.g. for manual
@@ -1016,7 +962,7 @@ error.
         describing that component, be certain the JLabel's LabelFor property is set. A Jemmy
         JLabelOperator can then be used to find the label, and retrieve the object.</li>
 
-        <li>When looking for a button, window or other item by it's label text, the default Jemmy
+        <li>When looking for a button, window or other item by its label text, the default Jemmy
         string comparison is a case insensitive <code>caption.contains(match)</code>. If
         <code>ce</code> is true, then the <code>equals(..)</code> method is used. The
         <code>ccs</code> option controls case sensitivity.</li>
@@ -1040,17 +986,24 @@ error.
       dialog window) of "Foo Warning" and an "OK" button to close it, put this in your JUnit test:
 
       <pre style="font-family: monospace;">
-        new Thread(() -&gt; {
+        Thread t = new Thread(() -&gt; {
             // constructor for d will wait until the dialog is visible
             JDialogOperator d = new JDialogOperator("Foo Warning");
             JButtonOperator bo = new JButtonOperator(d,"OK");
             jmri.util.ThreadingUtil.runOnGUI(() -&gt; {bo.push();});
-        }).start();
+        });
+        t.setName("My Foo Warning Dialog Close Thread");
+        t.start();
         showTheDialog();
-</pre>The thread is started before your code runs and starts Jemmy looking for the Dialog box. Once
-it appears, Jemmy will push the "OK" button. You can't put the Jemmy calls in advance: They'll wait
-forever for the dialog to appear, and never proceed to your code to show the dialog. And you can't
-put them after the call, because your call won't exist until somebody presses "OK".
+        JUnitUtil.waitFor(() -&gt; !t.isAlive(), "Thread did not complete "+t.getName());
+</pre>
+        <p>The thread is started before your code runs and starts Jemmy looking for the Dialog box.
+        <br/>Once it appears, Jemmy will push the "OK" button.
+        <br/>You can't put the Jemmy calls in advance: They'll wait forever for the dialog to appear,
+        and never proceed to your code to show the dialog.
+        <br/>You can't put them after the call, because your call won't exist until somebody presses "OK".
+        <br/>We can be certain that the dialog OK button has been found and pushed by waiting for
+        the Thread to complete.
       <h4 id="jemmytimeout">Jemmy timeouts</h4>
       Jemmy has an extensive system of built-in timeouts. It'll wait to perform an operation until
       e.g. the requested button or menu is on the screen, but will eventually timeout if it can't
@@ -1064,7 +1017,7 @@ put them after the call, because your call won't exist until somebody presses "O
         myMenuOperator.getTimeouts().setTimeout("JMenuOperator.WaitBeforePopupTimeout", 30L);
 </pre>where "<code>myMenuOperator</code>" is a reference to a Jemmy operator object, 30L is the new
 value (a <code>long</code>) in milliseconds, and the particular timeout name comes from the
-Javadoc. Sometimes, setting the "WaitBeforePopupTimeout" from it's default of zero to a few
+Javadoc. Sometimes, setting the "WaitBeforePopupTimeout" from its default of zero to a few
 milliseconds can improve the reliability of tests. Also, setting
 "<code>JMenuOperator.WaitPopupTimeout</code>" and
 "<code>ComponentOperator.WaitComponentTimeout</code>" to a lower value from their defaults of
@@ -1139,11 +1092,39 @@ milliseconds can improve the reliability of tests. Also, setting
       <code><a href=
       "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/jmrit/jython/SampleScriptTest.java">java/test/jmri/jmrit/jython/SampleScriptTest.java</a></code>.
       <p>See the <code><a href=
-      "https://github.com/JMRI/JMRI/blob/master/jython/test/jmri_bindings_test.py">jmri_bindings_test.py</a></code>
+      "https://github.com/JMRI/JMRI/blob/master/jython/test/jmri_bindings_Test.py">jmri_bindings_Test.py</a></code>
       sample for syntax, including examples of how to signal test failures.</p>
 
       <p>In the future, this could be extended to pick up files automatically, to support xUnit
       testing, etc.</p>
+
+      <h2 id="testingTheTests">Testing the Tests</h2>
+
+      <p>Ideally ( unless there is an actual issue with the code being tested ), all of the Tests will have a 100% success rate.
+      In the real world, tests can become flaky due to unknwon reasons and may not pass on every single execution.</p>
+
+      <p><code><a href="https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Test.html"
+      >@Test</a></code> method annotation can be replaced with <code><a href=
+      "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/RepeatedTest.html"
+      >@RepeatedTest(1000)</a></code>
+      to run the test multiple ( in this case 1000 ) times.</p>
+
+      <p>Check that no remnanat threads are left over after tests, see <code>jmri.util.JUnitUtil.failRemnantThreads</code>
+      in <a href="testingvars">Optional Checks</a>.
+      <br/>Ideally, run whole-package Tests in case other Tests being run around the same time are
+      leaving Threads that interfere with the flaky test.</p>
+
+      <p>Is the Test inheriting objects from other tests?  It may be worth running the tests with a
+      completely fresh <a href="io">JMRI User Profile in a Temporary Directory</a>.</p>
+
+      <p>Mocking Frameworks can create a more controlled environment for the class under test by simulating
+      external dependencies.  JMRI uses <a href="https://site.mockito.org/">Mockito</a>, org.mockito.Mockito.</p>
+
+      <p>Spotbugs Static Analysis reports can be generated for the Test classes.
+      <pre style="font-family: monospace;">    ant tests-spotbugs</pre>
+
+      <p>Compile source &amp; tests with CI ECJ warnings on ( this is run as routine CI )
+      <pre style="font-family: monospace;">    ant tests-warnings-check</pre>
 
       <h2 id="issues">Issues</h2>
       JUnit uses a custom classloader, which can cause problems finding singletons and starting

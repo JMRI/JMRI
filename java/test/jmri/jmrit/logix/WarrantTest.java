@@ -2,6 +2,8 @@ package jmri.jmrit.logix;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests for Warrant creation.
@@ -223,7 +226,7 @@ public class WarrantTest {
 
         // wait for done
         JUnitUtil.waitFor(() -> {
-            return warrant.getRunningMessage().equals(Bundle.getMessage("Idle"));
+            return Bundle.getMessage("Idle").equals(warrant.getRunningMessage());
         }, "warrant not done");
 
         JUnitAppender.assertWarnMessageStartingWith("block: West Path distance or SpeedProfile unreliable! pathDist= 200.0,");
@@ -249,10 +252,10 @@ public class WarrantTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File tempDir) throws IOException  {
         JUnitUtil.setUp();
 
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initRosterConfigManager();
 
@@ -303,6 +306,7 @@ public class WarrantTest {
         path = new OPath("SouthToWest", south, null, south.getPortalByName("SouthWest"), settings);
         south.addPath(path);
 
+        Assertions.assertNotNull(bSouth);
         bSouth.setLength(100);
 
         settings = new ArrayList<>();
@@ -320,8 +324,11 @@ public class WarrantTest {
         sEast = _sensorMgr.newSensor("IS2", "EastSensor");
         sNorth = _sensorMgr.newSensor("IS3", "NorthSensor");
         sSouth = _sensorMgr.newSensor("IS4", "SouthSensor");
+        Assertions.assertNotNull(bWest);
         bWest.setSensor("WestSensor");
+        Assertions.assertNotNull(bEast);
         bEast.setSensor("IS2");
+        Assertions.assertNotNull(bNorth);
         bNorth.setSensor("NorthSensor");
         bSouth.setSensor("IS4");
         warrant = new Warrant("IW0", "AllTestWarrant");

@@ -17,6 +17,8 @@ import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.beans.PropertyChangeSupport;
 
+import jmri.jmrit.roster.RosterEntry;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
 
@@ -208,6 +210,19 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
+     * Get Function Number without warning if Throttle does not support.
+     * When sending a whole Function Group, a function number may not be present.
+     * @param fN Function Number
+     * @return Function value, or false if not present.
+     */
+    protected boolean getFunctionNoWarn(int fN) {
+        if (fN<0 || fN > FUNCTION_BOOLEAN_ARRAY.length-1){
+            return false;
+        }
+        return FUNCTION_BOOLEAN_ARRAY[fN];
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -218,6 +233,19 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         }
         return FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fN];
 
+    }
+
+    /**
+     * Get Momentary Function Number without warning if Throttle does not support.
+     * When sending a whole Function Group, a function number may not be present.
+     * @param fN Function Number
+     * @return Function value, or false if not present.
+     */
+    protected boolean getFunctionMomentaryNoWarn(int fN) {
+        if (fN<0 || fN > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1){
+            return false;
+        }
+        return FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fN];
     }
 
     /**
@@ -784,7 +812,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
             return;
         }
         stopClock();
-        String currentDurationString = re.getAttribute("OperatingDuration");
+        String currentDurationString = re.getAttribute(RosterEntry.ATTRIBUTE_OPERATING_DURATION);
         long currentDuration = 0;
         if (currentDurationString == null) {
             currentDurationString = "0";
@@ -796,8 +824,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
             log.warn("current stored duration is not a valid number \"{} \"", currentDurationString);
         }
         currentDuration = currentDuration + durationRunning;
-        re.putAttribute("OperatingDuration", "" + currentDuration);
-        re.putAttribute("LastOperated", new StdDateFormat().format(new Date()));
+        re.putAttribute(RosterEntry.ATTRIBUTE_OPERATING_DURATION, "" + currentDuration);
+        re.putAttribute(RosterEntry.ATTRIBUTE_LAST_OPERATED, new StdDateFormat().format(new Date()));
         //Only store if the roster entry isn't open.
         if (!re.isOpen()) {
             re.store();

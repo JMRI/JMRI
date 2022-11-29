@@ -1,33 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+<html lang="fr">
 <!-- Translated by Herv&#233; Blorec bzh56420@yahoo. fr 2013-11-03 -->
-
-<html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Panel Editor Help</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Panel Editor">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.%20css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.%20css"
-  media="print">
-  <link rel="icon" href="/images/jmri.%20ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Cr&eacute;ation et &Eacute;dition de Mandat</h1>Un mandat
+      <h1>Cr&eacute;ation et &Eacute;dition de Mandat</h1>
+      <p>Un mandat
       contient les informations n&eacute;cessaires pour faire
       fonctionner un train. Cela comprend l'adresse de la
       locomotive DCC (s), l'itin&eacute;raire que le train
@@ -36,7 +23,7 @@
       &agrave; utiliser &agrave; diff&eacute;rents points le long
       de la route-par exemple les vitesse, quand afficher
       lumi&egrave;res, klaxons sonores , cloches ou d'autres effets
-      sonores.
+      sonores.</p>
 
       <div style="margin-left: 2em">
         <b>Remarque:</b> Le Mandat ne peut &ecirc;tre
@@ -48,13 +35,15 @@
       de r&eacute;gulateur.
 
       <h2>D&eacute;finir un Itin&eacute;raire
-      Mandat&eacute;</h2>Les Itin&eacute;raires sont
+      Mandat&eacute;</h2>
+      <p>Les Itin&eacute;raires sont
       cr&eacute;&eacute;s en utilisant l'onglet <b>D&eacute;finir
       Itin&eacute;raire</b> dans la fen&ecirc;tre d'&eacute;dition
-      des Mandats.P&gt;
+      des Mandats.</p>
 
       <h3>Origine,Destination, Via et &Eacute;viter les
-      Cantons</h3>Le Canton d'Origine est &eacute;videmment
+      Cantons</h3>
+      <p>Le Canton d'Origine est &eacute;videmment
       o&ugrave; un train donn&eacute; va commencer cet
       Itin&eacute;raire et le chemin de d&eacute;marrage dans le
       bloc d'origine est la voie c'est sur-par exemple un chemin
@@ -67,7 +56,7 @@
       les portails, les chemins et les cantons n&eacute;cessaires
       pour amener le train au canton de destination et le
       chemin-par exemple "Piste d'arriv&eacute;e n&deg;1 " dans le
-      canton de destination.
+      canton de destination.</p>
 
       <p>Un itin&eacute;raire de mandat est cr&eacute;&eacute;e en
       s&eacute;lectionnant le canton et le chemin o&ugrave; le
@@ -307,7 +296,8 @@
           d'un r&eacute;gulateur &agrave; l'&eacute;cran dans
           <b>Mode Apprentissage</b> .
 
-          <h3>R&eacute;gulateur en Mode Apprentissage</h3>Si un
+          <h3>R&eacute;gulateur en Mode Apprentissage</h3>
+          <p>Si un
           train a &eacute;t&eacute; assign&eacute;, c'est qu'il
           poss&egrave;de une adresse DCC valide dans le mandat,
           puis un r&eacute;gulateur peut &ecirc;tre acquis en
@@ -315,7 +305,7 @@
           acc&eacute;l&eacute;rateur actionnera le train et toutes
           les commandes r&eacute;gulateur seront
           enregistr&eacute;es jusqu'&agrave; ce que le bouton
-          <b>Arr&ecirc;t</b> soit press&eacute;.
+          <b>Arr&ecirc;t</b> soit press&eacute;.</p>
 
           <p>Le script apprentissage doit se fairoe avec un
           itin&eacute;raire compl&egrave;tement libre-Tous les
@@ -333,10 +323,11 @@
           <p>En appuyant sur le bouton <b>Arr&ecirc;t</b> pour
           terminer l'enregistrement.</p>
 
-          <h2>Mode Ex&eacute;cution</h2>En appuyant sur la touche
+          <h2>Mode Ex&eacute;cution</h2>
+          <p>En appuyant sur la touche
           <b>AutoRun</b> dans la bo&icirc;te <b>Ex&eacute;cuter
           Train</b> enverront les commandes du r&eacute;gulateur au
-          train pr&eacute;cis&eacute; dans le mandat.
+          train pr&eacute;cis&eacute; dans le mandat.</p>
 
           <div style="margin-left: 2em">
             <b>NOTE :</b> Assurez-vous que le train se trouve sur
@@ -372,7 +363,8 @@
             &Eacute;teints</li>
           </ul>
 
-          <h2>Faire circuler des trains en Automatiques</h2>Les
+          <h2>Faire circuler des trains en Automatiques</h2>
+          <p>Les
           commandes du r&eacute;gulateur enregistr&eacute;es
           peuvent &ecirc;tre lues pour conduire le train. Lors de
           l'ex&eacute;cution automatique, une commandle
@@ -381,7 +373,7 @@
           <b>Abandonner</b> . Comme le sugg&egrave;re le nom, ces
           commandes arr&ecirc;tent un train en automatique, le
           red&eacute;marrent ou abandonnent les commandes restantes
-          du r&eacute;gulateur.
+          du r&eacute;gulateur.</p>
 
           <p>Bien qu'il existe des op&eacute;rations distinctes
           dans le Tableau Liste Mandats pour r&eacute;server un
@@ -444,9 +436,10 @@
           &eacute;coul&eacute; chang&eacute;es en modifiant la
           table du r&eacute;gulateur.
 
-          <h3>Tableau de Commande R&eacute;gulateur</h3>Le Tableau
+          <h3>Tableau de Commande R&eacute;gulateur</h3>
+          <p>Le Tableau
           de Commande R&eacute;gulateur poss&egrave;de les colonnes
-          suivantes :
+          suivantes :</p>
 
           <ul>
             <li><b>ET(ms)</b> :-Le temps &eacute;coul&eacute; en
@@ -466,13 +459,14 @@
           </ul>
 
           <h3>Synchronisationn des Commandes aux Cantons
-          fronti&egrave;res.</h3>Changer le couplage d'un train ou
+          fronti&egrave;res.</h3>
+          <p>Changer le couplage d'un train ou
           peut-&ecirc;tre m&ecirc;me un changement de
           temp&eacute;rature entre l'enregistrement et la lecture,
           peut entra&icirc;ner que le train n'effectue pas une
           commande R&eacute;gulateur au m&ecirc;me endroit sur
           l'itin&eacute;raire o&ugrave; le "Mode Apprentissage" les
-          a enregistr&eacute;es pour ce train.
+          a enregistr&eacute;es pour ce train.</p>
 
           <p>L'entr&eacute;e dans chaque canton est
           enregistr&eacute;e avec un marqueur "NoOp". Ces marqueurs
@@ -521,7 +515,8 @@
           Ev&eacute;nements Externes</b> ci-dessous.
 
           <h3>&Eacute;dition des Commandes R&eacute;gulateurs
-          Enregistr&eacute;es</h3>Les commandes de
+          Enregistr&eacute;es</h3>
+          <p>Les commandes de
           R&eacute;gulateur enregistr&eacute;es dans le <b>Mode
           Apprentissage</b> peuvent &ecirc;tre modifi&eacute;es ,
           toutefois, des pr&eacute;cautions doivent &ecirc;tre
@@ -531,7 +526,7 @@
           &eacute;v&eacute;nements dramatiques. Il peut &ecirc;tre
           sage d' r&eacute;- enregistrer les commandes dans une
           nouvelle session de Mode d'Apprentissage si des
-          changements importants sont apport&eacute;s.
+          changements importants sont apport&eacute;s.</p>
 
           <p>Les commandes de r&eacute;gulateur enregistr&eacute;es
           s'ex&eacute;cutent en fonction du temps
@@ -564,7 +559,8 @@
           savoir "Circuler avec des Cantons &Eacute;teints".</p>
 
           <h3>Modification de Commandes
-          R&eacute;gulateur</h3>Toutes les colonnes du Tableau de
+          R&eacute;gulateur</h3>
+          <p>Toutes les colonnes du Tableau de
           Commandes R&eacute;gulateur peuvent &ecirc;tre
           modifi&eacute;es. Peut-&ecirc;tre que vous voulez
           retoucher les planning pour les coups de corne ou pour
@@ -572,7 +568,7 @@
           donn&eacute;es que vous souhaitez. Les valeurs dans le
           Tableau de Commande R&eacute;gulateur sont chang&eacute;s
           en tapant de nouvelles entr&eacute;es dans les cellules
-          de la table.
+          de la table.</p>
 
           <p>Des lLignes peuvent &ecirc;tre ins&eacute;r&eacute;es
           ou supprim&eacute;es de la table &agrave; l'aide des
@@ -590,7 +586,8 @@
           &eacute;coul&eacute; total constant dans le canton.</p>
 
           <h3>&Eacute;v&eacute;nements D&eacute;clencheurs Externes
-          &agrave; Partir de Scripts</h3>Des animations externes ou
+          &agrave; Partir de Scripts</h3>
+          <p>Des animations externes ou
           d'autres &eacute;v&eacute;nements peuvent &ecirc;tre
           d&eacute;clench&eacute;s par la saisie d'une
           commande<i>"D&eacute;finir Capteur"</i>" . Pour ce faire,
@@ -603,10 +600,11 @@
           &eacute;coul&eacute; quand d&eacute;clencher le
           r&eacute;glage du capteur. Lors de la lecture lorsque
           cette commande est ex&eacute;cut&eacute;e l'&eacute;tat
-          du capteur sera d&eacute;fini.
+          du capteur sera d&eacute;fini.</p>
 
           <h3>Synchronisation Interne par des
-          &Eacute;v&eacute;nements Externes</h3>Une ynchronisation
+          &Eacute;v&eacute;nements Externes</h3>
+          <p>Une synchronisation
           suppl&eacute;mentaire peut &ecirc;tre faite dans un
           Canton. Par exemple arr&ecirc;ter un train &agrave; un
           ch&acirc;teau d'eau ou sur un dispositif de
@@ -633,7 +631,7 @@
           le train &agrave; la vitesse lente jusqu'&agrave; ce que
           le capteur permette la d&eacute;tection. Ensuite, le
           script se poursuit et la commande de vitesse de 0
-          arr&ecirc;te le train.
+          arr&ecirc;te le train.</p>
 
           <p>De m&ecirc;me, le sscript et le train peuvent rester
           arr&ecirc;t&eacute; jusqu'&agrave; une deuxi&egrave;me
@@ -646,7 +644,8 @@
           continue.</p>
 
           <h3>S&eacute;quen&ccedil;age automatique de
-          scripts</h3>Il est possible de lancer un autre script
+          scripts</h3>
+          <p>Il est possible de lancer un autre script
           &agrave; partir d'un script. Pour ce faire,
           ins&eacute;rer une ligne avec les mots <b>Run Warrant</b>
           dans la colonne Commande et le nom d'un mandat dans la
@@ -654,7 +653,7 @@
           mandat. Notez qu'un train &agrave; l'adresse
           indiqu&eacute;e dans la deuxi&egrave;me mandat doit
           &ecirc;tre plac&eacute; dans le canton de d&eacute;part
-          du deuxi&egrave;me mandat.
+          du deuxi&egrave;me mandat.</p>
 
           <p>Cette fonctionnalit&eacute; peut &ecirc;tre
           utilis&eacute;e pour boucler un train &agrave; plusieurs
@@ -675,7 +674,8 @@
           nombre de r&eacute;p&eacute;titions.</p>
 
           <h3>Faire Circuler des Trains sur les Cantonss
-          &Eacute;teints</h3>Le mode d'apprentissage et les
+          &Eacute;teints</h3>
+          <p>Le mode d'apprentissage et les
           fonctions du Mode Run peuvent &ecirc;tre utilis&eacute;s
           sur des Cantons qui n'ont pas des capteurs de
           d&eacute;tection. Cependant, sans d&eacute;tection, autre
@@ -686,7 +686,7 @@
           trains epertubant l'itin&eacute;raire ou d'aiguillage en
           cours de modification tandis que le train est en route.
           Par cons&eacute;quent la circulation des trains doit se
-          faire avec prudence sur des cantons &eacute;teintss.
+          faire avec prudence sur des cantons &eacute;teintss.</p>
 
           <p>Notez que l'entr&eacute;e dans un canton &eacute;teint
           est d&eacute;tect&eacute; diff&eacute;remment d'un canton
@@ -701,8 +701,8 @@
           &eacute;teint est enregistr&eacute; par la queue du
           train, pas par la t&ecirc;te.p&gt;</p>
 
-          <h2>Sauvegarde Etc</h2>Il y a trois boutons en bas de la
-          fen&ecirc;tre.
+          <h2>Sauvegarde Etc</h2>
+          <p>Il y a trois boutons en bas de la fen&ecirc;tre.</p>
 
           <ul>
             <li><b>Sauvegarder</b> :-Enregistre le mandat afin
@@ -720,10 +720,13 @@
             <li><b>Supprimer</b> :-Supprime le mandat lorsque le
             panneau est enregistr&eacute; dans le fichier de
             configuration.li&gt;</li>
-          </ul><br>
+          </ul>
         </li>
       </ul>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

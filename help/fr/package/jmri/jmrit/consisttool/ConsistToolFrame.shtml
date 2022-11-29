@@ -1,28 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- translated by Herv&#233; Blorec le 2013-10-17-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- translated by Herv&#233; Blorec le 2013-10-17-->
 <head>
- <title>
+  <title>
       JMRI: Consist Tool
- </title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI help Consist Tool">
-
-<!-- Style -->
-  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  </title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Consist Tool">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-<h1> Outil de Couplage</h1>
+      <h1> Outil de Couplage</h1>
 
 <h2> Utilisation de l'Outil de Couplage</h2>
 <p>
@@ -120,8 +113,9 @@ voir la
 <a href="../../../../html/tools/consisttool/ConsistTool.shtml#tool"> page couplage</a> principale.
 <p>La page d'aide package\JMRI\jmrit\consisttool</p>
 
-<!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <!--#include virtual="/Footer_fr.shtml" -->
 </body>
 </html>

@@ -79,7 +79,7 @@ abstract public class AbstractCanTrafficController
         byte msg[] = new byte[lengthOfByteStream(hm)];
 
         // add header
-        int offset = addHeaderToOutput(msg, hm);
+        int offset = addHeaderToOutput(msg, hm); // always returns 0
 
         // add data content
         int len = hm.getNumDataElements();
@@ -222,9 +222,7 @@ abstract public class AbstractCanTrafficController
         distributeOneReply(msg, mLastSender);
 
         if (!msg.isUnsolicited()) {
-            if (log.isDebugEnabled()) {
-                log.debug("switch on state {}", mCurrentState);
-            }
+            log.debug("switch on state {}", mCurrentState);
             // effect on transmit:
             switch (mCurrentState) {
 
@@ -280,9 +278,7 @@ abstract public class AbstractCanTrafficController
                 default: {
                     replyInDispatch = false;
                     if (allowUnexpectedReply == true) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg.toString());
-                        }
+                        log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg);
                     } else {
                         unexpectedReplyStateError(mCurrentState,msg.toString());
                     }
@@ -297,6 +293,7 @@ abstract public class AbstractCanTrafficController
     public void distributeOneReply(CanReply msg, AbstractMRListener mLastSender) {
         // forward the message to the registered recipients,
         // which includes the communications monitor
+        if (msg == null) log.error("found unexpected null message", new Exception("traceback"));
         Runnable r = newRcvNotifier(msg, mLastSender, this);
         distributeReply(r);
     }

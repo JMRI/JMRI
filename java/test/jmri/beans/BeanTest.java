@@ -153,7 +153,7 @@ public class BeanTest {
     }
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         JUnitUtil.setUp();
         changed = false;
         bean = new Bean() {

@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock;
 
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
@@ -14,14 +13,11 @@ import org.slf4j.LoggerFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarsSetFrame;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -45,31 +41,31 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
 
     // major buttons
     public JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
-    protected JButton ignoreAllButton = new JButton(Bundle.getMessage("IgnoreAll"));
+    public JButton ignoreAllButton = new JButton(Bundle.getMessage("IgnoreAll"));
 
     // combo boxes
-    protected JComboBox<Location> locationBox = locationManager.getComboBox();
-    protected JComboBox<Track> trackLocationBox = new JComboBox<>();
-    protected JComboBox<Location> destinationBox = locationManager.getComboBox();
-    protected JComboBox<Track> trackDestinationBox = new JComboBox<>();
-    protected JComboBox<Location> finalDestinationBox = locationManager.getComboBox();
-    protected JComboBox<Track> finalDestTrackBox = new JComboBox<>();
-    protected JComboBox<Train> trainBox = trainManager.getTrainComboBox();
+    public JComboBox<Location> locationBox = locationManager.getComboBox();
+    public JComboBox<Track> trackLocationBox = new JComboBox<>();
+    public JComboBox<Location> destinationBox = locationManager.getComboBox();
+    public JComboBox<Track> trackDestinationBox = new JComboBox<>();
+    public JComboBox<Location> finalDestinationBox = locationManager.getComboBox();
+    public JComboBox<Track> finalDestTrackBox = new JComboBox<>();
+    public JComboBox<Train> trainBox = trainManager.getTrainComboBox();
 
     // check boxes
-    protected JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
-    protected JCheckBox autoDestinationTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
-    protected JCheckBox autoFinalDestTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
-    protected JCheckBox autoTrainCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
+    public JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
+    public JCheckBox autoDestinationTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
+    public JCheckBox autoFinalDestTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
+    public JCheckBox autoTrainCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
 
     public JCheckBox locationUnknownCheckBox = new JCheckBox(Bundle.getMessage("LocationUnknown"));
     public JCheckBox outOfServiceCheckBox = new JCheckBox(Bundle.getMessage("OutOfService"));
 
-    protected JCheckBox ignoreStatusCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
-    protected JCheckBox ignoreLocationCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
-    protected JCheckBox ignoreDestinationCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
-    protected JCheckBox ignoreFinalDestinationCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
-    protected JCheckBox ignoreTrainCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
+    public JCheckBox ignoreStatusCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
+    public JCheckBox ignoreLocationCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
+    public JCheckBox ignoreDestinationCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
+    public JCheckBox ignoreFinalDestinationCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
+    public JCheckBox ignoreTrainCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
 
     // optional panels
     protected JPanel pOptional = new JPanel();
@@ -236,11 +232,9 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         locationManager.addPropertyChangeListener(this);
         // get notified if train combo box gets modified
         trainManager.addPropertyChangeListener(this);
-
-        setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
 
-    public void load(RollingStock rs) {
+    protected void load(RollingStock rs) {
         _rs = rs;
         textRoad.setText(_rs.getRoadName() + " " + _rs.getNumber());
         textType.setText(_rs.getTypeName());
@@ -811,11 +805,6 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         if (_rs != null) {
             trainBox.setSelectedItem(_rs.getTrain());
         }
-    }
-
-    protected void packFrame() {
-        pack();
-        setVisible(true);
     }
 
     @Override

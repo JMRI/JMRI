@@ -1,40 +1,27 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Translated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12 -->
-
-  <title>JMRI: Signal Group Table</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: Entr&eacute;e/Sortie</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
       <!--#include virtual="Sidebar" -->
       <div id="mainContent">
 
     <h1>JMRI: Entr&eacute;e/Sortie (NX)</h1>
 
-    <h2>Pr&eacute;sentation</h2>Le syst&egrave;me Entr&eacute;e
+    <h2>Pr&eacute;sentation</h2>
+    <p>Le syst&egrave;me Entr&eacute;e
     Sortie utilise des capteurs affect&eacute;s &agrave; bloquer
     les fronti&egrave;res dans l'&eacute;diteur de mise en page
     pour d&eacute;finir un itin&eacute;raire entre les deux
     endroits sur l'&eacute;diteur de r&eacute;seau lorsque les
     capteurssont activ&eacute;s dans l'ordre correct. Ces deux
-    capteurs sont mentionn&eacute;es comme la paire NX .
+    capteurs sont mentionn&eacute;es comme la paire NX .</p>
 
     <p><b>Limites de Cantons</b> Les Capteurs, comme les signaux (
     soit des t&ecirc;tes ou des m&acirc;ts ), devraient &ecirc;tre
@@ -111,10 +98,11 @@
     &eacute;t&eacute; effac&eacute; manuellement, ou a
     &eacute;t&eacute; annul&eacute;e.</p>
 
-    <h2>Entr&eacute;e/Sortie Window (NX)</h2>De cette
+    <h2>Entr&eacute;e/Sortie Window (NX)</h2>
+    <p>De cette
     fen&ecirc;tre, vous pouvez cr&eacute;er et supprimer les paires
     d'Entr&eacute;e Sortie paires pour un panneau de TCO
-    donn&eacute;
+    donn&eacute;.</p>
 
     <p>Vous devez d'abord assigner des d&eacute;tecteurs aux
     limites de Cantons dans l'&eacute;diteur de r&eacute;seau,
@@ -166,10 +154,11 @@
     la sortie d'un aiguillage pour ainsi dire. La m&ecirc;me chose
     avec les croisements.</p>
 
-    <h3>options</h3><b>Ress&eacute;lection Itin&eacute;raire</b>
+    <h3>options</h3>
+    <p><b>Ress&eacute;lection Itin&eacute;raire</b>
     D&eacute;termine ce qui devrait survenir lorsque la voie NX est
     &agrave; nouveau s&eacute;lectionn&eacute; par l'utilisateur,
-    les options sont
+    les options sont:</p>
 
     <ul>
       <li>Demander &agrave; l'Utilisateur - Demandez &agrave;
@@ -300,10 +289,11 @@
     laissant le dernier Canton comme occup&eacute;, simulant ainsi
     un train qui passe &agrave; travers le dispositif de
     verrouillage. Pour ce faire, s&eacute;lectionnez &agrave;
-    nouveau l'Itin&eacute;raire et s&eacute;lectionnez "Effacer" .</p>
+    nouveau l'Itin&eacute;raire et s&eacute;lectionnez "Effacer".</p>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

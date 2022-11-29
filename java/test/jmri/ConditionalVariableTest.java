@@ -133,9 +133,9 @@ public class ConditionalVariableTest {
         bean = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH1");
         otherBean = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH2");
         cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_HEAD_RED, "IH1", false);
-        Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
+        Assertions.assertEquals( bean, ((NamedBeanHandle)cv.getNamedBean()).getBean(), "getNamedBean() returns correct bean");
         cv.setName("IH2");
-        Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
+        Assertions.assertEquals( otherBean, ((NamedBeanHandle)cv.getNamedBean()).getBean(),"setName() sets correct bean");
         Assert.assertTrue("toString() returns correct value",
                 "Signal Head \"IH2\" Appearance is \"Red\"".equals(cv.toString()));
         cv.setType(Conditional.Type.SIGNAL_HEAD_LIT);
@@ -257,7 +257,7 @@ public class ConditionalVariableTest {
         Assert.assertTrue("getNamedBeanData() returns null", cv.getNamedBeanData() == null);
         cv.setDataString(otherBean.getUserName());
         cv.setName(otherDeviceName);
-        Assert.assertTrue("getDataString() returns correct string", otherBean.getUserName().equals(cv.getDataString()));
+        Assertions.assertEquals( otherBean.getUserName(), cv.getDataString(), "getDataString() returns correct string");
         Assert.assertTrue("getNamedBeanData() returns correct bean", otherBean.equals(cv.getNamedBeanData()));
     }
 
@@ -968,7 +968,7 @@ public class ConditionalVariableTest {
      * A conditional variable there the method getBean() always return null.
      * Used to test ConditionalVariable.evaluate().
      */
-    private class ConditionalVariable_BeanAlwaysNull extends ConditionalVariable {
+    private static class ConditionalVariable_BeanAlwaysNull extends ConditionalVariable {
 
         ConditionalVariable_BeanAlwaysNull(boolean not, Operator opern, Conditional.Type type, String name, boolean trigger) {
             super(not, opern, type, name, trigger);

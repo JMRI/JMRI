@@ -332,12 +332,12 @@ public class RosterEntryTest {
         Assert.assertEquals("initial ID ", "test Roster Entry 123456789ABC", r.getId());
         File f = new File(Roster.getDefault().getRosterFilesLocation() + "test_Roster_Entry_123456789ABC.xml");
         if (f.exists()) {
-            f.delete();
+            Assertions.assertTrue(f.delete());
         }
         r.ensureFilenameExists();
         Assert.assertEquals("final filename ", "test_Roster_Entry_123456789ABC.xml", r.getFileName());
         if (f.exists()) {
-            f.delete();  // clean up afterwards
+            Assertions.assertTrue(f.delete());  // clean up afterwards
         }
     }
 
@@ -350,25 +350,23 @@ public class RosterEntryTest {
         Assert.assertEquals("initial ID ", "test Roster Entry 123456789ABC", r.getId());
         File f1 = new File(Roster.getDefault().getRosterFilesLocation() + "test_Roster_Entry_123456789ABC.xml");
         if (!f1.exists()) {
-            // create a dummy
-            FileOutputStream f = new FileOutputStream(f1);
-            f.write(0);
-            f.close();
+            try ( FileOutputStream f = new FileOutputStream(f1)) { // create a dummy
+                f.write(0);
+            }
         }
         File f2 = new File(Roster.getDefault().getRosterFilesLocation() + "test_Roster_Entry_123456789ABC0.xml");
         if (!f2.exists()) {
-            // create a dummy
-            FileOutputStream f = new FileOutputStream(f2);
-            f.write(0);
-            f.close();
+            try ( FileOutputStream f = new FileOutputStream(f2)) { // create a dummy
+                f.write(0);
+            }
         }
         r.ensureFilenameExists();
         Assert.assertEquals("final filename ", "test_Roster_Entry_123456789ABC1.xml", r.getFileName());
         if (f1.exists()) {
-            f1.delete();  // clean up afterwards
+            Assertions.assertTrue(f1.delete());  // clean up afterwards
         }
         if (f2.exists()) {
-            f2.delete();
+            Assertions.assertTrue(f2.delete());
         }
     }
 

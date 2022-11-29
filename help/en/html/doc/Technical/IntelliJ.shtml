@@ -19,7 +19,7 @@
       <p>IntelliJ IDEA Community Edition (available from <a href=
       "https://www.jetbrains.com/idea/">www.jetbrains.com/idea/</a>) makes a great platform for
       working with JMRI and Java on OS X, Windows and *nix.<br>
-      Here we describe working with version 2018.1 and up.</p>
+      Here we describe working with version 2021.x and up.</p>
 
       <ul class="snav">
         <!-- TOC -->
@@ -57,9 +57,9 @@
       of the IntelliJ IDEA download. For more information for getting the JMRI source, see <a href=
       "getgitcode.shtml">JMRI: Getting the Code</a>.</p>
 
-      <p>These instructions were developed and tested using IntelliJ IDEA 15 and 16 Community
-      Edition (free). The current version is 2020 and the Community Edition is still free. This
-      page has been updated to reflect the 2020 version</p>
+      <p>These instructions were first written and tested using IntelliJ IDEA 15 and 16 Community
+      Edition (free). The current version is 2022.1 and the Community Edition is still free. This
+      page has been updated to reflect the 2022 version</p>
 
       <h2 id="install">Installing IntelliJ IDEA</h2>
 
@@ -83,13 +83,18 @@
       application as follows:<br></p>
 
       <h3>Set vmoptions</h3>
+      <p>If you are running IntelliJ 2021 or later, you are good to go and can skip this item.<br>
+      If you are using IntelliJ 15 or 16, complete the next steps before continuing.</p>
 
       <h4>On macOS</h4>
 
       <ul>
-        <li>Open IntelliJ</li>
+        <li>Open IntelliJ.
+        </li>
 
-        <li>From the Help menu, select "Edit Custom VM Options":<br>
+        <li>From the Help menu, select
+          "Edit Custom
+          VM Options":<br>
           <a href="images/IntelliJ/IjVMOptionsMenu.png"><img src=
           "images/IntelliJ/IjVMOptionsMenu.png" alt=
           "IntelliJ Edit vmoptions menu"></a>
@@ -143,15 +148,15 @@
 
       <h3 id="IjPrefs">Set Preferences</h3>
 
-      <p>Start IntelliJ and choose "Preferences..." from the application menu (macOS) or "Settings from
+      <p>Start IntelliJ and choose "Preferences..." from the application menu (macOS) or "Settings" from
       the File menu (Win).</p>
 
       <ol>
-        <li>From the Editor -&gt; File Encodings tab, check "Transparent native-to-ascii
-        conversion":<br>
-          <a href="images/IntelliJ/IjPrefsFileEncodings.png"><img src=
-          "images/IntelliJ/IjPrefsFileEncodings.png"
-          alt="IntelliJ encoding prefs"></a>
+        <li><span class="since">since 5.0 </span>From the Editor -&gt; File Encodings tab, <strong>un</strong>check
+        "Transparent native-to-ascii conversion", because Java 11 allows UTF-8 character encoding for
+        those special accented letters found in many languages:<br>
+        <a href="images/IntelliJ/IjPrefsFileEncodings.png"><img src=
+        "images/IntelliJ/IjPrefsFileEncodings.png" alt="IntelliJ encoding prefs"></a>
         </li>
 
         <li>From the Version Control -&gt; GitHub tab choose Add... (the + sign), and select
@@ -170,14 +175,15 @@
           Token and click Add Account.
         </li>
 
-        <li>From the Build, Execution, Deployment -&gt; Java Compiler tab, select "11" as the
-        Project bytecode version.<br>
+        <li>From the Build, Execution, Deployment -&gt; Compiler -&gt; Java Compiler tab, select "11"
+        as the Project bytecode version.<br>
         On the same page, select "Eclipse" from the Use compiler drop-down:<br>
         <a href="images/IntelliJ/IjPrefsJava11.png"><img src="images/IntelliJ/IjPrefsJava11.png"
         alt="IntelliJ build java SDK prefs"></a>
         </li>
 
-        <li>Click OK to close the Preferences.</li>
+        <li>For now these are the essential settings. Some additional settings are described below, but for now
+          you can click OK to close your Preferences and start exploring the IDE.</li>
       </ol>
 
       <h2 id="getgit">Getting the JMRI Source using Git</h2>
@@ -797,16 +803,20 @@
       <a href="images/IntelliJ/IjPrefsEditorProperties.png"><img src=
       "images/IntelliJ/IjPrefsEditorProperties.png" alt=
       "IntelliJ Props Editor Style Setting"></a>
-      <p>To easily edit Resource Bundle <code>.properties</code> files, containing translations in
-      different languages, select a closed 'Bundle' folder in the Project file list and type Cmd +
-      arrow down key, or double click one of the language files. This will open a window with a
-      list of coded keywords on the left and a text box for every translation to the right:<br>
+      <p>To easily edit Resource Bundle <code>.properties</code> files,  select a 'Bundle' header icon in the Project file list and type Cmd +
+      arrow down key, or double click one of the language files. This will initially open a window with just that
+      single language file in the editor window.<br>
+      To access a single view with the list of coded keywords on the left and text boxes for every
+      translation into a different language to the right, on IntelliJ 2022 install the Resource Bundle Editor
+      plugin (go to Preferences &gt; Plugins, see screen shot).<br>
+      <img src="images/IntelliJ/IjEditProperties.png" alt="IntelliJ RBE Plugin"></p>
       <a href="images/IntelliJ/IjEditProperties.png"><img src=
       "images/IntelliJ/IjEditProperties.png" alt=
-      "IntelliJ Bundle edit window"></a></p>
+      "IntelliJ Bundle edit window"></a>
 
-      <p>When you open a specific language file, at the bottom of the screen you can switch views
-      by clicking the <strong>Resource Bundle</strong> or the <strong>Text</strong> tab:<br>
+      <p>When you open a specific language file and you have the Resource Bundle Editor installed, at the
+      bottom of the screen you can switch views by clicking the <strong>Resource Bundle</strong> or the
+      <strong>Text</strong> tab:<br>
       <img src="images/IntelliJ/IjResourceJump.png" alt=
       "IntelliJ Bundle edit menu"></p>
 

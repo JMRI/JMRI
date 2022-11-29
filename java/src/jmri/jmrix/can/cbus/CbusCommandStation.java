@@ -7,8 +7,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
-import jmri.jmrix.can.cbus.simulator.CbusSimulator;
-import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,16 +26,11 @@ public class CbusCommandStation implements CommandStation {
     public CbusCommandStation(CanSystemConnectionMemo memo) {
         tc = memo.getTrafficController();
         adapterMemo = memo;
-        if ( ( tc != null ) && ( tc.getClass().getName().contains("Loopback")) ) {
-            ThreadingUtil.runOnLayout(() -> {
-                CbusSimulator sim = new jmri.jmrix.can.cbus.simulator.CbusSimulator(adapterMemo);
-                log.debug("sim {}",sim);
-            });
-        }
+        
     }
     
     private final TrafficController tc;
-    private CanSystemConnectionMemo adapterMemo;
+    private final CanSystemConnectionMemo adapterMemo;
 
     /**
      * Send a specific packet to the rails.
@@ -159,7 +152,7 @@ public class CbusCommandStation implements CommandStation {
     @CheckForNull
     protected CbusNode getMasterCommandStation(){
         // if NodeTable already has the node stored, use it
-        CbusNodeTableDataModel nodeModel =  jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
+        CbusNodeTableDataModel nodeModel =  adapterMemo.get(CbusNodeTableDataModel.class);
         if (nodeModel!=null && nodeModel.getCsByNum(0)!=null) {
             return nodeModel.getCsByNum(0);
         }
@@ -219,9 +212,6 @@ public class CbusCommandStation implements CommandStation {
     @Override
     public String getSystemPrefix() {
         return adapterMemo.getSystemPrefix();
-    }
-    
-    public void dispose() {
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusCommandStation.class);

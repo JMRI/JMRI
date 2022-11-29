@@ -223,7 +223,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 getFunction(9), getFunction(10), getFunction(11), getFunction(12));
 
         log.debug("sendFunctionGroup3 sending {} to LocoNet slot {}", result, slot.getSlot());
-        ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
+        adapterMemo.get(jmri.CommandStation.class).sendPacket(result, 4); // repeat = 4
     }
 
     /**
@@ -238,7 +238,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 getFunction(17), getFunction(18), getFunction(19), getFunction(20));
 
         log.debug("sendFunctionGroup4 sending {} to LocoNet slot {}", result, slot.getSlot());
-        ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
+        adapterMemo.get(jmri.CommandStation.class).sendPacket(result, 4); // repeat = 4
     }
 
     /**
@@ -253,7 +253,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 getFunction(25), getFunction(26), getFunction(27), getFunction(28));
 
         log.debug("sendFunctionGroup5 sending {} to LocoNet slot {}", result, slot.getSlot());
-        ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
+        adapterMemo.get(jmri.CommandStation.class).sendPacket(result, 4); // repeat = 4
     }
 
     /**

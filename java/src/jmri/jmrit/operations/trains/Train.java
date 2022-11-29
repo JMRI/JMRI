@@ -2,16 +2,10 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
-import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 
 import org.jdom2.Element;
@@ -23,19 +17,12 @@ import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.rollingstock.engines.*;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
@@ -985,12 +972,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      */
     public void addTrainSkipsLocation(String routelocationId) {
         // insert at start of _skipLocationsList, sort later
-        if (_skipLocationsList.contains(routelocationId)) {
-            return;
+        if (!_skipLocationsList.contains(routelocationId)) {
+            _skipLocationsList.add(0, routelocationId);
+            log.debug("train does not stop at {}", routelocationId);
+            setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() - 1,
+                    _skipLocationsList.size());
         }
-        _skipLocationsList.add(0, routelocationId);
-        log.debug("train does not stop at {}", routelocationId);
-        setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() - 1, _skipLocationsList.size());
     }
 
     public void deleteTrainSkipsLocation(String locationId) {
@@ -1071,12 +1058,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public void deleteTypeName(String type) {
-        if (!_typeList.contains(type)) {
-            return;
+        if (_typeList.remove(type)) {
+            log.debug("Train ({}) delete car type ({})", getName(), type);
+            setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() + 1, _typeList.size());
         }
-        _typeList.remove(type);
-        log.debug("Train ({}) delete car type ({})", getName(), type);
-        setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() + 1, _typeList.size());
     }
 
     /**
@@ -1174,13 +1159,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return true if road name was removed, false if road name wasn't in the list.
      */
     public boolean deleteCarRoadName(String road) {
-        if (!_carRoadList.contains(road)) {
-            return false;
+        if (_carRoadList.remove(road)) {
+            log.debug("train ({}) delete car road {}", getName(), road);
+            setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _carRoadList.size() + 1, _carRoadList.size());
+            return true;
         }
-        _carRoadList.remove(road);
-        log.debug("train ({}) delete car road {}", getName(), road);
-        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _carRoadList.size() + 1, _carRoadList.size());
-        return true;
+        return false;
     }
 
     /**
@@ -1276,13 +1260,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return true if road name was removed, false if road name wasn't in the list.
      */
     public boolean deleteLocoRoadName(String road) {
-        if (!_locoRoadList.contains(road)) {
-            return false;
+        if (_locoRoadList.remove(road)) {
+            log.debug("train ({}) delete engine road {}", getName(), road);
+            setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _locoRoadList.size() + 1, _locoRoadList.size());
+            return true;
         }
-        _locoRoadList.remove(road);
-        log.debug("train ({}) delete engine road {}", getName(), road);
-        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _locoRoadList.size() + 1, _locoRoadList.size());
-        return true;
+        return false;
     }
 
     /**
@@ -1402,13 +1385,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return true if load name was removed, false if load name wasn't in the list.
      */
     public boolean deleteLoadName(String load) {
-        if (!_loadList.contains(load)) {
-            return false;
+        if (_loadList.remove(load)) {
+            log.debug("train ({}) delete car load {}", getName(), load);
+            setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _loadList.size() + 1, _loadList.size());
+            return true;
         }
-        _loadList.remove(load);
-        log.debug("train ({}) delete car load {}", getName(), load);
-        setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _loadList.size() + 1, _loadList.size());
-        return true;
+        return false;
     }
 
     /**
@@ -1514,13 +1496,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *         list.
      */
     public boolean deleteOwnerName(String owner) {
-        if (!_ownerList.contains(owner)) {
-            return false;
+        if (_ownerList.remove(owner)) {
+            log.debug("train ({}) delete car owner {}", getName(), owner);
+            setDirtyAndFirePropertyChange(OWNERS_CHANGED_PROPERTY, _ownerList.size() + 1, _ownerList.size());
+            return true;
         }
-        _ownerList.remove(owner);
-        log.debug("train ({}) delete car owner {}", getName(), owner);
-        setDirtyAndFirePropertyChange(OWNERS_CHANGED_PROPERTY, _ownerList.size() + 1, _ownerList.size());
-        return true;
+        return false;
     }
 
     /**
@@ -1767,7 +1748,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                         log.debug("Car ({}) destination is staging, check train ({}) termination track ({})",
                                 car.toString(), getName(), getTerminationTrack().getName());
                     }
-                    String status = car.testDestination(getTerminationTrack().getLocation(), getTerminationTrack());
+                    String status = car.checkDestination(getTerminationTrack().getLocation(), getTerminationTrack());
                     if (!status.equals(Track.OKAY)) {
                         addLine(buildReport,
                                 MessageFormat.format(Bundle.getMessage("trainCanNotDeliverToStaging"),
@@ -2205,14 +2186,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *
      * @return Road and number of caboose.
      */
-    @Nonnull
     public String getCabooseRoadAndNumber() {
         String cabooseRoadNumber = NONE;
         RouteLocation rl = getCurrentRouteLocation();
         List<Car> cars = InstanceManager.getDefault(CarManager.class).getByTrainList(this);
         for (Car car : cars) {
-            if (car.getRouteLocation() == rl && car.getRouteDestination() != rl && car.isCaboose()) {
-                cabooseRoadNumber = car.toString();
+            if (car.getRouteLocation() == rl && car.isCaboose()) {
+                cabooseRoadNumber =
+                        car.getRoadName().split(TrainCommon.HYPHEN)[0] + " " + TrainCommon.splitString(car.getNumber());
             }
         }
         return cabooseRoadNumber;
@@ -2972,11 +2953,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             // save the current status
             setOldStatusCode(getStatusCode());
             setStatusCode(CODE_RUN_SCRIPTS);
-            JmriScriptEngineManager.getDefault().initializeAllEngines(); // create
-                                                                         // the
-                                                                         // python
-                                                                         // interpreter
-                                                                         // thread
+            // create the python interpreter thread
+            JmriScriptEngineManager.getDefault().initializeAllEngines();
             // find the number of active threads
             ThreadGroup root = Thread.currentThread().getThreadGroup();
             int numberOfThreads = root.activeCount();
@@ -2996,8 +2974,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 try {
                     wait(40);
                 } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // retain if needed
-                                                        // later
+                    Thread.currentThread().interrupt();
                 }
                 if (count++ > 100) {
                     break; // 4 seconds maximum 40*100 = 4000
@@ -3901,7 +3878,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 log.error("Status cars requested ({}) isn't a valid number for train ({})", a.getValue(), getName());
             }
         }
-        if ((a = e.getAttribute(Xml.STATUS)) != null && e.getAttribute(Xml.STATUS_CODE) == null) {
+        if ((a = e.getAttribute(Xml.STATUS_CODE)) != null) {
+            try {
+                _statusCode = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Status code ({}) isn't a valid number for train ({})", a.getValue(), getName());
+            }
+        } else if ((a = e.getAttribute(Xml.STATUS)) != null) {
+            // attempt to recover status code
             String status = a.getValue();
             if (status.startsWith(BUILD_FAILED)) {
                 _statusCode = CODE_BUILD_FAILED;
@@ -3921,13 +3905,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 _statusCode = CODE_TRAIN_RESET;
             } else {
                 _statusCode = CODE_UNKNOWN;
-            }
-        }
-        if ((a = e.getAttribute(Xml.STATUS_CODE)) != null) {
-            try {
-                _statusCode = Integer.parseInt(a.getValue());
-            } catch (NumberFormatException ee) {
-                log.error("Status code ({}) isn't a valid number for train ({})", a.getValue(), getName());
             }
         }
         if ((a = e.getAttribute(Xml.OLD_STATUS_CODE)) != null) {

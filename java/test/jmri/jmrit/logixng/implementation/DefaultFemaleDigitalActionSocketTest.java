@@ -99,6 +99,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ActionMemory.class);
         classes.add(jmri.jmrit.logixng.actions.ActionOBlock.class);
         classes.add(jmri.jmrit.logixng.actions.ActionPower.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors.class);
         classes.add(jmri.jmrit.logixng.actions.ActionReporter.class);
         classes.add(jmri.jmrit.logixng.actions.ActionScript.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSensor.class);
@@ -119,23 +120,34 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.DoAnalogAction.class);
         classes.add(jmri.jmrit.logixng.actions.DoStringAction.class);
         classes.add(jmri.jmrit.logixng.actions.ExecuteDelayed.class);
+        classes.add(jmri.jmrit.logixng.actions.DigitalMany.class);
+        map.put(Category.COMMON, classes);
+
+        classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.actions.Break.class);
+        classes.add(jmri.jmrit.logixng.actions.Continue.class);
+        classes.add(jmri.jmrit.logixng.actions.DigitalCallModule.class);
+        classes.add(jmri.jmrit.logixng.actions.Error.class);
+        classes.add(jmri.jmrit.logixng.actions.Exit.class);
         classes.add(jmri.jmrit.logixng.actions.For.class);
         classes.add(jmri.jmrit.logixng.actions.ForEach.class);
         classes.add(jmri.jmrit.logixng.actions.IfThenElse.class);
-        classes.add(jmri.jmrit.logixng.actions.DigitalMany.class);
+        classes.add(jmri.jmrit.logixng.actions.Return.class);
         classes.add(jmri.jmrit.logixng.actions.Sequence.class);
         classes.add(jmri.jmrit.logixng.actions.TableForEach.class);
-        map.put(Category.COMMON, classes);
+        map.put(Category.FLOW_CONTROL, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.display.logixng.ActionPositionable.class);
         map.put(CategoryDisplay.DISPLAY, classes);
 
         classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.actions.ActionCreateBeansFromTable.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionFindTableRowOrColumn.class);
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeans.class);
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeansLocalVariable.class);
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeansTable.class);
-        classes.add(jmri.jmrit.logixng.actions.DigitalCallModule.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionShutDownTask.class);
         classes.add(jmri.jmrit.logixng.actions.Logix.class);
         classes.add(jmri.jmrit.logixng.actions.LogData.class);
         classes.add(jmri.jmrit.logixng.actions.LogLocalVariables.class);
@@ -159,6 +171,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initLogixNGManager();
 
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)

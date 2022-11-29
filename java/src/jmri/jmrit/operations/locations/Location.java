@@ -19,10 +19,7 @@ import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
@@ -42,28 +39,29 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public static final String NONE = "";
     public static final int RANGE_DEFAULT = 25;
 
-    protected String _id = NONE;
+    protected String _id = NONE; // location id
     protected String _name = NONE;
-    protected int _IdNumber = 0;
-    protected int _numberRS = 0; // number of cars and engines (total rolling stock)
+    protected int _IdNumber = 0; // last track id number created
+    protected int _numberRS = 0; // number of cars and engines (total rolling
+                                 // stock)
     protected int _numberCars = 0; // number of cars
     protected int _numberEngines = 0; // number of engines
     protected int _pickupRS = 0;
     protected int _dropRS = 0;
-    protected int _trainDir = EAST + WEST + NORTH + SOUTH; // train direction served by this location
+    protected int _trainDir = EAST + WEST + NORTH + SOUTH; // train directions
     protected int _length = 0; // length of all tracks at this location
     protected int _usedLength = 0; // length of track filled by cars and engines
     protected String _comment = NONE;
     protected String _switchListComment = NONE; // optional switch list comment
-    protected boolean _switchList = true; // when true print switchlist for this location
-    protected String _defaultPrinter = NONE; // the default printer name when printing a switchlist
+    protected boolean _switchList = true; // when true print switchlist
+    protected String _defaultPrinter = NONE; // the default printer name
     protected String _status = UNKNOWN; // print switch list status
-    protected int _switchListState = SW_CREATE; // switch list state, saved between sessions
-    protected Point _trainIconEast = new Point(); // coordinates of east bound train icons
+    protected int _switchListState = SW_CREATE; // switch list state
+    protected Point _trainIconEast = new Point(); // coordinates east bound
     protected Point _trainIconWest = new Point();
     protected Point _trainIconNorth = new Point();
     protected Point _trainIconSouth = new Point();
-    protected int _trainIconRangeX = RANGE_DEFAULT; // the x & y detection range for the train icon
+    protected int _trainIconRangeX = RANGE_DEFAULT;
     protected int _trainIconRangeY = RANGE_DEFAULT;
     protected Hashtable<String, Track> _trackHashTable = new Hashtable<>();
     protected PhysicalLocation _physicalLocation = new PhysicalLocation();
@@ -77,10 +75,12 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     protected int _idPoolNumber = 0;
     protected Hashtable<String, Pool> _poolHashTable = new Hashtable<>();
 
-    public static final String NORMAL = "1"; // types of track allowed at this location
+    public static final String NORMAL = "1"; // types of track allowed at this
+                                             // location
     public static final String STAGING = "2"; // staging only
 
-    public static final int EAST = 1; // train direction serviced by this location
+    public static final int EAST = 1; // train direction serviced by this
+                                      // location
     public static final int WEST = 2;
     public static final int NORTH = 4;
     public static final int SOUTH = 8;
@@ -100,7 +100,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     // For property change
     public static final String TRACK_LISTLENGTH_CHANGED_PROPERTY = "trackListLength"; // NOI18N
     public static final String TYPES_CHANGED_PROPERTY = "locationTypes"; // NOI18N
-    public static final String TRAINDIRECTION_CHANGED_PROPERTY = "locationTrainDirection"; // NOI18N
+    public static final String TRAIN_DIRECTION_CHANGED_PROPERTY = "locationTrainDirection"; // NOI18N
     public static final String LENGTH_CHANGED_PROPERTY = "locationTrackLengths"; // NOI18N
     public static final String USEDLENGTH_CHANGED_PROPERTY = "locationUsedLength"; // NOI18N
     public static final String NAME_CHANGED_PROPERTY = "locationName"; // NOI18N
@@ -110,8 +110,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public static final String POOL_LENGTH_CHANGED_PROPERTY = "poolLengthChanged"; // NOI18N
     public static final String SWITCHLIST_COMMENT_CHANGED_PROPERTY = "switchListComment";// NOI18N
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "locationTrackBlockingOrder";// NOI18N
-    public static final String LOCATION_REPORTER_PROPERTY = "locationReporterChange"; // NOI18N
-    public static final String LOCATION_DIVISION_PROPERTY = "homeDivisionChange"; // NOI18N
+    public static final String LOCATION_REPORTER_CHANGED_PROPERTY = "locationReporterChange"; // NOI18N
+    public static final String LOCATION_DIVISION_CHANGED_PROPERTY = "homeDivisionChange"; // NOI18N
 
     public Location(String id, String name) {
         log.debug("New location ({}) id: {}", name, id);
@@ -132,14 +132,13 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * Sets the location's name.
      * 
      * @param name The string name for this location.
-     *
      */
     public void setName(String name) {
         String old = _name;
         _name = name;
         if (!old.equals(name)) {
-            InstanceManager.getDefault(LocationManager.class).resetNameLengths(); // recalculate max location name
-                                                                                  // length for manifests
+            // recalculate max location name length for Manifests
+            InstanceManager.getDefault(LocationManager.class).resetNameLengths();
             setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
         }
     }
@@ -175,12 +174,11 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             }
         }
         copyTracksLocation(newLocation);
-
     }
 
     /**
-     * Copies all of the tracks at this location. If there's a track already at the
-     * copy to location with the same name, the track is skipped.
+     * Copies all of the tracks at this location. If there's a track already at
+     * the copy to location with the same name, the track is skipped.
      *
      * @param location the location to copy the tracks to.
      */
@@ -206,7 +204,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * Set total length of all tracks for this location
      * 
      * @param length The integer sum of all tracks at this location.
-     *
      */
     public void setLength(int length) {
         int old = _length;
@@ -217,7 +214,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     *
      * @return total length of all tracks for this location
      */
     public int getLength() {
@@ -233,7 +229,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     *
      * @return The length of the track that is occupied by cars and engines
      */
     public int getUsedLength() {
@@ -250,7 +245,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     *
      * @return True if location has spurs
      */
     public boolean hasSpurs() {
@@ -258,7 +252,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     *
      * @return True if location has classification/interchange tracks
      */
     public boolean hasInterchanges() {
@@ -266,7 +259,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     *
      * @return True if location has yard tracks
      */
     public boolean hasYards() {
@@ -274,7 +266,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     *
      * @param trackType The track type to check.
      * @return True if location has the track type specified Track.INTERCHANGE
      *         Track.YARD Track.SPUR Track.Staging
@@ -308,8 +299,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     * Sets the train directions that this location can service. EAST means that an
-     * Eastbound train can service the location.
+     * Sets the train directions that this location can service. EAST means that
+     * an Eastbound train can service the location.
      *
      * @param direction Any combination of EAST WEST NORTH SOUTH
      */
@@ -317,14 +308,14 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         int old = _trainDir;
         _trainDir = direction;
         if (old != direction) {
-            setDirtyAndFirePropertyChange(TRAINDIRECTION_CHANGED_PROPERTY, Integer.toString(old),
+            setDirtyAndFirePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, Integer.toString(old),
                     Integer.toString(direction));
         }
     }
 
     /**
-     * Gets the train directions that this location can service. EAST means that an
-     * Eastbound train can service the location.
+     * Gets the train directions that this location can service. EAST means that
+     * an Eastbound train can service the location.
      *
      * @return Any combination of EAST WEST NORTH SOUTH
      */
@@ -335,9 +326,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     /**
      * Sets the quantity of rolling stock for this location
      * 
-     * @param number An integer representing the quantity of rolling stock at this
-     *               location.
-     *
+     * @param number An integer representing the quantity of rolling stock at
+     *               this location.
      */
     public void setNumberRS(int number) {
         int old = _numberRS;
@@ -358,7 +348,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
 
     /**
      * Sets the number of cars at this location
-     *
      */
     private void setNumberCars(int number) {
         int old = _numberCars;
@@ -370,7 +359,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     *
      * @return The number of cars at this location
      */
     public int getNumberCars() {
@@ -379,7 +367,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
 
     /**
      * Sets the number of engines at this location
-     *
      */
     private void setNumberEngines(int number) {
         int old = _numberEngines;
@@ -391,7 +378,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     *
      * @return The number of engines at this location
      */
     public int getNumberEngines() {
@@ -399,11 +385,10 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     * When true, a switchlist is desired for this location. Used for preview and
-     * printing a manifest for a single location
+     * When true, a switchlist is desired for this location. Used for preview
+     * and printing a manifest for a single location
      * 
      * @param switchList When true, switch lists are enabled for this location.
-     *
      */
     public void setSwitchListEnabled(boolean switchList) {
         boolean old = _switchList;
@@ -458,7 +443,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     *
      * @param state Location.SW_CREATE Location.SW_PRINTED Location.SW_APPEND
      */
     public void setSwitchListState(int state) {
@@ -537,6 +521,12 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         }
     }
 
+    /**
+     * Used to determine the sensitivity when a user is manually moving a train
+     * icon on a panel.
+     * 
+     * @return the x +/- range for a train icon
+     */
     public int getTrainIconRangeX() {
         return _trainIconRangeX;
     }
@@ -554,6 +544,12 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         }
     }
 
+    /**
+     * Used to determine the sensitivity when a user is manually moving a train
+     * icon on a panel.
+     * 
+     * @return the y +/- range for a train icon
+     */
     public int getTrainIconRangeY() {
         return _trainIconRangeY;
     }
@@ -562,7 +558,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * Adds rolling stock to a specific location.
      * 
      * @param rs The RollingStock to add.
-     *
      */
     public void addRS(RollingStock rs) {
         setNumberRS(getNumberRS() + 1);
@@ -625,18 +620,16 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     *
-     * @return the number of cars and engines that are scheduled for pick up at this
-     *         location.
+     * @return the number of cars and engines that are scheduled for pick up at
+     *         this location.
      */
     public int getPickupRS() {
         return _pickupRS;
     }
 
     /**
-     *
-     * @return the number of cars and engines that are scheduled for drop at this
-     *         location.
+     * @return the number of cars and engines that are scheduled for drop at
+     *         this location.
      */
     public int getDropRS() {
         return _dropRS;
@@ -646,10 +639,15 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         Division old = _division;
         _division = division;
         if (old != _division) {
-            setDirtyAndFirePropertyChange(LOCATION_DIVISION_PROPERTY, old, division);
+            setDirtyAndFirePropertyChange(LOCATION_DIVISION_CHANGED_PROPERTY, old, division);
         }
     }
 
+    /**
+     * Gets the division for this location
+     * 
+     * @return the division for this location
+     */
     public Division getDivision() {
         return _division;
     }
@@ -675,11 +673,21 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             setDirtyAndFirePropertyChange("locationComment", old, comment); // NOI18N
         }
     }
-    
+
+    /**
+     * Gets the comment text without color attributes
+     * 
+     * @return the comment text
+     */
     public String getComment() {
         return TrainCommon.getTextColorString(getCommentWithColor());
     }
 
+    /**
+     * Gets the comment text with optional color attributes
+     * 
+     * @return text with optional color attributes
+     */
     public String getCommentWithColor() {
         return _comment;
     }
@@ -691,11 +699,21 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             setDirtyAndFirePropertyChange(SWITCHLIST_COMMENT_CHANGED_PROPERTY, old, comment);
         }
     }
-    
+
+    /**
+     * Gets the switch list comment text without color attributes
+     * 
+     * @return the comment text
+     */
     public String getSwitchListComment() {
         return TrainCommon.getTextColorString(getSwitchListCommentWithColor());
     }
 
+    /**
+     * Gets the switch list comment text with optional color attributes
+     * 
+     * @return text with optional color attributes
+     */
     public String getSwitchListCommentWithColor() {
         return _switchListComment;
     }
@@ -729,12 +747,10 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     public void deleteTypeName(String type) {
-        if (!_listTypes.contains(type)) {
-            return;
+        if (_listTypes.remove(type)) {
+            log.debug("Location ({}) delete rolling stock type ({})", getName(), type);
+            setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _listTypes.size() + 1, _listTypes.size());
         }
-        _listTypes.remove(type);
-        log.debug("Location ({}) delete rolling stock type ({})", getName(), type);
-        setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _listTypes.size() + 1, _listTypes.size());
     }
 
     public boolean acceptsTypeName(String type) {
@@ -742,8 +758,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     * Adds a track to this location. Valid track types are spurs, yards, staging
-     * and interchange tracks.
+     * Adds a track to this location. Valid track types are spurs, yards,
+     * staging and interchange tracks.
      *
      * @param name of track
      * @param type of track, Track.INTERCHANGE, Track.SPUR, Track.STAGING,
@@ -754,11 +770,12 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         Track track = getTrackByName(name, type);
         if (track == null) {
             _IdNumber++;
-            String id = _id + LOC_TRACK_REGIX + Integer.toString(_IdNumber);
+            // create track id
+            String id = getId() + LOC_TRACK_REGIX + Integer.toString(_IdNumber);
             log.debug("Adding new ({}) to ({}) track name ({}) id: {}", type, getName(), name, id);
             track = new Track(id, name, type, this);
-            InstanceManager.getDefault(LocationManager.class).resetNameLengths(); // recalculate max track name length
-                                                                                  // for manifests
+            // recalculate max location name length for Manifests
+            InstanceManager.getDefault(LocationManager.class).resetNameLengths();
             register(track);
         }
         resetMoves(); // give all of the tracks equal weighting
@@ -771,17 +788,17 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @param track The Track to be loaded at this location.
      */
     public void register(Track track) {
-        Integer old = Integer.valueOf(_trackHashTable.size());
+        Integer old = Integer.valueOf(getNumberOfTracks());
         _trackHashTable.put(track.getId(), track);
         // add to the locations's available track length
         setLength(getLength() + track.getLength());
-        // find last id created
+        // save last id number created
         String[] getId = track.getId().split(LOC_TRACK_REGIX);
         int id = Integer.parseInt(getId[1]);
         if (id > _IdNumber) {
             _IdNumber = id;
         }
-        setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
+        setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(getNumberOfTracks()));
         // listen for name and state changes to forward
         track.addPropertyChangeListener(this);
     }
@@ -792,10 +809,10 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             // subtract from the locations's available track length
             setLength(getLength() - track.getLength());
             track.dispose();
-            Integer old = Integer.valueOf(_trackHashTable.size());
+            Integer old = Integer.valueOf(getNumberOfTracks());
             _trackHashTable.remove(track.getId());
             setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, old,
-                    Integer.valueOf(_trackHashTable.size()));
+                    Integer.valueOf(getNumberOfTracks()));
         }
     }
 
@@ -870,17 +887,15 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     * Sorted list by track name. Returns a list of tracks of a given track type. If
-     * type is null returns all tracks for the location.
+     * Sorted list by track name. Returns a list of tracks of a given track
+     * type. If type is null returns all tracks for the location.
      *
      * @param type track type: Track.YARD, Track.SPUR, Track.INTERCHANGE,
      *             Track.STAGING
      * @return list of tracks ordered by name for this location
      */
     public List<Track> getTracksByNameList(String type) {
-
         List<Track> out = new ArrayList<>();
-
         for (Track track : getTracksByIdList()) {
             boolean locAdded = false;
             for (int j = 0; j < out.size(); j++) {
@@ -899,18 +914,17 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     * Sorted list by track moves. Returns a list of a given track type. If type is
-     * null, all tracks for the location are returned. Tracks with schedules are
-     * placed at the start of the list. Tracks that are alternates are removed.
+     * Sorted list by track moves. Returns a list of a given track type. If type
+     * is null, all tracks for the location are returned. Tracks with schedules
+     * are placed at the start of the list. Tracks that are alternates are
+     * removed.
      *
      * @param type track type: Track.YARD, Track.SPUR, Track.INTERCHANGE,
      *             Track.STAGING
      * @return list of tracks at this location ordered by moves
      */
-    public List<Track> getTracksByMovesList(String type) {
-
+    public List<Track> getTracksByMoves(String type) {
         List<Track> moveList = new ArrayList<>();
-
         for (Track track : getTracksByIdList()) {
             boolean locAdded = false;
             for (int j = 0; j < moveList.size(); j++) {
@@ -925,15 +939,15 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
                 moveList.add(track);
             }
         }
+        // remove alternate tracks from the list
         // bias tracks with schedules to the start of the list
-        // remove any alternate tracks from the list
         List<Track> out = new ArrayList<>();
         for (int i = 0; i < moveList.size(); i++) {
             Track track = moveList.get(i);
-            if (!track.getScheduleId().equals(NONE)) {
-                out.add(track);
+            if (track.isAlternate()) {
                 moveList.remove(i--);
-            } else if (track.isAlternate()) {
+            } else if (!track.getScheduleId().equals(NONE)) {
+                out.add(track);
                 moveList.remove(i--);
             }
         }
@@ -944,8 +958,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     * Sorted list by track blocking order. Returns a list of a given track type. If
-     * type is null, all tracks for the location are returned.
+     * Sorted list by track blocking order. Returns a list of a given track
+     * type. If type is null, all tracks for the location are returned.
      *
      * @param type track type: Track.YARD, Track.SPUR, Track.INTERCHANGE,
      *             Track.STAGING
@@ -954,15 +968,13 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public List<Track> getTracksByBlockingOrderList(String type) {
         List<Track> orderList = new ArrayList<>();
         for (Track track : getTracksByNameList(type)) {
-            boolean trackAdded = false;
             for (int j = 0; j < orderList.size(); j++) {
                 if (track.getBlockingOrder() < orderList.get(j).getBlockingOrder()) {
                     orderList.add(j, track);
-                    trackAdded = true;
                     break;
                 }
             }
-            if (!trackAdded) {
+            if (!orderList.contains(track)) {
                 orderList.add(track);
             }
         }
@@ -996,7 +1008,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             track.setBlockingOrder(track.getBlockingOrder() - 1);
             // move the end of order
             if (track.getBlockingOrder() <= 0)
-                track.setBlockingOrder(_trackHashTable.size() + 1);
+                track.setBlockingOrder(getNumberOfTracks() + 1);
         }
         resequnceTracksByBlockingOrder();
     }
@@ -1012,7 +1024,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             }
             track.setBlockingOrder(track.getBlockingOrder() + 1);
             // move the start of order
-            if (track.getBlockingOrder() > _trackHashTable.size())
+            if (track.getBlockingOrder() > getNumberOfTracks())
                 track.setBlockingOrder(0);
         }
         resequnceTracksByBlockingOrder();
@@ -1074,7 +1086,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         for (Track track : tracks) {
             String status = "";
             if (isDestination) {
-                status = rs.testDestination(this, track);
+                status = rs.checkDestination(this, track);
             } else {
                 status = rs.testLocation(this, track);
             }
@@ -1088,8 +1100,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     * Adds a track pool for this location. A track pool is a set of tracks where
-     * the length of the tracks is shared between all of them.
+     * Adds a track pool for this location. A track pool is a set of tracks
+     * where the length of the tracks is shared between all of them.
      *
      * @param name the name of the Pool to create
      * @return Pool
@@ -1098,7 +1110,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         Pool pool = getPoolByName(name);
         if (pool == null) {
             _idPoolNumber++;
-            String id = _id + "p" + Integer.toString(_idPoolNumber);
+            String id = getId() + "p" + Integer.toString(_idPoolNumber);
             log.debug("creating new pool ({}) id: {}", name, id);
             pool = new Pool(id, name);
             register(pool);
@@ -1217,7 +1229,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     * Used to determine if there are any load ship restrictions at this location.
+     * Used to determine if there are any load ship restrictions at this
+     * location.
      *
      * @return True if there are load ship restrictions
      */
@@ -1311,7 +1324,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         Reporter old = _reader;
         _reader = r;
         if (old != r) {
-            setDirtyAndFirePropertyChange(LOCATION_REPORTER_PROPERTY, old, r);
+            setDirtyAndFirePropertyChange(LOCATION_REPORTER_CHANGED_PROPERTY, old, r);
         }
     }
 
@@ -1340,7 +1353,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(EngineTypes.class).removePropertyChangeListener(this);
         // Change name in case object is still in use, for example Schedules
-        setName(MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { getName() }));
+        setName(MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{getName()}));
         setDirtyAndFirePropertyChange(DISPOSE_CHANGED_PROPERTY, null, DISPOSE_CHANGED_PROPERTY);
     }
 
@@ -1351,8 +1364,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     * Construct this Entry from XML. This member has to remain synchronized with
-     * the detailed DTD in operations-locations.dtd
+     * Construct this Entry from XML. This member has to remain synchronized
+     * with the detailed DTD in operations-locations.dtd
      *
      * @param e Consist XML element
      */
@@ -1369,7 +1382,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         if ((a = e.getAttribute(Xml.DIVISION_ID)) != null) {
             _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
         }
-        // TODO remove the following 3 lines in 2022
+        // TODO remove the following 3 lines in 2023
         if ((a = e.getAttribute(Xml.DIVISION_ID_ERROR)) != null) {
             _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
         }

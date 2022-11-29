@@ -391,7 +391,7 @@
         </label>
         <label>
           <text>  (+5v)</text>
-          <text xml:lang="cs">  (+5 V)</text>
+          <text xml:lang="cs">  (+5V)</text>
         </label>
         <display item="FL(f) controls output 7" format="checkbox" label="">
           <label/>
@@ -446,7 +446,7 @@
         </label>
         <label>
           <text>  (+5v)</text>
-          <text xml:lang="cs">  (+5 V)</text>
+          <text xml:lang="cs">  (+5V)</text>
         </label>
         <display item="FL(f) controls output 8" format="checkbox" label="">
           <label/>

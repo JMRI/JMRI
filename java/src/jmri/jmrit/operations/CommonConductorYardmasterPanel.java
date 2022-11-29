@@ -1,15 +1,11 @@
 package jmri.jmrit.operations;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
+import java.util.*;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,13 +18,8 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
-import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineSetFrame;
+import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -293,7 +284,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         }
         csf = new CarSetFrame();
         csf.initComponents();
-        csf.loadCar(car);
+        csf.load(car);
     }
 
     EngineSetFrame esf = null;
@@ -308,7 +299,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         }
         esf = new EngineSetFrame();
         esf.initComponents();
-        esf.loadEngine(eng);
+        esf.load(eng);
     }
 
     // confirm that all work is done
@@ -563,6 +554,9 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 for (Car car : carList) {
                     // note that a car in train doesn't have a track assignment
                     if (car.getTrack() == null) {
+                        continue;
+                    }
+                    if (car.isLocalMove() && rl == rld) {
                         continue;
                     }
                     // determine if car is a pick up from the right track

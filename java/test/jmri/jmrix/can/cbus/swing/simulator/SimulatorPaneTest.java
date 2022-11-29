@@ -24,32 +24,6 @@ import org.netbeans.jemmy.operators.*;
  */
 public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    private CanSystemConnectionMemo memo; 
-    private TrafficControllerScaffold tcis;
- 
-    @Override
-    @BeforeEach
-    public void setUp() {
-        JUnitUtil.setUp();
-        title = Bundle.getMessage("MenuItemNetworkSim");
-        helpTarget = "package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane";
-        memo = new CanSystemConnectionMemo();
-        tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
-        
-        panel = new SimulatorPane();
-    }
-    
-    @Override
-    @AfterEach
-    public void tearDown() {
-        tcis.terminateThreads();
-        memo.dispose();
-        tcis = null;
-        memo = null;
-        super.tearDown();
-    }
-
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testInitComp() {
@@ -92,6 +66,35 @@ public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
     
     private boolean getResetCsButtonEnabled( JFrameOperator jfo ){
         return ( new JButtonOperator(jfo, Bundle.getMessage("Reset")).isEnabled() );
+    }
+
+    private CanSystemConnectionMemo memo = null; 
+    private TrafficControllerScaffold tcis = null;
+ 
+    @Override
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        title = Bundle.getMessage("MenuItemNetworkSim");
+        helpTarget = "package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane";
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
+
+        panel = new SimulatorPane();
+    }
+
+    @Override
+    @AfterEach
+    public void tearDown() {
+        Assertions.assertNotNull(tcis);
+        tcis.terminateThreads();
+        Assertions.assertNotNull(memo);
+        memo.dispose();
+        tcis = null;
+        memo = null;
+        super.tearDown();
     }
 
 }

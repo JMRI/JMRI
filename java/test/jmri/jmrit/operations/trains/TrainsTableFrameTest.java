@@ -435,6 +435,12 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         String[] roads = { "SP", "UP" };
         train0.setCarRoadNames(roads);
         Assert.assertEquals("column found", 6, tbl.findColumn(Bundle.getMessage("Road")));
+        
+        train0.setCarRoadOption(Train.ALL_ROADS);
+        Assert.assertEquals("column not found", -1, tbl.findColumn(Bundle.getMessage("Road")));
+        train0.setLocoRoadOption(Train.EXCLUDE_ROADS);
+        train0.setLocoRoadNames(roads);
+        Assert.assertEquals("column found", 6, tbl.findColumn(Bundle.getMessage("Road")));
 
         // show load names
         train0.setLoadOption(Train.EXCLUDE_LOADS);

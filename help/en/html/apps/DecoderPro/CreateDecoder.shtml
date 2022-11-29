@@ -41,13 +41,14 @@
           <p>For the provided files, we use the same capitalization, etc, that the decoder
           manufacturer uses in their documentation.</p>
 
-          <p>This new file should go in the <code>decoders</code> subdirectory in the
+          <p>This new file should go in the <code>xml/decoders</code> subdirectory in the
           <code>JMRI</code> User Files Location so that the program can find it.
-          You can select "Locations..."
-          from the JMRI Help menu find the User Files Location. (See the <a href=
+          You may have to create this directory (including the xml/ directory above it)
+          if it hasn't already been created.
+          You can select "File Locations"
+          from the JMRI Help menu to find (and open) the User Files Location. (See the <a href=
           "../../doc/Technical/ProfileFileStructure.shtml"><em>configuration files page</em></a>
-          for further details about
-          how to find that directory and its contents)</p>
+          for further details about how to find that directory and its contents)</p>
 
           <p>If you're modifying a decoder definition, it is best to start with the most recent
           version, which can always be found here on the JMRI website at <a href=
@@ -380,6 +381,11 @@
 
           <p>You can also use fragment files to include (hence simplify) <a href=
           "https://jmri.org/xml/decoders/parts">common sets of enum choices</a>.</p>
+          <p>Note that you should use the full format for an include statement so that JMRI can find it:
+            <p class="example">&lt;xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/&gt;
+            </p>
+
+
         </dd>
 
         <dt class="left">Checking for syntax errors</dt>

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
@@ -112,7 +114,11 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     @Override
     public final String getLongDescription(Locale locale) {
-        return _object.getLongDescription(locale);
+        String s = _object.getLongDescription(locale);
+        if (!_listen) {
+            s += " ::: " + Base.getNoListenString();
+        }
+        return s;
     }
 
     @Override
@@ -411,6 +417,10 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             }
             writer.append(currentIndent);
             writer.append(getLongDescription(locale));
+            if (settings._printSystemNames) {
+                writer.append(" ::: ");
+                writer.append(this.getSystemName());
+            }
             if (settings._printDisplayName) {
                 writer.append(" ::: ");
                 writer.append(Bundle.getMessage("LabelDisplayName"));
@@ -626,7 +636,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                     ErrorHandlingDialog dialog = new ErrorHandlingDialog();
                     return dialog.showDialog(item, message);
                 });
-                if (abort) throw new AbortConditionalNGExecutionException(e);
+                if (abort) throw new AbortConditionalNGExecutionException(this, e);
                 break;
 
             case LogError:
@@ -642,7 +652,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
             case AbortExecution:
                 log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
-                throw new AbortConditionalNGExecutionException(e);
+                throw new AbortConditionalNGExecutionException(this, e);
 
             default:
                 throw e;
@@ -670,7 +680,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                     ErrorHandlingDialog_MultiLine dialog = new ErrorHandlingDialog_MultiLine();
                     return dialog.showDialog(item, message, messageList);
                 });
-                if (abort) throw new AbortConditionalNGExecutionException(e);
+                if (abort) throw new AbortConditionalNGExecutionException(this, e);
                 break;
 
             case LogError:
@@ -686,7 +696,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
             case AbortExecution:
                 log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
-                throw new AbortConditionalNGExecutionException(e);
+                throw new AbortConditionalNGExecutionException(this, e);
 
             default:
                 throw e;
@@ -708,7 +718,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                     ErrorHandlingDialog dialog = new ErrorHandlingDialog();
                     return dialog.showDialog(item, message);
                 });
-                if (abort) throw new AbortConditionalNGExecutionException(e);
+                if (abort) throw new AbortConditionalNGExecutionException(this, e);
                 break;
 
             case LogError:
@@ -725,7 +735,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 throw e;
 
             case AbortExecution:
-                throw new AbortConditionalNGExecutionException(e);
+                throw new AbortConditionalNGExecutionException(this, e);
 
             default:
                 throw e;
@@ -739,6 +749,11 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         for (int i=0; i < getChildCount(); i++) {
             getChild(i).getListenerRefsIncludingChildren(list);
         }
+    }
+
+    @Override
+    public boolean hasChild(@Nonnull Base b) {
+        return getObject() == b;
     }
 
     /** {@inheritDoc} */

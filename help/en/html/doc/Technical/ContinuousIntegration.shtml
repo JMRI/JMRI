@@ -46,6 +46,9 @@
         </li>
       </ul>
 
+      <p>These checks can be run locally by developers before uploading changes to Github,
+      see <a href="JUnit.shtml#run">Running JUnit Tests</a>.</p>
+
       <h2 id="mandatory">Mandatory Checks</h2>
       <p>We use multiple
       <a href="https://docs.github.com/en/actions">GitHub actions</a>
@@ -243,6 +246,41 @@
 
       <p><img src="images/NetBeansJenkinsOverview.png" alt="Jenkins Overview">
       </p>
+      
+    <h3 id="architectureTests">Architecture Tests</h3>
+    <p><a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/ArchitectureTest.java">ArchitectureTest</a>
+    contains rules which seek to maintain and improve the overall system architecture of JMRI.
+    <br/>For example, the server classes should not depend on code within the system connection hardware types.</p>
+
+    <pre style="font-family: monospace;">    noClasses()
+        .that().resideInAPackage("jmri.jmris")
+        .should().dependOnClassesThat().resideInAPackage("jmri.jmrix..");</pre>
+
+    <p><a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/ArchitectureCheck.java"
+    >ArchitectureCheck</a> uses FreezingArchRule to collect issues in the archunit_store directory.
+    <br/>Should new issues be encountered, they'll be reported as errors.
+    <br/>Please fix them rather than committing a larger store.
+    </p>
+
+    <p>The Test classes also undergo an Architecture Test,
+    <a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/TestArchitectureTest.java"
+    >TestArchitectureTest</a>.</p>
+
+    <p>These tests can be run with
+    <pre style="font-family: monospace;">    mvn -Dtest=jmri.ArchitectureTest,jmri.TestArchitectureTest,jmri.util.FileLineEndingsCheck test</pre>
+
+    <h3 id="cucumberTests">Cucumber Tests</h3>
+    <p><a href="https://en.wikipedia.org/wiki/Cucumber_(software)">Cucumber Tests</a> allow 
+    expected software behaviours to be specified in a logical language.
+    <br/>These are used to test the Web Server output ( in Firefox and Google Chrome ),
+    along with Application launches using simulation profiles for various hardware systems.
+    <br/>The Features and Step Definitions files are in the <a href="https://github.com/JMRI/JMRI/tree/master/java/acceptancetest"
+    >/java/acceptancetest</a> folder.
+    <br/>The ant command runs all tests with the class name RunCucumberIT.class ,
+    so both the apps and jmri tests are performed.</p>
+    <pre style="font-family: monospace;">    ant cucumber</pre>
+
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

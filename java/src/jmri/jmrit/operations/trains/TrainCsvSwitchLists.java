@@ -72,16 +72,8 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                 printRailroadName(fileOut, Setup.getRailroadName());
                 printLocationName(fileOut, splitString(location.getName()));
                 printPrinterName(fileOut, location.getDefaultPrinterName());
-                fileOut.printRecord("SWLC", Bundle.getMessage("csvSwitchListComment"), location.getSwitchListCommentWithColor());
-                // add location comment
-
-                if (Setup.isPrintLocationCommentsEnabled() && !location.getCommentWithColor().equals(Location.NONE)) {
-                    // location comment can have multiple lines
-                    String[] comments = location.getCommentWithColor().split(NEW_LINE); // NOI18N
-                    for (String comment : comments) {
-                        printLocationComment(fileOut, comment);
-                    }
-                }
+                printLocationSwitchListComment(fileOut, location);
+                printLocationComment(fileOut, location);
             }
             printValidity(fileOut, getDate(true));
 
@@ -132,6 +124,8 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                         // newLine(fileOut);
                         printTrainName(fileOut, train.getName());
                         printTrainDescription(fileOut, train.getDescription());
+                        printTrainComment(fileOut, train);
+                        printRouteComment(fileOut, train);
 
                         if (train.isTrainEnRoute()) {
                             fileOut.printRecord("TIR", Bundle.getMessage("csvTrainEnRoute")); // NOI18N
@@ -183,11 +177,8 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                     }
 
                     rlPrevious = rl;
-
-                    // add route comment
-                    if (!rl.getComment().equals(RouteLocation.NONE)) {
-                        printRouteLocationComment(fileOut, rl.getComment());
-                    }
+                    printRouteLocationComment(fileOut, rl);
+                    printTrackComments(fileOut, rl, carList);
 
                     // engine change or helper service?
                     checkForEngineOrCabooseChange(fileOut, train, rl);

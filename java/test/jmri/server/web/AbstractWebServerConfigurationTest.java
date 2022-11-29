@@ -1,35 +1,15 @@
 package jmri.server.web;
 
-import org.junit.jupiter.api.AfterAll;
+import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
  * @author Randall Wood (C) 2016
  */
 public class AbstractWebServerConfigurationTest {
-    
-    public AbstractWebServerConfigurationTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
-    }
-
 
     /**
      * Test of getFilePaths method, of class AbstractWebServerConfiguration.
@@ -61,7 +41,17 @@ public class AbstractWebServerConfigurationTest {
         Assert.assertTrue("Empty List", instance.getForbiddenPaths().isEmpty());
     }
 
-    public class AbstractWebServerConfigurationImpl extends AbstractWebServerConfiguration {
+    private static class AbstractWebServerConfigurationImpl extends AbstractWebServerConfiguration {
     }
-    
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

@@ -59,7 +59,7 @@ public class DigitalCallModule extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.OTHER;
+        return Category.FLOW_CONTROL;
     }
 
     /**
@@ -103,9 +103,6 @@ public class DigitalCallModule extends AbstractDigitalExpression
 
         if (module == null) return false;
 
-        ConditionalNG oldConditionalNG = getConditionalNG();
-        module.setCurrentConditionalNG(getConditionalNG());
-
         FemaleSocket femaleSocket = module.getRootSocket();
 
         if (! (femaleSocket instanceof FemaleDigitalExpressionSocket)) {
@@ -129,8 +126,6 @@ public class DigitalCallModule extends AbstractDigitalExpression
         conditionalNG.getStack().setCount(currentStackPos);
 
         conditionalNG.setSymbolTable(newSymbolTable.getPrevSymbolTable());
-
-        module.setCurrentConditionalNG(oldConditionalNG);
 
         return result;
     }

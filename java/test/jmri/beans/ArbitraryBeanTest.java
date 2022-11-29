@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.util.JUnitUtil;
 
@@ -17,7 +15,7 @@ import jmri.util.JUnitUtil;
  */
 public class ArbitraryBeanTest {
 
-    private ArbitraryBeanImpl bean;
+    private ArbitraryBeanImpl bean = null;
     private final static String AP = "arbitraryProperty";
     private final static String DP = "definedProperty";
     private final static String AIP = "arbitraryIndexedProperty";
@@ -37,6 +35,7 @@ public class ArbitraryBeanTest {
 
     @Test
     public void testSetProperty() {
+        Assertions.assertNotNull(bean);
         assertThat(bean).hasFieldOrProperty(DP);
         assertThat(bean.hasProperty(AP)).isFalse();
         assertThat(bean.getDefinedProperty()).isNull();
@@ -54,6 +53,7 @@ public class ArbitraryBeanTest {
 
     @Test
     public void testSetIndexedProperty() {
+        Assertions.assertNotNull(bean);
         assertThat(bean.hasIndexedProperty(DIP)).isTrue();
         assertThat(bean.getDefinedIndexedProperty()).isEmpty();
         assertThat(bean.hasIndexedProperty(AIP)).isFalse();
@@ -70,6 +70,7 @@ public class ArbitraryBeanTest {
 
     @Test
     public void testGetPropertyNames() {
+        Assertions.assertNotNull(bean);
         assertThat(bean.getPropertyNames())
                 .contains(DP, DIP)
                 .doesNotContain(AP, AIP);

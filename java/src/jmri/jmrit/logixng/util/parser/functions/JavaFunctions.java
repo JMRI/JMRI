@@ -13,7 +13,6 @@ import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TypeConversionUtil;
 
-import org.openide.util.Exceptions;
 import org.openide.util.lookup.ServiceProvider;
 
 /**

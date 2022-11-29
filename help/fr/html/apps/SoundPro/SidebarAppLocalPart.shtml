@@ -1,0 +1,12 @@
+<!-- SidebarAppLocalPart.shtml -->
+<!-- This is the local part sidebar definition for html/apps/SoundPro pages in French-->
+
+<dt class="dtheader">SoundPro&trade; Info</dt>
+<dd>
+  <ul>
+    <li><a href="../../tools/Audio.shtml">D&#233;tail du paquet Audio</a></li>
+    <li><a href="../../../package/jmri/jmrit/beantable/AudioTable.shtml">Tableau Audio</a></li>
+  </ul>
+</dd>
+
+<!-- /SidebarAppLocalPart.shtml -->

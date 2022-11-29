@@ -14,22 +14,21 @@
 			<li><a href="../apps/Errors.shtml">Error Codes</a></li>
 			<li><a href="../../package/apps/InstallTest/InstallTest.shtml">InstallTest</a></li>
 			</ul>
-                </dd>
+    </dd>
 
 	   <!--#include virtual="../../parts/SidebarInstall.shtml" -->
 
-           <!--#include virtual="../../parts/SidebarApplications.shtml" -->
+     <!--#include virtual="../../parts/SidebarApplications.shtml" -->
 
-           <!--#include virtual="../../parts/SidebarTools.shtml" -->
+     <!--#include virtual="../../parts/SidebarTools.shtml" -->
 
-            <!--#include virtual="../../parts/SidebarLayoutAutomation.shtml" -->
+     <!--#include virtual="../../parts/SidebarLayoutAutomation.shtml" -->
 
-	    <!--#include virtual="../../parts/SidebarSupportedHardware.shtml" -->
-
+	   <!--#include virtual="../../parts/SidebarSupportedHardware.shtml" -->
 
     </dl>
 
-      <!--#include virtual="../../parts/SidebarTail.shtml" -->
+    <!--#include virtual="../../parts/SidebarTail.shtml" -->
 
 	</div> <!-- closes #side -->
 

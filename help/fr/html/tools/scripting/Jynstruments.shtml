@@ -1,31 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Blorec Herv&#233; 2013-09-26-->
 
   <title>JMRI: Jynstruments</title>
-  <!-- Style -->
-  <meta http-equiv="content-type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>JMRI: Jynstruments</h1>
+      <h1>JMRI: Jynstruments</h1>
+
       <p>JMRI offre une belle fa&ccedil;on
       d'int&eacute;grer des scripts Jython dans l'application Java
       JMRI en particulier en visant &agrave; &eacute;tendre et
@@ -91,21 +82,19 @@
       <ul>
         <li>La fen&ecirc;tre principale JMRI o&ugrave; vous pouvez
         ajouter des <a href=
-        "https://jmri.org/jython/Jynstruments/Launchers/">lanceurs</a>
-        . Il y a un script Jython nomm&eacute;
+        "https://jmri.org/jython/Jynstruments/Launchers/">lanceurs</a>.
+        Il y a un script Jython nomm&eacute;
         JynstrumentMainFrame.py dans le dossier de script par
         d&eacute;faut Jython JMRI qui montre comment charger ces
-        lanceurs &agrave; partir d'un Script Jython JMRI ordinaire
-        , alors vous pouvez s&eacute;lectionner ce script pour
+        lanceurs &agrave; partir d'un Script Jython JMRI ordinaire,
+        alors vous pouvez s&eacute;lectionner ce script pour
         &ecirc;tre ex&eacute;cut&eacute; automatiquement au
         d&eacute;marrage de JMRI (depuis les
         pr&eacute;f&eacute;rences JMRI) afin d'avoir une
         fen&ecirc;tre principale JMRI personnalis&eacute;e comme
         vous le souhaitez.</li>
 
-        <li style="list-style: none">La</li>
-
-        <li><a href=
+        <li>La <a href=
         "../throttle/BasicThrottleWindow.shtml">Fen&ecirc;tre JMRI
         R&eacute;gulateur</a> o&ugrave; vous pouvez ajouter
         Jynstruments <a href=
@@ -128,9 +117,10 @@
         particulier avec les contr&ocirc;leurs
         sp&eacute;ciaux)</li>
       </ul>
-    </div>
 
-  <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div>
   </div>
+<script src="/js/main.js"></script>
 </body>
 </html>

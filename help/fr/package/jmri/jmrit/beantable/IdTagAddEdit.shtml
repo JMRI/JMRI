@@ -1,40 +1,27 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec 2013-10-11-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec 2013-10-11-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Adding/Editing Id Tags</title>
   <meta name="author" content="Matthew Harris">
   <meta name="keywords" content="JMRI help Id Tag Add Edit">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Ajout/Modification d'&eacute;tiquettes ID</h1>Pour
-      cr&eacute;er une &eacute;tiquette d'identification, cliquez
+      <h1>Ajout/Modification d'&eacute;tiquettes ID</h1>
+
+      <p>Pour cr&eacute;er une &eacute;tiquette d'identification, cliquez
       sur le bouton "Ajouter ..." sur la <a href=
       "IdTagTable.shtml">Table ID Tag</a>. Cela ouvrira une petite
       fen&ecirc;tre avec un espace pour entrer un nom
       syst&egrave;me et un nom utilisateur pour la nouvelle
-      &eacute;tiquette d'identification , plus une bouton
-      "Ajouter".
+      &eacute;tiquette d'identification, plus une bouton
+      "Ajouter".</p>
 
       <p>Vous devez entrer un nom syst&egrave;me unique. Les Noms
       syst&egrave;me des &eacute;tiquettes ID doivent avoir le
@@ -48,8 +35,10 @@
       <p>L'&eacute;tiquette ID indiqu&eacute;e dans le tableau est
       d&eacute;termin&eacute;e &agrave; partir du nom
       syst&egrave;me.</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

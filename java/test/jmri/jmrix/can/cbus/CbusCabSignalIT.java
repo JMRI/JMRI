@@ -17,8 +17,8 @@ import org.junit.jupiter.api.*;
  */
 public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
 
-    private CanSystemConnectionMemo memo;
-    private TrafficController tc;
+    private CanSystemConnectionMemo memo = null;
+    private TrafficController tc = null;
 
     @BeforeEach
     @Override
@@ -45,9 +45,11 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
     @AfterEach
     @Override
     public void tearDown() {
+        Assertions.assertNotNull(memo);
         memo.dispose();
-        tc.terminateThreads();
         memo = null;
+        Assertions.assertNotNull(tc);
+        tc.terminateThreads();
         tc = null;
         cs.dispose();
         cs = null;

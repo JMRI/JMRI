@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 Ronald Kuhn - add Fade-in and Fade-out time --> 
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable CV="190" item="Fade-in time" default="0">
+    <decVal min="0" max="255"/>
+    <label>Fade-in time</label>
+    <label xml:lang="it">Tempo di dissolvenza</label>
+    <label xml:lang="cs">Čas prolínání</label>
+    <label xml:lang="de">Aufblendzeit</label>
+    <tooltip>Fade-in time for effect "Slow fade in/out", default for Non Sounddecoder = 1</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit für den Effekt "Langsames Auf- und Abdimmen", Standard für Nicht-Sounddecoder = 1</tooltip>
+  </variable>
+  <variable CV="191" item="Fade-out time" default="0">
+    <decVal min="0" max="255"/>
+    <label>Fade-out time</label>
+    <label xml:lang="it">Tempo di dissolvenza</label>
+    <label xml:lang="cs">Čas doznívání</label>
+    <label xml:lang="de">Abblendzeit</label>
+    <tooltip>Fade-out time for effect "Slow fade in/out"</tooltip>
+    <tooltip xml:lang="de">Abblendzeit für den Effekt "Langsames Auf- und Abdimmen"</tooltip>
+  </variable>
+</variables>
