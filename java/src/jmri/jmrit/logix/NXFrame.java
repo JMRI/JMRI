@@ -234,12 +234,21 @@ public class NXFrame extends WarrantRoute {
     }
 
     private void unitsEventAction(JButton button, JTextField field) {
+        try {
+            getDistance(_originDist, _orders.get(0));
+            getDistance(_destDist, _orders.get(_orders.size()-1));
+        } catch (JmriException je) {
+            JOptionPane.showMessageDialog(null, je.getMessage(),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         if (button.getText().equals(Display.IN.toString())) {
             _units = Display.CM;
         } else {
             _units = Display.IN;
         }
-        setFieldText(button, field);
+        setFieldText(_originUnits, _originDist);
+        setFieldText(_destUnits, _destDist);
     }
     // convert to units change
     private void setFieldText(JButton button, JTextField field) {
@@ -384,11 +393,9 @@ public class NXFrame extends WarrantRoute {
 
         _originUnits.addActionListener((ActionEvent evt)-> {
             unitsEventAction(_originUnits, _originDist);
-            setFieldText(_destUnits, _destDist);
         });
         _destUnits.addActionListener((ActionEvent evt)-> {
             unitsEventAction(_destUnits, _destDist);
-            setFieldText(_originUnits, _originDist);
         });
 
         p1.add(makeTextAndButtonPanel(_originDist, _originUnits, 
@@ -639,15 +646,23 @@ public class NXFrame extends WarrantRoute {
         }
         if (_units.equals(Display.IN)){
             distance *= 25.4f;  // convert inches to millimeters
-            if (distance < 0 || distance > pathLen) {
-                field.setText(formatter.format(pathLen * 25.4f));
+            if (distance > pathLen) {
+                field.setText(formatter.format(pathLen*0.03937008f));
                 throw new JmriException(Bundle.getMessage(
-                        "BadLengthIn", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen*0.039701f, text));                                        
+                        "BadLengthIn", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen*0.03937008f, text));                                        
+            } else if (distance < 0) {
+                field.setText("0");
+                throw new JmriException(Bundle.getMessage(
+                        "BadLengthIn", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen*0.03937008f, text));                                        
             }
         } else {
             distance *= 10f;  // convert centimeters to millimeters
-            if (distance < 0 || distance > pathLen) {
-                field.setText(formatter.format(pathLen * 10));
+            if (distance > pathLen) {
+                field.setText(formatter.format(pathLen*0.1f));
+                throw new JmriException(Bundle.getMessage(
+                        "BadLengthCm", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen*0.1f, text));                                        
+            } else if (distance < 0) {
+                field.setText("0");
                 throw new JmriException(Bundle.getMessage(
                         "BadLengthCm", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen*0.1f, text));                                        
             }
