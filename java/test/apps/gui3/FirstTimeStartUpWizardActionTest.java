@@ -14,7 +14,7 @@ public class FirstTimeStartUpWizardActionTest {
 
     @Test
     public void testCTor() {
-        FirstTimeStartUpWizardAction t = new FirstTimeStartUpWizardAction("test ation");
+        FirstTimeStartUpWizardAction t = new FirstTimeStartUpWizardAction("test CTor");
         Assertions.assertNotNull(t, "exists");
         t.dispose();
     }
@@ -29,7 +29,7 @@ public class FirstTimeStartUpWizardActionTest {
 
     @Test
     public void testFirstTimeStartUpWizardAction3PartCTor() {
-        FirstTimeStartUpWizardAction t = new FirstTimeStartUpWizardAction("test ation", null, null);
+        FirstTimeStartUpWizardAction t = new FirstTimeStartUpWizardAction("test FirstTimeStartUpWizardAction3PartCTor", null, null);
         Assertions.assertNotNull(t, "exists");
         t.dispose();
     }
