@@ -319,7 +319,7 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
             try {
                 InstanceManager.getDefault(WarrantPreferences.class).initialize(project);
             } catch ( InitializationException ex ){
-                log.error("Exception Initialising warrant preserences: ", ex);
+                log.error("Exception Initialising warrant preferences: ", ex);
             }
             InstanceManager.getDefault(ConfigureManager.class).storePrefs();
             
