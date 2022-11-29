@@ -641,6 +641,16 @@
       <p>The Throttle action controls a throttle.</p>
 
       <div style="margin-left: 2em">
+        <a href="images/chapter5/throttle_dialog.png"><img src="images/chapter5/throttle_dialog.png"
+        alt="Chapter 5 throttle dialog"></a>
+      </div>
+
+      <p>The LogixNG throttle can use either the default throttle connection or an alternate throttle
+      connection.  The default connection is defined in <strong>Preferences &rArr; Defaults</strong>.
+      If there is more than one connection, other connections <strong><em>might</em></strong>
+      support a throttle.</p>
+
+      <div style="margin-left: 2em">
         <a href="images/chapter5/throttle_action.png"><img src="images/chapter5/throttle_action.png"
         alt="Chapter 5 throttle action"></a>
       </div>
