@@ -439,14 +439,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ##### junit-vintage-engine-5.9.1.jar
 
-##### i18nchecker.jar
-- Internationalization checker: used in source code development, for checking proper implementation of text internationalization.
-- From https://github.com/JMRI/i18nchecker
-- Note: We use a custom version of the original in https://github.com/phamernik/i18nchecker
-- See license https://github.com/phamernik/i18nchecker/blob/master/i18nchecker/LICENSE-2.0.txt
-- Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
-- Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
-
 ##### mockito-core mockito-inline mockito-junit-jupiter
 - version 3.5.11
 
