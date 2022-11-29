@@ -200,7 +200,6 @@ public class WarrantTest {
             String m = warrant.getRunningMessage();
             return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
         }, "Train starts to move after 2nd command");
-//        JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
         try {
             sWest.setState(Sensor.ACTIVE);
@@ -228,8 +227,6 @@ public class WarrantTest {
         JUnitUtil.waitFor(() -> {
             return Bundle.getMessage("Idle").equals(warrant.getRunningMessage());
         }, "warrant not done");
-
-        JUnitAppender.assertWarnMessageStartingWith("block: West Path distance or SpeedProfile unreliable! pathDist= 200.0,");
 
     }
 
