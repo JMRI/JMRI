@@ -24,6 +24,7 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
     private LogixNG_SelectNamedBeanSwing<Sensor> _selectNamedBeanSwing;
     private LogixNG_SelectEnumSwing<SensorState> _selectEnumFromStateSwing;
     private LogixNG_SelectEnumSwing<SensorState> _selectEnumToStateSwing;
+    private JCheckBox _clearStateAfterReadCheckBox;
 
 
     public ExpressionSensorEdgeSwing() {
@@ -38,12 +39,16 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
         ExpressionSensorEdge expression = (ExpressionSensorEdge)object;
 
         panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        JPanel innerPanel = new JPanel();
 
         _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
                 InstanceManager.getDefault(SensorManager.class), getJDialog(), this);
 
         _selectEnumFromStateSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
         _selectEnumToStateSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
+        _clearStateAfterReadCheckBox = new JCheckBox(Bundle.getMessage("ExpressionSensorEdge_ClearStateAfterRead"));
 
         JPanel _tabbedPaneNamedBean;
         JPanel _tabbedPaneEnumFromState;
@@ -53,6 +58,7 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
             _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(expression.getSelectNamedBean());
             _tabbedPaneEnumFromState = _selectEnumFromStateSwing.createPanel(expression.getSelectEnumFromState(), SensorState.values());
             _tabbedPaneEnumToState = _selectEnumToStateSwing.createPanel(expression.getSelectEnumToState(), SensorState.values());
+            _clearStateAfterReadCheckBox.setSelected(expression.getClearStateAfterRead());
         } else {
             _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
             _tabbedPaneEnumFromState = _selectEnumFromStateSwing.createPanel(null, SensorState.values());
@@ -68,7 +74,10 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
                 Bundle.getMessage("ExpressionSensorEdge_Components"), components);
 
-        for (JComponent c : componentList) panel.add(c);
+        for (JComponent c : componentList) innerPanel.add(c);
+
+        panel.add(innerPanel);
+        panel.add(_clearStateAfterReadCheckBox);
     }
 
     /** {@inheritDoc} */
@@ -109,6 +118,7 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
         _selectNamedBeanSwing.updateObject(expression.getSelectNamedBean());
         _selectEnumFromStateSwing.updateObject(expression.getSelectEnumFromState());
         _selectEnumToStateSwing.updateObject(expression.getSelectEnumToState());
+        expression.setClearStateAfterRead(_clearStateAfterReadCheckBox.isSelected());
     }
 
     /** {@inheritDoc} */

@@ -26,6 +26,8 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
     private final LogixNG_SelectEnum<SensorState> _selectEnumToState =
             new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active, this);
 
+    private boolean _clearStateAfterRead = false;
+
     SensorState lastSensorState = null;
     SensorState currentSensorState = null;
 
@@ -45,6 +47,7 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
         _selectNamedBean.copy(copy._selectNamedBean);
         _selectEnumFromState.copy(copy._selectEnumFromState);
         _selectEnumToState.copy(copy._selectEnumToState);
+        copy.setClearStateAfterRead(_clearStateAfterRead);
         return manager.registerExpression(copy);
     }
 
@@ -58,6 +61,14 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
 
     public LogixNG_SelectEnum<SensorState> getSelectEnumToState() {
         return _selectEnumToState;
+    }
+
+    public void setClearStateAfterRead(boolean clearStateAfterRead) {
+        _clearStateAfterRead = clearStateAfterRead;
+    }
+
+    public boolean getClearStateAfterRead() {
+        return _clearStateAfterRead;
     }
 
     /** {@inheritDoc} */
@@ -76,7 +87,15 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
         SensorState checkSensorFromState = _selectEnumFromState.evaluateEnum(getConditionalNG());
         SensorState checkSensorToState = _selectEnumToState.evaluateEnum(getConditionalNG());
 
-        return (lastSensorState == checkSensorFromState) && (currentSensorState == checkSensorToState);
+        boolean result = (lastSensorState == checkSensorFromState)
+                && (currentSensorState == checkSensorToState);
+
+        if (_clearStateAfterRead) {
+            lastSensorState = null;
+            currentSensorState = null;
+        }
+
+        return result;
     }
 
     @Override
@@ -100,7 +119,11 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
         String fromState = _selectEnumFromState.getDescription(locale);
         String toState = _selectEnumToState.getDescription(locale);
 
-        return Bundle.getMessage(locale, "SensorEdge_Long", namedBean, fromState, toState);
+        if (_clearStateAfterRead) {
+            return Bundle.getMessage(locale, "SensorEdge_LongClearState", namedBean, fromState, toState);
+        } else {
+            return Bundle.getMessage(locale, "SensorEdge_Long", namedBean, fromState, toState);
+        }
     }
 
     /** {@inheritDoc} */
