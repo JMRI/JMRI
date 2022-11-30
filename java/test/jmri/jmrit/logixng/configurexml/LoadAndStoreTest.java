@@ -62,6 +62,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     @Override
     public void setUp(@TempDir java.io.File tempDir) throws IOException  {
         super.setUp(tempDir);
+//        super.setUp(new File("F:\\Projekt\\Java\\GitHub\\JMRI\\temp\\temp"));
 
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initDebugCommandStation();

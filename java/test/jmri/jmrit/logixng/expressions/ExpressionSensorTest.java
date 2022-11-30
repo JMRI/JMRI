@@ -189,11 +189,11 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("Sensor '' is Active", expressionSensor.getLongDescription());
         expressionSensor.getSelectNamedBean().setNamedBean(sensor);
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
-        expressionSensor.setBeanState(ExpressionSensor.SensorState.Inactive);
+        expressionSensor.getSelectEnum().setEnum(ExpressionSensor.SensorState.Inactive);
         Assert.assertTrue("Sensor IS1 is Inactive".equals(expressionSensor.getLongDescription()));
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         Assert.assertTrue("Sensor IS1 is not Inactive".equals(expressionSensor.getLongDescription()));
-        expressionSensor.setBeanState(ExpressionSensor.SensorState.Other);
+        expressionSensor.getSelectEnum().setEnum(ExpressionSensor.SensorState.Other);
         Assert.assertTrue("Sensor IS1 is not Other".equals(expressionSensor.getLongDescription()));
     }
 
@@ -208,7 +208,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
 
         expressionSensor.getSelectNamedBean().setNamedBean(sensor);
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
-        expressionSensor.setBeanState(ExpressionSensor.SensorState.Active);
+        expressionSensor.getSelectEnum().setEnum(ExpressionSensor.SensorState.Active);
 
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());

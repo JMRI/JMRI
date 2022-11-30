@@ -4,7 +4,7 @@
   <jmriversion>
     <major>5</major>
     <minor>1</minor>
-    <test>2</test>
+    <test>6</test>
     <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -7558,11 +7558,11 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <is_isNot>Is</is_isNot>
-      <stateAddressing>Direct</stateAddressing>
-      <sensorState>Active</sensorState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Active</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -7647,11 +7647,14 @@
         <formula>"IT"+index</formula>
       </namedBean>
       <is_isNot>IsNot</is_isNot>
-      <stateAddressing>LocalVariable</stateAddressing>
-      <sensorState>Inactive</sensorState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <state>
+        <addressing>LocalVariable</addressing>
+        <enum>Inactive</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -7736,11 +7739,14 @@
         <formula>"IT"+index</formula>
       </namedBean>
       <is_isNot>Is</is_isNot>
-      <stateAddressing>Formula</stateAddressing>
-      <sensorState>Inactive</sensorState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <state>
+        <addressing>Formula</addressing>
+        <enum>Inactive</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -7825,11 +7831,14 @@
         <formula>"IT"+index</formula>
       </namedBean>
       <is_isNot>IsNot</is_isNot>
-      <stateAddressing>Reference</stateAddressing>
-      <sensorState>Inactive</sensorState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <state>
+        <addressing>Reference</addressing>
+        <enum>Inactive</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -7914,11 +7923,14 @@
         <formula>"IT"+index</formula>
       </namedBean>
       <is_isNot>Is</is_isNot>
-      <stateAddressing>Direct</stateAddressing>
-      <sensorState>Inactive</sensorState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Inactive</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -37598,14 +37610,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sun Aug 07 01:54:04 CEST 2022</date>
+      <date>Wed Nov 30 19:00:53 CET 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.5.1.3.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Aug 07 01:54:04 CEST 2022</date>
+      <date>Wed Nov 30 19:00:53 CET 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.1.2plus+daniel+2022-08-06T23:53:23Z+R7533a8a on Sun Aug 07 01:54:04 CEST 2022-->
+  <!--Written by JMRI version 5.1.6plus+daniel+2022-11-30T17:57:58Z+Rf06ad40 on Wed Nov 30 19:00:53 CET 2022-->
 </layout-config>
