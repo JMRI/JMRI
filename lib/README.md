@@ -312,10 +312,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
   and https://github.com/usb4java/usb4java-javax/releases/tag/usb4java-javax-1.3.0
 - lib/libusb4java-1.3.0-darwin-aarch64.jar made from a .dylib found at https://github.com/developersu/ns-usbloader/issues/91
 
-##### antlr-3.4-complete
-- version 3.4
-- ANother Tool for Language Recognition
-
 ##### beansbinding-1.2.1.jar
 - version 1.2.1
 - used in web server preference panels
