@@ -1,5 +1,8 @@
 package jmri;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class holds information and options for a Action to be applied when an
  * automated train enters, exits, or is inside of a Section in a Transit.
@@ -28,7 +31,8 @@ public class TransitSectionAction {
      * 
      * TODO: Convert to ENUM
      */
-    public static final int NUM_WHENS = 8; // Must correspond to the number of entries below
+    public static final int NUM_WHENS = 10; // Must correspond to the number of entries below
+    public static final int SELECTWHEN = 0;
     public static final int ENTRY = 1;   // On entry to Section
     public static final int EXIT = 2;   // On exit from Section
     public static final int BLOCKENTRY = 3; // On entry to specified Block in the Section
@@ -37,6 +41,9 @@ public class TransitSectionAction {
     public static final int TRAINSTART = 6; // When train starts 
     public static final int SENSORACTIVE = 7; // When specified Sensor changes to Active
     public static final int SENSORINACTIVE = 8; // When specified Sensor changtes to Inactive
+    public static final int PRESTARTDELAY = 9; // delays the throttle going from 0
+    public static final int PRESTARTACTION = 10; // Actions timed of prestartdelay
+
     // other action 'whens" may be defined here
 
     /**
@@ -44,6 +51,7 @@ public class TransitSectionAction {
      * 
      * TODO: Convert to ENUM
      */
+    public static final int SELECTWHAT = 0;
     public static final int PAUSE = 1;    // pause for the number of fast minutes in mDataWhat (e.g. station stop)
     public static final int SETMAXSPEED = 2; // set maximum train speed to value entered
     public static final int SETCURRENTSPEED = 3; // set current speed to target speed immediately - no ramping
@@ -62,14 +70,15 @@ public class TransitSectionAction {
     public static final int HOLDSIGNAL = 14;    // set specified signalhead or signalmast to HELD
     public static final int RELEASESIGNAL = 15; // set specified signalhead or signalmast to NOT HELD
     public static final int ESTOP = 16;   // set ESTOP
-    public static final int NUM_WHATS = 16; // Must correspond to the number of entries above
-    // other action 'whats" may be defined here, increment NUM_WHATS to match
+    public static final int PRESTARTRESUME = 17; // Resume after prestart
+    public static final int NUM_WHATS = 17; // Must correspond to the number of entries above
+    // other action 'whats" may be defined above, increment NUM_WHATS to match
 
     /**
      * Create a TransitSectionAction.
      *
      * @param when one of
-     *             {@link #ENTRY}, {@link #EXIT}, {@link #BLOCKENTRY}, {@link #BLOCKEXIT}, {@link #TRAINSTOP}, {@link #TRAINSTART}, {@link #SENSORACTIVE}, {@link #SENSORINACTIVE}
+     *             {@link #ENTRY}, {@link #EXIT}, {@link #BLOCKENTRY}, {@link #BLOCKEXIT}, {@link #TRAINSTOP}, {@link #TRAINSTART}, {@link #SENSORACTIVE}, {@link #SENSORINACTIVE}, {@link #PRESTARTRESUME}
      * @param what one of
      *             {@link #PAUSE}, {@link #SETMAXSPEED}, {@link #SETCURRENTSPEED}, {@link #RAMPTRAINSPEED}, {@link #TOMANUALMODE}, {@link #SETLIGHT}, {@link #STARTBELL}, {@link #STOPBELL}, {@link #SOUNDHORN}, {@link #SOUNDHORNPATTERN}, {@link #LOCOFUNCTION}, {@link #SETSENSORACTIVE}, {@link #SETSENSORINACTIVE}, {@link #HOLDSIGNAL}, {@link #RELEASESIGNAL}
      */
@@ -102,18 +111,27 @@ public class TransitSectionAction {
         mStringWhat = sWhat;
     }
 
+
     // instance variables
     private int mWhen = 0;
     private int mWhat = 0;
     private int mDataWhen = -1; // negative number signified no data 
     private int mDataWhat1 = -1;    // negative number signified no data 
+    private float mDataWhat1Float = -1.0f;
     private int mDataWhat2 = -1;    // negative number signified no data 
     private String mStringWhen = "";
     private String mStringWhat = "";
+    private Object threadObject;
 
     /*
      * Access methods
      */
+    public void setThreadObject(Object threadObj) {
+        threadObject = threadObj;
+    }
+    public Object getThreadObject() {
+        return threadObject;
+    }
     public int getWhenCode() {
         return mWhen;
     }
@@ -136,6 +154,14 @@ public class TransitSectionAction {
 
     public void setDataWhen(int n) {
         mDataWhen = n;
+    }
+
+    public float getDataWhat1Float() {
+        return mDataWhat1Float;
+    }
+
+    public void setDataWhat1Float(float n) {
+        mDataWhat1Float = n;
     }
 
     public int getDataWhat1() {
