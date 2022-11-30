@@ -747,7 +747,13 @@
         this route to move cars in the opposite direction of your first train.
       </p>
 
-      <p>
+   <p>
+    The OperationsPro&trade; default mode for building trains is to pick up and set out cars to
+    empty tracks. If you want to perform car swaps, pull cars from a track and replacing them with
+    new ones, you need to change the <a href="#BuildOptions">Build Options</a> to aggressive.
+   </p>
+
+   <p>
         You should now be well on your way with regards to JMRI operations. Each window in
         OperationsPro&trade; has a "Help" item on the menu bar which will direct you to the section
         in this document that covers that window's capabilities. Many of the OperationsPro&trade;
@@ -1279,7 +1285,16 @@
       only use staging tracks that don't modify a car's load. See <a href="#StagingAndCarLoads">Staging
         and Car loads</a>. You must deselect all six car load controls for staging.
 
-      <h4>Use all Trains when Routing</h4>
+   <p>
+    You would allow routing through staging to create a virtual world outside of your layout. Now
+    when you create a schedule, you can ship a car to a location and spur that exists outside of
+    your layout. Staging is this case is the gateway to the virtual world. You can create one or
+    several virtual trains to service the virtual world and the program will route cars to the
+    industries you've created outside of your layout. You also have the <a href="#TrackDestinations">option</a>
+    to only allow cars that are being routed to use the staging track.
+   </p>
+
+   <h4>Use all Trains when Routing</h4>
 
       <p>The option "Use all Trains when Routing" when selected instructs the program to use all
         of your trains to route a car. If you only want the router to use the trains that you've
