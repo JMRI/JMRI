@@ -24,7 +24,7 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
     private LogixNG_SelectNamedBeanSwing<Sensor> _selectNamedBeanSwing;
     private LogixNG_SelectEnumSwing<SensorState> _selectEnumFromStateSwing;
     private LogixNG_SelectEnumSwing<SensorState> _selectEnumToStateSwing;
-    private JCheckBox _clearStateAfterReadCheckBox;
+    private JCheckBox _onlyTrueOnceCheckBox;
 
 
     public ExpressionSensorEdgeSwing() {
@@ -48,7 +48,7 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
 
         _selectEnumFromStateSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
         _selectEnumToStateSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
-        _clearStateAfterReadCheckBox = new JCheckBox(Bundle.getMessage("ExpressionSensorEdge_ClearStateAfterRead"));
+        _onlyTrueOnceCheckBox = new JCheckBox(Bundle.getMessage("ExpressionSensorEdge_OnlyTrueOnce"));
 
         JPanel _tabbedPaneNamedBean;
         JPanel _tabbedPaneEnumFromState;
@@ -58,7 +58,7 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
             _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(expression.getSelectNamedBean());
             _tabbedPaneEnumFromState = _selectEnumFromStateSwing.createPanel(expression.getSelectEnumFromState(), SensorState.values());
             _tabbedPaneEnumToState = _selectEnumToStateSwing.createPanel(expression.getSelectEnumToState(), SensorState.values());
-            _clearStateAfterReadCheckBox.setSelected(expression.getClearStateAfterRead());
+            _onlyTrueOnceCheckBox.setSelected(expression.getOnlyTrueOnce());
         } else {
             _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
             _tabbedPaneEnumFromState = _selectEnumFromStateSwing.createPanel(null, SensorState.values());
@@ -77,7 +77,7 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
         for (JComponent c : componentList) innerPanel.add(c);
 
         panel.add(innerPanel);
-        panel.add(_clearStateAfterReadCheckBox);
+        panel.add(_onlyTrueOnceCheckBox);
     }
 
     /** {@inheritDoc} */
@@ -118,7 +118,7 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
         _selectNamedBeanSwing.updateObject(expression.getSelectNamedBean());
         _selectEnumFromStateSwing.updateObject(expression.getSelectEnumFromState());
         _selectEnumToStateSwing.updateObject(expression.getSelectEnumToState());
-        expression.setClearStateAfterRead(_clearStateAfterReadCheckBox.isSelected());
+        expression.setOnlyTrueOnce(_onlyTrueOnceCheckBox.isSelected());
     }
 
     /** {@inheritDoc} */

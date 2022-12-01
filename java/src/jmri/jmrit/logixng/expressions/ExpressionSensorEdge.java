@@ -26,7 +26,7 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
     private final LogixNG_SelectEnum<SensorState> _selectEnumToState =
             new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active, this);
 
-    private boolean _clearStateAfterRead = false;
+    private boolean _onlyTrueOnce = false;
 
     SensorState lastSensorState = null;
     SensorState currentSensorState = null;
@@ -47,7 +47,7 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
         _selectNamedBean.copy(copy._selectNamedBean);
         _selectEnumFromState.copy(copy._selectEnumFromState);
         _selectEnumToState.copy(copy._selectEnumToState);
-        copy.setClearStateAfterRead(_clearStateAfterRead);
+        copy.setOnlyTrueOnce(_onlyTrueOnce);
         return manager.registerExpression(copy);
     }
 
@@ -63,12 +63,12 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
         return _selectEnumToState;
     }
 
-    public void setClearStateAfterRead(boolean clearStateAfterRead) {
-        _clearStateAfterRead = clearStateAfterRead;
+    public void setOnlyTrueOnce(boolean onlyTrueOnce) {
+        _onlyTrueOnce = onlyTrueOnce;
     }
 
-    public boolean getClearStateAfterRead() {
-        return _clearStateAfterRead;
+    public boolean getOnlyTrueOnce() {
+        return _onlyTrueOnce;
     }
 
     /** {@inheritDoc} */
@@ -90,7 +90,7 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
         boolean result = (lastSensorState == checkSensorFromState)
                 && (currentSensorState == checkSensorToState);
 
-        if (_clearStateAfterRead) {
+        if (_onlyTrueOnce) {
             lastSensorState = null;
             currentSensorState = null;
         }
@@ -119,8 +119,8 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
         String fromState = _selectEnumFromState.getDescription(locale);
         String toState = _selectEnumToState.getDescription(locale);
 
-        if (_clearStateAfterRead) {
-            return Bundle.getMessage(locale, "SensorEdge_LongClearState", namedBean, fromState, toState);
+        if (_onlyTrueOnce) {
+            return Bundle.getMessage(locale, "SensorEdge_LongOnlyTrueOnce", namedBean, fromState, toState);
         } else {
             return Bundle.getMessage(locale, "SensorEdge_Long", namedBean, fromState, toState);
         }

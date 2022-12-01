@@ -46,7 +46,7 @@
               <xs:element name="fromState" type="LogixNG_SelectEnumType" minOccurs="1" maxOccurs="1" />
               <xs:element name="toState" type="LogixNG_SelectEnumType" minOccurs="1" maxOccurs="1" />
 
-              <xs:element name="clearStateAfterRead" type="yesNoType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="onlyTrueOnce" type="yesNoType" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

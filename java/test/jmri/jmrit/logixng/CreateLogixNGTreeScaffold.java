@@ -3831,7 +3831,7 @@ public class CreateLogixNGTreeScaffold {
         expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");
         expressionSensorEdge.getSelectEnumFromState().setLocalVariable("index2");
         expressionSensorEdge.getSelectEnumFromState().setReference("{IM2}");
-        expressionSensorEdge.setClearStateAfterRead(false);
+        expressionSensorEdge.setOnlyTrueOnce(false);
         maleSocket = digitalExpressionManager.registerExpression(expressionSensorEdge);
         and.getChild(indexExpr++).connect(maleSocket);
 
@@ -3847,7 +3847,7 @@ public class CreateLogixNGTreeScaffold {
         expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");
         expressionSensorEdge.getSelectEnumFromState().setLocalVariable("index2");
         expressionSensorEdge.getSelectEnumFromState().setReference("{IM2}");
-        expressionSensorEdge.setClearStateAfterRead(true);
+        expressionSensorEdge.setOnlyTrueOnce(true);
         maleSocket = digitalExpressionManager.registerExpression(expressionSensorEdge);
         and.getChild(indexExpr++).connect(maleSocket);
 

@@ -42,7 +42,7 @@ public class ExpressionSensorEdgeXml extends jmri.managers.configurexml.Abstract
         element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
         element.addContent(selectEnumFromStateXml.store(p.getSelectEnumFromState(), "fromState"));
         element.addContent(selectEnumToStateXml.store(p.getSelectEnumToState(), "toState"));
-        element.addContent(new Element("clearStateAfterRead").addContent(p.getClearStateAfterRead() ? "yes" : "no"));
+        element.addContent(new Element("onlyTrueOnce").addContent(p.getOnlyTrueOnce() ? "yes" : "no"));
 
         return element;
     }
@@ -63,9 +63,9 @@ public class ExpressionSensorEdgeXml extends jmri.managers.configurexml.Abstract
         selectEnumFromStateXml.load(shared.getChild("fromState"), h.getSelectEnumFromState());
         selectEnumToStateXml.load(shared.getChild("toState"), h.getSelectEnumToState());
 
-        Element clearStateAfterReadElem = shared.getChild("clearStateAfterRead");
-        if (clearStateAfterReadElem != null) {
-            h.setClearStateAfterRead("yes".equals(clearStateAfterReadElem.getTextTrim()));
+        Element onlyTrueOnceElem = shared.getChild("onlyTrueOnce");
+        if (onlyTrueOnceElem != null) {
+            h.setOnlyTrueOnce("yes".equals(onlyTrueOnceElem.getTextTrim()));
         }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
