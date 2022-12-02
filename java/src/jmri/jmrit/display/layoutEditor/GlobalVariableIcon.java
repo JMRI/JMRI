@@ -2,31 +2,29 @@ package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JOptionPane;
+// import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.roster.RosterEntry;
+// import jmri.jmrit.roster.RosterEntry;
 import jmri.Reportable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display a status of a Memory.
+ * An icon to display a status of a GlobalVariable.
  *
- * This is the same name as display.MemoryIcon, but a very
+ * This is the same name as display.GlobalVariableIcon, but a very
  * separate class. That's not good. Unfortunately, it's too
  * hard to disentangle that now because it's resident in the
  * panel file that have been written out, so we just annotated
  * the fact, but now we want to leave it on the list to fix.
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="Cannot rename for user data compatiblity reasons.")
-public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
+public class GlobalVariableIcon extends jmri.jmrit.display.GlobalVariableIcon {
 
     private final String defaultText = " ";
 
-    public MemoryIcon(String s, LayoutEditor panel) {
+    public GlobalVariableIcon(String s, LayoutEditor panel) {
         super(s, panel);
-        log.debug("MemoryIcon ctor= {}", MemoryIcon.class.getName());
+        log.debug("GlobalVariableIcon ctor= {}", GlobalVariableIcon.class.getName());
     }
 
     @Override
@@ -37,7 +35,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
             super.setText(text);
         }
     }
-
+/*
     private LayoutBlock lBlock = null;
 
     public LayoutBlock getLayoutBlock() {
@@ -47,25 +45,28 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
     public void setLayoutBlock(LayoutBlock lb) {
         lBlock = lb;
     }
-
+*/
     @Override
     public void displayState() {
         log.debug("displayState");
-        if (getMemory() == null) {  // use default if not connected yet
+        if (getGlobalVariable() == null) {  // use default if not connected yet
             setText(defaultText);
             updateSize();
             return;
         }
+/*
         if (re != null) {
             jmri.InstanceManager.throttleManagerInstance().removeListener(re.getDccLocoAddress(), this);
             re = null;
         }
-        Object key = getMemory().getValue();
+*/
+        Object key = getGlobalVariable().getValue();
         if (key != null) {
             java.util.HashMap<String, NamedIcon> map = getMap();
             if (map == null) {
                 // no map, attempt to show object directly
                 Object val = key;
+/*
                 if (val instanceof jmri.jmrit.roster.RosterEntry) {
                     jmri.jmrit.roster.RosterEntry roster = (jmri.jmrit.roster.RosterEntry) val;
                     val = updateIconFromRosterVal(roster);
@@ -74,6 +75,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                         return;
                     }
                 }
+*/
                 if (val instanceof String) {
                     if (((String)val).isEmpty()) {
                         setText(defaultText);
@@ -112,7 +114,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     _icon = false;
                     updateSize();
                 } else {
-                    log.warn("can't display current value of {}, val= {} of Class {}", getNamedMemory().getName(), val, val.getClass().getName());
+                    log.warn("can't display current value of {}, val= {} of Class {}", getNamedGlobalVariable().getName(), val, val.getClass().getName());
                 }
             } else {
                 // map exists, use it
@@ -156,21 +158,25 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
     }
 
     @Override
-    public void setMemory(String pName) {
-        super.setMemory(pName);
-        lBlock = jmri.InstanceManager.getDefault(LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory());
+    public void setGlobalVariable(String pName) {
+        super.setGlobalVariable(pName);
+//        lBlock = jmri.InstanceManager.getDefault(LayoutBlockManager.class).getBlockWithMemoryAssigned(getGlobalVariable());
     }
 
     @Override
     protected void setValue(Object obj) {
+        getGlobalVariable().setValue(obj);
+        updateSize();
+/*
         if (updateBlockValue && lBlock != null) {
             lBlock.getBlock().setValue(obj);
         } else {
-            getMemory().setValue(obj);
+            getGlobalVariable().setValue(obj);
             updateSize();
         }
+*/
     }
-
+/*
     @Override
     protected void addRosterToIcon(RosterEntry roster) {
         if (!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() || lBlock == null) {
@@ -224,13 +230,13 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                 lBlock.getBlock().setDirection(dirA);
             }
         }
-        if (getMemory().getValue() == roster) {
+        if (getGlobalVariable().getValue() == roster) {
             //No change in the loco but a change in direction facing might have occurred
             updateIconFromRosterVal(roster);
         } else {
             setValue(roster);
         }
     }
-
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MemoryIcon.class);
+*/
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GlobalVariableIcon.class);
 }

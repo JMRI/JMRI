@@ -17,21 +17,21 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 
-import jmri.Memory;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.MemoryComboIcon;
-import jmri.jmrit.display.MemoryIcon;
-import jmri.jmrit.display.MemoryInputIcon;
-import jmri.jmrit.display.MemorySpinnerIcon;
+import jmri.jmrit.display.GlobalVariableComboIcon;
+import jmri.jmrit.display.GlobalVariableIcon;
+import jmri.jmrit.display.GlobalVariableInputIcon;
+import jmri.jmrit.display.GlobalVariableSpinnerIcon;
 import jmri.jmrit.display.PreviewPanel;
+import jmri.jmrit.logixng.GlobalVariable;
 import jmri.jmrit.picker.PickListModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeListener {
+public class GlobalVariableItemPanel extends TableItemPanel<GlobalVariable> implements ChangeListener {
 
     enum Type {
         READONLY, READWRITE, SPINNER, COMBO
@@ -39,7 +39,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
     JSpinner _spinner;
     String[] list = {"Item1", "Item2", "Item3"};
 
-    public MemoryItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.Memory> model) {
+    public GlobalVariableItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<GlobalVariable> model) {
         super(parentFrame, type, family, model);
     }
 
@@ -60,11 +60,11 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("AddMemoryToPanel")));
-        blurb.add(new JLabel(Bundle.getMessage("MemoryDragStart")));
-        blurb.add(new JLabel(Bundle.getMessage("MemoryDragFix")));
+        blurb.add(new JLabel(Bundle.getMessage("AddGlobalVariableToPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("GlobalVariableDragStart")));
+        blurb.add(new JLabel(Bundle.getMessage("GlobalVariableDragFix")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("DecorateMemory")));
+        blurb.add(new JLabel(Bundle.getMessage("DecorateGlobalVariable")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -78,10 +78,10 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
     /**
      * CENTER Panel
      */
-    MemoryIcon _readMem;
-    MemoryInputIcon _writeMem;
-    MemorySpinnerIcon _spinMem;
-    MemoryComboIcon _comboMem;
+    GlobalVariableIcon _readMem;
+    GlobalVariableInputIcon _writeMem;
+    GlobalVariableSpinnerIcon _spinMem;
+    GlobalVariableComboIcon _comboMem;
 
     @Override
     protected void initIconFamiliesPanel() {
@@ -114,40 +114,40 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
         c.anchor = java.awt.GridBagConstraints.CENTER;
         c.weightx = 1.0;
 
-        JLabel label = new JLabel(Bundle.getMessage("ReadWriteMemory"));
+        JLabel label = new JLabel(Bundle.getMessage("ReadWriteGlobalVariable"));
         label.setOpaque(false);
         panel.add(label, c);
         c.gridy = 1;
-        _writeMem = new MemoryInputIcon(5, editor);
+        _writeMem = new GlobalVariableInputIcon(5, editor);
         panel.add(makeDragIcon(_writeMem, Type.READWRITE), c);
 
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.CENTER;
-        label = new JLabel(Bundle.getMessage("ReadMemory"));
+        label = new JLabel(Bundle.getMessage("ReadGlobalVariable"));
         label.setOpaque(false);
         panel.add(label, c);
         c.gridy = 1;
-        _readMem = new MemoryIcon("_____", editor);
+        _readMem = new GlobalVariableIcon("_____", editor);
         panel.add(makeDragIcon(_readMem, Type.READONLY), c);
 
         c.gridx = 2;
         c.gridy = 0;
-        label = new JLabel(Bundle.getMessage("SpinnerMemory"));
+        label = new JLabel(Bundle.getMessage("SpinnerGlobalVariable"));
         label.setOpaque(false);
         panel.add(label, c);
         c.gridy = 1;
-        _spinMem = new MemorySpinnerIcon(editor);
+        _spinMem = new GlobalVariableSpinnerIcon(editor);
         panel.add(makeDragIcon(_spinMem, Type.SPINNER), c);
 
         c.gridx = 3;
         c.gridy = 0;
-        label = new JLabel(Bundle.getMessage("ComboMemory"));
+        label = new JLabel(Bundle.getMessage("ComboGlobalVariable"));
         label.setOpaque(false);
         panel.add(label, c);
         c.gridy = 1;
         String[] list = {"item1", "Item2", "Item3"};
-        _comboMem = new MemoryComboIcon(editor, list);
+        _comboMem = new GlobalVariableComboIcon(editor, list);
         panel.add(makeDragIcon(_comboMem, Type.COMBO), c);
 
         _spinner = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
@@ -164,7 +164,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
 
         c.gridy = 3;
         c.anchor = java.awt.GridBagConstraints.NORTH;
-        label = new JLabel(Bundle.getMessage("MemoryWidth"));
+        label = new JLabel(Bundle.getMessage("GlobalVariableWidth"));
         label.setOpaque(false);
         panel.add(label, c);
 
@@ -243,7 +243,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
 
         @Override
         protected boolean okToDrag() {
-            Memory bean = getDeviceNamedBean();
+            GlobalVariable bean = getDeviceNamedBean();
             if (bean == null) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -257,9 +257,9 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            Memory bean = getDeviceNamedBean();
+            GlobalVariable bean = getDeviceNamedBean();
             if (bean == null) {
-                log.error("IconDragJComponent.getTransferData: Memory is null!");
+                log.error("IconDragJComponent.getTransferData: GlobalVariable is null!");
                 return null;
             }
 
@@ -270,35 +270,35 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                     ((JSpinner.DefaultEditor) _spinner.getEditor()).commitEdit();
                     SpinnerNumberModel spinModel = (SpinnerNumberModel) _spinner.getModel();
                     if (log.isDebugEnabled()) {
-                        log.debug("MemoryDnD.createTransferable: spinCols= {}", spinModel.getNumber().intValue());
+                        log.debug("GlobalVariableDnD.createTransferable: spinCols= {}", spinModel.getNumber().intValue());
                     }
                     numCols = spinModel.getNumber().intValue();
                 } catch (java.text.ParseException pe) {
-                    log.error("MemoryDnD.createTransferable: ", pe);
+                    log.error("GlobalVariableDnD.createTransferable: ", pe);
                 }
                 switch (_memType) {
                     case READONLY:
-                        MemoryIcon m = new MemoryIcon("", editor);
-                        m.setMemory(bean.getDisplayName());
+                        GlobalVariableIcon m = new GlobalVariableIcon("", editor);
+                        m.setGlobalVariable(bean.getDisplayName());
 //                        m.setSize(m.getPreferredSize().width, m.getPreferredSize().height);
                         m.getPopupUtility().setFixedWidth(numCols*10);
                         m.setLevel(Editor.MEMORIES);
                         return m;
                     case READWRITE:
-                        MemoryInputIcon mi = new MemoryInputIcon(numCols, editor);
-                        mi.setMemory(bean.getDisplayName());
+                        GlobalVariableInputIcon mi = new GlobalVariableInputIcon(numCols, editor);
+                        mi.setGlobalVariable(bean.getDisplayName());
                         mi.setSize(mi.getPreferredSize().width, mi.getPreferredSize().height);
                         mi.setLevel(Editor.MEMORIES);
                         return mi;
                     case SPINNER:
-                        MemorySpinnerIcon ms = new MemorySpinnerIcon(editor);
-                        ms.setMemory(bean.getDisplayName());
+                        GlobalVariableSpinnerIcon ms = new GlobalVariableSpinnerIcon(editor);
+                        ms.setGlobalVariable(bean.getDisplayName());
                         ms.setSize(ms.getPreferredSize().width, ms.getPreferredSize().height);
                         ms.setLevel(Editor.MEMORIES);
                         return ms;
                     case COMBO:
-                        MemoryComboIcon mc = new MemoryComboIcon(editor, list);
-                        mc.setMemory(bean.getDisplayName());
+                        GlobalVariableComboIcon mc = new GlobalVariableComboIcon(editor, list);
+                        mc.setGlobalVariable(bean.getDisplayName());
                         mc.setSize(mc.getPreferredSize().width, mc.getPreferredSize().height);
                         mc.setLevel(Editor.MEMORIES);
                         return mc;
@@ -313,6 +313,6 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryItemPanel.class);
+    private final static Logger log = LoggerFactory.getLogger(GlobalVariableItemPanel.class);
 
 }

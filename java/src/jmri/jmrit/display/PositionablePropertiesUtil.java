@@ -656,8 +656,8 @@ public class PositionablePropertiesUtil {
         }
         defaultForeground = pop.getForeground();
         defaultBorderColor = pop.getBorderColor();
-        if (_parent instanceof MemoryIcon) {
-            MemoryIcon pm = (MemoryIcon) _parent;
+        if (_parent instanceof MemoryOrGVIcon) {
+            MemoryOrGVIcon pm = (MemoryOrGVIcon) _parent;
             xPos = pm.getOriginalX();
             yPos = pm.getOriginalY();
         } else {

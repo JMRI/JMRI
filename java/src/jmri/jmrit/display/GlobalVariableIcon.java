@@ -1,76 +1,67 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.AbstractAction;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 import jmri.InstanceManager;
-import jmri.Memory;
 import jmri.NamedBeanHandle;
 import jmri.Reportable;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.roster.RosterIconFactory;
-import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.throttle.ThrottleFrameManager;
-import jmri.util.datatransfer.RosterEntrySelection;
+import jmri.jmrit.logixng.GlobalVariable;
+import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.util.swing.JmriMouseEvent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display a status of a Memory.
+ * An icon to display a status of a GlobalVariable.
  * <p>
  * The value of the memory can't be changed with this icon.
  *
- * @author Bob Jacobsen Copyright (c) 2004
+ * @author Bob Jacobsen     Copyright (c) 2004
+ * @author Daniel Bergqvist Copyright (C) 2022
  */
-public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyChangeListener/*, DropTargetListener*/ {
+public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.PropertyChangeListener/*, DropTargetListener*/ {
 
     NamedIcon defaultIcon = null;
     // the map of icons
     java.util.HashMap<String, NamedIcon> map = null;
-    private NamedBeanHandle<Memory> namedMemory;
+    private NamedBeanHandle<GlobalVariable> namedGlobalVariable;
 
-    public MemoryIcon(String s, Editor editor) {
+    public GlobalVariableIcon(String s, Editor editor) {
         super(s, editor);
         resetDefaultIcon();
         _namedIcon = defaultIcon;
         //By default all memory is left justified
         _popupUtil.setJustification(LEFT);
-        this.setTransferHandler(new TransferHandler());
     }
 
-    public MemoryIcon(NamedIcon s, Editor editor) {
+    public GlobalVariableIcon(NamedIcon s, Editor editor) {
         super(s, editor);
         setDisplayLevel(Editor.LABELS);
         defaultIcon = s;
         _popupUtil.setJustification(LEFT);
-        log.debug("MemoryIcon ctor= {}", MemoryIcon.class.getName());
-        this.setTransferHandler(new TransferHandler());
+        log.debug("GlobalVariableIcon ctor= {}", GlobalVariableIcon.class.getName());
     }
 
     @Override
     public Positionable deepClone() {
-        MemoryIcon pos = new MemoryIcon("", _editor);
+        GlobalVariableIcon pos = new GlobalVariableIcon("", _editor);
         return finishClone(pos);
     }
 
-    protected Positionable finishClone(MemoryIcon pos) {
-        pos.setMemory(namedMemory.getName());
+    protected Positionable finishClone(GlobalVariableIcon pos) {
+        pos.setGlobalVariable(namedGlobalVariable.getName());
         pos.setOriginalLocation(getOriginalX(), getOriginalY());
         if (map != null) {
             for (Map.Entry<String, NamedIcon> entry : map.entrySet()) {
@@ -101,55 +92,55 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
     }
 
     /**
-     * Attach a named Memory to this display item.
+     * Attach a named GlobalVariable to this display item.
      *
-     * @param pName Used as a system/user name to lookup the Memory object
+     * @param pName Used as a system/user name to lookup the GlobalVariable object
      */
-    public void setMemory(String pName) {
-        if (InstanceManager.getNullableDefault(jmri.MemoryManager.class) != null) {
+    public void setGlobalVariable(String pName) {
+        if (InstanceManager.getNullableDefault(GlobalVariableManager.class) != null) {
             try {
-                Memory memory = InstanceManager.memoryManagerInstance().provideMemory(pName);
-                setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
+                GlobalVariable globalVariable = InstanceManager.getDefault(GlobalVariableManager.class).getGlobalVariable(pName);
+                setGlobalVariable(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, globalVariable));
             } catch (IllegalArgumentException e) {
-                log.error("Memory '{}' not available, icon won't see changes", pName);
+                log.error("GlobalVariable '{}' not available, icon won't see changes", pName);
             }
         } else {
-            log.error("No MemoryManager for this protocol, icon won't see changes");
+            log.error("No GlobalVariableManager for this protocol, icon won't see changes");
         }
         updateSize();
     }
 
     /**
-     * Attach a named Memory to this display item.
+     * Attach a named GlobalVariable to this display item.
      *
-     * @param m The Memory object
+     * @param m The GlobalVariable object
      */
-    public void setMemory(NamedBeanHandle<Memory> m) {
-        if (namedMemory != null) {
-            getMemory().removePropertyChangeListener(this);
+    public void setGlobalVariable(NamedBeanHandle<GlobalVariable> m) {
+        if (namedGlobalVariable != null) {
+            getGlobalVariable().removePropertyChangeListener(this);
         }
-        namedMemory = m;
-        if (namedMemory != null) {
-            getMemory().addPropertyChangeListener(this, namedMemory.getName(), "Memory Icon");
+        namedGlobalVariable = m;
+        if (namedGlobalVariable != null) {
+            getGlobalVariable().addPropertyChangeListener(this, namedGlobalVariable.getName(), "GlobalVariable Icon");
             displayState();
-            setName(namedMemory.getName());
+            setName(namedGlobalVariable.getName());
         }
     }
 
-    public NamedBeanHandle<Memory> getNamedMemory() {
-        return namedMemory;
+    public NamedBeanHandle<GlobalVariable> getNamedGlobalVariable() {
+        return namedGlobalVariable;
     }
 
-    public Memory getMemory() {
-        if (namedMemory == null) {
+    public GlobalVariable getGlobalVariable() {
+        if (namedGlobalVariable == null) {
             return null;
         }
-        return namedMemory.getBean();
+        return namedGlobalVariable.getBean();
     }
 
     @Override
     public jmri.NamedBean getNamedBean() {
-        return getMemory();
+        return getGlobalVariable();
     }
 
     public java.util.HashMap<String, NamedIcon> getMap() {
@@ -168,7 +159,7 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
         displayState(); // in case changed
     }
 
-    // update icon as state of Memory changes
+    // update icon as state of GlobalVariable changes
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
@@ -193,10 +184,10 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
     @Override
     public String getNameString() {
         String name;
-        if (namedMemory == null) {
+        if (namedGlobalVariable == null) {
             name = Bundle.getMessage("NotConnected");
         } else {
-            name = getMemory().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
+            name = getGlobalVariable().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }
@@ -228,80 +219,19 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
             }
             return true;
         }  // end of selectable
-        if (re != null) {
-            popup.add(new AbstractAction(Bundle.getMessage("OpenThrottle")) {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
-                    tf.toFront();
-                    tf.getAddressPanel().setRosterEntry(re);
-                }
-            });
-            //don't like the idea of refering specifically to the layout block manager for this, but it has to be done if we are to allow the panel editor to also assign trains to block, when used with a layouteditor
-            if ((InstanceManager.getDefault(jmri.SectionManager.class).getNamedBeanSet().size()) > 0 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()) != null) {
-                final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
-                if (df != null) {
-                    final jmri.jmrit.dispatcher.ActiveTrain at = df.getActiveTrainForRoster(re);
-                    if (at != null) {
-                        popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
-
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                df.terminateActiveTrain(at,true,false);
-                            }
-                        });
-                        popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
-
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                //Just brings up the standard allocate extra frame, this could be expanded in the future
-                                //As a point and click operation.
-                                df.allocateExtraSection(e, at);
-                            }
-                        });
-                        if (at.getStatus() == jmri.jmrit.dispatcher.ActiveTrain.DONE) {
-                            popup.add(new AbstractAction(Bundle.getMessage("MenuRestartTrain")) {
-
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    at.allocateAFresh();
-                                }
-                            });
-                        }
-                    } else {
-                        popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
-
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                jmri.jmrit.display.layoutEditor.LayoutBlock lBlock = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory());
-                                if (!df.getNewTrainActive() && lBlock!=null) {
-                                    df.getActiveTrainFrame().initiateTrain(e, re, lBlock.getBlock());
-                                    df.setNewTrainActive(true);
-                                } else {
-                                    df.getActiveTrainFrame().showActivateFrame(re);
-                                }
-                            }
-
-                        });
-                    }
-                }
-            }
-            return true;
-        }
         return false;
     }
 
     /**
-     * Text edits cannot be done to Memory text - override
+     * Text edits cannot be done to GlobalVariable text - override
      */
     @Override
     public boolean setTextEditMenu(JPopupMenu popup) {
-        popup.add(new AbstractAction(Bundle.getMessage("EditMemoryValue")) {
+        popup.add(new AbstractAction(Bundle.getMessage("EditGlobalVariableValue")) {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                editMemoryValue();
+                editGlobalVariableValue();
             }
         });
         return true;
@@ -317,27 +247,24 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
     Color _saveColor;
 
     /**
-     * Drive the current state of the display from the state of the Memory.
+     * Drive the current state of the display from the state of the GlobalVariable.
      */
+    @Override
     public void displayState() {
         log.debug("displayState()");
 
-        if (namedMemory == null) {  // use default if not connected yet
+        if (namedGlobalVariable == null) {  // use default if not connected yet
             setIcon(defaultIcon);
             updateSize();
             return;
         }
-        if (re != null) {
-            jmri.InstanceManager.throttleManagerInstance().removeListener(re.getDccLocoAddress(), this);
-            re = null;
-        }
-        Object key = getMemory().getValue();
+        Object key = getGlobalVariable().getValue();
         displayState(key);
     }
 
     /**
      * Special method to transfer a setAttributes call from the LE version of
-     * MemoryIcon. This eliminates the need to change references to public.
+     * GlobalVariableIcon. This eliminates the need to change references to public.
      *
      * @since 4.11.6
      * @param util The LE popup util object.
@@ -353,14 +280,6 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
             if (map == null) {
                 Object val = key;
                 // no map, attempt to show object directly
-                if (val instanceof jmri.jmrit.roster.RosterEntry) {
-                    jmri.jmrit.roster.RosterEntry roster = (jmri.jmrit.roster.RosterEntry) val;
-                    val = updateIconFromRosterVal(roster);
-                    flipRosterIcon = false;
-                    if (val == null) {
-                        return;
-                    }
-                }
                 if (val instanceof String) {
                     String str = (String) val;
                     _icon = false;
@@ -434,36 +353,8 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
         updateSize();
     }
 
-    protected Object updateIconFromRosterVal(RosterEntry roster) {
-        re = roster;
-        javax.swing.ImageIcon icon = jmri.InstanceManager.getDefault(RosterIconFactory.class).getIcon(roster);
-        if (icon == null || icon.getIconWidth() == -1 || icon.getIconHeight() == -1) {
-            //the IconPath is still at default so no icon set
-            return roster.titleString();
-        } else {
-            NamedIcon rosterIcon = new NamedIcon(roster.getIconPath(), roster.getIconPath());
-            _text = false;
-            _icon = true;
-            updateIcon(rosterIcon);
-
-            if (flipRosterIcon) {
-                flipIcon(NamedIcon.HORIZONTALFLIP);
-            }
-            jmri.InstanceManager.throttleManagerInstance().attachListener(re.getDccLocoAddress(), this);
-            Object isForward = jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(re.getDccLocoAddress(), jmri.Throttle.ISFORWARD);
-            if (isForward != null) {
-                if (!(Boolean) isForward) {
-                    flipIcon(NamedIcon.HORIZONTALFLIP);
-                }
-            }
-            return null;
-        }
-    }
-
-    protected jmri.jmrit.roster.RosterEntry re = null;
-
-    /*As the size of a memory label can change we want to adjust the position of the x,y
-     if the width is fixed*/
+    /*As the size of a global variable label can change we want to adjust
+     the position of the x,y if the width is fixed*/
     static final int LEFT = 0x00;
     static final int RIGHT = 0x02;
     static final int CENTRE = 0x04;
@@ -506,10 +397,12 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
         updateSize();
     }
 
+    @Override
     public int getOriginalX() {
         return originalX;
     }
 
+    @Override
     public int getOriginalY() {
         return originalY;
     }
@@ -525,7 +418,7 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
 
     @Override
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameGlobalVariable"));
         popup.add(new AbstractAction(txt) {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -537,15 +430,15 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
 
     @Override
     protected void edit() {
-        makeIconEditorFrame(this, "Memory", true, null);
+        makeIconEditorFrame(this, "GlobalVariable", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
-        ActionListener addIconAction = (ActionEvent a) -> editMemory();
-        _iconEditor.complete(addIconAction, false, true, true);
-        _iconEditor.setSelection(getMemory());
+        ActionListener addIconAction = (ActionEvent a) -> editGlobalVariable();
+        _iconEditor.complete(addIconAction, false, false, true);
+        _iconEditor.setSelection(getGlobalVariable());
     }
 
-    void editMemory() {
-        setMemory(_iconEditor.getTableSelection().getDisplayName());
+    void editGlobalVariable() {
+        setGlobalVariable(_iconEditor.getTableSelection().getDisplayName());
         updateSize();
         _iconEditorFrame.dispose();
         _iconEditorFrame = null;
@@ -555,39 +448,35 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
 
     @Override
     public void dispose() {
-        if (getMemory() != null) {
-            getMemory().removePropertyChangeListener(this);
+        if (getGlobalVariable() != null) {
+            getGlobalVariable().removePropertyChangeListener(this);
         }
-        namedMemory = null;
-        if (re != null) {
-            jmri.InstanceManager.throttleManagerInstance().removeListener(re.getDccLocoAddress(), this);
-            re = null;
-        }
+        namedGlobalVariable = null;
         super.dispose();
     }
 
     @Override
     public void doMouseClicked(JmriMouseEvent e) {
         if (e.getClickCount() == 2) { // double click?
-            editMemoryValue();
+            editGlobalVariableValue();
         }
     }
 
-    protected void editMemoryValue() {
-        JTextField newMemory = new JTextField(20);
-        if (getMemory().getValue() != null) {
-            newMemory.setText(getMemory().getValue().toString());
+    protected void editGlobalVariableValue() {
+        JTextField newGlobalVariable = new JTextField(20);
+        if (getGlobalVariable().getValue() != null) {
+            newGlobalVariable.setText(getGlobalVariable().getValue().toString());
         }
-        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), newMemory};
+        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), newGlobalVariable};
         int retval = JOptionPane.showOptionDialog(this,
-                "Edit Current Memory Value", namedMemory.getName(),
+                "Edit Current GlobalVariable Value", namedGlobalVariable.getName(),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 options, options[2]);
 
         if (retval != 1) {
             return;
         }
-        setValue(newMemory.getText());
+        setValue(newGlobalVariable.getText());
         updateSize();
     }
 
@@ -602,70 +491,17 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
         return updateBlockValue;
     }
 
-    protected boolean flipRosterIcon = false;
-
-    protected void addRosterToIcon(RosterEntry roster) {
-        Object[] options = {"Facing West",
-            "Facing East",
-            "Do Not Add"};
-        int n = JOptionPane.showOptionDialog(this, // TODO I18N
-                "Would you like to assign loco "
-                + roster.titleString() + " to this location",
-                "Assign Loco",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[2]);
-        if (n == 2) {
-            return;
-        }
-        flipRosterIcon = (n == 0);
-        if (getValue() == roster) {
-            //No change in the loco but a change in direction facing might have occurred
-            updateIconFromRosterVal(roster);
-        } else {
-            setValue(roster);
-        }
-    }
-
     protected Object getValue() {
-        if (getMemory() == null) {
+        if (getGlobalVariable() == null) {
             return null;
         }
-        return getMemory().getValue();
+        return getGlobalVariable().getValue();
     }
 
     protected void setValue(Object val) {
-        getMemory().setValue(val);
+        getGlobalVariable().setValue(val);
     }
 
-    class TransferHandler extends javax.swing.TransferHandler {
-        @Override
-        public boolean canImport(JComponent c, DataFlavor[] transferFlavors) {
-            for (DataFlavor flavor : transferFlavors) {
-                if (RosterEntrySelection.rosterEntryFlavor.equals(flavor)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        @Override
-        public boolean importData(JComponent c, Transferable t) {
-            try {
-                ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(t);
-                for (RosterEntry roster : REs) {
-                    addRosterToIcon(roster);
-                }
-            } catch (java.awt.datatransfer.UnsupportedFlavorException | java.io.IOException e) {
-                log.error("Could not add a RosterEntry to Icon.", e);
-            }
-            return true;
-        }
-
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class);
+    private final static Logger log = LoggerFactory.getLogger(GlobalVariableIcon.class);
 
 }

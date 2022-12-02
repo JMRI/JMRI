@@ -25,7 +25,7 @@ public class ItemPanelTest {
         ItemPalette.getDefault("ItemPalette", editor);
 
         int count = ItemPalette._tabPane.getComponentCount();
-        Assert.assertEquals("tab count", 16, count);
+        Assert.assertEquals("tab count", 17, count);
         for (int i = count-1; i>=0; i--) {
             ItemPalette._tabPane.setSelectedIndex(i);
             JScrollPane sp = (JScrollPane) ItemPalette._tabPane.getSelectedComponent();
