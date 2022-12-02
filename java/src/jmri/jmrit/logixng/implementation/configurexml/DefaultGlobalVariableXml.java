@@ -64,8 +64,6 @@ public class DefaultGlobalVariableXml extends jmri.managers.configurexml.Abstrac
             h.setInitialValueData(elementInitialValueData.getTextTrim());
         }
 
-        System.out.format("Global variable %s is created%n", uname);
-
         return true;
     }
 
