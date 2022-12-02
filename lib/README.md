@@ -312,10 +312,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
   and https://github.com/usb4java/usb4java-javax/releases/tag/usb4java-javax-1.3.0
 - lib/libusb4java-1.3.0-darwin-aarch64.jar made from a .dylib found at https://github.com/developersu/ns-usbloader/issues/91
 
-##### antlr-3.4-complete
-- version 3.4
-- ANother Tool for Language Recognition
-
 ##### beansbinding-1.2.1.jar
 - version 1.2.1
 - used in web server preference panels
@@ -438,14 +434,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 1.9.1
 
 ##### junit-vintage-engine-5.9.1.jar
-
-##### i18nchecker.jar
-- Internationalization checker: used in source code development, for checking proper implementation of text internationalization.
-- From https://github.com/JMRI/i18nchecker
-- Note: We use a custom version of the original in https://github.com/phamernik/i18nchecker
-- See license https://github.com/phamernik/i18nchecker/blob/master/i18nchecker/LICENSE-2.0.txt
-- Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
-- Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
 
 ##### mockito-core mockito-inline mockito-junit-jupiter
 - version 3.5.11

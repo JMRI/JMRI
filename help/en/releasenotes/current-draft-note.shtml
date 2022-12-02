@@ -419,6 +419,10 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>The Throttle action supports multiple throttle connections.</li>
+          <li>The expression <i>Sensor Edge</i> has been added. It returns True when
+          the sensor goes from one predefined state to another predefined state.</li>
+          <li>The LogixNG table now have the option <i>Execute</i> that lets you to
+          execute a single LogixNG.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -564,7 +568,7 @@
         <a id="Wt" name="Wt"></a>
         <ul>
             <li>Fix bug making NXWarrants over very short blocks.</li>
-            <li>New concatenation option (Warrant Table menu Warrants->Concatenate Warrants). 
+            <li>New concatenation option (Warrant Table menu Warrants->Concatenate Warrants).
                Concatenated warrant may either stop or continue at speed through the connecting
                block. It is no longer required to match paths at the connecting block.
                Concatenation will find the connecting path if it exists.
@@ -605,5 +609,6 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>SpotBugs has been updated to 4.7.3</li>
+            <li>Remove the i18n-consistency-check ant target (and related jar) as ineffective</li>
         </ul>
 

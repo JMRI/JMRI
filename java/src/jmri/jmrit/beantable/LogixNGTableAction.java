@@ -163,6 +163,16 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     }
 
     @Override
+    protected boolean isExecuteSupported() {
+        return true;
+    }
+
+    @Override
+    protected void execute(@Nonnull LogixNG logixNG) {
+        logixNG.execute();
+    }
+
+    @Override
     protected String getBeanText(LogixNG e) {
         StringWriter writer = new StringWriter();
         _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
