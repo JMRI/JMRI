@@ -136,6 +136,7 @@ public class MemoryComboIcon extends MemoryOrGVComboIcon
         return namedMemory.getBean();
     }
 
+    @Override
     public ComboModel getComboModel() {
         return _model;
     }

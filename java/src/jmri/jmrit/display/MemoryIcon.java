@@ -319,6 +319,7 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
     /**
      * Drive the current state of the display from the state of the Memory.
      */
+    @Override
     public void displayState() {
         log.debug("displayState()");
 
@@ -506,10 +507,12 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
         updateSize();
     }
 
+    @Override
     public int getOriginalX() {
         return originalX;
     }
 
+    @Override
     public int getOriginalY() {
         return originalY;
     }
