@@ -306,6 +306,6 @@ public class MemoryComboIcon extends MemoryOrGVComboIcon
         namedMemory = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryOrGVComboIcon.class);
+    private final static Logger log = LoggerFactory.getLogger(MemoryComboIcon.class);
 
 }
