@@ -647,9 +647,9 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static final int LOGIXNG_ANALOG_ACTIONS = LOGIXNG_ANALOG_EXPRESSIONS + 10;   // LogixNG AnalogAction
     public static final int LOGIXNG_STRING_EXPRESSIONS = LOGIXNG_ANALOG_ACTIONS + 10;   // LogixNG StringExpression
     public static final int LOGIXNG_STRING_ACTIONS = LOGIXNG_STRING_EXPRESSIONS + 10;   // LogixNG StringAction
-    public static final int PANELFILES = LOGIXNGS + 10;
+    public static final int PANELFILES = LOGIXNG_STRING_ACTIONS + 10;
     public static final int ENTRYEXIT = PANELFILES + 10;
-    public static final int METERFRAMES = LOGIXNG_STRING_ACTIONS + 10;
+    public static final int METERFRAMES = ENTRYEXIT + 10;
     public static final int CTCDATA = METERFRAMES + 10;
 
     /**
