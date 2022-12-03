@@ -256,12 +256,12 @@ public class MemoryComboIcon extends PositionableJPanel
                 }
                 list = new JList<>(_listModel);
                 JScrollPane scrollPane = new JScrollPane(list);
-                JPanel pInner1 = new JPanel();
-                pInner1.add(new JLabel(Bundle.getMessage("comboList")));
-                p.add(pInner1);
-                p.add(scrollPane);
                 JPanel p1 = new JPanel();
-                pInner1 = new JPanel();
+                p1.add(new JLabel(Bundle.getMessage("comboList")));
+                p.add(p1);
+                p.add(scrollPane);
+                p1 = new JPanel();
+                JPanel pInner1 = new JPanel();
                 pInner1.setLayout(new BoxLayout(pInner1, BoxLayout.X_AXIS));
                 p1.add(pInner1);
                 pInner1.add(new JLabel(Bundle.getMessage("newItem"), SwingConstants.RIGHT));
