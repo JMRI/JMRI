@@ -44,11 +44,6 @@
                 <li></li>
             </ul>
 
-        <h4>EasyDCC</h4>
-            <ul>
-                <li>Now allows adding multiple new turnouts at the same time.</li>
-            </ul>
-
         <h4>ESU</h4>
             <ul>
                 <li></li>
@@ -81,13 +76,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>You can now select separate defaults (in the Preferences -> Defaults pane)
-                for additional types of LocoNet connections.
-                <p>
-                Note: Existing LocoNet connections might give a "The Defaults preferences are invalid"
-                warning when saving preferences.  In that case, click "yes" and then go set
-                all the default radio buttons on the "Defaults" pane to the LocoNet connection.  (You can also
-                click "no", but you'll get the message next time you store too)</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -347,8 +336,7 @@
 
         <h4>Viessmann</h4>
             <ul>
-                <li>New decoder definition for Viessmann 4567 TT Motorized point machine</li>
-		<li>New decoder definition for Tillig 08335 TT Motor-driven double crossing point</li>
+                <li></li>
             </ul>
 
         <h4>Wangrow</h4>
@@ -358,9 +346,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>New decoder definitions for Firmware 40.18</li>
-                <li>Nigel Cliffe did a
-                <a href="https://github.com/JMRI/JMRI/issues/11608">large update to the Zimo definitions</a></li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -383,7 +369,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Add ability to add PreStart delay and actions.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -418,11 +404,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The Throttle action supports multiple throttle connections.</li>
-          <li>The expression <i>Sensor Edge</i> has been added. It returns True when
-          the sensor goes from one predefined state to another predefined state.</li>
-          <li>The LogixNG table now have the option <i>Execute</i> that lets you to
-          execute a single LogixNG.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -492,8 +474,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Updated ControlPanel.py sample script to show the panel windows
-            instead of the panel editor windows.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -508,11 +489,7 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li>"Single Output" signal heads had their Thrown and Reversed
-                positions
-                <a href="https://groups.io/g/jmriusers/message/210041">reversed in the "Add..." dialog</a>.
-                This is now corrected.
-                </li>
+                <li></li>
             </ul>
 
         <h4>Signal Masts</h4>
@@ -567,12 +544,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Fix bug making NXWarrants over very short blocks.</li>
-            <li>New concatenation option (Warrant Table menu Warrants->Concatenate Warrants).
-               Concatenated warrant may either stop or continue at speed through the connecting
-               block. It is no longer required to match paths at the connecting block.
-               Concatenation will find the connecting path if it exists.
-               This method is preferred rather than linking warrants of the same DCC address.</li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
@@ -608,7 +580,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>SpotBugs has been updated to 4.7.3</li>
-            <li>Remove the i18n-consistency-check ant target (and related jar) as ineffective</li>
+            <li></li>
         </ul>
 
