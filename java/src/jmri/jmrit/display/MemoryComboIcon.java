@@ -263,9 +263,9 @@ public class MemoryComboIcon extends PositionableJPanel
                 p1 = new JPanel();
                 JPanel pInner1 = new JPanel();
                 pInner1.setLayout(new BoxLayout(pInner1, BoxLayout.X_AXIS));
-                p1.add(pInner1);
                 pInner1.add(new JLabel(Bundle.getMessage("newItem"), SwingConstants.RIGHT));
                 pInner1.add(textfield);
+                p1.add(pInner1);
                 p.add(p1);
                 JPanel p2 = new JPanel();
                 //p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
