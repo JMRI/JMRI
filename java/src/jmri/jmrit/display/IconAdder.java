@@ -518,8 +518,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _buttonPanel = new JPanel();
         _buttonPanel.setLayout(new BoxLayout(_buttonPanel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.setLayout(new FlowLayout());
         if (addToTable) {
+            JPanel pInner = new JPanel();
+            pInner.setLayout(new BoxLayout(pInner, BoxLayout.X_AXIS));
+            p.add(pInner);
             _sysNameText = new JTextField();
             _sysNameText.setPreferredSize(
                     new Dimension(150, _sysNameText.getPreferredSize().height + 2));
@@ -547,7 +550,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _addTableButton.addActionListener((ActionEvent a) -> addToTable());
             _addTableButton.setEnabled(false);
             _addTableButton.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
-            p.add(_sysNameText);
+            pInner.add(_sysNameText);
             _sysNameText.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyReleased(KeyEvent a) {
@@ -559,7 +562,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 }
             });
 
-            p.add(_addTableButton);
+            pInner.add(_addTableButton);
             _buttonPanel.add(p);
             p = new JPanel();
             p.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
