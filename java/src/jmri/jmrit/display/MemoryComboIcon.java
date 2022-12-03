@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractButton;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -260,9 +261,11 @@ public class MemoryComboIcon extends PositionableJPanel
                 p.add(p1);
                 p.add(scrollPane);
                 p1 = new JPanel();
-                p1.add(new JLabel(Bundle.getMessage("newItem"), SwingConstants.RIGHT));
-                textfield.setMaximumSize(textfield.getPreferredSize());
-                p1.add(textfield);
+                JPanel pInner1 = new JPanel();
+                pInner1.setLayout(new BoxLayout(pInner1, BoxLayout.X_AXIS));
+                pInner1.add(new JLabel(Bundle.getMessage("newItem"), SwingConstants.RIGHT));
+                pInner1.add(textfield);
+                p1.add(pInner1);
                 p.add(p1);
                 JPanel p2 = new JPanel();
                 //p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
