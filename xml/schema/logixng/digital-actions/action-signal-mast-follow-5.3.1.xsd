@@ -59,6 +59,9 @@
                 </xs:complexType>
               </xs:element>
 
+              <xs:element name="followLitUnlit" type="yesNoType" />
+              <xs:element name="followHeldUnheld" type="yesNoType" />
+
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>

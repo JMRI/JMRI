@@ -1694,33 +1694,51 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
-        ActionSignalMastFollow ActionSignalMastFollow = new ActionSignalMastFollow(digitalActionManager.getAutoSystemName(), null);
-        maleSocket = digitalActionManager.registerAction(ActionSignalMastFollow);
+        ActionSignalMastFollow actionSignalMastFollow = new ActionSignalMastFollow(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionSignalMastFollow);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        ActionSignalMastFollow = new ActionSignalMastFollow(digitalActionManager.getAutoSystemName(), null);
-        ActionSignalMastFollow.setComment("A comment");
-        ActionSignalMastFollow.getSelectPrimaryMast().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
-        ActionSignalMastFollow.getSelectSecondaryMast().setNamedBean("IF$shsm:PRR-1956:PL-1-high-abs(IH2)");
-        ActionSignalMastFollow.getAspectMap().put("Clear", "Clear");
-        ActionSignalMastFollow.getAspectMap().put("Approach Medium", "Approach");
-        ActionSignalMastFollow.getAspectMap().put("Medium Clear", "Approach");
-        ActionSignalMastFollow.getAspectMap().put("Medium Approach Slow", "Approach");
-        ActionSignalMastFollow.getAspectMap().put("Approach Slow", "Approach");
-        ActionSignalMastFollow.getAspectMap().put("Approach", "Approach");
-        ActionSignalMastFollow.getAspectMap().put("Medium Approach", "Approach");
-        ActionSignalMastFollow.getAspectMap().put("Slow Clear", "Clear");
-        ActionSignalMastFollow.getAspectMap().put("Slow Approach", "Approach");
-        ActionSignalMastFollow.getAspectMap().put("Permissive", "Permissive Block");
-        ActionSignalMastFollow.getAspectMap().put("Permissive Medium", "Permissive Block");
-        ActionSignalMastFollow.getAspectMap().put("Restricting", "Permissive Block");
-        ActionSignalMastFollow.getAspectMap().put("Stop and Proceed", "Stop");
-        ActionSignalMastFollow.getAspectMap().put("Stop and Proceed Medium", "Stop");
-        ActionSignalMastFollow.getAspectMap().put("Stop", "Stop");
-        SignalMast m1 = ActionSignalMastFollow.getSelectPrimaryMast().getBean();
-        SignalMast m2 = ActionSignalMastFollow.getSelectSecondaryMast().getBean();
-        maleSocket = digitalActionManager.registerAction(ActionSignalMastFollow);
+        actionSignalMastFollow = new ActionSignalMastFollow(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMastFollow.setComment("A comment");
+        actionSignalMastFollow.getSelectPrimaryMast().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        actionSignalMastFollow.getSelectSecondaryMast().setNamedBean("IF$shsm:PRR-1956:PL-1-high-abs(IH2)");
+        actionSignalMastFollow.getAspectMap().put("Clear", "Clear");
+        actionSignalMastFollow.getAspectMap().put("Approach Medium", "Approach");
+        actionSignalMastFollow.getAspectMap().put("Medium Clear", "Approach");
+        actionSignalMastFollow.getAspectMap().put("Medium Approach Slow", "Approach");
+        actionSignalMastFollow.getAspectMap().put("Approach Slow", "Approach");
+        actionSignalMastFollow.getAspectMap().put("Approach", "Approach");
+        actionSignalMastFollow.getAspectMap().put("Medium Approach", "Approach");
+        actionSignalMastFollow.getAspectMap().put("Slow Clear", "Clear");
+        actionSignalMastFollow.getAspectMap().put("Slow Approach", "Approach");
+        actionSignalMastFollow.getAspectMap().put("Permissive", "Permissive Block");
+        actionSignalMastFollow.getAspectMap().put("Permissive Medium", "Permissive Block");
+        actionSignalMastFollow.getAspectMap().put("Restricting", "Permissive Block");
+        actionSignalMastFollow.getAspectMap().put("Stop and Proceed", "Stop");
+        actionSignalMastFollow.getAspectMap().put("Stop and Proceed Medium", "Stop");
+        actionSignalMastFollow.getAspectMap().put("Stop", "Stop");
+        actionSignalMastFollow.setFollowLitUnlit(true);
+        actionSignalMastFollow.setFollowHeldUnheld(false);
+        maleSocket = digitalActionManager.registerAction(actionSignalMastFollow);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalMastFollow = new ActionSignalMastFollow(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMastFollow.setComment("A comment");
+        actionSignalMastFollow.getSelectPrimaryMast().setNamedBean("IF$shsm:PRR-1956:PL-1-high-abs(IH2)");
+        actionSignalMastFollow.getSelectSecondaryMast().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        actionSignalMastFollow.setFollowLitUnlit(false);
+        actionSignalMastFollow.setFollowHeldUnheld(true);
+        maleSocket = digitalActionManager.registerAction(actionSignalMastFollow);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalMastFollow = new ActionSignalMastFollow(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMastFollow.setComment("A comment");
+        actionSignalMastFollow.getSelectPrimaryMast().setNamedBean("IF$shsm:PRR-1956:PL-1-high-abs(IH2)");
+        actionSignalMastFollow.getSelectSecondaryMast().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        actionSignalMastFollow.setFollowLitUnlit(false);
+        actionSignalMastFollow.setFollowHeldUnheld(false);
+        maleSocket = digitalActionManager.registerAction(actionSignalMastFollow);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 

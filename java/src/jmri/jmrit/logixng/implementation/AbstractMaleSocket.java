@@ -122,6 +122,15 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     }
 
     @Override
+    public final String getDetailedLongDescription(Locale locale) {
+        String s = _object.getDetailedLongDescription(locale);
+        if (!_listen) {
+            s += " ::: " + Base.getNoListenString();
+        }
+        return s;
+    }
+
+    @Override
     public final String getUserName() {
         return _object.getUserName();
     }
@@ -416,7 +425,11 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
             }
             writer.append(currentIndent);
-            writer.append(getLongDescription(locale));
+            if (settings._printDetailedDescription) {
+                writer.append(getDetailedLongDescription(locale));
+            } else {
+                writer.append(getLongDescription(locale));
+            }
             if (settings._printSystemNames) {
                 writer.append(" ::: ");
                 writer.append(this.getSystemName());

@@ -50,6 +50,9 @@ public class ActionSignalMastFollowXml extends jmri.managers.configurexml.Abstra
         }
         element.addContent(elementAspectMap);
 
+        element.addContent(new Element("followLitUnlit").addContent(p.getFollowLitUnlit()? "yes" : "no"));
+        element.addContent(new Element("followHeldUnheld").addContent(p.getFollowHeldUnheld()? "yes" : "no"));
+
         return element;
     }
 
@@ -71,6 +74,20 @@ public class ActionSignalMastFollowXml extends jmri.managers.configurexml.Abstra
             String sourceAspect = apectMapping.getChild("sourceAspect").getTextTrim();
             String destAspect = apectMapping.getChild("destAspect").getTextTrim();
             h.getAspectMap().put(sourceAspect, destAspect);
+        }
+
+        Element followLitUnlit = shared.getChild("followLitUnlit");
+        if (followLitUnlit != null) {
+            h.setFollowLitUnlit("yes".equals(followLitUnlit.getTextTrim()));
+        } else {
+            h.setFollowLitUnlit(false);
+        }
+
+        Element followHeldUnheld = shared.getChild("followHeldUnheld");
+        if (followHeldUnheld != null) {
+            h.setFollowHeldUnheld("yes".equals(followHeldUnheld.getTextTrim()));
+        } else {
+            h.setFollowHeldUnheld(false);
         }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

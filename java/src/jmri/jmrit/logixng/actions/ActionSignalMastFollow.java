@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -28,6 +27,13 @@ public class ActionSignalMastFollow extends AbstractDigitalAction
 
     private final Map<String, String> _aspectMap = new HashMap<>();
 
+    private boolean _followLitUnlit = false;
+    private boolean _followHeldUnheld = false;
+
+    private String _lastAspect = null;
+    private Boolean _lastLit = null;
+    private Boolean _lastHeld = null;
+
 
     public ActionSignalMastFollow(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -49,6 +55,8 @@ public class ActionSignalMastFollow extends AbstractDigitalAction
         for (Map.Entry<String, String> entry : _aspectMap.entrySet()) {
             copy._aspectMap.put(entry.getKey(), entry.getValue());
         }
+        copy.setFollowLitUnlit(_followLitUnlit);
+        copy.setFollowHeldUnheld(_followHeldUnheld);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
@@ -62,6 +70,22 @@ public class ActionSignalMastFollow extends AbstractDigitalAction
 
     public Map<String, String> getAspectMap() {
         return _aspectMap;
+    }
+
+    public void setFollowLitUnlit(boolean followLitUnlit) {
+        this._followLitUnlit = followLitUnlit;
+    }
+
+    public boolean getFollowLitUnlit() {
+        return _followLitUnlit;
+    }
+
+    public void setFollowHeldUnheld(boolean followHeldUnheld) {
+        this._followHeldUnheld = followHeldUnheld;
+    }
+
+    public boolean getFollowHeldUnheld() {
+        return _followHeldUnheld;
     }
 
     /** {@inheritDoc} */
@@ -83,25 +107,39 @@ public class ActionSignalMastFollow extends AbstractDigitalAction
 
         String sourceAspect = primaryMast.getAspect();
 
-        // This might happen when JMRI starts
-        if (sourceAspect == null) return;
+        if (sourceAspect != null && !sourceAspect.equals(_lastAspect)) {
+            _lastAspect = sourceAspect;
 
-        String destAspect = _aspectMap.get(sourceAspect);
-        if (destAspect == null || destAspect.isEmpty()) {
-            throw new JmriException(String.format(
-                    "Aspect \"%s\" of primary mast %s has no mapping for the secondary mast %s",
-                    primaryMast.getAspect(), primaryMast.getDisplayName(), secondaryMast.getDisplayName()));
+            String destAspect = _aspectMap.get(sourceAspect);
+            if (destAspect == null || destAspect.isEmpty()) {
+                throw new JmriException(String.format(
+                        "Aspect \"%s\" of primary mast %s has no mapping for the secondary mast %s",
+                        primaryMast.getAspect(), primaryMast.getDisplayName(), secondaryMast.getDisplayName()));
+            }
+
+            jmri.util.ThreadingUtil.runOnLayout(() -> {
+                secondaryMast.setAspect(destAspect);
+            });
         }
 
-        AtomicReference<IllegalArgumentException> ref = new AtomicReference<>();
-        jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
-            try {
-                secondaryMast.setAspect(destAspect);
-            } catch (IllegalArgumentException e) {
-                ref.set(e);
-            }
-        });
-        if (ref.get() != null) throw ref.get();
+        boolean isLit = primaryMast.getLit();
+        if (_followLitUnlit && (_lastLit == null || isLit != _lastLit)) {
+            jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
+                if (!secondaryMast.allowUnLit() && !isLit) {
+                    throw new JmriException(String.format("Cannot set mast %s to unlit", secondaryMast.getDisplayName()));
+                }
+                secondaryMast.setLit(isLit);
+            });
+            _lastLit = isLit;
+        }
+
+        boolean isHeld = primaryMast.getHeld();
+        if (_followHeldUnheld && (_lastHeld == null || isHeld != _lastHeld)) {
+            jmri.util.ThreadingUtil.runOnLayout(() -> {
+                secondaryMast.setHeld(isHeld);
+            });
+            _lastHeld = isHeld;
+        }
     }
 
     @Override
@@ -138,7 +176,7 @@ public class ActionSignalMastFollow extends AbstractDigitalAction
             map.append("[").append(entry.getKey()).append(",").append(entry.getValue()).append("]");
         }
 
-        return Bundle.getMessage(locale, "SignalMastFollow_LongDetailed", primaryMast, secondaryMast, map.toString());
+        return Bundle.getMessage(locale, "SignalMastFollow_LongDetailed", primaryMast, secondaryMast, _followLitUnlit, _followHeldUnheld, map.toString());
     }
 
     /** {@inheritDoc} */
@@ -154,6 +192,8 @@ public class ActionSignalMastFollow extends AbstractDigitalAction
 
         if (!_listenersAreRegistered && (signalMast != null)) {
             signalMast.addPropertyChangeListener("Aspect", this);
+            signalMast.addPropertyChangeListener("Lit", this);
+            signalMast.addPropertyChangeListener("Held", this);
             _selectPrimaryMast.registerListeners();
             _selectSecondaryMast.registerListeners();
             _listenersAreRegistered = true;
@@ -167,6 +207,8 @@ public class ActionSignalMastFollow extends AbstractDigitalAction
 
         if (_listenersAreRegistered && (signalMast != null)) {
             signalMast.removePropertyChangeListener("Aspect", this);
+            signalMast.removePropertyChangeListener("Lit", this);
+            signalMast.removePropertyChangeListener("Held", this);
             _selectPrimaryMast.unregisterListeners();
             _selectSecondaryMast.unregisterListeners();
             _listenersAreRegistered = false;

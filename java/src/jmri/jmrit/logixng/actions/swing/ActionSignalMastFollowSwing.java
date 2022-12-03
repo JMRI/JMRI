@@ -33,8 +33,9 @@ public class ActionSignalMastFollowSwing extends AbstractDigitalActionSwing {
 
     private LogixNG_SelectNamedBeanSwing<SignalMast> _selectPrimaryMast;
     private LogixNG_SelectNamedBeanSwing<SignalMast> _selectSecondaryMast;
-
     private ActionSignalMastFollowTableModel _aspectMappingTableModel;
+    private JCheckBox _followLitUnlitCheckBox;
+    private JCheckBox _followHeldUnheldCheckBox;
 
 
     public ActionSignalMastFollowSwing() {
@@ -70,9 +71,11 @@ public class ActionSignalMastFollowSwing extends AbstractDigitalActionSwing {
 
         JPanel primaryMastPanel = new JPanel();
         JPanel secondaryMastPanel = new JPanel();
-        JPanel mappingPanel = new JPanel();
 
+        primaryMastPanel.add(new JLabel(Bundle.getMessage("ActionSignalMastFollowSwing_PrimaryMast")));
         primaryMastPanel.add(_tabbedPanePrimaryMast);
+
+        secondaryMastPanel.add(new JLabel(Bundle.getMessage("ActionSignalMastFollowSwing_SecondaryMast")));
         secondaryMastPanel.add(_tabbedPaneSecondaryMast);
 
         JTable table = new JTable();
@@ -84,9 +87,8 @@ public class ActionSignalMastFollowSwing extends AbstractDigitalActionSwing {
         table.setDefaultEditor(String.class,
                 new ActionSignalMastFollowTableModel.DestAspectCellEditor(_aspectMappingTableModel));
         _aspectMappingTableModel.setColumnsForComboBoxes(table);
-        JScrollPane scrollpane = new JScrollPane(table);
-        scrollpane.setPreferredSize(new Dimension(400, 200));
-        mappingPanel.add(scrollpane);
+        JScrollPane mappingScrollpane = new JScrollPane(table);
+        mappingScrollpane.setPreferredSize(new Dimension(400, 200));
 
         _selectPrimaryMast.getBeanSelectPanel().getBeanCombo().addActionListener(
                 (e)->{
@@ -100,9 +102,19 @@ public class ActionSignalMastFollowSwing extends AbstractDigitalActionSwing {
                             _selectSecondaryMast.getBeanSelectPanel().getNamedBean());
                 });
 
+        _followLitUnlitCheckBox = new JCheckBox(Bundle.getMessage("ActionSignalMastFollowSwing_FollowLitUnlit"));
+        _followHeldUnheldCheckBox = new JCheckBox(Bundle.getMessage("ActionSignalMastFollowSwing_FollowHeldUnheld"));
+
+        if (action != null) {
+            _followLitUnlitCheckBox.setSelected(action.getFollowLitUnlit());
+            _followHeldUnheldCheckBox.setSelected(action.getFollowHeldUnheld());
+        }
+
         panel.add(primaryMastPanel);
         panel.add(secondaryMastPanel);
-        panel.add(mappingPanel);
+        panel.add(mappingScrollpane);
+        panel.add(_followLitUnlitCheckBox);
+        panel.add(_followHeldUnheldCheckBox);
 
         _selectPrimaryMast.getBeanSelectPanel().getBeanCombo()
                 .addActionListener((e)->primaryMastUpdated());
@@ -144,6 +156,8 @@ public class ActionSignalMastFollowSwing extends AbstractDigitalActionSwing {
         _selectSecondaryMast.updateObject(action.getSelectSecondaryMast());
         action.getAspectMap().clear();
         action.getAspectMap().putAll(_aspectMappingTableModel.getAspectMapping());
+        action.setFollowLitUnlit(_followLitUnlitCheckBox.isSelected());
+        action.setFollowHeldUnheld(_followHeldUnheldCheckBox.isSelected());
     }
 
     /** {@inheritDoc} */
