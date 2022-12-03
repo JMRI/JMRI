@@ -165,6 +165,14 @@ public interface Base extends PropertyChangeProvider {
     }
 
     /**
+     * Get a long detailed description of this item.
+     * @return a long description
+     */
+    public default String getDetailedLongDescription() {
+        return getLongDescription();
+    }
+
+    /**
      * Get a short description of this item.
      * @param locale The locale to be used
      * @return a short description
@@ -177,6 +185,15 @@ public interface Base extends PropertyChangeProvider {
      * @return a long description
      */
     public String getLongDescription(Locale locale);
+
+    /**
+     * Get a long detailed description of this item.
+     * @param locale The locale to be used
+     * @return a long description
+     */
+    public default String getDetailedLongDescription(Locale locale) {
+        return getLongDescription(locale);
+    }
 
     /**
      * Get the Module of this item, if it's part of a module.
@@ -642,6 +659,7 @@ public interface Base extends PropertyChangeProvider {
         public boolean _printNotConnectedSockets = true;
         public boolean _printLocalVariables = true;
         public boolean _printSystemNames = false;
+        public boolean _printDetailedDescription = false;   // Used for tests
     }
 
 }

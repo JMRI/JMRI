@@ -25,12 +25,14 @@ import org.junit.*;
  */
 public class StoreAndLoadTest {
 
+    private CreateLogixNGTreeScaffold createLogixNGTreeScaffold;
+
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Add new LogixNG actions and expressions to jmri.jmrit.logixng.CreateLogixNGTreeScaffold
-        CreateLogixNGTreeScaffold.createLogixNGTree();
+        createLogixNGTreeScaffold.createLogixNGTree();
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
 
@@ -41,6 +43,7 @@ public class StoreAndLoadTest {
         } else {
             PrintTreeSettings printTreeSettings = new PrintTreeSettings();
             printTreeSettings._printDisplayName = true;
+            printTreeSettings._printDetailedDescription = true;
 
             FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
             File firstFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG_temp.xml");
@@ -73,7 +76,7 @@ public class StoreAndLoadTest {
             //**********************************
             // Delete all the LogixNGs, ConditionalNGs, and so on before reading the file.
             //**********************************
-            CreateLogixNGTreeScaffold.cleanup();
+            createLogixNGTreeScaffold.cleanup();
 
             LogixNG_Thread.stopAllLogixNGThreads();
             LogixNG_Thread.assertLogixNGThreadNotRunning();
@@ -186,13 +189,14 @@ public class StoreAndLoadTest {
 
     @Before
     public void setUp() {
-        CreateLogixNGTreeScaffold.setUp();
+        createLogixNGTreeScaffold = new CreateLogixNGTreeScaffold();
+        createLogixNGTreeScaffold.setUp();
     }
 
     @After
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
-        CreateLogixNGTreeScaffold.tearDown();
+        createLogixNGTreeScaffold.tearDown();
     }
 
 

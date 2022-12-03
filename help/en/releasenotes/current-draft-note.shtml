@@ -423,6 +423,9 @@
           the sensor goes from one predefined state to another predefined state.</li>
           <li>The LogixNG table now have the option <i>Execute</i> that lets you to
           execute a single LogixNG.</li>
+          <li>The action <i>Signal mast follow</i> has been added. It let one signal
+          mast follow the aspect of another signal mast. This is useful when the two
+          masts are of different systems.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
