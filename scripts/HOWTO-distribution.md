@@ -25,7 +25,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 5.1.7 5.1.8 5.1.8
+  ./scripts/update-HOWTO.sh 5.1.7 5.1.8 5.1.9
 ```
 (if you have this file open in an editor, refresh the contents from disk after running the script)
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
@@ -253,13 +253,13 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i .bak s/5.1.5-SNAPSHOT/5.1.7-SNAPSHOT/g pom.xml
+        sed -i .bak s/5.1.6-SNAPSHOT/5.1.7-SNAPSHOT/g pom.xml
         git commit -m"5.1.7 until next release" pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i .bak s/release.build=5/release.build=6/g release.properties
+        sed -i .bak s/release.build=6/release.build=7/g release.properties
         git commit -m"5.1.7 until next release" release.properties
         git push github
 ```
@@ -326,7 +326,7 @@ If you're developing any additional (post-5.1.7) changes that you want in the JM
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 5.1.7 release name at the top. Enter the 4.99.10 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 5.1.7 release name at the top. Enter the 5.1.6 most recent release at the bottom.  Click "OK"
 
 - Update
 
@@ -484,9 +484,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.1.7+R4c05a03807.dmg](https://github.com/JMRI/JMRI/releases/download/v5.1.7/JMRI.5.1.7+R4c05a03807.dmg) | c9618cd4387845aec94886c8da1b7f28bdb0f8cb2d2306b803cb40192b67e49c
-[JMRI.5.1.7+R4c05a03807.exe](https://github.com/JMRI/JMRI/releases/download/v5.1.7/JMRI.5.1.7+R4c05a03807.exe) | 7c213f1539bccde704f8fc92af8f41d88c9be2d37daeee7c2b64794da50a765b
-[JMRI.5.1.7+R4c05a03807.tgz](https://github.com/JMRI/JMRI/releases/download/v5.1.7/JMRI.5.1.7+R4c05a03807.tgz) | b443148e487714771bda45cab8c92c3b20fb4eb41eabeb0a0f20ef076f114d01
+[JMRI.5.1.7+Rd06615728f.dmg](https://github.com/JMRI/JMRI/releases/download/v5.1.7/JMRI.5.1.7+Rd06615728f.dmg) | a37daa5f0b1d0cd659cd92abc99366c08a9ff16e28a2df9853558e681fb3f028
+[JMRI.5.1.7+Rd06615728f.exe](https://github.com/JMRI/JMRI/releases/download/v5.1.7/JMRI.5.1.7+Rd06615728f.exe) | 8ea492bfe84e835bce225c8bea7ce9af70f2db97332cf1d32104c1275a501e86
+[JMRI.5.1.7+Rd06615728f.tgz](https://github.com/JMRI/JMRI/releases/download/v5.1.7/JMRI.5.1.7+Rd06615728f.tgz) | 8924942c824b90efc81875b3d0605f815173b5a9fbf4b952be58cb4bdf9e3632
 
 
 ```
