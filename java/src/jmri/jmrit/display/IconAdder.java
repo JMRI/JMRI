@@ -518,7 +518,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _buttonPanel = new JPanel();
         _buttonPanel.setLayout(new BoxLayout(_buttonPanel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
-        p.setLayout(new FlowLayout());
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         if (addToTable) {
             _sysNameText = new JTextField();
             _sysNameText.setPreferredSize(
