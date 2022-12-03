@@ -360,9 +360,11 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     static final String createInst = Bundle.getMessage("SignalGroupAddStatusInitial1", Bundle.getMessage("ButtonCreate")); // I18N to include original button name in help string
     static final String updateInst = Bundle.getMessage("SignalGroupAddStatusInitial3", Bundle.getMessage("ButtonApply"));
     static final String cancelInst = Bundle.getMessage("SignalGroupAddStatusInitial4", Bundle.getMessage("ButtonCancel"));
+    static final String logixNGSignalMastFollow = Bundle.getMessage("SignalGroupAddStatusInitial5");
 
     JLabel status1 = new JLabel(createInst);
     JLabel status2 = new JLabel(cancelInst);
+    JLabel status3 = new JLabel(logixNGSignalMastFollow);
 
     JPanel p2xs = null;   // Container for...
     JPanel p2xsi = null;  // SignalHead list table
@@ -640,8 +642,14 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             status2.setFont(status1.getFont().deriveFont(0.9f * nameLabel.getFont().getSize())); // a bit smaller
             status2.setForeground(Color.gray);
             p2.add(status2);
+            JPanel p33 = new JPanel();
+            p33.setLayout(new FlowLayout());
+            status3.setFont(status1.getFont().deriveFont(0.9f * nameLabel.getFont().getSize())); // a bit smaller
+            status3.setForeground(Color.gray);
+            p33.add(status3);
             pa.add(p1);
             pa.add(p2);
+            pa.add(p33);
 
             Border pBorder = BorderFactory.createEtchedBorder();
             pa.setBorder(pBorder);
