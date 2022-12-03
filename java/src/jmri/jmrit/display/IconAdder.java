@@ -522,7 +522,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (addToTable) {
             JPanel pInner = new JPanel();
             pInner.setLayout(new BoxLayout(pInner, BoxLayout.X_AXIS));
-            p.add(pInner);
             _sysNameText = new JTextField();
             _sysNameText.setPreferredSize(
                     new Dimension(150, _sysNameText.getPreferredSize().height + 2));
@@ -563,6 +562,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             });
 
             pInner.add(_addTableButton);
+            p.add(pInner);
             _buttonPanel.add(p);
             p = new JPanel();
             p.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
