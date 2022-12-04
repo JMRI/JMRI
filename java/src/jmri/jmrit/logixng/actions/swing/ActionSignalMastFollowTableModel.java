@@ -18,8 +18,8 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class ActionSignalMastFollowTableModel extends AbstractTableModel {
 
-    public static final int COLUMN_SOURCE_ASPECT = 0;
-    public static final int COLUMN_DEST_ASPECT = 1;
+    public static final int COLUMN_PRIMARY_ASPECT = 0;
+    public static final int COLUMN_SECONDARY_ASPECT = 1;
 
     private SignalMast _primaryMast;
     private SignalMast _secondaryMast;
@@ -92,10 +92,10 @@ public class ActionSignalMastFollowTableModel extends AbstractTableModel {
     @Override
     public String getColumnName(int col) {
         switch (col) {
-            case COLUMN_SOURCE_ASPECT:
-                return Bundle.getMessage("ActionSignalMastFollowTableModel_ColumnSourceAspect");
-            case COLUMN_DEST_ASPECT:
-                return Bundle.getMessage("ActionSignalMastFollowTableModel_ColumnDestAspect");
+            case COLUMN_PRIMARY_ASPECT:
+                return Bundle.getMessage("ActionSignalMastFollowTableModel_ColumnPrimaryAspect");
+            case COLUMN_SECONDARY_ASPECT:
+                return Bundle.getMessage("ActionSignalMastFollowTableModel_ColumnSecondaryAspect");
             default:
                 throw new IllegalArgumentException("Invalid column");
         }
@@ -105,8 +105,8 @@ public class ActionSignalMastFollowTableModel extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
-            case COLUMN_SOURCE_ASPECT:
-            case COLUMN_DEST_ASPECT:
+            case COLUMN_PRIMARY_ASPECT:
+            case COLUMN_SECONDARY_ASPECT:
                 return String.class;
             default:
                 throw new IllegalArgumentException("Invalid column");
@@ -116,16 +116,16 @@ public class ActionSignalMastFollowTableModel extends AbstractTableModel {
     /** {@inheritDoc} */
     @Override
     public boolean isCellEditable(int row, int col) {
-        return col == COLUMN_DEST_ASPECT;
+        return col == COLUMN_SECONDARY_ASPECT;
     }
 
     /** {@inheritDoc} */
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         switch (columnIndex) {
-            case COLUMN_DEST_ASPECT:
+            case COLUMN_SECONDARY_ASPECT:
                 if (value != null) {
-                    _aspectMapping.get(rowIndex)._destAspect = value.toString();
+                    _aspectMapping.get(rowIndex)._secondaryAspect = value.toString();
                 }
                 break;
             default:
@@ -139,10 +139,10 @@ public class ActionSignalMastFollowTableModel extends AbstractTableModel {
         if (rowIndex >= _aspectMapping.size()) throw new IllegalArgumentException("Invalid row");
 
         switch (columnIndex) {
-            case COLUMN_SOURCE_ASPECT:
-                return _aspectMapping.get(rowIndex)._sourceAspect;
-            case COLUMN_DEST_ASPECT:
-                return _aspectMapping.get(rowIndex)._destAspect;
+            case COLUMN_PRIMARY_ASPECT:
+                return _aspectMapping.get(rowIndex)._primaryAspect;
+            case COLUMN_SECONDARY_ASPECT:
+                return _aspectMapping.get(rowIndex)._secondaryAspect;
             default:
                 throw new IllegalArgumentException("Invalid column");
         }
@@ -151,14 +151,14 @@ public class ActionSignalMastFollowTableModel extends AbstractTableModel {
     public void setColumnsForComboBoxes(JTable table) {
         JComboBox<String> destAspectComboBox = new JComboBox<>();
         table.setRowHeight(destAspectComboBox.getPreferredSize().height);
-        table.getColumnModel().getColumn(COLUMN_DEST_ASPECT)
+        table.getColumnModel().getColumn(COLUMN_SECONDARY_ASPECT)
                 .setPreferredWidth((destAspectComboBox.getPreferredSize().width) + 4);
     }
 
     public Map<String, String> getAspectMapping() {
         Map<String, String> aspectMapping = new HashMap<>();
         for (AspectMapping mapping : _aspectMapping) {
-            aspectMapping.put(mapping._sourceAspect, mapping._destAspect);
+            aspectMapping.put(mapping._primaryAspect, mapping._secondaryAspect);
         }
         return aspectMapping;
     }
@@ -220,12 +220,12 @@ public class ActionSignalMastFollowTableModel extends AbstractTableModel {
 
     private static class AspectMapping {
 
-        String _sourceAspect;
-        String _destAspect;
+        String _primaryAspect;
+        String _secondaryAspect;
 
-        public AspectMapping(String sourceAspect, String destAspect) {
-            _sourceAspect = sourceAspect;
-            _destAspect = destAspect;
+        public AspectMapping(String primaryAspect, String secondaryAspect) {
+            _primaryAspect = primaryAspect;
+            _secondaryAspect = secondaryAspect;
         }
 
     }

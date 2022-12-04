@@ -50,8 +50,8 @@
                     <xs:element name="aspectMapping" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="sourceAspect" type="xs:string" minOccurs="1" maxOccurs="1"/>
-                          <xs:element name="destAspect" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="primaryAspect" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="secondaryAspect" type="xs:string" minOccurs="1" maxOccurs="1"/>
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>

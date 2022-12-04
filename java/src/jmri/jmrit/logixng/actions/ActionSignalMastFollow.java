@@ -105,20 +105,20 @@ public class ActionSignalMastFollow extends AbstractDigitalAction
         if (primaryMast == null) return;
         if (secondaryMast == null) return;
 
-        String sourceAspect = primaryMast.getAspect();
+        String primaryAspect = primaryMast.getAspect();
 
-        if (sourceAspect != null && !sourceAspect.equals(_lastAspect)) {
-            _lastAspect = sourceAspect;
+        if (primaryAspect != null && !primaryAspect.equals(_lastAspect)) {
+            _lastAspect = primaryAspect;
 
-            String destAspect = _aspectMap.get(sourceAspect);
-            if (destAspect == null || destAspect.isEmpty()) {
+            String secondaryAspect = _aspectMap.get(primaryAspect);
+            if (secondaryAspect == null || secondaryAspect.isEmpty()) {
                 throw new JmriException(String.format(
                         "Aspect \"%s\" of primary mast %s has no mapping for the secondary mast %s",
                         primaryMast.getAspect(), primaryMast.getDisplayName(), secondaryMast.getDisplayName()));
             }
 
             jmri.util.ThreadingUtil.runOnLayout(() -> {
-                secondaryMast.setAspect(destAspect);
+                secondaryMast.setAspect(secondaryAspect);
             });
         }
 

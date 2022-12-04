@@ -44,8 +44,8 @@ public class ActionSignalMastFollowXml extends jmri.managers.configurexml.Abstra
         Element elementAspectMap = new Element("aspectMap");
         for (Map.Entry<String, String> entry : p.getAspectMap().entrySet()) {
             Element apectMapping = new Element("aspectMapping");
-            apectMapping.addContent(new Element("sourceAspect").addContent(entry.getKey()));
-            apectMapping.addContent(new Element("destAspect").addContent(entry.getValue()));
+            apectMapping.addContent(new Element("primaryAspect").addContent(entry.getKey()));
+            apectMapping.addContent(new Element("secondaryAspect").addContent(entry.getValue()));
             elementAspectMap.addContent(apectMapping);
         }
         element.addContent(elementAspectMap);
@@ -71,9 +71,9 @@ public class ActionSignalMastFollowXml extends jmri.managers.configurexml.Abstra
         List<Element> actionList = shared.getChild("aspectMap").getChildren();
         for (int i = 0; i < actionList.size(); i++) {
             Element apectMapping = actionList.get(i);
-            String sourceAspect = apectMapping.getChild("sourceAspect").getTextTrim();
-            String destAspect = apectMapping.getChild("destAspect").getTextTrim();
-            h.getAspectMap().put(sourceAspect, destAspect);
+            String primaryAspect = apectMapping.getChild("primaryAspect").getTextTrim();
+            String secondaryAspect = apectMapping.getChild("secondaryAspect").getTextTrim();
+            h.getAspectMap().put(primaryAspect, secondaryAspect);
         }
 
         Element followLitUnlit = shared.getChild("followLitUnlit");
