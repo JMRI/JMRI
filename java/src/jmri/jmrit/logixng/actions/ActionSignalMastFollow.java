@@ -124,21 +124,21 @@ public class ActionSignalMastFollow extends AbstractDigitalAction
 
         boolean isLit = primaryMast.getLit();
         if (_followLitUnlit && (_lastLit == null || isLit != _lastLit)) {
+            _lastLit = isLit;
             jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
                 if (!secondaryMast.allowUnLit() && !isLit) {
                     throw new JmriException(String.format("Cannot set mast %s to unlit", secondaryMast.getDisplayName()));
                 }
                 secondaryMast.setLit(isLit);
             });
-            _lastLit = isLit;
         }
 
         boolean isHeld = primaryMast.getHeld();
         if (_followHeldUnheld && (_lastHeld == null || isHeld != _lastHeld)) {
+            _lastHeld = isHeld;
             jmri.util.ThreadingUtil.runOnLayout(() -> {
                 secondaryMast.setHeld(isHeld);
             });
-            _lastHeld = isHeld;
         }
     }
 
