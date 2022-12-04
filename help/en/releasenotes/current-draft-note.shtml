@@ -299,6 +299,11 @@
                 <li></li>
             </ul>
 
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>QuadLN_S - support for new Semaphore Aspect and Servo Refresh in version 3.2 firmware</li>
+            </ul>
+
         <h4>TAMS</h4>
             <ul>
                 <li></li>
