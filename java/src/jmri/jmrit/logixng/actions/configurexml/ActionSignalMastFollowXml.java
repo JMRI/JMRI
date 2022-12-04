@@ -14,7 +14,7 @@ import org.jdom2.Element;
  * Handle XML configuration for ActionSignalMastXml objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
- * @author Daniel Bergqvist Copyright (C) 2019
+ * @author Daniel Bergqvist Copyright (C) 2022
  */
 public class ActionSignalMastFollowXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
