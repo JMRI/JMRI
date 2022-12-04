@@ -418,6 +418,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li></li>
           <li>The Throttle action supports multiple throttle connections.</li>
           <li>The expression <i>Sensor Edge</i> has been added. It returns True when
           the sensor goes from one predefined state to another predefined state.</li>
