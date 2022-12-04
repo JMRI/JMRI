@@ -115,13 +115,6 @@ public class ActionSignalMastFollowSwing extends AbstractDigitalActionSwing {
         panel.add(mappingScrollpane);
         panel.add(_followLitUnlitCheckBox);
         panel.add(_followHeldUnheldCheckBox);
-
-        _selectPrimaryMast.getBeanSelectPanel().getBeanCombo()
-                .addActionListener((e)->primaryMastUpdated());
-    }
-
-    private void primaryMastUpdated() {
-        System.out.format("Primary mast updated");
     }
 
     /** {@inheritDoc} */
@@ -132,6 +125,14 @@ public class ActionSignalMastFollowSwing extends AbstractDigitalActionSwing {
 
         _selectPrimaryMast.validate(action.getSelectPrimaryMast(), errorMessages);
         _selectSecondaryMast.validate(action.getSelectSecondaryMast(), errorMessages);
+
+        SignalMast mast1 = _selectPrimaryMast.getBean();
+        SignalMast mast2 = _selectSecondaryMast.getBean();
+
+        if (mast1 != null && mast1 == mast2) {
+            errorMessages.add(Bundle.getMessage(
+                    "ActionSignalMastFollowSwing_ErrorMustBeTwoDifferentMasts"));
+        }
 
         return errorMessages.isEmpty();
     }
