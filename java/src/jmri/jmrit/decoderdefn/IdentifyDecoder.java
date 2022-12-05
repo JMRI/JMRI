@@ -186,7 +186,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         } else if (mfgID == 145) {  // Zimo
             productID = value;
             return true;
-        } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
+        } else if (mfgID == 141 && (modelID >= 70 && modelID <= 72)) {  // SoundTraxx Econami, Tsunami2 and Blunami
             productIDhigh = value;
             statusUpdate("Read decoder productID low CV256");
             readCV("256");
@@ -231,7 +231,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productIDhigh = value;
             productID = (productIDhigh << 8) | productIDlow;
             return true;
-        } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
+        } else if (mfgID == 141 && (modelID >= 70 && modelID <= 72)) {  // SoundTraxx Econami, Tsunami2 and Blunami
             productIDlow = value;
             productID = (productIDhigh << 8) | productIDlow;
             return true;
