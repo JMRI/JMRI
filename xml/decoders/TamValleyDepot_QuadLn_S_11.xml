@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
-   <version author="robin@n3ix.com" version="3.01.3" lastUpdated="20220328"/>
+   <version author="robin@n3ix.com" version="3.02.3" lastUpdated="20220702"/>
    <decoder>
         <family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address.">
             <model model="Quad-LN_S_v1" comment="4 or 8 Servo Driver with Signaling and Detection options" lowVersionID="6"/>
@@ -23,6 +23,9 @@
         </programming>
       
         <variables>
+            <variable item="Version" CV="4" readOnly="no">
+                <decVal/>
+            </variable>
             <variable item="Major Version" CV="4" mask="VVVVXXXX" readOnly="no" default="1">
                 <decVal/>
             </variable>
@@ -50,9 +53,6 @@
                     <enumChoice choice="Turnout" include="Quad-LN_S_v3" />
                 </enumVal>
             </variable>
-            <variable item="ServoExp" CV="11" mask="XXXXXXVX" default="0">
-                <decVal/>
-             </variable>
          
             <variable item="IO Mode" CV="11" mask="XXVVXXXX" default="0" include="Quad-LN_S_v3">
                 <enumVal>
@@ -99,9 +99,6 @@
                 </enumVal>
             </variable>
          
-            <variable item="Signaling" CV="11" mask="XXXXXXXV" default="0">
-                <decVal/>
-            </variable>
             <variable item="Servo State Memory" CV="11" mask="XXXXXVXX" default="1" include="Quad-LN_S_v1">
                 <enumVal>
                     <enumChoice choice="Disable"/>
@@ -115,11 +112,6 @@
                 </enumVal>
             </variable>
             <variable item="Signal State Memory" CV="11" mask="XXXXVXXX" default="0">
-                <qualifier>
-                    <variableref>Signaling</variableref>
-                    <relation>eq</relation>
-                    <value>1</value>
-                </qualifier>
                 <enumVal>
                     <enumChoice choice="Disable"/>
                     <enumChoice choice="Enable"/>
@@ -158,9 +150,9 @@
             </variable>
             <variables>
                 <qualifier>
-                    <variableref>Minor Version</variableref>
+                    <variableref>Version</variableref>
                     <relation>ge</relation>
-                    <value>1</value>
+                    <value>49</value>
                 </qualifier>
                 <variable item="Lock Scope" CV="12" mask="XXXXXXVX" default="0" include="Quad-LN_S_v3">
                     <enumVal>
@@ -174,7 +166,27 @@
                         <enumChoice choice="Respond"/>
                     </enumVal>
                 </variable>
+                <variables>
+                    <qualifier>
+                        <variableref>Version</variableref>
+                        <relation>ge</relation>
+                        <value>50</value>
+                    </qualifier>
+                    <variable item="Refresh Servos" CV="24" mask="XXXXXXXV" default="0">
+                        <enumVal>
+                            <enumChoice choice="Disable"/>
+                            <enumChoice choice="Enable"/>
+                        </enumVal>
+                    </variable>
+                    <variable item="Repower Servo" CV="24" mask="XXXXXXVX" default="0">
+                        <enumVal>
+                            <enumChoice choice="Always"/>
+                            <enumChoice choice="On Change Only"/>
+                        </enumVal>
+                    </variable>
+                </variables>
             </variables>
+            
             <variable item="Servo Drive" CV="12" mask="XXXXXXVX" default="0" include="Quad-LN_S_v1">
                 <enumVal>
                     <enumChoice choice="Always On"/>
@@ -208,14 +220,14 @@
             </variable>
 
             <variable item="Lock Start Address" CV="13,14" mask="VVVVVVVV XXXXXVVV" default="100">
-                <splitVal offset="1" /> 
+                <splitVal offset="1" min="1" max="2048" /> 
             </variable>
 
             <variable item="Servo Start Address" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0" include="Quad-LN_S_v1">
-                <splitVal offset="1" />
+                <splitVal offset="1" min="1" max="2048" />
             </variable>
             <variable item="Turnout Start Address" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0" include="Quad-LN_S_v3">
-                <splitVal offset="1" />
+                <splitVal offset="1" min="1" max="2048" />
             </variable>
 
             <variable item="Main IO Start Address" CV="9,10" mask="VVVVVVVV XXXXVVVV" default="0">
@@ -224,7 +236,7 @@
                     <relation>eq</relation>
                     <value>0</value>
                 </qualifier>
-                <splitVal offset="1" /> 
+                <splitVal offset="1" min="1" max="4096" /> 
             </variable>
 
             <variable item="Aux IO Start Address" CV="15,16" mask="VVVVVVVV XXXXVVVV" default="4">
@@ -233,7 +245,7 @@
                     <relation>eq</relation>
                     <value>0</value>
                 </qualifier>
-                <splitVal offset="1" /> 
+                <splitVal offset="1" min="1" max="4096" /> 
             </variable>
             
             <variable item="One Choice Enum" CV="1" mask="XXXXXXXX">
@@ -353,6 +365,12 @@
                     <display item="CV7 Interrogate" format="checkbox" tooltip="Treat a write to CV7 as an Interrogate">
                         <label>Enable CV7 Interrogate</label>
                     </display>
+                    <display item="Refresh Servos" format="checkbox" tooltip="Periodically send a pulse to all servos whether moving or not">
+                        <label>Refresh Servos</label>
+                    </display>
+                    <display item="Repower Servo" format="checkbox" tooltip="Only repower a servo when a command is received that changes the position">
+                        <label>Only Repower Servo On Change</label>
+                    </display>
                     <label label=" "/>
                 </column>
             </row>
@@ -362,7 +380,7 @@
             <row>
                 <column>
                     <display item="Manufacturer ID">
-                        <tooltip>Tam Valley Depot</tooltip>
+                        <tooltip>Tam Valley Depot (N3IX Engineering)</tooltip>
                     </display>
                 </column>
                 <column>
@@ -447,7 +465,7 @@
                     </group>
                     <label label=" "/>
                     <label>
-                        <text>Decoder Template File Version: 3.01.3</text>
+                        <text>Decoder Template File Version: 3.02.3</text>
                     </label>
                     <label>
                         <text>Decoder Transform File Version: x.xx.x</text>
@@ -650,67 +668,37 @@
    <pane>
         <name>LED 1-12</name>
         <qualifier>
-            <variableref>Signaling</variableref>
-            <relation>gt</relation>
-            <value>0</value>
+            <variableref>Expansion</variableref>
+            <relation>eq</relation>
+            <value>1</value>
         </qualifier>
     </pane>
    <pane>
         <name>LED 13-24</name>
         <qualifier>
-            <variableref>Signaling</variableref>
-            <relation>gt</relation>
-            <value>0</value>
+            <variableref>Expansion</variableref>
+            <relation>eq</relation>
+            <value>1</value>
         </qualifier>
    </pane>
                 
     <pane>
         <name>Aspect 1-8</name>
-        <qualifier>
-            <variableref>Signaling</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
     </pane>
     <pane>
         <name>Aspect 9-16</name>
-        <qualifier>
-            <variableref>Signaling</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
     </pane>
     <pane>
         <name>Aspect 17-24</name>
-        <qualifier>
-            <variableref>Signaling</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
     </pane>
     <pane>
         <name>Aspect 25-32</name>
-        <qualifier>
-            <variableref>Signaling</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
     </pane>
     <pane>
         <name>Aspect 33-40</name>
-        <qualifier>
-            <variableref>Signaling</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
     </pane>
     <pane>
         <name>Aspect 41-48</name>
-        <qualifier>
-            <variableref>Signaling</variableref>
-            <relation>gt</relation>
-            <value>0</value>
-        </qualifier>
     </pane>
    <!--</programmer>-->
 </decoder-config>
