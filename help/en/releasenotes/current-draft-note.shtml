@@ -573,7 +573,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Update minimatch.js library from 3.0..4 to 3.0.8</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
