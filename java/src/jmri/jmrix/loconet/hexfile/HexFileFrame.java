@@ -146,7 +146,7 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
         }
         // call load to process the file
         port.load(inputFileChooser.getSelectedFile());
-
+        port.setDelay(Integer.parseInt(delayField.getText()));
         // wake copy
         sourceThread.interrupt();  // really should be using notifyAll instead....
 
