@@ -212,13 +212,13 @@ public class TextItemPanel extends ItemPanel {
                 // To display PositionableJPanel types as PositionableLabels, set fixed sizes.
                 util.setFixedWidth(pos.getWidth() - 2*_util.getBorderSize());
                 util.setFixedHeight(pos.getHeight() - 2*_util.getBorderSize());
-                if (pos instanceof jmri.jmrit.display.PositionableJPanel) {
-                    JTextField field = (JTextField) pos.getTextComponent();
-                    sample.setText(field.getText());
-                    addtextField = false;
-                } else if (pos instanceof jmri.jmrit.display.MemoryOrGVComboIcon) {
+                if (pos instanceof jmri.jmrit.display.MemoryOrGVComboIcon) {
                     JComboBox<String> box = ((jmri.jmrit.display.MemoryOrGVComboIcon)pos).getTextComponent();
                     sample.setText(box.getSelectedItem() != null ? box.getSelectedItem().toString() : "");
+                    addtextField = false;
+                } else if (pos instanceof jmri.jmrit.display.PositionableJPanel) {
+                    JTextField field = (JTextField) pos.getTextComponent();
+                    sample.setText(field.getText());
                     addtextField = false;
                 } else {
                     addtextField = true;
