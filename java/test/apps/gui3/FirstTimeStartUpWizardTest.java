@@ -10,6 +10,7 @@ import jmri.util.JUnitAppender;
 import apps.gui3.dp3.DecoderPro3;
 
 import jmri.util.JUnitUtil;
+import jmri.util.gui.GuiLafPreferencesManager;
 
 import org.netbeans.jemmy.operators.*;
 import org.junit.jupiter.api.*;
@@ -112,6 +113,9 @@ public class FirstTimeStartUpWizardTest {
         JUnitUtil.waitFor(() -> {
             return JUnitAppender.checkForMessageStartingWith("No pre-existing config file found, searched for ") != null;
         }, "no existing config Info line seen");
+
+        Assertions.assertNotEquals(0, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize(),
+            "Font size should not be 0");
 
     }
 
