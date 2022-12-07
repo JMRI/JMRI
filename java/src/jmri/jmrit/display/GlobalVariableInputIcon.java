@@ -214,7 +214,7 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
         };
 
         makeIconEditorFrame(this, "GlobalVariable", true, _iconEditor);
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.globalVariablePickModelInstance());
         ActionListener addIconAction = a -> editGlobalVariable();
         _iconEditor.makeIconPanel(false);
         _iconEditor.complete(addIconAction, false, false, true);

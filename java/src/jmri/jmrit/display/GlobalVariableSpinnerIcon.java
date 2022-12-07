@@ -178,7 +178,7 @@ public class GlobalVariableSpinnerIcon extends PositionableJPanel implements Cha
     @Override
     protected void edit() {
         makeIconEditorFrame(this, "GlobalVariable", true, null);
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.globalVariablePickModelInstance());
         ActionListener addIconAction = a -> editGlobalVariable();
         _iconEditor.complete(addIconAction, false, false, true);
         _iconEditor.setSelection(getGlobalVariable());
