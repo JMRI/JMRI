@@ -95,8 +95,10 @@ which checks the dates of the control files to make sure they've been updated wh
 ##### commons-logging-1.2.jar
 - version 1.2
 
-##### commons-net-3.6.jar
-- version 3.6
+##### commons-net-3.9.0.jar
+- version 3.9.0
+- not used in direct compilation, not clear where it is used
+- from https://commons.apache.org/proper/commons-net/download_net.cgi
 
 ##### commons-text-1.2.jar
 - version 1.2
