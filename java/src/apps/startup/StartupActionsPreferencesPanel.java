@@ -53,6 +53,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
             this.downBtn.setEnabled(row != this.actionsTbl.getRowCount() - 1 && row != -1);
             this.removeBtn.setEnabled(row != -1);
         });
+
         ArrayList<JMenuItem> items = new ArrayList<>();
         InstanceManager.getDefault(StartupActionsManager.class).getFactories().values().stream().forEach((factory) -> {
             JMenuItem item = new JMenuItem(factory.getActionText());
