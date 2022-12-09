@@ -153,7 +153,7 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
         } catch (NumberFormatException exception) {
             log.error("invalid number in delay field - {}", delayField.getText());
         }
-        if (delayValue != null && delayValue >= 200)
+        if (delayValue != null && delayValue > 1 )
            port.setDelay(delayValue);
         // wake copy
         sourceThread.interrupt();  // really should be using notifyAll instead....
