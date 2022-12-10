@@ -59,8 +59,6 @@ public class LoadAndStoreAllSignalSystemsTest {
 
     public static Stream<Arguments> data() {
         return getFiles(new File("xml/signals"), true, true);
-//        return SchemaTestBase.getFiles(new File("xml/signals"), true, true)
-//                .filter(c -> "aspects.xml".equals(((File)c.get()[0]).getName()));
     }
 
     public static void checkFile(File inFile1, File inFile2) throws Exception {
@@ -153,31 +151,20 @@ public class LoadAndStoreAllSignalSystemsTest {
             }   // while readLine() != null
         } catch (java.io.FileNotFoundException ex) {
             // Ignore for now. Fix later
-            log.debug("File not found: {}", ex.getMessage());
+            log.warn("File not found: {}", ex.getMessage());
         }
     }
 
     public void loadAndStoreFileCheck(File file) throws Exception {
-//        Assume.assumeTrue("AAR-1946".equals(file.getParentFile().getName()));
-
 
         log.debug("Start check file {}", file.getCanonicalPath());
-//        System.out.format("Start check file %s%n", file.getCanonicalPath());
 
         File signalSystemFolder = file.getCanonicalFile().getParentFile();
         String signalSystemName = signalSystemFolder.getName();
-//        System.out.format("folder: %s%n", signalSystemFolder.getAbsolutePath());
-
-//        File temporaryFolder = new File("temp/temp/SignalSystems/"+signalSystemFolder.getName());
-//        if (!temporaryFolder.exists()) {
-//            Assert.assertTrue(temporaryFolder.mkdir());
-//        }
 
         if (!signalSystemName.equals(lastSignalSystem)) {
 
             lastSignalSystem = signalSystemName;
-
-//            SignalSystem signalSystem = new ConfigXmlManager().loadSignalSystem(file);
 
             SignalSystemXml signalSystemXml = new SignalSystemXml();
             SignalMastXml signalMastXml = new SignalMastXml();
@@ -189,13 +176,10 @@ public class LoadAndStoreAllSignalSystemsTest {
             for (SignalMast signalMast : signalSystem.getSignalMasts()) {
                 signalMastXml.save(signalSystem, signalMast);
             }
-
-//            System.exit(0);
         }
 
         File compFile = new File( jmri.util.FileUtil.getProfilePath()
                 + "xml/signals/" + "/" + file.getParentFile().getName() + "/" + file.getName() );
-//        System.out.format("File to check: %s%n", compFile);
         checkFile(compFile, file);
     }
 
@@ -214,18 +198,6 @@ public class LoadAndStoreAllSignalSystemsTest {
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
-
-        // kill the fast clock and set to a consistent time
-        jmri.Timebase clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
-        clock.setRun(false);
-
-        try {
-            clock.setTime(
-                new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse("2021-12-02 00:00:00.0")
-            );
-        } catch (Exception e) {
-            log.warn("Unexpected Exception in test setup", e);
-        }
     }
 
     @AfterEach

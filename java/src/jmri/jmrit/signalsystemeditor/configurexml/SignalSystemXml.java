@@ -39,11 +39,6 @@ public class SignalSystemXml {
 
             assert "aspecttable".equals(aspecttable.getName());
 
-//            if (aspecttable == null) {
-//                System.out.format("aspecttable is null");
-//                return signalSystem;
-//            }
-
             Attribute attr = aspecttable.getAttribute("noNamespaceSchemaLocation");
             if (attr == null) {
                 for (Attribute a : aspecttable.getAttributes()) {
@@ -57,30 +52,7 @@ public class SignalSystemXml {
             }
 
             signalSystem.setAspectSchema(attr.getValue());
-/*
-            if (signalSystem.getAspectSchema() == null) {
-                System.out.format("File %s has no aspect schema%n", file.toString());
-                for (Attribute attr : aspecttable.getAttributes()) {
-                    System.out.format("AA Attribute: '%s': '%s'%n", attr.getName(), attr.getValue());
-                }
 
-                Attribute attr = aspecttable.getAttribute("noNamespaceSchemaLocation");
-                if (attr != null) {
-                    System.out.format("AA Attribute: '%s': '%s'%n", attr.getName(), attr.getValue());
-                } else {
-                    System.out.format("AA Attribute is null%n");
-                }
-
-                attr = aspecttable.getAttribute("noNamespaceSchemaLocation", Namespace.getNamespace("xsi"));
-                if (attr != null) {
-                    System.out.format("AA Attribute: '%s': '%s'%n", attr.getName(), attr.getValue());
-                } else {
-                    System.out.format("AA Attribute is null%n");
-                }
-                printElement(root, "");
-                System.exit(0);
-            }
-*/
             signalSystem.setName(aspecttable.getChildText("name"));
             if (aspecttable.getChild("date") != null) {
                 signalSystem.setDate(aspecttable.getChildText("date"));
@@ -112,7 +84,6 @@ public class SignalSystemXml {
                                     personName.getChildText("surname", namespace),
                                     author.getChildText("email", namespace)));
                 }
-//                signalSystem.getAuthors().setHolder(authors.getChildText("holder", namespace));
             } else {
                 log.debug("ERROR: No authors");
             }
@@ -127,7 +98,6 @@ public class SignalSystemXml {
                                     revision.getChildText("authorinitials", namespace),
                                     revision.getChildText("revremark", namespace)));
                 }
-//                signalSystem.getRevisions().setHolder(revhistory.getChildText("holder", namespace));
             } else {
                 log.debug("ERROR: No authors");
             }
@@ -167,7 +137,6 @@ public class SignalSystemXml {
                     }
                     signalSystem.getAspects().add(aspect);
                 }
-//                signalSystem.getAspects().setHolder(revhistory.getChildText("holder"));
             } else {
                 log.debug("ERROR: No aspects");
             }
@@ -179,8 +148,6 @@ public class SignalSystemXml {
                 for (Element imagetype : imagetypes.getChildren("imagetype")) {
                     signalSystem.getImageTypes().add(new ImageType(imagetype.getAttributeValue("type")));
                 }
-//            } else {
-//                System.out.format("ERROR: No imagetypes: %s%n", file.getAbsolutePath());
             }
 
 
@@ -188,109 +155,12 @@ public class SignalSystemXml {
             signalSystem.getSignalMasts().clear();
             if (appearancefiles != null) {
                 for (Element appearancefile : appearancefiles.getChildren("appearancefile")) {
-//                    signalSystem.getAppearanceFiles().add(appearancefile.getAttributeValue("href"));
-//                    String fileName = "xml/signals" + file.getParent() + "/" + appearancefile.getAttributeValue("href");
                     signalSystem.getSignalMasts().add(new SignalMastXml()
                             .load(signalSystem, new File(
                                     "xml/signals/"+file.getParentFile().getName()
                                             +"/"+appearancefile.getAttributeValue("href"))));
                 }
-            } else {
-                log.debug("ERROR: No appearancefiles");
             }
-
-
-
-
-
-
-//            Document document = root.getDocument();
-/*
-            if (document.getDocType() != null) {
-                System.out.format("System ID: %s, Public ID: %s, CType: %s, Element name: %s, Internal subset: %s, Value: %s%n",
-                        document.getDocType().getSystemID(),
-                        document.getDocType().getPublicID(),
-                        document.getDocType().getCType().name(),
-                        document.getDocType().getElementName(),
-                        document.getDocType().getInternalSubset(),
-                        document.getDocType().getValue());
-            } else {
-                System.out.format("DocType is null%n");
-            }
-
-            System.out.format("BaseURI: %s, Namespace: %s, NamespacePrefix: %s, NamespaceURI: %s%n",
-                    document.getBaseURI(), root.getNamespace(), root.getNamespacePrefix(), root.getNamespacePrefix(), root.getNamespaceURI());
-*/
-
-//DANIEL            printElement(root, "");
-
-
-/*
-            // get appearances
-
-            List<Element> l = root.getChild("appearances").getChildren("appearance");
-
-            // find all appearances, include them by aspect name,
-            log.debug("   reading {} aspectname elements", l.size());
-            for (int i = 0; i < l.size(); i++) {
-                String name = l.get(i).getChild("aspectname").getText();
-                log.debug("aspect name {}", name);
-
-                // add 'show' sub-elements as ints
-                List<Element> c = l.get(i).getChildren("show");
-
-                int[] appearances = new int[c.size()];
-                for (int j = 0; j < c.size(); j++) {
-                    // note: includes setting name; redundant, but needed
-                    int ival;
-                    String sval = c.get(j).getText().toUpperCase();
-                    if (sval.equals("LUNAR")) {
-                        ival = SignalHead.LUNAR;
-                    } else if (sval.equals("GREEN")) {
-                        ival = SignalHead.GREEN;
-                    } else if (sval.equals("YELLOW")) {
-                        ival = SignalHead.YELLOW;
-                    } else if (sval.equals("RED")) {
-                        ival = SignalHead.RED;
-                    } else if (sval.equals("FLASHLUNAR")) {
-                        ival = SignalHead.FLASHLUNAR;
-                    } else if (sval.equals("FLASHGREEN")) {
-                        ival = SignalHead.FLASHGREEN;
-                    } else if (sval.equals("FLASHYELLOW")) {
-                        ival = SignalHead.FLASHYELLOW;
-                    } else if (sval.equals("FLASHRED")) {
-                        ival = SignalHead.FLASHRED;
-                    } else if (sval.equals("DARK")) {
-                        ival = SignalHead.DARK;
-                    } else {
-                        log.error("found invalid content: {}", sval);
-                        throw new JDOMException("invalid content: " + sval);
-                    }
-
-                    appearances[j] = ival;
-                }
-//                map.addAspect(name, appearances);
-
-                List<Element> img = l.get(i).getChildren("imagelink");
-//                loadImageMaps(img, name, map);
-
-                // now add the rest of the attributes
-                Map<String, String> hm = new HashMap<>();
-
-                List<Element> a = l.get(i).getChildren();
-
-                for (int j = 0; j < a.size(); j++) {
-                    String key = a.get(j).getName();
-                    String value = a.get(j).getText();
-                    hm.put(key, value);
-                }
-
-//                map.aspectAttributeMap.put(name, hm);
-            }
-//            loadSpecificMap(signalSystemName, aspectMapName, map, root);
-//            loadAspectRelationMap(signalSystemName, aspectMapName, map, root);
-*/
-
 
             log.debug("loading complete");
         } catch (java.io.IOException | org.jdom2.JDOMException e) {
@@ -303,41 +173,8 @@ public class SignalSystemXml {
     }
 
 
-/*
-    void printElement(Element element, String pad) {
-        System.out.format("%sCType: %s, name: %s, namespace: %s", pad, element.getCType().name(), element.getName(), element.getNamespaceURI());
-
-        if (element.hasAttributes()) {
-            System.out.format(", attributes: ");
-            for (Attribute attr : element.getAttributes()) {
-                System.out.format("%s: %s (%s), ", attr.getName(), attr.getValue(), attr.getNamespace());
-            }
-        }
-        System.out.format("%n");
-
-        for (Element child : element.getChildren()) {
-            printElement(child, pad+"   ");
-        }
-//        System.out.format("%n");
-
-//        List<Attribute> attributes = element.getAttributes();
-//        List<Element> elements = element.getChildren();
-
-//        List<Content> contents = element.getContent();
-
-//        element.getQualifiedName();
-
-//        element.getText();
-
-//        element.getValue();
-    }
-*/
-
     public void save(SignalSystem signalSystem) {
         String fileName = FileUtil.getProfilePath() + "xml/signals/" + signalSystem.getFolderName() + "/aspects.xml";
-
-//        System.out.format("fileName: %s%n", fileName);
-//        if (1==1) return;
 
         XmlFile xmlFile = new XmlFile() {
         };
@@ -365,8 +202,6 @@ public class SignalSystemXml {
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/panelfile"+schemaVersion+".xsl"?>
             java.util.Map<String, String> m = new java.util.HashMap<>();
-//            m.put("type", "text/xsl");
-//            m.put("href", "../../XSLT/aspecttable.xsl");
             m.put("type", signalSystem.getProcessingInstructionType() != null
                     ? signalSystem.getProcessingInstructionType() : "text/xsl");
             m.put("href", signalSystem.getProcessingInstructionHRef() != null
@@ -409,7 +244,6 @@ public class SignalSystemXml {
         for (Author author : signalSystem.getAuthors()) {
             Element authorElement = new Element("author");
             Element personName = new Element("personname");
-//            personName.removeNamespaceDeclaration(namespace);
             personName.addContent(new Element("firstname").setText(author.getFirstName()));
             personName.addContent(new Element("surname").setText(author.getSurName()));
             authorElement.addContent(personName);
@@ -430,8 +264,6 @@ public class SignalSystemXml {
             revhistory.addContent(revisionElement);
         }
         root.addContent(revhistory);
-
-
 
 
         Element aspects = new Element("aspects");
@@ -460,7 +292,6 @@ public class SignalSystemXml {
             for (String speed2 : aspect.getSpeed2List()) {
                 aspectElement.addContent(new Element("speed2").setText(speed2));
             }
-//            aspectElement.addContent(new Element("imagelink").setText(aspect.getImageLink()));
             if (aspect.getRoute() != null && !aspect.getRoute().isBlank()) {
                 aspectElement.addContent(new Element("route").setText(aspect.getRoute()));
             }
@@ -491,11 +322,8 @@ public class SignalSystemXml {
         }
         root.addContent(appearanceFiles);
 
-
-
         return true;
     }
-
 
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalSystemXml.class);
