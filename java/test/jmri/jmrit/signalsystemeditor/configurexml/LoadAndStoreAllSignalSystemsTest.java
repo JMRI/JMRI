@@ -105,7 +105,7 @@ public class LoadAndStoreAllSignalSystemsTest {
 
                 while (next2 != null && next2.isBlank()) {
                     next2 = fileStream2.readLine();
-		    next2 = next2.replace("<!-- Start of Specific Appearances list -->", "");
+                    next2 = next2.replace("<!-- Start of Specific Appearances list -->", "");
                     next2 = next2.replace("<!-- End of Specific Appearances list -->", "");
                     next2 = next2.replace("<!-- Start of Aspect Mapping -->", "");
                     next2 = next2.replace("<!-- End of Aspect Mapping -->", "");
