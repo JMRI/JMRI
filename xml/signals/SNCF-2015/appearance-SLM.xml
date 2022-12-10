@@ -32,28 +32,28 @@
       <aspectname>SLMall</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Manoeuvre/SLMall.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Manoeuvre/SLMall.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Manoeuvre/SLMall.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Manoeuvre/SLMall.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>SLMtirer</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Manoeuvre/SLMT.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Manoeuvre/SLMT.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Manoeuvre/SLMT.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Manoeuvre/SLMT.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>SLMRefouler</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Manoeuvre/SLMR.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Manoeuvre/SLMR.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Manoeuvre/SLMR.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Manoeuvre/SLMR.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Manoeuvre/SLMDark.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Manoeuvre/SLMDark.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Manoeuvre/SLMDark.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Manoeuvre/SLMDark.gif</imagelink>
     </appearance>
  </appearances>
