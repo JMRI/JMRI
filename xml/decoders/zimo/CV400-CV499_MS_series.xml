@@ -11,14 +11,212 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- version 1 - for Unified Software -->
-<!-- version 1.1 - Added CVs 490-507, enumChoice selections moved to seperate files, Mark Waters 26 Jan 2015 -->
-<!-- version 1.2 - Alain Carasso, new file CVSwissMapping_v36 adding groups 14 to 17 , 28 August 2017-->
-<!-- version 1.3 - Ronald Kuhn, disable groups 14 to 17 for non Sounddecoder, 25 April 2019-->
-<!-- version 1.4 - Nigel Cliffe. Added masks to group members (A1 Fwd, A2 Fwd, A1 Rev, A2 Rev) and dimming group selection. Added dimming levels,  14 Feb 2021 -->
-<!-- version 1.5 - Ronald Kuhn, add german translation, 29 November 2021-->
-<!-- version 1.6 - Nigel Cliffe,  fork for MS series to remove version number conditionals as MS series version numbers start from 1 --> 
+<!-- version 1 - merging various MX and MS series files for new MS-series CVs 400-499  -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      
+  <variable item="Input mapping for internal F0" CV="400">
+    <decVal/>
+    <label>Input mapping for internal F0</label>
+    <label xml:lang="it">Assegnazione per F0 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F0</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F0</label>
+  </variable>
+  <variable item="Input mapping for internal F1" CV="401">
+    <decVal/>
+    <label>Input mapping for internal F1</label>
+    <label xml:lang="it">Assegnazione per F1 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F1</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F1</label>
+  </variable>
+  <variable item="Input mapping for internal F2" CV="402">
+    <decVal/>
+    <label>Input mapping for internal F2</label>
+    <label xml:lang="it">Assegnazione per F2 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F2</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F2</label>
+  </variable>
+  <variable item="Input mapping for internal F3" CV="403">
+    <decVal/>
+    <label>Input mapping for internal F3</label>
+    <label xml:lang="it">Assegnazione per F3 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F3</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F3</label>
+  </variable>
+  <variable item="Input mapping for internal F4" CV="404">
+    <decVal/>
+    <label>Input mapping for internal F4</label>
+    <label xml:lang="it">Assegnazione per F4 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F4</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F4</label>
+  </variable>
+  <variable item="Input mapping for internal F5" CV="405">
+    <decVal/>
+    <label>Input mapping for internal F5</label>
+    <label xml:lang="it">Assegnazione per F5 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F5</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F5</label>
+  </variable>
+  <variable item="Input mapping for internal F6" CV="406">
+    <decVal/>
+    <label>Input mapping for internal F6</label>
+    <label xml:lang="it">Assegnazione per F6 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F6</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F6</label>
+  </variable>
+  <variable item="Input mapping for internal F7" CV="407">
+    <decVal/>
+    <label>Input mapping for internal F7</label>
+    <label xml:lang="it">Assegnazione per F7 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F7</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F7</label>
+  </variable>
+  <variable item="Input mapping for internal F8" CV="408">
+    <decVal/>
+    <label>Input mapping for internal F8</label>
+    <label xml:lang="it">Assegnazione per F8 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F8</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F8</label>
+  </variable>
+  <variable item="Input mapping for internal F9" CV="409">
+    <decVal/>
+    <label>Input mapping for internal F9</label>
+    <label xml:lang="it">Assegnazione per F9 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F9</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F9</label>
+  </variable>
+  <variable item="Input mapping for internal F10" CV="410">
+    <decVal/>
+    <label>Input mapping for internal F10</label>
+    <label xml:lang="it">Assegnazione per F10 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F10</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F10</label>
+  </variable>
+  <variable item="Input mapping for internal F11" CV="411">
+    <decVal/>
+    <label>Input mapping for internal F11</label>
+    <label xml:lang="it">Assegnazione per F11 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F11</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F11</label>
+  </variable>
+  <variable item="Input mapping for internal F12" CV="412">
+    <decVal/>
+    <label>Input mapping for internal F12</label>
+    <label xml:lang="it">Assegnazione per F12 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F12</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F12</label>
+  </variable>
+  <variable item="Input mapping for internal F13" CV="413">
+    <decVal/>
+    <label>Input mapping for internal F13</label>
+    <label xml:lang="it">Assegnazione per F13 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F13</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F13</label>
+  </variable>
+  <variable item="Input mapping for internal F14" CV="414">
+    <decVal/>
+    <label>Input mapping for internal F14</label>
+    <label xml:lang="it">Assegnazione per F14 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F14</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F14</label>
+  </variable>
+  <variable item="Input mapping for internal F15" CV="415">
+    <decVal/>
+    <label>Input mapping for internal F15</label>
+    <label xml:lang="it">Assegnazione per F15 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F15</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F15</label>
+  </variable>
+  <variable item="Input mapping for internal F16" CV="416">
+    <decVal/>
+    <label>Input mapping for internal F16</label>
+    <label xml:lang="it">Assegnazione per F16 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F16</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F16</label>
+  </variable>
+  <variable item="Input mapping for internal F17" CV="417">
+    <decVal/>
+    <label>Input mapping for internal F17</label>
+    <label xml:lang="it">Assegnazione per F17 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F17</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F17</label>
+  </variable>
+  <variable item="Input mapping for internal F18" CV="418">
+    <decVal/>
+    <label>Input mapping for internal F18</label>
+    <label xml:lang="it">Assegnazione per F18 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F18</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F18</label>
+  </variable>
+  <variable item="Input mapping for internal F19" CV="419">
+    <decVal/>
+    <label>Input mapping for internal F19</label>
+    <label xml:lang="it">Assegnazione per F19 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F19</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F19</label>
+  </variable>
+  <variable item="Input mapping for internal F20" CV="420">
+    <decVal/>
+    <label>Input mapping for internal F20</label>
+    <label xml:lang="it">Assegnazione per F20 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F20</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F20</label>
+  </variable>
+  <variable item="Input mapping for internal F21" CV="421">
+    <decVal/>
+    <label>Input mapping for internal F21</label>
+    <label xml:lang="it">Assegnazione per F21 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F21</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F21</label>
+  </variable>
+  <variable item="Input mapping for internal F22" CV="422">
+    <decVal/>
+    <label>Input mapping for internal F22</label>
+    <label xml:lang="it">Assegnazione per F22 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F22</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F22</label>
+  </variable>
+  <variable item="Input mapping for internal F23" CV="423">
+    <decVal/>
+    <label>Input mapping for internal F23</label>
+    <label xml:lang="it">Assegnazione per F23 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F23</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F23</label>
+  </variable>
+  <variable item="Input mapping for internal F24" CV="424">
+    <decVal/>
+    <label>Input mapping for internal F24</label>
+    <label xml:lang="it">Assegnazione per F24 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F24</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F24</label>
+  </variable>
+  <variable item="Input mapping for internal F25" CV="425">
+    <decVal/>
+    <label>Input mapping for internal F25</label>
+    <label xml:lang="it">Assegnazione per F25 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F25</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F25</label>
+  </variable>
+  <variable item="Input mapping for internal F26" CV="426">
+    <decVal/>
+    <label>Input mapping for internal F26</label>
+    <label xml:lang="it">Assegnazione per F26 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F26</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F26</label>
+  </variable>
+  <variable item="Input mapping for internal F27" CV="427">
+    <decVal/>
+    <label>Input mapping for internal F27</label>
+    <label xml:lang="it">Assegnazione per F27 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F27</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F27</label>
+  </variable>
+  <variable item="Input mapping for internal F28" CV="428">
+    <decVal/>
+    <label>Input mapping for internal F28</label>
+    <label xml:lang="it">Assegnazione per F28 interno</label>
+    <label xml:lang="de">Externe Funktion (F-Taste) für interne F28</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F28</label>
+  </variable>
   <variable item="Swiss Mapping Group 1 F-key" CV="430">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
@@ -464,11 +662,9 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
-          <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
-          <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
@@ -1514,666 +1710,4 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 12 A1 Rw" CV="500" mask="XXXVVVVV">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 12 A1 Rw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 12 A1 Retro</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 12 A1 vzad</label>
-  </variable>
-  <variable item="Swiss Mapping Group 12 A1 Rw DG" CV="500" mask="VVVXXXXX">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 12 A2 Rw" CV="501" mask="XXXVVVVV">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 12 A2 Rw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 12 A2 Retro</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 12 A2 vzad</label>
-  </variable>
-  <variable item="Swiss Mapping Group 12 A2 Rw DG" CV="501" mask="VVVXXXXX">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-
-  <variable item="Swiss Mapping Group 13 F-key" CV="502">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 13 F-key</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 13 Tasto F</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 13 tlačítko F</label>
-    <label xml:lang="nl">Zwitserse Mapping Groep 13 F-toets</label>
-  </variable>
-  <variable item="Swiss Mapping Group 13 M-key" CV="503" mask="XXXVVVVV">
-       
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
-    </enumVal>
-    <label>Map to:</label> 
-    <label xml:lang="cs">Přiřazeno na:</label>
-  </variable>
-  <variable item="Swiss Mapping Group 13 M-key M+F" CV="503" mask="VXXXXXXX">
-   
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>M+F</label>
-    <label xml:lang="cs">M+F</label>
-    <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
-    <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
-    <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 13 M-key NotOff" CV="503" mask="XVVXXXXX">
-   
-      <enumVal>
-        <enumChoice choice="None" value="0">
-          <choice>Off</choice>
-          <choice xml:lang="de">Aus</choice>
-          <choice xml:lang="cs">Vypnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Fw" value="2">
-          <choice>Fwd on</choice>
-          <choice xml:lang="de">Vor an</choice>
-          <choice xml:lang="cs">Vpřed zapnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Rev" value="1">
-          <choice>Rev on</choice>
-          <choice xml:lang="de">Rück an</choice>
-          <choice xml:lang="cs">Vzad zapnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Both" value="3">
-          <choice>All on</choice>
-          <choice xml:lang="de">Beide an</choice>
-          <choice xml:lang="cs">Vše zapnuto</choice>
-        </enumChoice>
-    </enumVal>
-    <label>ON while</label>
-    <label xml:lang="cs">Když Zapnuto</label>
-    <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
-    <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
-    <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 13 M-key Hibeam" CV="503" >
-  
-      <enumVal> <!-- copy in for special value-->
-        <enumChoice choice="No">
-          <choice>No</choice>
-          <choice xml:lang="cs">Ne</choice>
-        </enumChoice>
-        <enumChoice choice="Yes" value="255" >    <!--  -->
-          <choice>Yes</choice>
-          <choice xml:lang="cs">Ano</choice>
-        </enumChoice>
-    </enumVal>
-    <label>Hibeam</label>
-    <label xml:lang="cs">Dálkové světlo</label>
-    <tooltip>M-key Hibeam (hides other options in CV503 )</tooltip>
-    <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV503)</tooltip>
-    <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV503)</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 13 A1 Fw" CV="504" mask="XXXVVVVV">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 13 A1 Fw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 13 A1 Avanti</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 13 A1 vpřed</label>
-  </variable>
-  <variable item="Swiss Mapping Group 13 A1 Fw DG" CV="504" mask="VVVXXXXX">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 13 A2 Fw" CV="505" mask="XXXVVVVV">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 13 A2 Fw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 13 A2 Avanti</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 13 A2 vpřed</label>
-  </variable>
-  <variable item="Swiss Mapping Group 13 A2 Fw DG" CV="505" mask="VVVXXXXX">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 13 A1 Rw" CV="506" mask="XXXVVVVV">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 13 A1 Rw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 13 A1 Retro</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 13 A1 vzad</label>
-  </variable>
-  <variable item="Swiss Mapping Group 13 A1 Rw DG" CV="506" mask="VVVXXXXX">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 13 A2 Rw" CV="507" mask="XXXVVVVV">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 13 A2 Rw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 13 A2 Retro</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 13 A2 vzad</label>
-  </variable>
-  <variable item="Swiss Mapping Group 13 A2 Rw DG" CV="507" mask="VVVXXXXX">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-
-  <variable item="Swiss Mapping Group 14 F-key" CV="800" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 14 F-key</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 14 Tasto F</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 14 tlačítko F</label>
-    <label xml:lang="nl">Zwitserse Mapping Groep 14 F-toets</label>
-  </variable>
-  <variable item="Swiss Mapping Group 14 M-key" CV="801" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-       
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
-    </enumVal>
-    <label>Map to:</label> 
-    <label xml:lang="cs">Přiřazeno na:</label>
-  </variable>
-  <variable item="Swiss Mapping Group 14 M-key M+F" CV="801" mask="VXXXXXXX" exclude="195,199,201,211,218,240">
-   
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>M+F</label>
-    <label xml:lang="cs">M+F</label>
-    <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
-    <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
-    <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 14 M-key NotOff" CV="801" mask="XVVXXXXX" exclude="195,199,201,211,218,240">
-   
-      <enumVal>
-        <enumChoice choice="None" value="0">
-          <choice>Off</choice>
-          <choice xml:lang="de">Aus</choice>
-          <choice xml:lang="cs">Vypnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Fw" value="2">
-          <choice>Fwd on</choice>
-          <choice xml:lang="de">Vor an</choice>
-          <choice xml:lang="cs">Vpřed zapnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Rev" value="1">
-          <choice>Rev on</choice>
-          <choice xml:lang="de">Rück an</choice>
-          <choice xml:lang="cs">Vzad zapnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Both" value="3">
-          <choice>All on</choice>
-          <choice xml:lang="de">Beide an</choice>
-          <choice xml:lang="cs">Vše zapnuto</choice>
-        </enumChoice>
-    </enumVal>
-    <label>ON while</label>
-    <label xml:lang="cs">Když Zapnuto</label>
-    <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
-    <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
-    <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 14 M-key Hibeam" CV="801"  exclude="195,199,201,211,218,240">
-  
-      <enumVal> <!-- copy in for special value-->
-        <enumChoice choice="No">
-          <choice>No</choice>
-          <choice xml:lang="cs">Ne</choice>
-        </enumChoice>
-        <enumChoice choice="Yes" value="255" >    <!--  -->
-          <choice>Yes</choice>
-          <choice xml:lang="cs">Ano</choice>
-        </enumChoice>
-    </enumVal>
-    <label>Hibeam</label>
-    <label xml:lang="cs">Dálkové světlo</label>
-    <tooltip>M-key Hibeam (hides other options in CV801 )</tooltip>
-    <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV801)</tooltip>
-    <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV801)</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 14 A1 Fw" CV="802" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 14 A1 Fw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 14 A1 Avanti</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 14 A1 vpřed</label>
-  </variable>
-  <variable item="Swiss Mapping Group 14 A1 Fw DG" CV="802" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 14 A2 Fw" CV="803" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 14 A2 Fw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 14 A2 Avanti</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 14 A2 vpřed</label>
-  </variable>
-  <variable item="Swiss Mapping Group 14 A2 Fw DG" CV="803" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 14 A1 Rw" CV="804" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 14 A1 Rw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 14 A1 Retro</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 14 A1 vzad</label>
-  </variable>
-  <variable item="Swiss Mapping Group 14 A1 Rw DG" CV="804" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 14 A2 Rw" CV="805" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 14 A2 Rw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 14 A2 Retro</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 14 A2 vzad</label>
-  </variable>
-  <variable item="Swiss Mapping Group 14 A2 Rw DG" CV="805" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-
- <variable item="Swiss Mapping Group 15 F-key" CV="806" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 15 F-key</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 15 Tasto F</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 15 tlačítko F</label>
-    <label xml:lang="nl">Zwitserse Mapping Groep 15 F-toets</label>
-  </variable>
-  <variable item="Swiss Mapping Group 15 M-key" CV="807" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-       
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
-    </enumVal>
-    <label>Map to:</label> 
-    <label xml:lang="cs">Přiřazeno na:</label>
-  </variable>
-  <variable item="Swiss Mapping Group 15 M-key M+F" CV="807" mask="VXXXXXXX" exclude="195,199,201,211,218,240">
-   
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>M+F</label>
-    <label xml:lang="cs">M+F</label>
-    <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
-    <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
-    <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 15 M-key NotOff" CV="807" mask="XVVXXXXX" exclude="195,199,201,211,218,240">
-   
-      <enumVal>
-        <enumChoice choice="None" value="0">
-          <choice>Off</choice>
-          <choice xml:lang="de">Aus</choice>
-          <choice xml:lang="cs">Vypnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Fw" value="2">
-          <choice>Fwd on</choice>
-          <choice xml:lang="de">Vor an</choice>
-          <choice xml:lang="cs">Vpřed zapnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Rev" value="1">
-          <choice>Rev on</choice>
-          <choice xml:lang="de">Rück an</choice>
-          <choice xml:lang="cs">Vzad zapnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Both" value="3">
-          <choice>All on</choice>
-          <choice xml:lang="de">Beide an</choice>
-          <choice xml:lang="cs">Vše zapnuto</choice>
-        </enumChoice>
-    </enumVal>
-    <label>ON while</label>
-    <label xml:lang="cs">Když Zapnuto</label>
-    <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
-    <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
-    <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 15 M-key Hibeam" CV="807"  exclude="195,199,201,211,218,240">
-  
-      <enumVal> <!-- copy in for special value-->
-        <enumChoice choice="No">
-          <choice>No</choice>
-          <choice xml:lang="cs">Ne</choice>
-        </enumChoice>
-        <enumChoice choice="Yes" value="255" >    <!--  -->
-          <choice>Yes</choice>
-          <choice xml:lang="cs">Ano</choice>
-        </enumChoice>
-    </enumVal>
-    <label>Hibeam</label>
-    <label xml:lang="cs">Dálkové světlo</label>
-    <tooltip>M-key Hibeam (hides other options in CV807 )</tooltip>
-    <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV807)</tooltip>
-    <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV807)</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 15 A1 Fw" CV="808" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 15 A1 Fw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 15 A1 Avanti</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 15 A1 vpřed</label>
-  </variable>
-  <variable item="Swiss Mapping Group 15 A1 Fw DG" CV="808" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 15 A2 Fw" CV="809" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 15 A2 Fw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 15 A2 Avanti</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 15 A2 vpřed</label>
-  </variable>
-  <variable item="Swiss Mapping Group 15 A2 Fw DG" CV="809" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 15 A1 Rw" CV="810" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 15 A1 Rw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 15 A1 Retro</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 15 A1 vzad</label>
-  </variable>
-  <variable item="Swiss Mapping Group 15 A1 Rw DG" CV="810" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 15 A2 Rw" CV="811" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 15 A2 Rw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 15 A2 Retro</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 15 A2 vzad</label>
-  </variable>
-  <variable item="Swiss Mapping Group 15 A2 Rw DG" CV="811" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-
- <variable item="Swiss Mapping Group 16 F-key" CV="812" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 16 F-key</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 16 Tasto F</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 16 tlačítko F</label>
-    <label xml:lang="nl">Zwitserse Mapping Groep 16 F-toets</label>
-  </variable>
-  <variable item="Swiss Mapping Group 16 M-key" CV="813" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-       
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
-    </enumVal>
-    <label>Map to:</label> 
-    <label xml:lang="cs">Přiřazeno na:</label>
-  </variable>
-  <variable item="Swiss Mapping Group 16 M-key M+F" CV="813" mask="VXXXXXXX" exclude="195,199,201,211,218,240">
-   
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>M+F</label>
-    <label xml:lang="cs">M+F</label>
-    <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
-    <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
-    <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 16 M-key NotOff" CV="813" mask="XVVXXXXX" exclude="195,199,201,211,218,240">
-   
-      <enumVal>
-        <enumChoice choice="None" value="0">
-          <choice>Off</choice>
-          <choice xml:lang="de">Aus</choice>
-          <choice xml:lang="cs">Vypnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Fw" value="2">
-          <choice>Fwd on</choice>
-          <choice xml:lang="de">Vor an</choice>
-          <choice xml:lang="cs">Vpřed zapnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Rev" value="1">
-          <choice>Rev on</choice>
-          <choice xml:lang="de">Rück an</choice>
-          <choice xml:lang="cs">Vzad zapnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Both" value="3">
-          <choice>All on</choice>
-          <choice xml:lang="de">Beide an</choice>
-          <choice xml:lang="cs">Vše zapnuto</choice>
-        </enumChoice>
-    </enumVal>
-    <label>ON while</label>
-    <label xml:lang="cs">Když Zapnuto</label>
-    <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
-    <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
-    <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 16 M-key Hibeam" CV="813"  exclude="195,199,201,211,218,240">
-  
-      <enumVal> <!-- copy in for special value-->
-        <enumChoice choice="No">
-          <choice>No</choice>
-          <choice xml:lang="cs">Ne</choice>
-        </enumChoice>
-        <enumChoice choice="Yes" value="255" >    <!--  -->
-          <choice>Yes</choice>
-          <choice xml:lang="cs">Ano</choice>
-        </enumChoice>
-    </enumVal>
-    <label>Hibeam</label>
-    <label xml:lang="cs">Dálkové světlo</label>
-    <tooltip>M-key Hibeam (hides other options in CV813 )</tooltip>
-    <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV813)</tooltip>
-    <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV813)</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 16 A1 Fw" CV="814" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 16 A1 Fw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 16 A1 Avanti</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 16 A1 vpřed</label>
-  </variable>
-  <variable item="Swiss Mapping Group 16 A1 Fw DG" CV="814" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 16 A2 Fw" CV="815" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 16 A2 Fw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 16 A2 Avanti</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 16 A2 vpřed</label>
-  </variable>
-  <variable item="Swiss Mapping Group 16 A2 Fw DG" CV="815" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 16 A1 Rw" CV="816" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 16 A1 Rw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 16 A1 Retro</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 16 A1 vzad</label>
-  </variable>
-  <variable item="Swiss Mapping Group 16 A1 Rw DG" CV="816" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 16 A2 Rw" CV="817" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 16 A2 Rw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 16 A2 Retro</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 16 A2 vzad</label>
-  </variable>
-  <variable item="Swiss Mapping Group 16 A2 Rw DG" CV="817" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-
- <variable item="Swiss Mapping Group 17 F-key" CV="818" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 17 F-key</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 17 Tasto F</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 17 tlačítko F</label>
-    <label xml:lang="nl">Zwitserse Mapping Groep 17 F-toets</label>
-  </variable>
-  <variable item="Swiss Mapping Group 17 M-key" CV="819" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-       
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
-    </enumVal>
-    <label>Map to:</label> 
-    <label xml:lang="cs">Přiřazeno na:</label>
-  </variable>
-  <variable item="Swiss Mapping Group 17 M-key M+F" CV="819" mask="VXXXXXXX" exclude="195,199,201,211,218,240">
-   
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>M+F</label>
-    <label xml:lang="cs">M+F</label>
-    <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
-    <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
-    <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 17 M-key NotOff" CV="819" mask="XVVXXXXX" exclude="195,199,201,211,218,240">
-   
-      <enumVal>
-        <enumChoice choice="None" value="0">
-          <choice>Off</choice>
-          <choice xml:lang="de">Aus</choice>
-          <choice xml:lang="cs">Vypnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Fw" value="2">
-          <choice>Fwd on</choice>
-          <choice xml:lang="de">Vor an</choice>
-          <choice xml:lang="cs">Vpřed zapnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Rev" value="1">
-          <choice>Rev on</choice>
-          <choice xml:lang="de">Rück an</choice>
-          <choice xml:lang="cs">Vzad zapnuto</choice>
-        </enumChoice>
-        <enumChoice choice="Both" value="3">
-          <choice>All on</choice>
-          <choice xml:lang="de">Beide an</choice>
-          <choice xml:lang="cs">Vše zapnuto</choice>
-        </enumChoice>
-    </enumVal>
-    <label>ON while</label>
-    <label xml:lang="cs">Když Zapnuto</label>
-    <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
-    <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
-    <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 17 M-key Hibeam" CV="819"  exclude="195,199,201,211,218,240">
-  
-      <enumVal> <!-- copy in for special value-->
-        <enumChoice choice="No">
-          <choice>No</choice>
-          <choice xml:lang="cs">Ne</choice>
-        </enumChoice>
-        <enumChoice choice="Yes" value="255" >    <!--  -->
-          <choice>Yes</choice>
-          <choice xml:lang="cs">Ano</choice>
-        </enumChoice>
-    </enumVal>
-    <label>Hibeam</label>
-    <label xml:lang="cs">Dálkové světlo</label>
-    <tooltip>M-key Hibeam (hides other options in CV819 )</tooltip>
-    <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV819)</tooltip>
-    <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV819)</tooltip>
-  </variable>
-  <variable item="Swiss Mapping Group 17 A1 Fw" CV="820" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 17 A1 Fw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 17 A1 Avanti</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 17 A1 vpřed</label>
-  </variable>
-  <variable item="Swiss Mapping Group 17 A1 Fw DG" CV="820" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 17 A2 Fw" CV="821" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 17 A2 Fw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 17 A2 Avanti</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 17 A2 vpřed</label>
-  </variable>
-  <variable item="Swiss Mapping Group 17 A2 Fw DG" CV="821" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 17 A1 Rw" CV="822" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 17 A1 Rw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 17 A1 Retro</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 17 A1 vzad</label>
-  </variable>
-  <variable item="Swiss Mapping Group 17 A1 Rw DG" CV="822" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-  <variable item="Swiss Mapping Group 17 A2 Rw" CV="823" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
-    </enumVal>
-    <label>Swiss Mapping Group 17 A2 Rw</label>
-    <label xml:lang="it">Mappatura Svizzera Gruppo 17 A2 Retro</label>
-    <label xml:lang="cs">Švýcarské přiřazení skupina 17 A2 vzad</label>
-  </variable>
-  <variable item="Swiss Mapping Group 17 A2 Rw DG" CV="823" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
-    <enumVal>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
-    </enumVal>
-  </variable>
-
 </variables>

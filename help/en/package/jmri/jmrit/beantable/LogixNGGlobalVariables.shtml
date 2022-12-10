@@ -21,6 +21,11 @@
       Chapter 12</a> for details.
       </p>
 
+      <div style="margin-left: 2em">
+        <a href="../logixng/images/GlobalVariableList.png"><img src=
+        "../logixng/images/GlobalVariableList.png" alt="global variable list"></a>
+      </div>
+
       <ul>
         <li>
           <a href="#tableContent">Table Content</a>
@@ -111,8 +116,14 @@
 
         <dd>
           The <strong>Browse</strong> option opens a text window with a representation of the
-          global variable. See <a href=
-          "../logixng/LogixNGBrowser.shtml">LogixNG Browser</a> for details about the browser.
+          global variable.  The browse report includes the system and user name, the variable type
+          and current contents of the variable.  See <a href="../logixng/LogixNGBrowser.shtml">
+          LogixNG Browser</a> for details about the browser.
+
+          <div style="margin-left: 2em">
+            <a href="../logixng/images/GlobalVariableBrowse.png"><img src=
+            "../logixng/images/GlobalVariableBrowse.png" alt="global variable browse"></a>
+          </div>
         </dd>
 
         <dt>Delete</dt>

@@ -44,11 +44,6 @@
                 <li></li>
             </ul>
 
-        <h4>EasyDCC</h4>
-            <ul>
-                <li>Now allows adding multiple new turnouts at the same time.</li>
-            </ul>
-
         <h4>ESU</h4>
             <ul>
                 <li></li>
@@ -81,13 +76,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>You can now select separate defaults (in the Preferences -> Defaults pane)
-                for additional types of LocoNet connections.
-                <p>
-                Note: Existing LocoNet connections might give a "The Defaults preferences are invalid"
-                warning when saving preferences.  In that case, click "yes" and then go set
-                all the default radio buttons on the "Defaults" pane to the LocoNet connection.  (You can also
-                click "no", but you'll get the message next time you store too)</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -310,6 +299,11 @@
                 <li></li>
             </ul>
 
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>QuadLN_S - support for new Semaphore Aspect and Servo Refresh in version 3.2 firmware</li>
+            </ul>
+
         <h4>TAMS</h4>
             <ul>
                 <li></li>
@@ -347,8 +341,7 @@
 
         <h4>Viessmann</h4>
             <ul>
-                <li>New decoder definition for Viessmann 4567 TT Motorized point machine</li>
-		<li>New decoder definition for Tillig 08335 TT Motor-driven double crossing point</li>
+                <li></li>
             </ul>
 
         <h4>Wangrow</h4>
@@ -358,7 +351,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>New decoder definitions for Firmware 40.18</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -416,7 +409,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The Throttle action supports multiple throttle connections.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -486,8 +479,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Updated ControlPanel.py sample script to show the panel windows
-            instead of the panel editor windows.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -502,11 +494,7 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li>"Single Output" signal heads had their Thrown and Reversed
-                positions
-                <a href="https://groups.io/g/jmriusers/message/210041">reversed in the "Add..." dialog</a>.
-                This is now corrected.
-                </li>
+                <li></li>
             </ul>
 
         <h4>Signal Masts</h4>
@@ -585,7 +573,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Update minimatch.js library from 3.0..4 to 3.0.8</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -597,6 +585,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>SpotBugs has been updated to 4.7.3</li>
+            <li>Update commons-net library from 3.6 to 3.9.0</li>
         </ul>
 

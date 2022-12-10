@@ -195,7 +195,8 @@ public class TrainCsvCommon extends TrainCommon {
                 engine.getConsistName(),
                 engine.isLead() ? "Lead loco" : "", // NOI18N
                 engine.getComment(),
-                engine.getRfid());
+                engine.getRfid(),
+                engine.getDccAddress());
     }
 
     protected final void checkForEngineOrCabooseChange(CSVPrinter fileOut, Train train, RouteLocation rl)

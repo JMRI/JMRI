@@ -17,7 +17,7 @@
 
       <h2>The clipboard</h2>
 
-      <h3>Cut/Copy/Paste</h3>
+      <h3>Cut/Copy/Paste/Paste copy</h3>
 
       <p>While editing a ConditionalNG, it can be useful to <strong>cut</strong> out something,
       edit something else, and then <strong>paste</strong> it back. Chapter 1 has a good example.
@@ -26,6 +26,27 @@
 
       <p>It also possible to <strong>copy</strong> all or part of a ConditionalNG. This can then be
       pasted into the same ConditionalNG, another ConditionalNG or even a different LogixNG.</p>
+
+      <p>The LogixNG context menu contains four items for working with the clipboard.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter2/clipboard_actions.png"><img class="image-border" src=
+        "images/chapter2/clipboard_actions.png" alt="Chapter 2 clipboard actions"></a>
+      </div>
+
+      <dl>
+        <dt>Cut</dt>
+        <dd>The row and its children are removed from the ConditionalNG and added the clipboard.</dd>
+
+        <dt>Copy</dt>
+        <dd>The row and its children are copied from the ConditionalNG and added the clipboard.</dd>
+
+        <dt>Paste</dt>
+        <dd>The first row in the clipboard is pasted to the empty row and removed from the clipboard.</dd>
+
+        <dt>Paste copy</dt>
+        <dd>The first row in the clipboard is copied and then pasted to the empty row.</dd>
+      </dl>
 
       <h3>Working with the clipboard</h3>
 
@@ -37,13 +58,13 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter2/chapter2_clipboard.png"><img src=
-        "images/chapter2/chapter2_clipboard.png" alt="Chapter 2 clipboard" width="500" height=
-        "305"></a>
+        "images/chapter2/chapter2_clipboard.png" alt="Chapter 2 clipboard"></a>
       </div>
 
       <p>In the ConditionalNG editor window, copy and cut add to the beginning of the clipboard
       list. Paste uses the <strong><em>first</em></strong> item in the clipboard list and it will
-      be <strong>deleted</strong> from clipboard list.</p>
+      be <strong>deleted</strong> from clipboard list.  <strong>Paste copy</strong> does not remove
+      the item.</p>
 
       <p>In the clipboard window, copy creates a <strong>duplicate</strong> item and adds it to the
       beginning of the list. Cut <strong>moves</strong> the item to the beginning of the list.

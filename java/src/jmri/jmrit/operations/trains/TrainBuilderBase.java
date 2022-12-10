@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.Version;
-import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
@@ -2435,7 +2437,6 @@ public class TrainBuilderBase extends TrainCommon {
                 !splitString(_departLocation.getName()).equals(splitString(_terminateLocation.getName()))) {
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildThroughTrafficNotAllow"),
                     new Object[] { _departLocation.getName(), _terminateLocation.getName() }));
-            addLine(_buildReport, FIVE, BLANK_LINE);
             return false; // through cars not allowed
         }
         return true; // through cars allowed
@@ -2638,12 +2639,11 @@ public class TrainBuilderBase extends TrainCommon {
                             }
                             addLine(_buildReport, FIVE,
                                     MessageFormat.format(Bundle.getMessage("buildRedirectFromAlternate"),
-                                            new Object[] { car.getFinalDestinationName(),
+                                            new Object[]{car.getFinalDestinationName(),
                                                     car.getFinalDestinationTrackName(), k.toString(),
-                                                    car.getDestinationTrackName() }));
-                            k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true); // force
-                                                                                                               // car to
-                                                                                                               // track
+                                                    car.getDestinationTrackName()}));
+                            // force car to track
+                            k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true);
                         }
                     }
                     addLine(_buildReport, FIVE,
@@ -2976,7 +2976,7 @@ public class TrainBuilderBase extends TrainCommon {
                 String status = engine.checkDestination(destination, track);
                 if (status.equals(Track.OKAY)) {
                     addEngineToTrain(engine, rl, rld, track);
-                    return true; // done
+                    return true;
                 } else {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropEngineToTrack"),
                             new Object[] { engine.toString(), track.getName(), status, track.getTrackTypeName() }));

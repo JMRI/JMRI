@@ -3779,6 +3779,79 @@ public class CreateLogixNGTreeScaffold {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
+        ExpressionSensorEdge expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensorEdge);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensorEdge.setComment("A comment");
+        expressionSensorEdge.getSelectNamedBean().setNamedBean(sensor1);
+        expressionSensorEdge.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSensorEdge.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSensorEdge.getSelectNamedBean().setLocalVariable("index");
+        expressionSensorEdge.getSelectNamedBean().setReference("{IM1}");
+        expressionSensorEdge.getSelectEnumFromState().setEnum(ExpressionSensorEdge.SensorState.Inactive);
+        expressionSensorEdge.getSelectEnumFromState().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");
+        expressionSensorEdge.getSelectEnumFromState().setLocalVariable("index2");
+        expressionSensorEdge.getSelectEnumFromState().setReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensorEdge);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensorEdge.setComment("A comment");
+        expressionSensorEdge.getSelectNamedBean().setNamedBean(sensor1);
+        expressionSensorEdge.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSensorEdge.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSensorEdge.getSelectNamedBean().setLocalVariable("index");
+        expressionSensorEdge.getSelectNamedBean().setReference("{IM1}");
+        expressionSensorEdge.getSelectEnumFromState().setEnum(ExpressionSensorEdge.SensorState.Inactive);
+        expressionSensorEdge.getSelectEnumFromState().setAddressing(NamedBeanAddressing.Formula);
+        expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");
+        expressionSensorEdge.getSelectEnumFromState().setLocalVariable("index2");
+        expressionSensorEdge.getSelectEnumFromState().setReference("{IM2}");
+        expressionSensorEdge.getSelectEnumToState().setEnum(ExpressionSensorEdge.SensorState.Unknown);
+        expressionSensorEdge.getSelectEnumToState().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSensorEdge.getSelectEnumToState().setFormula("\"IT\"+index3");
+        expressionSensorEdge.getSelectEnumToState().setLocalVariable("index3");
+        expressionSensorEdge.getSelectEnumToState().setReference("{IM3}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensorEdge);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensorEdge.setComment("A comment");
+        expressionSensorEdge.getSelectNamedBean().setNamedBean(sensor1);
+        expressionSensorEdge.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionSensorEdge.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSensorEdge.getSelectNamedBean().setLocalVariable("index");
+        expressionSensorEdge.getSelectNamedBean().setReference("{IM1}");
+        expressionSensorEdge.getSelectEnumFromState().setEnum(ExpressionSensorEdge.SensorState.Inactive);
+        expressionSensorEdge.getSelectEnumFromState().setAddressing(NamedBeanAddressing.Reference);
+        expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");
+        expressionSensorEdge.getSelectEnumFromState().setLocalVariable("index2");
+        expressionSensorEdge.getSelectEnumFromState().setReference("{IM2}");
+        expressionSensorEdge.setOnlyTrueOnce(false);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensorEdge);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensorEdge.setComment("A comment");
+        expressionSensorEdge.getSelectNamedBean().setNamedBean(sensor1);
+        expressionSensorEdge.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionSensorEdge.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSensorEdge.getSelectNamedBean().setLocalVariable("index");
+        expressionSensorEdge.getSelectNamedBean().setReference("{IM1}");
+        expressionSensorEdge.getSelectEnumFromState().setEnum(ExpressionSensorEdge.SensorState.Inactive);
+        expressionSensorEdge.getSelectEnumFromState().setAddressing(NamedBeanAddressing.Direct);
+        expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");
+        expressionSensorEdge.getSelectEnumFromState().setLocalVariable("index2");
+        expressionSensorEdge.getSelectEnumFromState().setReference("{IM2}");
+        expressionSensorEdge.setOnlyTrueOnce(true);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensorEdge);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
         ExpressionSignalHead expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
         maleSocket.setEnabled(false);

@@ -101,6 +101,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      *
      * @param s the Section object to add
      */
+    @Override
     public void addTransitSection(TransitSection s) {
         mTransitSectionList.add(s);
         mMaxSequence = s.getSequenceNumber();
@@ -111,6 +112,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      *
      * @return a copy of the internal list of TransitSections or an empty list
      */
+    @Override
     public ArrayList<TransitSection> getTransitSectionList() {
         return new ArrayList<>(mTransitSectionList);
     }
@@ -120,6 +122,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      *
      * @return the maximum sequence
      */
+    @Override
     public int getMaxSequence() {
         return mMaxSequence;
     }
@@ -127,6 +130,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
     /**
      * Remove all TransitSections in this Transit.
      */
+    @Override
     public void removeAllSections() {
         mTransitSectionList.clear();
     }
@@ -137,6 +141,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      * @param s the section to check for
      * @return true if the section is present; false otherwise
      */
+    @Override
     public boolean containsSection(Section s) {
         return mTransitSectionList.stream().anyMatch((ts) -> (ts.getSection() == s));
     }
@@ -147,6 +152,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      * @param seq the sequence number
      * @return the list of of matching sections or an empty list if none
      */
+    @Override
     public ArrayList<Section> getSectionListBySeq(int seq) {
         ArrayList<Section> list = new ArrayList<>();
         for (TransitSection ts : mTransitSectionList) {
@@ -163,6 +169,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      * @param seq the sequence number
      * @return the list of of matching sections or an empty list if none
      */
+    @Override
     public ArrayList<TransitSection> getTransitSectionListBySeq(int seq) {
         ArrayList<TransitSection> list = new ArrayList<>();
         for (TransitSection ts : mTransitSectionList) {
@@ -179,6 +186,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      * @param s the section to match
      * @return the list of matching sequence numbers or an empty list if none
      */
+    @Override
     public ArrayList<Integer> getSeqListBySection(Section s) {
         ArrayList<Integer> list = new ArrayList<>();
         for (TransitSection ts : mTransitSectionList) {
@@ -195,6 +203,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      * @param block the block to check for
      * @return true if block is present; false otherwise
      */
+    @Override
     public boolean containsBlock(Block block) {
         for (Block b : getInternalBlocksList()) {
             if (b == block) {
@@ -210,6 +219,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      * @param block the block to check for
      * @return the number of times block is present; 0 if block is not present
      */
+    @Override
     public int getBlockCount(Block block) {
         int count = 0;
         for (Block b : getInternalBlocksList()) {
@@ -227,6 +237,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      * @param seq the sequence number of the Section
      * @return the Section or null if no matching Section is present
      */
+    @Override
     public Section getSectionFromBlockAndSeq(Block b, int seq) {
         for (TransitSection ts : mTransitSectionList) {
             if (ts.getSequenceNumber() == seq) {
@@ -246,6 +257,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      * @param seq the sequence number of the Section
      * @return the Section or null if no matching Section is present
      */
+    @Override
     public Section getSectionFromConnectedBlockAndSeq(Block b, int seq) {
         for (TransitSection ts : mTransitSectionList) {
             if (ts.getSequenceNumber() == seq) {
@@ -267,6 +279,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      *         or {@link jmri.Section#REVERSE} or zero if s and seq are not in a
      *         TransitSection together
      */
+    @Override
     public int getDirectionFromSectionAndSeq(Section s, int seq) {
         for (TransitSection ts : mTransitSectionList) {
             if ((ts.getSection() == s) && (ts.getSequenceNumber() == seq)) {
@@ -283,6 +296,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      * @param seq the sequence number of the Section
      * @return the transit section or null if not found
      */
+    @Override
     public TransitSection getTransitSectionFromSectionAndSeq(Section s, int seq) {
         for (TransitSection ts : mTransitSectionList) {
             if ((ts.getSection() == s) && (ts.getSequenceNumber() == seq)) {
@@ -301,6 +315,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      *
      * @return the list of all Blocks or an empty list if none are present
      */
+    @Override
     public ArrayList<Block> getInternalBlocksList() {
         ArrayList<Block> list = new ArrayList<>();
         blockSecSeqList.clear();
@@ -321,6 +336,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      * @return the list of all sequence numbers or an empty list if no Blocks
      *         are present
      */
+    @Override
     public ArrayList<Integer> getBlockSeqList() {
         return new ArrayList<>(blockSecSeqList);
     }
@@ -334,6 +350,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      *
      * @return the list of all blocks or an empty list if none are present
      */
+    @Override
     public ArrayList<Block> getEntryBlocksList() {
         ArrayList<Block> list = new ArrayList<>();
         ArrayList<Block> internalBlocks = getInternalBlocksList();
@@ -380,6 +397,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      *                       otherwise
      * @return a list of destination Blocks or an empty list if none exist
      */
+    @Override
     public ArrayList<Block> getDestinationBlocksList(Block startBlock, boolean startInTransit) {
         ArrayList<Block> list = new ArrayList<>();
         destBlocksSeqList.clear();
@@ -430,6 +448,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      * @return the list of all destination Block sequence numbers or an empty
      *         list if no destination Blocks are present
      */
+    @Override
     public ArrayList<Integer> getDestBlocksSeqList() {
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < destBlocksSeqList.size(); i++) {
@@ -452,6 +471,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      *
      * @return true if continuous running is possible; otherwise false
      */
+    @Override
     public boolean canBeResetWhenDone() {
         TransitSection firstTS = mTransitSectionList.get(0);
         int lastIndex = mTransitSectionList.size() - 1;
@@ -486,6 +506,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
      *
      * @return 0 if no errors, number of errors otherwise.
      */
+    @Override
     public int initializeBlockingSensors() {
         int numErrors = 0;
         for (int i = 0; i < mTransitSectionList.size(); i++) {
@@ -520,8 +541,9 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
         return numErrors;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UC_USELESS_OBJECT",
-            justification = "SpotBugs doesn't see that toBeRemoved is being read by the forEach clause")
+    //@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UC_USELESS_OBJECT",
+    //         justification = "SpotBugs doesn't see that toBeRemoved is being read by the forEach clause")
+    @Override
     public void removeTemporarySections() {
         ArrayList<TransitSection> toBeRemoved = new ArrayList<>();
         for (TransitSection ts : mTransitSectionList) {
@@ -534,6 +556,7 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
         });
     }
 
+    @Override
     public boolean removeLastTemporarySection(Section s) {
         TransitSection last = mTransitSectionList.get(mTransitSectionList.size() - 1);
         if (last.getSection() != s) {
