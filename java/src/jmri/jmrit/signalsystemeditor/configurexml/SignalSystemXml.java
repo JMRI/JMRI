@@ -161,6 +161,8 @@ public class SignalSystemXml {
                             case "speed2":
                                 aspect.getSpeed2List().add(e.getText());
                                 break;
+                            default:
+                                // Ignore
                         }
                     }
                     signalSystem.getAspects().add(aspect);
