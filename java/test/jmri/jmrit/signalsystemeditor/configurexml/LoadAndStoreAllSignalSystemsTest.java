@@ -153,7 +153,7 @@ public class LoadAndStoreAllSignalSystemsTest {
             }   // while readLine() != null
         } catch (java.io.FileNotFoundException ex) {
             // Ignore for now. Fix later
-            System.out.format("File not found: %s%n", ex.getMessage());
+            log.debug("File not found: {}", ex.getMessage());
         }
     }
 

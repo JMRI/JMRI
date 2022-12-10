@@ -79,7 +79,7 @@ public class SignalMastXml {
                 }
                 signalMast.getCopyright().setHolder(copyright.getChildText("holder", namespace));
             } else {
-                System.out.format("ERROR: No copyright%n");
+                log.debug("ERROR: No copyright");
             }
 
             Element authors = aspecttable.getChild("authorgroup", namespace);
@@ -94,7 +94,7 @@ public class SignalMastXml {
                 }
 //                signalMast.getAuthors().setHolder(authors.getChildText("holder", namespace));
             } else {
-                System.out.format("ERROR: No authorgroup%n");
+                log.debug("ERROR: No authorgroup");
             }
 
             Element revhistory = aspecttable.getChild("revhistory", namespace);
@@ -109,7 +109,7 @@ public class SignalMastXml {
                 }
 //                signalMast.getRevisions().setHolder(revhistory.getChildText("holder", namespace));
             } else {
-                System.out.format("ERROR: No revhistory%n");
+                log.debug("ERROR: No revhistory");
             }
 
 
@@ -157,7 +157,7 @@ public class SignalMastXml {
                             try {
                                 imageType = signalSystem.getImageType(imageLinkElement.getAttributeValue("type"));
                             } catch (IllegalArgumentException ex) {
-                                System.out.format("ERROR: image type %s does not exists, %s%n", imageLinkElement.getAttributeValue("type"), file.toString());
+                                log.debug("ERROR: image type {} does not exists, {}", imageLinkElement.getAttributeValue("type"), file.toString());
                             }
 //                        } else {
 //                            System.out.format("ERROR: imagelink has no type for aspect %s, %s%n", appearance.getChildText("aspectname"), file.toString());
@@ -169,7 +169,7 @@ public class SignalMastXml {
                     signalMast.getAppearances().add(appearance);
                 }
             } else {
-                System.out.format("ERROR: No appearances%n");
+                log.debug("ERROR: No appearances");
             }
 
 
@@ -381,7 +381,7 @@ public class SignalMastXml {
     }
 
 
-
+/*
     void printElement(Element element, String pad) {
         System.out.format("%sCType: %s, name: %s, namespace: %s", pad, element.getCType().name(), element.getName(), element.getNamespaceURI());
 
@@ -409,7 +409,7 @@ public class SignalMastXml {
 
 //        element.getValue();
     }
-
+*/
 
 
 

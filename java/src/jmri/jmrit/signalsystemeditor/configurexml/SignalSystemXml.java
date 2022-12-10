@@ -99,7 +99,7 @@ public class SignalSystemXml {
                 }
                 signalSystem.getCopyright().setHolder(copyright.getChildText("holder", namespace));
             } else {
-                System.out.format("ERROR: No copyright%n");
+                log.debug("ERROR: No copyright");
             }
 
             Element authors = aspecttable.getChild("authorgroup", namespace);
@@ -114,7 +114,7 @@ public class SignalSystemXml {
                 }
 //                signalSystem.getAuthors().setHolder(authors.getChildText("holder", namespace));
             } else {
-                System.out.format("ERROR: No authors%n");
+                log.debug("ERROR: No authors");
             }
 
             Element revhistory = aspecttable.getChild("revhistory", namespace);
@@ -129,7 +129,7 @@ public class SignalSystemXml {
                 }
 //                signalSystem.getRevisions().setHolder(revhistory.getChildText("holder", namespace));
             } else {
-                System.out.format("ERROR: No authors%n");
+                log.debug("ERROR: No authors");
             }
 
 
@@ -169,7 +169,7 @@ public class SignalSystemXml {
                 }
 //                signalSystem.getAspects().setHolder(revhistory.getChildText("holder"));
             } else {
-                System.out.format("ERROR: No aspects%n");
+                log.debug("ERROR: No aspects");
             }
 
 
@@ -196,7 +196,7 @@ public class SignalSystemXml {
                                             +"/"+appearancefile.getAttributeValue("href"))));
                 }
             } else {
-                System.out.format("ERROR: No appearancefiles%n");
+                log.debug("ERROR: No appearancefiles");
             }
 
 
@@ -303,7 +303,7 @@ public class SignalSystemXml {
     }
 
 
-
+/*
     void printElement(Element element, String pad) {
         System.out.format("%sCType: %s, name: %s, namespace: %s", pad, element.getCType().name(), element.getName(), element.getNamespaceURI());
 
@@ -331,7 +331,7 @@ public class SignalSystemXml {
 
 //        element.getValue();
     }
-
+*/
 
     public void save(SignalSystem signalSystem) {
         String fileName = FileUtil.getProfilePath() + "xml/signals/" + signalSystem.getFolderName() + "/aspects.xml";
