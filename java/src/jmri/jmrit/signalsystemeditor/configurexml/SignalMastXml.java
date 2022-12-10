@@ -10,7 +10,7 @@ import jmri.util.FileUtil;
 import org.jdom2.*;
 
 /**
- * Load and store a SignalSystem from/to xml
+ * Load and store a signal mast type from/to xml
  *
  * @author Daniel Bergqvist (C) 2022
  */

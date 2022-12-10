@@ -1,7 +1,7 @@
 package jmri.jmrit.signalsystemeditor;
 
 /**
- * An author
+ * A revision
  *
  * @author Daniel Bergqvist (C) 2022
  */
