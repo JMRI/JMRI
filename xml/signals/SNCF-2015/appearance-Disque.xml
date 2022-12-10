@@ -175,7 +175,7 @@
      	 <ourAspect>Disque</ourAspect>
     </aspectMapping>
 
-	<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Approach</ourAspect>
       <ourAspect>Approach Restrict30</ourAspect>
