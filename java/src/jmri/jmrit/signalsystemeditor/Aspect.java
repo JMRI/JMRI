@@ -14,9 +14,9 @@ public class Aspect {
     private String _title;
     private String _rule;
     private String _indication;
-    private final List<String> _descriptionList = new ArrayList<>();
-    private final List<String> _referenceList = new ArrayList<>();
-    private final List<String> _commentList = new ArrayList<>();
+    private final List<String> _descriptions = new ArrayList<>();
+    private final List<String> _references = new ArrayList<>();
+    private final List<String> _comments = new ArrayList<>();
     private final List<String> _speedList = new ArrayList<>();
     private final List<String> _speed2List = new ArrayList<>();
     private String _route;
@@ -63,16 +63,16 @@ public class Aspect {
         return this._indication;
     }
 
-    public List<String> getDescriptionList() {
-        return this._descriptionList;
+    public List<String> getDescriptions() {
+        return this._descriptions;
     }
 
-    public List<String> getReferenceList() {
-        return this._referenceList;
+    public List<String> getReferences() {
+        return this._references;
     }
 
-    public List<String> getCommentList() {
-        return this._commentList;
+    public List<String> getComments() {
+        return this._comments;
     }
 
     public List<String> getSpeedList() {

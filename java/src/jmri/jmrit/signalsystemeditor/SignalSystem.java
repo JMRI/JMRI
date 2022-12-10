@@ -16,7 +16,7 @@ public class SignalSystem {
     private String _processingInstructionType;
     private String _aspectSchema;
     private String _date;
-    private final List<String> _referenceList = new ArrayList<>();
+    private final List<String> _references = new ArrayList<>();
     private final Copyright _copyright = new Copyright();
     private final List<Author> _authors = new ArrayList<>();
     private final List<Aspect> _aspects = new ArrayList<>();
@@ -72,8 +72,8 @@ public class SignalSystem {
         return this._date;
     }
 
-    public List<String> getReferenceList() {
-        return this._referenceList;
+    public List<String> getReferences() {
+        return this._references;
     }
 
     public Copyright getCopyright() {

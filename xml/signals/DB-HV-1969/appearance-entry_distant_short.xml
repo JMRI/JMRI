@@ -54,7 +54,7 @@
 
   <aspecttable>DB-HV-1969</aspecttable>
   <name>Combined entry + distant signal at short breaking distance</name>
-  <reference>See <a href="http://www.sh1.org/eisenbahn/shhp.htm">sh1's page</a> or the <a href="http://en.wikipedia.org/wiki/German_railway_signalling#Home_signal.2Fdistant_signal_.28H.2FV.29">Wikipedia</a></reference>
+  <reference>See &lt;a href="http://www.sh1.org/eisenbahn/shhp.htm"&gt;sh1's page&lt;/a&gt; or the &lt;a href="http://en.wikipedia.org/wiki/German_railway_signalling#Home_signal.2Fdistant_signal_.28H.2FV.29"&gt;Wikipedia&lt;/a&gt;</reference>
   <description>Signal to use at the station entry, with distant signal head at short breaking distance from next main signal.
   Compared to a block signal it can also show "slow" because going through diverging switches may require a speed restriction.
   The top left light (usually never lit) is red and serves as a spare for the other red light.

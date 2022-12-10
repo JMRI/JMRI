@@ -15,6 +15,8 @@ public class SignalMast {
     private String _description;
     private String _aspectTable;
     private String _appearanceSchema;
+    private final List<String> _references = new ArrayList<>();
+    private final List<String> _descriptions = new ArrayList<>();
     private final List<Appearance> _appearances = new ArrayList<>();
     private final SpecificAppearance _appearanceDanger = new SpecificAppearance();
     private final SpecificAppearance _appearancePermissive = new SpecificAppearance();
@@ -67,6 +69,14 @@ public class SignalMast {
 
     public List<Revision> getRevisions() {
         return this._revisions;
+    }
+
+    public List<String> getReferences() {
+        return this._references;
+    }
+
+    public List<String> getDescriptions() {
+        return this._descriptions;
     }
 
     public List<Appearance> getAppearances() {

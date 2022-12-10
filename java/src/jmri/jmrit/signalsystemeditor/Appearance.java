@@ -1,5 +1,8 @@
 package jmri.jmrit.signalsystemeditor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * An appearance
  *
@@ -8,15 +11,14 @@ package jmri.jmrit.signalsystemeditor;
 public class Appearance {
 
     private String _aspectName;
-    private String _show;
-    private String _reference;
-    private ImageLink _imageLink;
+    private final List<String> _showList = new ArrayList<>();
+    private final List<String> _references = new ArrayList<>();
+    private final List<String> _comments = new ArrayList<>();
+    private String _delay;
+    private final List<ImageLink> _imageLinks = new ArrayList<>();
 
-    public Appearance(String aspectName, String show, String reference, ImageLink imageLink) {
+    public Appearance(String aspectName) {
         this._aspectName = aspectName;
-        this._show = show;
-        this._reference = reference;
-        this._imageLink = imageLink;
     }
 
     public void setAspectName(String name) {
@@ -27,28 +29,28 @@ public class Appearance {
         return this._aspectName;
     }
 
-    public void setShow(String show) {
-        this._show = show;
+    public List<String> getShowList() {
+        return this._showList;
     }
 
-    public String getShow() {
-        return this._show;
+    public List<String> getReferences() {
+        return this._references;
     }
 
-    public void setReference(String reference) {
-        this._reference = reference;
+    public List<String> getComments() {
+        return this._comments;
     }
 
-    public String getReference() {
-        return this._reference;
+    public void setDelay(String delay) {
+        this._delay = delay;
     }
 
-    public void setImageLink(ImageLink imageLink) {
-        this._imageLink = imageLink;
+    public String getDelay() {
+        return this._delay;
     }
 
-    public ImageLink getImageLink() {
-        return this._imageLink;
+    public List<ImageLink> getImageLinks() {
+        return this._imageLinks;
     }
 
 }

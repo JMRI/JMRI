@@ -70,9 +70,6 @@ public class SignalMastXml {
                 System.exit(0);
             }
 */
-//            signalMast.setName(aspecttable.getChildText("name"));
-//            signalMast.setDate(aspecttable.getChildText("date"));
-//            signalMast.setReference(aspecttable.getChildText("reference"));
 
             Element copyright = aspecttable.getChild("copyright", namespace);
             signalMast.getCopyright().getDates().clear();
@@ -120,37 +117,57 @@ public class SignalMastXml {
 
             signalMast.setName(aspecttable.getChildText("name"));
 
-            signalMast.setDescription(aspecttable.getChildText("description"));
+            signalMast.getReferences().clear();
+            for (Element referenceElement : aspecttable.getChildren("reference")) {
+                signalMast.getReferences().add(referenceElement.getText());
+            }
+
+            signalMast.getDescriptions().clear();
+            for (Element descriptionElement : aspecttable.getChildren("description")) {
+                signalMast.getDescriptions().add(descriptionElement.getText());
+            }
 
 
-            Element aspects = aspecttable.getChild("appearances");
+            Element appearances = aspecttable.getChild("appearances");
             signalMast.getAppearances().clear();
-            if (aspects != null) {
-                for (Element aspect : aspects.getChildren("appearance")) {
-                    ImageLink imageLink = null;
-                    Element imagelink = aspect.getChild("imagelink");
-                    if (imagelink != null) {
+            if (appearances != null) {
+                for (Element appearanceElement : appearances.getChildren("appearance")) {
+                    Appearance appearance = new Appearance(
+                            appearanceElement.getChildText("aspectname"));
+
+                    appearance.getShowList().clear();
+                    for (Element e : appearanceElement.getChildren("show")) {
+                        appearance.getShowList().add(e.getText());
+                    }
+                    appearance.getReferences().clear();
+                    for (Element e : appearanceElement.getChildren("reference")) {
+                        appearance.getReferences().add(e.getText());
+                    }
+                    appearance.getComments().clear();
+                    for (Element e : appearanceElement.getChildren("comment")) {
+                        appearance.getComments().add(e.getText());
+                    }
+                    if (appearanceElement.getChild("delay") != null) {
+                        appearance.setDelay(appearanceElement.getChildText("delay"));
+                    }
+                    appearance.getImageLinks().clear();
+                    for (Element imageLinkElement : appearanceElement.getChildren("imagelink")) {
                         ImageType imageType = null;
-                        if (imagelink.getAttribute("type") != null) {
+                        if (imageLinkElement.getAttribute("type") != null) {
                             try {
-                                imageType = signalSystem.getImageType(imagelink.getAttributeValue("type"));
+                                imageType = signalSystem.getImageType(imageLinkElement.getAttributeValue("type"));
                             } catch (IllegalArgumentException ex) {
-                                System.out.format("ERROR: image type %s does not exists, %s%n", imagelink.getAttributeValue("type"), file.toString());
+                                System.out.format("ERROR: image type %s does not exists, %s%n", imageLinkElement.getAttributeValue("type"), file.toString());
                             }
 //                        } else {
-//                            System.out.format("ERROR: imagelink has no type for aspect %s, %s%n", aspect.getChildText("aspectname"), file.toString());
+//                            System.out.format("ERROR: imagelink has no type for aspect %s, %s%n", appearance.getChildText("aspectname"), file.toString());
                         }
-                        imageLink = new ImageLink(imagelink.getTextTrim(), imageType);
+                        appearance.getImageLinks().add(new ImageLink(imageLinkElement.getTextTrim(), imageType));
 //                    } else {
-//                        System.out.format("ERROR: No imagelink for aspect %s%n", aspect.getChildText("aspectname"));
+//                        System.out.format("ERROR: No imagelink for aspect %s%n", appearance.getChildText("aspectname"));
                     }
-                    signalMast.getAppearances().add(
-                            new Appearance(aspect.getChildText("aspectname"),
-                                    aspect.getChildText("show"),
-                                    aspect.getChildText("reference"),
-                                    imageLink));
+                    signalMast.getAppearances().add(appearance);
                 }
-//                signalMast.getCopyright().setHolder(revhistory.getChildText("holder"));
             } else {
                 System.out.format("ERROR: No appearances%n");
             }
@@ -247,7 +264,7 @@ public class SignalMastXml {
 
 
             Element aspectMappings = aspecttable.getChild("aspectMappings");
-            signalMast.getAppearances().clear();
+            signalMast.getAspectMappings().clear();
             if (aspectMappings != null) {
                 for (Element aspectMapping : aspectMappings.getChildren("aspectMapping")) {
                     signalMast.getAspectMappings().put(
@@ -487,75 +504,49 @@ public class SignalMastXml {
         }
         root.addContent(revhistory);
 
-/*
-        Element prefs = new Element(LAYOUT_PARAMS);
-        try {
-            prefs.setAttribute(LAYOUT_SCALE, Float.toString(getLayoutScale()));
-            prefs.setAttribute(SEARCH_DEPTH, Integer.toString(getSearchDepth()));
-            Element shutdownPref = new Element(SHUT_DOWN);
-            shutdownPref.setText(_shutdown.toString());
-            prefs.addContent(shutdownPref);
 
-            Element tracePref = new Element(TRACE);
-            tracePref.setText(_trace ? "true" : "false");
-            prefs.addContent(tracePref);
+        root.addContent(new Element("aspecttable").setText(signalMast.getAspectTable()));
 
-            Element speedAssistancePref = new Element(SPEED_ASSISTANCE);
-            speedAssistancePref.setText(String.valueOf(_slowSpeedAssistance));
-            prefs.addContent(speedAssistancePref);
-            root.addContent(prefs);
+        root.addContent(new Element("name").setText(signalMast.getName()));
 
-            prefs = new Element(SPEED_MAP_PARAMS);
-            Element rampPrefs = new Element(STEP_INCREMENTS);
-            rampPrefs.setAttribute(TIME_INCREMENT, Integer.toString(getTimeIncrement()));
-            rampPrefs.setAttribute(RAMP_INCREMENT, Float.toString(getThrottleIncrement()));
-            rampPrefs.setAttribute(THROTTLE_SCALE, Float.toString(getThrottleScale()));
-            prefs.addContent(rampPrefs);
-
-            rampPrefs = new Element(SPEED_NAME_PREFS);
-            rampPrefs.setAttribute(INTERPRETATION, Integer.toString(getInterpretation()));
-
-            Iterator<Entry<String, Float>> it = getSpeedNameEntryIterator();
-            while (it.hasNext()) {
-                Entry<String, Float> ent = it.next();
-                Element step = new Element(ent.getKey());
-                step.setText(ent.getValue().toString());
-                rampPrefs.addContent(step);
-            }
-            prefs.addContent(rampPrefs);
-
-            rampPrefs = new Element(APPEARANCE_PREFS);
-            Element step = new Element("SignalHeadStateRed");
-            step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateRed")));
-            rampPrefs.addContent(step);
-            step = new Element("SignalHeadStateFlashingRed");
-            step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateFlashingRed")));
-            rampPrefs.addContent(step);
-            step = new Element("SignalHeadStateGreen");
-            step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateGreen")));
-            rampPrefs.addContent(step);
-            step = new Element("SignalHeadStateFlashingGreen");
-            step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateFlashingGreen")));
-            rampPrefs.addContent(step);
-            step = new Element("SignalHeadStateYellow");
-            step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateYellow")));
-            rampPrefs.addContent(step);
-            step = new Element("SignalHeadStateFlashingYellow");
-            step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateFlashingYellow")));
-            rampPrefs.addContent(step);
-            step = new Element("SignalHeadStateLunar");
-            step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateLunar")));
-            rampPrefs.addContent(step);
-            step = new Element("SignalHeadStateFlashingLunar");
-            step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateFlashingLunar")));
-            rampPrefs.addContent(step);
-            prefs.addContent(rampPrefs);
-        } catch (RuntimeException ex) {
-            log.warn("Exception in storing warrant xml.", ex);
-            return false;
+        for (String reference : signalMast.getReferences()) {
+            root.addContent(new Element("reference").setText(reference));
         }
-        root.addContent(prefs);
-*/
+
+        for (String description : signalMast.getDescriptions()) {
+            root.addContent(new Element("description").setText(description));
+        }
+
+        Element appearancesElement = new Element("appearances");
+        for (Appearance appearance : signalMast.getAppearances()) {
+            Element appearanceElement = new Element("appearance");
+            appearanceElement.addContent(new Element("aspectname").setText(appearance.getAspectName()));
+
+            for (String show : appearance.getShowList()) {
+                appearanceElement.addContent(new Element("show").setText(show));
+            }
+            for (String reference : appearance.getReferences()) {
+                appearanceElement.addContent(new Element("reference").setText(reference));
+            }
+            for (String comment : appearance.getComments()) {
+                appearanceElement.addContent(new Element("comment").setText(comment));
+            }
+            if (appearance.getDelay() != null && !appearance.getDelay().isBlank()) {
+                appearanceElement.addContent(new Element("delay").setText(appearance.getDelay()));
+            }
+            for (ImageLink imageLink : appearance.getImageLinks()) {
+                Element imageLinkElement = new Element("imagelink");
+                imageLinkElement.setText(imageLink.getImageLink());
+                if (imageLink.getType() != null) {
+                    imageLinkElement.setAttribute("type", imageLink.getType().getType());
+                }
+                appearanceElement.addContent(imageLinkElement);
+            }
+            appearancesElement.addContent(appearanceElement);
+        }
+        root.addContent(appearancesElement);
+
+
         return true;
     }
 

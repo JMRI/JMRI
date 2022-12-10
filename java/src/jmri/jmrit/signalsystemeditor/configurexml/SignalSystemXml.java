@@ -86,9 +86,9 @@ public class SignalSystemXml {
                 signalSystem.setDate(aspecttable.getChildText("date"));
             }
 
-            signalSystem.getReferenceList().clear();
+            signalSystem.getReferences().clear();
             for (Element e : aspecttable.getChildren("reference")) {
-                signalSystem.getReferenceList().add(e.getText());
+                signalSystem.getReferences().add(e.getText());
             }
 
             Element copyright = aspecttable.getChild("copyright", namespace);
@@ -147,13 +147,13 @@ public class SignalSystemXml {
                     for (Element e : aspectElement.getChildren()) {
                         switch (e.getName()) {
                             case "description":
-                                aspect.getDescriptionList().add(e.getText());
+                                aspect.getDescriptions().add(e.getText());
                                 break;
                             case "reference":
-                                aspect.getReferenceList().add(e.getText());
+                                aspect.getReferences().add(e.getText());
                                 break;
                             case "comment":
-                                aspect.getCommentList().add(e.getText());
+                                aspect.getComments().add(e.getText());
                                 break;
                             case "speed":
                                 aspect.getSpeedList().add(e.getText());
@@ -394,7 +394,7 @@ public class SignalSystemXml {
         if (signalSystem.getDate() != null) {
             root.addContent(new Element("date").setText(signalSystem.getDate()));
         }
-        for (String ref : signalSystem.getReferenceList()) {
+        for (String ref : signalSystem.getReferences()) {
             root.addContent(new Element("reference").setText(ref));
         }
 
@@ -445,13 +445,13 @@ public class SignalSystemXml {
                 aspectElement.addContent(new Element("rule").setText(aspect.getRule()));
             }
             aspectElement.addContent(new Element("indication").setText(aspect.getIndication()));
-            for (String description : aspect.getDescriptionList()) {
+            for (String description : aspect.getDescriptions()) {
                 aspectElement.addContent(new Element("description").setText(description));
             }
-            for (String reference : aspect.getReferenceList()) {
+            for (String reference : aspect.getReferences()) {
                 aspectElement.addContent(new Element("reference").setText(reference));
             }
-            for (String comment : aspect.getCommentList()) {
+            for (String comment : aspect.getComments()) {
                 aspectElement.addContent(new Element("comment").setText(comment));
             }
             for (String speed : aspect.getSpeedList()) {

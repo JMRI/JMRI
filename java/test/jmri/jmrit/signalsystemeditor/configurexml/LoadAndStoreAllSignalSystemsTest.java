@@ -102,7 +102,11 @@ public class LoadAndStoreAllSignalSystemsTest {
 
                 if (next2.startsWith("<") && !next2.strip().endsWith(">")) {
                     while (!next2.strip().endsWith(">")) {
-                        if (!next2.startsWith("<reference>") && !next2.startsWith("<revremark>") && !next2.startsWith("<indication>")) {
+                        if (!next2.startsWith("<reference>")
+                                && !next2.startsWith("<revremark>")
+                                && !next2.startsWith("<indication>")
+                                && !next2.startsWith("<description>")
+                                && !next2.startsWith("<reference>")) {
                             next2 += " ";
                         }
                         next2 += fileStream2.readLine().strip();
