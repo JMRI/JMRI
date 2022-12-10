@@ -30,7 +30,7 @@
       <name>Stop</name>
       <rule>Article 101</rule>
       <indication>ARRET/Stop</indication>
-      <description>CARRE D'ARRET ROUGE-ABSOLUTE RED STOP SIGNAL> commande l'arrêt </description>
+      <description>CARRE D'ARRET ROUGE-ABSOLUTE RED STOP SIGNAL - commande l'arrêt </description>
       <comment>commande l'arrêt avant le signal.C'est un signal de protection non franchissable.oeilleton éteint.</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
@@ -41,7 +41,7 @@
       <name>Stop Purple</name>
       <rule>Article 102</rule>
       <indication>ARRET/Stop</indication>
-      <description>CARRE D'ARRET VIOLET-ABSOLUTE PURPLE STOP SIGNAL> commande l'arrêt </description>
+      <description>CARRE D'ARRET VIOLET-ABSOLUTE PURPLE STOP SIGNAL - commande l'arrêt </description>
       <comment>commande l'arrêt avant le signal Violet.C'est un signal de protection non franchissable.oeilleton éteint.</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>

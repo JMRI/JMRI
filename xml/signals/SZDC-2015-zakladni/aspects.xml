@@ -51,8 +51,6 @@
 
   <aspects>
   
-<!-- ČSD -->
-
     <aspect>
       <name>Stůj</name>
       <title>Stop</title>
