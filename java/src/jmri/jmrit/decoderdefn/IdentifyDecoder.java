@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * CV248, CV110 and CV111 to identify specific sound sets and
  * features. New productID process triggers if (CV249 &gt; 128).</li>
  * <li>Zimo: (mfgID == 145) CV250 is ID</li>
- * <li>SoundTraxx: (mfgID == 141, modelID == 70 or 71) CV253 is high byte, CV256
+ * <li>SoundTraxx: (mfgID == 141, modelID == 70, 71 or 72) CV253 is high byte, CV256
  * is low byte of ID</li>
  * <li>ESU: (mfgID == 151, modelID == 255) use RailCom&reg; Product ID CVs;
  * write {@literal 0=>CV31}, write {@literal 255=>CV32}, then CVs 261 (lowest)
@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * low byte, CV50 is the lowest byte; (CV47 == 1) is reserved for the Czech
  * Republic</li>
  * <li>Doehler &amp; Haass: (mfgID == 97) CV261 is ID from 2020 firmwares</li>
- * <li>Train-O-Matic: (mfgID == 78, modelID == 3 or 5) CV508 lowest byte, 
+ * <li>Train-O-Matic: (mfgID == 78, modelID == 3 or 5) CV508 lowest byte,
  * CV509 low byte and CV510 high byte</li>
  * </ul>
  * <dl>
@@ -124,7 +124,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder ID CV 250");
             readCV("250");
             return false;
-        } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx Econami and Tsunami2
+        } else if (mfgID == 141 && (modelID >= 70 && modelID <= 72)) {  // SoundTraxx Econami, Tsunami2 and Blunami
             statusUpdate("Read productID high CV253");
             readCV("253");
             return false;
@@ -186,7 +186,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         } else if (mfgID == 145) {  // Zimo
             productID = value;
             return true;
-        } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
+        } else if (mfgID == 141 && (modelID >= 70 && modelID <= 72)) {  // SoundTraxx Econami, Tsunami2 and Blunami
             productIDhigh = value;
             statusUpdate("Read decoder productID low CV256");
             readCV("256");
@@ -231,7 +231,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productIDhigh = value;
             productID = (productIDhigh << 8) | productIDlow;
             return true;
-        } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
+        } else if (mfgID == 141 && (modelID >= 70 && modelID <= 72)) {  // SoundTraxx Econami, Tsunami2 and Blunami
             productIDlow = value;
             productID = (productIDhigh << 8) | productIDlow;
             return true;
