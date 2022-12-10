@@ -78,7 +78,8 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
         delayField.setText("200");
         delayField.setVisible(true);
         delayField.setToolTipText(Bundle.getMessage("DelayTooltip"));
-
+        delayField.addPropertyChangeListener(this::delayFieldActionPerformed);
+        
         jLabel1.setText(Bundle.getMessage("FieldDelay"));
         jLabel1.setVisible(true);
 
@@ -115,7 +116,6 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
         openHexFileButton.addActionListener(this::openHexFileButtonActionPerformed);
         filePauseButton.addActionListener(this::filePauseButtonActionPerformed);
         jButton1.addActionListener(this::jButton1ActionPerformed);
-        delayField.addActionListener(this::delayFieldActionPerformed);
         simReplyBox.addActionListener(this::simReplyActionPerformed);
 
         pack();
@@ -145,8 +145,16 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
             return;  // give up if no file selected
         }
         // call load to process the file
+        Integer delayValue = null;
         port.load(inputFileChooser.getSelectedFile());
+        try {
+            delayValue = Integer.parseInt(delayField.getText());
 
+        } catch (NumberFormatException exception) {
+            log.error("invalid number in delay field - {}", delayField.getText());
+        }
+        if (delayValue != null && delayValue > 1 )
+           port.setDelay(delayValue);
         // wake copy
         sourceThread.interrupt();  // really should be using notifyAll instead....
 
@@ -265,7 +273,7 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
         port.suspendReading(false);
     }
 
-    public void delayFieldActionPerformed(java.awt.event.ActionEvent e) {
+    public void delayFieldActionPerformed(java.beans.PropertyChangeEvent e) {
         // if the hex file has been started, change its delay
         if (port != null) {
             port.setDelay(Integer.parseInt(delayField.getText()));
