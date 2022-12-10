@@ -102,7 +102,7 @@
   </specificappearances>
 
   <aspectMappings>
-    <!-- Start of Advanced-Aspect mapping -->
+    <!-- Start of Advanced Aspect Mapping -->
     <!-- NOTE 1:  advancedAspect here means the signal ahead of "our", and aspect is same or more restrictive -->
 	<!-- NOTE 2:  Refer to related aspects.xml to consider and apply all possible aspects ahead to these "our" aspects -->
     <aspectMapping>

@@ -147,14 +147,13 @@ public class SignalMastXml {
                 Element appearanceDanger = specificappearances.getChild("danger");
                 if (appearanceDanger != null) {
                     signalMast.getAppearanceDanger().setAspectName(
-                            appearanceDanger.getChildText("aspectname"));
-                    Element imagelink = appearanceDanger.getChild("imagelink");
-                    if (imagelink != null) {
+                            appearanceDanger.getChildText("aspect"));
+                    for (Element imagelink : appearanceDanger.getChildren("imagelink")) {
                         ImageType imageType = null;
                         if (imagelink.getAttribute("type") != null) {
                             imageType = signalSystem.getImageType(imagelink.getAttributeValue("type"));
                         }
-                        signalMast.getAppearanceDanger().setImageLink(new ImageLink(
+                        signalMast.getAppearanceDanger().getImageLinks().add(new ImageLink(
                                 imagelink.getTextTrim(), imageType));
                     }
                 }
@@ -162,14 +161,13 @@ public class SignalMastXml {
                 Element appearancePermissive = specificappearances.getChild("permissive");
                 if (appearancePermissive != null) {
                     signalMast.getAppearancePermissive().setAspectName(
-                            appearancePermissive.getChildText("aspectname"));
-                    Element imagelink = appearancePermissive.getChild("imagelink");
-                    if (imagelink != null) {
+                            appearancePermissive.getChildText("aspect"));
+                    for (Element imagelink : appearancePermissive.getChildren("imagelink")) {
                         ImageType imageType = null;
                         if (imagelink.getAttribute("type") != null) {
                             imageType = signalSystem.getImageType(imagelink.getAttributeValue("type"));
                         }
-                        signalMast.getAppearancePermissive().setImageLink(new ImageLink(
+                        signalMast.getAppearancePermissive().getImageLinks().add(new ImageLink(
                                 appearancePermissive.getChildText("imagelink"), imageType));
                     }
                 }
@@ -177,14 +175,13 @@ public class SignalMastXml {
                 Element appearanceHeld = specificappearances.getChild("held");
                 if (appearanceHeld != null) {
                     signalMast.getAppearanceHeld().setAspectName(
-                            appearanceHeld.getChildText("aspectname"));
-                    Element imagelink = appearanceHeld.getChild("imagelink");
-                    if (imagelink != null) {
+                            appearanceHeld.getChildText("aspect"));
+                    for (Element imagelink : appearanceHeld.getChildren("imagelink")) {
                         ImageType imageType = null;
                         if (imagelink.getAttribute("type") != null) {
                             imageType = signalSystem.getImageType(imagelink.getAttributeValue("type"));
                         }
-                        signalMast.getAppearanceHeld().setImageLink(new ImageLink(
+                        signalMast.getAppearanceHeld().getImageLinks().add(new ImageLink(
                                 imagelink.getTextTrim(), imageType));
                     }
                 }
@@ -192,14 +189,13 @@ public class SignalMastXml {
                 Element appearanceDark = specificappearances.getChild("dark");
                 if (appearanceDark != null) {
                     signalMast.getAppearanceDark().setAspectName(
-                            appearanceDark.getChildText("aspectname"));
-                    Element imagelink = appearanceDark.getChild("imagelink");
-                    if (imagelink != null) {
+                            appearanceDark.getChildText("aspect"));
+                    for (Element imagelink : appearanceDark.getChildren("imagelink")) {
                         ImageType imageType = null;
                         if (imagelink.getAttribute("type") != null) {
                             imageType = signalSystem.getImageType(imagelink.getAttributeValue("type"));
                         }
-                        signalMast.getAppearanceDark().setImageLink(new ImageLink(
+                        signalMast.getAppearanceDark().getImageLinks().add(new ImageLink(
                                 imagelink.getTextTrim(), imageType));
                     }
                 }
@@ -209,10 +205,13 @@ public class SignalMastXml {
             Element aspectMappings = aspecttable.getChild("aspectMappings");
             signalMast.getAspectMappings().clear();
             if (aspectMappings != null) {
-                for (Element aspectMapping : aspectMappings.getChildren("aspectMapping")) {
-                    signalMast.getAspectMappings().put(
-                            aspectMapping.getChildText("advancedAspect"),
-                            aspectMapping.getChildText("ourAspect"));
+                for (Element aspectMappingElement : aspectMappings.getChildren("aspectMapping")) {
+                    AspectMapping aspectMapping = new AspectMapping(
+                            aspectMappingElement.getChildText("advancedAspect"));
+                    for (Element ourAspectElement : aspectMappingElement.getChildren("ourAspect")) {
+                        aspectMapping.getOurAspects().add(ourAspectElement.getText());
+                    }
+                    signalMast.getAspectMappings().add(aspectMapping);
                 }
             }
 
@@ -324,6 +323,7 @@ public class SignalMastXml {
             root.addContent(new Element("description").setText(description));
         }
 
+
         Element appearancesElement = new Element("appearances");
         for (Appearance appearance : signalMast.getAppearances()) {
             Element appearanceElement = new Element("appearance");
@@ -352,6 +352,88 @@ public class SignalMastXml {
             appearancesElement.addContent(appearanceElement);
         }
         root.addContent(appearancesElement);
+
+
+        Element specificAppearancesElement = new Element("specificappearances");
+
+        String dangerAspect = signalMast.getAppearanceDanger().getAspectName();
+        if (dangerAspect != null && !dangerAspect.isBlank()) {
+            Element specificAppearancesDanger = new Element("danger");
+            specificAppearancesDanger.addContent(new Element("aspect").setText(dangerAspect));
+            for (ImageLink imageLink : signalMast.getAppearanceDanger().getImageLinks()) {
+                Element imageLinkElement = new Element("imagelink");
+                imageLinkElement.setText(imageLink.getImageLink());
+                if (imageLink.getType() != null) {
+                    imageLinkElement.setAttribute("type", imageLink.getType().getType());
+                }
+                specificAppearancesDanger.addContent(imageLinkElement);
+            }
+            specificAppearancesElement.addContent(specificAppearancesDanger);
+        }
+
+        String permissiveAspect = signalMast.getAppearancePermissive().getAspectName();
+        if (permissiveAspect != null && !permissiveAspect.isBlank()) {
+            Element specificAppearancesPermissive = new Element("permissive");
+            specificAppearancesPermissive.addContent(new Element("aspect").setText(permissiveAspect));
+            for (ImageLink imageLink : signalMast.getAppearancePermissive().getImageLinks()) {
+                Element imageLinkElement = new Element("imagelink");
+                imageLinkElement.setText(imageLink.getImageLink());
+                if (imageLink.getType() != null) {
+                    imageLinkElement.setAttribute("type", imageLink.getType().getType());
+                }
+                specificAppearancesPermissive.addContent(imageLinkElement);
+            }
+            specificAppearancesElement.addContent(specificAppearancesPermissive);
+        }
+
+        String heldAspect = signalMast.getAppearanceHeld().getAspectName();
+        if (heldAspect != null && !heldAspect.isBlank()) {
+            Element specificAppearancesHeld = new Element("held");
+            specificAppearancesHeld.addContent(new Element("aspect").setText(heldAspect));
+            for (ImageLink imageLink : signalMast.getAppearanceHeld().getImageLinks()) {
+                Element imageLinkElement = new Element("imagelink");
+                imageLinkElement.setText(imageLink.getImageLink());
+                if (imageLink.getType() != null) {
+                    imageLinkElement.setAttribute("type", imageLink.getType().getType());
+                }
+                specificAppearancesHeld.addContent(imageLinkElement);
+            }
+            specificAppearancesElement.addContent(specificAppearancesHeld);
+        }
+
+        String darkAspect = signalMast.getAppearanceDark().getAspectName();
+        if (darkAspect != null && !darkAspect.isBlank()) {
+            Element specificAppearancesDark = new Element("dark");
+            specificAppearancesDark.addContent(new Element("aspect").setText(darkAspect));
+            for (ImageLink imageLink : signalMast.getAppearanceDark().getImageLinks()) {
+                Element imageLinkElement = new Element("imagelink");
+                imageLinkElement.setText(imageLink.getImageLink());
+                if (imageLink.getType() != null) {
+                    imageLinkElement.setAttribute("type", imageLink.getType().getType());
+                }
+                specificAppearancesDark.addContent(imageLinkElement);
+            }
+            specificAppearancesElement.addContent(specificAppearancesDark);
+        }
+
+        if (!specificAppearancesElement.getChildren().isEmpty()) {
+            root.addContent(specificAppearancesElement);
+        }
+
+
+        Element aspectMappingsElement = new Element("aspectMappings");
+        for (AspectMapping aspectMapping : signalMast.getAspectMappings()) {
+            Element aspectMappingElement = new Element("aspectMapping");
+            aspectMappingElement.addContent(new Element("advancedAspect").setText(aspectMapping.getAdvancedAspect()));
+            for (String ourAspect : aspectMapping.getOurAspects()) {
+                aspectMappingElement.addContent(new Element("ourAspect").setText(ourAspect));
+            }
+            aspectMappingsElement.addContent(aspectMappingElement);
+        }
+        if (!aspectMappingsElement.getChildren().isEmpty()) {
+            root.addContent(aspectMappingsElement);
+        }
+
 
         return true;
     }

@@ -1,5 +1,8 @@
 package jmri.jmrit.signalsystemeditor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A specific appearance
  *
@@ -8,16 +11,14 @@ package jmri.jmrit.signalsystemeditor;
 public class SpecificAppearance {
 
     private String _aspectName;
-    private ImageLink _imageLink;
+    private List<ImageLink> _imageLinks = new ArrayList<>();
 
     public SpecificAppearance() {
         this._aspectName = "";
-        this._imageLink = null;
     }
 
     public SpecificAppearance(String aspectName, ImageLink imageLink) {
         this._aspectName = aspectName;
-        this._imageLink = imageLink;
     }
 
     public void setAspectName(String name) {
@@ -28,12 +29,8 @@ public class SpecificAppearance {
         return this._aspectName;
     }
 
-    public void setImageLink(ImageLink imageLink) {
-        this._imageLink = imageLink;
-    }
-
-    public ImageLink getImageLink() {
-        return this._imageLink;
+    public List<ImageLink> getImageLinks() {
+        return this._imageLinks;
     }
 
 }

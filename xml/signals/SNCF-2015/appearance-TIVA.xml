@@ -146,14 +146,12 @@
     </appearance>
  </appearances>
 
-  <specificappearances>
-  </specificappearances>
-
   <aspectMappings>
     <aspectMapping>
       <advancedAspect>TIVA160</advancedAspect>
       <ourAspect>TIVP</ourAspect>
-    </aspectMapping>    <aspectMapping>
+    </aspectMapping>
+    <aspectMapping>
       <advancedAspect>TIVA150</advancedAspect>
       <ourAspect>TIVP</ourAspect>
     </aspectMapping>

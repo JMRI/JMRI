@@ -73,7 +73,8 @@ public class LoadAndStoreAllSignalSystemsTest {
             String line1 = fileStream1.readLine();
             String line2 = fileStream2.readLine();
             int lineNumber1 = 0, lineNumber2 = 0;
-            String next1, next2;
+            String next1 = null;
+            String next2 = null;
 
             // Remove BOM (Byte Order Mark)
             // https://en.wikipedia.org/wiki/Byte_order_mark
@@ -89,7 +90,32 @@ public class LoadAndStoreAllSignalSystemsTest {
                 while ((next1.isBlank()) && (next1 = fileStream2.readLine()) != null) {
                     lineNumber1++;
                 }
-                while ((next2.isBlank()) && (next2 = fileStream2.readLine()) != null) {
+
+                next2 = next2.replace("<!-- Start of Specific Appearances list -->", "");
+                next2 = next2.replace("<!-- End of Specific Appearances list -->", "");
+                next2 = next2.replace("<!-- Start of Aspect Mapping -->", "");
+                next2 = next2.replace("<!-- End of Aspect Mapping -->", "");
+                next2 = next2.replace("<!-- Start of Advanced Aspect Mapping -->", "");
+                next2 = next2.replace("<!-- Start of  Advanced Aspect Mapping -->", "");
+                next2 = next2.replace("<!-- End of  Advanced Aspect Mapping -->", "");
+                next2 = next2.replace("<!-- NOTE 1:  advancedAspect here means the signal ahead of \"our\", and aspect is same or more restrictive -->", "");
+                next2 = next2.replace("<!-- NOTE 2:  Refer to related aspects.xml to consider and apply all possible aspects ahead to these \"our\" aspects -->", "");
+                next2 = next2.replace("<!-- The following references the \"Restricted Proceed\" aspect, which is undefined here-->", "");
+                next2 = next2.replace("<email></email>", "");
+
+                while (next2 != null && next2.isBlank()) {
+                    next2 = fileStream2.readLine();
+		    next2 = next2.replace("<!-- Start of Specific Appearances list -->", "");
+                    next2 = next2.replace("<!-- End of Specific Appearances list -->", "");
+                    next2 = next2.replace("<!-- Start of Aspect Mapping -->", "");
+                    next2 = next2.replace("<!-- End of Aspect Mapping -->", "");
+                    next2 = next2.replace("<!-- Start of Advanced Aspect Mapping -->", "");
+                    next2 = next2.replace("<!-- Start of  Advanced Aspect Mapping -->", "");
+                    next2 = next2.replace("<!-- End of  Advanced Aspect Mapping -->", "");
+                    next2 = next2.replace("<!-- NOTE 1:  advancedAspect here means the signal ahead of \"our\", and aspect is same or more restrictive -->", "");
+                    next2 = next2.replace("<!-- NOTE 2:  Refer to related aspects.xml to consider and apply all possible aspects ahead to these \"our\" aspects -->", "");
+                    next2 = next2.replace("<!-- The following references the \"Restricted Proceed\" aspect, which is undefined here-->", "");
+                    next2 = next2.replace("<email></email>", "");
                     lineNumber2++;
                 }
 
@@ -112,10 +138,10 @@ public class LoadAndStoreAllSignalSystemsTest {
                     }
                 }
 
-                while (next2.strip().equals("<email></email>")) {
-                    next2 = fileStream2.readLine().strip();
-                    lineNumber2++;
-                }
+//                while (next2.strip().equals("<email></email>")) {
+//                    next2 = fileStream2.readLine().strip();
+//                    lineNumber2++;
+//                }
 
                 // Remove xmlns=""
                 next1 = next1.replaceAll(" xmlns=\"\"", "");
@@ -124,7 +150,15 @@ public class LoadAndStoreAllSignalSystemsTest {
                 next2 = next2.replaceAll("\\s*=\\s*", "=");
                 // Remove space between " and >
                 next2 = next2.replaceAll("\"\\s+\\>", "\">");
-
+/*
+                if (next2.strip().equals("<!-- Start of Specific Appearances list -->")
+                        || next2.strip().equals("<!-- End of Specific Appearances list -->")
+                        || next2.strip().equals("<!-- Start of Aspect Mapping -->")
+                        || next2.strip().equals("<!-- End of Aspect Mapping -->")) {
+                    next2 = fileStream2.readLine().strip();
+                    lineNumber2++;
+                }
+*/
                 while (!next2.equals(next1) && next2.startsWith(next1)) {
                     next1 += fileStream1.readLine().strip();
                     // Remove xmlns=""
@@ -149,6 +183,24 @@ public class LoadAndStoreAllSignalSystemsTest {
                 line1 = next1;
                 line2 = next2;
             }   // while readLine() != null
+
+            if (next1 != null) {
+                while ((next1 = fileStream1.readLine()) != null) {
+                    lineNumber1++;
+                    if (next1 != null && !next1.isBlank()) {
+                        log.warn("The file "+inFile1.getPath()+" has extra content: {}", next1.strip());
+                    }
+                }
+            }
+
+            if (next2 != null) {
+                while ((next2 = fileStream2.readLine()) != null) {
+                    lineNumber2++;
+                    if (next2 != null && !next2.isBlank()) {
+                        log.warn("The file "+inFile2.getPath()+" has extra content: {}", next2.strip());
+                    }
+                }
+            }
         } catch (java.io.FileNotFoundException ex) {
             // Ignore for now. Fix later
             log.warn("File not found: {}", ex.getMessage());

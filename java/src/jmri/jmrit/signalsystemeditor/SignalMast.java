@@ -22,7 +22,7 @@ public class SignalMast {
     private final SpecificAppearance _appearancePermissive = new SpecificAppearance();
     private final SpecificAppearance _appearanceHeld = new SpecificAppearance();
     private final SpecificAppearance _appearanceDark = new SpecificAppearance();
-    private final Map<String, String> _aspectMappings = new HashMap<>();
+    private final List<AspectMapping> _aspectMappings = new ArrayList<>();
     private final List<Author> _authors = new ArrayList<>();
     private final List<Revision> _revisions = new ArrayList<>();
     private final Copyright _copyright = new Copyright();
@@ -99,7 +99,7 @@ public class SignalMast {
         return this._appearanceDark;
     }
 
-    public Map<String, String> getAspectMappings() {
+    public List<AspectMapping> getAspectMappings() {
         return this._aspectMappings;
     }
 
