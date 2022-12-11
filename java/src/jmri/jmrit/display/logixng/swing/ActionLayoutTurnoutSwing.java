@@ -59,6 +59,7 @@ public class ActionLayoutTurnoutSwing extends AbstractDigitalActionSwing {
         _selectedLayoutEditor = action != null ? action.getLayoutEditorName() : null;
 
         _layoutEditorComboBox = new JComboBox<>();
+        JComboBoxUtil.setupComboBoxMaxRows(_layoutEditorComboBox);
         for (LayoutEditor layoutEditor : jmri.InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
             EditorItem item = new EditorItem(layoutEditor);
             _layoutEditorComboBox.addItem(item);

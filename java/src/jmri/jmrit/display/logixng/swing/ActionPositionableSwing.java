@@ -59,6 +59,7 @@ public class ActionPositionableSwing extends AbstractDigitalActionSwing {
         _selectedEditor = action != null ? action.getEditorName() : null;
 
         _editorComboBox = new JComboBox<>();
+        JComboBoxUtil.setupComboBoxMaxRows(_editorComboBox);
         for (Editor editor : jmri.InstanceManager.getDefault(EditorManager.class).getAll()) {
             EditorItem item = new EditorItem(editor);
             _editorComboBox.addItem(item);

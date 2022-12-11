@@ -94,6 +94,18 @@ public class ActionLayoutTurnout extends AbstractDigitalAction implements Vetoab
         return null;
     }
 
+    public LayoutTurnout findLayoutTurnout(jmri.Turnout turnout) {
+        for (LayoutTurnout lt : _layoutEditor.getLayoutTurnouts()) {
+            String turnoutName = lt.getTurnoutName();
+            if (!turnoutName.isBlank()
+                    && (turnoutName.equals(turnout.getSystemName())
+                        || turnoutName.equals(turnout.getUserName()))) {
+                return lt;
+            }
+        }
+        return null;
+    }
+
     public void setLayoutTurnout(@CheckForNull String layoutTurnoutName) {
         assertListenersAreNotRegistered(log, "setLayoutTurnout");
         if ((layoutTurnoutName != null) && (_layoutEditor != null)) {
@@ -279,6 +291,8 @@ public class ActionLayoutTurnout extends AbstractDigitalAction implements Vetoab
 
 //        System.out.format("ActionLayoutTurnout.execute: %s%n", getLongDescription());
 
+        Object value;
+
         switch (_addressing) {
             case Direct:
                 layoutTurnout = this._layoutTurnout;
@@ -292,16 +306,27 @@ public class ActionLayoutTurnout extends AbstractDigitalAction implements Vetoab
 
             case LocalVariable:
                 SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                layoutTurnout = findLayoutTurnout(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
+                value = symbolTable.getValue(_localVariable);
+                if (value instanceof jmri.Turnout) {
+                    layoutTurnout = findLayoutTurnout((jmri.Turnout)value);
+                } else {
+                    layoutTurnout = findLayoutTurnout(TypeConversionUtil
+                                    .convertToString(value, false));
+                }
                 break;
 
             case Formula:
-                layoutTurnout = _expressionNode != null ?
-                        findLayoutTurnout(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
+                if (_expressionNode != null) {
+                    value = _expressionNode.calculate(getConditionalNG().getSymbolTable());
+                    if (value instanceof jmri.Turnout) {
+                        layoutTurnout = findLayoutTurnout((jmri.Turnout)value);
+                    } else {
+                        layoutTurnout = findLayoutTurnout(TypeConversionUtil
+                                        .convertToString(value, false));
+                    }
+                } else {
+                    layoutTurnout = null;
+                }
                 break;
 
             default:
