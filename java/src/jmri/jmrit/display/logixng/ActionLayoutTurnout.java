@@ -1,12 +1,14 @@
 package jmri.jmrit.display.logixng;
 
-import java.beans.VetoableChangeListener;
+import java.beans.*;
 import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
+import jmri.jmrit.display.EditorManager;
+import static jmri.jmrit.display.EditorManager.EDITORS;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.logixng.*;
@@ -23,9 +25,9 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2022
  */
-public class ActionLayoutTurnout extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionLayoutTurnout extends AbstractDigitalAction
+        implements PropertyChangeListener, VetoableChangeListener {
 
-    private String _layoutEditorName;
     private LayoutEditor _layoutEditor;
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private LayoutTurnout _layoutTurnout;
@@ -53,7 +55,9 @@ public class ActionLayoutTurnout extends AbstractDigitalAction implements Vetoab
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionLayoutTurnout copy = new ActionLayoutTurnout(sysName, userName);
         copy.setComment(getComment());
-        copy.setLayoutEditor(_layoutEditorName);
+        if (_layoutEditor != null) {
+            copy.setLayoutEditor(_layoutEditor.getName());
+        }
         copy.setLayoutTurnout(_layoutTurnout);
         copy.setOperation(_operation);
         copy.setAddressing(_addressing);
@@ -69,38 +73,54 @@ public class ActionLayoutTurnout extends AbstractDigitalAction implements Vetoab
 
     public void setLayoutEditor(@CheckForNull String layoutEditorName) {
         assertListenersAreNotRegistered(log, "setEditor");
-        _layoutEditorName = layoutEditorName;
+
+        InstanceManager.getDefault(EditorManager.class)
+                .removePropertyChangeListener(EDITORS, this);
+
         if (layoutEditorName != null) {
-            _layoutEditor = jmri.InstanceManager
-                    .getDefault(jmri.jmrit.display.EditorManager.class)
+            _layoutEditor = InstanceManager.getDefault(EditorManager.class)
                     .get(LayoutEditor.class, layoutEditorName);
         } else {
             _layoutEditor = null;
+        }
+        if (_layoutEditor != null) {
+            InstanceManager.getDefault(EditorManager.class)
+                    .addPropertyChangeListener(EDITORS, this);
+        } else {
+            _layoutTurnout = null;
         }
 //        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
 
     public String getLayoutEditorName() {
-        return _layoutEditorName;
+        if (_layoutEditor != null) {
+            return _layoutEditor.getName();
+        } else {
+            return null;
+        }
     }
 
     public LayoutTurnout findLayoutTurnout(String name) {
-        for (LayoutTurnout lt : _layoutEditor.getLayoutTurnouts()) {
-            String turnoutName = lt.getTurnoutName();
-            if (!turnoutName.isBlank() && name.equals(turnoutName)) {
-                return lt;
+        if (_layoutEditor != null) {
+            for (LayoutTurnout lt : _layoutEditor.getLayoutTurnouts()) {
+                String turnoutName = lt.getTurnoutName();
+                if (!turnoutName.isBlank() && name.equals(turnoutName)) {
+                    return lt;
+                }
             }
         }
         return null;
     }
 
     public LayoutTurnout findLayoutTurnout(jmri.Turnout turnout) {
-        for (LayoutTurnout lt : _layoutEditor.getLayoutTurnouts()) {
-            String turnoutName = lt.getTurnoutName();
-            if (!turnoutName.isBlank()
-                    && (turnoutName.equals(turnout.getSystemName())
-                        || turnoutName.equals(turnout.getUserName()))) {
-                return lt;
+        if (_layoutEditor != null) {
+            for (LayoutTurnout lt : _layoutEditor.getLayoutTurnouts()) {
+                String turnoutName = lt.getTurnoutName();
+                if (!turnoutName.isBlank()
+                        && (turnoutName.equals(turnout.getSystemName())
+                            || turnoutName.equals(turnout.getUserName()))) {
+                    return lt;
+                }
             }
         }
         return null;
@@ -336,7 +356,7 @@ public class ActionLayoutTurnout extends AbstractDigitalAction implements Vetoab
 //        System.out.format("ActionLayoutTurnout.execute: layoutTurnout: %s%n", layoutTurnout);
 
         if (layoutTurnout == null) {
-            log.error("layoutTurnout is null");
+            log.debug("layoutTurnout is null");
             return;
         }
 
@@ -389,8 +409,8 @@ public class ActionLayoutTurnout extends AbstractDigitalAction implements Vetoab
 
     @Override
     public String getLongDescription(Locale locale) {
-        String editorName = _layoutEditorName != null
-                ? _layoutEditorName : Bundle.getMessage(locale, "BeanNotSelected");
+        String editorName = _layoutEditor != null
+                ? _layoutEditor.getName() : Bundle.getMessage(locale, "BeanNotSelected");
         String positonableName;
         String state;
 
@@ -471,7 +491,22 @@ public class ActionLayoutTurnout extends AbstractDigitalAction implements Vetoab
 
     /** {@inheritDoc} */
     @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (EDITORS.equals(evt.getPropertyName())) {
+            if (evt.getOldValue() == _layoutEditor) {
+                _layoutEditor = null;
+                _layoutTurnout = null;
+                InstanceManager.getDefault(EditorManager.class)
+                        .removePropertyChangeListener(EDITORS, this);
+            }
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public void disposeMe() {
+        InstanceManager.getDefault(EditorManager.class)
+                .removePropertyChangeListener(EDITORS, this);
     }
 
 
