@@ -78,6 +78,7 @@ public class ActionLayoutTurnoutSwing extends AbstractDigitalActionSwing {
         _tabbedPaneLayoutTurnout.addTab(NamedBeanAddressing.Formula.toString(), _panelLayoutTurnoutFormula);
 
         _layoutTurnoutComboBox = new JComboBox<>();
+        JComboBoxUtil.setupComboBoxMaxRows(_layoutTurnoutComboBox);
         updateLayoutTurnouts(null);
         _panelLayoutTurnoutDirect.add(_layoutTurnoutComboBox);
 
