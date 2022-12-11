@@ -244,7 +244,11 @@ public class ActionLayoutTurnoutSwing extends AbstractDigitalActionSwing {
             action.setLayoutEditor(_layoutEditorComboBox.getItemAt(_layoutEditorComboBox.getSelectedIndex())._layoutEditor.getName());
         }
         if (_tabbedPaneLayoutTurnout.getSelectedComponent() == _panelLayoutTurnoutDirect) {
-            action.setLayoutTurnout(_layoutTurnoutComboBox.getItemAt(_layoutTurnoutComboBox.getSelectedIndex())._lt);
+            if (_layoutTurnoutComboBox.getSelectedIndex() != -1) {
+                action.setLayoutTurnout(_layoutTurnoutComboBox.getItemAt(_layoutTurnoutComboBox.getSelectedIndex())._lt);
+            } else {
+                action.setLayoutTurnout((LayoutTurnout)null);
+            }
         }
         try {
             if (_tabbedPaneLayoutTurnout.getSelectedComponent() == _panelLayoutTurnoutDirect) {
