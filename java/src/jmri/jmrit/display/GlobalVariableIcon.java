@@ -431,7 +431,7 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
     @Override
     protected void edit() {
         makeIconEditorFrame(this, "GlobalVariable", true, null);
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.globalVariablePickModelInstance());
         ActionListener addIconAction = (ActionEvent a) -> editGlobalVariable();
         _iconEditor.complete(addIconAction, false, false, true);
         _iconEditor.setSelection(getGlobalVariable());

@@ -438,6 +438,9 @@ public class PositionablePropertiesUtil {
                 si.setTextInconsistent(txtList.get(3).getForeground());
                 si.setBackgroundInconsistent(txtList.get(3).getBackground());
             }
+        } else if (_parent instanceof PositionableJPanel) {
+             pop.setForeground(txtList.get(0).getForeground());
+             pop.setBackgroundColor(txtList.get(0).getBackground());
         } else {
             PositionableLabel pp = (PositionableLabel) _parent;
             pp.setText(txtList.get(0).getText());
