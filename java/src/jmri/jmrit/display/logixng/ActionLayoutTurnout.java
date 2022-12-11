@@ -86,7 +86,8 @@ public class ActionLayoutTurnout extends AbstractDigitalAction implements Vetoab
 
     public LayoutTurnout findLayoutTurnout(String name) {
         for (LayoutTurnout lt : _layoutEditor.getLayoutTurnouts()) {
-            if (name.equals(lt.getId())) {
+            String turnoutName = lt.getTurnoutName();
+            if (!turnoutName.isBlank() && name.equals(turnoutName)) {
                 return lt;
             }
         }
@@ -372,7 +373,7 @@ public class ActionLayoutTurnout extends AbstractDigitalAction implements Vetoab
             case Direct:
                 String layoutTurnoutName;
                 if (this._layoutTurnout != null) {
-                    layoutTurnoutName = this._layoutTurnout.getId();
+                    layoutTurnoutName = this._layoutTurnout.getTurnoutName();
                 } else {
                     layoutTurnoutName = Bundle.getMessage(locale, "BeanNotSelected");
                 }

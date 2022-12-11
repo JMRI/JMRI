@@ -44,7 +44,8 @@ public class ActionLayoutTurnoutXml extends jmri.managers.configurexml.AbstractN
 
         LayoutTurnout layoutTurnout = p.getLayoutTurnout();
         if (layoutTurnout != null) {
-            element.addContent(new Element("layoutTurnout").addContent(layoutTurnout.getId()));
+            element.addContent(new Element("layoutTurnout")
+                    .addContent(layoutTurnout.getTurnoutName()));
         }
 
         element.addContent(new Element("addressing").addContent(p.getAddressing().name()));

@@ -30,7 +30,7 @@ public class ActionLayoutTurnoutSwing extends AbstractDigitalActionSwing {
 
     private JComboBox<EditorItem> _layoutEditorComboBox;
     private JTabbedPane _tabbedPaneLayoutTurnout;
-    private JComboBox<LayoutTurnout> _layoutTurnoutComboBox;
+    private JComboBox<Turnout> _layoutTurnoutComboBox;
     private JPanel _panelLayoutTurnoutDirect;
     private JPanel _panelLayoutTurnoutReference;
     private JPanel _panelLayoutTurnoutLocalVariable;
@@ -172,11 +172,13 @@ public class ActionLayoutTurnoutSwing extends AbstractDigitalActionSwing {
         EditorItem item = _layoutEditorComboBox.getItemAt(_layoutEditorComboBox.getSelectedIndex());
         List<LayoutTurnout> list = new ArrayList<>();
         for (LayoutTurnout layoutTurnout : item._layoutEditor.getLayoutTurnouts()) {
-            list.add(layoutTurnout);
+            if (!layoutTurnout.getTurnoutName().isBlank()) {
+                list.add(layoutTurnout);
+            }
         }
-        Collections.sort(list, (o1,o2) -> o1.getId().compareTo(o2.getId()));
+        Collections.sort(list, (o1,o2) -> o1.getTurnoutName().compareTo(o2.getTurnoutName()));
         for (LayoutTurnout lt : list) {
-            _layoutTurnoutComboBox.addItem(lt);
+            _layoutTurnoutComboBox.addItem(new Turnout(lt));
         }
     }
 
@@ -242,7 +244,7 @@ public class ActionLayoutTurnoutSwing extends AbstractDigitalActionSwing {
             action.setLayoutEditor(_layoutEditorComboBox.getItemAt(_layoutEditorComboBox.getSelectedIndex())._layoutEditor.getName());
         }
         if (_tabbedPaneLayoutTurnout.getSelectedComponent() == _panelLayoutTurnoutDirect) {
-            action.setLayoutTurnout(_layoutTurnoutComboBox.getItemAt(_layoutTurnoutComboBox.getSelectedIndex()));
+            action.setLayoutTurnout(_layoutTurnoutComboBox.getItemAt(_layoutTurnoutComboBox.getSelectedIndex())._lt);
         }
         try {
             if (_tabbedPaneLayoutTurnout.getSelectedComponent() == _panelLayoutTurnoutDirect) {
@@ -306,6 +308,19 @@ public class ActionLayoutTurnoutSwing extends AbstractDigitalActionSwing {
         }
     }
 
+
+    private static class Turnout {
+        private final LayoutTurnout _lt;
+
+        public Turnout(LayoutTurnout turnout) {
+            _lt = turnout;
+        }
+
+        @Override
+        public String toString() {
+            return _lt.getTurnoutName();
+        }
+    }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLayoutTurnoutSwing.class);
 
