@@ -409,7 +409,8 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The action <i>Turnout on LayoutPanel</i> has been added.
+          It lets LogixNG enable/disable a turnout on a layout panel.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -573,7 +574,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Update minimatch.js library from 3.0..4 to 3.0.8</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -585,6 +586,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Update commons-net library from 3.6 to 3.9.0</li>
         </ul>
 

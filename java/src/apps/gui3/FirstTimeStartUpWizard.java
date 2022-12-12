@@ -313,6 +313,9 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
             Profile project = ProfileManager.getDefault().getActiveProfile();
             InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(project, owner.getText());
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setDefaultFontSize();
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setFontSize(
+                InstanceManager.getDefault(GuiLafPreferencesManager.class).getDefaultFontSize());
             InstanceManager.getDefault(RosterConfigManager.class).savePreferences(project);
             InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(project);
             connectionConfigPane.savePreferences();
