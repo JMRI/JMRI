@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.1.5plus+jake+20221105T1330Z+Rc34d2305ab on Sat Nov 05 09:31:47 EDT 2022-->
-  <decoderIndex version="33">
+  <!--Written by JMRI version 5.1.6plus+jake+20221203T1417Z+R4e1ede7df2 on Sat Dec 03 09:18:26 EST 2022-->
+  <decoderIndex version="35">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -40028,7 +40028,7 @@
           </output>
         </model>
       </family>
-      <family name="Point Motor Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="2" highVersionID="5" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom" file="Viessmann_45xx_Point_motor.xml">
+      <family name="Point Motor Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="2" highVersionID="15" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom" file="Viessmann_45xx_Point_motor.xml">
         <model model="4557" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="TT" connector="other" productID="4557" comment="TT Point motor for Tillig road bed point">
           <size length="68.4" width="24.5" height="5.3" units="mm" />
         </model>
@@ -40040,6 +40040,9 @@
         </model>
         <model model="4560" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="all" connector="other" productID="4560" comment="Motorized point and universal drive (scale independent)">
           <size length="50" width="20.2" height="5.8" units="mm" />
+        </model>
+        <model model="4567" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="TT" connector="other" productID="4567" comment="TT Point motor for Tillig road bed point">
+          <size length="68.4" width="24.5" height="5.3" units="mm" />
         </model>
       </family>
       <family name="Multi-Protocol Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="1" highVersionID="255" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom, SUSI interface" file="Viessmann_524x.xml">
@@ -40107,6 +40110,11 @@
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="4" lockable="true">Shunting Mode</functionlabel>
         </functionlabels>
+      </family>
+      <family name="Point Motor Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="2" highVersionID="15" comment="NMRA DCC &amp; RailCom" file="Viessmann_Tillig_08335_DKW.xml">
+        <model model="Tillig DKW 08335" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="TT" connector="other" productID="08335" comment="TT Double point motor for Tillig double slip turnout">
+          <size length="68.4" width="24.5" height="5.3" units="mm" />
+        </model>
       </family>
       <family name="Wangrow basic decoders" mfg="Wangrow" file="Wangrow_2.xml">
         <model model="DH-154" numOuts="4" connector="NMRAmedium" maxMotorCurrent="1.0A" formFactor="HO" nmraWarrant="yes" nmraWarrantStart="200506">
@@ -40370,27 +40378,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">FV 1</label>
+            <label xml:lang="cs">Funkční výstup 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">FV 2</label>
+            <label xml:lang="cs">Funkční výstup 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
-            <label xml:lang="cs">FV 3</label>
+            <label xml:lang="cs">Funkční výstup 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
-            <label xml:lang="cs">FV 4</label>
+            <label xml:lang="cs">Funkční výstup 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">FV 5</label>
+            <label xml:lang="cs">Funkční výstup 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">FV 6</label>
+            <label xml:lang="cs">Funkční výstup 6</label>
           </output>
           <size length="30" width="15" height="4" units="mm" />
         </model>
@@ -40446,30 +40454,14 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model model="MS480 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="8" numFns="14" productID="2">
-          <output name="1" label="Front Light">
-            <label xml:lang="cs">Přední světla</label>
-          </output>
-          <output name="2" label="Rear Light">
-            <label xml:lang="cs">Zadní světla</label>
-          </output>
-          <output name="3" label="FO 1">
-            <label xml:lang="cs">FV 1</label>
-          </output>
-          <output name="4" label="FO 2">
-            <label xml:lang="cs">FV 2</label>
-          </output>
-          <output name="5" label="FO 3">
-            <label xml:lang="cs">FV 3</label>
-          </output>
-          <output name="6" label="FO 4">
-            <label xml:lang="cs">FV 4</label>
-          </output>
-          <output name="7" label="FO 5 (+5v)">
-            <label xml:lang="cs">FV 5 (+5V)</label>
-          </output>
-          <output name="8" label="FO 6 (+5v)">
-            <label xml:lang="cs">FV 6 (+5V)</label>
-          </output>
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
           <size length="19" width="11" height="3.1" units="mm" />
         </model>
         <model model="MS490 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="3">
@@ -52325,6 +52317,33 @@
           <size length="25" width="10.5" height="4" units="mm" />
         </model>
         <model model="MX659N18 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="190">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
+          </output>
+          <size length="20" width="9.5" height="3.5" units="mm" />
+        </model>
+        <model model="MX660 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="DropIn" numOuts="6" numFns="14" productID="160">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
             <label xml:lang="cs">Přední světla</label>

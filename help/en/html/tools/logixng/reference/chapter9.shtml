@@ -132,11 +132,16 @@
           </tr>
 
           <tr>
-            <td>&amp;&</td>
+            <td>&amp;&amp;</td>
             <td>logical AND</td>
             <td>left to right</td>
           </tr>
 
+          <tr>
+            <td>^^</td>
+            <td>boolean XOR</td>
+            <td>left to right</td>
+          </tr>
           <tr>
             <td>||</td>
             <td>logical OR</td>
@@ -162,11 +167,11 @@
       </div>
 
       <p>Note that for the calculations to work, each operand must have the correct type. For
-      example, if you have a memory IM1 that has a number as a string and you want to subtrack from
-      it, like <code>IM1 - 1</code>, you need to convert the string in IM1 to an integer or a
-      float. Example: <code>int(IM1) - 1</code> or <code>float(IM1) - 1</code>. The same rules
-      apply to concatenating a string and an integer. The integer has to be converted to a string.
-      <code>"IT" + str(index)</code></p>
+      example, if you have a local variable <strong>MyVar</strong> that has a number as a string and
+      you want to subtrack from it, like <code>MyVar - 1</code>, you need to convert the string in
+      MyVar to an integer or a float. Example: <code>int(MyVar) - 1</code> or <code>float(MyVar) - 1
+      </code>.  The same rules apply to concatenating a string and an integer. The integer has to be
+      converted to a string, such as <code>"IT" + str(index)</code></p>
 
       <p>In this example, the <strong>A1</strong> section uses the <a href="chapter3.shtml">For</a>
       action to toggle 5 turnouts. The turnout user names are T1 thru T5. The

@@ -55,18 +55,17 @@ public class SpeedUtil {
     private boolean _isForward = true;
     private float _rampThrottleIncrement;   // user specified throttle increment for ramping
     private int _rampTimeIncrement; // user specified time for ramp step increment
-    private float _speedIncrement;  // throttle's minimum speed step
 
     private RosterSpeedProfile _sessionProfile; // speeds measured in the session
     private SignalSpeedMap _signalSpeedMap;
-    private float _ma;  // milliseconds needed to increase speed by throttle step amount
-    private float _md;  // milliseconds needed to decrease speed by throttle step amount
+    private int _ma;  // milliseconds needed to increase speed by throttle step amount
+    private int _md;  // milliseconds needed to decrease speed by throttle step amount
     private ArrayList<BlockSpeedInfo> _speedInfo; // map max speeds and occupation times of each block in route
 
-    // A SCALE_FACTOR of 45 divided by _scale, computes a scale speed of 100mph at full throttle.
+    // A SCALE_FACTOR of 44.704 divided by _scale, computes a scale speed of 100mph at full throttle.
     // This is set arbitrarily and can be modified by the Preferences "throttle Factor".
     // Only used when there is no SpeedProfile.
-    public static final float SCALE_FACTOR = 45; // divided by _scale, gives a rough approximation for track speed
+    public static final float SCALE_FACTOR = 44.704f; // divided by _scale, gives a rough approximation for track speed
     public static final float MAX_TGV_SPEED = 88889;   // maximum speed of a Bullet train (320 km/hr) in millimeters/sec
 
     protected SpeedUtil() {
@@ -334,20 +333,28 @@ public class SpeedUtil {
     }
 
     /** ms momentum time to change speed for a throttle amount
-     * @param delta throttle change
-     * @param increasing  is acceleration
+     * @param fromSpeed throttle change
+     * @param toSpeed throttle change
      * @return momentum time
      */
-    protected float getMomentumTime(float delta, boolean increasing) {
+    protected float getMomentumTime(float fromSpeed, float toSpeed) {
         float incr = getThrottleSpeedStepIncrement();  // step amount
         float time;
-        if (increasing) {
-            time = _ma * Math.abs(delta) / incr;   // accelerating
+        float delta;
+        if (fromSpeed < toSpeed) {
+            delta = toSpeed - fromSpeed;
+            time = _ma * delta / incr;   // accelerating
         } else {
-            time = _md * Math.abs(delta) / incr;
+            delta = fromSpeed - toSpeed;
+            time = _md * delta / incr;
         }
-        if (time < 50) {
-            time = 50;  // Even with CV == 0, there must be some time to change speed
+        // delta / incr ought to be number of speed steps
+        if (time < 2 * delta / incr) {
+            time = 2 * delta / incr;  // Even with CV == 0, there must be some time to change speed
+        }
+        if (log.isTraceEnabled()) {
+            log.debug("getMomentumTime for {}, addr={}. fromSpeed={}, toSpeed= {}, time= {}ms for {} steps",
+                    _rosterId, getAddress(), fromSpeed, toSpeed, time, delta / incr);
         }
         return time;
     }
@@ -357,12 +364,9 @@ public class SpeedUtil {
      * @return speed step amount
      */
     protected float getThrottleSpeedStepIncrement() {
+        // JMRI throttles don't seem to get actual values
         if (_throttle != null) {
-            _speedIncrement = _throttle.getSpeedIncrement();
-            return _speedIncrement;
-        }
-        if (_speedIncrement > .001f) {
-            return _speedIncrement;
+            return _throttle.getSpeedIncrement();
         }
         return 1.0f / 126.0f;
     }
@@ -453,15 +457,15 @@ public class SpeedUtil {
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("makeRampParameters for {}, addr={}. _ma= {}ms/step, _md= {}ms/step. rampStepIncr= {} timeIncr= {} throttleStep= {}",
+            log.debug("makeRampParameters for {}, addr={}. _ma= {}ms/step, _md= {}ms/step. rampThrottleIncr= {} rampTimeIncr= {} throttleStep= {}",
                     _rosterId, getAddress(), _ma, _md, _rampThrottleIncrement, _rampTimeIncrement, getThrottleSpeedStepIncrement());
         }
     }
 
     // return milliseconds per one speed step
-    private float getMomentumFactor(Element cv) {
+    private int getMomentumFactor(Element cv) {
         Attribute attr = cv.getAttribute("value");
-        float num = 0;
+        int num = 0;
         if (attr != null) {
             try {
                  /*  .896sec per (throttle Speed Step Increment) is NMRA spec for each CV value
@@ -473,7 +477,8 @@ public class SpeedUtil {
                  Same for CV#24
                  */
                 num = Integer.parseInt( attr.getValue());
-                num = num * 896 * getThrottleSpeedStepIncrement();     // milliseconds per step
+                // reciprocal of getThrottleSpeedStepIncrement() is number of steps in use
+                num = Math.round(num * 896 * getThrottleSpeedStepIncrement());     // milliseconds per step
             } catch (NumberFormatException nfe) {
                 num = 0;
             }
@@ -484,7 +489,7 @@ public class SpeedUtil {
     }
 
     // return milliseconds per one speed step
-    private float getMomentumAdustment(Element cv) {
+    private int getMomentumAdustment(Element cv) {
         /*  .896sec per  is NMRA spec for each CV value
         CV#23
         This Configuration Variable contains additional acceleration rate information that is to be added to or 
@@ -496,7 +501,7 @@ public class SpeedUtil {
         Same for CV#24
         */
         Attribute attr = cv.getAttribute("value");
-        float num = 0;
+        int num = 0;
         if (attr != null) {
             try {
                 int val = Integer.parseInt(attr.getValue());
@@ -811,26 +816,19 @@ public class SpeedUtil {
                 if (time > 0) {
                     calcDist += getDistanceOfSpeedChange(intStartSpeed, intEndSpeed, time);
                 }               
-                boolean trace = false;
-                if (calcDist<= 0) {
-                    log.warn("block: {} Path distance or SpeedProfile unreliable! pathDist= {}, calcDist={}!", blkName, pathDist, calcDist);
-                    trace = true;
-                }
-                if (blkOrderIdx > 0 && blkOrderIdx < commands.size() - 1) {
+                float ratio = 1;
+                if (calcDist > 0 && blkOrderIdx > 0 && blkOrderIdx < commands.size() - 1) {
                     pathDist = orders.get(blkOrderIdx).getPathLength();
-                    float ratio = pathDist / calcDist;
-                    if (Math.abs(ratio) > 2.0f || Math.abs(ratio) < 0.5f) {
-                        log.warn("block: {} Path distance or SpeedProfile unreliable! pathDist= {}, calcDist={}!", blkName, pathDist, calcDist);
-                        trace = true;
-                    }
+                    ratio = pathDist / calcDist;
                 } else {
-                    BlockOrder bo = orders.get(blkOrderIdx);
-                    pathDist = bo.getPathLength() / 2;
+                    pathDist = orders.get(blkOrderIdx).getPathLength() / 2;
                 }
                 _speedInfo.add(new BlockSpeedInfo(blkName, firstSpeed, speed, blkTime, pathDist, calcDist, firstIdx, i));
-                if (trace || log.isDebugEnabled()) {
-                   log.debug("\"{}\" Speeds: enter= {}, exit= {}. time= {}ms, pathDist= {}, calcDist= {}. index {} to {}",
-                            blkName, firstSpeed, speed, blkTime, pathDist, calcDist, firstIdx, i);
+                if (Warrant._trace || log.isDebugEnabled()) {
+                    if (calcDist <= 0 || Math.abs(ratio) > 2.0f || Math.abs(ratio) < 0.5f) {
+                        log.debug("\"{}\" Speeds: enter= {}, exit= {}. time= {}ms, pathDist= {}, calcDist= {}. index {} to {}",
+                                blkName, firstSpeed, speed, blkTime, pathDist, calcDist, firstIdx, i);
+                    }
                 }
                 blkOrderIdx++;
                 blk = (OBlock)ts.getNamedBeanHandle().getBean();
@@ -888,30 +886,30 @@ public class SpeedUtil {
      * Return the distance traveled at current speed after a speed change was made.
      * Takes into account the momentum configured for the decoder to change from
      * the previous speed to the current speed.  Assumes the velocity change is linear.
+     * Does not return a distance greater than that needed by momentum time.
      *
-     * @param prevSpeed throttle setting when speed changed to currSpeed
-     * @param currSpeed throttle setting being set
+     * @param fromSpeed throttle setting when speed changed to toSpeed
+     * @param toSpeed throttle setting being set
      * @param speedTime elapsed time from when the speed change was made to now
      * @return distance traveled
      */
-    protected float getDistanceOfSpeedChange(float prevSpeed, float currSpeed, long speedTime) {
-        if (currSpeed < 0) {
-            currSpeed = 0;
+    protected float getDistanceOfSpeedChange(float fromSpeed, float toSpeed, long speedTime) {
+        if (toSpeed < 0) {
+            toSpeed = 0;
         }
-        if (prevSpeed < 0) {
-            prevSpeed = 0;
+        if (fromSpeed < 0) {
+            fromSpeed = 0;
         }
-        boolean increasing = (prevSpeed <= currSpeed);
-        float momentumTime = getMomentumTime(currSpeed - prevSpeed, increasing);
+        float momentumTime = getMomentumTime(fromSpeed, toSpeed);
         float dist;
         // assume a linear change of speed
         if (speedTime <= momentumTime ) {
-            // perhaps will be too far since currSpeed may not be attained
-            dist = getTrackSpeed((prevSpeed + currSpeed)/2) * speedTime;
+            // perhaps will be too far since toSpeed may not be attained
+            dist = getTrackSpeed((fromSpeed + toSpeed)/2) * speedTime;
         } else {
-            dist = getTrackSpeed((prevSpeed + currSpeed)/2) * momentumTime;
+            dist = getTrackSpeed((fromSpeed + toSpeed)/2) * momentumTime;
             if (speedTime > momentumTime) { // time remainder at changed speed
-                dist += getTrackSpeed(currSpeed) * (speedTime - momentumTime);
+                dist += getTrackSpeed(toSpeed) * (speedTime - momentumTime);
             }
         }
 //      log.debug("momentumTime = {}, speedTime= {} moDist= {}", momentumTime, speedTime, dist);

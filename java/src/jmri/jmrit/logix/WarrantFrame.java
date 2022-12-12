@@ -11,6 +11,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -19,6 +20,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.SpeedStepMode;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.ThreadingUtil;
 import jmri.jmrit.logix.ThrottleSetting.Command;
@@ -100,7 +102,7 @@ public class WarrantFrame extends WarrantRoute {
         _saveWarrant = w;
         // temp unregistered version until editing is saved.
         _warrant = new Warrant(w.getSystemName(), w.getUserName());
-        setup(_saveWarrant);
+        setup(_saveWarrant, false);
         init();
     }
 
@@ -118,10 +120,20 @@ public class WarrantFrame extends WarrantRoute {
         }
         _warrant = new Warrant(sName, null);
         if (startW != null) {
-            setup(startW);
             if (endW != null) { // concatenate warrants
-                BlockOrder bo = _orders.get(_orders.size() - 1);
+                WarrantTableFrame tf = WarrantTableFrame.getDefault();
+                tf.setVisible(true);
+                boolean includeAllCmds = tf.askStopQuestion(startW.getLastOrder().getBlock().getDisplayName());
+                /*
+                if (JOptionPane.showConfirmDialog(f, Bundle.getMessage("stopAtBlock",
+                        startW.getLastOrder().getBlock().getDisplayName()),
+                        Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                    includeAllCmds = true;
+                }*/
+                float entranceSpeed = setup(startW, !includeAllCmds);
                 List<BlockOrder> orders = endW.getBlockOrders();
+                BlockOrder bo = orders.get(0);    // block order of common midblock
                 bo.setExitName(endW.getfirstOrder().getExitName());
                 for (int i = 1; i < orders.size(); i++) {
                     _orders.add(new BlockOrder(orders.get(i)));
@@ -133,10 +145,44 @@ public class WarrantFrame extends WarrantRoute {
                 if (_avoid.getOrder() == null) {
                     _avoid.setOrder(endW.getAvoidOrder());
                 }
+                float exitSpeed = 0;
+                NamedBean bean = bo.getBlock(); // common block
                 for (ThrottleSetting ts : endW.getThrottleCommands()) {
-                    _throttleCommands.add(new ThrottleSetting(ts));
+                    if (includeAllCmds) {
+                        _throttleCommands.add(new ThrottleSetting(ts));
+                    } else {
+                        Command cmd = ts.getCommand();
+                        if (cmd.equals(Command.SPEED)) {
+                            exitSpeed = ts.getValue().getFloat();
+                        } else if (cmd.equals(Command.NOOP) && !ts.getBean().equals(bean)) {
+                            includeAllCmds = true;
+                            long et = _speedUtil.getTimeForDistance(entranceSpeed, bo.getPathLength()) / 2;
+                            RampData ramp = _speedUtil.getRampForSpeedChange(entranceSpeed, exitSpeed);
+                            String blockName = bean.getDisplayName();
+                            if (ramp.isUpRamp()) {
+                                ListIterator<Float> iter = ramp.speedIterator(true);
+                                while (iter.hasNext()) {
+                                    float speedSetting = iter.next().floatValue();
+                                    _throttleCommands.add(new ThrottleSetting(et, Command.SPEED, -1, ValueType.VAL_FLOAT,
+                                            SpeedStepMode.UNKNOWN, speedSetting, blockName, _speedUtil.getTrackSpeed(speedSetting)));
+                                    et = ramp.getRampTimeIncrement();
+                                }
+                            } else {
+                                ListIterator<Float> iter = ramp.speedIterator(false);
+                                while (iter.hasPrevious()) {
+                                    float speedSetting = iter.previous().floatValue();
+                                    _throttleCommands.add(new ThrottleSetting(et, Command.SPEED, -1, ValueType.VAL_FLOAT,
+                                            SpeedStepMode.UNKNOWN, speedSetting, blockName, _speedUtil.getTrackSpeed(speedSetting)));
+                                    et = ramp.getRampTimeIncrement();
+                                }
+                            }
+                            _throttleCommands.add(new ThrottleSetting(ts));
+                        }
+                    }
                 }
-            } // else copy startW
+            } else {    // else just copy startW
+                setup(startW, false);
+            }
         } // else create new warrant
         init();
     }
@@ -145,7 +191,7 @@ public class WarrantFrame extends WarrantRoute {
      * Set up parameters from an existing warrant. note that _warrant is
      * unregistered.
      */
-    private void setup(Warrant warrant) {
+    private float setup(Warrant warrant, boolean omitLastBlockCmds) {
         _origin.setOrder(warrant.getfirstOrder());
         _destination.setOrder(warrant.getLastOrder());
         _via.setOrder(warrant.getViaOrder());
@@ -161,8 +207,22 @@ public class WarrantFrame extends WarrantRoute {
             _TTP = ((SCWarrant) warrant).getTimeToPlatform();
             _forward = ((SCWarrant) warrant).getForward();
         }
+
+        float entranceSpeed = 0;
         for (ThrottleSetting ts : warrant.getThrottleCommands()) {
-            _throttleCommands.add(new ThrottleSetting(ts));
+            if (omitLastBlockCmds && list.size() > 0) {
+                NamedBean bean = list.get(list.size()-1).getBlock();
+                Command cmd = ts.getCommand();
+                if (cmd.equals(Command.SPEED)) {
+                    entranceSpeed = ts.getValue().getFloat();
+                }
+                _throttleCommands.add(new ThrottleSetting(ts));
+               if (cmd.equals(Command.NOOP) && ts.getBean().equals(bean)) {
+                     break;
+                }
+            } else {
+                _throttleCommands.add(new ThrottleSetting(ts));
+            }
         }
         _shareRouteBox.setSelected(warrant.getShareRoute());
         _warrant.setShareRoute(warrant.getShareRoute());
@@ -186,6 +246,7 @@ public class WarrantFrame extends WarrantRoute {
         } else {
             setTrainName(warrant.getTrainName());
         }
+        return entranceSpeed;
     }
 
     private void init() {

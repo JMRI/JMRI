@@ -129,7 +129,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             "RunningLate", "WaitingForStart", "RecordingScript", "StopPending"};
 
     static final float BUFFER_DISTANCE = 50*12*25.4F / WarrantPreferences.getDefault().getLayoutScale(); // 50 scale feet for safety distance
-    protected boolean _trace = WarrantPreferences.getDefault().getTrace();
+    static protected boolean _trace = WarrantPreferences.getDefault().getTrace();
 
     // Speed states: steady, increasing, decreasing
     static final int AT_SPEED = 1;
@@ -603,7 +603,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
-    protected String getRunningMessage() {
+    protected synchronized String getRunningMessage() {
         if (_delayStart) {
             return Bundle.getMessage("waitForDelayStart", _trainName, getBlockAt(0).getDisplayName());
         }
@@ -1377,6 +1377,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
 
         if (_engineer != null) {
+            info.append("\""); info.append("\n\tEngineer Stack trace:");
+            for (StackTraceElement elem : _engineer.getStackTrace()) {
+                info.append("\n\t\t");
+                info.append(elem.getClassName()); info.append("."); info.append(elem.getMethodName());
+                info.append(", line "); info.append(elem.getLineNumber());
+            }
             info.append(_engineer.debugInfo());
          } else {
             info.append("No engineer.");
@@ -3096,7 +3102,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         } else if (_waitForBlock) {
             reason = Bundle.getMessage("Occupancy");                
         } else {
-            reason ="Unspecified";
+            reason = Bundle.getMessage("Signal");
         }
 
         if (_trace || log.isDebugEnabled()) {

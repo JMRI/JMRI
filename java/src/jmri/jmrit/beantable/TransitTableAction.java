@@ -6,12 +6,14 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -1442,11 +1444,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         actionTableFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                if (actionTableFrame != null) {
-                    actionTableFrame.setVisible(false);
-                    actionTableFrame.dispose();
-                    actionTableFrame = null;
-                }
+                actionTableFrame.setVisible(false);
+                actionTableFrame.dispose();
+                actionTableFrame = null;
                 if (addEditActionFrame != null) {
                     addEditActionFrame.setVisible(false);
                     addEditActionFrame.dispose();
@@ -1481,7 +1481,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private TransitSectionAction curTSA = null;
     private final JComboBox<String> whenBox = new JComboBox<>();
     private final NamedBeanComboBox<Sensor> whenSensorComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
-    private final JSpinner whenDataSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 65500, 1)); // delay
+    private final JSpinner whenDataSpinnerFloat = new JSpinner(new SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(65.0f), Float.valueOf(0.5f))); // delay
+    private final JSpinner whenDataSpinnerInt = new JSpinner(new SpinnerNumberModel(0, 0, 65000, 100)); // delay
+    private final JRadioButton mSecButton = new JRadioButton(Bundle.getMessage("LabelMilliseconds"));
+    private final JRadioButton secButton = new JRadioButton(Bundle.getMessage("LabelSeconds"));
     private final JComboBox<String> whatBox = new JComboBox<>();
     private final JSpinner whatPercentSpinner = new JSpinner(); // speed
     private final JSpinner whatMinuteSpinner1 = new JSpinner(new SpinnerNumberModel(1, 1, 65500, 1));     // time in ms
@@ -1497,6 +1500,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private final JRadioButton offButton = new JRadioButton(Bundle.getMessage("StateOff"));
     private final JLabel doneSensorLabel = new JLabel(rbx.getString("DoneSensorLabel"));
     private JPanel signalPanel;
+    private JPanel panelPercentageSpinner;
+    private JPanel panelDelay;
+    private JLabel panelDelayLabel = new JLabel();
+    private JPanel panelWhatBox;
     private final NamedBeanComboBox<Sensor> doneSensorComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalMast> signalMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> signalHeadComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalHeadManager.class), null, DisplayOptions.DISPLAYNAME);
@@ -1521,7 +1528,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             panel1.add(whenBox);
             whenBox.addActionListener((ActionEvent e) -> {
                 log.debug("whenBox was set");
-                setWhen(whenBox.getSelectedIndex() + 1);
+                if (whenBox.getSelectedItem()!=null) {
+                    setWhen(getWhenMenuCode((String)whenBox.getSelectedItem()));
+                }
             });
             whenBox.setToolTipText(rbx.getString("WhenBoxTip"));
             JComboBoxUtil.setupComboBoxMaxRows(whenSensorComboBox);
@@ -1532,39 +1541,75 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             panel1.add(blockBox);
             panelx.add(panel1);
             // to set optional delay setting
-            JPanel panel11 = new JPanel();
-            panel11.setLayout(new FlowLayout());
-            panel11.add(new JLabel("    " + rbx.getString("OptionalDelay") + ": "));
-            panel11.add(whenDataSpinner);
-            whenDataSpinner.setToolTipText(rbx.getString("HintDelayData"));
-            panel11.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
-            panelx.add(panel11);
+            panelDelay = new JPanel();
+            panelDelay.setLayout(new FlowLayout());
+            panelDelayLabel.setText("    " + rbx.getString("OptionalDelay") + ": ");
+            panelDelay.add(panelDelayLabel);
+            panelDelay.add(whenDataSpinnerInt);
+            whenDataSpinnerInt.setToolTipText(rbx.getString("HintDelayData"));
+            whenDataSpinnerInt.addChangeListener((ChangeEvent e) -> {
+                if (mSecButton.isSelected()) {
+                    float f = (int)whenDataSpinnerInt.getValue();
+                    whenDataSpinnerFloat.setValue(Float.valueOf(f/1000.0f));
+                }
+            });
+            panelDelay.add(whenDataSpinnerFloat);
+            whenDataSpinnerFloat.setToolTipText(rbx.getString("HintDelayData"));
+            whenDataSpinnerFloat.setPreferredSize(whenDataSpinnerInt.getPreferredSize());
+            whenDataSpinnerFloat.addChangeListener((ChangeEvent e) -> {
+                if (secButton.isSelected()) {
+                    float dVal = (float)whenDataSpinnerFloat.getValue();
+                    dVal *= 1000.0;
+                    whenDataSpinnerInt.setValue(Integer.valueOf(Math.round(dVal)));
+                }
+            });
+            ButtonGroup secMsec = new ButtonGroup();
+            secMsec.add(mSecButton);
+            secMsec.add(secButton);
+            panelDelay.add(mSecButton);
+            mSecButton.addChangeListener((ChangeEvent e) -> {
+                if (mSecButton.isSelected()) {
+                    whenDataSpinnerFloat.setVisible(false);
+                    whenDataSpinnerInt.setVisible(true);
+                }
+            });
+            panelDelay.add(secButton);
+            secButton.addChangeListener((ChangeEvent e) -> {
+                if (secButton.isSelected()) {
+                    whenDataSpinnerFloat.setVisible(true);
+                    whenDataSpinnerInt.setVisible(false);
+                }
+            });
+            secButton.setSelected(true);
+            panelx.add(panelDelay);
             JPanel spacer = new JPanel();
             spacer.setLayout(new FlowLayout());
             spacer.add(new JLabel("     "));
             panelx.add(spacer);
             // to set What action to take
-            JPanel panel2 = new JPanel();
-            panel2.setLayout(new FlowLayout());
-            panel2.add(new JLabel(rbx.getString("WhatText")));
-            initializeWhatBox();
+            panelWhatBox = new JPanel();
+            panelWhatBox.setLayout(new FlowLayout());
+            panelWhatBox.add(new JLabel(rbx.getString("WhatText")));
+            initializeWhatBox(0);
             JComboBoxUtil.setupComboBoxMaxRows(whatBox);
-            panel2.add(whatBox);
+            panelWhatBox.add(whatBox);
             whatBox.setToolTipText(rbx.getString("WhatBoxTip"));
             whatBox.addActionListener((ActionEvent e) -> {
-                setWhat(whatBox.getSelectedIndex() + 1);
+                if (whatBox.getSelectedItem()!=null) {
+                    setWhat(getWhatMenuCode((String)whatBox.getSelectedItem()));
+                }
             });
-            panel2.add(whatStringField);
+            panelWhatBox.add(whatStringField);
             whatStringField.setToolTipText(rbx.getString("HintSoundHornPatternString"));
-            panelx.add(panel2);
-            JPanel panel21 = new JPanel();
-            panel21.setLayout(new FlowLayout());
+            panelx.add(panelWhatBox);
+            panelPercentageSpinner = new JPanel();
+            panelPercentageSpinner.setLayout(new FlowLayout());
             whatPercentSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.00f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
             whatPercentSpinner.setEditor(new JSpinner.NumberEditor(whatPercentSpinner, "# %")); // show as a percentage % sign
-            panel21.add(whatPercentSpinner);
-            panel21.add(whatMinuteSpinner1);
-            panel21.add(whatMinuteSpinner2);
-            panel21.add(locoFunctionSpinner);
+            panelPercentageSpinner.add(whatPercentSpinner);
+            panelPercentageSpinner.add(whatMinuteSpinner1);
+            panelPercentageSpinner.add(whatMinuteSpinner2);
+            panelPercentageSpinner.add(locoFunctionSpinner);
             // signal comboboxes
             TitledBorder border = BorderFactory.createTitledBorder(rbx.getString("SelectASignal"));
             signalPanel = new JPanel();
@@ -1589,18 +1634,18 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             });
             signalMastComboBox.setToolTipText(rbx.getString("HintSignalEntry"));
             signalHeadComboBox.setToolTipText(rbx.getString("HintSignalEntry"));
-            panel21.add(signalPanel);
+            panelPercentageSpinner.add(signalPanel);
             // On/Off buttons
             ButtonGroup onOffGroup = new ButtonGroup();
             onOffGroup.add(onButton);
             onOffGroup.add(offButton);
-            panel21.add(onButton);
-            panel21.add(offButton);
-            panel21.add(doneSensorLabel);
-            panel21.add(doneSensorComboBox);
+            panelPercentageSpinner.add(onButton);
+            panelPercentageSpinner.add(offButton);
+            panelPercentageSpinner.add(doneSensorLabel);
+            panelPercentageSpinner.add(doneSensorComboBox);
             JComboBoxUtil.setupComboBoxMaxRows(doneSensorComboBox);
             doneSensorComboBox.setAllowNull(true);
-            panelx.add(panel21);
+            panelx.add(panelPercentageSpinner);
             contentPane.add(panelx);
             contentPane.add(new JSeparator());
             // add buttons
@@ -1624,7 +1669,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             addEditActionFrame.setTitle(rbx.getString("TitleEditAction"));
             updateActionButton.setVisible(true);
             createActionButton.setVisible(false);
-            whenDataSpinner.setValue(curTSA.getDataWhen());
+            whenDataSpinnerInt.setValue(Integer.valueOf(curTSA.getDataWhen()));
+            float f = (int)whenDataSpinnerInt.getValue();
+            whenDataSpinnerFloat.setValue(Float.valueOf(f/1000.0f));
             whenSensorComboBox.setSelectedItemByName(curTSA.getStringWhen());
             // spinners are set in setWhat()
             whatStringField.setText(curTSA.getStringWhat());
@@ -1633,9 +1680,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 offButton.setSelected(true);
             }
             log.debug("setWhen called for edit of action, editmode = {}", editActionMode);
-            whenBox.setSelectedIndex(curTSA.getWhenCode() - 1);
+            whenBox.setSelectedItem(getWhenMenuText(curTSA.getWhenCode()));
             // setWhen(curTSA.getWhenCode()) and setWhat(idem) are set via whenBox and whatBox
-            whatBox.setSelectedIndex(curTSA.getWhatCode() - 1);
+            whatBox.setSelectedItem(getWhatMenuText(curTSA.getWhatCode()));
             setBlockBox();
         } else {
             // initialize for add new action
@@ -1644,7 +1691,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             // setWhen(1) and setWhat(1) are set from the whenBox and whatBox listeners
             whatBox.setSelectedIndex(0);
             // set initial values after setting model
-            whenDataSpinner.setValue(0);
+            whenDataSpinnerInt.setValue(0);
+            whenDataSpinnerFloat.setValue(Float.valueOf(0.0f));
             whenSensorComboBox.setSelectedItem(0);
             whatPercentSpinner.setValue(1.0f);
             whatMinuteSpinner1.setValue(100);
@@ -1662,11 +1710,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         addEditActionFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                if (addEditActionFrame != null) {
                     addEditActionFrame.setVisible(false);
                     addEditActionFrame.dispose();
                     addEditActionFrame = null;
-                }
             }
         });
         addEditActionFrame.pack();
@@ -1682,12 +1728,24 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         // setting the whenBox here causes recursion
         whenSensorComboBox.setVisible(false);
         blockBox.setVisible(false);
+        panelDelay.setVisible(true);
+        panelWhatBox.setVisible(true);
+        panelPercentageSpinner.setVisible(true);
+        panelDelayLabel.setText("    " + rbx.getString("OptionalDelay") + ": ");
         log.debug("setWhen code = {}", code);
+        initializeWhatBox(code);
         switch (code) {
             case TransitSectionAction.ENTRY:
             case TransitSectionAction.EXIT:
             case TransitSectionAction.TRAINSTOP:
             case TransitSectionAction.TRAINSTART:
+            case TransitSectionAction.PRESTARTACTION:
+                break;
+            case TransitSectionAction.PRESTARTDELAY:
+                panelDelay.setVisible(true);
+                panelDelayLabel.setText("    " + rbx.getString("Delay") + ": ");
+                panelWhatBox.setVisible(false);
+                panelPercentageSpinner.setVisible(false);
                 break;
             case TransitSectionAction.BLOCKENTRY:
             case TransitSectionAction.BLOCKEXIT:
@@ -1698,6 +1756,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             case TransitSectionAction.SENSORINACTIVE:
                 whenSensorComboBox.setVisible(true);
                 whenSensorComboBox.setToolTipText(rbx.getString("HintSensorEntry"));
+                break;
+            case TransitSectionAction.SELECTWHEN:
                 break;
             default:
                 log.debug("Unhandled transit action code: {}", code); // causes too much noise, no harm done hiding it
@@ -1724,9 +1784,13 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         offButton.setVisible(false);
         doneSensorLabel.setVisible(false);
         doneSensorComboBox.setVisible(false);
+        panelDelay.setEnabled(true);
         log.debug("setWhat code = {}", code);
         switch (code) {
             case TransitSectionAction.PAUSE:
+                if (getWhenMenuCode((String)whenBox.getSelectedItem()) == TransitSectionAction.PRESTARTDELAY) {
+                    panelDelay.setEnabled(false);
+                }
                 whatMinuteSpinner1.setModel(new SpinnerNumberModel(1, 1, 65500, 1));
                 if (editActionMode) {
                     whatMinuteSpinner1.setValue(Math.max(curTSA.getDataWhat1(), 1));
@@ -1888,9 +1952,15 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     }
 
     private boolean validateWhenData() {
-        tWhen = whenBox.getSelectedIndex() + 1;
-        tWhenData = (Integer) whenDataSpinner.getValue(); // always int within range from JSpinner
+        tWhen = getWhenMenuCode((String)whenBox.getSelectedItem());
+        tWhenData = (int)whenDataSpinnerInt.getValue();
         tWhenString = "";
+        if (tWhen == TransitSectionAction.PRESTARTDELAY ) {
+            // must have a delay
+            if (tWhenData <1 ) {
+                return false;
+            }
+        }
         if ((tWhen == TransitSectionAction.SENSORACTIVE) || (tWhen == TransitSectionAction.SENSORINACTIVE)) {
             if (whenSensorComboBox.getSelectedIndex() != 0) { // it's optional, so might be 0
                 tWhenString = whenSensorComboBox.getSelectedItemSystemName();
@@ -1961,7 +2031,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
      * @return true if data entered into field whatStringField is valid for selected Action type tWhat
      */
     private boolean validateWhatData() {
-        tWhat = whatBox.getSelectedIndex() + 1;
+        tWhat = getWhatMenuCode((String)whatBox.getSelectedItem());
         tWhatData1 = 0;
         tWhatData2 = 0;
         tWhatString = "";
@@ -2042,6 +2112,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     return false;
                 }
                 break;
+            case TransitSectionAction.PRESTARTRESUME:
+                break;
             default:
                 log.warn("Unhandled transit section action code: {}", tWhat);
                 break;
@@ -2052,7 +2124,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     // initialize combos for add/edit action window
     private void initializeWhenBox() {
         whenBox.removeAllItems();
-        for (int i = 1; i <= TransitSectionAction.NUM_WHENS; i++) {
+        for (int i = 0; i <= TransitSectionAction.NUM_WHENS; i++) {
             whenBox.addItem(getWhenMenuText(i));
         }
     }
@@ -2075,22 +2147,82 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 return rbx.getString("OnSensorActive");
             case TransitSectionAction.SENSORINACTIVE:
                 return rbx.getString("OnSensorInactive");
+            case TransitSectionAction.PRESTARTDELAY:
+                return rbx.getString("PreStartDelay");
+            case TransitSectionAction.PRESTARTACTION:
+                return rbx.getString("PreStartAction");
+            case TransitSectionAction.SELECTWHEN:
+                return rbx.getString("SelectWhen");
             default:
-                log.warn("Unhandled transit section action code: {}", i);
-                break;
+                log.warn("Unhandled transit section when code: {}", i);
+                return rbx.getString("SelectWhen");
         }
-        return "WHEN";
     }
 
-    private void initializeWhatBox() {
+    private int getWhenMenuCode(String s) {
+        if (s.equals(rbx.getString("OnEntry"))) {
+            return TransitSectionAction.ENTRY;
+        }
+        if (s.equals(rbx.getString("OnExit"))) {
+            return TransitSectionAction.EXIT;
+        }
+        if (s.equals(rbx.getString("OnBlockEntry"))) {
+            return TransitSectionAction.BLOCKENTRY;
+        }
+        if (s.equals(rbx.getString("OnBlockExit"))) {
+            return TransitSectionAction.BLOCKEXIT;
+        }
+        if (s.equals(rbx.getString("TrainStop"))) {
+            return TransitSectionAction.TRAINSTOP;
+        }
+        if (s.equals(rbx.getString("TrainStart"))) {
+            return TransitSectionAction.TRAINSTART;
+        }
+        if (s.equals(rbx.getString("OnSensorActive"))) {
+            return TransitSectionAction.SENSORACTIVE;
+        }
+        if (s.equals(rbx.getString("OnSensorInactive"))) {
+            return TransitSectionAction.SENSORINACTIVE;
+        }
+        if (s.equals(rbx.getString("PreStartDelay"))) {
+            return TransitSectionAction.PRESTARTDELAY;
+        }
+        if (s.equals(rbx.getString("PreStartAction"))) {
+            return TransitSectionAction.PRESTARTACTION;
+        }
+        return TransitSectionAction.SELECTWHEN;
+    }
+
+    private void initializeWhatBox(int code) {
         whatBox.removeAllItems();
-        for (int i = 1; i <= TransitSectionAction.NUM_WHATS; i++) {
-            whatBox.addItem(getWhatMenuText(i));
+        List<Integer> excludeCodes = new ArrayList<>();
+        List<Integer> includeCodes = new ArrayList<>();
+        if (code == TransitSectionAction.PRESTARTACTION) {
+            // exclude speed changing as that messes up the prestart.List<Section> sectionList = new ArrayList<>();
+            excludeCodes = new ArrayList<>(Arrays.asList(TransitSectionAction.SETMAXSPEED, TransitSectionAction.SETCURRENTSPEED,
+                            TransitSectionAction.RAMPTRAINSPEED));
+        }    else if (code == TransitSectionAction.PRESTARTDELAY) {
+            includeCodes.add(TransitSectionAction.PRESTARTRESUME);
+        }
+        for (int i = 0; i <= TransitSectionAction.NUM_WHATS; i++) {
+            if (excludeCodes.size() > 0) {
+                if (! excludeCodes.contains(i)) {
+                    whatBox.addItem(getWhatMenuText(i));
+                }
+            } else if (includeCodes.size() > 0) {
+                if (includeCodes.contains(i)) {
+                    whatBox.addItem(getWhatMenuText(i));
+                }
+            } else {
+                whatBox.addItem(getWhatMenuText(i));
+            }
         }
     }
 
     private String getWhatMenuText(int i) {
         switch (i) {
+            case TransitSectionAction.SELECTWHAT:
+                return rbx.getString("SelectWhat");
             case TransitSectionAction.PAUSE:
                 return rbx.getString("Pause");
             case TransitSectionAction.SETMAXSPEED:
@@ -2123,11 +2255,71 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 return rbx.getString("ReleaseSignal");
             case TransitSectionAction.ESTOP:
                 return rbx.getString("EStop");
+            case TransitSectionAction.PRESTARTRESUME:
+                return rbx.getString("PreStartResume");
             default:
                 log.warn("Unhandled transit section action code: {}", i);
-                break;
+                return rbx.getString("SelectWhat");
         }
-        return "WHAT";
+    }
+
+    private int getWhatMenuCode(String s) {
+        if (s.equals(rbx.getString("SelectWhat"))) {
+            return TransitSectionAction.SELECTWHAT;
+        }
+        if (s.equals(rbx.getString("Pause"))) {
+            return TransitSectionAction.PAUSE;
+        }
+        if (s.equals(rbx.getString("SetMaxSpeed"))) {
+            return TransitSectionAction.SETMAXSPEED;
+        }
+        if (s.equals(rbx.getString("SetTrainSpeed"))) {
+            return TransitSectionAction.SETCURRENTSPEED;
+        }
+        if (s.equals(rbx.getString("RampTrainSpeed"))) {
+            return TransitSectionAction.RAMPTRAINSPEED;
+        }
+        if (s.equals(rbx.getString("ToManualMode"))) {
+            return TransitSectionAction.TOMANUALMODE;
+        }
+        if (s.equals(rbx.getString("SetLight"))) {
+            return TransitSectionAction.SETLIGHT;
+        }
+        if (s.equals(rbx.getString("StartBell"))) {
+            return TransitSectionAction.STARTBELL;
+        }
+        if (s.equals(rbx.getString("StopBell"))) {
+            return TransitSectionAction.STOPBELL;
+        }
+        if (s.equals(rbx.getString("SoundHorn"))) {
+            return TransitSectionAction.SOUNDHORN;
+        }
+        if (s.equals(rbx.getString("SoundHornPattern"))) {
+            return TransitSectionAction.SOUNDHORNPATTERN;
+        }
+        if (s.equals(rbx.getString("LocoFunction"))) {
+            return TransitSectionAction.LOCOFUNCTION;
+        }
+        if (s.equals(rbx.getString("SetSensorActive"))) {
+            return TransitSectionAction.SETSENSORACTIVE;
+        }
+        if (s.equals(rbx.getString("SetSensorInactive"))) {
+            return TransitSectionAction.SETSENSORINACTIVE;
+        }
+        if (s.equals(rbx.getString("HoldSignal"))) {
+            return TransitSectionAction.HOLDSIGNAL;
+        }
+        if (s.equals(rbx.getString("ReleaseSignal"))) {
+            return TransitSectionAction.RELEASESIGNAL;
+        }
+        if (s.equals(rbx.getString("EStop"))) {
+            return TransitSectionAction.ESTOP;
+        }
+        if (s.equals(rbx.getString("PreStartResume"))) {
+            return TransitSectionAction.PRESTARTRESUME;
+        }
+        log.warn("Unhandled transit section action text: {}", s);
+        return 0;
     }
 
     private void initializeBlockBox() {
@@ -2230,11 +2422,16 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 }
                 return java.text.MessageFormat.format(rbx.getString("OnSensorInactiveFull"),
                         new Object[]{tsa.getStringWhen()});
+            case TransitSectionAction.PRESTARTDELAY:
+                return java.text.MessageFormat.format(rbx.getString("PreStartDelayFull"),
+                        new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
+            case TransitSectionAction.PRESTARTACTION:
+                return java.text.MessageFormat.format(rbx.getString("PreStartActionFull"),
+                        new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
             default:
-                log.warn("Unhandled transit section action When code: {}", tsa.getWhenCode());
-                break;
+                log.warn("Unhandled transit section action When code: {}",tsa.getWhenCode());
+                return("");
         }
-        return "WHEN";
     }
 
     /**
@@ -2301,8 +2498,13 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             case TransitSectionAction.RELEASESIGNAL:
                 return java.text.MessageFormat.format(rbx.getString("ReleaseSignalFull"),
                         new Object[]{tsa.getStringWhat()});
+            case TransitSectionAction.PRESTARTRESUME:
+                return java.text.MessageFormat.format(rbx.getString("PreStartResumeFull"),
+                        new Object[]{tsa.getDataWhen()});
             case TransitSectionAction.ESTOP:
                 return rbx.getString("EStopFull");
+            case TransitSectionAction.SELECTWHAT:
+                return rbx.getString("SelectWhat");
             default:
                 log.warn("Unhandled transit section action What code: {}", tsa.getWhatCode());
                 break;
