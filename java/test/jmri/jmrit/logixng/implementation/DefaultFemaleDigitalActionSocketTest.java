@@ -133,6 +133,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ForEach.class);
         classes.add(jmri.jmrit.logixng.actions.IfThenElse.class);
         classes.add(jmri.jmrit.logixng.actions.Return.class);
+        classes.add(jmri.jmrit.logixng.actions.RunOnce.class);
         classes.add(jmri.jmrit.logixng.actions.Sequence.class);
         classes.add(jmri.jmrit.logixng.actions.TableForEach.class);
         map.put(Category.FLOW_CONTROL, classes);
