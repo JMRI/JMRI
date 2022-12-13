@@ -62,20 +62,18 @@ public class StringWithLinksXml {
             while (i < _strings.size() || i < _links.size()) {
                 if (i < _strings.size()) {
                     StringBuilder sb = new StringBuilder(_strings.get(i));
-                    // Replace spaces with &nbsp; at the beginning of the string
+                    // Replace spaces with non breaking spaces at the beginning of the string
                     for (int j=0; j < sb.length(); j++) {
                         if (sb.charAt(j) == ' ') {
-                            sb.replace(j, j+1, "&nbsp;");
-                            j += "&nbsp;".length()-1;
+                            sb.setCharAt(j, '\u00A0');
                         } else {
                             break;
                         }
                     }
-                    // Replace spaces with &nbsp; at the end of the string
+                    // Replace spaces with non breaking spaces at the end of the string
                     for (int j=sb.length()-1; j > 0; j--) {
                         if (sb.charAt(j) == ' ') {
-                            sb.replace(j, j+1, "&nbsp;");
-                            j -= "&nbsp;".length()-1;
+                            sb.setCharAt(j, '\u00A0');
                         } else {
                             break;
                         }
