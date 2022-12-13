@@ -54,7 +54,7 @@ public class StringWithLinksXml {
             if (i < _links.size()) {
                 Element link = new Element("a");
                 link.setText(_links.get(i).getName());
-                link.setAttribute("href", _links.get(i).getHRef());
+                link.setAttribute("href", _links.get(i).getHref());
                 element.addContent(link);
             }
             i++;

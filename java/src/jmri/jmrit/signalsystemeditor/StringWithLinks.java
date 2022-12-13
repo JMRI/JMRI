@@ -40,11 +40,11 @@ public class StringWithLinks {
             return this._name;
         }
 
-        public void setHRef(String href) {
+        public void setHref(String href) {
             this._href = href;
         }
 
-        public String getHRef() {
+        public String getHref() {
             return this._href;
         }
 
