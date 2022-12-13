@@ -94,6 +94,27 @@ public abstract class XmlFile {
         CheckDtdThenSchema
     }
 
+    private String processingInstructionHRef;
+    private String processingInstructionType;
+
+    /**
+     * Get the value of the attribute 'href' of the process instruction of
+     * the last loaded document.
+     * @return the value of the attribute 'href' or null
+     */
+    public String getProcessingInstructionHRef() {
+        return processingInstructionHRef;
+    }
+
+    /**
+     * Get the value of the attribute 'type' of the process instruction of
+     * the last loaded document.
+     * @return the value of the attribute 'type' or null
+     */
+    public String getProcessingInstructionType() {
+        return processingInstructionType;
+    }
+
     /**
      * Read the contents of an XML file from its filename. The name is expanded
      * by the {@link #findFile} routine. If the file is not found, attempts to
@@ -189,6 +210,9 @@ public abstract class XmlFile {
      */
     protected Element getRoot(InputStream stream) throws JDOMException, IOException {
         log.trace("getRoot from stream");
+
+        processingInstructionHRef = null;
+        processingInstructionType = null;
 
         SAXBuilder builder = getBuilder(getValidate());
         Document doc = builder.build(new BufferedInputStream(stream));
@@ -447,6 +471,15 @@ public abstract class XmlFile {
         // this iterates over top level
         for (Content c : doc.cloneContent()) {
             if (c instanceof ProcessingInstruction) {
+                ProcessingInstruction pi = (ProcessingInstruction) c;
+                for (String attrName : pi.getPseudoAttributeNames()) {
+                    if ("href".equals(attrName)) {
+                        processingInstructionHRef = pi.getPseudoAttributeValue(attrName);
+                    }
+                    if ("type".equals(attrName)) {
+                        processingInstructionType = pi.getPseudoAttributeValue(attrName);
+                    }
+                }
                 try {
                     doc = processOneInstruction((ProcessingInstruction) c, doc);
                 } catch (org.jdom2.transform.XSLTransformException ex) {
