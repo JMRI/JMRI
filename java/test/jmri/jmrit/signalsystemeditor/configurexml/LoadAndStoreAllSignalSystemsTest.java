@@ -124,6 +124,25 @@ public class LoadAndStoreAllSignalSystemsTest {
                 next1 = next1.strip();
                 next2 = next2.strip();
 
+                if (next1.startsWith("<aspecttable ") && next1.startsWith(next2) && !next1.equals(next2)) {
+                    while (next1.startsWith(next2) && !next1.equals(next2)) {
+                        next2 += " " + fileStream2.readLine().strip();
+                        // Remove space before and after = sign
+                        next2 = next2.replaceAll("\\s*=\\s*", "=");
+                        lineNumber2++;
+                    }
+                }
+
+                if (next1.startsWith("<appearancetable ") && next1.startsWith(next2) && !next1.equals(next2)) {
+                    while (next1.startsWith(next2) && !next1.equals(next2)) {
+                        next2 += " " + fileStream2.readLine().strip();
+                        // Remove space before and after = sign
+                        next2 = next2.replaceAll("\\s*=\\s*", "=");
+                        lineNumber2++;
+                    }
+                }
+
+/*
                 if (next2.startsWith("<") && !next2.strip().endsWith(">")) {
                     while (!next2.strip().endsWith(">")) {
                         if (!next2.startsWith("<reference>")
@@ -137,7 +156,7 @@ public class LoadAndStoreAllSignalSystemsTest {
                         lineNumber2++;
                     }
                 }
-
+*/
 //                while (next2.strip().equals("<email></email>")) {
 //                    next2 = fileStream2.readLine().strip();
 //                    lineNumber2++;
