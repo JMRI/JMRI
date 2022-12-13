@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Aspect {
 
-    private String _name;
+    private final StringWithComment _name;
     private String _title;
     private String _rule;
     private String _indication;
@@ -22,7 +22,7 @@ public class Aspect {
     private String _route;
     private String _dccAspect;
 
-    public Aspect(String name, String title, String rule, String indication, String route, String dccAspect) {
+    public Aspect(StringWithComment name, String title, String rule, String indication, String route, String dccAspect) {
         this._name = name;
         this._title = title;
         this._rule = rule;
@@ -31,11 +31,7 @@ public class Aspect {
         this._dccAspect = dccAspect;
     }
 
-    public void setName(String name) {
-        this._name = name;
-    }
-
-    public String getName() {
+    public StringWithComment getName() {
         return this._name;
     }
 

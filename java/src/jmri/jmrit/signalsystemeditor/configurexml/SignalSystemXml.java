@@ -107,7 +107,7 @@ public class SignalSystemXml {
             signalSystem.getAspects().clear();
             if (aspectsElement != null) {
                 for (Element aspectElement : aspectsElement.getChildren("aspect")) {
-                    Aspect aspect = new Aspect(aspectElement.getChildText("name"),
+                    Aspect aspect = new Aspect(StringWithCommentXml.load(aspectElement.getChild("name")),
                                     aspectElement.getChildText("title"),
                                     aspectElement.getChildText("rule"),
                                     aspectElement.getChildText("indication"),
@@ -269,7 +269,7 @@ public class SignalSystemXml {
         Element aspects = new Element("aspects");
         for (Aspect aspect : signalSystem.getAspects()) {
             Element aspectElement = new Element("aspect");
-            aspectElement.addContent(new Element("name").setText(aspect.getName()));
+            aspectElement.addContent(StringWithCommentXml.store(aspect.getName(), "name"));
             if (aspect.getTitle() != null && !aspect.getTitle().isBlank()) {
                 aspectElement.addContent(new Element("title").setText(aspect.getTitle()));
             }
