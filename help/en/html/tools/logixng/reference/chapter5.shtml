@@ -1139,6 +1139,26 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Turnout on LayoutPanel<span class="since">since 5.3.1</span></h4>
+
+      <p>Disable/Enable a turnout item on a specific Layout Editor panel.  A separate action is
+      needed since the turnout image on a Layout Editor panel is not an icon.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_turnout.png"><img src=
+        "images/chapter5/layout_turnout.png" alt="Chapter 5 layout turnout action"></a>
+      </div>
+
+      <p>The action applies to a single turnout item.  To change all of the turnouts, use a
+      <strong>For each</strong> action.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_turnout_foreach.png"><img class="image-border" src=
+        "images/chapter5/layout_turnout_foreach.png" alt="Chapter 5 layout turnout for each"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h2 id="digital_action_mqtt">Digital action :: MQTT <span class="since">since 4.99.7</span></h2>
 
       <div style="margin-left: 2em;">
