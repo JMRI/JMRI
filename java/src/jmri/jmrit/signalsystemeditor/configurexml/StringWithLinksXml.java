@@ -18,30 +18,32 @@ public class StringWithLinksXml {
         StringWithLinks swl = new StringWithLinks();
         List<String> _strings = swl.getStrings();
         List<StringWithLinks.Link> _links = swl.getLinks();
-        if (!element.getChildren().isEmpty()) {
-            for (Content content : element.getContent()) {
-                if (content.getCType() == Content.CType.Text) {
-                    int stringsSize = _strings.size();
-                    if (stringsSize > _links.size()) {
-                        _strings.set(stringsSize-1, _strings.get(stringsSize-1)+content.getValue());
-                    } else {
-                        _strings.add(content.getValue());
-                    }
-                } else if (content.getCType() == Content.CType.Element) {
-                    Element e = (Element) content;
-                    if ("a".equals(e.getName())) {
-                        if (_strings.size() <= _links.size()) {
-                            _strings.add("");
-                        }
-                        _links.add(new StringWithLinks.Link(e.getText(), e.getAttributeValue("href")));
-                    } else {
-                        throw new RuntimeException("Unkown tag: " + e.getName());
-                    }
+        for (Content content : element.getContent()) {
+            if (content.getCType() == Content.CType.Text) {
+                int stringsSize = _strings.size();
+                if (stringsSize > _links.size()) {
+                    _strings.set(stringsSize-1, _strings.get(stringsSize-1)+content.getValue());
                 } else {
-                    throw new RuntimeException("Unkown CType: " + content.getCType().name());
+                    _strings.add(content.getValue());
                 }
+            } else if (content.getCType() == Content.CType.Element) {
+                Element e = (Element) content;
+                if ("a".equals(e.getName())) {
+                    if (_strings.size() <= _links.size()) {
+                        _strings.add("");
+                    }
+                    _links.add(new StringWithLinks.Link(e.getText(), e.getAttributeValue("href")));
+                } else {
+                    throw new RuntimeException("Unkown tag: " + e.getName());
+                }
+            } else {
+                throw new RuntimeException("Unkown CType: " + content.getCType().name());
             }
-        } else {
+        }
+
+        // If no links, just read the text
+        if (_links.isEmpty()) {
+            _strings.clear();
             _strings.add(element.getText());
         }
         return swl;

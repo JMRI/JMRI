@@ -144,6 +144,56 @@ public class LoadAndStoreAllSignalSystemsTest {
                     }
                 }
 
+
+                while (next1.startsWith("<reference>")
+                        && next2.startsWith("<reference>")
+                        && (next1.startsWith(next2) || next2.startsWith(next1))
+                        && (!next1.endsWith("</reference>") || !next2.endsWith("</reference>"))) {
+
+                    if (next1.startsWith(next2)) {
+                        // \u00A0 is non breaking space
+                        next2 += fileStream2.readLine().strip().replaceAll("\u00A0", " ");
+                        lineNumber2++;
+                    } else {    // next2.startsWith(next1)
+                        // \u00A0 is non breaking space
+                        next1 += fileStream1.readLine().strip().replaceAll("\u00A0", " ");
+                        lineNumber1++;
+                    }
+                }
+
+                while (next1.startsWith("<description>")
+                        && next2.startsWith("<description>")
+                        && (next1.startsWith(next2) || next2.startsWith(next1))
+                        && (!next1.endsWith("</description>") || !next2.endsWith("</description>"))) {
+
+                    if (next1.startsWith(next2)) {
+                        // \u00A0 is non breaking space
+                        next2 += fileStream2.readLine().strip().replaceAll("\u00A0", " ");
+                        lineNumber2++;
+                    } else {    // next2.startsWith(next1)
+                        // \u00A0 is non breaking space
+                        next1 += fileStream1.readLine().strip().replaceAll("\u00A0", " ");
+                        lineNumber1++;
+                    }
+                }
+
+/*
+                if (next2.startsWith("<reference>") && next2.startsWith(next1) && !next2.equals(next1)) {
+                    while (next2.startsWith(next1) && !next2.equals(next1)) {
+                        // \u00A0 is non breaking space
+                        next1 += fileStream1.readLine().strip().replaceAll("\u00A0", " ");
+                        lineNumber1++;
+                    }
+                }
+
+                if (next2.startsWith("<description>") && next2.startsWith(next1) && !next2.equals(next1)) {
+                    while (next2.startsWith(next1) && !next2.equals(next1)) {
+                        // \u00A0 is non breaking space
+                        next1 += fileStream1.readLine().strip().replaceAll("\u00A0", " ");
+                        lineNumber1++;
+                    }
+                }
+*/
 /*
                 if (next2.startsWith("<") && !next2.strip().endsWith(">")) {
                     while (!next2.strip().endsWith(">")) {
