@@ -1073,6 +1073,16 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Run once</h4>
+
+      <p>Run the assigned action only one time during a JMRI session.</p>
+
+      <p>The assigned action will be the <strong>Many</strong> action if there is more than one
+      action to be performed.  This provides an alternate method compared to <strong>Trigger once
+      </strong> for startup initialization.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Sequence</h4>
 
       <p>The Sequence action executes a series of action/expression pairs. For each pair, the
