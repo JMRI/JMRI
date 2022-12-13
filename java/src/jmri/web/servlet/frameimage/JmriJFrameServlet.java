@@ -535,7 +535,7 @@ public class JmriJFrameServlet extends HttpServlet {
                 && (c instanceof jmri.jmrit.display.PositionableLabel)
                 && !(c instanceof jmri.jmrit.display.LightIcon)
                 && !(c instanceof jmri.jmrit.display.LocoIcon)
-                && !(c instanceof jmri.jmrit.display.MemoryIcon)
+                && !(c instanceof jmri.jmrit.display.MemoryOrGVIcon)
                 && !(c instanceof jmri.jmrit.display.MultiSensorIcon)
                 && !(c instanceof jmri.jmrit.display.PositionableIcon)
                 && !(c instanceof jmri.jmrit.display.ReporterIcon)

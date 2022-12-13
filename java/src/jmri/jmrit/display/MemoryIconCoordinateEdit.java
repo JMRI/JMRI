@@ -31,18 +31,18 @@ import javax.swing.event.ChangeListener;
  */
 public class MemoryIconCoordinateEdit extends CoordinateEdit {
 
-    MemoryIcon pl;    // positional label tracked by this frame
+    MemoryOrGVIcon pl;    // positional label tracked by this frame
     int oldX;
     int oldY;
     double oldD;
     String oldStr;
 
-    public void init(String title, MemoryIcon pos, boolean showName) {
+    public void init(String title, MemoryOrGVIcon pos, boolean showName) {
         super.init(title, pos, showName);
         pl = pos;
     }
 
-    public static AbstractAction getCoordinateEditAction(final MemoryIcon pos) {
+    public static AbstractAction getCoordinateEditAction(final MemoryOrGVIcon pos) {
         return new AbstractAction(Bundle.getMessage("SetXY", "")) {
             @Override
             public void actionPerformed(ActionEvent e) {

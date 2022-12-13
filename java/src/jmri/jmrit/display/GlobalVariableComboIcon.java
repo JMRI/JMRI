@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractButton;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,7 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import jmri.InstanceManager;
-import jmri.Memory;
+import jmri.jmrit.logixng.GlobalVariable;
+import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBean.DisplayOptions;
 import jmri.util.swing.*;
@@ -26,27 +25,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display and input a Memory value in a TextField.
+ * An icon to display and input a GlobalVariable value in a TextField.
  * <p>
- * Handles the case of either a String or an Integer in the Memory, preserving
+ * Handles the case of either a String or an Integer in the GlobalVariable, preserving
  * what it finds.
  *
- * @author Pete Cressman Copyright (c) 2012
+ * @author Pete Cressman    Copyright (c) 2012
+ * @author Daniel Bergqvist Copyright (C) 2022
  * @since 2.7.2
  */
-public class MemoryComboIcon extends MemoryOrGVComboIcon
+public class GlobalVariableComboIcon extends MemoryOrGVComboIcon
         implements java.beans.PropertyChangeListener, ActionListener {
 
     private final JComboBox<String> _comboBox;
     private final ComboModel _model;
 
-    // the associated Memory object
-    private NamedBeanHandle<Memory> namedMemory;
+    // the associated GlobalVariable object
+    private NamedBeanHandle<GlobalVariable> namedGlobalVariable;
 
     private final java.awt.event.MouseListener _mouseListener = JmriMouseListener.adapt(this);
     private final java.awt.event.MouseMotionListener _mouseMotionListener = JmriMouseMotionListener.adapt(this);
 
-    public MemoryComboIcon(Editor editor, String[] list) {
+    public GlobalVariableComboIcon(Editor editor, String[] list) {
         super(editor);
         if (list != null) {
             _model = new ComboModel(list);
@@ -82,59 +82,59 @@ public class MemoryComboIcon extends MemoryOrGVComboIcon
         for (int i = 0; i < _model.getSize(); i++) {
             list[i] = _model.getElementAt(i);
         }
-        MemoryComboIcon pos = new MemoryComboIcon(_editor, list);
+        GlobalVariableComboIcon pos = new GlobalVariableComboIcon(_editor, list);
         return finishClone(pos);
     }
 
-    protected Positionable finishClone(MemoryComboIcon pos) {
-        pos.setMemory(namedMemory.getName());
+    protected Positionable finishClone(GlobalVariableComboIcon pos) {
+        pos.setGlobalVariable(namedGlobalVariable.getName());
         return super.finishClone(pos);
     }
 
     /**
-     * Attach a named Memory to this display item.
+     * Attach a named GlobalVariable to this display item.
      *
-     * @param pName used as a system/user name to look up the Memory object
+     * @param pName used as a system/user name to look up the GlobalVariable object
      */
-    public void setMemory(String pName) {
-        log.debug("setMemory for memory= {}", pName);
-        if (InstanceManager.getNullableDefault(jmri.MemoryManager.class) != null) {
+    public void setGlobalVariable(String pName) {
+        log.debug("setGlobalVariable for memory= {}", pName);
+        if (InstanceManager.getNullableDefault(GlobalVariableManager.class) != null) {
             try {
-                Memory memory = InstanceManager.memoryManagerInstance().provideMemory(pName);
-                setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
+                GlobalVariable globalVariable = InstanceManager.getDefault(GlobalVariableManager.class).getGlobalVariable(pName);
+                setGlobalVariable(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, globalVariable));
             } catch (IllegalArgumentException e) {
-                log.error("No MemoryManager for this protocol, icon won't see changes");
+                log.error("No GlobalVariableManager for this protocol, icon won't see changes");
             }
         }
         updateSize();
     }
 
     /**
-     * Attach a named Memory to this display item.
+     * Attach a named GlobalVariable to this display item.
      *
-     * @param m The Memory object
+     * @param m The GlobalVariable object
      */
-    public void setMemory(NamedBeanHandle<Memory> m) {
-        if (namedMemory != null) {
-            getMemory().removePropertyChangeListener(this);
+    public void setGlobalVariable(NamedBeanHandle<GlobalVariable> m) {
+        if (namedGlobalVariable != null) {
+            getGlobalVariable().removePropertyChangeListener(this);
         }
-        namedMemory = m;
-        if (namedMemory != null) {
-            getMemory().addPropertyChangeListener(this, namedMemory.getName(), "Memory Input Icon");
+        namedGlobalVariable = m;
+        if (namedGlobalVariable != null) {
+            getGlobalVariable().addPropertyChangeListener(this, namedGlobalVariable.getName(), "GlobalVariable Input Icon");
             displayState();
-            setName(namedMemory.getName());
+            setName(namedGlobalVariable.getName());
         }
     }
 
-    public NamedBeanHandle<Memory> getNamedMemory() {
-        return namedMemory;
+    public NamedBeanHandle<GlobalVariable> getNamedGlobalVariable() {
+        return namedGlobalVariable;
     }
 
-    public Memory getMemory() {
-        if (namedMemory == null) {
+    public GlobalVariable getGlobalVariable() {
+        if (namedGlobalVariable == null) {
             return null;
         }
-        return namedMemory.getBean();
+        return namedGlobalVariable.getBean();
     }
 
     @Override
@@ -150,7 +150,7 @@ public class MemoryComboIcon extends MemoryOrGVComboIcon
         update();
     }
 
-    // update icon as state of Memory changes
+    // update icon as state of GlobalVariable changes
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("value")) {
@@ -161,25 +161,25 @@ public class MemoryComboIcon extends MemoryOrGVComboIcon
     @Override
     public String getNameString() {
         String name;
-        if (namedMemory == null) {
+        if (namedGlobalVariable == null) {
             name = Bundle.getMessage("NotConnected");
         } else {
-            name = getMemory().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
+            name = getGlobalVariable().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }
 
     @Override
     protected void update() {
-        if (namedMemory == null) {
+        if (namedGlobalVariable == null) {
             return;
         }
-        getMemory().setValue(_comboBox.getSelectedItem());
+        getGlobalVariable().setValue(_comboBox.getSelectedItem());
     }
 
     @Override
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameGlobalVariable"));
         popup.add(new javax.swing.AbstractAction(txt) {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -196,7 +196,7 @@ public class MemoryComboIcon extends MemoryOrGVComboIcon
 
     @Override
     protected void edit() {
-        _iconEditor = new IconAdder("Memory") {
+        _iconEditor = new IconAdder("GlobalVariable") {
             JList<String> list;
             final JButton bDel = new JButton(Bundle.getMessage("deleteSelection"));
             final JButton bAdd = new JButton(Bundle.getMessage("addItem"));
@@ -234,11 +234,9 @@ public class MemoryComboIcon extends MemoryOrGVComboIcon
                 p.add(p1);
                 p.add(scrollPane);
                 p1 = new JPanel();
-                JPanel pInner1 = new JPanel();
-                pInner1.setLayout(new BoxLayout(pInner1, BoxLayout.X_AXIS));
-                pInner1.add(new JLabel(Bundle.getMessage("newItem"), SwingConstants.RIGHT));
-                pInner1.add(textfield);
-                p1.add(pInner1);
+                p1.add(new JLabel(Bundle.getMessage("newItem"), SwingConstants.RIGHT));
+                textfield.setMaximumSize(textfield.getPreferredSize());
+                p1.add(textfield);
                 p.add(p1);
                 JPanel p2 = new JPanel();
                 //p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
@@ -250,18 +248,18 @@ public class MemoryComboIcon extends MemoryOrGVComboIcon
             }
         };
 
-        makeIconEditorFrame(this, "Memory", true, _iconEditor);
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
-        ActionListener addIconAction = a -> editMemory();
+        makeIconEditorFrame(this, "GlobalVariable", true, _iconEditor);
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.globalVariablePickModelInstance());
+        ActionListener addIconAction = a -> editGlobalVariable();
 
         _iconEditor.makeIconPanel(false);
-        _iconEditor.complete(addIconAction, false, true, true);
-        _iconEditor.setSelection(getMemory());
+        _iconEditor.complete(addIconAction, false, false, true);
+        _iconEditor.setSelection(getGlobalVariable());
     }
 
-    void editMemory() {
+    void editGlobalVariable() {
         jmri.NamedBean bean = _iconEditor.getTableSelection();
-        setMemory(bean.getDisplayName());
+        setGlobalVariable(bean.getDisplayName());
         _model.removeAllElements();
         for (int i = 0; i < _listModel.size(); i++) {
             _model.addElement(_listModel.getElementAt(i));
@@ -274,14 +272,14 @@ public class MemoryComboIcon extends MemoryOrGVComboIcon
     }
 
     /**
-     * Drive the current state of the display from the state of the Memory.
+     * Drive the current state of the display from the state of the GlobalVariable.
      */
     public void displayState() {
         log.debug("displayState");
-        if (namedMemory == null) {  // leave alone if not connected yet
+        if (namedGlobalVariable == null) {  // leave alone if not connected yet
             return;
         }
-        _model.setSelectedItem(getMemory().getValue());
+        _model.setSelectedItem(getGlobalVariable().getValue());
     }
 
     @Override
@@ -293,8 +291,8 @@ public class MemoryComboIcon extends MemoryOrGVComboIcon
 
     @Override
     void cleanup() {
-        if (namedMemory != null) {
-            getMemory().removePropertyChangeListener(this);
+        if (namedGlobalVariable != null) {
+            getGlobalVariable().removePropertyChangeListener(this);
         }
         if (_comboBox != null) {
             for (int i = 0; i < _comboBox.getComponentCount(); i++) {
@@ -306,9 +304,9 @@ public class MemoryComboIcon extends MemoryOrGVComboIcon
             }
             _comboBox.removeMouseListener(_mouseListener);
         }
-        namedMemory = null;
+        namedGlobalVariable = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryComboIcon.class);
+    private final static Logger log = LoggerFactory.getLogger(GlobalVariableComboIcon.class);
 
 }
