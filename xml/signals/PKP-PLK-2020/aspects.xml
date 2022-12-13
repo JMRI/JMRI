@@ -167,7 +167,7 @@
     <appearancefile href="appearance-sbl4.xml"/>
     <appearancefile href="appearance-spa4.xml"/>
     <appearancefile href="appearance-spa5.xml"/>
-    <appearancefile href="appearance-shounting.xml"/>
+    <appearancefile href="appearance-shunting.xml"/>
   </appearancefiles>
 
   <aspectSpeeds>
