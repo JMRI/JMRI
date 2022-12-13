@@ -97,6 +97,8 @@ public class LoadAndStoreAllSignalSystemsTest {
                 next2 = next2.replace("<!-- End of Aspect Mapping -->", "");
                 next2 = next2.replace("<!-- Start of Advanced Aspect Mapping -->", "");
                 next2 = next2.replace("<!-- Start of  Advanced Aspect Mapping -->", "");
+                next2 = next2.replace("<!-- Start of Advanced Aspect mapping -->", "");
+                next2 = next2.replace("<!-- Start of Advanced-Aspect mapping -->", "");
                 next2 = next2.replace("<!-- End of  Advanced Aspect Mapping -->", "");
                 next2 = next2.replace("<!-- NOTE 1:  advancedAspect here means the signal ahead of \"our\", and aspect is same or more restrictive -->", "");
                 next2 = next2.replace("<!-- NOTE 2:  Refer to related aspects.xml to consider and apply all possible aspects ahead to these \"our\" aspects -->", "");
