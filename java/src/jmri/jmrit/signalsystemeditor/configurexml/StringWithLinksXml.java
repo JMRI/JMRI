@@ -17,22 +17,26 @@ public class StringWithLinksXml {
         StringWithLinks swl = new StringWithLinks();
         List<String> _strings = swl.getStrings();
         List<StringWithLinks.Link> _links = swl.getLinks();
-        for (Element child : element.getChildren()) {
-            if ("text".equals(child.getName())) {
-                int stringsSize = _strings.size();
-                if (stringsSize > _links.size()) {
-                    _strings.set(stringsSize-1, _strings.get(stringsSize-1)+child.getText());
+        if (!element.getChildren().isEmpty()) {
+            for (Element child : element.getChildren()) {
+                if ("text".equals(child.getName())) {
+                    int stringsSize = _strings.size();
+                    if (stringsSize > _links.size()) {
+                        _strings.set(stringsSize-1, _strings.get(stringsSize-1)+child.getText());
+                    } else {
+                        _strings.add(child.getValue());
+                    }
+                } else if ("a".equals(child.getName())) {
+                    if (_strings.size() <= _links.size()) {
+                        _strings.add("");
+                    }
+                    _links.add(new StringWithLinks.Link(child.getText(), child.getAttributeValue("href")));
                 } else {
-                    _strings.add(child.getValue());
+                    throw new RuntimeException("Unkown tag: " + child.getName());
                 }
-            } else if ("a".equals(child.getName())) {
-                if (_strings.size() <= _links.size()) {
-                    _strings.add("");
-                }
-                _links.add(new StringWithLinks.Link(child.getText(), child.getAttributeValue("href")));
-            } else {
-                throw new RuntimeException("Unkown tag: " + child.getName());
             }
+        } else {
+            _strings.add(element.getText());
         }
         return swl;
     }
@@ -44,22 +48,27 @@ public class StringWithLinksXml {
         List<String> _strings = stringWithLinks.getStrings();
         List<StringWithLinks.Link> _links = stringWithLinks.getLinks();
 
-        int i=0;
-        while (i < _strings.size() || i < _links.size()) {
-            if (i < _strings.size()) {
-                Element text = new Element("text");
-                text.addContent(_strings.get(i));
-                element.addContent(text);
+        if (_strings.size() == 1 && _links.isEmpty()) {
+            element.setText(_strings.get(0));
+            return element;
+        } else {
+            int i=0;
+            while (i < _strings.size() || i < _links.size()) {
+                if (i < _strings.size()) {
+                    Element text = new Element("text");
+                    text.addContent(_strings.get(i));
+                    element.addContent(text);
+                }
+                if (i < _links.size()) {
+                    Element link = new Element("a");
+                    link.setText(_links.get(i).getName());
+                    link.setAttribute("href", _links.get(i).getHref());
+                    element.addContent(link);
+                }
+                i++;
             }
-            if (i < _links.size()) {
-                Element link = new Element("a");
-                link.setText(_links.get(i).getName());
-                link.setAttribute("href", _links.get(i).getHref());
-                element.addContent(link);
-            }
-            i++;
+            return !element.getChildren().isEmpty() ? element : null;
         }
-        return !element.getChildren().isEmpty() ? element : null;
     }
 
 }

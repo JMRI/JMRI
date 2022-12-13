@@ -17,6 +17,9 @@ import org.jdom2.*;
 public class SignalMastTypeXml {
 
     public SignalMastType load(SignalSystem signalSystem, File file) {
+
+//        System.out.format("Load: %s%n", file.getAbsolutePath());
+
         Namespace namespace = Namespace.getNamespace("http://docbook.org/ns/docbook");
 
         SignalMastType signalMastType = new SignalMastType(file.getName());
@@ -233,6 +236,9 @@ public class SignalMastTypeXml {
         };
         xmlFile.makeBackupFile(fileName);
         File file = new File(fileName);
+
+//        System.out.format("Store: %s%n", file.getAbsolutePath());
+
         try {
             File parentDir = file.getParentFile();
             if (!parentDir.exists()) {
