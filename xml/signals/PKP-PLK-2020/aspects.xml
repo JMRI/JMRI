@@ -142,7 +142,6 @@
       <name>Sygnał Ms 1</name>
       <indication>Pojedynczy ciągły sygnał niebieski</indication>
       <description>Jazda manewrowa zabroniona</description>
-      <comment></comment>
       <speed></speed>
       <speed2></speed2>
     </aspect>
@@ -151,7 +150,6 @@
       <name>Sygnał Ms 2</name>
       <indication>Pojedynczy ciągły sygnał biały</indication>
       <description>Jazda manewrowa dozwolona</description>
-      <comment></comment>
       <speed>Shunting</speed>
       <speed2>Shunting</speed2>
     </aspect>
