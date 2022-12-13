@@ -64,7 +64,6 @@ public class RunOnceXml extends jmri.managers.configurexml.AbstractNamedBeanMana
         if (shared.getChild("Socket") != null) {
             socketName = shared.getChild("Socket").getChild("socketName").getTextTrim();
             Element socketSystemNameElement = shared.getChild("Socket").getChild("systemName");
-            socketSystemName = null;
             if (socketSystemNameElement != null) {
                 socketSystemName = socketSystemNameElement.getTextTrim();
             }
