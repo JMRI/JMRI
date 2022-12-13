@@ -142,8 +142,8 @@
       <name>Sygnał Ms 1</name>
       <indication>Pojedynczy ciągły sygnał niebieski</indication>
       <description>Jazda manewrowa zabroniona</description>
-      <speed></speed>
-      <speed2></speed2>
+      <speed />
+      <speed2 />
     </aspect>
 
     <aspect>
