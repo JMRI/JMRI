@@ -191,13 +191,6 @@
                   <xs:annotation><xs:documentation>
                     Must match the aspectname of an appearance defined in this file.
                   </xs:documentation></xs:annotation>
-                    <xs:complexType>
-                      <xs:simpleContent>
-                        <xs:extension base="xs:string">
-                          <xs:attribute name="comment" type="xs:string"/>
-                        </xs:extension>
-                      </xs:simpleContent>
-                     </xs:complexType>
                 </xs:element>
                 <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
                   <xs:annotation><xs:documentation>
