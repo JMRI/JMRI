@@ -2391,8 +2391,8 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     protected GlobalVariableIcon putGlobalVariable() {
         GlobalVariableIcon result = new GlobalVariableIcon(new NamedIcon("resources/icons/misc/X-red.gif",
                 "resources/icons/misc/X-red.gif"), this);
-        IconAdder memoryIconEditor = getIconEditor("GlobalVariable");
-        result.setGlobalVariable(memoryIconEditor.getTableSelection().getDisplayName());
+        IconAdder globalVariableIconEditor = getIconEditor("GlobalVariable");
+        result.setGlobalVariable(globalVariableIconEditor.getTableSelection().getDisplayName());
         result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
         result.setDisplayLevel(MEMORIES);
         setNextLocation(result);
@@ -2407,8 +2407,8 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
 
     protected GlobalVariableSpinnerIcon addGlobalVariableSpinner() {
         GlobalVariableSpinnerIcon result = new GlobalVariableSpinnerIcon(this);
-        IconAdder memoryIconEditor = getIconEditor("GlobalVariable");
-        result.setGlobalVariable(memoryIconEditor.getTableSelection().getDisplayName());
+        IconAdder globalVariableIconEditor = getIconEditor("GlobalVariable");
+        result.setGlobalVariable(globalVariableIconEditor.getTableSelection().getDisplayName());
         result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
         result.setDisplayLevel(MEMORIES);
         setNextLocation(result);
@@ -2423,8 +2423,8 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
 
     protected GlobalVariableInputIcon addGlobalVariableInputBox() {
         GlobalVariableInputIcon result = new GlobalVariableInputIcon(_spinCols.getNumber().intValue(), this);
-        IconAdder memoryIconEditor = getIconEditor("GlobalVariable");
-        result.setGlobalVariable(memoryIconEditor.getTableSelection().getDisplayName());
+        IconAdder globalVariableIconEditor = getIconEditor("GlobalVariable");
+        result.setGlobalVariable(globalVariableIconEditor.getTableSelection().getDisplayName());
         result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
         result.setDisplayLevel(MEMORIES);
         setNextLocation(result);

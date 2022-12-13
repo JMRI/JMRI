@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 /**
  * An icon to display a status of a GlobalVariable.
  * <p>
- * The value of the memory can't be changed with this icon.
+ * The value of the global variable can't be changed with this icon.
  *
  * @author Bob Jacobsen     Copyright (c) 2004
  * @author Daniel Bergqvist Copyright (C) 2022
@@ -42,7 +42,7 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
         super(s, editor);
         resetDefaultIcon();
         _namedIcon = defaultIcon;
-        //By default all memory is left justified
+        //By default all content is left justified
         _popupUtil.setJustification(LEFT);
     }
 
@@ -478,17 +478,6 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
         }
         setValue(newGlobalVariable.getText());
         updateSize();
-    }
-
-    //This is used by the LayoutEditor
-    protected boolean updateBlockValue = false;
-
-    public void updateBlockValueOnChange(boolean boo) {
-        updateBlockValue = boo;
-    }
-
-    public boolean updateBlockValueOnChange() {
-        return updateBlockValue;
     }
 
     protected Object getValue() {

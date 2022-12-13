@@ -2,10 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.JCheckBoxMenuItem;
-// import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.catalog.NamedIcon;
-// import jmri.jmrit.roster.RosterEntry;
 import jmri.Reportable;
 
 /**
@@ -35,17 +33,7 @@ public class GlobalVariableIcon extends jmri.jmrit.display.GlobalVariableIcon {
             super.setText(text);
         }
     }
-/*
-    private LayoutBlock lBlock = null;
 
-    public LayoutBlock getLayoutBlock() {
-        return lBlock;
-    }
-
-    public void setLayoutBlock(LayoutBlock lb) {
-        lBlock = lb;
-    }
-*/
     @Override
     public void displayState() {
         log.debug("displayState");
@@ -54,28 +42,14 @@ public class GlobalVariableIcon extends jmri.jmrit.display.GlobalVariableIcon {
             updateSize();
             return;
         }
-/*
-        if (re != null) {
-            jmri.InstanceManager.throttleManagerInstance().removeListener(re.getDccLocoAddress(), this);
-            re = null;
-        }
-*/
+
         Object key = getGlobalVariable().getValue();
         if (key != null) {
             java.util.HashMap<String, NamedIcon> map = getMap();
             if (map == null) {
                 // no map, attempt to show object directly
                 Object val = key;
-/*
-                if (val instanceof jmri.jmrit.roster.RosterEntry) {
-                    jmri.jmrit.roster.RosterEntry roster = (jmri.jmrit.roster.RosterEntry) val;
-                    val = updateIconFromRosterVal(roster);
-                    flipRosterIcon = false;
-                    if (val == null) {
-                        return;
-                    }
-                }
-*/
+
                 if (val instanceof String) {
                     if (((String)val).isEmpty()) {
                         setText(defaultText);
@@ -145,98 +119,16 @@ public class GlobalVariableIcon extends jmri.jmrit.display.GlobalVariableIcon {
         }
     }
 
-    private final JCheckBoxMenuItem updateBlockItem = new JCheckBoxMenuItem("Update Block Details");
-
-    @Override
-    public boolean showPopUp(JPopupMenu popup) {
-        if (isEditable()) {
-            popup.add(updateBlockItem);
-            updateBlockItem.setSelected(updateBlockValueOnChange());
-            updateBlockItem.addActionListener((java.awt.event.ActionEvent e) -> updateBlockValueOnChange(updateBlockItem.isSelected()));
-        }  // end of selectable
-        return super.showPopUp(popup);
-    }
-
     @Override
     public void setGlobalVariable(String pName) {
         super.setGlobalVariable(pName);
-//        lBlock = jmri.InstanceManager.getDefault(LayoutBlockManager.class).getBlockWithMemoryAssigned(getGlobalVariable());
     }
 
     @Override
     protected void setValue(Object obj) {
         getGlobalVariable().setValue(obj);
         updateSize();
-/*
-        if (updateBlockValue && lBlock != null) {
-            lBlock.getBlock().setValue(obj);
-        } else {
-            getGlobalVariable().setValue(obj);
-            updateSize();
-        }
-*/
     }
-/*
-    @Override
-    protected void addRosterToIcon(RosterEntry roster) {
-        if (!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() || lBlock == null) {
-            super.addRosterToIcon(roster);
-            return;
-        }
 
-        int paths = lBlock.getNumberOfThroughPaths();
-        jmri.Block srcBlock = null;
-        jmri.Block desBlock = null;
-        for (int i = 0; i < paths; i++) {
-            if (lBlock.isThroughPathActive(i)) {
-                srcBlock = lBlock.getThroughPathSource(i);
-                desBlock = lBlock.getThroughPathDestination(i);
-                break;
-            }
-        }
-        int dirA;
-        int dirB;
-        if (srcBlock != null && desBlock != null) {
-            dirA = lBlock.getNeighbourDirection(srcBlock);
-            dirB = lBlock.getNeighbourDirection(desBlock);
-        } else {
-            dirA = jmri.Path.EAST;
-            dirB = jmri.Path.WEST;
-        }
-
-        Object[] options = {"Facing " + jmri.Path.decodeDirection(dirB),
-            "Facing " + jmri.Path.decodeDirection(dirA),
-            "Do Not Add"};
-        int n = JOptionPane.showOptionDialog(this,
-                "Would you like to assign loco "
-                + roster.titleString() + " to this location",
-                "Assign Loco",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[2]);
-        if (n == 2) {
-            return;
-        }
-        if (n == 0) {
-            flipRosterIcon = true;
-            if (updateBlockValue) {
-                lBlock.getBlock().setDirection(dirB);
-            }
-        } else {
-            flipRosterIcon = false;
-            if (updateBlockValue) {
-                lBlock.getBlock().setDirection(dirA);
-            }
-        }
-        if (getGlobalVariable().getValue() == roster) {
-            //No change in the loco but a change in direction facing might have occurred
-            updateIconFromRosterVal(roster);
-        } else {
-            setValue(roster);
-        }
-    }
-*/
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GlobalVariableIcon.class);
 }

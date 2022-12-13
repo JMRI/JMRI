@@ -86,6 +86,7 @@ class LayoutEditorComponent extends JComponent {
                 drawShapeEditControls(g2);
 
                 drawMemoryRects(g2);
+                drawGlobalVariableRects(g2);
                 drawBlockContentsRects(g2);
 
                 if (layoutEditor.allControlling()) {
@@ -590,6 +591,13 @@ class LayoutEditorComponent extends JComponent {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
         layoutEditor.getMemoryLabelList().forEach((l) -> g2.draw(new Rectangle2D.Double(l.getX(), l.getY(), l.getSize().width, l.getSize().height)));
+    }
+
+    private void drawGlobalVariableRects(Graphics2D g2) {
+        g2.setColor(layoutEditor.defaultTrackColor);
+        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+
+        layoutEditor.getGlobalVariableLabelList().forEach((l) -> g2.draw(new Rectangle2D.Double(l.getX(), l.getY(), l.getSize().width, l.getSize().height)));
     }
 
     private void drawBlockContentsRects(Graphics2D g2) {

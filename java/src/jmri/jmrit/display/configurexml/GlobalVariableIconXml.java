@@ -50,9 +50,6 @@ public class GlobalVariableIconXml extends PositionableLabelXml {
             element.setAttribute("y", "" + p.getOriginalY());
         }
         element.setAttribute("selectable", (p.isSelectable() ? "yes" : "no"));
-        if (p.updateBlockValueOnChange()) {
-            element.setAttribute("updateBlockValue", (p.updateBlockValueOnChange() ? "yes" : "no"));
-        }
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.GlobalVariableIconXml");
         if (p.getDefaultIcon() != null) {
@@ -133,11 +130,6 @@ public class GlobalVariableIconXml extends PositionableLabelXml {
         a = element.getAttribute("defaulticon");
         if (a != null) {
             l.setDefaultIcon(NamedIcon.getIconByName(a.getValue()));
-        }
-
-        a = element.getAttribute("updateBlockValue");
-        if (a != null && a.getValue().equals("yes")) {
-            l.updateBlockValueOnChange(true);
         }
 
         // get the icon pairs
