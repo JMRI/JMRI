@@ -223,7 +223,7 @@ public class LoadAndStoreAllSignalSystemsTest {
 */
         } catch (java.io.FileNotFoundException ex) {
             // Ignore for now. Fix later
-            log.warn("File not found: {}", ex.getMessage());
+//            log.warn("File not found: {}", ex.getMessage());
         }
     }
 

@@ -2,6 +2,7 @@ package jmri.jmrit.signalsystemeditor.configurexml;
 
 import java.util.List;
 
+import org.jdom2.Content;
 import org.jdom2.Element;
 
 import jmri.jmrit.signalsystemeditor.StringWithLinks;
@@ -18,21 +19,26 @@ public class StringWithLinksXml {
         List<String> _strings = swl.getStrings();
         List<StringWithLinks.Link> _links = swl.getLinks();
         if (!element.getChildren().isEmpty()) {
-            for (Element child : element.getChildren()) {
-                if ("text".equals(child.getName())) {
+            for (Content content : element.getContent()) {
+                if (content.getCType() == Content.CType.Text) {
                     int stringsSize = _strings.size();
                     if (stringsSize > _links.size()) {
-                        _strings.set(stringsSize-1, _strings.get(stringsSize-1)+child.getText());
+                        _strings.set(stringsSize-1, _strings.get(stringsSize-1)+content.getValue());
                     } else {
-                        _strings.add(child.getValue());
+                        _strings.add(content.getValue());
                     }
-                } else if ("a".equals(child.getName())) {
-                    if (_strings.size() <= _links.size()) {
-                        _strings.add("");
+                } else if (content.getCType() == Content.CType.Element) {
+                    Element e = (Element) content;
+                    if ("a".equals(e.getName())) {
+                        if (_strings.size() <= _links.size()) {
+                            _strings.add("");
+                        }
+                        _links.add(new StringWithLinks.Link(e.getText(), e.getAttributeValue("href")));
+                    } else {
+                        throw new RuntimeException("Unkown tag: " + e.getName());
                     }
-                    _links.add(new StringWithLinks.Link(child.getText(), child.getAttributeValue("href")));
                 } else {
-                    throw new RuntimeException("Unkown tag: " + child.getName());
+                    throw new RuntimeException("Unkown CType: " + content.getCType().name());
                 }
             }
         } else {
