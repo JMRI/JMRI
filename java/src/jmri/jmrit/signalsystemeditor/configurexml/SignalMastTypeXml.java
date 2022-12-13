@@ -135,7 +135,7 @@ public class SignalMastTypeXml {
                             try {
                                 imageType = signalSystem.getImageType(imageLinkElement.getAttributeValue("type"));
                             } catch (IllegalArgumentException ex) {
-                                log.debug("ERROR: image type {} does not exists, {}", imageLinkElement.getAttributeValue("type"), file.toString());
+                                log.error("ERROR: image type {} does not exists, {}", imageLinkElement.getAttributeValue("type"), file.toString());
                             }
                         }
                         appearance.getImageLinks().add(new ImageLink(imageLinkElement.getTextTrim(), imageType));
