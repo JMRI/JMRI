@@ -54,7 +54,12 @@
 
   <aspecttable>DB-HV-1969</aspecttable>
   <name>Combined exit + distant signal at short breaking distance</name>
-  <reference>See &lt;a href="http://www.sh1.org/eisenbahn/shhp.htm"&gt;sh1's page&lt;/a&gt; or the &lt;a href="http://en.wikipedia.org/wiki/German_railway_signalling#Home_signal.2Fdistant_signal_.28H.2FV.29"&gt;Wikipedia&lt;/a&gt;</reference>
+  <referenceWithLinks>
+    <text>See </text>
+    <a href="http://www.sh1.org/eisenbahn/shhp.htm">sh1's page</a>
+    <text> or the </text>
+    <a href="http://en.wikipedia.org/wiki/German_railway_signalling#Home_signal.2Fdistant_signal_.28H.2FV.29">Wikipedia</a>
+  </referenceWithLinks>
   <description>Signal to use at the station exit (placed before the switch zone), with distant signal head at short breaking distance from next main signal.
   Compared to an entry signal it can also show "shunting allowed Sh1" because shunting movements take place between this signal and "end of shunting" signal Ra11.
   Exits that lead to the track without switches can also be equipped with entry signals (no need for Sh1 aspect).

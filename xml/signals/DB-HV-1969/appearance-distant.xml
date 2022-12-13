@@ -64,9 +64,17 @@
 
   <aspecttable>DB-HV-1969</aspecttable>
   <name>Single distant signal</name>
-  <reference>See &lt;a href="http://www.sh1.org/eisenbahn/shhp.htm"&gt;sh1's page&lt;/a&gt; or the &lt;a href="http://en.wikipedia.org/wiki/German_railway_signalling#Home_signal.2Fdistant_signal_.28H.2FV.29"&gt;Wikipedia&lt;/a&gt;</reference>
-  <description>Single distant signal ahead of block signals.
-  It has a Ne2 plate (see &lt;a href="http://www.sh1.org/eisenbahn/snne.htm"&gt;sh1's supplemental signals page&lt;/a&gt;).</description>
+  <referenceWithLinks>
+    <text>See </text>
+    <a href="http://www.sh1.org/eisenbahn/shhp.htm">sh1's page</a>
+    <text> or the </text>
+    <a href="http://en.wikipedia.org/wiki/German_railway_signalling#Home_signal.2Fdistant_signal_.28H.2FV.29">Wikipedia</a>
+  </referenceWithLinks>
+  <descriptionWithLinks>
+    <text>Single distant signal ahead of block signals. It has a Ne2 plate (see </text>
+    <a href="http://www.sh1.org/eisenbahn/snne.htm">sh1's supplemental signals page</a>
+    <text>).</text>
+  </descriptionWithLinks>
 
   <appearances>
 

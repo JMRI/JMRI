@@ -31,8 +31,11 @@
 
   <aspecttable>SE TSFS 2010</aspecttable>
   <name>Two aspect stop signal</name>
-  <reference>See wikipedia &lt;a href="http://en.wikipedia.org/wiki/Swedish_railway_signalling"&gt;Swedish railway signaling&lt;/a&gt;
-  for english information.</reference>
+  <referenceWithLinks>
+    <text>See wikipedia </text>
+    <a href="http://en.wikipedia.org/wiki/Swedish_railway_signalling">Swedish railway signaling</a>
+    <text> for english information.</text>
+  </referenceWithLinks>
   <description>Single stop signal is placed to mark end of train movment or shunting movment instead of a Main signal.
   </description>
 

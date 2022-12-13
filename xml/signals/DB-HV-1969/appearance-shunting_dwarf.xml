@@ -54,7 +54,12 @@
 
   <aspecttable>DB-HV-1969</aspecttable>
   <name>Shunting signal, dwarf-type</name>
-  <reference>See &lt;a href="http://www.sh1.org/eisenbahn/shhp.htm"&gt;sh1's page&lt;/a&gt; or the &lt;a href="http://en.wikipedia.org/wiki/German_railway_signalling#Home_signal.2Fdistant_signal_.28H.2FV.29"&gt;Wikipedia&lt;/a&gt;</reference>
+  <referenceWithLinks>
+    <text>See </text>
+    <a href="http://www.sh1.org/eisenbahn/shhp.htm">sh1's page</a>
+    <text> or the </text>
+    <a href="http://en.wikipedia.org/wiki/German_railway_signalling#Home_signal.2Fdistant_signal_.28H.2FV.29">Wikipedia</a>
+  </referenceWithLinks>
   <description>Signal to use inside the station to control shunting movements.
   Shunting movements take place between this signal and "end of shunting" signal Ra10.
   This is the dwarf-type by Siemens, ca. 1950.

@@ -97,9 +97,19 @@ public class SignalMastXml {
                 signalMast.getReferences().add(referenceElement.getText());
             }
 
+            signalMast.getReferencesWithLinks().clear();
+            for (Element referenceElement : aspecttable.getChildren("referenceWithLinks")) {
+                signalMast.getReferencesWithLinks().add(StringWithLinksXml.load(referenceElement));
+            }
+
             signalMast.getDescriptions().clear();
             for (Element descriptionElement : aspecttable.getChildren("description")) {
                 signalMast.getDescriptions().add(descriptionElement.getText());
+            }
+
+            signalMast.getDescriptionsWithLinks().clear();
+            for (Element descriptionElement : aspecttable.getChildren("descriptionWithLinks")) {
+                signalMast.getDescriptionsWithLinks().add(StringWithLinksXml.load(descriptionElement));
             }
 
 
@@ -319,8 +329,22 @@ public class SignalMastXml {
             root.addContent(new Element("reference").setText(reference));
         }
 
+        for (StringWithLinks reference : signalMast.getReferencesWithLinks()) {
+            Element e = StringWithLinksXml.store(reference, "referenceWithLinks");
+            if (e != null) {
+                root.addContent(e);
+            }
+        }
+
         for (String description : signalMast.getDescriptions()) {
             root.addContent(new Element("description").setText(description));
+        }
+
+        for (StringWithLinks description : signalMast.getDescriptionsWithLinks()) {
+            Element e = StringWithLinksXml.store(description, "descriptionWithLinks");
+            if (e != null) {
+                root.addContent(e);
+            }
         }
 
 

@@ -183,7 +183,7 @@ public class LoadAndStoreAllSignalSystemsTest {
                 line1 = next1;
                 line2 = next2;
             }   // while readLine() != null
-
+/*
             if (next1 != null) {
                 while ((next1 = fileStream1.readLine()) != null) {
                     lineNumber1++;
@@ -201,6 +201,7 @@ public class LoadAndStoreAllSignalSystemsTest {
                     }
                 }
             }
+*/
         } catch (java.io.FileNotFoundException ex) {
             // Ignore for now. Fix later
             log.warn("File not found: {}", ex.getMessage());
@@ -208,6 +209,8 @@ public class LoadAndStoreAllSignalSystemsTest {
     }
 
     public void loadAndStoreFileCheck(File file) throws Exception {
+
+//        if (!file.getAbsolutePath().equals("F:\\Projekt\\Java\\GitHub\\JMRI\\xml\\signals\\DB-HV-1969\\appearance-block.xml")) return;
 
         log.debug("Start check file {}", file.getCanonicalPath());
 
