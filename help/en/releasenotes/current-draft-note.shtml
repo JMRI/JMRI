@@ -411,6 +411,9 @@
         <ul>
           <li>The action <i>Turnout on LayoutPanel</i> has been added.
           It lets LogixNG enable/disable a turnout on a layout panel.</li>
+          <li>The action <i>RunOnce</i> has been added. It runs an action
+          only one time. It's useful when something needs to be initialized
+          once.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
