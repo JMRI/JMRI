@@ -101,9 +101,9 @@ public class CanisbPaneProvider extends CbusConfigPaneProvider {
     /** {@inheritDoc} */
     @Override
     public AbstractEditNVPane getEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
-        if (_nVarEditFrame == null ){
-        	_nVarEditFrame = new CanisbEditNVPane(dataModel, node);
-        }
+//        if (_nVarEditFrame == null ){
+            _nVarEditFrame = new CanisbEditNVPane(dataModel, node);
+//        }
         return _nVarEditFrame.getContent();
     }
     
