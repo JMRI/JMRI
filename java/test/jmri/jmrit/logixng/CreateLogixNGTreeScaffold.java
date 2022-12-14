@@ -2696,6 +2696,17 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        RunOnce runOnceAction = new RunOnce(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(runOnceAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        Return returnAction2 = new Return(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(returnAction2);
+        maleSocket.setEnabled(false);
+        runOnceAction.getChild(0).connect(maleSocket);
+
+
         Sequence sequence =
                 new Sequence(digitalActionManager.getAutoSystemName(), null);
         sequence.setRunContinuously(false);
