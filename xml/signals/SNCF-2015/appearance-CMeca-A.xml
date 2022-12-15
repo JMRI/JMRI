@@ -46,14 +46,14 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Meca/VLMeca.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Meca/VLMeca.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Meca/VLMeca.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Meca/VLMeca.gif</imagelink>
     </appearance>
      <appearance>
       <aspectname>Approach</aspectname>
       <show>green</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Meca/AMeca.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Meca/AMeca.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Meca/AMeca.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Meca/AMeca.gif</imagelink>
     </appearance>
 

@@ -42,7 +42,7 @@
       <show>red</show>
         <comment>real color is purple</comment>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleF/CibleFCv_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleF/CibleFCv_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleF/CibleFCv_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleF/CibleFCv_face.gif</imagelink>
     </appearance>
     <appearance>
@@ -74,7 +74,7 @@
       <aspectname>Slow</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleF/CibleFFb_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleF/CibleFFb_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleF/CibleFFb_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleF/CibleFFb_face.gif</imagelink>
     </appearance>
     <appearance>
@@ -82,7 +82,7 @@
       <show>lunar</show>
       <comment>flashlunar</comment>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleF/CibleFFbc_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleF/CibleFFbc_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleF/CibleFFbc_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleF/CibleFFbc_face.gif</imagelink>
     </appearance>
     <appearance>

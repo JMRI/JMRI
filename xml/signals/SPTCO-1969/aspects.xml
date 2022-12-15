@@ -159,15 +159,15 @@
     <imagetype type="dwarf" />
   </imagetypes>
   <appearancefiles>
-    <appearancefile href="appearance-SE-1-A.xml"></appearancefile>
-    <appearancefile href="appearance-SE-1-G.xml"></appearancefile>
-    <appearancefile href="appearance-SE-1-PP.xml"></appearancefile>
-    <appearancefile href="appearance-SE-2-A.xml"></appearancefile>
-    <appearancefile href="appearance-SE-2-P.xml"></appearancefile>
-    <appearancefile href="appearance-SE-3-A.xml"></appearancefile>
-    <appearancefile href="appearance-SH-1-A.xml"></appearancefile>
-    <appearancefile href="appearance-SH-2-A.xml"></appearancefile>
-    <appearancefile href="appearance-SL-1-A.xml"></appearancefile>
+    <appearancefile href="appearance-SE-1-A.xml" />
+    <appearancefile href="appearance-SE-1-G.xml" />
+    <appearancefile href="appearance-SE-1-PP.xml" />
+    <appearancefile href="appearance-SE-2-A.xml" />
+    <appearancefile href="appearance-SE-2-P.xml" />
+    <appearancefile href="appearance-SE-3-A.xml" />
+    <appearancefile href="appearance-SH-1-A.xml" />
+    <appearancefile href="appearance-SH-2-A.xml" />
+    <appearancefile href="appearance-SL-1-A.xml" />
     <appearancefile href="appearance-SL-1-P.xml" />
     <appearancefile href="appearance-SL-1-D.xml" />
     <appearancefile href="appearance-SL-1-G.xml" />
