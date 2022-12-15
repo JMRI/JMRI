@@ -84,7 +84,7 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
             int row = e.getFirstRow();
             int nv = row + 1;
             int value = getSelectValue(nv);
-//            log.debug("sprog3plus gui table changed NV: {} Value: {}", nv, value);
+            log.debug("canisb gui table changed NV: {} Value: {}", nv, value);
             if (value >= 0) {
                 switch (nv) {
                     case CanisbPaneProvider.SETUP:
@@ -138,12 +138,12 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
                         break;
 
                     case CanisbPaneProvider.CAN_ERR_FREE_COUNT_LO:
-                        log.debug("canisb gui table changed NV: {} Value: {}", nv, value);
+//                        log.debug("canisb gui table changed NV: {} Value: {}", nv, value);
                         // Do not update display until Hi byte is handled
                         break;
 
                     case CanisbPaneProvider.CAN_ERR_FREE_COUNT_HI:
-                        log.debug("canisb gui table changed NV: {} Value: {}", nv, value);
+//                        log.debug("canisb gui table changed NV: {} Value: {}", nv, value);
                         rcCount[7].setText(Integer.toString(value * 256
                                 + (int) _dataModel.getValueAt(CanisbPaneProvider.CAN_ERR_FREE_COUNT_LO - 1, NV_SELECT_COLUMN)));
                         break;
