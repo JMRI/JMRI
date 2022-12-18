@@ -476,12 +476,6 @@
             <li></li>
        </ul>
 
-    <h3>Turnouts, Lights, Sensors and other elements</h3>
-        <a id="TLae" name="TLae"></a>
-        <ul>
-            <li></li>
-        </ul>
-
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
@@ -495,7 +489,11 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>The BNSF-1996 and CCOR-1967 signal systems have had some corrections
+                    made to their speed settings to make them more consistent with
+                    the underlying indications.</li>
+                <li>The XML Schema for signal systems has been updated to require
+                    there be one and only one speed and speed2 setting.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -548,6 +546,12 @@
 
    <h3>Tracker</h3>
         <a id="Tr" name="Tr"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"></a>
         <ul>
             <li></li>
         </ul>
