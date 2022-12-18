@@ -76,7 +76,9 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>New LocoNetSlotsReadCSV.py script which scans all LocoNet slots and
+                    creates report about slot status and slots used for the consists
+                    including the details of the consist. It also flags all non-zero slots. </li>
             </ul>
 
         <h4>Maple</h4>
