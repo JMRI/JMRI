@@ -12,16 +12,16 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
     private final TokenType _tokenType;
     private final ExpressionNode _leftSide;
     private final ExpressionNode _rightSide;
-    
+
     public ExpressionNodeBinaryOperator(TokenType tokenType, ExpressionNode leftSide, ExpressionNode rightSide) {
         _tokenType = tokenType;
         _leftSide = leftSide;
         _rightSide = rightSide;
-        
+
         if (_rightSide == null) {
             throw new IllegalArgumentException("rightSide must not be null");
         }
-        
+
         // Verify that the token is of the correct type
         switch (_tokenType) {
             case BINARY_OR:
@@ -31,21 +31,50 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
                     throw new IllegalArgumentException("leftSide must not be null for operators BINARY AND, BINARY OR and BINARY XOR");
                 }
                 break;
-                
+
             case BINARY_NOT:
                 if (_leftSide != null) {
                     throw new IllegalArgumentException("leftSide must be null for operator BINARY NOT");
                 }
                 break;
-                
+
             default:
                 throw new IllegalArgumentException("Unsupported binary operator: "+_tokenType.name());
         }
     }
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public int getStartPos() {
+        return _leftSide.getStartPos();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getEndPos() {
+        return _rightSide.getEndPos();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public ExpressionNode getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        switch (index) {
+            case 0: return _leftSide;
+            case 1: return _rightSide;
+            default: throw new IllegalArgumentException(
+                    String.format("index has invalid value: %d", index));
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getChildCount() {
+        return 2;
+    }
+
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
-        
+
         Object leftValue = null;
         if (_tokenType != TokenType.BINARY_NOT) {
             // Left value must be calculated _before_ right value is calculated.
@@ -54,39 +83,39 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
             leftValue = _leftSide.calculate(symbolTable);
         }
         if (leftValue == null) leftValue = false;
-        
+
         Object rightValue = _rightSide.calculate(symbolTable);
         if (rightValue == null) rightValue = false;
-        
+
         if (!TypeConversionUtil.isIntegerNumber(rightValue)) {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", rightValue));
         }
         long right = TypeConversionUtil.convertToLong(rightValue);
-        
+
         if (_tokenType == TokenType.BINARY_NOT) {
             return ~ right;
         }
-        
+
         if (!TypeConversionUtil.isIntegerNumber(leftValue)) {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", leftValue));
         }
         long left = TypeConversionUtil.convertToLong(leftValue);
-        
+
         switch (_tokenType) {
             case BINARY_OR:
                 return left | right;
-                
+
             case BINARY_XOR:
                 return left ^ right;
-                
+
             case BINARY_AND:
                 return left & right;
-                
+
             default:
                 throw new CalculateException("Unknown binary operator: "+_tokenType.name());
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String getDefinitionString() {
@@ -95,19 +124,19 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
             case BINARY_OR:
                 operStr = "|";
                 break;
-                
+
             case BINARY_XOR:
                 operStr = "^";
                 break;
-                
+
             case BINARY_AND:
                 operStr = "&";
                 break;
-                
+
             case BINARY_NOT:
                 operStr = "~";
                 break;
-                
+
             default:
                 throw new UnsupportedOperationException("Unknown arithmetic operator: "+_tokenType.name());
         }
@@ -117,5 +146,5 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
             return operStr + "("+_rightSide.getDefinitionString()+")";
         }
     }
-    
+
 }

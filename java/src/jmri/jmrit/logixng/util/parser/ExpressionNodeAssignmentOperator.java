@@ -12,28 +12,28 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
     private final TokenType _tokenType;
     private final ExpressionNode _leftSide;
     private final ExpressionNode _rightSide;
-    
-    
+
+
     public ExpressionNodeAssignmentOperator(TokenType tokenType, ExpressionNode leftSide, ExpressionNode rightSide) {
         _tokenType = tokenType;
         _leftSide = leftSide;
         _rightSide = rightSide;
-        
+
         if (_leftSide == null) {
             throw new IllegalArgumentException("leftSide must not be null");
         }
-        
+
         if (! _leftSide.canBeAssigned()) {
             throw new IllegalArgumentException("leftSide must assignable");
         }
-        
+
         // Verify that the token is of the correct type
         switch (_tokenType) {
             case ASSIGN:
             case ASSIGN_ADD:
             case ASSIGN_SUBTRACKT:
                 break;
-                
+
             case ASSIGN_MULTIPLY:
             case ASSIGN_DIVIDE:
             case ASSIGN_MODULO:
@@ -47,13 +47,41 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
                     throw new IllegalArgumentException("leftSide must not be null for operators *, /, %, <<, >>, >>>");
                 }
                 break;
-                
+
             default:
                 throw new IllegalArgumentException("Unknown arithmetic operator: "+_tokenType.name());
         }
     }
-    
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public int getStartPos() {
+        return _leftSide.getStartPos();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getEndPos() {
+        return _rightSide.getEndPos();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public ExpressionNode getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        switch (index) {
+            case 0: return _leftSide;
+            case 1: return _rightSide;
+            default: throw new IllegalArgumentException(
+                    String.format("index has invalid value: %d", index));
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getChildCount() {
+        return 2;
+    }
+
     private Object add(Object left, Object right) throws CalculateException {
         if (TypeConversionUtil.isIntegerNumber(left)
                 && TypeConversionUtil.isIntegerNumber(right)) {
@@ -71,8 +99,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             }
         }
     }
-    
-    
+
     private Object subtract(Object left, Object right) throws CalculateException {
         if (TypeConversionUtil.isIntegerNumber(left)) {
             if (TypeConversionUtil.isIntegerNumber(right)) {
@@ -92,8 +119,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotNumberError", left));
         }
     }
-    
-    
+
     private Object multiply(Object left, Object right) throws CalculateException {
         if (TypeConversionUtil.isIntegerNumber(left)) {
             if (TypeConversionUtil.isIntegerNumber(right)) {
@@ -113,8 +139,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotNumberError", left));
         }
     }
-    
-    
+
     private Object divide(Object left, Object right) throws CalculateException {
         if (TypeConversionUtil.isIntegerNumber(left)) {
             if (TypeConversionUtil.isIntegerNumber(right)) {
@@ -134,8 +159,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotNumberError", left));
         }
     }
-    
-    
+
     private Object modulo(Object left, Object right) throws CalculateException {
         if (TypeConversionUtil.isIntegerNumber(left)) {
             if (TypeConversionUtil.isIntegerNumber(right)) {
@@ -147,8 +171,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
         }
     }
-    
-    
+
     private Object and(Object left, Object right) throws CalculateException {
         if (TypeConversionUtil.isIntegerNumber(left)) {
             if (TypeConversionUtil.isIntegerNumber(right)) {
@@ -160,8 +183,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
         }
     }
-    
-    
+
     private Object or(Object left, Object right) throws CalculateException {
         if (TypeConversionUtil.isIntegerNumber(left)) {
             if (TypeConversionUtil.isIntegerNumber(right)) {
@@ -173,8 +195,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
         }
     }
-    
-    
+
     private Object xor(Object left, Object right) throws CalculateException {
         if (TypeConversionUtil.isIntegerNumber(left)) {
             if (TypeConversionUtil.isIntegerNumber(right)) {
@@ -186,8 +207,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
         }
     }
-    
-    
+
     private Object shiftLeft(Object left, Object right) throws CalculateException {
         if (TypeConversionUtil.isIntegerNumber(left)) {
             if (TypeConversionUtil.isIntegerNumber(right)) {
@@ -199,8 +219,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
         }
     }
-    
-    
+
     private Object shiftRight(Object left, Object right) throws CalculateException {
         if (TypeConversionUtil.isIntegerNumber(left)) {
             if (TypeConversionUtil.isIntegerNumber(right)) {
@@ -212,8 +231,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
         }
     }
-    
-    
+
     private Object unsignedShiftRight(Object left, Object right) throws CalculateException {
         if (TypeConversionUtil.isIntegerNumber(left)) {
             if (TypeConversionUtil.isIntegerNumber(right)) {
@@ -225,20 +243,19 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", left));
         }
     }
-    
-    
+
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
-        
+
         if (_tokenType == TokenType.ASSIGN) {
             Object value = _rightSide.calculate(symbolTable);
             _leftSide.assignValue(symbolTable, value);
             return value;
         }
-        
+
         Object left = _leftSide.calculate(symbolTable);
         Object right = _rightSide.calculate(symbolTable);
-        
+
         // Convert a boolean value to an integer value
         if (left instanceof Boolean) {
             left = ((Boolean)left) ? 1 : 0;
@@ -246,9 +263,9 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
         if (right instanceof Boolean) {
             right = ((Boolean)right) ? 1 : 0;
         }
-        
+
         Object result;
-        
+
         if (_tokenType == TokenType.ASSIGN_ADD) {
             // Add can handle String concatenation
             result = add(left, right);
@@ -296,12 +313,11 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
                 }
             }
         }
-        
+
         _leftSide.assignValue(symbolTable, result);
         return result;
     }
-    
-    
+
     /** {@inheritDoc} */
     @Override
     public String getDefinitionString() {
@@ -310,78 +326,77 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             case ADD:
                 operStr = "+";
                 break;
-                
+
             case SUBTRACKT:
                 operStr = "-";
                 break;
-                
+
             case MULTIPLY:
                 operStr = "*";
                 break;
-                
+
             case DIVIDE:
                 operStr = "/";
                 break;
-                
+
             case MODULO:
                 operStr = "%";
                 break;
-                
+
             case ASSIGN:
                 operStr = "=";
                 break;
-                
+
             case ASSIGN_ADD:
                 operStr = "+=";
                 break;
-                
+
             case ASSIGN_SUBTRACKT:
                 operStr = "-=";
                 break;
-                
+
             case ASSIGN_MULTIPLY:
                 operStr = "*=";
                 break;
-                
+
             case ASSIGN_DIVIDE:
                 operStr = "/=";
                 break;
-                
+
             case ASSIGN_MODULO:
                 operStr = "%=";
                 break;
-                
+
             case ASSIGN_AND:
                 operStr = "&=";
                 break;
-                
+
             case ASSIGN_OR:
                 operStr = "|=";
                 break;
-                
+
             case ASSIGN_XOR:
                 operStr = "^=";
                 break;
-                
+
             case ASSIGN_SHIFT_LEFT:
                 operStr = "<<=";
                 break;
-                
+
             case ASSIGN_SHIFT_RIGHT:
                 operStr = ">>=";
                 break;
-                
+
             case ASSIGN_UNSIGNED_SHIFT_RIGHT:
                 operStr = ">>>=";
                 break;
-                
+
             default:
                 throw new UnsupportedOperationException("Unknown arithmetic operator: "+_tokenType.name());
         }
-        
+
         String leftSideString = _leftSide != null ? _leftSide.getDefinitionString() : "null";
         String rightSideString = _rightSide != null ? _rightSide.getDefinitionString() : "null";
         return "("+leftSideString+")" + operStr + "("+rightSideString+")";
     }
-    
 }

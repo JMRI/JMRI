@@ -43,6 +43,33 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getStartPos() {
+        return _leftSide.getStartPos();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getEndPos() {
+        return _rightSide.getEndPos();
+    }
+
+    @Override
+    public ExpressionNode getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        switch (index) {
+            case 0: return _leftSide;
+            case 1: return _rightSide;
+            default: throw new IllegalArgumentException(
+                    String.format("index has invalid value: %d", index));
+        }
+    }
+
+    @Override
+    public int getChildCount() {
+        return 2;
+    }
+
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
 

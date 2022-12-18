@@ -8,7 +8,7 @@ import jmri.jmrit.logixng.SymbolTable;
 
 /**
  * A parsed expression
- * 
+ *
  * @author Daniel Bergqvist 2019
  */
 public class ExpressionNodeFunction implements ExpressionNode {
@@ -16,25 +16,57 @@ public class ExpressionNodeFunction implements ExpressionNode {
     private final String _identifier;
     private final Function _function;
     private final List<ExpressionNode> _parameterList;
-    
-    
-    public ExpressionNodeFunction(String identifier, List<ExpressionNode> parameterList) throws FunctionNotExistsException {
+    private final int _startPos;
+    private final int _endPos;
+
+
+    public ExpressionNodeFunction(String identifier, List<ExpressionNode> parameterList, int startPos, int endPos)
+            throws FunctionNotExistsException {
         _identifier = identifier;
         _function = InstanceManager.getDefault(FunctionManager.class).get(identifier);
         _parameterList = parameterList;
-        
+        _startPos = startPos;
+        _endPos = endPos;
+
         if (_function == null) {
             throw new FunctionNotExistsException(Bundle.getMessage("FunctionNotExists", identifier), identifier);
         }
-        
+
 //        System.err.format("Function %s, %s%n", _function.getName(), _function.getClass().getName());
     }
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public int getStartPos() {
+        return _startPos;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getEndPos() {
+        return _endPos;
+    }
+
+    @Override
+    public ExpressionNode getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        if (index >= 0 && index < _parameterList.size()) {
+            return _parameterList.get(index);
+        } else {
+            throw new IllegalArgumentException(
+                    String.format("index has invalid value: %d", index));
+        }
+    }
+
+    @Override
+    public int getChildCount() {
+        return _parameterList.size();
+    }
+
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
         return _function.calculate(symbolTable, _parameterList);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String getDefinitionString() {
@@ -51,5 +83,5 @@ public class ExpressionNodeFunction implements ExpressionNode {
         str.append(")");
         return str.toString();
     }
-    
+
 }

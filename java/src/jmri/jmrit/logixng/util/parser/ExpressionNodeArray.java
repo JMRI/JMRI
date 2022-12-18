@@ -8,35 +8,66 @@ import jmri.util.TypeConversionUtil;
 
 /**
  * A parsed expression
- * 
+ *
  * @author Daniel Bergqvist 2021
  */
 public class ExpressionNodeArray implements ExpressionNodeWithParameter {
 
+    private final Token _token;
     private final ExpressionNode _exprNode;
-    
-    public ExpressionNodeArray(ExpressionNode exprNode) throws FunctionNotExistsException {
+    private final int _endPos;
+
+    public ExpressionNodeArray(Token token, ExpressionNode exprNode, int endPos) throws FunctionNotExistsException {
+        _token = token;
         _exprNode = exprNode;
+        _endPos = endPos;
     }
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public int getStartPos() {
+        return _token.getPos();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getEndPos() {
+        return _endPos;
+    }
+
+    @Override
+    public ExpressionNode getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        if (index == 0) {
+            return _exprNode;
+        } else {
+            throw new IllegalArgumentException(
+                    String.format("index has invalid value: %d", index));
+        }
+    }
+
+    @Override
+    public int getChildCount() {
+        return 1;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public Object calculate(Object parameter, SymbolTable symbolTable) throws JmriException {
         if (parameter == null) throw new NullPointerException("Parameter is null");
         if (!(parameter instanceof List)) throw new IllegalArgumentException("Parameter is not a List");
-        
+
         int index = (int) TypeConversionUtil.convertToLong(_exprNode.calculate(symbolTable));
-        
+
         return ((List<Object>)parameter).get(index);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean canBeAssigned() {
         // We don't know so we assume that it is.
         return true;
     }
-    
+
     /**
      * Assign a value to this expression from a parameter.
      * @param parameter the parameter
@@ -49,12 +80,12 @@ public class ExpressionNodeArray implements ExpressionNodeWithParameter {
     public void assignValue(Object parameter, SymbolTable symbolTable, Object value) throws JmriException {
         if (parameter == null) throw new NullPointerException("Parameter is null");
         if (!(parameter instanceof List)) throw new IllegalArgumentException("Parameter is not a List");
-        
+
         int index = (int) TypeConversionUtil.convertToLong(_exprNode.calculate(symbolTable));
-        
+
         ((List<Object>)parameter).set(index, value);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String getDefinitionString() {
@@ -64,5 +95,5 @@ public class ExpressionNodeArray implements ExpressionNodeWithParameter {
         str.append("]");
         return str.toString();
     }
-    
+
 }

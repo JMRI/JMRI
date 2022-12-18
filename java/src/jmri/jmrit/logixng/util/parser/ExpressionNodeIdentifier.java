@@ -12,30 +12,52 @@ public class ExpressionNodeIdentifier implements ExpressionNode {
 
     private final Token _token;
     private final Variable _variable;
-    
+
     public ExpressionNodeIdentifier(Token token, Map<String, Variable> variables) throws IdentifierNotExistsException {
         _token = token;
         Variable variable = variables.get(token.getString());
-        
+
         if (variable == null) {
             // Assume the identifier is a local variable.
             // Local variables may not be known when the expression is parsed.
-            
+
             variable = new LocalVariableExpressionVariable(token.getString());
         }
-        
+
         _variable = variable;
     }
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public int getStartPos() {
+        return _token.getPos();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getEndPos() {
+        return _token.getPos() + _token.getString().length();
+    }
+
+    @Override
+    public ExpressionNode getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    @Override
+    public int getChildCount() {
+        return 0;
+    }
+
     public String getIdentifier() {
         return _token.getString();
     }
-    
+
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
         return _variable.getValue(symbolTable);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean canBeAssigned() {
@@ -44,7 +66,7 @@ public class ExpressionNodeIdentifier implements ExpressionNode {
         // expression is calculated. So we assume that it is.
         return true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void assignValue(SymbolTable symbolTable, Object value) throws JmriException {
@@ -52,11 +74,11 @@ public class ExpressionNodeIdentifier implements ExpressionNode {
             _variable.setValue(symbolTable, value);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String getDefinitionString() {
         return "Identifier:"+_token.getString();
     }
-    
+
 }

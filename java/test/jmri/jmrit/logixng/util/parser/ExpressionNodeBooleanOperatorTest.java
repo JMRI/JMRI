@@ -23,8 +23,8 @@ public class ExpressionNodeBooleanOperatorTest {
     @Test
     public void testCtor() throws ParserException {
 
-        ExpressionNode exprTrue = new ExpressionNodeTrue();
-        ExpressionNode exprFalse = new ExpressionNodeFalse();
+        ExpressionNode exprTrue = new ExpressionNodeTrue(null);
+        ExpressionNode exprFalse = new ExpressionNodeFalse(null);
 
         Token token = new Token(TokenType.NONE, "1", 0);
         ExpressionNodeFloatingNumber expressionNumber = new ExpressionNodeFloatingNumber(token);

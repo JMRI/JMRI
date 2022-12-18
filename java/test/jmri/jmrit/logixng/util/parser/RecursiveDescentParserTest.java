@@ -10,11 +10,8 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * Test ExpressionParser
@@ -145,8 +142,7 @@ public class RecursiveDescentParserTest {
         try {
             t.parseExpression("12+31*(23-1)+((((9*2+3)-2)/23");
         } catch (InvalidSyntaxException e) {
-//            System.err.format("Error message: %s%n", e.getMessage());
-            Assert.assertTrue("exception message matches", "Invalid syntax error".equals(e.getMessage()));
+            Assert.assertEquals("Invalid syntax error", e.getMessage());
             exceptionIsThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
@@ -985,17 +981,17 @@ public class RecursiveDescentParserTest {
 
 
 
-        ExpressionNodeInstanceVariable instanceVariable = new ExpressionNodeInstanceVariable("myString", variables);
+        ExpressionNodeInstanceVariable instanceVariable = new ExpressionNodeInstanceVariable(new Token(), "myString");
         Assert.assertEquals("Hello", testField.myString);
         instanceVariable.assignValue(testField, symbolTable, "Something else");
         Assert.assertEquals("Something else", testField.myString);
 
-        instanceVariable = new ExpressionNodeInstanceVariable("myInt", variables);
+        instanceVariable = new ExpressionNodeInstanceVariable(new Token(), "myInt");
         Assert.assertEquals(32, testField.myInt);
         instanceVariable.assignValue(testField, symbolTable, (long)23103);
         Assert.assertEquals(23103, testField.myInt);
 
-        instanceVariable = new ExpressionNodeInstanceVariable("myFloat", variables);
+        instanceVariable = new ExpressionNodeInstanceVariable(new Token(), "myFloat");
         Assert.assertEquals(31.32, testField.myFloat, 0.000001);
         instanceVariable.assignValue(testField, symbolTable, 112.12);
         Assert.assertEquals((float)112.12, testField.myFloat, 0.000001);
@@ -1012,6 +1008,13 @@ public class RecursiveDescentParserTest {
         Assert.assertEquals("expression matches", "(Identifier:myVar->[IntNumber:1])=(IntNumber:12)", exprNode.getDefinitionString());
         Assert.assertEquals("calculate is correct", 12, (long)(Long)exprNode.calculate(symbolTable));
         Assert.assertEquals("myVar[1] is correct", 12, (long)((List<Long>)myVar.getValue(symbolTable)).get(1));
+
+        myList.set(1, (long)10);
+        mySecondVar.setValue(symbolTable, 2);
+        exprNode = t.parseExpression("myVar[mySecondVar] = 12");
+        Assert.assertEquals("expression matches", "(Identifier:myVar->[Identifier:mySecondVar])=(IntNumber:12)", exprNode.getDefinitionString());
+        Assert.assertEquals("calculate is correct", 12, (long)(Long)exprNode.calculate(symbolTable));
+        Assert.assertEquals("myVar[mySecondVar] is correct", 12, (long)((List<Long>)myVar.getValue(symbolTable)).get(2));
 
         myList.set(1, (long)10);
         exprNode = t.parseExpression("myVar[1] += 12");
@@ -1173,8 +1176,231 @@ public class RecursiveDescentParserTest {
     }
 
 
+    @Test
+    public void testInvalidSyntaxException() throws ParserException {
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+
+        InvalidSyntaxException ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("2aa") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(1, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aaaaa bb") );
+        Assert.assertEquals("Invalid syntax error. The expression is not fully parsed. It failed at column 6", ex.getMessage());
+        Assert.assertEquals(6, ex.getPosition());
+
+//        t.parseExpression("aa+");
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa+") );
+        Assert.assertEquals("Invalid syntax error. Unexpected end of expression.", ex.getMessage());
+        Assert.assertEquals(3, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa++bb") );
+        Assert.assertEquals("Invalid syntax error. The expression is not fully parsed. It failed at column 4", ex.getMessage());
+        Assert.assertEquals(4, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa--bb") );
+        Assert.assertEquals("Invalid syntax error. The expression is not fully parsed. It failed at column 4", ex.getMessage());
+        Assert.assertEquals(4, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa**bb") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(3, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa//bb") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(3, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa = &&") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(5, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa ? a ?") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(7, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa ? *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(5, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa ? a : :") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(9, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa && *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(6, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa || *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(6, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa ^^ *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(6, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa & *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(5, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa | *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(5, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa ^ *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(5, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa == *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(6, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa <= *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(6, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa << *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(6, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa + *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(5, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa * *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(5, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("! *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(2, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("~ *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(2, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("+ *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(2, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("- *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(2, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("++ *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(3, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("-- *") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(3, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("()") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(1, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("(*aa)") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(1, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aaa(*aa)") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(4, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aaa(a,*)") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(6, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aaa(a,b,c,*)") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(10, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("bbb..aaa()") );
+        Assert.assertEquals("Invalid syntax error. The expression is not fully parsed. It failed at column 3", ex.getMessage());
+        Assert.assertEquals(3, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("bbb.*aaa()") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(4, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("bbb.aaa(*aa)") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(8, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("bbb.aaa(a,*)") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(10, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("bbb.aaa(a,b,c,d,*)") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(16, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aaa[]") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(4, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aaa[*]") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(4, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aaaa{}") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(5, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aaaa{a,*") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(6, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aaaa{*}") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(5, ex.getPosition());
+    }
+
+
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -1185,7 +1411,7 @@ public class RecursiveDescentParserTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

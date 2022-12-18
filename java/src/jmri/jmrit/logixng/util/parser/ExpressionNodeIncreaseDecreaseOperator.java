@@ -11,19 +11,29 @@ public class ExpressionNodeIncreaseDecreaseOperator implements ExpressionNode {
 
     private final ExpressionNode _exprNode;
     private final Operator _operator;
-    
-    
-    public ExpressionNodeIncreaseDecreaseOperator(TokenType tokenType, ExpressionNode exprNode, boolean before) {
+    private final int _startPos;
+    private final int _endPos;
+
+
+    public ExpressionNodeIncreaseDecreaseOperator(
+            TokenType tokenType,
+            ExpressionNode exprNode,
+            boolean before,
+            int startPos,
+            int endPos) {
+
         _exprNode = exprNode;
-        
+        _startPos = startPos;
+        _endPos = endPos;
+
         if (_exprNode == null) {
             throw new IllegalArgumentException("exprNode must not be null for operators ++ and --");
         }
-        
+
         if (! _exprNode.canBeAssigned()) {
             throw new IllegalArgumentException("exprNode must assignable");
         }
-        
+
         // Verify that the token is of the correct type
         switch (tokenType) {
             case INCREMENT:
@@ -36,17 +46,43 @@ public class ExpressionNodeIncreaseDecreaseOperator implements ExpressionNode {
                 throw new IllegalArgumentException("Unknown arithmetic operator: "+tokenType.name());
         }
     }
-    
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public int getStartPos() {
+        return _startPos;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getEndPos() {
+        return _endPos;
+    }
+
+    @Override
+    public ExpressionNode getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        if (index == 0) {
+            return _exprNode;
+        } else {
+            throw new IllegalArgumentException(
+                    String.format("index has invalid value: %d", index));
+        }
+    }
+
+    @Override
+    public int getChildCount() {
+        return 1;
+    }
+
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
-        
+
         Object value = _exprNode.calculate(symbolTable);
-        
+
         if (TypeConversionUtil.isIntegerNumber(value)) {
             long v = ((Number)value).longValue();
             long result;
-            
+
             switch (_operator) {
                 case PRE_INCREMENT:  result = ++v; break;
                 case PRE_DECREMENT:  result = --v; break;
@@ -61,8 +97,7 @@ public class ExpressionNodeIncreaseDecreaseOperator implements ExpressionNode {
             throw new CalculateException(Bundle.getMessage("ArithmeticNotIntegerNumberError", value));
         }
     }
-    
-    
+
     /** {@inheritDoc} */
     @Override
     public String getDefinitionString() {
@@ -72,34 +107,33 @@ public class ExpressionNodeIncreaseDecreaseOperator implements ExpressionNode {
             case PRE_INCREMENT:
                 leftOperStr = "++";
                 break;
-                
+
             case PRE_DECREMENT:
                 leftOperStr = "--";
                 break;
-                
+
             case POST_INCREMENT:
                 rightOperStr = "++";
                 break;
-                
+
             case POST_DECREMENT:
                 rightOperStr = "--";
                 break;
-                
+
             default:
                 throw new UnsupportedOperationException("Unknown operator: "+_operator.name());
         }
-        
+
         String exprNodeString = _exprNode != null ? _exprNode.getDefinitionString() : "null";
         return leftOperStr + "("+exprNodeString+")" + rightOperStr;
     }
-    
-    
-    
+
+
     private enum Operator {
         PRE_INCREMENT,
         PRE_DECREMENT,
         POST_INCREMENT,
         POST_DECREMENT,
     }
-    
+
 }

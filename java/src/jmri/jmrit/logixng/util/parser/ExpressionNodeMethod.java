@@ -13,12 +13,41 @@ import jmri.jmrit.logixng.SymbolTable;
  */
 public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
 
+    private final Token _token;
     private final String _method;
     private final List<ExpressionNode> _parameterList;
 
-    public ExpressionNodeMethod(String method, Map<String, Variable> variables, List<ExpressionNode> parameterList) throws FunctionNotExistsException {
+    public ExpressionNodeMethod(Token token, String method, Map<String, Variable> variables, List<ExpressionNode> parameterList) throws FunctionNotExistsException {
+        _token = token;
         _method = method;
         _parameterList = parameterList;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getStartPos() {
+        return _token.getPos();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getEndPos() {
+        return _token.getPos() + _token.getString().length();
+    }
+
+    @Override
+    public ExpressionNode getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        if (index >= 0 && index < _parameterList.size()) {
+            return _parameterList.get(index);
+        } else {
+            throw new IllegalArgumentException(
+                    String.format("index has invalid value: %d", index));
+        }
+    }
+
+    @Override
+    public int getChildCount() {
+        return _parameterList.size();
     }
 
     private boolean isAssignableFrom(Class<?> type, Object param) {

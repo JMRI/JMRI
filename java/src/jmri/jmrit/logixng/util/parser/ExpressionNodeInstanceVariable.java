@@ -8,21 +8,45 @@ import jmri.jmrit.logixng.SymbolTable;
 
 /**
  * A parsed expression
- * 
+ *
  * @author Daniel Bergqvist 2021
  */
 public class ExpressionNodeInstanceVariable implements ExpressionNodeWithParameter {
 
+    private final Token _token;
     private final String _fieldName;
-    
-    public ExpressionNodeInstanceVariable(String fieldName, Map<String, Variable> variables) throws IdentifierNotExistsException {
+
+    public ExpressionNodeInstanceVariable(Token token, String fieldName) throws IdentifierNotExistsException {
+        _token = token;
         _fieldName = fieldName;
     }
-    
+
+    /** {@inheritDoc} */
+    @Override
+    public int getStartPos() {
+        return _token.getPos();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getEndPos() {
+        return _token.getPos() + _token.getString().length();
+    }
+
+    @Override
+    public ExpressionNode getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    @Override
+    public int getChildCount() {
+        return 0;
+    }
+
     @Override
     public Object calculate(Object parameter, SymbolTable symbolTable) throws JmriException {
         if (parameter == null) throw new NullPointerException("Parameter is null");
-        
+
         try {
             Field field = parameter.getClass().getField(_fieldName);
             return field.get(parameter);
@@ -30,7 +54,7 @@ public class ExpressionNodeInstanceVariable implements ExpressionNodeWithParamet
             throw new ReflectionException("Reflection exception", ex);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean canBeAssigned() {
@@ -39,12 +63,12 @@ public class ExpressionNodeInstanceVariable implements ExpressionNodeWithParamet
         // expression is calculated. So we assume that it is.
         return true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void assignValue(Object parameter, SymbolTable symbolTable, Object value) throws JmriException {
         if (parameter == null) throw new NullPointerException("Parameter is null");
-        
+
         try {
             Field field = parameter.getClass().getField(_fieldName);
             Class<?> type = field.getType();
@@ -60,11 +84,11 @@ public class ExpressionNodeInstanceVariable implements ExpressionNodeWithParamet
             throw new ReflectionException("Reflection exception", ex);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String getDefinitionString() {
         return "InstanceVariable:"+_fieldName;
     }
-    
+
 }
