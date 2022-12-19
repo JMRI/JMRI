@@ -1939,7 +1939,7 @@ final public class ConnectivityUtil {
             String layoutBlockSystemName = nextLayoutBlock.getSystemName();
             String layoutBlockUserName = nextLayoutBlock.getUserName();
 
-            log.warn("Neither branch at {} leads to next Block {} ({})",
+            log.warn("Neither branch at {} leads to next block {} ({})",
                         layoutTrackInfo,
                         layoutBlockUserName,
                         layoutBlockSystemName);
