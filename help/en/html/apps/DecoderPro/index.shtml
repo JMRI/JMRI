@@ -118,7 +118,7 @@
 
       <p>The JMRI project has compiled a lot of information about decoders from many manufacturers,
       which we make freely available in several forms. To learn more, see the <a href=
-      "https://jmri.org/xml/XSLT/">Decoder Information page</a>.</p>
+      "https://www.jmri.org/xml/XSLT/">Decoder Information page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
