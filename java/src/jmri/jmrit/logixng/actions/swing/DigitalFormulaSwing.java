@@ -126,7 +126,7 @@ public class DigitalFormulaSwing extends AbstractDigitalActionSwing {
                 }
 
             } catch (InvalidSyntaxException ex) {
-                log.error("Error when parsing formula", ex);
+                log.debug("Error when parsing formula", ex);
                 String padAtEnd = "    ";
                 left = ex.getPosition();
                 right = _formula.getText().length() + padAtEnd.length();
