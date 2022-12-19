@@ -28,8 +28,7 @@ public class ExpressionNodeIncreaseDecreaseOperator implements ExpressionNode {
         _endPos = endPos;
 
         if (_exprNode == null) {
-            int pos = before ? _exprNode.getStartPos() : startPos;
-            throw new InvalidSyntaxException(Bundle.getMessage("ExpressionMustNotBeNullForPlusPlusAndMinusMinus"), pos);
+            throw new IllegalArgumentException("_exprNode is null");
         }
 
         if (! _exprNode.canBeAssigned()) {

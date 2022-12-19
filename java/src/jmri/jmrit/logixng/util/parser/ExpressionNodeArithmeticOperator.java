@@ -48,7 +48,7 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
         }
 
         _startPos = _leftSide != null ? _leftSide.getStartPos() : token.getPos();
-        _endPos = _rightSide != null ? _rightSide.getEndPos() : token.getEndPos();
+        _endPos = _rightSide.getEndPos();
     }
 
     /** {@inheritDoc} */
