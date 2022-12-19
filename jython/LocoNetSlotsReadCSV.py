@@ -14,7 +14,7 @@ import csv
 numSlots = 121
 class SampleLnStats(jmri.jmrit.automat.AbstractAutomaton) :
     arr = []
-    def init(self):  
+    def init(self):
         myLocoNetConnection = jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(0);
         self.slotManager = myLocoNetConnection.getSlotManager()
         nowSlotsUsed = self.slotManager.getInUseCount()
@@ -86,10 +86,10 @@ class SampleLnStats(jmri.jmrit.automat.AbstractAutomaton) :
         filename = "C:\Temp\LocoNet_slot_status.csv"
         with open(filename, 'wb') as csvfile:
 # creating a csv writer object
-            csvwriter = csv.writer(csvfile) 
-# writing the fields 
-            csvwriter.writerow(fields) 
-# writing the data rows 
+            csvwriter = csv.writer(csvfile)
+# writing the fields
+            csvwriter.writerow(fields)
+# writing the data rows
             csvwriter.writerows(rows)
         return
 a = SampleLnStats()
