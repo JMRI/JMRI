@@ -1939,7 +1939,7 @@ final public class ConnectivityUtil {
                         turnoutUserName,
                         turnoutSystemName,
                         layoutBlockUserName,
-                        layoutBlockUserName);
+                        layoutBlockSystemName);
         }
     }
 
