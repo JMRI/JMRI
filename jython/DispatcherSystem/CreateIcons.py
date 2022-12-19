@@ -51,13 +51,14 @@ class processPanels():
     controlSensors.append([8, 'setRouteSensor', 'Setup Route', 0, 2])
     controlSensors.append([9, 'setStoppingDistanceSensor', 'Set Stopping Length', 0, 2])
     controlSensors.append([10, 'setStationWaitTimeSensor', 'Set Station Wait Time', 0, 2])
+    controlSensors.append([11, 'setStationDirectionSensor', 'Set Station Direction', 0, 2])
 
-    controlSensors.append([11, 'runRouteSensor', 'Run Route', 10, 5])
-    controlSensors.append([12, 'editRoutesSensor', 'View/Edit Routes', 10, 5])
-    controlSensors.append([13, 'viewScheduledSensor', 'View/Edit Scheduled Trains', 10, 5])
-    controlSensors.append([14, 'schedulerStartTimeSensor', 'Set Scheduler Start Time', 10, 5])
-    controlSensors.append([15, 'showClockSensor', 'Show Analog Clock', 10, 5])
-    controlSensors.append([16, 'startSchedulerSensor', 'Start Scheduler', 10, 5])
+    controlSensors.append([12, 'runRouteSensor', 'Run Route', 10, 5])
+    controlSensors.append([13, 'editRoutesSensor', 'View/Edit Routes', 10, 5])
+    controlSensors.append([14, 'viewScheduledSensor', 'View/Edit Scheduled Trains', 10, 5])
+    controlSensors.append([15, 'schedulerStartTimeSensor', 'Set Scheduler Start Time', 10, 5])
+    controlSensors.append([16, 'showClockSensor', 'Show Analog Clock', 10, 5])
+    controlSensors.append([17, 'startSchedulerSensor', 'Start Scheduler', 10, 5])
 
     def __init__(self):
         self.define_DisplayProgress_global()
@@ -661,7 +662,7 @@ class processPanels():
                 if sensor is not None:
                     self.addSmallIcon(panel, sensor.getDisplayName(), x, y)
 
-                    y = int(y) - 40 if int(y) > 45 else 5
+                    y = int(y) - 30 if int(y) > 35 else 5
                     self.addBlockContentLabel(panel, block, x, y)
 
     # **************************************************
