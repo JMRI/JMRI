@@ -236,7 +236,8 @@ public class RecursiveDescentParser {
                             leftSide._exprNode, middleSide._exprNode, rightRightSide._exprNode);
                     leftSide = new ExpressionNodeAndState(exprNode, rightRightSide._state);
                 } else {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), middleSide._state._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : newState._token.getPos();
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
             }
             return leftSide;
@@ -808,9 +809,6 @@ public class RecursiveDescentParser {
                         if ((newState4 = accept(TokenType.LEFT_PARENTHESIS, newState3)) != null) {
                             ExpressionNodeAndState exprNodeAndState2 =
                                     rule21_Method.parse(newState4, newState._lastToken.getString(), newState3._lastToken.getString());
-                            if (exprNodeAndState2 == null) {
-                                throw new InvalidSyntaxException("k"+Bundle.getMessage("InvalidSyntax"), newState4._token.getPos());
-                            }
                             newState4 = expect(TokenType.RIGHT_PARENTHESIS, exprNodeAndState2._state);
                             exprNode = new ExpressionNodeComplex(
                                     exprNode, (ExpressionNodeWithParameter) exprNodeAndState2._exprNode);
