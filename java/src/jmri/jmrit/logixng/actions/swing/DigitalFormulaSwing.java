@@ -117,12 +117,14 @@ public class DigitalFormulaSwing extends AbstractDigitalActionSwing {
                 Reference<Integer> startRef = new Reference<>();
                 Reference<Integer> endRef = new Reference<>();
                 if (isPosWithingExprNode(expressionNode, event.getDot(), startRef, endRef)) {
-                    if (startRef.get() == null || endRef.get() == null) {
+                    Integer start = startRef.get();
+                    Integer end = endRef.get();
+                    if (start == null || end == null) {
                         // This cannot happen but Spotbugs warns about it.
                         throw new NullPointerException();
                     }
-                    left = startRef.get();
-                    right = endRef.get();
+                    left = start;
+                    right = end;
                 }
 
             } catch (InvalidSyntaxException ex) {

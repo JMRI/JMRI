@@ -222,6 +222,7 @@ public class RecursiveDescentParser {
                 if (middleSide == null) {
                     throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
                 }
+                State oldState = newState;
                 newState = middleSide._state;
 
                 if ((newState._token != null)
@@ -236,7 +237,7 @@ public class RecursiveDescentParser {
                             leftSide._exprNode, middleSide._exprNode, rightRightSide._exprNode);
                     leftSide = new ExpressionNodeAndState(exprNode, rightRightSide._state);
                 } else {
-                    int pos = newState._token != null ? newState._token.getPos() : newState._token.getPos();
+                    int pos = newState._token != null ? newState._token.getPos() : oldState._token.getEndPos();
                     throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
             }
