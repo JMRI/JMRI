@@ -77,7 +77,6 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
                 String name = inFile.getName();
                 FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
                 File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name + "." + index + ".png");
-                System.out.println(outFile);
 
                 java.awt.Dimension size = new java.awt.Dimension(Math.min(le.getTargetPanel().getSize().width, 2000),
                         Math.min(le.getTargetPanel().getSize().height, 1000));
