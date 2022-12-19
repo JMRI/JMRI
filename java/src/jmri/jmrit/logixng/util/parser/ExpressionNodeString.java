@@ -22,7 +22,8 @@ public class ExpressionNodeString implements ExpressionNode {
     /** {@inheritDoc} */
     @Override
     public int getEndPos() {
-        return _token.getPos() + _token.getString().length();
+        // Add 2 since the string starts and ends with double quotes (")
+        return _token.getPos() + _token.getString().length() + 2;
     }
 
     /** {@inheritDoc} */
