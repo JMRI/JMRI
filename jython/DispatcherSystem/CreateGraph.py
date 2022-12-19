@@ -260,7 +260,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
     def get_list_inhibited_blocks(self):
         list_inhibited_blocks = self.read_list()
         self.list_inhibited_blocks = list_inhibited_blocks
-        print "list_inhibited_blocks", list_inhibited_blocks
+        # print "list_inhibited_blocks", list_inhibited_blocks
     def is_path_inhibited(self, path):
         existing = self.list_inhibited_blocks
         #print "existing", existing

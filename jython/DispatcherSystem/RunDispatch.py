@@ -1111,18 +1111,18 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             # route.addLocation(location)
             last_station = button_station_name
 
-            print "last station", last_station , "first station", first_station, "button_sensor_name", button_sensor_name, "button_station_name", button_station_name
+            # print "last station", last_station , "first station", first_station, "button_sensor_name", button_sensor_name, "button_station_name", button_station_name
 
             #get the transit corresponding to first_station last_station
             done = False
             for e in g.g_express.edgeSet():
                 from_station_name = g.g_stopping.getEdgeSource(e)
                 to_station_name = g.g_stopping.getEdgeTarget(e)
-                print "from_station_name",str(from_station_name), "to_station_name", str(to_station_name)
+                # print "from_station_name",str(from_station_name), "to_station_name", str(to_station_name)
                 if from_station_name == first_station and to_station_name == last_station:
                     found_edge = e
-                    print "breaking ", "last station", last_station , "first station", first_station, "button_sensor_name", button_sensor_name, "button_station_name", button_station_name
-                    print "breaking from_station_name",str(from_station_name), "to_station_name". str(to_station_name)
+                    # print "breaking ", "last station", last_station , "first station", first_station, "button_sensor_name", button_sensor_name, "button_station_name", button_station_name
+                    # print "breaking from_station_name",str(from_station_name), "to_station_name", str(to_station_name)
                     done = True
                     break
             if done == False:
@@ -1130,11 +1130,11 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 for e in g.g_express.edgeSet():
                     to_station_name = g.g_stopping.getEdgeSource(e)
                     from_station_name = g.g_stopping.getEdgeTarget(e)
-                    print "from_station_name",str(from_station_name), "to_station_name", str(to_station_name)
+                    # print "from_station_name",str(from_station_name), "to_station_name", str(to_station_name)
                     if from_station_name == first_station and to_station_name == last_station:
                         found_edge = e
-                        print "breaking ", "last station", last_station , "first station", first_station, "button_sensor_name", button_sensor_name, "button_station_name", button_station_name
-                        print "breaking from_station_name", from_station_name, "to_station_name", to_station_name
+                        # print "breaking ", "last station", last_station , "first station", first_station, "button_sensor_name", button_sensor_name, "button_station_name", button_station_name
+                        # print "breaking from_station_name", from_station_name, "to_station_name", to_station_name
                         done1 = True
                         break
                 if done1 == False:
@@ -1168,9 +1168,9 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             elif s == opt1:
                 sensor_changed.setKnownState(INACTIVE)
                 first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e)
-                print "f2b before", first_two_blocks
+                # print "f2b before", first_two_blocks
                 first_two_blocks = self.swapPositions(first_two_blocks,0,1)
-                print "f2b after", first_two_blocks
+                # print "f2b after", first_two_blocks
                 list_of_inhibited_blocks = self.store_the_two_blocks(first_two_blocks)
                 #g.__init__()   # calculate the weights on the edges
                 g = StationGraph()
@@ -1189,11 +1189,11 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             if s == opt2:
                 sensor_changed.setKnownState(INACTIVE)
                 first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e)
-                print "f2b before", first_two_blocks
+                # print "f2b before", first_two_blocks
                 list_of_inhibited_blocks = self.store_the_two_blocks(first_two_blocks)
                 g.__init__()   # calculate the weights on the edges
                 sensor_changed.setKnownState(INACTIVE)
-                print "final2", list_of_inhibited_blocks
+                # print "final2", list_of_inhibited_blocks
                 return True
             if s == opt3:
                 sensor_changed.setKnownState(INACTIVE)
@@ -1202,7 +1202,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 first_two_blocks = self.swapPositions(first_two_blocks,0,1)
                 list_of_inhibited_blocks = self.remove_the_two_blocks(first_two_blocks)  #remove from file
                 g.setup_graph_edges()   # calculate the weights on the edges
-                print "final2", list_of_inhibited_blocks
+                # print "final2", list_of_inhibited_blocks
                 sensor_changed.setKnownState(INACTIVE)
                 return True
             Firstloop = False
@@ -1217,7 +1217,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         return list
     def getFirstTwoBlocksInAllowedDirection(self, e):
         path_name =  e.getItem("path_name")
-        print "path name", path_name
+        # print "path name", path_name
         return path_name[:2]
 
     def store_the_two_blocks(self, first_two_blocks):
@@ -1226,10 +1226,10 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         to_add = first_two_blocks
         #to_add = first_two_blocks[0]+"."+first_two_blocks[1]
         if to_add not in existing:
-            print "nit in existing", "to_add", to_add, "existing", existing
+            # print "not in existing", "to_add", to_add, "existing", existing
             existing.append(to_add)
         self.write_list(existing)
-        print "final" , existing
+        # print "final" , existing
         return existing
 
     def remove_the_two_blocks(self, first_two_blocks):
@@ -1237,10 +1237,10 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         existing = list_inhibited_blocks
         to_remove = first_two_blocks
         if to_remove in existing:
-            print "in existing", "to_remove", to_remove, "existing", existing
+            # print "in existing", "to_remove", to_remove, "existing", existing
             existing.remove(to_remove)
         self.write_list(existing)
-        print "final" , existing
+        # print "final" , existing
         return existing
 
     def last_section_of_transit(self, trainInfo_fwd):
@@ -1684,6 +1684,7 @@ class MonitorTrackMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_active_train(self, train_name):
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+        DF.setState(DF.ICONIFIED);
         java_active_trains_list = DF.getActiveTrainsList()
         java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
         #print "java_active_trains_Arraylist",java_active_trains_Arraylist
