@@ -52,10 +52,12 @@ public class CdBSystemConnectionMemo extends MarklinSystemConnectionMemo {
      * Provides access to the TrafficController for this particular connection.
      * @return Marklin Traffic Controller.
      */
+    @Override
     public MarklinTrafficController getTrafficController() {
         return et;
     }
 
+    @Override
     public void setMarklinTrafficController(MarklinTrafficController et) {
         this.et = et;
         et.setAdapterMemo(this);
@@ -65,6 +67,7 @@ public class CdBSystemConnectionMemo extends MarklinSystemConnectionMemo {
     /**
      * This puts the common manager config in one place.
      */
+    @Override
     public void configureManagers() {
 
         MarklinPowerManager powerManager = new MarklinPowerManager(getTrafficController());
@@ -113,18 +116,22 @@ public class CdBSystemConnectionMemo extends MarklinSystemConnectionMemo {
         store(p,TamsProgrammerManager.class);
     }*/
 
+    @Override
     public MarklinTurnoutManager getTurnoutManager() {
         return (MarklinTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class, (Class<?> c) -> { return new MarklinTurnoutManager(this); });
     }
 
+    @Override
     public MarklinSensorManager getSensorManager() {
         return (MarklinSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> { return new MarklinSensorManager(this); });
     }
 
+    @Override
     public MarklinThrottleManager getThrottleManager() {
         return (MarklinThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class<?> c) -> { return new MarklinThrottleManager(this); });
     }
 
+    @Override
     public MarklinPowerManager getPowerManager() {
         return (MarklinPowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class<?> c) -> { return new MarklinPowerManager(getTrafficController()); });
     }
