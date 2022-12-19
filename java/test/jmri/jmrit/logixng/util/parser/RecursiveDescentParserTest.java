@@ -1396,6 +1396,132 @@ public class RecursiveDescentParserTest {
             t.parseExpression("aaaa{*}") );
         Assert.assertEquals("Invalid syntax error", ex.getMessage());
         Assert.assertEquals(5, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("++123") );
+        Assert.assertEquals("Invalid syntax. The expression must be assignable for operators ++ and --", ex.getMessage());
+        Assert.assertEquals(2, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("123++") );
+        Assert.assertEquals("Invalid syntax. The expression must be assignable for operators ++ and --", ex.getMessage());
+        Assert.assertEquals(0, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("aa + 123++") );
+        Assert.assertEquals("Invalid syntax. The expression must be assignable for operators ++ and --", ex.getMessage());
+        Assert.assertEquals(5, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("--123") );
+        Assert.assertEquals("Invalid syntax. The expression must be assignable for operators ++ and --", ex.getMessage());
+        Assert.assertEquals(2, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("bb + --123") );
+        Assert.assertEquals("Invalid syntax. The expression must be assignable for operators ++ and --", ex.getMessage());
+        Assert.assertEquals(7, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("123--") );
+        Assert.assertEquals("Invalid syntax. The expression must be assignable for operators ++ and --", ex.getMessage());
+        Assert.assertEquals(0, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("++") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(0, ex.getPosition());
+
+        ex = Assertions.assertThrows(InvalidSyntaxException.class, () ->
+            t.parseExpression("--") );
+        Assert.assertEquals("Invalid syntax error", ex.getMessage());
+        Assert.assertEquals(0, ex.getPosition());
+    }
+
+
+    private void checkBeginEnd(ExpressionNode exprNode) {
+        if (exprNode.getStartPos() == -1) {
+            log.error("ExpressionNode {} has start pos -1. {}", exprNode.getDefinitionString(), exprNode.getClass().getName());
+        }
+        if (exprNode.getEndPos() == -1) {
+            log.error("ExpressionNode {} has end pos -1. {}", exprNode.getDefinitionString(), exprNode.getClass().getName());
+        }
+        for (int i=0; i < exprNode.getChildCount(); i++) {
+            if (exprNode.getChild(i) == null) {
+                System.out.format("exprNode.getChild(%d) is null. %s, %s%n", i, exprNode.getDefinitionString(), exprNode.getClass().getName());
+            }
+            checkBeginEnd(exprNode.getChild(i));
+        }
+    }
+
+    private void addToken(List<Token> tokens, String theFormula, int pos, TokenType tokenType, String string) throws ParserException {
+        List<Token> tempTokens = new ArrayList<>(tokens);
+        string = string + " ";
+        StringBuilder formula = new StringBuilder(theFormula);
+        formula.append(string);
+        tempTokens.add(new Token(tokenType, string, pos));
+        addToken(tempTokens, formula.toString(), pos + string.length());
+    }
+
+    private void addToken(List<Token> tokens, String theFormula, int pos) throws ParserException {
+        if (tokens.size() < 3) {
+            for (TokenType tokenType : TokenType.values()) {
+                switch (tokenType) {
+                    case ERROR:
+                    case SAME_AS_LAST:
+                    case NONE:
+                    case SPACE:
+                        // Ignore these
+                        continue;
+
+                    case IDENTIFIER:
+                        // The identifier must be a valid function name for this test to work.
+                        addToken(tokens, theFormula, pos, tokenType, "fastClock");
+                        break;
+
+                    case INTEGER_NUMBER:
+                        addToken(tokens, theFormula, pos, tokenType, "318");
+                        break;
+
+                    case FLOATING_NUMBER:
+                        addToken(tokens, theFormula, pos, tokenType, "12.37");
+                        break;
+
+                    case STRING:
+                        addToken(tokens, theFormula, pos, tokenType, "\"My string\"");
+                        break;
+
+                    default:
+                        addToken(tokens, theFormula, pos, tokenType, tokenType.getString());
+                }
+            }
+        } else {
+//            System.out.format("Formula: '%s'%n", theFormula);
+            if (theFormula.isBlank()) return;
+            Map<String, Variable> variables = new HashMap<>();
+            RecursiveDescentParser t = new RecursiveDescentParser(variables);
+            try {
+                ExpressionNode exprNode = t.parseExpression(theFormula);
+                if (exprNode != null) {
+                    checkBeginEnd(exprNode);
+                }
+            } catch (InvalidSyntaxException e) {
+                Assert.assertNotEquals(-1, e.getPosition());
+            } catch (IllegalArgumentException e) {
+                // Ignore this exception
+//                System.out.format("IllegalArgumentException: Formula: '%s'. %s%n", theFormula, e.getMessage());
+            } catch (NullPointerException e) {
+                System.out.format("NullPointerException: Formula: '%s'%n", theFormula);
+//                e.printStackTrace();
+                throw e;
+            }
+        }
+    }
+
+    @Test
+    public void testBeginAndEnd() throws ParserException {
+        List<Token> tokens = new ArrayList<>();
+        addToken(tokens, "", 0);
     }
 
 
@@ -1461,5 +1587,8 @@ public class RecursiveDescentParserTest {
         public int myInt = 32;
         public float myFloat = (float) 31.32;
     }
+
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RecursiveDescentParserTest.class);
 
 }

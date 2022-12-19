@@ -193,7 +193,8 @@ public class RecursiveDescentParser {
                 newState = next(newState);
                 ExpressionNodeAndState rightSide = rule2.parse(newState);
                 if (rightSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
                 ExpressionNode exprNode = new ExpressionNodeAssignmentOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
                 leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
@@ -220,7 +221,8 @@ public class RecursiveDescentParser {
                 newState = next(newState);
                 ExpressionNodeAndState middleSide = rule3a.parse(newState);
                 if (middleSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
                 State oldState = newState;
                 newState = middleSide._state;
@@ -231,7 +233,8 @@ public class RecursiveDescentParser {
                     newState = next(newState);
                     ExpressionNodeAndState rightRightSide = rule3a.parse(newState);
                     if (rightRightSide == null) {
-                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                        int pos = newState._token != null ? newState._token.getPos() : 0;
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                     }
                     ExpressionNode exprNode = new ExpressionNodeTernaryOperator(
                             leftSide._exprNode, middleSide._exprNode, rightRightSide._exprNode);
@@ -261,13 +264,14 @@ public class RecursiveDescentParser {
             while ((newState._token != null)
                     && ((newState._token._tokenType == TokenType.BOOLEAN_OR))) {
 
-                TokenType operatorTokenType = newState._token._tokenType;
+                Token operatorToken = newState._token;
                 newState = next(newState);
                 ExpressionNodeAndState rightSide = rule3b.parse(newState);
                 if (rightSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
-                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(operatorToken, leftSide._exprNode, rightSide._exprNode);
                 leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
                 newState = rightSide._state;
             }
@@ -291,13 +295,14 @@ public class RecursiveDescentParser {
             while ((newState._token != null)
                     && ((newState._token._tokenType == TokenType.BOOLEAN_XOR))) {
 
-                TokenType operatorTokenType = newState._token._tokenType;
+                Token operatorToken = newState._token;
                 newState = next(newState);
                 ExpressionNodeAndState rightSide = rule4.parse(newState);
                 if (rightSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
-                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(operatorToken, leftSide._exprNode, rightSide._exprNode);
                 leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
                 newState = rightSide._state;
             }
@@ -321,13 +326,14 @@ public class RecursiveDescentParser {
             while ((newState._token != null)
                     && ((newState._token._tokenType == TokenType.BOOLEAN_AND))) {
 
-                TokenType operatorTokenType = newState._token._tokenType;
+                Token operatorToken = newState._token;
                 newState = next(newState);
                 ExpressionNodeAndState rightSide = rule5.parse(newState);
                 if (rightSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
-                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(operatorToken, leftSide._exprNode, rightSide._exprNode);
                 leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
                 newState = rightSide._state;
             }
@@ -355,7 +361,8 @@ public class RecursiveDescentParser {
                 newState = next(newState);
                 ExpressionNodeAndState rightSide = rule6.parse(newState);
                 if (rightSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
                 ExpressionNode exprNode = new ExpressionNodeBinaryOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
                 leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
@@ -385,7 +392,8 @@ public class RecursiveDescentParser {
                 newState = next(newState);
                 ExpressionNodeAndState rightSide = rule7.parse(newState);
                 if (rightSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
                 ExpressionNode exprNode = new ExpressionNodeBinaryOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
                 leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
@@ -415,7 +423,8 @@ public class RecursiveDescentParser {
                 newState = next(newState);
                 ExpressionNodeAndState rightSide = rule8.parse(newState);
                 if (rightSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
                 ExpressionNode exprNode = new ExpressionNodeBinaryOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
                 leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
@@ -446,7 +455,8 @@ public class RecursiveDescentParser {
                 newState = next(newState);
                 ExpressionNodeAndState rightSide = rule9.parse(newState);
                 if (rightSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
                 ExpressionNode exprNode = new ExpressionNodeComparingOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
                 leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
@@ -479,7 +489,8 @@ public class RecursiveDescentParser {
                 newState = next(newState);
                 ExpressionNodeAndState rightSide = rule10.parse(newState);
                 if (rightSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
                 ExpressionNode exprNode = new ExpressionNodeComparingOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
                 leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
@@ -507,13 +518,14 @@ public class RecursiveDescentParser {
                             || (newState._token._tokenType == TokenType.SHIFT_RIGHT)
                             || (newState._token._tokenType == TokenType.UNSIGNED_SHIFT_RIGHT))) {
 
-                TokenType operatorTokenType = newState._token._tokenType;
+                Token operatorToken = newState._token;
                 newState = next(newState);
                 ExpressionNodeAndState rightSide = rule11.parse(newState);
                 if (rightSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
-                ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(operatorToken, leftSide._exprNode, rightSide._exprNode);
                 leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
                 newState = rightSide._state;
             }
@@ -538,13 +550,14 @@ public class RecursiveDescentParser {
                     && ((newState._token._tokenType == TokenType.ADD)
                             || (newState._token._tokenType == TokenType.SUBTRACKT))) {
 
-                TokenType operatorTokenType = newState._token._tokenType;
+                Token operatorToken = newState._token;
                 newState = next(newState);
                 ExpressionNodeAndState rightSide = rule12.parse(newState);
                 if (rightSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
-                ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(operatorToken, leftSide._exprNode, rightSide._exprNode);
                 leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
                 newState = rightSide._state;
             }
@@ -570,13 +583,14 @@ public class RecursiveDescentParser {
                             || (newState._token._tokenType == TokenType.DIVIDE)
                             || (newState._token._tokenType == TokenType.MODULO))) {
 
-                TokenType operatorTokenType = newState._token._tokenType;
+                Token operatorToken = newState._token;
                 newState = next(newState);
                 ExpressionNodeAndState rightSide = rule14.parse(newState);
                 if (rightSide == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
-                ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(operatorToken, leftSide._exprNode, rightSide._exprNode);
                 leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
                 newState = rightSide._state;
             }
@@ -600,9 +614,10 @@ public class RecursiveDescentParser {
             if (newState != null) {
                 ExpressionNodeAndState exprNodeAndState = rule14.parse(newState);
                 if (exprNodeAndState == null || exprNodeAndState._exprNode == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
-                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(newState._lastToken._tokenType, null, exprNodeAndState._exprNode);
+                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(newState._lastToken, null, exprNodeAndState._exprNode);
                 return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
 
             } else {
@@ -610,9 +625,10 @@ public class RecursiveDescentParser {
                 if (newState != null) {
                     ExpressionNodeAndState exprNodeAndState = rule14.parse(newState);
                     if (exprNodeAndState == null) {
-                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                        int pos = newState._token != null ? newState._token.getPos() : 0;
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                     }
-                    ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(newState._lastToken._tokenType, null, exprNodeAndState._exprNode);
+                    ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(newState._lastToken, null, exprNodeAndState._exprNode);
                     return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
 
                 } else {
@@ -621,9 +637,10 @@ public class RecursiveDescentParser {
                     if (newState != null) {
                         ExpressionNodeAndState exprNodeAndState = rule14.parse(newState);
                         if (exprNodeAndState == null) {
-                            throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                            int pos = newState._token != null ? newState._token.getPos() : 0;
+                            throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                         }
-                        ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(newState._lastToken._tokenType, null, exprNodeAndState._exprNode);
+                        ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(newState._lastToken, null, exprNodeAndState._exprNode);
                         return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
 
                     } else {
@@ -632,9 +649,10 @@ public class RecursiveDescentParser {
                         if (newState != null) {
                             ExpressionNodeAndState exprNodeAndState = rule14.parse(newState);
                             if (exprNodeAndState == null) {
-                                throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                                int pos = newState._token != null ? newState._token.getPos() : 0;
+                                throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                             }
-                            ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(newState._lastToken._tokenType, null, exprNodeAndState._exprNode);
+                            ExpressionNode exprNode = new ExpressionNodeArithmeticOperator(newState._lastToken, null, exprNodeAndState._exprNode);
                             return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
 
                         } else {
@@ -643,10 +661,11 @@ public class RecursiveDescentParser {
                             if (newState != null) {
                                 ExpressionNodeAndState exprNodeAndState = rule15.parse(newState);
                                 if (exprNodeAndState == null) {
-                                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                                 }
                                 ExpressionNode exprNode = new ExpressionNodeIncreaseDecreaseOperator(
-                                        newState._lastToken._tokenType, exprNodeAndState._exprNode, true, newState._token.getPos(), -1);
+                                        newState._lastToken._tokenType, exprNodeAndState._exprNode, true, newState._token.getPos(), -11);
                                 return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
 
                             } else {
@@ -655,10 +674,11 @@ public class RecursiveDescentParser {
                                 if (newState != null) {
                                     ExpressionNodeAndState exprNodeAndState = rule15.parse(newState);
                                     if (exprNodeAndState == null) {
-                                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                                        int pos = newState._token != null ? newState._token.getPos() : 0;
+                                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                                     }
                                     ExpressionNode exprNode = new ExpressionNodeIncreaseDecreaseOperator(
-                                            newState._lastToken._tokenType, exprNodeAndState._exprNode, true, newState._token.getPos(), -1);
+                                            newState._lastToken._tokenType, exprNodeAndState._exprNode, true, newState._token.getPos(), -12);
                                     return new ExpressionNodeAndState(exprNode, exprNodeAndState._state);
 
                                 } else {
@@ -686,17 +706,17 @@ public class RecursiveDescentParser {
             State newState = accept(TokenType.INCREMENT, exprNodeAndState._state);
 
             if (newState != null) {
+                int endPos = newState._token != null ? newState._token.getEndPos() : newState._lastTokenPos;
                 ExpressionNode exprNode = new ExpressionNodeIncreaseDecreaseOperator(
-//                        newState._lastToken._tokenType, exprNodeAndState._exprNode, false, newState._token.getPos(), -1);
-                        newState._lastToken._tokenType, exprNodeAndState._exprNode, false, -1, -1);
+                        newState._lastToken._tokenType, exprNodeAndState._exprNode, false, state._token.getPos(), endPos);
                 return new ExpressionNodeAndState(exprNode, newState);
             } else {
                 newState = accept(TokenType.DECREMENT, exprNodeAndState._state);
 
                 if (newState != null) {
+                    int endPos = newState._token != null ? newState._token.getEndPos() : newState._lastTokenPos;
                     ExpressionNode exprNode = new ExpressionNodeIncreaseDecreaseOperator(
-//                            newState._lastToken._tokenType, exprNodeAndState._exprNode, false, newState._token.getPos(), -1);
-                            newState._lastToken._tokenType, exprNodeAndState._exprNode, false, -1, -1);
+                            newState._lastToken._tokenType, exprNodeAndState._exprNode, false, state._token.getPos(), endPos);
                     return new ExpressionNodeAndState(exprNode, newState);
                 } else {
                     return exprNodeAndState;
@@ -719,7 +739,8 @@ public class RecursiveDescentParser {
             if (newState != null) {
                 ExpressionNodeAndState exprNodeAndState = firstRule.parse(newState);
                 if (exprNodeAndState == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState._token.getPos());
+                    int pos = newState._token != null ? newState._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
                 newState = expect(TokenType.RIGHT_PARENTHESIS, exprNodeAndState._state);
                 return new ExpressionNodeAndState(exprNodeAndState._exprNode, newState);
@@ -823,13 +844,15 @@ public class RecursiveDescentParser {
                             newState = newState3;
                         }
                     } else {
-                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState2._token.getPos());
+                        int pos = newState2._token != null ? newState2._token.getPos() : 0;
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                     }
                 } else if ((newState2 = accept(TokenType.LEFT_SQUARE_BRACKET, newState)) != null) {
                     State newState3;
                     ExpressionNodeAndState exprNodeAndState2 = rule1.parse(newState2);
                     if (exprNodeAndState2 == null) {
-                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState2._token.getPos());
+                        int pos = newState2._token != null ? newState2._token.getPos() : 0;
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                     }
                     newState3 = expect(TokenType.RIGHT_SQUARE_BRACKET, exprNodeAndState2._state);
                     exprNode = new ExpressionNodeComplex(
@@ -841,12 +864,14 @@ public class RecursiveDescentParser {
                     State newState3;
                     ExpressionNodeAndState exprNodeAndState2 = rule1.parse(newState2);
                     if (exprNodeAndState2 == null) {
-                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState2._token.getPos());
+                        int pos = newState2._token != null ? newState2._token.getPos() : 0;
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                     }
                     newState3 = expect(TokenType.RIGHT_CURLY_BRACKET, exprNodeAndState2._state);
+                    int endPos = newState3._token != null ? newState3._token.getEndPos() : exprNodeAndState2._state._token.getEndPos();
                     exprNode = new ExpressionNodeComplex(
                             exprNode,
-                            new ExpressionNodeMap(newState._token, exprNodeAndState2._exprNode, newState3._token.getEndPos()));
+                            new ExpressionNodeMap(newState._token, exprNodeAndState2._exprNode, endPos));
                     expressionNodeAndState = new ExpressionNodeAndState(exprNode, newState3);
                     newState = newState3;
                 } else {
@@ -869,24 +894,31 @@ public class RecursiveDescentParser {
 
             State newState = state;
             State newState2;
+            int endPos = state._token != null ? state._token.getEndPos() : startPos;
             if ((accept(TokenType.RIGHT_PARENTHESIS, newState)) == null) {
                 ExpressionNodeAndState exprNodeAndState = firstRule.parse(state);
                 if (exprNodeAndState == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), state._token.getPos());
+                    int pos = state._token != null ? state._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
                 parameterList.add(exprNodeAndState._exprNode);
 
                 while ((newState2 = accept(TokenType.COMMA, exprNodeAndState._state)) != null) {
                     exprNodeAndState = firstRule.parse(newState2);
                     if (exprNodeAndState == null) {
-                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState2._token.getPos());
+                        int pos = newState2._token != null ? newState2._token.getPos() : 0;
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                     }
                     parameterList.add(exprNodeAndState._exprNode);
                 }
 
                 newState = exprNodeAndState._state;
+
+                if (newState._token != null) {
+                    endPos = newState._token.getEndPos();
+                }
             }
-            ExpressionNode exprNode = new ExpressionNodeFunction(identifier, parameterList, startPos, newState._token.getPos());
+            ExpressionNode exprNode = new ExpressionNodeFunction(identifier, parameterList, startPos, endPos);
             return new ExpressionNodeAndState(exprNode, newState);
         }
 
@@ -905,14 +937,16 @@ public class RecursiveDescentParser {
             if ((accept(TokenType.RIGHT_PARENTHESIS, newState)) == null) {
                 ExpressionNodeAndState exprNodeAndState = firstRule.parse(state);
                 if (exprNodeAndState == null) {
-                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), state._token.getPos());
+                    int pos = state._token != null ? state._token.getPos() : 0;
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                 }
                 parameterList.add(exprNodeAndState._exprNode);
 
                 while ((newState2 = accept(TokenType.COMMA, exprNodeAndState._state)) != null) {
                     exprNodeAndState = firstRule.parse(newState2);
                     if (exprNodeAndState == null) {
-                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), newState2._token.getPos());
+                        int pos = newState2._token != null ? newState2._token.getPos() : 0;
+                        throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"), pos);
                     }
                     parameterList.add(exprNodeAndState._exprNode);
                 }

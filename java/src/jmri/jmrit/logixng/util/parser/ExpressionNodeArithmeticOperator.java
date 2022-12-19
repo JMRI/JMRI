@@ -12,10 +12,12 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
     private final TokenType _tokenType;
     private final ExpressionNode _leftSide;
     private final ExpressionNode _rightSide;
+    private final int _startPos;
+    private final int _endPos;
 
 
-    public ExpressionNodeArithmeticOperator(TokenType tokenType, ExpressionNode leftSide, ExpressionNode rightSide) {
-        _tokenType = tokenType;
+    public ExpressionNodeArithmeticOperator(Token token, ExpressionNode leftSide, ExpressionNode rightSide) {
+        _tokenType = token._tokenType;
         _leftSide = leftSide;
         _rightSide = rightSide;
 
@@ -44,35 +46,46 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
             default:
                 throw new IllegalArgumentException("Unknown arithmetic operator: "+_tokenType.name());
         }
+
+        _startPos = _leftSide != null ? _leftSide.getStartPos() : token.getPos();
+        _endPos = _rightSide != null ? _rightSide.getStartPos() : token.getEndPos();
     }
 
     /** {@inheritDoc} */
     @Override
     public int getStartPos() {
-        return _leftSide.getStartPos();
+        return _startPos;
     }
 
     /** {@inheritDoc} */
     @Override
     public int getEndPos() {
-        return _rightSide.getEndPos();
+        return _endPos;
     }
 
     /** {@inheritDoc} */
     @Override
     public ExpressionNode getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        switch (index) {
-            case 0: return _leftSide;
-            case 1: return _rightSide;
-            default: throw new IllegalArgumentException(
-                    String.format("index has invalid value: %d", index));
+        if (_leftSide != null) {
+            switch (index) {
+                case 0: return _leftSide;
+                case 1: return _rightSide;
+                default: throw new IllegalArgumentException(
+                        String.format("index has invalid value: %d", index));
+            }
+        } else {
+            switch (index) {
+                case 0: return _rightSide;
+                default: throw new IllegalArgumentException(
+                        String.format("index has invalid value: %d", index));
+            }
         }
     }
 
     /** {@inheritDoc} */
     @Override
     public int getChildCount() {
-        return 2;
+        return _leftSide != null ? 2 : 1;
     }
 
     private Object add(Object left, Object right) throws CalculateException {

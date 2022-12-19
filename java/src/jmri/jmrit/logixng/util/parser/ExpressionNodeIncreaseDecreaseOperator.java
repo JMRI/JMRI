@@ -20,18 +20,21 @@ public class ExpressionNodeIncreaseDecreaseOperator implements ExpressionNode {
             ExpressionNode exprNode,
             boolean before,
             int startPos,
-            int endPos) {
+            int endPos)
+            throws InvalidSyntaxException {
 
         _exprNode = exprNode;
         _startPos = startPos;
         _endPos = endPos;
 
         if (_exprNode == null) {
-            throw new IllegalArgumentException("exprNode must not be null for operators ++ and --");
+            int pos = before ? _exprNode.getStartPos() : startPos;
+            throw new InvalidSyntaxException(Bundle.getMessage("ExpressionMustNotBeNullForPlusPlusAndMinusMinus"), pos);
         }
 
         if (! _exprNode.canBeAssigned()) {
-            throw new IllegalArgumentException("exprNode must assignable");
+            int pos = before ? _exprNode.getStartPos() : startPos;
+            throw new InvalidSyntaxException(Bundle.getMessage("ExpressionMustBeAssignableForPlusPlusAndMinusMinus"), pos);
         }
 
         // Verify that the token is of the correct type
