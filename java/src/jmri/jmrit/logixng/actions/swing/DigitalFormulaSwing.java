@@ -90,7 +90,7 @@ public class DigitalFormulaSwing extends AbstractDigitalActionSwing {
         while (c != null && !(c instanceof JDialog)) {
             c = c.getParent();
         }
-        if (c instanceof JDialog) {
+        if (c != null) {
             ((JDialog)c).pack();
         } else {
             throw new RuntimeException("Panel is not within a JDialog");
