@@ -117,6 +117,10 @@ public class DigitalFormulaSwing extends AbstractDigitalActionSwing {
                 Reference<Integer> startRef = new Reference<>();
                 Reference<Integer> endRef = new Reference<>();
                 if (isPosWithingExprNode(expressionNode, event.getDot(), startRef, endRef)) {
+                    if (startRef.get() == null || endRef.get() == null) {
+                        // This cannot happen but Spotbugs warns about it.
+                        throw new NullPointerException();
+                    }
                     left = startRef.get();
                     right = endRef.get();
                 }
