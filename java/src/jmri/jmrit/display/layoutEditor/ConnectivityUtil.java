@@ -1929,15 +1929,18 @@ final public class ConnectivityUtil {
      */
     private void neitherBranchWarning(LayoutTurnout layoutTurnout, LayoutBlock nextLayoutBlock, boolean suppress) {
         if (!suppress) {
-            Turnout turnout = layoutTurnout.namedTurnout.getBean();
-            String turnoutSystemName = turnout.getSystemName();
-            String turnoutUserName = turnout.getUserName();
+            String layoutBlockInfo = layoutTurnout.toString();
+            if (layoutTurnout.namedTurnout != null && layoutTurnout.namedTurnout.getBean() != null) {
+                Turnout turnout = layoutTurnout.namedTurnout.getBean();
+                String turnoutSystemName = turnout.getSystemName();
+                String turnoutUserName = turnout.getUserName();
+                layoutBlockInfo = layoutBlockInfo+ " turnout: "+turnoutUserName+" ("+turnoutSystemName+")";
+            }
             String layoutBlockSystemName = nextLayoutBlock.getSystemName();
             String layoutBlockUserName = nextLayoutBlock.getUserName();
 
-            log.warn("Neither branch at \"{}\" ({}) leads to next Block \"{}\" ({})",
-                        turnoutUserName,
-                        turnoutSystemName,
+            log.warn("Neither branch at {} leads to next Block {} ({})",
+                        layoutBlockInfo,
                         layoutBlockUserName,
                         layoutBlockSystemName);
         }
