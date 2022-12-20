@@ -566,9 +566,12 @@ public class TokenizerTest {
 
         new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("(a-b) + c*d");
         new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("(a-b)+!c");
+        new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("(a-bbb)+!c?d:e");
+        new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("(a-bbb)+!c?d:(eee+f*ggggg)");
+        new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("(a-bbb)+!c?d:(eee+f*ggggg*hhhhhhhhhhh+jjjjjjjjjjj+fffffff)");
 
 
-
+/*
         new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("12");
         new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("12+31");
         new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("12345+31");
@@ -579,7 +582,7 @@ public class TokenizerTest {
         new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("(12345+31)*(23-1)");
         new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("(12345+312345)*(23-1)");
         new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("12+31*(23-1)+((9*2+3)-2)/23");
-
+*/
     }
 
     // The minimal setup for log4J
