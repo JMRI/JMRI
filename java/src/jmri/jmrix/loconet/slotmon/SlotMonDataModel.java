@@ -32,19 +32,20 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     static public final int STATCOLUMN = 5;  // status: free, common, etc
     static public final int DISPCOLUMN = 6;  // originally "dispatch" button, now "free"
     static public final int CONSCOLUMN = 7;  // consist state
-    static public final int THROTCOLUMN = 8;
-    static public final int DIRCOLUMN = 9;
-    static public final int F0COLUMN = 10;
-    static public final int F1COLUMN = 11;
-    static public final int F2COLUMN = 12;
-    static public final int F3COLUMN = 13;
-    static public final int F4COLUMN = 14;
-    static public final int F5COLUMN = 15;
-    static public final int F6COLUMN = 16;
-    static public final int F7COLUMN = 17;
-    static public final int F8COLUMN = 18;
+    static public final int CONSISTADDRESS = 8; //consist address
+    static public final int THROTCOLUMN = 9;
+    static public final int DIRCOLUMN = 10;
+    static public final int F0COLUMN = 11;
+    static public final int F1COLUMN = 12;
+    static public final int F2COLUMN = 13;
+    static public final int F3COLUMN = 14;
+    static public final int F4COLUMN = 15;
+    static public final int F5COLUMN = 16;
+    static public final int F6COLUMN = 17;
+    static public final int F7COLUMN = 18;
+    static public final int F8COLUMN = 19;
 
-    static public final int NUMCOLUMN = 19;
+    static public final int NUMCOLUMN = 20;
 
     private final transient LocoNetSystemConnectionMemo memo;
 
@@ -102,6 +103,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return Bundle.getMessage("UseCol");
             case CONSCOLUMN:
                 return Bundle.getMessage("ConsistedCol");
+            case CONSISTADDRESS:
+                return Bundle.getMessage("ConsistAddress");
             case DIRCOLUMN:
                 return Bundle.getMessage("DirectionCol");
             case DISPCOLUMN:
@@ -136,6 +139,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         switch (col) {
             case SLOTCOLUMN:
             case ADDRCOLUMN:
+            case CONSISTADDRESS:
                 return Integer.class;
             case SPDCOLUMN:
             case TYPECOLUMN:
@@ -260,6 +264,18 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                     default:
                         return Bundle.getMessage("StateError");
                 }
+            case CONSISTADDRESS:
+                switch (s.consistStatus()) {
+                    case LnConstants.CONSIST_TOP:
+                        return s.locoAddr();
+                    case LnConstants.CONSIST_MID:
+                    case LnConstants.CONSIST_SUB:
+                        return memo.getSlotManager().slot(s.speed()).locoAddr();
+                    case LnConstants.CONSIST_NO:
+                        return 0;
+                    default:
+                        return 0;
+                }
             case DISPCOLUMN:
                 return Bundle.getMessage("ButtonRelease"); // will be name of button in default GUI
             case DIRCOLUMN:
@@ -308,6 +324,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return new JTextField(12).getPreferredSize().width;
             case CONSCOLUMN:
                 return new JTextField(4).getPreferredSize().width;
+            case CONSISTADDRESS:
+                return new JTextField(" 0000 ").getPreferredSize().width;
             case DIRCOLUMN:
                 // the length of an empty JTextField works on more GUIs
                 int m = Math.max(Bundle.getMessage("DirColForward").length(), Bundle.getMessage("DirColReverse").length());
