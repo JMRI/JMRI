@@ -37,13 +37,18 @@ public class ScriptFileChooser extends JFileChooser {
         HashMap<String, FileFilter> filters = new HashMap<>();
         List<String> filterNames = new ArrayList<>();
         JmriScriptEngineManager.getDefault().getManager().getEngineFactories().stream().forEach((ScriptEngineFactory factory) -> {
+            log.debug("processing factory {} for {}", factory, factory.getLanguageName());
             String version = factory.getEngineVersion();
             if (version != null) {
                 List<String> extensions = factory.getExtensions();
                 allExtensions.addAll(extensions);
                 String name = JmriScriptEngineManager.fileForLanguage(factory.getEngineName(), factory.getLanguageName());
                 filterNames.add(name);
-                filters.put(name, new FileNameExtensionFilter(name, extensions.toArray(new String[extensions.size()])));
+                if (!extensions.isEmpty()) {
+                    filters.put(name, new FileNameExtensionFilter(name, extensions.toArray(new String[extensions.size()])));
+                } else {
+                    log.warn("Found no valid extensions for language {} version {}", factory.getLanguageName(), version);
+                }
             }
         });
         FileFilter allScripts = new FileNameExtensionFilter(Bundle.getMessage("allScripts"), allExtensions.toArray(new String[allExtensions.size()]));
@@ -55,5 +60,5 @@ public class ScriptFileChooser extends JFileChooser {
         this.setFileSelectionMode(JFileChooser.FILES_ONLY);
     }
 
-    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScriptFileChooser.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScriptFileChooser.class);
 }
