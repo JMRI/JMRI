@@ -33,31 +33,22 @@ public class FormulaDiagram {
         List<StringBuilder> output = new ArrayList<>();
         printDiagram(exprNodeData, output);
 
-//        System.out.format("%n------------------------%nDiagram:%n");
         System.out.format("%n------------------------%n");
         for (int i=0; i < output.size(); i++) {
             System.out.println(output.get(i).toString());
         }
         System.out.format("%n%n");
-//        System.out.format("------------------------%n");
     }
 
     private void printDiagram(ExprNodeData exprNodeData, List<StringBuilder> output) {
-//        System.out.format("printDiagram: %s, x: %d, y: %d%n", exprNodeData._str, exprNodeData._x, exprNodeData._y);
-
         if (output.size() <= exprNodeData._y) {
             output.add(new StringBuilder());
         }
 
         StringBuilder sb = output.get(exprNodeData._y);
-//        if (sb.length() < exprNodeData._x) {
-            // Pad string with spaces
-//            sb.append(String.format(String.format("%%%ds", exprNodeData._x - sb.length()), ""));
-//        }
-//        System.out.println("Format: '"+String.format("%%%ds", exprNodeData._x)+"'");
         int pad = exprNodeData._x - sb.length();
-//        int pad = exprNodeData._x;
         if (pad > 0) {
+            // Pad string with spaces
             sb.append(String.format(String.format("%%%ds", pad), ""));
         }
         sb.append(exprNodeData._str);
@@ -68,8 +59,6 @@ public class FormulaDiagram {
     }
 
     private void calculateDiagramPass1(ExpressionNode exprNode, ExprNodeData exprNodeData, int y) {
-//        System.out.format("calculateDiagramPass1: %s, %d%n", exprNode.getDefinitionString(), y);
-
         TokenType tokenType = exprNode.getToken().getTokenType();
         exprNodeData._str = tokenType.hasData() ? exprNode.getToken().getString() : tokenType.getString();
         exprNodeData._y = y;
@@ -90,8 +79,6 @@ public class FormulaDiagram {
         }
         if (!exprNodeData._childs.isEmpty()) width -= space;
 
-//        System.out.format("calculateDiagramPass2: %s, %d, %d%n", exprNodeData._str, exprNodeData._y, width);
-
         int left = (width - exprNodeData._str.length()) / 2;
         if (left < 0) left = 0;
         exprNodeData._x = x0 + left;
@@ -101,7 +88,6 @@ public class FormulaDiagram {
 
 
     private static class ExprNodeData {
-//        private ExpressionNode _exprNode;
         private String _str;
         private int _x, _y;
         List<ExprNodeData> _childs = new ArrayList<>();
