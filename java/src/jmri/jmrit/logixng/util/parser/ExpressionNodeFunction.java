@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.SymbolTable;
  */
 public class ExpressionNodeFunction implements ExpressionNode {
 
+    private final Token _token;
     private final String _identifier;
     private final Function _function;
     private final List<ExpressionNode> _parameterList;
@@ -20,19 +21,26 @@ public class ExpressionNodeFunction implements ExpressionNode {
     private final int _endPos;
 
 
-    public ExpressionNodeFunction(String identifier, List<ExpressionNode> parameterList, int startPos, int endPos)
+    public ExpressionNodeFunction(Token token, List<ExpressionNode> parameterList, int startPos, int endPos)
             throws FunctionNotExistsException {
-        _identifier = identifier;
-        _function = InstanceManager.getDefault(FunctionManager.class).get(identifier);
+        _token = token;
+        _identifier = token.getString();
+        _function = InstanceManager.getDefault(FunctionManager.class).get(_identifier);
         _parameterList = parameterList;
         _startPos = startPos;
         _endPos = endPos;
 
         if (_function == null) {
-            throw new FunctionNotExistsException(Bundle.getMessage("FunctionNotExists", identifier), identifier);
+            throw new FunctionNotExistsException(Bundle.getMessage("FunctionNotExists", _identifier), _identifier);
         }
 
 //        System.err.format("Function %s, %s%n", _function.getName(), _function.getClass().getName());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Token getToken() {
+        return _token;
     }
 
     /** {@inheritDoc} */

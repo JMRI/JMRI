@@ -8,14 +8,23 @@ import jmri.jmrit.logixng.SymbolTable;
  */
 public class ExpressionNodeComplex implements ExpressionNode {
 
+    private final Token _token;
     private final ExpressionNode _firstNode;
     private final ExpressionNodeWithParameter _secondNode;
 
     public ExpressionNodeComplex(
+            Token token,
             ExpressionNode firstNode,
             ExpressionNodeWithParameter secondNode) {
+        _token = token;
         _firstNode = firstNode;
         _secondNode = secondNode;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Token getToken() {
+        return _token;
     }
 
     /** {@inheritDoc} */

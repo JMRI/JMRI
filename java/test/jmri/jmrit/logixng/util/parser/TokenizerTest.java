@@ -561,6 +561,11 @@ public class TokenizerTest {
 
     }
 
+    @Test
+    public void testDaniel() throws InvalidSyntaxException {
+        new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("12+31*(23-1)+((9*2+3)-2)/23");
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

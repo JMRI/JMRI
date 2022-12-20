@@ -9,12 +9,12 @@ import jmri.util.TypeConversionUtil;
  */
 public class ExpressionNodeBinaryOperator implements ExpressionNode {
 
-    private final TokenType _tokenType;
+    private final Token _token;
     private final ExpressionNode _leftSide;
     private final ExpressionNode _rightSide;
 
-    public ExpressionNodeBinaryOperator(TokenType tokenType, ExpressionNode leftSide, ExpressionNode rightSide) {
-        _tokenType = tokenType;
+    public ExpressionNodeBinaryOperator(Token token, ExpressionNode leftSide, ExpressionNode rightSide) {
+        _token = token;
         _leftSide = leftSide;
         _rightSide = rightSide;
 
@@ -23,7 +23,7 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
         }
 
         // Verify that the token is of the correct type
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case BINARY_OR:
             case BINARY_XOR:
             case BINARY_AND:
@@ -39,8 +39,14 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
                 break;
 
             default:
-                throw new IllegalArgumentException("Unsupported binary operator: "+_tokenType.name());
+                throw new IllegalArgumentException("Unsupported binary operator: "+_token._tokenType.name());
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Token getToken() {
+        return _token;
     }
 
     /** {@inheritDoc} */
@@ -76,7 +82,7 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
     public Object calculate(SymbolTable symbolTable) throws JmriException {
 
         Object leftValue = null;
-        if (_tokenType != TokenType.BINARY_NOT) {
+        if (_token._tokenType != TokenType.BINARY_NOT) {
             // Left value must be calculated _before_ right value is calculated.
             // When a value is calculated, a method might be called, and the
             // order of these calls must be correct.
@@ -92,7 +98,7 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
         }
         long right = TypeConversionUtil.convertToLong(rightValue);
 
-        if (_tokenType == TokenType.BINARY_NOT) {
+        if (_token._tokenType == TokenType.BINARY_NOT) {
             return ~ right;
         }
 
@@ -101,7 +107,7 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
         }
         long left = TypeConversionUtil.convertToLong(leftValue);
 
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case BINARY_OR:
                 return left | right;
 
@@ -112,7 +118,7 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
                 return left & right;
 
             default:
-                throw new CalculateException("Unknown binary operator: "+_tokenType.name());
+                throw new CalculateException("Unknown binary operator: "+_token._tokenType.name());
         }
     }
 
@@ -120,7 +126,7 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
     @Override
     public String getDefinitionString() {
         String operStr;
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case BINARY_OR:
                 operStr = "|";
                 break;
@@ -138,7 +144,7 @@ public class ExpressionNodeBinaryOperator implements ExpressionNode {
                 break;
 
             default:
-                throw new UnsupportedOperationException("Unknown arithmetic operator: "+_tokenType.name());
+                throw new UnsupportedOperationException("Unknown arithmetic operator: "+_token._tokenType.name());
         }
         if (_leftSide != null) {
             return "("+_leftSide.getDefinitionString()+")" + operStr + "("+_rightSide.getDefinitionString()+")";

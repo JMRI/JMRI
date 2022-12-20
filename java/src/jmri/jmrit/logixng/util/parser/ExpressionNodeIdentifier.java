@@ -29,6 +29,12 @@ public class ExpressionNodeIdentifier implements ExpressionNode {
 
     /** {@inheritDoc} */
     @Override
+    public Token getToken() {
+        return _token;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public int getStartPos() {
         return _token.getPos();
     }

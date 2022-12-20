@@ -9,7 +9,7 @@ import jmri.util.TypeConversionUtil;
  */
 public class ExpressionNodeArithmeticOperator implements ExpressionNode {
 
-    private final TokenType _tokenType;
+    private final Token _token;
     private final ExpressionNode _leftSide;
     private final ExpressionNode _rightSide;
     private final int _startPos;
@@ -17,7 +17,7 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
 
 
     public ExpressionNodeArithmeticOperator(Token token, ExpressionNode leftSide, ExpressionNode rightSide) {
-        _tokenType = token._tokenType;
+        _token = token;
         _leftSide = leftSide;
         _rightSide = rightSide;
 
@@ -26,7 +26,7 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
         }
 
         // Verify that the token is of the correct type
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case ADD:
             case SUBTRACKT:
             case BINARY_NOT:
@@ -44,11 +44,17 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
                 break;
 
             default:
-                throw new IllegalArgumentException("Unknown arithmetic operator: "+_tokenType.name());
+                throw new IllegalArgumentException("Unknown arithmetic operator: "+_token._tokenType.name());
         }
 
         _startPos = _leftSide != null ? _leftSide.getStartPos() : token.getPos();
         _endPos = _rightSide.getEndPos();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Token getToken() {
+        return _token;
     }
 
     /** {@inheritDoc} */
@@ -220,7 +226,7 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
         Object left = _leftSide != null ? _leftSide.calculate(symbolTable) : null;
         Object right = _rightSide.calculate(symbolTable);
 
-        if ((left == null) && ((_tokenType == TokenType.ADD) || (_tokenType == TokenType.SUBTRACKT))) {
+        if ((left == null) && ((_token._tokenType == TokenType.ADD) || (_token._tokenType == TokenType.SUBTRACKT))) {
             left = 0;
         }
 
@@ -232,14 +238,14 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
             right = ((Boolean)right) ? 1 : 0;
         }
 
-        if (_tokenType == TokenType.BINARY_NOT) {
+        if (_token._tokenType == TokenType.BINARY_NOT) {
             if (! TypeConversionUtil.isIntegerNumber(right)) {
                 return 0;
             }
             return ~ TypeConversionUtil.convertToLong(right);
         }
 
-        if (_tokenType == TokenType.ADD) {
+        if (_token._tokenType == TokenType.ADD) {
             // Add can handle String concatenation
             return add(left, right);
         } else {
@@ -252,7 +258,7 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
                 return 0;
             }
 
-            switch (_tokenType) {
+            switch (_token._tokenType) {
                 case SUBTRACKT:
                     return subtract(left, right);
                 case MULTIPLY:
@@ -269,7 +275,7 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
                     return unsignedShiftRight(left, right);
 
                 default:
-                    throw new CalculateException("Unknown arithmetic operator: "+_tokenType.name());
+                    throw new CalculateException("Unknown arithmetic operator: "+_token._tokenType.name());
             }
         }
     }
@@ -278,7 +284,7 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
     @Override
     public String getDefinitionString() {
         String operStr;
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case ADD:
                 operStr = "+";
                 break;
@@ -316,7 +322,7 @@ public class ExpressionNodeArithmeticOperator implements ExpressionNode {
                 break;
 
             default:
-                throw new UnsupportedOperationException("Unknown arithmetic operator: "+_tokenType.name());
+                throw new UnsupportedOperationException("Unknown arithmetic operator: "+_token._tokenType.name());
         }
 
         String leftSideString = _leftSide != null ? "(" + _leftSide.getDefinitionString() + ")" : "";

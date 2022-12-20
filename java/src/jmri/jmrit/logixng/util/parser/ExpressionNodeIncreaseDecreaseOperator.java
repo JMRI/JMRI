@@ -9,6 +9,7 @@ import jmri.util.TypeConversionUtil;
  */
 public class ExpressionNodeIncreaseDecreaseOperator implements ExpressionNode {
 
+    private final Token _token;
     private final ExpressionNode _exprNode;
     private final Operator _operator;
     private final int _startPos;
@@ -16,13 +17,14 @@ public class ExpressionNodeIncreaseDecreaseOperator implements ExpressionNode {
 
 
     public ExpressionNodeIncreaseDecreaseOperator(
-            TokenType tokenType,
+            Token token,
             ExpressionNode exprNode,
             boolean before,
             int startPos,
             int endPos)
             throws InvalidSyntaxException {
 
+        _token = token;
         _exprNode = exprNode;
         _startPos = startPos;
         _endPos = endPos;
@@ -37,7 +39,7 @@ public class ExpressionNodeIncreaseDecreaseOperator implements ExpressionNode {
         }
 
         // Verify that the token is of the correct type
-        switch (tokenType) {
+        switch (_token._tokenType) {
             case INCREMENT:
                 _operator = before ? Operator.PRE_INCREMENT : Operator.POST_INCREMENT;
                 break;
@@ -45,8 +47,14 @@ public class ExpressionNodeIncreaseDecreaseOperator implements ExpressionNode {
                 _operator = before ? Operator.PRE_DECREMENT : Operator.POST_DECREMENT;
                 break;
             default:
-                throw new IllegalArgumentException("Unknown arithmetic operator: "+tokenType.name());
+                throw new IllegalArgumentException("Unknown arithmetic operator: "+_token._tokenType.name());
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Token getToken() {
+        return _token;
     }
 
     /** {@inheritDoc} */

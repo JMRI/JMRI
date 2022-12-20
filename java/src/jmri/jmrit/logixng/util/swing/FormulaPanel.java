@@ -31,7 +31,7 @@ public class FormulaPanel {
 //        DigitalFormula action = (DigitalFormula)object;
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
-        JLabel label = new JLabel(Bundle.getMessage("DigitalFormula_Formula"));
+        JLabel label = new JLabel(Bundle.getMessage("FormulaPanel_Formula"));
         _formula = new JTextField();
         _formula.setColumns(40);
         _formulaParentheses = new JLabel("  "); // This must not be an empty string
@@ -60,6 +60,12 @@ public class FormulaPanel {
         panel.add(_formulaParenthesesScrollPane, c);
         c.gridy = 2;
         panel.add(_formulaError, c);
+        c.gridy = 3;
+        JButton showDiagramButton = new JButton(Bundle.getMessage("FormulaPanel_ShowDiagram"));
+        showDiagramButton.addActionListener((e)->{
+            new FormulaDiagram().showDiagram(_formula.getText());
+        });
+        panel.add(showDiagramButton, c);
 
         return panel;
     }
@@ -174,7 +180,7 @@ public class FormulaPanel {
         try {
             parser.parseExpression(_formula.getText());
         } catch (ParserException ex) {
-            errorMessages.add(Bundle.getMessage("DigitalFormula_InvalidFormula", _formula.getText()));
+            errorMessages.add(Bundle.getMessage("FormulaPanel_InvalidFormula", _formula.getText()));
             log.error("Invalid formula '{}'. Error: ", _formula.getText(), ex);
             return false;
         }

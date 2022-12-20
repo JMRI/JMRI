@@ -9,13 +9,18 @@ import jmri.util.TypeConversionUtil;
  */
 public class ExpressionNodeAssignmentOperator implements ExpressionNode {
 
-    private final TokenType _tokenType;
+    private final Token _token;
     private final ExpressionNode _leftSide;
     private final ExpressionNode _rightSide;
 
 
-    public ExpressionNodeAssignmentOperator(TokenType tokenType, ExpressionNode leftSide, ExpressionNode rightSide) {
-        _tokenType = tokenType;
+    // This constructor is used by tests
+    public ExpressionNodeAssignmentOperator(TokenType tokenType,  ExpressionNode leftSide, ExpressionNode rightSide) {
+        this(new Token(tokenType, "", 0), leftSide, rightSide);
+    }
+
+    public ExpressionNodeAssignmentOperator(Token token, ExpressionNode leftSide, ExpressionNode rightSide) {
+        _token = token;
         _leftSide = leftSide;
         _rightSide = rightSide;
 
@@ -28,7 +33,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
         }
 
         // Verify that the token is of the correct type
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case ASSIGN:
             case ASSIGN_ADD:
             case ASSIGN_SUBTRACKT:
@@ -49,8 +54,14 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
                 break;
 
             default:
-                throw new IllegalArgumentException("Unknown arithmetic operator: "+_tokenType.name());
+                throw new IllegalArgumentException("Unknown arithmetic operator: "+_token._tokenType.name());
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Token getToken() {
+        return _token;
     }
 
     /** {@inheritDoc} */
@@ -247,7 +258,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
 
-        if (_tokenType == TokenType.ASSIGN) {
+        if (_token._tokenType == TokenType.ASSIGN) {
             Object value = _rightSide.calculate(symbolTable);
             _leftSide.assignValue(symbolTable, value);
             return value;
@@ -266,7 +277,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
 
         Object result;
 
-        if (_tokenType == TokenType.ASSIGN_ADD) {
+        if (_token._tokenType == TokenType.ASSIGN_ADD) {
             // Add can handle String concatenation
             result = add(left, right);
         } else {
@@ -277,7 +288,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             } else if (! TypeConversionUtil.isFloatingNumber(right)) {
                 result = 0;
             } else {
-                switch (_tokenType) {
+                switch (_token._tokenType) {
                     case ASSIGN_SUBTRACKT:
                         result = subtract(left, right);
                         break;
@@ -309,7 +320,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
                         result = unsignedShiftRight(left, right);
                         break;
                     default:
-                        throw new CalculateException("Unknown arithmetic operator: "+_tokenType.name());
+                        throw new CalculateException("Unknown arithmetic operator: "+_token._tokenType.name());
                 }
             }
         }
@@ -322,7 +333,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
     @Override
     public String getDefinitionString() {
         String operStr;
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case ADD:
                 operStr = "+";
                 break;
@@ -392,7 +403,7 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
                 break;
 
             default:
-                throw new UnsupportedOperationException("Unknown arithmetic operator: "+_tokenType.name());
+                throw new UnsupportedOperationException("Unknown arithmetic operator: "+_token._tokenType.name());
         }
 
         String leftSideString = _leftSide != null ? _leftSide.getDefinitionString() : "null";

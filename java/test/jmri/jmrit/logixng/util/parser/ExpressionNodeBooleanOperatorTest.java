@@ -152,7 +152,7 @@ public class ExpressionNodeBooleanOperatorTest {
             hasThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", hasThrown.get());
-
+/*
         // Test unsupported token type
         hasThrown.set(false);
         try {
@@ -163,6 +163,7 @@ public class ExpressionNodeBooleanOperatorTest {
             hasThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", hasThrown.get());
+*/
     }
 
     @Test
@@ -234,7 +235,7 @@ public class ExpressionNodeBooleanOperatorTest {
                         .getDefinitionString());
 
         AtomicBoolean hasThrown = new AtomicBoolean(false);
-
+/*
         // Test unsupported token type
         hasThrown.set(false);
         try {
@@ -245,6 +246,7 @@ public class ExpressionNodeBooleanOperatorTest {
             hasThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", hasThrown.get());
+*/
     }
 
     // The minimal setup for log4J

@@ -24,6 +24,12 @@ public class ExpressionNodeMap implements ExpressionNodeWithParameter {
 
     /** {@inheritDoc} */
     @Override
+    public Token getToken() {
+        return _token;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public int getStartPos() {
         return _token.getPos();
     }

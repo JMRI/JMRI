@@ -58,16 +58,33 @@ public enum TokenType {
     RIGHT_SQUARE_BRACKET("]"),  // ]
     LEFT_CURLY_BRACKET("{"),    // {
     RIGHT_CURLY_BRACKET("}"),   // }
-    IDENTIFIER(null),
-    INTEGER_NUMBER(null),
-    FLOATING_NUMBER(null),
-    STRING(null);
+    IDENTIFIER(null, true),
+    INTEGER_NUMBER(null, true),
+    FLOATING_NUMBER(null, true),
+    STRING(null, true),
+    TERNARY_TOKEN(null, true),
+    FUNCTION_TOKEN(null, true),
+    FIELD_TOKEN(null, true),
+    ARRAY_TOKEN(null, true),
+    MAP_TOKEN(null, true),
+    ;
 
 
     private final String _str;
+    private final boolean _hasData;
 
     private TokenType(String str) {
         this._str = str;
+        this._hasData = false;
+    }
+
+    private TokenType(String str, boolean hasData) {
+        this._str = str;
+        this._hasData = hasData;
+    }
+
+    public boolean hasData() {
+        return _hasData;
     }
 
     public String getString() {

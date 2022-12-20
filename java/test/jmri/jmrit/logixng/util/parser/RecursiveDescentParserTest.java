@@ -1547,6 +1547,8 @@ public class RecursiveDescentParserTest {
                 if (exprNode != null) {
                     checkBeginEnd(exprNode);
                 }
+            } catch (FunctionNotExistsException e) {
+                // Ignore this exception
             } catch (InvalidSyntaxException e) {
                 Assert.assertNotEquals(-1, e.getPosition());
             } catch (IllegalArgumentException e) {

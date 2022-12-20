@@ -9,14 +9,14 @@ import jmri.util.TypeConversionUtil;
  */
 public class ExpressionNodeBooleanOperator implements ExpressionNode {
 
-    private final TokenType _tokenType;
+    private final Token _token;
     private final ExpressionNode _leftSide;
     private final ExpressionNode _rightSide;
     private final int _startPos;
     private final int _endPos;
 
     public ExpressionNodeBooleanOperator(Token token, ExpressionNode leftSide, ExpressionNode rightSide) {
-        _tokenType = token._tokenType;
+        _token = token;
         _leftSide = leftSide;
         _rightSide = rightSide;
 
@@ -25,7 +25,7 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
         }
 
         // Verify that the token is of the correct type
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case BOOLEAN_OR:
             case BOOLEAN_XOR:
             case BOOLEAN_AND:
@@ -41,11 +41,17 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
                 break;
 
             default:
-                throw new IllegalArgumentException("Unsupported boolean operator: "+_tokenType.name());
+                throw new IllegalArgumentException("Unsupported boolean operator: "+_token._tokenType.name());
         }
 
         _startPos = _leftSide != null ? _leftSide.getStartPos() : token.getPos();
         _endPos = _rightSide.getEndPos();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Token getToken() {
+        return _token;
     }
 
     /** {@inheritDoc} */
@@ -87,7 +93,7 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
     public Object calculate(SymbolTable symbolTable) throws JmriException {
 
         Object leftValue = null;
-        if (_tokenType != TokenType.BOOLEAN_NOT) {
+        if (_token._tokenType != TokenType.BOOLEAN_NOT) {
             // Left value must be calculated _before_ right value is calculated.
             // When a value is calculated, a method might be called, and the
             // order of these calls must be correct.
@@ -110,7 +116,7 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
         }
         boolean right = (Boolean)rightValue;
 
-        if (_tokenType == TokenType.BOOLEAN_NOT) {
+        if (_token._tokenType == TokenType.BOOLEAN_NOT) {
             return ! right;
         }
 
@@ -124,7 +130,7 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
         }
         boolean left = (Boolean)leftValue;
 
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case BOOLEAN_OR:
                 return left || right;
 
@@ -135,7 +141,7 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
                 return left && right;
 
             default:
-                throw new CalculateException("Unknown boolean operator: "+_tokenType.name());
+                throw new CalculateException("Unknown boolean operator: "+_token._tokenType.name());
         }
     }
 
@@ -143,7 +149,7 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
     @Override
     public String getDefinitionString() {
         String operStr;
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case BOOLEAN_OR:
                 operStr = "||";
                 break;
@@ -161,7 +167,7 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
                 break;
 
             default:
-                throw new UnsupportedOperationException("Unknown arithmetic operator: "+_tokenType.name());
+                throw new UnsupportedOperationException("Unknown arithmetic operator: "+_token._tokenType.name());
         }
         if (_leftSide != null) {
             return "("+_leftSide.getDefinitionString()+")" + operStr + "("+_rightSide.getDefinitionString()+")";

@@ -9,6 +9,7 @@ import jmri.util.TypeConversionUtil;
  */
 public class ExpressionNodeTernaryOperator implements ExpressionNode {
 
+    private final Token _token = new Token(TokenType.TERNARY_TOKEN, "? :", 0);
     private final ExpressionNode _leftSide;
     private final ExpressionNode _middleSide;
     private final ExpressionNode _rightSide;
@@ -22,6 +23,12 @@ public class ExpressionNodeTernaryOperator implements ExpressionNode {
         if (_leftSide == null) {
             throw new IllegalArgumentException("leftSide must not be null");
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Token getToken() {
+        return _token;
     }
 
     /** {@inheritDoc} */

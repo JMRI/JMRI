@@ -9,6 +9,12 @@ import jmri.jmrit.logixng.SymbolTable;
 public interface ExpressionNode {
 
     /**
+     * Return the token of this node.
+     * @return the token
+     */
+    public Token getToken();
+
+    /**
      * Return the start position of this node.
      * @return the start position
      */

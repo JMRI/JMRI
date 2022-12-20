@@ -8,12 +8,17 @@ import jmri.jmrit.logixng.SymbolTable;
  */
 public class ExpressionNodeComparingOperator implements ExpressionNode {
 
-    private final TokenType _tokenType;
+    private final Token _token;
     private final ExpressionNode _leftSide;
     private final ExpressionNode _rightSide;
 
-    public ExpressionNodeComparingOperator(TokenType tokenType, ExpressionNode leftSide, ExpressionNode rightSide) {
-        _tokenType = tokenType;
+    // This constructor is used by tests
+    public ExpressionNodeComparingOperator(TokenType tokenType,  ExpressionNode leftSide, ExpressionNode rightSide) {
+        this(new Token(tokenType, "", 0), leftSide, rightSide);
+    }
+
+    public ExpressionNodeComparingOperator(Token token,  ExpressionNode leftSide, ExpressionNode rightSide) {
+        _token = token;
         _leftSide = leftSide;
         _rightSide = rightSide;
 
@@ -25,7 +30,7 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
         }
 
         // Verify that the token is of the correct type
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case EQUAL:
             case NOT_EQUAL:
             case LESS_THAN:
@@ -35,8 +40,14 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
                 break;
 
             default:
-                throw new RuntimeException("Unknown comparing operator: "+_tokenType.name());
+                throw new RuntimeException("Unknown comparing operator: "+_token._tokenType.name());
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Token getToken() {
+        return _token;
     }
 
     /** {@inheritDoc} */
@@ -73,7 +84,7 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
             throw new RuntimeException("This method is only valid if left and/or right is null");
         }
 
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case EQUAL:
                 return left == right;
             case NOT_EQUAL:
@@ -88,7 +99,7 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
                 return right == null;
 
             default:
-                throw new RuntimeException("Unknown arithmetic operator: "+_tokenType.name());
+                throw new RuntimeException("Unknown arithmetic operator: "+_token._tokenType.name());
         }
     }
 
@@ -144,7 +155,7 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
         }
 
         if (left instanceof Number) {
-            switch (_tokenType) {
+            switch (_token._tokenType) {
                 case EQUAL:
                     return left.equals(right);
                 case NOT_EQUAL:
@@ -159,10 +170,10 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
                     return ((Number) left).doubleValue() >= ((Number) right).doubleValue();
 
                 default:
-                    throw new RuntimeException("Unknown arithmetic operator: "+_tokenType.name());
+                    throw new RuntimeException("Unknown arithmetic operator: "+_token._tokenType.name());
             }
         } else {
-            switch (_tokenType) {
+            switch (_token._tokenType) {
                 case EQUAL:
                     return left.equals(right);
                 case NOT_EQUAL:
@@ -177,7 +188,7 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
                     return ((String)left).compareTo(((String)right)) >= 0;
 
                 default:
-                    throw new RuntimeException("Unknown comparing operator: "+_tokenType.name());
+                    throw new RuntimeException("Unknown comparing operator: "+_token._tokenType.name());
             }
         }
     }
@@ -186,7 +197,7 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
     @Override
     public String getDefinitionString() {
         String operStr;
-        switch (_tokenType) {
+        switch (_token._tokenType) {
             case EQUAL:
                 operStr = "==";
                 break;
@@ -212,7 +223,7 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
                 break;
 
             default:
-                throw new RuntimeException("Unknown comparing operator: "+_tokenType.name());
+                throw new RuntimeException("Unknown comparing operator: "+_token._tokenType.name());
         }
         return "("+_leftSide.getDefinitionString()+")" + operStr + "("+_rightSide.getDefinitionString()+")";
     }

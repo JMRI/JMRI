@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.util.parser;
 
 import java.lang.reflect.*;
-import java.util.*;
 
 import jmri.JmriException;
 import jmri.jmrit.logixng.SymbolTable;
@@ -19,6 +18,12 @@ public class ExpressionNodeInstanceVariable implements ExpressionNodeWithParamet
     public ExpressionNodeInstanceVariable(Token token, String fieldName) throws IdentifierNotExistsException {
         _token = token;
         _fieldName = fieldName;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Token getToken() {
+        return _token;
     }
 
     /** {@inheritDoc} */

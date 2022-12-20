@@ -25,6 +25,12 @@ public class ExpressionNodeArray implements ExpressionNodeWithParameter {
 
     /** {@inheritDoc} */
     @Override
+    public Token getToken() {
+        return _token;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public int getStartPos() {
         return _token.getPos();
     }
