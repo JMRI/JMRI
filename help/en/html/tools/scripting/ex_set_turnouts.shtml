@@ -26,8 +26,8 @@
         come. At this time, and for the foreseeable future, the turnouts do not provide feedback;
         it's an expense I am not ready to incur.</p>
 
-        <p>I've developed <a href="http://jbritton.pennsyrr.com/control_panels.ws4d" target=
-        "new">PanelPro panels</a> for a pair of dispatchers to use to control the railroad.
+        <p>I've developed <a href="https://jbritton.pennsyrr.com/index.php/public-relations/blog/11-construction-blog/1027-dispatching-improvements"
+        target="new">PanelPro panels</a> for a pair of dispatchers to use to control the railroad.
         PanelPro issues turnout commands via LocoNet (Digitrax system). Turnouts are powered by
         Tortoise switch machines which are controlled by NCE SwitchIt stationary decoders which
         monitor LocoNet for commands.</p>
