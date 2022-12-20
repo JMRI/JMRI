@@ -1073,6 +1073,16 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Run once<span class="since">since 5.3.1</span></h4>
+
+      <p>Run the assigned action only one time during a JMRI session.</p>
+
+      <p>The assigned action will be the <strong>Many</strong> action if there is more than one
+      action to be performed.  This provides an alternate method compared to <strong>Trigger once
+      </strong> for startup initialization.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Sequence</h4>
 
       <p>The Sequence action executes a series of action/expression pairs. For each pair, the
@@ -1136,6 +1146,26 @@
       <h4>Icon/Label on panel</h4>
 
       <p>Disable/Enable/Hide/Show an icon or label on a specific panel.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Turnout on LayoutPanel<span class="since">since 5.3.1</span></h4>
+
+      <p>Disable/Enable a turnout item on a specific Layout Editor panel.  A separate action is
+      needed since the turnout image on a Layout Editor panel is not an icon.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_turnout.png"><img src=
+        "images/chapter5/layout_turnout.png" alt="Chapter 5 layout turnout action"></a>
+      </div>
+
+      <p>The action applies to a single turnout item.  To change all of the turnouts, use a
+      <strong>For each</strong> action.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_turnout_foreach.png"><img class="image-border" src=
+        "images/chapter5/layout_turnout_foreach.png" alt="Chapter 5 layout turnout for each"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
