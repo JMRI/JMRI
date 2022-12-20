@@ -342,8 +342,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);
             }
-            if (e.getPropertyName().equals(Location.LOCATION_REPORTER_PROPERTY) ||
-                    e.getPropertyName().equals(Location.LOCATION_DIVISION_PROPERTY)) {
+            if (e.getPropertyName().equals(Location.LOCATION_REPORTER_CHANGED_PROPERTY) ||
+                    e.getPropertyName().equals(Location.LOCATION_DIVISION_CHANGED_PROPERTY)) {
                 setColumnsVisible();
             }
         }

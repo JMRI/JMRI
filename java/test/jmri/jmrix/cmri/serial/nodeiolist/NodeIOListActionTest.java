@@ -19,7 +19,7 @@ public class NodeIOListActionTest {
     }
 
     @Test
-    public void testMemoCTor() {
+    public void testNodeIOListActionMemoCtor() {
         NodeIOListAction t = new NodeIOListAction(new CMRISystemConnectionMemo()); 
         Assert.assertNotNull("exists",t);
     }

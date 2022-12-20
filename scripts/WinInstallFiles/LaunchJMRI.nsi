@@ -25,6 +25,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.28.0
+; - Check default version of installed java before looking anywhere else
+; - If environment variable JMRI_JAVA_HOME is present use that
+; -------------------------------------------------------------------------
 ; - Version 0.1.27.0
 ; - Add support for 200 return code to shutdown the host machine
 ; - Add support for 210 return code to reboot the host machine
@@ -163,13 +167,17 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "(C) 1997-2022 JMRI Community" ; Copyright string
-!define VER        "0.1.27.0"                     ; Launcher version
+!define VER        "0.1.28.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
 !define INITHEAP   96                             ; Initial heap size in Mbyte
 !define MINMEM     192                            ; Minimum memory in Mbyte
 !define X86MAX     1024                           ; Maximum heap size for x86 in Mbyte
+!ifndef JRE_VER
+  ; -- usually, this will be determined by the build.xml ant script
+  !define JRE_VER   "11"                       ; Required JRE version
+!endif
 
 ; -------------------------------------------------------------------------
 ; - End of basic information
@@ -202,7 +210,7 @@ Var x64JRE     ; used to determine JRE architecture
 Var FORCE32BIT ; used to determine if 32-bit JRE should always be used
 Var DEFOPTIONS ; used to hold any default options
 Var ALTLAUNCH  ; used to determine use of the alternate launcher
-
+Var USEDEFJAVA ; use default java
 ; -------------------------------------------------------------------------
 ; - Various constants
 ; -------------------------------------------------------------------------
@@ -212,6 +220,47 @@ Var ALTLAUNCH  ; used to determine use of the alternate launcher
 !define ARCH_64BIT  1   ; represents 64-bit architecture
 !define FLAG_NO     0   ; represents a NO return value from subroutines
 !define FLAG_YES    1   ; represents a YES return value from subroutines
+; -------------------------------------------------------------------------
+; - includes
+; -------------------------------------------------------------------------
+; include "MultiUser.nsh" ; MultiUser installation
+!include "WordFunc.nsh" ; add header for word manipulation
+!insertmacro VersionCompare ; add function to compare versions
+
+;-- from https://nsis.sourceforge.io/GetInQuotes:_Get_string_from_between_quotes
+Function GetInQuotes
+Exch $R0
+Push $R1
+Push $R2
+Push $R3
+
+ StrCpy $R2 -1
+ IntOp $R2 $R2 + 1
+  StrCpy $R3 $R0 1 $R2
+  StrCmp $R3 "" 0 +3
+   StrCpy $R0 ""
+   Goto Done
+  StrCmp $R3 '"' 0 -5
+
+ IntOp $R2 $R2 + 1
+ StrCpy $R0 $R0 "" $R2
+
+ StrCpy $R2 0
+ IntOp $R2 $R2 + 1
+  StrCpy $R3 $R0 1 $R2
+  StrCmp $R3 "" 0 +3
+   StrCpy $R0 ""
+   Goto Done
+  StrCmp $R3 '"' 0 -5
+
+ StrCpy $R0 $R0 $R2
+ Done:
+
+Pop $R3
+Pop $R2
+Pop $R1
+Exch $R0
+FunctionEnd
 
 ; -------------------------------------------------------------------------
 ; - Compiler Flags (to reduce executable size, saves some bytes)
@@ -298,51 +347,81 @@ Section "Main"
       SetRegView 64
       StrCpy $x64JRE ${ARCH_64BIT}
 
-  ; -- Read from machine registry
+  ; --check directory for jre
   JRESearch:
     ClearErrors
-    DetailPrint "Checking 'JRE'..."
-    ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\JRE" "CurrentVersion"
-    ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\JRE\$R1" "JavaHome"
-    IfErrors 0 FoundJavaInstallPoint
-    DetailPrint "Checking 'Java Runtime Environment'..."
-    ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
-    ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$R1" "JavaHome"
-    IfErrors 0 FoundJavaInstallPoint
-    DetailPrint "Checking 'JDK'..."
-    ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\JDK" "CurrentVersion"
-    ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\JDK\$R1" "JavaHome"
-    ; -- JDK 11 doesn't seem to like our 'default' behaviour of running from
-    ; -- a temp directory with a renamed 'java.exe' so switch that off here
-    ; -- We only need to do this if JDK has been found
-    IfErrors 0 DisableAltLauncher
-    ; -- As we've just cleared the error flag, we need to set it again
-    ; -- otherwise we'll think that we've found an installation
-    ; -- Gotta love the spaghetti...
+    strCpy $R0 "$EXEDIR\jre"
+    DetailPrint "Checking local path [$R0\bin\$JAVAEXE]"
+    IfFileExists  "$R0\bin\$JAVAEXE" 0 JRESearchNoLocal
+       StrCpy $UseDefJava "0"
+       DetailPrint "Using Local  $R0"
+       Goto DisableAltLauncher
+    JRESearchNoLocal:
+        DetailPrint "Checking default java as Local not found"
+        ; -- Check default java
+       ClearErrors
+        nsExec::ExecToStack "java -fullversion"
+        IfErrors JRESearchC  ; continue to use registry
+        Pop $0
+        Pop $0    ;-- response code
+        DetailPrint "program response [$0]"
+        push $0
+        call GetInQuotes
+        Pop $R1
+        IfErrors JRESearchC  ; continue to use registry
+        DetailPrint "Default java is [$R1]"
+        ${VersionCompare} "$R1" "${JRE_VER}" $0
+        StrCpy $UseDefJava "1"
+        IntCmp $0 2 JRESearchC 0 JRESearchC
+        DetailPrint "Useing default java"
+        goto DisableAltLauncher
+  JRESearchC:
+        ; -- loop over javasoft keys looking for our version or greater
+        StrCpy $0 0
+  loopKeys:
+        EnumRegKey $1 HKLM "SOFTWARE\JavaSoft" $0
+        StrCmp $1 "" done  ;-- end of keys
+        StrCpy $2 0
+  loopSubKeys:
+            EnumRegKey $3 HKLM "SOFTWARE\JavaSoft\$1" $2
+            DetailPrint "Checked [SOFTWARE\JavaSoft\$1] item [$2] got [$3]"
+            StrCmp $3 "" doneSubKey  ;--end of subkeys
+            ReadRegStr $6 HKLM "SOFTWARE\JavaSoft\$1\$3" "JavaHome"
+            DetailPrint "JavaHome [$6]"
+            IfErrors nextSubKey
+            ${VersionCompare} "$3" "${JRE_VER}" $5
+            StrCpy $UseDefJava "0"
+            DetailPrint "Found key for java [$3]"
+            IntCmp $5 2 nextSubKey 0 nextSubKey
+            ;--have good one
+            StrCpy $R0 $6   ;-- stuff home
+            StrCpy $R1 $3   ;-- stuff version
+            goto DisableAltLauncher
+    nextSubKey:
+           IntOp $2 $2 + 1
+           DetailPrint "$1 $3 Checked"
+           goto loopSubKeys
+     doneSubKey:
+           IntOp $0 $0 + 1 ;-- move to next top level key
+           DetailPrint "$1 checked - movin on"
+           goto loopKeys
+     done:
+           ;-- still no good java
     SetErrors
-    IfErrors 0 FoundJavaInstallPoint
-    DetailPrint "Checking 'Java Development Kit'..."
-    ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\Java Development Kit" "CurrentVersion"
-    ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Development Kit\$R1" "JavaHome"
-    IfErrors 0 DisableAltLauncher
-    ; -- As we've just cleared the error flag, we need to set it again
-    ; -- otherwise we'll think that we've found an installation
-    ; -- Gotta love the spaghetti...
-    SetErrors
-    Goto FoundJavaInstallPoint
+    Goto FoundJavaInstallPoint   ;-- counter intuitive I know, but going with errors
 
-  DisableAltLauncher:
+  DisableAltLauncher:       ;-- always use this an stop the ssd wear.
     DetailPrint "Switching off alternate launcher..."
     StrCpy $ALTLAUNCH ${FLAG_NO}
 
   FoundJavaInstallPoint:
     StrCpy $R0 "$R0\bin\$JAVAEXE"
-
-  ; -- Not found
-  IfErrors 0 JreFound
+    StrCmp $UseDefJava "0" +2
+    StrCpy $R0 "$JAVAEXE"   ;-- use just the exec name if using default
+    IfErrors 0 JreFound
     ; -- If we've got an error here on x64, switch to the 32-bit registry
     ; -- and retry (not needed if we've forced 32-bit above)
-    StrCmp ${ARCH_32BIT} $x64JRE JRENotFound
+      StrCmp ${ARCH_32BIT} $x64JRE JRENotFound
       SetRegView 32
       DetailPrint "Setting x86 registry view..."
       StrCpy $x64JRE ${ARCH_32BIT}
@@ -350,7 +429,7 @@ Section "Main"
 
   JreNotFound:
     DetailPrint "Java not found!"
-    MessageBox MB_OK|MB_ICONSTOP "Java not found!"
+    MessageBox MB_OK|MB_ICONSTOP "Java not found  in jre, default or registry$\n$\rTry installing or using mklink jre {path to java version ${JRE_VER}"
     Goto Exit
 
   JreFound:

@@ -62,7 +62,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
         SensorManager sensorManager = new EcosSensorManager(this);
         InstanceManager.setSensorManager(sensorManager);
         store(sensorManager, SensorManager.class);
-        
+
         PowerManager powerManager = new EcosPowerManager(getTrafficController());
         InstanceManager.store(powerManager, PowerManager.class);
         store(powerManager, PowerManager.class);
@@ -106,11 +106,11 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
     }
 
     public EcosTurnoutManager getTurnoutManager() {
-        return get(TurnoutManager.class);
+        return (EcosTurnoutManager)get(TurnoutManager.class);
     }
 
     public EcosSensorManager getSensorManager() {
-        return get(SensorManager.class);
+        return (EcosSensorManager)get(SensorManager.class);
     }
 
     public EcosPreferences getPreferenceManager() {
@@ -118,15 +118,15 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
     }
 
     public EcosDccThrottleManager getThrottleManager() {
-        return get(ThrottleManager.class);
+        return (EcosDccThrottleManager)get(ThrottleManager.class);
     }
 
     public EcosPowerManager getPowerManager() {
-        return get(PowerManager.class);
+        return (EcosPowerManager)get(PowerManager.class);
     }
 
     public EcosReporterManager getReporterManager() {
-        return get(ReporterManager.class);
+        return (EcosReporterManager)get(ReporterManager.class);
     }
 
     public EcosProgrammerManager getProgrammerManager() {

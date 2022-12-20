@@ -6,15 +6,14 @@ import java.text.MessageFormat;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.Test;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
+import org.netbeans.jemmy.operators.*;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.locations.schedules.Schedule;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -197,18 +196,19 @@ public class LocationEditFrameTest extends OperationsTestCase {
         // test name too long error
         f.locationNameTextField.setText("abcdefghijklmnopqrstuvwxyz");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveLocationButton);
-        String title = MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("save")});
+        String title =
+                MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("save")});
         JemmyUtil.pressDialogButton(f, title, Bundle.getMessage("ButtonOK"));
-        
+
         // test hyphen feature (this creates a new location)
         f.locationNameTextField.setText("abcdefghijkl-mnopqrstuvwxyz");
         JemmyUtil.enterClickAndLeave(f.saveLocationButton);
-        
+
         // test hyphen error
         f.locationNameTextField.setText("-");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveLocationButton);
         JemmyUtil.pressDialogButton(f, title, Bundle.getMessage("ButtonOK"));
-        
+
         // test blank name error
         f.locationNameTextField.setText("");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveLocationButton);
@@ -218,22 +218,22 @@ public class LocationEditFrameTest extends OperationsTestCase {
         f.locationNameTextField.setText("Bad.name");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveLocationButton);
         JemmyUtil.pressDialogButton(f, title, Bundle.getMessage("ButtonOK"));
-        
+
         // test same name error
         lManager.newLocation("Same Name");
         f.locationNameTextField.setText("Same Name");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveLocationButton);
         JemmyUtil.pressDialogButton(f, title, Bundle.getMessage("ButtonOK"));
-        
+
         Assert.assertEquals("should be 2 locations", 2, lManager.getLocationsByNameList().size());
-        
+
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testTrainDirections() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         // improve test coverage
         Setup.setRfidEnabled(true);
 
@@ -245,27 +245,29 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("should be 1 locations", 1, lManager.getLocationsByNameList().size());
         Location newLoc = lManager.getLocationByName("New Test Location");
         Assert.assertNotNull(newLoc);
-        
-        Assert.assertEquals("Train directions", Location.EAST + Location.WEST + Location.SOUTH + Location.NORTH, newLoc.getTrainDirections());
-        
+
+        Assert.assertEquals("Train directions", Location.EAST + Location.WEST + Location.SOUTH + Location.NORTH,
+                newLoc.getTrainDirections());
+
         JemmyUtil.enterClickAndLeave(f.eastCheckBox);
-        Assert.assertEquals("Train directions", Location.WEST + Location.SOUTH + Location.NORTH, newLoc.getTrainDirections());
-        
+        Assert.assertEquals("Train directions", Location.WEST + Location.SOUTH + Location.NORTH,
+                newLoc.getTrainDirections());
+
         JemmyUtil.enterClickAndLeave(f.westCheckBox);
         Assert.assertEquals("Train directions", Location.SOUTH + Location.NORTH, newLoc.getTrainDirections());
- 
+
         JemmyUtil.enterClickAndLeave(f.northCheckBox);
         Assert.assertEquals("Train directions", Location.SOUTH, newLoc.getTrainDirections());
-        
+
         JemmyUtil.enterClickAndLeave(f.southCheckBox);
         Assert.assertEquals("Train directions", 0, newLoc.getTrainDirections());
-        
+
         JemmyUtil.enterClickAndLeave(f.eastCheckBox);
         Assert.assertEquals("Train directions", Location.EAST, newLoc.getTrainDirections());
 
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testSelectButtons() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -278,24 +280,24 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("should be 1 locations", 1, lManager.getLocationsByNameList().size());
         Location newLoc = lManager.getLocationByName("New Test Location");
         Assert.assertNotNull(newLoc);
-        
+
         Assert.assertTrue("Location accepts all types", newLoc.acceptsTypeName("Boxcar"));
         JemmyUtil.enterClickAndLeave(f.clearButton);
         Assert.assertFalse("Location doesn't accepts all types", newLoc.acceptsTypeName("Boxcar"));
         JemmyUtil.enterClickAndLeave(f.setButton);
         Assert.assertTrue("Location accepts all types", newLoc.acceptsTypeName("Boxcar"));
-        
+
         JemmyUtil.enterClickAndLeaveThreadSafe(f.autoSelectButton);
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("autoSelectLocations?"), Bundle.getMessage("ButtonNo")); 
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("autoSelectLocations?"), Bundle.getMessage("ButtonNo"));
         Assert.assertTrue("Location accepts all types", newLoc.acceptsTypeName("Boxcar"));
-        
+
         JemmyUtil.enterClickAndLeaveThreadSafe(f.autoSelectButton);
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("autoSelectLocations?"), Bundle.getMessage("ButtonYes")); 
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("autoSelectLocations?"), Bundle.getMessage("ButtonYes"));
         Assert.assertFalse("Location doesn't accepts all types", newLoc.acceptsTypeName("Boxcar"));
-        
+
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testTypeCheckbox() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -308,18 +310,18 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("should be 1 locations", 1, lManager.getLocationsByNameList().size());
         Location newLoc = lManager.getLocationByName("New Test Location");
         Assert.assertNotNull(newLoc);
-        
+
         Assert.assertTrue("Location accepts Boxcar", newLoc.acceptsTypeName("Boxcar"));
-        
+
         JFrameOperator jfo = new JFrameOperator(f);
         JCheckBoxOperator jbo = new JCheckBoxOperator(jfo, "Boxcar");
 
-        jbo.doClick();        
+        jbo.doClick();
         Assert.assertFalse("Location doesn't accepts Boxcar", newLoc.acceptsTypeName("Boxcar"));
-        
+
         jbo.doClick();
         Assert.assertTrue("Location accepts Boxcar", newLoc.acceptsTypeName("Boxcar"));
-        
+
         JUnitUtil.dispose(f);
     }
 
@@ -354,6 +356,94 @@ public class LocationEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
         tef = JmriJFrame.getFrame(Bundle.getMessage("EditStaging"));
         Assert.assertNull(tef);
+    }
+    
+    @Test
+    public void testStagingTable() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.createTwoStagingLocations();
+
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
+        Location loc = lManager.getLocationByName("North End Staging");
+        Assert.assertNotNull(loc);
+
+        LocationEditFrame f = new LocationEditFrame(loc);
+        Assert.assertNotNull(f);
+        f.setSize(1200, f.getHeight()); // need full width
+
+        JFrameOperator jfo = new JFrameOperator(f);
+        JTableOperator tbl = new JTableOperator(jfo);
+        
+        Setup.setCarRoutingViaStagingEnabled(true);
+        
+        Assert.assertEquals("Confirm number of columns", 11, tbl.getColumnCount());
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Moves")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Hold")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Schedule")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Road")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Load")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Restrictions")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Pool")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("ServiceOrder")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("PlanPickUp")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Dest")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Ship")));
+               
+        // add track moves column
+        Setup.setShowTrackMovesEnabled(true);
+        Assert.assertEquals("Confirm number of columns", 12, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 5, tbl.findColumn(Bundle.getMessage("Moves")));
+        
+        // test 2nd row
+        Track track = loc.getTrackByName("North End 2", Track.STAGING);
+        Assert.assertNotNull(track);
+        
+        // test change moves value
+        tbl.setValueAt(23, 1, tbl.findColumn(Bundle.getMessage("Moves")));
+        Assert.assertEquals("moves", 23, track.getMoves());
+        
+        // test routed
+        Assert.assertEquals("Column exists", 10, tbl.findColumn(Bundle.getMessage("Routed")));
+        Assert.assertFalse("Routed", track.isOnlyCarsWithFinalDestinationEnabled());
+        tbl.clickOnCell(1, tbl.findColumn(Bundle.getMessage("Routed")));
+        Assert.assertTrue("Routed", track.isOnlyCarsWithFinalDestinationEnabled());
+
+        // add road restriction
+        track.setRoadOption(Track.EXCLUDE_ROADS);
+        Assert.assertEquals("Confirm number of columns", 13, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 10, tbl.findColumn(Bundle.getMessage("Road")));
+
+        // add load restriction
+        track.setLoadOption(Track.EXCLUDE_LOADS);
+        Assert.assertEquals("Confirm number of columns", 14, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 11, tbl.findColumn(Bundle.getMessage("Load")));
+
+        // add train restriction
+        track.setPickupOption(Track.EXCLUDE_TRAINS);
+        Assert.assertEquals("Confirm number of columns", 15, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Restrictions")));
+        
+        // add pool
+        Pool pool = loc.addPool("Pool One");
+        track.setPool(pool);
+        Assert.assertEquals("Confirm number of columns", 16, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 14, tbl.findColumn(Bundle.getMessage("Pool")));
+        
+        // destination restrictions
+        track.setDestinationOption(Track.EXCLUDE_DESTINATIONS);
+        Assert.assertEquals("Confirm number of columns", 17, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 13, tbl.findColumn(Bundle.getMessage("Dest")));
+        
+        // ship load restrictions
+        track.setShipLoadOption(Track.INCLUDE_LOADS);
+        Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Ship")));
+        
+        // remove routed
+        Setup.setCarRoutingViaStagingEnabled(false);
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Routed")));
+
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -390,6 +480,103 @@ public class LocationEditFrameTest extends OperationsTestCase {
     }
 
     @Test
+    public void testSpurTable() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
+        Assert.assertNotNull(loc);
+        
+        // add a 3rd track for coverage
+        Track track3 = loc.addTrack("Test Location Spur 3", Track.SPUR);
+
+        LocationEditFrame f = new LocationEditFrame(loc);
+        Assert.assertNotNull(f);
+        f.setSize(1200, f.getHeight()); // need full width
+
+        JFrameOperator jfo = new JFrameOperator(f);
+        JTableOperator tbl = new JTableOperator(jfo);
+
+        Assert.assertEquals("Confirm number of columns", 10, tbl.getColumnCount());
+        Assert.assertEquals("Confirm number of rows", 3, tbl.getRowCount());
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Moves")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Hold")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Schedule")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Road")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Load")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Restrictions")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Pool")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("ServiceOrder")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("PlanPickUp")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Dest")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Routed")));
+        
+        // add track moves column
+        Setup.setShowTrackMovesEnabled(true);
+        Assert.assertEquals("Confirm number of columns", 11, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 5, tbl.findColumn(Bundle.getMessage("Moves")));
+        
+        // add schedule column
+        Track track = loc.getTrackByName("Test Location Spur 1", Track.SPUR);
+        Assert.assertNotNull(track);
+
+        ScheduleManager sm = InstanceManager.getDefault(ScheduleManager.class);
+        Schedule s = sm.newSchedule("Test Schedule");
+        track.setSchedule(s);
+        // adding a schedule also adds the hold column
+        Assert.assertEquals("Confirm number of columns", 13, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 11, tbl.findColumn(Bundle.getMessage("Hold")));
+        Assert.assertEquals("Column exists", 10, tbl.findColumn(Bundle.getMessage("Schedule")));
+        
+        // test change moves value
+        tbl.setValueAt(5, 0, tbl.findColumn(Bundle.getMessage("Moves")));
+        Assert.assertEquals("moves", 5, track.getMoves());
+        
+        // test hold checkbox
+        Assert.assertFalse("Hold", track.isHoldCarsWithCustomLoadsEnabled());
+        tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("Hold")));
+        Assert.assertTrue("Hold", track.isHoldCarsWithCustomLoadsEnabled());
+
+        // add road restriction
+        track.setRoadOption(Track.EXCLUDE_ROADS);
+        Assert.assertEquals("Confirm number of columns", 14, tbl.getColumnCount());
+        // hold moves to column 12
+        Assert.assertEquals("Column exists", 11, tbl.findColumn(Bundle.getMessage("Road")));
+
+        // add load restriction
+        track.setLoadOption(Track.EXCLUDE_LOADS);
+        Assert.assertEquals("Confirm number of columns", 15, tbl.getColumnCount());
+        // hold moves to column 13
+        Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Load")));
+
+        // add train restriction
+        track.setDropOption(Track.EXCLUDE_TRAINS);
+        Assert.assertEquals("Confirm number of columns", 16, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 13, tbl.findColumn(Bundle.getMessage("Restrictions")));
+        
+        // add pool
+        Pool pool = loc.addPool("Pool One");
+        track.setPool(pool);
+        Assert.assertEquals("Confirm number of columns", 17, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 15, tbl.findColumn(Bundle.getMessage("Pool")));
+
+        // test alternate track
+        Track trackAlt = loc.getTrackByName("Test Location Spur 2", Track.SPUR);
+        track.setAlternateTrack(trackAlt);
+        Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 16, tbl.findColumn(Bundle.getMessage("AlternateTrack")));
+        
+        // test track length
+        Assert.assertEquals("zero length", 0, tbl.getValueAt(2, tbl.findColumn(Bundle.getMessage("Length"))));
+        track3.setLength(124);
+        Assert.assertEquals("new length", 124, tbl.getValueAt(2, tbl.findColumn(Bundle.getMessage("Length"))));
+        
+        // test adding a new track
+        loc.addTrack("Test Location Spur 4", Track.SPUR);
+        Assert.assertEquals("Confirm number of rows", 4, tbl.getRowCount());
+        
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
     public void testEditInterchange() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.createOneNormalLocation("Test Location");
@@ -423,9 +610,93 @@ public class LocationEditFrameTest extends OperationsTestCase {
         tef = JmriJFrame.getFrame(Bundle.getMessage("EditInterchange"));
         Assert.assertNull(tef);
     }
+    
+    @Test
+    public void testInterchangeTable() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
+        Assert.assertNotNull(loc);
+
+        LocationEditFrame f = new LocationEditFrame(loc);
+        Assert.assertNotNull(f);
+        JemmyUtil.enterClickAndLeave(f.interchangeRadioButton);
+        f.setSize(1200, f.getHeight()); // need full width
+
+        JFrameOperator jfo = new JFrameOperator(f);
+        JTableOperator tbl = new JTableOperator(jfo);
+
+        Assert.assertEquals("Confirm number of columns", 11, tbl.getColumnCount());
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Moves")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Hold")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Schedule")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Road")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Load")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Restrictions")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Pool")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("ServiceOrder")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("PlanPickUp")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Dest")));
+               
+        // add track moves column
+        Setup.setShowTrackMovesEnabled(true);
+        Assert.assertEquals("Confirm number of columns", 12, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 5, tbl.findColumn(Bundle.getMessage("Moves")));
+        
+        // test 2nd row
+        Track track = loc.getTrackByName("Test Location Interchange 2", Track.INTERCHANGE);
+        Assert.assertNotNull(track);
+        
+        // test change moves value
+        tbl.setValueAt(6, 1, tbl.findColumn(Bundle.getMessage("Moves")));
+        Assert.assertEquals("moves", 6, track.getMoves());
+        
+        // test routed
+        Assert.assertEquals("Column exists", 10, tbl.findColumn(Bundle.getMessage("Routed")));
+        Assert.assertFalse("Routed", track.isOnlyCarsWithFinalDestinationEnabled());
+        tbl.clickOnCell(1, tbl.findColumn(Bundle.getMessage("Routed")));
+        Assert.assertTrue("Routed", track.isOnlyCarsWithFinalDestinationEnabled());
+
+        // add road restriction
+        track.setRoadOption(Track.EXCLUDE_ROADS);
+        Assert.assertEquals("Confirm number of columns", 13, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 10, tbl.findColumn(Bundle.getMessage("Road")));
+
+        // add load restriction
+        track.setLoadOption(Track.EXCLUDE_LOADS);
+        Assert.assertEquals("Confirm number of columns", 14, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 11, tbl.findColumn(Bundle.getMessage("Load")));
+
+        // add train restriction
+        track.setPickupOption(Track.EXCLUDE_TRAINS);
+        Assert.assertEquals("Confirm number of columns", 15, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Restrictions")));
+        
+        // add pool
+        Pool pool = loc.addPool("Pool One");
+        track.setPool(pool);
+        Assert.assertEquals("Confirm number of columns", 16, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 14, tbl.findColumn(Bundle.getMessage("Pool")));
+        
+        // add service order
+        track.setServiceOrder(Track.FIFO);
+        Assert.assertEquals("Confirm number of columns", 17, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 15, tbl.findColumn(Bundle.getMessage("ServiceOrder")));
+
+        // add planned pick ups
+        track.setIgnoreUsedLengthPercentage(50);
+        Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 15, tbl.findColumn(Bundle.getMessage("PlanPickUp")));
+        
+        // destination restrictions
+        track.setDestinationOption(Track.EXCLUDE_DESTINATIONS);
+        Assert.assertEquals("Confirm number of columns", 19, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 13, tbl.findColumn(Bundle.getMessage("Dest")));
+
+        JUnitUtil.dispose(f);
+    }
 
     @Test
-    public void testEdityard() {
+    public void testEditYard() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.createOneNormalLocation("Test Location");
 

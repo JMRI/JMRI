@@ -168,9 +168,9 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             // if the rosterFilename passed in is null, create a complete path
             // to the default roster index before attempting to read
             if (rosterFilename == null) {
-                rosterFilename = this.getRosterIndexPath();
+                rosterFilename = Roster.this.getRosterIndexPath();
             }
-            this.readFile(rosterFilename);
+            Roster.this.readFile(rosterFilename);
         } catch (IOException | JDOMException e) {
             log.error("Exception during reading while constructing roster", e);
             try {
@@ -740,9 +740,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @throws java.io.IOException           if unable to write file
      */
     void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         File file = findFile(name);
         if (file == null) {
             file = new File(name);
@@ -1011,9 +1009,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
         if (dirty) {
             log.error("Dispose invoked on dirty Roster");
         }

@@ -20,7 +20,7 @@ import jmri.util.iharder.dnd.URIDrop;
 
 import org.jdom2.Element;
 import org.jdom2.Attribute;
-import org.openide.util.Exceptions;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -164,12 +164,14 @@ public class ThrottleWindow extends JmriJFrame {
                         }
                     }
                 }
-            }@Override
+            }
+
+            @Override
             public void windowOpened(WindowEvent e) {
                 try { // on initial open, force selection of address panel
                     getCurrentThrottleFrame().getAddressPanel().setSelected(true);
                 } catch (PropertyVetoException ex) {
-                    Exceptions.printStackTrace(ex);
+                    log.warn("Unable to force selection of address panel", ex);
                 }
             }
         });

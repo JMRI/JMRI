@@ -633,11 +633,9 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static final int CONDITIONALS = LOGIXS + 10;
     public static final int AUDIO = CONDITIONALS + 10;
     public static final int TIMEBASE = AUDIO + 10;
-    public static final int PANELFILES = TIMEBASE + 10;
-    public static final int ENTRYEXIT = PANELFILES + 10;
     // All LogixNG beans share the "Q" letter. For example, a digital expression
     // has a system name like "IQDE001".
-    public static final int LOGIXNGS = ENTRYEXIT + 10;                              // LogixNG
+    public static final int LOGIXNGS = TIMEBASE + 10;                              // LogixNG
     public static final int LOGIXNG_GLOBAL_VARIABLES = LOGIXNGS + 10;               // LogixNG Global Variables
     public static final int LOGIXNG_CONDITIONALNGS = LOGIXNG_GLOBAL_VARIABLES + 10; // LogixNG ConditionalNG
     public static final int LOGIXNG_MODULES = LOGIXNG_CONDITIONALNGS + 10;          // LogixNG Modules
@@ -649,7 +647,9 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static final int LOGIXNG_ANALOG_ACTIONS = LOGIXNG_ANALOG_EXPRESSIONS + 10;   // LogixNG AnalogAction
     public static final int LOGIXNG_STRING_EXPRESSIONS = LOGIXNG_ANALOG_ACTIONS + 10;   // LogixNG StringExpression
     public static final int LOGIXNG_STRING_ACTIONS = LOGIXNG_STRING_EXPRESSIONS + 10;   // LogixNG StringAction
-    public static final int METERFRAMES = LOGIXNG_STRING_ACTIONS + 10;
+    public static final int PANELFILES = LOGIXNG_STRING_ACTIONS + 10;
+    public static final int ENTRYEXIT = PANELFILES + 10;
+    public static final int METERFRAMES = ENTRYEXIT + 10;
     public static final int CTCDATA = METERFRAMES + 10;
 
     /**

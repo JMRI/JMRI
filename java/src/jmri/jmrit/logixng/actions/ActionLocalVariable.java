@@ -199,11 +199,11 @@ public class ActionLocalVariable extends AbstractDigitalAction
     public void execute() throws JmriException {
         if (_localVariable == null) return;
 
-        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+        final ConditionalNG conditionalNG = getConditionalNG();
+
+        SymbolTable symbolTable = conditionalNG.getSymbolTable();
 
         AtomicReference<JmriException> ref = new AtomicReference<>();
-
-        final ConditionalNG conditionalNG = getConditionalNG();
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
 
@@ -224,7 +224,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     break;
 
                 case CopyMemoryToVariable:
-                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(conditionalNG);
                     if (memory != null) {
                         symbolTable.setValue(_localVariable, memory.getValue());
                     } else {
@@ -243,7 +243,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     break;
 
                 case CopyBlockToVariable:
-                    Block block = _selectBlockNamedBean.evaluateNamedBean(getConditionalNG());
+                    Block block = _selectBlockNamedBean.evaluateNamedBean(conditionalNG);
                     if (block != null) {
                         symbolTable.setValue(_localVariable, block.getValue());
                     } else {
@@ -252,7 +252,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     break;
 
                 case CopyReporterToVariable:
-                    Reporter reporter = _selectReporterNamedBean.evaluateNamedBean(getConditionalNG());
+                    Reporter reporter = _selectReporterNamedBean.evaluateNamedBean(conditionalNG);
                     if (reporter != null) {
                         symbolTable.setValue(_localVariable, reporter.getCurrentReport());
                     } else {
@@ -315,7 +315,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
             case CopyMemoryToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyMemoryToVariable",
-                        _localVariable, copyToMemoryName);
+                        _localVariable, copyToMemoryName, Base.getListenString(_listenToMemory));
 
             case CopyReferenceToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyReferenceToVariable",
@@ -323,7 +323,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
             case CopyBlockToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyBlockToVariable",
-                        _localVariable, copyToBlockName);
+                        _localVariable, copyToBlockName, Base.getListenString(_listenToBlock));
 
             case CopyTableCellToVariable:
                 String tableName = _selectTable.getTableNameDescription(locale);
@@ -333,7 +333,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
             case CopyReporterToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyReporterToVariable",
-                        _localVariable, copyToReporterName);
+                        _localVariable, copyToReporterName, Base.getListenString(_listenToReporter));
 
             case CalculateFormula:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_Formula", _localVariable, _formula);

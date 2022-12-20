@@ -188,7 +188,7 @@ public class Xml {
     static final String SWITCH_LIST_TRACK = "switchListTrack"; // NOI18N
     static final String HOLD_CAR = "holdCar"; // NOI18N
 
-    // TrainManifestHeaderText.jafa
+    // TrainManifestHeaderText.java
     static final String MANIFEST_HEADER_TEXT_STRINGS = "manifestHeaderTextStrings"; // NOI18N
     static final String ROAD = "road"; // the supported message format options // NOI18N
     static final String NUMBER = "number"; // NOI18N
@@ -207,6 +207,7 @@ public class Xml {
     static final String FINAL_DEST_TRACK = "fd_Track"; // NOI18N
     //static final String LOCATION = "location"; // NOI18N
     static final String CONSIST = "consist"; // NOI18N
+    static final String DCC_ADDRESS = "dcc_addr"; // NOI18N
     static final String KERNEL = "kernel"; // NOI18N
     static final String OWNER = "owner"; // NOI18N
     static final String DIVISION = "division"; // NOI18N

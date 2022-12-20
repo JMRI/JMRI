@@ -1038,10 +1038,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             v1Border.setTitle(Bundle.getMessage("LabelTurnoutNumber"));
             v1Panel.setVisible(true);
             to1.setVisible(true);
-            v2Border.setTitle(Bundle.getMessage("LabelTurnoutClosedAppearance"));
+            v2Border.setTitle(Bundle.getMessage("LabelTurnoutThrownAppearance"));
             v2Panel.setVisible(true);
             s2aBox.setVisible(true);
-            v3Border.setTitle(Bundle.getMessage("LabelTurnoutThrownAppearance"));
+            v3Border.setTitle(Bundle.getMessage("LabelTurnoutClosedAppearance"));
             s3aBox.setVisible(true);
             v3Panel.setVisible(true);
         } else if (virtualHead.equals(typeBox.getSelectedItem())) {
@@ -2085,11 +2085,11 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 ev1Panel.setVisible(true);
                 eto1.setVisible(true);
                 eto1.setDefaultNamedBean(((SingleTurnoutSignalHead) curS).getOutput().getBean());
-                ev2Border.setTitle(Bundle.getMessage("LabelTurnoutClosedAppearance"));
+                ev2Border.setTitle(Bundle.getMessage("LabelTurnoutThrownAppearance"));
                 ev2Panel.setVisible(true);
                 es2aBox.setVisible(true);
                 setSignalStateInBox(es2aBox, ((SingleTurnoutSignalHead) curS).getOnAppearance());
-                ev3Border.setTitle(Bundle.getMessage("LabelTurnoutThrownAppearance"));
+                ev3Border.setTitle(Bundle.getMessage("LabelTurnoutClosedAppearance"));
                 ev3Panel.setVisible(true);
                 es3aBox.setVisible(true);
                 setSignalStateInBox(es3aBox, ((SingleTurnoutSignalHead) curS).getOffAppearance());

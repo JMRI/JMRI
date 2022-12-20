@@ -78,12 +78,13 @@ public class SchedulesTableFrame extends OperationsFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new ScheduleCopyAction());
-        toolMenu.add(new SchedulesByLoadAction());
         toolMenu.add(new SchedulesResetHitsAction());
         toolMenu.add(new ExportSchedulesAction());
         toolMenu.addSeparator();
+        toolMenu.add(new SchedulesByLoadAction());
+        toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false));
-        toolMenu.add(new PrintLocationsAction(true));
+        toolMenu.add(new PrintLocationsAction(true));       
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_LocationSchedules", true); // NOI18N

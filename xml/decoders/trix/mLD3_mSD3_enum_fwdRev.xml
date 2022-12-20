@@ -19,15 +19,18 @@
     <choice>Both</choice>
     <choice xml:lang="de">Beide</choice>
     <choice xml:lang="fr">Les deux</choice>
+    <choice xml:lang="cs">Obojí</choice>
   </enumChoice>
   <enumChoice value="1">
     <choice>Forward</choice>
     <choice xml:lang="de">Vorwärts</choice>
     <choice xml:lang="fr">Avant</choice>
+    <choice xml:lang="cs">Vpřed</choice>
   </enumChoice>
   <enumChoice value="2">
     <choice>Reverse</choice>
     <choice xml:lang="de">Rückwärts</choice>
     <choice xml:lang="fr">Arrière</choice>
+    <choice xml:lang="cs">Vzad</choice>
   </enumChoice>
 </enumVal>

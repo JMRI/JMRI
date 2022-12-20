@@ -65,7 +65,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
     public void setState(int s) {
         super.setState(s);
         if ( getMaintainSensor() ) {
-            SensorManager sm = (SensorManager) _memo.get(SensorManager.class);
+            SensorManager sm = _memo.get(SensorManager.class);
             sm.provide("+"+_number).setCommandedState( s==IdTag.SEEN ? Sensor.ACTIVE : Sensor.INACTIVE );
         }
     }

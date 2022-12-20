@@ -15,12 +15,14 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import jmri.InstanceManager;
+import jmri.Path;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.XTableColumnModel;
@@ -28,6 +30,8 @@ import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * The WarrantTableFrame lists the existing Warrants and has controls to set
@@ -295,6 +299,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
         _concatDialog.setVisible(true);
     }
 
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
     private void concatenate(String startName, String endName) {
         WarrantManager manager = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class);
         Warrant startW = manager.getWarrant(startName.trim());
@@ -309,15 +314,44 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
             showWarning("EmptyRoutes");
             return;
         }
-        if (!last.getPathName().equals(next.getPathName()) || !last.getBlock().equals(next.getBlock())) {
-            showWarning("RoutesDontMatch");
+        if (!last.getBlock().equals(next.getBlock())) {
+            showWarning("BlocksDontMatch");
             return;
+        }
+        if (!last.getPathName().equals(next.getPathName())) {
+            boolean foundPath = false;
+            String entryName = last.getEntryName();
+            String exitName = next.getExitName();
+            Iterator<Path> iter = last.getBlock().getPaths().iterator();
+            while (iter.hasNext()) {
+                String pathName = ((OPath)iter.next()).getName();
+                if (pathName.equals(entryName) && pathName.equals(exitName)) {
+                    last.setPathName(pathName);
+                    foundPath = true;
+                    break;
+                }
+            }
+            if (!foundPath) {
+                showWarning("RoutesDontMatch");
+                return;
+            }
         }
         WarrantTableAction.getDefault().makeWarrantFrame(startW, endW);
         _concatDialog.dispose();
     }
 
+    protected boolean askStopQuestion(String blockName) {
+        boolean includeAllCmds = false;
+        if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("stopAtBlock", blockName),
+                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            includeAllCmds = true;
+        }
+        return includeAllCmds;
+    }
+
     public void showWarning(String msg) {
+        setVisible(true);
         JOptionPane.showMessageDialog(this, Bundle.getMessage(msg, _startWarrant.getText(), _endWarrant.getText()),
                 Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
     }

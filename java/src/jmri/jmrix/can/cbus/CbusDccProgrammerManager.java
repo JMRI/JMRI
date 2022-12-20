@@ -24,12 +24,12 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
     private boolean _isAddressedModePossible = true;
     private boolean _isGlobalProgrammerAvailable = true;
     
-    private CbusPreferences prefs;
+    private final CbusPreferences prefs;
 
     public CbusDccProgrammerManager(Programmer serviceModeProgrammer, CanSystemConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
         tc = memo.getTrafficController();
-        prefs = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        prefs = memo.get(jmri.jmrix.can.cbus.CbusPreferences.class);
         log.info("Preferences for programmers start as: global {} addressed {}", prefs.isGlobalProgrammerAvailable(), prefs.isAddressedModePossible());
         validateProgrammingModes(memo);
         log.info("Preferences for programmers now: global {} addressed {}", prefs.isGlobalProgrammerAvailable(), prefs.isAddressedModePossible());

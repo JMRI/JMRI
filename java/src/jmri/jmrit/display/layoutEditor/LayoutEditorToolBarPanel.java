@@ -18,6 +18,8 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.*;
+import jmri.jmrit.logixng.GlobalVariable;
+import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.MathUtil;
 
@@ -93,6 +95,10 @@ public class LayoutEditorToolBarPanel extends JPanel {
     protected JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
     protected NamedBeanComboBox<Memory> textMemoryComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(MemoryManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
+
+    protected JRadioButton globalVariableButton = new JRadioButton(Bundle.getMessage("BeanNameGlobalVariable"));
+    protected NamedBeanComboBox<GlobalVariable> textGlobalVariableComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(GlobalVariableManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
     protected JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
     protected NamedBeanComboBox<Block> blockContentsComboBox = new NamedBeanComboBox<>(
@@ -184,6 +190,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         itemGroup.add(signalMastButton);
         itemGroup.add(textLabelButton);
         itemGroup.add(memoryButton);
+        itemGroup.add(globalVariableButton);
         itemGroup.add(blockContentsButton);
         itemGroup.add(iconLabelButton);
         itemGroup.add(shapeButton);
@@ -258,9 +265,10 @@ public class LayoutEditorToolBarPanel extends JPanel {
                 blockSensorComboBox.setEnabled(e);
             }
 
-            // enable/disable text label, memory & block contents text fields
+            // enable/disable text label, memory, global variable & block contents text fields
             textLabelTextField.setEnabled(textLabelButton.isSelected());
             textMemoryComboBox.setEnabled(memoryButton.isSelected());
+            textGlobalVariableComboBox.setEnabled(globalVariableButton.isSelected());
             blockContentsComboBox.setEnabled(blockContentsButton.isSelected());
 
             // enable/disable signal mast, sensor & signal head text fields
@@ -295,6 +303,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         signalMastButton.addActionListener(selectionListAction);
         textLabelButton.addActionListener(selectionListAction);
         memoryButton.addActionListener(selectionListAction);
+        globalVariableButton.addActionListener(selectionListAction);
         blockContentsButton.addActionListener(selectionListAction);
         iconLabelButton.addActionListener(selectionListAction);
         shapeButton.addActionListener(selectionListAction);
@@ -451,6 +460,11 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
         setupComboBox(textMemoryComboBox, true, false, false);
         textMemoryComboBox.setToolTipText(Bundle.getMessage("MemoryToolTip"));
+
+        globalVariableButton.setToolTipText(Bundle.getMessage("GlobalVariableButtonToolTip", Bundle.getMessage("GlobalVariable")));
+
+        setupComboBox(textGlobalVariableComboBox, true, false, false);
+        textGlobalVariableComboBox.setToolTipText(Bundle.getMessage("GlobalVariableToolTip"));
 
         blockContentsButton.setToolTipText(Bundle.getMessage("BlockContentsButtonToolTip"));
 
@@ -700,6 +714,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
             put(edgeButton, Bundle.getMessage("Edge_QuickKeys"));
             put(textLabelButton, Bundle.getMessage("TextLabel_QuickKeys"));
             put(memoryButton, Bundle.getMessage("Memory_QuickKeys"));
+            put(globalVariableButton, Bundle.getMessage("GlobalVariable_QuickKeys"));
             put(blockContentsButton, Bundle.getMessage("BlockContents_QuickKeys"));
             put(multiSensorButton, Bundle.getMessage("MultiSensor_QuickKeys"));
             put(sensorButton, Bundle.getMessage("Sensor_QuickKeys"));

@@ -972,12 +972,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      */
     public void addTrainSkipsLocation(String routelocationId) {
         // insert at start of _skipLocationsList, sort later
-        if (_skipLocationsList.contains(routelocationId)) {
-            return;
+        if (!_skipLocationsList.contains(routelocationId)) {
+            _skipLocationsList.add(0, routelocationId);
+            log.debug("train does not stop at {}", routelocationId);
+            setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() - 1,
+                    _skipLocationsList.size());
         }
-        _skipLocationsList.add(0, routelocationId);
-        log.debug("train does not stop at {}", routelocationId);
-        setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() - 1, _skipLocationsList.size());
     }
 
     public void deleteTrainSkipsLocation(String locationId) {
@@ -1058,12 +1058,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public void deleteTypeName(String type) {
-        if (!_typeList.contains(type)) {
-            return;
+        if (_typeList.remove(type)) {
+            log.debug("Train ({}) delete car type ({})", getName(), type);
+            setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() + 1, _typeList.size());
         }
-        _typeList.remove(type);
-        log.debug("Train ({}) delete car type ({})", getName(), type);
-        setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() + 1, _typeList.size());
     }
 
     /**
@@ -1161,13 +1159,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return true if road name was removed, false if road name wasn't in the list.
      */
     public boolean deleteCarRoadName(String road) {
-        if (!_carRoadList.contains(road)) {
-            return false;
+        if (_carRoadList.remove(road)) {
+            log.debug("train ({}) delete car road {}", getName(), road);
+            setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _carRoadList.size() + 1, _carRoadList.size());
+            return true;
         }
-        _carRoadList.remove(road);
-        log.debug("train ({}) delete car road {}", getName(), road);
-        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _carRoadList.size() + 1, _carRoadList.size());
-        return true;
+        return false;
     }
 
     /**
@@ -1263,13 +1260,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return true if road name was removed, false if road name wasn't in the list.
      */
     public boolean deleteLocoRoadName(String road) {
-        if (!_locoRoadList.contains(road)) {
-            return false;
+        if (_locoRoadList.remove(road)) {
+            log.debug("train ({}) delete engine road {}", getName(), road);
+            setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _locoRoadList.size() + 1, _locoRoadList.size());
+            return true;
         }
-        _locoRoadList.remove(road);
-        log.debug("train ({}) delete engine road {}", getName(), road);
-        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _locoRoadList.size() + 1, _locoRoadList.size());
-        return true;
+        return false;
     }
 
     /**
@@ -1389,13 +1385,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return true if load name was removed, false if load name wasn't in the list.
      */
     public boolean deleteLoadName(String load) {
-        if (!_loadList.contains(load)) {
-            return false;
+        if (_loadList.remove(load)) {
+            log.debug("train ({}) delete car load {}", getName(), load);
+            setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _loadList.size() + 1, _loadList.size());
+            return true;
         }
-        _loadList.remove(load);
-        log.debug("train ({}) delete car load {}", getName(), load);
-        setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _loadList.size() + 1, _loadList.size());
-        return true;
+        return false;
     }
 
     /**
@@ -1501,13 +1496,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *         list.
      */
     public boolean deleteOwnerName(String owner) {
-        if (!_ownerList.contains(owner)) {
-            return false;
+        if (_ownerList.remove(owner)) {
+            log.debug("train ({}) delete car owner {}", getName(), owner);
+            setDirtyAndFirePropertyChange(OWNERS_CHANGED_PROPERTY, _ownerList.size() + 1, _ownerList.size());
+            return true;
         }
-        _ownerList.remove(owner);
-        log.debug("train ({}) delete car owner {}", getName(), owner);
-        setDirtyAndFirePropertyChange(OWNERS_CHANGED_PROPERTY, _ownerList.size() + 1, _ownerList.size());
-        return true;
+        return false;
     }
 
     /**

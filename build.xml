@@ -141,13 +141,13 @@
         <pathelement location="${libdir}/jna-5.9.0.jar"/>
         <pathelement location="${libdir}/jna-platform-5.9.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
-        <pathelement location="${libdir}/commons-net-3.6.jar"/>
+        <pathelement location="${libdir}/commons-net-3.9.0.jar"/>
         <pathelement location="${libdir}/commons-logging-1.2.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
-        <pathelement location="${libdir}/jackson-core-2.12.6.jar"/>
-        <pathelement location="${libdir}/jackson-annotations-2.12.6.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.12.6.1.jar"/>
+        <pathelement location="${libdir}/jackson-core-2.13.4.jar"/>
+        <pathelement location="${libdir}/jackson-annotations-2.13.4.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.13.4.1.jar"/>
         <pathelement location="${libdir}/jetty-http-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-io-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-security-9.4.28.v20200408.jar"/>
@@ -187,8 +187,7 @@
         <pathelement location="${libdir}/jinputvalidator-0.8.0.jar"/>
         <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
-        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE126.jar"/>
-        <pathelement location="${libdir}/org-openide-util-RELEASE126.jar"/>
+        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE150.jar"/>
         <pathelement location="${libdir}/apiguardian-api-1.1.0.jar"/>
         <pathelement location="${libdir}/batik-transcoder-1.14.jar"/>
         <pathelement location="${libdir}/batik-svg-dom-1.14.jar"/>
@@ -213,39 +212,30 @@
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
-    <!-- jars needed for i18n testing only -->
-    <path id="i18n.class.path">
-        <pathelement location="${ant.home}/lib/ant.jar"/>
-        <pathelement location="${libdir}/antlr-3.4-complete.jar"/>
-        <pathelement location="${libdir}/i18nchecker.jar"/>
-    </path>
-    <pathconvert property="i18n.class.jars" refid="i18n.class.path"/>
-
     <!-- jars that are needed at build and/or test time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
-        <pathelement location="${libdir}/junit-jupiter-5.6.0.jar"/>
-        <pathelement location="${libdir}/junit-platform-console-standalone-1.6.0.jar"/>
-        <pathelement location="${libdir}/junit-platform-commons-1.6.0.jar"/>
-        <pathelement location="${libdir}/junit-platform-engine-1.6.0.jar"/>
-        <pathelement location="${libdir}/junit-platform-launcher-1.6.0.jar"/>
-        <pathelement location="${libdir}/junit-platform-runner-1.6.0.jar"/>
-        <pathelement location="${libdir}/junit-platform-suite-api-1.6.0.jar"/>
-        <pathelement location="${libdir}/junit-vintage-engine-5.6.0.jar"/>
-        <pathelement location="${libdir}/junit-jupiter-api-5.6.0.jar"/>
-        <pathelement location="${libdir}/junit-jupiter-engine-5.6.0.jar"/>
-        <pathelement location="${libdir}/junit-jupiter-params-5.6.0.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-5.9.1.jar"/>
+        <pathelement location="${libdir}/junit-platform-console-standalone-1.9.1.jar"/>
+        <pathelement location="${libdir}/junit-platform-commons-1.9.1.jar"/>
+        <pathelement location="${libdir}/junit-platform-engine-1.9.1.jar"/>
+        <pathelement location="${libdir}/junit-platform-launcher-1.9.1.jar"/>
+        <pathelement location="${libdir}/junit-platform-runner-1.9.1.jar"/>
+        <pathelement location="${libdir}/junit-platform-suite-api-1.9.1.jar"/>
+        <pathelement location="${libdir}/junit-vintage-engine-5.9.1.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-api-5.9.1.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-engine-5.9.1.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-params-5.9.1.jar"/>
         <pathelement location="${libdir}/opentest4j-1.2.0.jar"/>
         <pathelement location="${libdir}/apiguardian-api-1.1.0.jar"/>
-        <pathelement location="${libdir}/archunit-0.14.1.jar"/>
-        <pathelement location="${libdir}/archunit-junit5-api-0.14.1.jar"/>
-        <pathelement location="${libdir}/archunit-junit5-engine-0.14.1.jar"/>
-        <pathelement location="${libdir}/archunit-junit5-engine-api-0.14.1.jar"/>
-        <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
+        <pathelement location="${libdir}/archunit-1.0.0-rc1.jar"/>
+        <pathelement location="${libdir}/archunit-junit5-api-1.0.0-rc1.jar"/>
+        <pathelement location="${libdir}/archunit-junit5-engine-1.0.0-rc1.jar"/>
+        <pathelement location="${libdir}/archunit-junit5-engine-api-1.0.0-rc1.jar"/>
         <!-- SpotBugs annotations -->
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
         <pathelement location="${libdir}/jsr305.jar"/>
-        <pathelement location="${libdir}/spotbugs-annotations-3.1.7.jar"/>
+        <pathelement location="${libdir}/spotbugs-annotations-4.7.3.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -376,6 +366,7 @@
         <exclude name="apps.tests.AllTest.class"/>
         <exclude name="jmri.HeadLessTest.class"/>
         <exclude name="jmri.ArchitectureTest.class"/>
+        <exclude name="jmri.TestArchitectureTest.class"/>
     </fileset>
 
 
@@ -1296,16 +1287,6 @@
         </java>
     </target>
 
-    <target name="i18n-consistency-check"  description="Verification of localized strings in source code" depends="jar">
-        <property name="i18n.modulefilter" value=""/>
-        <property name="i18n.logger" value="log" /> <!-- name of logging token to match with logging methods -->
-        <property name="i18n.loggerMethods" value="info,debug,error,warn" /> <!-- logging methods that should not be checked for i18n consistency -->
-        <echo>I18N Consistency Check - use modulefilter property if you want to see errors only from one module</echo>
-        <taskdef classname="org.i18nchecker.I18nChecker" name="i18nConsistencyCheck" classpathref="i18n.class.path"/>
-        <!-- check includes all .properties files including ones we use for non-translatable files -->
-        <i18nConsistencyCheck srcdir="${basedir}" topdirs="." allProperties="true" logger="${i18n.logger}" loggerMethods="${i18n.loggerMethods}" modulefilter="${i18n.modulefilter}"/>
-    </target>
-
     <!-- end of I18N test targets -->
 
     <!-- ============================================================================= -->
@@ -1708,7 +1689,7 @@
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
-            <jvmarg value="-Xmx3000m"/> <!-- needs to cover ArchUnit test run under coverage -->
+            <jvmarg value="-Xmx1536m"/>
             <jvmarg value="${jacocoagent}"/>
             <jvmarg line="${jvm.args}"/>
         </java>
@@ -2025,8 +2006,6 @@
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
             <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
 
-            <link href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.12.6.1/" />
-
             <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
             <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
 
@@ -2044,7 +2023,7 @@
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/"/>
+            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
             <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
             <!-- <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/> -->
@@ -2153,8 +2132,7 @@
             <link offline="true" href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" packagelistLoc="openlcb-0.7.23-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
-            <link href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.12.6.1/" />
-            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/"/>
+             <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
 
         </javadoc>
@@ -2490,7 +2468,7 @@
         <exec executable="${nsis.home}makensis"
               dir="scripts/WinInstallFiles/"
               failonerror="true">
-            <arg line="-V2 LaunchJMRI.nsi"/>
+            <arg line="-V2 -DJMRI_VER=${release.version-string} LaunchJMRI.nsi"/>
         </exec>
     </target>
 

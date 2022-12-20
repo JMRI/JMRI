@@ -34,7 +34,6 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
     
     private static final int GENERIC = 0;
     private static final int EDIT = 1;
-    private static final int TEMPLATE = 2;
     
     /**
      * Create a new instance of CbusNodeEditNVarPane.
@@ -107,14 +106,10 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         
         tabbedPane = new JTabbedPane();
         
-        JPanel template = new JPanel();
-        
         tabbedPane.addTab(("Generic"), genericNVTable);
         tabbedPane.addTab(("Edit"), editNVGui);
-        tabbedPane.addTab(("Template"), template);
         
         tabbedPane.setEnabledAt(EDIT,false);
-        tabbedPane.setEnabledAt(TEMPLATE,false);
         tabbedPane.setSelectedIndex(GENERIC);
         
         infoPane.add(nvMenuPane, BorderLayout.PAGE_START);

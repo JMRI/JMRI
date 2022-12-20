@@ -138,7 +138,16 @@ public class AutoActiveTrain implements ThrottleListener {
         return _autoEngineer.getTargetSpeed();
     }
 
+    public synchronized void setTargetSpeedByPass(float speed) {
+         _autoEngineer.setTargetSpeed(speed);
+    }
+
     public synchronized void setTargetSpeed(float speed) {
+        if (_autoEngineer.isStopped() && getTargetSpeed() == 0.0f && speed > 0.0f) {
+            if (_autoTrainAction.isDelayedStart(speed)) {
+                return;
+            }
+        }
         _autoEngineer.setTargetSpeed(speed);
     }
 
@@ -616,6 +625,8 @@ public class AutoActiveTrain implements ThrottleListener {
         //Reset initialized flag
         _initialized = false;
         // set direction
+        _currentAllocatedSection=null;
+        _currentBlock=null;
         setForward(!getRunInReverse());
     }
 
@@ -1777,7 +1788,6 @@ public class AutoActiveTrain implements ThrottleListener {
      * after specified number of fast Minutes have elapsed.
      */
     class PauseTrain implements Runnable {
-
         /**
          * Create a PauseTrain
          *
@@ -1810,7 +1820,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         waitNow = false;
                     }
                 } catch (InterruptedException e) {
-                    log.error("InterruptedException while waiting to stop for pause", e);
+                    log.trace("InterruptedException while waiting to stop for pause-indicates action cancelled.", e);
                     waitNow = false;
                     keepGoing = false;
                 }
@@ -1832,7 +1842,7 @@ public class AutoActiveTrain implements ThrottleListener {
                             waitNow = false;
                         }
                     } catch (InterruptedException e) {
-                        log.error("InterruptedException while waiting when paused", e);
+                        log.trace("InterruptedException indicates action cancelled.", e);
                         keepGoing = false;
                     }
                 }
@@ -1910,8 +1920,7 @@ public class AutoActiveTrain implements ThrottleListener {
          */
         public void setHalt(boolean halt) {
             if (halt) {
-                stopAllTimers();
-                throttle.setSpeedSetting(0.0f);
+                this.setSpeedImmediate(0.0f);
             }
         }
 
@@ -2038,6 +2047,7 @@ public class AutoActiveTrain implements ThrottleListener {
          */
         public synchronized void setSpeedImmediate(float speed) {
             log.trace("{}: setting speed directly to {}%", _activeTrain.getTrainName(), (int) (speed * 100));
+            stopAllTimers();
             targetSpeed = speed;
             throttle.setSpeedSetting(targetSpeed);
         }

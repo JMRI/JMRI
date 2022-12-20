@@ -83,7 +83,7 @@ public class SRCPSystemConnectionMemo extends DefaultSystemConnectionMemo {
     }
 
     @Override
-    public <T> T get(Class<?> T) {
+    public <T> T get(Class<T> T) {
         return null; // nothing, by default
     }
 

@@ -813,7 +813,7 @@
                 <comment xml:lang="de">Wert 0-255</comment>
                 <comment xml:lang="nl">Waarde van 0-255</comment>
             </variable>
-            <variable CV="144" item="Accel3" default="24" comment="Range 0-255">
+            <variable CV="146" item="Accel3" default="24" comment="Range 0-255">
                 <decVal/>
                 <label>Acceleration Rate 3</label>
                 <label xml:lang="it">Accellerazione 3</label>
@@ -828,7 +828,7 @@
                 <comment xml:lang="de">Wert 0-255</comment>
                 <comment xml:lang="nl">Waarde van 0-255</comment>
             </variable>
-            <variable CV="145" item="Decel3" default="24" comment="Range 0-255">
+            <variable CV="147" item="Decel3" default="24" comment="Range 0-255">
                 <decVal/>
                 <label>Deceleration Rate 3</label>
                 <label xml:lang="it">Decellerazione 3</label>

@@ -81,9 +81,10 @@ public class LinkedWarrantTest {
 
         assertThat(NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("LoopDeLoop after second leg").isEqualTo(block.getSensor().getDisplayName());
 
+        String linkMsg = Bundle.getMessage("warrantComplete", warrant.getTrainName(), warrant.getDisplayName(), block.getDisplayName());
         JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
-            return m.equals(Bundle.getMessage("warrantStart", warrant.getTrainName(), warrant.getDisplayName(), block.getDisplayName()));
+            return m.equals(linkMsg);
         }, "LoopDeLoop finished second leg");
 
         JUnitUtil.waitFor(() -> {
@@ -138,19 +139,10 @@ public class LinkedWarrantTest {
         JFrameOperator jfoPanel = new JFrameOperator("LinkedWarrantsTest");
         Assertions.assertNotNull(jfoPanel,"LinkedWarrantsTest panel not Found");
 
-        JUnitAppender.assertWarnMessageStartsWith("block: West Path distance or SpeedProfile unreliable! pathDist= 100.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: WestApproach Path distance or SpeedProfile unreliable! pathDist= 1000.0,");
-
-        JUnitAppender.assertWarnMessageStartsWith("block: MidWest Path distance or SpeedProfile unreliable! pathDist= 1000.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: Middle Path distance or SpeedProfile unreliable! pathDist= 100.0,");
-
-        JUnitAppender.assertWarnMessageStartsWith("block: EastApproach Path distance or SpeedProfile unreliable! pathDist= 1000.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: East Path distance or SpeedProfile unreliable! pathDist= 100.0,");
-
         JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return m.endsWith("Cmd #8.");
-        }, "Train starts to move at 8th command");
+        }, "Train starts to move at 8th command, but running message was " + warrant.getRunningMessage());
 
        // OBlock of route
         String[] route1 = {"OB12", "OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11", "OB12"};
@@ -173,12 +165,6 @@ public class LinkedWarrantTest {
 
         String[] route2 = {"OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11"};
         block = _OBlockMgr.getOBlock("OB11");
-
-        JUnitAppender.assertWarnMessageStartsWith("block: WestApproach Path distance or SpeedProfile unreliable! pathDist= 1000.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: MidWest Path distance or SpeedProfile unreliable! pathDist= 1000.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: Middle Path distance or SpeedProfile unreliable! pathDist= 100.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: MidEast Path distance or SpeedProfile unreliable! pathDist= 1000.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: EastApproach Path distance or SpeedProfile unreliable! pathDist= 1000.0,");
 
         assertThat(NXFrameTest.runtimes(route2, _OBlockMgr)).withFailMessage("Train after second leg").isEqualTo(block.getSensor());
 
@@ -335,11 +321,6 @@ public class LinkedWarrantTest {
         JFrameOperator jfoPanel = new JFrameOperator("NXWarrantTest");
         Assertions.assertNotNull(jfoPanel,"NXWarrantTest panel not Found");
 
-        JUnitAppender.assertWarnMessageStartsWith("block: OB1 Path distance or SpeedProfile unreliable! pathDist= 2540.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: OB2 Path distance or SpeedProfile unreliable! pathDist= 1270.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: OB4 Path distance or SpeedProfile unreliable! pathDist= 1905.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: OB5 Path distance or SpeedProfile unreliable! pathDist= 2540.0,");
-
         JUnitUtil.waitFor(() -> {
             String m =  w.getRunningMessage();
             return m.endsWith("Cmd #8.");
@@ -361,9 +342,6 @@ public class LinkedWarrantTest {
             return m.endsWith("Cmd #8.");
         }, "Evers starts to move at 8th command");
 
-        JUnitAppender.assertWarnMessageStartsWith("block: OB3 Path distance or SpeedProfile unreliable! pathDist= 2540.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: OB2 Path distance or SpeedProfile unreliable! pathDist= 1270.0,");
-
         String[] route2 = {"OB7", "OB3", "OB2", "OB1"};
         block = _OBlockMgr.getOBlock("OB1");
 
@@ -376,9 +354,6 @@ public class LinkedWarrantTest {
             String m =  www.getRunningMessage();
             return m.endsWith("Cmd #8.") || m.endsWith("Cmd #9.") || m.endsWith("Cmd #10."); // in case runs fast
         }, "Chance starts to move at 8th command");
-
-        JUnitAppender.assertWarnMessageStartsWith("block: OB3 Path distance or SpeedProfile unreliable! pathDist= 2540.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: OB4 Path distance or SpeedProfile unreliable! pathDist= 1905.0,");
 
         String[] route3 = {"OB6", "OB3", "OB4", "OB5"};
         block = _OBlockMgr.getOBlock("OB5");

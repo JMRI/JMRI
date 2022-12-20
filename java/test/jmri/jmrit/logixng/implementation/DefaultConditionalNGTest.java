@@ -16,7 +16,7 @@ import org.junit.Test;
 
 /**
  * Test DefaultConditionalNG
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 public class DefaultConditionalNGTest {
@@ -25,7 +25,7 @@ public class DefaultConditionalNGTest {
     public void testCtor() {
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
         Assert.assertNotNull("exists", conditionalNG);
-        
+
         boolean hasThrown = false;
         try {
             // Bad system name
@@ -36,47 +36,49 @@ public class DefaultConditionalNGTest {
         }
         Assert.assertTrue("Exception thrown", hasThrown);
     }
-    
+
     @Test
     public void testState() throws JmriException {
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
         conditionalNG.setState(NamedBean.INCONSISTENT);
         JUnitAppender.assertWarnMessage("Unexpected call to setState in DefaultConditionalNG.");
-        
+
         Assert.assertEquals("State is correct", NamedBean.UNKNOWN, conditionalNG.getState());
         JUnitAppender.assertWarnMessage("Unexpected call to getState in DefaultConditionalNG.");
     }
-    
+
     @Test
     public void testExecute() throws SocketAlreadyConnectedException, JmriException {
+        DefaultLogixNG logixNG = new DefaultLogixNG("IQ1", null);
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+        conditionalNG.setParent(logixNG);
         conditionalNG.setRunDelayed(false);
         MyDigitalAction action = new MyDigitalAction("IQDA1", null);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(action);
         conditionalNG.getChild(0).connect(socket);
         if (! conditionalNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
-        
+
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
-        
+
         action.throwOnExecute = false;
         action.hasExecuted = false;
         conditionalNG.execute();
         Assert.assertTrue("Action is executed", action.hasExecuted);
-        
+
         action.throwOnExecute = true;
         action.hasExecuted = false;
         conditionalNG.execute();
         JUnitAppender.assertWarnMessage("ConditionalNG IQC123 got an exception during execute: jmri.JmriException: An error has occured");
     }
-    
+
     @Test
     public void testDescription() {
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
         Assert.assertEquals("Short description is correct", "ConditionalNG: IQC123", conditionalNG.getShortDescription());
         Assert.assertEquals("Long description is correct", "ConditionalNG: IQC123", conditionalNG.getLongDescription());
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -95,14 +97,14 @@ public class DefaultConditionalNGTest {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
-    
+
+
+
     private static class MyDigitalAction extends AbstractDigitalAction {
 
         private boolean hasExecuted;
         private boolean throwOnExecute;
-        
+
         public MyDigitalAction(String sys, String user) throws BadUserNameException, BadSystemNameException {
             super(sys, user);
         }
@@ -170,7 +172,7 @@ public class DefaultConditionalNGTest {
         public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
-        
+
     }
-    
+
 }

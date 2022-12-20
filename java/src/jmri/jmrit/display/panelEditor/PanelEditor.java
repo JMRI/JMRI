@@ -111,6 +111,7 @@ public class PanelEditor extends Editor implements ItemListener {
     private static final String MULTI_SENSOR = "MultiSensor";
     private static final String RPSREPORTER = "RPSreporter";
     private static final String FAST_CLOCK = "FastClock";
+    private static final String GLOBAL_VARIABLE = "GlobalVariable";
     private static final String ICON = "Icon";
     private final JTextField nextX = new JTextField("0", 4);
     private final JTextField nextY = new JTextField("0", 4);
@@ -287,6 +288,7 @@ public class PanelEditor extends Editor implements ItemListener {
         _addIconBox.addItem(new ComboBoxItem(MULTI_SENSOR));
         _addIconBox.addItem(new ComboBoxItem(RPSREPORTER));
         _addIconBox.addItem(new ComboBoxItem(FAST_CLOCK));
+        _addIconBox.addItem(new ComboBoxItem(GLOBAL_VARIABLE));
         _addIconBox.addItem(new ComboBoxItem(ICON));
         _addIconBox.setSelectedIndex(-1);
         _addIconBox.addItemListener(this);  // must be AFTER no selection is set
@@ -446,6 +448,8 @@ public class PanelEditor extends Editor implements ItemListener {
                 bundleName = "BeanNameReporter";
             } else if (LIGHT.equals(name)) {
                 bundleName = "BeanNameLight";
+            } else if (GLOBAL_VARIABLE.equals(name)) {
+                bundleName = "BeanNameGlobalVariable";
             } else {
                 bundleName = name;
             }
@@ -608,6 +612,8 @@ public class PanelEditor extends Editor implements ItemListener {
                 setDisplayLevelMenu(p, popup);
                 setHiddenMenu(p, popup);
                 setEditIdMenu(p, popup);
+                popup.addSeparator();
+                setLogixNGPositionableMenu(p, popup);
                 popup.addSeparator();
             }
 
@@ -1022,6 +1028,7 @@ public class PanelEditor extends Editor implements ItemListener {
         addItemPopUp(new ComboBoxItem(MULTI_SENSOR), _add);
         addItemPopUp(new ComboBoxItem(RPSREPORTER), _add);
         addItemPopUp(new ComboBoxItem(FAST_CLOCK), _add);
+        addItemPopUp(new ComboBoxItem(GLOBAL_VARIABLE), _add);
         addItemPopUp(new ComboBoxItem(ICON), _add);
         addItemPopUp(new ComboBoxItem("Text"), _add);
         popup.add(_add);

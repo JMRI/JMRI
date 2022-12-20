@@ -22,18 +22,18 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
      * @param layoutEditor the layout editor that this is for
      */
     public LayoutEditorFloatingToolBarPanel(@Nonnull LayoutEditor layoutEditor) {
-        super(layoutEditor);    
-        localLayoutComponents();    
+        super(layoutEditor);
+        localLayoutComponents();
     }
 
-    // super.setupComponents() used as-is. super.layoutComponents() is 
+    // super.setupComponents() used as-is. super.layoutComponents() is
     // suppressed, as it doesn't need to run. localLayoutComponents()
     // is then invoked by this class's constructor after the initializers
     // are complete. (Putting this into an override of layoutComponents would
     // not be correct, as that is invoked from the superclass constructor before
-    // this classes initializers are run; local reference members will be 
+    // this classes initializers are run; local reference members will be
     // overwritten when that happens.)
-    
+
     /**
      * Deliberately not running the superclass
      * {@link LayoutEditorToolBarPanel#layoutComponents()}
@@ -42,12 +42,12 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
     @Override
     final protected void layoutComponents() {
     }
-    
+
     /**
-     * Local configuration of Swing components run as 
+     * Local configuration of Swing components run as
      * last phase of construction.
      */
-    private void localLayoutComponents() {    
+    private void localLayoutComponents() {
         /*
          *  JPanel - floatEditTabsPanel
          *      JTabbedPane - floatEditTabsPane
@@ -151,6 +151,11 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         labelGroup2.add(memoryButton);
         labelGroup2.add(textMemoryComboBox);
         floatEditLabel.add(labelGroup2);
+
+        JPanel labelGroup4 = new JPanel(floatContentLayout);
+        labelGroup4.add(globalVariableButton);
+        labelGroup4.add(textGlobalVariableComboBox);
+        floatEditLabel.add(labelGroup4);
 
         JPanel labelGroup3 = new JPanel(floatContentLayout);
         labelGroup3.add(blockContentsButton);

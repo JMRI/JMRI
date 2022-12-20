@@ -34,6 +34,7 @@ public class NamedBeanFunctions implements FunctionFactory {
         functionClasses.add(new GetLogixNGTableFunction());
         functionClasses.add(new ReadMemoryFunction());
         functionClasses.add(new EvaluateMemoryFunction());
+        functionClasses.add(new WriteMemoryFunction());
         return functionClasses;
     }
 
@@ -203,6 +204,60 @@ public class NamedBeanFunctions implements FunctionFactory {
         @Override
         public String getDescription() {
             return Bundle.getMessage("NamedBean.evaluateMemory_Descr");
+        }
+
+    }
+
+
+    /**
+     * Writes a value to a memory if the memory exists.
+     * Does nothing if the memory does not exists or if the parameter cannot
+     * be evaluated to a String.
+     * Return the value.
+     */
+    public static class WriteMemoryFunction implements Function {
+
+        @Override
+        public String getModule() {
+            return new NamedBeanFunctions().getModule();
+        }
+
+        @Override
+        public String getConstantDescriptions() {
+            return new NamedBeanFunctions().getConstantDescription();
+        }
+
+        @Override
+        public String getName() {
+            return "writeMemory";
+        }
+
+        @Override
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+
+            if (parameterList.size() != 2) {
+                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+            }
+
+            Object memoryName = parameterList.get(0).calculate(symbolTable);
+            if (memoryName == null) return null;
+
+            String s = TypeConversionUtil.convertToString(memoryName, false);
+            if (s.isEmpty()) return null;
+
+            Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(s);
+            if (m == null) return null;
+
+            Object value = parameterList.get(1).calculate(symbolTable);
+            m.setValue(value);
+
+            return value;
+        }
+
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("NamedBean.writeMemory_Descr");
         }
 
     }

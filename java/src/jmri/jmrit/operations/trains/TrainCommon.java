@@ -1,15 +1,10 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
+import java.awt.*;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -20,16 +15,11 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
-import jmri.jmrit.operations.rollingstock.engines.ConsistManager;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
+import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -1377,6 +1367,9 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.CONSIST)) {
             return padAndTruncateIfNeeded(engine.getConsistName(),
                     InstanceManager.getDefault(ConsistManager.class).getMaxNameLength());
+        } else if (attribute.equals(Setup.DCC_ADDRESS)) {
+            return padAndTruncateIfNeeded(engine.getDccAddress(),
+                    TrainManifestHeaderText.getStringHeader_DCC_Address().length());
         }
         return getRollingStockAttribute(engine, attribute, isPickup, false);
     }
@@ -1780,6 +1773,9 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.CONSIST)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Consist(),
                         InstanceManager.getDefault(ConsistManager.class).getMaxNameLength()) + SPACE);
+            } else if (attribute.equals(Setup.DCC_ADDRESS)) {
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_DCC_Address(),
+                        TrainManifestHeaderText.getStringHeader_DCC_Address().length()) + SPACE);
             } else if (attribute.equals(Setup.KERNEL)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Kernel(),
                         InstanceManager.getDefault(KernelManager.class).getMaxNameLength()) + SPACE);
@@ -2121,6 +2117,10 @@ public class TrainCommon {
             color = ColorUtil.stringToColor(c);
         }
         return color;
+    }
+    
+    public static String getTextColorName(String string) {
+        return ColorUtil.colorToColorName(getTextColor(string));
     }
 
     private static final Logger log = LoggerFactory.getLogger(TrainCommon.class);

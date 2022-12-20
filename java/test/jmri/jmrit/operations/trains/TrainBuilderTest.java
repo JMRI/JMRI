@@ -15629,6 +15629,57 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    /**
+     * Test custom load out of staging.
+     */
+    @Test
+    public void testCustomCarLoadFromStagingF() {
+
+        setupCustomCarLoad();
+
+        // get tracks, train travels from west to east
+        Train train = tmanager.getTrainByName("Train Westend-Midtown-Eastend");
+
+        Location midtown = lmanager.newLocation("Midtown");
+        Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null);
+        Track midtownSpur2 = midtown.getTrackByName("Midtown spur 2", null);
+
+        // test car from staging, create one staging track
+        Location staging = lmanager.newLocation("Staging");
+        Track stagingTrack1 = staging.addTrack("Staging Track 1", Track.STAGING);
+        stagingTrack1.setLength(500);
+        stagingTrack1.setAddCustomLoadsEnabled(true);
+
+        // add staging to the start of the route
+        Route route = train.getRoute();
+        route.addLocation(staging, 1);
+
+        // change train name
+        train.setName("Train Staging-Westend-Midtown-Eastend");
+
+        // place cars in staging with custom loads
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "40", stagingTrack1, 0);
+        c3.setLoadName("Flour");
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Boxcar", "50", stagingTrack1, 1);
+        c4.setLoadName("Bags");
+
+        // Only allow one car to spur
+        midtownSpur1.setLength(100);
+        midtownSpur1.setReservationFactor(50);
+        
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm car has custom load and destination
+        Assert.assertEquals("car load", "Flour", c3.getLoadName());
+        Assert.assertEquals("car destination track", midtownSpur1, c3.getDestinationTrack());
+
+        Assert.assertEquals("car load", "Bags", c4.getLoadName());
+        Assert.assertEquals("car destination track", midtownSpur2, c4.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 
     /**
      * Test schedule drop off and pick up day options.
@@ -15992,6 +16043,70 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // confirm car's destination (Any spur is acceptable)
         Assert.assertEquals("Confirm c1 destination", chelmsfordSpur1, c1.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Tests division feature. Car with "load" type should return to car's home
+     * division spur when at foreign division. Car at home division can go to any
+     * spur. Tests spur with schedule.
+     */
+    @Test
+    public void testDivisionDepartingSpurLoadLoadSchedule() {
+        Train train = tmanager.newTrain("Train Acton-Boston-Chelmsford DivisionTest");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train.setRoute(route);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", null);
+
+
+        // Danvers is not reachable by train
+        Location danvers = lmanager.getLocationByName("Danvers");
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonSpur1, 16);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        danvers.setDivision(divEast); // not reachable
+        c1.setDivision(divEast);
+
+        c1.setLoadName(cld.getDefaultLoadName());
+        // confirm default is type load
+        Assert.assertEquals("Confirm load type", CarLoad.LOAD_TYPE_LOAD, c1.getLoadType());
+
+        // car with load should return to spur at car's home division
+        boston.setDivision(divEast);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination
+        Assert.assertEquals("Confirm c1 destination", bostonSpur1, c1.getDestinationTrack());
+        train.reset();
+        
+        // don't allow Boston Spur 1 to service Boxcar with load "L"
+        // demand the custom empty load, track length issue for c1
+        // no alternate
+        Schedule schedule = smanager.newSchedule("Schedule for car load");
+        ScheduleItem sch1Item1 = schedule.addItem("Boxcar");
+        sch1Item1.setReceiveLoadName("EMPTY");
+        bostonSpur1.setSchedule(schedule);
+        bostonSpur1.setLength(44);
+        JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", bostonSpur1, 16);
+        
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination
+        Assert.assertEquals("Confirm c1 destination", bostonSpur2, c1.getDestinationTrack());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -17081,9 +17196,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         train.addTypeName("-");
 
         // 3 cars at Acton Yard using hyphen for road and car type
-        Car c1 = JUnitOperationsUtil.createAndPlaceCar("-", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 0);
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A-", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 0);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "-", "40", "DAB", "1958", actonYard1, 1);
-        Car c3 = JUnitOperationsUtil.createAndPlaceCar("-", "3", "-", "40", "DAB", "1958", actonYard1, 2);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("-A", "3", "-", "40", "DAB", "1958", actonYard1, 2);
 
         Assert.assertTrue(new TrainBuilder().build(train));
         

@@ -35,6 +35,15 @@ public interface ShutDownTask extends Callable<Boolean>, Runnable, PropertyChang
     /**
      * Take the necessary action. This method cannot abort the shutdown, and
      * must not require user interaction to complete successfully. This method
+     * will be run in parallel to other ShutDownTasks, but will be executed
+     * before any of the {@code run() } methods are executed.
+     */
+    public default void runEarly() {
+    }
+
+    /**
+     * Take the necessary action. This method cannot abort the shutdown, and
+     * must not require user interaction to complete successfully. This method
      * will be run in parallel to other ShutDownTasks.
      */
     @Override

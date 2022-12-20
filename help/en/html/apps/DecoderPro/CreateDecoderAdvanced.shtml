@@ -956,6 +956,8 @@ delay is 500 milliseconds.
 
       <p>You can also use the include mechanism to specify the default value of a variable.</p>
 
+      <p>Note: &lt;defaultItem&gt; must be the first element inside the &lt;variable&gt; element body.</p>
+
       <p>Example:</p>
 
       <pre style="font-family: monospace;">
@@ -965,8 +967,10 @@ delay is 500 milliseconds.
   &lt;/variable&gt;
 </pre>
       <p>This will set the default (initial) value of the CV to 12 if the "815" matches, and
-      otherwise use the default-default of 3. You can have as many defaultItem elements as needed;
+      otherwise use the default-default of 3. You can have as many &lt;defaultItem&gt; elements as needed;
       the first one that matches is used.</p>
+
+      <p>Note: any &lt;defaultItem&gt; elements must come before other elements inside the &lt;variable&gt; element.</p>
 
       <h4 id="pane_include">Include/Exclude During Pane Creation</h4>
       Whether a pane (or part of a pane) is created can be made conditional on the decoder type

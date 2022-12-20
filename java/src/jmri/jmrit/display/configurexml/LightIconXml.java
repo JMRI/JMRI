@@ -44,6 +44,8 @@ public class LightIconXml extends PositionableLabelXml {
         elem.addContent(storeIcon("inconsistent", p.getInconsistentIcon()));
         element.addContent(elem);
 
+        storeLogixNG_Data(p, element);
+
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LightIconXml");
 
         return element;
@@ -116,6 +118,9 @@ public class LightIconXml extends PositionableLabelXml {
             // This should never happen
             log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
         }
+
+        loadLogixNG_Data(l, element);
+
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.LIGHTS, element);
     }

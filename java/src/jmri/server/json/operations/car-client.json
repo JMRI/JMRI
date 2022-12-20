@@ -82,6 +82,10 @@
             "type": "boolean",
             "description": "True if the car is a passenger vehicle; false otherwise"
         },
+        "isLocal": {
+            "type": "boolean",
+            "description": "True if the car is being moved locally; false otherwise"
+        },
         "rfid": {
             "type": [
                 "string",

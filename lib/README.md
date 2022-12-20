@@ -95,8 +95,10 @@ which checks the dates of the control files to make sure they've been updated wh
 ##### commons-logging-1.2.jar
 - version 1.2
 
-##### commons-net-3.6.jar
-- version 3.6
+##### commons-net-3.9.0.jar
+- version 3.9.0
+- not used in direct compilation, not clear where it is used
+- from https://commons.apache.org/proper/commons-net/download_net.cgi
 
 ##### commons-text-1.2.jar
 - version 1.2
@@ -125,7 +127,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - from http://www.slf4j.org
 
 ##### openlcb.jar
- - Local build with PR #204, #205 from https://github.com/openlcb/OpenLCB_Java/pull/205
+ - 0.7.31 from https://github.com/openlcb/OpenLCB_Java
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -143,10 +145,9 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.0.6
 - from <jdom.org>
 
-##### jackson-annotations-2.12.6.jar, jackson-core-2.12.6.jar, jackson-databind-2.12.6.1.jar
+##### jackson-annotations-2.13.4.jar, jackson-core-2.13.4.jar, jackson-databind-2.13.4.1.jar
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.12.6.1
 
 ##### json-schema-validator-1.0.28.jar
 - JSON Schema validation library
@@ -313,10 +314,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
   and https://github.com/usb4java/usb4java-javax/releases/tag/usb4java-javax-1.3.0
 - lib/libusb4java-1.3.0-darwin-aarch64.jar made from a .dylib found at https://github.com/developersu/ns-usbloader/issues/91
 
-##### antlr-3.4-complete
-- version 3.4
-- ANother Tool for Language Recognition
-
 ##### beansbinding-1.2.1.jar
 - version 1.2.1
 - used in web server preference panels
@@ -386,9 +383,10 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ## For unit tests & development work only:
 
-##### ArchUnit: archunit-0.11.0.jar archunit-junit4-0.11.0.jar
+##### ArchUnit: archunit-*.jar, archunit-junit5-api-*.jar, archunit-junit5-engine-*.jar, archunit-junit5-engine-api*.jar
 - See https://www.archunit.org
 - Jars from https://search.maven.org/search?q=g:com.tngtech.archunit
+- version 1.0.0-rc1
 
 ##### byte-buddy-1.10.14
 - version 1.10.14
@@ -431,33 +429,21 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Sept 13, 2021
 - From https://mvnrepository.com/artifact/org.netbeans.external/jemmy-2.3.1.1/RELEASE125
 
-##### junit-4.12.jar
-- version 4.12
-- from http://search.maven.org/#artifactdetails%7Cjunit%7Cjunit%7C4.12%7Cjar
-
 ##### junit-jupiter-*
-- version 5.6.0
+- version 5.9.1
 
 ##### junit-platform-*
-- version 1.6
+- version 1.9.1
 
-##### junit-vintage-engine-5.6.0.jar
-
-##### i18nchecker.jar
-- Internationalization checker: used in source code development, for checking proper implementation of text internationalization.
-- From https://github.com/JMRI/i18nchecker
-- Note: We use a custom version of the original in https://github.com/phamernik/i18nchecker
-- See license https://github.com/phamernik/i18nchecker/blob/master/i18nchecker/LICENSE-2.0.txt
-- Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
-- Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
+##### junit-vintage-engine-5.9.1.jar
 
 ##### mockito-core mockito-inline mockito-junit-jupiter
 - version 3.5.11
 
 ##### OpenIDE Utilities
-- org-openide-util-RELEASE126.jar
-- org-openide-util-lookup-RELEASE126.jar
-- Downloaded from Maven Central 2021-12-21
+- org-openide-util-lookup-RELEASE150.jar
+- Downloaded from Maven Central 2022-10-07
+- https://mvnrepository.com/artifact/org.netbeans.api/org-openide-util-lookup/RELEASE150
 
 ##### PlantUML
 - plantuml.jar
@@ -490,10 +476,10 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
-##### spotbugs-annotations-3.1.7.jar
-- From SpotBugs 3.1.7
+##### spotbugs-annotations-4.7.3.jar
+- From SpotBugs 4.7.3
 - Only needed at compile/build time, not runtime
-- http://repo1.maven.org/maven2/com/github/spotbugs/spotbugs-annotations/3.1.7/
+- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.7.3
 
 ##### picocontainer-2.15.jar
 - version 2.15
@@ -505,6 +491,11 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 0.8.5
 
 ## Older, no longer present:
+
+##### junit-4.12.jar
+- version 4.12
+- from http://search.maven.org/#artifactdetails%7Cjunit%7Cjunit%7C4.12%7Cjar
+- JUnit4 classes currently accessed via junit-platform-console-standalone
 
 ##### UmlGraph-5.7
 - from http://www.umlgraph.org/download.html
@@ -563,6 +554,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Used for testing only, not at runtime
 - from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
 - No longer used as of JMRI 5.1.3
+
+##### org-openide-util-RELEASE126.jar
+- No longer used as of JMRI 5.1.5
 
 #### SpotBugs static analysis
 - used in pom.xml

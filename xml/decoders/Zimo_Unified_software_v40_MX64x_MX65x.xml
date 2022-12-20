@@ -41,6 +41,9 @@
   <version author="Ronald Kuhn   ronald@wirkuhns.de" version="2.0" lastUpdated="2021/11/29"/>
   <!-- v2.0,  added version 40 firmware capabilities,  Ronald Kuhn, 29 Nov 2021 -->
   <!-- v2.1,  add czech translation with FW v40                                               -->
+  <version author="Nigel Cliffe" version="2.2" lastUpdated="2022/11/23"/>
+  <!-- v2.2,  added MX660 decoder, 23 Nov 2022 -->
+  
 
   <decoder>
     <family name="Zimo Unified software (version 40+)" mfg="Zimo">
@@ -604,6 +607,33 @@
         <size length="25" width="10.5" height="4" units="mm"/>
       </model>
       <model model="MX659N18 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="190">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3 (+5v)">
+          <label xml:lang="de">FA3 (+5v)</label>
+          <label xml:lang="cs">FV 3 (+5V)</label>
+        </output>
+        <output name="6" label="FO 4 (+5v)">
+          <label xml:lang="de">FA4 (+5v)</label>
+          <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <size length="20" width="9.5" height="3.5" units="mm"/>
+      </model>
+      <model model="MX660 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="DropIn" numOuts="6" numFns="14" productID="160">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>

@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
@@ -41,7 +42,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTrack;
 import jmri.jmrit.display.LinkingObject;
 import jmri.jmrit.display.LocoIcon;
-import jmri.jmrit.display.MemoryIcon;
+import jmri.jmrit.display.MemoryOrGVIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableIcon;
 import jmri.jmrit.display.PositionableJComponent;
@@ -675,8 +676,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                                 if (bean != null) {
                                     ((PositionableIcon) pos).displayState(bean.getState());
                                 }
-                            } else if (pos instanceof MemoryIcon) {
-                                ((MemoryIcon) pos).displayState();
+                            } else if (pos instanceof MemoryOrGVIcon) {
+                                ((MemoryOrGVIcon) pos).displayState();
                             } else if (pos instanceof PositionableJComponent) {
                                 ((PositionableJComponent) pos).displayState();
                             }
@@ -1592,6 +1593,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 setDisplayLevelMenu(p, popup);
                 setHiddenMenu(p, popup);
                 setEditIdMenu(p, popup);
+                popup.addSeparator();
+                setLogixNGPositionableMenu(p, popup);
                 popup.addSeparator();
                 setCopyMenu(p, popup);
             }

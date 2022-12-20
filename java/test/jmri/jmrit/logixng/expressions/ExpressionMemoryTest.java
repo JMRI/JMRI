@@ -456,7 +456,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         logixNG.addConditionalNG(conditionalNG);
 
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null);
-        ifThenElse.setType(IfThenElse.Type.AlwaysExecute);
+        ifThenElse.setExecuteType(IfThenElse.ExecuteType.AlwaysExecute);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);

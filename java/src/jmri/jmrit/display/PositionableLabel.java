@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyVetoException;
 import java.util.Objects;
 
 import javax.annotation.CheckForNull;
@@ -23,10 +24,13 @@ import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.IconItemPanel;
 import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.display.palette.TextItemPanel;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.tools.swing.DeleteBean;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
 import jmri.util.ThreadingUtil;
@@ -68,6 +72,9 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected String _unRotatedText;
     protected boolean _rotateText = false;
     private int _degrees;
+
+    private LogixNG _logixNG;
+    private String _logixNG_SystemName;
 
     /**
      * Create a new Positionable Label.
@@ -1080,6 +1087,35 @@ public class PositionableLabel extends JLabel implements Positionable {
      */
     @Override
     public void remove() {
+        // If this Positionable has an Inline LogixNG, that LogixNG might be in use.
+        LogixNG logixNG = getLogixNG();
+        if (logixNG != null) {
+            DeleteBean<LogixNG> deleteBean = new DeleteBean<>(
+                    InstanceManager.getDefault(LogixNG_Manager.class));
+
+            boolean hasChildren = logixNG.getNumConditionalNGs() > 0;
+
+            deleteBean.delete(logixNG, hasChildren, (t)->{deleteLogixNG(t);},
+                    (t,list)->{logixNG.getListenerRefsIncludingChildren(list);},
+                    jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName());
+        } else {
+            doRemove();
+        }
+    }
+
+    private void deleteLogixNG(LogixNG logixNG) {
+        logixNG.setEnabled(false);
+        try {
+            InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
+            setLogixNG(null);
+            doRemove();
+        } catch (PropertyVetoException e) {
+            //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
+            log.error("{} : Could not Delete.", e.getMessage());
+        }
+    }
+
+    private void doRemove() {
         if (_editor.removeFromContents(this)) {
             // Modified to support conditional delete for NX sensors
             // remove from persistance by flagging inactive
@@ -1234,6 +1270,37 @@ public class PositionableLabel extends JLabel implements Positionable {
     @Override
     public jmri.NamedBean getNamedBean() {
         return null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LogixNG getLogixNG() {
+        return _logixNG;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setLogixNG(LogixNG logixNG) {
+        this._logixNG = logixNG;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setLogixNG_SystemName(String systemName) {
+        this._logixNG_SystemName = systemName;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setupLogixNG() {
+        _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .getBySystemName(_logixNG_SystemName);
+        if (_logixNG == null) {
+            throw new RuntimeException(String.format(
+                    "LogixNG %s is not found for positional %s in panel %s",
+                    _logixNG_SystemName, getNameString(), getEditor().getName()));
+        }
+        _logixNG.setInlineLogixNG(this);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class);

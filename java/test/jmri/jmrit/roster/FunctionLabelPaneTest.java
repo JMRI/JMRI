@@ -1,29 +1,27 @@
 package jmri.jmrit.roster;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the jmrit.roster.FunctionLabelPane class.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class FunctionLabelPaneTest {
 
-    // statics for test objects
+    // test objects
     org.jdom2.Element eOld = null;
-    org.jdom2.Element eNew = null;
+    // org.jdom2.Element eNew = null;
     RosterEntry rOld = null;
-    RosterEntry rNew = null;
+    // RosterEntry rNew = null;
 
     @Test
     public void testShow() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         FunctionLabelPane p = new FunctionLabelPane(rOld);
 
         jmri.util.JmriJFrame j = new jmri.util.JmriJFrame("FunctionLabelPaneTest");
@@ -38,7 +36,6 @@ public class FunctionLabelPaneTest {
 
     @Test
     public void testGuiChanged1() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         FunctionLabelPane p = new FunctionLabelPane(rOld);
 
         // copy to a new entry
@@ -53,7 +50,6 @@ public class FunctionLabelPaneTest {
 
     @Test
     public void testGuiChanged2() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         FunctionLabelPane p = new FunctionLabelPane(rOld);
 
         // copy to a new entry
@@ -91,6 +87,7 @@ public class FunctionLabelPaneTest {
             }
         };
 
+        /* currently unused
         eNew = new org.jdom2.Element("locomotive")
                 .setAttribute("id", "id info")
                 .setAttribute("fileName", "file here")
@@ -113,6 +110,8 @@ public class FunctionLabelPaneTest {
             protected void warnShortLong(String s) {
             }
         };
+        END OF UNUSED CODE
+        */
     }
 
     @AfterEach

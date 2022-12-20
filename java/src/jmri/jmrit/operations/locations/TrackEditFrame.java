@@ -1,9 +1,6 @@
 package jmri.jmrit.operations.locations;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,25 +10,19 @@ import javax.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.Reporter;
-import jmri.ReporterManager;
+import jmri.*;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.locations.tools.*;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 import jmri.swing.NamedBeanComboBox;
 
 /**
@@ -153,6 +144,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(Setup.class).addPropertyChangeListener(this);
         trainManager.addPropertyChangeListener(this);
         routeManager.addPropertyChangeListener(this);
 
@@ -356,8 +348,9 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         _toolMenu.add(new PoolTrackAction(this));
         // spurs, interchanges, yards, and staging insert menu items here
         _toolMenu.add(new TrackEditCommentsAction(this));
-        _toolMenu.add(new ShowTrainsServingLocationAction(_location, _track));
         _toolMenu.add(new ShowCarsByLocationAction(false, _location, _track));
+        _toolMenu.addSeparator();
+        _toolMenu.add(new ShowTrainsServingLocationAction(_location, _track));
 
         menuBar.add(_toolMenu);
         setJMenuBar(menuBar);
@@ -1243,8 +1236,9 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
                 e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)) {
             updateCheckboxes();
         }
-        if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Track.TRAINDIRECTION_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Location.TRAIN_DIRECTION_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.TRAIN_DIRECTION_CHANGED_PROPERTY) || 
+                e.getPropertyName().equals(Setup.TRAIN_DIRECTION_PROPERTY_CHANGE)) {
             updateTrainDir();
         }
         if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)) {

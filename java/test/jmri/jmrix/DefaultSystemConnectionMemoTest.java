@@ -56,9 +56,9 @@ public class DefaultSystemConnectionMemoTest {
 
             @Override
             @SuppressWarnings("unchecked") // dynamic check
-            public <T> T get(Class<?> T) {
+            public <T> T get(Class<T> T) {
                 if (T.equals(jmri.CommandStation.class)) {
-                    return (T) InstanceManager.getDefault(T);
+                    return InstanceManager.getDefault(T);
                 }
                 return super.get(T);
             }
@@ -90,9 +90,9 @@ public class DefaultSystemConnectionMemoTest {
 
             @Override
             @SuppressWarnings("unchecked") // dynamic check
-            public <T> T get(Class<?> T) {
+            public <T> T get(Class<T> T) {
                 if (T.equals(jmri.CommandStation.class)) {
-                    return (T) InstanceManager.getDefault(T);
+                    return InstanceManager.getDefault(T);
                 }
                 return super.get(T);
             }
@@ -123,9 +123,9 @@ public class DefaultSystemConnectionMemoTest {
 
             @Override
             @SuppressWarnings("unchecked") // dynamic check
-            public <T> T get(Class<?> T) {
+            public <T> T get(Class<T> T) {
                 if (T.equals(jmri.AddressedProgrammerManager.class)) {
-                    return (T) InstanceManager.getDefault(T);
+                    return InstanceManager.getDefault(T);
                 }
                 return super.get(T);
             }
@@ -157,9 +157,9 @@ public class DefaultSystemConnectionMemoTest {
 
             @Override
             @SuppressWarnings("unchecked") // dynamic check
-            public <T> T get(Class<?> T) {
+            public <T> T get(Class<T> T) {
                 if (T.equals(jmri.AddressedProgrammerManager.class)) {
-                    return (T) InstanceManager.getDefault(T);
+                    return InstanceManager.getDefault(T);
                 }
                 return super.get(T);
             }

@@ -34,6 +34,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel.LocationFormat;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
+import jmri.jmrit.logixng.GlobalVariable;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
 import jmri.util.swing.JComboBoxUtil;
@@ -212,6 +213,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     // PositionableLabel's
     private List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); // BlockContentsIcon Label List
     private List<MemoryIcon> memoryLabelList = new ArrayList<>();               // Memory Label List
+    private List<GlobalVariableIcon> globalVariableLabelList = new ArrayList<>(); // LogixNG Global Variable Label List
     private List<SensorIcon> sensorList = new ArrayList<>();                    // Sensor Icons
     private List<SignalHeadIcon> signalList = new ArrayList<>();                // Signal Head Icons
     private List<SignalMastIcon> signalMastList = new ArrayList<>();            // Signal Mast Icons
@@ -236,6 +238,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Nonnull
     public List<MemoryIcon> getMemoryLabelList() {
         return memoryLabelList;
+    }
+
+    @Nonnull
+    public List<GlobalVariableIcon> getGlobalVariableLabelList() {
+        return globalVariableLabelList;
     }
 
     @Nonnull
@@ -2242,6 +2249,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         listOfListsOfComponents.add(multiSensors);
         listOfListsOfComponents.add(signalList);
         listOfListsOfComponents.add(memoryLabelList);
+        listOfListsOfComponents.add(globalVariableLabelList);
         listOfListsOfComponents.add(blockContentsLabelList);
         listOfListsOfComponents.add(sensorList);
         listOfListsOfComponents.add(signalMastList);
@@ -2628,6 +2636,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         positionables.addAll(blockContentsLabelList);
         positionables.addAll(labelImage);
         positionables.addAll(memoryLabelList);
+        positionables.addAll(globalVariableLabelList);
         positionables.addAll(sensorImage);
         positionables.addAll(sensorList);
         positionables.addAll(signalHeadImage);
@@ -2695,6 +2704,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         positionables.addAll(blockContentsLabelList);
         positionables.addAll(labelImage);
         positionables.addAll(memoryLabelList);
+        positionables.addAll(globalVariableLabelList);
         positionables.addAll(sensorImage);
         positionables.addAll(sensorList);
         positionables.addAll(signalHeadImage);
@@ -3006,6 +3016,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             startDelta = MathUtil.subtract(((PositionableLabel) selectedObject).getLocation(), dLoc);
                             if (selectedObject instanceof MemoryIcon) {
                                 MemoryIcon pm = (MemoryIcon) selectedObject;
+
+                                if (pm.getPopupUtility().getFixedWidth() == 0) {
+                                    startDelta = new Point2D.Double((pm.getOriginalX() - dLoc.getX()),
+                                            (pm.getOriginalY() - dLoc.getY()));
+                                }
+                            }
+                            if (selectedObject instanceof GlobalVariableIcon) {
+                                GlobalVariableIcon pm = (GlobalVariableIcon) selectedObject;
 
                                 if (pm.getPopupUtility().getFixedWidth() == 0) {
                                     startDelta = new Point2D.Double((pm.getOriginalX() - dLoc.getX()),
@@ -3528,6 +3546,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     addLabel();
                 } else if (leToolBarPanel.memoryButton.isSelected()) {
                     addMemory();
+                } else if (leToolBarPanel.globalVariableButton.isSelected()) {
+                    addGlobalVariable();
                 } else if (leToolBarPanel.blockContentsButton.isSelected()) {
                     addBlockContents();
                 } else if (leToolBarPanel.iconLabelButton.isSelected()) {
@@ -3871,6 +3891,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 if (p.doViemMenu()) {
                     setHiddenMenu(p, popup);
                     setEditIdMenu(p, popup);
+                    popup.addSeparator();
+                    setLogixNGPositionableMenu(p, popup);
                 }
             }
         } else {
@@ -5677,6 +5699,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             memoryLabelList.remove(s);
             found = true;
         }
+        if (globalVariableLabelList.contains(s)) {
+            globalVariableLabelList.remove(s);
+            found = true;
+        }
         if (blockContentsLabelList.contains(s)) {
             blockContentsLabelList.remove(s);
             found = true;
@@ -6689,6 +6715,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             signalMastList.add((SignalMastIcon) l);
         } else if (l instanceof MemoryIcon) {
             memoryLabelList.add((MemoryIcon) l);
+        } else if (l instanceof GlobalVariableIcon) {
+            globalVariableLabelList.add((GlobalVariableIcon) l);
         } else if (l instanceof BlockContentsIcon) {
             blockContentsLabelList.add((BlockContentsIcon) l);
         } else if (l instanceof AnalogClock2Display) {
@@ -6731,6 +6759,41 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (!uname.equals(memoryName)) {
                 // put the system name in the memory field
                 leToolBarPanel.textMemoryComboBox.setSelectedItem(xMemory);
+            }
+        }
+        setNextLocation(l);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setDisplayLevel(Editor.LABELS);
+        l.setForeground(defaultTextColor);
+        unionToPanelBounds(l.getBounds());
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+    }
+
+    void addGlobalVariable() {
+        String globalVariableName = leToolBarPanel.textGlobalVariableComboBox.getSelectedItemDisplayName();
+        if (globalVariableName == null) {
+            globalVariableName = "";
+        }
+
+        if (globalVariableName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error11c"),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        GlobalVariableIcon l = new GlobalVariableIcon(" ", this);
+        l.setGlobalVariable(globalVariableName);
+        GlobalVariable xGlobalVariable = l.getGlobalVariable();
+
+        if (xGlobalVariable != null) {
+            String uname = xGlobalVariable.getDisplayName();
+            if (!uname.equals(globalVariableName)) {
+                // put the system name in the memory field
+                leToolBarPanel.textGlobalVariableComboBox.setSelectedItem(xGlobalVariable);
             }
         }
         setNextLocation(l);
@@ -8275,6 +8338,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             theList = blockContentsLabelList;
         } else if (nb instanceof Memory) {
             theList = memoryLabelList;
+        } else if (nb instanceof GlobalVariable) {
+            theList = globalVariableLabelList;
         }
         if (theList != null) {
             for (Object o : theList) {
@@ -8460,6 +8525,17 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             }
 
+            if (nb instanceof GlobalVariable) {
+                for (GlobalVariableIcon si : globalVariableLabelList) {
+                    if (nb.equals(si.getGlobalVariable())) {
+                        found = true;
+                        message.append("<li>");
+                        message.append(Bundle.getMessage("VetoGlobalVariableIconFound"));
+                        message.append("</li>");
+                    }
+                }
+            }
+
             if (found) {
                 message.append("</ul>");
                 message.append(Bundle.getMessage("VetoReferencesWillBeRemoved")); // NOI18N
@@ -8554,6 +8630,19 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     MemoryIcon i = icon.next();
 
                     if (nb.equals(i.getMemory())) {
+                        icon.remove();
+                        super.removeFromContents(i);
+                    }
+                }
+            }
+
+            if (nb instanceof GlobalVariable) {
+                Iterator<GlobalVariableIcon> icon = globalVariableLabelList.iterator();
+
+                while (icon.hasNext()) {
+                    GlobalVariableIcon i = icon.next();
+
+                    if (nb.equals(i.getGlobalVariable())) {
                         icon.remove();
                         super.removeFromContents(i);
                     }

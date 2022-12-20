@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.trains.schedules;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
@@ -195,6 +193,10 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         addRadioButtonAction(noneButton);
         addRadioButtonAction(anyButton);
+        
+        // tips
+        noneButton.setToolTipText(Bundle.getMessage("NoActiveTip"));
+        anyButton.setToolTipText(Bundle.getMessage("AnyActiveTip"));
 
         // build menu
         JMenuBar menuBar = new JMenuBar();

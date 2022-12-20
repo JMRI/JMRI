@@ -9,17 +9,15 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.*;
-import jmri.InstanceManager;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.CbusAddress;
-import jmri.jmrix.can.cbus.CbusMessage;
-import jmri.jmrix.can.cbus.CbusPreferences;
-import jmri.jmrix.can.cbus.CbusSend;
+import jmri.jmrix.can.cbus.*;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
@@ -40,14 +38,12 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements PropertyChangeListener{
 
-    public CbusNodeTableDataModel nodeModel;
     public JTable nodeTable;
     private CbusPreferences preferences;
 
     protected CbusNodeTablePane nodeTablePane;
     private CbusNodeRestoreFcuFrame fcuFrame;
     private CbusNodeEditEventFrame _editEventFrame;
-    // private CbusNodeBackupsPane _backupPane;
 
     private JScrollPane eventScroll;
     private JSplitPane split;
@@ -60,21 +56,21 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public int NODE_SEARCH_TIMEOUT = 5000;
 
-    private JMenuItem teachNodeFromFcuFile;
-    private JMenuItem searchForNodesMenuItem;
-    private JCheckBoxMenuItem nodeNumRequestMenuItem;
-    private JRadioButtonMenuItem backgroundDisabled;
-    private JRadioButtonMenuItem backgroundSlow;
-    private JRadioButtonMenuItem backgroundFast;
-    private JCheckBoxMenuItem addCommandStationMenuItem;
-    private JCheckBoxMenuItem addNodesMenuItem;
-    private JCheckBoxMenuItem startupCommandStationMenuItem;
-    private JCheckBoxMenuItem startupNodesMenuItem;
-    private JCheckBoxMenuItem startupNodesXmlMenuItem;
-    private JRadioButtonMenuItem zeroBackups;
-    private JRadioButtonMenuItem fiveBackups;
-    private JRadioButtonMenuItem tenBackups;
-    private JRadioButtonMenuItem twentyBackups;
+    private final JMenuItem teachNodeFromFcuFile;
+    private final JMenuItem searchForNodesMenuItem;
+    private final JCheckBoxMenuItem nodeNumRequestMenuItem;
+    private final JRadioButtonMenuItem backgroundDisabled;
+    private final JRadioButtonMenuItem backgroundSlow;
+    private final JRadioButtonMenuItem backgroundFast;
+    private final JCheckBoxMenuItem addCommandStationMenuItem;
+    private final JCheckBoxMenuItem addNodesMenuItem;
+    private final JCheckBoxMenuItem startupCommandStationMenuItem;
+    private final JCheckBoxMenuItem startupNodesMenuItem;
+    private final JCheckBoxMenuItem startupNodesXmlMenuItem;
+    private final JRadioButtonMenuItem zeroBackups;
+    private final JRadioButtonMenuItem fiveBackups;
+    private final JRadioButtonMenuItem tenBackups;
+    private final JRadioButtonMenuItem twentyBackups;
 
     /**
      * {@inheritDoc}
@@ -82,20 +78,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        nodeModel=InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
-        if (nodeModel == null) {
-            ThreadingUtil.runOnLayout(() -> {
-            nodeModel = new CbusNodeTableDataModel(memo, 5, CbusNodeTableDataModel.MAX_COLUMN);
-            InstanceManager.store(nodeModel, CbusNodeTableDataModel.class);
-            nodeModel.startup();
-            });
-        }
 
         CbusConfigPaneProvider.loadInstances();
 
         _selectedNode = -1;
 
-        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        preferences = memo.get(jmri.jmrix.can.cbus.CbusPreferences.class);
         init();
 
     }
@@ -105,6 +93,23 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
      */
     public NodeConfigToolPane() {
         super();
+        nodeNumRequestMenuItem = new JCheckBoxMenuItem(("Listen for Node Number Requests"));
+        teachNodeFromFcuFile = new JMenuItem(("Restore Node / Import Data from FCU XML")); //  FCU
+        searchForNodesMenuItem = new JMenuItem("Search for Nodes and Command Stations");
+        addCommandStationMenuItem = new JCheckBoxMenuItem(("Add Command Stations when found"));
+        addNodesMenuItem = new JCheckBoxMenuItem(("Add Nodes when found"));
+        backgroundDisabled = new JRadioButtonMenuItem(Bundle.getMessage("HighlightDisabled"));
+        backgroundSlow = new JRadioButtonMenuItem(("Slow"));
+        backgroundFast = new JRadioButtonMenuItem(("Fast"));
+
+        startupCommandStationMenuItem = new JCheckBoxMenuItem(("Search Command Stations on Startup"));
+        startupNodesMenuItem = new JCheckBoxMenuItem(("Search Nodes on Startup"));
+
+        startupNodesXmlMenuItem = new JCheckBoxMenuItem(("Add previously seen Nodes on Startup"));
+        zeroBackups = new JRadioButtonMenuItem(("0"));
+        fiveBackups = new JRadioButtonMenuItem(("5"));
+        tenBackups = new JRadioButtonMenuItem(("10"));
+        twentyBackups = new JRadioButtonMenuItem(("20"));
     }
 
     protected final ArrayList<CbusNodeConfigTab> getTabs() {
@@ -124,6 +129,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
      * Initialise the NodeConfigToolPane
      */
     public void init() {
+
+        setMenuOptions(); // called when memo available
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -267,9 +274,9 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             nodeTable.setRowSelectionInterval(sel,sel);
 
             // this also starts urgent fetch loop if not currently looping
-            nodeModel.setUrgentFetch(_selectedNode,nodeBefore,nodeAfter);
+            getNodeModel().setUrgentFetch(_selectedNode,nodeBefore,nodeAfter);
 
-            getTabs().get(tabindex).setNode( nodeModel.getNodeByNodeNum(_selectedNode) );
+            getTabs().get(tabindex).setNode( getNodeModel().getNodeByNodeNum(_selectedNode) );
 
         }
         else {
@@ -283,7 +290,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
      */
     private void setMenuOptions(){
 
-        nodeNumRequestMenuItem.setSelected( preferences.getAllocateNNListener() );
+        nodeNumRequestMenuItem.setSelected(
+                preferences.getAllocateNNListener() );
         backgroundDisabled.setSelected(false);
         backgroundSlow.setSelected(false);
         backgroundFast.setSelected(false);
@@ -343,43 +351,30 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
 
-        teachNodeFromFcuFile = new JMenuItem(("Restore Node / Import Data from FCU XML")); //  FCU
-
         fileMenu.add(teachNodeFromFcuFile);
 
         JMenu optionsMenu = new JMenu("Options");
 
-        searchForNodesMenuItem = new JMenuItem("Search for Nodes and Command Stations");
+
 
         JMenuItem sendSysResetMenuItem = new JMenuItem("Send System Reset");
 
         searchForNodesMenuItem.setToolTipText(("Timeout set to " + NODE_SEARCH_TIMEOUT + "ms."));
 
-        nodeNumRequestMenuItem = new JCheckBoxMenuItem(("Listen for Node Number Requests"));
+
         nodeNumRequestMenuItem.setToolTipText("Also adds a check for any node already awaiting a number when performing node searches.");
 
-        addCommandStationMenuItem = new JCheckBoxMenuItem(("Add Command Stations when found"));
-        addNodesMenuItem = new JCheckBoxMenuItem(("Add Nodes when found"));
+
 
         JMenu backgroundFetchMenu = new JMenu("Node Info Fetch Speed");
         ButtonGroup backgroundFetchGroup = new ButtonGroup();
 
-        backgroundDisabled = new JRadioButtonMenuItem(Bundle.getMessage("HighlightDisabled"));
-        backgroundSlow = new JRadioButtonMenuItem(("Slow"));
-        backgroundFast = new JRadioButtonMenuItem(("Fast"));
 
-        startupCommandStationMenuItem = new JCheckBoxMenuItem(("Search Command Stations on Startup"));
-        startupNodesMenuItem = new JCheckBoxMenuItem(("Search Nodes on Startup"));
-
-        startupNodesXmlMenuItem = new JCheckBoxMenuItem(("Add previously seen Nodes on Startup"));
 
         JMenu numBackupsMenu = new JMenu("Min. Auto Backups to retain");
         ButtonGroup minNumBackupsGroup = new ButtonGroup();
 
-        zeroBackups = new JRadioButtonMenuItem(("0"));
-        fiveBackups = new JRadioButtonMenuItem(("5"));
-        tenBackups = new JRadioButtonMenuItem(("10"));
-        twentyBackups = new JRadioButtonMenuItem(("20"));
+
 
         minNumBackupsGroup.add(zeroBackups);
         minNumBackupsGroup.add(fiveBackups);
@@ -433,7 +428,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             searchForNodesMenuItem.setEnabled(false);
             busy_dialog = new jmri.util.swing.BusyDialog(topFrame, "Node Search", false);
             busy_dialog.start();
-            nodeModel.startASearchForNodes( this , NODE_SEARCH_TIMEOUT );
+            getNodeModel().startASearchForNodes( this , NODE_SEARCH_TIMEOUT );
         };
         searchForNodesMenuItem.addActionListener(updatenodes);
 
@@ -450,7 +445,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         sendSysResetMenuItem.addActionListener(systemReset);
 
         ActionListener nodeRequestActive = ae -> {
-            nodeModel.setBackgroundAllocateListener( nodeNumRequestMenuItem.isSelected() );
+            getNodeModel().setBackgroundAllocateListener( nodeNumRequestMenuItem.isSelected() );
             preferences.setAllocateNNListener( nodeNumRequestMenuItem.isSelected() );
         };
         nodeNumRequestMenuItem.addActionListener(nodeRequestActive);
@@ -459,15 +454,15 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         ActionListener fetchListener = ae -> {
             if ( backgroundDisabled.isSelected() ) {
                 preferences.setNodeBackgroundFetchDelay(0L);
-                nodeModel.startBackgroundFetch();
+                getNodeModel().startBackgroundFetch();
             }
             else if ( backgroundSlow.isSelected() ) {
                 preferences.setNodeBackgroundFetchDelay(100L);
-                nodeModel.startBackgroundFetch();
+                getNodeModel().startBackgroundFetch();
             }
             else if ( backgroundFast.isSelected() ) {
                 preferences.setNodeBackgroundFetchDelay(50L);
-                nodeModel.startBackgroundFetch();
+                getNodeModel().startBackgroundFetch();
             }
         };
         backgroundDisabled.addActionListener(fetchListener);
@@ -519,7 +514,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         tenBackups.addActionListener(minBackupsListener);
         twentyBackups.addActionListener(minBackupsListener);
 
-        setMenuOptions();
 
         return menuList;
     }
@@ -633,11 +627,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             return false;
         }
 
-        if (nodeModel==null){
-            log.warn("No Node Model");
-            return false;
-        }
-        CbusNode _node = nodeModel.getNodeByNodeNum( _selectedNode );
+        CbusNode _node = getNodeModel().getNodeByNodeNum( _selectedNode );
         if (_node==null){
             log.warn("No Node");
             return false;
@@ -848,11 +838,16 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     /**
-     * Get the Default Instance Node Model
-     * @return Default Instance Node Model
+     * Get the System Connection Node Model
+     * @return System Connection Node Model
      */
+    @Nonnull
     protected CbusNodeTableDataModel getNodeModel(){
-        return InstanceManager.getDefault(CbusNodeTableDataModel.class);
+        if ( memo == null ) {
+            throw new IllegalStateException("No System Connection Set, call initComponents(memo)");
+        }
+        return memo.get(CbusConfigurationManager.class)
+            .provide(CbusNodeTableDataModel.class);
     }
 
     /**

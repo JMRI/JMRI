@@ -52,7 +52,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     public LayoutTurntable(@Nonnull String id, @Nonnull LayoutEditor models) {
         super(id, models);
-        
+
         radius = 25.0; // initial default, change asap.
     }
 
@@ -65,8 +65,8 @@ public class LayoutTurntable extends LayoutTrack {
     private int lastKnownIndex = -1;
 
     // persistent instance variables (saved between sessions)
-    
-    // temporary: this is referenced directly from LayoutTurntable, which 
+
+    // temporary: this is referenced directly from LayoutTurntable, which
     // should be using _functional_ accessors here.
     public final List<RayTrack> rayTrackList = new ArrayList<>(); // list of Ray Track objects
 
@@ -785,7 +785,7 @@ public class LayoutTurntable extends LayoutTrack {
          * @param turnoutName the turnout name
          * @param state       its state
          */
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE",
                 justification="2nd check of turnoutName is considered redundant by SpotBugs, but required by ecj") // temporary
         public void setTurnout(@Nonnull String turnoutName, int state) {
             Turnout turnout = null;
@@ -1031,6 +1031,14 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     public boolean canRemove() {
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTypeName() {
+        return Bundle.getMessage("TypeName_Turntable");
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntable.class);

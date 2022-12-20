@@ -193,7 +193,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     @OverridingMethodsMustInvokeSuper
     @SuppressWarnings("unchecked") // dynamic checking done on cast of getConsistManager
     @Override
-    public <T> T get(Class<?> type) {
+    public <T> T get(Class<T> type) {
         if (disabled) {
             return null;
         }

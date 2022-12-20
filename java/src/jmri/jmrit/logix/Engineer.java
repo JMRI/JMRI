@@ -440,7 +440,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         } while (time <= pause && _isRamping);
 
         if (!_isRamping) {
-            if (_warrant._trace || log.isDebugEnabled()) {
+            if (Warrant._trace || log.isDebugEnabled()) {
                 log.info(Bundle.getMessage("RampStart", _warrant.getTrainName(),
                         endSpeedType, _warrant.getCurrentBlockName()));
             }
@@ -842,7 +842,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         jmri.Sensor s = (Sensor)bean;
         ValueType type = cmdVal.getType();
         try {
-            if (_warrant._trace || log.isDebugEnabled()) {
+            if (Warrant._trace || log.isDebugEnabled()) {
                 log.info("{} : Set Sensor", Bundle.getMessage("setSensor",
                             _warrant.getTrainName(), s.getDisplayName(), type.toString()));
             }
@@ -893,7 +893,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             _waitForSensor = true;
             while (_waitForSensor) {
                 try {
-                    if (_warrant._trace || log.isDebugEnabled()) {
+                    if (Warrant._trace || log.isDebugEnabled()) {
                         log.info("{} : waitSensor", Bundle.getMessage("waitSensor",
                             _warrant.getTrainName(), _waitSensor.getDisplayName(), type.toString()));
                     }
@@ -901,7 +901,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                     wait();
                     if (!_abort ) {
                         String name =  _waitSensor.getDisplayName();    // save name, _waitSensor will be null 'eventually'
-                        if (_warrant._trace || log.isDebugEnabled()) {
+                        if (Warrant._trace || log.isDebugEnabled()) {
                             log.info("{} : wait Sensor Change", Bundle.getMessage("waitSensorChange",
                                     _warrant.getTrainName(), name));
                         }
@@ -987,7 +987,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         _warrant.getfirstOrder().getBlock().getDisplayName());
                 color = WarrantTableModel.myGreen;
             }
-            if (_warrant._trace || log.isDebugEnabled()) {
+            if (Warrant._trace || log.isDebugEnabled()) {
                 log.info("{} : Warrant Status", msg);
             }
             Engineer.setFrameStatusText(msg, color, true);
@@ -1018,7 +1018,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             }
             color = WarrantTableModel.myGreen;
         }
-        if (_warrant._trace || log.isDebugEnabled()) {
+        if (Warrant._trace || log.isDebugEnabled()) {
             log.info("{} : Launch", msg);
         }
         Engineer.setFrameStatusText(msg, color, true);
@@ -1473,12 +1473,12 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             rampDone(stop, _endSpeedType, _endBlockIdx);
             if (!stop) {
                 _warrant.fireRunStatus("RampDone", _halt, _endSpeedType);   // normal completion of ramp
-                if (_warrant._trace || log.isDebugEnabled()) {
+                if (Warrant._trace || log.isDebugEnabled()) {
                     log.info(Bundle.getMessage("RampSpeed", _warrant.getTrainName(),
                         _endSpeedType, _warrant.getCurrentBlockName()));
                 }
             } else {
-                if (_warrant._trace || log.isDebugEnabled()) {
+                if (Warrant._trace || log.isDebugEnabled()) {
                     log.info(Bundle.getMessage("RampSpeed", _warrant.getTrainName(),
                             _endSpeedType, _warrant.getCurrentBlockName()) + "-Interrupted!");
                 }

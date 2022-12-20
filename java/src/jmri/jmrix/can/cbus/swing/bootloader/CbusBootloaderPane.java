@@ -77,8 +77,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     private CbusSend send;
     private CbusPreferences preferences;
 
-    private JRadioButtonMenuItem slowWrite;
-    private JRadioButtonMenuItem fastWrite;
+    private final JRadioButtonMenuItem slowWrite;
+    private final JRadioButtonMenuItem fastWrite;
     protected JTextField nodeNumberField = new JTextField(6);
     protected JCheckBox configCheckBox = new JCheckBox();
     protected JCheckBox eepromCheckBox = new JCheckBox();
@@ -182,6 +182,8 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     public CbusBootloaderPane() {
         super();
         bootConsole = new TextAreaFIFO(MAX_LINES);
+        slowWrite = new JRadioButtonMenuItem(Bundle.getMessage("Slow"));
+        fastWrite = new JRadioButtonMenuItem(Bundle.getMessage("Fast"));
     }
 
     /**
@@ -197,9 +199,10 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
         send = new CbusSend(memo, bootConsole);
 
-        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        preferences = memo.get(jmri.jmrix.can.cbus.CbusPreferences.class);
 
         init();
+        setMenuOptions();
     }
 
 
@@ -392,9 +395,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         JMenu writeSpeedMenu = new JMenu(Bundle.getMessage("BootWriteSpeed"));
         ButtonGroup backgroundFetchGroup = new ButtonGroup();
 
-        slowWrite = new JRadioButtonMenuItem(Bundle.getMessage("Slow"));
-        fastWrite = new JRadioButtonMenuItem(Bundle.getMessage("Fast"));
-
         backgroundFetchGroup.add(slowWrite);
         backgroundFetchGroup.add(fastWrite);
 
@@ -420,7 +420,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         slowWrite.addActionListener(writeSpeedListener);
         slowWrite.addActionListener(writeSpeedListener);
 
-        setMenuOptions();
+        
 
         return menuList;
     }

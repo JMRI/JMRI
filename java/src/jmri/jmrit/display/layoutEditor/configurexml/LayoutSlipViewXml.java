@@ -1,13 +1,10 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
-import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.*;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This module handles configuration for display.LayoutSlipView objects for a
@@ -17,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2018
  * @author Bob Jacobsen Copyright (c) 2020
  */
-public class LayoutSlipViewXml extends AbstractXmlAdapter {
+public class LayoutSlipViewXml extends LayoutTrackViewXml {
 
     public LayoutSlipViewXml() {
     }
@@ -171,6 +168,7 @@ public class LayoutSlipViewXml extends AbstractXmlAdapter {
             states.addContent(state);
         }
         element.addContent(states);
+        storeLogixNG_Data(pv, element);
         addClass(element);
         return element;
     }
@@ -207,9 +205,9 @@ public class LayoutSlipViewXml extends AbstractXmlAdapter {
                 tTypeEnumMap.inputFromAttribute(element.getAttribute("slipType"));
 
         // create the new LayoutSlip
-        LayoutSlip l; 
-        LayoutSlipView lv; 
-        
+        LayoutSlip l;
+        LayoutSlipView lv;
+
         switch(type) {
             case DOUBLE_SLIP :
                 LayoutDoubleSlip lds = new LayoutDoubleSlip(name, p);
@@ -347,6 +345,8 @@ public class LayoutSlipViewXml extends AbstractXmlAdapter {
                         bc.getChild("turnoutB").getText());
             }
         }
+
+        loadLogixNG_Data(lv, element);
     }
 
     String getElement(Element el, String child) {

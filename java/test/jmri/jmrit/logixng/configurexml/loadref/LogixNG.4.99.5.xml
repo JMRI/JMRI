@@ -155,12 +155,12 @@
       <id>54</id>
       <name>My other logixng thread</name>
     </Thread>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0001</systemName>
       <userName>An empty logixNG</userName>
       <ConditionalNGs />
     </LogixNG>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0002</systemName>
       <userName>A logixNG with an empty conditionlNG</userName>
       <ConditionalNGs>
@@ -170,21 +170,21 @@
         <systemName>IQC:AUTO:0004</systemName>
       </ConditionalNGs>
     </LogixNG>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0003</systemName>
       <userName>A logixNG in the initialization table</userName>
       <ConditionalNGs>
         <systemName>IQC:AUTO:0005</systemName>
       </ConditionalNGs>
     </LogixNG>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0004</systemName>
       <userName>Another logixNG in the initialization table</userName>
       <ConditionalNGs>
         <systemName>IQC:AUTO:0006</systemName>
       </ConditionalNGs>
     </LogixNG>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0005</systemName>
       <userName>A logixNG</userName>
       <ConditionalNGs>
@@ -293,6 +293,7 @@
     <CsvTable class="jmri.jmrit.logixng.implementation.configurexml.DefaultCsvNamedTableXml">
       <systemName>IQT1</systemName>
       <fileName>program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv</fileName>
+      <csvType>TABBED</csvType>
     </CsvTable>
   </LogixNGTables>
   <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">
@@ -5644,6 +5645,7 @@
       <systemName>IQDE:AUTO:0065</systemName>
       <is_isNot>Is</is_isNot>
       <powerState>On</powerState>
+      <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -5706,6 +5708,7 @@
       <comment>A comment</comment>
       <is_isNot>IsNot</is_isNot>
       <powerState>Off</powerState>
+      <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -5768,6 +5771,7 @@
       <comment>A comment</comment>
       <is_isNot>IsNot</is_isNot>
       <powerState>On</powerState>
+      <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -5828,8 +5832,9 @@
     <ExpressionPower class="jmri.jmrit.logixng.expressions.configurexml.ExpressionPowerXml">
       <systemName>IQDE:AUTO:0068</systemName>
       <comment>A comment</comment>
-      <is_isNot>IsNot</is_isNot>
-      <powerState>Other</powerState>
+      <is_isNot>Is</is_isNot>
+      <powerState>OnOrOff</powerState>
+      <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -22500,7 +22505,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </For>
-    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="ExecuteOnChange" evaluateType="EvaluateAll">
       <systemName>IQDA:AUTO:0163</systemName>
       <Expressions>
         <Socket>
@@ -22572,7 +22577,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </IfThenElse>
-    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="ExecuteOnChange" evaluateType="EvaluateAll">
       <systemName>IQDA:AUTO:0164</systemName>
       <comment>A comment</comment>
       <Expressions>
@@ -22645,7 +22650,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </IfThenElse>
-    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="AlwaysExecute">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="AlwaysExecute" evaluateType="EvaluateAll">
       <systemName>IQDA:AUTO:0165</systemName>
       <comment>A comment</comment>
       <Expressions>
@@ -25517,7 +25522,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </TriggerRoute>
-    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="ExecuteOnChange" evaluateType="EvaluateAll">
       <systemName>IQDA:AUTO:0205</systemName>
       <comment>A comment</comment>
       <Expressions>

@@ -15,27 +15,32 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class JmriSRCPServerPreferencesTest {
 
-    @Test public void testCtor() {
+    @Test
+    public void testCtor() {
         JmriSRCPServerPreferences a = new JmriSRCPServerPreferences();
         assertThat(a).isNotNull();
     }
 
-    @Test public void testStringCtor() {
+    @Test
+    public void testJmriSRCPServerPreferencesStringCtor() {
         JmriSRCPServerPreferences a = new JmriSRCPServerPreferences("Hello World");
         assertThat(a).isNotNull();
     }
 
-    @Test public void defaultPort() {
+    @Test
+    public void testDefaultPort() {
         JmriSRCPServerPreferences a = new JmriSRCPServerPreferences();
         assertThat(a.getDefaultPort()).withFailMessage("Default Port").isEqualTo(4303);
     }
 
-    @BeforeEach public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
-    @AfterEach public void tearDown() {
+    @AfterEach
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
