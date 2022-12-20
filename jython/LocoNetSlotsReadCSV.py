@@ -10,8 +10,8 @@ import java
 import java.util
 import array
 import csv
-# change ns accordingly DCS50=11; DCS51=21, DB150=23, DCS100=121
-ns = 121
+# change numSlots=number of slots accordingly DCS50=11; DCS51=21, DB150=23, DCS100=121
+numSlots = 121
 class SampleLnStats(jmri.jmrit.automat.AbstractAutomaton) :
     arr = []
     def init(self):
@@ -23,7 +23,7 @@ class SampleLnStats(jmri.jmrit.automat.AbstractAutomaton) :
         CS = self.slotManager.getCommandStationType()
         print "Command Station:", CS, "User Name:", MyUserName, "Prefix:", MySystemPrefix
         print "Number of slots in use: ", nowSlotsUsed
-        for x in range(1, ns):
+        for x in range(1, numSlots):
             slrec = []
             self.LocoNetSlot = self.slotManager.slot(x)
             LnSlot = self.LocoNetSlot.locoAddr()
@@ -94,4 +94,5 @@ class SampleLnStats(jmri.jmrit.automat.AbstractAutomaton) :
         return
 a = SampleLnStats()
 a.start()
+
 
