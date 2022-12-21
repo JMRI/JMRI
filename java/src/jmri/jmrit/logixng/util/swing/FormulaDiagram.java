@@ -158,9 +158,9 @@ public class FormulaDiagram {
             sb3.append(" /")
                     .append(pad(' ', x2 - sb3Len - 1))
                     .append('/')
-                    .append(pad('-', center - x2 - 2))
-                    .append("/")
-                    .append(pad(' ', x3 - center - 2))
+                    .append(pad('-', center - x2 - 3))
+                    .append("/  ")
+                    .append(pad(' ', x3 - center - 3))
                     .append("\\ ");
 
         } else if (center == x2) {
