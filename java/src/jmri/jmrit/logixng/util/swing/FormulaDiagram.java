@@ -11,19 +11,19 @@ import jmri.jmrit.logixng.util.parser.*;
  */
 public class FormulaDiagram {
 
-    public void showDiagram(String formula) {
-        try {
-            Map<String, Variable> variables = new HashMap<>();
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            ExpressionNode exprNode = parser.parseExpression(formula);
-            showDiagram(exprNode);
-        } catch (ParserException ex) {
-            log.error("Invalid formula '{}'. Error: ", formula, ex);
-        }
+    private FormulaDiagram() {
+        // This class should never be instantiated.
     }
 
-    public void showDiagram(ExpressionNode exprNode) {
-        if (exprNode == null) return;
+    public static String getDiagram(String formula) throws ParserException {
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+        ExpressionNode exprNode = parser.parseExpression(formula);
+        return getDiagram(exprNode);
+    }
+
+    public static String getDiagram(ExpressionNode exprNode) {
+        if (exprNode == null) return "";
 
         ExprNodeData exprNodeData = new ExprNodeData();
 
@@ -33,14 +33,15 @@ public class FormulaDiagram {
         List<StringBuilder> output = new ArrayList<>();
         printDiagram(exprNodeData, output);
 
-        System.out.format("%n%n%n");
+        String newLine = String.format("\n");
+        StringBuilder sb = new StringBuilder();
         for (int i=0; i < output.size(); i++) {
-            System.out.println(output.get(i).toString());
+            sb.append(output.get(i).toString()).append(newLine);
         }
-        System.out.format("%n%n");
+        return sb.toString();
     }
 
-    private String pad(char ch, int size) {
+    private static String pad(char ch, int size) {
         StringBuilder sb = new StringBuilder();
         for (int i=0; i < size; i++) {
             sb.append(ch);
@@ -48,7 +49,7 @@ public class FormulaDiagram {
         return sb.toString();
     }
 
-    private void drawLines(List<StringBuilder> output, int y, int numLines, int center, int x1, int x2, int width) {
+    private static void drawLines(List<StringBuilder> output, int y, int numLines, int center, int x1, int x2, int width) {
 
         StringBuilder sb1 = output.get(y * 4 + 1);
         StringBuilder sb2 = output.get(y * 4 + 2);
@@ -117,7 +118,7 @@ public class FormulaDiagram {
 
 
 
-    private void drawLines3(List<StringBuilder> output, int y, int center, int x1, int x2, int x3, int width) {
+    private static void drawLines3(List<StringBuilder> output, int y, int center, int x1, int x2, int x3, int width) {
 
         StringBuilder sb1 = output.get(y * 4 + 1);
         StringBuilder sb2 = output.get(y * 4 + 2);
@@ -221,7 +222,7 @@ public class FormulaDiagram {
 
 
 
-    private void printDiagram(ExprNodeData exprNodeData, List<StringBuilder> output) {
+    private static void printDiagram(ExprNodeData exprNodeData, List<StringBuilder> output) {
         if (output.size() <= exprNodeData._y*4) {
             for (int i=0; i < 4; i++) {
                 output.add(new StringBuilder());
@@ -254,7 +255,7 @@ public class FormulaDiagram {
         }
     }
 
-    private void calculateDiagramPass1(ExpressionNode exprNode, ExprNodeData exprNodeData, int y) {
+    private static void calculateDiagramPass1(ExpressionNode exprNode, ExprNodeData exprNodeData, int y) {
         TokenType tokenType = exprNode.getToken().getTokenType();
         exprNodeData._str = tokenType.hasData() ? exprNode.getToken().getString() : tokenType.getString();
         exprNodeData._y = y;
@@ -265,7 +266,7 @@ public class FormulaDiagram {
         }
     }
 
-    private void moveRight(ExprNodeData exprNodeData, int size) {
+    private static void moveRight(ExprNodeData exprNodeData, int size) {
         if (size == 0) return;
 
         exprNodeData._x0 += size;
@@ -275,7 +276,7 @@ public class FormulaDiagram {
         }
     }
 
-    private int calculateDiagramPass2(ExprNodeData exprNodeData, int x0) {
+    private static int calculateDiagramPass2(ExprNodeData exprNodeData, int x0) {
         final int space = 7;
         int width = 0;
         for (int i=0; i < exprNodeData._childs.size(); i++) {

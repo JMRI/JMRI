@@ -63,7 +63,7 @@ public class FormulaPanel {
         c.gridy = 3;
         JButton showDiagramButton = new JButton(Bundle.getMessage("FormulaPanel_ShowDiagram"));
         showDiagramButton.addActionListener((e)->{
-            new FormulaDiagram().showDiagram(_formula.getText());
+//            FormulaDiagram.getDiagram(_formula.getText());
         });
         panel.add(showDiagramButton, c);
 
