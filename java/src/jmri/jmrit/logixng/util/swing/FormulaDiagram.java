@@ -98,7 +98,7 @@ public class FormulaDiagram {
                                 .append("\\");
                 }
                 sb3.append(" /")
-                        .append(pad(' ', (center - sb3Len) * 2 - 3))
+                        .append(pad(' ', x2 - sb3Len - 3))
                         .append("\\ ");
                 break;
 
