@@ -40,13 +40,85 @@ public class FormulaDiagram {
         System.out.format("%n%n");
     }
 
-    private void printDiagram(ExprNodeData exprNodeData, List<StringBuilder> output) {
-        if (output.size() <= exprNodeData._y) {
-            output.add(new StringBuilder());
+    private String pad(char ch, int size) {
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i < size; i++) {
+            sb.append(ch);
+        }
+        return sb.toString();
+    }
+
+    private void drawLines(List<StringBuilder> output, int y, int numLines, int center, int x1, int x2, int x3, int width) {
+
+        StringBuilder sb1 = output.get(y * 4 + 1);
+        StringBuilder sb2 = output.get(y * 4 + 2);
+        StringBuilder sb3 = output.get(y * 4 + 3);
+        sb1.append(pad(' ', x1 - sb1.length()));
+        sb2.append(pad(' ', x1 - sb2.length()));
+        sb3.append(pad(' ', x1 - sb3.length()));
+
+        int sb1Len = sb1.length();
+        int sb2Len = sb2.length();
+        int sb3Len = sb3.length();
+
+        // Calculate how to draw lines
+        switch (numLines) {
+            case 0:
+                // Do nothing
+                break;
+            case 1:
+                sb1.append(pad(' ', center - sb1.length())).append("|");
+                sb2.append(pad(' ', center - sb2.length())).append("|");
+                sb3.append(pad(' ', center - sb3.length())).append("|");
+                break;
+            case 2:
+//                System.out.format("aa: %d%n", center - sb2Len - 5);
+                sb1.append(pad(' ', center - sb1Len - 1))
+                        .append("/ \\")
+                        .append(pad(' ', center - sb1Len - 1));
+                switch (center - sb2.length() - 5) {
+                    case -2:
+                        sb2.append(",,,");
+                        break;
+                    case -1:
+                        sb2.append("  ")
+                                .append("/   \\");
+                        break;
+                    case 0:
+                        sb2.append("   ")
+                                .append("/   \\");
+                        break;
+                    default:
+                        sb2.append("  /")
+                                .append(pad('-', center - sb2Len - 5))
+                                .append("/   \\")
+                                .append(pad('-', x2 - center - 5))
+                                .append("\\");
+                }
+                sb3.append(" /")
+                        .append(pad(' ', (center - sb3Len) * 2 - 3))
+                        .append("\\ ");
+                break;
+            case 3:
+                break;
+            default:
+                throw new RuntimeException("Too many children. Only 0 - 3 children is possible. Num children: "+Integer.toString(numLines));
         }
 
-        StringBuilder sb = output.get(exprNodeData._y);
-        int pad = exprNodeData._x - sb.length();
+//        sb1.append(padRight);
+//        sb2.append(padRight);
+//        sb3.append(padRight);
+    }
+
+    private void printDiagram(ExprNodeData exprNodeData, List<StringBuilder> output) {
+        if (output.size() <= exprNodeData._y*4) {
+            for (int i=0; i < 4; i++) {
+                output.add(new StringBuilder());
+            }
+        }
+
+        StringBuilder sb = output.get(exprNodeData._y * 4);
+        int pad = exprNodeData._x0 - sb.length();
 //        System.out.format("Token: %s, x: %d, sb.len: %d%n", exprNodeData._str, exprNodeData._x, sb.length(), pad);
         if (pad > 0) {
             // Pad string with spaces
@@ -54,7 +126,29 @@ public class FormulaDiagram {
         }
         sb.append(exprNodeData._str);
 
-        for (int i=0; i < exprNodeData._childs.size(); i++) {
+        int numChilds = exprNodeData._childs.size();
+        int lineX1 = numChilds > 0 ? exprNodeData._childs.get(0)._center : 0;
+        int lineX2 = numChilds > 1 ? exprNodeData._childs.get(1)._center : 0;
+        int lineX3 = numChilds > 2 ? exprNodeData._childs.get(2)._center : 0;
+
+        drawLines(output, exprNodeData._y, numChilds, exprNodeData._center, lineX1, lineX2, lineX3, exprNodeData._x1);
+/*
+        // Calculate how to draw lines
+        switch (exprNodeData._childs.size()) {
+            case 0:
+                // Do nothing
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                throw new RuntimeException("Too many children. Only 0 - 3 children is possible. Num children: "+Integer.toString(numChilds));
+        }
+*/
+        for (int i=0; i < numChilds; i++) {
             printDiagram(exprNodeData._childs.get(i), output);
         }
     }
@@ -73,7 +167,7 @@ public class FormulaDiagram {
     private void moveRight(ExprNodeData exprNodeData, int size) {
         if (size == 0) return;
 
-        exprNodeData._x += size;
+        exprNodeData._x0 += size;
 
         for (int i=0; i < exprNodeData._childs.size(); i++) {
             moveRight(exprNodeData, size);
@@ -91,7 +185,7 @@ public class FormulaDiagram {
 
 
         int myStrDiv2 = exprNodeData._str.length() / 2;
-        int myCenter = x0 + myStrDiv2;
+        exprNodeData._center = x0 + myStrDiv2;
 
         if (!exprNodeData._childs.isEmpty()) {
             width -= space;
@@ -102,21 +196,27 @@ public class FormulaDiagram {
 
 //            System.out.format("Token: %s, myCenter: %d, centerLeft: %d, centerRight: %d, childCenter: %d%n", exprNodeData._str, myCenter, centerLeft, centerRight, childCenter);
 
-            if (childCenter < myCenter) {
-                double addPerChild = (myCenter - childCenter) / (exprNodeData._childs.size() - 1);
+            if (childCenter < exprNodeData._center) {
+                double addPerChild = (exprNodeData._center - childCenter) / (exprNodeData._childs.size() - 1);
                 moveRight(exprNodeData, (int) Math.round(addPerChild));
 //                System.out.format("Token: %s, addPerChild: %1.1f%n", exprNodeData._str, addPerChild);
             } else {
-                myCenter = childCenter;
+                exprNodeData._center = childCenter;
 //                System.out.format("Token: %s, myCenter: %d%n", exprNodeData._str, myCenter);
             }
         }
 
 
 //        int left = (width - exprNodeData._str.length()) / 2;
-        exprNodeData._x = myCenter - myStrDiv2;
+        exprNodeData._x0 = exprNodeData._center - myStrDiv2;
 //        if (left < 0) left = 0;
 //        exprNodeData._x = x0 + left;
+
+        exprNodeData._x1 = exprNodeData._x0 + exprNodeData._str.length();
+        if (!exprNodeData._childs.isEmpty()
+                && exprNodeData._childs.get(exprNodeData._childs.size()-1)._x1 > exprNodeData._x1) {
+            exprNodeData._x1 = exprNodeData._childs.get(exprNodeData._childs.size()-1)._x1;
+        }
 
         return Math.max(exprNodeData._str.length(), width);
     }
@@ -124,11 +224,11 @@ public class FormulaDiagram {
 
     private static class ExprNodeData {
         private String _str;
-        private int _x, _y;
+        private int _x0, _center, _y, _x1;
         List<ExprNodeData> _childs = new ArrayList<>();
 
         public int getCenter() {
-            return _x + _str.length()/2;
+            return _x0 + _str.length()/2;
         }
     }
 

@@ -233,9 +233,9 @@ public class ExpressionNodeBooleanOperatorTest {
                 "(false)^^(true)",
                 new ExpressionNodeBooleanOperator(new Token(TokenType.BOOLEAN_XOR, "", 0), exprFalse1, exprTrue1)
                         .getDefinitionString());
-
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
 /*
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+
         // Test unsupported token type
         hasThrown.set(false);
         try {
