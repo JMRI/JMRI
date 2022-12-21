@@ -127,6 +127,7 @@ public class FormulaPanel {
         }
 
         _formulaError.setText("");
+        _showDiagramButton.setEnabled(true);
 
         String color = "#ff9966";
         String text = _formula.getText();
@@ -177,8 +178,6 @@ public class FormulaPanel {
 //        _formulaParenthesesScrollPane.getHorizontalScrollBar().setValue(_formula.getScrollOffset());
 
         pack();
-
-        _showDiagramButton.setEnabled(true);
     }
 
     /**

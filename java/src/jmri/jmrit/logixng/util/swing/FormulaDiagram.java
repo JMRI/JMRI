@@ -335,5 +335,5 @@ public class FormulaDiagram {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormulaDiagram.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormulaDiagram.class);
 }
