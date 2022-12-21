@@ -417,6 +417,10 @@
           <li>The action <i>RunOnce</i> has been added. It runs an action
           only one time. It's useful when something needs to be initialized
           once.</li>
+          <li>The action <i>Digital Formula</i> and the expressions
+          <i>Analog Formula</i>, <i>Digital Formula</i> and <i>String Formula</i>
+          has been improved. They now visualize the formula. The formula
+          can also be viewed as a diagram.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
