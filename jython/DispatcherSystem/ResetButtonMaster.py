@@ -333,6 +333,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             os.makedirs(path)
         return path + java.io.File.separator
     def reset_all_station_directions(self):
+        global g
         self.od.displayMessage("About to set All stations set to 2-way working")
         if self.od.CLOSED_OPTION == True:
             self.od.displayMessage("Cancelled setting all stations to 2-way working")
@@ -340,7 +341,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             file = self.directory() + "blockDirections.txt"
             with open(file  ,'w') as f:  # empty the file containing the direction information
                 pass
-            g.setup_graph_edges()   # calculate the weights on the edges (reads the file containing direction info)
+            g = StationGraph()        # recalculate the weights on the edges
             self.od.displayMessage("All stations set to 2-way working")
 
 

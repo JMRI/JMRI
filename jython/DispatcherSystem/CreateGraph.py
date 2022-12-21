@@ -21,21 +21,17 @@ from org.jgrapht.graph import DirectedWeightedMultigraph
 
 
 class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
-
-    g = DirectedWeightedMultigraph(DefaultWeightedEdge)
-    g_stopping = DirectedWeightedMultigraph(DefaultWeightedEdge)
-    g_express = DirectedWeightedMultigraph(DefaultWeightedEdge)
-    
-    station_block_list = []
-    station_blk_list = []
-    dict_path_stopping = {}
-    dict_path_express = {}
-    dict_path_name_stopping= {}
-    dict_path_name_express= {}
-    
-    logLevel = 0
-
     def __init__(self):
+        self.g = DirectedWeightedMultigraph(DefaultWeightedEdge)
+        self.g_stopping = DirectedWeightedMultigraph(DefaultWeightedEdge)
+        self.g_express = DirectedWeightedMultigraph(DefaultWeightedEdge)
+        self.station_block_list = []
+        self.station_blk_list = []
+        self.dict_path_stopping = {}
+        self.dict_path_express = {}
+        self.dict_path_name_stopping= {}
+        self.dict_path_name_express= {}
+        self.logLevel = 0
         if self.logLevel > 0: print "graph __init__"
         self.setup_station_block_list()
         if self.logLevel > 0: print "__init__2"
@@ -240,7 +236,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                     
         for e in self.g_stopping.edgeSet():
             if self.logLevel > 0: print (self.g_stopping.getEdgeSource(e) + " --> " + self.g_stopping.getEdgeTarget(e))                 
-        
+
         #set the indicators for the train to reverse
         for e in self.g_stopping.edgeSet():
             

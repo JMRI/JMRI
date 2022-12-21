@@ -64,6 +64,7 @@ from org.jgrapht.graph import DirectedWeightedMultigraph
 logLevel = 0          # for debugging
 trains = {}           # dictionary of trains shared over classes
 instanceList=[]       # instance list of threads shared over classes
+global g
 g = None              # graph shared over classes
 
 time_to_stop_in_station = 10000   # time to stop in station in stopping mode(msec)
@@ -91,7 +92,6 @@ my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/Dispatc
 sys.path.append(my_path_to_jars) # add the jar to your path
 CreateGraph = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateGraph.py')
 exec(open (CreateGraph).read())
-#execfile(CreateGraph)
 le = LabelledEdge
 g = StationGraph()
 
@@ -387,6 +387,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
     def remove_train_from_transit(self, train_name):
         if self.logLevel > 0: print "train_name to remove from trainsit", train_name
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+        DF.setState(DF.ICONIFIED);
         activeTrainsList = DF.getActiveTrainsList()
         for i in range(0, activeTrainsList.size()) :
             activeTrain = activeTrainsList.get(i)
@@ -432,6 +433,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
     def delete_active_transits(self):
 
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+        DF.setState(DF.ICONIFIED);
         activeTrainsList = DF.getActiveTrainsList()
         for i in range(0, activeTrainsList.size()) :
             activeTrain = activeTrainsList.get(i)
@@ -1173,7 +1175,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # print "f2b after", first_two_blocks
                 list_of_inhibited_blocks = self.store_the_two_blocks(first_two_blocks)
                 #g.__init__()   # calculate the weights on the edges
-                g = StationGraph()
+                g = StationGraph()  # recalculate the weights on the edges
                 sensor_changed.setKnownState(INACTIVE)
                 #
                 #
@@ -1191,7 +1193,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e)
                 # print "f2b before", first_two_blocks
                 list_of_inhibited_blocks = self.store_the_two_blocks(first_two_blocks)
-                g.__init__()   # calculate the weights on the edges
+                # g.__init__()
+                g = StationGraph() # recalculate the weights on the edges
                 sensor_changed.setKnownState(INACTIVE)
                 # print "final2", list_of_inhibited_blocks
                 return True
@@ -1201,7 +1204,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 list_of_inhibited_blocks = self.remove_the_two_blocks(first_two_blocks)
                 first_two_blocks = self.swapPositions(first_two_blocks,0,1)
                 list_of_inhibited_blocks = self.remove_the_two_blocks(first_two_blocks)  #remove from file
-                g.setup_graph_edges()   # calculate the weights on the edges
+                #g.setup_graph_edges()   # calculate the weights on the edges
+                g = StationGraph()      # recalculate the weights on the edges
                 # print "final2", list_of_inhibited_blocks
                 sensor_changed.setKnownState(INACTIVE)
                 return True
@@ -1319,8 +1323,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def dispatch_train(self, sensor_changed, button_sensor_name, button_station_name):
         global trains_allocated
         global trains_dispatched
-
-        g.setup_graph_edges()   #ensure that if weights of graph have been changed they are read before train moves
+        global g
 
         #find what train we want to move
         #select only from available trains  %%%%todo%%%%%

@@ -44,6 +44,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 1: print"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
         if self.logLevel > 1: print "move between stations in the thread"
         if self.logLevel > 1: print"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
         self.move_between_stations(self.station_from_name, self.station_to_name, self.train_name, self.graph)
         return False
 
@@ -853,7 +854,6 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         # direction
         global train
         global trains_allocated
-        print ("in add_to_train_list_and_set_new_train_location")
         if train_name not in trains:
             trains[train_name] = {}
             train = trains[train_name]
