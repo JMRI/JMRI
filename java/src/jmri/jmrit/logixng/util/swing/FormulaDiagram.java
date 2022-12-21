@@ -48,7 +48,7 @@ public class FormulaDiagram {
         return sb.toString();
     }
 
-    private void drawLines(List<StringBuilder> output, int y, int numLines, int center, int x1, int x2, int x3, int width) {
+    private void drawLines(List<StringBuilder> output, int y, int numLines, int center, int x1, int x2, int width) {
 
         StringBuilder sb1 = output.get(y * 4 + 1);
         StringBuilder sb2 = output.get(y * 4 + 2);
@@ -66,11 +66,13 @@ public class FormulaDiagram {
             case 0:
                 // Do nothing
                 break;
+
             case 1:
                 sb1.append(pad(' ', center - sb1.length())).append("|");
                 sb2.append(pad(' ', center - sb2.length())).append("|");
                 sb3.append(pad(' ', center - sb3.length())).append("|");
                 break;
+
             case 2:
 //                System.out.format("aa: %d%n", center - sb2Len - 5);
                 sb1.append(pad(' ', center - sb1Len - 1))
@@ -99,8 +101,10 @@ public class FormulaDiagram {
                         .append(pad(' ', (center - sb3Len) * 2 - 3))
                         .append("\\ ");
                 break;
+
             case 3:
                 break;
+
             default:
                 throw new RuntimeException("Too many children. Only 0 - 3 children is possible. Num children: "+Integer.toString(numLines));
         }
@@ -109,6 +113,68 @@ public class FormulaDiagram {
 //        sb2.append(padRight);
 //        sb3.append(padRight);
     }
+
+
+
+
+    private void drawLines3(List<StringBuilder> output, int y, int center, int x1, int x2, int x3, int width) {
+
+        StringBuilder sb1 = output.get(y * 4 + 1);
+        StringBuilder sb2 = output.get(y * 4 + 2);
+        StringBuilder sb3 = output.get(y * 4 + 3);
+        sb1.append(pad(' ', x1 - sb1.length()));
+        sb2.append(pad(' ', x1 - sb2.length()));
+        sb3.append(pad(' ', x1 - sb3.length()));
+
+        int sb1Len = sb1.length();
+        int sb2Len = sb2.length();
+        int sb3Len = sb3.length();
+
+
+
+        if (center > x2) {
+
+        } else if (center == x2) {
+            sb1.append(pad(' ', center - sb1Len - 1))
+                    .append("/|\\")
+                    .append(pad(' ', center - sb1Len - 1));
+            switch (center - sb2.length() - 5) {
+                case -2:
+                    sb2.append(",,,");
+                    break;
+                case -1:
+                    sb2.append("  ")
+                            .append("/ | \\");
+                    break;
+                case 0:
+                    sb2.append("   ")
+                            .append("/ | \\");
+                    break;
+                default:
+                    sb2.append("  /")
+                            .append(pad('-', center - sb2Len - 5))
+                            .append("/ | \\")
+                            .append(pad('-', x3 - center - 5))
+                            .append("\\");
+            }
+            sb3.append(" /")
+                    .append(pad(' ', center - sb3Len - 2))
+                    .append("|")
+                    .append(pad(' ', x3 - center - 2))
+                    .append("\\ ");
+        } else {    // center < x2
+
+        }
+
+
+
+
+
+
+    }
+
+
+
 
     private void printDiagram(ExprNodeData exprNodeData, List<StringBuilder> output) {
         if (output.size() <= exprNodeData._y*4) {
@@ -131,23 +197,13 @@ public class FormulaDiagram {
         int lineX2 = numChilds > 1 ? exprNodeData._childs.get(1)._center : 0;
         int lineX3 = numChilds > 2 ? exprNodeData._childs.get(2)._center : 0;
 
-        drawLines(output, exprNodeData._y, numChilds, exprNodeData._center, lineX1, lineX2, lineX3, exprNodeData._x1);
-/*
-        // Calculate how to draw lines
-        switch (exprNodeData._childs.size()) {
-            case 0:
-                // Do nothing
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            default:
-                throw new RuntimeException("Too many children. Only 0 - 3 children is possible. Num children: "+Integer.toString(numChilds));
+        if (numChilds == 3) {
+            // Operator ? :
+            drawLines3(output, exprNodeData._y, exprNodeData._center, lineX1, lineX2, lineX3, exprNodeData._x1);
+        } else {
+            drawLines(output, exprNodeData._y, numChilds, exprNodeData._center, lineX1, lineX2, exprNodeData._x1);
         }
-*/
+
         for (int i=0; i < numChilds; i++) {
             printDiagram(exprNodeData._childs.get(i), output);
         }
