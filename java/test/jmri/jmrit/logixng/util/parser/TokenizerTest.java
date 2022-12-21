@@ -569,6 +569,7 @@ public class TokenizerTest {
         new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("(a-bbb)+!c?d:e");
         new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("(a-bbb)+!c?d:(eee+f*ggggg)");
         new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("(a-bbb)+!c?d:(eee+f*ggggg*hhhhhhhhhhh+jjjjjjjjjjj+fffffff)");
+        new jmri.jmrit.logixng.util.swing.FormulaDiagram().showDiagram("(a-bbb)+!(eee+f*ggggg*hhhhhhhhhhh+jjjjjjjjjjj+fffffff)?d:c");
 
 
 /*

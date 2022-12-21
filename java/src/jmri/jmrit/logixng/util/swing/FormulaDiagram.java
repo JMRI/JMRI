@@ -33,7 +33,7 @@ public class FormulaDiagram {
         List<StringBuilder> output = new ArrayList<>();
         printDiagram(exprNodeData, output);
 
-        System.out.format("%n------------------------%n");
+        System.out.format("%n%n%n");
         for (int i=0; i < output.size(); i++) {
             System.out.println(output.get(i).toString());
         }
@@ -133,6 +133,36 @@ public class FormulaDiagram {
 
 
         if (center > x2) {
+            sb1.append("   /")
+                    .append(pad('-', center - sb1Len - 5))
+                    .append("/|\\")
+                    .append(pad(' ', center - sb1Len - 1));
+            switch (center - sb2.length() - 5) {
+                case -2:
+                    sb2.append(",,,");
+                    break;
+                case -1:
+                    sb2.append("  ")
+                            .append("/ | \\");
+                    break;
+                case 0:
+                    sb2.append("   ")
+                            .append("/ | \\");
+                    break;
+                default:
+                    sb2.append("  /")
+                            .append(pad(' ', center - sb2Len - 3))
+                            .append("| \\")
+                            .append(pad('-', x3 - center - 5))
+                            .append("\\");
+            }
+            sb3.append(" /")
+                    .append(pad(' ', x2 - sb3Len - 1))
+                    .append('/')
+                    .append(pad('-', center - x2 - 2))
+                    .append("|")
+                    .append(pad(' ', x3 - center - 2))
+                    .append("\\ ");
 
         } else if (center == x2) {
             sb1.append(pad(' ', center - sb1Len - 1))
@@ -162,15 +192,39 @@ public class FormulaDiagram {
                     .append("|")
                     .append(pad(' ', x3 - center - 2))
                     .append("\\ ");
+
         } else {    // center < x2
-
+            sb1.append(pad(' ', center - sb1Len - 1))
+                    .append("/|\\")
+                    .append(pad('-', center - sb1Len - 4))
+                    .append("\\");
+            switch (center - sb2.length() - 5) {
+                case -2:
+                    sb2.append(",,,");
+                    break;
+                case -1:
+                    sb2.append("  ")
+                            .append("/ | \\");
+                    break;
+                case 0:
+                    sb2.append("   ")
+                            .append("/ | \\");
+                    break;
+                default:
+                    sb2.append("  /")
+                            .append(pad('-', center - sb2Len - 5))
+                            .append("/ |")
+                            .append(pad(' ', x3 - center - 3))
+                            .append("\\");
+            }
+            sb3.append(" /")
+                    .append(pad(' ', center - sb3Len - 1))
+                    .append('\\')
+                    .append(pad('-', x2 - center - 2))
+                    .append("\\")
+                    .append(pad(' ', x3 - x2 - 2))
+                    .append("\\ ");
         }
-
-
-
-
-
-
     }
 
 
