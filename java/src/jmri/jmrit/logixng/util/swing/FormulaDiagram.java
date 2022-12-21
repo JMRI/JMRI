@@ -190,7 +190,7 @@ public class FormulaDiagram {
         } else {    // center < x2
             sb1.append(pad(' ', center - sb1Len - 1))
                     .append("/|\\")
-                    .append(pad('-', center - sb1Len - 4))
+                    .append(pad('-', x3 - center - 5))
                     .append("\\");
             switch (center - sb2.length() - 5) {
                 case -1:
