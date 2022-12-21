@@ -35,7 +35,8 @@ public class FormulaDiagram {
 
         String newLine = String.format("\n");
         StringBuilder sb = new StringBuilder();
-        for (int i=0; i < output.size(); i++) {
+        // The last three lines are empty
+        for (int i=0; i < output.size()-3; i++) {
             sb.append(output.get(i).toString()).append(newLine);
         }
         return sb.toString();

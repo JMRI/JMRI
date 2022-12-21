@@ -10,6 +10,7 @@ import javax.swing.event.CaretEvent;
 
 import jmri.Reference;
 import jmri.jmrit.logixng.util.parser.*;
+import jmri.util.JmriJFrame;
 
 /**
  * Configures an Formula panel.
@@ -23,6 +24,7 @@ public class FormulaPanel {
     private JLabel _formulaParentheses;
     private JScrollPane _formulaParenthesesScrollPane;
     private JLabel _formulaError;
+    private JButton _showDiagramButton;
     private final Map<String, Variable> variables = new HashMap<>();
     private final RecursiveDescentParser parser = new RecursiveDescentParser(variables);
 
@@ -60,12 +62,23 @@ public class FormulaPanel {
         panel.add(_formulaParenthesesScrollPane, c);
         c.gridy = 2;
         panel.add(_formulaError, c);
-        c.gridy = 3;
-        JButton showDiagramButton = new JButton(Bundle.getMessage("FormulaPanel_ShowDiagram"));
-        showDiagramButton.addActionListener((e)->{
-//            FormulaDiagram.getDiagram(_formula.getText());
+
+        _showDiagramButton = new JButton(Bundle.getMessage("FormulaPanel_ShowDiagram"));
+        _showDiagramButton.addActionListener((e)->{
+            try {
+                JmriJFrame diagramDialog = new JmriJFrame(Bundle.getMessage("FormulaPanel_ShowDiagram"), false, false);
+                JTextArea textArea = new JTextArea(FormulaDiagram.getDiagram(_formula.getText()));
+                textArea.setFont(new Font("Monospaced", textArea.getFont().getStyle(), textArea.getFont().getSize()));
+                textArea.setEditable(false);
+                textArea.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
+                diagramDialog.add(textArea);
+                diagramDialog.pack();
+                diagramDialog.setVisible(true);
+            } catch (ParserException ex) {
+                log.error("Exception thrown: {}", ex.getMessage(), ex);
+            }
         });
-        panel.add(showDiagramButton, c);
+        buttonPanel.add(_showDiagramButton, c);
 
         return panel;
     }
@@ -142,6 +155,7 @@ public class FormulaPanel {
                 color = "#ff0000";
                 text = _formula.getText() + padAtEnd;
                 _formulaError.setText(ex.getLocalizedMessage() + padAtEnd);
+                _showDiagramButton.setEnabled(false);
             } catch (ParserException | RuntimeException ex) {
                 log.error("Error when parsing formula", ex);
                 if (ex.getLocalizedMessage() != null) {
@@ -151,6 +165,7 @@ public class FormulaPanel {
                 }
                 _formulaParentheses.setText(_formula.getText());
                 pack();
+                _showDiagramButton.setEnabled(false);
                 return;
             }
         }
@@ -162,6 +177,8 @@ public class FormulaPanel {
 //        _formulaParenthesesScrollPane.getHorizontalScrollBar().setValue(_formula.getScrollOffset());
 
         pack();
+
+        _showDiagramButton.setEnabled(true);
     }
 
     /**

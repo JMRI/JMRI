@@ -20,10 +20,7 @@ public class FormulaDiagramTest {
     public void test1() throws InvalidSyntaxException, ParserException {
 
         Assert.assertEquals(
-                "12\n" +
-                "\n" +
-                "\n" +
-                "\n",
+                "12\n",
                 FormulaDiagram.getDiagram("12"));
     }
 
@@ -38,10 +35,7 @@ public class FormulaDiagramTest {
                 "   / \\             / \\   \n" +
                 "  /   \\           /   \\\n" +
                 " /     \\         /     \\ \n" +
-                "a       b       c       d\n" +
-                "\n" +
-                "\n" +
-                "\n",
+                "a       b       c       d\n",
                 FormulaDiagram.getDiagram("(a-b) + c*d"));
     }
 
@@ -56,10 +50,7 @@ public class FormulaDiagramTest {
                 "   / \\          |\n" +
                 "  /   \\         |\n" +
                 " /     \\        |\n" +
-                "a       b       c\n" +
-                "\n" +
-                "\n" +
-                "\n",
+                "a       b       c\n",
                 FormulaDiagram.getDiagram("(a-b)+!c"));
     }
 
@@ -78,10 +69,7 @@ public class FormulaDiagramTest {
                 "   / \\            |\n" +
                 "  /   \\           |\n" +
                 " /      \\         |\n" +
-                "a       bbb       c\n" +
-                "\n" +
-                "\n" +
-                "\n",
+                "a       bbb       c\n",
                 FormulaDiagram.getDiagram("(a-bbb)+!c?d:e"));
     }
 
@@ -100,10 +88,7 @@ public class FormulaDiagramTest {
                 "   / \\            |                             / \\    \n" +
                 "  /   \\           |                            /   \\\n" +
                 " /      \\         |                          /       \\ \n" +
-                "a       bbb       c                         f       ggggg\n" +
-                "\n" +
-                "\n" +
-                "\n",
+                "a       bbb       c                         f       ggggg\n",
                 FormulaDiagram.getDiagram("(a-bbb)+!c?d:(eee+f*ggggg)"));
     }
 
@@ -134,10 +119,7 @@ public class FormulaDiagramTest {
                 "                                                / \\    \n" +
                 "                                               /   \\\n" +
                 "                                             /       \\ \n" +
-                "                                            f       ggggg\n" +
-                "\n" +
-                "\n" +
-                "\n",
+                "                                            f       ggggg\n",
                 FormulaDiagram.getDiagram("(a-bbb)+!c?d:(eee+f*ggggg*hhhhhhhhhhh+jjjjjjjjjjj+fffffff)"));
     }
 
@@ -176,21 +158,14 @@ public class FormulaDiagramTest {
                 "                                / \\    \n" +
                 "                               /   \\\n" +
                 "                             /       \\ \n" +
-                "                            f       ggggg\n" +
-                "\n" +
-                "\n" +
-                "\n",
+                "                            f       ggggg\n",
                 FormulaDiagram.getDiagram("(a-bbb)+!(eee+f*ggggg*hhhhhhhhhhh+jjjjjjjjjjj+fffffff)?d:c"));
     }
 
     @Test
     public void test8() throws InvalidSyntaxException, ParserException {
-        Assert.assertEquals(
-                "12\n" +
-                "\n" +
-                "\n" +
-                "\n",
-        FormulaDiagram.getDiagram("12"));
+        Assert.assertEquals("12\n",
+                FormulaDiagram.getDiagram("12"));
     }
 
     @Test
@@ -200,11 +175,8 @@ public class FormulaDiagramTest {
                 "    / \\   \n" +
                 "   /   \\\n" +
                 "  /      \\ \n" +
-                "12       31\n" +
-                "\n" +
-                "\n" +
-                "\n",
-        FormulaDiagram.getDiagram("12+31"));
+                "12       31\n",
+                FormulaDiagram.getDiagram("12+31"));
     }
 
     @Test
@@ -214,11 +186,8 @@ public class FormulaDiagramTest {
                 "      / \\    \n" +
                 "     /   \\\n" +
                 "   /        \\ \n" +
-                "12345       31\n" +
-                "\n" +
-                "\n" +
-                "\n",
-        FormulaDiagram.getDiagram("12345+31"));
+                "12345       31\n",
+                FormulaDiagram.getDiagram("12345+31"));
     }
 
     @Test
@@ -232,11 +201,8 @@ public class FormulaDiagramTest {
                 "    / \\   \n" +
                 "   /   \\\n" +
                 "  /      \\ \n" +
-                "12       31\n" +
-                "\n" +
-                "\n" +
-                "\n",
-        FormulaDiagram.getDiagram("12*31+2"));
+                "12       31\n",
+                FormulaDiagram.getDiagram("12*31+2"));
     }
 
     @Test
@@ -250,11 +216,8 @@ public class FormulaDiagramTest {
                 "             / \\   \n" +
                 "            /   \\\n" +
                 "           /      \\ \n" +
-                "         31       23\n" +
-                "\n" +
-                "\n" +
-                "\n",
-        FormulaDiagram.getDiagram("12+31*23"));
+                "         31       23\n",
+                FormulaDiagram.getDiagram("12+31*23"));
     }
 
     @Test
@@ -268,11 +231,8 @@ public class FormulaDiagramTest {
                 "                / \\   \n" +
                 "               /   \\\n" +
                 "              /      \\ \n" +
-                "            31       23\n" +
-                "\n" +
-                "\n" +
-                "\n",
-        FormulaDiagram.getDiagram("12345+31*23"));
+                "            31       23\n",
+                FormulaDiagram.getDiagram("12345+31*23"));
     }
 
     @Test
@@ -286,11 +246,8 @@ public class FormulaDiagramTest {
                 "    / \\               / \\   \n" +
                 "   /   \\             /   \\\n" +
                 "  /      \\          /     \\ \n" +
-                "12       31       23       1\n" +
-                "\n" +
-                "\n" +
-                "\n",
-        FormulaDiagram.getDiagram("(12+31)*(23-1)"));
+                "12       31       23       1\n",
+                FormulaDiagram.getDiagram("(12+31)*(23-1)"));
     }
 
     @Test
@@ -304,11 +261,8 @@ public class FormulaDiagramTest {
                 "      / \\                / \\   \n" +
                 "     /   \\              /   \\\n" +
                 "   /        \\          /     \\ \n" +
-                "12345       31       23       1\n" +
-                "\n" +
-                "\n" +
-                "\n",
-        FormulaDiagram.getDiagram("(12345+31)*(23-1)"));
+                "12345       31       23       1\n",
+                FormulaDiagram.getDiagram("(12345+31)*(23-1)"));
     }
 
     @Test
@@ -322,11 +276,8 @@ public class FormulaDiagramTest {
                 "       / \\                   / \\   \n" +
                 "    /-/   \\--\\              /   \\\n" +
                 "   /          \\            /     \\ \n" +
-                "12345       312345       23       1\n" +
-                "\n" +
-                "\n" +
-                "\n",
-        FormulaDiagram.getDiagram("(12345+312345)*(23-1)"));
+                "12345       312345       23       1\n",
+                FormulaDiagram.getDiagram("(12345+312345)*(23-1)"));
     }
 
     @Test
@@ -352,11 +303,8 @@ public class FormulaDiagramTest {
                 "                                      / \\   \n" +
                 "                                     /   \\\n" +
                 "                                    /     \\ \n" +
-                "                                   9       2\n" +
-                "\n" +
-                "\n" +
-                "\n",
-        FormulaDiagram.getDiagram("12+31*(23-1)+((9*2+3)-2)/23"));
+                "                                   9       2\n",
+                FormulaDiagram.getDiagram("12+31*(23-1)+((9*2+3)-2)/23"));
     }
 
     // The minimal setup for log4J
