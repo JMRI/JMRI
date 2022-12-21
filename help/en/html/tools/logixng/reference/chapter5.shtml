@@ -1457,7 +1457,7 @@
       </div>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter5/show_dialog_button_process"><img src=
+        <a href="images/chapter5/show_dialog_button_process.png"><img src=
         "images/chapter5/show_dialog_button_process.png" alt="Chapter 5 show dialog button process"></a>
       </div>
 
@@ -1469,7 +1469,7 @@
       </div>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter5/show_dialog_ml_sample"><img src=
+        <a href="images/chapter5/show_dialog_ml_sample.png"><img src=
         "images/chapter5/show_dialog_ml_sample.png" alt="Chapter 5 show dialog multiline sample"></a>
       </div>
 
@@ -1492,7 +1492,7 @@
       <p>Create a task that will run before JMRI shutdown occurs.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter5/digital_action_shutdown_task"><img class="image-border" src=
+        <a href="images/chapter5/digital_action_shutdown_task.png"><img class="image-border" src=
         "images/chapter5/digital_action_shutdown_task.png" alt="Chapter 5 shutdown task"></a>
       </div>
 
