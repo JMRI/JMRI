@@ -159,7 +159,7 @@ public class FormulaDiagram {
                     .append(pad(' ', x2 - sb3Len - 1))
                     .append('/')
                     .append(pad('-', center - x2 - 2))
-                    .append("|")
+                    .append("/")
                     .append(pad(' ', x3 - center - 2))
                     .append("\\ ");
 
