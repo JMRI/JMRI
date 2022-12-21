@@ -18,7 +18,7 @@
       <span class="since">since 2.99.4</span>
       <p>This brief tutorial is designed to explain how the Entry Exit and Interlocking is set up
       and works within JMRI. It is based upon the Signal Mast Logic <a href=
-      "http://www.jmri.org/community/clinics/UK2011/">clinic</a> held in the UK and follows on from
+      "https://www.jmri.org/community/clinics/UK2011/">clinic</a> held in the UK and follows on from
       that.</p>
 
       <p>The panel file for this tutorial was taken from the "Logix and Feathers" section of the
@@ -29,7 +29,7 @@
       <p>In addition the file has been modified to use Internal Sensors and Turnouts only, thus
       allowing it to be opened with any system connection configured in the JMRI Preferences.</p>
 
-      <p>As a prerequisite the <a href="http://www.jmri.org/community/clinics/UK2011/">clinic</a>
+      <p>As a prerequisite the <a href="https://www.jmri.org/community/clinics/UK2011/">clinic</a>
       on Signal Mast Logic should be followed before attempting this one as it provides the
       foundation on how to build your panel ready for use with the Signal Mast Logic and also
       Interlocking.</p>
@@ -55,7 +55,7 @@
 
       <p>In the Signal Mast Logic tutorial, each block was configured with a different color to
       show Occupied and Unoccupied states (<a href=
-      "http://www.jmri.org/community/clinics/UK2011/layout_editor.shtml">Building a Layout</a>). In
+      "https://www.jmri.org/community/clinics/UK2011/layout_editor.shtml">Building a Layout</a>). In
       addition it is possible to assign an alternative color to each Block on the panel. When using
       Full Interlocking, this alternative color is used to highlight routes that have been set.
       When a Block is using the alternative color it also prevents another route from being set

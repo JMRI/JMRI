@@ -16,7 +16,7 @@
       <h1>JMRI: Defining Your Own Signaling System</h1>
       This page describes how to define a new signaling system to JMRI.
       <p>We go through creating one from scratch, but it's often easier to copy and modify one of
-      the existing ones in the <a href="https://jmri.org/xml/signals/">xml/signals</a>
+      the existing ones in the <a href="https://www.jmri.org/xml/signals/">xml/signals</a>
       directory.</p>
 
       <h2>Creating a New Signaling System</h2>
@@ -162,7 +162,7 @@ locate all of them and display them to the user.
       filename. Use the <code>&lt;reference&gt;</code> and <code>&lt;description&gt;</code>
       elements to provide information to future users of this signal system. You can see how this
       is displayed in a <a href=
-      "https://jmri.org/xml/signals/AAR-1946/appearance-SL-1-high-pbs.xml">sample file</a>.</p>
+      "https://www.jmri.org/xml/signals/AAR-1946/appearance-SL-1-high-pbs.xml">sample file</a>.</p>
 
       <p>Next is the <code>&lt;appearances&gt;</code> element, which contains a series of
       <code>&lt;appearance&gt;</code> elements that define how the individual Aspects appear on
@@ -196,7 +196,7 @@ locate all of them and display them to the user.
       "preference:" followed by the remainder of the path. As long as you work locally, use
       preference:resources/etc paths. If all aspects of your new signal definition are working on
       your panel/layout and you plan to submit your new signal system as a patch to JMRI, use full
-      URL paths like https://jmri.org/resources/icons/etc in the XML files so that they'll work
+      URL paths like https://www.jmri.org/resources/icons/etc in the XML files so that they'll work
       with both the local JMRI program and for people viewing them on the JMRI website.</p>
 
       <h4>Specific Appearances</h4>
