@@ -104,8 +104,8 @@
                     <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     <xs:element name="comment" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     <xs:element name="imagelink" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
-                    <xs:element name="speed" type="xs:string" minOccurs="1" maxOccurs="unbounded"></xs:element>
-                    <xs:element name="speed2" type="xs:string" minOccurs="1" maxOccurs="unbounded"></xs:element>
+                    <xs:element name="speed" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+                    <xs:element name="speed2" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
                     <xs:element name="route" minOccurs="0" maxOccurs="1">
                      <xs:simpleType>
                         <xs:restriction base="xs:string">

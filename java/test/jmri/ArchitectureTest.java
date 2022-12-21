@@ -44,7 +44,7 @@ public class ArchitectureTest {
     }
 
     /**
-     * No access to System.err and System.out except as specified
+     * No access to java.awt.event.MouseEvent except as specified
      */
     @ArchTest // Initially 50 flags in JMRI 4.17.4 - see archunit_ignore_patterns.txt
     public static final ArchRule checkMouseEvent = noClasses().that()
