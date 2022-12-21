@@ -138,9 +138,6 @@ public class FormulaDiagram {
                     .append("/|\\")
                     .append(pad(' ', center - sb1Len - 1));
             switch (center - sb2.length() - 5) {
-                case -2:
-                    sb2.append(",,,");
-                    break;
                 case -1:
                     sb2.append("  ")
                             .append("/ | \\");
@@ -169,9 +166,6 @@ public class FormulaDiagram {
                     .append("/|\\")
                     .append(pad(' ', center - sb1Len - 1));
             switch (center - sb2.length() - 5) {
-                case -2:
-                    sb2.append(",,,");
-                    break;
                 case -1:
                     sb2.append("  ")
                             .append("/ | \\");
@@ -199,9 +193,6 @@ public class FormulaDiagram {
                     .append(pad('-', center - sb1Len - 4))
                     .append("\\");
             switch (center - sb2.length() - 5) {
-                case -2:
-                    sb2.append(",,,");
-                    break;
                 case -1:
                     sb2.append("  ")
                             .append("/ | \\");
@@ -307,7 +298,7 @@ public class FormulaDiagram {
 //            System.out.format("Token: %s, myCenter: %d, centerLeft: %d, centerRight: %d, childCenter: %d%n", exprNodeData._str, myCenter, centerLeft, centerRight, childCenter);
 
             if (childCenter < exprNodeData._center) {
-                double addPerChild = (exprNodeData._center - childCenter) / (exprNodeData._childs.size() - 1);
+                double addPerChild = ((double)exprNodeData._center - childCenter) / (exprNodeData._childs.size() - 1);
                 moveRight(exprNodeData, (int) Math.round(addPerChild));
 //                System.out.format("Token: %s, addPerChild: %1.1f%n", exprNodeData._str, addPerChild);
             } else {
