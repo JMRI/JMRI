@@ -33,7 +33,7 @@ public class FormulaDiagram {
         List<StringBuilder> output = new ArrayList<>();
         printDiagram(exprNodeData, output);
 
-        String newLine = String.format("\n");
+        String newLine = String.format("%n");
         StringBuilder sb = new StringBuilder();
         // The last three lines are empty
         for (int i=0; i < output.size()-3; i++) {

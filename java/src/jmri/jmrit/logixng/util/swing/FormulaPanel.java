@@ -75,7 +75,7 @@ public class FormulaPanel {
                 diagramDialog.pack();
                 diagramDialog.setVisible(true);
             } catch (ParserException ex) {
-                log.error("Exception thrown: {}", ex.getMessage(), ex);
+                log.error("Exception thrown: {}", ex, ex);
             }
         });
         buttonPanel.add(_showDiagramButton, c);
