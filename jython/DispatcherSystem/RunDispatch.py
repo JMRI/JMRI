@@ -624,9 +624,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print ("set_route")
             test = self.set_route(sensor_changed, button_sensor_name, button_station_name)
             if self.logLevel > 0: print "test = " , test
-            # if test == False:
-                # self.button_sensors_to_watch = copy.copy(self.button_sensors)
             sensor_changed.setKnownState(INACTIVE)
+            self.button_sensors_to_watch = copy.copy(self.button_sensors)
         elif setup_dispatch_sensor.getKnownState() == ACTIVE:
             if self.logLevel > 0: print ("dispatch_train")
             self.dispatch_train(sensor_changed, button_sensor_name, button_station_name)
@@ -675,8 +674,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
         location = LocationManager.newLocation(button_station_name)
         route.addLocation(location)
-
-        msg = "selected station " + button_station_name + ". \nHave you more stations on route?"
+        msg = "Start of Route Selentiom"
+        msg = msg + "\nselected station " + button_station_name + "."
         title = "Continue selecting stations"
 
         opt1 = "Select another station"
@@ -689,6 +688,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             return False
         if s == JOptionPane.NO_OPTION:
             return False
+        if s == opt2:
+            return
         if s == opt3:
             what_to_do = self.add_action(route,LocationManager, button_station_name)
             if what_to_do == 'continue':
