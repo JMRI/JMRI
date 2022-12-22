@@ -28,7 +28,7 @@
       <p>When combined with <a href="chapter11.shtml">tables</a>, a module could be passed the name
       of a table row. It would then perform the actions based on the table row data.</p>
 
-      <p>The <a href="/help/en/package/jmri/jmrit/beantable/LogixNGModuleTable.shtml">Module
+      <p>The <a href="../../../../package/jmri/jmrit/beantable/LogixNGModuleTable.shtml">Module
       Table</a> provides the details on creating a module.</p>
 
       <p>This is a digital expression socket. It can have inputs and outputs as well as returning
