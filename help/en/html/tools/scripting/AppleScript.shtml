@@ -20,7 +20,7 @@
 
       <p>You can embed or call OSA scripts within JMRI scripts, invoking them to have your Mac
       perform functions outside JMRI. An example of this is in the <a href=
-      "https://jmri.org/jython/AppleScript.py">AppleScript.py</a> sample script distributed with
+      "https://www.jmri.org/jython/AppleScript.py">AppleScript.py</a> sample script distributed with
       JMRI. It executes a simple AppleScript:</p>
 
       <pre style="font-family: monospace;">
@@ -33,7 +33,7 @@
       OSA scripts from within JMRI.</p>
 
       <p>JMRI 4.5.2 or newer can directly call AppleScript without embedding it in another script
-      by adding <a href="https://jmri.github.io/applescript">JMRI AppleScript Support</a> to your
+      by adding <a href="https://jmri.github.io/applescript/">JMRI AppleScript Support</a> to your
       JMRI installation. Note that this may not work in future versions of macOS or Java.</p>
 
       <h2>AppleScript Information</h2>
@@ -42,17 +42,17 @@
 
       <ul>
         <li>
-          <a href="http://help.apple.com/applescript/mac/10.9/">AppleScript Help</a> at <a href=
-          "http://www.apple.com/">Apple</a>.
+          <a href="https://help.apple.com/applescript/mac/10.9/">AppleScript Help</a> at <a href=
+          "https://www.apple.com/">Apple</a>.
         </li>
 
-        <li>The <a href="http://en.wikipedia.org/wiki/AppleScript">Wikipedia AppleScript
+        <li>The <a href="https://en.wikipedia.org/wiki/AppleScript">Wikipedia AppleScript
         article</a> has some interesting background info.
         </li>
 
         <li>
-          <a href="http://developer.apple.com/applescript">AppleScript Overview</a> at <a href=
-          "http://developer.apple.com/">Apple</a>.
+          <a href="https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html"
+          >AppleScript Introduction</a> at <a href="https://developer.apple.com/">Apple</a>.
         </li>
       </ul>
 

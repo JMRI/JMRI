@@ -125,7 +125,7 @@
       information</a> on creating and customizing them on a <a href=
       "../scripting/Jynstruments.shtml">separate page</a>. Here, we focus on using the customized
       throttle control.
-      <p><a href="https://jmri.org/jython/Jynstruments/ThrottleWindowToolBar/">
+      <p><a href="https://www.jmri.org/jython/Jynstruments/ThrottleWindowToolBar/">
       Jynstruments</a> provided below are for controlling already assigned Throttles, the Throttle
       pane you will control has to be set up before. Then it's only a matter of drag'n dropping a
       folder on the <a href="ThrottleToolBar.shtml">Throttle Window <span style=
@@ -235,7 +235,7 @@
       <h2>RailDriver</h2>
       See the <a href="../../hardware/raildriver/index.shtml">RailDriver Hardware Help</a>.
       <h2 id="iphone">iPhone and iPod Touch</h2>
-      There's a third-party application called <a href="http://withrottle.com/">WiThrottle</a> that
+      There's a third-party application called <a href="https://www.withrottle.com/">WiThrottle</a> that
       works with JMRI to let you control trains with your iPhone or iPod Touch.
       <p>You can also browse the <a href="../../web/index.shtml">JMRI webserver</a> from Safari on
       your iPhone or iPod Touch.</p>

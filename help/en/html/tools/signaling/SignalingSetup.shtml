@@ -48,7 +48,7 @@
           <ol>
             <li>The easiest way: if you are using an accessory decoder that can drive the Signal
             Masts natively and supports the NMRA Standard 9.2.1 Extended Accessory Protocol
-            (<a href="http://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf">PDF</a>) just
+            (<a href="https://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf">PDF</a>) just
             add the Signal Mast using the 'DCC Signal Mast Decoder driver' and when prompted, input
             the Aspect numbers configured in your decoder against each Aspect. Decoders like the
             <a href="http://signalist.co.uk">Signalist SC1</a> have different Signal Mast types
