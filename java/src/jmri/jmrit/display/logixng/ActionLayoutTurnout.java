@@ -28,8 +28,10 @@ import jmri.util.TypeConversionUtil;
 public class ActionLayoutTurnout extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
+    private String _layoutEditorName;
     private LayoutEditor _layoutEditor;
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
+    private String _layoutTurnoutName;
     private LayoutTurnout _layoutTurnout;
     private String _reference = "";
     private String _localVariable = "";
@@ -76,6 +78,8 @@ public class ActionLayoutTurnout extends AbstractDigitalAction
 
         InstanceManager.getDefault(EditorManager.class)
                 .removePropertyChangeListener(EDITORS, this);
+
+        _layoutEditorName = layoutEditorName;
 
         if (layoutEditorName != null) {
             _layoutEditor = InstanceManager.getDefault(EditorManager.class)
@@ -128,6 +132,7 @@ public class ActionLayoutTurnout extends AbstractDigitalAction
 
     public void setLayoutTurnout(@CheckForNull String layoutTurnoutName) {
         assertListenersAreNotRegistered(log, "setLayoutTurnout");
+        _layoutTurnoutName = layoutTurnoutName;
         if ((layoutTurnoutName != null) && (_layoutEditor != null)) {
             this._layoutTurnout = findLayoutTurnout(layoutTurnoutName);
         } else {
@@ -468,15 +473,12 @@ public class ActionLayoutTurnout extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void setup() {
-        // Do nothing
-/*
         if ((_layoutEditorName != null) && (_layoutEditor == null)) {
-            setEditor(_layoutEditorName);
+            setLayoutEditor(_layoutEditorName);
         }
         if ((_layoutTurnoutName != null) && (_layoutTurnout == null)) {
             setLayoutTurnout(_layoutTurnoutName);
         }
-*/
     }
 
     /** {@inheritDoc} */

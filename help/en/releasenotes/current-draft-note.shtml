@@ -395,6 +395,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
+	        <li>Fixes a bug in the actions <i>Icon/Label on panel</i> and
+	        <i>Turnout on LayoutPanel</i> which caused that the actions
+	        wasn't loaded correctly.</li>
 	        <li>Add support for LogixNG Global Variable icons.  These work like memory icons.</li>
         </ul>
 
