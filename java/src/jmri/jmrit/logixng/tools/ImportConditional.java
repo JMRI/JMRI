@@ -96,7 +96,7 @@ public class ImportConditional {
                 break;
             case MIXED:
                 expression = new Antecedent(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-                ((Antecedent)expression).setAntecedent(antecedentExpression);
+                ((Antecedent)expression).setAntecedent(removeNotFromAntecedent(antecedentExpression));
                 break;
             default:
                 return;
@@ -136,6 +136,16 @@ public class ImportConditional {
             MaleSocket logixAction = InstanceManager.getDefault(DigitalActionManager.class).registerAction(logix);
             _conditionalNG.getChild(0).connect(logixAction);
         }
+    }
+
+    /**
+     * Remove the word "not" from the antecedent when followed by R, such as "not R1".
+     * @param antecedent The Logix antecedent string.
+     * @return the modified antecedent.
+     */
+    private String removeNotFromAntecedent(String antecedent) {
+        String newAntecedent = antecedent.replaceAll("not\\s+R", "R");
+        return newAntecedent;
     }
 
 
