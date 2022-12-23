@@ -341,10 +341,10 @@ If you're developing any additional (post-5.3.1) changes that you want in the JM
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
 
-- Check the [signing-wget.log](https://builds.jmri.org/jenkins/job/testreleases/job/5.3.1/ws/%20signing-wget.log) file in the job’s workspace to make sure all the return codes are zero. This is the macOS signing process. A non-zero code indicates a problem with the signature.
+- Check the [signing-wget.log](https://builds.jmri.org/jenkins/job/testreleases/job/5.3.1/ws/%20signing-wget.log) file in the job’s workspace to make sure all the return codes are zero. This is the macOS signing process. A non-zero code indicates a problem with the signature. If there is a non-zero code, resolve that before proceeding!
 
 ================================================================================
-## Capture A Profile (Optional)
+## Capture A Profile (Production releases only)
 
 - On your local machine, start `jconsole`. Do
 
@@ -485,10 +485,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.3.1+Rd06615728f.dmg](https://github.com/JMRI/JMRI/releases/download/v5.3.1/JMRI.5.3.1+Rd06615728f.dmg) | a37daa5f0b1d0cd659cd92abc99366c08a9ff16e28a2df9853558e681fb3f028
-[JMRI.5.3.1+Rd06615728f.exe](https://github.com/JMRI/JMRI/releases/download/v5.3.1/JMRI.5.3.1+Rd06615728f.exe) | 8ea492bfe84e835bce225c8bea7ce9af70f2db97332cf1d32104c1275a501e86
-[JMRI.5.3.1+Rd06615728f.tgz](https://github.com/JMRI/JMRI/releases/download/v5.3.1/JMRI.5.3.1+Rd06615728f.tgz) | 8924942c824b90efc81875b3d0605f815173b5a9fbf4b952be58cb4bdf9e3632
-
+[JMRI.5.3.1+R6e60208d29.dmg](https://github.com/JMRI/JMRI/releases/download/v5.3.1/JMRI.5.3.1+R6e60208d29.dmg) | ea4e4e8462a0db3e19ea18fa4d197ae2ff2e245953d4ffb582ca584767aed194
+[JMRI.5.3.1+R6e60208d29.exe](https://github.com/JMRI/JMRI/releases/download/v5.3.1/JMRI.5.3.1+R6e60208d29.exe) | 10e988dfb8621d982b29f8fe189bc0033fa5d73502607d80d4974791048b07ae
+[JMRI.5.3.1+R6e60208d29.tgz](https://github.com/JMRI/JMRI/releases/download/v5.3.1/JMRI.5.3.1+R6e60208d29.tgz) | 30d1e92f209f280d62b65b22bb3c859f1029c38ae8884c194b12dbad04285318
 
 ```
 
@@ -588,7 +587,7 @@ This is the next release in the 5.4 cycle. It's intended to be created from the 
 
 - Mail announcement to
 
-[jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20version%205.3.1%20of%20JMRI/DecoderPro%20is%20available%20for%20download&body=Test%20version%205.3.1%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20December%202022.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20versions%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20version,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.23.8%20or%20earlier,%20there%20is%20an%20update%20process%20that%20we%20strongly%20recommend.%20See%20the%20release%20note%20section%20on%20updates:%0A<https://www.jmri.org/releasenotes/jmri5.3.1.shtml#update>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.3.1%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.3.1.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.3.1.shtml>%0A)
+[jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20version%205.3.1%20of%20JMRI/DecoderPro%20is%20available%20for%20download&body=Test%20version%205.3.1%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20Summer%202023.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20versions%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20version,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.23.8%20or%20earlier,%20there%20is%20an%20update%20process%20that%20we%20strongly%20recommend.%20See%20the%20release%20note%20section%20on%20updates:%0A<https://www.jmri.org/releasenotes/jmri5.3.1.shtml#update>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.3.1%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.3.1.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.3.1.shtml>%0A)
 
 
 Subject:
@@ -601,7 +600,7 @@ Content:
 
     Test version 5.3.1 of JMRI/DecoderPro is available for download.
 
-    This is the next in a series of test releases that will culminate in a production release, hopefully in early Summer 2022. It's really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
+    This is the next in a series of test releases that will culminate in a production release, hopefully in early Summer 2023. It's really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
 
     If you are currently using JMRI 4.23.8 or earlier, there is an update process that we strongly recommend. See the release note section on updates:
     <https://www.jmri.org/releasenotes/jmri5.3.1.shtml#update>
