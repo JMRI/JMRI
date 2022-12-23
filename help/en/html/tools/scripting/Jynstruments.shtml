@@ -22,14 +22,14 @@
       <p><a href="images/throttleWindowJynstrumented.png"><img style=
       "border: 0px solid ; width: 369px; height: 215px;" alt="Fully Jysntrumented Throttle Window"
       src="images/throttleWindowJynstrumented.png"></a> Have a look at the <a href=
-      "https://jmri.org/jython">Jython folder</a> in your source tree, there is <a href=
-      "https://jmri.org/jython/Jynstruments/">Jynstruments folder</a> with a <a href=
-      "https://jmri.org/jython/Jynstruments/README">README</a> and a <a href=
-      "https://jmri.org/jython/Jynstruments/ThrottleFrame/Light.jyn">ThrottleFrame/Light.jyn</a> to
+      "https://www.jmri.org/jython/">Jython folder</a> in your source tree, there is <a href=
+      "https://www.jmri.org/jython/Jynstruments/">Jynstruments folder</a> with a <a href=
+      "https://www.jmri.org/jython/Jynstruments/README">README</a> and a <a href=
+      "https://www.jmri.org/jython/Jynstruments/ThrottleFrame/Light.jyn/">ThrottleFrame/Light.jyn</a> to
       be tried on the JMRI Throttle window. The image to the right shows them in use (the diamond
       buttons).<br>
       In the Jython folder, you'll also find a simple <a href=
-      "https://jmri.org/jython/Jynstruments/Test.jyn/">Test.jyn</a> for testing purpose.<br></p>
+      "https://www.jmri.org/jython/Jynstruments/Test.jyn/">Test.jyn</a> for testing purpose.<br></p>
 
       <p>See ThrottleFrame.java for how to make code instrumentable; more details are in the
       README.</p>
@@ -53,7 +53,7 @@
 
       <ul>
         <li>The JMRI main Window were you can add <a href=
-        "https://jmri.org/jython/Jynstruments/Launchers/">launchers</a>. There is a Jython script
+        "https://www.jmri.org/jython/Jynstruments/Launchers/">launchers</a>. There is a Jython script
         named JynstrumentMainFrame.py in the JMRI default Jython script folder that shows how to
         load these Launchers from a regular JMRI Jython script, then you can select this script to
         be automatically executed at JMRI startup (from JMRI preferences) in order to have JMRI
@@ -61,7 +61,7 @@
         </li>
 
         <li>The <a href="../throttle/BasicThrottleWindow.shtml">JMRI Throttle Window</a> where you
-        can add Jynstruments <a href="https://jmri.org/jython/Jynstruments/ThrottleFrame/">to
+        can add Jynstruments <a href="https://www.jmri.org/jython/Jynstruments/ThrottleFrame/">to
         enrich the curent throttle experience</a> (special functions, e-stop, directions... and
         even one that will display video from a video capture device, like a Bluetooth webcam
         mounted on a train). Do not hesitate to write your own special function Jynstruments,
@@ -70,7 +70,7 @@
 
         <li>The <a href="../throttle/ThrottleToolBar.shtml">JMRI Throttle Windows toolbar</a> that
         allows for Jynstruments that will <a href=
-        "https://jmri.org/jython/Jynstruments/ThrottleWindowToolBar/">pilot all the Throttles in
+        "https://www.jmri.org/jython/Jynstruments/ThrottleWindowToolBar/">pilot all the Throttles in
         that Window</a> (particularly with special controllers)<br>
         </li>
       </ul>

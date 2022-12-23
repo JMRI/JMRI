@@ -76,7 +76,10 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>New LocoNetSlotsReadCSV.py script which scans all LocoNet slots and
+                    creates report about slot status and slots used for the consists
+                    including the details of the consist. It also flags all non-zero slots. </li>
+                <li>Add Consist number column.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -296,7 +299,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>Add Blunami decoders</li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
@@ -331,7 +334,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Bug fixes and extension of extended function mapping of the IntelliDrive 2 decoder</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -392,6 +395,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
+	        <li>Fixes a bug in the actions <i>Icon/Label on panel</i> and
+	        <i>Turnout on LayoutPanel</i> which caused that the actions
+	        wasn't loaded correctly.</li>
 	        <li>Add support for LogixNG Global Variable icons.  These work like memory icons.</li>
         </ul>
 
@@ -474,12 +480,6 @@
             <li></li>
        </ul>
 
-    <h3>Turnouts, Lights, Sensors and other elements</h3>
-        <a id="TLae" name="TLae"></a>
-        <ul>
-            <li></li>
-        </ul>
-
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
@@ -493,7 +493,11 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>The BNSF-1996 and CCOR-1967 signal systems have had some corrections
+                    made to their speed settings to make them more consistent with
+                    the underlying indications.</li>
+                <li>The XML Schema for signal systems has been updated to require
+                    there be one and only one speed and speed2 setting.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -546,6 +550,12 @@
 
    <h3>Tracker</h3>
         <a id="Tr" name="Tr"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"></a>
         <ul>
             <li></li>
         </ul>
