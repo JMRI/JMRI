@@ -420,6 +420,8 @@
           <li>The action <i>RunOnce</i> has been added. It runs an action
           only one time. It's useful when something needs to be initialized
           once.</li>
+          <li>Fixes a bug when importing a Logix with <i>Copy memory</i> to
+          LogixNG. The source memory and the destination memory was reversed.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
