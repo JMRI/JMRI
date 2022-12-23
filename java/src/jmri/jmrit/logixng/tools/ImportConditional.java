@@ -1032,7 +1032,9 @@ public class ImportConditional {
                     action.getSelectNamedBean().setReference("{"+fromMemory.substring(1)+"}");
                 } else {
                     action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
-                    action.getSelectNamedBean().setNamedBean(fromMemory);
+                    if (fromMemory != null) {
+                        action.getSelectNamedBean().setNamedBean(fromMemory);
+                    }
                 }
 
                 if (reference != null) {
