@@ -61,6 +61,7 @@ public class ExpressionEntryExitXml extends jmri.managers.configurexml.AbstractN
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<DestinationPoints>();
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean(), true);
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "destinationPoints");
 
         Element is_IsNot = shared.getChild("is_isNot");
         if (is_IsNot != null) {
