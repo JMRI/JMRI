@@ -387,12 +387,13 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
     def remove_train_from_transit(self, train_name):
         if self.logLevel > 0: print "train_name to remove from trainsit", train_name
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        DF.setState(DF.ICONIFIED);
+        #DF.setState(DF.ICONIFIED);
         activeTrainsList = DF.getActiveTrainsList()
         for i in range(0, activeTrainsList.size()) :
             activeTrain = activeTrainsList.get(i)
             if train_name == activeTrain.getTrainName():
                 DF.terminateActiveTrain(activeTrain)
+        DF = None
 
     def remove_train_name(self, train_name):
         global trains_allocated
@@ -433,11 +434,12 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
     def delete_active_transits(self):
 
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        DF.setState(DF.ICONIFIED);
+        #DF.setState(DF.ICONIFIED);
         activeTrainsList = DF.getActiveTrainsList()
         for i in range(0, activeTrainsList.size()) :
             activeTrain = activeTrainsList.get(i)
             DF.terminateActiveTrain(activeTrain)
+        DF = None
 
 # End of class StopMaster
 
@@ -539,7 +541,7 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 
 
-DF = None
+#DF = None
 
 class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
@@ -561,7 +563,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 
     def setup(self):
-        global DF
+        #global DF
 
         if self.logLevel > 1: print "starting DispatchMaster setup"
 
@@ -775,10 +777,12 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         msg = "completed route  " + route_name + ". you may see the route by clicking View/Edit Routes."
         opt1 = "Finish"
         opt2 = "View Route"
-        reply = self.od.customQuestionMessage2(msg, title, opt1, opt2)
+        reply = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
         sensor_changed.setKnownState(INACTIVE)
         if reply == opt2:
             self.show_routes()
+        elif reply == opt1:
+            self.save_routes()
         if self.logLevel > 0: print ("terminated dispatch")
         return True
 
@@ -832,6 +836,9 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def show_routes(self):
         a = jmri.jmrit.operations.routes.RoutesTableAction()
         a.actionPerformed(None)
+
+    def save_routes(self):
+        jmri.jmrit.operations.OperationsXml.save()
 
     def modify_individual_stopping_length(self, sensor_changed, button_sensor_name, button_station_name):
         msg = "selected station " + button_station_name + ". \nSelect the next station to modify the stopping length?"
@@ -1688,7 +1695,7 @@ class MonitorTrackMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_active_train(self, train_name):
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        DF.setState(DF.ICONIFIED);
+        #DF.setState(DF.ICONIFIED);
         java_active_trains_list = DF.getActiveTrainsList()
         java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
         #print "java_active_trains_Arraylist",java_active_trains_Arraylist
@@ -1699,6 +1706,7 @@ class MonitorTrackMaster(jmri.jmrit.automat.AbstractAutomaton):
             #print "t.getActiveTrainName().count(train_name)", t.getActiveTrainName().count(train_name)
             if t.getActiveTrainName().count(train_name) >0:     #check if train_name is contained in
                 return t
+        DF = None
         return None
 
     def get_occupied_blocks(self,active_train):
