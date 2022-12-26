@@ -226,7 +226,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void setup() {
-        // Do nothing
+        getSelectNamedBean().setup();
     }
 
     /** {@inheritDoc} */
