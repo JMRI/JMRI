@@ -15,7 +15,7 @@
     <div id="mainContent">
       <h1>JMRI Code: Building with Eclipse</h1>
 
-      <p>Eclipse (available at <a href="http://www.eclipse.org">www.eclipse.org</a>) can be used
+      <p>Eclipse (available at <a href="https://www.eclipse.org/">www.eclipse.org</a>) can be used
       for working with JMRI. Due to the lack of integration between Ant (the primary JMRI build
       tool) and Eclipse, <a href="NetBeans.shtml">NetBeans</a> is recommended unless you are
       already familiar with Eclipse.</p>
@@ -23,7 +23,7 @@
       <p>Eclipse is a complex environment to work with. If you're already familiar with IDEs like
       Microsoft Visual Studio it won't be too hard to get used to, but it is definitely worth
       buying a textbook (e.g. <a href=
-      "http://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635">The Java
+      "https://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635">The Java
       Developer's Guide to Eclipse</a>).</p>
 
       <p>JMRI developers use Git for source control. Source control using Git is including as part
@@ -37,7 +37,7 @@
       included with Eclipse) to build JMRI with Eclipse.</p>
 
       <p>If using versions of Eclipse older than "Mars", the <a href=
-      "http://www.eclipse.org/m2e/">M2Eclipse</a> plugin must be installed in Eclipse.</p>
+      "https://www.eclipse.org/m2e/">M2Eclipse</a> plugin must be installed in Eclipse.</p>
 
       <p>Also note that since version 4.99 JMRI requires Java version
       11. You must confirm that JRE 11 is the default Java Runtime Environment.</p>
@@ -218,7 +218,7 @@
 
         <li>Finally, submit a "Pull Request" to the main JMRI code repository on the GitHub
         website.
-          <p>To do this, start by signing on to the <a href="http://github.com">GitHub web
+          <p>To do this, start by signing on to the <a href="https://github.com">GitHub web
           site</a>, selecting your repository and clicking the <a href=
           "gitdeveloper.shtml#pull">Pull Request button</a>. For more info, see the <a href=
           "gitdeveloper.shtml#pull">developer instructions,</a></p>
