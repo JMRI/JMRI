@@ -132,11 +132,16 @@
           </tr>
 
           <tr>
-            <td>&amp;&</td>
+            <td>&amp;&amp;</td>
             <td>logical AND</td>
             <td>left to right</td>
           </tr>
 
+          <tr>
+            <td>^^</td>
+            <td>boolean XOR</td>
+            <td>left to right</td>
+          </tr>
           <tr>
             <td>||</td>
             <td>logical OR</td>
@@ -162,11 +167,11 @@
       </div>
 
       <p>Note that for the calculations to work, each operand must have the correct type. For
-      example, if you have a memory IM1 that has a number as a string and you want to subtrack from
-      it, like <code>IM1 - 1</code>, you need to convert the string in IM1 to an integer or a
-      float. Example: <code>int(IM1) - 1</code> or <code>float(IM1) - 1</code>. The same rules
-      apply to concatenating a string and an integer. The integer has to be converted to a string.
-      <code>"IT" + str(index)</code></p>
+      example, if you have a local variable <strong>MyVar</strong> that has a number as a string and
+      you want to subtrack from it, like <code>MyVar - 1</code>, you need to convert the string in
+      MyVar to an integer or a float. Example: <code>int(MyVar) - 1</code> or <code>float(MyVar) - 1
+      </code>.  The same rules apply to concatenating a string and an integer. The integer has to be
+      converted to a string, such as <code>"IT" + str(index)</code></p>
 
       <p>In this example, the <strong>A1</strong> section uses the <a href="chapter3.shtml">For</a>
       action to toggle 5 turnouts. The turnout user names are T1 thru T5. The
@@ -214,43 +219,43 @@
         <li>Clock
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_clock.png"><img src=
-            "images/chapter9/functions_clock.png" alt="Chapter 9 clock functions"
-            width="435" height="44"></a>
+            "images/chapter9/functions_clock.png" alt="Chapter 9 clock functions"></a>
           </div>
         </li>
         <li>Convert
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_convert.png"><img src=
-            "images/chapter9/functions_convert.png" alt="Chapter 9 convert functions"
-            width="435" height="116"></a>
+            "images/chapter9/functions_convert.png" alt="Chapter 9 convert functions"></a>
+          </div>
+        </li>
+        <li>Java<span class="since">since 5.1.3</span>
+          <div style="margin-left: 2em;">
+            <a href="images/chapter9/functions_java.png"><img src=
+            "images/chapter9/functions_java.png" alt="Chapter 9 java functions"></a>
           </div>
         </li>
         <li>Layout<span class="since">since 4.25.8</span>
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_layout.png"><img src=
-            "images/chapter9/functions_layout.png" alt="Chapter 9 layout functions"
-            width="435" height="296"></a>
+            "images/chapter9/functions_layout.png" alt="Chapter 9 layout functions"></a>
           </div>
         </li>
         <li>Math
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_math.png"><img src=
-            "images/chapter9/functions_math.png" alt="Chapter 9 math functions"
-            width="435" height="62"></a>
+            "images/chapter9/functions_math.png" alt="Chapter 9 math functions"></a>
           </div>
         </li>
         <li>NamedBean
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_named_bean.png"><img src=
-            "images/chapter9/functions_named_bean.png" alt="Chapter 9 named bean functions"
-            width="435" height="44"></a>
+            "images/chapter9/functions_named_bean.png" alt="Chapter 9 named bean functions"></a>
           </div>
         </li>
         <li>String
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_string.png"><img src=
-            "images/chapter9/functions_string.png" alt="Chapter 9 string functions"
-            width="435" height="26"></a>
+            "images/chapter9/functions_string.png" alt="Chapter 9 string functions"></a>
           </div>
         </li>
       </ul>
@@ -298,9 +303,9 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h3>Advanced: Add new function with Jython</h3>
+      <h3 id="jythonFunction">Advanced: Add new function with Jython</h3>
 
-      <p>It's possible to create a new function using Jython to be used by formula. The code below
+      <p>It's possible to create a new function using Jython to be used by a formula. The code below
       gives an example that you can use as a template. A new function is added by creating a new
       class that extends the class <strong>Function</strong> and implements these methods:</p>
 
@@ -322,41 +327,69 @@
           </tr>
 
           <tr>
+            <td>getDescription</td>
+            <td>Description of the function for the user</td>
+          </tr>
+
+          <tr>
+            <td>getConstantDescriptions</td>
+            <td>Description of any constants</td>
+          </tr>
+
+          <tr>
             <td>calculate</td>
             <td>Calculate the function</td>
           </tr>
 
-          <tr>
-            <td>getDescription</td>
-            <td>Description of the function for the user</td>
-          </tr>
         </table>
       </div>
 
-      <p>Example Jython script that defines the function <strong>jythonTest</strong> that takes one
-      floating point parameter:</p>
+      <p>Example Jython script that defines the <strong>getBlockValue</strong> function that takes
+      the name of a block as its parameter:</p>
 
       <div style="margin-left: 2em">
         <pre>
 import jmri
 
-class MyFunction(jmri.jmrit.logixng.util.parser.Function):
+class BlockValue(jmri.jmrit.logixng.util.parser.Function):
   def getModule(self):
-    return "Jython example"
+    return 'Custom'
 
   def getName(self):
-    return "jythonTest"
-
-  def calculate(self, parameterList):
-    if (parameterList.size() != 1):
-      raise jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException("Function requires one parameter")
-    return parameterList.get(0).calculate() * 3.4
+    return 'getBlockValue'
 
   def getDescription(self):
-    return "Example of function defined in Jython"
+    return 'Get the current value for the specified block name.'
 
+  def getConstantDescriptions(self):
+    return None
 
-jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).put("jythonTest", MyFunction())
+  def calculate(self, symbolTable, parameterList):
+    if (parameterList.size() != 1):
+      raise jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException("Function requires one parameter")
+
+    blockName = parameterList.get(0).calculate(symbolTable)
+    block = blocks.getBlock(blockName)
+    return None if block is None else block.getValue()
+
+jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).put("getBlockValue", BlockValue())
+        </pre>
+      </div>
+
+      <h6>Sample LogixNG conditional</h6>
+      <div style="margin-left: 2em">
+        <pre>
+LogixNG: Test Script Function
+    ConditionalNG: Get Block Value
+        ! A
+            Many
+               ::: Local variable "BlockValue", init to None ""
+                ! A1
+                    Digital Formula: BlockValue = getBlockValue("TestBlock")
+                        ?* E1
+
+                ! A2
+                    Log local variables
         </pre>
       </div>
 
@@ -374,12 +407,20 @@ jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).
       to use. We do that by calling the method <strong>calculate</strong> on each argument we want
       to use.</p>
 
-      <p>We then do the calculation, which in this case multiplies the first argument with 3.4 and
-      then returns the value.</p>
+      <p>We then do the calculation, which in this case finds the requested block and returns the
+      current value.</p>
+
+      <p>Since the local variables symbol table is also passed to the calculate function, local
+      variables are also available to the script using <code>symbolTable.getValue(name)</code> and
+      <code>symbolTable(name, new value)</code>.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4>Important!</h4>
+
+      <p>The Jython script needs to loaded before the LogixNG runs that references the custom
+      function.  The best approach is to add a start up action to run the script.  When the xml
+      data file is loaded, the script will be ready to process the custom function request.</p>
 
       <p>A function may set turnouts, sensors, and other things on the layout. You may for example
       create the function <strong>setTurnout(turnout, newState)</strong>. But it's important to

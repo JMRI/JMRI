@@ -36,6 +36,7 @@ import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -239,7 +240,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 try {
                     val = s.getAppearanceName();
                 } catch (java.lang.ArrayIndexOutOfBoundsException e) {
-                    log.error(e.getLocalizedMessage(), e);
+                    log.error("Could not get Appearance Name for {}", s.getDisplayName(), e);
                 }
                 if (val != null) {
                     return val;
@@ -757,6 +758,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 typeBox.addItem(grapevine);
             }
             typeBox.addActionListener(e1 -> typeChanged());
+            JComboBoxUtil.setupComboBoxMaxRows(typeBox);
 
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
@@ -889,7 +891,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             userNameTextField.setText("");
         }
         typeBox.setSelectedIndex(2);  // force GUI status consistent. Default set to Double Head type
-        
+
         addFrame.setEscapeKeyClosesWindow(true);
         addFrame.pack();
         addFrame.setVisible(true);
@@ -1036,10 +1038,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             v1Border.setTitle(Bundle.getMessage("LabelTurnoutNumber"));
             v1Panel.setVisible(true);
             to1.setVisible(true);
-            v2Border.setTitle(Bundle.getMessage("LabelTurnoutClosedAppearance"));
+            v2Border.setTitle(Bundle.getMessage("LabelTurnoutThrownAppearance"));
             v2Panel.setVisible(true);
             s2aBox.setVisible(true);
-            v3Border.setTitle(Bundle.getMessage("LabelTurnoutThrownAppearance"));
+            v3Border.setTitle(Bundle.getMessage("LabelTurnoutClosedAppearance"));
             s3aBox.setVisible(true);
             v3Panel.setVisible(true);
         } else if (virtualHead.equals(typeBox.getSelectedItem())) {
@@ -2083,11 +2085,11 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 ev1Panel.setVisible(true);
                 eto1.setVisible(true);
                 eto1.setDefaultNamedBean(((SingleTurnoutSignalHead) curS).getOutput().getBean());
-                ev2Border.setTitle(Bundle.getMessage("LabelTurnoutClosedAppearance"));
+                ev2Border.setTitle(Bundle.getMessage("LabelTurnoutThrownAppearance"));
                 ev2Panel.setVisible(true);
                 es2aBox.setVisible(true);
                 setSignalStateInBox(es2aBox, ((SingleTurnoutSignalHead) curS).getOnAppearance());
-                ev3Border.setTitle(Bundle.getMessage("LabelTurnoutThrownAppearance"));
+                ev3Border.setTitle(Bundle.getMessage("LabelTurnoutClosedAppearance"));
                 ev3Panel.setVisible(true);
                 es3aBox.setVisible(true);
                 setSignalStateInBox(es3aBox, ((SingleTurnoutSignalHead) curS).getOffAppearance());
@@ -2519,7 +2521,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         ((DccSignalHead) curS).setOutputForAppearance(curS.getValidStates()[i], number);
                     } catch (Exception ex) {
                         //in theory JSpinner should already have caught a number conversion error.
-                        log.error(ex.toString());
+                        log.error("JSpinner for {} did not catch number conversion error", className, ex);
                     }
                 }
                 ((DccSignalHead) curS).useAddressOffSet(dccOffSetAddressEdt.isSelected());

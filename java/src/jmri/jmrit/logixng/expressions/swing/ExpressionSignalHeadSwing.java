@@ -16,6 +16,7 @@ import jmri.SignalHeadManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionSignalHead;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
@@ -29,15 +30,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
 
     public static final int NUM_COLUMNS_TEXT_FIELDS = 20;
 
-    private JTabbedPane _tabbedPaneSignalHead;
-    private BeanSelectPanel<SignalHead> _signalHeadBeanPanel;
-    private JPanel _panelSignalHeadDirect;
-    private JPanel _panelSignalHeadReference;
-    private JPanel _panelSignalHeadLocalVariable;
-    private JPanel _panelSignalHeadFormula;
-    private JTextField _signalHeadReferenceTextField;
-    private JTextField _signalHeadLocalVariableTextField;
-    private JTextField _signalHeadFormulaTextField;
+    private LogixNG_SelectNamedBeanSwing<SignalHead> _selectNamedBeanSwing;
 
     private JTabbedPane _tabbedPaneQueryType;
     private JPanel _panelQueryTypeDirect;
@@ -64,12 +57,30 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
     private BeanSelectPanel<SignalHead> _exampleSignalHeadBeanPanel;
 
 
+    public ExpressionSignalHeadSwing() {
+    }
+
+    public ExpressionSignalHeadSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ExpressionSignalHead expression = (ExpressionSignalHead)object;
 
+        _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(SignalHeadManager.class), getJDialog(), this);
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        JPanel _tabbedPaneNamedBean;
+
+        if (expression != null) {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(expression.getSelectNamedBean());
+        } else {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+        }
 
         JPanel examplePanel = new JPanel();
         JPanel innerExamplePanel = new JPanel();
@@ -84,43 +95,14 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
 
         JPanel expressionPanel = new JPanel();
 
-
-        // Set up tabbed pane for selecting the signal head
-        _tabbedPaneSignalHead = new JTabbedPane();
-        _panelSignalHeadDirect = new javax.swing.JPanel();
-        _panelSignalHeadReference = new javax.swing.JPanel();
-        _panelSignalHeadLocalVariable = new javax.swing.JPanel();
-        _panelSignalHeadFormula = new javax.swing.JPanel();
-
-        _tabbedPaneSignalHead.addTab(NamedBeanAddressing.Direct.toString(), _panelSignalHeadDirect);
-        _tabbedPaneSignalHead.addTab(NamedBeanAddressing.Reference.toString(), _panelSignalHeadReference);
-        _tabbedPaneSignalHead.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelSignalHeadLocalVariable);
-        _tabbedPaneSignalHead.addTab(NamedBeanAddressing.Formula.toString(), _panelSignalHeadFormula);
-
-        _tabbedPaneSignalHead.addChangeListener((ChangeEvent e) -> {
+        _selectNamedBeanSwing.addAddressingListener((ChangeEvent e) -> {
             setGuiEnabledStates();
         });
 
-        _signalHeadBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SignalHeadManager.class), null);
-        _panelSignalHeadDirect.add(_signalHeadBeanPanel);
-
-        _signalHeadBeanPanel.getBeanCombo().addActionListener((java.awt.event.ActionEvent e) -> {
+        _selectNamedBeanSwing.getBeanSelectPanel().getBeanCombo()
+                .addActionListener((java.awt.event.ActionEvent e) -> {
             setAppearanceComboBox(null);
         });
-
-
-        _signalHeadReferenceTextField = new JTextField();
-        _signalHeadReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelSignalHeadReference.add(_signalHeadReferenceTextField);
-
-        _signalHeadLocalVariableTextField = new JTextField();
-        _signalHeadLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelSignalHeadLocalVariable.add(_signalHeadLocalVariableTextField);
-
-        _signalHeadFormulaTextField = new JTextField();
-        _signalHeadFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelSignalHeadFormula.add(_signalHeadFormulaTextField);
-
 
         // Set up the tabbed pane for selecting the operation
         _tabbedPaneQueryType = new JTabbedPane();
@@ -226,23 +208,9 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
 
 
         if (expression != null) {
-            switch (expression.getAddressing()) {
-                case Direct: _tabbedPaneSignalHead.setSelectedComponent(_panelSignalHeadDirect); break;
-                case Reference: _tabbedPaneSignalHead.setSelectedComponent(_panelSignalHeadReference); break;
-                case LocalVariable: _tabbedPaneSignalHead.setSelectedComponent(_panelSignalHeadLocalVariable); break;
-                case Formula: _tabbedPaneSignalHead.setSelectedComponent(_panelSignalHeadFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getAddressing().name());
+            if (expression.getSelectExampleNamedBean().getNamedBean() != null) {
+                _exampleSignalHeadBeanPanel.setDefaultNamedBean(expression.getSelectExampleNamedBean().getNamedBean().getBean());
             }
-            if (expression.getSignalHead() != null) {
-                _signalHeadBeanPanel.setDefaultNamedBean(expression.getSignalHead().getBean());
-            }
-            if (expression.getExampleSignalHead() != null) {
-                _exampleSignalHeadBeanPanel.setDefaultNamedBean(expression.getExampleSignalHead().getBean());
-            }
-            _signalHeadReferenceTextField.setText(expression.getReference());
-            _signalHeadLocalVariableTextField.setText(expression.getLocalVariable());
-            _signalHeadFormulaTextField.setText(expression.getFormula());
-
 
             switch (expression.getQueryAddressing()) {
                 case Direct: _tabbedPaneQueryType.setSelectedComponent(_panelQueryTypeDirect); break;
@@ -272,7 +240,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
         }
 
         JComponent[] components = new JComponent[]{
-            _tabbedPaneSignalHead,
+            _tabbedPaneNamedBean,
             _tabbedPaneQueryType,
             _tabbedPaneAppearanceType
         };
@@ -306,7 +274,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
 
         _tabbedPaneAppearanceType.setEnabled(true);
 
-        if (_tabbedPaneSignalHead.getSelectedComponent() != _panelSignalHeadDirect &&
+        if (_selectNamedBeanSwing.getAddressing() != NamedBeanAddressing.Direct &&
                 _tabbedPaneAppearanceType.getSelectedComponent() == _panelAppearanceTypeDirect) {
             _exampleSignalHeadBeanPanel.getBeanCombo().setEnabled(true);
         }
@@ -327,8 +295,8 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
 
     private void setAppearanceComboBox(ExpressionSignalHead expression) {
         SignalHead sh;
-        if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect) {
-            sh = _signalHeadBeanPanel.getBeanCombo().getSelectedItem();
+        if (_selectNamedBeanSwing.getAddressing() == NamedBeanAddressing.Direct) {
+            sh = _selectNamedBeanSwing.getBean();
         } else {
             sh = _exampleSignalHeadBeanPanel.getBeanCombo().getSelectedItem();
         }
@@ -356,14 +324,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
         // Create a temporary expression to test formula
         ExpressionSignalHead expression = new ExpressionSignalHead("IQDE1", null);
 
-        try {
-            if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadReference) {
-                expression.setReference(_signalHeadReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
+        _selectNamedBeanSwing.validate(expression.getSelectNamedBean(), errorMessages);
 
         try {
             if (_tabbedPaneQueryType.getSelectedComponent() == _panelQueryTypeReference) {
@@ -374,23 +335,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
             return false;
         }
 
-        try {
-            expression.setFormula(_signalHeadFormulaTextField.getText());
-            if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect) {
-                expression.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadReference) {
-                expression.setAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadLocalVariable) {
-                expression.setAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadFormula) {
-                expression.setAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
-        return true;
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -408,22 +353,11 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionSignalHead but is a: "+object.getClass().getName());
         }
         ExpressionSignalHead expression = (ExpressionSignalHead)object;
-        if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect) {
-            SignalHead signalHead = _signalHeadBeanPanel.getNamedBean();
-            if (signalHead != null) {
-                NamedBeanHandle<SignalHead> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
-                expression.setSignalHead(handle);
-            } else {
-                expression.removeSignalHead();
-            }
-        } else {
-            expression.removeSignalHead();
-        }
+
+        _selectNamedBeanSwing.updateObject(expression.getSelectNamedBean());
 
         if (!_exampleSignalHeadBeanPanel.isEmpty()
-                && (_tabbedPaneSignalHead.getSelectedComponent() != _panelSignalHeadDirect)
+                && (_selectNamedBeanSwing.getAddressing() != NamedBeanAddressing.Direct)
                 && (_tabbedPaneAppearanceType.getSelectedComponent() == _panelAppearanceTypeDirect)) {
 
             SignalHead signalHead = _exampleSignalHeadBeanPanel.getNamedBean();
@@ -431,28 +365,13 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
                 NamedBeanHandle<SignalHead> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
-                expression.setExampleSignalHead(handle);
+                expression.getSelectExampleNamedBean().setNamedBean(handle);
             }
         } else {
-            expression.removeExampleSignalHead();
+            expression.getSelectExampleNamedBean().removeNamedBean();
         }
 
         try {
-            if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect) {
-                expression.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadReference) {
-                expression.setAddressing(NamedBeanAddressing.Reference);
-                expression.setReference(_signalHeadReferenceTextField.getText());
-            } else if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadLocalVariable) {
-                expression.setAddressing(NamedBeanAddressing.LocalVariable);
-                expression.setLocalVariable(_signalHeadLocalVariableTextField.getText());
-            } else if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadFormula) {
-                expression.setAddressing(NamedBeanAddressing.Formula);
-                expression.setFormula(_signalHeadFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneSignalHead has unknown selection");
-            }
-
             if (_tabbedPaneQueryType.getSelectedComponent() == _panelQueryTypeDirect) {
                 expression.setQueryAddressing(NamedBeanAddressing.Direct);
                 expression.setQueryType((ExpressionSignalHead.QueryType)_operationComboBox.getSelectedItem());

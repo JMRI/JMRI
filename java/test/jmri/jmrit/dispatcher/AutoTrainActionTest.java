@@ -1,9 +1,11 @@
 package jmri.jmrit.dispatcher;
 
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import org.mockito.Mockito;
 
 /**
  *
@@ -13,11 +15,15 @@ public class AutoTrainActionTest {
 
     @Test
     public void testCTor() {
-        jmri.Transit transit = new jmri.Transit("TT1");
+
+        DispatcherFrame df = Mockito.mock(DispatcherFrame.class);
+        InstanceManager.setDefault(DispatcherFrame.class,df);
+
+        jmri.Transit transit = new jmri.implementation.DefaultTransit("TT1");
         ActiveTrain at = new ActiveTrain(transit,"Train",ActiveTrain.USER);
         AutoActiveTrain aat = new AutoActiveTrain(at);
         AutoTrainAction t = new AutoTrainAction(aat);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

@@ -198,7 +198,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     protected void sendMomentaryFunctionGroup4() {
         if (csVersionSupportsHighFunctions()) {
-            XNetMessage msg = XNetMessage.getFunctionGroup4SetMomMsg(this.getDccAddress(), 
+            XNetMessage msg = XNetMessage.getFunctionGroup4SetMomMsg(this.getDccAddress(),
            getFunctionMomentary(13), getFunctionMomentary(14),
            getFunctionMomentary(15), getFunctionMomentary(16),
            getFunctionMomentary(17), getFunctionMomentary(18),
@@ -215,7 +215,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     protected void sendMomentaryFunctionGroup5() {
         if (csVersionSupportsHighFunctions()) {
-            XNetMessage msg = XNetMessage.getFunctionGroup5SetMomMsg(this.getDccAddress(), 
+            XNetMessage msg = XNetMessage.getFunctionGroup5SetMomMsg(this.getDccAddress(),
                 getFunctionMomentary(21), getFunctionMomentary(22), getFunctionMomentary(23),
                 getFunctionMomentary(24), getFunctionMomentary(25), getFunctionMomentary(26),
                 getFunctionMomentary(27), getFunctionMomentary(28));
@@ -324,7 +324,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected synchronized void sendStatusInformationRequest() {
         /* Send the request for status */
         XNetMessage msg = XNetMessage.getLocomotiveInfoRequestMsg(this.address);
-        msg.setRetries(1); // Since we repeat this ourselves, don't ask the 
+        msg.setRetries(1); // Since we repeat this ourselves, don't ask the
         // traffic controller to do this for us.
         // now, we queue the message for sending to the command station
         queueMessage(msg, THROTTLESTATSENT);
@@ -370,12 +370,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     // Handle incoming messages for This throttle.
     @Override
     public void message(XNetReply l) {
-        // First, we want to see if this throttle is waiting for a message 
+        // First, we want to see if this throttle is waiting for a message
         //or not.
         log.debug("Throttle {} - received message {}", getDccAddress(), l);
         if (requestState == THROTTLEIDLE) {
             log.trace("Current throttle status is THROTTLEIDLE");
-            // We haven't sent anything, but we might be told someone else 
+            // We haven't sent anything, but we might be told someone else
             // has taken over this address
             if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
                 log.trace("Throttle - message is LOCO_INFO_RESPONSE ");
@@ -388,7 +388,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         } else if ((requestState & THROTTLESPEEDSENT) == THROTTLESPEEDSENT
                 || (requestState & THROTTLEFUNCSENT) == THROTTLEFUNCSENT) {
             log.trace("Current throttle status is THROTTLESPEEDSENT");
-            // For a Throttle Command, we're just looking for a return 
+            // For a Throttle Command, we're just looking for a return
             // acknowledgment, Either a Success or Failure message.
             if (l.isOkMessage()) {
                 log.trace("Last Command processed successfully.");
@@ -413,11 +413,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
         } else if ((requestState & THROTTLESTATSENT) == THROTTLESTATSENT) {
             log.trace("Current throttle status is THROTTLESTATSENT");
-            // This throttle has requested status information, so we need 
-            // to process those messages. 
+            // This throttle has requested status information, so we need
+            // to process those messages.
             if (l.getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
                 if (l.getElement(1) == XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM) {
-                    /* handle information response about F13-F28 Momentary 
+                    /* handle information response about F13-F28 Momentary
                      Status*/
                     log.trace("Throttle - message is LOCO_FUNCTION_STATUS_HIGH_MOM");
                     int b3 = l.getElement(2);
@@ -451,7 +451,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 int b2 = l.getElement(2);
                 int b3 = l.getElement(3);
                 int b4 = l.getElement(4);
-                // Element 5 is the consist address, it can only be in the 
+                // Element 5 is the consist address, it can only be in the
                 // range 1-99
                 int b5 = l.getElement(5);
 
@@ -474,7 +474,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 int b3 = l.getElement(3);
                 int b4 = l.getElement(4);
 
-                // elements 5 and 6 contain the address of the other unit 
+                // elements 5 and 6 contain the address of the other unit
                 // in the DH
                 int b5 = l.getElement(5);
                 int b6 = l.getElement(6);
@@ -589,7 +589,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         log.debug("Notified of timeout on message {} , {} retries available.",
                 msg, msg.getRetries());
         if (msg.getRetries() > 0) {
-            // If the message still has retries available, send it back to 
+            // If the message still has retries available, send it back to
             // the traffic controller.
             synchronized (this) {
                 tc.sendXNetMessage(msg, this);
@@ -655,7 +655,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         if (this.speedStepMode == SpeedStepMode.NMRA_DCC_128) {
             // We're in 128 speed step mode
             int speedVal = b2 & 0x7f;
-            // The first speed step used is actually at 2 for 128 
+            // The first speed step used is actually at 2 for 128
             // speed step mode.
             if (speedVal >= 1) {
                 speedVal -= 1;
@@ -673,7 +673,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             // but other bits are in order from 0-3
             int speedVal = ((b2 & 0x0F) << 1)
                     + ((b2 & 0x10) >> 4);
-            // The first speed step used is actually at 4 for 28 
+            // The first speed step used is actually at 4 for 28
             // speed step mode.
             if (speedVal >= 3) {
                 speedVal -= 3;
@@ -693,7 +693,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             // but other bits are in order from 0-3
             int speedVal = ((b2 & 0x0F) << 1)
                     + ((b2 & 0x10) >> 4);
-            // The first speed step used is actually at 4 for 27 
+            // The first speed step used is actually at 4 for 27
             // speed step mode.
             if (speedVal >= 3) {
                 speedVal -= 3;
@@ -776,20 +776,20 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         log.trace("Parsing Function Momentary status, function bytes: {} and {}",
                 b3, b4);
         /* data byte 3 is the momentary status of F0 F4 F3 F2 F1 */
-        checkForFunctionMomentaryValueChange(0, b3, 0x10, getF0Momentary());
-        checkForFunctionMomentaryValueChange(1, b3, 0x01, getF1Momentary());
-        checkForFunctionMomentaryValueChange(2, b3, 0x02, getF2Momentary());
-        checkForFunctionMomentaryValueChange(3, b3, 0x04, getF3Momentary());
-        checkForFunctionMomentaryValueChange(4, b3, 0x08, getF4Momentary());
+        checkForFunctionMomentaryValueChange(0, b3, 0x10, getFunctionMomentary(0));
+        checkForFunctionMomentaryValueChange(1, b3, 0x01, getFunctionMomentary(1));
+        checkForFunctionMomentaryValueChange(2, b3, 0x02, getFunctionMomentary(2));
+        checkForFunctionMomentaryValueChange(3, b3, 0x04, getFunctionMomentary(3));
+        checkForFunctionMomentaryValueChange(4, b3, 0x08, getFunctionMomentary(4));
         /* data byte 4 is the momentary status of F12 F11 F10 F9 F8 F7 F6 F5 */
-        checkForFunctionMomentaryValueChange(5, b4, 0x01, getF5Momentary());
-        checkForFunctionMomentaryValueChange(6, b4, 0x02, getF6Momentary());
-        checkForFunctionMomentaryValueChange(7, b4, 0x04, getF7Momentary());
-        checkForFunctionMomentaryValueChange(8, b4, 0x08, getF8Momentary());
-        checkForFunctionMomentaryValueChange(9, b4, 0x10, getF9Momentary());
-        checkForFunctionMomentaryValueChange(10, b4, 0x20, getF10Momentary());
-        checkForFunctionMomentaryValueChange(11, b4, 0x40, getF11Momentary());
-        checkForFunctionMomentaryValueChange(12, b4, 0x80, getF12Momentary());
+        checkForFunctionMomentaryValueChange(5, b4, 0x01, getFunctionMomentary(5));
+        checkForFunctionMomentaryValueChange(6, b4, 0x02, getFunctionMomentary(6));
+        checkForFunctionMomentaryValueChange(7, b4, 0x04, getFunctionMomentary(7));
+        checkForFunctionMomentaryValueChange(8, b4, 0x08, getFunctionMomentary(8));
+        checkForFunctionMomentaryValueChange(9, b4, 0x10, getFunctionMomentary(9));
+        checkForFunctionMomentaryValueChange(10, b4, 0x20, getFunctionMomentary(10));
+        checkForFunctionMomentaryValueChange(11, b4, 0x40, getFunctionMomentary(11));
+        checkForFunctionMomentaryValueChange(12, b4, 0x80, getFunctionMomentary(12));
     }
 
     protected void parseFunctionHighMomentaryInformation(int b3, int b4) {
@@ -797,22 +797,22 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 b3, b4);
         /* data byte 3 is the momentary status of F20 F19 F17 F16 F15 F14 F13 */
         checkForFunctionMomentaryValueChange(13, b3, 0x01, getFunctionMomentary(13));
-        checkForFunctionMomentaryValueChange(14, b3, 0x02, getF14Momentary());
-        checkForFunctionMomentaryValueChange(15, b3, 0x04, getF15Momentary());
-        checkForFunctionMomentaryValueChange(16, b3, 0x08, getF16Momentary());
-        checkForFunctionMomentaryValueChange(17, b3, 0x10, getF17Momentary());
-        checkForFunctionMomentaryValueChange(18, b3, 0x20, getF18Momentary());
-        checkForFunctionMomentaryValueChange(19, b3, 0x40, getF19Momentary());
-        checkForFunctionMomentaryValueChange(20, b3, 0x80, getF20Momentary());
+        checkForFunctionMomentaryValueChange(14, b3, 0x02, getFunctionMomentary(14));
+        checkForFunctionMomentaryValueChange(15, b3, 0x04, getFunctionMomentary(15));
+        checkForFunctionMomentaryValueChange(16, b3, 0x08, getFunctionMomentary(16));
+        checkForFunctionMomentaryValueChange(17, b3, 0x10, getFunctionMomentary(17));
+        checkForFunctionMomentaryValueChange(18, b3, 0x20, getFunctionMomentary(18));
+        checkForFunctionMomentaryValueChange(19, b3, 0x40, getFunctionMomentary(19));
+        checkForFunctionMomentaryValueChange(20, b3, 0x80, getFunctionMomentary(20));
         /* data byte 4 is the momentary status of F28 F27 F26 F25 F24 F23 F22 F21 */
-        checkForFunctionMomentaryValueChange(21, b4, 0x01, getF21Momentary());
-        checkForFunctionMomentaryValueChange(22, b4, 0x02, getF22Momentary());
-        checkForFunctionMomentaryValueChange(23, b4, 0x04, getF23Momentary());
-        checkForFunctionMomentaryValueChange(24, b4, 0x08, getF24Momentary());
-        checkForFunctionMomentaryValueChange(25, b4, 0x10, getF25Momentary());
-        checkForFunctionMomentaryValueChange(26, b4, 0x20, getF26Momentary());
-        checkForFunctionMomentaryValueChange(27, b4, 0x40, getF27Momentary());
-        checkForFunctionMomentaryValueChange(28, b4, 0x80, getF28Momentary());
+        checkForFunctionMomentaryValueChange(21, b4, 0x01, getFunctionMomentary(21));
+        checkForFunctionMomentaryValueChange(22, b4, 0x02, getFunctionMomentary(22));
+        checkForFunctionMomentaryValueChange(23, b4, 0x04, getFunctionMomentary(23));
+        checkForFunctionMomentaryValueChange(24, b4, 0x08, getFunctionMomentary(24));
+        checkForFunctionMomentaryValueChange(25, b4, 0x10, getFunctionMomentary(25));
+        checkForFunctionMomentaryValueChange(26, b4, 0x20, getFunctionMomentary(26));
+        checkForFunctionMomentaryValueChange(27, b4, 0x40, getFunctionMomentary(27));
+        checkForFunctionMomentaryValueChange(28, b4, 0x80, getFunctionMomentary(28));
     }
 
     protected void checkForFunctionMomentaryValueChange(int funcNum, int bytevalue, int bitmask, boolean currentValue) {
@@ -822,10 +822,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             updateFunctionMomentary(funcNum, false);
         }
     }
-    
+
     /**
      * Set the internal isAvailable property.
-     * 
+     *
      * @param available true if available; false otherwise
      */
     protected void setIsAvailable(boolean available) {
@@ -852,7 +852,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         statusTask = new java.util.TimerTask() {
             @Override
             public void run() {
-                /* If the timer times out, just send a status 
+                /* If the timer times out, just send a status
                  request message */
                 sendStatusInformationRequest();
             }
@@ -895,7 +895,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         if (!requestList.isEmpty()) {
             log.debug("sending message to traffic controller");
             // if the queue is not empty, remove the first message
-            // from the queue, send the message, and set the state machine 
+            // from the queue, send the message, and set the state machine
             // to the required state.
             try {
                 msg = requestList.take();

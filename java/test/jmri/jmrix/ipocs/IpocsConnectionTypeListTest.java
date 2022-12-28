@@ -1,11 +1,8 @@
 package jmri.jmrix.ipocs;
 
-import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for IpocsConnectionTypeList class.
@@ -16,10 +13,24 @@ import org.junit.Assert;
  */
 public class IpocsConnectionTypeListTest {
 
-    @BeforeEach        
+    @Test
+    public void testCtor() {
+        Assertions.assertNotNull( new IpocsConnectionTypeList(),"constructor");
+    }
+
+    @Test
+    public void testGetManufacturers() {
+        Assertions.assertNotNull(new IpocsConnectionTypeList().getManufacturers());
+    }
+
+    @Test
+    public void testGetAvailableProtocolClasses() {
+        Assertions.assertNotNull(new IpocsConnectionTypeList().getAvailableProtocolClasses());
+    }
+
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @AfterEach
@@ -27,18 +38,4 @@ public class IpocsConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    @Test
-    public void ConstructorTest() {
-        Assert.assertNotNull("constructor", new IpocsConnectionTypeList());
-    }
-
-    @Test
-    public void GetManufacturersTest() {
-      new IpocsConnectionTypeList().getManufacturers();
-    }
-
-    @Test
-    public void GetAvailableProtocolClassesTest() {
-      new IpocsConnectionTypeList().getAvailableProtocolClasses();
-    }
 }

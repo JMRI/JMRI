@@ -67,7 +67,7 @@ public class TableItemPanelTest {
         JFrameOperator fo = new JFrameOperator(ItemPalette.getDefault("ItemPalette", editor));
 
         ItemPalette._tabPane.setSelectedIndex(14);
-        JScrollPane sp = (JScrollPane)ItemPalette._tabPane.getComponentAt(14);
+        JScrollPane sp = (JScrollPane)ItemPalette._tabPane.getComponentAt(15);
         ItemPanel panel = (ItemPanel)sp.getViewport().getView();
         Assert.assertNotNull("ItemPanel exists", panel);
         Assert.assertEquals("ItemPanel._itemType", "IndicatorTO", panel._itemType);
@@ -127,7 +127,6 @@ public class TableItemPanelTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

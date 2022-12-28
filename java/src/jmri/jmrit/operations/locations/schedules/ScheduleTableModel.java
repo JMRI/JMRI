@@ -563,9 +563,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             log.error("Schedule wait must be a positive number");
             return;
         }
-        if (wait > 10) {
-            log.warn("Schedule wait must be 10 or less");
-            wait = 10;
+        if (wait > 100) {
+            log.warn("Schedule wait must be 100 or less");
+            wait = 100;
         }
         si.setWait(wait);
     }

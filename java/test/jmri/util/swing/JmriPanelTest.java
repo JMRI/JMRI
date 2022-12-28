@@ -4,6 +4,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -26,6 +27,13 @@ public class JmriPanelTest {
         panel.initComponents();
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testAccessibility() throws Exception{
+        panel.initComponents();
+        jmri.util.AccessibilityChecks.check(panel);
+    }
+
     @Test
     public void testGetHelpTarget(){
         Assert.assertEquals("help target", helpTarget, panel.getHelpTarget());
@@ -34,6 +42,12 @@ public class JmriPanelTest {
     @Test
     public void testGetTitle(){
         Assert.assertEquals("title", title, panel.getTitle());
+    }
+
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    public void testGetMenus() {
+        Assertions.assertNotNull(panel.getMenus());
     }
 
     @BeforeEach

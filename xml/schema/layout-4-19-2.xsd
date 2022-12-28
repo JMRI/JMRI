@@ -78,6 +78,7 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/meters.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/meterframes.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/ctcdata.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/script.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/logixng-4.23.1.xsd"/>
 
@@ -358,6 +359,7 @@ signals - obsolete, EMPTY, never used
         <xs:element name="LogixNGConditionalNGs"         type="LogixNG_ConditionalNGManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="LogixNGModules"                type="LogixNG_ModuleManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="LogixNGTables"                 type="LogixNG_TableManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LogixNGGlobalVariables"        type="LogixNG_GlobalVariableManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="LogixNGAnalogActions"          type="LogixNG_AnalogActionManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="LogixNGAnalogExpressions"      type="LogixNG_AnalogExpressionManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="LogixNGDigitalActions"         type="LogixNG_DigitalActionManagerType" minOccurs="0" maxOccurs="unbounded" />

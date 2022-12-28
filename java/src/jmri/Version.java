@@ -44,7 +44,7 @@ import java.util.ResourceBundle;
  * <p>
  * Generally, JMRI updates its version string in the code repository right
  * <b>after</b> a release. Between formal release 1.2.3 and 1.2.4, the string
- * will be 1.2.3plus.
+ * will be 1.2.4plus.
  * <hr>
  * This file is part of JMRI.
  * <p>

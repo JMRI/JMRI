@@ -20,10 +20,6 @@ public abstract class ThrottleWindowActions implements PropertyChangeListener {
     protected ThrottlesPreferencesWindowKeyboardControls tpwkc;
     
     ThrottleWindowActions(ThrottleWindow tw) {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         this.tw = tw;
         resetTpwkc();
     }

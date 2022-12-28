@@ -38,12 +38,18 @@ public class MockShutDownManagerTest {
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getCallables().size());
         Assert.assertEquals(1, dsdm.getRunnables().size());
-        try {
-            dsdm.register(null);
-            Assert.fail("Expected NullPointerException not thrown");
-        } catch (NullPointerException ex) {
-            // ignore since throwing the NPE is passing
-        }
+        
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
+            registerNull(dsdm);
+        },"Expected NullPointerException not thrown");
+        Assertions.assertNotNull(ex);
+
+    }
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
+        justification = "testing passing null to create exception ")
+    private void registerNull(MockShutDownManager dsdm){
+        dsdm.register(null);
     }
 
     @Test

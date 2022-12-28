@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - LocoNet® Addressing</title>
+  <title>JMRI Hardware Support - LocoNet&reg; Addressing</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout">
   <!--#include virtual="/Style.shtml" -->
@@ -14,7 +14,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Support: LocoNet® addressing</h1>
+      <h1>Support: LocoNet&reg; addressing</h1>
 
       <ul class="snav">
         <li>
@@ -62,7 +62,7 @@
       <h1 id="general">General LocoNet Object Types and Addressing: "System Names" and "User
       Names"</h1>
 
-      <p>LocoNet® systems provide "general purpose inputs" via LocoNet "Sensors", provide "general
+      <p>LocoNet&reg; systems provide "general purpose inputs" via LocoNet "Sensors", provide "general
       purpose outputs" via either LocoNet-connected or DCC-connected "Turnouts", and provide
       "Reporter zone" numbers via LocoNet "Transponding zones". Each of these object types use
       independent addressing within LocoNet messaging.</p>
@@ -894,7 +894,7 @@
       example, a CV numbered as "csOpSw.007" is a reference to a "command station OpSw" numbered
       "7".</p>
 
-      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

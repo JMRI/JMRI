@@ -25,6 +25,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SpinnerNumberModel;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
+import jmri.util.swing.JComboBoxUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -103,6 +104,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 ((JComboBox<?>) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
                     adapter.setOptionState(item, options.get(item).getItem());
                 });
+                JComboBoxUtil.setupComboBoxMaxRows((JComboBox<?>) entry.getValue().getComponent());
             }
         }
 
@@ -222,6 +224,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             }
         }
         updateSerialPortNames(portName, portBox, v);
+        JComboBoxUtil.setupComboBoxMaxRows(portBox);
 
         // If there's no name selected, select one that seems most likely
         boolean didSetName = false;

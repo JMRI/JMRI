@@ -10,15 +10,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -27,10 +24,12 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.annotation.CheckForNull;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
+
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -70,6 +69,9 @@ import jmri.util.HelpUtil;
 import jmri.util.WindowMenu;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.util.swing.WindowInterface;
 import jmri.util.swing.multipane.TwoPaneTBWindow;
@@ -84,7 +86,7 @@ import org.slf4j.LoggerFactory;
  * No reset toolbar support yet. No glass pane support (See DecoderPro3Panes
  * class and usage below). Special panes (Roster entry, attributes, graphics)
  * not included. How do you pick a programmer file? (hardcoded) Initialization
- * needs partial deferal, too for 1st pane to appear.
+ * needs partial deferral, too for 1st pane to appear.
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
@@ -116,8 +118,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         this.buildWindow();
     }
 
-    int clickDelay = 0;
-    final JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(Bundle.getMessage("ButtonEdit"));
+    final JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(Bundle.getMessage("EditOnly"));
     final JRadioButtonMenuItem contextOps = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingOnMain"));
     final JRadioButtonMenuItem contextService = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingTrack"));
     final JTextPane dateUpdated = new JTextPane();
@@ -266,7 +267,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
         rosterMedia.setEnabled(false);
         rosterMedia.addActionListener((ActionEvent e) -> {
-            log.debug("Open programmer pressed");
+            log.debug("Open Media pressed");
             edit.setSelected(true);
             startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
         });
@@ -384,7 +385,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         return true;
     }
 
-    //@TODO The disabling of the closewindow menu item doesn't quite work as this in only invoked on the closing window, and not the one that is left
+    //@TODO The disabling of the closeWindow menu item doesn't quite work as this in only invoked on the closing window, and not the one that is left
     void closeWindow(WindowEvent e) {
         saveWindowDetails();
         //Save any changes made in the roster entry details
@@ -454,7 +455,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         rtable.getTable().setName(rostertableref);
 
         // Allow only one column to be sorted at a time -
-        // Java allows multiple column sorting, but to effectly persist that, we
+        // Java allows multiple column sorting, but to effectively persist that, we
         // need to be intelligent about which columns can be meaningfully sorted
         // with other columns; this bypasses the problem by only allowing the
         // last column sorted to affect sorting
@@ -489,14 +490,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 // nothing to do
             }
         });
-        MouseListener rosterMouseListener = new RosterPopupListener();
-        rtable.getTable().addMouseListener(rosterMouseListener);
-        try {
-            clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval"));
-        } catch (RuntimeException e) {
-            clickDelay = 500;
-            log.debug("Unable to get the double click speed, Using JMRI default of half a second {}", e.getMessage());
-        }
+        JmriMouseListener rosterMouseListener = new RosterPopupListener();
+        rtable.getTable().addMouseListener(JmriMouseListener.adapt(rosterMouseListener));
 
         // assemble roster/groups splitpane
         rosterGroupSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, groups, rosters);
@@ -674,7 +669,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             return hideBottomPane;
         }
         // call parent getProperty method to return any properties defined
-        // in the class heirarchy.
+        // in the class hierarchy.
         return super.getProperty(key);
     }
 
@@ -822,7 +817,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         if (id != null) {
             log.debug("locoSelected ID {}", id);
             if (re != null) {
-                //We remove the propertychangelistener if we had a previoulsy selected entry;
+                // we remove the propertychangelistener if we had a previously selected entry;
                 re.removePropertyChangeListener(rosterEntryUpdateListener);
             }
             // convert to roster entry
@@ -849,14 +844,21 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * Prepare a roster entry to be printed, and display a selection list.
      *
      * @see jmri.jmrit.roster.PrintRosterEntry#printPanes(boolean)
-     * @param preview true if output should got to a Preview pane on screen, false
+     * @param preview true if output should go to a Preview pane on screen, false
      *            to output to a printer (dialog)
      */
     protected void printLoco(boolean preview) {
         log.debug("Selected entry: {}", re.getDisplayName());
-        PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers" + File.separator + programmer2 + ".xml");
-        // uses Basic programmer (programmer2) when printing a selected entry from (this) top Roster frame
+        String programmer = "Basic";
+        if (this.getProgrammerConfigManager().getDefaultFile() != null) {
+            programmer = this.getProgrammerConfigManager().getDefaultFile();
+        } else {
+            log.error("programmer is NULL");
+        }
+        PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers" + File.separator + programmer + ".xml");
+        // uses programmer set in prefs when printing a selected entry from (this) top Roster frame
         // compare with: jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame#printPanes(boolean)
+        // as user expects to see more tabs on printout using Comprehensive or just 1 tab for Basic programmer
         pre.printPanes(preview);
     }
 
@@ -1121,7 +1123,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, Integer.toString(dccAddress), null, null, null, null);
         log.debug("selectLoco found {} matches", l.size());
-        if (l.size() > 0) {
+        if (!l.isEmpty()) {
             if (l.size() > 1) {
                 //More than one possible loco, so check long flag
                 List<RosterEntry> l2 = new ArrayList<>();
@@ -1170,8 +1172,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             updateDetails();
             rtable.moveTableViewToSelected();
         } else {
-            log.warn("Read address {}, but no such loco in roster", dccAddress); //"No roster entry found"
-            JOptionPane.showMessageDialog(this, "No roster entry found", "Address " + dccAddress + " was read from the decoder\nbut has not been found in the Roster", JOptionPane.INFORMATION_MESSAGE);
+            log.warn("Read address {}, but no such loco in roster", dccAddress); //"No roster entry found; changed to promote the number to the front, June 2022,  Bill Chown"
+            JOptionPane.showMessageDialog(this, dccAddress + " was read from the decoder\nbut has not been found in the Roster", dccAddress + " No roster entry found", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -1200,12 +1202,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         groups.setSelectedRosterGroup(rosterGroup);
     }
 
-    protected void showPopup(MouseEvent e) {
+    protected void showPopup(JmriMouseEvent e) {
         int row = rtable.getTable().rowAtPoint(e.getPoint());
         if (!rtable.getTable().isRowSelected(row)) {
             rtable.getTable().changeSelection(row, 0, false, false);
         }
         JPopupMenu popupMenu = new JPopupMenu();
+
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("Program"));
         menuItem.addActionListener((ActionEvent e1) -> startProgrammer(null, re, programmer1));
         if (re == null) {
@@ -1240,6 +1243,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
         progMenu.add(contextEdit);
         popupMenu.add(progMenu);
+
         popupMenu.addSeparator();
         menuItem = new JMenuItem(Bundle.getMessage("LabelsAndMedia"));
         menuItem.addActionListener((ActionEvent e1) -> editMediaButton());
@@ -1291,7 +1295,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     /**
      * Start the identify operation after [Identify Loco] button pressed.
      * <p>
-     * This defines what happens when the identify is done.
+     * This defines what happens when Identify is done.
      */
     //taken out of CombinedLocoSelPane
     protected void startIdentifyLoco() {
@@ -1361,7 +1365,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     @Override
                     protected JPanel getModePane() {
                         return null;
-                    }
+                    } // hide prog mode buttons pane
                 };
             } else if (service.isSelected()) {
                 progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer());
@@ -1578,7 +1582,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogservice", "setEnabled", false);
             }
             // Disable Identify in toolBar
-            // This relies on it being the 2nd item in the tool bar, as defined in xml//config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
+            // This relies on it being the 2nd item in the toolbar, as defined in xml//config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
             // Because of I18N, we don't look for a particular Action name here
             getToolBar().getComponents()[1].setEnabled(false);
             serModeProCon = null;
@@ -1664,43 +1668,29 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     /**
      * Displays a context (right-click) menu for a roster entry.
      */
-    private class RosterPopupListener extends MouseAdapter {
-
-        // does clickTimer still actually do anything in this code?
-        // it looks like it just starts and stops, without
-        // invoking anything
-        javax.swing.Timer clickTimer = null;
+    private class RosterPopupListener extends JmriMouseAdapter {
 
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopup(e);
             }
         }
 
         @Override
-        public void mouseReleased(MouseEvent e) {
+        public void mouseReleased(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopup(e);
             }
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseClicked(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopup(e);
                 return;
             }
-            if (clickTimer == null) {
-                clickTimer = new Timer(clickDelay, (ActionEvent e1) -> {
-                    //Single click item is handled else where.
-                });
-                clickTimer.setRepeats(false);
-            }
-            if (e.getClickCount() == 1) {
-                clickTimer.start();
-            } else if (e.getClickCount() == 2) {
-                clickTimer.stop();
+            if (e.getClickCount() == 2) {
                 startProgrammer(null, re, programmer1);
             }
         }
@@ -1732,4 +1722,5 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
     }
     private final static Logger log = LoggerFactory.getLogger(RosterFrame.class);
+
 }

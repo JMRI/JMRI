@@ -1,19 +1,18 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Conditional List Editor</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Logix Conditional Add Edit">
   <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>Éditeur de Listes Conditions</h1>
 
       <h2>Modifier le Logix</h2>
@@ -320,13 +319,13 @@
       documentation principale de Logix</a>.</p>
 
       <h2>Les pages de la documentation Logix sont classées logiquement</h2>
-      .
-      <p>Traduction2021-03-27</p>
+
       <!--#include virtual="LogixDocList.shtml" -->
-      <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+      <p>Traduction2021-03-27</p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         super(memo);
         InstanceManager.store(cf = new jmri.jmrix.can.nmranet.swing.NmraNetComponentFactory(adapterMemo),
                 jmri.jmrix.swing.ComponentFactory.class);
-        InstanceManager.store(this, NmraConfigurationManager.class);
+        InstanceManager.store(NmraConfigurationManager.this, NmraConfigurationManager.class);
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -29,17 +29,11 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
      */
     @Override
     public boolean provides(Class<?> type) {
-        if (adapterMemo.getDisabled()) {
-            return false;
-        }
         return false; // nothing, by default
     }
 
     @Override
     public <T> T get(Class<?> T) {
-        if (adapterMemo.getDisabled()) {
-            return null;
-        }
         return null; // nothing, by default
     }
 

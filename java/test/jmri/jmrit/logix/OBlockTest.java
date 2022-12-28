@@ -4,6 +4,7 @@ import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -65,9 +66,10 @@ public class OBlockTest {
     @Test
     public void testSetSensor()  throws Exception {
         OBlock b = blkMgr.createNewOBlock("OB100", "a");
+        Assertions.assertNotNull(b);
         Assert.assertFalse("setSensor", b.setSensor("foo"));
         Assert.assertNull("getSensor", b.getSensor());
-        jmri.util.JUnitAppender.assertErrorMessage("No sensor named 'foo' exists.");        
+        JUnitAppender.assertErrorMessage("No sensor named 'foo' exists.");        
         
         SensorManager sensorMgr = InstanceManager.getDefault(SensorManager.class);
         Sensor s1 = sensorMgr.newSensor("IS1", "sensor1");
@@ -94,9 +96,10 @@ public class OBlockTest {
     @Test
     public void testSetErrorSensor() throws Exception {
         OBlock b = blkMgr.createNewOBlock("OB101", "b");
+        Assertions.assertNotNull(b);
         Assert.assertFalse("setErrorSensor foo", b.setErrorSensor("foo"));
         Assert.assertNull("getErrorSensor foo", b.getErrorSensor());
-        jmri.util.JUnitAppender.assertErrorMessage("No sensor named 'foo' exists.");        
+        JUnitAppender.assertErrorMessage("No sensor named 'foo' exists.");        
 
         SensorManager sensorMgr = InstanceManager.getDefault(SensorManager.class);
         Sensor se = sensorMgr.newSensor("ISE1", "error1");
@@ -122,8 +125,9 @@ public class OBlockTest {
         w1.setTrainName("T1");
         Warrant w2 = new Warrant("IW2", null);
         OBlock b = blkMgr.createNewOBlock("OB102", "c");
+        Assertions.assertNotNull(b);
+        assertThat(b.getState()).withFailMessage("state is dark").isEqualTo(OBlock.UNDETECTED);
         Assert.assertNull("Allocate w1", b.allocate(w1));
-        assertThat(b.getState()).withFailMessage("state allocated & dark").isEqualTo(OBlock.ALLOCATED|OBlock.UNDETECTED);
         assertThat(b.allocate(w2)).withFailMessage("Allocate w2").isEqualTo(Bundle.getMessage("AllocatedToWarrant", w1.getDisplayName(), b.getDisplayName(), w1.getTrainName()));
         
         assertThat(b.setPath("PathName", w1)).withFailMessage("path not found").isEqualTo(Bundle.getMessage("PathNotFound", "PathName", b.getDisplayName()));
@@ -132,23 +136,22 @@ public class OBlockTest {
         Assert.assertNull("path set", b.setPath("path1", w1));
         Assert.assertFalse("Allocated to w2", b.isAllocatedTo(w2));
         assertThat(b.isAllocatedTo(w1)).withFailMessage("Allocated to w1").isTrue();
-        Assert.assertFalse("DeAllocate null", b.deAllocate(null));
 
         Assert.assertTrue("DeAllocate null", b.deAllocate(w1));
         b.setOutOfService(true);
-        assertThat(b.allocate(w2)).withFailMessage("Allocate oos").isEqualTo(Bundle.getMessage("BlockOutOfService", b.getDisplayName()));
-        assertThat(b.getState()).withFailMessage("state not allocated, dark").isEqualTo(OBlock.UNDETECTED|OBlock.OUT_OF_SERVICE);
-        
+        Assert.assertNull("Allocate w2", b.allocate(w2));        
         b.setOutOfService(false);
-        assertThat(b.setPath("path1", w1)).withFailMessage("path not set").isEqualTo(Bundle.getMessage("PathNotSet", "path1", b.getDisplayName()));
-        
-        jmri.util.JUnitAppender.assertWarnMessage("Path \"PathName\" not found in block \"c\"."); 
-        jmri.util.JUnitAppender.assertWarnMessage("Path \"path1\" not set in block \"c\". Block not allocated."); 
+        Assert.assertTrue("deAllocate w2", b.deAllocate(w2));        
+
+        assertThat(b.setPath("path1", w1)).withFailMessage("path not set").isEqualTo(Bundle.getMessage("PathNotSet", "path1", b.getDisplayName(), Bundle.getMessage("Warrant")));
+        Assert.assertNull("Allocate w1", b.allocate(w1));
+        assertThat(b.setPath("path1", w2)).withFailMessage("path not set").isEqualTo(Bundle.getMessage("PathNotSet", "path1", b.getDisplayName(), w1.getDisplayName()));
     }
     
     @Test
     public void testSensorChanges() throws Exception {
         OBlock b = blkMgr.createNewOBlock("OB103", null);
+        Assertions.assertNotNull(b);
         Warrant w0 = new Warrant("IW0", "war0");
         b.setOutOfService(true);
         assertThat(b.getState()).withFailMessage("state OutOfService & dark").isEqualTo(OBlock.UNDETECTED|OBlock.OUT_OF_SERVICE);
@@ -176,6 +179,7 @@ public class OBlockTest {
     @Test
     public void testAddPortal() {
         OBlock b = blkMgr.createNewOBlock("OB0", "");
+        Assertions.assertNotNull(b);
         PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
         Portal p = portalMgr.providePortal("Doop");
         b.addPortal(p);
@@ -198,14 +202,15 @@ public class OBlockTest {
         b.removePortal(p);
         assertThat(b.getPortals().size()).withFailMessage("One portals").isEqualTo(1);
         
-        jmri.util.JUnitAppender.assertWarnMessage("Portal \"Doop\" between OBlocks \"null\" and \"null\" not in block OB0"); 
-        jmri.util.JUnitAppender.assertWarnMessage("Portal \"barp\" between OBlocks \"null\"and \"null\" not in block OB0");
-        portalMgr = null;
+        JUnitAppender.assertWarnMessage("Portal \"Doop\" between OBlocks \"null\" and \"null\" not in block OB0"); 
+        JUnitAppender.assertWarnMessage("Portal \"barp\" between OBlocks \"null\"and \"null\" not in block OB0");
+
     }
         
     @Test
     public void testAddPath() {
         OBlock b = blkMgr.createNewOBlock("OB1", "");
+        Assertions.assertNotNull(b);
         OPath path1 = new OPath(b, "path1");
         // also test the "add" method checks
         PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
@@ -220,7 +225,7 @@ public class OBlockTest {
         OPath path2 = new OPath(bb, "path2");
         Assert.assertFalse("path2 not in block", b.addPath(path2));
         assertThat(b.getPaths().size()).withFailMessage("path2 not in block").isEqualTo(1);
-        jmri.util.JUnitAppender.assertWarnMessage("Path \"path2\" already in block OB2, cannot be added to block OB1"); 
+        JUnitAppender.assertWarnMessage("Path \"path2\" already in block OB2, cannot be added to block OB1"); 
         
         Assert.assertFalse("path1 already in block", b.addPath(path1));
         assertThat(b.getPaths().size()).withFailMessage("path1 already in block").isEqualTo(1);
@@ -237,7 +242,7 @@ public class OBlockTest {
         b.removeOPath(path1);
         b.removeOPath(path2);
         assertThat(b.getPaths().size()).withFailMessage("no paths").isEqualTo(0);
-        portalMgr = null;
+
     }
 
     @Test
@@ -246,6 +251,7 @@ public class OBlockTest {
         assertThat(b).withFailMessage("Block OB99 is null").isNotNull();
         b.setUserName("99user");
         b = blkMgr.getBySystemName("OB99");
+        Assertions.assertNotNull(b);
         assertThat(b.getUserName()).withFailMessage("UserName not kept").isEqualTo("99user");
     }
     
@@ -331,7 +337,10 @@ public class OBlockTest {
 
     @AfterEach
     public void tearDown() {
-        blkMgr = null;
+        if (blkMgr != null ) {
+            blkMgr.dispose();
+            blkMgr = null;
+        }
         JUnitUtil.tearDown();
     }
 

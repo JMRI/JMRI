@@ -93,6 +93,7 @@ public class ConditionalEditBase {
     boolean _showReminder = false;
     boolean _suppressReminder = false;
     boolean _suppressIndirectRef = false;
+    private boolean _checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     /**
      * Input selection names.
@@ -807,7 +808,7 @@ public class ConditionalEditBase {
      * Display reminder to save.
      */
     void showSaveReminder() {
-        if (_showReminder) {
+        if (_showReminder && !_checkEnabled) {
             if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", // NOI18N

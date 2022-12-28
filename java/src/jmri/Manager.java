@@ -633,14 +633,13 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static final int CONDITIONALS = LOGIXS + 10;
     public static final int AUDIO = CONDITIONALS + 10;
     public static final int TIMEBASE = AUDIO + 10;
-    public static final int PANELFILES = TIMEBASE + 10;
-    public static final int ENTRYEXIT = PANELFILES + 10;
     // All LogixNG beans share the "Q" letter. For example, a digital expression
     // has a system name like "IQDE001".
-    public static final int LOGIXNGS = ENTRYEXIT + 10;                          // LogixNG
-    public static final int LOGIXNG_CONDITIONALNGS = LOGIXNGS + 10;             // LogixNG ConditionalNG
-    public static final int LOGIXNG_MODULES = LOGIXNG_CONDITIONALNGS + 10;      // LogixNG Modules
-    public static final int LOGIXNG_TABLES = LOGIXNG_MODULES + 10;              // LogixNG Tables (not bean tables)
+    public static final int LOGIXNGS = TIMEBASE + 10;                              // LogixNG
+    public static final int LOGIXNG_GLOBAL_VARIABLES = LOGIXNGS + 10;               // LogixNG Global Variables
+    public static final int LOGIXNG_CONDITIONALNGS = LOGIXNG_GLOBAL_VARIABLES + 10; // LogixNG ConditionalNG
+    public static final int LOGIXNG_MODULES = LOGIXNG_CONDITIONALNGS + 10;          // LogixNG Modules
+    public static final int LOGIXNG_TABLES = LOGIXNG_MODULES + 10;                  // LogixNG Tables (not bean tables)
     public static final int LOGIXNG_DIGITAL_EXPRESSIONS = LOGIXNG_TABLES + 10;          // LogixNG Expression
     public static final int LOGIXNG_DIGITAL_ACTIONS = LOGIXNG_DIGITAL_EXPRESSIONS + 10; // LogixNG Action
     public static final int LOGIXNG_DIGITAL_BOOLEAN_ACTIONS = LOGIXNG_DIGITAL_ACTIONS + 10;   // LogixNG Digital Boolean Action
@@ -648,7 +647,9 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static final int LOGIXNG_ANALOG_ACTIONS = LOGIXNG_ANALOG_EXPRESSIONS + 10;   // LogixNG AnalogAction
     public static final int LOGIXNG_STRING_EXPRESSIONS = LOGIXNG_ANALOG_ACTIONS + 10;   // LogixNG StringExpression
     public static final int LOGIXNG_STRING_ACTIONS = LOGIXNG_STRING_EXPRESSIONS + 10;   // LogixNG StringAction
-    public static final int METERFRAMES = LOGIXNG_STRING_ACTIONS + 10;
+    public static final int PANELFILES = LOGIXNG_STRING_ACTIONS + 10;
+    public static final int ENTRYEXIT = PANELFILES + 10;
+    public static final int METERFRAMES = ENTRYEXIT + 10;
     public static final int CTCDATA = METERFRAMES + 10;
 
     /**
@@ -702,8 +703,8 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * parsed out without knowledge of the type of NamedBean involved.
      *
      * @param inputName System Name to provide the prefix
-     * @throws NamedBean.BadSystemNameException If the inputName can't be
-     *                                          converted to normalized form
+     * @throws NamedBean.BadSystemNameException If the inputName is not
+     *                                          in normalized form
      * @return The length of the system-prefix part of the system name in
      *         standard normalized form
      */
@@ -732,8 +733,8 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * parsed out without knowledge of the type of NamedBean involved.
      *
      * @param inputName System name to provide the prefix
-     * @throws NamedBean.BadSystemNameException If the inputName can't be
-     *                                          converted to normalized form
+     * @throws NamedBean.BadSystemNameException If the inputName is not
+     *                                          in normalized form
      * @return The system-prefix part of the system name in standard normalized
      *         form
      */
@@ -742,6 +743,41 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static String getSystemPrefix(@Nonnull String inputName) {
         return inputName.substring(0, getSystemPrefixLength(inputName));
     }
+
+    /**
+     * Provides the type letter of the given system name.
+     * <p>
+     * This is a common operation across JMRI, as the system prefix can be
+     * parsed out without knowledge of the type of NamedBean involved.
+     *
+     * @param inputName System name to provide the type letter
+     * @throws NamedBean.BadSystemNameException If the inputName is not
+     *                                          in normalized form
+     * @return The type letter of the system name
+     */
+    @CheckReturnValue
+    @Nonnull
+    public static String getTypeLetter(@Nonnull String inputName) {
+        return inputName.substring(getSystemPrefixLength(inputName), getSystemPrefixLength(inputName)+1);
+    }
+
+    /**
+     * Provides the suffix (part after the type letter) of the given system name.
+     * <p>
+     * This is a common operation across JMRI, as the system prefix can be
+     * parsed out without knowledge of the type of NamedBean involved.
+     *
+     * @param inputName System name to provide the suffix
+     * @throws NamedBean.BadSystemNameException If the inputName is not
+     *                                          in normalized form
+     * @return The suffix part of the system name
+     */
+    @CheckReturnValue
+    @Nonnull
+    public static String getSystemSuffix(@Nonnull String inputName) {
+        return inputName.substring(getSystemPrefixLength(inputName)+1);
+    }
+
 
     /**
      * Get a manager-specific tool tip for adding an entry to the manager.

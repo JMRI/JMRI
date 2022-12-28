@@ -31,7 +31,7 @@
 
         <p>Signal Masts are configured through the <a href=
         "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a>. You
-        access this tool from the <strong>Tools ⇒ Tables ⇒ Signal Masts</strong> menu.</p>
+        access this tool from the <strong>Tools &rArr; Tables &rArr; Signal Masts</strong> menu.</p>
 
         <p>From the table, you can manually set individual Signal Masts to any Aspect that they're
         able to display by selecting it from one of the combo boxes in the "Aspect" column.<br>
@@ -79,7 +79,7 @@
         "../../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</p>
 
         <p>For more information on creating and displaying panels, including how to show signals on
-        your panels, please see the <a href="../../apps/PanelPro/Panels.shtml">Panels
+        your panels, please see the <a href="../../apps/PanelPro/index.shtml">Panels
         pages</a>.</p>
 
         <p>Back to the <a href="index.shtml#tools">Signaling main help page</a>.</p>

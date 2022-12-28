@@ -17,9 +17,14 @@ public class CbusBasicNodeTest {
     public void testCTor() {
         Assert.assertNotNull("exists",new CbusBasicNode(null,123));
     }
-    
-    private CanSystemConnectionMemo memo;
-    
+
+    @Test
+    public void testCTorWithCanMemo() {
+        Assert.assertNotNull("exists",new CbusBasicNode(memo,123));
+    }
+
+    private CanSystemConnectionMemo memo = null;
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -30,7 +35,7 @@ public class CbusBasicNodeTest {
 
     @AfterEach
     public void tearDown() {
-        
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         

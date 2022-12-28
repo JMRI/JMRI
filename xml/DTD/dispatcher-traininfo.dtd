@@ -30,14 +30,19 @@
     <!ATTLIST traininfo trainfromroster         CDATA #REQUIRED>
     <!ATTLIST traininfo trainfromtrains	   	CDATA #REQUIRED>
     <!ATTLIST traininfo trainfromuser	   	CDATA #REQUIRED>
+    <!ATTLIST traininfo trainfromsetlater       CDATA #REQUIRED>
     <!ATTLIST traininfo priority        	CDATA #REQUIRED>
     <!ATTLIST traininfo resetwhendone        	CDATA #REQUIRED>
-    <!ATTLIST traininfo reverseatend        	CDATA #REQUIRED>
-    <!ATTLIST traininfo delayedstart        	CDATA "no">
     <!ATTLIST traininfo delayedrestart        	CDATA "no">
     <!ATTLIST traininfo delayedrestartsensor    CDATA "-1">
     <!ATTLIST traininfo delayedrestarttime      CDATA "00:00">
     <!ATTLIST traininfo delayedSensor           CDATA "">
+    <!ATTLIST traininfo reverseatend        	CDATA #REQUIRED>
+    <!ATTLIST traininfo reversedelayedrestart          CDATA "no">
+    <!ATTLIST traininfo reversedelayedrestartsensor    CDATA "-1">
+    <!ATTLIST traininfo reversedelayedrestarttime      CDATA "00:00">
+    <!ATTLIST traininfo reversedelayedSensor           CDATA "">
+    <!ATTLIST traininfo delayedstart        	CDATA "no">
     <!ATTLIST traininfo departuretimehr        	CDATA #REQUIRED>
     <!ATTLIST traininfo departuretimemin        CDATA #REQUIRED>
     <!ATTLIST traininfo traintype        	CDATA #REQUIRED>
@@ -52,8 +57,9 @@
     <!ATTLIST traininfo terminatewhendone     	CDATA "yes">
     <!ATTLIST traininfo loadatstartup        	CDATA "no">
     <!ATTLIST traininfo allocationmethod      	CDATA "3">
+    <!ATTLIST traininfo nexttrain              CDATA #IMPLIED>
     <!ATTLIST traininfo allocatealltheway     	CDATA "no">
     <!ATTLIST traininfo usespeedprofile        	CDATA "no">
     <!ATTLIST traininfo stopbyspeedprofile      CDATA "no">
     <!ATTLIST traininfo stopbyspeedprofileadjust CDATA "1500">
-
+    <!ATTLIST traininfo waittime                CDATA "0">

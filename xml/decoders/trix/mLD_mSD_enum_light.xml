@@ -18,73 +18,91 @@
   <enumChoice choice="Output disabled">
     <choice xml:lang="de">Ausgang aus</choice>
     <choice xml:lang="fr">Sortie désactivée</choice>    
+    <choice xml:lang="cs">Výstup zakázán</choice>    
   </enumChoice>
   <enumChoice choice="Dimmable">
     <choice xml:lang="de">Dimmbar</choice>
     <choice xml:lang="fr">Atténuable</choice>    
+    <choice xml:lang="cs">Stmívatelný</choice>    
   </enumChoice>
   <enumChoice choice="Flash 1">
     <choice xml:lang="de">Blinklicht 1</choice>
     <choice xml:lang="fr">Clignotant 1</choice>     
+    <choice xml:lang="cs">Blikání 1</choice>    
   </enumChoice>
   <enumChoice choice="Flash 2">
     <choice xml:lang="de">Blinklicht 2</choice>
     <choice xml:lang="fr">Clignotant 2</choice>     
+    <choice xml:lang="cs">Blikání 2</choice>    
   </enumChoice>
   <enumChoice choice="Single Strobe">
     <choice xml:lang="de">Blinklicht einzeln</choice>
     <choice xml:lang="fr">Feu à éclat simple</choice>     
+    <choice xml:lang="cs">Jednoduchý stroboskop</choice>    
   </enumChoice>
   <enumChoice choice="Double Strobe">
     <choice xml:lang="de">Blinklicht doppelt</choice>
     <choice xml:lang="fr">Feu à éclat double</choice>    
+    <choice xml:lang="cs">Dvojitý stroboskop</choice>    
   </enumChoice>
   <enumChoice choice="Random / Firebox">
     <choice xml:lang="de">Blinklicht zufällig</choice>
     <choice xml:lang="fr">Aléatoire/Boîte à feu</choice>    
+    <choice xml:lang="cs">Náhodný / Topeniště</choice>    
   </enumChoice>
   <enumChoice choice="Smoke Generator">
     <choice xml:lang="de">Rauchgenerator</choice>
     <choice xml:lang="fr">Générateur de fumée</choice>    
+    <choice xml:lang="cs">Kouřový generátor</choice>    
   </enumChoice>
   <enumChoice choice="Fade In/Out">
     <choice xml:lang="de">Auf/Abblendend</choice>
     <choice xml:lang="fr">Fondu allumé/éteint</choice>    
+    <choice xml:lang="cs">Pohasínání Vstup/Výstup</choice>    
   </enumChoice>
   <enumChoice choice="Mars Light">
     <choice xml:lang="de">Mars Licht</choice>
     <choice xml:lang="fr">Lumière Mars</choice>     
+    <choice xml:lang="cs">Světlo Mars</choice>    
   </enumChoice>
   <enumChoice choice="Gyra Light">
     <choice xml:lang="de">Gyra Licht</choice>
     <choice xml:lang="fr">Lumière Gyra</choice>     
+    <choice xml:lang="cs">Světlo Gyra</choice>    
   </enumChoice>
   <enumChoice choice="Ditch light A">
     <choice xml:lang="de">"Ditch" Licht vorwärts</choice>
     <choice xml:lang="fr">Lumière "Ditch" avant</choice>     
+    <choice xml:lang="cs">Problikávající světlo A</choice>    
   </enumChoice>
   <enumChoice choice="Ditch light B">
     <choice xml:lang="de">"Ditch" Licht rückwärts</choice>
     <choice xml:lang="fr">Lumière "Ditch" arrière</choice>     
+    <choice xml:lang="cs">Problikávající světlo B</choice>    
   </enumChoice>
   <enumChoice choice="Neon Tube">
     <choice xml:lang="de">Neonröhre</choice>
     <choice xml:lang="fr">Tube néon</choice>     
+    <choice xml:lang="cs">Zářivková trubice</choice>    
   </enumChoice>
   <enumChoice choice="Energie Save">
     <choice xml:lang="de">Energiesparlampe</choice>
     <choice xml:lang="fr">Lampe économie énergie</choice>     
+    <choice xml:lang="cs">Spořič energie</choice>    
   </enumChoice>
   <enumChoice choice="Soft Telex Coupling">
     <choice xml:lang="de">Telex Kupplung neu</choice>
     <choice xml:lang="fr">Attelage Telex</choice>     
+    <choice xml:lang="cs">Digitální spřáhlo</choice>    
   </enumChoice>
   <enumChoice choice="Switched max." include="Märklin mLD/3,Märklin mSD/3">
     <choice xml:lang="de">max. Schaltet</choice>
     <choice xml:lang="fr">Déclenchement max.</choice>     
+    <choice xml:lang="cs">Spínač max</choice>    
   </enumChoice>
   <enumChoice choice="Switched min." include="Märklin mLD/3,Märklin mSD/3">
     <choice xml:lang="de">min. Schaltet</choice>
     <choice xml:lang="fr">Déclenchement min.</choice>     
+    <choice xml:lang="cs">Spínač min</choice>    
   </enumChoice>
 </enumVal>

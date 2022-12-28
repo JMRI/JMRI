@@ -1,52 +1,41 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- Updated by Blorec Herv&#233; le 2016-08-14-->
-<title>JMRI: Startup Scripts</title>
-
-<!-- Style -->
-<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Updated by Blorec Herv&#233; le 2016-08-14-->
+  <title>JMRI: Startup Scripts</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
 <h1>Scripts de D&#233;marrage JMRI</h1>
 
-Bien que JMRI lui-m&#234;me soit construit pour "fonctionner partout",
+<p>Bien que JMRI lui-m&#234;me soit construit pour "fonctionner partout",
 d&#233;marrer une application JMRI n&#233;cessite des commandes qui sont
 sp&#233;cifiques au type particulier d'ordinateur utilis&#233;.
 Avec chaque distribution JMRI, nous fournissons les
 scripts, des kits d'applications ou de fichiers batch pour
 s'occuper des d&#233;tails &#224; votre place.
-Bien s&#251;r, vous pouvez les modifier ou cr&#233;er les v&#244;tres.
+Bien s&#251;r, vous pouvez les modifier ou cr&#233;er les v&#244;tres.</p>
 <p>
 Cette page fournit des informations sur les outils fournis avec les
-distributions JMRI sur:
+distributions JMRI sur:</p>
 <ul>
   <li> <a href="#linux"> Linux</a></li>
   <li> <a href="#macosx"> macOS</a></li>
   <li> <a href="#windows"> Windows</a></li>
 </ul>
 
-Si vous mettez &#224; jour toutes ces choses, s'il vous pla&#238;t envisager soit de
+<p>Si vous mettez &#224; jour toutes ces choses, s'il vous pla&#238;t envisager soit de
 faire votre changement sur les autres machines (et de le tester!)
 soit au moins mettre un commentaire dans les autres pour
-d&#233;crire comment ils diff&#232;rent maintenant.
+d&#233;crire comment ils diff&#232;rent maintenant.</p>
 
 <p>
 Durant le d&#233;marrage, JMRI obtients des informations suppl&#233;mentaires de plusieurs sources:
@@ -58,13 +47,14 @@ Durant le d&#233;marrage, JMRI obtients des informations suppl&#233;mentaires de
 <a name="linux" id="linux"></a>
 <h2>Linux</h2>
 
-La distributions JMRI  pour Linux contient les scripts shell (bash)
+<p>La distributions JMRI  pour Linux contient les scripts shell (bash)
 pour chacune des applications principales: DecoderPro, PanelPro, etc
-Ils sont tous structur&#233;s de la m&#234;me fa&#231;on.
+Ils sont tous structur&#233;s de la m&#234;me fa&#231;on.</p>
 
 <h3>D&#233;tails</h3>
 
-Dans cette section, nous d&#233;crivons bri&#232;vement ce que fait chaque section du script.
+<p>Dans cette section, nous d&#233;crivons bri&#232;vement ce que fait chaque section du script.</p>
+
 <dl>
     <dt>CLASSNAME</dt>
     <dd>Pour rendre le script plus facile &#224; maintenir, le nom de la principale
@@ -329,34 +319,35 @@ La structure de cr&#233;ation des Ic&#244;nes du bureau est semblable &#224; cel
 <p>Le DecoderPro qui existait pr&#233;c&#233;demment &#224; la version 4.0.x a &#233;t&#233; enlev&#233; des paquet de distribution et "DecoderPro 3" a &#233;t&#233; promu pour &#234;tre la seule version DecoderPro disponible.</p>
 <p>Si vous ne voulez absolument pas la nouvelle interface utilisateur DecoderPro ( affichage inventaire ), nous sugg&#233;rons une des m&#233;thodes suivantes:</p>
 <ol>
-<li><b>En utilisant PanelPro avec le script</b>: &#224; l'exception d'une ic&#244;ne diff&#233;rente et diff&#233;rents boutons fix&#233;s sur la fen&#234;tre principale, PanelPro a une interface utilisateur identique &#224; l'ancien DecoderPro.
+  <li><b>En utilisant PanelPro avec le script</b>: &#224; l'exception d'une ic&#244;ne diff&#233;rente et diff&#233;rents boutons fix&#233;s sur la fen&#234;tre principale, PanelPro a une interface utilisateur identique &#224; l'ancien DecoderPro.
+      <ul>
+          <li>Vous pouvez ajouter les 3 boutons fixes	( Ouvrir Inventaire, Mode Service, Mode Exploitation ) utilis&#233;s pour &#234;tre sur DecoderPro en ajoutant un script au d&#233;marrage.</li>
+          <li>Allez &#224; &#201;dition --> Preferences --> D&#233;marrage --> Ajouter -->Ajouter Script. S&#233;lectionnez le fichier "C:\Program Files\JMRI\jython\jython/MakeOriginalDecoderPro.py"</li>
+          <li>Puis sauvegarder et red&#233;marrer.</li>
+      </ul>
+  </li>
+  <li><b>Utilisation de PanelPro avec des boutons</b>:
+      <ul>
+          <li>Vous pouvez ajouter plusieurs boutons fixes de votre choix sur l'interface PanelPro.</li>
+          <li>Allez &#224; &#201;dition --> Preferences --> D&#233;marrage --> Ajouter --> Ajouter Bouton. S&#233;lectionnez l'action de votre choix. R&#233;p&#233;ter pour autant de boutons que vous voulez.</li>
+          <li>Pour les m&#234;mes boutons que sur l'ancien DecoderPro, s&#233;lectionner "Ouvrir Inventaire", "DecoderPro Mode Service", "DecoderPro Mode Exploitation"</li>
+          <li>Puis sauvegarder et red&#233;marrer.</li>
+      </ul>
+  </li>
+  <li><b>Ajout d'un raccourci personnalis&#233; au DecoderPro ant&#233;rieur</b>:
     <ul>
-        <li>Vous pouvez ajouter les 3 boutons fixes	( Ouvrir Inventaire, Mode Service, Mode Exploitation ) utilis&#233;s pour &#234;tre sur DecoderPro en ajoutant un script au d&#233;marrage.</li>
-        <li>Allez &#224; &#201;dition --> Preferences --> D&#233;marrage --> Ajouter -->Ajouter Script. S&#233;lectionnez le fichier "C:\Program Files\JMRI\jython\jython/MakeOriginalDecoderPro.py"</li>
-        <li>Puis sauvegarder et red&#233;marrer.</li>
+          <li>Copiez et Collez le raccourci "DecoderPro" ( sur votre bureau ou dans le menu d&#233;marrage ) </li>
+          <li>Renommez la copie en "D&#233;coderPro Ancien" <i>( ou autre chose de votre choix mais <b>pas</b> "DecoderPro"</i></li>
+          <li>Sur le nouveau raccourci, clic droit -->Propri&#233;t&#233;s</li>
+          <li>Dans la cible, remplacez l' existant par: "C:\Program Files\JMRI\LaunchJMRI.exe" apps.DecoderPro.DecoderPro</li>
+          <li>Ceci lancera l'interface de l'ancien DecoderPro </li>
     </ul>
-</li>
-<li><b>Utilisation de PanelPro avec des boutons</b>:
-    <ul>
-        <li>Vous pouvez ajouter plusieurs boutons fixes de votre choix sur l'interface PanelPro.</li>
-        <li>Allez &#224; &#201;dition --> Preferences --> D&#233;marrage --> Ajouter --> Ajouter Bouton. S&#233;lectionnez l'action de votre choix. R&#233;p&#233;ter pour autant de boutons que vous voulez.</li>
-        <li>Pour les m&#234;mes boutons que sur l'ancien DecoderPro, s&#233;lectionner "Ouvrir Inventaire", "DecoderPro Mode Service", "DecoderPro Mode Exploitation"</li>
-        <li>Puis sauvegarder et red&#233;marrer.</li>
-    </ul>
-</li>
-<li><b>Ajout d'un raccourci personnalis&#233; au DecoderPro ant&#233;rieur</b>:
-	<ul>
-        <li>Copiez et Collez le raccourci "DecoderPro" ( sur votre bureau ou dans le menu d&#233;marrage ) </li>
-        <li>Renommez la copie en "D&#233;coderPro Ancien" <i>( ou autre chose de votre choix mais <b>pas</b> "DecoderPro"</i></li>
-        <li>Sur le nouveau raccourci, clic droit -->Propri&#233;t&#233;s</li>
-        <li>Dans la cible, remplacez l' existant par: "C:\Program Files\JMRI\LaunchJMRI.exe" apps.DecoderPro.DecoderPro</li>
-        <li>Ceci lancera l'interface de l'ancien DecoderPro </li>
-	</ul>
-</li>
+  </li>
 </ol>
 
-        <!--#include virtual="/Footer.shtml" -->
-        </div>
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div>
+  </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

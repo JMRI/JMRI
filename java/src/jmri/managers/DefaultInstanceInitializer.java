@@ -92,6 +92,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new DefaultRouteManager(memo);
         }
 
+        if (type == SectionManager.class) {
+            return new DefaultSectionManager();
+        }
+
         if (type == SensorManager.class) {
             return new ProxySensorManager();
         }
@@ -134,6 +138,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new ProxyTurnoutManager();
         }
 
+        if (type == TransitManager.class) {
+            return new DefaultTransitManager();
+        }
+
         if (type == VSDecoderManager.class) {
             return VSDecoderManager.instance();
         }
@@ -161,6 +169,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 RailComManager.class,
                 ReporterManager.class,
                 RouteManager.class,
+                SectionManager.class,
                 SensorManager.class,
                 SignalGroupManager.class,
                 SignalHeadManager.class,
@@ -169,6 +178,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 SignalSystemManager.class,
                 StringIOManager.class,
                 Timebase.class,
+                TransitManager.class,
                 TurnoutManager.class,
                 VariableLightManager.class,
                 VSDecoderManager.class

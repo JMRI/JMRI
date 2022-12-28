@@ -304,7 +304,7 @@ public class RosterSpeedProfile {
         int key;
         Entry<Integer, SpeedStep> entry = findEquivalentEntry (throttleSetting, speedIncrement);
         if (entry != null) {    // close keys. i.e. resolve to same throttle step
-            float value = entry.getValue().getForwardSpeed();
+            float value = entry.getValue().getReverseSpeed();
             speed = (speed + value) / 2;
             key = entry.getKey();
         } else {    // nothing close. make new entry
@@ -829,7 +829,7 @@ public class RosterSpeedProfile {
                 log.warn("Throttle destroyed before zero length[{}] remaining.",calculatedDistance);
                 calculatedDistance = 0;
             }
-            if (calculatedDistance < 0 && !calculated) {
+            if (calculatedDistance <= 0 && !calculated) {
                 log.error("distance remaining is now 0, but we have not reached desired speed setting {} v {}", desiredSpeedStep, calculatingStep);
                 ss = new SpeedSetting(desiredSpeedStep, 10);
                 synchronized (this) {

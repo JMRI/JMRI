@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: CBUS® Console Tool</title>
+  <title>JMRI: CBUS&reg; Console Tool</title>
   <meta name="author" content="Steve Young">
   <meta name="keywords" content="JMRI CBUS Command station throttle session monitor cancmd">
   <!--#include virtual="/Style.shtml" -->
@@ -136,7 +136,7 @@
       <p>View debug information for the Command station Monitor by adding
       log4j.category.jmri.jmrix.can.cbus.swing.cbusslotmonitor=DEBUG to your default.lcf file.</p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

@@ -1,31 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec  2013-10-13-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec  2013-10-13-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Le Tableau Aiguillage</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Turnout Table">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Le Tableau Aiguillage</h1>
 
@@ -426,14 +412,15 @@
         "../../../../html/hardware/loconet/DS54.shtml">DS54</a>.</dd>
       </dl>
 
-      <h3><a name="automation" id="automation"></a> Automatisation
-      de l'Aiguillage'</h3>JMRI peut regarder un aiguillage et
+      <h3><a name="automation" id="automation"></a>Automatisation
+      de l'Aiguillage'</h3>
+      <p>JMRI peut regarder un aiguillage et
       automatiser certaines op&eacute;rations. Cela a
       &eacute;t&eacute; initialement ajout&eacute; pour traiter le
       cas des "Habituellement, je dois cliquez sur cette aiguillage
       &agrave; quelques reprises pour l'amener &agrave; basculer
       D&eacute;vi&eacute;", mais il peut &ecirc;tre utilis&eacute;
-      pour d'autres choses aussi.
+      pour d'autres choses aussi.</p>
 
       <p>Les trois formes sont:</p>
 
@@ -501,7 +488,8 @@
       <a href="itin%C3%A9raireAddEdit.shtml#lock"></a> ou de Logix,
       ou &agrave; partir de scripts.</p>
 
-      <h4>Verrouillage Pupitre</h4>Pour ce faire le verrouillage de
+      <h4>Verrouillage Pupitre</h4>
+      <p>Pour ce faire le verrouillage de
       pupitre JMRI fonctionne avec le syst&egrave;me DCC pour
       emp&ecirc;cher les op&eacute;rateurs de changer la position
       d'un aiguillage verrouill&eacute;. JMRI ne peut le faire
@@ -510,7 +498,7 @@
       et si elle d&eacute;tecte une commande de changement depuis
       un pupitre, JMRI annule la commande en envoyant
       imm&eacute;diatement la commande inverse &agrave;
-      l'aiguillage.
+      l'aiguillage.</p>
 
       <p>Pour utiliser cette fonction avec un poste de commandement
       NCE, vous devez s&eacute;lectionner le SUIVI comme mode de
@@ -518,7 +506,8 @@
       commande NCE doit disposer de l'EPROM 2007 ou plus
       r&eacute;cent.</p>
 
-      <h4>Verrouillage Poussoir</h4>JMRI peut aussi fonctionner
+      <h4>Verrouillage Poussoir</h4>
+      <p>JMRI peut aussi fonctionner
       avec certains types de d&eacute;codeurs d'accessoires DCC
       pour verrouiller leurs boutons c&acirc;bl&eacute;s
       localement. Pour ce faire, JMRI envoie des commandes DCC au
@@ -533,19 +522,21 @@
       chaque type) Les diff&eacute;rents types sont
       s&eacute;lectionn&eacute; dans la <a href=
       "#decodercol">"colonne D&eacute;codeur"</a> du
-      TableauAiguillage.
+      TableauAiguillage.</p>
 
-      <h4>Verrouillage Itin&eacute;raires</h4>Pour vous aider
+      <h4>Verrouillage Itin&eacute;raires</h4>
+      <p>Pour vous aider
       &agrave; s&eacute;lectionner un ensemble d'appareils de voie
       &agrave; verrouiller, un itin&eacute;raire peut &ecirc;tre
       verrouill&eacute;. Tous les aiguillages qui sont
       supervis&eacute;s par le programme JMRI et qui sont inclus
       dans l'itin&eacute;raire seront verrouill&eacute;s. Voir la
       <a href="RouteTable.shtml">page Itin&eacute;raire</a> pour
-      plus d'informations &agrave; ce sujet.
+      plus d'informations &agrave; ce sujet.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

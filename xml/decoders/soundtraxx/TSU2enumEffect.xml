@@ -11,91 +11,124 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- version 1 - new include file for SoundTraxx Tsunami2                   -->
-<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <enumChoice>
+<!--                                                                        -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2016</year>
+      <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+          <personname>
+              <firstname>Michael</firstname>
+              <surname>Mosher</surname>
+          </personname>
+      </author>
+      <author>
+          <personname>
+              <firstname>James</firstname>
+              <surname>Exler</surname>
+          </personname>
+      </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+          <revnumber>1</revnumber>
+          <date>2016-05-26</date>
+          <authorinitials>MM</authorinitials>
+          <revremark>New file for tsu2</revremark>
+      </revision>
+      <revision>
+          <revnumber>2</revnumber>
+          <date>2022-07-21</date>
+          <authorinitials>JE</authorinitials>
+          <revremark>chg effect #15 to "Dyno/Diesel Light" as it is used with both steam and diesel</revremark>
+      </revision>
+  </revhistory>
+  <!-- enum start -->
+  <enumChoice value="0">
     <choice>On/Off</choice>
     <choice xml:lang="it">On-Off</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="1">
     <choice>Dimmable headlight</choice>
     <choice xml:lang="it">Luci Smorzabili</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="2">
     <choice>Mars light</choice>
     <choice xml:lang="it">Luci tipo Mars</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="3">
     <choice>Pyle Gyralite</choice>
     <choice xml:lang="it">Luci Pyle Gyralite</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="4">
     <choice>Oscillating headlight</choice>
     <choice xml:lang="it">Luci Oscillanti</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="5">
     <choice>Single flash strobe</choice>
     <choice xml:lang="it">Strobe a Flash Singolo</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="6">
     <choice>Double flash strobe</choice>
     <choice xml:lang="it">Strobe a Flash Doppio</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="7">
     <choice>Western-Cullen D312 rotary beacon</choice>
     <choice xml:lang="it">Faro Rotante D312</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="8">
     <choice>Prime Stratolite</choice>
     <choice xml:lang="it">Luci Stratolite</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="9">
     <choice>Type I ditch light</choice>
     <choice xml:lang="it">Luci ditch tipo 1</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="10">
     <choice>Type II ditch light</choice>
     <choice xml:lang="it">Luci ditch tipo 2</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="11">
     <choice>FRED (end of train flasher)</choice>
     <choice xml:lang="it">FRED (lampeggiante fine trenp)</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="12">
     <choice>Engine exhaust flicker</choice>
     <choice xml:lang="it">Sfarfallio Scarico Motore</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="13">
     <choice>Firebox flicker</choice>
     <choice xml:lang="it">Sfarfallio caldaia</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="14">
     <choice>Smart firebox flicker</choice>
     <choice xml:lang="it">Sfarfallio intelligente caldaia</choice>
   </enumChoice>
-  <enumChoice>
-    <choice>Dyno-light</choice>
+  <enumChoice value="15">
+    <choice>Dyno/Diesel-light</choice>
     <choice xml:lang="it">Luci Dinamo </choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="16">
     <choice>Auto dim forward</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="17">
     <choice>Auto dim reverse</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="18">
     <choice>Brake light</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="19">
     <choice>On/off - brightness 1</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="20">
     <choice>On/off - brightness 2</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="21">
     <choice>Emergency Gyralite</choice>
   </enumChoice>
-  <enumChoice>
+  <enumChoice value="22">
     <choice>Electrical arcing</choice>
   </enumChoice>
   <enumChoice value="23">

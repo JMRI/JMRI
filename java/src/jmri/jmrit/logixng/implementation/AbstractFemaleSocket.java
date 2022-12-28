@@ -477,6 +477,17 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         if (isConnected()) getConnectedSocket().forEntireTree(r);
     }
 
+    /**
+     * Do something on every item in the sub tree of this item.
+     * @param r the action to do on all items.
+     * @throws Exception if an exception occurs
+     */
+    @Override
+    public void forEntireTreeWithException(RunnableWithBaseThrowException r) throws Exception {
+        r.run(this);
+        if (isConnected()) getConnectedSocket().forEntireTreeWithException(r);
+    }
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         throw new UnsupportedOperationException("Not supported");
@@ -493,6 +504,11 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         if (isConnected()) {
             getConnectedSocket().getListenerRefsIncludingChildren(list);
         }
+    }
+
+    @Override
+    public boolean hasChild(@Nonnull Base b) {
+        return isConnected() && getConnectedSocket() == b;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);

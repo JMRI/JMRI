@@ -17,12 +17,6 @@ public class EcosReporterTest extends jmri.implementation.AbstractRailComReporte
         r = new EcosReporter("UR1","Test");
     }
 
-    @AfterEach
-    @Override
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
-
     // private final static Logger log = LoggerFactory.getLogger(EcosReporterTest.class);
 
 }

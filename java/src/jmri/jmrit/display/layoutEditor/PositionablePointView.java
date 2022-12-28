@@ -18,6 +18,7 @@ import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.*;
 import jmri.util.swing.JCBHandle;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * MVC View component for the PositionablePoint class.
@@ -251,11 +252,6 @@ public class PositionablePointView extends LayoutTrackView {
         //Note: empty bounds don't draw...
         // so now I'm making them 0.5 bigger in all directions (1 pixel total)
         return new Rectangle2D.Double(c.getX() - 0.5, c.getY() - 0.5, 1.0, 1.0);
-    }
-
-    @CheckReturnValue
-    protected LayoutEditor getLayoutEditor() {
-        return layoutEditor;
     }
 
     @CheckReturnValue
@@ -721,7 +717,7 @@ public class PositionablePointView extends LayoutTrackView {
     int xClick = 0;
     int yClick = 0;
 
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(JmriMouseEvent e) {
         // remember where we are
         xClick = e.getX();
         yClick = e.getY();
@@ -731,14 +727,14 @@ public class PositionablePointView extends LayoutTrackView {
         }
     }
 
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(JmriMouseEvent e) {
         // if (debug) log.debug("Release: "+where(e));
         if (e.isPopupTrigger()) {
             showPopup(e);
         }
     }
 
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(JmriMouseEvent e) {
         if (e.isPopupTrigger()) {
             showPopup(e);
         }
@@ -751,7 +747,7 @@ public class PositionablePointView extends LayoutTrackView {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@Nonnull JmriMouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -1204,7 +1200,8 @@ public class PositionablePointView extends LayoutTrackView {
             @Override
             public void actionPerformed(ActionEvent e
             ) {
-                if (canRemove() && layoutEditor.removePositionablePoint(positionablePoint)) {
+                if (canRemove() && removeInlineLogixNG()
+                        && layoutEditor.removePositionablePoint(positionablePoint)) {
                     // user is serious about removing this point from the panel
                     clearPossibleSelection();
                     remove();
@@ -1318,6 +1315,8 @@ public class PositionablePointView extends LayoutTrackView {
         }
 
         layoutEditor.setShowAlignmentMenu(popup);
+
+        addCommonPopupItems(mouseEvent, popup);
 
         popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
 

@@ -9,7 +9,6 @@ import jmri.jmrit.ctc.*;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVPrinter;
 
 /**
  *
@@ -17,13 +16,15 @@ import org.apache.commons.csv.CSVPrinter;
  */
 
 public class ProjectsCommonSubs {
-    static final public char SSV_SEPARATOR = ';';
+    static final public String SSV_SEPARATOR = ";";
 
-    static public ArrayList<String> getArrayListFromCSV(String csvString) { return helper1(csvString, CSVFormat.DEFAULT.getDelimiter());}
+    static public ArrayList<String> getArrayListFromCSV(String csvString) { return helper1(csvString, CSVFormat.DEFAULT.getDelimiterString());}
     static public ArrayList<String> getArrayListFromSSV(String ssvString) { return helper1(ssvString, SSV_SEPARATOR); }
-    static private ArrayList<String> helper1(String ssvString, char separator) {
+    static private ArrayList<String> helper1(String ssvString, String separator) {
         ArrayList<String> list = new ArrayList<>();
-        try (CSVParser parser = new CSVParser(new StringReader(ssvString), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator).withRecordSeparator(null))) {
+        try (CSVParser parser = new CSVParser(new StringReader(ssvString),
+                CSVFormat.Builder.create(CSVFormat.DEFAULT)
+                        .setQuote(null).setDelimiter(separator).setRecordSeparator(null).build())) {
             parser.getRecords().forEach(record -> record.forEach(item -> list.add(item)));
         } catch (IOException ex) {
             log.error("Unable to parse {}", ssvString, ex);

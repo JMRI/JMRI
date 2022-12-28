@@ -59,7 +59,7 @@ public class PiSprogOneCSSerialDriverAdapter
             numSlots = Integer.parseInt(slots);
         }
         catch (NumberFormatException e) {
-            log.warn("Could not parse number of slots " + e);
+            log.warn("Could not parse number of slots {}", e.getMessage() );
             numSlots = 16;
         }
         

@@ -1,0 +1,17 @@
+<!-- This is the local part of the sidebar for signaling -->
+<!-- Using absolute address link so this sidebar can also be referenced from interlock -->
+
+  <dt><a href="index.shtml">Signalisation</a></dt>
+  <dd>Ajout de signaux &agrave; votre r&#233;seau avec JMRI.
+    <ul>
+      <li><a href="SignalingSetup.shtml">Signalisation D&#233;marrage Rapide</a></li>
+      <li><a href="AspectSignaling.shtml">Aspect Signalisation</a></li>
+      <li><a href="SignalHeads.shtml">Feux de Signalisation</a></li>
+      <li><a href="SignalMasts.shtml">M&#226;ts de Signalisation</a></li>
+      <li><a href="SignalGroups.shtml">Groupes de Signaux</a></li>
+      <li><a href="SignalMastLogic.shtml">Logique M&#226;ts de Signalisation</a></li>
+      <li><a href="../../../../../xml/signals/">Systèmes de Signalisation</a>
+      <li><a href="interlock/index.shtml">Enclenchements &amp; Entr&#233;e Sortie</a></li>
+      <li><a href="/help/en/package/jmri/jmrit/cabsignals/CabSignalPane.shtml">Signalisation Cabine</a> *)
+    </ul>
+  </dd>

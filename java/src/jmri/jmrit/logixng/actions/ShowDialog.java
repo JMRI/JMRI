@@ -54,7 +54,8 @@ public class ShowDialog extends AbstractDigitalAction
     }
 
     @Override
-    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames)
+            throws ParserException, JmriException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
@@ -73,7 +74,7 @@ public class ShowDialog extends AbstractDigitalAction
         for (Data data : _dataList) {
             copy.getDataList().add(new Data(data));
         }
-        return manager.registerAction(copy);
+        return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
     /**
@@ -185,7 +186,7 @@ public class ShowDialog extends AbstractDigitalAction
                     if (_data._expressionNode != null) {
                         values.add(_data._expressionNode.calculate(getConditionalNG().getSymbolTable()));
                     }
-                    
+
                     break;
 
                 default:
@@ -293,16 +294,16 @@ public class ShowDialog extends AbstractDigitalAction
             _dialog.setVisible(true);
         });
     }
-    
+
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
                 return _validateSocket;
-                
+
             case 1:
                 return _executeSocket;
-                
+
             default:
                 throw new IllegalArgumentException(
                         String.format("index has invalid value: %d", index));
@@ -404,7 +405,7 @@ public class ShowDialog extends AbstractDigitalAction
                         _validateSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -414,11 +415,11 @@ public class ShowDialog extends AbstractDigitalAction
             if (!_executeSocket.isConnected()
                     || !_executeSocket.getConnectedSocket().getSystemName()
                             .equals(_executeSocketSystemName)) {
-                
+
                 String socketSystemName = _executeSocketSystemName;
-                
+
                 _executeSocket.disconnect();
-                
+
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalActionManager.class)
@@ -427,7 +428,7 @@ public class ShowDialog extends AbstractDigitalAction
                         _executeSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital action " + socketSystemName);
+                        log.error("cannot load digital action {}", socketSystemName);
                     }
                 }
             } else {
@@ -466,7 +467,7 @@ public class ShowDialog extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-/*        
+/*
         log.debug("getUsageReport :: ShowDialog: bean = {}, report = {}", cdl, report);
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {

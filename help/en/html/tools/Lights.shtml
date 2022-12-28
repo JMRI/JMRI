@@ -116,7 +116,7 @@
       lights, or for other on/off tasks where the control mechanisms of Lights fit the need.</p>
 
       <p>Lights can be turned on or off by clicking the status column in the <a href=
-      "../../package/jmri/jmrit/beantable/LightTable.shtml">Lights Table.</a> They can aslo be
+      "../../package/jmri/jmrit/beantable/LightTable.shtml">Lights Table.</a> They can also be
       automatically controlled:</p>
 
       <ul>

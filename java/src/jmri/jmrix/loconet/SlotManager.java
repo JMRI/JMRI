@@ -54,6 +54,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     static public int postProgDelay = 100; // this is public to allow changes via script
 
     public int slotScanInterval = 50; // this is public to allow changes via script and tests
+
+    public int serviceModeReplyDelay = 20;  // this is public to allow changes via script and tests
+
+    public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
+
     /**
      * slotMapEntry - a from to pair of slot numbers defining a valid range of loco/system slots
      * TODO add slottype, eg systemslot, std slot, expanded slot etc
@@ -570,6 +575,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         switch (m.getOpCode()) {
             case LnConstants.OPC_WR_SL_DATA:
             case LnConstants.OPC_SL_RD_DATA:
+            case LnConstants.RE_OPC_IB2_SPECIAL:
                 i = m.getElement(2);
                 break;
 
@@ -856,7 +862,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
-     * Scedule a delayed slot read.
+     * Schedule a delayed slot read.
      * @param slotNo - the slot.
      * @param delay - delay in msecs.
      */
@@ -1490,9 +1496,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param status The error code, if any
      */
     protected void sendProgrammingReply(ProgListener p, int value, int status) {
-        int delay = 20;  // value in service mode
+        int delay = serviceModeReplyDelay;  // value in service mode
         if (!mServiceMode) {
-            delay = 100;  // value in ops mode
+            delay = opsModeReplyDelay;  // value in ops mode
         }
 
         // delay and run on GUI thread
@@ -1697,8 +1703,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Dispose of this by stopped it's ongoing actions
      */
+    @Override
     public void dispose() {
-        if (staleSlotCheckTimer != null) staleSlotCheckTimer.stop();
+        if (staleSlotCheckTimer != null) {
+            staleSlotCheckTimer.stop();
+        }
     }
 
     // initialize logging

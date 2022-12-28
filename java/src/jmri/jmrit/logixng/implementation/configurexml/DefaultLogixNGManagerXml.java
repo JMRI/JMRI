@@ -52,8 +52,9 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
             }
 
             for (LogixNG logixNG : tm.getNamedBeanSet()) {
-                log.debug("logixng system name is " + logixNG.getSystemName());  // NOI18N
+                log.debug("logixng system name is {}", logixNG.getSystemName() );  // NOI18N
                 boolean enabled = logixNG.isEnabled();
+                boolean inline = logixNG.isInline();
                 Element elem = new Element("LogixNG");  // NOI18N
                 elem.addContent(new Element("systemName").addContent(logixNG.getSystemName()));  // NOI18N
 
@@ -67,6 +68,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 elem.addContent(e);
 
                 elem.setAttribute("enabled", enabled ? "yes" : "no");  // NOI18N
+                elem.setAttribute("inline", inline ? "yes" : "no");  // NOI18N
 
                 logixNGs.addContent(elem);
                 hasData = true;
@@ -138,7 +140,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
      */
     public void loadThreads(Element sharedLogixNG) {
         List<Element> threads = sharedLogixNG.getChildren("Thread");  // NOI18N
-        log.debug("Found " + threads.size() + " threads");  // NOI18N
+        log.debug("Found {} threads", threads.size() );  // NOI18N
 
         for (int i = 0; i < threads.size(); i++) {
 
@@ -147,7 +149,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
             int threadId = Integer.parseInt(threadElement.getChild("id").getTextTrim());
             String threadName = threadElement.getChild("name").getTextTrim();
 
-            log.debug("create thread: " + Integer.toString(threadId) + ", " + threadName);  // NOI18N
+            log.debug("create thread: {}, {}", Integer.toString(threadId), threadName);  // NOI18N
             LogixNG_Thread.createNewThread(threadId, threadName);
         }
     }
@@ -161,7 +163,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
      */
     public void loadLogixNGs(Element sharedLogixNG) {
         List<Element> logixNGList = sharedLogixNG.getChildren("LogixNG");  // NOI18N
-        log.debug("Found " + logixNGList.size() + " logixngs");  // NOI18N
+        log.debug("Found {} logixngs", logixNGList.size() );  // NOI18N
         LogixNG_Manager tm = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
 
         for (int i = 0; i < logixNGList.size(); i++) {
@@ -170,30 +172,33 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
 
             String sysName = getSystemName(logixNG_Element);
             if (sysName == null) {
-                log.warn("unexpected null in systemName " + logixNG_Element);  // NOI18N
+                log.warn("unexpected null in systemName {}", logixNG_Element);  // NOI18N
                 break;
             }
 
             String userName = getUserName(logixNG_Element);
 
-            String yesno = "";
+            String enabled = "";
             if (logixNGList.get(i).getAttribute("enabled") != null) {  // NOI18N
-                yesno = logixNG_Element.getAttribute("enabled").getValue();  // NOI18N
+                enabled = logixNG_Element.getAttribute("enabled").getValue();  // NOI18N
             }
-            log.debug("create logixng: (" + sysName + ")("  // NOI18N
-                    + (userName == null ? "<null>" : userName) + ")");  // NOI18N
+            boolean inline = false;
+            if (logixNGList.get(i).getAttribute("inline") != null) {  // NOI18N
+                inline = "yes".equals(logixNG_Element.getAttribute("inline").getValue());  // NOI18N
+            }
+            log.debug("create logixng: ({})({})", sysName, (userName == null ? "<null>" : userName) );  // NOI18N
 
             // Create a new LogixNG but don't setup the initial tree.
-            DefaultLogixNG logixNG = (DefaultLogixNG)tm.createLogixNG(sysName, userName);
+            DefaultLogixNG logixNG = (DefaultLogixNG)tm.createLogixNG(sysName, userName, inline);
             if (logixNG != null) {
                 // load common part
                 loadCommon(logixNG, logixNGList.get(i));
 
                 // set enabled/disabled if attribute was present
-                if ((yesno != null) && (!yesno.equals(""))) {
-                    if (yesno.equals("yes")) {  // NOI18N
+                if ((enabled != null) && (!enabled.equals(""))) {
+                    if (enabled.equals("yes")) {  // NOI18N
                         logixNG.setEnabled(true);
-                    } else if (yesno.equals("no")) {  // NOI18N
+                    } else if (enabled.equals("no")) {  // NOI18N
                         logixNG.setEnabled(false);
                     }
                 }
@@ -235,6 +240,8 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="Error string generated by DefaultClipboard#replaceClipboardItems ")
     public void loadClipboard(Element sharedLogixNG) {
         List<Element> clipboardList = sharedLogixNG.getChildren("Clipboard");  // NOI18N
         if (clipboardList.isEmpty()) return;
@@ -248,7 +255,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
         try {
             clazz = Class.forName(className);
         } catch (ClassNotFoundException ex) {
-            log.error("cannot load class " + className, ex);
+            log.error("cannot load class {}", className, ex);
             return;
         }
 
@@ -268,7 +275,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 return;
             }
             if (! (o instanceof ClipboardManyXml)) {
-                log.error("class has wrong type: " + o.getClass().getName());
+                log.error("class has wrong type: {}", o.getClass().getName());
                 return;
             }
 

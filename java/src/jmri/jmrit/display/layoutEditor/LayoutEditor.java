@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
@@ -35,10 +34,12 @@ import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel.LocationFormat;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
+import jmri.jmrit.logixng.GlobalVariable;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
@@ -212,6 +213,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     // PositionableLabel's
     private List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); // BlockContentsIcon Label List
     private List<MemoryIcon> memoryLabelList = new ArrayList<>();               // Memory Label List
+    private List<GlobalVariableIcon> globalVariableLabelList = new ArrayList<>(); // LogixNG Global Variable Label List
     private List<SensorIcon> sensorList = new ArrayList<>();                    // Sensor Icons
     private List<SignalHeadIcon> signalList = new ArrayList<>();                // Signal Head Icons
     private List<SignalMastIcon> signalMastList = new ArrayList<>();            // Signal Mast Icons
@@ -236,6 +238,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Nonnull
     public List<MemoryIcon> getMemoryLabelList() {
         return memoryLabelList;
+    }
+
+    @Nonnull
+    public List<GlobalVariableIcon> getGlobalVariableLabelList() {
+        return globalVariableLabelList;
     }
 
     @Nonnull
@@ -371,7 +378,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         setupMenuBar();
 
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("SansSerif", Font.PLAIN, 12),
-                Color.black, new Color(215, 225, 255), Color.black));
+                Color.black, new Color(215, 225, 255), Color.black, null));
 
         // setup help bar
         helpBar.setLayout(new BoxLayout(helpBar, BoxLayout.PAGE_AXIS));
@@ -2242,6 +2249,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         listOfListsOfComponents.add(multiSensors);
         listOfListsOfComponents.add(signalList);
         listOfListsOfComponents.add(memoryLabelList);
+        listOfListsOfComponents.add(globalVariableLabelList);
         listOfListsOfComponents.add(blockContentsLabelList);
         listOfListsOfComponents.add(sensorList);
         listOfListsOfComponents.add(signalMastList);
@@ -2628,6 +2636,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         positionables.addAll(blockContentsLabelList);
         positionables.addAll(labelImage);
         positionables.addAll(memoryLabelList);
+        positionables.addAll(globalVariableLabelList);
         positionables.addAll(sensorImage);
         positionables.addAll(sensorList);
         positionables.addAll(signalHeadImage);
@@ -2695,6 +2704,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         positionables.addAll(blockContentsLabelList);
         positionables.addAll(labelImage);
         positionables.addAll(memoryLabelList);
+        positionables.addAll(globalVariableLabelList);
         positionables.addAll(sensorImage);
         positionables.addAll(sensorList);
         positionables.addAll(signalHeadImage);
@@ -2915,14 +2925,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     * Side effects on xLoc, yLoc and dLoc
      */
     @Nonnull
-    private Point2D calcLocation(MouseEvent event, int dX, int dY) {
+    private Point2D calcLocation(JmriMouseEvent event, int dX, int dY) {
         xLoc = (int) ((event.getX() + dX) / getZoom());
         yLoc = (int) ((event.getY() + dY) / getZoom());
         dLoc = new Point2D.Double(xLoc, yLoc);
         return dLoc;
     }
 
-    private Point2D calcLocation(MouseEvent event) {
+    private Point2D calcLocation(JmriMouseEvent event) {
         return calcLocation(event, 0, 0);
     }
 
@@ -2932,10 +2942,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Side-effects on _anchorX, _anchorY,_lastX, _lastY, xLoc, yLoc, dLoc,
      * selectionActive, xLabel, yLabel
      *
-     * @param event the MouseEvent
+     * @param event the JmriMouseEvent
      */
     @Override
-    public void mousePressed(MouseEvent event) {
+    public void mousePressed(JmriMouseEvent event) {
         // initialize cursor position
         _anchorX = xLoc;
         _anchorY = yLoc;
@@ -2950,7 +2960,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             leToolBarPanel.setLocationText(dLoc);
 
             if (event.isPopupTrigger()) {
-                if (isMetaDown(event) || event.isAltDown()) {
+                if (event.isMetaDown() || event.isAltDown()) {
                     // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
                     delayedPopupTrigger = true;
                 } else {
@@ -2959,7 +2969,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             }
 
-            if (isMetaDown(event) || event.isAltDown()) {
+            if (event.isMetaDown() || event.isAltDown()) {
                 // if dragging an item, identify the item for mouseDragging
                 selectedObject = null;
                 selectedHitPointType = HitPointType.NONE;
@@ -3006,6 +3016,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             startDelta = MathUtil.subtract(((PositionableLabel) selectedObject).getLocation(), dLoc);
                             if (selectedObject instanceof MemoryIcon) {
                                 MemoryIcon pm = (MemoryIcon) selectedObject;
+
+                                if (pm.getPopupUtility().getFixedWidth() == 0) {
+                                    startDelta = new Point2D.Double((pm.getOriginalX() - dLoc.getX()),
+                                            (pm.getOriginalY() - dLoc.getY()));
+                                }
+                            }
+                            if (selectedObject instanceof GlobalVariableIcon) {
+                                GlobalVariableIcon pm = (GlobalVariableIcon) selectedObject;
 
                                 if (pm.getPopupUtility().getFixedWidth() == 0) {
                                     startDelta = new Point2D.Double((pm.getOriginalX() - dLoc.getX()),
@@ -3085,12 +3103,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 redrawPanel();
             }
         } else if (allControlling()
-                && !isMetaDown(event) && !event.isPopupTrigger()
+                && !event.isMetaDown() && !event.isPopupTrigger()
                 && !event.isAltDown() && !event.isShiftDown() && !event.isControlDown()) {
             // not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
             checkControls(true);
-        } else if ((isMetaDown(event) || event.isAltDown())
+        } else if ((event.isMetaDown() || event.isAltDown())
                 && !event.isShiftDown() && !event.isControlDown()) {
             // not in edit mode - check if moving a marker if there are any
             selectedObject = checkMarkerPopUps(dLoc);
@@ -3460,7 +3478,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     @Override
-    public void mouseReleased(MouseEvent event) {
+    public void mouseReleased(JmriMouseEvent event) {
         super.setToolTip(null);
 
         // initialize mouse position
@@ -3473,7 +3491,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             leToolBarPanel.setLocationText(dLoc);
 
             // released the mouse with shift down... see what we're adding
-            if (!event.isPopupTrigger() && !isMetaDown(event) && event.isShiftDown()) {
+            if (!event.isPopupTrigger() && !event.isMetaDown() && event.isShiftDown()) {
 
                 currentPoint = new Point2D.Double(xLoc, yLoc);
 
@@ -3528,6 +3546,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     addLabel();
                 } else if (leToolBarPanel.memoryButton.isSelected()) {
                     addMemory();
+                } else if (leToolBarPanel.globalVariableButton.isSelected()) {
+                    addGlobalVariable();
                 } else if (leToolBarPanel.blockContentsButton.isSelected()) {
                     addBlockContents();
                 } else if (leToolBarPanel.iconLabelButton.isSelected()) {
@@ -3554,20 +3574,20 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 whenReleased = event.getWhen();
                 showEditPopUps(event);
             } else if ((selectedObject != null) && (selectedHitPointType == HitPointType.TURNOUT_CENTER)
-                    && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 // controlling turnouts, in edit mode
                 LayoutTurnout t = (LayoutTurnout) selectedObject;
                 t.toggleTurnout();
             } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.SLIP_LEFT)
                     || (selectedHitPointType == HitPointType.SLIP_RIGHT))
-                    && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 // controlling slips, in edit mode
                 LayoutSlip sl = (LayoutSlip) selectedObject;
                 sl.toggleState(selectedHitPointType);
             } else if ((selectedObject != null) && (HitPointType.isTurntableRayHitType(selectedHitPointType))
-                    && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 // controlling turntable, in edit mode
                 LayoutTurntable t = (LayoutTurntable) selectedObject;
@@ -3576,12 +3596,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     || (selectedHitPointType == HitPointType.SLIP_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_LEFT)
                     || (selectedHitPointType == HitPointType.SLIP_RIGHT))
-                    && allControlling() && (isMetaDown(event) && !event.isAltDown())
+                    && allControlling() && (event.isMetaDown() && !event.isAltDown())
                     && !event.isShiftDown() && !event.isControlDown() && isDragging) {
                 // We just dropped a turnout (or slip)... see if it will connect to anything
                 hitPointCheckLayoutTurnouts((LayoutTurnout) selectedObject);
             } else if ((selectedObject != null) && (selectedHitPointType == HitPointType.POS_POINT)
-                    && allControlling() && (isMetaDown(event))
+                    && allControlling() && (event.isMetaDown())
                     && !event.isShiftDown() && !event.isControlDown() && isDragging) {
                 // We just dropped a PositionablePoint... see if it will connect to anything
                 PositionablePoint p = (PositionablePoint) selectedObject;
@@ -3600,7 +3620,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
             createSelectionGroups();
         } else if ((selectedObject != null) && (selectedHitPointType == HitPointType.TURNOUT_CENTER)
-                && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
+                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turnout out of edit mode
             LayoutTurnout t = (LayoutTurnout) selectedObject;
@@ -3611,13 +3631,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.SLIP_LEFT)
                 || (selectedHitPointType == HitPointType.SLIP_RIGHT))
-                && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
+                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling slip out of edit mode
             LayoutSlip sl = (LayoutSlip) selectedObject;
             sl.toggleState(selectedHitPointType);
         } else if ((selectedObject != null) && (HitPointType.isTurntableRayHitType(selectedHitPointType))
-                && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
+                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turntable out of edit mode
             LayoutTurntable t = (LayoutTurntable) selectedObject;
@@ -3707,7 +3727,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         requestFocusInWindow();
     }   // mouseReleased
 
-    private void showEditPopUps(@Nonnull MouseEvent event) {
+    private void showEditPopUps(@Nonnull JmriMouseEvent event) {
         if (findLayoutTracksHitPoint(dLoc)) {
             if (HitPointType.isBezierHitType(foundHitPointType)) {
                 getTrackSegmentView((TrackSegment) foundTrack).showBezierPopUp(event, foundHitPointType);
@@ -3793,7 +3813,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Select the menu items to display for the Positionable's popup.
      */
     @Override
-    public void showPopUp(@Nonnull Positionable p, @Nonnull MouseEvent event) {
+    public void showPopUp(@Nonnull Positionable p, @Nonnull JmriMouseEvent event) {
         assert p != null;
 
         if (!((Component) p).isVisible()) {
@@ -3871,6 +3891,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 if (p.doViemMenu()) {
                     setHiddenMenu(p, popup);
                     setEditIdMenu(p, popup);
+                    popup.addSeparator();
+                    setLogixNGPositionableMenu(p, popup);
                 }
             }
         } else {
@@ -3891,14 +3913,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private boolean awaitingIconChange = false;
 
     @Override
-    public void mouseClicked(@Nonnull MouseEvent event) {
+    public void mouseClicked(@Nonnull JmriMouseEvent event) {
         // initialize mouse position
         calcLocation(event);
 
         // if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
-        if (!isMetaDown(event) && !event.isPopupTrigger() && !event.isAltDown()
+        if (!event.isMetaDown() && !event.isPopupTrigger() && !event.isAltDown()
                 && !awaitingIconChange && !event.isShiftDown() && !event.isControlDown()) {
             List<Positionable> selections = getSelectedItems(event);
 
@@ -4659,7 +4681,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     int _prevNumSel = 0;
 
     @Override
-    public void mouseMoved(@Nonnull MouseEvent event) {
+    public void mouseMoved(@Nonnull JmriMouseEvent event) {
         // initialize mouse position
         calcLocation(event);
 
@@ -4705,7 +4727,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private boolean isDragging = false;
 
     @Override
-    public void mouseDragged(@Nonnull MouseEvent event) {
+    public void mouseDragged(@Nonnull JmriMouseEvent event) {
         // initialize mouse position
         calcLocation(event);
 
@@ -4725,7 +4747,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // don't allow negative placement, objects could become unreachable
         currentPoint = MathUtil.max(currentPoint, MathUtil.zeroPoint2D);
 
-        if ((selectedObject != null) && (isMetaDown(event) || event.isAltDown())
+        if ((selectedObject != null) && (event.isMetaDown() || event.isAltDown())
                 && (selectedHitPointType == HitPointType.MARKER)) {
             // marker moves regardless of editMode or positionable
             PositionableLabel pl = (PositionableLabel) selectedObject;
@@ -4736,7 +4758,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         if (isEditable()) {
-            if ((selectedObject != null) && isMetaDown(event) && allPositionable()) {
+            if ((selectedObject != null) && event.isMetaDown() && allPositionable()) {
                 if (snapToGridOnMove != snapToGridInvert) {
                     // this snaps currentPoint to the grid
                     currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
@@ -4920,7 +4942,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     && leToolBarPanel.shapeButton.isSelected() && (selectedObject != null)) {
                 // dragging from end of shape
                 currentLocation = new Point2D.Double(xLoc, yLoc);
-            } else if (selectionActive && !event.isShiftDown() && !isMetaDown(event)) {
+            } else if (selectionActive && !event.isShiftDown() && !event.isMetaDown()) {
                 selectionWidth = xLoc - selectionX;
                 selectionHeight = yLoc - selectionY;
             }
@@ -4932,7 +4954,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }   // mouseDragged
 
     @Override
-    public void mouseEntered(@Nonnull MouseEvent event) {
+    public void mouseEntered(@Nonnull JmriMouseEvent event) {
         _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
@@ -5675,6 +5697,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
         if (memoryLabelList.contains(s)) {
             memoryLabelList.remove(s);
+            found = true;
+        }
+        if (globalVariableLabelList.contains(s)) {
+            globalVariableLabelList.remove(s);
             found = true;
         }
         if (blockContentsLabelList.contains(s)) {
@@ -6689,6 +6715,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             signalMastList.add((SignalMastIcon) l);
         } else if (l instanceof MemoryIcon) {
             memoryLabelList.add((MemoryIcon) l);
+        } else if (l instanceof GlobalVariableIcon) {
+            globalVariableLabelList.add((GlobalVariableIcon) l);
         } else if (l instanceof BlockContentsIcon) {
             blockContentsLabelList.add((BlockContentsIcon) l);
         } else if (l instanceof AnalogClock2Display) {
@@ -6731,6 +6759,41 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (!uname.equals(memoryName)) {
                 // put the system name in the memory field
                 leToolBarPanel.textMemoryComboBox.setSelectedItem(xMemory);
+            }
+        }
+        setNextLocation(l);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setDisplayLevel(Editor.LABELS);
+        l.setForeground(defaultTextColor);
+        unionToPanelBounds(l.getBounds());
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+    }
+
+    void addGlobalVariable() {
+        String globalVariableName = leToolBarPanel.textGlobalVariableComboBox.getSelectedItemDisplayName();
+        if (globalVariableName == null) {
+            globalVariableName = "";
+        }
+
+        if (globalVariableName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error11c"),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        GlobalVariableIcon l = new GlobalVariableIcon(" ", this);
+        l.setGlobalVariable(globalVariableName);
+        GlobalVariable xGlobalVariable = l.getGlobalVariable();
+
+        if (xGlobalVariable != null) {
+            String uname = xGlobalVariable.getDisplayName();
+            if (!uname.equals(globalVariableName)) {
+                // put the system name in the memory field
+                leToolBarPanel.textGlobalVariableComboBox.setSelectedItem(xGlobalVariable);
             }
         }
         setNextLocation(l);
@@ -7023,12 +7086,55 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     @Override
     public boolean deletePanel() {
-        // verify deletion
-        if (!super.deletePanel()) {
-            return false; // return without deleting if "No" response
+        if (canDeletePanel()) {
+            // verify deletion
+            if (!super.deletePanel()) {
+                return false; // return without deleting if "No" response
+            }
+            clearLayoutTracks();
+            return true;
         }
-        clearLayoutTracks();
-        return true;
+        return false;
+    }
+
+    /**
+     * Check for conditions that prevent a delete.
+     * <ul>
+     * <li>The panel has active edge connector links</li>
+     * <li>The panel is used by EntryExit</li>
+     * </ul>
+     * @return true if ok to delete
+     */
+    public boolean canDeletePanel() {
+        var messages = new ArrayList<String>();
+
+        var points = getPositionablePoints();
+        for (PositionablePoint point : points) {
+            if (point.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
+                var panelName = point.getLinkedEditorName();
+                if (!panelName.isEmpty()) {
+                    messages.add(Bundle.getMessage("ActiveEdgeConnector", point.getId(), point.getLinkedEditorName()));
+                }
+            }
+        }
+
+        var entryExitPairs = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class);
+        if (!entryExitPairs.getNxSource(this).isEmpty()) {
+            messages.add(Bundle.getMessage("ActiveEntryExit"));
+        }
+
+        if (!messages.isEmpty()) {
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("PanelRelationshipsError"));
+            for (String message : messages) {
+                msg.append(message);
+            }
+            JOptionPane.showMessageDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+        return messages.isEmpty();
     }
 
     /**
@@ -8205,13 +8311,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Override
     public void showToolTip(
             @Nonnull Positionable selection,
-            @Nonnull MouseEvent event) {
+            @Nonnull JmriMouseEvent event) {
         ToolTip tip = selection.getToolTip();
-        String txt = tip.getText();
-        if ((txt != null) && !txt.isEmpty()) {
-            tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
-            setToolTip(tip);
-        }
+        tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
+        setToolTip(tip);
     }
 
     @Override
@@ -8235,6 +8338,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             theList = blockContentsLabelList;
         } else if (nb instanceof Memory) {
             theList = memoryLabelList;
+        } else if (nb instanceof GlobalVariable) {
+            theList = globalVariableLabelList;
         }
         if (theList != null) {
             for (Object o : theList) {
@@ -8420,6 +8525,17 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             }
 
+            if (nb instanceof GlobalVariable) {
+                for (GlobalVariableIcon si : globalVariableLabelList) {
+                    if (nb.equals(si.getGlobalVariable())) {
+                        found = true;
+                        message.append("<li>");
+                        message.append(Bundle.getMessage("VetoGlobalVariableIconFound"));
+                        message.append("</li>");
+                    }
+                }
+            }
+
             if (found) {
                 message.append("</ul>");
                 message.append(Bundle.getMessage("VetoReferencesWillBeRemoved")); // NOI18N
@@ -8514,6 +8630,19 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     MemoryIcon i = icon.next();
 
                     if (nb.equals(i.getMemory())) {
+                        icon.remove();
+                        super.removeFromContents(i);
+                    }
+                }
+            }
+
+            if (nb instanceof GlobalVariable) {
+                Iterator<GlobalVariableIcon> icon = globalVariableLabelList.iterator();
+
+                while (icon.hasNext()) {
+                    GlobalVariableIcon i = icon.next();
+
+                    if (nb.equals(i.getGlobalVariable())) {
                         icon.remove();
                         super.removeFromContents(i);
                     }

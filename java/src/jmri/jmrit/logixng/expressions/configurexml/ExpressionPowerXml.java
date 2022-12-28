@@ -18,7 +18,7 @@ public class ExpressionPowerXml extends jmri.managers.configurexml.AbstractNamed
 
     public ExpressionPowerXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a ExpressionPower
      *
@@ -32,37 +32,51 @@ public class ExpressionPowerXml extends jmri.managers.configurexml.AbstractNamed
         Element element = new Element("ExpressionPower");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
-        
+
         element.addContent(new Element("powerState").addContent(p.getBeanState().name()));
+
+        element.addContent(new Element("ignoreUnknownState").addContent(p.isIgnoreUnknownState() ? "yes" : "no"));
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         ExpressionPower h = new ExpressionPower(sys, uname);
-        
+
         loadCommon(h, shared);
-        
+
         Element is_IsNot = shared.getChild("is_isNot");
         if (is_IsNot != null) {
             h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
         }
-        
+
         Element powerState = shared.getChild("powerState");
         if (powerState != null) {
-            h.setBeanState(ExpressionPower.PowerState.valueOf(powerState.getTextTrim()));
+            String powerStateStr = powerState.getTextTrim();
+            if ("Other".equals(powerStateStr)) {
+                powerStateStr = "OnOrOff";
+                h.set_Is_IsNot(h.get_Is_IsNot().getOpposite());
+            }
+            h.setBeanState(ExpressionPower.PowerState.valueOf(powerStateStr));
         }
-        
+
+        Element ignoreUnknownState = shared.getChild("ignoreUnknownState");
+        if (ignoreUnknownState != null) {
+            h.setIgnoreUnknownState("yes".equals(ignoreUnknownState.getTextTrim()));
+        } else {
+            h.setIgnoreUnknownState(false);
+        }
+
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionPowerXml.class);
 }

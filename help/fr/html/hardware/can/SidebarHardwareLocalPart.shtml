@@ -1,0 +1,14 @@
+<!-- SidebarHardwareLocalPart.shtml for can in French-->
+
+          <dt><a href="index.shtml">Controller Area Networks (CAN)</a></dt>
+		  <dd>
+        <ul>
+          <li><a href="../openlcb/index.shtml">OpenLCB</a>
+          <li><a href="scripting.shtml">CAN Scripts</a>
+          <li><a href="cbus/index.shtml">CBUS&reg;</a>
+          <li><a href="cbus/Names.shtml">D&#233;signation CBUS</a>
+          <li><a href="cbus/Details.shtml">D&eacute;tails de Connection CBUS</a>
+        </ul>
+		  </dd>
+
+<!-- /SidebarHardwareLocalPart.shtml -->

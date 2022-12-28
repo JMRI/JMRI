@@ -71,7 +71,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
     javax.swing.JLabel textMacro = new javax.swing.JLabel();
     javax.swing.JLabel macroNumber = new javax.swing.JLabel();
 
-    private NceTrafficController tc = null;
+    private final NceTrafficController tc;
 
     public NceMacroRestore(NceTrafficController t) {
         super();
@@ -97,7 +97,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 
             // create a status frame
             JPanel ps = new JPanel();
-            jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Macro Restore");
+            jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(Bundle.getMessage("RestoreTitle"));
             fstatus.setLocationRelativeTo(null);
             fstatus.setSize(200, 100);
             fstatus.getContentPane().add(ps);
@@ -105,7 +105,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
             ps.add(textMacro);
             ps.add(macroNumber);
 
-            textMacro.setText("Macro number:");
+            textMacro.setText(Bundle.getMessage("MacroNumberLabel"));
             textMacro.setVisible(true);
             macroNumber.setVisible(true);
 
@@ -127,12 +127,10 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                 macroNumber.setText(Integer.toString(macroNum++));
 
                 if (line == null) {    // while loop does not break out quick enough
-                    log.error("NCE macro file terminator :0000 not found");
+                    log.error("NCE macro file terminator :0000 not found"); // NOI18N
                     break;
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("macro {}", line);
-                }
+                log.debug("macro {}", line);
                 // check that each line contains the NCE memory address of the macro
                 String macroAddr = ":" + Integer.toHexString(curMacro);
                 String[] macroLine = line.split(" ");
@@ -144,8 +142,8 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                 }
 
                 if (!macroAddr.equalsIgnoreCase(macroLine[0])) {
-                    log.error("Restore file selected is not a vaild backup file");
-                    log.error("Macro addr in restore file should be {} Macro addr read {}", macroAddr, macroLine[0]);
+                    log.error("Restore file selected is not a vaild backup file"); // NOI18N
+                    log.error("Macro addr in restore file should be {} Macro addr read {}", macroAddr, macroLine[0]); // NOI18N
                     break;
                 }
 
@@ -154,8 +152,9 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                     if (JOptionPane
                             .showConfirmDialog(
                                     null,
-                                    "Restore file found!  Restore can take over a minute, continue?",
-                                    "NCE Macro Restore", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                                    Bundle.getMessage("dialogRestoreTime"),
+                                    Bundle.getMessage("RestoreTitle"),
+                                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                         break;
                     }
                 }
@@ -166,7 +165,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                 for (int i = 0; i < 10; i++) {
                     int j = i << 1;    // i = word index, j = byte index
 
-                    byte b[] = StringUtil.bytesFromHexString(macroLine[i + 1]);
+                    byte[] b = StringUtil.bytesFromHexString(macroLine[i + 1]);
 
                     macroAccy[j] = b[0];
                     macroAccy[j + 1] = b[1];
@@ -191,7 +190,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                 }
                 // failed
                 if (waiting > 0) {
-                    log.error("timeout waiting for reply");
+                    log.error("timeout waiting for reply"); // NOI18N
                     break;
                 }
             }
@@ -202,17 +201,18 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
             fstatus.dispose();
 
             if (fileValid) {
-                JOptionPane.showMessageDialog(null, "Successful Restore!",
-                        "NCE Macro", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("dialogRestoreSuccess"),
+                        Bundle.getMessage("RestoreTitle"),
+                        JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null,
-                        "Restore failed. Check console for error messages. \r\n"
-                        + "If operating at 19,200 baud, try 9600 baud.",
-                        "NCE Macro", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("dialogRestoreFailed"),
+                        Bundle.getMessage("RestoreTitle"),
+                        JOptionPane.ERROR_MESSAGE);
             }
 
-        } catch (IOException e) {
-            return;
+        } catch (IOException ignore) {
         }
     }
 
@@ -252,22 +252,20 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
     @SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
     @Override
     public void reply(NceReply r) {
-        if (log.isDebugEnabled()) {
-            log.debug("waiting for {} responses ", waiting);
-        }
+        log.debug("waiting for {} responses ", waiting);
         if (waiting <= 0) {
-            log.error("unexpected response");
+            log.error("unexpected response"); // NOI18N
             return;
         }
         waiting--;
         if (r.getNumDataElements() != replyLen) {
-            log.error("reply length incorrect");
+            log.error("reply length incorrect"); // NOI18N
             return;
         }
         if (replyLen == REPLY_1) {
             // Looking for proper response
             if (r.getElement(0) != NceMessage.NCE_OKAY) {
-                log.error("reply incorrect");
+                log.error("reply incorrect"); // NOI18N
             }
         }
 

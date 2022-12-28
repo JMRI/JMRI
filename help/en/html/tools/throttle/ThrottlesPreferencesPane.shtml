@@ -117,7 +117,7 @@
       questions are processed as steal-only.</p>
 
       <p>See individual hardware documentation for more detail on how these options affect your
-      system, eg. <a href="../../hardware/can/cbus/index.shtml#dcc">CBUS® Throttles</a>( CBUS® is a registered trade mark of Dr Michael Bolton)</p>
+      system, eg. <a href="../../hardware/can/cbus/index.shtml#dcc">CBUS&reg; Throttles</a>( CBUS&reg; is a registered trade mark of Dr Michael Bolton)</p>
 
       <h3>Default throttle file :</h3>
       This file selector allows to define a JMRI Throttle file (xml file created from save as menu in a throttle window) as a default to be loaded

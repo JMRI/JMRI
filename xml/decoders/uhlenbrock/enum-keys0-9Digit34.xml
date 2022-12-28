@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2022 All rights reserved -->
+<!--used in Uhlenbrock_63400-->
+<enumVal max="100" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <enumChoice choice="K1" value="11">
+    <choice>Key 1</choice>
+    <choice xml:lang="de">Taste 1</choice>
+    <choice xml:lang="nl">Toets 1</choice>
+  </enumChoice>
+  <enumChoice choice="K2" value="12">
+    <choice>Key 2</choice>
+    <choice xml:lang="de">Taste 2</choice>
+    <choice xml:lang="nl">Toets 2</choice>
+  </enumChoice>
+  <enumChoice choice="K3" value="13">
+    <choice>Key 3</choice>
+    <choice xml:lang="de">Taste 3</choice>
+    <choice xml:lang="nl">Toets 3</choice>
+  </enumChoice>
+  <enumChoice choice="K4" value="14">
+    <choice>Key 4</choice>
+    <choice xml:lang="de">Taste 4</choice>
+    <choice xml:lang="nl">Toets 4</choice>
+  </enumChoice>
+  <enumChoice choice="K5" value="15">
+    <choice>Key 5</choice>
+    <choice xml:lang="de">Taste 5</choice>
+    <choice xml:lang="nl">Toets 5</choice>
+  </enumChoice>
+  <enumChoice choice="K6" value="16">
+    <choice>Key 6</choice>
+    <choice xml:lang="de">Taste 6</choice>
+    <choice xml:lang="nl">Toets 62</choice>
+  </enumChoice>
+  <enumChoice choice="K7" value="17">
+    <choice>Key 7</choice>
+    <choice xml:lang="de">Taste 7</choice>
+    <choice xml:lang="nl">Toets 7</choice>
+  </enumChoice>
+  <enumChoice choice="K8" value="18">
+    <choice>Key 8</choice>
+    <choice xml:lang="de">Taste 8</choice>
+    <choice xml:lang="nl">Toets 8</choice>
+  </enumChoice>
+  <enumChoice choice="K9" value="19">
+    <choice>Key 9</choice>
+    <choice xml:lang="de">Taste 9</choice>
+    <choice xml:lang="nl">Toets 9</choice>
+  </enumChoice>
+  <enumChoice choice="K10" value="10">
+    <choice>Key 10</choice>
+    <choice xml:lang="de">Taste 10</choice>
+    <choice xml:lang="nl">Toets 10</choice>
+  </enumChoice>
+</enumVal>

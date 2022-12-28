@@ -565,7 +565,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         r1l1.setPickUpAllowed(false);
         r1l1.setCarMoves(3); // this value isn't saved
         r1l1.setComment("rl1 comment");
-        r1l1.setGrade(Double.valueOf("5"));
+        r1l1.setGrade(5d);
         r1l1.setMaxCarMoves(8);
         r1l1.setMaxTrainLength(345);
         r1l1.setTrainDirection(Location.SOUTH);
@@ -584,7 +584,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         r2l2.setPickUpAllowed(true);
         r2l2.setCarMoves(3); // this value isn't saved
         r2l2.setComment("r2l2 comment");
-        r2l2.setGrade(Double.valueOf("1"));
+        r2l2.setGrade(1d);
         r2l2.setMaxCarMoves(181);
         r2l2.setMaxTrainLength(4561);
         r2l2.setTrainDirection(Location.EAST);
@@ -597,7 +597,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         r2l4.setPickUpAllowed(false);
         r2l4.setCarMoves(3); // this value isn't saved
         r2l4.setComment("r2l4 comment");
-        r2l4.setGrade(Double.valueOf("2"));
+        r2l4.setGrade(2d);
         r2l4.setMaxCarMoves(18);
         r2l4.setMaxTrainLength(456);
         r2l4.setTrainDirection(Location.NORTH);

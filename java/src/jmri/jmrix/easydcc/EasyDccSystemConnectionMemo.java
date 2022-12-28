@@ -164,6 +164,14 @@ public class EasyDccSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     }
 
     @Override
+    public boolean provides(Class<?> c) {
+        if (!getDisabled() && c.equals(ConsistManager.class)) {
+            return true;
+        }
+        return super.provides(c);
+    }
+    
+    @Override
     public void dispose() {
         et = null;
         InstanceManager.deregister(this, EasyDccSystemConnectionMemo.class);

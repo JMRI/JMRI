@@ -39,8 +39,11 @@ public class Xml {
     static final String LOCO_TYPE = "locoType"; // NOI18N
     static final String CAR_ROAD_OPERATION = "carRoadOperation"; // NOI18N should have been option not operation
     static final String CAR_ROAD_OPTION = "carRoadOption"; // NOI18N
+    static final String LOCO_ROAD_OPTION = "locoRoadOption"; // NOI18N
     static final String CAR_ROADS = "carRoads"; // NOI18N
+    static final String LOCO_ROADS = "locoRoads"; // NOI18N
     static final String CAR_ROAD = "carRoad"; // NOI18N
+    static final String LOCO_ROAD = "locoRoad"; // NOI18N
     static final String CAR_LOAD_OPTION = "carLoadOption"; // NOI18N
     static final String CAR_LOADS = "carLoads"; // NOI18N
     static final String CAR_LOAD = "carLoad"; // NOI18N
@@ -120,8 +123,6 @@ public class Xml {
     static final String RUN_FILE = "runFile"; // NOI18N
     static final String TRAIN_ACTION = "trainAction"; // NOI18N
 
-//    static final String TRAIN_SCHEDULE_OPTIONS = "trainScheduleOptions"; // NOI18N
-//    static final String ACTIVE_ID = "activeId"; // NOI18N
     static final String START_UP = "startUp"; // NOI18N
     static final String SHUT_DOWN = "shutDown"; // NOI18N
     
@@ -187,7 +188,7 @@ public class Xml {
     static final String SWITCH_LIST_TRACK = "switchListTrack"; // NOI18N
     static final String HOLD_CAR = "holdCar"; // NOI18N
 
-    // TrainManifestHeaderText.jafa
+    // TrainManifestHeaderText.java
     static final String MANIFEST_HEADER_TEXT_STRINGS = "manifestHeaderTextStrings"; // NOI18N
     static final String ROAD = "road"; // the supported message format options // NOI18N
     static final String NUMBER = "number"; // NOI18N
@@ -206,8 +207,10 @@ public class Xml {
     static final String FINAL_DEST_TRACK = "fd_Track"; // NOI18N
     //static final String LOCATION = "location"; // NOI18N
     static final String CONSIST = "consist"; // NOI18N
+    static final String DCC_ADDRESS = "dcc_addr"; // NOI18N
     static final String KERNEL = "kernel"; // NOI18N
     static final String OWNER = "owner"; // NOI18N
+    static final String DIVISION = "division"; // NOI18N
     static final String RWE = "rwe"; // NOI18N
     //static final String COMMENT = "Comment"; // NOI18N
     static final String DROP_COMMENT = "setOut_msg"; // NOI18N

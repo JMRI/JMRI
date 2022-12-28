@@ -1,33 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Turnout Control</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Route Add Edit">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Commande de l'aiguillage</h1>Saisissez le num&eacute;ro
+      <h1>Commande de l'aiguillage</h1>
+
+      <p>Saisissez le num&eacute;ro
       de l'accessoire ou le nom syst&egrave;me d'aiguillage pour
       l'accessoire ou l'aiguillage que vous souhaitez commander
       dans la case &agrave; droite de "aiguillage". Pour Par
@@ -46,7 +34,7 @@
       l'&eacute;tat de l'aiguillage interne et ne changera pas un
       aiguillage sur le r&eacute;seau. Voir " <a href=
       "../../../../html/doc/Technical/Names.shtml">Noms</a> " dans
-      l'aide g&eacute;n&eacute;rale pour plus d'informations.
+      l'aide g&eacute;n&eacute;rale pour plus d'informations.</p>
 
       <p>Pour plus d'informations sur les aiguillages JMRI,
       consultez le <a href=
@@ -147,10 +135,11 @@
       verrouill&eacute;s.</p>
 
       <p>Ceci est la page d'aide
-      help/fr/package/jmri/jmrit/simpletournoutctrl/SimpleTurnoutCtrl.shtml</p>
+      help/fr/package/jmri/jmrit/ simpletournoutctrl/SimpleTurnoutCtrl.shtml</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

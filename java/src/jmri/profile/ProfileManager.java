@@ -93,7 +93,7 @@ public class ProfileManager extends Bean {
             this.readProfiles();
             this.findProfiles();
         } catch (JDOMException | IOException ex) {
-            log.error(ex.getLocalizedMessage(), ex);
+            log.error("Exception opening Profiles in {}", catalog, ex);
         }
     }
 
@@ -262,13 +262,13 @@ public class ProfileManager extends Bean {
         try {
             os = new FileOutputStream(config);
             p.storeToXML(os, "Active profile configuration (saved at " + (new Date()).toString() + ")"); // NOI18N
-            os.close();
         } catch (IOException ex) {
             log.error("While trying to save active profile {}", config, ex);
+            throw ex;
+        } finally {
             if (os != null) {
                 os.close();
             }
-            throw ex;
         }
 
     }

@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -17,8 +18,10 @@ import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import jmri.util.FileUtil;
 import jmri.util.swing.WindowInterface;
+
 import org.jdom2.Element;
 
 /**
@@ -95,15 +98,16 @@ public class FullBackupImportAction extends ImportRosterItemAction {
             ZipEntry entry;
             acceptAll = false; // skip prompting for each entry and accept all
             acceptAllDup = false;  // skip prompting for dups and accept all
+            SimpleDateFormat isoDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // NOI18N ISO8601
             
             while ((entry = zipper.getNextEntry()) != null) {
-                log.debug(String.format("Entry: %s len %d (%d) added %TD content: %s",
+                log.debug("Entry: {} len {} ({}) added {} content: {}",
                                         entry.getName(), 
                                         entry.getSize(), 
                                         entry.getCompressedSize(), 
-                                        new Date(entry.getTime()),
+                                        isoDateFormat.format(entry.getTime()),
                                         entry.getComment()
-                        ));
+                        );
 
                 // Once we get the entry from the stream, the stream is
                 // positioned read to read the raw data, and we keep

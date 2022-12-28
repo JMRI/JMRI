@@ -1,5 +1,7 @@
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 
@@ -45,6 +48,7 @@ import jmri.util.zeroconf.ZeroConfServiceManager;
 
 import org.apache.log4j.Level;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.netbeans.jemmy.*;
 import org.netbeans.jemmy.operators.*;
 
@@ -52,7 +56,7 @@ import org.netbeans.jemmy.operators.*;
  * Common utility methods for working with JUnit.
  * <p>
  * To release the current thread and allow other listeners to execute:  <code><pre>
- * JUnitUtil.releaseThread(this);
+ * JUnitUtil.waitFor(int time);
  * </pre></code> Note that this is not appropriate for Swing objects; you need
  * to use Jemmy for that.
  * <p>
@@ -83,14 +87,17 @@ public class JUnitUtil {
      * Standard time (in mSec) to wait when releasing
      * a thread during a test.
      * <p>
+     * The method releaseThread() is removed but this constant is still used
+     * by some tests when calling waitFor(int time).
+     * <p>
      * Public in case modification is needed from a test or script.
      */
-    static final public int DEFAULT_RELEASETHREAD_DELAY = 50;
+    static final public int WAITFOR_DEFAULT_DELAY = 50;
 
     /**
      * Default standard time step (in mSec) when looping in a waitFor operation.
      */
-    static final private int DEFAULT_WAITFOR_DELAY_STEP = 5;
+    static final protected int DEFAULT_WAITFOR_DELAY_STEP = 5;
 
     /**
      * Standard time step (in mSec) when looping in a waitFor operation.
@@ -99,6 +106,8 @@ public class JUnitUtil {
      * This value is always reset to {@value #DEFAULT_WAITFOR_DELAY_STEP}
      * during setUp().
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "MS_CANNOT_BE_FINAL",
+        justification = "value reset dueing setUp() ")
     static public int WAITFOR_DELAY_STEP = DEFAULT_WAITFOR_DELAY_STEP;
 
     /**
@@ -109,7 +118,7 @@ public class JUnitUtil {
      * are slow. But too long will cause CI jobs to time out before this logs
      * the error....
      */
-    static final private int DEFAULT_WAITFOR_MAX_DELAY = 10000;
+    static final protected int DEFAULT_WAITFOR_MAX_DELAY = 10000;
 
     /**
      * Maximum time to wait before failing a waitFor operation.
@@ -117,6 +126,8 @@ public class JUnitUtil {
      * Public in case modification is needed from a test or script.
      * This value is always reset to {@value #DEFAULT_WAITFOR_MAX_DELAY} during setUp().
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "MS_CANNOT_BE_FINAL",
+        justification = "value reset dueing setUp() ")
     static public int WAITFOR_MAX_DELAY = DEFAULT_WAITFOR_MAX_DELAY;
 
     /**
@@ -149,6 +160,13 @@ public class JUnitUtil {
      * Set from the jmri.util.JUnitUtil.checkRemnantThreads environment variable.
      */
     static boolean checkRemnantThreads =    Boolean.getBoolean("jmri.util.JUnitUtil.checkRemnantThreads"); // false unless set true
+
+    /**
+     * Fail Test if any threads left behind after a test calls {@link #tearDown}
+     * <p>
+     * Set from the jmri.util.JUnitUtil.failRemnantThreads environment variable.
+     */
+    static boolean failRemnantThreads =  Boolean.getBoolean("jmri.util.JUnitUtil.failRemnantThreads"); // false unless set true
 
     /**
      * Kill any threads left behind after a test calls {@link #tearDown}
@@ -283,6 +301,7 @@ public class JUnitUtil {
 
         // Do a minimal amount of de-novo setup
         resetInstanceManager();
+        InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);
 
     }
 
@@ -311,7 +330,8 @@ public class JUnitUtil {
     }
 
     /**
-     * Utility to remove any threads with a matchiing name
+     * Utility to remove any threads with a matching name
+     * @param nameContains The thread name to search
      */
     public static void removeMatchingThreads(String nameContains) {
         ThreadGroup main = Thread.currentThread().getThreadGroup();
@@ -350,6 +370,9 @@ public class JUnitUtil {
      * annotated method.
      */
     public static void tearDown() {
+
+        // Stop all LogixNG threads
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
 
         // check that no LogixNG threads is still running
         jmri.jmrit.logixng.util.LogixNG_Thread.assertLogixNGThreadNotRunning();
@@ -411,7 +434,7 @@ public class JUnitUtil {
         checkShutDownManager();
 
         // Optionally, handle any threads left running
-        if (checkRemnantThreads || killRemnantThreads) {
+        if (checkRemnantThreads || killRemnantThreads || failRemnantThreads) {
             handleThreads();
         }
 
@@ -422,51 +445,6 @@ public class JUnitUtil {
         // Optionally, check that the Swing queue is idle
         //new org.netbeans.jemmy.QueueTool().waitEmpty(250);
 
-    }
-
-    /**
-     * Release the current thread, allowing other threads to process. Waits for
-     * {@value #DEFAULT_RELEASETHREAD_DELAY} milliseconds.
-     * <p>
-     * This cannot be used on the Swing or AWT event threads. For those, please
-     * use Jemmy's wait routine.
-     * <p>
-     * The various waitFor(..) methods are much preferred to using this.
-     * They're faster and more reliable.  This is retained only for
-     * cases where there's nothing accessible to wait for.
-     *
-     * @param self currently ignored
-     */
-    public static void releaseThread(Object self) {
-        releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
-    }
-
-    /**
-     * Release the current thread, allowing other threads to process.
-     * <p>
-     * This cannot be used on the Swing or AWT event threads. For those, please
-     * use Jemmy's wait routine.
-     * <p>
-     * The various waitFor(..) methods are much preferred to using this.
-     * They're faster and more reliable.  This is retained only for
-     * cases where there's nothing accessible to wait for.
-     *
-     * @param self  currently ignored
-     * @param delay milliseconds to wait
-     */
-    public static void releaseThread(Object self, int delay) {
-        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
-            log.error("Cannot use releaseThread on Swing thread", new Exception());
-            return;
-        }
-        try {
-            int priority = Thread.currentThread().getPriority();
-            Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-            Thread.sleep(delay);
-            Thread.currentThread().setPriority(priority);
-        } catch (InterruptedException e) {
-            Assert.fail("failed due to InterruptedException");
-        }
     }
 
     /**
@@ -482,6 +460,7 @@ public class JUnitUtil {
      * @param name      name of condition being waited for; will appear in
      *                  Assert.fail if condition not true fast enough
      */
+    @SuppressFBWarnings("REC_CATCH_EXCEPTION")
     static public void waitFor(ReleaseUntil condition, String name) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
@@ -490,8 +469,12 @@ public class JUnitUtil {
         int delay = 0;
         try {
             while (delay < WAITFOR_MAX_DELAY) {
-                if (condition.ready()) {
-                    return;
+                try {
+                    if (condition.ready()) {
+                        return;
+                    }
+                } catch(Exception ex) {
+                    Assertions.fail("Exception while processing condition for \"" + name + "\" ", ex);
                 }
                 int priority = Thread.currentThread().getPriority();
                 try {
@@ -499,14 +482,14 @@ public class JUnitUtil {
                     Thread.sleep(WAITFOR_DELAY_STEP);
                     delay += WAITFOR_DELAY_STEP;
                 } catch (InterruptedException e) {
-                    Assert.fail("failed due to InterruptedException");
+                    Assertions.fail("failed due to InterruptedException", e);
                 } finally {
                     Thread.currentThread().setPriority(priority);
                 }
             }
-            Assert.fail("\"" + name + "\" did not occur in time");
+            Assertions.fail("\"" + name + "\" did not occur in time");
         } catch (Exception ex) {
-            Assert.fail("Exception while waiting for \"" + name + "\" " + ex);
+            Assertions.fail("Exception while waiting for \"" + name + "\" ", ex);
         }
     }
 
@@ -523,6 +506,7 @@ public class JUnitUtil {
      * @return true if condition is met before WAITFOR_MAX_DELAY, false
      *         otherwise
      */
+    @CheckReturnValue
     static public boolean waitFor(ReleaseUntil condition) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
@@ -559,16 +543,16 @@ public class JUnitUtil {
      * this will have to do.
      * <p>
      *
-     * @param time Delay in milliseconds
+     * @param msec Delay in milliseconds
      */
-    static public void waitFor(int time) {
+    static public void waitFor(int msec) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
             return;
         }
         int delay = 0;
         try {
-            while (delay < time) {
+            while (delay < msec) {
                 int priority = Thread.currentThread().getPriority();
                 try {
                     Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
@@ -598,6 +582,7 @@ public class JUnitUtil {
      * @param name      name of condition being waited for; will appear in
      *                  Assert.fail if condition not true fast enough
      */
+    @SuppressFBWarnings("REC_CATCH_EXCEPTION")
     static public void fasterWaitFor(ReleaseUntil condition, String name) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
@@ -606,8 +591,12 @@ public class JUnitUtil {
         int delay = 0;
         try {
             while (delay < 1000) {
-                if (condition.ready()) {
-                    return;
+                try {
+                    if (condition.ready()) {
+                        return;
+                    }
+                } catch(Exception ex) {
+                    Assertions.fail("Exception while processing condition for \"" + name + "\" ", ex);
                 }
                 int priority = Thread.currentThread().getPriority();
                 try {
@@ -615,14 +604,14 @@ public class JUnitUtil {
                     Thread.sleep(5);
                     delay += 5;
                 } catch (InterruptedException e) {
-                    Assert.fail("failed due to InterruptedException");
+                    Assertions.fail("failed due to InterruptedException", e);
                 } finally {
                     Thread.currentThread().setPriority(priority);
                 }
             }
-            Assert.fail("\"" + name + "\" did not occur in time");
+            Assertions.fail("\"" + name + "\" did not occur in time");
         } catch (Exception ex) {
-            Assert.fail("Exception while waiting for \"" + name + "\" " + ex);
+            Assertions.fail("Exception while waiting for \"" + name + "\" ", ex);
         }
     }
 
@@ -639,6 +628,7 @@ public class JUnitUtil {
      * @return true if condition is met before 1 second, false
      *         otherwise
      */
+    @CheckReturnValue
     static public boolean fasterWaitFor(ReleaseUntil condition) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
@@ -742,6 +732,7 @@ public class JUnitUtil {
         InstanceManager.getDefault().clearAll();
         // ensure the auto-default UserPreferencesManager is not created by installing a test one
         InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
+        InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);
     }
 
     public static void resetTurnoutOperationManager() {
@@ -815,15 +806,6 @@ public class JUnitUtil {
                 .deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
     }
 
-    public static void deregisterEditorManagerShutdownTask() {
-        if (! InstanceManager.isInitialized(ShutDownManager.class)) return;
-        if (! InstanceManager.isInitialized(EditorManager.class)) return;
-
-        InstanceManager
-                .getDefault(ShutDownManager.class)
-                .deregister(InstanceManager.getDefault(EditorManager.class).shutDownTask);
-    }
-
     public static void initWarrantManager() {
         WarrantManager w = new WarrantManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
@@ -846,7 +828,7 @@ public class JUnitUtil {
     }
 
     public static void initSectionManager() {
-        jmri.SectionManager w = new jmri.SectionManager();
+        jmri.SectionManager w = new jmri.managers.DefaultSectionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.SECTIONS);
         }
@@ -1127,7 +1109,7 @@ public class JUnitUtil {
      *
      * @see #clearShutDownManager()
      */
-    static void checkShutDownManager() {
+    public static void checkShutDownManager() {
         if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
@@ -1238,21 +1220,18 @@ public class JUnitUtil {
 
     /**
      * Use if the profile needs to be written to or cleared as part of the test.
-     * Suggested use in the {@link org.junit.Before} annotated method is:      <code>
-     *
-     * @Rule
-     * public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
-     *
-     * @BeforeEach
-     * public void setUp() {
-     *     resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-     * }
+     * A temporary folder is suggested for the profile, see
+     * https://www.jmri.org/help/en/html/doc/Technical/JUnit.shtml#tempFileCreation
+     * <code>
+     * jmri.profile.Profile profile = new jmri.profile.NullProfile(temporaryFolder);
+     * JUnitUtil.resetProfileManager(profile);
      * </code>
      *
      * @param profile the provided profile
      */
     public static void resetProfileManager(Profile profile) {
         ProfileManager.getDefault().setActiveProfile(profile);
+        InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);
     }
 
     /**
@@ -1442,6 +1421,7 @@ public class JUnitUtil {
         "WindowMonitor-DispatchThread",
         "RMI Reaper",
         "RMI TCP Accept",
+        "RMI GC Daemon",
         "TimerQueue",
         "Java Sound Event Dispatcher",
         "Aqua L&F",                         // macOS
@@ -1499,6 +1479,7 @@ public class JUnitUtil {
                  || name.startsWith("ForkJoinPool.commonPool-worker")
                  || name.startsWith("SocketListener(")
                  || name.startsWith("Libgraal")
+                 || name.startsWith("LibGraal")
                  || name.startsWith("TruffleCompilerThread-")
                  || ( name.startsWith("pool-") && name.endsWith("thread-1") )
                  || group.contains("FailOnTimeoutGroup") // JUnit timeouts
@@ -1526,20 +1507,27 @@ public class JUnitUtil {
                             if (traces == null) continue;  // thread went away, maybe terminated in parallel
                             if (traces.length >7 && traces[7].getClassName().contains("org.netbeans.jemmy") ) {
                                 // empirically. jemmy leaves anonymous threads
-                                log.warn("Jemmy remnant thread running {}.{} [{}.{}]",
-                                        traces[7].getClassName(),
-                                        traces[7].getMethodName(),
-                                       traces[7].getFileName(),
-                                       traces[7].getLineNumber()
-                                    );
+                                String details = traces[7].getClassName() + "." + traces[7].getMethodName()
+                                    +" [" + traces[7].getFileName() + "." + traces[7].getLineNumber() + "]";
+                                        
+                                log.warn("Jemmy remnant thread running {}", details );
+                                if ( failRemnantThreads ) {
+                                    Assertions.fail("Jemmy remnant thread running " + details);
+                                }
                             } else {
                                 // anonymous thread that should be displayed
                                 Exception ex = new Exception("traceback of numbered thread");
                                 ex.setStackTrace(traces);
                                 log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
+                                if ( failRemnantThreads ) {
+                                    Assertions.fail("Thread \"" + name + "\" after " + getTestClassName());
+                                }
                             }
                         } else {
                             log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName());
+                            if ( failRemnantThreads ) {
+                                Assertions.fail("Thread \"" + name + "\" in group \"" + group + "\" after " + getTestClassName());
+                            }
                         }
                         if (kill) {
                             killThread(t);
@@ -1600,6 +1588,12 @@ public class JUnitUtil {
         AbstractButtonOperator abo = new AbstractButtonOperator(button);
         abo.doClick();
         return button;
+    }
+
+    final private static Random random = new Random();
+
+    public static Random getRandom(){
+        return random;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JUnitUtil.class);

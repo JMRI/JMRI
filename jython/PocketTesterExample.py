@@ -1,6 +1,6 @@
 # Example of an event listener for a PRICOM PocketTester
 #
-# Author: Bob Jacobsen, copyright 2007
+# Author: Bob Jacobsen, copyright 2007, updated in 2022
 # Part of the JMRI distribution
 
 import jmri
@@ -15,7 +15,7 @@ class PricomListener(jmri.jmrix.pricom.pockettester.DataListener):
 # Now create a pricom.DataSource window and display it
 class MyDataSource(jmri.jmrix.pricom.pockettester.DataSource) :
   def initSuper(self) :
-     self.init()
+     self.initComponents()
      return
 
 source = MyDataSource()
@@ -23,5 +23,5 @@ source.initSuper()
 source.setVisible(True)
 
 # and finally attach my listener for data
-source.addListener(source, PricomListener())
+source.addListener(PricomListener())
 

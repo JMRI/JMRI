@@ -1,18 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI : SPROG CBUS® ; Outil de commutation de mode simple</title>
   <meta name="author" content="Andrew Crosland">
   <meta name="keywords" content="JMRI SPROG CBUS Simple Mode Switcher Tool">
   <!--#include virtual="/Style.shtml" -->
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>JMRI : CBUS Outil de commutation de mode simple</h1>
 
       <p>Le sélecteur de mode permet de contrôler les modes de programmation disponibles pour la
@@ -37,12 +36,12 @@
       <br></p>
       <img src="images/StatusBar.png" alt="Barre d'état du DP3">
       <p>CBUS® est une marque déposée du Dr Michael Bolton</p>
-      .
+
       <p>Traduction 2021-03-20</p>
-      <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

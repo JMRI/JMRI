@@ -77,7 +77,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 
     /**
      * Listen for sensors, creating them as needed.
-     * 
+     *
      * @param l the message to parse
      */
     @Override
@@ -88,7 +88,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
             if (log.isDebugEnabled()) {
                 log.debug("SensorDef Reply for Encoder {}", Integer.toString(addr));
             }
-            
+
         } else if (l.isSensorReply()) {
             addr = l.getSensorNumInt();
             if (log.isDebugEnabled()) {
@@ -98,12 +98,12 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         if (addr >= 0) {
             String s = getSystemNamePrefix() + (addr);
             if (null == getBySystemName(s)) {
-                // The sensor doesn't exist.  We need to create a 
+                // The sensor doesn't exist.  We need to create a
                 // new sensor, and forward this message to it.
                 DCCppSensor sn = (DCCppSensor) provideSensor(s);
                 sn.initmessage(l);
             } else {
-                // The sensor exists.  We need to forward this 
+                // The sensor exists.  We need to forward this
                 // message to it.
                 Sensor sen = getBySystemName(s);
                 if (sen == null) {
@@ -117,7 +117,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 
     /**
      * Listen for the outgoing messages (to the command station)
-     * 
+     *
      * @param l the message to parse
      */
     @Override
@@ -132,7 +132,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         if (msg.getRetries() > 0) {
             msg.setRetries(msg.getRetries() - 1);
             tc.sendDCCppMessage(msg, this);
-        }        
+        }
     }
 
     @Override
@@ -169,35 +169,6 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     int iName; // must synchronize to avoid race conditions.
-
-    /**
-     * Provide next valid DCC++ address. Does not enforce any rules on the
-     * encoder or input values.
-     *
-     * @param curAddress the current address
-     * @param prefix     the system connection prefix
-     * @return the next valid address after the current address
-     */
-    @Override
-    synchronized public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-
-        String tmpSName = createSystemName(curAddress, prefix);
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
-        Sensor s = getBySystemName(tmpSName);
-        if (s != null || ignoreInitialExisting) {
-            for (int x = 1; x < 10; x++) {
-                iName = iName + 1;
-                s = getBySystemName(prefix + typeLetter() + iName);
-                if (s == null) {
-                    return Integer.toString(iName);
-                }
-            }
-            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,iName));
-        } else {
-            return Integer.toString(iName);
-        }
-    }
 
     /**
      * {@inheritDoc}

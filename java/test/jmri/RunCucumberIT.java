@@ -31,7 +31,7 @@ import org.junit.BeforeClass;
 @CucumberOptions(plugin = {"junit:cucumber-results.xml", "progress", "json:cucumber-results.json"},
         features = "java/acceptancetest/features/web",
         tags = {"not @webtest", "not @Disabled", "not @Ignore", "not @ignore"},
-        glue = {"jmri"})
+        glue = {"apps"})
 public class RunCucumberIT {
 
     @BeforeClass
@@ -44,7 +44,7 @@ public class RunCucumberIT {
 
     @AfterClass
     public static void afterTests() {
-        BrowserFactory.CloseAllDriver();
+        BrowserFactory.closeAllDrivers();
         JUnitUtil.resetZeroConfServiceManager();
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();

@@ -1,28 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+<html lang="fr">
 <!-- Updated by Blorec Herv&#233;  2017-01-10-->
-<HTML LANG="fr">
 <head>
-<title>JMRI Hardware Setup Support - USB to Serial adapters</title>
-
-<meta name="Author" content="Bob Jacobsen">
-<meta name="keywords" content="USB serial adapter JMRI install">
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI Hardware Setup Support - USB to Serial adapters</title>
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="keywords" content="USB serial adapter JMRI install">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
 <a name="usb2serial"></a>
   <h1>Configuration Mat&#233;rielle prise en charge: Utilisation d'un Adaptateur USB vers
@@ -131,8 +122,9 @@ commande RS232 fournisse le contr&#244;le de flux.</p>
 personnes utilisant un LI101 avec un adaptateur USB/s&#233;rie. Plus d'informations
 seraient grandement appr&#233;ci&#233;es.</p>
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+    <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

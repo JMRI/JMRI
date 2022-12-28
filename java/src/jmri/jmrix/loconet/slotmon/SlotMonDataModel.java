@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.slotmon;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -31,19 +32,20 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     static public final int STATCOLUMN = 5;  // status: free, common, etc
     static public final int DISPCOLUMN = 6;  // originally "dispatch" button, now "free"
     static public final int CONSCOLUMN = 7;  // consist state
-    static public final int THROTCOLUMN = 8;
-    static public final int DIRCOLUMN = 9;
-    static public final int F0COLUMN = 10;
-    static public final int F1COLUMN = 11;
-    static public final int F2COLUMN = 12;
-    static public final int F3COLUMN = 13;
-    static public final int F4COLUMN = 14;
-    static public final int F5COLUMN = 15;
-    static public final int F6COLUMN = 16;
-    static public final int F7COLUMN = 17;
-    static public final int F8COLUMN = 18;
+    static public final int CONSISTADDRESS = 8; //consist address
+    static public final int THROTCOLUMN = 9;
+    static public final int DIRCOLUMN = 10;
+    static public final int F0COLUMN = 11;
+    static public final int F1COLUMN = 12;
+    static public final int F2COLUMN = 13;
+    static public final int F3COLUMN = 14;
+    static public final int F4COLUMN = 15;
+    static public final int F5COLUMN = 16;
+    static public final int F6COLUMN = 17;
+    static public final int F7COLUMN = 18;
+    static public final int F8COLUMN = 19;
 
-    static public final int NUMCOLUMN = 19;
+    static public final int NUMCOLUMN = 20;
 
     private final transient LocoNetSystemConnectionMemo memo;
 
@@ -51,7 +53,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         this.memo = memo;
 
         // connect to SlotManager for updates
-        memo.getSlotManager().addSlotListener(this);
+        memo.getSlotManager().addSlotListener(SlotMonDataModel.this);
 
         // start update process
         memo.getSlotManager().update();
@@ -101,28 +103,30 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return Bundle.getMessage("UseCol");
             case CONSCOLUMN:
                 return Bundle.getMessage("ConsistedCol");
+            case CONSISTADDRESS:
+                return Bundle.getMessage("ConsistAddress");
             case DIRCOLUMN:
                 return Bundle.getMessage("DirectionCol");
             case DISPCOLUMN:
                 return "";     // no heading, as button is clear
             case F0COLUMN:
-                return Throttle.F0;
+                return Throttle.getFunctionString(0);
             case F1COLUMN:
-                return Throttle.F1;
+                return Throttle.getFunctionString(1);
             case F2COLUMN:
-                return Throttle.F2;
+                return Throttle.getFunctionString(2);
             case F3COLUMN:
-                return Throttle.F3;
+                return Throttle.getFunctionString(3);
             case F4COLUMN:
-                return Throttle.F4;
+                return Throttle.getFunctionString(4);
             case F5COLUMN:
-                return Throttle.F5;
+                return Throttle.getFunctionString(5);
             case F6COLUMN:
-                return Throttle.F6;
+                return Throttle.getFunctionString(6);
             case F7COLUMN:
-                return Throttle.F7;
+                return Throttle.getFunctionString(7);
             case F8COLUMN:
-                return Throttle.F8;
+                return Throttle.getFunctionString(8);
             case THROTCOLUMN:
                 return Bundle.getMessage("ThrottleIDCol");
             default:
@@ -135,6 +139,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         switch (col) {
             case SLOTCOLUMN:
             case ADDRCOLUMN:
+            case CONSISTADDRESS:
                 return Integer.class;
             case SPDCOLUMN:
             case TYPECOLUMN:
@@ -259,6 +264,18 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                     default:
                         return Bundle.getMessage("StateError");
                 }
+            case CONSISTADDRESS:
+                switch (s.consistStatus()) {
+                    case LnConstants.CONSIST_TOP:
+                        return s.locoAddr();
+                    case LnConstants.CONSIST_MID:
+                    case LnConstants.CONSIST_SUB:
+                        return memo.getSlotManager().slot(s.speed()).locoAddr();
+                    case LnConstants.CONSIST_NO:
+                        return 0;
+                    default:
+                        return 0;
+                }
             case DISPCOLUMN:
                 return Bundle.getMessage("ButtonRelease"); // will be name of button in default GUI
             case DIRCOLUMN:
@@ -307,8 +324,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return new JTextField(12).getPreferredSize().width;
             case CONSCOLUMN:
                 return new JTextField(4).getPreferredSize().width;
+            case CONSISTADDRESS:
+                return new JTextField(" 0000 ").getPreferredSize().width;
             case DIRCOLUMN:
-                return new JLabel(Bundle.getMessage("DirectionCol")).getPreferredSize().width;
+                // the length of an empty JTextField works on more GUIs
+                int m = Math.max(Bundle.getMessage("DirColForward").length(), Bundle.getMessage("DirColReverse").length());
+                m = Math.max(m, Bundle.getMessage("DirectionCol").length());
+                return new JTextField(m).getPreferredSize().width;
             case DISPCOLUMN:
                 return new JButton(Bundle.getMessage("ButtonRelease")).getPreferredSize().width;
             case THROTCOLUMN:
@@ -322,7 +344,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F6COLUMN:
             case F7COLUMN:
             case F8COLUMN:
-                return new JLabel("       ").getPreferredSize().width; // to show checkboxes
+                // to show checkboxes and Text
+                return Math.max(new JCheckBox().getPreferredSize().width, new JTextField("F99").getPreferredSize().width);
             default:
                 return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
         }
@@ -402,7 +425,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException ex) {
-                    log.error(null, ex);
+                    log.error("InterruptedException", ex);
                 }
                 // reset status to original value if not previously 'in use'
                 if (status != LnConstants.LOCO_IN_USE) {
@@ -444,7 +467,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException ex) {
-                    log.error(null, ex);
+                    log.error("InterruptedException", ex);
                 }
 
                 // reset status to original value if not previously 'in use'
@@ -586,6 +609,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    // gets called on SlotMonPane.dispose
     public void dispose() {
         memo.getSlotManager().removeSlotListener(this);
     }

@@ -20,7 +20,6 @@ import org.apache.commons.lang3.mutable.MutableInt;
  */
 public interface Base extends PropertyChangeProvider {
 
-
     /**
      * The name of the property child count.
      * To get the number of children, use the method getChildCount().
@@ -180,6 +179,22 @@ public interface Base extends PropertyChangeProvider {
     public String getLongDescription(Locale locale);
 
     /**
+     * Get the Module of this item, if it's part of a module.
+     * @return the Module that owns this item or null if it's
+     *         owned by a ConditonalNG.
+     */
+    public default Module getModule() {
+        Base parent = this.getParent();
+        while (parent != null) {
+            if (parent instanceof Module) {
+                return (Module) parent;
+            }
+            parent = parent.getParent();
+        }
+        return null;
+    }
+
+    /**
      * Get the ConditionalNG of this item.
      * @return the ConditionalNG that owns this item
      */
@@ -236,7 +251,7 @@ public interface Base extends PropertyChangeProvider {
 
     /**
      * Set the parent for all the children.
-     * 
+     *
      * @param errors a list of potential errors
      * @return true if success, false otherwise
      */
@@ -434,6 +449,18 @@ public interface Base extends PropertyChangeProvider {
             String currentIndent,
             MutableInt lineNumber);
 
+    public static String getListenString(boolean listen) {
+        if (listen) {
+            return Bundle.getMessage("Base_Listen");
+        } else {
+            return Bundle.getMessage("Base_NoListen");
+        }
+    }
+
+    public static String getNoListenString() {
+        return Bundle.getMessage("Base_NoListen");
+    }
+
     /**
      * Navigate the LogixNG tree.
      *
@@ -559,9 +586,47 @@ public interface Base extends PropertyChangeProvider {
         }
     }
 
+    /**
+     * Do something on every item in the sub tree of this item.
+     * @param r the action to do on all items.
+     * @throws Exception if an exception occurs
+     */
+    public default void forEntireTreeWithException(RunnableWithBaseThrowException r) throws Exception {
+        r.run(this);
+        for (int i=0; i < getChildCount(); i++) {
+            getChild(i).forEntireTreeWithException(r);
+        }
+    }
+
+    /**
+     * Does this item has the child b?
+     * @param  b the child
+     * @return true if this item has the child b, false otherwise
+     */
+    default boolean hasChild(@Nonnull Base b) {
+        for (int i=0; i < getChildCount(); i++) {
+            if (getChild(i) == b) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Does this item exists in the tree?
+     * @return true if the item exists in the tree, false otherwise
+     */
+    public default boolean existsInTree() {
+        Base parent = getParent();
+        return parent == null || (parent.hasChild(this) && parent.existsInTree());
+    }
+
 
     public interface RunnableWithBase {
         public void run(@Nonnull Base b);
+    }
+
+
+    public interface RunnableWithBaseThrowException {
+        public void run(@Nonnull Base b) throws Exception;
     }
 
 
@@ -571,9 +636,12 @@ public interface Base extends PropertyChangeProvider {
 
     public static class PrintTreeSettings {
         public boolean _printLineNumbers = false;
+        public boolean _printDisplayName = false;
+        public boolean _hideUserName = false;           // Used for tests
         public boolean _printErrorHandling = true;
         public boolean _printNotConnectedSockets = true;
         public boolean _printLocalVariables = true;
+        public boolean _printSystemNames = false;
     }
 
 }

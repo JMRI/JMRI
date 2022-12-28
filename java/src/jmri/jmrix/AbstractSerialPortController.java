@@ -219,14 +219,16 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     /**
      * {@inheritDoc}
+     * Invalid indexes are ignored.
      */
     @Override
     public void configureBaudRateFromIndex(int index) {
-        if (validBaudRates().length > index) {
+        if (validBaudRates().length > index && index > -1 ) {
             mBaudRate = validBaudRates()[index];
             log.debug("mBaudRate set by index to: {}", mBaudRate);
         } else {
-            log.debug("no baud rates in array"); // expected for simulators extending serialPortAdapter, mBaudRate already null
+            // expected for simulators extending serialPortAdapter, mBaudRate already null
+            log.debug("no baud rate index {} in array size {}", index, validBaudRates().length);
         }
     }
 
@@ -480,6 +482,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Attempts a re-connection to the serial port from the main reconnect
      * thread.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="I18N of Info Message")
     @Override
     protected void reconnectFromLoop(int retryNum){
         try {

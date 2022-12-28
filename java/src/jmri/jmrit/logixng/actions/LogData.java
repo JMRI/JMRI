@@ -170,9 +170,18 @@ public class LogData extends AbstractDigitalAction
             default:
                 throw new IllegalArgumentException("_formatType has invalid value: "+_formatType.name());
         }
+        doLogging(str);
+    }
 
-        if (_logToLog) log.warn(str);
-        if (_logToScriptOutput) ScriptOutput.getDefault().getOutputArea().append(str+"\n");
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="Pass generated String unchanged")
+    private void doLogging(String logString) {
+        if (_logToLog) {
+            log.warn(logString);
+        }
+        if (_logToScriptOutput) {
+            ScriptOutput.getDefault().getOutputArea().append(logString+"\n");
+        }
     }
 
     @Override

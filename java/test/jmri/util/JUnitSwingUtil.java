@@ -65,10 +65,10 @@ public final class JUnitSwingUtil {
 
         g2.dispose();
 
-        java.io.FileOutputStream fos = new java.io.FileOutputStream(file);
-        javax.imageio.ImageIO.write(image, "png", fos); // NOI18N
-        fos.flush();
-        fos.close();
+        try (java.io.FileOutputStream fos = new java.io.FileOutputStream(file)) {
+            javax.imageio.ImageIO.write(image, "png", fos); // NOI18N
+            fos.flush();
+        }
     }
 
     public static enum Pixel {

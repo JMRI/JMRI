@@ -15,6 +15,9 @@
                 http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
                 http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
             ">
+
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/inline-logixng-data-5.1.6.xsd"/>
+
   <xs:annotation>
     <xs:documentation>
       Defines XML structures common to Layout Editor and Panel Editor
@@ -256,11 +259,13 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
         <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -320,6 +325,7 @@
              </xs:sequence>
            </xs:complexType>
          </xs:element>
+         <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
        </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
@@ -556,6 +562,7 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
@@ -579,6 +586,7 @@
         <xs:element name="inactiveText" type="EditorSensorTextType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="unknownText" type="EditorSensorTextType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="inconsistentText" type="EditorSensorTextType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -718,7 +726,9 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -740,6 +750,7 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
@@ -750,6 +761,7 @@
             <xs:attribute name="icon" type="xs:string" use="required"></xs:attribute>
           </xs:complexType>
         </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -775,10 +787,12 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -800,6 +814,7 @@
       </xs:annotation>
 
       <xs:all minOccurs="0" maxOccurs="1">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
@@ -819,6 +834,7 @@
           </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:all>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -826,6 +842,102 @@
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="memory" type="beanNameType"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorGlobalVariableIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a GlobalVariableIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.GlobalVariableIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="globalVariableState" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="icon" type="xs:string" use="required"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="globalVariable" type="beanNameType"></xs:attribute>
+      <xs:attribute name="defaulticon" type="xs:string"></xs:attribute>
+      <xs:attribute name="selectable" type="yesNoType"></xs:attribute>
+      <xs:attribute name="colWidth" type="xs:int"></xs:attribute>
+      <xs:attribute name="updateBlockValue" type="yesNoType" default="yes"></xs:attribute>
+
+    </xs:complexType>
+
+    <xs:complexType name="EditorGlobalVariableInputIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a GlobalVariableInputIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.GlobalVariableInputIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="globalVariable" type="beanNameType"></xs:attribute>
+      <xs:attribute name="colWidth" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorGlobalVariableComboIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a GlobalVariableComboIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.GlobalVariableComboIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:all minOccurs="0" maxOccurs="1">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="itemList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+          <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                     <xs:attribute name="index" type="xs:int"></xs:attribute>
+                  </xs:extension>
+                </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:all>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="globalVariable" type="beanNameType"></xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="EditorFastClockIconType">
@@ -837,6 +949,10 @@
           jmri.jmrit.display.configurexml.FastClockXml
         </xs:appinfo>
       </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="x" type="xs:int" use="required"></xs:attribute>
@@ -858,6 +974,7 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
@@ -880,6 +997,7 @@
         <xs:element name="inactive" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -918,6 +1036,7 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
@@ -973,6 +1092,7 @@
         <xs:element name="flashlunar" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
         </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -1037,10 +1157,12 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
+        <xs:element name="LogixNG" type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -1068,6 +1190,7 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
@@ -1127,6 +1250,7 @@
         <xs:element name="thrown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -1211,6 +1335,7 @@
         <xs:element name="sensorB" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sensorC" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sensorD" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
@@ -1328,6 +1453,7 @@
               </xs:sequence>
             </xs:complexType>
         </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
@@ -1396,6 +1522,7 @@
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
       </xs:sequence>
 
@@ -1455,7 +1582,9 @@
       </xs:annotation>
       <xs:sequence>
         <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -1586,6 +1715,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
@@ -1762,6 +1892,7 @@
         <xs:element name="sensorB" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sensorC" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sensorD" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="ident" type="beanNameType" use="required">
@@ -1818,6 +1949,7 @@
             <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
           </xs:complexType>
         </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
@@ -1844,12 +1976,14 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:all>
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
         <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:all>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -1871,6 +2005,7 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
           <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
@@ -1901,6 +2036,8 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attribute name="degrees" type="xs:integer"></xs:attribute>
@@ -1929,12 +2066,15 @@
         <xs:element name="lowerWestToLowerEast" type="EditorIconTextType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="upperWestToUpperEast" type="EditorIconTextType" minOccurs="0" maxOccurs="1"></xs:element>
 
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
 
         <xs:element name="lowerWestToUpperEast" type="EditorIconTextType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="upperWestToLowerEast" type="EditorIconTextType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
 
       </xs:sequence>
 
@@ -1986,6 +2126,7 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
@@ -2071,6 +2212,8 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attribute name="degrees" type="xs:integer"></xs:attribute>
@@ -2090,10 +2233,12 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -2119,6 +2264,7 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
           <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
@@ -2133,6 +2279,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>

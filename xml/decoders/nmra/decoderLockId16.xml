@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
@@ -40,6 +40,12 @@
       <revremark>Revision in original 0NMRA.xml file</revremark>
     </revision>
   </revhistory>
+  <!-- The following variable definition may not be  -->
+  <!-- appropriate for all decoders.  In particular, -->
+  <!-- some decoders need to have different default  -->
+  <!-- values. In that case, you should not include  -->
+  <!-- this fragment file, and instead define CV16   -->
+  <!-- directly within the main definition file.     -->
   <variable item="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
     <decVal/>
     <label>Decoder Lock ID number</label>
@@ -48,5 +54,6 @@
     <label xml:lang="de">Nummer der Decoder Lock ID</label>
     <label xml:lang="cs">Zámek dekodéru ID číslo</label>
     <label xml:lang="nl">Nummer van het Decoder Lock ID</label>
+    <label xml:lang="es">Número ID de bloqueo del decodificador</label>
   </variable>
 </variables>

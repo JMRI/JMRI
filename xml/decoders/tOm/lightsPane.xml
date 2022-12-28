@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II              -->
+<!-- Version 2 - Petr Sidlo - 2022-08-14 - small fix                        -->
+
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>Lights</name>
+    <name xml:lang="cs">Světla</name>
+    <column>
+      <label>
+        <text>Output Light Intensity</text>
+        <text xml:lang="cs">Intenzita světla výstupu</text>
+      </label>
+      <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+        <griditem>
+          <display item="FL Light intensity" />
+          <display item="FL Light intensity" label="" format="hslider" />
+          <display item="FL dim/fade" />
+        </griditem>
+        <griditem>
+          <display item="RL Light intensity" />
+          <display item="RL Light intensity" label="" format="hslider" />
+          <display item="RL dim/fade" />
+        </griditem>
+        <griditem>
+          <display item="Out 1 Light intensity" />
+          <display item="Out 1 Light intensity" label="" format="hslider" />
+          <display item="Output 1 dim/fade" />
+        </griditem>
+        <griditem>
+          <display item="Out 2 Light intensity" />
+          <display item="Out 2 Light intensity" label=""  format="hslider" />
+          <display item="Output 2 dim/fade" />
+        </griditem>
+        <griditem>
+          <display item="Out 3 Light intensity" />
+          <display item="Out 3 Light intensity" label=""  format="hslider" />
+          <display item="Output 3 dim/fade" />
+        </griditem>
+        <griditem>
+          <display item="Out 4 Light intensity" />
+          <display item="Out 4 Light intensity" label=""  format="hslider" />
+          <display item="Output 4 dim/fade" />
+        </griditem>
+        <griditem>
+          <display item="Out 5 Light intensity" />
+          <display item="Out 5 Light intensity" label=""  format="hslider" />
+          <display item="Output 5 dim/fade" />
+        </griditem>
+        <griditem>
+          <display item="Out 6 Light intensity" />
+          <display item="Out 6 Light intensity" label=""  format="hslider" />
+          <display item="Output 6 dim/fade" />
+        </griditem>
+        <griditem>
+          <display item="Out 7 Light intensity" />
+          <display item="Out 7 Light intensity" label=""  format="hslider" />
+          <display item="Aux7 dim/fade" />
+        </griditem>
+        <griditem>
+          <display item="Out 8 Light intensity" />
+          <display item="Out 8 Light intensity" label=""  format="hslider" />
+          <display item="Aux8 dim/fade" />
+        </griditem>
+        <griditem>
+          <display item="Out 9 Light intensity" />
+          <display item="Out 9 Light intensity" label=""  format="hslider" />
+          <display item="Aux9 dim/fade" />
+        </griditem>
+        <griditem>
+          <display item="Out 10 Light intensity" />
+          <display item="Out 10 Light intensity" label=""  format="hslider" />
+          <display item="Aux10 dim/fade" />
+        </griditem>
+      </grid>
+    </column>
+    <column>
+      <label>
+        <text>Output Effects</text>
+        <text xml:lang="cs">Efekty výstupů</text>
+      </label>
+      <display item="FadeOn" />
+      <display item="FadeOFF" />
+    </column>
+  </pane>

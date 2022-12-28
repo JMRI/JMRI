@@ -1,13 +1,15 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
+import java.util.*;
+
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.IfThenElse;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
-import jmri.jmrit.logixng.MaleSocket;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -30,105 +32,147 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
         Element element = new Element("IfThenElse");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        element.setAttribute("type", p.getType().name());
-        
-        Element e2 = new Element("IfSocket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
-        MaleSocket socket = p.getIfExpressionSocket().getConnectedSocket();
+        element.setAttribute("executeType", p.getExecuteType().name());
+        element.setAttribute("evaluateType", p.getEvaluateType().name());
+
         String socketSystemName;
-        if (socket != null) {
-            socketSystemName = socket.getSystemName();
-        } else {
-            socketSystemName = p.getIfExpressionSocketSystemName();
+        Element e = new Element("Expressions");
+        for (int i=0; i < p.getNumExpressions(); i++) {
+            Element e2 = new Element("Socket");
+            e2.addContent(new Element("socketName").addContent(p.getExpressionSocket(i).getName()));
+            MaleSocket socket = p.getExpressionSocket(i).getConnectedSocket();
+            if (socket != null) {
+                socketSystemName = socket.getSystemName();
+            } else {
+                socketSystemName = p.getExpressionSocketSystemName(i);
+            }
+            if (socketSystemName != null) {
+                e2.addContent(new Element("systemName").addContent(socketSystemName));
+            }
+            e.addContent(e2);
         }
-        if (socketSystemName != null) {
-            e2.addContent(new Element("systemName").addContent(socketSystemName));
-        }
-        element.addContent(e2);
+        element.addContent(e);
 
-        e2 = new Element("ThenSocket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
-        socket = p.getThenActionSocket().getConnectedSocket();
-        if (socket != null) {
-            socketSystemName = socket.getSystemName();
-        } else {
-            socketSystemName = p.getThenActionSocketSystemName();
+        e = new Element("Actions");
+        for (int i=0; i < p.getNumActions(); i++) {
+            Element e2 = new Element("Socket");
+            e2.addContent(new Element("socketName").addContent(p.getActionSocket(i).getName()));
+            MaleSocket socket = p.getActionSocket(i).getConnectedSocket();
+            if (socket != null) {
+                socketSystemName = socket.getSystemName();
+            } else {
+                socketSystemName = p.getActionSocketSystemName(i);
+            }
+            if (socketSystemName != null) {
+                e2.addContent(new Element("systemName").addContent(socketSystemName));
+            }
+            e.addContent(e2);
         }
-        if (socketSystemName != null) {
-            e2.addContent(new Element("systemName").addContent(socketSystemName));
-        }
-        element.addContent(e2);
-
-        e2 = new Element("ElseSocket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(2).getName()));
-        socket = p.getElseActionSocket().getConnectedSocket();
-        if (socket != null) {
-            socketSystemName = socket.getSystemName();
-        } else {
-            socketSystemName = p.getElseActionSocketSystemName();
-        }
-        if (socketSystemName != null) {
-            e2.addContent(new Element("systemName").addContent(socketSystemName));
-        }
-        element.addContent(e2);
+        element.addContent(e);
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
-        
-        String typeStr = shared.getAttribute("type").getValue();
-        
-        /*
-        To not cause problems during testing, these are accepted
-        for now. But they should be removed before the production
-        version. These where changed to CamelCase after people
-        had started testing LogixNG.
-        Remove TRIGGER_ACTION and CONTINOUS_ACTION in if-then-else-4.23.1.xsd
-        as well.
-        */
-        if ("TRIGGER_ACTION".equals(typeStr)) typeStr = "ExecuteOnChange";
-        if ("CONTINOUS_ACTION".equals(typeStr)) typeStr = "AlwaysExecute";
-        if ("TriggerAction".equals(typeStr)) typeStr = "ExecuteOnChange";
-        if ("ContinuousAction".equals(typeStr)) typeStr = "AlwaysExecute";
-        
-        IfThenElse.Type type = IfThenElse.Type.valueOf(typeStr);
-        
+
+        IfThenElse.ExecuteType executeType = IfThenElse.ExecuteType.ExecuteOnChange;
+        IfThenElse.EvaluateType evaluateType = IfThenElse.EvaluateType.EvaluateAll;
+
+        Attribute typeAttr = shared.getAttribute("executeType");
+        if (typeAttr != null) {
+            String typeStr = typeAttr.getValue();
+            executeType = IfThenElse.ExecuteType.valueOf(typeStr);
+        }
+
+        typeAttr = shared.getAttribute("evaluateType");
+        if (typeAttr != null) {
+            String typeStr = typeAttr.getValue();
+            evaluateType = IfThenElse.EvaluateType.valueOf(typeStr);
+        }
+
+        // For backward compatibility pre JMRI 5.1.5
+        typeAttr = shared.getAttribute("type");
+        if (typeAttr != null) {
+            String typeStr = typeAttr.getValue();
+            executeType = IfThenElse.ExecuteType.valueOf(typeStr);
+        }
+
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        IfThenElse h = new IfThenElse(sys, uname);
-        h.setType(type);
+
+        List<Map.Entry<String, String>> expressionSystemNames = new ArrayList<>();
+
+        Element expressionElement = shared.getChild("Expressions");
+        if (expressionElement != null) {
+            for (Element socketElement : expressionElement.getChildren()) {
+                String socketName = socketElement.getChild("socketName").getTextTrim();
+                Element systemNameElement = socketElement.getChild("systemName");
+                String systemName = null;
+                if (systemNameElement != null) {
+                    systemName = systemNameElement.getTextTrim();
+                }
+                expressionSystemNames.add(new AbstractMap.SimpleEntry<>(socketName, systemName));
+            }
+        }
+
+        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
+
+        Element actionElement = shared.getChild("Actions");
+        if (actionElement != null) {
+            for (Element socketElement : actionElement.getChildren()) {
+                String socketName = socketElement.getChild("socketName").getTextTrim();
+                Element systemNameElement = socketElement.getChild("systemName");
+                String systemName = null;
+                if (systemNameElement != null) {
+                    systemName = systemNameElement.getTextTrim();
+                }
+                actionSystemNames.add(new AbstractMap.SimpleEntry<>(socketName, systemName));
+            }
+        }
+
+        // For backwards compability up until 5.1.3
+        if (shared.getChild("IfSocket") != null) {
+            String socketName = shared.getChild("IfSocket").getChild("socketName").getTextTrim();
+            Element socketSystemName = shared.getChild("IfSocket").getChild("systemName");
+            String systemName = null;
+            if (socketSystemName != null) {
+                systemName = socketSystemName.getTextTrim();
+            }
+            expressionSystemNames.add(new AbstractMap.SimpleEntry<>(socketName, systemName));
+        }
+        if (shared.getChild("ThenSocket") != null) {
+            String socketName = shared.getChild("ThenSocket").getChild("socketName").getTextTrim();
+            Element socketSystemName = shared.getChild("ThenSocket").getChild("systemName");
+            String systemName = null;
+            if (socketSystemName != null) {
+                systemName = socketSystemName.getTextTrim();
+            }
+            actionSystemNames.add(new AbstractMap.SimpleEntry<>(socketName, systemName));
+        }
+        if (shared.getChild("ElseSocket") != null) {
+            String socketName = shared.getChild("ElseSocket").getChild("socketName").getTextTrim();
+            Element socketSystemName = shared.getChild("ElseSocket").getChild("systemName");
+            String systemName = null;
+            if (socketSystemName != null) {
+                systemName = socketSystemName.getTextTrim();
+            }
+            actionSystemNames.add(new AbstractMap.SimpleEntry<>(socketName, systemName));
+        }
+        // For backwards compability up until 5.1.3
+
+        IfThenElse h = new IfThenElse(sys, uname, expressionSystemNames, actionSystemNames);
+        h.setExecuteType(executeType);
+        h.setEvaluateType(evaluateType);
 
         loadCommon(h, shared);
-        
-        Element socketName = shared.getChild("IfSocket").getChild("socketName");
-        h.getChild(0).setName(socketName.getTextTrim());
-        Element socketSystemName = shared.getChild("IfSocket").getChild("systemName");
-        if (socketSystemName != null) {
-            h.setIfExpressionSocketSystemName(socketSystemName.getTextTrim());
-        }
-        
-        socketName = shared.getChild("ThenSocket").getChild("socketName");
-        h.getChild(1).setName(socketName.getTextTrim());
-        socketSystemName = shared.getChild("ThenSocket").getChild("systemName");
-        if (socketSystemName != null) {
-            h.setThenActionSocketSystemName(socketSystemName.getTextTrim());
-        }
-        
-        socketName = shared.getChild("ElseSocket").getChild("socketName");
-        h.getChild(2).setName(socketName.getTextTrim());
-        socketSystemName = shared.getChild("ElseSocket").getChild("systemName");
-        if (socketSystemName != null) {
-            h.setElseActionSocketSystemName(socketSystemName.getTextTrim());
-        }
-        
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IfThenElseXml.class);
 }

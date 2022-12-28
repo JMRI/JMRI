@@ -122,7 +122,7 @@ public class ExportCars extends XmlFile {
                         car.getLength(),
                         car.getWeight(),
                         car.getColor(),
-                        car.getOwner(),
+                        car.getOwnerName(),
                         car.getBuilt(),
                         car.getLocationName(),
                         LOCATION_TRACK_SEPARATOR,

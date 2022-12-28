@@ -94,6 +94,27 @@ public abstract class XmlFile {
         CheckDtdThenSchema
     }
 
+    private String processingInstructionHRef;
+    private String processingInstructionType;
+
+    /**
+     * Get the value of the attribute 'href' of the process instruction of
+     * the last loaded document.
+     * @return the value of the attribute 'href' or null
+     */
+    public String getProcessingInstructionHRef() {
+        return processingInstructionHRef;
+    }
+
+    /**
+     * Get the value of the attribute 'type' of the process instruction of
+     * the last loaded document.
+     * @return the value of the attribute 'type' or null
+     */
+    public String getProcessingInstructionType() {
+        return processingInstructionType;
+    }
+
     /**
      * Read the contents of an XML file from its filename. The name is expanded
      * by the {@link #findFile} routine. If the file is not found, attempts to
@@ -190,6 +211,9 @@ public abstract class XmlFile {
     protected Element getRoot(InputStream stream) throws JDOMException, IOException {
         log.trace("getRoot from stream");
 
+        processingInstructionHRef = null;
+        processingInstructionType = null;
+
         SAXBuilder builder = getBuilder(getValidate());
         Document doc = builder.build(new BufferedInputStream(stream));
         doc = processInstructions(doc);  // handle any process instructions
@@ -279,7 +303,7 @@ public abstract class XmlFile {
      */
     static public void dumpElement(@Nonnull Element name) {
         name.getChildren().forEach((element) -> {
-            System.out.println(" Element: " + element.getName() + " ns: " + element.getNamespace());
+            log.info(" Element: {} ns: {}", element.getName(), element.getNamespace());
         });
     }
 
@@ -425,33 +449,14 @@ public abstract class XmlFile {
      */
     private String getDate() {
         Calendar now = Calendar.getInstance();
-        int month = now.get(Calendar.MONTH) + 1;
-        String m = Integer.toString(month);
-        if (month < 10) {
-            m = "0" + Integer.toString(month);
-        }
-        int day = now.get(Calendar.DATE);
-        String d = Integer.toString(day);
-        if (day < 10) {
-            d = "0" + Integer.toString(day);
-        }
-        int hour = now.get(Calendar.HOUR);
-        String h = Integer.toString(hour);
-        if (hour < 10) {
-            h = "0" + Integer.toString(hour);
-        }
-        int minute = now.get(Calendar.MINUTE);
-        String min = Integer.toString(minute);
-        if (minute < 10) {
-            min = "0" + Integer.toString(minute);
-        }
-        int second = now.get(Calendar.SECOND);
-        String sec = Integer.toString(second);
-        if (second < 10) {
-            sec = "0" + Integer.toString(second);
-        }
-        String date = "" + now.get(Calendar.YEAR) + m + d + h + min + sec;
-        return date;
+        return String.format("%d%02d%02d%02d%02d%02d",
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH) + 1,
+                now.get(Calendar.DATE),
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                now.get(Calendar.SECOND)
+        );
     }
 
     /**
@@ -466,6 +471,15 @@ public abstract class XmlFile {
         // this iterates over top level
         for (Content c : doc.cloneContent()) {
             if (c instanceof ProcessingInstruction) {
+                ProcessingInstruction pi = (ProcessingInstruction) c;
+                for (String attrName : pi.getPseudoAttributeNames()) {
+                    if ("href".equals(attrName)) {
+                        processingInstructionHRef = pi.getPseudoAttributeValue(attrName);
+                    }
+                    if ("type".equals(attrName)) {
+                        processingInstructionType = pi.getPseudoAttributeValue(attrName);
+                    }
+                }
                 try {
                     doc = processOneInstruction((ProcessingInstruction) c, doc);
                 } catch (org.jdom2.transform.XSLTransformException ex) {

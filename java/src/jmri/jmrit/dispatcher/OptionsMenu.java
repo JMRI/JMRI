@@ -105,8 +105,8 @@ public class OptionsMenu extends JMenu {
     JmriJFrame optionsFrame = null;
     Container optionsPane = null;
     JCheckBox useConnectivityCheckBox = new JCheckBox(Bundle.getMessage("UseConnectivity"));
-    JComboBox<String> layoutEditorBox = new JComboBox<>();
     ArrayList<LayoutEditor> layoutEditorList = new ArrayList<>();
+
     JCheckBox autoAllocateCheckBox = new JCheckBox(Bundle.getMessage("AutoAllocateBox"));
     JCheckBox autoTurnoutsCheckBox = new JCheckBox(Bundle.getMessage("AutoTurnoutsBox"));
     JRadioButton trainsFromRoster = new JRadioButton(Bundle.getMessage("TrainsFromRoster"));
@@ -142,8 +142,6 @@ public class OptionsMenu extends JMenu {
             p1.setLayout(new FlowLayout());
             p1.add(useConnectivityCheckBox);
             useConnectivityCheckBox.setToolTipText(Bundle.getMessage("UseConnectivityHint"));
-            p1.add(layoutEditorBox);
-            layoutEditorBox.setToolTipText(Bundle.getMessage("LayoutEditorHint"));
             signalTypeBox = new JComboBox<>(signalTypes);
             p1.add(signalTypeBox);
             signalTypeBox.setToolTipText(Bundle.getMessage("SignalTypeHint"));
@@ -313,14 +311,11 @@ public class OptionsMenu extends JMenu {
             applyButton.setToolTipText(Bundle.getMessage("ApplyButtonHint"));
             optionsPane.add(p9);
         }
-        if (initializeLayoutEditorCombo()) {
-            useConnectivityCheckBox.setVisible(true);
-            layoutEditorBox.setVisible(true);
-        } else {
-            useConnectivityCheckBox.setVisible(false);
-            layoutEditorBox.setVisible(false);
-        }
+
+        initializeLayoutEditorList();
+        useConnectivityCheckBox.setEnabled(!layoutEditorList.isEmpty());
         useConnectivityCheckBox.setSelected(dispatcher.getUseConnectivity());
+
         signalTypeBox.setSelectedIndex(dispatcher.getSignalType());
         switch (dispatcher.getTrainsFrom()) {
             case TRAINSFROMROSTER:
@@ -349,19 +344,21 @@ public class OptionsMenu extends JMenu {
         minThrottleIntervalSpinner.setValue(dispatcher.getMinThrottleInterval());
         fullRampTimeSpinner.setValue(dispatcher.getFullRampTime());
 
-        if (dispatcher.getLayoutEditor() != null) {
-            openDispatcherWithPanel.setSelected(dispatcher.getLayoutEditor().getOpenDispatcherOnLoad());
+        boolean openDispatcher = false;
+        for (LayoutEditor panel : layoutEditorList) {
+            if (panel.getOpenDispatcherOnLoad()) {
+                openDispatcher = true;
+            }
         }
+        openDispatcherWithPanel.setSelected(openDispatcher);
+        openDispatcherWithPanel.setEnabled(!layoutEditorList.isEmpty());
+
         optionsFrame.pack();
         optionsFrame.setVisible(true);
     }
 
     private void applyOptions(ActionEvent e) {
-        if (layoutEditorList.size() > 0) {
-            int index = layoutEditorBox.getSelectedIndex();
-            dispatcher.setLayoutEditor(layoutEditorList.get(index));
-            dispatcher.setUseConnectivity(useConnectivityCheckBox.isSelected());
-        }
+        dispatcher.setUseConnectivity(useConnectivityCheckBox.isSelected());
         dispatcher.setSetSSLDirectionalSensors(setSSLDirectionalSensorsCheckBox.isSelected());
         if (trainsFromRoster.isSelected()) {
             dispatcher.setTrainsFrom(TrainsFrom.TRAINSFROMROSTER);
@@ -392,7 +389,11 @@ public class OptionsMenu extends JMenu {
         dispatcher.setUseScaleMeters(scaleMeters.isSelected());
         dispatcher.setMinThrottleInterval((int) minThrottleIntervalSpinner.getValue());
         dispatcher.setFullRampTime((int) fullRampTimeSpinner.getValue());
-        dispatcher.getLayoutEditor().setOpenDispatcherOnLoad(openDispatcherWithPanel.isSelected());
+
+        for (LayoutEditor panel : layoutEditorList) {
+            panel.setOpenDispatcherOnLoad(openDispatcherWithPanel.isSelected());
+        }
+
         dispatcher.setStoppingSpeedName( (String) stoppingSpeedBox.getSelectedItem());
         optionsFrame.setVisible(false);
         optionsFrame.dispose(); // prevent this window from being listed in the Window menu.
@@ -424,27 +425,9 @@ public class OptionsMenu extends JMenu {
         }
     }
 
-    private boolean initializeLayoutEditorCombo() {
+    private void initializeLayoutEditorList() {
         // get list of Layout Editor panels
         layoutEditorList = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
-        if (layoutEditorList.isEmpty()) {
-            return false;
-        }
-        layoutEditorBox.removeAllItems();
-        for (int i = 0; i < layoutEditorList.size(); i++) {
-            layoutEditorBox.addItem(layoutEditorList.get(i).getTitle());
-        }
-        if (layoutEditorList.size() > 1) {
-            LayoutEditor le = dispatcher.getLayoutEditor();
-            for (int j = 0; j < layoutEditorList.size(); j++) {
-                if (le == layoutEditorList.get(j)) {
-                    layoutEditorBox.setSelectedIndex(j);
-                }
-            }
-        } else {
-            layoutEditorBox.setSelectedIndex(0);
-        }
-        return true;
     }
 
     private void initializeScaleCombo() {

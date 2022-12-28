@@ -583,6 +583,9 @@
    <tocitem text="Simple Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
 
   </tocitem>
+
+  <tocitem text="Virtual Sound Decoder " target="html.tools.vsd.index"/>
+
   <tocitem text="Warrants " target="html.tools.WarrantsIntro">
    <tocitem text="Warrants Overview and Getting Started " target="package.jmri.jmrit.logix.Warrant"/>
 

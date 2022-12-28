@@ -26,9 +26,14 @@ public class ButtonTestAction extends jmri.util.swing.JmriAbstractAction {
                 return "Button Test";
             }
         };
-        newPane.add(new JLabel("Test panel " + n++));
+        newPane.add(new JLabel("Test panel " + n));
+        ButtonTestAction.incrementCount();
         return newPane;
     }
 
-    static int n = 1;
+    private static synchronized void incrementCount() {
+        n++;
+    }
+
+    private static volatile int n = 1;
 }

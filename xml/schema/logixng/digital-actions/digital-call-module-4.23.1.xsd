@@ -41,7 +41,11 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
+              <xs:element name="namedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+
+              <!-- These are for backwards compability up until JMRI 4.99.7 -->
               <xs:element name="module" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <!-- These are for backwards compability up until JMRI 4.99.7 -->
 
               <xs:element name="Parameters" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
@@ -91,7 +95,7 @@
 
             </xs:sequence>
             
-			<xs:attribute name="class" type="classType" use="required"/>
+            <xs:attribute name="class" type="classType" use="required"/>
         
     </xs:complexType>
 

@@ -17,17 +17,19 @@ public abstract class AbstractPortControllerTestBase {
 
     @Test
     public void testisDirtyNotNPE() {
-        apc.isDirty();
+        Assertions.assertNotNull(apc);
+        Assertions.assertDoesNotThrow(() -> { apc.isDirty(); });
     }
 
     @Test
     public void testDefaultMethod() {
+        Assertions.assertNotNull(apc);
         Assert.assertFalse("default false", apc.isOptionTypeText("foo"));
         jmri.util.JUnitAppender.assertErrorMessage("did not find option foo for type");
     }
 
     // from here down is testing infrastructure
-    protected AbstractPortController apc;
+    protected AbstractPortController apc = null;
 
     @BeforeEach
     public void setUp() {

@@ -1,0 +1,59 @@
+<!-- Sidebar -->
+	  <hr class="hide">
+	  <div id="side"> <!-- Block of text on left side of page for /help/en/manual Index page -->
+
+<div id="manual" style="text-align: center;">Manuels JMRI®</div>
+
+<dl>
+
+<dt class="dtheader">PDF</dt>
+      <dd>
+      <ul>
+        <li><a href="/help/en/manual/pdf/DP3_Man_3-4.pdf">DP3 Guide v3.4</a></li>
+        <li><a href="/help/en/manual/pdf/DP_man_3-4.pdf">DP Guide v3.4</a></li>
+        <li><a href="/help/en/manual/pdf/DP3_Man_2_14.pdf">DP3 Guide v2.14</a></li>
+      </ul>
+      </dd>
+
+<dt class="dtheader" style="padding-left: 2em; padding-bottom: .5em">En Linge</dt>
+
+<dt class="dtheader">JMRI&reg; v4.x</dt>
+  <dd>
+    <ul>
+      <li style="font-weight: bold;"><a href="../html/apps/DecoderPro/index.shtml">DecoderPro&reg; v4/v5</a></li>
+      <li style="font-weight: bold;"><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro
+        v4/v5</a></li>
+    </ul>
+  </dd>
+
+<dt class="dtheader">JMRI&reg; v3.10</dt>
+  <dd>
+    <ul>
+        <li style="font-weight: bold;"><a href="/help/en/manual/DecoderPro3/index.shtml">DecoderPro3&reg;</a></li>
+        <li style="font-weight: bold;"><a href="/help/en/manual/DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+        <li style="font-weight: bold;"><a href="/help/en/manual/JMRI_OPS_UsersGuide/index.shtml">OperationsPro</a></li>
+    </ul>
+  </dd>
+
+  <!-- 2015/12: masquez les manuels anciennes versions intermediaire, tr&#232;s d&#233;routant pour les nouveaux
+  utilisateurs-->
+
+<dt class="dtheader">JMRI&reg; v2.14</dt>
+    <dd style="font-weight: bold;">
+    <ul>
+        <li><a href="/help/en/manual/JMRI_2-14_manual/index.shtml">JMRI&reg; Guide</a></li>
+        <li><a href="/help/en/manual//DP3_2-14_manual/index.shtml">DecoderPro3&reg;</a></li>
+    </ul>
+    </dd>
+
+<!--#include virtual="/help/fr/parts/SidebarInstall.shtml" -->
+
+</dl>
+
+<!--#include virtual="/help/fr/parts/SidebarTail.shtml" -->
+
+  </div> <!-- close #manual -->
+
+  <!-- button is in /Header -->
+  <script src="/js/side.js"></script>
+<!-- /Sidebar -->

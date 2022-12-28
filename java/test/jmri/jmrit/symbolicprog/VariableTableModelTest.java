@@ -14,7 +14,6 @@ import jmri.util.JUnitUtil;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -41,7 +40,7 @@ public class VariableTableModelTest {
     public void testVarTableCreate() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, null);  // CvTableModel ref is null for this test
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     // Check column count member fn, column names
@@ -49,8 +48,8 @@ public class VariableTableModelTest {
     public void testVarTableColumnCount() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, null);
-        Assert.assertTrue(t.getColumnCount() == 2);
-        Assert.assertTrue(t.getColumnName(1).equals(Bundle.getMessage("Name"))); // allow for I18N
+        Assertions.assertEquals(2, t.getColumnCount());
+        Assertions.assertEquals(t.getColumnName(1), Bundle.getMessage("Name")); // allow for I18N
     }
 
     // Check loading two columns, three rows
@@ -103,23 +102,27 @@ public class VariableTableModelTest {
         //} catch (Exception e) { System.out.println("error writing XML: "+e);}
         // and test reading this
         t.setRow(0, el0);
-        Assert.assertTrue(t.getValueAt(0, 0).equals("1"));
-        Assert.assertTrue(t.getValueAt(0, 1).equals("one"));
+        Assertions.assertEquals("1", t.getValueAt(0, 0));
+        Assertions.assertEquals("one", t.getValueAt(0, 1));
 
         // check that the variable names were set right
-        Assert.assertEquals("check loaded label ", "one", t.getLabel(0));
-        Assert.assertEquals("check loaded item ", "really two", t.getItem(0));
+        Assertions.assertEquals("one", t.getLabel(0), "check loaded label ");
+        Assertions.assertEquals("really two", t.getItem(0), "check loaded item ");
 
         t.setRow(1, el1);
-        Assert.assertTrue(t.getValueAt(1, 0).equals("4"));
-        Assert.assertTrue(t.getValueAt(1, 1).equals("two"));
+        Assertions.assertEquals("4", t.getValueAt(1, 0));
+        Assertions.assertEquals("two", t.getValueAt(1, 1));
 
-        Assert.assertTrue(t.getRowCount() == 2);
+        Assertions.assertEquals(2, t.getRowCount());
 
         // check finding
-        Assert.assertEquals("find variable two ", 1, t.findVarIndex("two"));
-        Assert.assertEquals("find nonexistant variable ", -1, t.findVarIndex("not there, eh?"));
+        Assertions.assertEquals(1, t.findVarIndex("two"), "find variable two ");
+        Assertions.assertEquals(-1, t.findVarIndex("not there, eh?"), "find nonexistant variable ");
 
+        // check reverse finding
+        Assertions.assertEquals(1, t.findVarIndex("two", true), "find variable two ");
+        Assertions.assertEquals(0, t.findVarIndex("really two", true), "find variable one ");
+        Assertions.assertEquals(-1, t.findVarIndex("not there, eh?", true), "find nonexistant variable ");
     }
 
     // Check creating a longaddr type, walk through its programming
@@ -159,10 +162,10 @@ public class VariableTableModelTest {
         //} catch (Exception e) { System.out.println("error writing XML: "+e);}
         // and test reading this
         t.setRow(0, el0);
-        Assert.assertTrue(t.getValueAt(0, 0).equals("17"));
-        Assert.assertTrue(t.getValueAt(0, 1).equals("long"));
+        Assertions.assertEquals("17", t.getValueAt(0, 0));
+        Assertions.assertEquals("long", t.getValueAt(0, 1));
 
-        Assert.assertTrue(t.getRowCount() == 1);
+        Assertions.assertEquals(1, t.getRowCount());
 
     }
 
@@ -197,10 +200,10 @@ public class VariableTableModelTest {
         t.setRow(0, el0);
 
         // check finding
-        Assert.assertEquals("length of variable list ", 1, t.getRowCount());
-        Assert.assertEquals("name of 1st variable ", "Speed Table", t.getLabel(0));
-        Assert.assertEquals("find Speed Table ", 0, t.findVarIndex("Speed Table"));
-        Assert.assertEquals("find nonexistant variable ", -1, t.findVarIndex("not there, eh?"));
+        Assertions.assertEquals(1, t.getRowCount(), "length of variable list ");
+        Assertions.assertEquals("Speed Table", t.getLabel(0), "name of 1st variable ");
+        Assertions.assertEquals(0, t.findVarIndex("Speed Table"), "find Speed Table ");
+        Assertions.assertEquals(-1, t.findVarIndex("not there, eh?"), "find nonexistant variable ");
 
     }
 
@@ -233,10 +236,10 @@ public class VariableTableModelTest {
         t.setRow(0, el0);
 
         // check finding
-        Assert.assertEquals("length of variable list ", 1, t.getRowCount());
-        Assert.assertEquals("name of 1st variable ", "SplitVal no default", t.getLabel(0));
-        Assert.assertEquals("find variable by name ", 0, t.findVarIndex("SplitVal no default"));
-        Assert.assertEquals("find nonexistant variable ", -1, t.findVarIndex("not there, eh?"));
+        Assertions.assertEquals(1, t.getRowCount(), "length of variable list ");
+        Assertions.assertEquals("SplitVal no default", t.getLabel(0), "name of 1st variable ");
+        Assertions.assertEquals(0, t.findVarIndex("SplitVal no default"), "find variable by name ");
+        Assertions.assertEquals(-1, t.findVarIndex("not there, eh?"), "find nonexistant variable ");
 
     }
 
@@ -270,13 +273,11 @@ public class VariableTableModelTest {
         t.setRow(0, el0);
 
         // check finding
-        Assert.assertEquals("length of variable list ", 1, t.getRowCount());
-        Assert.assertEquals("name of 1st variable ", "SplitVal with default", t.getLabel(0));
-        Assert.assertEquals("find variable by name ", 0, t.findVarIndex("SplitVal with default"));
+        Assertions.assertEquals(1, t.getRowCount(), "length of variable list ");
+        Assertions.assertEquals("SplitVal with default", t.getLabel(0), "name of 1st variable ");
+        Assertions.assertEquals(0, t.findVarIndex("SplitVal with default"), "find variable by name ");
         SplitVariableValue sv = (SplitVariableValue) t.getVariable(t.findVarIndex("SplitVal with default"));
-        Assert.assertEquals("find value of variable ", 32700, sv.getLongValue());
-        
-
+        Assertions.assertEquals(32700, sv.getLongValue(), "find value of variable ");
     }
 
     // Check creating a splitVal variable with big default value
@@ -309,11 +310,11 @@ public class VariableTableModelTest {
         t.setRow(0, el0);
 
         // check finding
-        Assert.assertEquals("length of variable list ", 1, t.getRowCount());
-        Assert.assertEquals("name of 1st variable ", "SplitVal with big default", t.getLabel(0));
-        Assert.assertEquals("find variable by name ", 0, t.findVarIndex("SplitVal with big default"));
+        Assertions.assertEquals(1, t.getRowCount(), "length of variable list ");
+        Assertions.assertEquals("SplitVal with big default", t.getLabel(0), "name of 1st variable ");
+        Assertions.assertEquals(0, t.findVarIndex("SplitVal with big default"), "find variable by name ");
         SplitVariableValue sv = (SplitVariableValue) t.getVariable(t.findVarIndex("SplitVal with big default"));
-        Assert.assertEquals("find value of variable ", 35184372088832L, sv.getLongValue());
+        Assertions.assertEquals(35184372088832L, sv.getLongValue(), "find value of variable ");
 
     }
 
@@ -365,17 +366,88 @@ public class VariableTableModelTest {
         t.setRow(0, el0);
 
         // check
-        Assert.assertEquals("name of variable 1", "Enum Sample", t.getLabel(0));
+        Assertions.assertEquals("Enum Sample", t.getLabel(0), "name of variable 1");
         EnumVariableValue ev = (EnumVariableValue) t.getVariable(t.findVarIndex("Enum Sample"));
         ev.setValue(1);
-        Assert.assertEquals("value 1", "V1", ev.getTextValue());
+        Assertions.assertEquals("V1", ev.getTextValue(), "value 1");
         ev.setValue(2);
-        Assert.assertEquals("value 2", "V2", ev.getTextValue());
+        Assertions.assertEquals("V2", ev.getTextValue(), "value 2");
         ev.setValue(3);
-        Assert.assertEquals("value 3", "V3", ev.getTextValue());
+        Assertions.assertEquals("V3", ev.getTextValue(), "value 3");
         ev.setValue(4);
-        Assert.assertEquals("value 4", "V4", ev.getTextValue());
+        Assertions.assertEquals("V4", ev.getTextValue(), "value 4");
+    }
 
+    @Test
+    public void testVarDecVarMaxMask() {
+        String[] args = {"CV", "Name"};
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
+
+        // create a JDOM tree with just some elements
+        Element root = new Element("decoder-config");
+        Document doc = new Document(root);
+        doc.setDocType(new DocType("decoder-config", "decoder-config.dtd"));
+
+        // add some elements
+        Element el0, el1, el2, el3, el4;
+        root.addContent(new Element("decoder")
+                .addContent(new Element("variables")
+                        .addContent(el0 = new Element("variable")
+                                .setAttribute("CV", "1")
+                                .addContent(new Element("decVal")
+                                        .setAttribute("max", "31")
+                                )
+                        )
+                        .addContent(el1 = new Element("variable")
+                                .setAttribute("CV", "2")
+                                .setAttribute("mask", "VVVV")
+                                .addContent(new Element("decVal")
+                                        .setAttribute("max", "3")
+                                )
+                        )
+                        .addContent(el2 = new Element("variable")
+                                .setAttribute("CV", "3")
+                                .addContent(new Element("decVal")
+                                        .setAttribute("max", "9999")
+                                )
+                        )
+                        .addContent(el3 = new Element("variable")
+                                .setAttribute("CV", "4")
+                                .addContent(new Element("hexVal")
+                                        .setAttribute("max", "9")
+                                )
+                        )
+                        .addContent(el4 = new Element("variable")
+                                .setAttribute("CV", "5")
+                                .addContent(new Element("hexVal")
+                                        .setAttribute("max", "F99")
+                                )
+                        )
+                ) // variables element
+        ) // decoder element
+        ; // end of adding contents
+
+        // set up a decoder to match against
+        DecoderFile _df = createDecoderFile("p", "m", "f");
+        t.setRow(0, el0, _df);
+        Assertions.assertNull(el0.getAttribute("mask"), "mask");
+        t.setRow(1, el1, _df);
+        Assertions.assertEquals("[Attribute: mask=\"VVVV\"]", el1.getAttribute("mask").toString(), "mask");
+        t.setRow(2, el2, _df);
+        Assertions.assertNull(el2.getAttribute("mask"), "mask");
+        t.setRow(3, el3, _df);
+        Assertions.assertNull(el3.getAttribute("mask"), "mask");
+        t.setRow(4, el4, _df);
+        Assertions.assertNull(el4.getAttribute("mask"), "mask");
+
+        // now read the rows from the tablemodel
+        // decval
+        Assertions.assertEquals("VVVVVVVV", t.getVariable(0).getMask(), "default mask"); // default mask applied
+        Assertions.assertEquals("VVVV", t.getVariable(1).getMask(), "xml mask"); // from xml definition
+        Assertions.assertEquals("VVVVVVVVVVVVVV", t.getVariable(2).getMask(), ">256 mask"); // autogenerated
+        // hexval
+        Assertions.assertEquals("VVVVVVVV", t.getVariable(3).getMask(), "hex default mask"); // default
+        Assertions.assertEquals("VVVVVVVVVVVV", t.getVariable(4).getMask(), "hex max mask"); // autogenerated on hex
     }
 
     @Test
@@ -392,14 +464,14 @@ public class VariableTableModelTest {
 
         VariableValue v = new DecVariableValue("label17", "comment17", "", false, false, false, false, "17", "VVVVVVVV", 0, 255, map, null, null);
 
-        Assert.assertEquals("default start", "0", v.getValueString());
+        Assertions.assertEquals("0", v.getValueString(), "default start");
 
         // set default with normal element
         Element el0 = new Element("variable")
                                 .setAttribute("default", "21");
 
         t.setDefaultValue(el0, v);
-        Assert.assertEquals("default start", "21", v.getValueString());
+        Assertions.assertEquals("21", v.getValueString(), "default start");
 
         // set default with defaultItem elements
         Element el1 = new Element("variable")
@@ -414,7 +486,7 @@ public class VariableTableModelTest {
                                 .setAttribute("default", "21");
 
         t.setDefaultValue(el1, v);
-        Assert.assertEquals("default start", "32", v.getValueString());
+        Assertions.assertEquals("32", v.getValueString(), "default start");
     }
     
     // Check creating an enumvar with various groupings and element-based includes/excludes
@@ -745,20 +817,20 @@ public class VariableTableModelTest {
         // create the EnumVar and get a reference to it
         Element el0 = setupEnumVarIncludeExcludeElement(include, exclude, includeGroup, excludeGroup);
         t.setRow(0, el0, _df);
-        Assert.assertEquals("name of variable 1", "Enum Sample", t.getLabel(0));
+        Assertions.assertEquals("Enum Sample", t.getLabel(0), "name of variable 1");
         EnumVariableValue ev = (EnumVariableValue) t.getVariable(t.findVarIndex("Enum Sample"));
 
         ArrayList<Integer> includedList = new ArrayList<>(Arrays.asList(included));
         for (int i = 0; i < itemCount; i++) {
             ev.setValue(i);
             if (includedList.contains(i)) {
-                Assert.assertEquals("Value " + i + " is included", "V" + i, ev.getTextValue());
+                Assertions.assertEquals("V" + i, ev.getTextValue(), "Value " + i + " is included");
             } else {
-                Assert.assertEquals("Value " + i + " is excluded", "Reserved value " + i, ev.getTextValue());
+                Assertions.assertEquals("Reserved value " + i, ev.getTextValue(), "Value " + i + " is excluded");
             }
         }
     }
-    // End commom setup routines for testVarEnumVarIncludeExclude tests
+    // End common setup routines for testVarEnumVarIncludeExclude tests
 
     // Check creating bogus XML (unknown variable type)
     @Test
@@ -801,8 +873,7 @@ public class VariableTableModelTest {
         //} catch (Exception e) { System.out.println("error writing XML: "+e);}
         // and test reading this
         t.setRow(0, el0);
-        Assert.assertTrue(t.getRowCount() == 0);
-
+        Assertions.assertEquals(0, t.getRowCount());
     }
 
     // Check can read simple file
@@ -844,7 +915,6 @@ public class VariableTableModelTest {
             t.setRow(i++, v);
         }
         // fault is failure to reach the end, e.g. throw message or exception
-
     }
 
     @BeforeEach

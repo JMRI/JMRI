@@ -3,7 +3,7 @@ package jmri.jmrix.can.cbus;
 import java.beans.PropertyChangeEvent;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
+import javax.annotation.*;
 
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -43,7 +43,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         try {
             newAddress = CbusAddress.validateSysName(addr);
         } catch (IllegalArgumentException e) {
-            log.error(e.getMessage());
+            log.error("Unable to create CbusSensor, {}", e.getMessage());
             throw e;
         }
         // OK, make
@@ -76,14 +76,24 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         return true;
     }
 
-    /**
-     * Only increments by 1, which is fine for CBUS Sensors.
-     * {@inheritDoc}
-     */
-    @Nonnull
     @Override
-    protected String getIncrement(String curAddress, int increment) throws JmriException {
-        return CbusAddress.getIncrement(curAddress);
+    @Nonnull
+    @CheckReturnValue
+    public String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
+        if (!allowMultipleAdditions(currentBean.getSystemName())) throw new UnsupportedOperationException("Not supported");
+
+        String currentName = currentBean.getSystemName();
+        String suffix = Manager.getSystemSuffix(currentName);
+        String type = Manager.getTypeLetter(currentName);
+        String prefix = Manager.getSystemPrefix(currentName);
+
+        String nextName = CbusAddress.getIncrement(suffix);
+
+        if (nextName==null) {
+            throw new JmriException("No existing number found when incrementing " + currentName);
+        }
+        return prefix+type+nextName;
+
     }
 
     /**
@@ -144,7 +154,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
             }
         }
     }
-    
+
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);

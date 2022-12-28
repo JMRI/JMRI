@@ -118,12 +118,12 @@ window immediately:
         <p>JMRI does not provide a full "development environment," but it does provide some basic
         information that can help with debugging your scripts.</p>
 
-        <p>Open the JMRI System Console window (<strong>Help ⇒ System Console</strong>). This will
+        <p>Open the JMRI System Console window (<strong>Help &rArr; System Console</strong>). This will
         give you instant information pertaining to WARN and ERROR messages. Text can be copied to a
         text editor for further review.</p>
 
         <p>Open the Script Output window (<strong>Scripting</strong> {<em>Old:
-        <strong>Panels</strong></em>} <strong>⇒ Script Output</strong>). This will display the
+        <strong>Panels</strong></em>} <strong>&rArr; Script Output</strong>). This will display the
         results of any "print" statements in your script as well as some error messages (NOTE that
         some errors go here and some to the System Console so you you should have both windows open
         when you are debugging). Text can be copied to a text editor for further review.</p>
@@ -180,7 +180,7 @@ window immediately:
 
         <p>There are a lot of useful Python books and online tutorials. For more information on the
         Jython language and it's relations with Java, the best reference is the <a href=
-        "http://www.oreilly.com/catalog/jythoness/" target="_blank">Jython Essentials</a> book
+        "https://www.oreilly.com/library/view/jython-essentials/9781449397364/" target="_blank">Jython Essentials</a> book
         published by O'Reilly. The <a href="https://www.jython.org/" target="_blank">jython.org web
         site</a> is also very useful.</p>
 
@@ -236,6 +236,10 @@ method calls.
           <li>layoutblocks</li>
 
           <li>warrants</li>
+
+          <li>sections</li>
+
+          <li>transits</li>
         </ul>
         These can then be referenced directly in Jython as
 

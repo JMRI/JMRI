@@ -1,20 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Translated by Herv&#233; BLOREC<bzh56420@yahoo.fr> on 2016-08-24 -->
-
   <title>JMRI: Getting the Code</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Git download">
   <!--#include virtual="/Style.shtml" -->
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <!-- Page Body -->
@@ -129,11 +128,11 @@
       "Repository menu in GitHub Desktop" height="175" width="275"></a></p>
 
       <p>Vous pouvez aussi naviguer directement là en utilisant votre fichier système.<br>
-      À l'intérieur vous trouverez des répertoires appelés <tt>xml</tt>, <tt>resources</tt>,
-      <tt>jython</tt>, <tt>help</tt>, <tt>lib</tt>, <tt>java</tt> et autres.</p>
+      À l'intérieur vous trouverez des répertoires appelés <code>xml</code>, <code>resources</code>,
+      <code>jython</code>, <code>help</code>, <code>lib</code>, <code>java</code> et autres.</p>
 
-      <p>Dans le répertoire <tt>java</tt>, vous trouverez un répertoire <tt>src</tt> qui contient
-      le code source pour JMRI lui-même, et un répertoire <tt>tests</tt> qui contient diverses
+      <p>Dans le répertoire <code>java</code>, vous trouverez un répertoire <code>src</code> qui contient
+      le code source pour JMRI lui-même, et un répertoire <code>tests</code> qui contient diverses
       routines de test.</p>
 
       <p>Vous pouvez regarder le code avec votre éditeur de texte favori.<br>
@@ -163,11 +162,11 @@
       https://github.com/JMRI/JMRI.git</code></p>
 
       <p>Après que la vérification est terminée, allez au nouveau répertoire JMRI qui a été créé. À
-      l'intérieur, vous trouverez: des répertoires appelés <tt>xml</tt>, <tt>resources</tt>,
-      <tt>jython</tt>, <tt>help</tt>, <tt>lib</tt>, <tt>java</tt> et autres.</p>
+      l'intérieur, vous trouverez: des répertoires appelés <code>xml</code>, <code>resources</code>,
+      <code>jython</code>, <code>help</code>, <code>lib</code>, <code>java</code> et autres.</p>
 
-      <p>Dans le répertoire <tt>java</tt>, vous trouverez un répertoire <tt>src</tt> qui contient
-      le code source pour JMRI lui-même, et un répertoire <tt>tests</tt> qui contient diverses
+      <p>Dans le répertoire <code>java</code>, vous trouverez un répertoire <code>src</code> qui contient
+      le code source pour JMRI lui-même, et un répertoire <code>tests</code> qui contient diverses
       routines de test.</p>
 
       <p>Vous pouvez regarder le code avec votre éditeur des texte favori.</p>
@@ -204,11 +203,13 @@
       détails</p>
 
       <p>La meilleure méthode pour retrouver la source pour les version 4.1.2 et avant est par le
-      <a href="getcvscode.shtml">Répertoire CVS</a> SVP Voir ces instructions pour plus de détails 
-      <!--#include virtual="/Footer.shtml" --></p>
+      <a href="getcvscode.shtml">Répertoire CVS</a> SVP Voir ces instructions pour plus de détails.</p>
+      
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

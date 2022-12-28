@@ -1,8 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -10,8 +9,9 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
@@ -24,21 +24,19 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionOBlock extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionOBlock extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<OBlock> _oblockHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
+    private final LogixNG_SelectNamedBean<OBlock> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, OBlock.class, InstanceManager.getDefault(OBlockManager.class), this);
 
-    private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private DirectOperation _operationDirect = DirectOperation.Deallocate;
-    private String _operationReference = "";
-    private String _operationLocalVariable = "";
-    private String _operationFormula = "";
-    private ExpressionNode _operationExpressionNode;
+    private final LogixNG_SelectEnum<DirectOperation> _selectEnum =
+            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.Deallocate, this);
+
+    private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
@@ -61,17 +59,9 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionOBlock copy = new ActionOBlock(sysName, userName);
         copy.setComment(getComment());
-        copy.setAddressing(_addressing);
-        if (_oblockHandle != null) copy.setOBlock(_oblockHandle);
-        copy.setReference(_reference);
-        copy.setLocalVariable(_localVariable);
-        copy.setFormula(_formula);
-
-        copy.setOperationAddressing(_operationAddressing);
-        copy.setOperationDirect(_operationDirect);
-        copy.setOperationReference(_operationReference);
-        copy.setOperationLocalVariable(_operationLocalVariable);
-        copy.setOperationFormula(_operationFormula);
+        _selectNamedBean.copy(copy._selectNamedBean);
+        _selectMemoryNamedBean.copy(copy._selectMemoryNamedBean);
+        _selectEnum.copy(copy._selectEnum);
 
         copy.setDataAddressing(_dataAddressing);
         copy.setDataReference(_dataReference);
@@ -82,146 +72,17 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         return manager.registerAction(copy);
     }
 
-    public void setOBlock(@Nonnull String oblockName) {
-        assertListenersAreNotRegistered(log, "setOBlock");
-        OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getNamedBean(oblockName);
-        if (oblock != null) {
-            ActionOBlock.this.setOBlock(oblock);
-        } else {
-            removeOBlock();
-            log.error("OBlock \"{}\" is not found", oblockName);
-        }
+    public LogixNG_SelectNamedBean<OBlock> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
-    public void setOBlock(@Nonnull OBlock oblock) {
-        assertListenersAreNotRegistered(log, "setOBlock");
-        ActionOBlock.this.setOBlock(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(oblock.getDisplayName(), oblock));
+    public LogixNG_SelectNamedBean<Memory> getSelectMemoryNamedBean() {
+        return _selectMemoryNamedBean;
     }
 
-    public void setOBlock(@Nonnull NamedBeanHandle<OBlock> handle) {
-        assertListenersAreNotRegistered(log, "setOBlock");
-        _oblockHandle = handle;
-        InstanceManager.getDefault(OBlockManager.class).addVetoableChangeListener(this);
+    public LogixNG_SelectEnum<DirectOperation> getSelectEnum() {
+        return _selectEnum;
     }
-
-    public void removeOBlock() {
-        assertListenersAreNotRegistered(log, "removeOBlock");
-        if (_oblockHandle != null) {
-            InstanceManager.getDefault(OBlockManager.class).removeVetoableChangeListener(this);
-            _oblockHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<OBlock> getOBlock() {
-        return _oblockHandle;
-    }
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
-    }
-
-
-    public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _operationAddressing = addressing;
-        parseOperationFormula();
-    }
-
-    public NamedBeanAddressing getOperationAddressing() {
-        return _operationAddressing;
-    }
-
-    public void setOperationDirect(DirectOperation state) {
-        _operationDirect = state;
-    }
-
-    public DirectOperation getOperationDirect() {
-        return _operationDirect;
-    }
-
-    public void setOperationReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _operationReference = reference;
-    }
-
-    public String getOperationReference() {
-        return _operationReference;
-    }
-
-    public void setOperationLocalVariable(@Nonnull String localVariable) {
-        _operationLocalVariable = localVariable;
-    }
-
-    public String getOperationLocalVariable() {
-        return _operationLocalVariable;
-    }
-
-    public void setOperationFormula(@Nonnull String formula) throws ParserException {
-        _operationFormula = formula;
-        parseOperationFormula();
-    }
-
-    public String getOperationFormula() {
-        return _operationFormula;
-    }
-
-    private void parseOperationFormula() throws ParserException {
-        if (_operationAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _operationExpressionNode = parser.parseExpression(_operationFormula);
-        } else {
-            _operationExpressionNode = null;
-        }
-    }
-
 
      public void setDataAddressing(NamedBeanAddressing addressing) throws ParserException {
         _dataAddressing = addressing;
@@ -279,47 +140,10 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         return _oblockValue;
     }
 
-
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof OBlock) {
-                if (evt.getOldValue().equals(getOBlock().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ActionOBlock_OBlockInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.ITEM;
-    }
-
-    private String getNewOperation() throws JmriException {
-
-        switch (_operationAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _operationReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_operationLocalVariable), false);
-
-            case Formula:
-                return _operationExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _operationExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
-        }
     }
 
     private String getNewData(ConditionalNG conditionalNG) throws JmriException {
@@ -338,7 +162,7 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
                         .convertToString(symbolTable.getValue(_dataLocalVariable), false);
 
             case Formula:
-                return _operationExpressionNode != null
+                return _dataExpressionNode != null
                         ? TypeConversionUtil.convertToString(
                                 _dataExpressionNode.calculate(
                                         conditionalNG.getSymbolTable()), false)
@@ -353,59 +177,16 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        OBlock oblock;
+        final ConditionalNG conditionalNG = getConditionalNG();
 
-        switch (_addressing) {
-            case Direct:
-                oblock = _oblockHandle != null ? _oblockHandle.getBean() : null;
-                break;
+        OBlock oblock = _selectNamedBean.evaluateNamedBean(conditionalNG);
 
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                oblock = InstanceManager.getDefault(OBlockManager.class)
-                        .getNamedBean(ref);
-                break;
+        if (oblock == null) return;
 
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                oblock = InstanceManager.getDefault(OBlockManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                oblock = _expressionNode != null ?
-                        InstanceManager.getDefault(OBlockManager.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-        if (oblock == null) {
-            return;
-        }
-
-        String name = (_operationAddressing != NamedBeanAddressing.Direct)
-                ? getNewOperation() : null;
-
-        DirectOperation oper;
-        if ((_operationAddressing == NamedBeanAddressing.Direct)) {
-            oper = _operationDirect;
-        } else {
-            oper = DirectOperation.valueOf(name);
-        }
-
+        DirectOperation oper = _selectEnum.evaluateEnum(conditionalNG);
 
         // Variables used in lambda must be effectively final
         DirectOperation theOper = oper;
-
-        final ConditionalNG conditionalNG = getConditionalNG();
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch (theOper) {
@@ -426,6 +207,32 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
                     break;
                 case ClearOutOfService:
                     oblock.setOutOfService(false);
+                    break;
+                case GetBlockWarrant:
+                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(conditionalNG);
+                    if (memory != null) {
+                        Warrant w = oblock.getWarrant();
+                        if (w != null) {
+                            memory.setValue(w.getDisplayName());
+                        } else {
+                            memory.setValue("unallocated");
+                        }
+                    } else {
+                        throw new JmriException("Memory for GetBlockWarrant is null for oblock - " + oblock.getDisplayName());  // NOI18N
+                    }
+                    break;
+                case GetBlockValue:
+                    memory = _selectMemoryNamedBean.evaluateNamedBean(conditionalNG);
+                    if (memory != null) {
+                        Object obj = oblock.getValue();
+                        if (obj instanceof String) {
+                            memory.setValue(obj);
+                        } else {
+                            memory.setValue("");
+                        }
+                    } else {
+                        throw new JmriException("Memory for GetBlockValue is null for oblock - " + oblock.getDisplayName());  // NOI18N
+                    }
                     break;
                 default:
                     throw new IllegalArgumentException("invalid oper state: " + theOper.name());
@@ -450,74 +257,41 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
-        String state = "";
+        String namedBean = _selectNamedBean.getDescription(locale);
+        String state = _selectEnum.getDescription(locale);
+        String getLocationMemory = _selectMemoryNamedBean.getDescription(locale);
 
-        switch (_addressing) {
-            case Direct:
-                String oblockName;
-                if (_oblockHandle != null) {
-                    oblockName = _oblockHandle.getBean().getDisplayName();
-                } else {
-                    oblockName = Bundle.getMessage(locale, "BeanNotSelected");
+        if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
+            if (_selectEnum.getEnum() != null) {
+                switch (_selectEnum.getEnum()) {
+                    case SetValue:
+                        return getLongDataDescription(locale, "ActionOBlock_Long_Value", namedBean, _oblockValue);
+                    case GetBlockWarrant:
+                        return getLongDataDescription(locale, "ActionOBlock_Long_GetWarrant", namedBean, getLocationMemory);
+                    case GetBlockValue:
+                        return getLongDataDescription(locale, "ActionOBlock_Long_GetTrain", namedBean, getLocationMemory);
+                    default:
+                        // Fall thru and handle it in the end of the method
                 }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", oblockName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-        switch (_operationAddressing) {
-            case Direct:
-                if (_operationDirect == DirectOperation.SetValue) {
-                    String bundleKey = "ActionOBlock_Long_Value";
-                    switch (_dataAddressing) {
-                        case Direct:
-                            return Bundle.getMessage(locale, bundleKey, namedBean, _oblockValue);
-                        case Reference:
-                            return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByReference", _dataReference));
-                        case LocalVariable:
-                            return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByLocalVariable", _dataLocalVariable));
-                        case Formula:
-                            return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByFormula", _dataFormula));
-                        default:
-                            throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
-                    }
-                } else {
-                    state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
-                }
-                break;
-
-            case Reference:
-                state = Bundle.getMessage(locale, "AddressByReference", _operationReference);
-                break;
-
-            case LocalVariable:
-                state = Bundle.getMessage(locale, "AddressByLocalVariable", _operationLocalVariable);
-                break;
-
-            case Formula:
-                state = Bundle.getMessage(locale, "AddressByFormula", _operationFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _operationAddressing.name());
+            }
         }
 
         return Bundle.getMessage(locale, "ActionOBlock_Long", namedBean, state);
+    }
+
+    private String getLongDataDescription(Locale locale, String bundleKey, String namedBean, String value) {
+        switch (_dataAddressing) {
+            case Direct:
+                return Bundle.getMessage(locale, bundleKey, namedBean, value);
+            case Reference:
+                return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByReference", _dataReference));
+            case LocalVariable:
+                return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByLocalVariable", _dataLocalVariable));
+            case Formula:
+                return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByFormula", _dataFormula));
+            default:
+                throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
+        }
     }
 
     /** {@inheritDoc} */
@@ -529,11 +303,17 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectNamedBean.registerListeners();
+        _selectEnum.registerListeners();
+        _selectMemoryNamedBean.addPropertyChangeListener("value", this);
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectNamedBean.unregisterListeners();
+        _selectEnum.unregisterListeners();
+        _selectMemoryNamedBean.removePropertyChangeListener("value", this);
     }
 
     /** {@inheritDoc} */
@@ -547,7 +327,9 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
         SetError(Bundle.getMessage("ActionOBlock_SetError")),
         ClearError(Bundle.getMessage("ActionOBlock_ClearError")),
         SetOutOfService(Bundle.getMessage("ActionOBlock_SetOutOfService")),
-        ClearOutOfService(Bundle.getMessage("ActionOBlock_ClearOutOfService"));
+        ClearOutOfService(Bundle.getMessage("ActionOBlock_ClearOutOfService")),
+        GetBlockWarrant(Bundle.getMessage("ActionOBlock_GetBlockWarrant")),
+        GetBlockValue(Bundle.getMessage("ActionOBlock_GetValue"));
 
         private final String _text;
 
@@ -565,12 +347,15 @@ public class ActionOBlock extends AbstractDigitalAction implements VetoableChang
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ActionOBlock: bean = {}, report = {}", cdl, report);
-        if (getOBlock() != null && bean.equals(getOBlock().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionOBlock.class);
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
+    }
+
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionOBlock.class);
 
 }

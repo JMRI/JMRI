@@ -62,7 +62,7 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     }
     
     @Test
-    public void testRequestUpdateSensors() {
+    public void testRequestUpdateSensors() throws Exception {
         
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcis);
@@ -71,31 +71,28 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         t.requestUpdateFromLayout();
         Assert.assertEquals(1,tcis.outbound.size());
         tcis.outbound.clear();
-        
-        try {
+
+        Assertions.assertDoesNotThrow( () -> {
             t.provideFirstFeedbackSensor("MS+54321");
-        } catch (jmri.JmriException ex) { }
+        });
         t.setFeedbackMode("ONESENSOR");
         t.requestUpdateFromLayout();
         Assert.assertEquals(2,tcis.outbound.size());
         tcis.outbound.clear();
-        
-        try {
+
+        Assertions.assertDoesNotThrow( () -> {
             t.provideSecondFeedbackSensor("MS+4545");
-        } catch (jmri.JmriException ex) { }
+        });
         t.setFeedbackMode("TWOSENSOR");
         t.requestUpdateFromLayout();
         Assert.assertEquals(3,tcis.outbound.size());
         memo.dispose();
     }    
-    
+
     @Test
-    public void testNullEvent() {
-        try {
-            t = new CbusTurnout("MT",null,tcis);
-            Assert.fail("Should have thrown an exception");
-        } catch (NullPointerException e) {
-        }
+    public void testNullEvent() throws Exception {
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> { t = new CbusTurnout("MT",null,tcis); });
+        Assertions.assertEquals(null, ex.getMessage());
     }
     
     @Test
@@ -436,16 +433,21 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
         
-        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=15;
         t.setFeedbackMode("DELAYED");
+        Assertions.assertEquals(Turnout.UNKNOWN, t.getKnownState());
+        
         ((CbusTurnout)t).message(m);
-        Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, "msg Turnout.THROWN didn't arrive");
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); }, 
+                "Turnout message goes to INCONSISTENT before THROWN");
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, 
+                "Turnout.THROWN after delay");
         
         m.setElement(0, 0x91); // ACOF OPC
         ((CbusTurnout)t).message(m);
-        Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, "msg Turnout.CLOSED didn't arrive");
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); }, 
+                "Turnout message goes to INCONSISTENT before CLOSED");
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, 
+                "Turnout.CLOSED after delay");
         
     }
     
@@ -454,8 +456,8 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     public void testDelayedTurnoutThrownCanReply() throws jmri.JmriException {
         
         t = new CbusTurnout("MT","+N54321E12345",tcis);
-        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=15;
         t.setFeedbackMode("DELAYED");
+        Assertions.assertEquals(Turnout.UNKNOWN, t.getKnownState());
         
         CanReply m = new CanReply(tcis.getCanid());
         m.setNumDataElements(5);
@@ -466,7 +468,8 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(4, 0x39);
         
         ((CbusTurnout)t).reply(m);
-        Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); },
+            "thrown Turnout.INCONSISTENT didn't happen"); 
         JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, 
             "Turnout.THROWN didn't happen after delayed feedback");
 
@@ -476,7 +479,6 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     public void testDelayedTurnoutClosedCanReply() throws jmri.JmriException {
         
         t = new CbusTurnout("MT","+N54321E12345",tcis);
-        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=15;
         t.setFeedbackMode("DELAYED");
         
         CanReply r = new CanReply(tcis.getCanid());
@@ -489,9 +491,9 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         
         ((CbusTurnout)t).reply(r);
         JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); },
-            "closed Turnout.INCONSISTENT didn't happen add retry?"); 
+            "closed Turnout.INCONSISTENT didn't happen"); 
         JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, 
-            " Turnout.CLOSED didn't happen after delayed feedback add retry?");
+            " Turnout.CLOSED didn't happen after delayed feedback");
         
     }
 
@@ -577,6 +579,7 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     }
 
     @AfterEach
+    @Override
     public void tearDown() {
         t.dispose();
         t = null;

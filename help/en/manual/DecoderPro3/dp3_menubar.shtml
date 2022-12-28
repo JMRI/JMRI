@@ -22,7 +22,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">DecoderPro® Main Window</h1>
+      <h1 id="Top">DecoderPro&reg; Main Window</h1>
 
       <h2>The Menu bar</h2>
 
@@ -555,17 +555,17 @@
 
         <li style="list-style: none">
           <ul>
-            <li>Window Help...</li>
+            <li>Window Help</li>
 
-            <li>General Help...</li>
+            <li>General Help</li>
 
-            <li>License...</li>
+            <li>License</li>
 
-            <li>Locations...</li>
+            <li>Locations</li>
 
-            <li>Context...</li>
+            <li>Context</li>
 
-            <li>System Console...</li>
+            <li>System Console</li>
 
             <li>Upload Debugging Info...</li>
           </ul>

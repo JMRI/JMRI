@@ -2,15 +2,11 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.util.*;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 
 /**
  * Reads a Memory.
@@ -18,9 +14,11 @@ import jmri.jmrit.logixng.*;
  * @author Daniel Bergqvist Copyright 2018
  */
 public class StringExpressionMemory extends AbstractStringExpression
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements PropertyChangeListener {
 
-    private NamedBeanHandle<Memory> _memoryHandle;
+    private final LogixNG_SelectNamedBean<Memory> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 
     public StringExpressionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -36,26 +34,12 @@ public class StringExpressionMemory extends AbstractStringExpression
         if (sysName == null) sysName = manager.getAutoSystemName();
         StringExpressionMemory copy = new StringExpressionMemory(sysName, userName);
         copy.setComment(getComment());
-        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        _selectNamedBean.copy(copy._selectNamedBean);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
-    @Override
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    removeMemory();
-                }
-            }
-        }
+    public LogixNG_SelectNamedBean<Memory> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
     /** {@inheritDoc} */
@@ -64,46 +48,12 @@ public class StringExpressionMemory extends AbstractStringExpression
         return Category.ITEM;
     }
 
-    public void setMemory(@Nonnull String memoryName) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
-        if (memory != null) {
-            setMemory(memory);
-        } else {
-            removeMemory();
-            log.error("memory \"{}\" is not found", memoryName);
-        }
-    }
-
-    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        _memoryHandle = handle;
-        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-    }
-
-    public void setMemory(@Nonnull Memory memory) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(memory.getDisplayName(), memory));
-    }
-
-    public void removeMemory() {
-        assertListenersAreNotRegistered(log, "setMemory");
-        if (_memoryHandle != null) {
-            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
-            _memoryHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Memory> getMemory() {
-        return _memoryHandle;
-    }
-
     /** {@inheritDoc} */
     @Override
-    public String evaluate() {
-        if (_memoryHandle != null) {
-            return jmri.util.TypeConversionUtil.convertToString(_memoryHandle.getBean().getValue(), false);
+    public String evaluate() throws JmriException {
+        Memory memory = _selectNamedBean.evaluateNamedBean(getConditionalNG());
+        if (memory != null) {
+            return jmri.util.TypeConversionUtil.convertToString(memory.getValue(), false);
         } else {
             return "";
         }
@@ -127,11 +77,7 @@ public class StringExpressionMemory extends AbstractStringExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        if (_memoryHandle != null) {
-            return Bundle.getMessage(locale, "StringExpressionMemory_Long", _memoryHandle.getBean().getDisplayName());
-        } else {
-            return Bundle.getMessage(locale, "StringExpressionMemory_Long", "none");
-        }
+        return Bundle.getMessage(locale, "StringExpressionMemory_Long", _selectNamedBean.getDescription(locale));
     }
 
     /** {@inheritDoc} */
@@ -143,8 +89,9 @@ public class StringExpressionMemory extends AbstractStringExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if ((! _listenersAreRegistered) && (_memoryHandle != null)) {
-            _memoryHandle.getBean().addPropertyChangeListener("value", this);
+        if (!_listenersAreRegistered) {
+            _selectNamedBean.addPropertyChangeListener("value", this);
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -153,7 +100,8 @@ public class StringExpressionMemory extends AbstractStringExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _memoryHandle.getBean().removePropertyChangeListener("value", this);
+            _selectNamedBean.removePropertyChangeListener("value", this);
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -175,9 +123,7 @@ public class StringExpressionMemory extends AbstractStringExpression
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: StringExpressionMemory: bean = {}, report = {}", cdl, report);
-        if (getMemory() != null && bean.equals(getMemory().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringExpressionMemory.class);

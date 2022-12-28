@@ -71,7 +71,7 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
         }
 
         String retval = sbuf.toString();
-        if (retval.equals("")) {
+        if (retval.isEmpty()) {
             return "unknown status code: " + code;
         } else {
             return retval;
@@ -119,7 +119,7 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
         List<ProgrammingMode> validModes = getSupportedModes();
 
         if (m == null) {
-            if (validModes.size()>0) {
+            if (!validModes.isEmpty()) {
                 // null can only be set if there are no valid modes
                 throw new IllegalArgumentException("Cannot set null mode when modes are present");
             } else {

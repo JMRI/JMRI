@@ -27,7 +27,7 @@ public class LncvDevices {
      * Add a device that responded to a PROG_START request to the list of LNCV Devices.
      *
      * @param d the device object, containing its properties
-     * @return true if device was addded, false if not eg it was already in the list
+     * @return true if device was added, false if not eg it was already in the list
      */
     public synchronized boolean addDevice(LncvDevice d) {
         if (!deviceExists(d)) {

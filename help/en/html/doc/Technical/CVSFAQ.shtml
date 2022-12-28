@@ -34,9 +34,8 @@
       <h3 id="cvstool">How do I get a copy of CVS?</h3>
       Many computers come with CVS installed, including Linux and Mac OS X. If you're using
       Windows, you will need to install a CVS "client" program like <a href=
-      "http://sourceforge.net/project/showfiles.php?group_id=10072&amp;release_id=24467">WinCVS</a>.
-      A recent version can be downloaded from: <a href=
-      "http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip</a>.
+      "https://sourceforge.net/projects/cvsgui/files/WinCvs/">WinCVS</a>.
+
       <h3 id="jmrisource">How can I get my own copy of the JMRI code?</h3>
       To get a copy of the source for your own use, you can use "anonymous checkout". For a command
       line cvs client, make a new directory for the project, change to it, and tell CVS you exist
@@ -118,7 +117,7 @@ with your own changes still present.
       etc. directories.</p>
 
       <p>Finally, there's a bunch of information that's not part of the application development
-      areas, including the "scripts" directory of tools for building releases, the web site, and
+      areas, including the "scripts" directory of tools for building releases, the website, and
       others.</p>
 
       <p>We store all these separately in CVS so that you can check out just the ones you need.</p>

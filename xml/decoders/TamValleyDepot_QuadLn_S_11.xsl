@@ -7,7 +7,7 @@
 <xsl:output method="xml" encoding="utf-8"/>
 
 <!-- for QUAD-LN_S -->
-<!-- v3.01  -->
+<!-- v3.02.3  -->
 
 <!--  Variables ............................................................................. -->
 <!--                  ............................................................................ -->
@@ -24,46 +24,24 @@
     <variable item="Aspect{$index} Addr Mode" CV="{$CV1}" mask="XVVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/AddrMode.xml"/>
     </variable>
-
-    <variable item="Aspect{$index} LED1 Out" CV="{$CV2}" mask="XXXVVVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/>
+	<variable item="Aspect{$index} Output Type" CV="{$CV1}" mask="XXXVXXXX" default="0">
+		<qualifier>
+			<variableref>Version</variableref>
+			<relation>ge</relation>
+			<value>50</value>
+		</qualifier>
+		<xi:include href="http://jmri.org/xml/decoders/tvd/AspectOutputType.xml"/>
     </variable>
-    <variable item="Aspect{$index} LED1 Bicolor" CV="{$CV2}" mask="VXXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/AspectBicolor.xml"/>
+	<variable item="Aspect{$index} Output LED Type" CV="{$CV1}" mask="XXXVXXXX" default="0">
+		<qualifier>
+			<variableref>Version</variableref>
+			<relation>lt</relation>
+			<value>50</value>
+		</qualifier>
+		<xi:include href="http://jmri.org/xml/decoders/tvd/AspectOutputLEDType.xml"/>
     </variable>
-    <variable item="Aspect{$index} LED1 Mode" CV="{$CV2}" mask="XVVXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/AspectMode.xml"/>
-    </variable>
-    <variable item="Aspect{$index} LED2 Out" CV="{$CV2 +1}" mask="XXXVVVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/>
-    </variable>
-    <variable item="Aspect{$index} LED2 Bicolor" CV="{$CV2 +1}" mask="VXXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/AspectBicolor.xml"/>
-    </variable>
-    <variable item="Aspect{$index} LED2 Mode" CV="{$CV2 +1}" mask="XVVXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/AspectMode.xml"/>
-    </variable>
-    <variable item="Aspect{$index} LED3 Out" CV="{$CV2 +2}" mask="XXXVVVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/>
-    </variable>
-    <variable item="Aspect{$index} LED3 Bicolor" CV="{$CV2 +2}" mask="VXXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/AspectBicolor.xml"/>
-    </variable>
-    <variable item="Aspect{$index} LED3 Mode" CV="{$CV2 +2}" mask="XVVXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/AspectMode.xml"/>
-    </variable>
-    <variable item="Aspect{$index} LED4 Out" CV="{$CV2 +3}" mask="XXXVVVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/>
-    </variable>
-    <variable item="Aspect{$index} LED4 Bicolor" CV="{$CV2 +3}" mask="VXXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/AspectBicolor.xml"/>
-    </variable>
-    <variable item="Aspect{$index} LED4 Mode" CV="{$CV2 +3}" mask="XVVXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/AspectMode.xml"/>
-    </variable>
-
-    <variable item="Aspect{$index} Addr" CV="{$CV3}" mask="VVVVVVVV" default="0">
-        <splitVal highCV="{$CV3 +1}" upperMask="XXXXXVVV" offset="1" />
+    <variable item="Aspect{$index} Addr" CV="{$CV3},{$CV3 +1}" mask="VVVVVVVV XXXXXVVV" default="0">
+        <splitVal offset="1" min="1" max="2048" />
     </variable>
     <variables>
         <qualifier>
@@ -101,6 +79,164 @@
             <xi:include href="http://jmri.org/xml/decoders/tvd/SensorSense.xml"/>
         </variable>
     </variables>
+    <variables>
+        <qualifier>
+            <variableref>Aspect<xsl:value-of select="$index"/> Output Type</variableref>
+            <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <variable item="Aspect{$index} LED1 Out" CV="{$CV2}" mask="XXXVVVVV" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/>
+        </variable>
+        <variable item="Aspect{$index} LED1 Bicolor" CV="{$CV2}" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/AspectBicolor.xml"/>
+        </variable>
+        <variable item="Aspect{$index} LED1 Mode" CV="{$CV2}" mask="XVVXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/AspectMode.xml"/>
+        </variable>
+        <variable item="Aspect{$index} LED2 Out" CV="{$CV2 +1}" mask="XXXVVVVV" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/>
+        </variable>
+        <variable item="Aspect{$index} LED2 Bicolor" CV="{$CV2 +1}" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/AspectBicolor.xml"/>
+        </variable>
+        <variable item="Aspect{$index} LED2 Mode" CV="{$CV2 +1}" mask="XVVXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/AspectMode.xml"/>
+        </variable>
+        <variable item="Aspect{$index} LED3 Out" CV="{$CV2 +2}" mask="XXXVVVVV" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/>
+        </variable>
+        <variable item="Aspect{$index} LED3 Bicolor" CV="{$CV2 +2}" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/AspectBicolor.xml"/>
+        </variable>
+        <variable item="Aspect{$index} LED3 Mode" CV="{$CV2 +2}" mask="XVVXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/AspectMode.xml"/>
+        </variable>
+        <variable item="Aspect{$index} LED4 Out" CV="{$CV2 +3}" mask="XXXVVVVV" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/>
+        </variable>
+        <variable item="Aspect{$index} LED4 Bicolor" CV="{$CV2 +3}" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/AspectBicolor.xml"/>
+        </variable>
+        <variable item="Aspect{$index} LED4 Mode" CV="{$CV2 +3}" mask="XVVXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/AspectMode.xml"/>
+        </variable>
+    </variables>
+    <variables>
+        <qualifier>
+            <variableref>Aspect<xsl:value-of select="$index"/> Output Type</variableref>
+            <relation>ne</relation>
+            <value>0</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Version</variableref>
+            <relation>ge</relation>
+            <value>50</value>
+        </qualifier>
+        <variable item="One Choice Enum Aspect{$index} SigTOQual" CV="1" mask="XXXXXXXX">
+            <enumVal>
+                <enumChoice choice="" />
+            </enumVal>
+        </variable>
+        <variables>
+            <qualifier>
+                <variableref>Servo16</variableref>
+                <relation>eq</relation>
+                <value>25</value>
+            </qualifier>
+            <variable item="Aspect{$index} TO1 Out" CV="{$CV2}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTOOutput.xml"/>
+            </variable>
+            <variable item="Aspect{$index} TO2 Out" CV="{$CV2 +1}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTOOutput.xml"/>
+            </variable>
+            <variable item="Aspect{$index} TO3 Out" CV="{$CV2 +2}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTOOutput.xml"/>
+            </variable>
+            <variable item="Aspect{$index} TO4 Out" CV="{$CV2 +3}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTOOutput.xml"/>
+            </variable>
+        </variables>
+        <variables>
+            <qualifier>
+                <variableref>Servo16</variableref>
+                <relation>le</relation>
+                <value>24</value>
+            </qualifier>
+            <qualifier>
+                <variableref>Servo16</variableref>
+                <relation>ge</relation>
+                <value>9</value>
+            </qualifier>
+            <variable item="Aspect{$index} TO12_1 Out" CV="{$CV2}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTO12Output.xml"/>
+            </variable>
+            <variable item="Aspect{$index} TO12_2 Out" CV="{$CV2 +1}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTO12Output.xml"/>
+            </variable>
+            <variable item="Aspect{$index} TO12_3 Out" CV="{$CV2 +2}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTO12Output.xml"/>
+            </variable>
+            <variable item="Aspect{$index} TO12_4 Out" CV="{$CV2 +3}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTO12Output.xml"/>
+            </variable>
+        </variables>
+        <variables>
+            <qualifier>
+                <variableref>Servo16</variableref>
+                <relation>le</relation>
+                <value>8</value>
+            </qualifier>
+            <qualifier>
+                <variableref>Servo16</variableref>
+                <relation>ge</relation>
+                <value>1</value>
+            </qualifier>
+            <variable item="Aspect{$index} TO8_1 Out" CV="{$CV2}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTO8Output.xml"/>
+            </variable>
+            <variable item="Aspect{$index} TO8_2 Out" CV="{$CV2 +1}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTO8Output.xml"/>
+            </variable>
+            <variable item="Aspect{$index} TO8_3 Out" CV="{$CV2 +2}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTO8Output.xml"/>
+            </variable>
+            <variable item="Aspect{$index} TO8_4 Out" CV="{$CV2 +3}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTO8Output.xml"/>
+            </variable>
+        </variables>
+        <variables>
+            <qualifier>
+                <variableref>Servo16</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+            </qualifier>
+            <variable item="Aspect{$index} TO4_1 Out" CV="{$CV2}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTO4Output.xml"/>
+            </variable>
+            <variable item="Aspect{$index} TO4_2 Out" CV="{$CV2 +1}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTO4Output.xml"/>
+            </variable>
+            <variable item="Aspect{$index} TO4_3 Out" CV="{$CV2 +2}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTO4Output.xml"/>
+            </variable>
+            <variable item="Aspect{$index} TO4_4 Out" CV="{$CV2 +3}" mask="XXXVVVVV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTO4Output.xml"/>
+            </variable>
+        </variables>
+        <variable item="Aspect{$index} TO1 Mode" CV="{$CV2}" mask="XVVXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTOMode.xml"/>
+        </variable>
+        <variable item="Aspect{$index} TO2 Mode" CV="{$CV2 +1}" mask="XVVXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTOMode.xml"/>
+        </variable>
+        <variable item="Aspect{$index} TO3 Mode" CV="{$CV2 +2}" mask="XVVXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTOMode.xml"/>
+        </variable>
+        <variable item="Aspect{$index} TO4 Mode" CV="{$CV2 +3}" mask="XVVXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/AspectTOMode.xml"/>
+        </variable>
+    </variables>
 </xsl:template>
 
 <xsl:template name="AllAspectGroups">
@@ -134,8 +270,8 @@
     <xsl:param name="index"/>
     
     <variable item="LED{$index} Bright" CV="{$CV1}" mask="XXXVVVVV" default="31">
-        <decVal min="0" max="31"/>
-    </variable>
+        <decVal max="31" />
+   </variable>
     <variable item="LED{$index} Effect" CV="{$CV1}" mask="XVVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/LedEffect.xml"/>
     </variable>
@@ -200,22 +336,108 @@
     <xsl:param name="CV5"/>
     <xsl:param name="index"/>
     
-    <variable item="Servo{$index} Addr" CV="2" mask="VVVVVVVV" default="0">
-        <splitVal highCV="3" upperMask="XXXXXVVV" offset="{$index}" /> 
+    <variable item="Servo{$index} Addr" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0">
+        <splitVal offset="{$index}" /> 
     </variable>
-    <variable item="Lock{$index} Addr" CV="13" mask="VVVVVVVV" default="100">
-        <splitVal highCV="14" upperMask="XXXXXVVV" offset="{$index}" />
+    <variable item="Lock{$index} Addr" CV="13,14" mask="VVVVVVVV XXXXXVVV" default="100">
+        <splitVal offset="{$index}" />
     </variable>
 
-    <variable item="Servo{$index} RapidStart" CV="{$CV1}" mask="VVXXXXXX" default="0">
+    <variable item="Servo{$index} RapidStart" CV="{$CV1}" mask="VVXXXXXX" default="0" include="Quad-LN_S_v1">
         <xi:include href="http://jmri.org/xml/decoders/tvd/RapidStart.xml"/>
     </variable>
-    <variable item="Servo{$index} Speed" CV="{$CV1}" mask="XXVVVVVV" default="4">
-        <decVal/>
+    <variable item="Servo{$index} DriveType" CV="{$CV1}" mask="VXXXXXXX" default="0" include="Quad-LN_S_v3">
+        <xi:include href="http://jmri.org/xml/decoders/tvd/DriveType.xml"/>
     </variable>
+    <variable item="Servo{$index} DriveType" CV="{$CV1}" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
+        <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+            <enumChoice choice="Servo"/>
+        </enumVal>
+    </variable>
+    <variables>
+        <qualifier>
+            <variableref>Servo<xsl:value-of select="$index"/> DriveType</variableref>
+            <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <variable item="One Choice Enum Servo{$index} Qual" CV="1" mask="XXXXXXXX">
+            <enumVal>
+                <enumChoice choice="" />
+            </enumVal>
+        </variable>
+        <variable item="Servo{$index} JumpStart" CV="{$CV1}" mask="XVXXXXXX" default="0" include="Quad-LN_S_v3">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/JumpStart.xml"/>
+        </variable>
+        <variable item="Servo{$index} JumpStart" CV="{$CV1}" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
+            <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+                <enumChoice choice="Use Speed Setting"/>
+            </enumVal>
+        </variable>
+        <variables>
+            <qualifier>
+                <variableref>Servo<xsl:value-of select="$index"/> JumpStart</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+            </qualifier>
+            <variable item="Servo{$index} Speed" CV="{$CV1}" mask="XXVVVVVV" default="4">
+                <decVal max="63" />
+            </variable>
+        </variables>
+        <variable item="Servo{$index} DriveOff" CV="{$CV2}" mask="VXXXXXXX" default="0" include="Quad-LN_S_v3">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/DriveOff.xml"/>
+        </variable>
 
-    <variable item="Servo{$index} Closed" CV="{$CV3}" default="1260" comment="range 0-2400">
-        <splitVal highCV="{$CV3 +1}" upperMask="XXXXVVVV"/>
+        <variable item="Servo{$index} Closed" CV="{$CV3},{$CV3 +1}" mask="VVVVVVVV XXXXVVVV" default="1260" comment="range 0-2400">
+            <splitVal max="2400" />
+        </variable>
+        <variable item="Servo{$index} Directional Speed" CV="{$CV3 +1}" mask="VXXXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/DirectionalSpeed.xml"/>
+        </variable>
+        <variable item="Servo{$index} Thrown" CV="{$CV4},{$CV4 +1}" mask="VVVVVVVV XXXXVVVV" default="1140" comment="range 0-2400">
+            <splitVal max="2400" />
+        </variable>
+        <variables>
+            <qualifier>
+                <variableref>Servo<xsl:value-of select="$index"/> Directional Speed</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+            </qualifier>
+             <variable item="Servo{$index} Thrown RapidStart" CV="{$CV2}" mask="VVXXXXXX" default="0" include="Quad-LN_S_v1">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/RapidStart.xml"/>
+            </variable>
+            <variable item="Servo{$index} Thrown JumpStart" CV="{$CV2}" mask="XVXXXXXX" default="0" include="Quad-LN_S_v3">
+                <xi:include href="http://jmri.org/xml/decoders/tvd/JumpStart.xml"/>
+            </variable>
+            <variable item="Servo{$index} Thrown JumpStart" CV="{$CV2}" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
+                <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+                    <enumChoice choice="Use Speed Setting"/>
+                </enumVal>
+            </variable>
+            <variables>
+                <qualifier>
+                    <variableref>Servo<xsl:value-of select="$index"/> Thrown JumpStart</variableref>
+                    <relation>eq</relation>
+                    <value>0</value>
+                </qualifier>
+                <variable item="Servo{$index} Thrown Speed" CV="{$CV2}" mask="XXVVVVVV" default="4">
+                    <decVal max="63" />
+                </variable>
+            </variables>
+        </variables>
+    </variables>
+    <variables>
+        <qualifier>
+            <variableref>Servo<xsl:value-of select="$index"/> DriveType</variableref>
+            <relation>gt</relation>
+            <value>0</value>
+        </qualifier>
+        <variable item="Servo{$index} SwitchPoint" CV="{$CV3+1}" mask="VXXXXXXX" default="0" include="Quad-LN_S_v3">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/SwitchPoint.xml"/>
+        </variable>
+    </variables>
+        
+    <variable item="Servo{$index} Dodeca Action" CV="{$CV4 +1}" mask="VVVVXXXX" default="0">
+       <xi:include href="http://jmri.org/xml/decoders/tvd/InputAction.xml"/>
     </variable>
     <variable item="Servo{$index} Output Message" CV="{$CV3 +1}" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/ServoMessage.xml"/>
@@ -223,33 +445,9 @@
     <variable item="Servo{$index} Lock" CV="{$CV3 +1}" mask="XVVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/ServoLock.xml"/>
     </variable>
-    <variable item="Servo{$index} Directional Speed" CV="{$CV3 +1}" mask="VXXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/DirectionalSpeed.xml"/>
-    </variable>
 
-    <variables>
-        <qualifier>
-            <variableref>Servo<xsl:value-of select="$index"/> Directional Speed</variableref>
-            <relation>eq</relation>
-            <value>1</value>
-        </qualifier>
-        <variable item="Servo{$index} Thrown RapidStart" CV="{$CV2}" mask="VVXXXXXX" default="0">
-            <xi:include href="http://jmri.org/xml/decoders/tvd/RapidStart.xml"/>
-        </variable>
-        <variable item="Servo{$index} Thrown Speed" CV="{$CV2}" mask="XXVVVVVV" default="4">
-            <decVal/>
-        </variable>
-    </variables>
-
-    <variable item="Servo{$index} Thrown" CV="{$CV4}" default="1140" comment="range 0-2400">
-        <splitVal highCV="{$CV4 +1}" upperMask="XXXXVVVV"/>
-    </variable>
-    <variable item="Servo{$index} Dodeca Action" CV="{$CV4 +1}" mask="VVVVXXXX" default="0">
-       <xi:include href="http://jmri.org/xml/decoders/tvd/InputAction.xml"/>
-    </variable>
-
-    <variable item="Servo{$index} Cascade Turnout" CV="{$CV5}" default="0">
-        <splitVal highCV="{$CV5 +1}" upperMask="XXXXXVVV" offset="1" />
+    <variable item="Servo{$index} Cascade Turnout" CV="{$CV5},{$CV5 +1}" mask="VVVVVVVV XXXXXVVV" default="0">
+        <splitVal offset="1" min="1" max="2048" />
     </variable>
     <variable item="Servo{$index} Cascade Trigger" CV="{$CV5 +1}" mask="VVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/CascadeTrigger.xml"/>
@@ -329,11 +527,11 @@
     <xsl:param name="CV7"/>
     <xsl:param name="index"/>
     
-    <variable item="Main IO{$Offset} Addr" CV="9" mask="VVVVVVVV" default="0">
-        <splitVal highCV="10" upperMask="XXXXVVVV" offset="{$Offset}" /> 
+    <variable item="Main IO{$Offset} Addr" CV="9,10" mask="VVVVVVVV XXXXVVVV" default="0">
+        <splitVal offset="{$Offset}" /> 
    </variable>
-    <variable item="Aux IO{$Offset} Addr" CV="15" mask="VVVVVVVV" default="4">
-        <splitVal highCV="16" upperMask="XXXXVVVV" offset="{$Offset}" /> 
+    <variable item="Aux IO{$Offset} Addr" CV="15,16" mask="VVVVVVVV XXXXVVVV" default="4">
+        <splitVal offset="{$Offset}" /> 
     </variable>
 
 <!-- Aux IO .................................................................. -->
@@ -368,8 +566,8 @@
         <xi:include href="http://jmri.org/xml/decoders/tvd/LedSense.xml"/>
     </variable>
 
-    <variable item="GPIO{$index} Msg2 Addr" CV="{$CV4}" default="0">
-        <splitVal highCV="{$CV4 +1}" upperMask="XXXXVVVV" offset="1" />
+    <variable item="GPIO{$index} Msg2 Addr" CV="{$CV4},{$CV4 +1}" mask="VVVVVVVV XXXXVVVV" default="0">
+        <splitVal offset="1" min="1" max="4096" />
     </variable>
     <variable item="GPIO{$index} Msg2 Condition" CV="{$CV4 +1}" mask="XXVVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/InputMessageCondition.xml"/>
@@ -466,8 +664,8 @@
         </enumVal>
     </variable>
 
-    <variable item="GPIO{$index +1} Msg2 Addr" CV="{$CV5}" default="0">
-        <splitVal highCV="{$CV5 +1}" upperMask="XXXXVVVV" offset="1" />
+    <variable item="GPIO{$index +1} Msg2 Addr" CV="{$CV5},{$CV5 +1}" mask="VVVVVVVV XXXXVVVV" default="0">
+        <splitVal offset="1" min="1" max="4096" />
     </variable>
     <variable item="GPIO{$index +1} Msg2 Condition" CV="{$CV5 +1}" mask="XXVVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/InputMessageCondition.xml"/>
@@ -564,26 +762,26 @@
     <xsl:param name="CV2"/>
     <xsl:param name="index"/>
 
-    <variable item="Route{$index} Turnout1" CV="{$CV1}" mask="VVVVVVVV" default="0">
-        <splitVal highCV="{$CV1 +1}" upperMask="XXXXVVVV" offset="1" />
+    <variable item="Route{$index} Turnout1" CV="{$CV1},{$CV1 +1}" mask="VVVVVVVV XXXXVVVV" default="0">
+        <splitVal offset="1" min="1" max="4096" />
     </variable>
     <variable item="Route{$index} Turnout1 Action" CV="{$CV1 +1}" mask="VVVVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/RouteEntry.xml"/>
     </variable>
-    <variable item="Route{$index} Turnout2" CV="{$CV1 +2}" mask="VVVVVVVV" default="0">
-        <splitVal highCV="{$CV1 +3}" upperMask="XXXXVVVV" offset="1" />
+    <variable item="Route{$index} Turnout2" CV="{$CV1 +2},{$CV1 +3}" mask="VVVVVVVV XXXXVVVV" default="0">
+        <splitVal offset="1" min="1" max="4096" />
     </variable>
     <variable item="Route{$index} Turnout2 Action" CV="{$CV1 +3}" mask="VVVVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/RouteEntry.xml"/>
     </variable>
-    <variable item="Route{$index} Turnout3" CV="{$CV1 +4}" mask="VVVVVVVV" default="0">
-        <splitVal highCV="{$CV1 +5}" upperMask="XXXXVVVV" offset="1" />
+    <variable item="Route{$index} Turnout3" CV="{$CV1 +4},{$CV1 +5}" mask="VVVVVVVV XXXXVVVV" default="0">
+        <splitVal offset="1" min="1" max="4096" />
     </variable>
     <variable item="Route{$index} Turnout3 Action" CV="{$CV1 +5}" mask="VVVVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/RouteEntry.xml"/>
     </variable>
-    <variable item="Route{$index} Turnout4" CV="{$CV1 +6}" mask="VVVVVVVV" default="0">
-        <splitVal highCV="{$CV1 +7}" upperMask="XXXXVVVV" offset="1" />
+    <variable item="Route{$index} Turnout4" CV="{$CV1 +6},{$CV1 +7}" mask="VVVVVVVV XXXXVVVV" default="0">
+        <splitVal offset="1" min="1" max="4096" />
     </variable>
     <variable item="Route{$index} Turnout4 Action" CV="{$CV1 +7}" mask="VVVVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/tvd/RouteEntry.xml"/>
@@ -631,7 +829,7 @@
       <xsl:when test="4 >= $index">
          <column>
             <display item="One Choice Enum" format="onradiobutton" layout="right">
-               <label>SERVO <xsl:value-of select="$index"/></label>
+               <label>SERVO <xsl:value-of select="$index"/>  TURNOUT</label>
             </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
@@ -646,7 +844,7 @@
                <value>0</value>
             </qualifier>
             <display item="One Choice Enum" format="onradiobutton" layout="right">
-               <label>MAIN <xsl:value-of select="$index - 4"/> SERVO</label>
+               <label>MAIN <xsl:value-of select="$index - 4"/>  TURNOUT</label>
             </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
@@ -659,7 +857,7 @@
                <value>1</value>
             </qualifier>
             <display item="One Choice Enum" format="onradiobutton" layout="right">
-               <label>AUX <xsl:value-of select="$index - 4"/> SERVO</label>
+               <label>AUX <xsl:value-of select="$index - 4"/>  TURNOUT</label>
             </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
@@ -672,7 +870,7 @@
                <value>1</value>
             </qualifier>
             <display item="One Choice Enum" format="onradiobutton" layout="right">
-               <label>EXP <xsl:value-of select="$index - 4"/> SERVO</label>
+               <label>EXP <xsl:value-of select="$index - 4"/>  TURNOUT </label>
             </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
@@ -687,7 +885,7 @@
                <value>0</value>
             </qualifier>
             <display item="One Choice Enum" format="onradiobutton" layout="right">
-               <label>AUX <xsl:value-of select="$index - 8"/> SERVO</label>
+               <label>AUX <xsl:value-of select="$index - 8"/>  TURNOUT</label>
             </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
@@ -700,7 +898,7 @@
                <value>0</value>
             </qualifier>
             <display item="One Choice Enum" format="onradiobutton" layout="right">
-               <label>EXP <xsl:value-of select="$index - 8"/> SERVO</label>
+               <label>EXP <xsl:value-of select="$index - 8"/>  TURNOUT</label>
             </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
@@ -710,7 +908,7 @@
       <xsl:otherwise>
          <column>
             <display item="One Choice Enum" format="onradiobutton" layout="right">
-               <label>EXP <xsl:value-of select="$index - 12"/> SERVO</label>
+               <label>EXP <xsl:value-of select="$index - 12"/>  TURNOUT</label>
             </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
@@ -723,16 +921,32 @@
 <xsl:template name="ServoParams">
     <xsl:param name="index"/>
    <label label=" "/>   
-   <display  item="Servo{$index} Addr">
-      <tooltip>To change, adjust Servo Base Addr on Quad-LN pane</tooltip>
+   <display  item="Servo{$index} Addr" viewOnly="yes">
+      <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
       <label>Address  LT</label>
    </display>
-   <display  item="Lock{$index} Addr">
-      <tooltip>To change, adjust Lock Base Addr on Quad-LN pane</tooltip>
+   <display  item="Lock{$index} Addr" viewOnly="yes">
+      <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
       <label>Lock  LT</label>
    </display>
    <label label=" "/>   
    <display item="One Choice Enum" format="onradiobutton" layout="right">
+      <label>DRIVE</label>
+   </display>
+   <display item="Servo{$index} DriveType">
+      <tooltip>select the type of connected device</tooltip>
+      <label>Type</label>
+   </display>
+   <display item="Servo{$index} DriveOff" >
+      <tooltip>set whether the servo drive turns off when the servo stops moving</tooltip>
+      <label>Turn Off</label>
+   </display>
+   <display item="Servo{$index} SwitchPoint">
+      <tooltip>select when the output drive changes state after the turnout state is changed</tooltip>
+      <label>Change Point</label>
+   </display>
+   <label label=" "/>   
+   <display item="One Choice Enum Servo{$index} Qual" format="onradiobutton" layout="right">
       <label>TRAVEL</label>
    </display>
    <display item="Servo{$index} Closed">
@@ -742,6 +956,10 @@
    <display item="Servo{$index} Thrown">
       <tooltip>0=full CCW, 2400=full CW</tooltip>
       <label>Thrown Position</label>
+   </display>
+   <display item="Servo{$index} JumpStart">
+      <tooltip>jump directly to setpoint for use with animation effects</tooltip>
+      <label>Speed Or Jump</label>
    </display>
    <display item="Servo{$index} Speed">
       <tooltip>0-63: 0=very slow, 4=normal, 63=very fast</tooltip>
@@ -754,6 +972,10 @@
    <display item="Servo{$index} Directional Speed">
       <tooltip>enables separate speed setting for travel in the Thrown direction</tooltip>
       <label>Directional Speed</label>
+   </display>
+   <display item="Servo{$index} Thrown JumpStart">
+      <tooltip>increases speed during initial movement</tooltip>
+      <label>Thrown Speed Or Jump</label>
    </display>
    <display item="Servo{$index} Thrown Speed">
       <tooltip>0-63: 0=very slow, 4=normal, 63=very fast</tooltip>
@@ -768,7 +990,7 @@
       <label>LOCK</label>
    </display>
    <display item="Servo{$index} Lock">
-      <tooltip>Controls Lock via Turnout at addr of servo + 4</tooltip>
+      <tooltip>Turnout at the Lock address controls this mode</tooltip>
       <label>Mode</label>
    </display>
    <label label=" "/>   
@@ -792,7 +1014,7 @@
    </display>
    <display item="Servo{$index} Cascade Turnout">
       <tooltip>Cascade turnout number</tooltip>
-      <label>Turnout</label>
+      <label>Number</label>
    </display>
 </xsl:template>
 
@@ -812,8 +1034,8 @@
             <label>MAIN IO <xsl:value-of select="$index"/></label>
          </display>
          <label label=" "/>   
-         <display  item="Main IO{$index} Addr">
-            <tooltip>To change, adjust Main IO Base Addr on Quad-LN pane</tooltip>
+         <display  item="Main IO{$index} Addr" viewOnly="yes">
+            <tooltip>To change, adjust Main IO Base Addr on Quad-LN_S pane</tooltip>
             <label>Address   LS</label>
          </display>
          <label label=" "/>   
@@ -847,7 +1069,7 @@
          <label label=" "/>   
          <!-- use 2 qualified labels to maintain consistent column height -->
          <display item="Non-TVD Det GPIO{$io} Qual" format="onradiobutton" layout="right">
-            <label>SERVO <xsl:value-of select="$servo"/> INDICATION</label>
+            <label>TURNOUT <xsl:value-of select="$servo"/> INDICATION</label>
          </display>
          <display item="TVD Det GPIO{$io} Qual" format="onradiobutton" layout="right">
             <label>&lt;html&gt;&lt;/html&gt;</label>
@@ -877,8 +1099,8 @@
             <label>AUX IO <xsl:value-of select="$index"/></label>
          </display>
          <label label=" "/>   
-         <display  item="Aux IO{$index} Addr">
-            <tooltip>To change, adjust Aux IO Base Addr on Quad-LN pane</tooltip>
+         <display  item="Aux IO{$index} Addr" viewOnly="yes">
+            <tooltip>To change, adjust Aux IO Base Addr on Quad-LN_S pane</tooltip>
             <label>Address   LS</label>
          </display>
          <label label=" "/>   
@@ -903,7 +1125,7 @@
          </display>
          <label label=" "/>   
          <display item="One Choice Enum" format="onradiobutton" layout="right">
-            <label>SERVO <xsl:value-of select="$servo"/> INDICATION</label>
+            <label>TURNOUT <xsl:value-of select="$servo"/> INDICATION</label>
          </display>
          <xsl:call-template name="IOColumn">
             <xsl:with-param name="io" select="$io"/>
@@ -932,20 +1154,20 @@
          <label>ACTION</label>
       </display>
       <display item="GPIO{$io} Action: Servo1">
-         <tooltip>Servo 1 action</tooltip>
-         <label>Servo 1</label>
+         <tooltip>Turnout 1 action</tooltip>
+         <label>Turnout 1</label>
       </display>
       <display item="GPIO{$io} Action: Servo2">
-         <tooltip>Servo 2 action</tooltip>
-         <label>Servo 2</label>
+         <tooltip>Turnout 2 action</tooltip>
+         <label>Turnout 2</label>
       </display>
       <display item="GPIO{$io} Action: Servo3">
-         <tooltip>Servo 3 action</tooltip>
-         <label>Servo 3</label>
+         <tooltip>Turnout 3 action</tooltip>
+         <label>Turnout 3</label>
       </display>
       <display item="GPIO{$io} Action: Servo4">
-         <tooltip>Servo 4 action</tooltip>
-         <label>Servo 4</label>
+         <tooltip>Turnout 4 action</tooltip>
+         <label>Turnout 4</label>
       </display>
       <label label=" "/>
    </xsl:if>
@@ -1038,56 +1260,56 @@
          <label>ACTION</label>
       </display>
       <display item="GPIO{$io} Action: Servo1">
-         <tooltip>Servo 1 action</tooltip>
-         <label>Servo 1</label>
+         <tooltip>Turnout 1 action</tooltip>
+         <label>Turnout 1</label>
       </display>
       <display item="GPIO{$io} Action: Servo2">
-         <tooltip>Servo 2 action</tooltip>
-         <label>Servo 2</label>
+         <tooltip>Turnout 2 action</tooltip>
+         <label>Turnout 2</label>
       </display>
       <display item="GPIO{$io} Action: Servo3">
-         <tooltip>Servo 3 action</tooltip>
-         <label>Servo 3</label>
+         <tooltip>Turnout 3 action</tooltip>
+         <label>Turnout 3</label>
       </display>
       <display item="GPIO{$io} Action: Servo4">
-         <tooltip>Servo 4 action</tooltip>
-         <label>Servo 4</label>
+         <tooltip>Turnout 4 action</tooltip>
+         <label>Turnout 4</label>
       </display>
       <display item="GPIO{$io} Action: Servo5">
-         <tooltip>Servo 5 action</tooltip>
-         <label>Servo 5</label>
+         <tooltip>Turnout 5 action</tooltip>
+         <label>Turnout 5</label>
       </display>
       <display item="GPIO{$io} Action: Servo6">
-         <tooltip>Servo 6 action</tooltip>
-         <label>Servo 6</label>
+         <tooltip>Turnout 6 action</tooltip>
+         <label>Turnout 6</label>
       </display>
       <display item="GPIO{$io} Action: Servo7">
-         <tooltip>Servo 7 action</tooltip>
-         <label>Servo 7</label>
+         <tooltip>Turnout 7 action</tooltip>
+         <label>Turnout 7</label>
       </display>
       <display item="GPIO{$io} Action: Servo8">
-         <tooltip>Servo 8 action</tooltip>
-         <label>Servo 8</label>
+         <tooltip>Turnout 8 action</tooltip>
+         <label>Turnout 8</label>
       </display>
 </xsl:template>
 
 <xsl:template name="DodecaActionColumn">
     <xsl:param name="index"/>
       <display item="Servo{$index} Dodeca Action">
-         <tooltip>Servo 9 action</tooltip>
-         <label>Servo 9</label>
+         <tooltip>Turnout 9 action</tooltip>
+         <label>Turnout 9</label>
       </display>
       <display item="Servo{$index + 1} Dodeca Action">
-         <tooltip>Servo 10 action</tooltip>
-         <label>Servo 10</label>
+         <tooltip>Turnout 10 action</tooltip>
+         <label>Turnout 10</label>
       </display>
       <display item="Servo{$index + 2} Dodeca Action">
-         <tooltip>Servo 11 action</tooltip>
-         <label>Servo 11</label>
+         <tooltip>Turnout 11 action</tooltip>
+         <label>Turnout 11</label>
       </display>
       <display item="Servo{$index + 3} Dodeca Action">
-         <tooltip>Servo 12 action</tooltip>
-         <label>Servo 12</label>
+         <tooltip>Turnout 12 action</tooltip>
+         <label>Turnout 12</label>
       </display>
 </xsl:template>
 
@@ -1366,8 +1588,15 @@
             <label>Action</label>
         </display>
         <label label= " "/>
-        <display item="Aspect{$aspect} LED1 Out">
-            <tooltip>Select LED 1-16</tooltip>
+        <display item="Aspect{$aspect} Output Type">
+            <label>Output Type</label>
+        </display>
+        <display item="Aspect{$aspect} Output LED Type">
+            <label>Output Type</label>
+        </display>
+        <label label= " "/>
+       <display item="Aspect{$aspect} LED1 Out">
+            <tooltip>Select LED 1-24</tooltip>
             <label>Led A Out</label>
         </display>
         <display item="Aspect{$aspect} LED1 Mode">
@@ -1378,9 +1607,36 @@
             <tooltip>Bicolor drive with next physical output pin</tooltip>
             <label>Bicolor</label>
         </display>
+        <display item="Aspect{$aspect} TO1 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout A</label>
+        </display>
+        <display item="Aspect{$aspect} TO12_1 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout A</label>
+        </display>
+        <display item="Aspect{$aspect} TO8_1 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout A</label>
+        </display>
+        <display item="Aspect{$aspect} TO4_1 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout A</label>
+        </display>
+        <display item="Aspect{$aspect} TO1 Mode">
+            <tooltip>Turnout action</tooltip>
+            <label>Action</label>
+        </display>
+        <!-- use qualified labels to maintain consistent row grouping and column height -->
+        <display item="One Choice Enum Aspect{$aspect} SigTOQual" format="onradiobutton" layout="right">
+            <enumVal>
+                <enumChoice choice="" />
+            </enumVal>
+            <label>&lt;html&gt;&lt;br&gt;&lt;/html&gt;</label>
+        </display>
         <label label= " "/>
         <display item="Aspect{$aspect} LED2 Out">
-            <tooltip>Select LED 1-16</tooltip>
+            <tooltip>Select LED 1-24</tooltip>
             <label>Led B Out</label>
         </display>
         <display item="Aspect{$aspect} LED2 Mode">
@@ -1391,9 +1647,36 @@
             <tooltip>Bicolor drive with next physical output pin</tooltip>
             <label>Bicolor</label>
         </display>
+        <display item="Aspect{$aspect} TO2 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout B</label>
+        </display>
+        <display item="Aspect{$aspect} TO12_2 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout B</label>
+        </display>
+        <display item="Aspect{$aspect} TO8_2 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout B</label>
+        </display>
+        <display item="Aspect{$aspect} TO4_2 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout B</label>
+        </display>
+        <display item="Aspect{$aspect} TO2 Mode">
+            <tooltip>Turnout action</tooltip>
+            <label>Action</label>
+        </display>
+        <!-- use qualified labels to maintain consistent row grouping and column height -->
+        <display item="One Choice Enum Aspect{$aspect} SigTOQual" format="onradiobutton" layout="right">
+            <enumVal>
+                <enumChoice choice="" />
+            </enumVal>
+            <label>&lt;html&gt;&lt;br&gt;&lt;/html&gt;</label>
+        </display>
         <label label= " "/>
         <display item="Aspect{$aspect} LED3 Out">
-            <tooltip>Select LED 1-16</tooltip>
+            <tooltip>Select LED 1-24</tooltip>
             <label>Led C Out</label>
         </display>
         <display item="Aspect{$aspect} LED3 Mode">
@@ -1404,9 +1687,36 @@
             <tooltip>Bicolor drive with next physical output pin</tooltip>
             <label>Bicolor</label>
         </display>
+        <display item="Aspect{$aspect} TO3 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout C</label>
+        </display>
+        <display item="Aspect{$aspect} TO12_3 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout C</label>
+        </display>
+        <display item="Aspect{$aspect} TO8_3 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout C</label>
+        </display>
+        <display item="Aspect{$aspect} TO4_3 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout C</label>
+        </display>
+        <display item="Aspect{$aspect} TO3 Mode">
+            <tooltip>Turnout action</tooltip>
+            <label>Action</label>
+        </display>
+        <!-- use qualified labels to maintain consistent row grouping and column height -->
+        <display item="One Choice Enum Aspect{$aspect} SigTOQual" format="onradiobutton" layout="right">
+            <enumVal>
+                <enumChoice choice="" />
+            </enumVal>
+            <label>&lt;html&gt;&lt;br&gt;&lt;/html&gt;</label>
+        </display>
         <label label= " "/>
         <display item="Aspect{$aspect} LED4 Out">
-            <tooltip>Select LED 1-16</tooltip>
+            <tooltip>Select LED 1-24</tooltip>
             <label>Led D Out</label>
         </display>
         <display item="Aspect{$aspect} LED4 Mode">
@@ -1416,6 +1726,33 @@
         <display item="Aspect{$aspect} LED4 Bicolor" format="checkbox">
             <tooltip>Bicolor drive with next physical output pin</tooltip>
             <label>Bicolor</label>
+        </display>
+        <display item="Aspect{$aspect} TO4 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout D</label>
+        </display>
+        <display item="Aspect{$aspect} TO12_4 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout D</label>
+        </display>
+        <display item="Aspect{$aspect} TO8_4 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout D</label>
+        </display>
+        <display item="Aspect{$aspect} TO4_4 Out">
+            <tooltip>Select Turnout or Lock</tooltip>
+            <label>Turnout D</label>
+        </display>
+        <display item="Aspect{$aspect} TO4 Mode">
+            <tooltip>Turnout action</tooltip>
+            <label>Action</label>
+        </display>
+        <!-- use qualified labels to maintain consistent row grouping and column height -->
+        <display item="One Choice Enum Aspect{$aspect} SigTOQual" format="onradiobutton" layout="right">
+            <enumVal>
+                <enumChoice choice="" />
+            </enumVal>
+            <label>&lt;html&gt;&lt;br&gt;&lt;br&gt;&lt;/html&gt;</label>
         </display>
     </column>
     <xsl:if test="not(7 = $index)">
@@ -1459,9 +1796,9 @@
  </xsl:template>
 
  <!--install panes -->
- <xsl:template match="label[text='Decoder Transform File Version: x.xx']">
+ <xsl:template match="label[text='Decoder Transform File Version: x.xx.x']">
     <label>
-        <text>Decoder Transform File Version: 3.01</text>
+        <text>Decoder Transform File Version: 3.02.3</text>
     </label>
  </xsl:template>
 

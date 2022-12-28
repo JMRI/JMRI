@@ -50,8 +50,6 @@ public class VSDFile extends ZipFile {
     private String missedFileName;
     private int num_cylinders;
 
-    ZipInputStream zis;
-
     public VSDFile(File file) throws ZipException, IOException {
         super(file);
         initialized = init();
@@ -75,6 +73,8 @@ public class VSDFile extends ZipFile {
         return _statusMsg;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="error text in _statusMsg kept for later use")
     protected boolean init() {
         VSDXmlFile xmlfile = new VSDXmlFile();
         initialized = false;
@@ -106,10 +106,6 @@ public class VSDFile extends ZipFile {
             _statusMsg = "IO Error auto-loading VSD File: " + VSDXmlFileName + " " + ioe.toString();
             log.error(_statusMsg);
             return false;
-        } catch (NullPointerException npe) {
-            _statusMsg = "NP Error auto-loading VSD File: path = " + VSDXmlFileName + " " + npe.toString();
-            log.error(_statusMsg);
-            return false;
         } catch (org.jdom2.JDOMException ex) {
             _statusMsg = "JDOM Exception loading VSDecoder from path " + VSDXmlFileName + " " + ex.toString();
             log.error(_statusMsg);
@@ -139,20 +135,17 @@ public class VSDFile extends ZipFile {
         } catch (IOException e) {
             log.error("IOException caught", e);
             rv = null;
-        } catch (NullPointerException ne) {
-            log.error("Null Pointer Exception caught. name: {}", name, ne);
-            rv = null;
         }
         return rv;
     }
 
     public java.io.File getFile(String name) {
-        try {
-            ZipEntry e = this.getEntry(name);
+        ZipEntry e = this.getEntry(name);
+        if (e == null) {
+            return null;
+        } else {
             File f = new File(e.getName());
             return f;
-        } catch (NullPointerException e) {
-            return null;
         }
     }
 
@@ -169,9 +162,6 @@ public class VSDFile extends ZipFile {
             // return the name of the tempfile
             return t.getPath();
 
-        } catch (NullPointerException e) {
-            log.error("Null pointer exception", e);
-            return null;
         } catch (IOException e) {
             log.error("IO exception", e);
             return null;
@@ -461,6 +451,8 @@ public class VSDFile extends ZipFile {
         return true;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="error text in _statusMsg kept for later use")
     protected boolean validateFilesNumbers(Element el, String name, String[] fnames, Boolean required) {
         List<Element> elist = el.getChildren(name);
 

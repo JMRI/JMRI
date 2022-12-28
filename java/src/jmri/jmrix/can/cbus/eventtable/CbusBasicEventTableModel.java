@@ -65,8 +65,13 @@ public class CbusBasicEventTableModel extends javax.swing.table.AbstractTableMod
         EVENT_DAT_1, EVENT_DAT_2, EVENT_DAT_3 };
 
     public CbusBasicEventTableModel(CanSystemConnectionMemo memo) {
+        this(memo, 1);
+    }
+
+    public CbusBasicEventTableModel(CanSystemConnectionMemo memo, int initialRowSize) {
+        super();
         _memo = memo;
-        _mainArray = new ArrayList<>();
+        _mainArray = new ArrayList<>(initialRowSize);
         ta = new CbusEventTableAction( this);
     }
 
@@ -248,7 +253,7 @@ public class CbusBasicEventTableModel extends javax.swing.table.AbstractTableMod
         // not existing so creating new
         CbusTableEvent newtabev = new CbusTableEvent(_memo,nn,en );
         _mainArray.add(newtabev);
-        ThreadingUtil.runOnGUIEventually(() -> fireTableDataChanged());
+        fireTableDataChanged();
         return newtabev;
     }
 

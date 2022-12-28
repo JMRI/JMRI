@@ -5,6 +5,8 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionSound;
+import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -19,7 +21,7 @@ public class ActionSoundXml extends jmri.managers.configurexml.AbstractNamedBean
 
     public ActionSoundXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalMast
      *
@@ -36,21 +38,18 @@ public class ActionSoundXml extends jmri.managers.configurexml.AbstractNamedBean
 
         storeCommon(p, element);
 
-        element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
-        element.addContent(new Element("operationType").addContent(p.getOperation().name()));
-        element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
-        element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
-        element.addContent(new Element("operationFormula").addContent(p.getOperationFormula()));
-        
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionSound.Operation>();
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "operation"));
+
         element.addContent(new Element("soundAddressing").addContent(p.getSoundAddressing().name()));
         element.addContent(new Element("sound").addContent(p.getSound()));
         element.addContent(new Element("soundReference").addContent(p.getSoundReference()));
         element.addContent(new Element("soundLocalVariable").addContent(p.getSoundLocalVariable()));
         element.addContent(new Element("soundFormula").addContent(p.getSoundFormula()));
-        
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
@@ -59,57 +58,48 @@ public class ActionSoundXml extends jmri.managers.configurexml.AbstractNamedBean
 
         loadCommon(h, shared);
 
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionSound.Operation>();
+
+        selectEnumXml.load(shared.getChild("operation"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "operationAddressing",
+                "operationType",
+                "operationReference",
+                "operationLocalVariable",
+                "operationFormula");
+
         try {
-            Element elem = shared.getChild("operationAddressing");
-            if (elem != null) {
-                h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-            
-            Element queryType = shared.getChild("operationType");
-            if (queryType != null) {
-                h.setOperation(ActionSound.Operation.valueOf(queryType.getTextTrim()));
-            }
-            
-            elem = shared.getChild("operationReference");
-            if (elem != null) h.setOperationReference(elem.getTextTrim());
-            
-            elem = shared.getChild("operationLocalVariable");
-            if (elem != null) h.setOperationLocalVariable(elem.getTextTrim());
-            
-            elem = shared.getChild("operationFormula");
-            if (elem != null) h.setOperationFormula(elem.getTextTrim());
-            
-            
-            elem = shared.getChild("soundAddressing");
+            Element elem = shared.getChild("soundAddressing");
             if (elem != null) {
                 h.setSoundAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
-            
+
             Element soundElement = shared.getChild("sound");
             if (soundElement != null) {
                 try {
                     h.setSound(soundElement.getText());
                 } catch (NumberFormatException e) {
-                    log.error("cannot parse sound: " + soundElement.getTextTrim(), e);
+                    log.error("cannot parse sound: {}", soundElement.getTextTrim(), e);
                 }
             }
-            
+
             elem = shared.getChild("soundReference");
             if (elem != null) h.setSoundReference(elem.getTextTrim());
-            
+
             elem = shared.getChild("soundLocalVariable");
             if (elem != null) h.setSoundLocalVariable(elem.getTextTrim());
-            
+
             elem = shared.getChild("soundFormula");
             if (elem != null) h.setSoundFormula(elem.getTextTrim());
-            
+
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
         }
-        
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSoundXml.class);
 }

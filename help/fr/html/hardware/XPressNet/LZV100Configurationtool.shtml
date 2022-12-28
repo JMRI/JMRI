@@ -1,26 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- Updated by Blorec Herv&#233; 2017-01-12-->
-<title>JMRI Hardware Support - XPressNet LZV100 Configuration Tool</title>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <!-- Updated by Blorec Herv&#233; 2017-01-12-->
+  <title>JMRI Hardware Support - XPressNet LZV100 Configuration Tool</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
- <!--#include virtual="Sidebar" -->
- <div id="mainContent">
-  <!-- Page Body -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+      <!-- Page Body -->
 
 <h2>Outil deCconfiguration XPressNet LZV100 </h2>
 <img src="images/LZV100ConfigurationUtility.jpg" alt="LZV100 Configuration 
@@ -61,8 +52,8 @@ Voir le manuel LZV100 pour plus d'informations pour savoir exactement ce que
 cela fait.
 <p>
 Le bouton "Auto/Manual mode toggle" envoie &#224; la locomotive &#224; l'adresse 0 des instructions fonction indiqu&#233; dans le Manuel LZV100
- pour basculer entre le mode de d&#233;marrage manuel et automatique. Dans le mode Manuel
-, la LZV100 fonctionnera sur toutes les fonctions des locomotives qui &#233;taient en service la
+pour basculer entre le mode de d&#233;marrage manuel et automatique. Dans le mode Manuel,
+la LZV100 fonctionnera sur toutes les fonctions des locomotives qui &#233;taient en service la
 derni&#232;re fois que la LZV100 a &#233;t&#233; allum&#233;e. En mode Automatique, les locomotives
 reprendront &#233;galement la vitesse et les r&#233;glages de direction pr&#233;c&#233;dents .
 
@@ -72,8 +63,9 @@ reprendront &#233;galement la vitesse et les r&#233;glages de direction pr&#233;
 Paul Bender<br>
 paul.bender@acm.org
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+    <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

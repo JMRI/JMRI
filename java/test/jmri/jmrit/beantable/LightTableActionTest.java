@@ -2,22 +2,22 @@ package jmri.jmrit.beantable;
 
 import jmri.util.gui.GuiLafPreferencesManager;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.annotation.Nonnull;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import jmri.*;
+import jmri.jmrit.beantable.light.LightControlTableModel;
 import jmri.jmrit.beantable.light.LightTableDataModel;
 import jmri.jmrix.internal.InternalLightManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
-import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
@@ -65,8 +65,8 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
      * @since 4.7.4
      */
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddAndInvoke() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         a.actionPerformed(null); // show table
         // create 2 lights and see if they exist
@@ -78,8 +78,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // set graphic state column display preference to false, read by createModel()
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(false);
 
-        LightTableAction _lTable;
-        _lTable = new LightTableAction();
+        LightTableAction _lTable = new LightTableAction();
         Assert.assertNotNull("found LightTable frame", _lTable);
 
         // set to true, use icons
@@ -108,35 +107,36 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Override
     public void testEditButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
+
+        Assert.assertTrue(a.includeAddButton());
         a.actionPerformed(null);
-        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-        JFrameOperator jfo = new JFrameOperator(f);
+        JFrameOperator jfo = new JFrameOperator(getTableFrameName());
         JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
         new QueueTool().waitEmpty();
-        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-        //Enter 1 in the text field labeled "Hardware address:"
-        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
-        Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
-        // set to "1"
-        new JTextFieldOperator(hwAddressField).setText("1");
+        JFrameOperator f1 = new JFrameOperator(getAddFrameName());
+        //Enter 1 in the text field labeled "Hardware address:"
+        new JTextFieldOperator(f1, new NameComponentChooser("hwAddressTextField")).setText("1");
+
         //and press create
-        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCreate"));
+        JemmyUtil.pressButton(f1, Bundle.getMessage("ButtonCreate"));
         new QueueTool().waitEmpty();
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
         tbl.clickOnCell(0, LightTableDataModel.EDITCOL); // edit column
         new QueueTool().waitEmpty();
-        JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
-        JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
-        JUnitUtil.dispose(f2);
-        JUnitUtil.dispose(f1);
+        JFrameOperator editFrameOperator = new JFrameOperator(getEditFrameName());
+        JemmyUtil.pressButton(editFrameOperator, Bundle.getMessage("ButtonCancel"));
+
+        editFrameOperator.waitClosed();
+        f1.requestClose();
+        f1.waitClosed();
+
     }
 
     @Override
@@ -145,9 +145,8 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddEditSensorLightControl() throws jmri.JmriException {
-
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create 2 Sensors to pick from
         Sensor sOne = sensorManager.provideSensor("S1");
@@ -155,21 +154,18 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
 
         a.actionPerformed(null); // show table
 
-        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
-
         // find the "Add... " button and press it.
-        JFrameOperator jfo = new JFrameOperator(f);
+        JFrameOperator jfo = new JFrameOperator(getTableFrameName());
         JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
         new QueueTool().waitEmpty();
-        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        
+        JFrameOperator jfob = new JFrameOperator(getAddFrameName());
         //Enter 1234 in the text field labeled "Hardware address:"
-        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
-        // set to "1234"
-        new JTextFieldOperator(hwAddressField).setText("1234");
-        JFrameOperator jfob = new JFrameOperator(f1);
+        new JTextFieldOperator(jfob, new NameComponentChooser("hwAddressTextField")).setText("1234");
+        
         JemmyUtil.pressButton(jfob, Bundle.getMessage("LightAddControlButton"));
-        JFrame fControl = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddLightControl"), true, true);
-        JFrameOperator jfoc = new JFrameOperator(fControl);
+        
+        JFrameOperator jfoc = new JFrameOperator(Bundle.getMessage("TitleAddLightControl"));
 
         Assert.assertEquals("No Sensor selected ", Bundle.getMessage("LightNoControl"),
                 new JComboBoxOperator(jfoc, 0).getSelectedItem());
@@ -180,6 +176,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         new JComboBoxOperator(jfoc, 1).setSelectedItem(sTwo); // select Sensor S2
         new JComboBoxOperator(jfoc, 2).selectItem(Bundle.getMessage("SensorStateActive"));
         JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
+        jfoc.waitClosed();
         // light control frame closes
 
         JemmyUtil.pressButton(jfob, Bundle.getMessage("ButtonCreate"));
@@ -200,22 +197,18 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
                         created.getLightControlList().get(0).getControlType()));
 
         // now we find the Light in the table and edit it
-        JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
-        tbl.clickOnCell(0, LightTableDataModel.EDITCOL); // edit column
+        new JTableOperator(jfo, 0).clickOnCell(0, LightTableDataModel.EDITCOL);
 
         new QueueTool().waitEmpty();
-        JFrame f2 = JFrameOperator.waitJFrame("Edit Light IL1234", true, true);
-        JFrameOperator jfoce = new JFrameOperator(f2);
-        JTabbedPaneOperator tabOperator = new JTabbedPaneOperator(jfoce);
-        tabOperator.selectPage(Bundle.getMessage("LightControllerTitlePlural"));
-        JTableOperator controltbl = new JTableOperator(jfoce, 0);
+        JFrameOperator jfoce = new JFrameOperator("Edit Light IL1234");
+        new JTabbedPaneOperator(jfoce).selectPage(Bundle.getMessage("LightControllerTitlePlural"));
+
         // find the "Edit" button and press it.  This is in the table body.
-        controltbl.clickOnCell(0, 2); // click edit button in column 2.
+        new JTableOperator(jfoce, 0).clickOnCell(0, LightControlTableModel.EDIT_COLUMN); // click edit button in column 2.
 
         // find edit control window
-        JFrame f3 = JFrameOperator.waitJFrame(Bundle.getMessage("TitleEditLightControl"), true, true);
-        JFrameOperator jfof3 = new JFrameOperator(f3);
+        JFrameOperator jfof3 = new JFrameOperator(Bundle.getMessage("TitleEditLightControl"));
 
         Assert.assertEquals("Sensor Control type selected ", Bundle.getMessage("LightSensorControl"),
                 new JComboBoxOperator(jfof3, 0).getSelectedItem());
@@ -248,50 +241,50 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         }, "Light should go ON to match sOne");
         Assert.assertEquals("1 Control", 1, created.getLightControlList().size());
 
-        JUnitUtil.dispose(f1);
+        jfob.requestClose();
+        jfob.waitClosed();
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddEditFastClockFollowerLightControl() throws jmri.JmriException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         a.actionPerformed(null); // show table
-
-        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
-
         // find the "Add... " button and press it.
-        JFrameOperator jfo = new JFrameOperator(f);
-        JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
+        JFrameOperator tableFrameOperator = new JFrameOperator(getTableFrameName());
+        JemmyUtil.pressButton(tableFrameOperator, Bundle.getMessage("ButtonAdd"));
         new QueueTool().waitEmpty();
-        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+
+        JFrameOperator addFrameOperator = new JFrameOperator(getAddFrameName());
+
         //Enter 4321 in the text field labeled "Hardware address:"
-        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
-        // set to "4321"
-        new JTextFieldOperator(hwAddressField).setText("4321");
-        JFrameOperator jfob = new JFrameOperator(f1);
-        JemmyUtil.pressButton(jfob, Bundle.getMessage("LightAddControlButton"));
-        JFrame fControl = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddLightControl"), true, true);
-        JFrameOperator jfoc = new JFrameOperator(fControl);
+        new JTextFieldOperator(addFrameOperator, new NameComponentChooser("hwAddressTextField")).setText("4321");
+        JemmyUtil.pressButton(addFrameOperator, Bundle.getMessage("LightAddControlButton"));
+
+        JFrameOperator addControlOperator = new JFrameOperator(Bundle.getMessage("TitleAddLightControl"));
 
         // create a new Light Controlled by Sensor S2
-        new JComboBoxOperator(jfoc, 0).setSelectedItem(Bundle.getMessage("LightFastClockControl"));
+        new JComboBoxOperator(addControlOperator, 0).setSelectedItem(Bundle.getMessage("LightFastClockControl"));
 
-        Assert.assertEquals("default Hour ON Time ", "00", new JTextFieldOperator(jfoc, 0).getText());
-        Assert.assertEquals("default Minute ON Time ", "00", new JTextFieldOperator(jfoc, 1).getText());
-        Assert.assertEquals("default Hour OFF Time ", "00", new JTextFieldOperator(jfoc, 2).getText());
-        Assert.assertEquals("default Minute OFF Time ", "00", new JTextFieldOperator(jfoc, 3).getText());
+        Assert.assertEquals("default Hour ON Time ", "00", new JTextFieldOperator(addControlOperator, 0).getText());
+        Assert.assertEquals("default Minute ON Time ", "00", new JTextFieldOperator(addControlOperator, 1).getText());
+        Assert.assertEquals("default Hour OFF Time ", "00", new JTextFieldOperator(addControlOperator, 2).getText());
+        Assert.assertEquals("default Minute OFF Time ", "00", new JTextFieldOperator(addControlOperator, 3).getText());
 
-        new JTextFieldOperator(jfoc, 0).setText("01");
-        new JTextFieldOperator(jfoc, 1).setText("02");
-        new JTextFieldOperator(jfoc, 2).setText("03");
-        new JTextFieldOperator(jfoc, 3).setText("04");
+        new JTextFieldOperator(addControlOperator, 0).setText("01");
+        new JTextFieldOperator(addControlOperator, 1).setText("02");
+        new JTextFieldOperator(addControlOperator, 2).setText("03");
+        new JTextFieldOperator(addControlOperator, 3).setText("04");
 
-        JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
+        JemmyUtil.pressButton(addControlOperator, Bundle.getMessage("ButtonCreate"));
+        addControlOperator.waitClosed();
         // light control frame closes
 
-        JemmyUtil.pressButton(jfob, Bundle.getMessage("ButtonCreate"));
-        // new light frame closes
-
+        JemmyUtil.pressButton(addFrameOperator, Bundle.getMessage("ButtonCreate"));
+        // new light frame stays open
+        addFrameOperator.requestClose();
+        addFrameOperator.waitClosed();
+        
         Light created = lightManager.provideLight("IL4321");
         Assert.assertEquals("1 Control", 1, created.getLightControlList().size());
         Assert.assertEquals("Correct Light Control Type and Times", "ON at 01:02, OFF at 03:04.",
@@ -299,43 +292,37 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
                         created.getLightControlList().get(0).getControlType()));
 
         // now we find the Light in the table and edit it
-        JTableOperator tbl = new JTableOperator(jfo, 0);
+        JTableOperator tbl = new JTableOperator(tableFrameOperator, 0);
         // find the "Edit" button and press it.  This is in the table body.
         tbl.clickOnCell(0, LightTableDataModel.EDITCOL); // edit column
-
         new QueueTool().waitEmpty();
-        JFrame f2 = JFrameOperator.waitJFrame("Edit Light IL4321", true, true);
 
-        JFrameOperator jfoce = new JFrameOperator(f2);
-        JTabbedPaneOperator tabOperator = new JTabbedPaneOperator(jfoce);
-        tabOperator.selectPage(Bundle.getMessage("LightControllerTitlePlural"));
-        
-        JTableOperator controltbl = new JTableOperator(jfoce, 0);
-        // find the "Edit" button and press it.  This is in the table body.
+        JFrameOperator editLightOperator = new JFrameOperator("Edit Light IL4321");
+        new JTabbedPaneOperator(editLightOperator).selectPage(Bundle.getMessage("LightControllerTitlePlural"));
 
-        controltbl.clickOnCell(0, 2); // click edit button in column 2.
+        // find the "Edit" button and press it.
+        new JTableOperator(editLightOperator, 0).clickOnCell(0, LightControlTableModel.EDIT_COLUMN);
 
         // find edit control window
-        JFrame f3 = JFrameOperator.waitJFrame(Bundle.getMessage("TitleEditLightControl"), true, true);
-        JFrameOperator jfof3 = new JFrameOperator(f3);
+        JFrameOperator editLightExistingControlOperator = new JFrameOperator(Bundle.getMessage("TitleEditLightControl"));
         // edit window should have the FastClock Follower control selected
         Assert.assertEquals("Sensor Control type selected ", Bundle.getMessage("LightFastClockControl"),
-                new JComboBoxOperator(jfof3, 0).getSelectedItem());
+                new JComboBoxOperator(editLightExistingControlOperator, 0).getSelectedItem());
 
-        Assert.assertEquals("Correct Hour ON Time ", "01", new JTextFieldOperator(jfof3, 0).getText());
-        Assert.assertEquals("Correct Minute ON Time ", "02", new JTextFieldOperator(jfof3, 1).getText());
-        Assert.assertEquals("Correct Hour OFF Time ", "03", new JTextFieldOperator(jfof3, 2).getText());
-        Assert.assertEquals("Correct Minute OFF Time ", "04", new JTextFieldOperator(jfof3, 3).getText());
+        Assert.assertEquals("Correct Hour ON Time ", "01", new JTextFieldOperator(editLightExistingControlOperator, 0).getText());
+        Assert.assertEquals("Correct Minute ON Time ", "02", new JTextFieldOperator(editLightExistingControlOperator, 1).getText());
+        Assert.assertEquals("Correct Hour OFF Time ", "03", new JTextFieldOperator(editLightExistingControlOperator, 2).getText());
+        Assert.assertEquals("Correct Minute OFF Time ", "04", new JTextFieldOperator(editLightExistingControlOperator, 3).getText());
 
-        new JTextFieldOperator(jfof3, 0).setText("21");
-        new JTextFieldOperator(jfof3, 1).setText("22");
-        new JTextFieldOperator(jfof3, 2).setText("23");
-        new JTextFieldOperator(jfof3, 3).setText("24");
+        new JTextFieldOperator(editLightExistingControlOperator, 0).setText("21");
+        new JTextFieldOperator(editLightExistingControlOperator, 1).setText("22");
+        new JTextFieldOperator(editLightExistingControlOperator, 2).setText("23");
+        new JTextFieldOperator(editLightExistingControlOperator, 3).setText("24");
 
-        JemmyUtil.pressButton(jfof3, Bundle.getMessage("ButtonUpdate"));
+        JemmyUtil.pressButton(editLightExistingControlOperator, Bundle.getMessage("ButtonUpdate"));
         // light control edit frame closes
 
-        JemmyUtil.pressButton(jfoce, Bundle.getMessage("ButtonOK"));
+        JemmyUtil.pressButton(editLightOperator, Bundle.getMessage("ButtonOK"));
         // light edit frame closes
 
         Assert.assertEquals("Correct Light Control Type and Times", "ON at 21:22, OFF at 23:24.",
@@ -345,17 +332,15 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // now we edit the control then cancel the edit
         tbl.clickOnCell(0, LightTableDataModel.EDITCOL); // edit column
         new QueueTool().waitEmpty();
-        JFrame f4 = JFrameOperator.waitJFrame("Edit Light IL4321", true, true);
 
-        JFrameOperator jfocef4 = new JFrameOperator(f4);
+        JFrameOperator jfocef4 = new JFrameOperator("Edit Light IL4321");
         JTabbedPaneOperator tabOperator4 = new JTabbedPaneOperator(jfocef4);
         tabOperator4.selectPage(Bundle.getMessage("LightControllerTitlePlural"));
         new JTableOperator(jfocef4, 0).clickOnCell(0, 2); // click edit button in column 2.
         // find the "Edit" Control button and press it.  This is in the table body.
 
         // find edit control window
-        JFrame f5 = JFrameOperator.waitJFrame(Bundle.getMessage("TitleEditLightControl"), true, true);
-        JFrameOperator jfof5 = new JFrameOperator(f5);
+        JFrameOperator jfof5 = new JFrameOperator(Bundle.getMessage("TitleEditLightControl"));
         // edit window should have the FastClock Follower control selected
 
         Assert.assertEquals("Correct Hour ON Time ", "21", new JTextFieldOperator(jfof5, 0).getText());
@@ -383,8 +368,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // now attempt to create a new Light Control with the same time
         
         JemmyUtil.pressButton(jfocef4, Bundle.getMessage("LightAddControlButton"));
-        fControl = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddLightControl"), true, true);
-        jfoc = new JFrameOperator(fControl);
+        JFrameOperator jfoc = new JFrameOperator(Bundle.getMessage("TitleAddLightControl"));
         
         new JComboBoxOperator(jfoc, 0).setSelectedItem(Bundle.getMessage("LightFastClockControl"));
         
@@ -413,10 +397,10 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
     }
-    
+
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddEditTurnoutLightControl() throws jmri.JmriException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Turnout tOne = turnoutManager.provideTurnout("T1");
         Turnout tTwo = turnoutManager.provideTurnout("T2");
@@ -505,8 +489,8 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddEditTimedOnLightControl() throws jmri.JmriException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create 2 Sensors to pick from
         Sensor sOne = sensorManager.provideSensor("S1");
@@ -593,9 +577,8 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddEditTwoSensorLightControl() throws jmri.JmriException {
-
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create 3 Sensors to pick from
         Sensor sOne = sensorManager.provideSensor("S1");
@@ -696,9 +679,8 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
 
     // sensors with usernames
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testSensorUserNamesLightControl() throws jmri.JmriException {
-
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create 3 Sensors to pick from
         Sensor sOne = sensorManager.provideSensor("S1");
@@ -746,15 +728,15 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
     }
-    
+
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddFailureCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        InstanceManager.setDefault(LightManager.class, new CreateNewLightAlwaysException());
+        InstanceManager.setDefault(LightManager.class, new ThrowsExceptionCreateNewLight());
         
         a = new LightTableAction();
-        Assume.assumeTrue(a.includeAddButton());
+        Assert.assertTrue(a.includeAddButton());
         
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
@@ -777,10 +759,10 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
-    
-    private class CreateNewLightAlwaysException extends InternalLightManager {
 
-        public CreateNewLightAlwaysException() {
+    private static class ThrowsExceptionCreateNewLight extends InternalLightManager {
+
+        ThrowsExceptionCreateNewLight() {
             super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 
@@ -796,10 +778,10 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
     @BeforeEach
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
         helpTarget = "package.jmri.jmrit.beantable.LightTable";
         a = new LightTableAction();
         lightManager = InstanceManager.getDefault(LightManager.class);
@@ -818,7 +800,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         lightManager = null;
         sensorManager = null;
         turnoutManager = null;
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LightTableActionTest.class);

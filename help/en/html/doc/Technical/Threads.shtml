@@ -26,14 +26,15 @@
       The Java Swing event thread.</p>
 
       <p>Note that this does <em>not</em> mean that other things can't be happening. For example,
-      this script fragment:</p>
-
-      <pre style="font-family: monospace;">
-    state = sensors.provideSensor("mySensor").getState()<br>
-    turnouts.provideTurnout("myTurnout").setState(THROWN)<br>
-    print state == sensors.provideSensor("mySensor").getState()<br>
-</pre>can print either true or false, because changing that turnout <em>can</em> change associated
-sensors instantaneously.
+      this script fragment:
+      <div class="wide">
+      <pre>
+ state = sensors.provideSensor("mySensor").getState()
+ turnouts.provideTurnout("myTurnout").setState(THROWN)
+ print state == sensors.provideSensor("mySensor").getState()
+      </pre></div>
+      can print either true or false, because changing that turnout <em>can</em> change associated
+      sensors instantaneously.
       <p>There are times when you might want to do something a bit more complex using an additional
       thread:</p>
 
@@ -55,15 +56,16 @@ sensors instantaneously.
       thread. At the end, when it's time to set your new frame visible, <a href=
       "http://web.archive.org/web/20090526170426/http://java.sun.com/developer/JDCTechTips/2003/tt1208.html">
       you have to to that on the Swing (GUI) thread</a>. Here's the code to do that:</p>
-
-      <pre style="font-family: monospace;">
-    frame = new JmriJFrame();  // frame declared as instance variable<br>
-    // spend a long time reading data and configuring the frame<br>
-    ThreadingUtil.runOnGUI( ()-&gt;{  frame.setVisible(); });<br>
-</pre>ThreadingUtil separates operations on the GUI (e.g. Java Swing) thread, and operations on the
-Layout (e.g. Sensors, Turnouts, etc) thread. There's no real difference now, but in the interest of
-perhaps someday needing to separate those, we've introduced the two versions now. Please try to
-pick the mostly-likely-right one when coding.
+      <div class="wide">
+      <pre>
+ frame = new JmriJFrame();  // frame declared as instance variable
+ // spend a long time reading data and configuring the frame
+ ThreadingUtil.runOnGUI( ()-&gt;{  frame.setVisible(); });
+</pre></div>
+      <p>ThreadingUtil separates operations on the GUI (e.g. Java Swing) thread, and operations on the
+      Layout (e.g. Sensors, Turnouts, etc) thread. There's no real difference now, but in the interest of
+      perhaps someday needing to separate those, we've introduced the two versions now. Please try to
+      pick the mostly-likely-right one when coding.</p>
       <p>(N.B.: You'll find lots of older cases that use explicitly use
       javax.swing.SwingUtilities.invokeLater(r) or javax.swing.SwingUtilities.invokeAndWait(r);
       these should be migrated to the newer JMRI-specific methods as time is available to keep our
@@ -81,20 +83,21 @@ pick the mostly-likely-right one when coding.
 
       <p>If you want to check at runtime that something is running on the intended thread:</p>
 
-      <pre style="font-family: monospace;">
-    ThreadingUtil.requireGuiThread(log);
+      <pre>
+ ThreadingUtil.requireGuiThread(log);
 </pre>or
 
-      <pre style="font-family: monospace;">
-    ThreadingUtil.requireLayoutThread(log);
-</pre>That check does take a bit of time, so it should probably only be done on entry to a large
-chunk of code, or perhaps be protected by a check of <code>log.isDebugEnabled()</code>. If the call
-occurs on the wrong thread, a <code>Log4JUtil.warnOnce</code> logs the first occurance with
-traceback info. In addition to the <code>@InvokeOnGuiThread</code>,
-<code>@InvokeOnLayoutThread</code> and <code>@InvokeOnAnyThread</code> annotations mentioned here,
-there are <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, <code>@Immutable</code>, and
-<code>@GuardedBy</code> annotations that are useful. See the discussion on the <a href=
-"SpotBugs.shtml#annotations">JMRI SpotBugs page</a>.
+      <pre>
+ ThreadingUtil.requireLayoutThread(log);
+</pre>
+      <p>That check does take a bit of time, so it should probably only be done on entry to a large
+      chunk of code, or perhaps be protected by a check of <code>log.isDebugEnabled()</code>. If the call
+      occurs on the wrong thread, a <code>Log4JUtil.warnOnce</code> logs the first occurance with
+      traceback info. In addition to the <code>@InvokeOnGuiThread</code>,
+      <code>@InvokeOnLayoutThread</code> and <code>@InvokeOnAnyThread</code> annotations mentioned here,
+      there are <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, <code>@Immutable</code>, and
+      <code>@GuardedBy</code> annotations that are useful. See the discussion on the <a href=
+      "SpotBugs.shtml#annotations">JMRI SpotBugs page</a>.</p>
       <p>If you do need to launch a thread of your own, there are a few things to remember:</p>
 
       <ul>
@@ -130,22 +133,25 @@ there are <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, <code>@Immutabl
         <li>Sometimes you can't change the signature of your method: Perhaps it's overriding a Java
         definition by inheritance. Only if you can't terminate cleanly or pass it up, you can mark
         the interrupt and continue:
-
-          <pre style="font-family: monospace;">
-        try {
-            wait()
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-</pre>This will let execution continue, as if you hadn't received the interrupt, but the <em>
-          next</em> that execution hits a blocking call, that call will immediately get an
-          interrupt too. Perhaps it can handle it better!
+          <div class="wide">
+        <pre>
+ try {
+   wait()
+ } catch (InterruptedException e) {
+   Thread.currentThread().interrupt();
+ }
+        </pre></div>
+        This will let execution continue, as if you hadn't received the interrupt, but the <em>
+        next</em> that execution hits a blocking call, that call will immediately get an
+        interrupt too. Perhaps it can handle it better!
         </li>
       </ol>
-      For more background, please read <a href=
-      "https://www.ibm.com/developerworks/library/j-jtp05236/index.html">this article</a>.
+
+      <p>For more background, please read <a href=
+      "https://www.ibm.com/developerworks/library/j-jtp05236/index.html">this article</a>.</p>
+
       <h3 id="timer">Timed Events</h3>
-      The <a href=
+      <p>The <a href=
       "https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a> class
       provides the <a href=
       "https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnGUIDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">
@@ -153,7 +159,7 @@ there are <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, <code>@Immutabl
       "https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnLayoutDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">
       runOnLayoutDelayed</a> methods to make it easy to run some code after a delay. In general,
       you should use these whenever possible instead of explicit javax.swing.Timer or
-      java.util.Timer objects.
+      java.util.Timer objects.</p>
       <p>We recommend you not use the java.util.Timer class directly because of significant
       issues:</p>
 
@@ -164,8 +170,9 @@ there are <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, <code>@Immutabl
         <li>The requested operation is run on the Timer's own thread, which isn't the layout or GUI
         thread.</li>
       </ul>
-      The <a href="https://jmri.org/JavaDoc/doc/jmri/util/TimerUtil.html">jmri.util.TimerUtil</a>
-      can help with these issues.
+      <p>The <a href="https://jmri.org/JavaDoc/doc/jmri/util/TimerUtil.html">jmri.util.TimerUtil</a>
+      can help with these issues.</p>
+
       <h3>Other Items of Interest</h3>
 
       <p>Using a <a href=
@@ -221,18 +228,26 @@ there are <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, <code>@Immutabl
             <code>ps | grep java | grep apps | awk '{print $1}'<br></code></li>
 
             <li>and then send a QUIT signal to that process. E.g., if it's 6190,<br>
-            <code>kill -s QUIT 6190<br></code> or you can combine them:<br>
-            <code>kill -s QUIT `ps | grep java | grep apps | awk '{print $1}'`<br></code></li>
+              <div class="wide">
+                <code>kill -s QUIT 6190<br></code>
+              </div>
+                or you can combine them:
+              <div class="wide">
+                <code>kill -s QUIT `ps | grep java | grep apps | awk '{print $1}'`</code><br>
+              </div>
+            </li>
 
-            <li>Then look for the output in Console or ....</li>
+            <li>Then look for the output in Console or ...</li>
           </ul>
         </li>
 
         <li>If you're running under Netbeans or Eclipse, there are simple menu commands to do
         this.</li>
       </ul>
-      Note that if running under Ant or an IDE, you might get more than one dump: The one you're
-      looking for from JMRI, plus many one from Ant or the IDE itself. 
+
+      <p>Note that if running under Ant or an IDE, you might get more than one dump: The one you're
+      looking for from JMRI, plus maybe one from Ant or the IDE itself.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

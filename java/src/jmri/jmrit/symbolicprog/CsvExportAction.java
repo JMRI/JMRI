@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to export the CV values to a Comma Separated Valiable (CSV) data file.
+ * Action to export the CV values to a Comma Separated Variable (CSV) data file.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
@@ -51,12 +51,14 @@ public class CsvExportAction extends AbstractAction {
             }
 
             try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
-                str.printRecord("CV, value");
+                str.printRecord("CV", "value");
                 for (int i = 0; i < mModel.getRowCount(); i++) {
                     CvValue cv = mModel.getCvByRow(i);
-                    String num = cv.number();
-                    int value = cv.getValue();
-                    str.printRecord(num, value);
+                    if (isWritable(cv)) {
+                        String num = cv.number();
+                        int value = cv.getValue();
+                        str.printRecord(num, value);
+                    }
                 }
                 str.flush();
             } catch (IOException ex) {
@@ -64,6 +66,16 @@ public class CsvExportAction extends AbstractAction {
             }
         }
     }
+
+    /**
+     * Decide whether a given CV should be written out.
+     * @param cv CV to be checked
+     * @return true if CV should be included in output file.
+     */
+    protected boolean isWritable(CvValue cv) {
+        return true;
+    }
+
 
     private final static Logger log = LoggerFactory.getLogger(CsvExportAction.class);
 }

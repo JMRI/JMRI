@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
 
 /**
  * Configures an LogData object with a Swing JPanel.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class LogDataSwing extends AbstractDigitalExpressionSwing {
@@ -31,19 +31,19 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
     private JTextField _format;
     private JTable _logDataTable;
     private LogDataTableModel _logDataTableModel;
-    
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         if ((object != null) && (! (object instanceof LogData))) {
             throw new IllegalArgumentException("object is not a LogData: " + object.getClass().getName());
         }
         LogData logData = (LogData)object;
-        
+
         panel = new JPanel();
-        
+
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        
-        
+
+
         JPanel resultTypePanel = new JPanel();
         _resultType = new JComboBox<>();
         for (ResultType formatType : ResultType.values()) {
@@ -52,16 +52,16 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
         resultTypePanel.add(new JLabel(Bundle.getMessage("LogData_ResultType")));
         resultTypePanel.add(_resultType);
         panel.add(resultTypePanel);
-        
-        
+
+
         _logToLogCheckBox = new JCheckBox(Bundle.getMessage("LogData_LogToLog"));
         _logToLogCheckBox.setSelected(true);    // Selected as default
         panel.add(_logToLogCheckBox);
-        
+
         _logToScriptOutputCheckBox = new JCheckBox(Bundle.getMessage("LogData_LogToScriptOutput"));
         panel.add(_logToScriptOutputCheckBox);
-        
-        
+
+
         JPanel formatTypePanel = new JPanel();
         _formatType = new JComboBox<>();
         for (LogData.FormatType formatType : LogData.FormatType.values()) {
@@ -70,14 +70,14 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
         formatTypePanel.add(new JLabel(Bundle.getMessage("LogData_FormatType")));
         formatTypePanel.add(_formatType);
         panel.add(formatTypePanel);
-        
+
         JPanel formatPanel = new JPanel();
         _format = new JTextField(20);
         formatPanel.add(new JLabel(Bundle.getMessage("LogData_Format")));
         formatPanel.add(_format);
         panel.add(formatPanel);
-        
-        
+
+
         if (logData != null) {
             _resultType.setSelectedItem(ResultType.parseResult(logData.getResult()));
             _logToLogCheckBox.setSelected(logData.getLogToLog());
@@ -85,11 +85,10 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
             _formatType.setSelectedItem(logData.getFormatType());
             _format.setText(logData.getFormat());
         }
-        
-        
-        JPanel tablePanel = new JPanel();
+
+
         _logDataTable = new JTable();
-        
+
         if (logData != null) {
             List<LogData.Data> dataList
                     = new ArrayList<>(logData.getDataList());
@@ -98,7 +97,7 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
         } else {
             _logDataTableModel = new LogDataTableModel(null);
         }
-        
+
         _logDataTable.setModel(_logDataTableModel);
         _logDataTable.setDefaultRenderer(LogData.DataType.class,
                 new LogDataTableModel.CellRenderer());
@@ -107,7 +106,7 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
         _logDataTableModel.setColumnsForComboBoxes(_logDataTable);
         _logDataTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
         _logDataTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
-        
+
         JButton testButton = new JButton("XXXXXX");  // NOI18N
         _logDataTable.setRowHeight(testButton.getPreferredSize().height);
         TableColumn deleteColumn = _logDataTable.getColumnModel()
@@ -115,7 +114,7 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
         deleteColumn.setMinWidth(testButton.getPreferredSize().width);
         deleteColumn.setMaxWidth(testButton.getPreferredSize().width);
         deleteColumn.setResizable(false);
-        
+
         // The dummy column is used to be able to force update of the
         // other columns when the panel is closed.
         TableColumn dummyColumn = _logDataTable.getColumnModel()
@@ -123,12 +122,11 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
         dummyColumn.setMinWidth(0);
         dummyColumn.setPreferredWidth(0);
         dummyColumn.setMaxWidth(0);
-        
+
         JScrollPane scrollpane = new JScrollPane(_logDataTable);
         scrollpane.setPreferredSize(new Dimension(400, 200));
-        tablePanel.add(scrollpane, BorderLayout.CENTER);
-        panel.add(tablePanel);
-        
+        panel.add(scrollpane);
+
         // Add parameter
         JButton add = new JButton(Bundle.getMessage("LogData_TableAdd"));
         buttonPanel.add(add);
@@ -136,7 +134,7 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
             _logDataTableModel.add();
         });
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
@@ -153,7 +151,7 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
         }
         return true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
@@ -161,7 +159,7 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
         updateObject(expression);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
@@ -169,33 +167,33 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object is not a LogData: " + object.getClass().getName());
         }
         LogData logData = (LogData)object;
-        
-        
+
+
         logData.setResult(_resultType.getItemAt(_resultType.getSelectedIndex()).getResult());
-        
+
         logData.setLogToLog(_logToLogCheckBox.isSelected());
         logData.setLogToScriptOutput(_logToScriptOutputCheckBox.isSelected());
-        
+
         logData.setFormatType(_formatType.getItemAt(_formatType.getSelectedIndex()));
         logData.setFormat(_format.getText());
-        
-        
+
+
         // Do this to force update of the table
         _logDataTable.editCellAt(0, 2);
-        
+
         logData.getDataList().clear();
-        
+
         for (LogData.Data data : _logDataTableModel.getDataList()) {
             logData.getDataList().add(data);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String toString() {
         return Bundle.getMessage("LogData_Short");
     }
-    
+
     @Override
     public void dispose() {
     }

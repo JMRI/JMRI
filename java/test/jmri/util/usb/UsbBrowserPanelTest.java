@@ -46,9 +46,9 @@ public class UsbBrowserPanelTest {
 
     // private final static Logger log = LoggerFactory.getLogger(UsbBrowserPanelTest.class);
 
-    class UsbHubScaffold extends UsbDeviceScaffold implements UsbHub {
+    private static class UsbHubScaffold extends UsbDeviceScaffold implements UsbHub {
 
-        public UsbHubScaffold() {
+        UsbHubScaffold() {
             super("jmri","testhub");
         }
 

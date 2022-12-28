@@ -3,15 +3,14 @@ package jmri.jmrix.can.cbus.eventtable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.nio.file.Path;
+import java.io.File;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.can.cbus.CbusPreferences;
+
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -34,7 +33,7 @@ public class CbusEventTableXmlActionTest {
     @Test
     public void testLoadGoodFile() throws java.io.IOException, java.text.ParseException {
         
-        CbusEventTableXmlFile x = new CbusEventTableXmlFile();
+        CbusEventTableXmlFile x = new CbusEventTableXmlFile(memo);
 
         java.io.File dir = new java.io.File("java/test/jmri/jmrix/can/cbus/eventtable/");
         java.io.File systemFile = new java.io.File(dir, "EventTableData-1.xml");
@@ -85,7 +84,7 @@ public class CbusEventTableXmlActionTest {
     @Test
     public void testLoadBadFile() throws java.io.IOException {
         
-        CbusEventTableXmlFile x = new CbusEventTableXmlFile();
+        CbusEventTableXmlFile x = new CbusEventTableXmlFile(memo);
 
         java.io.File dir = new java.io.File("java/test/jmri/jmrix/can/cbus/eventtable/");
         java.io.File systemFile = new java.io.File(dir, "EventTableData-2.xml");
@@ -170,25 +169,19 @@ public class CbusEventTableXmlActionTest {
         assertThat(te.getDate()).isNull();
     }
     
-    
     private CbusEventTableDataModel model;
-    private TrafficControllerScaffold tcis;
-    private CanSystemConnectionMemo memo;
-    
-    @TempDir 
-    protected Path tempDir;
+    private CanSystemConnectionMemo memo = null;
 
     @BeforeEach
-    public void setUp() throws java.io.IOException {
+    public void setUp( @TempDir File tempDir ) throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         
-        tcis = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(tcis);
-        jmri.InstanceManager.store(new CbusPreferences(),CbusPreferences.class );
-        model = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.SPROGCBUS);
+
+        model = new CbusEventTableDataModel( memo, 2);
       
     }
 
@@ -199,10 +192,9 @@ public class CbusEventTableXmlActionTest {
         
         CbusEventTableShutdownTask task = new CbusEventTableShutdownTask("Test Dispose",model);
         task.run();
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
-        tcis.terminateThreads();
-        tcis = null;
         
         JUnitUtil.tearDown();
 

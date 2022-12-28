@@ -1,11 +1,12 @@
 package jmri.jmrix.can.cbus.eventtable;
 
+import jmri.jmrix.can.CanSystemConnectionMemo;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -17,18 +18,25 @@ public class CbusBasicEventTableModelTest {
     @Test
     public void testCTor() {
         
-        CbusBasicEventTableModel t = new CbusBasicEventTableModel(null);
+        CbusBasicEventTableModel t = new CbusBasicEventTableModel(memo);
         assertThat(t).isNotNull();
         
     }
-    
+
+    private CanSystemConnectionMemo memo = null;
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new CanSystemConnectionMemo();
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.SPROGCBUS);
+        memo.configureManagers();
     }
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(memo);
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

@@ -20,7 +20,8 @@ public class DigitalFactory implements DigitalExpressionFactory {
                 Set.of(
                         new AbstractMap.SimpleEntry<>(Category.COMMON, And.class),
                         new AbstractMap.SimpleEntry<>(Category.COMMON, Antecedent.class),
-                        new AbstractMap.SimpleEntry<>(Category.OTHER, DigitalCallModule.class),
+                        new AbstractMap.SimpleEntry<>(Category.FLOW_CONTROL, DigitalCallModule.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, ConnectionName.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionBlock.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionClock.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionConditional.class),
@@ -35,6 +36,7 @@ public class DigitalFactory implements DigitalExpressionFactory {
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionReporter.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionScript.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSensor.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSensorEdge.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSignalHead.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSignalMast.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionTurnout.class),
@@ -49,7 +51,7 @@ public class DigitalFactory implements DigitalExpressionFactory {
                         new AbstractMap.SimpleEntry<>(Category.OTHER, TriggerOnce.class),
                         new AbstractMap.SimpleEntry<>(Category.OTHER, True.class)
                 );
-        
+
         return expressionClasses;
     }
 

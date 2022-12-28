@@ -3,7 +3,6 @@ package jmri;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +56,7 @@ public class BlockTest {
     }
 
     @Test
-    public void testHashCode() {
+    public void testBlockHashCode() {
         Block b1 = new Block("SystemName1");
         
         //multiple Block objects with same SystemName are really the same
@@ -76,7 +75,7 @@ public class BlockTest {
         b.setSensor("IS12");
     }
 
-    static int count;
+    private int count;
 
     @Test
     public void testSensorInvoke() throws JmriException {
@@ -107,14 +106,14 @@ public class BlockTest {
         count = 0;
         Block b = new Block("SystemName");
         Sensor s = sm.provideSensor("IS12");
-        s.setState(jmri.Sensor.UNKNOWN);
+        s.setState(Sensor.UNKNOWN);
         
         Assert.assertEquals("Initial state", Block.UNDETECTED, b.getState()); // state until sensor is set
         
         b.setSensor("IS12");
-        s.setState(jmri.Sensor.ACTIVE);
+        s.setState(Sensor.ACTIVE);
         Assert.assertEquals("State with sensor active", Block.OCCUPIED, s.getState());
-        s.setState(jmri.Sensor.INACTIVE);
+        s.setState(Sensor.INACTIVE);
         Assert.assertEquals("State with sensor inactive", Block.UNOCCUPIED, s.getState());
     }
 
@@ -141,7 +140,7 @@ public class BlockTest {
 
         Block b2 = new Block("SystemName2");
         Sensor s2 = sm.provideSensor("IS2");
-        b2.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
+        b2.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
         s2.setState(Sensor.ACTIVE);
         b2.setValue("b2 contents");
 
@@ -166,16 +165,16 @@ public class BlockTest {
         Block b3 = new Block("SystemName3");
 
         Sensor s1 = sm.provideSensor("IS1");
-        b1.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
+        b1.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
         s1.setState(Sensor.ACTIVE);
         b1.setValue("b1 contents");
 
         Sensor s2 = sm.provideSensor("IS2");
-        b2.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
+        b2.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
         s2.setState(Sensor.INACTIVE);
 
         Sensor s3 = sm.provideSensor("IS3");
-        b3.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS3", s3));
+        b3.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS3", s3));
         s3.setState(Sensor.INACTIVE);
 
         Path p21 = new Path();
@@ -209,17 +208,17 @@ public class BlockTest {
         Block b3 = new Block("SystemName3");
 
         Sensor s1 = sm.provideSensor("IS1");
-        b1.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
+        b1.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
         s1.setState(Sensor.ACTIVE);
         b1.setValue("b1 contents");
         b1.setDirection(Path.RIGHT);
 
         Sensor s2 = sm.provideSensor("IS2");
-        b2.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
+        b2.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
         s2.setState(Sensor.INACTIVE);
 
         Sensor s3 = sm.provideSensor("IS3");
-        b3.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS3", s3));
+        b3.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS3", s3));
         s3.setState(Sensor.ACTIVE);
         b3.setValue("b3 contents");
         b3.setDirection(Path.RIGHT);
@@ -255,17 +254,17 @@ public class BlockTest {
         Block b3 = new Block("SystemName3");
 
         Sensor s1 = sm.provideSensor("IS1");
-        b1.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
+        b1.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
         s1.setState(Sensor.ACTIVE);
         b1.setValue("b1 contents");
         b1.setDirection(Path.NORTH_WEST); //combination direction
 
         Sensor s2 = sm.provideSensor("IS2");
-        b2.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
+        b2.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
         s2.setState(Sensor.INACTIVE);
 
         Sensor s3 = sm.provideSensor("IS3");
-        b3.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS3", s3));
+        b3.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS3", s3));
         s3.setState(Sensor.ACTIVE);
         b3.setValue("b3 contents");
         b3.setDirection(Path.NORTH);
@@ -316,7 +315,7 @@ public class BlockTest {
 
     @Test
     public void testReporterInvokeCurrent() {
-        ReporterManager rm = jmri.InstanceManager.getDefault(ReporterManager.class);
+        ReporterManager rm = InstanceManager.getDefault(ReporterManager.class);
         count = 0;
         Block b = new Block("SystemName") {
             @Override
@@ -338,7 +337,7 @@ public class BlockTest {
 
     @Test
     public void testReporterInvokeLast() {
-        ReporterManager rm = jmri.InstanceManager.getDefault(ReporterManager.class);
+        ReporterManager rm = InstanceManager.getDefault(ReporterManager.class);
         count = 0;
         Block b = new Block("SystemName") {
             @Override
@@ -471,7 +470,7 @@ public class BlockTest {
     @Test
     public void testAddReporterPropertyChange() throws JmriException {
         
-        ReporterManager rm = jmri.InstanceManager.getDefault(ReporterManager.class);
+        ReporterManager rm = InstanceManager.getDefault(ReporterManager.class);
         Reporter rep = rm.provide("IR123");
         
         Block b = new Block("BlockSystemName");

@@ -580,7 +580,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                     log.debug("xmt list size {}", xmtList.size());
                                     Iterator<MrcMessage> iterator = xmtList.iterator();
                                     while (iterator.hasNext()) {
-                                        log.debug(iterator.next().toString());
+                                        log.debug("message: {}", iterator.next().toString());
                                     }
                                 }
                             }
@@ -613,6 +613,8 @@ public class MrcPacketizer extends MrcTrafficController {
 
     static final Object transmitLock = new Object();
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification = "passing InterruptMessage unchanged")
     protected void transmitWait(int waitTime, int state, String InterruptMessage, int x) {
         // wait() can have spurious wakeup!
         // so we protect by making sure the entire timeout time is used

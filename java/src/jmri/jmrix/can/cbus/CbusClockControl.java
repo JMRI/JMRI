@@ -5,6 +5,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+
+import javax.annotation.Nonnull;
+
+import jmri.Disposable;
 import jmri.TimebaseRateException;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanListener;
@@ -19,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * @since 4.19.6
  * @author Steve Young (C) 2020
  */
-public class CbusClockControl extends jmri.implementation.DefaultClockControl implements CanListener {
+public class CbusClockControl extends jmri.implementation.DefaultClockControl implements CanListener, Disposable {
 
     private boolean isRunning;
     private int _cbusTemp = 0;
@@ -35,7 +39,7 @@ public class CbusClockControl extends jmri.implementation.DefaultClockControl im
     
     private final CanSystemConnectionMemo _memo;
     
-    public CbusClockControl(CanSystemConnectionMemo memo) {
+    public CbusClockControl(@Nonnull CanSystemConnectionMemo memo) {
         super();
         
         minuteFormat = new java.text.SimpleDateFormat("mm");
@@ -231,8 +235,7 @@ public class CbusClockControl extends jmri.implementation.DefaultClockControl im
             }
         }
         if (specificDate!=null) {
-            Date newnewdate = Date.from( specificDate.atZone( ZoneId.systemDefault()).toInstant());
-            clock.setTime(newnewdate);
+            clock.setTime(specificDate.atZone( ZoneId.systemDefault()).toInstant());
         }
     }
     
@@ -317,6 +320,7 @@ public class CbusClockControl extends jmri.implementation.DefaultClockControl im
      * Stops listening for updates from network and main time base.
      *
      */
+    @Override
     public void dispose() {
         clock.removeMinuteChangeListener(this::newMinute);
         this.removeTc(_memo);

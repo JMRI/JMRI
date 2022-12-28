@@ -15,11 +15,11 @@
     <div id="mainContent">
       <h1>JMRI: DecoderPro User Guide</h1>
 
-      <h2>The Details</h2>
+      <h2>DecoderPro Details</h2>
 
       <p>This page provides information on how DecoderPro (Symbolic Programmer) works.<br>
       For details on the JMRI internals, please see the <a href=
-      "../../doc/Technical/IntroStructure.shtml">Technical Doc pages</a>.</p>
+      "../../doc/Technical/IntroStructure.shtml">Technical Documentation pages</a>.</p>
 
       <dl>
         <dt class="left">Configuration Files</dt>
@@ -115,17 +115,6 @@
           </ul>
         </dd>
 
-        <dt class="left">Printing</dt>
-
-        <dd>
-          <p>You can print the current locomotive's information from the programmer windows. From
-          the "File..." menu, select "Print...", and fill out the dialog box that's presented.</p>
-
-          <p>The printout is formatted by the currently-selected programmer format, so the
-          information on all of the tabs is printed. You get a shorter printout of just the most
-          important values when you print from the "Basic" format, and a listing of everything when
-          you use "Comprehensive".</p>
-        </dd>
       </dl>
       <!--#include virtual="/Footer.shtml" -->
     </div>

@@ -78,7 +78,10 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
 
     @Override
     public String getTitle() {
-        return "OpenLCB Network Tree";
+        if (memo != null) {
+            return (memo.getUserName() + " Network Tree");
+        }
+        return "LCC / OpenLCB Network Tree";
     }
 
     @Override

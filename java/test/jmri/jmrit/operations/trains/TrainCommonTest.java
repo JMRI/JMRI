@@ -65,14 +65,14 @@ public class TrainCommonTest extends OperationsTestCase {
         TrainCommon tc = new TrainCommon();
         // select car type "Boxcar"
         String s = tc.setoutUtilityCars(cars, cars.get(0), TrainCommon.LOCAL, TrainCommon.IS_MANIFEST);
-        Assert.assertEquals("Confirm text", " 4     Boxcar 40'  E from North End 2 to  ", s);
+        Assert.assertEquals("Confirm text", " 4   Boxcar 40' E from North End 2 to ", s);
         
         s = tc.setoutUtilityCars(cars, cars.get(0), TrainCommon.LOCAL, TrainCommon.IS_MANIFEST);
         Assert.assertNull("should be null", s);
         
         // select car type "Caboose"
         s = tc.setoutUtilityCars(cars, cars.get(4), TrainCommon.LOCAL, !TrainCommon.IS_MANIFEST);
-        Assert.assertEquals("Confirm text", " 2     Caboose  from North End 1 to  Test Car CP C10099 Comment", s);
+        Assert.assertEquals("Confirm text", " 2   Caboose from North End 1 to  Test Car CP C10099 Comment", s);
         
         s = tc.setoutUtilityCars(cars, cars.get(4), TrainCommon.LOCAL, !TrainCommon.IS_MANIFEST);
         Assert.assertNull("should be null", s);
@@ -98,14 +98,14 @@ public class TrainCommonTest extends OperationsTestCase {
         TrainCommon tc = new TrainCommon();
         // select car type "Boxcar"
         String s = tc.setoutUtilityCars(cars, cars.get(0), !TrainCommon.LOCAL, TrainCommon.IS_MANIFEST);
-        Assert.assertEquals("Confirm text", " 4     Boxcar 40'  E to   ", s);
+        Assert.assertEquals("Confirm text", " 4   Boxcar 40' E to ", s);
         
         s = tc.setoutUtilityCars(cars, cars.get(0), !TrainCommon.LOCAL, TrainCommon.IS_MANIFEST);
         Assert.assertNull("should be null", s);
         
         // select car type "Caboose"
         s = tc.setoutUtilityCars(cars, cars.get(4), !TrainCommon.LOCAL, !TrainCommon.IS_MANIFEST);
-        Assert.assertEquals("Confirm text", " 2     Caboose  to  Test Car CP C10099 Comment ", s);
+        Assert.assertEquals("Confirm text", " 2   Caboose to  Test Car CP C10099 Comment", s);
         
         s = tc.setoutUtilityCars(cars, cars.get(4), !TrainCommon.LOCAL, !TrainCommon.IS_MANIFEST);
         Assert.assertNull("should be null", s);

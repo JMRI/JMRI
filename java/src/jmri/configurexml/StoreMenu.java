@@ -21,7 +21,6 @@ public class StoreMenu extends JMenu {
 
         setText(Bundle.getMessage("MenuItemStore"));  // NOI18N
 
-        add(new jmri.configurexml.StoreXmlConfigAction(Bundle.getMessage("FileMenuItemStoreTables")));  // NOI18N
         add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));  // NOI18N
 
     }

@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -77,7 +76,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         _femaleSocket.connect(maleSocket);
         if (! _conditionalNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
-        _expression.setTurnout(t);
+        _expression.getSelectNamedBean().setNamedBean(t);
         _expression.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
         t.setState(Turnout.CLOSED);
         Assert.assertFalse("turnout is not thrown", ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).evaluate());
@@ -104,6 +103,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.ExpressionReporter.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionScript.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSensor.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionSensorEdge.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSignalHead.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSignalMast.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionTurnout.class);
@@ -120,6 +120,10 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.DigitalCallModule.class);
+        map.put(Category.FLOW_CONTROL, classes);
+
+        classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.expressions.ConnectionName.class);
         classes.add(jmri.jmrit.logixng.expressions.False.class);
         classes.add(jmri.jmrit.logixng.expressions.Hold.class);
         classes.add(jmri.jmrit.logixng.expressions.LastResultOfDigitalExpression.class);

@@ -1,25 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-23 -->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-23 -->
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: éditer Pont Tournant</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content="JMRI help Layout Editor turntable"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Layout Editor turntable">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>éditer Pont Tournant</h1>
-      Un Dessin de pont tournant est une représentation schématique d'un pont tournant sur le
+      <p>Un Dessin de pont tournant est une représentation schématique d'un pont tournant sur le
       réseau. Un pont tournant est dessiné comme un cercle avec un nombre variable de connexions de
       voies, appelé <em>voies rayonnantes</em>. Chaque <em>voie rayonnante</em> est dessinée comme
       une voie courte rayonnante en talon à partir du pont tournant. Un segment de voie doit se
@@ -27,7 +23,8 @@
       rayonnante à un butoir. La distance de chaque point de connexion de voie rayonnante à partir
       du cercle du ponte est fixe, mais la direction de chaque voie peut variée en faisant glisser
       son point de connexion autour du cercle du pont. N'importe quel nombre de pont peut être
-      ajouté à un panneau, et chaque pont peut avoir n'importe quel nombre de voies rayonnantes.
+      ajouté à un panneau, et chaque pont peut avoir n'importe quel nombre de voies rayonnantes.</p>
+
       <p>Un pont est ajouté à un panneau en sélectionnant l'option <strong>Ajouter Pont
       Tournant</strong> dans le menu panneau. Les nouveaux pont sont placés au centre du panneau,
       et doivent être déplacés aux endroits souhaités en déplaçant son centre avec la touche
@@ -86,8 +83,10 @@
       voie rayonnante. Après avoir diminué le rayon de retour à sa dernière valeur, ajouter des
       segments voie. Les segments de voie seront alignés assez précisément avec le centre du
       pont.</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

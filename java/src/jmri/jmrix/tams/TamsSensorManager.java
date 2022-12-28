@@ -31,7 +31,11 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
 
     public TamsSensorManager(TamsSystemConnectionMemo memo) {
         super(memo);
-        TamsTrafficController tc = memo.getTrafficController();
+        init();
+    }
+
+    private void init() {
+        TamsTrafficController tc = getMemo().getTrafficController();
         //Connect to the TrafficManager
         tc.addTamsListener(this);
         TamsMessage tm = TamsMessage.setXSR();//auto reset after reading S88
@@ -164,46 +168,9 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
         return validateTrimmedMin1NumberSystemNameFormat(name,locale);
     }
-    
+
     int board = 0;
     int port = 0;
-
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-
-        String tmpSName = createSystemName(curAddress, prefix);
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
-        Sensor s = getBySystemName(tmpSName);
-        if (s != null || ignoreInitialExisting) {
-            port++;
-            while (port < 17) {
-                try {
-                    tmpSName = createSystemName(board + ":" + port, prefix);
-                } catch (JmriException e) {
-                    throw new JmriException("Error creating system name from "+curAddress+" for "+board+":"+port);
-                }
-                s = getBySystemName(tmpSName);
-                if (s == null) {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(board);
-                    sb.append(":");
-                    //Little work around to pad single digit address out.
-                    padPortNumber(port, sb);
-                    return sb.toString();
-                }
-                port++;
-            }
-            throw new JmriException("Error creating system name from "+curAddress+" , port needs to be less than 16");
-        } else {
-            StringBuilder sb = new StringBuilder();
-            sb.append(board);
-            sb.append(":");
-            //Little work around to pad single digit address out.
-            padPortNumber(port, sb);
-            return sb.toString();
-        }
-    }
 
     void padPortNumber(int portNo, StringBuilder sb) {
         if (portNo < 10) {
@@ -228,10 +195,10 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public void reply(TamsReply r) {
         //log.debug("ReplyType = " + tm.getReplyType() + ", Binary? = " +  tm.isBinary()+ ", OneByteReply = " + tm.getReplyOneByte());
-        if (TamsTrafficController.replyType == 'S') {//Only handle Sensor events
+        if (getMemo().getTrafficController().replyType == 'S') {//Only handle Sensor events
             log.debug("*** Tams Sensor Reply ***");
-            if (TamsTrafficController.replyBinary) {
-                log.debug("Reply to binary command = {}", r.toString());
+            if ( getMemo().getTrafficController().replyBinary ) {
+                log.debug("Reply to binary command = {}", r );
                 if ((r.getNumDataElements() > 1) && (r.getElement(0) > 0x00)) {
                     // Here we break up a long sensor related TamsReply into individual S88 module status'
                     int numberOfReplies = r.getNumDataElements() / 3;
@@ -310,6 +277,13 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             mask = mask / 2;
         }
         log.debug("sensor decoding is done");
+    }
+
+    @Override
+    public void dispose() {
+        getMemo().getTrafficController().removePollMessage(TamsMessage.getXEvtSen(), this);
+        getMemo().getTrafficController().removeTamsListener(this);
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TamsSensorManager.class);

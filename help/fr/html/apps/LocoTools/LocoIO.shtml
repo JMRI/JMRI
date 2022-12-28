@@ -1,20 +1,18 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- Updated by Blorec Herv&#233; le 2013-09-01 et Egbert Broerse (Note "desapprouve"); le 2015-10-19-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; le 2013-09-01 et Egbert Broerse (Note "desapprouve"); le 2015-10-19-->
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Outils Programmateur LocoIO (désapprouvé)</title><!-- Style -->
+  <title>JMRI Outils Programmateur LocoIO (désapprouvé)</title>
+  <!--#include virtual="/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <!-- Page Body -->
@@ -215,10 +213,11 @@ demand&#233;. -->
       <p>Les messages d'état lors de la capture/lecture/écriture sont affichés à la bas de la
       fenêtre. Si aucune réponse n'est reçue par l'unité LocoIO, l'opération sera renouvelée
       jusqu'à ce qu'elle réussisse ou jusqu'à ce que vous fermiez la fenêtre.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

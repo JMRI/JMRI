@@ -72,7 +72,7 @@ import javax.annotation.CheckForNull;
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  */
-public interface Turnout extends DigitalIO {
+public interface Turnout extends DigitalIO, VariableControlSpanBean {
 
     /**
      * Constant representing a "closed" state, either in readback or as a
@@ -140,6 +140,13 @@ public interface Turnout extends DigitalIO {
      * with a fixed delay before the feedback (known state) takes effect.
      */
     public static final int DELAYED = 128;
+
+    /**
+     * Constant representing "loconet alternate feedback method". In this case, the layout
+     * hardware can sense both positions of the turnout, which is used to set
+     * the known state. Hardware use OPS_SW_REP alternate message.
+     */
+    public static final int LNALTERNATE = 256;
 
     /**
      * Constant representing turnout lockout cab commands
@@ -352,21 +359,6 @@ public interface Turnout extends DigitalIO {
     public void setInitialKnownStateFromFeedback();
 
     /**
-     * Get number of output bits.
-     *
-     * @return the size of the output, currently 1 or 2
-     */
-    public int getNumberOutputBits();
-
-    /**
-     * Set number of output bits.
-     *
-     * @param num the size of the output, currently 1 or 2
-     */
-    @InvokeOnLayoutThread
-    public void setNumberOutputBits(int num);
-
-    /**
      * Get control type.
      *
      * @return 0 for steady state or the number of time units the control pulses
@@ -441,8 +433,8 @@ public interface Turnout extends DigitalIO {
     public boolean canLock(int turnoutLockout);
 
     /**
-     * Provide the possible locking modes for a turnout.  
-     * These may require additional configuration, e.g. 
+     * Provide the possible locking modes for a turnout.
+     * These may require additional configuration, e.g.
      * setting of a decoder definition for PUSHBUTTONLOCKOUT,
      * before {@link #canLock(int)} will return true.
      *

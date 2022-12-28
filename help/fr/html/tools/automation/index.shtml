@@ -1,6 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -9,26 +7,22 @@
   <!-- Translated by Herv&#233; Blorec 2013-09-25 -->
 
   <title>JMRI: Layout Automation</title>
-    <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
-<h2>JMRI Automatisation R&eacute;seau</h2>L'application JMRI
+      <!-- Page Body -->
+
+      <h2>JMRI Automatisation R&eacute;seau</h2>
+      <p>L'application JMRI
       fournit un grand nombre de fa&ccedil;ons d'automatiser votre
       r&eacute;seeau, allant du simple remplissage de formulaires
       &agrave; des scripts &agrave; part enti&egrave;re et des
-      capacit&eacute;s de programmation. Il s'agit notamment de:
+      capacit&eacute;s de programmation. Il s'agit notamment de:</p>
 
       <dl>
         <dt><a href="../signaling/index.shtml">Logique
@@ -39,11 +33,51 @@
         conduire vos t&ecirc;te signal dans de nombreuses
         applications.</dd>
 
-        <dt><a href="../Routes.shtml">Itin&eacute;raires</a></dt>
+        <dt><a href="../EntryExit.shtml">Entr&eacute;e Sortie (NX)</a></dt>
 
-<dt><A  HREF="../signaling/index.shtml">Signalisation</a>
-<dd> JMRI fournit une logique de signalisation de simple &#224; r&#233;aliste qui peut &#234;tre utilis&#233;e pour
-conduire vos signaux dans de nombreuses applications.
+        <dd>
+          Le routage NX cr&eacute;e un chemin valide dynamique entre deux emplacements sur un <a href=
+          "../../apps/PanelPro/index.shtml#le">&Eacute;diteur de R&eacute;seau</a>.
+        </dd>
+
+        <dt>
+          <a href="../../../package/jmri/jmrit/logix/Warrant.shtml">Bulletin d'Ordre</a>
+        </dt>
+
+        <dd>
+          Les Bulletins d'Ordre (Warrants) vous permettent de faire circuler automatiquement des trains
+          sur le r&eacute;seau avec un <a href=
+          "../../apps/PanelPro/index.shtml#cpe">&Eacute;diteur Panneau de Commandes</a>.
+        </dd>
+
+        <dt>
+          <a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcheur</a>
+        </dt>
+
+        <dd>
+          Dispatcheur vous permet d'exp&eacute;dier et (automatiquement) de faire circuler des
+          trains sur le r&eacute;seau avec <a href=
+          "../../apps/PanelPro/index.shtml#le">&Eacute;diteur de R&eacute;seau</a>.
+        </dd>
+
+        <dt><a href="../Routes.shtml">Itin&eacute;raires</a></dt>
+        <dd>Un simple forme d'automatisation est d&eacute;finir des Itin&eacute;raires et controler
+        vos aiguillages et signeaux.</dd>
+
+        <dt>
+          <a href="../LRoutes.shtml">LItin&eacute;raires</a>
+        </dt>
+
+        <dd>Les LItin&eacute;raires sont comme les Itin&eacute;raires mais offrent plus de types de contr&ocirc;le.
+        Lorsqu&apos;un LItin&eacute;raire est d&eacute;fini, il cr&eacute;e automatiquement des instructions Logix
+        (voir ci-dessous) qui peuvent &ecirc;tre modifi&eacute;es pour impl&eacute;menter encore plus de
+        contr&ocirc;les d&apos;itin&eacute;raire.</dd>
+
+        <dt>
+          <a href="../CTC.shtml">CTC (Centralized Traffic Control)</a>
+        </dt>
+
+        <dd>Un ensemble d'outils pour aider &agrave; l'automatisation des panneaux CTC.</dd>
 
         <dt><a href="../Logix.shtml">Logix</a></dt>
 
@@ -51,7 +85,13 @@ conduire vos signaux dans de nombreuses applications.
         actions &agrave; r&eacute;aliser quand diverses conditions
         se produisent sur le r&eacute;seau.</dd>
 
-        <dt><a href="../scripting/index.shtml">&eacute;criture de
+        <dt><a href="/help/en/html/tools/logixng/LogixNG.shtml">LogixNG</a> *)</dt>
+
+        <dd>La nouvelle g&eacute;n&eacute;ration de fonctionnalit&eacute;s Logix avec une structure
+        modulaire pour l'extension et la possibilit&eacute; de cr&eacute;er une logique plus complexe
+        sans script.</dd>
+
+        <dt><a href="../scripting/index.shtml">&Eacute;criture de
         Scripts</a></dt>
 
         <dd>JMRI fournit un outil de script tr&egrave;s puissant.
@@ -59,14 +99,18 @@ conduire vos signaux dans de nombreuses applications.
         programmation, il vous donne acc&egrave;s &agrave; toutes
         les fonctionnalit&eacute;s JMRI.</dd>
 
-        <dt><a href="viaJava.shtml">&eacute;crire votre propre code
+        <dt><a href="viaJava.shtml">&Eacute;crire votre propre code
         en Java</a></dt>
 
         <dd>Les biblioth&egrave;ques JMRI simplifient grandement
         l'&eacute;criture d'un programme pour que votre
         r&eacute;seau fasse exactement ce que vous voulez.</dd>
-      </dl><!--#include virtual="/Footer.shtml" -->
+
+      </dl>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

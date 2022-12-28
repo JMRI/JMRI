@@ -26,11 +26,7 @@
  *  TODO:    ditto for sensorIcons with text
  *  TODO: add support for slipturnouticon (one2beros)
  *  TODO: handle (and test) disableWhenOccupied for layoutslip
- *
- *  DONE: draw dashed curves
- *  DONE: handle drawn ellipse (see LMRC APB)
- *  DONE: address color differences between java panel and javascript panel (e.g. lightGray)
- *  DONE: make turnout, levelXing occupancy work like LE panels (more than just checking A)
+ *  TODO: handle block color and track widths for turntable raytracks
  *
  **********************************************************************************************/
 
@@ -69,6 +65,11 @@ var ALLOCATED = 0x10;       // constants to match JSON Server oblock status name
 var RUNNING = 0x20;         // Oblock that running train has reached
 var OUT_OF_SERVICE = 0x40;  // Oblock that should not be used
 var TRACK_ERROR = 0x80;     // Oblock has Error
+
+var CLOSEDCLOSED = '5';     // constants for slipturnouticon
+var CLOSEDTHROWN = '7';
+var THROWNCLOSED = '9';
+var THROWNTHROWN = '11';
 
 var PT_CEN = ".POS_POINT";  // named constants for point types
 var PT_A = ".TURNOUT_A";
@@ -208,7 +209,7 @@ function processPanelXML($returnedData, $success, $xhr) {
         $total = Number($gPanel.total);
         $rows = Number($gPanel.rows);
         if ($rows == 0) { // AutoRows set, automatically choose grid showing largest tiles using flexbox
-            $("#panel-area").css({display: "flex", 'flex-flow': "row wrap"})
+            $("#panel-area").css({'display': "flex", 'flex-flow': "row wrap"})
             $autoRows = 1;
             $rows = autoRows(window.screen.width, window.screen.height - 200); // use (mobile) screen size, leave space for header
             // check browser window (window.innerWidth) size vs whole screen (window.screen.width)
@@ -559,7 +560,86 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
                             break;
+                        case "slipturnouticon" : // added 2022, adapted from indicatorturnouticon
+                            // no direct link to a JSON/named bean (systemName = id)
+                            // also used for three way turnouts
+                            // see java/src/jmri/jmrit/display/SlipTurnoutIcon.java
+                            // and java/src/jmri/jmrit/display/configurexml/SlipTurnoutIconXml.java
+                            $widget['turnoutEast'] = $(this).find('turnoutEast').text();
+                            $widget['turnoutWest'] = $(this).find('turnoutWest').text();
+                            $widget['name'] = $widget['turnoutEast'] + " " +$widget['turnoutWest'];
+                            $widget.jsonType = "turnout"; // JSON object type, used to send commands in $handleClick(e)
+                            $widget['slipicontype'] = $(this).find('turnoutType').text();
+                            $widget['slipStateEast'] = UNKNOWN;
+                            $widget['slipStateWest'] = UNKNOWN;
+                            $widget['slipState'] = UNKNOWN; // combined state
+                            // set icons
+                            $widget['icon' + UNKNOWN] = $(this).find('unknown').attr('url');
+                            $widget['icon' + INCONSISTENT] = $(this).find('inconsistent').attr('url');
+                            $widget['icon5'] = $(this).find('upperWestToLowerEast').attr('url');
+                            $widget['icon7'] = $widget['icon' + INCONSISTENT]; // state 7 loaded later where supported
+                            $widget['icon9'] = $(this).find('lowerWestToLowerEast').attr('url');
+                            $widget['icon11'] = $(this).find('lowerWestToUpperEast').attr('url');
+
+                            switch ($widget.turnoutType) {
+                                case "singleSlip" :
+                                    // $widget['singleSlipRoute'] = "lowerWestToLowerEast" or "upperWestToUpperEast"
+                                    if ($widget.singleSlipRoute == "upperWestToUpperEast") {
+                                        $widget['icon7'] = $(this).find('upperWestToUpperEast').attr('url');
+                                    }
+                                    break;
+                                case "threeWay" :
+                                    // $widget['firstTurnoutExit'] = "upper" or "lower"
+                                    if ($widget.firstTurnoutExit == "lower") { // swap icons7 and 9
+                                        $widget['icon7'] = $widget.icon9;
+                                        $widget['icon9'] = $(this).find('lowerWestToUpperEast').attr('url');
+                                    }
+                                    break;
+                                case "scissor" :
+                                    $widget['turnoutLowerEast'] = $(this).find('turnoutLowerEast').text();
+                                    $widget['turnoutLowerWest'] = $(this).find('turnoutLowerWest').text();
+                                    if (isDefined($widget.turnoutLowerEast)) {
+                                        $widget['singleCrossOver'] = "false";
+                                        // connect 2 extra turnouts now to prevent extra switch case below, no need to listen
+                                        // jmri.getTurnout($widget['turnoutLowerEast']);
+                                        // jmri.getTurnout($widget['turnoutLowerWest']);
+                                    } else {
+                                        $widget['singleCrossOver'] = "true";
+                                    }
+                                    $widget['icon7'] = $widget.icon5;  // UWLE
+                                    $widget['icon5'] = $widget.icon9;  // LWLE
+                                    $widget['icon9'] = $widget.icon11; // LWUE
+                                    $widget['icon11'] = $widget['icon' + INCONSISTENT];
+                                    break;
+                                case "doubleSlip" : // default
+                                    $widget['icon7'] = $(this).find('upperWestToUpperEast').attr('url');
+                                    break;
+                            }
+
+                            $widget['rotation'] = $(this).find('lowerWestToLowerEast').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('lowerWestToLowerEast').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('lowerWestToLowerEast').attr('scale');
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            jmri.getTurnout($widget['turnoutEast']);
+                            jmri.getTurnout($widget['turnoutWest']);
+
+                            // add turnout to whereUsed array (as $widget.id + 'e')
+                            if (!($widget.turnoutEast in whereUsed)) {  //set where-used for this new turnout
+                               whereUsed[$widget.turnoutEast] = new Array();
+                            }
+                            whereUsed[$widget.turnoutEast][whereUsed[$widget.turnoutEast].length] = $widget.id + "e";
+
+                            // add turnoutB to whereUsed array (as $widget + 'w')
+                            if (!($widget.turnoutWest in whereUsed)) {  //set where-used for this new turnout
+                               whereUsed[$widget.turnoutWest] = new Array();
+                            }
+                            whereUsed[$widget.turnoutWest][whereUsed[$widget.turnoutWest].length] = $widget.id + "w";
+                            // TODO add the extra 2 turnouts to whereUsed that optionally are part of a scissor?
+                            break;
                     }
+
                     $preloadWidgetImages($widget); //start loading all images
                     $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                     $gWidgets[$widget.id] = $widget; //store widget in persistent array
@@ -874,7 +954,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //
                             // note: the <div> areas above have their titles & alts turnouts swapped (left <-> right) also
 
-                            // add turnout to whereUsed array (as $widget + 'r')
+                            // add turnout to whereUsed array (as $widget.id + 'r')
                             if (!($widget.turnout in whereUsed)) {  //set where-used for this new turnout
                                whereUsed[$widget.turnout] = new Array();
                             }
@@ -1042,8 +1122,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //draw the turntable
                             $drawTurntable($widget);
                             break;
-                        case "backgroundColor": // set background color of the panel itself
-                            $("#panel-area").css({"background-color": "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
+                        case "backgroundColor": // set background color of the window
+                            $("body").css({"background-color": "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
                             break;
                         case "layoutShape" :
                             //log.log("#### Layout Shape ####");
@@ -1057,7 +1137,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $drawLayoutShape($widget);
                             break;
                         default:
-                            log.log("unknown $widget.widgetType: " + $widget.widgetType + ".");
+                            log.warn("unknown $widget.widgetType: " + $widget.widgetType + ".");
                             break;
                     }
                     break;
@@ -1065,7 +1145,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                 case "switch" : // Switchboard BeanSwitches
                     // they have no x,y
                     $widget['styles'] = {}; // clear built-in styles
-                    $widget.styles['background-color'] = 'inherit'; // essential to color the switches
                     $widget['name'] = $widget.label; // normalize name from label
                     $widget['text'] = $widget.label; // use label as initial button text too
                     $widget.styles['width'] = $swWidth + "px";
@@ -1126,7 +1205,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                     if ($widget.connected == "true") {
                         $widget['text'] = $widget.text0; // add UNKNOWN state to label of connected switches
                         $widget.styles['border-color'] = "black"; //$widget['swColor' + UNKNOWN];
-                        $widget.classes += " " + $widget.jsonType + " clickable ";
+                        $widget.classes += " " + $widget.jsonType + " clickable connected";
                     }
 
                     $gWidgets[$widget.id] = $widget; // store widget in persistent array
@@ -1199,6 +1278,7 @@ function processPanelXML($returnedData, $success, $xhr) {
             e.preventDefault(); //prevent double-firing (touch + click)
             sendElementChange($gWidgets[this.id].jsonType, $gWidgets[this.id].systemName, INACTIVE);  //send inactive on up
         });
+
         // Switchboard All Off/All On buttons
         $(".lightswitch#allOff").bind(UPEVENT, $handleClickAllOff); // all Lights Off
         $(".lightswitch#allOn").bind(UPEVENT, $handleClickAllOn); // all Lights On
@@ -1217,7 +1297,9 @@ function processPanelXML($returnedData, $success, $xhr) {
 
 // perform regular click-handling, bound to click event for clickable, non-momentary widgets, except for multisensor and linkinglabel.
 function $handleClick(e) {
-    if (jmri_logging) log.log("$handleClick()");
+    if (jmri_logging) {
+        log.log("$handleClick()");
+    }
 
     e.stopPropagation();
     e.preventDefault(); //prevent double-firing (touch + click)
@@ -1226,18 +1308,20 @@ function $handleClick(e) {
     //     $logProperties(this);
     // }
 
-    // special case for layoutSlips
+    // special case for LE layoutSlips
     if (this.className.startsWith('layoutSlip ')) {
         if (this.id.startsWith("SL") && (this.id.endsWith("r") || this.id.endsWith("l"))) {
-            var slipID = this.id.slice(0, -1);
-            var $widget = $gWidgets[slipID];
+            var $slipID = this.id.slice(0, -1);
+            var $widget = $gWidgets[$slipID];
 
             if (this.id.endsWith("l")) {
                 $widget["side"] = "left";
             } else if (this.id.endsWith("r")) {
                 $widget["side"] = "right";
             }
-            if (jmri_logging) log.log("\nlayoutSlip-side:" + $widget.side);
+            if (jmri_logging) {
+                log.log("\nlayoutSlip-side:" + $widget.side);
+            }
 
             // convert current slip state to current turnout states
             var $oldStateA, $oldStateB;
@@ -1263,27 +1347,61 @@ function $handleClick(e) {
             }
             //jmri_logging = false;
         } else {
-            log.log("$handleClick(e): unknown slip widget " + this.id);
+            log.warn("$handleClick(e): unknown slip widget " + this.id);
             $logProperties(this);
-        }   // special case for layoutSlips
+        }
+    // special case for LE layoutTurntable
     } else if (this.className.startsWith('layoutturntable ')) {
         var $rayID = this.id;
         var $turntableID = $rayID.split(".")[0];
         var $widget = $gWidgets[$turntableID];
         $widget.raytracks.each(function(i, item) {
             $logProperties(item);
-            //note:offset 50 is due to TrackSegment.java TURNTABLE_RAY_OFFSET
+            //note: offset 50 is due to TrackSegment.java TURNTABLE_RAY_OFFSET
             var rayID = $turntableID + ".TURNTABLE_RAY_" + (item.attributes.index.value * 1);
             if (rayID == $rayID) {
                 if (isDefined(item.attributes.turnout)) {
                     var turnout = item.attributes.turnout.value;
                     var state = item.attributes.turnoutstate.value;
                     var $newState = (state == 'thrown') ? THROWN : CLOSED;
-                    //log.log("sendElementChange(" + $widget.jsonType + ", " + turnout + ", " + $newState + ")");
                     sendElementChange($widget.jsonType, turnout, $newState);
                 }
             }
         });
+    } else if (this.className.startsWith('slipturnouticon')) {
+        // special handling of slipturnouticon, which has (at least) 2 turnouts
+        var $widget = $gWidgets[this.id];
+        var $newState = $getNextState($widget); // determine next state from current state
+        var $turnoutWestNewState = 0;
+        var $turnoutEastNewState = 0;
+        // we may need to send a command to multiple turnouts
+        switch ($newState) {
+            case 5 :
+                $turnoutWestNewState = CLOSED;
+                $turnoutEastNewState = CLOSED;
+                break;
+            case 7 :
+                $turnoutWestNewState = THROWN;
+                $turnoutEastNewState = CLOSED;
+                break;
+            case 9 :
+                $turnoutWestNewState = CLOSED;
+                $turnoutEastNewState = THROWN;
+                break;
+            case 11 :
+                $turnoutWestNewState = THROWN;
+                $turnoutEastNewState = THROWN;
+                break;
+            }
+        sendElementChange($widget.jsonType, $widget.turnoutWest, $turnoutWestNewState);
+        sendElementChange($widget.jsonType, $widget.turnoutEast, $turnoutEastNewState);
+        if (isDefined($widget.turnoutLowerWest)) {
+            sendElementChange($widget.jsonType, $widget.turnoutLowerWest, $turnoutEastNewState); // note: same as turnoutWest
+        }
+        if (isDefined($widget.turnoutLowerEast)) {
+            sendElementChange($widget.jsonType, $widget.turnoutLowerEast, $turnoutWestNewState); // note: same as turnoutEast
+        }
+        return;
     } else {
         var $widget = $gWidgets[this.id];
         var $newState = $getNextState($widget); // determine next state from current state
@@ -1292,11 +1410,11 @@ function $handleClick(e) {
         if (isDefined($widget.turnoutB)) {
             sendElementChange($widget.jsonType, $widget.turnoutB, $newState);
         }
-        //used for crossover, layoutTurnout type 5
+        //used for crossover, LE layoutTurnout type 5
         if (isDefined($widget.secondturnoutname)) {
             //invert 2nd turnout if requested
             if ($widget.secondturnoutinverted == "true") {
-                $newState = ($newState==CLOSED ? THROWN : CLOSED);
+                $newState = ($newState == CLOSED ? THROWN : CLOSED);
             }
             sendElementChange($widget.jsonType, $widget.secondturnoutname, $newState);
         }
@@ -1310,8 +1428,9 @@ function $handleMultiClick(e) {
     var $widget = $gWidgets[this.id];
     var clickX = (e.offsetX || e.pageX - $(e.target).offset().left); //get click position on the widget
     var clickY = (e.offsetY || e.pageY - $(e.target).offset().top );
-    log.log("handleMultiClick X,Y on WxH: " + clickX + "," + clickY + " on " + this.width + "x" + this.height);
-
+    if (jmri_logging) {
+        log.log("handleMultiClick X,Y on WxH: " + clickX + "," + clickY + " on " + this.width + "x" + this.height);
+    }
     //increment or decrement based on where the click occurred on image
     var missed = true; //flag if click x,y outside image bounds, indicates we didn't get good values
     var dec = false;
@@ -1418,10 +1537,13 @@ function $drawIcon($widget) {
         Ostate = ($widget.occupancystate & 0xF0); // binary 11110000, discards (in)active bits in occupancy which we already used above
         $state = Ostate | $widget.state; // adds Turnout state back in to fetch TO state = position icon
         // $hoverText is updated for OUT_OF_SERVICE on redraw only
+    } else if ($widget.widgetType == "slipturnouticon") { // check turnout states, compare to $redrawIcon()
+        $state = $widget.slipState; // combined Turnouts state
     } else {
         $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
         $state = $widget.state;
     }
+
     // add the image to the panel area, with appropriate css classes and id (skip any unsupported)
     if (isDefined($widget['icon' + $indicator + $state])) {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
@@ -1633,9 +1755,21 @@ var $reDrawIcon = function($widget) {
         $state = (Ostate | $widget.state); // adds Turnout state back in to insert TO state = position icon
         if (isDefined($widget.name)) { // intended for indicatorturnouts to show they are not clickable
             $('img#' + $widget.id).attr('title', $widget.name + ((Ostate & 0x40) == OUT_OF_SERVICE ? " (off)" : ""));
-        // explain why not clickable TODO I18N tooltip for OOS + ERROR
+            // explain why not clickable TODO I18N tooltip for OOS + ERROR
         }
-    } else {
+    } else if ($widget.widgetType == "slipturnouticon") {
+        $state = $widget.slipState; // widget is not a bean, fetch combined state as stored in widget, calculated from 2 turnout states
+        //log.log("STI $redrawIcon state: " + $state);
+        // adjust some states, copied from Display/SlipTurnoutIcon#displayState(int state), not required?
+        //        if ($widget.turnoutType == "scissor") {
+        //            switch ($state) {
+        //                case 5 :
+        //                    log.log("########### STI $redrawIcon state: " + $state + " set to 0 for Scissor");
+        //                    $state = 0;
+        //                    break;
+        //            }
+        //        }
+    } else { // default handling
         $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
         $state = $widget.state;
     }
@@ -1653,18 +1787,81 @@ var $reDrawIcon = function($widget) {
 var $setWidgetState = function($id, $newState, data) {
     var $widget = $gWidgets[$id];
 
-    // if undefined widget this must be a slip
+    // if undefined widget this must be a LE slip or a PE slipTurnoutIcon
     if (isUndefined($widget)) {
-        // does it have "l" or "r" suffix?
-        if ($id.endsWith("l") || $id.endsWith("r")) {
+        // does it have "e" or "w" suffix? it's a slipTurnoutIcon
+        if ($id.endsWith("e") || $id.endsWith("w")) {
+            if (jmri_logging) {
+                log.log("$setWidgetState STI " + $id + " to state " + $newState);
+            }
+            // remove suffix
+            var $slipID = $id.slice(0, -1);
+            // get the slip widget
+            $widget = $gWidgets[$slipID];
+            // determine combined slipState for icon0/5/7/9/11
+            $turnoutName = data.name; // systemName
+            //log.log("change from turnout: " + $turnoutName + " to state: " + $newState);
+            if (($turnoutName == $widget.turnoutEast) || (data.userName == $widget.turnoutEast)) {
+                // east turnout                          // also compare source by userName
+                $widget.slipStateEast = $newState; // store turnout state e
+            } else if (($turnoutName == $widget.turnoutWest) || (data.userName == $widget.turnoutWest)) {
+                // west turnout                                 // also compare source by userName
+                $widget.slipStateWest = $newState; // store turnout state w
+            }
+            // handle changes from the 2 extra turnouts, if defined (they mirror the basic e and w turnouts)
+            // only CCCC, TCCT and CTTC are valid turnout state combinations (for slipState 5, 7 and 9 respectively)
+            if (($turnoutName == $widget.turnoutLowerWest) || (data.userName == $widget.turnoutLowerWest)) {
+                // scissor additional west turnout, handle like turnoutEast
+                if (($newState == CLOSED) && ((($widget.slipStateWest == CLOSED) && ($widget.slipStateEast == CLOSED)) ||
+                    (($widget.slipStateWest == THROWN) && ($widget.slipStateEast == CLOSED)))) {
+                        $widget.slipStateEast = $newState;
+                } else if (($newState == THROWN) && ($widget.slipStateWest == CLOSED) && ($widget.slipStateEast == THROWN)) {
+                        $widget.slipStateEast = $newState;
+                } else {
+                    $newState = INCONSISTENT;
+                }
+            }
+            if (($turnoutName == $widget.turnoutLowerEast) || (data.userName == $widget.turnoutLowerEast)) {
+                // scissor additional east turnout, handle like turnoutWest
+                if (($newState == CLOSED) && ((($widget.slipStateWest == CLOSED) && ($widget.slipStateEast == CLOSED)) ||
+                    (($widget.slipStateWest == CLOSED) && ($widget.slipStateEast == THROWN)))) {
+                        $widget.slipStateWest = $newState;
+                } else if (($newState == THROWN) && ($widget.slipStateWest == THROWN) && ($widget.slipStateEast == CLOSED)) {
+                        $widget.slipStateWest = $newState;
+                } else {
+                    $newState = INCONSISTENT;
+                }
+            }
+
+            if ($widget.slipStateWest == UNKNOWN || $widget.slipStateEast == UNKNOWN) {
+                $widget.slipState = UNKNOWN; // incomplete inputs, set state UNKNOWN
+            } else if ($newState == INCONSISTENT) {
+                $widget.slipState = INCONSISTENT;
+            } else {
+                // fix some special sequences, as in java/src/jmri/jmrit/display/SlipTurnoutIcon.java#displayState(state)
+                if ($widget.turnoutType == "threeWay" && $widget.slipStateWest == THROWN && $widget.slipStateEast == CLOSED) {
+                    // ignore slipStateEast CLOSED (slipstate 7), use slipstate 11 instead, like Panel SlipTurnoutIcon.java
+                    $widget.slipState = (THROWN << 1) | ($widget.slipStateWest >> 1) | 0x01;
+                } else {
+                    $widget.slipState = ($widget.slipStateEast << 1) | ($widget.slipStateWest >> 1) | 0x01;
+                }
+            }
+            log.log("#### $setWidgetState(slipturnouticon " + $slipID + ", " + $widget.slipState +
+                "); (was " + $widget.slipState + ")");
+            $newState = $widget.slipState;
+            // is overwritten by $newState at end of method, so temp only to pass next if-statement and redraw correctly
+            $id = $slipID;
+
+        // does it have "l" or "r" suffix? it's an LE slip
+        } else if ($id.endsWith("l") || $id.endsWith("r")) {
             if (jmri_logging) {
                 log.log("\n#### INFO: clicked slip " + $id + " to state " + $newState);
             }
 
             // remove suffix
-            var slipID = $id.slice(0, -1);
+            var $slipID = $id.slice(0, -1);
             // get the slip widget
-            $widget = $gWidgets[slipID];
+            $widget = $gWidgets[$slipID];
 
             // convert current slip state to current turnout states
             var $stateA, $stateB;
@@ -1673,7 +1870,7 @@ var $setWidgetState = function($id, $newState, data) {
             [$stateA, $stateB] = [$widget.stateA, $widget.stateB];
             $widget.state = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
             if (jmri_logging) {
-                log.log("#### 3360 Slip " + $widget.name +
+                log.log("#### Slip " + $widget.name +
                     " before: " + slipStateToString($widget.state) +
                     ", stateA: " + turnoutStateToString($stateA) +
                     ", stateB: " + turnoutStateToString($stateB));
@@ -1683,7 +1880,7 @@ var $setWidgetState = function($id, $newState, data) {
             if ($id.endsWith("r")) {
                 if ($stateA != $newState) {
                     if (jmri_logging) {
-                        log.log("#### 3370 Changed r slip " + $widget.name +
+                        log.log("#### Changed r slip " + $widget.name +
                             " $stateA from " + turnoutStateToString($stateA) +
                             " to " + turnoutStateToString($newState));
                     }
@@ -1693,7 +1890,7 @@ var $setWidgetState = function($id, $newState, data) {
             } else if ($id.endsWith("l")) {
                 if ($stateB != $newState) {
                     if (jmri_logging) {
-                        log.log("#### 3379 Changed l slip " + $widget.name +
+                        log.log("#### Changed l slip " + $widget.name +
                             " $stateB from " + turnoutStateToString($stateB) +
                             " to " + turnoutStateToString($newState));
                     }
@@ -1705,7 +1902,7 @@ var $setWidgetState = function($id, $newState, data) {
             // turn turnout states back into slip state
             $newState = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
             if (jmri_logging) {
-                log.log("#### 3390 Slip " + $widget.name +
+                log.log("#### Slip " + $widget.name +
                     " after: " + slipStateToString($newState) +
                     ", stateA: " + turnoutStateToString($stateA) +
                     ", stateB: " + turnoutStateToString($stateB));
@@ -1713,14 +1910,14 @@ var $setWidgetState = function($id, $newState, data) {
 
             if ($widget.state != $newState) {
                if (jmri_logging) {
-                   log.log("#### 3398 Changing slip " + $widget.name + " from " + slipStateToString($widget.state) +
+                   log.log("#### Changing slip " + $widget.name + " from " + slipStateToString($widget.state) +
                        " to " + slipStateToString($newState));
                }
             }
             //jmri_logging = false;
 
             // set $id to slip id
-            $id = slipID;
+            $id = $slipID;
         } else if ($id.startsWith("TUR")) {
             //log.log("$setWidgetState(" + $id + ", " + $newState + ", " + data + ")");
             $logProperties(data);
@@ -1739,22 +1936,22 @@ var $setWidgetState = function($id, $newState, data) {
             return;
         }
     } else if ($widget.widgetType == 'layoutSlip') {
+        // JMRI doesn't send slip states, it sends slip turnout states
+        // so ignore this (incorrect) slip state change
         if (jmri_logging) {
             log.log("#### $setWidgetState(slip " + $id + ", " + slipStateToString($newState) +
                 "); (was " + slipStateToString($widget.state) + ")");
         }
-        // JMRI doesn't send slip states, it sends slip turnout states
-        // so ignore this (incorrect) slip state change
         return;
     }
 
     if ($widget.state !== $newState) { // don't bother if already this value
-        if (jmri_logging) {
+        //if (jmri_logging) {
             log.log("JMRI changed " + $id + " (" + $widget.jsonType + " " + $widget.name + ") from state '" + $widget.state + "' to '" + $newState + "'.");
-        }
+        //}
         if (data.type == "sensor" && ($widget.widgetType == "indicatortrackicon" || $widget.widgetType == "indicatortrackicon")) {
             $widget.occupancystate = $newState;
-        } else {
+        } else { // standard handling of icon widgets
             $widget.state = $newState;
         }
         // override the state with idTag's "name" in a very specific circumstance
@@ -1811,7 +2008,7 @@ var $setWidgetState = function($id, $newState, data) {
                 if ($widget.widgetType == "beanswitch" && isDefined($widget['shape'])) {
                     if ($widget.shape == "button") { // update div css
                         $('div#' + $id).text($widget['text' + $newState]); // set text to new state's text
-                        $('div#' + $id).css({"border-color": $widget['swColor' + $newState]});
+                        $('div#' + $id).css({"background-color": $widget['swColor' + $newState]});
                     } else { // icon, symbol, slider (drawing) are directly drawn on canvas
                         $widget.text = $widget['text' + $newState]; // set text in Widget to new state's text
                         $drawWidgetSymbol($id, $newState);
@@ -1882,6 +2079,7 @@ jQuery.fn.xmlClean = function() {
 var $getNextState = function($widget) {
     var $nextState = undefined;
     $logProperties($widget);
+
     if ($widget.widgetType == 'signalheadicon') { //special case for signalheadicons
         switch ($widget.clickmode * 1) {          //   logic based on SignalHeadIcon.java
             case 0 :
@@ -1924,7 +2122,7 @@ var $getNextState = function($widget) {
                 }
                 if (isUndefined($nextState))
                     $nextState = $firstState;  // if still not set, start over
-        } //end of signalheadicon clickmode switch
+        }
 
     } else if ($widget.widgetType == 'signalmasticon') { // special case for signalmasticons
         // loop through all elements, finding iconXXX and get next iconXXX, skipping special ones
@@ -1958,8 +2156,67 @@ var $getNextState = function($widget) {
                 $nextState = ($widget.state == "Held" ? "Stop" : "Held");
                 break;
 
-            }; //end of signalmasticon clickmode switch
-    } else {  // start with INACTIVE, then toggle to ACTIVE and back (same for turnout states: 2 <> 4
+            };
+
+    } else if ($widget.widgetType == 'slipturnouticon') {
+        // slipturnouticons store the current state in .slipState, not .state
+        switch ($widget.turnoutType) { // logic based on java/src/jmri/jmrit/display/SlipTurnoutIcon.java
+            case "doubleSlip" :
+                $nextState = ($widget.slipState == 11 ? 5 : $widget.slipState + 2);
+                break;
+            case "singleSlip" :
+                if ($widget.singleSlipRoute == "lowerWestToLowerEast") {
+                    switch ($widget.slipState) {
+                        case 5 :
+                            $nextState = 9;
+                            break;
+                        case 9 :
+                            $nextState = 11;
+                            break;
+                        case 11 :
+                            $nextState = 5;
+                            break;
+                    }
+                } else if ($widget.singleSlipRoute == "upperWestToUpperEast") {
+                    switch ($widget.slipState) {
+                        case 5 :
+                            $nextState = 11;
+                            break;
+                        case 7 :
+                            $nextState = 5;
+                            break;
+                        case 11 :
+                            $nextState = 7;
+                            break;
+                    }
+                }
+                break;
+            case "threeWay" :
+                if ($widget.firstTurnoutExit == "lower") {
+                    $nextState = ($widget.slipState == 9 ? 5 : $widget.slipState + 2);
+                } else { // $widget.firstTurnoutExit == "upper"
+                    switch ($widget.slipState) {
+                        case 5 :
+                            $nextState = 9;
+                            break;
+                        case 9 :
+                            $nextState = 11;
+                            break;
+                        case 11 :
+                            $nextState = 5;
+                            break;
+                    }
+                }
+                break;
+            case "scissor" :
+                $nextState = ($widget.slipState == 9 ? 5 : $widget.slipState + 2);
+                    // State 11 not allowed for a scissor
+                    // does not provide 5 after 7 as it would require extra logic
+                    $nextState = ($widget.slipState == 9 ? 5 : $widget.slipState + 2);
+                break;
+            };
+
+    } else {  // default: start with INACTIVE, then toggle to ACTIVE and back (same for turnout states: 2 <> 4)
         $nextState = ($widget.state == ACTIVE ? INACTIVE : ACTIVE);
     }
 
@@ -2013,6 +2270,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "indicatortrackicon" :
         case "indicatorturnouticon" :
         case "memoryicon" :
+        case "slipturnouticon" :
             return "icon";
             break;
         case 'layoutSlip' :
@@ -2114,7 +2372,8 @@ $(document).ready(function() {
         // hide the Show XML menu when listing panels
         $("#navbar-panel-xml").addClass("hidden").removeClass("show");
     } else {
-        // note: the functions and parameter names must match exactly those in jquery.jmri.js
+        // note: the functions and parameter names must match exactly those in web/js/jquery.jmri.js
+        // see for example jmri/server/json/turnout/turnout-server.json
         jmri = $.JMRI({
             didReconnect: function() {
                 // if a reconnect is triggered, reload the page - it is the
@@ -2685,8 +2944,9 @@ function $drawTurntable($widget) {
         }
     });
 
-    $drawCircle($txcen, $tycen, $tr, $gPanel.defaulttrackcolor, $gPanel.mainlinetrackwidth);
-    $drawCircle($txcen, $tycen, $tr / 4, $gPanel.defaulttrackcolor, $gPanel.sidelinetrackwidth);
+    var $turntablecirclelinewidth = 2; //matches LayoutTurntableView.java
+    $drawCircle($txcen, $tycen, $tr, $gPanel.defaulttrackcolor, $turntablecirclelinewidth);
+    $drawCircle($txcen, $tycen, $tr / 4, $gPanel.defaulttrackcolor, $turntablecirclelinewidth);
 }   //$drawTurntable
 
 //draw a LevelXing (pass in widget)
@@ -2720,16 +2980,18 @@ function $drawLevelXing($widget) {
         }
     }
 
-    //  set trackcolor based on block color
+    //  set trackcolor and width based on block
     var $colorAC = $gPanel.defaulttrackcolor;
     var $blkAC = $gBlks[$widget.blocknameac];
     if (isDefined($blkAC)) {
         $colorAC = $blkAC.blockcolor;
+        $widthAC = $gPanel.sidelineblockwidth;
     }
     var $colorBD = $gPanel.defaulttrackcolor;
     var $blkBD = $gBlks[$widget.blocknamebd];
     if (isDefined($blkBD)) {
         $colorBD = $blkBD.blockcolor;
+        $widthBD = $gPanel.sidelineblockwidth;
     }
 
     //retrieve the points
@@ -2786,26 +3048,33 @@ function $drawTurnout($widget) {
     var $eraseColor = $gPanel.backgroundcolor;
     var $trackColor = $gPanel.defaulttrackcolor;
 
-    //set track colors based on block colors
+    //set track colors and widths based on block colors, use A if others not populated
     var $colorA = $trackColor;
     var $blkA = $gBlks[$widget.blockname];
     if (isDefined($blkA)) {
         $colorA = $blkA.blockcolor;
+        $widthA = $gPanel.sidelineblockwidth;
     }
     var $colorB = $colorA;
+    var $widthB = $widthA;
     var $blkB = $gBlks[$widget.blockbname];
     if (isDefined($blkB)) {
         $colorB = $blkB.blockcolor;
+        $widthB = $gPanel.sidelineblockwidth;
     }
     var $colorC = $colorA;
+    var $widthC = $widthA;
     var $blkC = $gBlks[$widget.blockcname];
     if (isDefined($blkC)) {
         $colorC = $blkC.blockcolor;
+        $widthC = $gPanel.sidelineblockwidth;
     }
     var $colorD = $colorA;
+    var $widthD = $widthA;
     var $blkD = $gBlks[$widget.blockdname];
     if (isDefined($blkD)) {
         $colorD = $blkD.blockcolor;
+        $widthD = $gPanel.sidelineblockwidth;
     }
 
     var cen = [$widget.xcen * 1, $widget.ycen * 1]
@@ -2942,7 +3211,7 @@ function $drawTurnout($widget) {
         if  (($widget.disableWhenOccupied !== "yes") || ($widget.occupancystate != ACTIVE)) {
             var $color = $gPanel.turnoutcirclecolor;
 
-            if (($widget.state != UNKNOWN) && ($widget.state != $widget.continuing)) {
+            if ($widget.state != CLOSED) {
                 $color = $gPanel.turnoutcirclethrowncolor;
             }
             if ($gPanel.turnoutfillcontrolcircles == "yes") {
@@ -3774,14 +4043,14 @@ var $drawAllSwitchIcons = function() {
 function updateWidgets(name, state, data) {
     // update all widgets based on the element that changed, using systemname
     if (whereUsed[name]) {
-        //if (jmri_logging) log.log("updateWidgets(" + name + ", " + state + ", data);");
+        //log.log("updateWidgets(" + name + ", " + state);
         $.each(whereUsed[name], function(index, widgetId) {
             $setWidgetState(widgetId, state, data);
         });
     }
     //update all widgets based on the element that changed, using username
     if (isDefined(data.userName) && whereUsed[data.userName]) {
-        //if (jmri_logging) log.log("updateWidgets(" + data.userName + ", " + state + ", data);");
+        //log.log("updateWidgets by username (" + data.userName + "), " + state);
         $.each(whereUsed[data.userName], function(index, widgetId) {
             $setWidgetState(widgetId, state, data);
         });
@@ -4061,7 +4330,7 @@ function getNextSlipState(slipWidget) {
             log.log("getNextSlipState($widget): unknown $widget.side: " + slipWidget.side);
             break;
         }
-    }   // switch (slipWidget.side)
+    }
     return result;
 }
 // ======= End of Layout Editor functions =======
@@ -4634,13 +4903,14 @@ class BumperDecoration extends Decoration {
         var bumperLength = this.length;
         var halfLength = bumperLength / 2;
         // common points
-        var p1 = [0, -halfLength], p2 = [0, +halfLength];
         if ((this.end == "start") || (this.end == "both")) {
+	        var p1 = [0, -halfLength], p2 = [0, +halfLength];
             var p1 = $point_add($point_rotate(p1, startAngleRAD), this.ep1);
             var p2 = $point_add($point_rotate(p2, startAngleRAD), this.ep1);
             $drawLineP(p1, p2);   // draw cross tie
         }
         if ((this.end == "stop") || (this.end == "both")) {
+	        var p1 = [0, -halfLength], p2 = [0, +halfLength];
             var p1 = $point_add($point_rotate(p1, stopAngleRAD), this.ep2);
             var p2 = $point_add($point_rotate(p2, stopAngleRAD), this.ep2);
             $drawLineP(p1, p2);   // draw cross tie

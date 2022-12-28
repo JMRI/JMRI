@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (trains | options | schedules | trainScheduleOptions | automations)*>
+<!ELEMENT operations-config (trains | options | schedules | trainScheduleOptions | automations | automationOptions)*>
 
 <!ELEMENT options (trainOptions | conductorOptions | rowColorOptions | trainEditOptions | scripts | manifestCreator 
 | switchlistCreator)*>
@@ -21,6 +21,7 @@
 <!ELEMENT rowColorOptions EMPTY>
 <!ELEMENT trainEditOptions EMPTY>
 <!ELEMENT trainScheduleOptions EMPTY>
+<!ELEMENT automationOptions EMPTY>
 
 <!ATTLIST trainOptions buildReport		(true | false) "false">
 <!ATTLIST trainOptions printPreview 	(true | false) "false">
@@ -204,4 +205,6 @@
 
 <!ATTLIST messageOk message			CDATA #IMPLIED>
 <!ATTLIST messageFail message		CDATA #IMPLIED>
+
+<!ATTLIST automationOptions automationStartupId		CDATA #IMPLIED>
 

@@ -63,21 +63,22 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnecti
      * Configure the common managers for Powerline connections. This puts the
      * common manager config in one place.
      */
+    @Override
     public void configureManagers() {
         // now does nothing here, it's done by the specific class
         register(); // registers general type
     }
 
     public SerialTurnoutManager getTurnoutManager() {
-        return get(TurnoutManager.class);
+        return (SerialTurnoutManager)get(TurnoutManager.class);
     }
 
     public SerialLightManager getLightManager() {
-        return get(LightManager.class);
+        return (SerialLightManager)get(LightManager.class);
     }
 
     public SerialSensorManager getSensorManager() {
-        return get(SensorManager.class);
+        return (SerialSensorManager)get(SensorManager.class);
     }
 
     public void setTurnoutManager(SerialTurnoutManager m) {

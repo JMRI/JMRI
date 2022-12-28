@@ -134,16 +134,16 @@ public class StringUtil {
     @CheckReturnValue
     @Nonnull
     public static String to8Bits(int val, boolean msbLeft) {
-        String result = "";
+        StringBuilder result = new StringBuilder(8);
         for (int i = 0; i < 8; i++) {
             if (msbLeft) {
-                result = (((val & 0x01) != 0) ? "1" : "0") + result;
+                result.insert(0,(val & 0x01) != 0 ? "1" : "0");
             } else {
-                result = result + (((val & 0x01) != 0) ? "1" : "0");
+                result.append(((val & 0x01) != 0 ? "1" : "0"));
             }
             val = val >> 1;
         }
-        return result;
+        return result.toString();
     }
 
     /**

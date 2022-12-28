@@ -303,7 +303,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
             graphicArea.repaint();
 
         } else {
-            log.error(Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum));
+            log.error("{}",Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum));
         }
     }
 

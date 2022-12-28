@@ -44,7 +44,7 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     void setReadOnlyValue(VariableValue var, String val) {
-        ((CompositeVariableValue) var).setValue(Integer.valueOf(val));
+        ((CompositeVariableValue) var).setValue(Integer.parseInt(val));
     }
 
     @Override

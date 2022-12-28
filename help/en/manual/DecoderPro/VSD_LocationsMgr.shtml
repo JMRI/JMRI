@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>DecoderPro® Main Window</title><!--#include virtual="/Style.shtml" -->
+  <title>DecoderPro&reg; Main Window</title><!--#include virtual="/Style.shtml" -->
   <!-- DecoderPro Styles -->
 
   <style>
@@ -23,7 +23,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>DecoderPro® Debug Menu</h1>
+      <h1>DecoderPro&reg; Debug Menu</h1>
 
       <h2>Virtual Sound Decoder</h2>
 
@@ -96,14 +96,14 @@
       users Groups.io group</a>. More systems will be added in the future. To enable VSD Location
       Following, follow these steps:
       <ol>
-        <li>Follow the directions appropriate to your hardware system for setting up 
+        <li>Follow the directions appropriate to your hardware system for setting up
         <!-- link below should point to the HELP page for Reporters -->
            <!-- klk32003: it is the HELP page (part 2) for Reporters -->
            <a href="../../html/tools/Reporters.shtml">Reporters</a> or <a href=
           "../../html/tools/Sensors.shtml">Sensors</a>.
         </li>
 
-        <li>Select Debug-&gt;Virtual Sound Decoder-&gt;Manage VSD Locations</li>
+        <li>Select Tools-&gt;Virtual Sound Decoder-&gt;Manage VSD Locations</li>
 
         <li>In the dialog, set X / Y / Z coordinates for each Reporter (or other Objects) you wish
         to use for VSD location following. Uncheck the "Use Location" box for Objects you do not
@@ -174,7 +174,7 @@
 
       <p>A convenient way to do the setup is creating a Panel with the JMRI Layout Editor. A Layout
       Editor guidance can be found <a href=
-      "https://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">here</a>.</p>
+      "../../package/jmri/jmrit/display/LayoutEditor.shtml">here</a>.</p>
 
       <p>Your Panel should have all the Blocks and attached Sensors you need. Test and store the
       Panel.<br>
@@ -201,26 +201,83 @@
       </ol>
 
       <p>To use Operations for location following, assign the specific locomotive to the train,
-      then select the train in the locomotive's VSDecoder Options pane. When you <em>MOVE</em> the
-      train in Operations, the sound will move to the next location on the Route.</p>
+      then select the train in the locomotive's VSDecoder Options pane. When you <em>MOVE</em>
+      the train in Operations, the sound will move to the next location on the Route.</p>
 
-      <p>For more information on Operations, see the JMRI® Operations User's Guide</p>
+      <p>For more information on Operations, see the JMRI&reg; Operations User's Guide</p>
 
       <h4 id="advanced_location_following">Advanced Location Following</h4>
 
-      <p>With input from locomotive tracking hardware, Virtual Sound Decoder is able to move the
-      apparent source of the locomotive sound to follow the locomotive's position on the
+      <p>With input from locomotive tracking hardware, Virtual Sound Decoder is able to move
+      the apparent source of the locomotive sound to follow the locomotive's position on the
       layout.</p>
 
-      <p>By adding some geometric layout data, the sound will follow the locomotives continuously
-      (without a "jump").</p>
-
-      <p><em>Note:</em> JMRI Test Release 4.13.2 or newer required.</p>
+      <p>The next section presents two setup possibilities - a newer and simple way based on a
+      LayoutEditor panel and an earlier way by adding some geometric layout data into a file.
+      </p>
 
       <h5>Advanced Location Following Setup</h5>
 
-      <p>A file named VSDGeoData.xml is required, which provides two general attributes and some
-      specific attributes for each location.</p>
+      <p>Since JMRI 4.99.5 there is an easy way to use Advanced Location Following.
+      For the setup a LayoutEditor (LE) panel and a simple VSDGeoData.xm file is required.</p>
+
+      <p>The LE Panel must meet some minimum standards:</p>
+
+      <ul>
+        <li>at least one Track Segment with a Block</li>
+        <li>no errors with Tools-&gt;Check (e.g. Un-Blocked Tracks)</li>
+        <li>the LE panel should be close to the physical layout scale (if you want to use VSD
+        on a real layout - this is not important for VSD in Simulator Mode)</li>
+      </ul>
+
+      <p>Here is an example of a VSDGeoData.xml:</p>
+      <pre>
+        &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+        &lt;vsdecoder-geodata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+           &lt;layout-scale&gt;N&lt;/layout-scale&gt;
+           &lt;check-time&gt;2000&lt;/check-time&gt;
+           &lt;models&gt;Layout Editor Clinic - Full Signals&lt;/models&gt;
+           &lt;models-origin&gt;(346, 260, 0)&lt;/models-origin&gt;
+        &lt;/vsdecoder-geodata&gt;
+      </pre>
+
+      <p>The attributes are:</p>
+
+      <ul>
+        <li>layout-scale: scale of the layout, default: N</li>
+        <li>check-time: interval for calculating a new locomotive position; minimum: 500,
+        maximum: 5000; default: 2000 milliseconds.</li>
+        <li>models: the title of the LE panel</li>
+        <li>models-origin: a location in the LE panel to mark the listener position; 3rd
+        value is always zero; default: (346, 260, 0)</li>
+      </ul>
+
+      <p>The file VSDGeoData.xml should be located in the same folder as your LayoutEditor
+      panel.</p>
+
+      <p>To run a locomotive open PanelPro and load your LayoutEditor panel first. Then add a
+      VSDecoder and start the engine. Now enter the DCC address in the Block Tables into a
+      possible starting Block, then open the throttle.</p>
+
+      <p>The current sound position is printed in the System Console.</p>
+      <p>No further block setting is necessary if your are in Simulator Mode and the CheckBox
+      "Use Blocks" in VSD Preferences is unchecked.</p>
+      <p>Watch the System Console for events that stop the sound positioning.</p>
+      <p>To use another panel do also change the panel title in the VSDGeoData.xml.</p>
+
+      <p>Turntables are not supported. The sound position remains unchanged, until you 
+      reverse the locomotive traveling direction.</p>
+
+      <p>Routes, Signals and Dispatcher are not tested.</p>
+      <p><em>Note:</em> To hear the surround sound, at least two speakers are required.</p>
+ 
+ 
+      <p><strong>And here is the old setup version of Advanced Location Following.</strong></p>
+
+      <p><em>Note:</em> JMRI Test Release 4.13.2 or newer required.</p>
+
+      <p>A file named VSDGeoData.xml is required, which provides two general attributes and
+      some specific attributes for each location.</p>
 
       <p>Here is an example of a VSDGeoData.xml with one location (geodataset):</p>
 
@@ -249,8 +306,8 @@
       <ul>
         <li>layout scale (default: N)</li>
 
-        <li>check time (interval for calculating a new locomotive position; minimum: 500, maximum:
-        5000, default: 2000 milliseconds).</li>
+        <li>check time (interval for calculating a new locomotive position; minimum: 500,
+        maximum: 5000, default: 2000 milliseconds).</li>
       </ul>
 
       <p>The attributes for each location are:</p>
@@ -318,7 +375,7 @@
 
         <li>Open a JMRI throttle: Tools-&gt;Throttle-&gt;New Throttle-&gt;Address: 3-&gt;Set</li>
 
-        <li>Add a VSDecoder: Debug-&gt;Virtual Sound Decoder-&gt;VSDecoder Manager-&gt;Add
+        <li>Add a VSDecoder: Tools-&gt;Virtual Sound Decoder-&gt;VSDecoder Manager-&gt;Add
         Decoder-&gt;Manual-&gt;Address: 3-&gt;Set-&gt;Load VSD File-&gt;File name:
         Class64.vsd-&gt;Select a Profile: Class64-&gt;OK-&gt;Start Engine</li>
 

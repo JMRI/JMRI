@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import java.util.List;
 import java.util.*;
@@ -15,6 +14,7 @@ import javax.swing.*;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * MVC View component for the TrackSegment class.
@@ -653,7 +653,7 @@ public class TrackSegmentView extends LayoutTrackView {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@Nonnull JmriMouseEvent mouseEvent) {
         if (popupMenu != null) {
             popupMenu.removeAll();
         } else {
@@ -1295,7 +1295,7 @@ public class TrackSegmentView extends LayoutTrackView {
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (canRemove()) {
+                if (canRemove() && removeInlineLogixNG()) {
                     layoutEditor.removeTrackSegment(trackSegment);
                     remove();
                     dispose();
@@ -1370,6 +1370,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 }
             });
         }
+        addCommonPopupItems(mouseEvent, popupMenu);
         popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         return popupMenu;
     }   // showPopup
@@ -1587,7 +1588,7 @@ public class TrackSegmentView extends LayoutTrackView {
      * @param e            The original event causing this
      * @param hitPointType the type of the underlying hit
      */
-    protected void showBezierPopUp(MouseEvent e, HitPointType hitPointType) {
+    protected void showBezierPopUp(JmriMouseEvent e, HitPointType hitPointType) {
         int bezierControlPointIndex = hitPointType.bezierPointIndex();
         if (popupMenu != null) {
             popupMenu.removeAll();
@@ -1625,6 +1626,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 }
             });
         }
+        addCommonPopupItems(e, popupMenu);
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
 

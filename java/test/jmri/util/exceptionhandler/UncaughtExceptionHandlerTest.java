@@ -1,6 +1,9 @@
 package jmri.util.exceptionhandler;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
@@ -15,42 +18,44 @@ public class UncaughtExceptionHandlerTest {
     private Thread.UncaughtExceptionHandler defaultExceptionHandler;
 
     @Test
-    @SuppressWarnings("all") // because we're deliberately forcing an NPE to test the handler
     public void testThread() throws Exception {
         Thread t = new Thread(() -> {
-            // null.toString(); will not compile
-            // ((Object) null).toString(); raises unnessesary cast warnings
-            Object o = null;
-            o.toString();
+            throwNullPointerException();
         });
         t.setName("Uncaught Exception Handler Test Thread");
         t.start();
-        jmri.util.JUnitUtil.releaseThread(this);
+        JUnitUtil.waitFor(JUnitUtil.WAITFOR_DEFAULT_DELAY);
         JUnitAppender.assertErrorMessage("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler");
     }
 
     @Test
-    @SuppressWarnings("all") // because we're deliberately forcing an NPE to test the handler
     public void testSwing() throws Exception {
         try {
             javax.swing.SwingUtilities.invokeAndWait(() -> {
-                // null.toString(); will not compile
-                // ((Object) null).toString(); raises unnessesary cast warnings
-                Object o = null;
-                o.toString();
+                throwNullPointerException();
             });
         } catch (java.lang.reflect.InvocationTargetException e) {
             caught = true;
         }
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return caught;
         }, "threw exception");
         // emits no logging, as the UncaughtExceptionHandlerTest handler isn't invoked
     }
 
+    @SuppressWarnings("null") // because we're deliberately forcing an NPE to test the handler
+    @SuppressFBWarnings( value = {"NP_LOAD_OF_KNOWN_NULL_VALUE","NP_ALWAYS_NULL"},
+        justification = "testing exception handler")
+    private void throwNullPointerException() {
+        // null.toString(); will not compile
+        // ((Object) null).toString(); raises unnessesary cast warnings
+        Object o = null;
+        Assertions.assertNotNull(o.toString());
+    }
+
     @BeforeEach
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
         this.defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
@@ -59,7 +64,7 @@ public class UncaughtExceptionHandlerTest {
     @AfterEach
     public void tearDown() throws Exception {
         Thread.setDefaultUncaughtExceptionHandler(this.defaultExceptionHandler);
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
 
     }
 }

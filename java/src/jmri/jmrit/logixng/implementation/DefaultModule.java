@@ -316,7 +316,7 @@ public class DefaultModule extends AbstractBase
                         _femaleRootSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("digital action is not found: " + _socketSystemName);
+                        log.error("digital action is not found: {}", _socketSystemName);
                     }
                 } catch (SocketAlreadyConnectedException ex) {
                     // This shouldn't happen and is a runtime error if it does.
@@ -367,6 +367,11 @@ public class DefaultModule extends AbstractBase
         log.debug("** {} :: {}", level, this.getClass().getName());
         level++;
         _femaleRootSocket.getUsageTree(level, bean, report, cdl);
+    }
+
+    @Override
+    public boolean existsInTree() {
+        return true;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModule.class);

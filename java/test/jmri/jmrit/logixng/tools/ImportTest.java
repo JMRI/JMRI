@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.tools;
 
 import java.awt.GraphicsEnvironment;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import org.junit.*;
 
@@ -11,6 +9,7 @@ import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 
@@ -50,26 +49,19 @@ public class ImportTest {
         }
     }
 
-    private boolean destinationPointsIsEnabled(DestinationPoints dp) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-//        Method retrieveItems = dp.getClass().getDeclaredMethod("isEnabled", String.class);
-        Method isEnabled = dp.getClass().getDeclaredMethod("isEnabled");
-        isEnabled.setAccessible(true);
-        return (boolean)isEnabled.invoke(dp);
-    }
-
-    private void runTestEntryExit(DestinationPoints dp, Sensor sensor) throws JmriException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        Assert.assertFalse(destinationPointsIsEnabled(dp));
+    private void runTestEntryExit(DestinationPoints dp, Sensor sensor) throws JmriException {
+        Assert.assertFalse(dp.isEnabled());
         sensor.setState(Sensor.INACTIVE);
-        JUnitUtil.waitFor(() -> (destinationPointsIsEnabled(dp)));
-        Assert.assertTrue(destinationPointsIsEnabled(dp));
+        JUnitUtil.waitFor(() -> (dp.isEnabled()),"destination point enabled");
+        Assert.assertTrue(dp.isEnabled());
         sensor.setState(Sensor.ACTIVE);
-        JUnitUtil.waitFor(() -> (!destinationPointsIsEnabled(dp)));
-        Assert.assertFalse(destinationPointsIsEnabled(dp));
+        JUnitUtil.waitFor(() -> (!dp.isEnabled()),"destination point disabled");
+        Assert.assertFalse(dp.isEnabled());
     }
 
     @Test
     @Ignore
-    public void testEntryExit() throws InterruptedException, JmriException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public void testEntryExit() throws JmriException {
         // ENTRYEXIT
         // SET_NXPAIR_ENABLED
 /*
@@ -122,8 +114,8 @@ public class ImportTest {
 
         sensor.setState(Sensor.ACTIVE);
 
-        JUnitUtil.waitFor(() -> (turnout101.getState() == Turnout.CLOSED));
-        JUnitUtil.waitFor(() -> (turnout102.getState() == Turnout.CLOSED));
+        JUnitUtil.waitFor(() -> (turnout101.getState() == Turnout.CLOSED),"turnout 101 closed");
+        JUnitUtil.waitFor(() -> (turnout102.getState() == Turnout.CLOSED),"turnout 102 closed");
 
         Assert.assertEquals(Turnout.CLOSED, turnout101.getState());
         Assert.assertEquals(Turnout.CLOSED, turnout102.getState());
@@ -160,6 +152,12 @@ public class ImportTest {
 
         // Test route
         runTestSetRoute(turnout101, turnout102, sensor210);
+
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX:AUTO:0001C1' to LogixNG 'IQ:AUTO:0001'");
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX:AUTO:0002C1' to LogixNG 'IQ:AUTO:0002'");
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX:AUTO:0003C1' to LogixNG 'IQ:AUTO:0003'");
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX:AUTO:0004C1' to LogixNG 'IQ:AUTO:0004'");
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX:RTXINITIALIZER1T' to LogixNG 'IQ:AUTO:0005'");
     }
 
 
@@ -238,7 +236,6 @@ public class ImportTest {
         JUnitUtil.clearTurnoutThreads();
         JUnitUtil.clearRouteThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

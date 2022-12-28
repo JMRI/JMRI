@@ -4,9 +4,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Frame for adding and editing the car roster for operations.
  *
@@ -23,9 +20,6 @@ final class CarAttributeAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        log.debug("Show attribute quanity");
         caef.toggleShowQuanity();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(CarAttributeAction.class);
 }

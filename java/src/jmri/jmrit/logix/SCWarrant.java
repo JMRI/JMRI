@@ -172,12 +172,13 @@ public class SCWarrant extends Warrant {
 
         startupWarrant();
 
-        firePropertyChange("runMode", Integer.valueOf(MODE_NONE), Integer.valueOf(_runMode));
+        firePropertyChange("WarrantStart", Integer.valueOf(MODE_NONE), Integer.valueOf(_runMode));
         runSignalControlledTrain();
     }
 
     /**
-     * Generate status message to show in warrant table
+     * Generate status message to show in warrant table.
+     * {@inheritDoc}
      **/
     @Override
     protected synchronized String getRunningMessage() {
@@ -418,7 +419,7 @@ public class SCWarrant extends Warrant {
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="NotifyAll call triggers recomputation")
     protected void goingActive(OBlock block) {
-        int activeIdx = getIndexOfBlock(block, getCurrentOrderIndex());
+        int activeIdx = getIndexOfBlockAfter(block, getCurrentOrderIndex());
         log.debug("{} **Block \"{}\" goingActive. activeIdx= {}"
                     + ", getCurrentOrderIndex()= {}"
                     + " - warrant= {} _runMode = {} _throttle==null: {}",_trainName,block.getDisplayName(),activeIdx,getCurrentOrderIndex(),getDisplayName(),_runMode,(_throttle==null));
@@ -463,7 +464,7 @@ public class SCWarrant extends Warrant {
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="See comment above notify call")
     protected void goingInactive(OBlock block) {
-        int idx = getIndexOfBlock(block, 0);  // if idx >= 0, it is in this warrant
+        int idx = getIndexOfBlockAfter(block, 0);  // if idx >= 0, it is in this warrant
         log.debug("{} Block \"{}\" goingInactive. idx= {}"
                     + ", getCurrentOrderIndex()= {}"
                     + " - warrant= {}",_trainName,block.getDisplayName(),idx,getCurrentOrderIndex(),getDisplayName());

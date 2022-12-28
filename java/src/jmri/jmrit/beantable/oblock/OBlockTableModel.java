@@ -17,7 +17,7 @@ import jmri.jmrit.beantable.block.BlockCurvatureJComboBox;
 import jmri.jmrit.logix.*;
 import jmri.util.IntlUtilities;
 import jmri.util.NamedBeanComparator;
-
+import jmri.util.ThreadingUtil;
 import jmri.util.gui.GuiLafPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -920,8 +920,10 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         String property = e.getPropertyName();
         if (log.isDebugEnabled()) log.debug("PropertyChange = {}", property);
         if (property.equals("length") || property.equals("UserName") || property.equals("state")) {
-            _parent.updateOBlockTablesMenu();
-            fireTableDataChanged();
+            ThreadingUtil.runOnGUIEventually(()-> {
+                _parent.updateOBlockTablesMenu();
+                fireTableDataChanged();
+            });
         }
         _parent.getPortalXRefTableModel().propertyChange(e);
         _parent.getSignalTableModel().propertyChange(e);

@@ -1,24 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-		"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
-<head>
 <!-- Updated by Blorec Herv&#233; le 2017-01-16-->
- <title>JMRI Hardware Support - CTI Acela System</title>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+<head>
+  <title>JMRI Hardware Support - CTI Acela System</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
-	<!--#include virtual="../SidebarUp" -->
+	<!--#include virtual="../Sidebar.shtml" -->
 	<div id="mainContent">
 		<!-- Page Body -->
 
@@ -38,7 +29,7 @@ Comme d&#233;crit dans le documentation Acela sur le
 <a href="http://www.cti-electronics.com/app_sw.htm"> site web CTI Acela</a>, plusieurs modules sont disponibles
 <ul>
 		<li> Un module CTI Acela (actuellement seulement existant avec une interface s&#233;rie) qui effectue la plupart de la gestion du r&#233;seau CTI de bas niveau.
-		<li> Un module CTI SmartCAB  qui, lorsqu'il est utilis&#233; sur un r&#233;seau ferroviaire non DCC, commandes les trains dans un syst&#232;me traditionnel de CAB. Le module CTI SmartCAB n'est pas pris en charge par JMRI.
+		<li> Un module CTI SmartCAB qui, lorsqu'il est utilis&#233; sur un r&#233;seau ferroviaire non DCC, commandes les trains dans un syst&#232;me traditionnel de CAB. Le module CTI SmartCAB n'est pas pris en charge par JMRI.
 		<li> Un module CTI TrainBrain (4 relais de sortie et 4 circuits d'entr&#233;e).
 		<li> Un module CTI Dash-8 (8 relais de sortie, pas de circuits d'entr&#233;e).
 		<li> Un module CTI Watchman (gardien)(8 circuits d'entr&#233;e, pas de circuits de sortie).
@@ -107,8 +98,9 @@ LED verte clignote toujours pour indiquer qu'il est correct (que la boucle est b
 Plus d'informations sur le mat&#233;riel Acela peut &#234;tre consult&#233;e sur le
 <a href="http://www.cti-electronics.com/app_sw.htm">site  web CTI</a>.
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+    <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

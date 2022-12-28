@@ -107,45 +107,47 @@
           <td style="text-align:center"><b>11</b></td>
           <td style="text-align:center"><b>11</b></td>
         </tr>
+
+        <tr>
+          <td style="text-align:center">(Intended) 5.4</td>
+          <td>Production version, culmination of Spring 2023 series</td>
+          <td style="text-align:center">June 2023</td>
+          <td style="text-align:center"><b>11</b></td>
+          <td style="text-align:center"><b>11</b></td>
+        </tr>
+
       </table>
 
       <h3>Java and JMRI in the Near Future</h3>
-      The 4.1.* series of test releases in Fall 2015 started the requirement for Java 8. This has
-      continued through the following release series. Java 8 will continue to be the requirement
-      through the Fall of 2021. This involves doing development, test and production release
-      builds using Java 1.8.0_181. (We also <a href=
-      "https://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%208u151/">test on
-      Jenkins with Java 1.8_0_151</a> to ensure Windows XP compatibility)
-      <p>The next long-term-support (LTS) Java release is Java 11 from Fall of 2018. Oracle has
+      <p>The 4.1.* series of test releases in Fall 2015 started the requirement for Java 8. This
+      continued through the following release series. Java 8 continued to be the requirement
+      through the Fall of 2021.
+      <p>The next long-term-support (LTS) Java release after Java 8 is Java 11 from Fall of 2018. Oracle has
       <a href=
       "https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">
-      aligned their Java and the OpenJDK from that point</a>. Because some people will need to have
-      that on their computers for other purposes, we have been building and running JMRI
-      for testing purposes on Oracle Java 8
-      through 11 and OpenJDK version 11 by using <a href=
-      "https://builds.jmri.org/jenkins/job/Development/job/VersionChecks/">Jenkins</a>.
-      You can follow the current status of these on the <a href="CI-status.shtml">CI Status
-      page</a>.
-      <p>Java 17 is the current LTS release.  JMRI is built and tests are run on it too,
-      but we don't recommend using it due to some remaining compatibility issues.
+      aligned their Java and the OpenJDK from that point</a>.
 
-      <p>In the near future, the Java version required by JMRI will move forward. We expect
-      that it will be during the Spring 2022 development releases, leading to the June 2022
-      production releases requiring Java 11 and therefore being called JMRI 5.0. There might be one
-      or two JMRI updates and minor releases early in Spring that would still work with Java 8.</p>
+      <p>In Spring 2022 the Java version required by JMRI moved forward, making
+      <a href="https://www.jmri.org/releasenotes/jmri4.27.1.shtml">JMRI 4.27.1</a> the last JMRI version
+      running on Java 8.<br>
+      Newer development releases 4.99.x will culminate in the June 2022 production releases
+      requiring Java 11 and therefore being called JMRI 5.0.</p>
+
+      <p>Java 17 is the current LTS release.  JMRI is built and tests are run on it too,
+      but we don't recommend using it due to some remaining compatibility issues.</p>
 
       <h4>Java Release and Operating System Support</h4>
-      More information on Java releases and the operating systems that support them is on a
-      <a href="JVMCapabilities.shtml">separate page</a>.
+      <p>More information on Java releases and the operating systems that support them can be found
+      <a href="JVMCapabilities.shtml">here</a>.</p>
 
-      <p>Java installers are now available from multiple sources.  Our
-        <a href="/java/index.shtml">Java installer page</a> lists a number of them.
+      <p>Java installers are now available from multiple sources. Our
+      <a href="/java/index.shtml">Java installer page</a> lists a number of them.</p>
 
       <h2>Migration Notes</h2>
 
       <p>This is a section of notes for various code migrations that are in progress or
       contemplated. These don't directly affect JMRI users in the way that Java version changes do,
-      but they may effect external users of the JMRI libraries.</p>
+      but they may affect external users of the JMRI libraries.</p>
 
       <ul>
         <li>USB access technology has advanced a lot since support for some basic libraries was
@@ -153,7 +155,7 @@
         break some user scripts.</li>
 
         <li>Our <a href="Logging.shtml">logging methodology</a> is now a hybrid of native logging
-        (in some included libraries), Log4J 1.2.17 (our logger) and SLF4J (a logging abstraction
+        (in some included libraries), Log4J 1.2.17 (logger in our code) and SLF4J (a logging abstraction
         layer). We may choose to simplify that, but at least we have to move to another logger at
         some point.
         </li>

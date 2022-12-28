@@ -6,11 +6,15 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
+
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
+
 import jmri.JmriException;
+import jmri.NamedBean;
+import jmri.jmrit.logixng.InlineLogixNG;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * Defines display objects.
@@ -38,7 +42,7 @@ import jmri.JmriException;
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
  */
-public interface Positionable extends Cloneable {
+public interface Positionable extends Cloneable, InlineLogixNG {
 
     /**
      * Sets the Id of this Positionable
@@ -123,7 +127,17 @@ public interface Positionable extends Cloneable {
      *
      * @return the name to display
      */
+    @Override
     String getNameString();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public default String getTypeName() {
+        NamedBean nb = getNamedBean();
+        return nb != null ? nb.getBeanType() : null;
+    }
 
     /**
      * Add additional menu items to the menu.
@@ -224,19 +238,19 @@ public interface Positionable extends Cloneable {
 
     // Mouse-handling events.  See
     // Editor class for more information on how these are used.
-    void doMousePressed(MouseEvent event);
+    void doMousePressed(JmriMouseEvent event);
 
-    void doMouseReleased(MouseEvent event);
+    void doMouseReleased(JmriMouseEvent event);
 
-    void doMouseClicked(MouseEvent event);
+    void doMouseClicked(JmriMouseEvent event);
 
-    void doMouseDragged(MouseEvent event);
+    void doMouseDragged(JmriMouseEvent event);
 
-    void doMouseMoved(MouseEvent event);
+    void doMouseMoved(JmriMouseEvent event);
 
-    void doMouseEntered(MouseEvent event);
+    void doMouseEntered(JmriMouseEvent event);
 
-    void doMouseExited(MouseEvent event);
+    void doMouseExited(JmriMouseEvent event);
 
     // The following are common for all JComponents
     Rectangle getBounds(Rectangle r);
@@ -287,6 +301,10 @@ public interface Positionable extends Cloneable {
 
     boolean requestFocusInWindow();
 
+    @Override
+    public default String getEditorName() {
+        return getEditor().getName();
+    }
 
 
     public static class DuplicateIdException extends JmriException {

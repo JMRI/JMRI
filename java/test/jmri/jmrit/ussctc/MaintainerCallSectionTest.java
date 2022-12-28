@@ -54,12 +54,33 @@ public class MaintainerCallSectionTest {
         Assert.assertEquals(Turnout.CLOSED, mcLayoutTurnout.getCommandedState());
     }
 
+    @Test
+    public void testImplListener(){
+        Assertions.assertNotNull(station);
+        Assertions.assertFalse(requestIndicationStart);
+        station.requestIndicationStart();
+        Assertions.assertTrue(requestIndicationStart);
+    }
+
     CodeLine codeline;
-    Station station;
+    Station station = null;
     boolean requestIndicationStart;
 
-    Turnout mcLayoutTurnout;
-    Sensor panelSensor;
+    private Turnout mcLayoutTurnout = null;
+    private Sensor panelSensor = null;
+
+    private class StationImpl extends Station<CodeGroupOneBit,CodeGroupNoBits> {
+
+        StationImpl(String name, CodeLine codeline, CodeButton button) {
+            super(name, codeline, button);
+            requestIndicationStart = false;
+        }
+
+        @Override
+        public void requestIndicationStart() {
+            requestIndicationStart = true;
+        }
+    }
 
     @BeforeEach
     public void setUp() {
@@ -77,13 +98,11 @@ public class MaintainerCallSectionTest {
 
         codeline = new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
 
-        requestIndicationStart = false;
-        station = new Station("test", codeline, new CodeButton("IS221", "IS222")) {
-            @Override
-            public void requestIndicationStart() {
-                requestIndicationStart = true;
-            }
-        };
+        station = new StationImpl("test", codeline, new CodeButton("IS221", "IS222"));
+        
+        Assertions.assertNotNull(mcLayoutTurnout);
+        Assertions.assertNotNull(panelSensor);
+        Assertions.assertNotNull(station);
     }
 
     @AfterEach

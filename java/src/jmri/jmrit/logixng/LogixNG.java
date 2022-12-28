@@ -1,6 +1,8 @@
 package jmri.jmrit.logixng;
 
 import jmri.NamedBean;
+import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 
 /**
  * LogixNG.
@@ -9,6 +11,36 @@ import jmri.NamedBean;
  * @author Dave Sand        Copyright 2021
  */
 public interface LogixNG extends Base, NamedBean {
+
+    public static final String PROPERTY_INLINE = "IsInline";
+
+    /**
+     * Sets whether this LogixNG is inline or not.
+     *
+     * @param inline true if the LogixNG is inline, false otherwise
+     */
+    public void setInline(boolean inline);
+
+    /**
+     * Determines whether this LogixNG is inline or not.
+     *
+     * @return true if the LogixNG is inline, false otherwise
+     */
+    public boolean isInline();
+
+    /**
+     * Set the InlineLogixNG that owns this LogixNG, if the LogixNG is inline.
+     *
+     * @param inlineLogixNG the InlineLogixNG that owns this LogixNG, if the LogixNG is inline.
+     */
+    public void setInlineLogixNG(InlineLogixNG inlineLogixNG);
+
+    /**
+     * Get the InlineLogixNG that owns this LogixNG, if the LogixNG is inline.
+     *
+     * @return the InlineLogixNG
+     */
+    public InlineLogixNG getInlineLogixNG();
 
     /**
      * Set whenether this LogixNG is enabled or disabled.
@@ -27,6 +59,14 @@ public interface LogixNG extends Base, NamedBean {
      */
     @Override
     public boolean isEnabled();
+
+    /**
+     * Activates this LogixNG.
+     * <P>
+     * This method is only called by the LogixNG manager and it is called
+     * during initialization of the LogixNGs.
+     */
+    public void activate();
 
     /**
      * Set the system name for the conditionalNG at the specified position in this list

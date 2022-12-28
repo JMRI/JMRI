@@ -70,9 +70,7 @@ public class HelpUtil {
     public static JMenuItem makeHelpMenuItem(String ref) {
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemWindowHelp"));
 
-        menuItem.addActionListener((ignore) -> {
-            displayHelpRef(ref);
-        });
+        menuItem.addActionListener((ignore) -> displayHelpRef(ref));
 
         return menuItem;
     }
@@ -84,13 +82,9 @@ public class HelpUtil {
     // https://coderanch.com/how-to/javadoc/javahelp-2.0_05/javax/help/HelpBroker.html#enableHelpOnButton(java.awt.Component,%20java.lang.String,%20javax.help.HelpSet)
     public static void enableHelpOnButton(java.awt.Component comp, String id) {
         if (comp instanceof javax.swing.AbstractButton) {
-            ((javax.swing.AbstractButton) comp).addActionListener((ignore) -> {
-                displayHelpRef(id);
-            });
+            ((javax.swing.AbstractButton) comp).addActionListener((ignore) -> displayHelpRef(id));
         } else if (comp instanceof java.awt.Button) {
-            ((java.awt.Button) comp).addActionListener((ignore) -> {
-                displayHelpRef(id);
-            });
+            ((java.awt.Button) comp).addActionListener((ignore) -> displayHelpRef(id));
         } else {
             throw new IllegalArgumentException("comp is not a javax.swing.AbstractButton or a java.awt.Button");
         }
@@ -98,7 +92,7 @@ public class HelpUtil {
 
     public static void displayHelpRef(String ref) {
         // We only have English (en) and French (fr) help files.
-        Boolean isFrench = "fr"
+        boolean isFrench = "fr"
                 .equals(InstanceManager.getDefault(GuiLafPreferencesManager.class).getLocale().getLanguage());
         String localeStr = isFrench ? "fr" : "en";
 
@@ -138,7 +132,7 @@ public class HelpUtil {
         }
 
         // Open a local help file by default or a failure of jmri.org or the local JMRI web server.
-        String fileName = "";
+        String fileName;
         try {
             fileName = HelpUtil.createStubFile(ref, localeStr);
         } catch (IOException iox) {
@@ -170,15 +164,11 @@ public class HelpUtil {
     }
 
     public static String createStubFile(String helpKey, String locale) throws IOException {
-        String stubLocation = FileUtil.getPreferencesPath() + "jmrihelp/";
+        String stubLocation = FileUtil.getHomePath() + "jmrihelp/";
         FileUtil.createDirectory(stubLocation);
         log.debug("---- stub location: {}", stubLocation);
 
-        StringBuilder sb = new StringBuilder(FileUtil.getProgramPath());
-        sb.append("help/");
-        sb.append(locale);
-        sb.append("/local/");
-        String htmlLocation = sb.toString();
+        String htmlLocation = FileUtil.getProgramPath() + "help/" + locale + "/local/";
         log.debug("---- html location: {}", htmlLocation);
 
         String template = FileUtil.readFile(new File(htmlLocation + "stub_template.html"));
@@ -204,8 +194,7 @@ public class HelpUtil {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
                 Desktop.getDesktop().open(file);
             } else {
-                throw new JmriException(String.format(
-                        "Failed to connect to browser. java.awt.Desktop in Windows doesn't suppport Action.OPEN"));
+                throw new JmriException("Failed to connect to browser. java.awt.Desktop in Windows doesn't support Action.OPEN");
             }
         } catch (IOException ex) {
             throw new JmriException(
@@ -240,8 +229,7 @@ public class HelpUtil {
                 // Open browser to URL with draft report
                 Desktop.getDesktop().browse(uri);
             } else {
-                throw new JmriException(String
-                        .format("Failed to connect to web page. java.awt.Desktop doesn't suppport Action.BROWSE"));
+                throw new JmriException("Failed to connect to web page. java.awt.Desktop doesn't suppport Action.BROWSE");
             }
         } catch (IOException | URISyntaxException e) {
             throw new JmriException(

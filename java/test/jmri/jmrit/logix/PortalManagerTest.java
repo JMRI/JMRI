@@ -5,6 +5,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import java.io.File;
@@ -44,6 +45,7 @@ public class PortalManagerTest {
         pSouthWest.setFromBlock(bSouth, false);
         assertThat(_portalMgr.getPortal("NorthWest")).withFailMessage("Portal").isEqualTo(pNorthWest);
         assertThat(_portalMgr.getPortal("SouthWest").getFromBlock()).withFailMessage("Portal Block").isEqualTo(bSouth);
+        Assertions.assertNotNull(bSouth);
         assertThat(bSouth.getPortalByName("SouthWest")).withFailMessage("Portal").isEqualTo(pSouthWest);
         assertThat(_portalMgr.getPortal("NorthWest").getToBlockName()).withFailMessage("Portal Block").isEqualTo("West");
         assertThat(_portalMgr.getPortal("NorthWest").getFromBlockName()).withFailMessage("Portal Block").isEqualTo("North");
@@ -68,7 +70,7 @@ public class PortalManagerTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+        JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
 
@@ -104,7 +106,7 @@ public class PortalManagerTest {
         // warrant can't be started
         assertThat(tableFrame.runTrain(warrant, Warrant.MODE_RUN)).withFailMessage("Warrant starts").isNull(); // start run
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return m.endsWith("Cmd #8.");
         }, "Train starts to move at 8th command");
@@ -144,7 +146,6 @@ public class PortalManagerTest {
         JUnitUtil.removeMatchingThreads("Engineer(");
         _portalMgr = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

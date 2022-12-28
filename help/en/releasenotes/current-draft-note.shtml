@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>handle new locoState reply to sync speed, dir and Fkeys</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -69,6 +69,11 @@
                 <li></li>
             </ul>
 
+        <h4>KPF-Zeller</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>LocoNet</h4>
             <ul>
                 <li></li>
@@ -91,8 +96,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Native MQTT SignalMasts are available.</li>
-                <li>Splash screen shows connection address</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -142,7 +146,7 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li>Enabled functions 23-27 in the throttle.</li>
+                <li></li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
@@ -235,6 +239,11 @@
                 <li></li>
             </ul>
 
+        <h4>MD Electronics</h4>
+             <ul>
+                <li></li>
+             </ul>
+
         <h4>MGP</h4>
              <ul>
                 <li></li>
@@ -286,6 +295,11 @@
             </ul>
 
         <h4>SoundTraxx</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Tam Valley Depot</h4>
             <ul>
                 <li></li>
             </ul>
@@ -395,7 +409,9 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Fixes a bug when importing a Logix to LogixNG, where the Conditional
+          uses <i>Mixed</i>. The <i>Not</i> is ignored for the conditional
+          variables when using Mixed.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -456,21 +472,10 @@
             <li></li>
        </ul>
 
-    <h3>Turnouts, Lights, Sensors and other elements</h3>
-        <a id="TLae" name="TLae"></a>
-        <ul>
-            <li></li>
-        </ul>
-
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Example scripts related to MQTT moved from jython directory to jython\MQTT directory.</li>
-            <li>Initial
-                <a href="https://jmri.org/help/en/html/tools/scripting/Python3.shtml">Python 3 support</a>
-                is available for macOS and Linux.
-            <li>Added simpler accessors to InstanceManager for use in scripts. See
-                jython/test/InstanceManagerTest.py</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -490,7 +495,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li>Native MQTT masts are available</li>
+                <li></li>
             </ul>
 
     	<h4>Signal Groups</h4>
@@ -537,6 +542,12 @@
             <li></li>
         </ul>
 
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"></a>
+        <ul>
+            <li></li>
+        </ul>
+
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
@@ -576,6 +587,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>SpotBugs has been updated to 4.5.0</li>
+            <li></li>
         </ul>
 

@@ -87,7 +87,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it.
     // Note that dispose() doesn't act on these.  Its not clear whether it should...
-    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     static final public String schemaVersion = ""; // NOI18N
     private String defaultRosterGroup = null;
     private final HashMap<String, RosterGroup> rosterGroups = new HashMap<>();
@@ -168,9 +168,9 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             // if the rosterFilename passed in is null, create a complete path
             // to the default roster index before attempting to read
             if (rosterFilename == null) {
-                rosterFilename = this.getRosterIndexPath();
+                rosterFilename = Roster.this.getRosterIndexPath();
             }
-            this.readFile(rosterFilename);
+            Roster.this.readFile(rosterFilename);
         } catch (IOException | JDOMException e) {
             log.error("Exception during reading while constructing roster", e);
             try {
@@ -740,9 +740,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @throws java.io.IOException           if unable to write file
      */
     void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         File file = findFile(name);
         if (file == null) {
             file = new File(name);
@@ -1011,9 +1009,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
         if (dirty) {
             log.error("Dispose invoked on dirty Roster");
         }
@@ -1459,6 +1455,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      *
      * @return the rosterGroups
      */
+    @Nonnull
     public HashMap<String, RosterGroup> getRosterGroups() {
         return new HashMap<>(rosterGroups);
     }

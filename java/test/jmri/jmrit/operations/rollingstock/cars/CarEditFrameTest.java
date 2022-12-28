@@ -1,23 +1,19 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -28,9 +24,9 @@ import jmri.util.swing.JemmyUtil;
 @Timeout(10)
 public class CarEditFrameTest extends OperationsTestCase {
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testClearRoadNumber() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -43,9 +39,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testRoadNumberErrorConditions() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -62,7 +58,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         JemmyUtil.waitFor(f);
         
         // test number too long
-        StringBuffer sb = new StringBuffer("A");
+        StringBuilder sb = new StringBuilder("A");
         for (int i = 0; i < Control.max_len_string_road_number; i++) {
             sb.append(i);
         }
@@ -88,9 +84,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testWeightErrorConditions() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -126,10 +122,50 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
+    
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testWeightCalculation() {
 
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        Assert.assertTrue(f.isShowing());
+
+        JemmyUtil.enterClickAndLeave(f.fillWeightButton);
+        Assert.assertEquals("Calculated weight for 32 foot car", "64", f.weightTonsTextField.getText());
+        
+        // weight for caboose is reduced
+        JemmyUtil.enterClickAndLeave(f.cabooseCheckBox);
+        JemmyUtil.enterClickAndLeave(f.fillWeightButton);
+        Assert.assertEquals("Calculated weight for 32 foot caboose", "28", f.weightTonsTextField.getText());
+
+        JUnitUtil.dispose(f);
+    }
+    
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testWeightPassengerCalculation() {
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        Assert.assertTrue(f.isShowing());
+        
+        // weight for passenger is reduced
+        JemmyUtil.enterClickAndLeave(f.passengerCheckBox);
+        JemmyUtil.enterClickAndLeave(f.fillWeightButton);
+        Assert.assertEquals("Calculated weight for 32 foot caboose", "28", f.weightTonsTextField.getText());
+        
+        JemmyUtil.enterClickAndLeave(f.passengerCheckBox);
+        JemmyUtil.enterClickAndLeave(f.fillWeightButton);
+        Assert.assertEquals("Calculated weight for 32 foot car", "64", f.weightTonsTextField.getText());
+
+        JUnitUtil.dispose(f);
+    }
+
+
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testEditRoadButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -143,13 +179,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
         Assert.assertEquals("Check attribute", CarAttributeEditFrame.TYPE, f.carAttributeEditFrame._attribute);
 
-        JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);
+        Assert.assertNull(f.carAttributeEditFrame);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testEditTypeButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -162,9 +198,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testEditColorButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -177,9 +213,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testEditLengthButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -192,9 +228,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testEditOwnerButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -207,9 +243,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testEditGroupButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -222,13 +258,17 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testEditLoadButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
 
+        JemmyUtil.enterClickAndLeave(f.editLoadButton);
+        Assert.assertTrue(f.carLoadEditFrame.isShowing());
+        
+        // for test coverage
         JemmyUtil.enterClickAndLeave(f.editLoadButton);
         Assert.assertTrue(f.carLoadEditFrame.isShowing());
 
@@ -236,9 +276,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testLocationComboBox() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -326,9 +366,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddCar() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // increase test coverage
         Setup.setValueEnabled(true);
@@ -372,7 +412,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("car color", "Black", c6.getColor());
         Assert.assertEquals("car load", "L", c6.getLoadName());
         Assert.assertEquals("car built", "1999", c6.getBuilt());
-        Assert.assertEquals("car owner", "DAB", c6.getOwner());
+        Assert.assertEquals("car owner", "DAB", c6.getOwnerName());
         Assert.assertEquals("car comment", "test car comment field", c6.getComment());
 
         // test type default check boxes
@@ -444,9 +484,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testSaveCar() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -457,6 +497,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         Car car = cManager.getByRoadAndNumber("CP", "888");
         // confirm car id
         Assert.assertEquals("car id", "CP888", car.getId());
+        // improve test coverage
+        car.setKernel(new Kernel("One car"));
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -464,6 +506,8 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         Assert.assertEquals("car road", "CP", f.roadComboBox.getSelectedItem());
         Assert.assertEquals("car number", "888", f.roadNumberTextField.getText());
+        // cars in a kernel have blocking numbers
+        Assert.assertTrue(f.pBlocking.isVisible());
 
         // change road number for this car
         f.roadNumberTextField.setText("54321");
@@ -487,11 +531,11 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("window closed", f.isVisible());
     }
 
-    @Test
     // @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
     // please detail failure so test can be fixed
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
     public void testSaveExistingCar() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -515,11 +559,11 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    @Test
     // @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
     // please detail failure so test can be fixed
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
     public void testSaveCarPassenger() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -595,11 +639,11 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    @Test
     // @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
     // please detail failure so test can be fixed
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
     public void testSaveCarCaboose() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -648,9 +692,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testSaveCarFred() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -674,11 +718,11 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    @Test
     // @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
     // please detail failure so test can be fixed
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
     public void testSaveCarUtility() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -727,11 +771,11 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    @Test
     // @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
     // please detail failure so test can be fixed
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
     public void testSaveCarHazardous() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -780,9 +824,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testSaveKernel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -856,9 +900,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testCarEditFrameRead() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
@@ -898,9 +942,9 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddNewCarRoadNo() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
@@ -909,25 +953,28 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
-
-        // should cause add road dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("addRoad"), Bundle.getMessage("ButtonNo"));
         });
-        load.start();
+        t1.setName("click testAddNewCarRoadNo Thread");
+        t1.start();
 
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addRoad"), Bundle.getMessage("ButtonNo"));
-        JemmyUtil.waitFor(f);
+        ThreadingUtil.runOnGUI( ()->{
+                f.load(c1);
+        });
+
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click No Button in dialogue didn't happen");
+
         Assert.assertFalse(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
         JUnitUtil.dispose(f);
     }
     
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddNewCarRoadYes() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
@@ -937,24 +984,28 @@ public class CarEditFrameTest extends OperationsTestCase {
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
 
-        // should cause add road dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("addRoad"), Bundle.getMessage("ButtonYes"));
         });
-        load.start();
+        t1.setName("click testAddNewCarRoadYes Thread");
+        t1.start();
         
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addRoad"), Bundle.getMessage("ButtonYes"));
-        JemmyUtil.waitFor(f);
+        // should cause add road dialog to appear
+        ThreadingUtil.runOnGUI( ()->{
+                f.load(c1);
+        });
+
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click Yes Button in dialogue didn't happen");
+        
         Assert.assertTrue(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddNewCarTypeYes() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
@@ -963,26 +1014,29 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
+        
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("addType"), Bundle.getMessage("ButtonYes"));
+        });
+        t1.setName("click testAddNewCarTypeYes Thread");
+        t1.start();
 
         // should cause add type dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
+        ThreadingUtil.runOnGUI( ()->{
                 f.load(c1);
-            }
         });
-        load.setName("load edit frame"); // NOI18N
-        load.start();
 
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addType"), Bundle.getMessage("ButtonYes"));
-        JemmyUtil.waitFor(f);
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click Yes Button in dialogue didn't happen");
+        
         Assert.assertTrue(InstanceManager.getDefault(CarTypes.class).containsName("TEST_TYPE"));
         JUnitUtil.dispose(f);
     }
     
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddNewCarTypeNo() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
@@ -992,24 +1046,28 @@ public class CarEditFrameTest extends OperationsTestCase {
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
 
-        // should cause add type dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("addType"), Bundle.getMessage("ButtonNo"));
         });
-        load.start();
+        t1.setName("click testAddNewCarTypeNo Thread");
+        t1.start();
+        
+        // should cause add type dialog to appear
+        ThreadingUtil.runOnGUI( ()->{
+                f.load(c1);
+        });
 
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addType"), Bundle.getMessage("ButtonNo"));
-        JemmyUtil.waitFor(f);
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click No Button in dialogue didn't happen");
+        
         Assert.assertFalse(InstanceManager.getDefault(CarTypes.class).containsName("TEST_TYPE"));
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddNewCarLengthNo() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
@@ -1019,24 +1077,28 @@ public class CarEditFrameTest extends OperationsTestCase {
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
 
-        // should cause add length dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("addLength"), Bundle.getMessage("ButtonNo"));
         });
-        load.start();
+        t1.setName("click testAddNewCarLengthNo Thread");
+        t1.start();
 
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addLength"), Bundle.getMessage("ButtonNo"));        
-        JemmyUtil.waitFor(f);
+        // should cause add length dialog to appear
+        ThreadingUtil.runOnGUI( ()->{
+                f.load(c1);
+        });
+
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click No Button in dialogue didn't happen");
+        
         Assert.assertFalse(InstanceManager.getDefault(CarLengths.class).containsName("123"));
         JUnitUtil.dispose(f);
     }
     
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddNewCarLengthYes() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
@@ -1046,80 +1108,88 @@ public class CarEditFrameTest extends OperationsTestCase {
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
 
-        // should cause add length dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("addLength"), Bundle.getMessage("ButtonYes"));
         });
-        load.start();
+        t1.setName("click testAddNewCarLengthYes Thread");
+        t1.start();
 
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addLength"), Bundle.getMessage("ButtonYes"));
-        JemmyUtil.waitFor(f);
+        // should cause add length dialog to appear
+        ThreadingUtil.runOnGUI( ()->{
+            f.load(c1);
+        });
+
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click Yes Button in dialogue didn't happen");
+        
         Assert.assertTrue(InstanceManager.getDefault(CarLengths.class).containsName("123"));
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddNewCarOwnerNo() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
         Car c1 = cManager.getByRoadAndNumber("CP", "777");
-        c1.setOwner("TEST_OWNER");
+        c1.setOwnerName("TEST_OWNER");
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
-
-        // should cause add owner dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("addOwner"), Bundle.getMessage("ButtonNo"));
         });
-        load.setName("load edit frame"); // NOI18N
-        load.start();
+        t1.setName("click testAddNewCarOwnerNo Thread");
+        t1.start();
 
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addOwner"), Bundle.getMessage("ButtonNo"));
-        JemmyUtil.waitFor(f);
+        ThreadingUtil.runOnGUI( ()->{
+            f.load(c1);
+        });
+
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click No Button in dialogue didn't happen");
+
         Assert.assertFalse(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
         JUnitUtil.dispose(f);
     }
     
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddNewCarOwnerYes() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
         Car c1 = cManager.getByRoadAndNumber("CP", "777");
-        c1.setOwner("TEST_OWNER");
+        c1.setOwnerName("TEST_OWNER");
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
-
-        // should cause add owner dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("addOwner"), Bundle.getMessage("ButtonYes"));
         });
-        load.setName("load edit frame"); // NOI18N
-        load.start();
+        t1.setName("click testAddNewCarRoadNo Thread");
+        t1.start();
 
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addOwner"), Bundle.getMessage("ButtonYes"));
-        JemmyUtil.waitFor(f);
+        ThreadingUtil.runOnGUI( ()->{
+                f.load(c1);
+        });
+
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click No Button in dialogue didn't happen");
+        
         Assert.assertTrue(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddNewCarColorNo() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
@@ -1128,26 +1198,29 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
+        
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("carAddColor"), Bundle.getMessage("ButtonNo"));
+        });
+        t1.setName("click testAddNewCarColorNo Thread");
+        t1.start();
 
         // should cause add color dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
+        ThreadingUtil.runOnGUI( ()->{
                 f.load(c1);
-            }
         });
-        load.setName("load edit frame"); // NOI18N
-        load.start();
 
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("carAddColor"), Bundle.getMessage("ButtonNo"));
-        JemmyUtil.waitFor(f);
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click No Button in dialogue didn't happen");
+        
         Assert.assertFalse(InstanceManager.getDefault(CarColors.class).containsName("TEST_COLOR"));
         JUnitUtil.dispose(f);
     }
     
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddNewCarColorYes() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
@@ -1156,26 +1229,29 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
+        
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("carAddColor"), Bundle.getMessage("ButtonYes"));
+        });
+        t1.setName("click testAddNewCarColorYes Thread");
+        t1.start();
 
         // should cause add color dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
+        ThreadingUtil.runOnGUI( ()->{
                 f.load(c1);
-            }
         });
-        load.setName("load edit frame"); // NOI18N
-        load.start();
 
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("carAddColor"), Bundle.getMessage("ButtonYes"));
-        JemmyUtil.waitFor(f);
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click Yes Button in dialogue didn't happen");
+        
         Assert.assertTrue(InstanceManager.getDefault(CarColors.class).containsName("TEST_COLOR"));
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddNewCarLoadNo() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
@@ -1185,25 +1261,28 @@ public class CarEditFrameTest extends OperationsTestCase {
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
 
-        // should cause add load dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("addLoad"), Bundle.getMessage("ButtonNo"));
         });
-        load.setName("load edit frame"); // NOI18N
-        load.start();
+        t1.setName("click testAddNewCarLoadNo Thread");
+        t1.start();
+        
+        // should cause add load dialog to appear
+        ThreadingUtil.runOnGUI( ()->{
+                f.load(c1);
+        });
 
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addLoad"), Bundle.getMessage("ButtonNo"));
-        JemmyUtil.waitFor(f);
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click No Button in dialogue didn't happen");
+
         Assert.assertFalse(InstanceManager.getDefault(CarLoads.class).containsName(c1.getTypeName(), "TEST_LOAD"));
         JUnitUtil.dispose(f);
     }
     
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddNewCarLoadYes() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
@@ -1213,18 +1292,21 @@ public class CarEditFrameTest extends OperationsTestCase {
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
 
-        // should cause add load dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread t1 = new Thread(() -> {
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("addLoad"), Bundle.getMessage("ButtonYes"));
         });
-        load.setName("load edit frame"); // NOI18N
-        load.start();
+        t1.setName("click testAddNewCarLoadYes Thread");
+        t1.start();
+        
+        // should cause add load dialog to appear
+        ThreadingUtil.runOnGUI( ()->{
+                f.load(c1);
+        });
 
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("addLoad"), Bundle.getMessage("ButtonYes"));
-        JemmyUtil.waitFor(f);
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click Yes Button in dialogue didn't happen");
+
         Assert.assertTrue(InstanceManager.getDefault(CarLoads.class).containsName(c1.getTypeName(), "TEST_LOAD"));
         JUnitUtil.dispose(f);
     }

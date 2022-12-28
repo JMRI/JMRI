@@ -39,7 +39,6 @@ public class FirstTimeStartUpWizardAction extends jmri.util.swing.JmriAbstractAc
     }
 
     public void actionPerformed() {
-        // create the JTable model, with changes for specific NamedBean
         // create the frame
         if (f == null) {
             f = new jmri.util.JmriJFrame("DecoderPro Wizard", false, false);

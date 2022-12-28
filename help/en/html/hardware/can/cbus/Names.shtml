@@ -3,7 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <meta name="keywords" content="JMRI help CBUS naming long short events event add sensor hex">
-  <title>JMRI Hardware Support - CBUS® - Events</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Hardware Support - CBUS&reg; - Events</title><!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -948,7 +948,7 @@
         Developers Guide</p>
       </div>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

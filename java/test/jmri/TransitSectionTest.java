@@ -15,7 +15,7 @@ import org.junit.Assert;
 public class TransitSectionTest {
 
    @Test
-   public void SysNameConstructorTest(){
+   public void testSysNameConstructor(){
       Assert.assertNotNull("Delayed", new TransitSection("TS1",0,0,false));
    }
 

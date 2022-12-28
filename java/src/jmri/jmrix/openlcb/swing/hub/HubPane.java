@@ -13,8 +13,6 @@ import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
 import jmri.jmrix.can.swing.CanPanelInterface;
 import org.openlcb.hub.Hub;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying,and more importantly starting, an OpenLCB TCP/IP hub
@@ -44,6 +42,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
 
     @Override
     public void initContext(Object context) {
+        log.trace("initContext");
         if (context instanceof CanSystemConnectionMemo) {
             initComponents((CanSystemConnectionMemo) context);
         }
@@ -51,6 +50,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
+        log.trace("initComponents");
         this.memo = memo;
 
         // This hears OpenLCB traffic at packet level from traffic controller
@@ -62,7 +62,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         try {
             add(new JLabel("Hub IP address " + InetAddress.getLocalHost().getHostAddress() + ":" + hub.getPort()));
         } catch (UnknownHostException e) {
-            log.error(e.getLocalizedMessage(), e);
+            log.error("Unknown Host", e);
         }
         add(label);
 
@@ -79,30 +79,36 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         // add forwarder for internal JMRI traffic
         hub.addForwarder(m -> {
             if (m.source == null) {
+                log.trace("not forwarding {} back to JMRI due to null source", m.line);
                 return;  // was from this
-            }                // process and forward m.line
+            }
+            // process and forward m.line
             GridConnectReply msg = new GridConnectReply();
             byte[] bytes;
             bytes = m.line.getBytes(StandardCharsets.US_ASCII);  // GC adapters use ASCII // NOI18N
             for (int i = 0; i < m.line.length(); i++) {
                 msg.setElement(i, bytes[i]);
             }
-            workingReply = msg.createReply();
+
+            CanReply workingReply = msg.createReply();
+            workingReplySet.add(workingReply);  // save for later recognition
 
             CanMessage result = new CanMessage(workingReply.getNumDataElements(), workingReply.getHeader());
             for (int i = 0; i < workingReply.getNumDataElements(); i++) {
                 result.setElement(i, workingReply.getElement(i));
             }
             result.setExtended(workingReply.isExtended());
+            workingMessageSet.add(result);
+            log.trace("Hub forwarder create reply {}", workingReply);
 
             // Send over outbound link
-            memo.getTrafficController().sendCanMessage(result, HubPane.this);
+            memo.getTrafficController().sendCanMessage(result, null); // HubPane.this
             // And send into JMRI
             memo.getTrafficController().distributeOneReply(workingReply, HubPane.this);
         });
 
         t.start();
-
+        log.debug("hub thread started");
         advertise(port);
     }
 
@@ -115,7 +121,8 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
 
-    CanReply workingReply;
+    java.util.ArrayList<CanReply> workingReplySet = new java.util.ArrayList<>(); // collection of self-sent replies
+    java.util.ArrayList<CanMessage> workingMessageSet = new java.util.ArrayList<>(); // collection of self-sent messages
 
     void advertise(int port) {
         jmri.util.zeroconf.ZeroConfService.create("_openlcb-can._tcp.local.", port).publish();
@@ -123,32 +130,47 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
 
     @Override
     public String getTitle() {
-        return "OpenLCB Hub Control";
+        if (memo != null) {
+            return (memo.getUserName() + " Hub Control");
+        }
+        return "LCC / OpenLCB Hub Control";
     }
 
     @Override
     public void dispose() {
-        memo.getTrafficController().removeCanListener(this);
+       memo.getTrafficController().removeCanListener(this);
     }
 
+    // connection from this JMRI instance - messages received here
     @Override
     public synchronized void message(CanMessage l) {  // receive a message and log it
-        GridConnectMessage gm = new GridConnectMessage(l);
-        if (log.isDebugEnabled()) {
-            log.debug("message {}",gm);
+        if ( workingMessageSet.contains(l)) {
+            // ours, don't send
+            workingMessageSet.remove(l);
+            log.debug("suppress forward of message {} from JMRI; WMS={} items", l, workingMessageSet.size());
+            return;
         }
+
+        GridConnectMessage gm = new GridConnectMessage(l);
+        log.debug("forward message {}",gm);
         hub.putLine(gm.toString());
     }
 
+    // connection from this JMRI instance - replies received here
     @Override
     public synchronized void reply(CanReply reply) {
-        if (reply != workingReply) {
+        if ( workingReplySet.contains(reply)) {
+            // ours, don't send
+            workingReplySet.remove(reply);
+            log.trace("suppress forward of reply {} from JMRI; WRS={} items", reply, workingReplySet.size());
+        } else {
+            // not ours, forward
             GridConnectMessage gm = new GridConnectMessage(new CanMessage(reply));
-            log.debug("reply {}", gm.toString());
+            log.debug("forward reply {} from JMRI, WRS={} items", gm, workingReplySet.size());
             hub.putLine(gm.toString());
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(HubPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HubPane.class);
 
 }

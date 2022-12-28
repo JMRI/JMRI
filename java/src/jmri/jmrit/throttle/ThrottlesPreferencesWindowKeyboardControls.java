@@ -48,10 +48,12 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
     
     // moving through internal windows
     private int[][] nextThrottleInternalWindowKeys = { 
-        {0,KeyEvent.VK_K}            
+        {0,KeyEvent.VK_K},
+        {0,KeyEvent.VK_TAB}
     };
     private int[][] prevThrottleInternalWindowKeys = { 
-        {0,KeyEvent.VK_L}          
+        {0,KeyEvent.VK_L},
+        {KeyEvent.SHIFT_DOWN_MASK, KeyEvent.VK_TAB}          
     };
     
     // select internal window
@@ -629,7 +631,7 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
             }
             moreSpeedMultiplier = Float.parseFloat(e.getAttributeValue("moreSpeedMultiplier"));
         } catch (NumberFormatException exc) {
-            log.error("Error while restoring thottle controls from xml : "+exc.getMessage());
+            log.error("Error while restoring thottle controls from xml : {}", exc.getMessage());
         }
         
     }

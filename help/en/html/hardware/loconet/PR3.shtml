@@ -23,7 +23,7 @@
       <h1>Introduction</h1>
       The Digitrax PR3 (Xtra) can be used as a standalone decoder programmer with its own dedicated
       programming track (much like the Digitrax PR2), or as an interface between your computer and
-      a LocoNet®, much like an MS100. It can only do one or the other of these at a given time. You
+      a LocoNet&reg;, much like an MS100. It can only do one or the other of these at a given time. You
       select the PR3 operating mode in the JMRI preferences when setting up s "connection" in the
       JMRI "preferences".
       <p>Digitrax has released a product called the "PR3 Xtra". This is simply a PR3 device plus a
@@ -203,7 +203,7 @@
       applied by the user.</p>
 
       <p>The appropriate update files and instructions are available from the "Download" page on
-      the <a href="http://www.digitrax.com">Digitrax</a> web site. Digitrax provides an application
+      the <a href="http://www.digitrax.com">Digitrax</a> website. Digitrax provides an application
       to apply the firmware update; the software package runs under Microsoft Operating Systems,
       and this is the <strong>strongly recommended</strong> way to apply the PR3 firmware
       update.</p>
@@ -214,7 +214,7 @@
       update process. If the failure happens during the PR3 firmware update process, it is possible
       that the PR3 might require factory repair.</p>
 
-      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
