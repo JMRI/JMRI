@@ -21,15 +21,15 @@ if (sm == None) : raise AssertionError('No instance manager access')
 # use that manager to affect JMRI
 IS1 = sm.provideSensor("IS1")
 
+# load the shortcuts
+exec( open("jython/jmri_bindings.py3").read() )
+
+# check NamedBean (Sensor) state manipulation
 if (sm.getSensor("IS1") == None) : raise AssertionError('Sensor not created')
 IS1.setKnownState(ACTIVE)
 if (sm.getSensor("IS1").getKnownState() != ACTIVE) : raise AssertionError('Sensor state not ACTIVE')
 IS1.setKnownState(INACTIVE)
 if (sm.getSensor("IS1").getKnownState() != INACTIVE) : raise AssertionError('Sensor state not INACTIVE')
-
-
-# load the shortcuts
-exec( open("jython/jmri_bindings.py3").read() )
 
 # check against direct syntax
 if (sm != sensors) : raise AssertionError('Not same SensorManager')
@@ -54,7 +54,6 @@ class Automat(AbstractAutomaton) :
 a = Automat()
 print ("core running on", java.lang.Thread.currentThread())
 a.start()
-print(a.value)
 
 # check for a listener being OK
 IS1.setKnownState(UNKNOWN)
