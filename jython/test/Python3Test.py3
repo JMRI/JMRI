@@ -81,8 +81,8 @@ IS1.setKnownState(INACTIVE)
 # call back should have been immediate
 if (not listenerCheck) : raise AssertionError('listenerCheck not set True')
 
-# local variables can't be accessed
-#! print ("local localResult:", m.localResult)
+# local variables require .this. syntax
+print ("local localResult:", m.this.localResult)
 
 
 print ("Python3Test main execution complete")

@@ -12,17 +12,13 @@ Some super-class methods need to be called via e.g.
 ```
 But others don’t, and it’s not clear why.
 
-You can't reference local variables defined within objects:
+Referencing Python local variables in a Java-based object requires .this. syntax:
 ```
     m = MyListener()
-    # invoked the listener
-    m.internalVariable
-```
-gives
-```
-     [java] javax.script.ScriptException: org.graalvm.polyglot.PolyglotException: AttributeError: foreign object has no attribute 'value'
-     [java] 	at jmri.script.jsr223graalpython.GraalJSScriptEngine.toScriptException(GraalJSScriptEngine.java:512)
-     [java] 	at jmri.script.jsr223graalpython.GraalJSScriptEngine.eval(GraalJSScriptEngine.java:489)
+    #
+    # invoked the listener, which sets 'internalVariable'
+    #
+    m.this.internalVariable
 ```
 
 We can't yet put JMRI symbols into the Python context, so you have to run
