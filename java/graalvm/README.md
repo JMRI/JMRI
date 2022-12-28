@@ -1,4 +1,4 @@
-We can't know require everybody to install a GraalVM JDK, so we have a workaround:
+We can't now require everybody to install a GraalVM JDK, so we have a workaround:
 
  - This `java/graalvm` directory contains GraalVM-specific code that requires a GraalVM JDK to build.
  - The code lives in the `jmri.script.jsr223graalpython` package
