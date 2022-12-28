@@ -1,0 +1,2790 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2022-11-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<!-- Bank 3 variables -->
+	<!--CVs 257.17, 296.17-->
+	<variable item="Bank_17_CV257" CV="257.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 257</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 257</label>
+	</variable>
+	<!-- Bits 257 -->
+	<variable item="CV257.0" CV="257.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 257.0</label>
+	</variable>
+	<variable item="CV257.1" CV="257.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 257.1</label>
+	</variable>
+	<variable item="CV257.2" CV="257.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 257.2</label>
+	</variable>
+	<variable item="CV257.3" CV="257.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 257.3</label>
+	</variable>
+	<variable item="CV257.4" CV="257.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 257.4</label>
+	</variable>
+	<variable item="CV257.5" CV="257.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 257.5</label>
+	</variable>
+	<variable item="CV257.6" CV="257.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 257.6</label>
+	</variable>
+	<variable item="CV257.7" CV="257.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 257.7</label>
+	</variable>
+	<variable item="Bank_17_CV258" CV="258.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 258</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 258</label>
+	</variable>
+	<!-- Bits 258 -->
+	<variable item="CV258.0" CV="258.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 258.0</label>
+	</variable>
+	<variable item="CV258.1" CV="258.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 258.1</label>
+	</variable>
+	<variable item="CV258.2" CV="258.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 258.2</label>
+	</variable>
+	<variable item="CV258.3" CV="258.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 258.3</label>
+	</variable>
+	<variable item="CV258.4" CV="258.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 258.4</label>
+	</variable>
+	<variable item="CV258.5" CV="258.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 258.5</label>
+	</variable>
+	<variable item="CV258.6" CV="258.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 258.6</label>
+	</variable>
+	<variable item="CV258.7" CV="258.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 258.7</label>
+	</variable>
+	<variable item="Bank_17_CV259" CV="259.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 259</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 259</label>
+	</variable>
+	<!-- Bits 259 -->
+	<variable item="CV259.0" CV="259.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 259.0</label>
+	</variable>
+	<variable item="CV259.1" CV="259.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 259.1</label>
+	</variable>
+	<variable item="CV259.2" CV="259.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 259.2</label>
+	</variable>
+	<variable item="CV259.3" CV="259.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 259.3</label>
+	</variable>
+	<variable item="CV259.4" CV="259.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 259.4</label>
+	</variable>
+	<variable item="CV259.5" CV="259.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 259.5</label>
+	</variable>
+	<variable item="CV259.6" CV="259.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 259.6</label>
+	</variable>
+	<variable item="CV259.7" CV="259.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 259.7</label>
+	</variable>
+	<variable item="Bank_17_CV260" CV="260.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 260</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 260</label>
+	</variable>
+	<!-- Bits 260 -->
+	<variable item="CV260.0" CV="260.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 260.0</label>
+	</variable>
+	<variable item="CV260.1" CV="260.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 260.1</label>
+	</variable>
+	<variable item="CV260.2" CV="260.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 260.2</label>
+	</variable>
+	<variable item="CV260.3" CV="260.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 260.3</label>
+	</variable>
+	<variable item="CV260.4" CV="260.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 260.4</label>
+	</variable>
+	<variable item="CV260.5" CV="260.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 260.5</label>
+	</variable>
+	<variable item="CV260.6" CV="260.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 260.6</label>
+	</variable>
+	<variable item="CV260.7" CV="260.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 260.7</label>
+	</variable>
+	<variable item="Bank_17_CV261" CV="261.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 261</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 261</label>
+	</variable>
+	<!-- Bits 261 -->
+	<variable item="CV261.0" CV="261.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 261.0</label>
+	</variable>
+	<variable item="CV261.1" CV="261.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 261.1</label>
+	</variable>
+	<variable item="CV261.2" CV="261.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 261.2</label>
+	</variable>
+	<variable item="CV261.3" CV="261.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 261.3</label>
+	</variable>
+	<variable item="CV261.4" CV="261.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 261.4</label>
+	</variable>
+	<variable item="CV261.5" CV="261.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 261.5</label>
+	</variable>
+	<variable item="CV261.6" CV="261.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 261.6</label>
+	</variable>
+	<variable item="CV261.7" CV="261.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 261.7</label>
+	</variable>
+	<variable item="Bank_17_CV262" CV="262.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 262</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 262</label>
+	</variable>
+	<!-- Bits 262 -->
+	<variable item="CV262.0" CV="262.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 262.0</label>
+	</variable>
+	<variable item="CV262.1" CV="262.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 262.1</label>
+	</variable>
+	<variable item="CV262.2" CV="262.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 262.2</label>
+	</variable>
+	<variable item="CV262.3" CV="262.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 262.3</label>
+	</variable>
+	<variable item="CV262.4" CV="262.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 262.4</label>
+	</variable>
+	<variable item="CV262.5" CV="262.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 262.5</label>
+	</variable>
+	<variable item="CV262.6" CV="262.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 262.6</label>
+	</variable>
+	<variable item="CV262.7" CV="262.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 262.7</label>
+	</variable>
+	<variable item="Bank_17_CV263" CV="263.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 263</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 263</label>
+	</variable>
+	<!-- Bits 263 -->
+	<variable item="CV263.0" CV="263.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 263.0</label>
+	</variable>
+	<variable item="CV263.1" CV="263.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 263.1</label>
+	</variable>
+	<variable item="CV263.2" CV="263.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 263.2</label>
+	</variable>
+	<variable item="CV263.3" CV="263.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 263.3</label>
+	</variable>
+	<variable item="CV263.4" CV="263.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 263.4</label>
+	</variable>
+	<variable item="CV263.5" CV="263.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 263.5</label>
+	</variable>
+	<variable item="CV263.6" CV="263.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 263.6</label>
+	</variable>
+	<variable item="CV263.7" CV="263.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 263.7</label>
+	</variable>
+	<variable item="Bank_17_CV264" CV="264.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 264</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 264</label>
+	</variable>
+	<!-- Bits 264 -->
+	<variable item="CV264.0" CV="264.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 264.0</label>
+	</variable>
+	<variable item="CV264.1" CV="264.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 264.1</label>
+	</variable>
+	<variable item="CV264.2" CV="264.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 264.2</label>
+	</variable>
+	<variable item="CV264.3" CV="264.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 264.3</label>
+	</variable>
+	<variable item="CV264.4" CV="264.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 264.4</label>
+	</variable>
+	<variable item="CV264.5" CV="264.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 264.5</label>
+	</variable>
+	<variable item="CV264.6" CV="264.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 264.6</label>
+	</variable>
+	<variable item="CV264.7" CV="264.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 264.7</label>
+	</variable>
+	<variable item="Bank_17_CV265" CV="265.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 265</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 265</label>
+	</variable>
+	<!-- Bits 265 -->
+	<variable item="CV265.0" CV="265.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 265.0</label>
+	</variable>
+	<variable item="CV265.1" CV="265.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 265.1</label>
+	</variable>
+	<variable item="CV265.2" CV="265.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 265.2</label>
+	</variable>
+	<variable item="CV265.3" CV="265.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 265.3</label>
+	</variable>
+	<variable item="CV265.4" CV="265.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 265.4</label>
+	</variable>
+	<variable item="CV265.5" CV="265.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 265.5</label>
+	</variable>
+	<variable item="CV265.6" CV="265.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 265.6</label>
+	</variable>
+	<variable item="CV265.7" CV="265.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 265.7</label>
+	</variable>
+	<variable item="Bank_17_CV266" CV="266.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 266</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 266</label>
+	</variable>
+	<!-- Bits 266 -->
+	<variable item="CV266.0" CV="266.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 266.0</label>
+	</variable>
+	<variable item="CV266.1" CV="266.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 266.1</label>
+	</variable>
+	<variable item="CV266.2" CV="266.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 266.2</label>
+	</variable>
+	<variable item="CV266.3" CV="266.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 266.3</label>
+	</variable>
+	<variable item="CV266.4" CV="266.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 266.4</label>
+	</variable>
+	<variable item="CV266.5" CV="266.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 266.5</label>
+	</variable>
+	<variable item="CV266.6" CV="266.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 266.6</label>
+	</variable>
+	<variable item="CV266.7" CV="266.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 266.7</label>
+	</variable>
+	<variable item="Bank_17_CV267" CV="267.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 267</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 267</label>
+	</variable>
+	<!-- Bits 267 -->
+	<variable item="CV267.0" CV="267.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 267.0</label>
+	</variable>
+	<variable item="CV267.1" CV="267.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 267.1</label>
+	</variable>
+	<variable item="CV267.2" CV="267.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 267.2</label>
+	</variable>
+	<variable item="CV267.3" CV="267.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 267.3</label>
+	</variable>
+	<variable item="CV267.4" CV="267.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 267.4</label>
+	</variable>
+	<variable item="CV267.5" CV="267.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 267.5</label>
+	</variable>
+	<variable item="CV267.6" CV="267.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 267.6</label>
+	</variable>
+	<variable item="CV267.7" CV="267.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 267.7</label>
+	</variable>
+	<variable item="Bank_17_CV268" CV="268.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 268</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 268</label>
+	</variable>
+	<!-- Bits 268 -->
+	<variable item="CV268.0" CV="268.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 268.0</label>
+	</variable>
+	<variable item="CV268.1" CV="268.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 268.1</label>
+	</variable>
+	<variable item="CV268.2" CV="268.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 268.2</label>
+	</variable>
+	<variable item="CV268.3" CV="268.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 268.3</label>
+	</variable>
+	<variable item="CV268.4" CV="268.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 268.4</label>
+	</variable>
+	<variable item="CV268.5" CV="268.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 268.5</label>
+	</variable>
+	<variable item="CV268.6" CV="268.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 268.6</label>
+	</variable>
+	<variable item="CV268.7" CV="268.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 268.7</label>
+	</variable>
+	<variable item="Bank_17_CV269" CV="269.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 269</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 269</label>
+	</variable>
+	<!-- Bits 269 -->
+	<variable item="CV269.0" CV="269.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 269.0</label>
+	</variable>
+	<variable item="CV269.1" CV="269.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 269.1</label>
+	</variable>
+	<variable item="CV269.2" CV="269.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 269.2</label>
+	</variable>
+	<variable item="CV269.3" CV="269.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 269.3</label>
+	</variable>
+	<variable item="CV269.4" CV="269.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 269.4</label>
+	</variable>
+	<variable item="CV269.5" CV="269.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 269.5</label>
+	</variable>
+	<variable item="CV269.6" CV="269.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 269.6</label>
+	</variable>
+	<variable item="CV269.7" CV="269.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 269.7</label>
+	</variable>
+	<variable item="Bank_17_CV270" CV="270.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 270</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 270</label>
+	</variable>
+	<!-- Bits 270 -->
+	<variable item="CV270.0" CV="270.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 270.0</label>
+	</variable>
+	<variable item="CV270.1" CV="270.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 270.1</label>
+	</variable>
+	<variable item="CV270.2" CV="270.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 270.2</label>
+	</variable>
+	<variable item="CV270.3" CV="270.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 270.3</label>
+	</variable>
+	<variable item="CV270.4" CV="270.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 270.4</label>
+	</variable>
+	<variable item="CV270.5" CV="270.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 270.5</label>
+	</variable>
+	<variable item="CV270.6" CV="270.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 270.6</label>
+	</variable>
+	<variable item="CV270.7" CV="270.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 270.7</label>
+	</variable>
+	<variable item="Bank_17_CV271" CV="271.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 271</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 271</label>
+	</variable>
+	<!-- Bits 271 -->
+	<variable item="CV271.0" CV="271.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 271.0</label>
+	</variable>
+	<variable item="CV271.1" CV="271.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 271.1</label>
+	</variable>
+	<variable item="CV271.2" CV="271.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 271.2</label>
+	</variable>
+	<variable item="CV271.3" CV="271.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 271.3</label>
+	</variable>
+	<variable item="CV271.4" CV="271.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 271.4</label>
+	</variable>
+	<variable item="CV271.5" CV="271.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 271.5</label>
+	</variable>
+	<variable item="CV271.6" CV="271.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 271.6</label>
+	</variable>
+	<variable item="CV271.7" CV="271.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 271.7</label>
+	</variable>
+	<variable item="Bank_17_CV272" CV="272.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 272</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 272</label>
+	</variable>
+	<!-- Bits 272 -->
+	<variable item="CV272.0" CV="272.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 272.0</label>
+	</variable>
+	<variable item="CV272.1" CV="272.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 272.1</label>
+	</variable>
+	<variable item="CV272.2" CV="272.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 272.2</label>
+	</variable>
+	<variable item="CV272.3" CV="272.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 272.3</label>
+	</variable>
+	<variable item="CV272.4" CV="272.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 272.4</label>
+	</variable>
+	<variable item="CV272.5" CV="272.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 272.5</label>
+	</variable>
+	<variable item="CV272.6" CV="272.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 272.6</label>
+	</variable>
+	<variable item="CV272.7" CV="272.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 272.7</label>
+	</variable>
+	<variable item="Bank_17_CV273" CV="273.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 273</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 273</label>
+	</variable>
+	<!-- Bits 273 -->
+	<variable item="CV273.0" CV="273.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 273.0</label>
+	</variable>
+	<variable item="CV273.1" CV="273.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 273.1</label>
+	</variable>
+	<variable item="CV273.2" CV="273.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 273.2</label>
+	</variable>
+	<variable item="CV273.3" CV="273.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 273.3</label>
+	</variable>
+	<variable item="CV273.4" CV="273.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 273.4</label>
+	</variable>
+	<variable item="CV273.5" CV="273.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 273.5</label>
+	</variable>
+	<variable item="CV273.6" CV="273.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 273.6</label>
+	</variable>
+	<variable item="CV273.7" CV="273.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 273.7</label>
+	</variable>
+	<variable item="Bank_17_CV274" CV="274.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 274</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 274</label>
+	</variable>
+	<!-- Bits 274 -->
+	<variable item="CV274.0" CV="274.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 274.0</label>
+	</variable>
+	<variable item="CV274.1" CV="274.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 274.1</label>
+	</variable>
+	<variable item="CV274.2" CV="274.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 274.2</label>
+	</variable>
+	<variable item="CV274.3" CV="274.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 274.3</label>
+	</variable>
+	<variable item="CV274.4" CV="274.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 274.4</label>
+	</variable>
+	<variable item="CV274.5" CV="274.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 274.5</label>
+	</variable>
+	<variable item="CV274.6" CV="274.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 274.6</label>
+	</variable>
+	<variable item="CV274.7" CV="274.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 274.7</label>
+	</variable>
+	<variable item="Bank_17_CV275" CV="275.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 275</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 275</label>
+	</variable>
+	<!-- Bits 275 -->
+	<variable item="CV275.0" CV="275.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 275.0</label>
+	</variable>
+	<variable item="CV275.1" CV="275.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 275.1</label>
+	</variable>
+	<variable item="CV275.2" CV="275.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 275.2</label>
+	</variable>
+	<variable item="CV275.3" CV="275.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 275.3</label>
+	</variable>
+	<variable item="CV275.4" CV="275.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 275.4</label>
+	</variable>
+	<variable item="CV275.5" CV="275.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 275.5</label>
+	</variable>
+	<variable item="CV275.6" CV="275.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 275.6</label>
+	</variable>
+	<variable item="CV275.7" CV="275.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 275.7</label>
+	</variable>
+	<variable item="Bank_17_CV276" CV="276.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 276</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 276</label>
+	</variable>
+	<!-- Bits 276 -->
+	<variable item="CV276.0" CV="276.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 276.0</label>
+	</variable>
+	<variable item="CV276.1" CV="276.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 276.1</label>
+	</variable>
+	<variable item="CV276.2" CV="276.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 276.2</label>
+	</variable>
+	<variable item="CV276.3" CV="276.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 276.3</label>
+	</variable>
+	<variable item="CV276.4" CV="276.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 276.4</label>
+	</variable>
+	<variable item="CV276.5" CV="276.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 276.5</label>
+	</variable>
+	<variable item="CV276.6" CV="276.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 276.6</label>
+	</variable>
+	<variable item="CV276.7" CV="276.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 276.7</label>
+	</variable>
+	<variable item="Bank_17_CV277" CV="277.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 277</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 277</label>
+	</variable>
+	<!-- Bits 277 -->
+	<variable item="CV277.0" CV="277.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 277.0</label>
+	</variable>
+	<variable item="CV277.1" CV="277.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 277.1</label>
+	</variable>
+	<variable item="CV277.2" CV="277.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 277.2</label>
+	</variable>
+	<variable item="CV277.3" CV="277.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 277.3</label>
+	</variable>
+	<variable item="CV277.4" CV="277.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 277.4</label>
+	</variable>
+	<variable item="CV277.5" CV="277.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 277.5</label>
+	</variable>
+	<variable item="CV277.6" CV="277.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 277.6</label>
+	</variable>
+	<variable item="CV277.7" CV="277.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 277.7</label>
+	</variable>
+	<variable item="Bank_17_CV278" CV="278.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 278</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 278</label>
+	</variable>
+	<!-- Bits 278 -->
+	<variable item="CV278.0" CV="278.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 278.0</label>
+	</variable>
+	<variable item="CV278.1" CV="278.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 278.1</label>
+	</variable>
+	<variable item="CV278.2" CV="278.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 278.2</label>
+	</variable>
+	<variable item="CV278.3" CV="278.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 278.3</label>
+	</variable>
+	<variable item="CV278.4" CV="278.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 278.4</label>
+	</variable>
+	<variable item="CV278.5" CV="278.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 278.5</label>
+	</variable>
+	<variable item="CV278.6" CV="278.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 278.6</label>
+	</variable>
+	<variable item="CV278.7" CV="278.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 278.7</label>
+	</variable>
+	<variable item="Bank_17_CV279" CV="279.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 279</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 279</label>
+	</variable>
+	<!-- Bits 279 -->
+	<variable item="CV279.0" CV="279.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 279.0</label>
+	</variable>
+	<variable item="CV279.1" CV="279.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 279.1</label>
+	</variable>
+	<variable item="CV279.2" CV="279.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 279.2</label>
+	</variable>
+	<variable item="CV279.3" CV="279.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 279.3</label>
+	</variable>
+	<variable item="CV279.4" CV="279.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 279.4</label>
+	</variable>
+	<variable item="CV279.5" CV="279.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 279.5</label>
+	</variable>
+	<variable item="CV279.6" CV="279.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 279.6</label>
+	</variable>
+	<variable item="CV279.7" CV="279.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 279.7</label>
+	</variable>
+	<variable item="Bank_17_CV280" CV="280.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 280</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 280</label>
+	</variable>
+	<!-- Bits 280 -->
+	<variable item="CV280.0" CV="280.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 280.0</label>
+	</variable>
+	<variable item="CV280.1" CV="280.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 280.1</label>
+	</variable>
+	<variable item="CV280.2" CV="280.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 280.2</label>
+	</variable>
+	<variable item="CV280.3" CV="280.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 280.3</label>
+	</variable>
+	<variable item="CV280.4" CV="280.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 280.4</label>
+	</variable>
+	<variable item="CV280.5" CV="280.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 280.5</label>
+	</variable>
+	<variable item="CV280.6" CV="280.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 280.6</label>
+	</variable>
+	<variable item="CV280.7" CV="280.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 280.7</label>
+	</variable>
+	<variable item="Bank_17_CV281" CV="281.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 281</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 281</label>
+	</variable>
+	<!-- Bits 281 -->
+	<variable item="CV281.0" CV="281.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 281.0</label>
+	</variable>
+	<variable item="CV281.1" CV="281.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 281.1</label>
+	</variable>
+	<variable item="CV281.2" CV="281.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 281.2</label>
+	</variable>
+	<variable item="CV281.3" CV="281.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 281.3</label>
+	</variable>
+	<variable item="CV281.4" CV="281.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 281.4</label>
+	</variable>
+	<variable item="CV281.5" CV="281.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 281.5</label>
+	</variable>
+	<variable item="CV281.6" CV="281.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 281.6</label>
+	</variable>
+	<variable item="CV281.7" CV="281.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 281.7</label>
+	</variable>
+	<variable item="Bank_17_CV282" CV="282.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 282</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 282</label>
+	</variable>
+	<!-- Bits 282 -->
+	<variable item="CV282.0" CV="282.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 282.0</label>
+	</variable>
+	<variable item="CV282.1" CV="282.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 282.1</label>
+	</variable>
+	<variable item="CV282.2" CV="282.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 282.2</label>
+	</variable>
+	<variable item="CV282.3" CV="282.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 282.3</label>
+	</variable>
+	<variable item="CV282.4" CV="282.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 282.4</label>
+	</variable>
+	<variable item="CV282.5" CV="282.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 282.5</label>
+	</variable>
+	<variable item="CV282.6" CV="282.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 282.6</label>
+	</variable>
+	<variable item="CV282.7" CV="282.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 282.7</label>
+	</variable>
+	<variable item="Bank_17_CV283" CV="283.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 283</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 283</label>
+	</variable>
+	<!-- Bits 283 -->
+	<variable item="CV283.0" CV="283.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 283.0</label>
+	</variable>
+	<variable item="CV283.1" CV="283.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 283.1</label>
+	</variable>
+	<variable item="CV283.2" CV="283.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 283.2</label>
+	</variable>
+	<variable item="CV283.3" CV="283.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 283.3</label>
+	</variable>
+	<variable item="CV283.4" CV="283.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 283.4</label>
+	</variable>
+	<variable item="CV283.5" CV="283.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 283.5</label>
+	</variable>
+	<variable item="CV283.6" CV="283.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 283.6</label>
+	</variable>
+	<variable item="CV283.7" CV="283.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 283.7</label>
+	</variable>
+	<variable item="Bank_17_CV284" CV="284.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 284</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 284</label>
+	</variable>
+	<!-- Bits 284 -->
+	<variable item="CV284.0" CV="284.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 284.0</label>
+	</variable>
+	<variable item="CV284.1" CV="284.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 284.1</label>
+	</variable>
+	<variable item="CV284.2" CV="284.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 284.2</label>
+	</variable>
+	<variable item="CV284.3" CV="284.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 284.3</label>
+	</variable>
+	<variable item="CV284.4" CV="284.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 284.4</label>
+	</variable>
+	<variable item="CV284.5" CV="284.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 284.5</label>
+	</variable>
+	<variable item="CV284.6" CV="284.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 284.6</label>
+	</variable>
+	<variable item="CV284.7" CV="284.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 284.7</label>
+	</variable>
+	<variable item="Bank_17_CV285" CV="285.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 285</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 285</label>
+	</variable>
+	<!-- Bits 285 -->
+	<variable item="CV285.0" CV="285.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 285.0</label>
+	</variable>
+	<variable item="CV285.1" CV="285.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 285.1</label>
+	</variable>
+	<variable item="CV285.2" CV="285.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 285.2</label>
+	</variable>
+	<variable item="CV285.3" CV="285.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 285.3</label>
+	</variable>
+	<variable item="CV285.4" CV="285.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 285.4</label>
+	</variable>
+	<variable item="CV285.5" CV="285.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 285.5</label>
+	</variable>
+	<variable item="CV285.6" CV="285.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 285.6</label>
+	</variable>
+	<variable item="CV285.7" CV="285.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 285.7</label>
+	</variable>
+	<variable item="Bank_17_CV286" CV="286.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 286</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 286</label>
+	</variable>
+	<!-- Bits 286 -->
+	<variable item="CV286.0" CV="286.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 286.0</label>
+	</variable>
+	<variable item="CV286.1" CV="286.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 286.1</label>
+	</variable>
+	<variable item="CV286.2" CV="286.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 286.2</label>
+	</variable>
+	<variable item="CV286.3" CV="286.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 286.3</label>
+	</variable>
+	<variable item="CV286.4" CV="286.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 286.4</label>
+	</variable>
+	<variable item="CV286.5" CV="286.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 286.5</label>
+	</variable>
+	<variable item="CV286.6" CV="286.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 286.6</label>
+	</variable>
+	<variable item="CV286.7" CV="286.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 286.7</label>
+	</variable>
+	<variable item="Bank_17_CV287" CV="287.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 287</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 287</label>
+	</variable>
+	<!-- Bits 287 -->
+	<variable item="CV287.0" CV="287.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 287.0</label>
+	</variable>
+	<variable item="CV287.1" CV="287.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 287.1</label>
+	</variable>
+	<variable item="CV287.2" CV="287.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 287.2</label>
+	</variable>
+	<variable item="CV287.3" CV="287.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 287.3</label>
+	</variable>
+	<variable item="CV287.4" CV="287.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 287.4</label>
+	</variable>
+	<variable item="CV287.5" CV="287.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 287.5</label>
+	</variable>
+	<variable item="CV287.6" CV="287.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 287.6</label>
+	</variable>
+	<variable item="CV287.7" CV="287.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 287.7</label>
+	</variable>
+	<variable item="Bank_17_CV288" CV="288.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 288</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 288</label>
+	</variable>
+	<!-- Bits 288 -->
+	<variable item="CV288.0" CV="288.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 288.0</label>
+	</variable>
+	<variable item="CV288.1" CV="288.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 288.1</label>
+	</variable>
+	<variable item="CV288.2" CV="288.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 288.2</label>
+	</variable>
+	<variable item="CV288.3" CV="288.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 288.3</label>
+	</variable>
+	<variable item="CV288.4" CV="288.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 288.4</label>
+	</variable>
+	<variable item="CV288.5" CV="288.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 288.5</label>
+	</variable>
+	<variable item="CV288.6" CV="288.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 288.6</label>
+	</variable>
+	<variable item="CV288.7" CV="288.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 288.7</label>
+	</variable>
+	<variable item="Bank_17_CV289" CV="289.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 289</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 289</label>
+	</variable>
+	<!-- Bits 289 -->
+	<variable item="CV289.0" CV="289.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 289.0</label>
+	</variable>
+	<variable item="CV289.1" CV="289.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 289.1</label>
+	</variable>
+	<variable item="CV289.2" CV="289.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 289.2</label>
+	</variable>
+	<variable item="CV289.3" CV="289.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 289.3</label>
+	</variable>
+	<variable item="CV289.4" CV="289.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 289.4</label>
+	</variable>
+	<variable item="CV289.5" CV="289.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 289.5</label>
+	</variable>
+	<variable item="CV289.6" CV="289.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 289.6</label>
+	</variable>
+	<variable item="CV289.7" CV="289.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 289.7</label>
+	</variable>
+	<variable item="Bank_17_CV290" CV="290.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 290</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 290</label>
+	</variable>
+	<!-- Bits 290 -->
+	<variable item="CV290.0" CV="290.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 290.0</label>
+	</variable>
+	<variable item="CV290.1" CV="290.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 290.1</label>
+	</variable>
+	<variable item="CV290.2" CV="290.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 290.2</label>
+	</variable>
+	<variable item="CV290.3" CV="290.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 290.3</label>
+	</variable>
+	<variable item="CV290.4" CV="290.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 290.4</label>
+	</variable>
+	<variable item="CV290.5" CV="290.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 290.5</label>
+	</variable>
+	<variable item="CV290.6" CV="290.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 290.6</label>
+	</variable>
+	<variable item="CV290.7" CV="290.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 290.7</label>
+	</variable>
+	<variable item="Bank_17_CV291" CV="291.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 291</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 291</label>
+	</variable>
+	<!-- Bits 291 -->
+	<variable item="CV291.0" CV="291.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 291.0</label>
+	</variable>
+	<variable item="CV291.1" CV="291.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 291.1</label>
+	</variable>
+	<variable item="CV291.2" CV="291.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 291.2</label>
+	</variable>
+	<variable item="CV291.3" CV="291.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 291.3</label>
+	</variable>
+	<variable item="CV291.4" CV="291.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 291.4</label>
+	</variable>
+	<variable item="CV291.5" CV="291.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 291.5</label>
+	</variable>
+	<variable item="CV291.6" CV="291.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 291.6</label>
+	</variable>
+	<variable item="CV291.7" CV="291.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 291.7</label>
+	</variable>
+	<variable item="Bank_17_CV292" CV="292.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 292</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 292</label>
+	</variable>
+	<!-- Bits 292 -->
+	<variable item="CV292.0" CV="292.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 292.0</label>
+	</variable>
+	<variable item="CV292.1" CV="292.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 292.1</label>
+	</variable>
+	<variable item="CV292.2" CV="292.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 292.2</label>
+	</variable>
+	<variable item="CV292.3" CV="292.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 292.3</label>
+	</variable>
+	<variable item="CV292.4" CV="292.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 292.4</label>
+	</variable>
+	<variable item="CV292.5" CV="292.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 292.5</label>
+	</variable>
+	<variable item="CV292.6" CV="292.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 292.6</label>
+	</variable>
+	<variable item="CV292.7" CV="292.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 292.7</label>
+	</variable>
+	<variable item="Bank_17_CV293" CV="293.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 293</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 293</label>
+	</variable>
+	<!-- Bits 293 -->
+	<variable item="CV293.0" CV="293.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 293.0</label>
+	</variable>
+	<variable item="CV293.1" CV="293.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 293.1</label>
+	</variable>
+	<variable item="CV293.2" CV="293.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 293.2</label>
+	</variable>
+	<variable item="CV293.3" CV="293.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 293.3</label>
+	</variable>
+	<variable item="CV293.4" CV="293.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 293.4</label>
+	</variable>
+	<variable item="CV293.5" CV="293.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 293.5</label>
+	</variable>
+	<variable item="CV293.6" CV="293.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 293.6</label>
+	</variable>
+	<variable item="CV293.7" CV="293.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 293.7</label>
+	</variable>
+	<variable item="Bank_17_CV294" CV="294.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 294</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 294</label>
+	</variable>
+	<!-- Bits 294 -->
+	<variable item="CV294.0" CV="294.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 294.0</label>
+	</variable>
+	<variable item="CV294.1" CV="294.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 294.1</label>
+	</variable>
+	<variable item="CV294.2" CV="294.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 294.2</label>
+	</variable>
+	<variable item="CV294.3" CV="294.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 294.3</label>
+	</variable>
+	<variable item="CV294.4" CV="294.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 294.4</label>
+	</variable>
+	<variable item="CV294.5" CV="294.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 294.5</label>
+	</variable>
+	<variable item="CV294.6" CV="294.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 294.6</label>
+	</variable>
+	<variable item="CV294.7" CV="294.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 294.7</label>
+	</variable>
+	<variable item="Bank_17_CV295" CV="295.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 295</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 295</label>
+	</variable>
+	<!-- Bits 295 -->
+	<variable item="CV295.0" CV="295.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 295.0</label>
+	</variable>
+	<variable item="CV295.1" CV="295.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 295.1</label>
+	</variable>
+	<variable item="CV295.2" CV="295.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 295.2</label>
+	</variable>
+	<variable item="CV295.3" CV="295.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 295.3</label>
+	</variable>
+	<variable item="CV295.4" CV="295.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 295.4</label>
+	</variable>
+	<variable item="CV295.5" CV="295.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 295.5</label>
+	</variable>
+	<variable item="CV295.6" CV="295.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 295.6</label>
+	</variable>
+	<variable item="CV295.7" CV="295.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 295.7</label>
+	</variable>
+	<variable item="Bank_17_CV296" CV="296.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 296</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 296</label>
+	</variable>
+	<!-- Bits 296 -->
+	<variable item="CV296.0" CV="296.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 296.0</label>
+	</variable>
+	<variable item="CV296.1" CV="296.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 296.1</label>
+	</variable>
+	<variable item="CV296.2" CV="296.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 296.2</label>
+	</variable>
+	<variable item="CV296.3" CV="296.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 296.3</label>
+	</variable>
+	<variable item="CV296.4" CV="296.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 296.4</label>
+	</variable>
+	<variable item="CV296.5" CV="296.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 296.5</label>
+	</variable>
+	<variable item="CV296.6" CV="296.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 296.6</label>
+	</variable>
+	<variable item="CV296.7" CV="296.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 296.7</label>
+	</variable>
+	<variable item="Bank_17_CV297" CV="297.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 297</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 297</label>
+	</variable>
+	<!-- Bits 297 -->
+	<variable item="CV297.0" CV="297.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 297.0</label>
+	</variable>
+	<variable item="CV297.1" CV="297.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 297.1</label>
+	</variable>
+	<variable item="CV297.2" CV="297.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 297.2</label>
+	</variable>
+	<variable item="CV297.3" CV="297.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 297.3</label>
+	</variable>
+	<variable item="CV297.4" CV="297.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 297.4</label>
+	</variable>
+	<variable item="CV297.5" CV="297.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 297.5</label>
+	</variable>
+	<variable item="CV297.6" CV="297.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 297.6</label>
+	</variable>
+	<variable item="CV297.7" CV="297.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 297.7</label>
+	</variable>
+	<variable item="Bank_17_CV298" CV="298.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 298</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 298</label>
+	</variable>
+	<!-- Bits 298 -->
+	<variable item="CV298.0" CV="298.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 298.0</label>
+	</variable>
+	<variable item="CV298.1" CV="298.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 298.1</label>
+	</variable>
+	<variable item="CV298.2" CV="298.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 298.2</label>
+	</variable>
+	<variable item="CV298.3" CV="298.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 298.3</label>
+	</variable>
+	<variable item="CV298.4" CV="298.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 298.4</label>
+	</variable>
+	<variable item="CV298.5" CV="298.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 298.5</label>
+	</variable>
+	<variable item="CV298.6" CV="298.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 298.6</label>
+	</variable>
+	<variable item="CV298.7" CV="298.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 298.7</label>
+	</variable>
+	<variable item="Bank_17_CV299" CV="299.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 299</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 299</label>
+	</variable>
+	<!-- Bits 299 -->
+	<variable item="CV299.0" CV="299.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 299.0</label>
+	</variable>
+	<variable item="CV299.1" CV="299.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 299.1</label>
+	</variable>
+	<variable item="CV299.2" CV="299.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 299.2</label>
+	</variable>
+	<variable item="CV299.3" CV="299.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 299.3</label>
+	</variable>
+	<variable item="CV299.4" CV="299.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 299.4</label>
+	</variable>
+	<variable item="CV299.5" CV="299.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 299.5</label>
+	</variable>
+	<variable item="CV299.6" CV="299.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 299.6</label>
+	</variable>
+	<variable item="CV299.7" CV="299.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 299.7</label>
+	</variable>
+	<variable item="Bank_17_CV300" CV="300.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 300</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 300</label>
+	</variable>
+	<!-- Bits 300 -->
+	<variable item="CV300.0" CV="300.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 300.0</label>
+	</variable>
+	<variable item="CV300.1" CV="300.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 300.1</label>
+	</variable>
+	<variable item="CV300.2" CV="300.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 300.2</label>
+	</variable>
+	<variable item="CV300.3" CV="300.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 300.3</label>
+	</variable>
+	<variable item="CV300.4" CV="300.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 300.4</label>
+	</variable>
+	<variable item="CV300.5" CV="300.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 300.5</label>
+	</variable>
+	<variable item="CV300.6" CV="300.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 300.6</label>
+	</variable>
+	<variable item="CV300.7" CV="300.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 300.7</label>
+	</variable>
+	<variable item="Bank_17_CV301" CV="301.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 301</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 301</label>
+	</variable>
+	<!-- Bits 301 -->
+	<variable item="CV301.0" CV="301.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 301.0</label>
+	</variable>
+	<variable item="CV301.1" CV="301.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 301.1</label>
+	</variable>
+	<variable item="CV301.2" CV="301.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 301.2</label>
+	</variable>
+	<variable item="CV301.3" CV="301.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 301.3</label>
+	</variable>
+	<variable item="CV301.4" CV="301.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 301.4</label>
+	</variable>
+	<variable item="CV301.5" CV="301.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 301.5</label>
+	</variable>
+	<variable item="CV301.6" CV="301.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 301.6</label>
+	</variable>
+	<variable item="CV301.7" CV="301.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 301.7</label>
+	</variable>
+	<variable item="Bank_17_CV302" CV="302.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 302</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 302</label>
+	</variable>
+	<!-- Bits 302 -->
+	<variable item="CV302.0" CV="302.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 302.0</label>
+	</variable>
+	<variable item="CV302.1" CV="302.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 302.1</label>
+	</variable>
+	<variable item="CV302.2" CV="302.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 302.2</label>
+	</variable>
+	<variable item="CV302.3" CV="302.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 302.3</label>
+	</variable>
+	<variable item="CV302.4" CV="302.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 302.4</label>
+	</variable>
+	<variable item="CV302.5" CV="302.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 302.5</label>
+	</variable>
+	<variable item="CV302.6" CV="302.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 302.6</label>
+	</variable>
+	<variable item="CV302.7" CV="302.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 302.7</label>
+	</variable>
+	<variable item="Bank_17_CV303" CV="303.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 303</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 303</label>
+	</variable>
+	<!-- Bits 303 -->
+	<variable item="CV303.0" CV="303.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 303.0</label>
+	</variable>
+	<variable item="CV303.1" CV="303.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 303.1</label>
+	</variable>
+	<variable item="CV303.2" CV="303.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 303.2</label>
+	</variable>
+	<variable item="CV303.3" CV="303.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 303.3</label>
+	</variable>
+	<variable item="CV303.4" CV="303.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 303.4</label>
+	</variable>
+	<variable item="CV303.5" CV="303.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 303.5</label>
+	</variable>
+	<variable item="CV303.6" CV="303.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 303.6</label>
+	</variable>
+	<variable item="CV303.7" CV="303.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 303.7</label>
+	</variable>
+	<variable item="Bank_17_CV304" CV="304.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 304</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 304</label>
+	</variable>
+	<!-- Bits 304 -->
+	<variable item="CV304.0" CV="304.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 304.0</label>
+	</variable>
+	<variable item="CV304.1" CV="304.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 304.1</label>
+	</variable>
+	<variable item="CV304.2" CV="304.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 304.2</label>
+	</variable>
+	<variable item="CV304.3" CV="304.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 304.3</label>
+	</variable>
+	<variable item="CV304.4" CV="304.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 304.4</label>
+	</variable>
+	<variable item="CV304.5" CV="304.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 304.5</label>
+	</variable>
+	<variable item="CV304.6" CV="304.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 304.6</label>
+	</variable>
+	<variable item="CV304.7" CV="304.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 304.7</label>
+	</variable>
+	<variable item="Bank_17_CV305" CV="305.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 305</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 305</label>
+	</variable>
+	<!-- Bits 305 -->
+	<variable item="CV305.0" CV="305.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 305.0</label>
+	</variable>
+	<variable item="CV305.1" CV="305.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 305.1</label>
+	</variable>
+	<variable item="CV305.2" CV="305.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 305.2</label>
+	</variable>
+	<variable item="CV305.3" CV="305.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 305.3</label>
+	</variable>
+	<variable item="CV305.4" CV="305.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 305.4</label>
+	</variable>
+	<variable item="CV305.5" CV="305.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 305.5</label>
+	</variable>
+	<variable item="CV305.6" CV="305.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 305.6</label>
+	</variable>
+	<variable item="CV305.7" CV="305.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 305.7</label>
+	</variable>
+	<variable item="Bank_17_CV306" CV="306.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 306</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 306</label>
+	</variable>
+	<!-- Bits 306 -->
+	<variable item="CV306.0" CV="306.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 306.0</label>
+	</variable>
+	<variable item="CV306.1" CV="306.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 306.1</label>
+	</variable>
+	<variable item="CV306.2" CV="306.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 306.2</label>
+	</variable>
+	<variable item="CV306.3" CV="306.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 306.3</label>
+	</variable>
+	<variable item="CV306.4" CV="306.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 306.4</label>
+	</variable>
+	<variable item="CV306.5" CV="306.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 306.5</label>
+	</variable>
+	<variable item="CV306.6" CV="306.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 306.6</label>
+	</variable>
+	<variable item="CV306.7" CV="306.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 306.7</label>
+	</variable>
+	<variable item="Bank_17_CV307" CV="307.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 307</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 307</label>
+	</variable>
+	<!-- Bits 307 -->
+	<variable item="CV307.0" CV="307.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 307.0</label>
+	</variable>
+	<variable item="CV307.1" CV="307.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 307.1</label>
+	</variable>
+	<variable item="CV307.2" CV="307.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 307.2</label>
+	</variable>
+	<variable item="CV307.3" CV="307.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 307.3</label>
+	</variable>
+	<variable item="CV307.4" CV="307.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 307.4</label>
+	</variable>
+	<variable item="CV307.5" CV="307.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 307.5</label>
+	</variable>
+	<variable item="CV307.6" CV="307.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 307.6</label>
+	</variable>
+	<variable item="CV307.7" CV="307.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 307.7</label>
+	</variable>
+	<variable item="Bank_17_CV308" CV="308.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 308</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 308</label>
+	</variable>
+	<!-- Bits 308 -->
+	<variable item="CV308.0" CV="308.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 308.0</label>
+	</variable>
+	<variable item="CV308.1" CV="308.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 308.1</label>
+	</variable>
+	<variable item="CV308.2" CV="308.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 308.2</label>
+	</variable>
+	<variable item="CV308.3" CV="308.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 308.3</label>
+	</variable>
+	<variable item="CV308.4" CV="308.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 308.4</label>
+	</variable>
+	<variable item="CV308.5" CV="308.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 308.5</label>
+	</variable>
+	<variable item="CV308.6" CV="308.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 308.6</label>
+	</variable>
+	<variable item="CV308.7" CV="308.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 308.7</label>
+	</variable>
+	<variable item="Bank_17_CV309" CV="309.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 309</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 309</label>
+	</variable>
+	<!-- Bits 309 -->
+	<variable item="CV309.0" CV="309.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 309.0</label>
+	</variable>
+	<variable item="CV309.1" CV="309.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 309.1</label>
+	</variable>
+	<variable item="CV309.2" CV="309.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 309.2</label>
+	</variable>
+	<variable item="CV309.3" CV="309.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 309.3</label>
+	</variable>
+	<variable item="CV309.4" CV="309.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 309.4</label>
+	</variable>
+	<variable item="CV309.5" CV="309.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 309.5</label>
+	</variable>
+	<variable item="CV309.6" CV="309.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 309.6</label>
+	</variable>
+	<variable item="CV309.7" CV="309.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 309.7</label>
+	</variable>
+	<variable item="Bank_17_CV310" CV="310.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 310</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 310</label>
+	</variable>
+	<!-- Bits 310 -->
+	<variable item="CV310.0" CV="310.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 310.0</label>
+	</variable>
+	<variable item="CV310.1" CV="310.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 310.1</label>
+	</variable>
+	<variable item="CV310.2" CV="310.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 310.2</label>
+	</variable>
+	<variable item="CV310.3" CV="310.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 310.3</label>
+	</variable>
+	<variable item="CV310.4" CV="310.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 310.4</label>
+	</variable>
+	<variable item="CV310.5" CV="310.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 310.5</label>
+	</variable>
+	<variable item="CV310.6" CV="310.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 310.6</label>
+	</variable>
+	<variable item="CV310.7" CV="310.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 310.7</label>
+	</variable>
+	<variable item="Bank_17_CV311" CV="311.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 311</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 311</label>
+	</variable>
+	<!-- Bits 311 -->
+	<variable item="CV311.0" CV="311.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 311.0</label>
+	</variable>
+	<variable item="CV311.1" CV="311.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 311.1</label>
+	</variable>
+	<variable item="CV311.2" CV="311.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 311.2</label>
+	</variable>
+	<variable item="CV311.3" CV="311.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 311.3</label>
+	</variable>
+	<variable item="CV311.4" CV="311.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 311.4</label>
+	</variable>
+	<variable item="CV311.5" CV="311.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 311.5</label>
+	</variable>
+	<variable item="CV311.6" CV="311.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 311.6</label>
+	</variable>
+	<variable item="CV311.7" CV="311.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 311.7</label>
+	</variable>
+	<!-- Bits 312 -->
+	<variable item="Bank_17_CV312" CV="312.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 312</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 312</label>
+	</variable>
+	<!-- Bits 312 -->
+	<variable item="CV312.0" CV="312.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 312.0</label>
+	</variable>
+	<variable item="CV312.1" CV="312.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 312.1</label>
+	</variable>
+	<variable item="CV312.2" CV="312.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 312.2</label>
+	</variable>
+	<variable item="CV312.3" CV="312.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 312.3</label>
+	</variable>
+	<variable item="CV312.4" CV="312.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 312.4</label>
+	</variable>
+	<variable item="CV312.5" CV="312.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 312.5</label>
+	</variable>
+	<variable item="CV312.6" CV="312.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 312.6</label>
+	</variable>
+	<variable item="CV312.7" CV="312.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 312.7</label>
+	</variable>
+	<!-- Bits 313 -->
+	<variable item="Bank_17_CV313" CV="313.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 313</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 313</label>
+	</variable>
+	<!-- Bits 313 -->
+	<variable item="CV313.0" CV="313.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 313.0</label>
+	</variable>
+	<variable item="CV313.1" CV="313.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 313.1</label>
+	</variable>
+	<variable item="CV313.2" CV="313.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 313.2</label>
+	</variable>
+	<variable item="CV313.3" CV="313.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 313.3</label>
+	</variable>
+	<variable item="CV313.4" CV="313.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 313.4</label>
+	</variable>
+	<variable item="CV313.5" CV="313.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 313.5</label>
+	</variable>
+	<variable item="CV313.6" CV="313.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 313.6</label>
+	</variable>
+	<variable item="CV313.7" CV="313.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 313.7</label>
+	</variable>
+	<!-- Bits 314 -->
+	<variable item="Bank_17_CV314" CV="314.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 314</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 314</label>
+	</variable>
+	<!-- Bits 314 -->
+	<variable item="CV314.0" CV="314.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 314.0</label>
+	</variable>
+	<variable item="CV314.1" CV="314.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 314.1</label>
+	</variable>
+	<variable item="CV314.2" CV="314.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 314.2</label>
+	</variable>
+	<variable item="CV314.3" CV="314.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 314.3</label>
+	</variable>
+	<variable item="CV314.4" CV="314.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 314.4</label>
+	</variable>
+	<variable item="CV314.5" CV="314.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 314.5</label>
+	</variable>
+	<variable item="CV314.6" CV="314.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 314.6</label>
+	</variable>
+	<variable item="CV314.7" CV="314.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 314.7</label>
+	</variable>
+	<!-- Bits 315 -->
+	<variable item="Bank_17_CV315" CV="315.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 315</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 315</label>
+	</variable>
+	<!-- Bits 315 -->
+	<variable item="CV315.0" CV="315.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 315.0</label>
+	</variable>
+	<variable item="CV315.1" CV="315.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 315.1</label>
+	</variable>
+	<variable item="CV315.2" CV="315.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 315.2</label>
+	</variable>
+	<variable item="CV315.3" CV="315.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 315.3</label>
+	</variable>
+	<variable item="CV315.4" CV="315.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 315.4</label>
+	</variable>
+	<variable item="CV315.5" CV="315.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 315.5</label>
+	</variable>
+	<variable item="CV315.6" CV="315.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 315.6</label>
+	</variable>
+	<variable item="CV315.7" CV="315.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 315.7</label>
+	</variable>
+	<!-- Bits 316 -->
+	<variable item="Bank_17_CV316" CV="316.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 316</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 316</label>
+	</variable>
+	<!-- Bits 316 -->
+	<variable item="CV316.0" CV="316.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 316.0</label>
+	</variable>
+	<variable item="CV316.1" CV="316.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 316.1</label>
+	</variable>
+	<variable item="CV316.2" CV="316.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 316.2</label>
+	</variable>
+	<variable item="CV316.3" CV="316.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 316.3</label>
+	</variable>
+	<variable item="CV316.4" CV="316.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 316.4</label>
+	</variable>
+	<variable item="CV316.5" CV="316.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 316.5</label>
+	</variable>
+	<variable item="CV316.6" CV="316.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 316.6</label>
+	</variable>
+	<variable item="CV316.7" CV="316.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 316.7</label>
+	</variable>
+	<!-- Bits 317 -->
+	<variable item="Bank_17_CV317" CV="317.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 317</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 317</label>
+	</variable>
+	<!-- Bits 317 -->
+	<variable item="CV317.0" CV="317.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 317.0</label>
+	</variable>
+	<variable item="CV317.1" CV="317.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 317.1</label>
+	</variable>
+	<variable item="CV317.2" CV="317.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 317.2</label>
+	</variable>
+	<variable item="CV317.3" CV="317.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 317.3</label>
+	</variable>
+	<variable item="CV317.4" CV="317.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 317.4</label>
+	</variable>
+	<variable item="CV317.5" CV="317.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 317.5</label>
+	</variable>
+	<variable item="CV317.6" CV="317.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 317.6</label>
+	</variable>
+	<variable item="CV317.7" CV="317.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 317.7</label>
+	</variable>
+	<!-- Bits 318 -->
+	<variable item="Bank_17_CV318" CV="318.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 318</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 318</label>
+	</variable>
+	<!-- Bits 318 -->
+	<variable item="CV318.0" CV="318.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 318.0</label>
+	</variable>
+	<variable item="CV318.1" CV="318.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 318.1</label>
+	</variable>
+	<variable item="CV318.2" CV="318.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 318.2</label>
+	</variable>
+	<variable item="CV318.3" CV="318.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 318.3</label>
+	</variable>
+	<variable item="CV318.4" CV="318.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 318.4</label>
+	</variable>
+	<variable item="CV318.5" CV="318.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 318.5</label>
+	</variable>
+	<variable item="CV318.6" CV="318.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 318.6</label>
+	</variable>
+	<variable item="CV318.7" CV="318.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 318.7</label>
+	</variable>
+	<!-- Bits 319 -->
+	<variable item="Bank_17_CV319" CV="319.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 319</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 319</label>
+	</variable>
+	<!-- Bits 319 -->
+	<variable item="CV319.0" CV="319.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 319.0</label>
+	</variable>
+	<variable item="CV319.1" CV="319.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 319.1</label>
+	</variable>
+	<variable item="CV319.2" CV="319.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 319.2</label>
+	</variable>
+	<variable item="CV319.3" CV="319.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 319.3</label>
+	</variable>
+	<variable item="CV319.4" CV="319.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 319.4</label>
+	</variable>
+	<variable item="CV319.5" CV="319.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 319.5</label>
+	</variable>
+	<variable item="CV319.6" CV="319.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 319.6</label>
+	</variable>
+	<variable item="CV319.7" CV="319.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 319.7</label>
+	</variable>
+	<!-- Bits 320 -->
+	<variable item="Bank_17_CV320" CV="320.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 320</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 320</label>
+	</variable>
+	<!-- Bits 320 -->
+	<variable item="CV320.0" CV="320.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 320.0</label>
+	</variable>
+	<variable item="CV320.1" CV="320.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 320.1</label>
+	</variable>
+	<variable item="CV320.2" CV="320.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 320.2</label>
+	</variable>
+	<variable item="CV320.3" CV="320.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 320.3</label>
+	</variable>
+	<variable item="CV320.4" CV="320.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 320.4</label>
+	</variable>
+	<variable item="CV320.5" CV="320.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 320.5</label>
+	</variable>
+	<variable item="CV320.6" CV="320.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 320.6</label>
+	</variable>
+	<variable item="CV320.7" CV="320.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 320.7</label>
+	</variable>
+	<!-- Bits 321 -->
+	<variable item="Bank_17_CV321" CV="321.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 321</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 321</label>
+	</variable>
+	<!-- Bits 321 -->
+	<variable item="CV321.0" CV="321.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 321.0</label>
+	</variable>
+	<variable item="CV321.1" CV="321.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 321.1</label>
+	</variable>
+	<variable item="CV321.2" CV="321.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 321.2</label>
+	</variable>
+	<variable item="CV321.3" CV="321.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 321.3</label>
+	</variable>
+	<variable item="CV321.4" CV="321.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 321.4</label>
+	</variable>
+	<variable item="CV321.5" CV="321.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 321.5</label>
+	</variable>
+	<variable item="CV321.6" CV="321.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 321.6</label>
+	</variable>
+	<variable item="CV321.7" CV="321.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 321.7</label>
+	</variable>
+	<!-- Bits 322 -->
+	<variable item="Bank_17_CV322" CV="322.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 322</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 322</label>
+	</variable>
+	<!-- Bits 322 -->
+	<variable item="CV322.0" CV="322.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 322.0</label>
+	</variable>
+	<variable item="CV322.1" CV="322.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 322.1</label>
+	</variable>
+	<variable item="CV322.2" CV="322.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 322.2</label>
+	</variable>
+	<variable item="CV322.3" CV="322.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 322.3</label>
+	</variable>
+	<variable item="CV322.4" CV="322.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 322.4</label>
+	</variable>
+	<variable item="CV322.5" CV="322.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 322.5</label>
+	</variable>
+	<variable item="CV322.6" CV="322.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 322.6</label>
+	</variable>
+	<variable item="CV322.7" CV="322.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 322.7</label>
+	</variable>
+	<!-- Bits 323 -->
+	<variable item="Bank_17_CV323" CV="323.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 323</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 323</label>
+	</variable>
+	<!-- Bits 323 -->
+	<variable item="CV323.0" CV="323.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 323.0</label>
+	</variable>
+	<variable item="CV323.1" CV="323.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 323.1</label>
+	</variable>
+	<variable item="CV323.2" CV="323.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 323.2</label>
+	</variable>
+	<variable item="CV323.3" CV="323.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 323.3</label>
+	</variable>
+	<variable item="CV323.4" CV="323.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 323.4</label>
+	</variable>
+	<variable item="CV323.5" CV="323.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 323.5</label>
+	</variable>
+	<variable item="CV323.6" CV="323.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 323.6</label>
+	</variable>
+	<variable item="CV323.7" CV="323.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 323.7</label>
+	</variable>
+	<!-- Bits 324 -->
+	<variable item="Bank_17_CV324" CV="324.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 324</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 324</label>
+	</variable>
+	<!-- Bits 324 -->
+	<variable item="CV324.0" CV="324.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 324.0</label>
+	</variable>
+	<variable item="CV324.1" CV="324.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 324.1</label>
+	</variable>
+	<variable item="CV324.2" CV="324.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 324.2</label>
+	</variable>
+	<variable item="CV324.3" CV="324.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 324.3</label>
+	</variable>
+	<variable item="CV324.4" CV="324.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 324.4</label>
+	</variable>
+	<variable item="CV324.5" CV="324.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 324.5</label>
+	</variable>
+	<variable item="CV324.6" CV="324.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 324.6</label>
+	</variable>
+	<variable item="CV324.7" CV="324.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 324.7</label>
+	</variable>
+	<!-- Bits 325 -->
+	<variable item="Bank_17_CV325" CV="325.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 325</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 325</label>
+	</variable>
+	<!-- Bits 325 -->
+	<variable item="CV325.0" CV="325.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 325.0</label>
+	</variable>
+	<variable item="CV325.1" CV="325.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 325.1</label>
+	</variable>
+	<variable item="CV325.2" CV="325.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 325.2</label>
+	</variable>
+	<variable item="CV325.3" CV="325.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 325.3</label>
+	</variable>
+	<variable item="CV325.4" CV="325.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 325.4</label>
+	</variable>
+	<variable item="CV325.5" CV="325.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 325.5</label>
+	</variable>
+	<variable item="CV325.6" CV="325.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 325.6</label>
+	</variable>
+	<variable item="CV325.7" CV="325.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 325.7</label>
+	</variable>
+	<!-- Bits 326 -->
+	<variable item="Bank_17_CV326" CV="326.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 326</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 326</label>
+	</variable>
+	<!-- Bits 326 -->
+	<variable item="CV326.0" CV="326.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 326.0</label>
+	</variable>
+	<variable item="CV326.1" CV="326.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 326.1</label>
+	</variable>
+	<variable item="CV326.2" CV="326.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 326.2</label>
+	</variable>
+	<variable item="CV326.3" CV="326.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 326.3</label>
+	</variable>
+	<variable item="CV326.4" CV="326.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 326.4</label>
+	</variable>
+	<variable item="CV326.5" CV="326.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 326.5</label>
+	</variable>
+	<variable item="CV326.6" CV="326.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 326.6</label>
+	</variable>
+	<variable item="CV326.7" CV="326.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 326.7</label>
+	</variable>
+	<!-- Bits 327 -->
+	<variable item="Bank_17_CV327" CV="327.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 327</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 327</label>
+	</variable>
+	<!-- Bits 327 -->
+	<variable item="CV327.0" CV="327.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 327.0</label>
+	</variable>
+	<variable item="CV327.1" CV="327.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 327.1</label>
+	</variable>
+	<variable item="CV327.2" CV="327.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 327.2</label>
+	</variable>
+	<variable item="CV327.3" CV="327.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 327.3</label>
+	</variable>
+	<variable item="CV327.4" CV="327.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 327.4</label>
+	</variable>
+	<variable item="CV327.5" CV="327.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 327.5</label>
+	</variable>
+	<variable item="CV327.6" CV="327.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 327.6</label>
+	</variable>
+	<variable item="CV327.7" CV="327.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 327.7</label>
+	</variable>
+	<!-- Bits 328 -->
+	<variable item="Bank_17_CV328" CV="328.31=17" tooltip="0-255">
+		<decVal/>
+		<label>CV 328</label>
+		<label xml:lang="de">Erw. Fkt. Mapping CV 328</label>
+	</variable>
+	<!-- Bits 328 -->
+	<variable item="CV328.0" CV="328.31=17" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 328.0</label>
+	</variable>
+	<variable item="CV328.1" CV="328.31=17" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 328.1</label>
+	</variable>
+	<variable item="CV328.2" CV="328.31=17" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 328.2</label>
+	</variable>
+	<variable item="CV328.3" CV="328.31=17" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 328.3</label>
+	</variable>
+	<variable item="CV328.4" CV="328.31=17" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 328.4</label>
+	</variable>
+	<variable item="CV328.5" CV="328.31=17" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 328.5</label>
+	</variable>
+	<variable item="CV328.6" CV="328.31=17" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 328.6</label>
+	</variable>
+	<variable item="CV328.7" CV="328.31=17" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>CV 328.7</label>
+	</variable>
+</variables>
