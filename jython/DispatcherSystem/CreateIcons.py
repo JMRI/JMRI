@@ -29,7 +29,7 @@ from javax.swing import JOptionPane
 #   Block content labels
 
 
-class processPanels():
+class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
     logLevel = 0
 
@@ -73,7 +73,8 @@ class processPanels():
             self.show_progress(20)
             self.removeSensors()
             self.show_progress(40)
-
+            self.updatePanels()
+            self.waitMsec(5000)
             self.get_list_of_stopping_points()
             self.addSensors()
             self.generateSML()
@@ -83,8 +84,8 @@ class processPanels():
             self.addLogix()
             self.addIcons()
             self.end_show_progress()
-            #msg = 'The JMRI tables and panels have been udpated to support the Dispatcher System\nA store is recommended.'
-            #JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
+            msg = 'The JMRI tables and panels have been udpated to support the Dispatcher System\nA store is recommended.'
+            JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
 
     def define_DisplayProgress_global(self):
         global dpg
@@ -357,6 +358,12 @@ class processPanels():
         self.msg5 = self.msg5 + '\n - '.join(list_of_errors)
 
         return success
+
+    def updatePanels(self):
+        for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
+            panel.invalidate()
+            panel.validate()
+            panel.repaint()
 
     # **************************************************
     # remove icons and labels from panels
