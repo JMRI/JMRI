@@ -413,9 +413,9 @@
           uses <i>Mixed</i>. The <i>Not</i> is ignored for the conditional
           variables when using Mixed.</li>
           <li>Fixes a bug with the action Entry/Exit and the expression Entry/Exit.
-          The action and expression stored the user name instead of the system name.
-          The user name of an Entry/Exit changes when the NX sensor or related signal
-          mast is changed.</li>
+          The action and expression stored the user name instead of the system name
+          if the Entry/Exit. The user name of an Entry/Exit changes when the NX sensor
+          or related signal mast is changed.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
