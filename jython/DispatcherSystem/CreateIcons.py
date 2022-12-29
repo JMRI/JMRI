@@ -84,7 +84,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.addLogix()
             self.addIcons()
             self.end_show_progress()
-            msg = 'The JMRI tables and panels have been udpated to support the Dispatcher System\nA store is recommended.'
+            msg = 'The JMRI tables and panels have been updated to support the Dispatcher System\nA store is recommended.'
             JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
 
     def define_DisplayProgress_global(self):
