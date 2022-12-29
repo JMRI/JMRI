@@ -412,10 +412,10 @@
 		<label xml:lang="cs">Banka D nastavení zvuku 40</label>
 		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #40.</tooltip>
 	</variable>
-	<!-- CV 900.4-931.4-->
+	<!-- CV 900.1021=4-931.1021=4-->
 	<!-- Piko Info: Lautstärken 0-255 der Einzelgeräusche -->
-	<xi:include href="http://jmri.org/xml/decoders/piko/cv900-1024_PIKO40501-18_v4.1.xml"/>
+<!--	<xi:include href="http://jmri.org/xml/decoders/piko/cv900-1024_PIKO40501-18_v4.1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/cv900-1024_PIKO46440-18_v4.1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/cv900-1024_PIKO46442-16_v4.1.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/cv900-1024_PIKO46443-22_v4.1.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/piko/cv900-1024_PIKO46443-22_v4.1.xml"/>-->
 </variables>
