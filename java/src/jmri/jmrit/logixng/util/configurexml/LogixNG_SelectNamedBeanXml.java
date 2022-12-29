@@ -30,7 +30,7 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
 
     public Element store(LogixNG_SelectNamedBean<E> selectNamedBean,
             String tagName,
-            GetNameFromNamedBeanHandle getNameFromNamedBeanHandle) {
+            GetNameFromNamedBeanHandle<E> getNameFromNamedBeanHandle) {
         Element namedBeanElement = new Element(tagName);
 
         LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
