@@ -148,12 +148,12 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
         getInterface().getMemoryConfigurationService().requestWrite(nid, SPACE_DCC_CV, getCvAddress(CV), new byte[]{(byte) val}, new MemoryConfigurationService.McsWriteHandler() {
             @Override
             public void handleSuccess() {
-                p.programmingOpReply(val, ProgListener.OK);
+                notifyProgListenerEnd(p, val, ProgListener.OK);
             }
 
             @Override
             public void handleFailure(int i) {
-                p.programmingOpReply(0, olcbErrorToProgStatus(i));
+                notifyProgListenerEnd(p, 0, olcbErrorToProgStatus(i));
             }
         });
     }
@@ -170,13 +170,15 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
                     handleFailure(0x1000);
                     return;
                 }
-                p.programmingOpReply(bytes[0] & 0xff, ProgListener.OK);
+                if (p != null) {
+                    notifyProgListenerEnd(p, bytes[0] & 0xff, ProgListener.OK);
+                }
             }
 
             @Override
             public void handleFailure(int i) {
                 log.debug("CV {} read - memory config error 0x{}", CV, Integer.toHexString(i));
-                p.programmingOpReply(0, olcbErrorToProgStatus(i));
+                notifyProgListenerEnd(p, 0, olcbErrorToProgStatus(i));
             }
         });
     }
