@@ -39,8 +39,8 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        //new OlcbSystemConnectionMemo();
-        programmer = new OlcbProgrammer();
+        OlcbSystemConnectionMemo system = new OlcbSystemConnectionMemo();
+        programmer = new OlcbProgrammer(system.getInterface());
     }
 
     @Override

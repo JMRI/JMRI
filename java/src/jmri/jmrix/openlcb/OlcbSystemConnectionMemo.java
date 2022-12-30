@@ -40,7 +40,6 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
             return getProgrammerManager().isAddressedModePossible();
         }
-
         if (type.equals(jmri.SensorManager.class)) {
             return true;
         }
@@ -109,7 +108,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
 
     public OlcbProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
-            programmerManager = new OlcbProgrammerManager(new OlcbProgrammer());
+            programmerManager = new OlcbProgrammerManager(this);
         }
         return programmerManager;
     }

@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb;
 
+import jmri.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -13,11 +14,10 @@ import org.junit.Assert;
  * @author Bob Jacobsen
  */
 public class OlcbProgrammerManagerTest {
-
+    protected OlcbSystemConnectionMemo adapterMemo = new OlcbSystemConnectionMemo();
     @Test
     public void testCtor() {
-        new OlcbSystemConnectionMemo();
-        OlcbProgrammerManager s = new OlcbProgrammerManager(new OlcbProgrammer());
+        OlcbProgrammerManager s = new OlcbProgrammerManager(adapterMemo);
         Assert.assertNotNull(s);
     }
 
