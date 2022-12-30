@@ -18,14 +18,14 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Test
     @Override
     public void testDefault() {
-        Assert.assertEquals("Check Default", OlcbProgrammerManager.OPENLCBMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
                 programmer.getMode());        
     }
     
     @Override
     @Test
     public void testDefaultViaBestMode() {
-        Assert.assertEquals("Check Default", OlcbProgrammerManager.OPENLCBMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
                 ((OlcbProgrammer)programmer).getBestMode());        
     }
 
@@ -39,14 +39,19 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        OlcbSystemConnectionMemo system = new OlcbSystemConnectionMemo();
-        programmer = new OlcbProgrammer(system.getInterface());
+        testIface = new OlcbTestInterface();
+        testIface.waitForStartup();
+        programmer = new OlcbProgrammer(testIface.iface);
     }
 
     @Override
     @AfterEach
     public void tearDown() {
         programmer = null;
+        testIface.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
+
+    OlcbTestInterface testIface;
 }
