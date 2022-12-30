@@ -38,7 +38,10 @@ public class ExpressionEntryExitXml extends jmri.managers.configurexml.AbstractN
         storeCommon(p, element);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<DestinationPoints>();
-        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        element.addContent(selectNamedBeanXml.store(
+                p.getSelectNamedBean(),
+                "namedBean",
+                (handle) -> handle.getBean() != null ? handle.getBean().getSystemName() : null));
 
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
 
