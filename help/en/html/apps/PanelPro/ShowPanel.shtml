@@ -29,9 +29,9 @@
       <img src="images/PanelFileView.png" alt="screen shot of xml preview" class="floatRight"
       width="462" height="164">
       <p>A large example of this is available as a <a href=
-      "https://jmri.org/community/examples/SPShastaConfigFile.pdf">PDF file</a>. This is the
+      "https://www.jmri.org/community/examples/SPShastaConfigFile.pdf">PDF file</a>. This is the
       configuration information, including routes, Logix, etc, for the <a href=
-      "https://jmri.org/community/examples/SPShasta.shtml">SP Shasta Route</a> layout.</p>
+      "https://www.jmri.org/community/examples/SPShasta.shtml">SP Shasta Route</a> layout.</p>
 
       <p>To view your own panel file, the easiest approach is to view it via JMRI's web server
       which knows how to find all the needed formating files automatically. The steps are:</p>

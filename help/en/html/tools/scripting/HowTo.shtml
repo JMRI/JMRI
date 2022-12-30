@@ -333,11 +333,11 @@ continuing.
 
       <div class="para">
         <p>If your script is based on a Siglet or <a href=
-        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>
+        "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>
         class (e.g. if you're writing a "handle" routine" - <a href=
         "WhatWhere.shtml#siglet-automaton">see What...Where page for more info on these
         classes</a>), there's a general "<a href=
-        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#waitChange-jmri.NamedBean:A-">waitChange</a>"
+        "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#waitChange-jmri.NamedBean:A-">waitChange</a>"
         routine which waits for any of several sensors to change before returning to you. Note that
         more than one may change at the same time, so you can't assume that just one has a
         different value! And you'll then have to check whether they've become some particular
@@ -591,7 +591,7 @@ SensndExample().start()
         <p>The call to jmri.util.FileUtil.getExternalFilename(..) translates the string using
         JMRI's standard prefixes. The "scripts:" tells JMRI to search in the default scripts
         directory. You can also use other prefixes, see the <a href=
-        "https://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)">
+        "https://www.jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)">
         documentation</a>.</p>
 
         <p><a href="#HowToTopOfPage">[Go to top of page]</a>
@@ -660,7 +660,7 @@ SensndExample().start()
         <p>The "<code>preference:</code>" means to look for that file starting in the preferences
         directory on the current computer. Other choices are "program:" and "home:", see the
         <a href=
-        "https://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)">
+        "https://www.jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)">
         documentation</a>.</p>
 
         <p><a href="#HowToTopOfPage">[Go to top of page]</a>

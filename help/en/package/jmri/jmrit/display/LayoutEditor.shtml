@@ -166,7 +166,7 @@
 
       <p>Below is a short tutorial on the basics of using Layout Editor. A more complete tutorial
       is available for download as a pdf file on the JMRI website. See <a href=
-      "https://jmri.org/community/clinics/NMRA2008/index.html"><strong>Using the JMRI/PanelPro
+      "https://jmri.org/community/clinics/NMRA2008/index.shtml"><strong>Using the JMRI/PanelPro
       Layout Editor</strong></a> and its two associated demonstration .xml files.</p>
 
       <h2 id="start">Getting Started with Layout Editor</h2>
@@ -305,6 +305,9 @@
         <li><strong>Memory</strong> - selects a label showing the contents of the memory whose name
         is entered on the right</li>
 
+        <li><strong>Global Variable</strong> - selects a label showing the contents of the LogixNG
+        Global Variable whose name is entered on the right<span class="since">since 5.3.1</span></li>
+
         <li><strong>Block Contents</strong> - selects a label showing the contents of the block
         whose name is entered</li>
 
@@ -433,34 +436,30 @@
         <li><strong>Label Text</strong> (field) - applies to Text Label - Entry is required if
         anything is to be displayed in the new Text Label.</li>
 
-        <li><strong>Memory Label</strong> (ComboBox) - applies to Memory Label - Entry is required.
-        If the entered name doesn't correspond to a memory variable in the Memory Table, a new
-        memory variable will be created, using the entered name as the JMRI system name (with IM
-        prefixed if needed).</li>
+        <li><strong>Memory</strong> (ComboBox) - applies to Memory Label. Select an entry from
+        the drop down list.</li>
 
-        <li><strong>Block Contents</strong> (ComboBox) - applies to Block Contents - Entry is
-        required. If the entered name doesn't correspond to a layout block a new memory layout
-        block will be created, using the entered name as the JMRI system name (with a prefix added
-        if needed). This new block will be discarded on the next save of the Layout unless it is
-        actually used.</li>
+        <li><strong>Global Variable</strong> (ComboBox) - applies to LogixNG Global Variable Label.
+        Select an entry from the drop down list.<span class="since">since 5.3.1</span></li>
 
-        <li><strong>Sensor Icon</strong> (ComboBox) - applies to Sensor Icon - Entry is required.
-        If a sensor with the entered name does not exist, it will be created using the entered name
-        as the JMRI system name (with a suitable prefix if needed).</li>
+        <li><strong>Block Contents</strong> (ComboBox) - applies to Block Contents. Select an
+        entry from the drop down list.</li>
 
-        <li><strong>Signal Mast Icon</strong> (ComboBox) - applies to Signal Mast Icon - Entry is
-        required. If a signal mast with the entered name is not in the Signal Mast Table, an error
-        message results, and the Signal Mast Icon is not created. <strong>Note: To automatically
-        associate signal masts with turnouts and block boundaries, you should use the automated
-        tools in the Tools menu to place signal mast icons.</strong> This item is provided for
-        those cases where those automated tools cannot place a signal mast icon where needed.</li>
+        <li><strong>Sensor Icon</strong> (ComboBox) - applies to Sensor Icon.  Select an entry from
+        the drop down list.</li>
 
-        <li><strong>Signal Head Icon</strong> (ComboBox) - applies to Signal Head Icon - Entry is
-        required. If a signal head with the entered name is not in the Signal Head Table, an error
-        message results, and the Signal Head Icon is not created. <strong>Note: To automatically
-        associate signal heads with turnouts and block boundaries, you should use the automated
-        tools in the Tools menu to place signal head icons.</strong> This item is provided for
-        those cases where those automated tools cannot place a signal head icon where needed.</li>
+        <li><strong>Signal Mast Icon</strong> (ComboBox) - applies to Signal Mast Icon. Select an
+        entry from the drop down list. <strong>Note: To automatically associate signal masts with
+        turnouts and block boundaries, you should use the automated tools in the Tools menu to place
+        signal mast icons.</strong> This item is provided for those cases where those automated
+        tools cannot place a signal mast icon where needed.</li>
+
+        <li><strong>Signal Head Icon</strong> (ComboBox) - applies to Signal Head Icon. Select an
+        entry from the drop down list.
+        required.  <strong>Note: To automatically associate signal heads with turnouts and block
+        boundaries, you should use the automated tools in the Tools menu to place signal head icons.
+        </strong> This item is provided for those cases where those automated tools cannot place a
+        signal head icon where needed.</li>
       </ul>
 
       <p>When pressed, the <strong>Change Icons...</strong> button on the tool bar brings up an
@@ -982,7 +981,8 @@
 
       <p>Every item on a panel has a popup menu. <strong>Except for Markers, popup menus are only
       active in edit mode.</strong> To access the popup menu of an icon-based item (sensor icon,
-      signal icon, text label, memory label, multi-sensor, fast clock, icon label, marker,
+      signal icon, text label, memory label, global variable label, block contents label,
+      multi-sensor, fast clock, icon label, marker,
       recorder, or background): on Windows systems, right-click on the icon; on Macintosh systems,
       control-click on the icon (hold down the control key and click the mouse button on any point
       within the icon). Drawn items are similar, except for where you click. For turnouts, level
@@ -1498,11 +1498,11 @@
       automated tools for setting up signals, train tracking, etc. If you would like both worlds,
       consider building both Panel Editor and Layout Editor panels for your layout. You can switch
       between them easily using the <strong>Panels</strong> menu. Since both type of panels share
-      the same configuration items (turnouts, sensors, memory variables, block contents, signal
-      heads, etc.), whatever is set in one panel is reflected in the other if the same items are
-      displayed. After they are loaded, panels continue to function, whether they are displayed or
-      not-- they just need to show up in the <strong>Show Panel</strong> submenu. So, for example,
-      if you set up a Layout Editor panel for train tracking as described above, you can track
+      the same configuration items (turnouts, sensors, memory variables, global variables, block
+      contents, signal heads, etc.), whatever is set in one panel is reflected in the other if the
+      same items are displayed. After they are loaded, panels continue to function, whether they are
+      displayed or not-- they just need to show up in the <strong>Show Panel</strong> submenu. So, for
+      example, if you set up a Layout Editor panel for train tracking as described above, you can track
       trains in a companion Panel Editor panel just by adding Block Contents Labels or follow a
       bunch of sensors using a dedicated Switchboard.</p>
 

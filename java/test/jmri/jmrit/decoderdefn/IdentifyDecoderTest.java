@@ -157,6 +157,55 @@ public class IdentifyDecoderTest {
     }
 
     /**
+     * Test Blunami decoder with productID in CV253 and CV256.
+     */
+    @Test
+    public void testIdentifyBlunami() {
+        // create our test object
+        IdentifyDecoder i = new IdentifyDecoder(p) {
+            @Override
+            public void done(int mfgID, int modelID, int productID) {
+            }
+
+            @Override
+            public void message(String m) {
+            }
+
+            @Override
+            public void error() {
+            }
+        };
+
+        i.start();
+        Assert.assertEquals("step 1 reads CV ", 8, cvRead);
+        Assert.assertEquals("running after 1 ", true, i.isRunning());
+
+        // simulate CV read complete on CV8, start 7
+        i.programmingOpReply(141, 0);
+        Assert.assertEquals("step 2 reads CV ", 7, cvRead);
+        Assert.assertEquals("running after 2 ", true, i.isRunning());
+
+        // simulate CV read complete on CV7, start 253
+        i.programmingOpReply(72, 0);
+        Assert.assertEquals("step 3 reads CV ", 253, cvRead);
+        Assert.assertEquals("running after 3 ", true, i.isRunning());
+
+        // simulate CV read complete on CV253, does 256 and ends
+        i.programmingOpReply(1, 0);
+        Assert.assertEquals("step 4 reads CV ", 256, cvRead);
+        Assert.assertEquals("running after 4 ", true, i.isRunning());
+
+        // simulate CV read complete on CV256, ends
+        i.programmingOpReply(29, 0);
+        Assert.assertEquals("running after 5 ", false, i.isRunning());
+
+        Assert.assertEquals("found mfg ID ", 141, i.mfgID);
+        Assert.assertEquals("found model ID ", 72, i.modelID);
+        Assert.assertEquals("found product ID ", 285, i.productID);
+
+    }
+
+    /**
      * Test Hornby decoder with CV159 = 143, productIDlow in CV159 and
      * productIDhigh in CV153.
      */
@@ -429,7 +478,7 @@ public class IdentifyDecoderTest {
         jmri.util.JUnitAppender.assertWarnMessage("Stopping due to error: "
                             + p.decodeErrorCode(2));
     }
-    
+
     /**
      * Test TCS decoder with 4-digit productID.
      * Should pass
@@ -469,17 +518,17 @@ public class IdentifyDecoderTest {
         i.programmingOpReply(176, 0);
         Assert.assertEquals("step 4 reads CV ", 248, cvRead);
         Assert.assertEquals("running after 4 ", true, i.isRunning());
-        
+
         // simulate CV read complete on CV248, start 111
         i.programmingOpReply(1, 0);
         Assert.assertEquals("step 5 reads CV 111", 111, cvRead);
         Assert.assertEquals("running after 5 ", true, i.isRunning());
-        
+
         // simulate CV read complete on CV111, start 110
         i.programmingOpReply(1, 0);
         Assert.assertEquals("step 6 reads CV ", 110, cvRead);
         Assert.assertEquals("running after 6 ", true, i.isRunning());
-        
+
         // simulate CV read complete on CV110, start end
         i.programmingOpReply(2, 0);
 
@@ -487,7 +536,7 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("found model ID ", 5, i.modelID);
         Assert.assertEquals("found product ID ", 33620400, i.productID);
     }
-    
+
     /**
      * Test TCS decoder with single byte, CV249 productID. Sound decoders pre V5
      * Should pass
@@ -527,17 +576,17 @@ public class IdentifyDecoderTest {
         i.programmingOpReply(176, 0);
         Assert.assertEquals("step 4 reads CV ", 248, cvRead);
         Assert.assertEquals("running after 4 ", true, i.isRunning());
-        
+
         // simulate CV read complete on CV248, start 111
         i.programmingOpReply(1, 0);
         Assert.assertEquals("step 5 reads CV 111", 111, cvRead);
         Assert.assertEquals("running after 5 ", true, i.isRunning());
-        
+
         // simulate CV read complete on CV111, start 110
         i.programmingOpReply(1, 0);
         Assert.assertEquals("step 6 reads CV ", 110, cvRead);
         Assert.assertEquals("running after 6 ", true, i.isRunning());
-        
+
         // simulate CV read complete on CV110, start end
         i.programmingOpReply(2, 0);
 
@@ -545,7 +594,7 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("found model ID ", 4, i.modelID);
         Assert.assertEquals("found product ID ", 176, i.productID);
     }
-    
+
     /**
      * Test TCS decoder with single byte, CV249 productID. Non-sound decoders only).
      * Should pass

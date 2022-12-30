@@ -2,11 +2,15 @@ package jmri.jmrix.loconet.slotmon;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
@@ -97,6 +101,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         // install a button renderer & editor in the "ESTOP" column for stopping a loco
         setColumnToHoldEStopButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.ESTOPCOLUMN));
 
+        // Install a numeric format for ConsistAddress
+        setColumnForBlankWhenZero(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.CONSISTADDRESS));
         // add listener object so checkboxes function
 
         refreshAllButton.addActionListener((ActionEvent e) -> {
@@ -157,6 +163,43 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         slotTable.setRowHeight(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().height);
         slotTable.getColumnModel().getColumn(column)
                 .setPreferredWidth(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().width);
+    }
+
+    /*
+     * Helper class to format number and optionally make blank when zero
+     */
+    private static class NumberFormatRenderer extends DefaultTableCellRenderer
+    {
+        public NumberFormatRenderer(String pattern, boolean suppressZero) {
+            super();
+            this.pattern = pattern;
+            this.suppressZero = suppressZero;
+            setHorizontalAlignment(JLabel.RIGHT);
+        }
+        @Override
+        public void setValue(Object value)
+        {
+            try
+            {
+                if (value != null && value instanceof Number) {
+                    if (suppressZero && ((Number) value).doubleValue() == 0.0 ) {
+                        value = "";
+                    }
+                    NumberFormat formatter = new DecimalFormat(pattern);
+                    value = formatter.format(value);
+                }
+            }
+            catch(IllegalArgumentException e) {}
+            super.setValue(value);
+        }
+        private String pattern;
+        private boolean suppressZero;
+    }
+
+    void setColumnForBlankWhenZero(JTable slotTable, int column) {
+        TableColumnModel tcm = slotTable.getColumnModel();
+        TableCellRenderer renderer = new NumberFormatRenderer("####",true);
+        tcm.getColumn(column).setCellRenderer(renderer);
     }
 
     void setColumnToHoldEStopButton(JTable slotTable, int column) {

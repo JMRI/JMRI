@@ -30,7 +30,7 @@
       <name>Stop</name>
       <rule>Article 101</rule>
       <indication>ARRET/Stop</indication>
-      <description>CARRE D'ARRET ROUGE-ABSOLUTE RED STOP SIGNAL> commande l'arrêt </description>
+      <description>CARRE D'ARRET ROUGE-ABSOLUTE RED STOP SIGNAL - commande l'arrêt </description>
       <comment>commande l'arrêt avant le signal.C'est un signal de protection non franchissable.oeilleton éteint.</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
@@ -41,7 +41,7 @@
       <name>Stop Purple</name>
       <rule>Article 102</rule>
       <indication>ARRET/Stop</indication>
-      <description>CARRE D'ARRET VIOLET-ABSOLUTE PURPLE STOP SIGNAL> commande l'arrêt </description>
+      <description>CARRE D'ARRET VIOLET-ABSOLUTE PURPLE STOP SIGNAL - commande l'arrêt </description>
       <comment>commande l'arrêt avant le signal Violet.C'est un signal de protection non franchissable.oeilleton éteint.</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
@@ -548,7 +548,7 @@
       <rule>Article 212</rule>
       <indication>Stop voie courte en gare- short stop at station</indication>
       <description>Dans certaines gares, en complément de l’avertissement présenté sur le panneau portant le carré d’entrée, il est fait usage d’une bande lumineuse jaune horizontalek</description>
-      <comment> Cette bande indique au conducteur que la voie de réception correspondante est une voie à quai de courte longueur, ou bien que sa longueur se trouve réduite, soit par la présence de véhicules en stationnement aux abords du point habituel d’arrêt des trains longs, soit par la fermeture d’un signal d’arrêt intermédiaire (protection d’une jonction, par exemple). </comment>
+      <comment>Cette bande indique au conducteur que la voie de réception correspondante est une voie à quai de courte longueur, ou bien que sa longueur se trouve réduite, soit par la présence de véhicules en stationnement aux abords du point habituel d’arrêt des trains longs, soit par la fermeture d’un signal d’arrêt intermédiaire (protection d’une jonction, par exemple). </comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
@@ -559,7 +559,7 @@
       <rule>Article 205</rule>
       <indication>guidon d’arrêt-Stop</indication>
       <description>Le guidon d’arrêt fermé présente en signalisation lumineuse, une bande lumineuse rouge horizontale </description>
-      <comment> le guidon d’arrêt fermé commande au conducteur l’arrêt avant le signal.</comment>
+      <comment>le guidon d’arrêt fermé commande au conducteur l’arrêt avant le signal.</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
@@ -581,7 +581,7 @@
       <rule>Article 205</rule>
       <indication>ouverture guidon d’arrêt-Clear</indication>
       <description>Le guidon d’arrêt ne présente aucune indication particulière en position d’ouverture.</description>
-      <comment> celle-ci étant seulement caractérisée en signalisation lumineuse, par l’extinction de la bande rouge. </comment>
+      <comment>celle-ci étant seulement caractérisée en signalisation lumineuse, par l’extinction de la bande rouge. </comment>
       <speed>Clear</speed>
       <speed2>Clear</speed2>
       <route>Either</route>
@@ -1131,7 +1131,7 @@
       <rule>Article ?</rule>
       <indication>Tableau d'Entrée à Contre Sens</indication>
       <description>Indique une entrée à contre sens</description>
-      <comment> Indique au mécanicien une entrée à contre sens d'une installations Permanentes de Contre Sens</comment>
+      <comment>Indique au mécanicien une entrée à contre sens d'une installations Permanentes de Contre Sens</comment>
       <speed>Slow</speed>
       <speed2>Slow</speed2>
       <route>Either</route>
@@ -1142,7 +1142,7 @@
       <rule>Article ?</rule>
       <indication>Tableau de Sortie du Contre Sens</indication>
       <description>Indique une sortie du contre sens</description>
-      <comment> Indique au mécanicien une sortie du contre sens de l'installations Permanentes de Contre Sens</comment>
+      <comment>Indique au mécanicien une sortie du contre sens de l'installations Permanentes de Contre Sens</comment>
       <speed>Slow</speed>
       <speed2>Slow</speed2>
       <route>Either</route>
@@ -1150,8 +1150,8 @@
  </aspect>
  <aspect>
       <name>Not Lit</name>
-      <rule> Sans </rule>
-      <indication> Dark </indication>
+      <rule>Sans </rule>
+      <indication>Dark </indication>
       <description>Dark</description>
       <comment>Dark</comment>
       <speed>Stop</speed>

@@ -232,8 +232,8 @@
       The Throttle Window is Jynstrumentable, particularly with more advanced function
       controls.<br>
       <br>
-      <a href="https://jmri.org/jython/Jynstruments/ThrottleFrame/"> A few sample
-      Jynstruments are delivered</a>, some for function control, others for camera image integratio
+      <a href="https://www.jmri.org/jython/Jynstruments/ThrottleFrame/"> A few sample
+      Jynstruments are delivered</a>, some for function control, others for camera image integration
       into a JMRI throttle window, roster image display etc...<br><br>
       <span style="font-style: italic;">Note that Throttle Window toolbar is Jynstrumentable too,
       so here we drop the Jynstruments on the window content</span><span style=

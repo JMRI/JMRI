@@ -71,9 +71,9 @@
       destination platform.</p>
 
       <h4 id="speed">Speed Indicators</h4>
-      <a href="https://mysite.du.edu/~jcalvert/railway/belgian.htm"><img src=
+      <img src=
       "../../../package/jmri/jmrit/beantable/images/speedindicbelg40.gif" class="floatRight" width=
-      "60" height="119" alt="Speed Indicator figure by J. Calvert"></a>
+      "60" height="119" alt="Speed Indicator figure by J. Calvert">
       <p>A Speed Indicator as used in Dutch (Prorail) and Belgian (NMBS/SNCB) railways will display
       an illuminated digit below the main Signal Head, e.g. a "4" restricts the maximum speed to 40
       km/h.</p>
@@ -115,7 +115,7 @@
       "../../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</p>
 
       <p>For more information on creating and displaying panels, including how to show Signals on
-      your Panels, please see the <a href="../../apps/PanelPro/Panels.shtml">Panels help
+      your Panels, please see the <a href="../../apps/PanelPro/index.shtml">Panels help
       pages</a>.</p>
 
       <p>Back to the <a href="index.shtml#tools">Signaling main help page</a>.</p>

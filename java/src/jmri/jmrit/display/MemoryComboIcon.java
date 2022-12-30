@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractButton;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2012
  * @since 2.7.2
  */
-public class MemoryComboIcon extends PositionableJPanel
+public class MemoryComboIcon extends MemoryOrGVComboIcon
         implements java.beans.PropertyChangeListener, ActionListener {
 
     private final JComboBox<String> _comboBox;
@@ -73,35 +74,6 @@ public class MemoryComboIcon extends PositionableJPanel
     @Override
     public JComboBox<String> getTextComponent() {
         return _comboBox;
-    }
-
-    class ComboModel extends DefaultComboBoxModel<String> {
-
-        ComboModel() {
-            super();
-        }
-
-        ComboModel(String[] l) {
-            super(l);
-        }
-
-        @Override
-        public void addElement(String obj) {
-            if (getIndexOf(obj) >= 0) {
-                return;
-            }
-            super.addElement(obj);
-            updateMemory();
-        }
-
-        @Override
-        public void insertElementAt(String obj, int idx) {
-            if (getIndexOf(obj) >= 0) {
-                return;
-            }
-            super.insertElementAt(obj, idx);
-            updateMemory();
-        }
     }
 
     @Override
@@ -165,6 +137,7 @@ public class MemoryComboIcon extends PositionableJPanel
         return namedMemory.getBean();
     }
 
+    @Override
     public ComboModel getComboModel() {
         return _model;
     }
@@ -174,7 +147,7 @@ public class MemoryComboIcon extends PositionableJPanel
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        updateMemory();
+        update();
     }
 
     // update icon as state of Memory changes
@@ -196,7 +169,8 @@ public class MemoryComboIcon extends PositionableJPanel
         return name;
     }
 
-    private void updateMemory() {
+    @Override
+    protected void update() {
         if (namedMemory == null) {
             return;
         }
@@ -260,9 +234,11 @@ public class MemoryComboIcon extends PositionableJPanel
                 p.add(p1);
                 p.add(scrollPane);
                 p1 = new JPanel();
-                p1.add(new JLabel(Bundle.getMessage("newItem"), SwingConstants.RIGHT));
-                textfield.setMaximumSize(textfield.getPreferredSize());
-                p1.add(textfield);
+                JPanel pInner1 = new JPanel();
+                pInner1.setLayout(new BoxLayout(pInner1, BoxLayout.X_AXIS));
+                pInner1.add(new JLabel(Bundle.getMessage("newItem"), SwingConstants.RIGHT));
+                pInner1.add(textfield);
+                p1.add(pInner1);
                 p.add(p1);
                 JPanel p2 = new JPanel();
                 //p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));

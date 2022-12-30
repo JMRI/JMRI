@@ -83,11 +83,18 @@
 
                   <xs:sequence>
 
-                    <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1">
+                    <xs:element name="name" minOccurs="1" maxOccurs="1">
                       <xs:annotation><xs:documentation>
                       This must match zero or one "aspectname" element
                       in each appearance definition file.
                       </xs:documentation></xs:annotation>
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="comment" type="xs:string"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
                     </xs:element>
 
                     <xs:element name="title" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
@@ -97,8 +104,8 @@
                     <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     <xs:element name="comment" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     <xs:element name="imagelink" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
-                    <xs:element name="speed" type="xs:string" minOccurs="1" maxOccurs="unbounded"></xs:element>
-                    <xs:element name="speed2" type="xs:string" minOccurs="1" maxOccurs="unbounded"></xs:element>
+                    <xs:element name="speed" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+                    <xs:element name="speed2" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
                     <xs:element name="route" minOccurs="0" maxOccurs="1">
                      <xs:simpleType>
                         <xs:restriction base="xs:string">

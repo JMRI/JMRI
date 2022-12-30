@@ -23,9 +23,9 @@
 
       <p>XML persistance is done via some explicitly written code. Basically, certain classes
       register themselves with a instance of the "<a href=
-      "https://jmri.org/JavaDoc/doc/jmri/ConfigureManager.html">ConfigureManager</a>". Normally,
+      "https://www.jmri.org/JavaDoc/doc/jmri/ConfigureManager.html">ConfigureManager</a>". Normally,
       that will be the implementation that stores to and loads from XML files: <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/configurexml/ConfigXmlManager.html">jmri.configurexml.ConfigXmlManager</a>.
+      "https://www.jmri.org/JavaDoc/doc/jmri/configurexml/ConfigXmlManager.html">jmri.configurexml.ConfigXmlManager</a>.
       When it's time to store, the ConfigureXmlManager is told to do it. It goes through the
       registered objects and finds the persisting class responsible for storing the object. E.g.
       class a.b.Foo will have the class a.b.configurexml.FooXml located. If that class is found,
@@ -135,9 +135,9 @@
 
       <p>Note that in some cases, there's an inheritance relationship amoung the persisting classes
       that can help. For example, the LocoNet <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html">LnSensorManagerXml</a>
+      "https://www.jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html">LnSensorManagerXml</a>
       class inherits from <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/configurexml/AbstractTurnoutManagerConfigXML.html">jmri.configurexml.AbstractSensorManagerConfigXML</a>,
+      "https://www.jmri.org/JavaDoc/doc/jmri/managers/configurexml/AbstractTurnoutManagerConfigXML.html">jmri.managers.configurexml.AbstractSensorManagerConfigXML</a>,
       which does almost all the work of storing and loading sensors.</p>
 
       <h3 id="errors">Handling Errors</h3>
@@ -216,7 +216,7 @@
         after a decent interval.</li>
       </ul>
       There's also a service-oriented approach. For more on that, please see <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/configurexml/ClassMigration.html">jmri.configurexml.ClassMigration</a>
+      "https://www.jmri.org/JavaDoc/doc/jmri/configurexml/ClassMigration.html">jmri.configurexml.ClassMigration</a>
       that works in a similar way. For an example, see <a href=
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/pi/configurexml/RaspberryPiClassMigration.java">
       jmri.jmrix.pi.configurexml.RaspberryPiClassMigration</a>
@@ -226,7 +226,7 @@
 
       <p>For example, layout information is stored in XML files as a "layout-config" element, whose
       contents are then defined via a schema file. These files are kept in the <a href=
-      "https://jmri.org/xml/schema">xml/schema</a> directory.</p>
+      "https://www.jmri.org/xml/schema/">xml/schema</a> directory.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

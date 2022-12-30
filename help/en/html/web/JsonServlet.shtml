@@ -39,7 +39,7 @@
       servlet and provides some examples of use.</p>
 
       <p><strong>Note</strong> the JMRI JSON protocol is documented in <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">JMRI API
+      "https://www.jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">JMRI API
       Documentation</a>.</p>
 
       <h2 id="jmri_json_servlet">JMRI JSON Servlet</h2>
@@ -124,7 +124,7 @@
           A JSON array of valid types for your JMRI installation is available by using the
           <em>type</em> "<code><a href="http://localhost:12080/json/type">type</a></code>" (with
           JMRI Web Server running). See the <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">protocol
+          "https://www.jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">protocol
           documentation</a> for more details.
         </dd>
 
@@ -167,21 +167,21 @@
 
         <dd>
           source <a href=
-          "https://github.com/JMRI/JMRI/blob/master/web/ts/operations.js">/ts/operations.js</a>
+          "https://github.com/JMRI/JMRI/blob/master/web/js/operations.js">/js/operations.js</a>
         </dd>
 
         <dt>Panel</dt>
 
         <dd>
           source <a href=
-          "https://github.com/JMRI/JMRI/blob/master/web/ts/panel.js">/ts/panel.js</a>
+          "https://github.com/JMRI/JMRI/blob/master/web/js/panel.js">/js/panel.js</a>
         </dd>
 
         <dt>JSON Console</dt>
 
         <dd>
           source <a href=
-          "https://github.com/JMRI/JMRI/blob/master/web/ts/json-console.js">/ts/json-console.js</a>
+          "https://github.com/JMRI/JMRI/blob/master/web/js/json-console.js">/js/json-console.js</a>
         </dd>
 
         <p>Note: The source code for the above is found in the web/ts directory, which contains
@@ -190,7 +190,8 @@
             for actual execution.
 
         <dt>
-          <a href="/web/power.html">Power Demonstration</a>
+          <a href="http://localhost:12080/web/power.html">Power Demonstration</a>  (with
+          JMRI Web Server running).
         </dt>
 
         <dd>

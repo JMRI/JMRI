@@ -558,15 +558,9 @@
 
       <h2 id="catalpha">Category/Alphabetic Index</h2>
 
-      <p>This index cross-references hardware and products by the categories under which they
-      appear on this page. Click on a category to go to that category on this page. Click on a
-      hardware item to go to the JMRI Help page for that product or family. The sidebar provides an
-      alphabetic list.</p>
 
-      <div class="row">
-        <div class="column">
-          <em style="padding-left: 1em;"><a href="#layout">Layout elements:</a></em> Describe the
-          physical layout
+          <h3 id="layout">Layout elements:</h3>
+          Describe the physical layout
           <ul>
             <li>Layout Editor (LE) Panel</li>
 
@@ -583,8 +577,9 @@
             <li>MORE</li>
           </ul>
           <br>
-          <em style="padding-left: 1em;"><a href="#roster">Roster information:</a></em> Specify
-          engine and other DCC controlled components
+
+          <h3 id="roster">Roster information:</h3>
+          Specify engine and other DCC controlled components
           <ul>
             <li>Roster main page</li>
 
@@ -592,11 +587,10 @@
 
             <li>Roster group</li>
           </ul>
-        </div>
+          <br>
 
-        <div class="column">
-          <em style="padding-left: 1em;"><a href="#opns">Operations elements:</a></em> Additional
-          information about the physical layout used for operational control of the railroad
+          <h3 id="opns">Operations elements:</h3>
+          Additional information about the physical layout used for operational control of the railroad
           <ul>
             <li>Block</li>
 
@@ -618,11 +612,10 @@
 
             <li>MORE</li>
           </ul>
-        </div>
+          <br>
 
-        <div class="column">
-          <em style="padding-left: 1em;"><a href="#pref">System preferences:</a></em> Information
-          used by JMRI to customize look, feel, and operation of the JMRI system
+        <h3 id="pref">System preferences:</h3>
+        Information used by JMRI to customize look, feel, and operation of the JMRI system
           <ul>
             <li>Connection</li>
 
@@ -631,7 +624,8 @@
             <li>MORE</li>
           </ul>
           <br>
-          <em style="padding-left: 1em;"><a href="#other">Other:</a></em>
+
+          <h3 id="other">Other:</h3>
           <ul>
             <li>Window size/position</li>
 
@@ -639,8 +633,7 @@
 
             <li>MORE</li>
           </ul>
-        </div>
-      </div>
+          <br>
 
       <p><a href="#TopOfPage">[Go to top of page]</a>
       </p>
