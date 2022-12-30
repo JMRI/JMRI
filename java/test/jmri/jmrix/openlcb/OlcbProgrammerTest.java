@@ -41,7 +41,7 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         JUnitUtil.setUp();
         testIface = new OlcbTestInterface();
         testIface.waitForStartup();
-        programmer = new OlcbProgrammer(testIface.iface);
+        programmer = new OlcbProgrammer(testIface.iface, null);
     }
 
     @Override

@@ -45,7 +45,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
     private final SystemConnectionMemo system;
 
     public OlcbProgrammerManager(SystemConnectionMemo system) {
-        super(new OlcbProgrammer(system.get(OlcbInterface.class)));
+        super(new OlcbProgrammer(system.get(OlcbInterface.class), null));
         this.system = system;
     }
 

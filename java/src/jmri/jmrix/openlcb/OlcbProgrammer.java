@@ -7,9 +7,7 @@ import javax.annotation.Nullable;
 
 import jmri.ProgListener;
 import jmri.ProgrammingMode;
-import org.openlcb.NodeID;
-import org.openlcb.OlcbInterface;
-import org.openlcb.VerifyNodeIDNumberMessage;
+import org.openlcb.*;
 import org.openlcb.implementations.MemoryConfigurationService;
 
 /**
@@ -56,6 +54,8 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     /// Memory space number used for DCC CVs.
     public static final int SPACE_DCC_CV = 0xF8;
 
+    /// Programming tracks export this event as a producer.
+    public static final EventID IS_PROGRAMMINGTRACK_EVENT = new EventID("09.00.99.FE.FF.FF.00.02");
 
     /// No locomotive is detected on the programming track.
     public static final int ERROR_NO_LOCO = 0x2031;
@@ -88,6 +88,9 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     /// Stores the dcc address type (for addressed programmer only).
     private boolean dccIsLong;
 
+    /// Listens for producer identified messages denoting a programming track.
+    private ProgTrackListener listener;
+
     /**
      * Creates a programmer for a given OpenLCB node.
      *
@@ -95,11 +98,18 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
      * @param nid    the target node to use for DCC CV programming. This can be a train node or a program track node.
      */
     public OlcbProgrammer(OlcbInterface system, @Nullable NodeID nid) {
-        this(system);
+        this.iface = system;
         this.nid = nid;
         if (nid != null) {
-            // Sends an addressed verify node ID message to ensure that the remote node exists and we have an alias.
-            getInterface().getOutputConnection().put(new VerifyNodeIDNumberMessage(nid), null);
+            system.getOutputConnection().registerStartNotification(new Connection.ConnectionListener() {
+                @Override
+                public void connectionActive(Connection connection) {
+                    // Sends an addressed verify node ID message to ensure that the remote node exists and we have an alias.
+                    getInterface().getOutputConnection().put(new VerifyNodeIDNumberMessage(nid), null);
+                }
+            });
+        } else {
+            startProgTrackLookup();
         }
     }
 
@@ -114,11 +124,6 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
         this(system, OlcbThrottle.guessDCCNodeID(isLong, address));
         this.dccIsLong = isLong;
         this.dccAddress = address;
-    }
-
-    public OlcbProgrammer(OlcbInterface system) {
-        this.iface = system;
-        this.nid = null;
     }
 
     /**
@@ -232,6 +237,55 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     private long getCvAddress(String cvName) {
         int cvNum = Integer.parseInt(cvName);
         return cvNum - 1;
+    }
+
+    class ProgTrackListener extends MessageDecoder {
+        @Override
+        public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender) {
+            if (!msg.getEventID().equals(IS_PROGRAMMINGTRACK_EVENT)) {
+                return;
+            }
+            if (msg.getSourceNodeID() == null) {
+                log.error("Found programming track with null source node.");
+                return;
+            }
+            if (foundProgrammingTrack(msg.getSourceNodeID())) {
+                iface.unRegisterMessageListener(this);
+                isRegistered = false;
+            }
+        }
+
+        boolean isRegistered = false;
+    }
+
+    private void startProgTrackLookup() {
+        if (listener == null) {
+            listener = new ProgTrackListener();
+        }
+        if (!listener.isRegistered) {
+            iface.registerMessageListener(listener);
+            listener.isRegistered = true;
+        }
+        iface.getOutputConnection().registerStartNotification(new Connection.ConnectionListener() {
+            @Override
+            public void connectionActive(Connection connection) {
+                iface.getOutputConnection().put(new IdentifyProducersMessage(
+                        iface.getNodeId(), IS_PROGRAMMINGTRACK_EVENT), null);
+            }
+        });
+    }
+
+    /**
+     * Notifies that a programming track device was found.
+     * @param nodeID Node ID of the programming track node.
+     * @return true if no further programming tracks need to be looked for.
+     */
+    private boolean foundProgrammingTrack(@Nonnull NodeID nodeID) {
+        if (nid == null) {
+            nid = nodeID;
+            log.info("Found programming track {}.", nodeID);
+        }
+        return true;
     }
 
     /**
