@@ -1137,3 +1137,4 @@
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoExtendedFmap_v4.1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoSound_v4.1.xml"/>
 </decoder-config>
+
