@@ -389,4 +389,27 @@ public class ArchitectureTest {
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.util.swing.BeanSelectPanel");
 */
+
+    /**
+     * No classes in jmri.jmrit.logixng.actions should access jmri.jmrit.logixng.NamedBeanAddressing.
+     * They should use jmri.jmrit.logixng.util.LogixNG_Select* instead.
+     *./
+    @ArchTest
+    public static final ArchRule checkLogixNGActionsNotUsingNamedBeanAddressing = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.actions")
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.jmrit.logixng.NamedBeanAddressing");
+
+    /**
+     * No classes in jmri.jmrit.logixng.actions should access jmri.jmrit.logixng.NamedBeanAddressing.
+     * They should use jmri.jmrit.logixng.util.LogixNG_Select* instead.
+     *./
+    @ArchTest
+    public static final ArchRule checkLogixNGExpressionsNotUsingNamedBeanAddressing = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.expressions")
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.jmrit.logixng.NamedBeanAddressing");
+*/
 }

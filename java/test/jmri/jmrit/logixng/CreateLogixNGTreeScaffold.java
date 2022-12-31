@@ -359,8 +359,8 @@ public class CreateLogixNGTreeScaffold {
         actionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
         actionBlock.getSelectEnum().setEnum(ActionBlock.DirectOperation.SetValue);
 
-        actionBlock.setDataAddressing(NamedBeanAddressing.Direct);
-        actionBlock.setBlockValue("ABC");
+        actionBlock.getSelectBlockValue().setAddressing(NamedBeanAddressing.Direct);
+        actionBlock.getSelectBlockValue().setValue("ABC");
 
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
@@ -3092,11 +3092,11 @@ public class CreateLogixNGTreeScaffold {
 
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
 
-        expressionBlock.setStateAddressing(NamedBeanAddressing.Direct);
-        expressionBlock.setBeanState(ExpressionBlock.BlockState.ValueMatches);
+        expressionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.ValueMatches);
 
-        expressionBlock.setDataAddressing(NamedBeanAddressing.Direct);
-        expressionBlock.setBlockValue("XYZ");
+        expressionBlock.getSelectBlockValue().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectBlockValue().setValue("XYZ");
 
         maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
         and.getChild(indexExpr++).connect(maleSocket);
@@ -3110,8 +3110,8 @@ public class CreateLogixNGTreeScaffold {
 
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
 
-        expressionBlock.setStateAddressing(NamedBeanAddressing.Direct);
-        expressionBlock.setBeanState(ExpressionBlock.BlockState.Occupied);
+        expressionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.Occupied);
 
         maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
         and.getChild(indexExpr++).connect(maleSocket);
@@ -3125,8 +3125,8 @@ public class CreateLogixNGTreeScaffold {
 
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
 
-        expressionBlock.setStateAddressing(NamedBeanAddressing.LocalVariable);
-        expressionBlock.setStateLocalVariable("index2");
+        expressionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionBlock.getSelectEnum().setLocalVariable("index2");
 
         maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
         and.getChild(indexExpr++).connect(maleSocket);
@@ -3140,8 +3140,8 @@ public class CreateLogixNGTreeScaffold {
 
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
 
-        expressionBlock.setStateAddressing(NamedBeanAddressing.Formula);
-        expressionBlock.setStateFormula("\"IT\"+index2");
+        expressionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Formula);
+        expressionBlock.getSelectEnum().setFormula("\"IT\"+index2");
 
         maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
         and.getChild(indexExpr++).connect(maleSocket);
@@ -3155,8 +3155,8 @@ public class CreateLogixNGTreeScaffold {
 
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
 
-        expressionBlock.setStateAddressing(NamedBeanAddressing.Reference);
-        expressionBlock.setStateReference("{IM2}");
+        expressionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        expressionBlock.getSelectEnum().setReference("{IM2}");
 
         maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
         and.getChild(indexExpr++).connect(maleSocket);
@@ -3170,8 +3170,8 @@ public class CreateLogixNGTreeScaffold {
 
         expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
 
-        expressionBlock.setStateAddressing(NamedBeanAddressing.Direct);
-        expressionBlock.setBeanState(ExpressionBlock.BlockState.Allocated);
+        expressionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.Allocated);
 
         maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
         and.getChild(indexExpr++).connect(maleSocket);

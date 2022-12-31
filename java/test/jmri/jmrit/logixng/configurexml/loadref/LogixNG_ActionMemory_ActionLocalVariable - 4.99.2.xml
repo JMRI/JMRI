@@ -3,8 +3,8 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>5</major>
-    <minor>1</minor>
-    <test>6</test>
+    <minor>3</minor>
+    <test>1</test>
     <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -406,14 +406,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Wed Nov 30 19:01:04 CET 2022</date>
+      <date>Sat Dec 31 14:40:11 CET 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable%20-%204.99.2.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed Nov 30 19:01:04 CET 2022</date>
+      <date>Sat Dec 31 14:40:11 CET 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.1.6plus+daniel+2022-11-30T17:57:58Z+Rf06ad40 on Wed Nov 30 19:01:04 CET 2022-->
+  <!--Written by JMRI version 5.3.1plus+daniel+2022-12-31T13:35:16Z+Re863d9a on Sat Dec 31 14:40:11 CET 2022-->
 </layout-config>

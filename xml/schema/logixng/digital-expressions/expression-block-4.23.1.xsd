@@ -47,15 +47,20 @@
               <xs:element name="block" type="beanNameType" minOccurs="0" maxOccurs="1"/>
               <!-- These are for backwards compability up until JMRI 4.99.5 -->
 
+              <!-- These are for backwards compability up until JMRI 4.99.7 -->
               <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
               <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <!-- These are for backwards compability up until JMRI 4.99.7 -->
 
               <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="0" maxOccurs="1"/>
 
+              <xs:element name="blockStateData" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
+
+              <!-- These are for backwards compability up until JMRI 5.3.2 -->
               <xs:element name="stateAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
-              <xs:element name="blockState" minOccurs="1" maxOccurs="1">
+              <xs:element name="blockState" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
                     <xs:enumeration value="Occupied"/>
@@ -63,23 +68,23 @@
                     <xs:enumeration value="Other"/>
                     <xs:enumeration value="Allocated"/>
                     <xs:enumeration value="ValueMatches"/>
-                    <xs:enumeration value="MemoryMatches"/>     <!-- deprecated 4.23.5 remove 4.25.1 -->
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
               <xs:element name="stateReference" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="stateLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="stateFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <!-- These are for backwards compability up until JMRI 5.3.2 -->
 
+              <xs:element name="blockValueData" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1" />
+
+              <!-- These are for backwards compability up until JMRI 5.3.2 -->
               <xs:element name="dataAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
               <xs:element name="dataReference" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="dataLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="dataFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
-
-              <xs:element name="blockConstant" type="xs:string" minOccurs="0" maxOccurs="1"/>       <!-- deprecated 4.23.5 remove 4.25.1 -->
-              <xs:element name="blockMemory" type="beanNameType" minOccurs="0" maxOccurs="1"/>      <!-- deprecated 4.23.5 remove 4.25.1 -->
-
               <xs:element name="blockValue" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <!-- These are for backwards compability up until JMRI 5.3.2 -->
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
