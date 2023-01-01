@@ -283,6 +283,11 @@
             <ul>
                 <li></li>
             </ul>
+	    
+        <h4>Piko</h4>
+            <ul>
+                <li>Piko Smart Decoder 4.1 and XP5.1</li>
+            </ul>
 
         <h4>Rautenhaus</h4>
             <ul>
@@ -331,7 +336,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>New decoder file for Tillig BR 89 steam loco</li>
             </ul>
 
         <h4>Umelec</h4>
