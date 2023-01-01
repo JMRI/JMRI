@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import jmri.ProgListener;
+import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import org.openlcb.*;
 import org.openlcb.implementations.MemoryConfigurationService;
@@ -105,7 +106,8 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
                 @Override
                 public void connectionActive(Connection connection) {
                     // Sends an addressed verify node ID message to ensure that the remote node exists and we have an alias.
-                    getInterface().getOutputConnection().put(new VerifyNodeIDNumberMessage(nid), null);
+                    getInterface().getOutputConnection().put(
+                            new VerifyNodeIDNumberMessage(getInterface().getNodeId(),nid), null);
                 }
             });
         } else {
@@ -149,7 +151,8 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
      * {@inheritDoc}
      */
     @Override
-    public void writeCV(String CV, int val, ProgListener p) {
+    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
+        checkProgramTrack();
         getInterface().getMemoryConfigurationService().requestWrite(nid, SPACE_DCC_CV, getCvAddress(CV), new byte[]{(byte) val}, new MemoryConfigurationService.McsWriteHandler() {
             @Override
             public void handleSuccess() {
@@ -167,7 +170,8 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
      * {@inheritDoc}
      */
     @Override
-    public void readCV(String CV, ProgListener p) {
+    public void readCV(String CV, ProgListener p) throws ProgrammerException {
+        checkProgramTrack();
         getInterface().getMemoryConfigurationService().requestRead(nid, SPACE_DCC_CV, getCvAddress(CV), 1, new MemoryConfigurationService.McsReadHandler() {
             @Override
             public void handleReadData(NodeID nodeID, int i, long l, byte[] bytes) {
@@ -192,7 +196,8 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
      * {@inheritDoc}
      */
     @Override
-    public void confirmCV(String CV, int val, ProgListener p) {
+    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
+        checkProgramTrack();
     }
 
     /**
@@ -290,6 +295,12 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
             log.info("Found programming track {}.", nodeID);
         }
         return true;
+    }
+
+    private void checkProgramTrack() throws ProgrammerException {
+        if (nid == null) {
+            throw new ProgrammerException("No programming track found.");
+        }
     }
 
     /**
