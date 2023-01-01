@@ -37,6 +37,7 @@ public class OlcbTestHelper {
     protected boolean testWithCanFrameRendering = false;
     private boolean debugFrames = false;
     private FakeConnection fakeConnection;
+    FakeExecutionThread thread;
 
     /* A Connection class that forwards all messages to a
      * mock connection passed in at construction time.
@@ -62,6 +63,9 @@ public class OlcbTestHelper {
     }
 
     public void dispose() {
+        if (thread != null) {
+            thread.waitForEmpty();
+        }
         expectNoMessages();
         iface.dispose();
         iface = null;
@@ -77,7 +81,7 @@ public class OlcbTestHelper {
     }
 
     public void enableSingleThreaded() {
-        FakeExecutionThread thread = new FakeExecutionThread();
+        thread = new FakeExecutionThread();
         iface.setLoopbackThread(thread);
         iface.runOnThreadPool(thread);
     }
@@ -85,6 +89,16 @@ public class OlcbTestHelper {
     class FakeExecutionThread implements OlcbInterface.SyncExecutor, Runnable {
         private final BlockingQueue<QEntry> outputQueue = new
                 LinkedBlockingQueue<>();
+
+        public void waitForEmpty() {
+            while (!outputQueue.isEmpty()) {
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    return;
+                }
+            }
+        }
 
         @Override
         public void schedule(Runnable r) throws InterruptedException {
