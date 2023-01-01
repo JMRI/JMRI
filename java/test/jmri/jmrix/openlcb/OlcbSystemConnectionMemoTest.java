@@ -18,7 +18,7 @@ import jmri.jmrix.can.TestTrafficController;
  * @author Bob Jacobsen
  * @author Paul Bender Copyright (C) 2016
  */
-public class OlcbSystemConnectionMemoTest extends SystemConnectionMemoTestBase<OlcbSystemConnectionMemo> {
+public class OlcbSystemConnectionMemoTest extends SystemConnectionMemoTestBase<OlcbSystemConnectionMemoScaffold> {
 
     @Override
     @Test
@@ -30,7 +30,7 @@ public class OlcbSystemConnectionMemoTest extends SystemConnectionMemoTestBase<O
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        scm = new OlcbSystemConnectionMemo();
+        scm = new OlcbSystemConnectionMemoScaffold();
         TestTrafficController tc = new TestTrafficController();
         scm.setTrafficController(tc);
         InstanceManager.setDefault(CanSystemConnectionMemo.class,scm);
