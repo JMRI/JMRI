@@ -317,7 +317,7 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
                 return ProgListener.ConfirmFailed;
             case ERROR_NO_RAILCOM:
                 /// @todo how do we represent that the target loco does not support railcom?
-                return ProgListener.NoLocoDetected;
+                return ProgListener.NoAck;
             case ERROR_INVALID_RESPONSE:
                 return ProgListener.CommError;
             case ERROR_PGM_SHORT:

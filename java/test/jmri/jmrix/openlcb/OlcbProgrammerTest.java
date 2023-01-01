@@ -17,6 +17,7 @@ import org.openlcb.DatagramMessage;
 import org.openlcb.EventState;
 import org.openlcb.NodeID;
 import org.openlcb.ProducerIdentifiedMessage;
+import org.openlcb.implementations.DatagramService;
 
 /**
  * OlcbProgrammerTest.java
@@ -120,13 +121,37 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         Mockito.verify(p).programmingOpReply(37, ProgListener.OK);
     }
 
+    @Test
+    public void testReadNoReply() throws ProgrammerException {
+        registerProgramTrack();
+        prog.readCV("13", p);
+        expectInteraction(new int[]{0x20, 0x40, 0, 0, 0, 12, 0xF8, 1},
+                new int[]{0x20, 0x58, 0, 0, 0, 12, 0xF8, 0x20, 0x31});
+        Mockito.verify(p).programmingOpReply(0, ProgListener.NoLocoDetected);
+    }
+
+    @Test
+    public void testWriteNoAck() throws ProgrammerException {
+        registerProgramTrack();
+        prog.writeCV("13", 42, p);
+        expectInteraction(new int[]{0x20, 0x00, 0, 0, 0, 12, 0xF8, 42},
+                new int[]{0x20, 0x18, 0, 0, 0, 12, 0xF8, 0x20, 0x32});
+        Mockito.verify(p).programmingOpReply(0, ProgListener.ConfirmFailed);
+    }
+
+    @Test
+    public void testWriteNoRailcom() throws ProgrammerException {
+        registerProgramTrack();
+        prog.writeCV("13", 42, p);
+        expectInteraction(new int[]{0x20, 0x00, 0, 0, 0, 12, 0xF8, 42},
+                new int[]{0x20, 0x18, 0, 0, 0, 12, 0xF8, 0x20, 0x33});
+        Mockito.verify(p).programmingOpReply(0, ProgListener.NoAck);
+    }
 
     @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        log.warn("hello");
-        //h.enableSingleThreaded();
         programmer = prog = new OlcbProgrammer(h.iface, null);
         h.expectFrame(":X19914333N090099FEFFFF0002;");
         h.expectNoFrames();
@@ -139,7 +164,6 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         h.expectNoFrames();
         Mockito.verifyNoMoreInteractions(p);
         h.dispose();
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
@@ -164,7 +188,7 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     private void expectInteraction(int[] dgRequest, int[] dgResponse) {
         h.expectMessageAndNoMore(new DatagramMessage(localNid, progNid, dgRequest));
         // Acknowledged
-        h.sendMessage(new DatagramAcknowledgedMessage(progNid, localNid, 0x80));
+        h.sendMessage(new DatagramAcknowledgedMessage(progNid, localNid, DatagramService.FLAG_REPLY_PENDING));
         Mockito.verifyNoInteractions(p);
         // Response datagram
         h.sendMessageAndExpectResult(new DatagramMessage(progNid, localNid, dgResponse),
