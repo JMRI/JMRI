@@ -799,7 +799,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         # display the list to select the required python file
         if python_files == []:
             msg =  "no python files in directory " + directory
-            print msg
+            if self.logLevel > 0: print msg
             return 'cancel'
         else:
             msg = "select action file \n(must be in deirectory " + directory + " )"

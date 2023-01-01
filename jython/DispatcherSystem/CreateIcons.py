@@ -220,7 +220,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         if some_checks_OK:
             msg = "Performed some prelimiary checks to ensure the trains run correctly\n\nAll Checks OK"
             reply = Query().customQuestionMessage2(msg, "Checks", "Continue", "Look in more detail")
-            print "reply=", reply
             if reply == JOptionPane.NO_OPTION:
                 if sensors_OK:
                     Message = "All blocks have sensors"

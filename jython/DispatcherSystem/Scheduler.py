@@ -422,7 +422,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
     def execute_action(self, action):
         # execute a python file in the dispatcher directory
         file = self.action_directory() + action
-        print "file", file
+        if self.logLevel > 0: print "file", file
         with open(file) as f:
             exec(open(file).read())     # execute the file
         try:
@@ -430,7 +430,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                 exec(open(file).read())     # execute the file
         except:
             msg = 'action file ' + action + ' could not be found'
-            print(msg)
+            if self.logLevel > 0: print(msg)
             self.displayMessage(msg)
 
     def displayMessage(self, msg, title = ""):

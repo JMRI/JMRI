@@ -287,9 +287,6 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                 msg = "there must be signal masts between and beyond each pair of stopping points. "
                 msg = msg + "please insert a signal mast, or remove a station for the station pair: "
                 msg = msg + e.getItem("first_block_name") + " : " + e.getItem("last_block_name")
-               
-                print msg
-                
                 dpg=DisplayProgress_global()
                 dpg.resize()
                 dpg.Update(msg)

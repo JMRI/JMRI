@@ -11,7 +11,7 @@ import java
 import jmri
 import math
 
-from javax.swing import JTable, JScrollPane, JFrame, JPanel, JComboBox,  BorderFactory, DefaultCellEditor, JLabel, UIManager, SwingConstants
+from javax.swing import JTable, JScrollPane, JFrame, JPanel, JComboBox,  BorderFactory, DefaultCellEditor, JLabel, UIManager, SwingConstants, JFileChooser
 from javax.swing.table import  TableCellRenderer, DefaultTableCellRenderer
 from java.awt.event import MouseAdapter,MouseEvent, WindowListener, WindowEvent
 from java.awt import GridLayout, Dimension, BorderLayout, Color
@@ -19,6 +19,9 @@ from javax.swing.table import AbstractTableModel, DefaultTableModel
 from java.lang.Object import getClass
 import jarray
 from javax.swing.event import TableModelListener, TableModelEvent
+from javax.swing.filechooser import FileNameExtensionFilter
+from org.apache.commons.io import FilenameUtils
+from java.io import File
 #, defaultTableModel
 
 
@@ -290,6 +293,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         # if self.logLevel > 1: print ("FAILURE tried to run dispatcher with file {} type {} value {}".format(traininfoFileName,  type, value))
         # pass
         # return False
+        DF = None
 
 
     def set_sensor(self, sensorName, sensorState):
@@ -1200,55 +1204,19 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 class createandshowGUI(TableModelListener):
 
     def __init__(self, super):
+        self.logLevel = 0
         self.super = super
         #Create and set up the window.
 
         self.initialise_model(super)
-
-
-        # tablePanel = self.self_table()
-        # jpane = JScrollPane(tablePanel)
-        # panel = JPanel()
-        # panel.add(jpane)
-        # self.frame = JFrame("SimpleTableDemo")
         self.frame = JFrame("Set up trains")
         self.frame.setSize(600, 600);
-        #self.frame.addWindowListener(MyFrameListener())
 
         self.completeTablePanel()
         # print "about to populate"
         self.populate_action(None)
-        # self.frame.setSize(600, 600);
-        # self.frame.getContentPane().add( tablePanel )
-        # #self.frame.add(JScrollPane(panel))
-        # #self.frame.add(tablePanel)
-        # self.frame.pack();
-        # self.frame.setVisible(True)
-
         self.cancel = False
 
-        # #self.frame.setdefaultCloseOperation(JFrame.EXIT_ON_CLOSE)   #do bot close on exit
-        #
-        # #Create and set up the content pane.
-        # self.initialise_model()
-        # newContentPane = self.completeTablePanel()
-        # newContentPane.setOpaque(True) #content panes must be opaque
-        # self.scrollPane = JScrollPane()
-        # self.scrollPane.add(newContentPane)
-        # #self.frame.setContentPane(newContentPane)
-        # self.frame.setSize(600, 600);
-        #
-        # #self.frame.getContentPane().add( newContentPane )
-        # self.frame.add(self.scrollPane)
-        # #self.frame.add( newContentPane, java.awt.BorderLayout.CENTER)
-        # #Display the window.
-        # self.frame.pack();
-        # self.frame.setVisible(True);
-        #
-        # DEBUG = False;
-
-        # print "super1 set up ********************************************************************************"
-        self.cancel = False
 
     def completeTablePanel(self):
 
@@ -1285,9 +1253,13 @@ class createandshowGUI(TableModelListener):
         self.buttonPane.add(button_cancel)
         self.buttonPane.add(Box.createHorizontalGlue());
 
-        # button_save = JButton("Save", actionPerformed = self.save_action)
-        # self.buttonPane.add(button_save)
-        # self.buttonPane.add(Box.createHorizontalGlue());
+        button_savetofile = JButton("Save To File", actionPerformed = self.savetofile_action)
+        self.buttonPane.add(button_savetofile)
+        self.buttonPane.add(Box.createHorizontalGlue());
+
+        button_loadfromfile = JButton("Load From File", actionPerformed = self.loadfromfile_action)
+        self.buttonPane.add(button_loadfromfile)
+        self.buttonPane.add(Box.createHorizontalGlue());
 
         contentPane = self.frame.getContentPane()
 
@@ -1412,13 +1384,117 @@ class createandshowGUI(TableModelListener):
         self.model.remove_not_set_row()
         self.completeTablePanel()
 
-    def save_action(self, event):
-        # print "save action"
-        for row in self.model.data:
-            # print("row",row[0])
-            pass
-        #self.super.add_to_train_list_and_set_new_train_location(new_train_name, new_section_name)
-        pass
+    def savetofile_action(self, event):
+
+        #Tidy
+        self.model.remove_not_set_row()
+        self.completeTablePanel()
+
+        if self.model.getRowCount() == 0:
+            msg = "There are no valid rows"
+            result = OptionDialog().displayMessage(msg)
+            return
+
+        msg = "Saving Valid rows"
+        result = OptionDialog().displayMessage(msg)
+
+
+        dir = self.directory()
+        j = JFileChooser(dir);
+        j.setAcceptAllFileFilterUsed(False)
+        filter = FileNameExtensionFilter("text files txt", ["txt"])
+        j.addChoosableFileFilter(filter);
+        j.setDialogTitle("Select a .txt file");
+
+
+
+        ret = j.showSaveDialog(None);
+        if (ret == JFileChooser.APPROVE_OPTION) :
+            file = j.getSelectedFile()
+            if file == "" or file == None:
+                msg = "No file selected"
+                result = OptionDialog().displayMessage(msg)
+                return
+            if FilenameUtils.getExtension(file.getName()).lower() == "txt" :
+                #filename is OK as-is
+                pass
+            else:
+                #file = File(file.toString() + ".txt");  # append .txt if "foo.jpg.txt" is OK
+                file = File(file.getParentFile(), FilenameUtils.getBaseName(file.getName())+".txt") # ALTERNATIVELY: remove the extension (if any) and replace it with ".xml"
+
+        else:
+            return
+        if self.logLevel > 0: print "savetofile action", file
+        my_list = []
+        [train, block, direction, length] = [0, 1, 2, 4]
+        for row in range(len(self.model.data)):
+            train_name = str(self.model.data[row][train])
+            block_name = str(self.model.data[row][block])
+            train_direction = str(self.model.data[row][direction])
+            train_length = str(self.model.data[row][length])
+            row_list = [train_name, block_name, train_direction,train_length]
+            if self.logLevel > 0: print "x", row
+            my_list.append(row_list)
+            if self.logLevel > 0: print "y", row
+        if self.logLevel > 0: print "A"
+        self.write_list(my_list,file)
+
+
+    def loadfromfile_action(self, event):
+        # load the file
+        dir = self.directory()
+        j = JFileChooser(dir);
+        j.setAcceptAllFileFilterUsed(False)
+        filter = FileNameExtensionFilter("text files txt", ["txt"])
+        j.setDialogTitle("Select a .txt file");
+        j.addChoosableFileFilter(filter);
+        ret = j.showOpenDialog(None);
+        if (ret == JFileChooser.APPROVE_OPTION) :
+            file = j.getSelectedFile()
+            if self.logLevel > 0: print "about to read list", file
+            my_list = self.read_list(file)
+            if self.logLevel > 0: print "my_list", my_list
+            for row in reversed(range(len(self.model.data))):
+                self.model.data.pop(row)
+            i = 0
+            [train, block, direction, length] = [0, 1, 2, 4]
+            for row in my_list:
+                [train_val, block_val, direction_val, length_val] = row
+                self.model.add_row()
+                self.model.data[i][train] = train_val.replace('"','')
+                self.model.data[i][block] = block_val.replace('"','')
+                self.model.data[i][direction] = direction_val.replace('"','')
+                self.model.data[i][length] = length_val.replace('"','')
+                i += 1
+            self.completeTablePanel()
+
+            msg = "Deleting invalid rows"
+            result = OptionDialog().displayMessage(msg)
+            if result == JOptionPane.NO_OPTION:
+                return
+
+            # check the loaded contents
+            # 1) check that the trains are valid
+            # 2) ckeck that the blocks are occupied by valid trains
+            # if either of the above are not valic we blank the entries
+            # 3) Tidy
+
+            # check the trains are valid
+            b = False
+            trains_to_put_in_dropdown = [t for t in self.non_allocated_trains]
+            for row in reversed(range(len(self.model.data))):
+                #if len(self.model.data) >1:
+                    # print "row", row
+                if self.model.data[row][train] not in trains_to_put_in_dropdown:
+                    self.model.data.pop(row)
+
+            not_allocated_blocks = self.super.occupied_blocks_not_allocated()
+            for row in reversed(range(len(self.model.data))):
+                # if len(self.model.data) >1:
+                    # print "row", row
+                if self.model.data[row][block] not in not_allocated_blocks:
+                    self.model.data.pop(row)
+            self.completeTablePanel()
 
     def cancel_action(self, event):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
@@ -1441,6 +1517,55 @@ class createandshowGUI(TableModelListener):
         self.completeTablePanel()
     def set_train_selections(self, combobox):
         pass
+    def directory(self):
+        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "setup_trains"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
+    def write_list(self, a_list, file):
+        # store list in binary file so 'wb' mode
+        #file = self.directory() + "blockDirections.txt"
+        if self.logLevel > 0: print "block_info" , a_list
+        if self.logLevel > 0: print "file" , file
+        file = str(file)
+        with open(file, 'wb') as fp:
+            pass
+        if self.logLevel > 0: print "V"
+        with open(file, 'wb') as fp:
+            if self.logLevel > 0: print "B"
+            for items in a_list:
+                if self.logLevel > 0: print "C", items
+                i = 0
+                for item in items:
+                    if self.logLevel > 0: print "item", item
+                    fp.write('"%s"' %item)
+                    if i != 3: fp.write(",")
+                    i+=1
+                fp.write('\n')
+                #fp.write('\n'.join(item))
+                #fp.write(items)
+
+    # Read list to memory
+    def read_list(self, file):
+        file = str(file)
+        if self.logLevel > 0: print "read list", file
+        # for reading also binary mode is important
+        #file = self.directory() + "blockDirections.txt"
+        n_list = []
+        # try:
+        with open(file, 'rb') as fp:
+            for line in fp:
+                if self.logLevel > 0: print "line" , line
+                x = line[:-1]
+                if self.logLevel > 0: print x
+                y = x.split(",")
+                #y = [item.replace('"','') for item in y]
+                if self.logLevel > 0: print "y" , y
+                n_list.append(y)
+
+        return n_list
+        # except:
+        #     return ["",""]
 
 class MyModelListener(TableModelListener):
 
@@ -1583,13 +1708,9 @@ class MyTableModel (DefaultTableModel):
     def remove_not_set_row(self):
         b = False
         for row in reversed(range(len(self.data))):
-            if len(self.data) >1:
-                # print "row", row
-                if self.data[row][0] == "":
-                    self.data.pop(row)
-
-        if len (self.data) ==1 and self.data[0][0] == "":
-            OptionDialog().displayMessage("deleted Not Set train rows, but no train set")
+            # print "row", row
+            if self.data[row][0] == "":
+                self.data.pop(row)
 
     def add_row(self):
         # print "addidn row"

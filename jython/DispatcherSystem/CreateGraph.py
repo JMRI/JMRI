@@ -286,8 +286,8 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
     def write_list(self, a_list):
         # store list in binary file so 'wb' mode
         file = self.directory() + "blockDirections.txt"
-        print "block_info" , a_list
-        print "file"  +file
+        if self.logLevel > 0: print "block_info" , a_list
+        if self.logLevel > 0: print "file"  +file
         with open(file, 'wb') as fp:
             for items in a_list:
                 i = 0
@@ -310,9 +310,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
             with open(file, 'rb') as fp:
                 for line in fp:
                     x = line[:-1]
-                    print x
                     y = x.split(",")
-                    print "y" , y
                     n_list.append(y)
             return n_list
         except:
