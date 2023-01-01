@@ -82,7 +82,7 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     /// Target OpenLCB node to send requests to. This is set to the train node when we are an addressed programmer.
     /// It may be null if we are a global programmer and we have not looked up the programming track node ID yet.
     @Nullable
-    private NodeID nid;
+    NodeID nid;
     /// Stores the DCC address value (for addressed programmer only).
     private int dccAddress;
     /// Stores the dcc address type (for addressed programmer only).
