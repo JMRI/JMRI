@@ -329,6 +329,8 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
             case ERROR_PGM_DISABLED:
                 /// @todo this is not a very accurate representation of a configuration error.
                 return ProgListener.ProgrammerBusy;
+            default:
+                break;
         }
         if ((olcbError & 0x2000) != 0) {
             // Unknown temporary error
