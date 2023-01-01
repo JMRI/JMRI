@@ -53,6 +53,19 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
+    public void testFindProgramTrack2() {
+        programmer = prog = new OlcbProgrammer(h.iface, null);
+        h.expectFrame(":X19914333N090099FEFFFF0002;");
+        Assert.assertNull(prog.nid);
+        // Seeds alias map with a node ID.
+        h.setRemoteAlias(0x555, new NodeID(0x050101011807L));
+        // Producer identified.
+        h.sendFrame(":X19547555N090099FEFFFF0002;");
+        Assert.assertEquals(new NodeID("05.01.01.01.18.07"), prog.nid);
+        h.expectNoFrames();
+    }
+
+    @Test
     public void testAddressedReadLookup() {
         ti.flush();
         ti.clearSentMessages();
@@ -78,12 +91,14 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @AfterEach
     public void tearDown() {
         programmer = null;
+        h.dispose();
         ti.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
     OlcbTestInterface ti;
+    OlcbTestHelper h = new OlcbTestHelper();
     OlcbProgrammer prog;
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbProgrammerTest.class);

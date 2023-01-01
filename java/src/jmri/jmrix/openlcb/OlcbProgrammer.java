@@ -249,6 +249,10 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
                 log.error("Found programming track with null source node.");
                 return;
             }
+            if (msg.getSourceNodeID().getContents()[0] == 0) {
+                log.error("Found programming track with invalid source node: " + msg.getSourceNodeID().toString());
+                return;
+            }
             if (foundProgrammingTrack(msg.getSourceNodeID())) {
                 iface.unRegisterMessageListener(this);
                 isRegistered = false;

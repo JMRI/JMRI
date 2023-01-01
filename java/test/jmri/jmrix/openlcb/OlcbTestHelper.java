@@ -15,6 +15,7 @@ import org.openlcb.can.AliasMap;
 import org.openlcb.can.CanFrame;
 import org.openlcb.can.GridConnect;
 import org.openlcb.can.MessageBuilder;
+import org.openlcb.can.OpenLcbCanFrame;
 
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -115,6 +116,16 @@ public class OlcbTestHelper {
         }
     }
 
+    /**
+     * Defines an alias for a remote node. This is equivalent to sending an AMD frame for the given alias and node ID
+     * via sendFrame. It essentially simulates a remote node showing up on the bus.
+     * @param alias node alias
+     * @param nid node ID
+     */
+    public void setRemoteAlias(int alias, NodeID nid) {
+        aliasMap.insert(alias, nid);
+    }
+
     /// Prints all messages that get sent to the mock. For debugging purposes.
     public void printAllSentMessages() {
         fakeConnection.debugMessages = true;
@@ -129,6 +140,7 @@ public class OlcbTestHelper {
         List<CanFrame> parsedFrames = GridConnect.parse(frames);
         MessageBuilder d = new MessageBuilder(aliasMap);
         for (CanFrame f : parsedFrames) {
+            aliasMap.processFrame(new OpenLcbCanFrame(f));
             List<Message> l = d.processFrame(f);
             if (l != null) {
                 for (Message m : l) {
@@ -170,6 +182,7 @@ public class OlcbTestHelper {
     protected void expectFrame(String expectedFrame, VerificationMode cardinality) {
         class MessageMatchesFrame implements ArgumentMatcher<Message> {
             private final String frame;
+            private String actual = "";
 
             public MessageMatchesFrame(String frame) {
                 this.frame = frame;
@@ -181,11 +194,15 @@ public class OlcbTestHelper {
                 for (CanFrame f : actualFrames) {
                     b.append(GridConnect.format(f));
                 }
-                return frame.equals(b.toString());
+                String r = b.toString();
+                if (!frame.equals(r)) {
+                    actual = actual + r;
+                }
+                return frame.equals(r);
             }
             public String toString() {
                 //printed in verification errors
-                return "[OpenLCB message with CAN rendering of " + frame + "]";
+                return "[OpenLCB message with CAN rendering of " + frame + "][actual " + actual + "]";
             }
         }
 
