@@ -16,8 +16,8 @@
 
     <div id="mainContent">
       <h1>Hardware Support: Connecting to a Digitrax PR3 (Xtra)</h1>
-      <a href="http://www.digitrax.com/products/computer-control/pr3xtra/"><img src=
-      "http://www.digitrax.com/static/apps/products/computer-control/pr3/images/PR3_jpg_350x900_q85.jpg"
+      <a href="https://www.digitrax.com/products/retired/computer-control/pr3xtra/"><img src=
+      "https://www.digitrax.com/static/apps/products/computer-control/pr3/images/PR3_jpg_350x900_q85.jpg"
       alt="PR3 picture"></a><br>
 
       <h1>Introduction</h1>
@@ -63,14 +63,14 @@
       LocoNet"</a> page.</p>
 
       <p>For more information on the PR3 itself, please see the <a href=
-      "http://www.digitrax.com/products/computer-control/pr3xtra/">Digitrax PR3 page</a> and the
-      <a href="http://www.digitrax.com/tsd/product/PR3/">PR3 Support page.</a></p>
+      "https://www.digitrax.com/products/retired/computer-control/pr3xtra/">Digitrax PR3 page</a> and the
+      <a href="https://www.digitrax.com/tsd/product/PR3/">PR3 Support page.</a></p>
 
-      <h2><a href="http://www.digitrax.com/tsd/product/PR3/">Drivers</a>
+      <h2><a href="https://www.digitrax.com/tsd/product/PR3/">Drivers</a>
       </h2>
-      <a href="http://www.digitrax.com/tsd/product/PR3/">The PR3 needs to have a driver installed
+      <a href="https://www.digitrax.com/tsd/product/PR3/">The PR3 needs to have a driver installed
       when used with Microsoft Windows. See the</a> <a href=
-      "http://www.digitrax.com/tsd/KB196/pr3-software-setup-for-microsoft-windows-xp/">Digitrax PR3
+      "https://www.digitrax.com/tsd/KB196/pr3-software-setup-for-microsoft-windows-xp/">Digitrax PR3
       Windows Setup page</a> for more information. Make sure to follow the instructions exactly,
       particularly about the order of installing the drivers and plugging in the device.
       <p>See also <a href="#firmwareissue">PR3 Firmware issue which affects computers running
@@ -203,7 +203,7 @@
       applied by the user.</p>
 
       <p>The appropriate update files and instructions are available from the "Download" page on
-      the <a href="http://www.digitrax.com">Digitrax</a> website. Digitrax provides an application
+      the <a href="https://www.digitrax.com">Digitrax</a> website. Digitrax provides an application
       to apply the firmware update; the software package runs under Microsoft Operating Systems,
       and this is the <strong>strongly recommended</strong> way to apply the PR3 firmware
       update.</p>
@@ -214,7 +214,7 @@
       update process. If the failure happens during the PR3 firmware update process, it is possible
       that the PR3 might require factory repair.</p>
 
-      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
