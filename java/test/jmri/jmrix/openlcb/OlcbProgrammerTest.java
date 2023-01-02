@@ -111,11 +111,59 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
+    public void testWriteNegative() throws ProgrammerException {
+        registerProgramTrack();
+        prog.writeCV("13", 255, p);
+        expectInteraction(new int[]{0x20,0x00,0,0,0,12,0xF8, 255}, new int[]{0x20,0x10,0,0,0,12,0xF8});
+        Mockito.verify(p).programmingOpReply(255, 0); //ProgListener.OK
+    }
+
+    @Test
+    public void testWriteAddressMedium() throws ProgrammerException {
+        registerProgramTrack();
+        prog.writeCV("254", 44, p);
+        expectInteraction(new int[]{0x20, 0x00, 0, 0, 0, 253, 0xF8, 44}, new int[]{0x20, 0x10, 0, 0, 0, 253, 0xF8});
+        Mockito.verify(p).programmingOpReply(44, 0); //ProgListener.OK
+    }
+
+    @Test
+    public void testWriteAddressHigh() throws ProgrammerException {
+        registerProgramTrack();
+        prog.writeCV("1024", 45, p);
+        expectInteraction(new int[]{0x20, 0x00, 0, 0, 3, 255, 0xF8, 45}, new int[]{0x20, 0x10, 0, 0, 3, 255, 0xF8});
+        Mockito.verify(p).programmingOpReply(45, 0); //ProgListener.OK
+    }
+
+    @Test
     public void testReadOK() throws ProgrammerException {
         registerProgramTrack();
         prog.readCV("13", p);
         expectInteraction(new int[]{0x20, 0x40, 0, 0, 0, 12, 0xF8, 1}, new int[]{0x20, 0x50, 0, 0, 0, 12, 0xF8, 37});
         Mockito.verify(p).programmingOpReply(37, ProgListener.OK);
+    }
+
+    @Test
+    public void testReadAddressMedium() throws ProgrammerException {
+        registerProgramTrack();
+        prog.readCV("254", p);
+        expectInteraction(new int[]{0x20, 0x40, 0, 0, 0, 253, 0xF8, 1}, new int[]{0x20, 0x50, 0, 0, 0, 253, 0xF8, 99});
+        Mockito.verify(p).programmingOpReply(99, ProgListener.OK);
+    }
+
+    @Test
+    public void testReadAddressHigh() throws ProgrammerException {
+        registerProgramTrack();
+        prog.readCV("1024", p);
+        expectInteraction(new int[]{0x20, 0x40, 0, 0, 3, 255, 0xF8, 1}, new int[]{0x20, 0x50, 0, 0, 3, 255, 0xF8, 253});
+        Mockito.verify(p).programmingOpReply(253, ProgListener.OK);
+    }
+
+    @Test
+    public void testReadNegative() throws ProgrammerException {
+        registerProgramTrack();
+        prog.readCV("13", p);
+        expectInteraction(new int[]{0x20, 0x40, 0, 0, 0, 12, 0xF8, 1}, new int[]{0x20, 0x50, 0, 0, 0, 12, 0xF8, 255});
+        Mockito.verify(p).programmingOpReply(255, ProgListener.OK);
     }
 
     @Test
