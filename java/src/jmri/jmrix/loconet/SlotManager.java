@@ -1826,10 +1826,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (!val) {
             loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;
             // slots would have been created with unknown for auto detect
-            if (!val) {
-                for( int ix = 0; ix < 128; ix++ ) {
-                    slot(ix).setProtocol(loconetProtocol);
-                }
+            for( int ix = 0; ix < 128; ix++ ) {
+                slot(ix).setProtocol(loconetProtocol);
             }
         }
     }
