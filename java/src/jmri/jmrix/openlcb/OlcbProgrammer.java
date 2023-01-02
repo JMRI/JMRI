@@ -269,7 +269,7 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
                 return;
             }
             if (msg.getSourceNodeID().getContents()[0] == 0) {
-                log.error("Found programming track with invalid source node: " + msg.getSourceNodeID().toString());
+                log.error("Found programming track with invalid source node: {}", msg.getSourceNodeID());
                 return;
             }
             if (foundProgrammingTrack(msg.getSourceNodeID())) {
