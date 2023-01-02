@@ -8,7 +8,14 @@ import javax.annotation.Nullable;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import org.openlcb.*;
+import org.openlcb.Connection;
+import org.openlcb.EventID;
+import org.openlcb.IdentifyProducersMessage;
+import org.openlcb.MessageDecoder;
+import org.openlcb.NodeID;
+import org.openlcb.OlcbInterface;
+import org.openlcb.ProducerIdentifiedMessage;
+import org.openlcb.VerifyNodeIDNumberMessage;
 import org.openlcb.implementations.MemoryConfigurationService;
 
 /**
