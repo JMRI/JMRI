@@ -340,6 +340,7 @@ public class ArchitectureTest {
     public static final ArchRule checkLogixNGActionsXmlNotUsingNamedBeanHandle = noClasses()
             .that()
             .resideInAPackage("jmri.jmrit.logixng.actions.configurexml")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml")    // This class needs to use NamedBeanHandle
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
 
@@ -362,6 +363,7 @@ public class ArchitectureTest {
     public static final ArchRule checkLogixNGExpressionsXmlNotUsingNamedBeanHandle = noClasses()
             .that()
             .resideInAPackage("jmri.jmrit.logixng.expressions.configurexml")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.configurexml.ExpressionEntryExitXml")    // This class needs to use NamedBeanHandle
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
 

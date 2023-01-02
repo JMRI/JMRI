@@ -2,7 +2,7 @@ package jmri.jmrix.openlcb.configurexml;
 
 import jmri.util.JUnitUtil;
 import jmri.jmrix.openlcb.OlcbSignalMast;
-import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold;
 
 import org.openlcb.AbstractConnection;
 import org.openlcb.Connection;
@@ -27,7 +27,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
 public class OlcbSignalMastXmlTest {
 
-    private static OlcbSystemConnectionMemo memo;
+    private static OlcbSystemConnectionMemoScaffold memo;
     static Connection connection;
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
@@ -80,7 +80,7 @@ public class OlcbSignalMastXmlTest {
             }
         };
 
-        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo = new OlcbSystemConnectionMemoScaffold(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
             @Override

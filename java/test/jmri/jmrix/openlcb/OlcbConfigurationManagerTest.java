@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class OlcbConfigurationManagerTest {
 
-    private static OlcbSystemConnectionMemo scm;
+    private static OlcbSystemConnectionMemoScaffold scm;
 
     @Test
     public void testCTor() {
@@ -65,7 +65,7 @@ public class OlcbConfigurationManagerTest {
         JUnitUtil.setUp();
        // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        scm = new OlcbSystemConnectionMemo();
+        scm = new OlcbSystemConnectionMemoScaffold();
         TestTrafficController tc = new TestTrafficController();
         scm.setTrafficController(tc);
     }

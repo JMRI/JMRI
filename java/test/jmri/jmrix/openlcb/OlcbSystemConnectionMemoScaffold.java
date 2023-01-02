@@ -1,11 +1,11 @@
 package jmri.jmrix.openlcb;
 
 import java.util.ResourceBundle;
+
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+
 import org.openlcb.OlcbInterface;
-import javax.annotation.Nonnull;
-import javax.annotation.CheckReturnValue;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -16,12 +16,12 @@ import javax.annotation.CheckReturnValue;
  *
  * @author Bob Jacobsen Copyright (C) 2015
  */
-public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnectionMemo {
+public class OlcbSystemConnectionMemoScaffold extends jmri.jmrix.can.CanSystemConnectionMemo {
 
-    public OlcbSystemConnectionMemo() {
+    public OlcbSystemConnectionMemoScaffold() {
         //super("M", "OpenLCB");
         register(); // registers general type
-        InstanceManager.store(this, OlcbSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, OlcbSystemConnectionMemoScaffold.class); // also register as specific type
     }
 
     final jmri.jmrix.swing.ComponentFactory cf = null;
@@ -170,7 +170,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
 
     @Override
     public void dispose() {
-        InstanceManager.deregister(this, OlcbSystemConnectionMemo.class);
+        InstanceManager.deregister(this, OlcbSystemConnectionMemoScaffold.class);
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
@@ -186,28 +186,4 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         super.dispose();
     }
 
-    /**
-     * See {@link jmri.NamedBean#compareSystemNameSuffix} for background.
-     * This is a common implementation for OpenLCB Sensors and Turnouts
-     * of the comparison method.
-     *
-     * @param suffix1 1st suffix to compare.
-     * @param suffix2 2nd suffix to compare.
-     * @return true if suffixes match, else false.
-     */
-    @CheckReturnValue
-    public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
-
-        // extract addresses
-        OlcbAddress[] array1 = new OlcbAddress(suffix1).split();
-        OlcbAddress[] array2 = new OlcbAddress(suffix2).split();
-
-        // compare on content
-        for (int i = 0; i < Math.min(array1.length, array2.length); i++) {
-            int c = array1[i].compare(array2[i]);
-            if (c != 0) return c;
-        }
-        // check for different length (shorter sorts first)
-        return Integer.signum(array1.length - array2.length);
-    }
 }

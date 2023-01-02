@@ -14,7 +14,7 @@ import org.junit.Assert;
  * @author Bob Jacobsen
  */
 public class OlcbProgrammerManagerTest {
-    protected OlcbSystemConnectionMemo adapterMemo = new OlcbSystemConnectionMemo();
+    protected SystemConnectionMemo adapterMemo = new OlcbSystemConnectionMemoScaffold();
     @Test
     public void testCtor() {
         OlcbProgrammerManager s = new OlcbProgrammerManager(adapterMemo);
