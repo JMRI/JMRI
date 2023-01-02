@@ -2,7 +2,7 @@ package jmri.jmrix.openlcb.swing.send;
 
 import jmri.InstanceManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -33,7 +33,7 @@ public class OpenLcbCanSendActionTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        memo = Mockito.mock(OlcbSystemConnectionMemo.class);
+        memo = Mockito.mock(OlcbSystemConnectionMemoScaffold.class);
         InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }
 

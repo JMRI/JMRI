@@ -16,7 +16,7 @@ public class OlcbProgrammerManagerTest {
 
     @Test
     public void testCtor() {
-        new OlcbSystemConnectionMemo();
+        new OlcbSystemConnectionMemoScaffold();
         OlcbProgrammerManager s = new OlcbProgrammerManager(new OlcbProgrammer());
         Assert.assertNotNull(s);
     }
