@@ -105,9 +105,9 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Test
     public void testWriteOK() throws ProgrammerException {
         registerProgramTrack();
-        prog.writeCV("13", 42, p);
-        expectInteraction(new int[]{0x20,0x00,0,0,0,12,0xF8, 42}, new int[]{0x20,0x10,0,0,0,12,0xF8});
-        Mockito.verify(p).programmingOpReply(42, 0); //ProgListener.OK
+        prog.writeCV("13", 41, p);
+        expectInteraction(new int[]{0x20,0x00,0,0,0,12,0xF8, 41}, new int[]{0x20,0x10,0,0,0,12,0xF8});
+        Mockito.verify(p).programmingOpReply(41, 0); //ProgListener.OK
     }
 
     @Test
@@ -137,12 +137,21 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    public void testWriteNoRailcom() throws ProgrammerException {
+    public void testWriteNoRailcomProgTrack() throws ProgrammerException {
         registerProgramTrack();
-        prog.writeCV("13", 42, p);
-        expectInteraction(new int[]{0x20, 0x00, 0, 0, 0, 12, 0xF8, 42},
+        prog.writeCV("13", 43, p);
+        expectInteraction(new int[]{0x20, 0x00, 0, 0, 0, 12, 0xF8, 43},
                 new int[]{0x20, 0x18, 0, 0, 0, 12, 0xF8, 0x20, 0x33});
         Mockito.verify(p).programmingOpReply(0, ProgListener.NoAck);
+    }
+
+    @Test
+    public void testWriteNoRailcomOps() throws ProgrammerException {
+        setupAddressed();
+        prog.writeCV("13", 43, p);
+        expectInteraction(new int[]{0x20, 0x00, 0, 0, 0, 12, 0xF8, 43},
+                new int[]{0x20, 0x18, 0, 0, 0, 12, 0xF8, 0x20, 0x33}, pomNid);
+        Mockito.verify(p).programmingOpReply(43, ProgListener.OK);
     }
 
     @Override
@@ -175,6 +184,17 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     /**
+     * Helper function to setup an addressed (ops mode) programmer.
+     */
+    private void setupAddressed() {
+        programmer = prog = new OlcbProgrammer(h.iface, true, 15);
+        Assert.assertEquals(new NodeID("06.01.00.00.C0.0F"), prog.nid);
+        // There is a verify node ID message sent.
+        h.expectFrame(":X19490333N06010000C00F;");
+        h.setRemoteAlias(0x999, pomNid);
+    }
+
+    /**
      * Helper function to verify a programming track interaction comprised of a request datagram, and a matching
      * response datagram. Covers the necessary datagram acknowledgements as well. Assumes that the program track is
      * assigned (not a POM).
@@ -183,13 +203,25 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
      * @param dgResponse int array of the response datagram contents, example: `new int[]{0x20, 0x50, 0,0,0,0, 0xF8, 23}` for read response=23.
      */
     private void expectInteraction(int[] dgRequest, int[] dgResponse) {
-        h.expectMessageAndNoMore(new DatagramMessage(localNid, progNid, dgRequest));
+        expectInteraction(dgRequest, dgResponse, progNid);
+    }
+    /**
+     * Helper function to verify a programming track interaction comprised of a request datagram, and a matching
+     * response datagram. Covers the necessary datagram acknowledgements as well. Assumes that the program track is
+     * assigned (not a POM).
+     *
+     * @param dgRequest int array of the request datagram contents, example: `new int[]{0x20, 0x40, 0,0,0,0, 0xF8, 1}` for read CV 1.
+     * @param dgResponse int array of the response datagram contents, example: `new int[]{0x20, 0x50, 0,0,0,0, 0xF8, 23}` for read response=23.
+     * @param dest node ID of the destination node to which the interaction will be targeted.
+     */
+    private void expectInteraction(int[] dgRequest, int[] dgResponse, NodeID dest) {
+        h.expectMessageAndNoMore(new DatagramMessage(localNid, dest, dgRequest));
         // Acknowledged
-        h.sendMessage(new DatagramAcknowledgedMessage(progNid, localNid, DatagramService.FLAG_REPLY_PENDING));
+        h.sendMessage(new DatagramAcknowledgedMessage(dest, localNid, DatagramService.FLAG_REPLY_PENDING));
         Mockito.verifyNoInteractions(p);
         // Response datagram
-        h.sendMessageAndExpectResult(new DatagramMessage(progNid, localNid, dgResponse),
-                new DatagramAcknowledgedMessage(localNid, progNid));
+        h.sendMessageAndExpectResult(new DatagramMessage(dest, localNid, dgResponse),
+                new DatagramAcknowledgedMessage(localNid, dest));
         h.expectNoMessages();
     }
 
