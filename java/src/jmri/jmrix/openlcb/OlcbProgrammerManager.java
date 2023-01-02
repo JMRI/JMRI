@@ -2,8 +2,12 @@ package jmri.jmrix.openlcb;
 
 import java.util.List;
 
-import jmri.*;
-import org.openlcb.NodeID;
+import jmri.AddressedProgrammer;
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
+import jmri.Programmer;
+import jmri.ProgrammingMode;
+import jmri.SystemConnectionMemo;
 import org.openlcb.OlcbInterface;
 
 import javax.annotation.Nonnull;
