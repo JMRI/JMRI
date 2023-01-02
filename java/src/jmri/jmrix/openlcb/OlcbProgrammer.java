@@ -3,7 +3,6 @@ package jmri.jmrix.openlcb;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import jmri.ProgListener;
 import jmri.ProgrammerException;
@@ -89,7 +88,6 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     private final OlcbInterface iface;
     /// Target OpenLCB node to send requests to. This is set to the train node when we are an addressed programmer.
     /// It may be null if we are a global programmer and we have not looked up the programming track node ID yet.
-    @Nullable
     NodeID nid;
     /// Stores the DCC address value (for addressed programmer only).
     private int dccAddress;
@@ -105,7 +103,7 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
      * @param system system connection memo
      * @param nid    the target node to use for DCC CV programming. This can be a train node or a program track node.
      */
-    public OlcbProgrammer(OlcbInterface system, @Nullable NodeID nid) {
+    public OlcbProgrammer(OlcbInterface system, NodeID nid) {
         this.iface = system;
         this.nid = nid;
         if (nid != null) {
