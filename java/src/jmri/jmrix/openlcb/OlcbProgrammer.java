@@ -168,6 +168,13 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
 
             @Override
             public void handleFailure(int i) {
+                if (i == ERROR_NO_RAILCOM && (dccAddress > 0 || dccIsLong)) {
+                    // We swallow the NO_RAILCOM error for writes, because POM writes should return OK to JMRI when
+                    // RailCom is unavailable. JMRI can not distinguish whether the decoder is not present or that there
+                    // is no RailCom support. For a correct operation of the UI, POM writes have to return OK.
+                    notifyProgListenerEnd(p, val, ProgListener.OK);
+                    return;
+                }
                 notifyProgListenerEnd(p, 0, olcbErrorToProgStatus(i));
             }
         });
