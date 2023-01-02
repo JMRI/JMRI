@@ -204,7 +204,4 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     NodeID pomNid = new NodeID(0x06010000C00FL);
 
     ProgListener p = Mockito.mock(ProgListener.class);
-
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbProgrammerTest.class);
-
 }
