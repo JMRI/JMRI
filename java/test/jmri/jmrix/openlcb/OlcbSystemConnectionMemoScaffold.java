@@ -161,6 +161,9 @@ public class OlcbSystemConnectionMemoScaffold extends jmri.jmrix.can.CanSystemCo
         if (olcbInterface != null) {
             return olcbInterface;
         }
+        // We check if someone instantiated an OlcbConfigurationManager in the test or the fixture. If so, we use the
+        // interface from that object. (The superclass CanSystemConnectionMemo does instantiate an object like this and
+        // forwards the get<T>() calls to it, which does find the OlcbInterface there.)
         List<OlcbConfigurationManager> l = InstanceManager.getList(OlcbConfigurationManager.class);
         if (!l.isEmpty()) {
             return l.get(l.size() - 1).getInterface();
