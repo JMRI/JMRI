@@ -76,7 +76,12 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Support for expanded slots and associated protocol.
+                    To enable this the advanced LocoNet preferences must be set XPSlots Auto Detect.
+                    If using DCS240(+) limited to less than 120 slots use DCS210 or DCS210+ to avoid needless reading of slots.
+                    When using a DCS240(+) be aware that when first opening a Slot Monitor window 430 odd slots are read, so avoid doing it during layout start.
+                    If using throttles that cannot access XP Slots along side those that can you may see the same loco number twice in the slotmon, which slot actually has control may vary.
+                </li>
             </ul>
 
         <h4>Maple</h4>
