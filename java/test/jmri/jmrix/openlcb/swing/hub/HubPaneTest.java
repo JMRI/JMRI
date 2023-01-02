@@ -36,7 +36,7 @@ public class HubPaneTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
-        memo  = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
+        memo  = new jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold();
         tc = new TestTrafficController();
         memo.setTrafficController(tc);
         jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);

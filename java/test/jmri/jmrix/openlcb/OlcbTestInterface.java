@@ -136,8 +136,8 @@ public class OlcbTestInterface {
     /**
      * @return an OlcbSystemConnectionMemo bound to this test interface for integration tests.
      */
-    public OlcbSystemConnectionMemo createSystemConnectionMemo() {
-        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo();
+    public OlcbSystemConnectionMemoScaffold createSystemConnectionMemo() {
+        OlcbSystemConnectionMemoScaffold memo = new OlcbSystemConnectionMemoScaffold();
         memo.setTrafficController(tc);
         memo.setInterface(iface);
         waitForStartup();
@@ -149,7 +149,7 @@ public class OlcbTestInterface {
      * Internally it will have created all the individual managers.
      */
     public OlcbConfigurationManager createConfigurationManager() {
-        OlcbSystemConnectionMemo memo = createSystemConnectionMemo();
+        OlcbSystemConnectionMemoScaffold memo = createSystemConnectionMemo();
         OlcbConfigurationManager t = new OlcbConfigurationManagerScaffold(memo);
         t.configureManagers();
         return t;

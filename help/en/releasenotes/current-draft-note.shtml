@@ -76,10 +76,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>New LocoNetSlotsReadCSV.py script which scans all LocoNet slots and
-                    creates report about slot status and slots used for the consists
-                    including the details of the consist. It also flags all non-zero slots. </li>
-                <li>Add Consist number column.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -286,6 +283,11 @@
             <ul>
                 <li></li>
             </ul>
+	    
+        <h4>Piko</h4>
+            <ul>
+                <li>Piko Smart Decoder 4.1 and XP5.1</li>
+            </ul>
 
         <h4>Rautenhaus</h4>
             <ul>
@@ -299,12 +301,12 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>Add Blunami decoders</li>
+                <li></li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
             <ul>
-                <li>QuadLN_S - support for new Semaphore Aspect and Servo Refresh in version 3.2 firmware</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -334,7 +336,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li>Bug fixes and extension of extended function mapping of the IntelliDrive 2 decoder</li>
+                <li>New decoder file for Tillig BR 89 steam loco</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -395,10 +397,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>Fixes a bug in the actions <i>Icon/Label on panel</i> and
-	        <i>Turnout on LayoutPanel</i> which caused that the actions
-	        wasn't loaded correctly.</li>
-	        <li>Add support for LogixNG Global Variable icons.  These work like memory icons.</li>
+	        <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -415,11 +414,13 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The action <i>Turnout on LayoutPanel</i> has been added.
-          It lets LogixNG enable/disable a turnout on a layout panel.</li>
-          <li>The action <i>RunOnce</i> has been added. It runs an action
-          only one time. It's useful when something needs to be initialized
-          once.</li>
+          <li>Fixes a bug when importing a Logix to LogixNG, where the Conditional
+          uses <i>Mixed</i>. The <i>Not</i> is ignored for the conditional
+          variables when using Mixed.</li>
+          <li>Fixes a bug with the action Entry/Exit and the expression Entry/Exit.
+          The action and expression stored the user name instead of the system name
+          if the Entry/Exit. The user name of an Entry/Exit changes when the NX sensor
+          or related signal mast is changed.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -437,13 +438,13 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>Add support for LogixNG Global Variable icons.  These work like memory icons.</li>
+            <li></li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>Add support for LogixNG Global Variable icons.  These work like memory icons.</li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -493,11 +494,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>The BNSF-1996 and CCOR-1967 signal systems have had some corrections
-                    made to their speed settings to make them more consistent with
-                    the underlying indications.</li>
-                <li>The XML Schema for signal systems has been updated to require
-                    there be one and only one speed and speed2 setting.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -587,7 +584,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>Update minimatch.js library from 3.0..4 to 3.0.8</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -599,6 +596,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Update commons-net library from 3.6 to 3.9.0</li>
+            <li></li>
         </ul>
 

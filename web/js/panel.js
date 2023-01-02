@@ -26,11 +26,7 @@
  *  TODO:    ditto for sensorIcons with text
  *  TODO: add support for slipturnouticon (one2beros)
  *  TODO: handle (and test) disableWhenOccupied for layoutslip
- *
- *  DONE: draw dashed curves
- *  DONE: handle drawn ellipse (see LMRC APB)
- *  DONE: address color differences between java panel and javascript panel (e.g. lightGray)
- *  DONE: make turnout, levelXing occupancy work like LE panels (more than just checking A)
+ *  TODO: handle block color and track widths for turntable raytracks
  *
  **********************************************************************************************/
 
@@ -2948,8 +2944,9 @@ function $drawTurntable($widget) {
         }
     });
 
-    $drawCircle($txcen, $tycen, $tr, $gPanel.defaulttrackcolor, $gPanel.mainlinetrackwidth);
-    $drawCircle($txcen, $tycen, $tr / 4, $gPanel.defaulttrackcolor, $gPanel.sidelinetrackwidth);
+    var $turntablecirclelinewidth = 2; //matches LayoutTurntableView.java
+    $drawCircle($txcen, $tycen, $tr, $gPanel.defaulttrackcolor, $turntablecirclelinewidth);
+    $drawCircle($txcen, $tycen, $tr / 4, $gPanel.defaulttrackcolor, $turntablecirclelinewidth);
 }   //$drawTurntable
 
 //draw a LevelXing (pass in widget)
@@ -2983,16 +2980,18 @@ function $drawLevelXing($widget) {
         }
     }
 
-    //  set trackcolor based on block color
+    //  set trackcolor and width based on block
     var $colorAC = $gPanel.defaulttrackcolor;
     var $blkAC = $gBlks[$widget.blocknameac];
     if (isDefined($blkAC)) {
         $colorAC = $blkAC.blockcolor;
+        $widthAC = $gPanel.sidelineblockwidth;
     }
     var $colorBD = $gPanel.defaulttrackcolor;
     var $blkBD = $gBlks[$widget.blocknamebd];
     if (isDefined($blkBD)) {
         $colorBD = $blkBD.blockcolor;
+        $widthBD = $gPanel.sidelineblockwidth;
     }
 
     //retrieve the points
@@ -3049,26 +3048,33 @@ function $drawTurnout($widget) {
     var $eraseColor = $gPanel.backgroundcolor;
     var $trackColor = $gPanel.defaulttrackcolor;
 
-    //set track colors based on block colors
+    //set track colors and widths based on block colors, use A if others not populated
     var $colorA = $trackColor;
     var $blkA = $gBlks[$widget.blockname];
     if (isDefined($blkA)) {
         $colorA = $blkA.blockcolor;
+        $widthA = $gPanel.sidelineblockwidth;
     }
     var $colorB = $colorA;
+    var $widthB = $widthA;
     var $blkB = $gBlks[$widget.blockbname];
     if (isDefined($blkB)) {
         $colorB = $blkB.blockcolor;
+        $widthB = $gPanel.sidelineblockwidth;
     }
     var $colorC = $colorA;
+    var $widthC = $widthA;
     var $blkC = $gBlks[$widget.blockcname];
     if (isDefined($blkC)) {
         $colorC = $blkC.blockcolor;
+        $widthC = $gPanel.sidelineblockwidth;
     }
     var $colorD = $colorA;
+    var $widthD = $widthA;
     var $blkD = $gBlks[$widget.blockdname];
     if (isDefined($blkD)) {
         $colorD = $blkD.blockcolor;
+        $widthD = $gPanel.sidelineblockwidth;
     }
 
     var cen = [$widget.xcen * 1, $widget.ycen * 1]

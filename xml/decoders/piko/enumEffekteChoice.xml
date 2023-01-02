@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		-->
+<!-- Version 1 - Include file for Piko SmartDecoder 4.1 and XP5.1 (11/2022) -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<enumChoice choice="ohne Effekt">
+		<choice> 0:ohne Effekt</choice>
+	</enumChoice>
+	<enumChoice choice="Blinken 1">
+		<choice> 1: Blinken 1</choice>
+	</enumChoice>
+	<enumChoice choice="Blinken 2">
+		<choice> 2: Blinken 2</choice>
+	</enumChoice>
+	<enumChoice choice="Blinken 3">
+		<choice> 3: Blinken 3</choice>
+	</enumChoice>
+	<enumChoice choice="Blinken 4">
+		<choice> 4: Blinken 4</choice>
+	</enumChoice>
+	<enumChoice choice="Mars light" value="10">
+		<choice>10: Mars light</choice>
+	</enumChoice>
+	<enumChoice choice="Gyro light" value="11">
+		<choice>11: Gyro light</choice>
+	</enumChoice>
+	<enumChoice choice="Blinkendes Spitzenlicht" value="12">
+		<choice>12: Blinkendes Spitzenlicht</choice>
+	</enumChoice>
+	<enumChoice choice="Stufiges Blinken" value="13">
+		<choice>13: Stufiges Blinken</choice>
+	</enumChoice>
+	<enumChoice choice="Flaches Ausblenden" value="14">
+		<choice>14: Flaches Ausblenden</choice>
+	</enumChoice>
+	<enumChoice choice="15" value="15">
+		<choice>15: Rundumleuchte</choice>
+	</enumChoice>
+	<enumChoice choice="16" value="16">
+		<choice>16: Einzelblitz wiederholend</choice>
+	</enumChoice>
+	<enumChoice choice="17" value="17">
+		<choice>17: Doppelblitz wiederholend</choice>
+	</enumChoice>
+	<enumChoice choice="18" value="18">
+		<choice>18: Multiblitz wiederholend</choice>
+	</enumChoice>
+	<enumChoice choice="30" value="30">
+		<choice>30: Einzelner Blitz</choice>
+	</enumChoice>
+	<enumChoice choice="31" value="31">
+		<choice>31: Mehrfacher Blitz</choice>
+	</enumChoice>
+	<enumChoice choice="32" value="32">
+		<choice>32: Schaltblitz</choice>
+	</enumChoice>
+	<enumChoice choice="33" value="33">
+		<choice>33: Zufall linear</choice>
+	</enumChoice>
+	<enumChoice choice="34" value="34">
+		<choice>34: Feuerbüchse</choice>
+	</enumChoice>
+	<enumChoice choice="35" value="35">
+		<choice>35: Leuchtstofflampe</choice>
+	</enumChoice>
+	<enumChoice choice="36" value="36">
+		<choice>36: Leuchtstofflampe defekt</choice>
+	</enumChoice>
+	<enumChoice choice="37" value="37">
+		<choice>37: Energiesparlampe</choice>
+	</enumChoice>
+	<enumChoice choice="40" value="40">
+		<choice>40: Verdampfer lastabhängig</choice>
+	</enumChoice>
+	<enumChoice choice="41" value="41">
+		<choice>41: Verdampfer speedabhängig</choice>
+	</enumChoice>
+	<enumChoice choice="50" value="50">
+		<choice>50: Servo 1</choice>
+	</enumChoice>
+	<enumChoice choice="51" value="51">
+		<choice>51: Servo 2</choice>
+	</enumChoice>
+	<enumChoice choice="52" value="52">
+		<choice>52: Servo 3</choice>
+	</enumChoice>
+	<enumChoice choice="53" value="53">
+		<choice>53: Servo 4</choice>
+	</enumChoice>
+	<enumChoice choice="255" value="255">
+		<choice>255:Ausgang/Effekt aus</choice>
+	</enumChoice>
+</enumVal>

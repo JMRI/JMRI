@@ -25,6 +25,12 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
      * @return Element containing the complete info
      */
     public Element store(LogixNG_SelectNamedBean<E> selectNamedBean, String tagName) {
+        return store(selectNamedBean, tagName, (handle) -> handle.getName());
+    }
+
+    public Element store(LogixNG_SelectNamedBean<E> selectNamedBean,
+            String tagName,
+            GetNameFromNamedBeanHandle<E> getNameFromNamedBeanHandle) {
         Element namedBeanElement = new Element(tagName);
 
         LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
@@ -32,7 +38,7 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
         namedBeanElement.addContent(new Element("addressing").addContent(selectNamedBean.getAddressing().name()));
         NamedBeanHandle<E> namedBeanHandle = selectNamedBean.getNamedBean();
         if (namedBeanHandle != null) {
-            namedBeanElement.addContent(new Element("name").addContent(namedBeanHandle.getName()));
+            namedBeanElement.addContent(new Element("name").addContent(getNameFromNamedBeanHandle.get(namedBeanHandle)));
         }
         if (selectNamedBean.getReference() != null && !selectNamedBean.getReference().isEmpty()) {
             namedBeanElement.addContent(new Element("reference").addContent(selectNamedBean.getReference()));
@@ -189,6 +195,11 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
         }
+    }
+
+
+    public interface GetNameFromNamedBeanHandle<E extends NamedBean> {
+        public String get(NamedBeanHandle<E> handle);
     }
 
 }
