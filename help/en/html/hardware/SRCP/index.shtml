@@ -15,7 +15,7 @@
       <a href="http://www.der-moba.de/index.php/Digitalprojekt"><img src=
       "http://www.der-moba.de/images/7/7b/Srcp-clients.png" class="floatRight" height="130" width=
       "159" alt="srcp clients"></a>
-      <p>The <a href="http://srcpd.sourceforge.net/">SRCP protocol</a> was created by the <a href=
+      <p>The <a href="https://srcpd.sourceforge.net/">SRCP protocol</a> was created by the <a href=
       "http://www.der-moba.de/index.php/Hauptseite">der Moba</a> model railroad group as a standard
       way of connecting "client" user programs to a "server", which in turn connects to the model
       railroad. There are a number of model railroad SRCP servers available, which in turn can
@@ -31,7 +31,7 @@
       <h2 id="limitations">Limitations</h2>
 
       <p>SRCP support was introduced in <a href=
-      "https://jmri.org/releasenotes/jmri2.1.6.shtml">JMRI v2.1.6</a> during the Spring of 2008.
+      "https://www.jmri.org/releasenotes/jmri2.1.6.shtml">JMRI v2.1.6</a> during the Spring of 2008.
       That first version had several limitations:</p>
 
       <ul>
@@ -59,8 +59,8 @@
 
       <p>There's a lot of good information on SRCP and how it fits into an overall model-railroad
       system on <a href="http://www.der-moba.de/index.php/Digitalprojekt">der-moba.de (in
-      German)</a>. There's an English <a href="http://srcpd.sourceforge.net/srcp/">overview</a> and
-      <a href="http://srcpd.sourceforge.net/srcp/srcp-084.html">document for version 0.8.4 of the
+      German)</a>. There's an English <a href="https://srcpd.sourceforge.net/srcp/">overview</a> and
+      <a href="https://srcpd.sourceforge.net/srcp/srcp-084.html">document for version 0.8.4 of the
       protocol</a>. The overview page has links to some sample implementations.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
