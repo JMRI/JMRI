@@ -157,7 +157,7 @@ public class LocoNetSlot {
      * @param value one,two or unknown
      */
    protected void setProtocol(int value) {
-        loconetProtocol = value;;
+        loconetProtocol = value;
    }
 
     /**
