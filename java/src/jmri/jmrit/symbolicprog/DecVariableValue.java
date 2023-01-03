@@ -59,7 +59,7 @@ public class DecVariableValue extends VariableValue
         _value.addFocusListener(this);
         CvValue cv = _cvMap.get(getCvNum());
         cv.addPropertyChangeListener(this);
-        cv.setState(CvValue.FROMFILE);
+        cv.setState(ValueState.FROMFILE);
         simplifyMask();
     }
 
@@ -359,7 +359,7 @@ public class DecVariableValue extends VariableValue
      *
      */
     @Override
-    public void setCvState(int state) {
+    public void setCvState(ValueState state) {
         _cvMap.get(getCvNum()).setState(state);
     }
 
@@ -417,10 +417,10 @@ public class DecVariableValue extends VariableValue
             }
         } else if (e.getPropertyName().equals("State")) {
             CvValue cv = _cvMap.get(getCvNum());
-            if (cv.getState() == STORED) {
+            if (cv.getState() == ValueState.STORED) {
                 setToWrite(false);
             }
-            if (cv.getState() == READ) {
+            if (cv.getState() == ValueState.READ) {
                 setToRead(false);
             }
             setState(cv.getState());
