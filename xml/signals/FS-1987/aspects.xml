@@ -48,7 +48,7 @@
    </revision>
   </revhistory>
 
-  <aspects>    
+  <aspects>
     <aspect>
         <name>Rosso</name>
         <indication>Stop</indication>
@@ -105,7 +105,7 @@
       <speed>Limited</speed>
       <speed2>Limited</speed2>
     </aspect>
-  </aspects> 
+  </aspects>
 
   <imagetypes>
 	<imagetype type="prototype"/>
@@ -114,20 +114,20 @@
   </imagetypes>
 
   <appearancefiles>
-    <appearancefile href="appearance-Linea acc. 1 vela.xml"/>
-    <appearancefile href="appearance-Linea acc. 2 vele.xml"/>
-    <appearancefile href="appearance-Linea acc. 3 vele.xml"/>
-    <appearancefile href="appearance-Linea avv. 1 vela.xml"/>
-    <appearancefile href="appearance-Linea avv. 2 vele.xml"/>
-    <appearancefile href="appearance-Linea I cat. 1 vela.xml"/>
-    <appearancefile href="appearance-Linea I cat. 2 vele.xml"/>
-    <appearancefile href="appearance-ACEI acc. 1 vela.xml"/>
-    <appearancefile href="appearance-ACEI acc. 2 vele.xml"/>
-    <appearancefile href="appearance-ACEI acc. 3 vele.xml"/>
-    <appearancefile href="appearance-ACEI avv. 1 vela.xml"/>
-    <appearancefile href="appearance-ACEI avv. 2 vele.xml"/>
-    <appearancefile href="appearance-ACEI I cat. 1 vela.xml"/>
-    <appearancefile href="appearance-ACEI I cat. 2 vele.xml"/>
+    <appearancefile href="appearance-Lineaacc.1vela.xml"/>
+    <appearancefile href="appearance-Lineaacc.2vele.xml"/>
+    <appearancefile href="appearance-Lineaacc.3vele.xml"/>
+    <appearancefile href="appearance-Lineaavv.1vela.xml"/>
+    <appearancefile href="appearance-Lineaavv.2vele.xml"/>
+    <appearancefile href="appearance-LineaIcat.1vela.xml"/>
+    <appearancefile href="appearance-LineaIcat.2vele.xml"/>
+    <appearancefile href="appearance-ACEIacc.1vela.xml"/>
+    <appearancefile href="appearance-ACEIacc.2vele.xml"/>
+    <appearancefile href="appearance-ACEIacc.3vele.xml"/>
+    <appearancefile href="appearance-ACEIavv.1vela.xml"/>
+    <appearancefile href="appearance-ACEIavv.2vele.xml"/>
+    <appearancefile href="appearance-ACEIIcat.1vela.xml"/>
+    <appearancefile href="appearance-ACEIIcat.2vele.xml"/>
   </appearancefiles>
 
 </aspecttable>

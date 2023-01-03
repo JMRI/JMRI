@@ -24,25 +24,25 @@
 <h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>JMRI: FS - Italian State Railways - Signaling Definition</b></span></h1>
 <p class="p2"><span class="s1">This directory contains signaling definitions corresponding to the Italian rules as described in Il Treno Company book “Inserimento in linea dei segnali FS” according to the 1987 Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovie dello Stato”, FS today RFI). Prototypical (Linea) and Dispatcher (ACEI) icons.</span></p>
 <p class="p2"><span class="s1">Wikipedia: https://it.wikipedia.org/wiki/Segnalamento_ferroviario_in_Italia</span></p>
-<p class="p3"><span class="s2">See the <a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/aspects.xml"><span class="s3">aspect page</span></a>.</span></p>
+<p class="p3"><span class="s2">See the <a href="aspects.xml"><span class="s3">aspect page</span></a>.</span></p>
 <p class="p2"><span class="s1">Signal Mast definitions:</span></p>
 <ul class="ul1">
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-Linea%20acc.%203%20vele.xml"><span class="s5">Linea Triple searchlight<span class="Apple-converted-space">  </span>accoppiato signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-Linea%20acc.%202%20vele.xml"><span class="s5">Linea Double searchlight accoppiato signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-Linea%20acc.%201%20vela.xml"><span class="s5">Linea Single searchlight accoppiato signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-Linea%20I%20cat.%201%20vela.xml"><span class="s5">Linea Single searchlight<span class="Apple-converted-space">  </span>1. Cat .signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-Linea%20I%20cat.%202%20vele.xml"><span class="s5">Linea Double searchlight 1. Cat. signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-Linea%20avv.%201%20vela.xml"><span class="s5">Linea Single searchlight avviso signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-Linea%20avv.%202%20vele.xml"><span class="s5">Linea Double searchlight avviso signal</span></a></span></li>
-  <li class="li5"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-ACEI%20acc.%203%20vele.xml"><span class="s6">ACEI<span class="Apple-converted-space">  </span>Triple searchlight<span class="Apple-converted-space">  </span>accoppiato signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-Lineaacc.3vele.xml"><span class="s5">Linea Triple searchlight<span class="Apple-converted-space">  </span>accoppiato signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-Lineaacc.2vele.xml"><span class="s5">Linea Double searchlight accoppiato signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-Lineaacc.1vela.xml"><span class="s5">Linea Single searchlight accoppiato signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-LineaIcat.1vela.xml"><span class="s5">Linea Single searchlight<span class="Apple-converted-space">  </span>1. Cat .signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-LineaIcat.2vele.xml"><span class="s5">Linea Double searchlight 1. Cat. signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-Lineaavv.1vela.xml"><span class="s5">Linea Single searchlight avviso signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-Lineaavv.2vele.xml"><span class="s5">Linea Double searchlight avviso signal</span></a></span></li>
+  <li class="li5"><span class="s4"><a href="appearance-ACEIacc.3vele.xml"><span class="s6">ACEI<span class="Apple-converted-space">  </span>Triple searchlight<span class="Apple-converted-space">  </span>accoppiato signal</span></a></span></li>
 </ul>
 <ul class="ul1">
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-ACEI%20acc.%202%20vele.xml"><span class="s5">ACEI Double<span class="Apple-converted-space">  </span>searchlight accoppiato signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-ACEI%20acc.%201%20vela.xml"><span class="s5">ACEI Single searchlight accoppiato signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-ACEI%20I%20cat.%201%20vela.xml"><span class="s5">ACEI Single searchlight<span class="Apple-converted-space">  </span>1. Cat .signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-ACEI%20I%20cat.%202%20vele.xml"><span class="s5">ACEI Double searchlight 1. Cat. signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-ACEI%20avv.%201%20vela.xml"><span class="s5">ACEI Single searchlight avviso signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="file:///Applications/JMRI/xml/signals/FS%20-%201987/appearance-ACEI%20avv.%202%20vele.xml"><span class="s5">ACEI Double searchlight avviso signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-ACEIacc.2vele.xml"><span class="s5">ACEI Double<span class="Apple-converted-space">  </span>searchlight accoppiato signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-ACEIacc.1vela.xml"><span class="s5">ACEI Single searchlight accoppiato signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-ACEIIcat.1vela.xml"><span class="s5">ACEI Single searchlight<span class="Apple-converted-space">  </span>1. Cat .signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-ACEIIcat.2vele.xml"><span class="s5">ACEI Double searchlight 1. Cat. signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-ACEIavv.1vela.xml"><span class="s5">ACEI Single searchlight avviso signal</span></a></span></li>
+  <li class="li4"><span class="s4"><a href="appearance-ACEIavv.2vele.xml"><span class="s5">ACEI Double searchlight avviso signal</span></a></span></li>
 </ul>
 </body>
 </html>
