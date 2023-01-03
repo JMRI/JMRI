@@ -225,7 +225,7 @@
       flexibility to set their topic strings, such as some home automation devices.</p>
       
       <p><a href=
-      "images/MQTTSchematic2.jpg"><img src="images/MQTTSchematic2.jpg" alt="MQTT schematic specific"></a></p>
+      "images/MQTTPrefs_rel5_0.jpg"><img src="images/MQTTPrefs_rel5_0.jpg" alt="MQTT schematic specific"></a></p>
    
       <p>Any message topic, defined or custom, can be subscribed to and processed by a <a href="#LNG">LogixNG</a>
       or a custom <a href="#scripts">script</a>. These messages
@@ -315,7 +315,7 @@
        <li>followed by the hardware name portion of the object's system name (system name stripped of the connection
        and object type characters). 
        [<em>Advanced Usage</em>: the object's hardware name may be inserted in the middle of the object type topic if
-        so defined in Preferences, <a href="prefs">as discussed above.</a></li>
+        so defined in Preferences, <a href="#prefs">as discussed above.</a></li>
       </ol>
 
       <p>An example of MQTT-connected objects: Using the example entries in the JMRI Preferences Connection pane 
@@ -415,7 +415,7 @@
       topic and contents of the message into LogixNG local variables (Topic and Contents) and you can then use them
       or, as in this example, move them into JMRI memories (TestDataRcvd and TextTopicRcvd) for further use.</p>
       
-      <a href="images/MQTTLogixNGPSubscribe.jpg"><img src="images/MQTTLogixNGSubscribe.jpg" 
+      <a href="images/MQTTLogixNGSubscribe.jpg"><img src="images/MQTTLogixNGSubscribe.jpg" 
       alt="LogixNG condition for subscribing to MQTT messages"></a>
       
       <p><a href="#top"><em><small>[Go to top of page]</small></em></a>
@@ -466,7 +466,7 @@
 
       <span class="since">Since JMRI 4.15.5</span>
       <p><em>Advanced Usage</em>: You can use a script to install a new <a href=
-      "../../../../../JavaDoc/doc/jmri/jmrix/mqtt/MqttContentParser.html">MqttContentParser</a>
+      "https://www.jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttContentParser.html">MqttContentParser</a>
       object to code and decode the content of messages. You might want to use JSON format, or need
       to adapt to specific messages from some already-existing device; you can create a custom
       parser to do any of that. See the <a href=
@@ -476,9 +476,9 @@
       target="_blank">inner class implementation in MqttTurnout</a>.</p>
 
       <p>Note that you can call <code>setParser(...)</code> on the <a href=
-      "../../../../../JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnoutManager.html">jmri.jmrix.mqtt.MqttTurnoutManager</a>
+      "https://www.jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnoutManager.html">jmri.jmrix.mqtt.MqttTurnoutManager</a>
       or on an individual <a href=
-      "../../../../../JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnout.html">jmri.jmrix.mqtt.MqttTurnout</a>
+      "https://www.jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnout.html">jmri.jmrix.mqtt.MqttTurnout</a>
       object. If you call it on the MqttTurnoutManager, all <strong>later created</strong>
       MqttTurnout objects will use the new parser; earlier-created ones will not be changed. This
       means you should execute a script to change the parser before loading any panel files if you
