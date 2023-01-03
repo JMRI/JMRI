@@ -781,7 +781,7 @@ public class SplitVariableValue extends VariableValue
         } else if (e.getPropertyName().equals("State")) {
             log.debug("Possible {} variable state change due to CV state change, so propagate that", _name);
             ValueState varState = getState(); // AbstractValue.SAME;
-            log.debug("{} variable state was {}", _name, stateNameFromValue(varState));
+            log.debug("{} variable state was {}", _name, varState.getName());
             for (int i = 0; i < cvCount; i++) {
                 var state = cvList.get(i).thisCV.getState();
                 if (i == 0) {
@@ -792,7 +792,7 @@ public class SplitVariableValue extends VariableValue
                 }
             }
             setState(varState);
-            log.debug("{} variable state set to {}", _name, stateNameFromValue(varState));
+            log.debug("{} variable state set to {}", _name, varState.getName());
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             log.debug("update value of Variable {}", _name);

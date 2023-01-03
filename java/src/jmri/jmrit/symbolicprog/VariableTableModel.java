@@ -377,7 +377,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 cvList.add(CV);  // it's an ordinary CV so add it as such
             }
             for (String theCV : cvList) {
-                log.debug("Setting CV={} of '{}'to {}", theCV, CV, VariableValue.stateNameFromValue(AbstractValue.ValueState.FROMFILE));
+                log.debug("Setting CV={} of '{}'to {}", theCV, CV, AbstractValue.ValueState.FROMFILE.getName());
                 _cvModel.getCvByNumber(theCV).setState(AbstractValue.ValueState.FROMFILE); // correct for transition to "edited"
             }
         }
@@ -1128,7 +1128,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("prop changed {} new value: {}{} Source {}", e.getPropertyName(), e.getNewValue(), e.getPropertyName().equals("State") ? (" (" + VariableValue.stateNameFromValue(((AbstractValue.ValueState) e.getNewValue())) + ") ") : " ", e.getSource());
+            log.debug("prop changed {} new value: {}{} Source {}", e.getPropertyName(), e.getNewValue(), e.getPropertyName().equals("State") ? (" (" + ((AbstractValue.ValueState) e.getNewValue()).getName() + ") ") : " ", e.getSource());
         }
         if (e.getNewValue() == null) {
             log.error("new value of {} should not be null!", e.getPropertyName(), new Exception());
