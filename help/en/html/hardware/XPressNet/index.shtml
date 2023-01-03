@@ -31,10 +31,11 @@
       <!-- https://www.roco.cc/en/home/index.html -->
       <!-- http://www.roco.com -->
       https://dccwiki.com/XpressNet_Protocol https://uk.hornby.com
-      <p>The XpressNet specification ( formerly available from the 
-      http://www.lenzusa.com/techinfo/index.htm Lenz website ) specifies the electrical
-      communications standards and command set for devices to communicate with the command
-      station.</p>
+      <p>The XpressNet specification ( available from <a href=
+      "https://wiki.rocrail.net/lib/exe/fetch.php?media=xpressnet:xpressnet-v2.pdf"
+      >https://wiki.rocrail.net/lib/exe/fetch.php?media=xpressnet:xpressnet-v2.pdf</a>
+      ) specifies the electrical communications standards and command set for devices
+      to communicate with the command station.
 
       <ul>
         <!-- TOC -->
