@@ -206,6 +206,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     private final int SLOTS_DCS240 = 433;
     private int numSlots = SLOTS_DCS240;         // This is the largest number so far.
+    private int slot250CommandStationType;
+    private int slot250InUseSlots;
+    private int slot250IdleSlots;
+    private int slot250FreeSlots;
+
     /**
      * The network protocol.
      */
@@ -217,6 +222,22 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     public void setLoconet2Supported(int value) {
         loconetProtocol = value;
+    }
+
+    /**
+     * Get the Command Station type reported in slot 250 message
+     * @return model
+     */
+    public String getSlot250CommandStationType() {
+        return LnConstants.IPL_NAME(slot250CommandStationType);
+    }
+
+    /**
+     * Get the total number of slots reported in the slot250 message;
+     * @return number of slots
+     */
+    public int getSlot250CSSlots() {
+        return slot250InUseSlots + slot250IdleSlots + slot250FreeSlots;
     }
 
     /**
@@ -422,6 +443,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         int i = findSlotFromMessage(m);
         if (i != -1) {
             getMoreDetailsForSlot(m, i);
+            checkSpecialSlots(m, i);
             forwardMessageToSlot(m, i);
             respondToAddrRequest(m, i);
             programmerOpMessage(m, i);
@@ -467,23 +489,42 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /*
+     * Collect data from specific slots
+     */
+    void checkSpecialSlots(LocoNetMessage m, int slot) {
+        // TODO: Collect CS opswitch
+        switch (slot) {
+            case 250:
+                // slot info
+                if (LnConstants.IPL_NAME(m.getElement(16)).startsWith("DCS")) { // will do for now
+                    slot250CommandStationType = m.getElement(16);
+                    slot250InUseSlots = (m.getElement(4) + ((m.getElement(5) & 0x03) * 128));
+                    slot250IdleSlots = (m.getElement(6) + ((m.getElement(7) & 0x03) * 128));
+                    slot250FreeSlots = (m.getElement(8) + ((m.getElement(9) & 0x03) * 128));
+                }
+                break;
+            default:
+        }
+    }
+
+    /*
      * If protocol not yet established use slot status for protocol support
      * System slots , except zero, do not have this info
      */
-    void checkLoconetProtocol(LocoNetMessage m , int slot) {
+    void checkLoconetProtocol(LocoNetMessage m, int slot) {
         // detect protocol if not yet set
         if (getLoconetProtocol() == LnConstants.LOCONETPROTOCOL_UNKNOWN) {
-            if (_slots[slot].getSlotType() != SlotType.SYSTEM || slot == 0 ) {
-            if ((m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA && m.getNumDataElements() == 21) ||
-                    (m.getOpCode() == LnConstants.OPC_SL_RD_DATA)) {
-                if ((m.getElement(7) & 0b01000000) == 0b01000000) {
-                    log.info("Setting protocol Loconet 2");
-                    setLoconet2Supported(LnConstants.LOCONETPROTOCOL_TWO);
-                } else {
-                    log.info("Setting protocol Loconet 1");
-                    setLoconet2Supported(LnConstants.LOCONETPROTOCOL_ONE);
+            if (_slots[slot].getSlotType() != SlotType.SYSTEM || slot == 0) {
+                if ((m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA && m.getNumDataElements() == 21) ||
+                        (m.getOpCode() == LnConstants.OPC_SL_RD_DATA)) {
+                    if ((m.getElement(7) & 0b01000000) == 0b01000000) {
+                        log.info("Setting protocol Loconet 2");
+                        setLoconet2Supported(LnConstants.LOCONETPROTOCOL_TWO);
+                    } else {
+                        log.info("Setting protocol Loconet 1");
+                        setLoconet2Supported(LnConstants.LOCONETPROTOCOL_ONE);
+                    }
                 }
-            }
             }
         }
     }

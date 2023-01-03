@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.Date;
-import jmri.jmrix.loconet.LnCommandStationType.CommandStationFracType;
+import jmri.jmrix.loconet.LnCommandStationType.CommandStationClockFracType;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;

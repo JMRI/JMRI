@@ -65,15 +65,18 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     static public final int F27COLUMN = 38;
     static public final int F28COLUMN = 39;
 
-    static public final int NUMCOLUMN = 40;
+    //static public final int NUMCOLUMN = 40; Number of columns comes from the pane.
 
     private int numRows = 128;
+    private int columns;
 
     private final transient LocoNetSystemConnectionMemo memo;
 
     SlotMonDataModel(int row, int column, LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
 
+        // number of columns
+        this.columns = column;
         // set number of rows;
         numRows = row;
 
@@ -108,7 +111,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     @Override
     public int getColumnCount() {
-        return NUMCOLUMN;
+        return columns;
     }
 
     @Override
@@ -1195,12 +1198,12 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 (tempF27 ? 0b01000000 : 0));
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(0xd5);
-        if (tempF28) {
-            msg.setElement(1, (slot.getSlot() / 128) | 0b00101000);
+        if (!tempF28) {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK);
         } else {
-            msg.setElement(1, (slot.getSlot() / 128) | 0b00110000);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK);
         }
-        msg.setElement(2, slot.getSlot() & 0b01111111);
+        msg.setElement(2, slot.getSlot() &  0x7F);
         msg.setElement(3, slot.id() & 0x7F);
         msg.setElement(4, new_F14F20);
         memo.getLnTrafficController().sendLocoNetMessage(msg);

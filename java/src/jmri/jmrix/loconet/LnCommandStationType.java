@@ -46,7 +46,7 @@ public enum LnCommandStationType {
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -63,7 +63,7 @@ public enum LnCommandStationType {
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION,
-            CommandStationFracType.CLOCK15BIT,
+            CommandStationClockFracType.CLOCK15BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,128,SlotType.SYSTEM),
@@ -80,7 +80,7 @@ public enum LnCommandStationType {
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION,
-            CommandStationFracType.CLOCK15BIT,
+            CommandStationClockFracType.CLOCK15BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,128,SlotType.SYSTEM),
@@ -98,7 +98,7 @@ public enum LnCommandStationType {
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION,
-            CommandStationFracType.CLOCK15BIT,
+            CommandStationClockFracType.CLOCK15BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,100,SlotType.LOCO),
                     new SlotMapEntry(101,120,SlotType.UNKNOWN),
@@ -116,7 +116,7 @@ public enum LnCommandStationType {
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION,
-            CommandStationFracType.CLOCK15BIT,
+            CommandStationClockFracType.CLOCK15BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,100,SlotType.LOCO),
                     new SlotMapEntry(101,120,SlotType.UNKNOWN),
@@ -134,7 +134,7 @@ public enum LnCommandStationType {
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -151,7 +151,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,12,SlotType.LOCO),
                     new SlotMapEntry(13,120,SlotType.UNKNOWN),
@@ -169,7 +169,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,19,SlotType.LOCO),
                     new SlotMapEntry(20,120,SlotType.UNKNOWN),
@@ -187,7 +187,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION,
-            CommandStationFracType.CLOCK15BIT,
+            CommandStationClockFracType.CLOCK15BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,20,SlotType.LOCO),
                     new SlotMapEntry(21,120,SlotType.UNKNOWN),
@@ -205,7 +205,7 @@ public enum LnCommandStationType {
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -223,7 +223,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -240,7 +240,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -257,7 +257,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -274,7 +274,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -292,7 +292,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -305,7 +305,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -318,7 +318,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -331,7 +331,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK13BIT,
+            CommandStationClockFracType.CLOCK13BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -344,7 +344,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK15BIT,
+            CommandStationClockFracType.CLOCK15BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -357,7 +357,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK15BIT,
+            CommandStationClockFracType.CLOCK15BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -370,7 +370,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK15BIT,
+            CommandStationClockFracType.CLOCK15BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -383,7 +383,7 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT, // NOI18N
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
-            CommandStationFracType.CLOCK15BIT,
+            CommandStationClockFracType.CLOCK15BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
@@ -395,7 +395,7 @@ public enum LnCommandStationType {
             ProgDepowersTrack progEndOp,
             String throttleClassName, String slotManagerClassName,
             IdleSupport supportsIdle, MultiMeterSupport supportMultiMeter,
-            LocoResetSupport supportsLocoReset, CommandStationFracType csClockFracType,
+            LocoResetSupport supportsLocoReset, CommandStationClockFracType csClockFracType,
             List<SlotMapEntry> slotMap) {
         this.name = name;
         this.canRead = canRead;
@@ -417,7 +417,7 @@ public enum LnCommandStationType {
     final IdleSupport supportsIdle;
     final MultiMeterSupport supportsMultiMeter;
     final LocoResetSupport supportsLocoReset;
-    final CommandStationFracType csClockFracType;
+    final CommandStationClockFracType csClockFracType;
     final List<SlotMapEntry> slotMap;
 
     public String getName() {
@@ -565,7 +565,7 @@ public enum LnCommandStationType {
      *
      * @return the FracType
      */
-    public CommandStationFracType getCsClockFracType() {
+    public CommandStationClockFracType getCsClockFracType() {
 
         return csClockFracType;
     }
@@ -590,7 +590,7 @@ public enum LnCommandStationType {
         NO_LOCO_RESET_SUPPORT, SUPPORTS_LOCO_RESET_FUNCTION
     }
 
-    public enum CommandStationFracType {
+    public enum CommandStationClockFracType {
         CLOCKNONE,
         CLOCK13BIT,
         CLOCK15BIT

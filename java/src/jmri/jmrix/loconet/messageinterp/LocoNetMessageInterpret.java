@@ -4833,28 +4833,8 @@ public class LocoNetMessageInterpret {
      * @return a format message.
      */
     private static String interpretExtendedSlot_StatusData_Base(LocoNetMessage l, int slot) {
-        String hwType = "";
-        int hwSerial;
-        switch (l.getElement(16)) {
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
-                hwType = "DCS240";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
-                hwType = "DCS210";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
-                hwType = "DCS52";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
-                hwType = "BXP88";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
-                hwType = "BXPA1";
-                break;
-            default:
-                hwType = "Unknown";
-        }
-        hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
+        String hwType = LnConstants.IPL_NAME(l.getElement(16));
+        int hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASE",
                 hwType,
                 hwSerial);
@@ -4870,32 +4850,7 @@ public class LocoNetMessageInterpret {
         double hwVersion ;
         double swVersion ;
         int hwSerial;
-        String hwType;
-        switch (l.getElement(14)) {
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
-                hwType = "DB210";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240PLUS:
-                hwType = "DCS240+";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210PLUS:
-                hwType = "DCS210+";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
-                hwType = "DCS240";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
-                hwType = "DCS210";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
-                hwType = "BXP88";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
-                hwType = "BXPA1";
-                break;
-            default:
-                hwType = "Unknown";
-        }
+        String hwType = LnConstants.IPL_NAME(l.getElement(14));
         hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
         hwVersion = ((double)(l.getElement(17) & 0x78) / 8 ) + ((double)(l.getElement(17) & 0x07) / 10 ) ;
         swVersion = ((double)(l.getElement(16) & 0x78) / 8 ) + ((double)(l.getElement(16) & 0x07) / 10 ) ;

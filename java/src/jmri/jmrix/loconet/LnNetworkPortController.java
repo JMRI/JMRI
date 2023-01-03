@@ -29,7 +29,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
 
     protected boolean mTranspondingAvailable = false;
 
-    protected boolean mLoconetProtocolAutoDetect = true;
+    protected boolean mLoconetProtocolAutoDetect = false;
 
     protected LnCommandStationType[] commandStationTypes = {
         LnCommandStationType.COMMAND_STATION_DCS100,
