@@ -52,12 +52,12 @@ This is the next release in the 5.4 cycle. It's intended to be created from the 
 
  - Make sure `git status` shows "up to date", not "ahead".
 
-- If it's a new year, update through-now copyright dates (done for 2022):
+- If it's a new year, update through-now copyright dates (done for 2023):
     JMRI:
     * build.xml in the jmri.copyright.years property value
     * xml/XSLT/build.xml
     * A flock of places in xml/XSLT/
-    * scripts//WinInstallFiles/LaunchJMRI.nsi
+    * scripts/WinInstallFiles/LaunchJMRI.nsi
     website:
     * Copyright.html (3 places)
     * Footer Footer.shtml

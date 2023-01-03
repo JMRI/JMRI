@@ -3,7 +3,7 @@
 <!-- Stylesheet fragment to display a docbook:revhistory element            -->
 
 
-<!-- This file is part of JMRI.  Copyright 2009-2022.                       -->
+<!-- This file is part of JMRI.  Copyright 2009-2023.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
