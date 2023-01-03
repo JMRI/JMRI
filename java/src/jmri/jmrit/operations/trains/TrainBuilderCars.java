@@ -1209,8 +1209,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     new Object[]{car.toString(), router.getStatus()}));
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
+            // don't move car if another train can
             if (router.getStatus().startsWith(Router.STATUS_NOT_THIS_TRAIN_PREFIX)) {
-                // hold car if able to route to track
                 _routeToTrackFound = true;
             }
             return false;
