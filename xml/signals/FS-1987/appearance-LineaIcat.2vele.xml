@@ -49,7 +49,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <aspectname>Rosso</aspectname>
       <show>red</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Stop</comment>
       <imagelink>../../../resources/icons/ItalianSignals/Prototypical/I cat 2 vele rosso.gif</imagelink>
     </appearance>
@@ -58,7 +58,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <aspectname>Verde</aspectname>
       <show>green</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Normal speed</comment>
       <imagelink>../../../resources/icons/ItalianSignals/Prototypical/I cat 2 vele verde.gif</imagelink>
     </appearance>
@@ -67,7 +67,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <aspectname>Rosso-Verde</aspectname>
       <show>red</show>
       <show>green</show>
-      <reference></reference>
+      <reference />
       <comment>Normal speed</comment>
       <imagelink>../../../resources/icons/ItalianSignals/Prototypical/I cat 2 vele rosso-verde.gif</imagelink>
     </appearance>

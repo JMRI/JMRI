@@ -48,7 +48,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
     <appearance>
       <aspectname>Rosso</aspectname>
       <show>red</show>
-      <reference></reference>
+      <reference />
       <comment>Stop</comment>
       <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI Acc 1 vela rosso.gif</imagelink>
     </appearance>
@@ -56,7 +56,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
     <appearance>
       <aspectname>Giallo</aspectname>
       <show>yellow</show>
-      <reference></reference>
+      <reference />
       <comment>Approach</comment>
       <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI Acc 1 vela giallo.gif</imagelink>
     </appearance>
@@ -64,7 +64,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
     <appearance>
       <aspectname>Verde</aspectname>
       <show>green</show>
-      <reference></reference>
+      <reference />
       <comment>Normal speed</comment>
       <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI Acc 1 vela verde.gif</imagelink>
     </appearance>
