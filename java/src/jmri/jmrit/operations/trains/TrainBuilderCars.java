@@ -15,6 +15,7 @@ import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -1208,6 +1209,10 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     new Object[]{car.toString(), router.getStatus()}));
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
+            if (router.getStatus().startsWith(Router.STATUS_NOT_THIS_TRAIN_PREFIX)) {
+                // hold car if able to route to track
+                _routeToTrackFound = true;
+            }
             return false;
         }
         car.updateKernel();
