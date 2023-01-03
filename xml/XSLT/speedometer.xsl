@@ -8,7 +8,7 @@
 <!-- This is just a basic implementation for debugging purposes, without    -->
 <!-- any real attempt at formatting                                         -->
 
-<!-- This file is part of JMRI.  Copyright 2011, 2022.                      -->
+<!-- This file is part of JMRI.  Copyright 2011 - 2023                      -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -32,7 +32,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2023')" />
 
 <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
