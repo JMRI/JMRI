@@ -1,48 +1,49 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2113.6">
-  <style type="text/css">
-    p.p2 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
-    p.p3 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px Times; color: #00009f; -webkit-text-stroke: #00008d}
-    li.li4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0000e9; -webkit-text-stroke: #000000}
-    li.li5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0000dc; -webkit-text-stroke: #000000}
-    span.s1 {font-kerning: none}
-    span.s2 {font-kerning: none; color: #000000; -webkit-text-stroke: 0px #000000}
-    span.s3 {text-decoration: underline ; font-kerning: none; color: #00009f; -webkit-text-stroke: 0px #00008d}
-    span.s4 {-webkit-text-stroke: 0px #000000}
-    span.s5 {text-decoration: underline ; font-kerning: none}
-    span.s6 {text-decoration: underline ; font-kerning: none; color: #0000dc}
-    ul.ul1 {list-style-type: disc}
-  </style>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright ($Author$) 2009 -->
+
+  <title>JMRI: FS - Italian State Railways - Signaling Definition</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>JMRI: FS - Italian State Railways - Signaling Definition</b></span></h1>
-<p class="p2"><span class="s1">This directory contains signaling definitions corresponding to the Italian rules as described in Il Treno Company book “Inserimento in linea dei segnali FS” according to the 1987 Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovie dello Stato”, FS today RFI). Prototypical (Linea) and Dispatcher (ACEI) icons.</span></p>
-<p class="p2"><span class="s1">Wikipedia: https://it.wikipedia.org/wiki/Segnalamento_ferroviario_in_Italia</span></p>
-<p class="p3"><span class="s2">See the <a href="aspects.xml"><span class="s3">aspect page</span></a>.</span></p>
-<p class="p2"><span class="s1">Signal Mast definitions:</span></p>
-<ul class="ul1">
-  <li class="li4"><span class="s4"><a href="appearance-Lineaacc.3vele.xml"><span class="s5">Linea Triple searchlight<span class="Apple-converted-space">  </span>accoppiato signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="appearance-Lineaacc.2vele.xml"><span class="s5">Linea Double searchlight accoppiato signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="appearance-Lineaacc.1vela.xml"><span class="s5">Linea Single searchlight accoppiato signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="appearance-LineaIcat.1vela.xml"><span class="s5">Linea Single searchlight<span class="Apple-converted-space">  </span>1. Cat .signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="appearance-LineaIcat.2vele.xml"><span class="s5">Linea Double searchlight 1. Cat. signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="appearance-Lineaavv.1vela.xml"><span class="s5">Linea Single searchlight avviso signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="appearance-Lineaavv.2vele.xml"><span class="s5">Linea Double searchlight avviso signal</span></a></span></li>
-  <li class="li5"><span class="s4"><a href="appearance-ACEIacc.3vele.xml"><span class="s6">ACEI<span class="Apple-converted-space">  </span>Triple searchlight<span class="Apple-converted-space">  </span>accoppiato signal</span></a></span></li>
-</ul>
-<ul class="ul1">
-  <li class="li4"><span class="s4"><a href="appearance-ACEIacc.2vele.xml"><span class="s5">ACEI Double<span class="Apple-converted-space">  </span>searchlight accoppiato signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="appearance-ACEIacc.1vela.xml"><span class="s5">ACEI Single searchlight accoppiato signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="appearance-ACEIIcat.1vela.xml"><span class="s5">ACEI Single searchlight<span class="Apple-converted-space">  </span>1. Cat .signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="appearance-ACEIIcat.2vele.xml"><span class="s5">ACEI Double searchlight 1. Cat. signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="appearance-ACEIavv.1vela.xml"><span class="s5">ACEI Single searchlight avviso signal</span></a></span></li>
-  <li class="li4"><span class="s4"><a href="appearance-ACEIavv.2vele.xml"><span class="s5">ACEI Double searchlight avviso signal</span></a></span></li>
-</ul>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
+        <h1>JMRI: FS - Italian State Railways - Signaling Definition</h1>
+        <p>This directory contains signaling definitions corresponding to the Italian rules as described in Il Treno Company book “Inserimento in linea dei segnali FS”
+        according to the 1987 Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovie dello Stato”, FS today RFI).
+        Prototypical (Linea) and Dispatcher (ACEI) icons.</p>
+        <p><a href="https://it.wikipedia.org/wiki/Segnalamento_ferroviario_in_Italia">Wikipedia entry</a></p>
+        <p>See the <a href="aspects.xml">aspect page</a>.</p>
+        <p>Signal Mast definitions:</p>
+        <ul>
+          <li><a href="appearance-Lineaacc.3vele.xml">Linea Triple searchlight accoppiato signal</a></li>
+          <li><a href="appearance-Lineaacc.2vele.xml">Linea Double searchlight accoppiato signal</a></li>
+          <li><a href="appearance-Lineaacc.1vela.xml">Linea Single searchlight accoppiato signal</a></li>
+          <li><a href="appearance-LineaIcat.1vela.xml">Linea Single searchlight 1. Cat .signal</a></li>
+          <li><a href="appearance-LineaIcat.2vele.xml">Linea Double searchlight 1. Cat. signal</a></li>
+          <li><a href="appearance-Lineaavv.1vela.xml">Linea Single searchlight avviso signal</a></li>
+          <li><a href="appearance-Lineaavv.2vele.xml">Linea Double searchlight avviso signal</a></li>
+          <li class="li5"><span class="s4"><a href="appearance-ACEIacc.3vele.xml">ACEI Triple searchlight accoppiato signal</a></li>
+        </ul>
+        <ul>
+          <li><a href="appearance-ACEIacc.2vele.xml">ACEI Double searchlight accoppiato signal</a></li>
+          <li><a href="appearance-ACEIacc.1vela.xml">ACEI Single searchlight accoppiato signal</a></li>
+          <li><a href="appearance-ACEIIcat.1vela.xml">ACEI Single searchlight 1. Cat .signal</a></li>
+          <li><a href="appearance-ACEIIcat.2vele.xml">ACEI Double searchlight 1. Cat. signal</a></li>
+          <li><a href="appearance-ACEIavv.1vela.xml">ACEI Single searchlight avviso signal</a></li>
+          <li><a href="appearance-ACEIavv.2vele.xml">ACEI Double searchlight avviso signal</a></li>
+        </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
