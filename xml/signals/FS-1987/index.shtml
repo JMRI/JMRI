@@ -14,8 +14,8 @@
     <div id="mainContent" class="no-sidebar">
 
         <h1>JMRI: FS - Italian State Railways - Signaling Definition</h1>
-        <p>This directory contains signaling definitions corresponding to the Italian rules as described in Il Treno Company book “Inserimento in linea dei segnali FS”
-        according to the 1987 Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovie dello Stato”, FS today RFI).
+        <p>This directory contains signaling definitions corresponding to the Italian rules as described in Il Treno Company book &quot;Inserimento in linea dei segnali FS&quot;
+        according to the 1987 Signal Rules &quot;Regolamento Segnali&quot; of the Italian State Railways (&quot;Ferrovie dello Stato&quot;, FS today RFI).
         Prototypical (Linea) and Dispatcher (ACEI) icons.</p>
         <p><a href="https://it.wikipedia.org/wiki/Segnalamento_ferroviario_in_Italia">Wikipedia entry</a></p>
         <p>See the <a href="aspects.xml">aspect page</a>.</p>
@@ -28,7 +28,7 @@
           <li><a href="appearance-LineaIcat.2vele.xml">Linea Double searchlight 1. Cat. signal</a></li>
           <li><a href="appearance-Lineaavv.1vela.xml">Linea Single searchlight avviso signal</a></li>
           <li><a href="appearance-Lineaavv.2vele.xml">Linea Double searchlight avviso signal</a></li>
-          <li class="li5"><span class="s4"><a href="appearance-ACEIacc.3vele.xml">ACEI Triple searchlight accoppiato signal</a></li>
+          <li><a href="appearance-ACEIacc.3vele.xml">ACEI Triple searchlight accoppiato signal</a></li>
         </ul>
         <ul>
           <li><a href="appearance-ACEIacc.2vele.xml">ACEI Double searchlight accoppiato signal</a></li>
