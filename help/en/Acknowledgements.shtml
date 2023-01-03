@@ -317,6 +317,8 @@
 
         <li>Luca Dentella, who contributed the CmdMapper script.</li>
 
+        <li>Pino Di Biasi, who contributed an Italian signal system</li>
+
         <li>Kevin Dickerson, who figured out the ECoS protocol so JMRI could connect to one and
         wrote code for ECoS throttles and turnouts, added turnout monitoring to the ECoS support,
         fixed a problem what would sometimes improperly disable Logix and Conditionals, worked on
