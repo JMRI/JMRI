@@ -29,7 +29,7 @@ from javax.swing import JOptionPane
 #   Block content labels
 
 
-class processPanels():
+class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
     logLevel = 0
 
@@ -51,13 +51,14 @@ class processPanels():
     controlSensors.append([8, 'setRouteSensor', 'Setup Route', 0, 2])
     controlSensors.append([9, 'setStoppingDistanceSensor', 'Set Stopping Length', 0, 2])
     controlSensors.append([10, 'setStationWaitTimeSensor', 'Set Station Wait Time', 0, 2])
+    controlSensors.append([11, 'setStationDirectionSensor', 'Set Station Direction', 0, 2])
 
-    controlSensors.append([11, 'runRouteSensor', 'Run Route', 10, 5])
-    controlSensors.append([12, 'editRoutesSensor', 'View/Edit Routes', 10, 5])
-    controlSensors.append([13, 'viewScheduledSensor', 'View/Edit Scheduled Trains', 10, 5])
-    controlSensors.append([14, 'schedulerStartTimeSensor', 'Set Scheduler Start Time', 10, 5])
-    controlSensors.append([15, 'showClockSensor', 'Show Analog Clock', 10, 5])
-    controlSensors.append([16, 'startSchedulerSensor', 'Start Scheduler', 10, 5])
+    controlSensors.append([12, 'runRouteSensor', 'Run Route', 10, 5])
+    controlSensors.append([13, 'editRoutesSensor', 'View/Edit Routes', 10, 5])
+    controlSensors.append([14, 'viewScheduledSensor', 'View/Edit Scheduled Trains', 10, 5])
+    controlSensors.append([15, 'schedulerStartTimeSensor', 'Set Scheduler Start Time', 10, 5])
+    controlSensors.append([16, 'showClockSensor', 'Show Analog Clock', 10, 5])
+    controlSensors.append([17, 'startSchedulerSensor', 'Start Scheduler', 10, 5])
 
     def __init__(self):
         self.define_DisplayProgress_global()
@@ -72,7 +73,8 @@ class processPanels():
             self.show_progress(20)
             self.removeSensors()
             self.show_progress(40)
-
+            self.updatePanels()
+            self.waitMsec(5000)
             self.get_list_of_stopping_points()
             self.addSensors()
             self.generateSML()
@@ -82,8 +84,8 @@ class processPanels():
             self.addLogix()
             self.addIcons()
             self.end_show_progress()
-            #msg = 'The JMRI tables and panels have been udpated to support the Dispatcher System\nA store is recommended.'
-            #JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
+            # msg = 'The JMRI tables and panels have been updated to support the Dispatcher System\nA store is recommended.'
+            # JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
 
     def define_DisplayProgress_global(self):
         global dpg
@@ -218,7 +220,6 @@ class processPanels():
         if some_checks_OK:
             msg = "Performed some prelimiary checks to ensure the trains run correctly\n\nAll Checks OK"
             reply = Query().customQuestionMessage2(msg, "Checks", "Continue", "Look in more detail")
-            print "reply=", reply
             if reply == JOptionPane.NO_OPTION:
                 if sensors_OK:
                     Message = "All blocks have sensors"
@@ -356,6 +357,12 @@ class processPanels():
         self.msg5 = self.msg5 + '\n - '.join(list_of_errors)
 
         return success
+
+    def updatePanels(self):
+        for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
+            panel.invalidate()
+            panel.validate()
+            panel.repaint()
 
     # **************************************************
     # remove icons and labels from panels
@@ -661,7 +668,7 @@ class processPanels():
                 if sensor is not None:
                     self.addSmallIcon(panel, sensor.getDisplayName(), x, y)
 
-                    y = int(y) - 40 if int(y) > 45 else 5
+                    y = int(y) - 30 if int(y) > 35 else 5
                     self.addBlockContentLabel(panel, block, x, y)
 
     # **************************************************

@@ -1,3 +1,4 @@
+global g
 class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     # if a button is turned on, this routing turns it off
@@ -22,6 +23,8 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.get_sensors_requiring_use_of_station_buttons()
         self.get_route_run_button()
         self.get_set_stopping_length_button()
+        self.get_station_wait_time_button()
+        self.get_station_direction_button()
         #set all move_to buttons inactive
         for sensor in self.button_sensors:
             if sensor != None:
@@ -31,6 +34,10 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         for sensor in self.route_run_sensor:
             sensor.setKnownState(INACTIVE)
         for sensor in self.stopping_distance_sensor:
+            sensor.setKnownState(INACTIVE)
+        for sensor in self.station_wait_time_sensor:
+            sensor.setKnownState(INACTIVE)
+        for sensor in self.station_direction_sensor:
             sensor.setKnownState(INACTIVE)
 
 
@@ -225,7 +232,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 #stopping_sensor_choice = "setAllStoppingSensors"
                 self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
                 self.modify_all_stopping_distances()
-            else:
+            else:    #opt2
                 stopping_sensor_choice = "setIndividualStoppingSensors"
                 msg = "Press station buttons to select a section in order to\nset stopping length for that section"
                 self.od.displayMessage(msg)
@@ -251,7 +258,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 #stopping_sensor_choice = "setAllStoppingSensors"
                 self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
                 self.modify_all_station_wait_times()
-            else:
+            else:  #opt2
                 #stopping_sensor_choice = "setIndividualWaitTimes"
                 msg = "Press station buttons to select a section in order to\nset wait time at beginning of that section"
                 self.od.displayMessage(msg)
@@ -261,6 +268,30 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 else:
                     self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_on")
 
+        elif sensor_changed == sensors.getSensor("setStationDirectionSensor"):
+
+            #optionbox
+            title = "Station Directions"
+            msg = "modify station directions?"
+            opt1 = "Reset All"
+            opt2 = "Set At particular station"
+            s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
+            if self.od.CLOSED_OPTION == True: #check of optionbox was closed prematurely
+                self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                return
+            elif s == opt1:
+                #stopping_sensor_choice = "setAllStoppingSensors"
+                self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                self.reset_all_station_directions()
+            else:     #opt2
+                #stopping_sensor_choice = "setIndividualWaitTimes"
+                msg = "Press station buttons to select a section in order to\nset one way working at that station\n"
+                msg = msg + "secect the second station adjacent to the first to indicate the direction"
+                self.od.displayMessage(msg)
+                if self.od.CLOSED_OPTION == True:
+                    self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                else:
+                    self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_on")
         else:
             msg = "error" + sensor_changed.getUserName()
             OptionDialog().displayMessage(msg)
@@ -280,7 +311,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         new_stopping_position = self.get_new_stopping_position()
         if new_stopping_position == None:
             return  # if one has cancelled
-        for e in g.g_express.edgeSet():
+        for e in g_express.edgeSet():
             from_station_name = g.g_stopping.getEdgeSource(e)
             to_station_name = g.g_stopping.getEdgeTarget(e)
             found_edge = e
@@ -295,6 +326,24 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.modify_stopping_distance(found_edge, combined_stopping_fraction, filename_fwd)
             filename_rvs = self.get_filename(found_edge, "rvs")
             self.modify_stopping_distance(found_edge, combined_stopping_fraction, filename_rvs)
+
+    def directory(self):
+        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "blockDirections"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
+    def reset_all_station_directions(self):
+        global g
+        self.od.displayMessage("About to set All stations set to 2-way working")
+        if self.od.CLOSED_OPTION == True:
+            self.od.displayMessage("Cancelled setting all stations to 2-way working")
+        else:
+            file = self.directory() + "blockDirections.txt"
+            with open(file  ,'w') as f:  # empty the file containing the direction information
+                pass
+            g = StationGraph()        # recalculate the weights on the edges
+            self.od.displayMessage("All stations set to 2-way working")
+
 
     def modify_all_station_wait_times(self):
         title = "Modify all station wait times"
@@ -449,8 +498,10 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         # self.button_dict[button_sensor] = self.check_sensor_state(button_sensor)
 
     def get_sensors_requiring_use_of_station_buttons(self):
+        sensor_list = ["setDispatchSensor", "setRouteSensor", "setStoppingDistanceSensor", \
+                       "setStationWaitTimeSensor", "setStationDirectionSensor" ]
         self.sensors_requiring_use_of_station_buttons = \
-            [sensors.getSensor(sensorName) for sensorName in ["setDispatchSensor", "setRouteSensor", "setStoppingDistanceSensor", "setStationWaitTimeSensor" ]]
+            [sensors.getSensor(sensorName) for sensorName in sensor_list]
         self.route_dispatch_states = [self.check_sensor_state(rd_sensor) for rd_sensor in self.sensors_requiring_use_of_station_buttons]
 
     def get_route_run_button(self):
@@ -458,6 +509,13 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_set_stopping_length_button(self):
         self.stopping_distance_sensor = [sensors.getSensor(sensorName) for sensorName in ["setStoppingDistanceSensor"]]
+
+    def get_station_wait_time_button(self):
+        self.station_wait_time_sensor = [sensors.getSensor(sensorName) for sensorName in ["setStationWaitTimeSensor"]]
+
+    def get_station_direction_button(self):
+        self.station_direction_sensor = [sensors.getSensor(sensorName) for sensorName in ["setStationDirectionSensor"]]
+
 
     def check_sensor_state(self, sensor):
         #if self.logLevel > 0: print("check_sensor_state",sensor)
@@ -539,7 +597,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         if dont_run_route == False:
             if self.logLevel > 0: print "station_from",    station_from, "station_to",station_to, "repeat",repeat
-            run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions)
+            run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, engine)
             run_train.setName("running_route_" + routeName)
             instanceList.append(run_train)
             run_train.start()
