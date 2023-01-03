@@ -680,7 +680,7 @@
 
             <li>JMRI normally sends an "ON" LocoNet message followed by an "OFF" LocoNet message
             when controlling switches, just like Digitrax throttles do. <span class="since">Since
-            <a href="https://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">JMRI
+            <a href="https://www.jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">JMRI
             4.15.7</a></span>, it is possible to configure JMRI to send only "ON" messages to
             turnouts, without sending "OFF" messages. Many accessory decoders work well when only
             receiving "ON" messages.
@@ -750,7 +750,7 @@
 
                 <li>
                   <span class="since">Since <a href=
-                  "https://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">JMRI
+                  "https://www.jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">JMRI
                   4.15.7</a></span>, JMRI provides a feature which "bypasses" the command station's
                   "Bushby" feature and therefore allows JMRI to control those devices which are
                   controlled by turnout control information on the DCC track signal. This requires
@@ -790,7 +790,7 @@
 
                 <li>
                   <span class="since">Since <a href=
-                  "https://jmri.org/releasenotes/jmri4.25.2.shtml" target="_blank">JMRI
+                  "https://www.jmri.org/releasenotes/jmri4.25.2.shtml" target="_blank">JMRI
                   4.25.2</a></span>, JMRI includes a simple script to provide forwarding of
                   "normal" LocoNet turnout control messages, for certain user-defined addresses, as
                   equivalent "special" LocoNet turnout control messages. This can be useful when
@@ -1345,8 +1345,8 @@
         </li>
 
         <li>Support for Digitrax hardware products is available through <a href=
-        "http://www.digitrax.com">Digitrax, Inc.</a> Digitrax product manuals may be found
-          <a href="http://www.digitrax.com/support/manuals/">here</a>. Note that Digitrax generally
+        "https://www.digitrax.com">Digitrax, Inc.</a> Digitrax product manuals may be found
+          <a href="https://www.digitrax.com/support/manuals/">here</a>. Note that Digitrax generally
           does not provide support for JMRI software or third-party LocoNet devices.
         </li>
 
@@ -1358,7 +1358,7 @@
         </li>
       </ul>
 
-      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
