@@ -24,13 +24,15 @@ public class OlcbConfigurationManagerTest {
     public void testCTor() {
         OlcbConfigurationManager t = new OlcbConfigurationManager(scm);
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     @Test
     public void testConfigureManagers() {
         OlcbConfigurationManager t = new OlcbConfigurationManager(scm);
-        // this tet verifies this does not throw an exception
+        // this test verifies this does not throw an exception
         t.configureManagers();
+        t.dispose();
     }
 
     @Test
@@ -39,6 +41,7 @@ public class OlcbConfigurationManagerTest {
         OlcbConfigurationManager t = new OlcbConfigurationManager(scm);
         t.configureManagers();
         assertEquals("05.01.01.01.00.FF", t.nodeID.toString());
+        t.dispose();
     }
 
     @Test
@@ -58,6 +61,8 @@ public class OlcbConfigurationManagerTest {
         MimicNodeStore.NodeMemo nmemo = ns.findNode(t.nodeID);
         assertEquals("Test User Name", nmemo.getSimpleNodeIdent().getUserName());
         assertEquals("Test Description", nmemo.getSimpleNodeIdent().getUserDesc());
+
+        t.dispose();
     }
 
     @BeforeAll
@@ -81,7 +86,6 @@ public class OlcbConfigurationManagerTest {
         }
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManagerTest.class);
