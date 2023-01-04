@@ -86,8 +86,8 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         f.setVisible(true);
     }
 
-    @SuppressWarnings("unchecked")
-    protected void addBottomButtons(BeanTableFrame ata, JTable dataTable ){
+    @SuppressWarnings("unchecked") // revisit Java16+  if dm instanceof BeanTableDataModel<E>
+    protected void addBottomButtons(BeanTableFrame<E> ata, JTable dataTable ){
 
         TableItem<E> ti = new TableItem<>(this);
         ti.setTableFrame(ata);
@@ -95,7 +95,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         ti.dataTable = dataTable;
         TableModel dm = dataTable.getModel();
 
-        if ( dm instanceof BeanTableDataModel<?>) {
+        if ( dm instanceof BeanTableDataModel) {
             ti.dataModel = (BeanTableDataModel<E>)dm;
         }
         ti.includePropertyCheckBox();
@@ -371,23 +371,22 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
 
         void includePropertyCheckBox() {
 
-            TableModel model = dataTable.getModel();
-            if ( model instanceof BeanTableDataModel ) {
-                BeanTableDataModel btdm = (BeanTableDataModel)model;
-                if (btdm.getPropertyColumnCount() > 0) {
-                    propertyVisible.setToolTipText(Bundle.getMessage
-                            ("ShowSystemSpecificPropertiesToolTip"));
-                    addToBottomBox(propertyVisible);
-                    propertyVisible.addActionListener((ActionEvent e) -> {
-                        btdm.setPropertyColumnsVisible(dataTable, propertyVisible.isSelected());
-                    });
-                }
-                fireColumnsUpdated(); // init bottom buttons
-                dataTable.getColumnModel().addColumnModelListener(this);
+            if (dataModel==null) {
+                log.error("datamodel for dataTable {} should not be null", dataTable);
+                return;
             }
-        
-        
-        
+
+            if (dataModel.getPropertyColumnCount() > 0) {
+                propertyVisible.setToolTipText(Bundle.getMessage
+                        ("ShowSystemSpecificPropertiesToolTip"));
+                addToBottomBox(propertyVisible);
+                propertyVisible.addActionListener((ActionEvent e) -> {
+                    dataModel.setPropertyColumnsVisible(dataTable, propertyVisible.isSelected());
+                });
+            }
+            fireColumnsUpdated(); // init bottom buttons
+            dataTable.getColumnModel().addColumnModelListener(this);
+
         }
         
         void includeAddButton(boolean includeAddButton){
@@ -406,7 +405,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
                 beanTableFrame.addToBottomBox(comp, this.getClass().getName());
             }
         }
-        
+
         /**
          * Notify the subclasses that column visibility has been updated,
          * or the table has finished loading.
