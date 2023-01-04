@@ -57,6 +57,8 @@
         documentation Wiki</a>, which lets a lot of people easily contribute to building better
         documentation.</li>
 
+        <li>Kevin Appleby, who provided a script to do serial transfers from the Light table</li>
+
         <li>Chris Atkins helped improve the <a href=
         "https://jmri.org/help/en/html/tools/scripting/Python.shtml#newJython">instructions for using
         a separate jython install</a>
