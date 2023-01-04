@@ -87,7 +87,7 @@ public abstract class AbstractValue {
         /**
          * Gets the color associated with this state value.
          * @return the color assigned to this state value or null if
-         *         use default for the component
+         *         to use default for the component
          */
         public Color getColor() {
             return _color;
