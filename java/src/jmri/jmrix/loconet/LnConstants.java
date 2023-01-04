@@ -501,7 +501,7 @@ public final class LnConstants {
             case RE_IPL_DIGITRAX_HOST_DS74:
                 return "DS74";
             case RE_IPL_DIGITRAX_HOST_DS78V:
-                return "LNRP";
+                return "DS78V";
             case RE_IPL_DIGITRAX_HOST_LNWI:
                 return "LNWI";
             case RE_IPL_DIGITRAX_SLAVE_RF24:
