@@ -7,9 +7,6 @@ import jmri.SystemConnectionMemo;
 
 import jmri.managers.AbstractReporterManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Provide a ReporterManager implementation for MQTT communications
  *
@@ -89,6 +86,6 @@ public class MqttReporterManager extends AbstractReporterManager {
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MqttReporterManager.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttReporterManager.class);
 
 }
