@@ -39,21 +39,24 @@ class MqttReporter extends AbstractIdTagReporter implements MqttEventListener {
             return;
         }
 
-        log.debug("start parse of {}", message);
+        log.trace("start parse of {}", message);
+
         // parse content
         String[] terms = message.split(" ", 2);
-        if ( terms.length < 1) {
-            log.warn("No loco ID present in ({})", message);
+
+        if ( terms.length < 1 || terms[0].isEmpty()) {
+            log.debug("No loco ID present in ({}), record empty report", message);
+            notify(null);
             return;
         }
-
+        // normal condition
         String loco = terms[0];
+
         String content  = "";
         if (terms.length > 1 ) {
             content = terms[1];
         }
 
-        // from java/src/jmri/jmrix/loconet/LnReporter.java
         IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(loco);
         idTag.setProperty("content", content);
         notify(idTag);
