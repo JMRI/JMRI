@@ -452,31 +452,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * @see AbstractValue
      */
     public void setState(ValueState state) {
-        switch (state) {
-            case UNKNOWN:
-                setColor(COLOR_UNKNOWN);
-                break;
-            case EDITED:
-                setColor(COLOR_EDITED);
-                break;
-            case READ:
-                setColor(COLOR_READ);
-                break;
-            case STORED:
-                setColor(COLOR_STORED);
-                break;
-            case FROMFILE:
-                setColor(COLOR_FROMFILE);
-                break;
-            case SAME:
-                setColor(COLOR_SAME);
-                break;
-            case DIFF:
-                setColor(COLOR_DIFF);
-                break;
-            default:
-                log.error("Inconsistent state: {}", _state);
-        }
+        setColor(state.getColor());
         if (_state != state || _state == ValueState.UNKNOWN) {
             prop.firePropertyChange("State", _state, state);
         }

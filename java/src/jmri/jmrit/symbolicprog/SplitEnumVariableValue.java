@@ -25,7 +25,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 
-import static jmri.jmrit.symbolicprog.AbstractValue.COLOR_UNKNOWN;
 import jmri.util.CvUtil;
 
 import org.slf4j.Logger;
@@ -247,7 +246,7 @@ public class SplitEnumVariableValue extends VariableValue
         // finish initialization
         _value.setActionCommand("");
         _defaultColor = _value.getBackground();
-        _value.setBackground(COLOR_UNKNOWN);
+        _value.setBackground(ValueState.UNKNOWN.getColor());
         _value.setOpaque(true);
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);

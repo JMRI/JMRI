@@ -37,43 +37,43 @@ public abstract class AbstractValue {
         /**
          * Defines state when nothing is known about the real value.
          */
-        UNKNOWN(COLOR_UNKNOWN, "Unknown"),
+        UNKNOWN(Color.red.brighter(), "Unknown"),
 
         /**
          * Defines state where value has been edited, no longer same as in decoder
          * or file.
          */
-        EDITED(COLOR_EDITED, "Edited"),
+        EDITED(Color.orange, "Edited"),
 
         /**
          * Defines state where value has been read from (hence same as) decoder, but
          * perhaps not same as in file.
          */
-        READ(COLOR_READ, "Read"),
+        READ(null, "Read"),
 
         /**
          * Defines state where value has been written to (hence same as) decoder,
          * but perhaps not same as in file.
          */
-        STORED(COLOR_STORED, "Stored"),
+        STORED(null, "Stored"),
 
         /**
          * Defines state where value was read from a config file, but might not be
          * the same as the decoder.
          */
-        FROMFILE(COLOR_FROMFILE, "FromFile"),
+        FROMFILE(Color.yellow, "FromFile"),
 
         /**
          * Defines state where value was read from a config file, and is the same as
          * the decoder.
          */
-        SAME(COLOR_SAME, "Same"),
+        SAME(null, "Same"),
 
         /**
          * Defines state where value was read from a config file, and is the not the
          * same as the decoder.
          */
-        DIFF(COLOR_DIFF, "Different");
+        DIFF(Color.red.brighter(), "Different");
 
 
         private final Color _color;
@@ -86,7 +86,8 @@ public abstract class AbstractValue {
 
         /**
          * Gets the color associated with this state value.
-         * @return the color assigned to this state value
+         * @return the color assigned to this state value or null if
+         *         use default for the component
          */
         public Color getColor() {
             return _color;
@@ -100,48 +101,6 @@ public abstract class AbstractValue {
             return _name;
         }
     }
-
-    /**
-     * Define color to denote UNKNOWN state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_UNKNOWN = Color.red.brighter();
-
-    /**
-     * Define color to denote EDITED state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_EDITED = Color.orange;
-
-    /**
-     * Define color to denote READ state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_READ = null;
-
-    /**
-     * Define color to denote STORED state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_STORED = null;
-
-    /**
-     * Define color to denote FROMFILE state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_FROMFILE = Color.yellow;
-
-    /**
-     * Define color to denote SAME state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_SAME = null;
-
-    /**
-     * Define color to denote DIFF state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_DIFF = Color.red.brighter();
 
     /**
      * Mark whether this object needs to be read.

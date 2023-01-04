@@ -112,7 +112,7 @@ public class CvValueTest {
     @Test
     public void testInitialColor() {
         CvValue cv = new CvValue("21", p);
-        Assert.assertEquals("initial color", CvValue.COLOR_UNKNOWN, cv.getTableEntry().getBackground());
+        Assert.assertEquals("initial color", AbstractValue.ValueState.UNKNOWN.getColor(), cv.getTableEntry().getBackground());
     }
 
     // check color update for EDITED
@@ -120,7 +120,7 @@ public class CvValueTest {
     public void testEditedColor() {
         CvValue cv = new CvValue("21", p);
         cv.setValue(23);
-        Assert.assertEquals("edited color", CvValue.COLOR_EDITED, cv.getTableEntry().getBackground());
+        Assert.assertEquals("edited color", AbstractValue.ValueState.EDITED.getColor(), cv.getTableEntry().getBackground());
     }
 
     private final static Logger log = LoggerFactory.getLogger(CvValueTest.class);

@@ -32,7 +32,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         mProgrammer = pProgrammer;
         _tableEntry = new JTextField("0", 3);
         _defaultColor = _tableEntry.getBackground();
-        _tableEntry.setBackground(COLOR_UNKNOWN);
+        _tableEntry.setBackground(ValueState.UNKNOWN.getColor());
     }
 
     public CvValue(String num, String cvName, Programmer pProgrammer) {
@@ -44,7 +44,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         mProgrammer = pProgrammer;
         _tableEntry = new JTextField("0", 3);
         _defaultColor = _tableEntry.getBackground();
-        _tableEntry.setBackground(COLOR_UNKNOWN);
+        _tableEntry.setBackground(ValueState.UNKNOWN.getColor());
     }
 
     @Override
@@ -130,31 +130,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         }
         ValueState oldstate = _state;
         _state = state;
-        switch (state) {
-            case UNKNOWN:
-                setColor(COLOR_UNKNOWN);
-                break;
-            case EDITED:
-                setColor(COLOR_EDITED);
-                break;
-            case READ:
-                setColor(COLOR_READ);
-                break;
-            case STORED:
-                setColor(COLOR_STORED);
-                break;
-            case FROMFILE:
-                setColor(COLOR_FROMFILE);
-                break;
-            case SAME:
-                setColor(COLOR_SAME);
-                break;
-            case DIFF:
-                setColor(COLOR_DIFF);
-                break;
-            default:
-                log.error("Inconsistent state: {}", _state); // NOI18N
-        }
+        setColor(state.getColor());
         if (oldstate != state) {
             prop.firePropertyChange("State", oldstate, state);
         }

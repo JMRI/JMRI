@@ -320,10 +320,10 @@ public abstract class AbstractVariableValueTestBase {
         v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
-        Assertions.assertEquals(VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground(), "FROM_FILE color");
+        Assertions.assertEquals(VariableValue.ValueState.FROMFILE.getColor(), variable.getCommonRep().getBackground(), "FROM_FILE color");
 
         cv.setState(AbstractValue.ValueState.UNKNOWN);
-        Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground(), "UNKNOWN color");
+        Assertions.assertEquals(VariableValue.ValueState.UNKNOWN.getColor(), variable.getCommonRep().getBackground(), "UNKNOWN color");
     }
 
     // check the state <-> color connection for rep when var changes
@@ -339,18 +339,18 @@ public abstract class AbstractVariableValueTestBase {
         // get a representation
         JComponent rep = (JComponent) variable.getNewRep("");
 
-        Assertions.assertEquals(VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground(), "FROMFILE color");
-        Assertions.assertEquals(VariableValue.COLOR_FROMFILE, rep.getBackground(), "FROMFILE color");
+        Assertions.assertEquals(VariableValue.ValueState.FROMFILE.getColor(), variable.getCommonRep().getBackground(), "FROMFILE color");
+        Assertions.assertEquals(VariableValue.ValueState.FROMFILE.getColor(), rep.getBackground(), "FROMFILE color");
 
         cv.setState(AbstractValue.ValueState.UNKNOWN);
 
-        Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground(), "UNKNOWN color");
-        Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, rep.getBackground(), "UNKNOWN color");
+        Assertions.assertEquals(VariableValue.ValueState.UNKNOWN.getColor(), variable.getCommonRep().getBackground(), "UNKNOWN color");
+        Assertions.assertEquals(VariableValue.ValueState.UNKNOWN.getColor(), rep.getBackground(), "UNKNOWN color");
 
         setValue(variable, "5");
 
-        Assertions.assertEquals(VariableValue.COLOR_EDITED, variable.getCommonRep().getBackground(), "EDITED color");
-        Assertions.assertEquals(VariableValue.COLOR_EDITED, rep.getBackground(), "EDITED color");
+        Assertions.assertEquals(VariableValue.ValueState.EDITED.getColor(), variable.getCommonRep().getBackground(), "EDITED color");
+        Assertions.assertEquals(VariableValue.ValueState.EDITED.getColor(), rep.getBackground(), "EDITED color");
     }
 
     // check the state <-> color connection for var when rep changes
@@ -367,20 +367,20 @@ public abstract class AbstractVariableValueTestBase {
         // get a representation
         JComponent rep = (JComponent) variable.getNewRep("");
 
-        Assertions.assertEquals(VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground(), "FROMFILE color");
-        Assertions.assertEquals(VariableValue.COLOR_FROMFILE, rep.getBackground(), "FROMFILE color");
+        Assertions.assertEquals(VariableValue.ValueState.FROMFILE.getColor(), variable.getCommonRep().getBackground(), "FROMFILE color");
+        Assertions.assertEquals(VariableValue.ValueState.FROMFILE.getColor(), rep.getBackground(), "FROMFILE color");
 
         cv.setState(AbstractValue.ValueState.UNKNOWN);
-        Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground(), "UNKNOWN color");
-        Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, rep.getBackground(), "UNKNOWN color");
+        Assertions.assertEquals(VariableValue.ValueState.UNKNOWN.getColor(), variable.getCommonRep().getBackground(), "UNKNOWN color");
+        Assertions.assertEquals(VariableValue.ValueState.UNKNOWN.getColor(), rep.getBackground(), "UNKNOWN color");
 
         try {   // might be either of two reps?
             ((JComboBox<String>) rep).setSelectedItem("9");
         } catch (java.lang.ClassCastException e) {
             ((JTextField) rep).setText("9");
             ((JTextField) rep).postActionEvent();
-            Assertions.assertEquals(VariableValue.COLOR_EDITED, variable.getCommonRep().getBackground(), "EDITED color");
-            Assertions.assertEquals(VariableValue.COLOR_EDITED, rep.getBackground(), "EDITED color");
+            Assertions.assertEquals(VariableValue.ValueState.EDITED.getColor(), variable.getCommonRep().getBackground(), "EDITED color");
+            Assertions.assertEquals(VariableValue.ValueState.EDITED.getColor(), rep.getBackground(), "EDITED color");
         }
     }
 

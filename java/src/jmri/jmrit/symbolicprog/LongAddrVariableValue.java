@@ -35,7 +35,7 @@ public class LongAddrVariableValue extends VariableValue
         _value.getAccessibleContext().setAccessibleName(label());
 
         _defaultColor = _value.getBackground();
-        _value.setBackground(COLOR_UNKNOWN);
+        _value.setBackground(ValueState.UNKNOWN.getColor());
         // connect to the JTextField value, cv
         _value.addActionListener(this);
         _value.addFocusListener(this);

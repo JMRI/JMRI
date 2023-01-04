@@ -71,7 +71,7 @@ public class SplitVariableValue extends VariableValue
         _textField = new JTextField("0");
         _defaultColor = _textField.getBackground();
 
-        _textField.setBackground(COLOR_UNKNOWN);
+        _textField.setBackground(ValueState.UNKNOWN.getColor());
         _textField.getAccessibleContext().setAccessibleName(label());
 
         mFactor = pFactor;
