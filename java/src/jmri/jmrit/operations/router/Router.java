@@ -2,18 +2,24 @@ package jmri.jmrit.operations.router;
 
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
-import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  * Router for car movement. This code attempts to find a way (a route) to move a
@@ -44,6 +50,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     private final List<Train> _lastLocationTrains = new ArrayList<>();
 
     protected static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
+    public static final String STATUS_NOT_THIS_TRAIN_PREFIX = Router.STATUS_NOT_THIS_TRAIN.substring(0, Router.STATUS_NOT_THIS_TRAIN.indexOf('('));
     protected static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
     protected static final String STATUS_ROUTER_DISABLED = Bundle.getMessage("RouterDisabled");
 
