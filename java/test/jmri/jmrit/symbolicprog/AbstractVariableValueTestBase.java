@@ -49,7 +49,7 @@ public abstract class AbstractVariableValueTestBase {
         Assert.assertNull(AbstractValue.ValueState.STORED.getColor());
         Assert.assertEquals(Color.yellow, AbstractValue.ValueState.FROMFILE.getColor());
         Assert.assertNull(AbstractValue.ValueState.SAME.getColor());
-        Assert.assertEquals(Color.red.brighter(), AbstractValue.ValueState.DIFF.getColor());
+        Assert.assertEquals(Color.red.brighter(), AbstractValue.ValueState.DIFFERENT.getColor());
 
         Assert.assertEquals("Unknown", AbstractValue.ValueState.UNKNOWN.getName());
         Assert.assertEquals("Edited", AbstractValue.ValueState.EDITED.getName());
@@ -57,7 +57,7 @@ public abstract class AbstractVariableValueTestBase {
         Assert.assertEquals("Stored", AbstractValue.ValueState.STORED.getName());
         Assert.assertEquals("FromFile", AbstractValue.ValueState.FROMFILE.getName());
         Assert.assertEquals("Same", AbstractValue.ValueState.SAME.getName());
-        Assert.assertEquals("Different", AbstractValue.ValueState.DIFF.getName());
+        Assert.assertEquals("Different", AbstractValue.ValueState.DIFFERENT.getName());
     }
 
     // check label, item from ctor

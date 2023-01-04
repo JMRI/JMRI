@@ -1002,7 +1002,7 @@ public class SplitEnumVariableValue extends VariableValue
             case UNKNOWN:
                 value++;
             //$FALL-THROUGH$
-            case DIFF:
+            case DIFFERENT:
                 value++;
             //$FALL-THROUGH$
             case EDITED:

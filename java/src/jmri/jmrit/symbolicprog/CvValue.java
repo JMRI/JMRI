@@ -126,40 +126,13 @@ public class CvValue extends AbstractValue implements ProgListener {
      */
     public void setState(ValueState state) {
         if (log.isDebugEnabled()) {  // stateToString overhead
-            log.debug("cv {} set state from {} to {}", number(), stateToString(_state), stateToString(state)); // NOI18N
+            log.debug("cv {} set state from {} to {}", number(), _state.name(), state.name()); // NOI18N
         }
         ValueState oldstate = _state;
         _state = state;
         setColor(state.getColor());
         if (oldstate != state) {
             prop.firePropertyChange("State", oldstate, state);
-        }
-    }
-
-    /**
-     * Intended for debugging only, don't translate.
-     * @param state State to translate to text
-     * @return Text (human readable) representation of state
-     */
-    String stateToString(ValueState state) {
-        switch (state) {
-            case UNKNOWN:
-                return "UNKNOWN";
-            case EDITED:
-                return "EDITED";
-            case READ:
-                return "READ";
-            case STORED:
-                return "STORED";
-            case FROMFILE:
-                return "FROMFILE";
-            case SAME:
-                return "SAME";
-            case DIFF:
-                return "DIFF";
-            default:
-                log.error("Inconsistent state: {}", _state); // NOI18N
-                return "ERROR!!";
         }
     }
 
@@ -456,7 +429,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 if (value == _value) {
                     setState(ValueState.SAME);
                 } else {
-                    setState(ValueState.DIFF);
+                    setState(ValueState.DIFFERENT);
                 }
                 _busy = false;
                 notifyBusyChange(oldBusy, _busy);

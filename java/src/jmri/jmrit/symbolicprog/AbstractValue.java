@@ -73,7 +73,7 @@ public abstract class AbstractValue {
          * Defines state where value was read from a config file, and is the not the
          * same as the decoder.
          */
-        DIFF(Color.red.brighter(), "Different");
+        DIFFERENT(Color.red.brighter(), "Different");
 
 
         private final Color _color;

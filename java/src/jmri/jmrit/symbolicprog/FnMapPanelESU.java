@@ -762,7 +762,7 @@ public final class FnMapPanelESU extends JPanel {
             case UNKNOWN:
                 value++;
             //$FALL-THROUGH$
-            case DIFF:
+            case DIFFERENT:
                 value++;
             //$FALL-THROUGH$
             case EDITED:
