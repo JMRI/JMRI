@@ -360,16 +360,29 @@
       "ACTIVE" and "INACTIVE". Any other message will generate a Warning in the <a href=
       "../../../package/apps/SystemConsole.shtml">JMRI System Console</a> but will not change the
       Sensor state.
+
       <h4>Turnouts</h4>
       The message content to be published by turnouts is "CLOSED" and "THROWN". Turnouts in Direct or Monitoring
       mode can also receive these as well as the messages "INCONSISTENT" and "UNKNOWN" (sets the Known State).
       Receiving any other message will generate a Warning in the <a href="../../../package/apps/SystemConsole.shtml">
       JMRI System Console</a> and will set the turnout Known state to "UNKNOWN."
+
       <h4>Lights</h4>
       The expected message content for lights is "ON"
       and "OFF". Receiving any other messages will result in a Warning in the <a href=
       "../../../package/apps/SystemConsole.shtml">JMRI System Console.</a> and cause the Light
       state to be set to "UNKNOWN."
+
+      <h4 id="reporters"> Reporters</h4>
+      <span class="since">Since JMRI 5.3.2</span>
+        MQTT-connected Reporters expect to receive a message like "123 west",
+        where the first term is the locomotive ID and the rest of the message is free form.
+        The Reporter creates/updates an IdTag with the locomotive ID as the tag ID
+        (e.g. ID123 in the example case)
+        and puts the rest of the message in the "content" parameter.
+        A Reporter can also receive an empty message, which clears the report but
+        doesn't update any IdTags.
+        Reporters do not send anything to MQTT.
 
       <h4>Signal Masts</h4>
       <span class="since">Since JMRI 4.26</span> A JMRI MQTT Signal Mast will send the
