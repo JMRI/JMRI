@@ -387,7 +387,7 @@ public final class LnConstants {
 
     /* Expanded slot codes */
     public final static int OPC_EXP_REQ_SLOT = 0xbe;
-    public final static int OPC_EXP_SLOT_MOVE = 0xd4;
+    // public final static int OPC_EXP_SLOT_MOVE = 0xd4;
     public final static int OPC_EXP_RD_SL_DATA = 0xe6;
     public final static int OPC_EXP_WR_SL_DATA = 0xee;
     public final static int OPC_EXP_SEND_SUB_CODE_MASK_SPEED = 0b11110000;
@@ -446,6 +446,70 @@ public final class LnConstants {
             default: return "<unknown>"; // NOI18N
         }
     }
+    /**
+     * Encode Device IPL code as a string
+     *
+     * @param device code
+     * @return string containing the opcode "name"
+     */
+    public final static String IPL_NAME(int device) {
+        switch (device) {
+            case RE_IPL_DIGITRAX_HOST_LNRP:
+                return "LNRP";
+            case RE_IPL_DIGITRAX_HOST_UT4:
+                return "UT4";
+            case RE_IPL_DIGITRAX_HOST_UT6:
+                return "UT6";
+            case RE_IPL_DIGITRAX_HOST_WTL12:
+                return "WTL12";
+            case RE_IPL_DIGITRAX_HOST_DB210OPTO:
+                return "DB210OPTO";
+            case RE_IPL_DIGITRAX_HOST_DB210:
+                return "DB210";
+            case RE_IPL_DIGITRAX_HOST_DB220:
+                return "DB220";
+            case RE_IPL_DIGITRAX_HOST_DCS210PLUS:
+                return "DCS210PLUS";
+            case RE_IPL_DIGITRAX_HOST_DCS210:
+                return "DCS210";
+            case RE_IPL_DIGITRAX_HOST_DCS240:
+                return "DCS240";
+            case RE_IPL_DIGITRAX_HOST_DCS240PLUS:
+                return "DCS240PLUS";
+            case RE_IPL_DIGITRAX_HOST_DCS52:
+                return "DCS52";
+            case RE_IPL_DIGITRAX_HOST_PR3:
+                return "PR3";
+            case RE_IPL_DIGITRAX_HOST_PR4:
+                return "PR4";
+            case RE_IPL_DIGITRAX_HOST_DT402:
+                return "DT402";
+            case RE_IPL_DIGITRAX_HOST_DT500:
+                return "DT500";
+            case RE_IPL_DIGITRAX_HOST_DT602:
+                return "DT602";
+            case RE_IPL_DIGITRAX_HOST_DCS51:
+                return "DCS51";
+            case RE_IPL_DIGITRAX_HOST_BXPA1:
+                return "BXPA1";
+            case RE_IPL_DIGITRAX_HOST_UR92:
+                return "UR92";
+            case RE_IPL_DIGITRAX_HOST_UR93:
+                return "UR93";
+            case RE_IPL_DIGITRAX_HOST_BXP88:
+                return "BXP88";
+            case RE_IPL_DIGITRAX_HOST_DS74:
+                return "DS74";
+            case RE_IPL_DIGITRAX_HOST_DS78V:
+                return "DS78V";
+            case RE_IPL_DIGITRAX_HOST_LNWI:
+                return "LNWI";
+            case RE_IPL_DIGITRAX_SLAVE_RF24:
+                return "RF24";
+            default: return "<unknown>"; // NOI18N
+        }
+    }
+
 
 // start of values not from llnmon.c
 
@@ -641,7 +705,7 @@ public final class LnConstants {
      *  <FUNC> = functions mask
      */
 // Common to Intellibox-I and -II :
-    public final static int RE_OPC_IB2_SPECIAL = 0xD4; //For functions F13-F28 (IB-II) and by IB-I v2.x ("one") for F0-F28
+    public final static int OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL= 0xD4; //For functions F13-F28 (IB-II) and by IB-I v2.x ("one") for F0-F28
     public final static int RE_IB2_SPECIAL_FUNCS_TOKEN = 0x20;
 //Used only by Intellibox-I ("one") version 2.x
     public final static int RE_IB1_SPECIAL_F0_F4_TOKEN = 0x06; //Used by Intellibox-I ("one") version 2.x
