@@ -1,13 +1,17 @@
 package jmri.jmrit.symbolicprog;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.util.HashMap;
+
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -35,6 +39,27 @@ public abstract class AbstractVariableValueTestBase {
     abstract void checkReadOnlyValue(VariableValue var, String comment, String value);
 
     // start of base tests
+
+    // Test the ValueState enum
+    @Test
+    public void testValueStateEnum() {
+        Assert.assertEquals(Color.red.brighter(), AbstractValue.ValueState.UNKNOWN.getColor());
+        Assert.assertEquals(Color.orange, AbstractValue.ValueState.EDITED.getColor());
+        Assert.assertNull(AbstractValue.ValueState.READ.getColor());
+        Assert.assertNull(AbstractValue.ValueState.STORED.getColor());
+        Assert.assertEquals(Color.yellow, AbstractValue.ValueState.FROMFILE.getColor());
+        Assert.assertNull(AbstractValue.ValueState.SAME.getColor());
+        Assert.assertEquals(Color.red.brighter(), AbstractValue.ValueState.DIFF.getColor());
+
+        Assert.assertEquals("Unknown", AbstractValue.ValueState.UNKNOWN.getName());
+        Assert.assertEquals("Edited", AbstractValue.ValueState.EDITED.getName());
+        Assert.assertEquals("Read", AbstractValue.ValueState.READ.getName());
+        Assert.assertEquals("Stored", AbstractValue.ValueState.STORED.getName());
+        Assert.assertEquals("FromFile", AbstractValue.ValueState.FROMFILE.getName());
+        Assert.assertEquals("Same", AbstractValue.ValueState.SAME.getName());
+        Assert.assertEquals("Different", AbstractValue.ValueState.DIFF.getName());
+    }
+
     // check label, item from ctor
     @Test
     public void testVariableNaming() {
