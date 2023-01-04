@@ -372,7 +372,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Some internal state constants have been changed from integer values
+                to an enum.  This should not have any external effect.</li>
         </ul>
 
     <h3>CTC Tool</h3>

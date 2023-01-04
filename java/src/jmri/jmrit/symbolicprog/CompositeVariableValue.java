@@ -221,7 +221,7 @@ public class CompositeVariableValue extends EnumVariableValue {
     public void lastItem() {
         // configure the representation object
         _defaultColor = _value.getBackground();
-        super.setState(READ);
+        super.setState(ValueState.READ);
 
         // note that we don't set this to COLOR_UNKNOWN!  Rather,
         // we check the current value
@@ -274,7 +274,7 @@ public class CompositeVariableValue extends EnumVariableValue {
      * This variable doesn't change state, hence doesn't change color.
      */
     @Override
-    public void setState(int state) {
+    public void setState(ValueState state) {
         log.debug("Ignore setState({})", state);
     }
 
@@ -313,7 +313,7 @@ public class CompositeVariableValue extends EnumVariableValue {
         int oldVal = getIntValue();
         selectValue(value);
 
-        if (oldVal != value || getState() == VariableValue.UNKNOWN) {
+        if (oldVal != value || getState() == ValueState.UNKNOWN) {
             prop.firePropertyChange("Value", null, value);
         }
     }
@@ -323,7 +323,7 @@ public class CompositeVariableValue extends EnumVariableValue {
      * variables (e.g. not direct to CVs).
      */
     @Override
-    public void setCvState(int state) {
+    public void setCvState(ValueState state) {
         Iterator<VariableValue> i = variables.iterator();
         while (i.hasNext()) {
             VariableValue v = i.next();
@@ -448,7 +448,7 @@ public class CompositeVariableValue extends EnumVariableValue {
         }
         // found nothing, ensure cleaned up
         amReading = false;
-        super.setState(READ);
+        super.setState(ValueState.READ);
         setBusy(false);
         log.debug("End continueRead, nothing to do");
     }
@@ -491,7 +491,7 @@ public class CompositeVariableValue extends EnumVariableValue {
         }
         // found nothing, ensure cleaned up
         amWriting = false;
-        super.setState(STORED);
+        super.setState(ValueState.STORED);
         setBusy(false);
         log.debug("End continueWrite, nothing to do");
     }

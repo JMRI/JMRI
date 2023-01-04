@@ -33,46 +33,49 @@ public abstract class AbstractValue {
      */
     abstract void setColor(Color c);
 
-    /**
-     * Defines state when nothing is known about the real value.
-     */
-    public static final int UNKNOWN = 0;
+    public enum ValueState {
+        /**
+         * Defines state when nothing is known about the real value.
+         */
+        UNKNOWN,
 
-    /**
-     * Defines state where value has been edited, no longer same as in decoder
-     * or file.
-     */
-    public static final int EDITED = 4;
+        /**
+         * Defines state where value has been edited, no longer same as in decoder
+         * or file.
+         */
+        EDITED,
 
-    /**
-     * Defines state where value has been read from (hence same as) decoder, but
-     * perhaps not same as in file.
-     */
-    public static final int READ = 16;
+        /**
+         * Defines state where value has been read from (hence same as) decoder, but
+         * perhaps not same as in file.
+         */
+        READ,
 
-    /**
-     * Defines state where value has been written to (hence same as) decoder,
-     * but perhaps not same as in file.
-     */
-    public static final int STORED = 64;
+        /**
+         * Defines state where value has been written to (hence same as) decoder,
+         * but perhaps not same as in file.
+         */
+        STORED,
 
-    /**
-     * Defines state where value was read from a config file, but might not be
-     * the same as the decoder.
-     */
-    public static final int FROMFILE = 256;
+        /**
+         * Defines state where value was read from a config file, but might not be
+         * the same as the decoder.
+         */
+        FROMFILE,
 
-    /**
-     * Defines state where value was read from a config file, and is the same as
-     * the decoder.
-     */
-    public static final int SAME = 512;
+        /**
+         * Defines state where value was read from a config file, and is the same as
+         * the decoder.
+         */
+        SAME,
 
-    /**
-     * Defines state where value was read from a config file, and is the not the
-     * same as the decoder.
-     */
-    public static final int DIFF = 1024;
+        /**
+         * Defines state where value was read from a config file, and is the not the
+         * same as the decoder.
+         */
+        DIFF
+
+    }
 
     /**
      * Define color to denote UNKNOWN state. null means to use default for the
@@ -164,7 +167,7 @@ public abstract class AbstractValue {
      * @param val a state value
      * @return the color assigned to the specified state value
      */
-    public static Color stateColorFromValue(int val) {
+    public static Color stateColorFromValue(ValueState val) {
         switch (val) {
             case UNKNOWN:
                 return COLOR_UNKNOWN;
@@ -191,7 +194,7 @@ public abstract class AbstractValue {
      * @param val a state value
      * @return the name assigned to the specified state value
      */
-    public static String stateNameFromValue(int val) {
+    public static String stateNameFromValue(ValueState val) {
         switch (val) {
             case UNKNOWN:
                 return "Unknown";

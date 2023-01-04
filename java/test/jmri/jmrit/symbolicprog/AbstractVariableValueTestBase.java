@@ -216,11 +216,11 @@ public abstract class AbstractVariableValueTestBase {
         variable.readAll();
         // wait for reply (normally, done by callback; will check that later)
         JUnitUtil.waitFor(()-> !variable.isBusy(), "variable.isBusy");
-        
+
         checkValue(variable, "text var value ", "14");
-        Assertions.assertEquals(AbstractValue.READ, variable.getState(), "var state ");
+        Assertions.assertEquals(AbstractValue.ValueState.READ, variable.getState(), "var state ");
         Assertions.assertEquals(123, cv.getValue(), "cv value");
-        Assertions.assertEquals(AbstractValue.READ, cv.getState(), "CV state ");
+        Assertions.assertEquals(AbstractValue.ValueState.READ, cv.getState(), "CV state ");
     }
 
     // check a write operation to the variable
@@ -238,10 +238,10 @@ public abstract class AbstractVariableValueTestBase {
         variable.writeAll();
         // wait for reply (normally, done by callback; will check that later)
         JUnitUtil.waitFor(()-> !variable.isBusy(), "variable.isBusy");
-        
+
         checkValue(variable, "value ", "5");
-        Assertions.assertEquals(AbstractValue.STORED, variable.getState(), "var state ");
-        Assertions.assertEquals(AbstractValue.STORED, cv.getState(), "cv state ");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, variable.getState(), "var state ");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, cv.getState(), "cv state ");
         Assertions.assertEquals(5 * 4 + 128 + 1, p.lastWrite(), "last program write "); // include checking original bits
     }
 
@@ -260,10 +260,10 @@ public abstract class AbstractVariableValueTestBase {
         cv.write(statusLabel);  // JLabel is for reporting status, ignored here
         // wait for reply (normally, done by callback; will check that later)
         JUnitUtil.waitFor(()-> !cv.isBusy(), "cv.isBusy");
-        
+
         checkValue(variable, "value ", "5");
-        Assertions.assertEquals(AbstractValue.STORED, variable.getState(), "variable state ");
-        Assertions.assertEquals(AbstractValue.STORED, cv.getState(), "cv state ");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, variable.getState(), "variable state ");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, cv.getState(), "cv state ");
         Assertions.assertEquals(5 * 4 + 3, p.lastWrite(), "value written "); // includes initial value bits
         Assertions.assertEquals("OK", statusLabel.getText(), "status label ");
     }
@@ -278,11 +278,11 @@ public abstract class AbstractVariableValueTestBase {
         v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
-        Assertions.assertEquals(VariableValue.FROMFILE, variable.getState(), "initial state");
-        cv.setState(CvValue.UNKNOWN);
-        Assertions.assertEquals(VariableValue.UNKNOWN, variable.getState(), "after CV set unknown");
+        Assertions.assertEquals(VariableValue.ValueState.FROMFILE, variable.getState(), "initial state");
+        cv.setState(AbstractValue.ValueState.UNKNOWN);
+        Assertions.assertEquals(VariableValue.ValueState.UNKNOWN, variable.getState(), "after CV set unknown");
         setValue(variable, "5");
-        Assertions.assertEquals(VariableValue.EDITED, variable.getState(), "state after setValue");
+        Assertions.assertEquals(VariableValue.ValueState.EDITED, variable.getState(), "state after setValue");
     }
 
     // check the state <-> color connection for value
@@ -297,7 +297,7 @@ public abstract class AbstractVariableValueTestBase {
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         Assertions.assertEquals(VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground(), "FROM_FILE color");
 
-        cv.setState(CvValue.UNKNOWN);
+        cv.setState(AbstractValue.ValueState.UNKNOWN);
         Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground(), "UNKNOWN color");
     }
 
@@ -317,7 +317,7 @@ public abstract class AbstractVariableValueTestBase {
         Assertions.assertEquals(VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground(), "FROMFILE color");
         Assertions.assertEquals(VariableValue.COLOR_FROMFILE, rep.getBackground(), "FROMFILE color");
 
-        cv.setState(CvValue.UNKNOWN);
+        cv.setState(AbstractValue.ValueState.UNKNOWN);
 
         Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground(), "UNKNOWN color");
         Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, rep.getBackground(), "UNKNOWN color");
@@ -345,7 +345,7 @@ public abstract class AbstractVariableValueTestBase {
         Assertions.assertEquals(VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground(), "FROMFILE color");
         Assertions.assertEquals(VariableValue.COLOR_FROMFILE, rep.getBackground(), "FROMFILE color");
 
-        cv.setState(CvValue.UNKNOWN);
+        cv.setState(AbstractValue.ValueState.UNKNOWN);
         Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground(), "UNKNOWN color");
         Assertions.assertEquals(VariableValue.COLOR_UNKNOWN, rep.getBackground(), "UNKNOWN color");
 
@@ -419,8 +419,8 @@ public abstract class AbstractVariableValueTestBase {
 
         checkValue(var1, "var 1 value", "5");
         checkValue(var2, "var 2 value", "5");
-        Assertions.assertEquals(AbstractValue.STORED, var1.getState(), "1st variable state ");
-        Assertions.assertEquals(AbstractValue.STORED, var2.getState(), "2nd variable state ");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, var1.getState(), "1st variable state ");
+        Assertions.assertEquals(AbstractValue.ValueState.STORED, var2.getState(), "2nd variable state ");
         Assertions.assertEquals(5 * 4 + 3, p.lastWrite(), "value written to programmer "); // includes initial value bits
     }
 
