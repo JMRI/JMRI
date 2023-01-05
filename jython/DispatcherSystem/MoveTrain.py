@@ -454,10 +454,11 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 
         #display the allocated trains
-        msg = "choose"
-        actions = ["setup 1 train","setup several trains", "check train direction", "reset trains"]
-        action = self.od.List(msg, actions)
-        if action == "setup 1 train":
+        action = self.choose_action()
+        #msg = "choose"
+        #actions = ["setup 1 train","setup several trains", "check train direction", "reset trains"]
+        #action = self.od.List(msg, actions)
+        if action == "1 train":
             # msg = "choose"
             # actions = ["setup 1 train","setup 2+ trains"]
             # action = self.od.List(msg, actions)
@@ -519,7 +520,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                     pass
                 elif ans == JOptionPane.NO_OPTION:
                     self.reset_allocation()
-        elif action == "setup several trains":
+        elif action == "several trains":
             createandshowGUI(self)
 
 
@@ -566,7 +567,27 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
     # def createAndShowGUI(self, super):
     #     createandshowGUI(self,super)
 
-
+    def choose_action(self):
+        title = ""
+        msg = "setup one or more trains"
+        opt1 = "1 train"
+        opt2 = "several trains"
+        opt3 = "other actions"
+        reply = self.od.customQuestionMessage3str(msg, title, opt1, opt2, opt3)
+        if reply == opt1:
+            return opt1
+        elif reply == opt2:
+            return opt2
+        else:
+            title = ""
+            msg = "setup one or more trains"
+            opt1 = "check train direction"
+            opt2 = "reset trains"
+            reply = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
+            if reply == opt1:
+                return opt1
+            else:
+                return opt2
 
     def check_train_direction(self, train_name, station_block_name):
         global train
@@ -1497,7 +1518,7 @@ class createandshowGUI(TableModelListener):
             self.completeTablePanel()
 
     def cancel_action(self, event):
-        self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
+        self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
 
     def apply_action(self, event):
         train = 0
@@ -1515,6 +1536,8 @@ class createandshowGUI(TableModelListener):
                                                                          train_direction, train_length)
                 self.model.data.pop(row)
         self.completeTablePanel()
+        if self.model.getRowCount() == 0:
+            self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
     def set_train_selections(self, combobox):
         pass
     def directory(self):
