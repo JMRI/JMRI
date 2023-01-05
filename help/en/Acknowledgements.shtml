@@ -253,7 +253,8 @@
         <li>Nigel Cliffe, who updated the CT Elektronik decoder definitions, provided sample
         scripts, provided new Zimo MX620 and ZTC 471 definitions, provided MERG decoder
         definitions, created a script tool for setting Zimo function options, designed the
-        DecoderPro 3 GUI, and created a DCC Concepts decoder definition.</li>
+        DecoderPro 3 GUI, created a DCC Concepts decoder definition
+        and helped with creation of the MQTT Reporter.</li>
 
         <li>John Clutterbuck helped with Fleischmann decoder definitions</li>
 
