@@ -107,7 +107,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         // finish initialization
         _value.setActionCommand("");
         _defaultColor = _value.getBackground();
-        _value.setBackground(COLOR_UNKNOWN);
+        _value.setBackground(ValueState.UNKNOWN.getColor());
         _value.setOpaque(true);
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);

@@ -744,7 +744,7 @@ public final class FnMapPanelESU extends JPanel {
             retString.deleteCharAt(0);
         }
 
-        summaryLine[row][block].setBackground(AbstractValue.stateColorFromValue(retState));
+        summaryLine[row][block].setBackground(retState.getColor());
         summaryLine[row][block].setText(retString.toString());
         summaryLine[row][block].setToolTipText(retString.toString());
     }
@@ -762,7 +762,7 @@ public final class FnMapPanelESU extends JPanel {
             case UNKNOWN:
                 value++;
             //$FALL-THROUGH$
-            case DIFF:
+            case DIFFERENT:
                 value++;
             //$FALL-THROUGH$
             case EDITED:

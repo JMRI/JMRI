@@ -212,7 +212,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
                         return Bundle.getMessage("CvStateFromFile");
                     case SAME:
                         return Bundle.getMessage("CvStateSame");
-                    case DIFF:
+                    case DIFFERENT:
                         return Bundle.getMessage("CvStateDiff") + " "
                                 + _cvDisplayVector.elementAt(row).getDecoderValue();
                     default:

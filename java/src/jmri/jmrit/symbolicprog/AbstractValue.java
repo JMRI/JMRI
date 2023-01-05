@@ -37,87 +37,70 @@ public abstract class AbstractValue {
         /**
          * Defines state when nothing is known about the real value.
          */
-        UNKNOWN,
+        UNKNOWN(Color.red.brighter(), "Unknown"),
 
         /**
          * Defines state where value has been edited, no longer same as in decoder
          * or file.
          */
-        EDITED,
+        EDITED(Color.orange, "Edited"),
 
         /**
          * Defines state where value has been read from (hence same as) decoder, but
          * perhaps not same as in file.
          */
-        READ,
+        READ(null, "Read"),
 
         /**
          * Defines state where value has been written to (hence same as) decoder,
          * but perhaps not same as in file.
          */
-        STORED,
+        STORED(null, "Stored"),
 
         /**
          * Defines state where value was read from a config file, but might not be
          * the same as the decoder.
          */
-        FROMFILE,
+        FROMFILE(Color.yellow, "FromFile"),
 
         /**
          * Defines state where value was read from a config file, and is the same as
          * the decoder.
          */
-        SAME,
+        SAME(null, "Same"),
 
         /**
          * Defines state where value was read from a config file, and is the not the
          * same as the decoder.
          */
-        DIFF
+        DIFFERENT(Color.red.brighter(), "Different");
 
+
+        private final Color _color;
+        private final String _name;
+
+        private ValueState(Color color, String name) {
+            this._color = color;
+            this._name = name;
+        }
+
+        /**
+         * Gets the color associated with this state value.
+         * @return the color assigned to this state value or null if
+         *         to use default for the component
+         */
+        public Color getColor() {
+            return _color;
+        }
+
+        /**
+         * Gets the name associated with this state value.
+         * @return the name assigned to this state value
+         */
+        public String getName() {
+            return _name;
+        }
     }
-
-    /**
-     * Define color to denote UNKNOWN state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_UNKNOWN = Color.red.brighter();
-
-    /**
-     * Define color to denote EDITED state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_EDITED = Color.orange;
-
-    /**
-     * Define color to denote READ state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_READ = null;
-
-    /**
-     * Define color to denote STORED state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_STORED = null;
-
-    /**
-     * Define color to denote FROMFILE state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_FROMFILE = Color.yellow;
-
-    /**
-     * Define color to denote SAME state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_SAME = null;
-
-    /**
-     * Define color to denote DIFF state. null means to use default for the
-     * component.
-     */
-    static final Color COLOR_DIFF = Color.red.brighter();
 
     /**
      * Mark whether this object needs to be read.
@@ -160,60 +143,6 @@ public abstract class AbstractValue {
         return _toWrite;
     }
     private boolean _toWrite = false;
-
-    /**
-     * Gets the color associated with a particular state value.
-     *
-     * @param val a state value
-     * @return the color assigned to the specified state value
-     */
-    public static Color stateColorFromValue(ValueState val) {
-        switch (val) {
-            case UNKNOWN:
-                return COLOR_UNKNOWN;
-            case EDITED:
-                return COLOR_EDITED;
-            case READ:
-                return COLOR_READ;
-            case STORED:
-                return COLOR_STORED;
-            case FROMFILE:
-                return COLOR_FROMFILE;
-            case SAME:
-                return COLOR_SAME;
-            case DIFF:
-                return COLOR_DIFF;
-            default:
-                return null;
-        }
-    }
-
-    /**
-     * Gets the name associated with a particular state value.
-     *
-     * @param val a state value
-     * @return the name assigned to the specified state value
-     */
-    public static String stateNameFromValue(ValueState val) {
-        switch (val) {
-            case UNKNOWN:
-                return "Unknown";
-            case EDITED:
-                return "Edited";
-            case READ:
-                return "Read";
-            case STORED:
-                return "Stored";
-            case FROMFILE:
-                return "FromFile";
-            case SAME:
-                return "Same";
-            case DIFF:
-                return "Different";
-            default:
-                return "<unexpected value: " + val + ">";
-        }
-    }
 
     /**
      * Sets the availability status of the object.

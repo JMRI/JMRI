@@ -813,7 +813,7 @@ public class PaneProgPane extends javax.swing.JPanel
             AbstractValue.ValueState vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
             if (log.isDebugEnabled()) {
-                log.debug("nextRead var index {} state {} isToRead: {} label: {}", varNum, VariableValue.stateNameFromValue(vState), var.isToRead(), var.label());
+                log.debug("nextRead var index {} state {} isToRead: {} label: {}", varNum, vState.getName(), var.isToRead(), var.label());
             }
             varListIndex++;
             if (var.isToRead()) {
@@ -975,7 +975,7 @@ public class PaneProgPane extends javax.swing.JPanel
             AbstractValue.ValueState vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
             if (log.isDebugEnabled()) {
-                log.debug("nextWrite var index {} state {} isToWrite: {} label:{}", varNum, VariableValue.stateNameFromValue(vState), var.isToWrite(), var.label());
+                log.debug("nextWrite var index {} state {} isToWrite: {} label:{}", varNum, vState.getName(), var.isToWrite(), var.label());
             }
             varListIndex++;
             if (var.isToWrite()) {

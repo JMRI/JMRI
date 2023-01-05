@@ -25,7 +25,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 
-import static jmri.jmrit.symbolicprog.AbstractValue.COLOR_UNKNOWN;
 import jmri.util.CvUtil;
 
 import org.slf4j.Logger;
@@ -247,7 +246,7 @@ public class SplitEnumVariableValue extends VariableValue
         // finish initialization
         _value.setActionCommand("");
         _defaultColor = _value.getBackground();
-        _value.setBackground(COLOR_UNKNOWN);
+        _value.setBackground(ValueState.UNKNOWN.getColor());
         _value.setOpaque(true);
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);
@@ -1003,7 +1002,7 @@ public class SplitEnumVariableValue extends VariableValue
             case UNKNOWN:
                 value++;
             //$FALL-THROUGH$
-            case DIFF:
+            case DIFFERENT:
                 value++;
             //$FALL-THROUGH$
             case EDITED:
@@ -1083,7 +1082,7 @@ public class SplitEnumVariableValue extends VariableValue
             case "State": {
                 log.info("Possible {} variable state change due to CV state change, so propagate that", _name);
                 ValueState varState = getState(); // AbstractValue.SAME;
-                log.info("{} variable state was {}", _name, stateNameFromValue(varState));
+                log.info("{} variable state was {}", _name, varState.getName());
                 for (int i = 0; i < cvCount; i++) {
                     ValueState state = cvList.get(i).thisCV.getState();
                     if (i == 0) {
@@ -1098,7 +1097,7 @@ public class SplitEnumVariableValue extends VariableValue
                     tree.setBackground(_value.getBackground());
                     //tree.setOpaque(true);
                 }
-                log.info("{} variable state set to {}", _name, stateNameFromValue(varState));
+                log.info("{} variable state set to {}", _name, varState.getName());
                 break;
             }
             case "Value": {
