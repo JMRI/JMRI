@@ -393,7 +393,8 @@ public final class LnConstants {
     public final static int OPC_EXP_SEND_SUB_CODE_MASK_SPEED = 0b11110000;
     public final static int OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION = 0b11111000;
     public final static int OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR = 0xd5;
-    public final static int OPC_EXP_SEND_SPEED_AND_DIR_MASK = 0b00010000;
+    public final static int OPC_EXP_SEND_SPEED_AND_DIR_MASK = 0b00000000;
+    public final static int OPC_EXP_SEND_SPEED_AND_DIR_MASK_REV = 0b00001000;
     public final static int OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK = 0b00010000;
     public final static int OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK = 0b00011000;
     public final static int OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK = 0b00100000;

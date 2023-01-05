@@ -4696,10 +4696,10 @@ public class LocoNetMessageInterpret {
 
     private static String interpretPocExpLocoSpdDirFunction(LocoNetMessage l) {
         int slot = ((l.getElement(1) & 0x03) * 128) + (l.getElement(2) & 0x7f);
-        if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == 0) {
+        if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == LnConstants.OPC_EXP_SEND_SPEED_AND_DIR_MASK) {
             // speed and direction
             int spd = l.getElement(4);
-            String direction = Bundle.getMessage((l.getElement(1) & 0b00001000) != 0
+            String direction = Bundle.getMessage((l.getElement(1) & LnConstants.OPC_EXP_SEND_SPEED_AND_DIR_MASK_REV) != 0
                     ? "LN_MSG_DIRECTION_REV" : "LN_MSG_DIRECTION_FWD");
             String throttleID = Integer.toHexString(l.getElement(3));
             return Bundle.getMessage("LN_MSG_OPC_EXP_SPEED_DIRECTION", slot, spd, direction, throttleID);

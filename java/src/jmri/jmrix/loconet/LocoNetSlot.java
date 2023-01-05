@@ -232,6 +232,20 @@ public class LocoNetSlot {
     }
 
     /**
+     * Get the state of the Acquire Throttle / slot.
+     * It is fully initialized if this is true.
+     * If it is false then any changes to its state may be lost.
+     * @return true
+     */
+    public boolean getIsInitilized() {
+        return isInitialized;
+    }
+
+    protected void setIsInitialized(boolean state) {
+        isInitialized = state;
+    }
+
+    /**
      * Get consist status.
      * <p>
      * This returns only those bits of the slot's STAT byte which are related to
@@ -1424,6 +1438,7 @@ public class LocoNetSlot {
 
     // data values to echo slot contents
     final private int slot;   // <SLOT#> is the number of the slot that was read.
+    private boolean isInitialized; // set when full initilization is complete with the throttle ID.
     private int loconetProtocol; // protocol used by the slot.
     private SlotType slotType; // system, loco, unknown
     private int stat; // <STAT> is the status of the slot
