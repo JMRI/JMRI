@@ -179,183 +179,187 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
     int addressp1found = 0;
 
-    int packetseen = 0;
-    int packetsinerror = 0;
+    static int packetseen = 0;
+    static int packetsinerror = 0;
+    private static final Object lock = new Object();
+
     Hashtable<Integer, Integer> cvValues = new Hashtable<>();
 
-    synchronized void decodeRailComInfo(RailComPacket rc, int packetTypeCmd) {
+    void decodeRailComInfo(RailComPacket rc, int packetTypeCmd) {
 
-        addressp1found++;
-        RailCom rcTag = null;
+        synchronized(lock) {
+            addressp1found++;
+            RailCom rcTag = null;
 
-        if (super.getCurrentReport() instanceof RailCom) {
-            rcTag = (RailCom) super.getCurrentReport();
-        }
-        int[] packet = rc.getPacket();
-        char chbyte;
-        char type;
-
-        if (log.isDebugEnabled()) {
-            log.debug("{} packet type {}", getDisplayName(), packetTypeCmd);
-            log.debug("decodeRailComInfo {} {}", this.getDisplayName(), super.getCurrentReport());
-            StringBuilder buf = new StringBuilder();
-            for (int i = 0; i < packet.length; ++i) {
-                buf.append(packet[i]);
+            if (super.getCurrentReport() instanceof RailCom) {
+                rcTag = (RailCom) super.getCurrentReport();
             }
-            log.debug("Rail Comm Packets {}", buf);
+            int[] packet = rc.getPacket();
+            char chbyte;
+            char type;
 
-        }
-        int i = 0;
-        while (i < packet.length) {
-            packetseen++;
-            chbyte = (char) packet[i];
-            chbyte = decode[chbyte];
-            if (chbyte == ERROR) {
-                if (log.isDebugEnabled()) {
-                    log.debug("{} Error packet stage 1: {}", this.getDisplayName(), Integer.toHexString(packet[i]));
+            if (log.isDebugEnabled()) {
+                log.debug("{} packet type {}", getDisplayName(), packetTypeCmd);
+                log.debug("decodeRailComInfo {} {}", this.getDisplayName(), super.getCurrentReport());
+                StringBuilder buf = new StringBuilder();
+                for (int i = 0; i < packet.length; ++i) {
+                    buf.append(packet[i]);
                 }
-                packetsinerror++;
-                return;
+                log.debug("Rail Comm Packets {}", buf);
+
             }
-            i++;
-            if ((chbyte & ACK) == ACK) {
+            int i = 0;
+            while (i < packet.length) {
+                packetseen++;
                 chbyte = (char) packet[i];
-                i++;
                 chbyte = decode[chbyte];
                 if (chbyte == ERROR) {
-                    log.debug("{} Error packet stage 2", this.getDisplayName());
+                    if (log.isDebugEnabled()) {
+                        log.debug("{} Error packet stage 1: {}", this.getDisplayName(), Integer.toHexString(packet[i]));
+                    }
                     packetsinerror++;
                     return;
                 }
+                i++;
                 if ((chbyte & ACK) == ACK) {
-                    if (packet.length <= (i + 1)) {
-                        log.debug("No further data to process Only had the ack 1");
-                        break;
-                    }
                     chbyte = (char) packet[i];
                     i++;
                     chbyte = decode[chbyte];
+                    if (chbyte == ERROR) {
+                        log.debug("{} Error packet stage 2", this.getDisplayName());
+                        packetsinerror++;
+                        return;
+                    }
+                    if ((chbyte & ACK) == ACK) {
+                        if (packet.length <= (i + 1)) {
+                            log.debug("No further data to process Only had the ack 1");
+                            break;
+                        }
+                        chbyte = (char) packet[i];
+                        i++;
+                        chbyte = decode[chbyte];
+                    }
                 }
-            }
-            if (packet.length <= i) {
-                break;
-            }
-            type = chbyte;
-            chbyte = (char) packet[i];
-            chbyte = decode[chbyte];
-            if ((chbyte == ERROR) || ((chbyte & ACK) == ACK)) {
-                if (log.isDebugEnabled()) {
-                    log.debug("{} Error packet stage 3 {}\n{}", this.getDisplayName(), Integer.toHexString(packet[i]), rc.toHexString());
+                if (packet.length <= i) {
+                    break;
+                }
+                type = chbyte;
+                chbyte = (char) packet[i];
+                chbyte = decode[chbyte];
+                if ((chbyte == ERROR) || ((chbyte & ACK) == ACK)) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("{} Error packet stage 3 {}\n{}", this.getDisplayName(), Integer.toHexString(packet[i]), rc.toHexString());
+                    }
+                    i++;
+                    packetsinerror++;
+                    return;
+                }
+
+                chbyte = (char) (((type & 0x03) << 6) | (chbyte & 0x3f));
+                type = (char) ((type >> 2) & 0x0F);
+
+                switch (type) {
+                    case 0:
+                        log.debug("{} CV Value {}{}", this.getDisplayName(), (int) chbyte, rcTag);
+                        cvvalue = chbyte;
+                        if (rcTag != null) {
+                            rcTag.setWhereLastSeen(this);
+                            if (rcTag.getExpectedCv() != -1) {
+                                rcTag.setCvValue(chbyte);
+                            } else {
+                                rcTag.setCV(rc.getCvNumber(), chbyte);
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (log.isDebugEnabled()) {
+                            log.debug("{} Create/Get id tag for {}", this.getDisplayName(), rc.getDccAddress());
+                        }
+                        addr = rc.getDccAddress();
+                        addr_type = rc.getAddressType();
+                        break;
+                    case 1: // Address byte 1
+                        log.debug("Address Byte 1");
+                        address_part_1 = (0x100 | chbyte);
+                        addressp1found = 0;
+                        break;
+                    case 2: //Address byte 2
+                        log.debug("{} Address part 2:", this.getDisplayName());
+                        address_part_2 = chbyte;
+                        if (packetTypeCmd == 0x03) {
+                            log.debug("Type three packet so shouldn't not pair part one with part two if it came from the previous packet");
+                            //As the last command was a type 3, an address part one packet can not be paired with this address part two packet.  Therefore will set it back to default
+                            //address_part_1 = 0x100;
+                            // break;
+                        }
+                        if (!((address_part_1 & 0x100) == 0x100)) {
+                            log.debug("{} Break at Address part 1, part one not complete", this.getDisplayName());
+                            break;
+                        }
+                        rcTag = decodeAddress();
+                        break;
+                    case 3: //Actual Speed / load
+                        if ((chbyte & 0x80) == 0x80) {
+                            actual_speed = (chbyte & 0x7f);
+                            log.debug("{} Actual Speed: {}", this.getDisplayName(), actual_speed);
+                        } else {
+                            actual_load = (chbyte & 0x7f);
+                            log.debug("{} Actual Load: {}", this.getDisplayName(), actual_load);
+                        }
+                        if (rcTag != null) {
+                            rcTag.setActualLoad(actual_load);
+                            rcTag.setActualSpeed(actual_speed);
+                            rcTag.setWhereLastSeen(this);
+                        }
+                        break;
+                    case 5: //Routing number
+                        routing_no = chbyte;
+                        if (rcTag != null) {
+                            rcTag.setRoutingNo(routing_no);
+                            rcTag.setWhereLastSeen(this);
+                        }
+                        break;
+                    case 6: //Location
+                        location = chbyte;
+                        if (rcTag != null) {
+                            rcTag.setLocation(location);
+                            rcTag.setWhereLastSeen(this);
+                        }
+                        break;
+                    case 7: //Fuel water
+                        if ((chbyte & 0x80) == 0x80) {
+                            fuelLevel = (chbyte & 0x7f);
+                        } else {
+                            waterLevel = (chbyte & 0x7f);
+                        }
+
+                        if (rcTag != null) {
+                            rcTag.setWaterLevel(waterLevel);
+                            rcTag.setFuelLevel(fuelLevel);
+                            rcTag.setWhereLastSeen(this);
+                        }
+                        break;
+                    case 8: //Temp
+                        if (!((chbyte & 0x80) == 0x80)) {
+                            actual_temperature = (chbyte & 0x7F);
+                        }
+                        if (rcTag != null) {
+                            rcTag.setActualTemperature(actual_temperature);
+                            rcTag.setWhereLastSeen(this);
+                        }
+                        break;
+                    case 15: //CV Address  Value
+                        log.debug("{} CV Address and value:", this.getDisplayName());
+                        i = i + 2;
+                        //len = 4;
+                        break;
+                    default:
+                        log.info("unknown railcom type packet {}", type);
+                        break;
                 }
                 i++;
-                packetsinerror++;
-                return;
+
             }
-
-            chbyte = (char) (((type & 0x03) << 6) | (chbyte & 0x3f));
-            type = (char) ((type >> 2) & 0x0F);
-
-            switch (type) {
-                case 0:
-                    log.debug("{} CV Value {}{}", this.getDisplayName(), (int) chbyte, rcTag);
-                    cvvalue = chbyte;
-                    if (rcTag != null) {
-                        rcTag.setWhereLastSeen(this);
-                        if (rcTag.getExpectedCv() != -1) {
-                            rcTag.setCvValue(chbyte);
-                        } else {
-                            rcTag.setCV(rc.getCvNumber(), chbyte);
-                        }
-                    }
-                    break;
-                case 4:
-                    if (log.isDebugEnabled()) {
-                        log.debug("{} Create/Get id tag for {}", this.getDisplayName(), rc.getDccAddress());
-                    }
-                    addr = rc.getDccAddress();
-                    addr_type = rc.getAddressType();
-                    break;
-                case 1: // Address byte 1
-                    log.debug("Address Byte 1");
-                    address_part_1 = (0x100 | chbyte);
-                    addressp1found = 0;
-                    break;
-                case 2: //Address byte 2
-                    log.debug("{} Address part 2:", this.getDisplayName());
-                    address_part_2 = chbyte;
-                    if (packetTypeCmd == 0x03) {
-                        log.debug("Type three packet so shouldn't not pair part one with part two if it came from the previous packet");
-                        //As the last command was a type 3, an address part one packet can not be paired with this address part two packet.  Therefore will set it back to default
-                        //address_part_1 = 0x100;
-                        // break;
-                    }
-                    if (!((address_part_1 & 0x100) == 0x100)) {
-                        log.debug("{} Break at Address part 1, part one not complete", this.getDisplayName());
-                        break;
-                    }
-                    rcTag = decodeAddress();
-                    break;
-                case 3: //Actual Speed / load
-                    if ((chbyte & 0x80) == 0x80) {
-                        actual_speed = (chbyte & 0x7f);
-                        log.debug("{} Actual Speed: {}", this.getDisplayName(), actual_speed);
-                    } else {
-                        actual_load = (chbyte & 0x7f);
-                        log.debug("{} Actual Load: {}", this.getDisplayName(), actual_load);
-                    }
-                    if (rcTag != null) {
-                        rcTag.setActualLoad(actual_load);
-                        rcTag.setActualSpeed(actual_speed);
-                        rcTag.setWhereLastSeen(this);
-                    }
-                    break;
-                case 5: //Routing number
-                    routing_no = chbyte;
-                    if (rcTag != null) {
-                        rcTag.setRoutingNo(routing_no);
-                        rcTag.setWhereLastSeen(this);
-                    }
-                    break;
-                case 6: //Location
-                    location = chbyte;
-                    if (rcTag != null) {
-                        rcTag.setLocation(location);
-                        rcTag.setWhereLastSeen(this);
-                    }
-                    break;
-                case 7: //Fuel water
-                    if ((chbyte & 0x80) == 0x80) {
-                        fuelLevel = (chbyte & 0x7f);
-                    } else {
-                        waterLevel = (chbyte & 0x7f);
-                    }
-
-                    if (rcTag != null) {
-                        rcTag.setWaterLevel(waterLevel);
-                        rcTag.setFuelLevel(fuelLevel);
-                        rcTag.setWhereLastSeen(this);
-                    }
-                    break;
-                case 8: //Temp
-                    if (!((chbyte & 0x80) == 0x80)) {
-                        actual_temperature = (chbyte & 0x7F);
-                    }
-                    if (rcTag != null) {
-                        rcTag.setActualTemperature(actual_temperature);
-                        rcTag.setWhereLastSeen(this);
-                    }
-                    break;
-                case 15: //CV Address  Value
-                    log.debug("{} CV Address and value:", this.getDisplayName());
-                    i = i + 2;
-                    //len = 4;
-                    break;
-                default:
-                    log.info("unknown railcom type packet {}", type);
-                    break;
-            }
-            i++;
-
         }
     }
 
