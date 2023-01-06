@@ -316,7 +316,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 | (getFunction(4) ? LnConstants.DIRF_F4 : 0));
             LocoNetMessage msg = new LocoNetMessage(6);
             msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
-            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK );
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6 );
             msg.setElement(2,slot.getSlot() & 0b01111111);
             msg.setElement(3,slot.id() & 0x7F);
             msg.setElement(4, new_F0F6);
@@ -335,7 +335,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     | (getFunction(13) ? 0b01000000 : 0));
                 LocoNetMessage msg = new LocoNetMessage(6);
                 msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
-                msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK );
+                msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13 );
                 msg.setElement(2,slot.getSlot() & 0b01111111);
                 msg.setElement(3,slot.id() & 0x7F);
                 msg.setElement(4, new_F7F13);
@@ -355,7 +355,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 | (getFunction(20) ? 0b01000000 : 0));
             LocoNetMessage msg = new LocoNetMessage(6);
             msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
-            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK );
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20 );
             msg.setElement(2,slot.getSlot() & 0b01111111);
             msg.setElement(3,slot.id() & 0x7F);
             msg.setElement(4, new_F14F20);
@@ -376,9 +376,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
         if (!getFunction(28)) {
-            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF);
         } else {
-            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON);
         }
         msg.setElement(2, slot.getSlot() & 0b01111111);
         msg.setElement(3, slot.id() & 0x7F);
