@@ -61,6 +61,9 @@ class MqttReporter extends AbstractIdTagReporter implements MqttEventListener {
         try {
             IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(loco);
             idTag.setProperty("content", content);
+            // always send a null report as workaround for IdTag equality not checking properties
+            notify(null);
+            // and then send the real report
             notify(idTag);
         } catch (IllegalArgumentException e) {
             log.error("Reporter {} cannot make a tag from input ({})", getSystemName(), message);
