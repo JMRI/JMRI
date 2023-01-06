@@ -407,7 +407,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     /**
      * {@inheritDoc}
      *
-     * @return hash code value is based on sthe ystem name.
+     * @return hash code value is based on the system name.
      */
     @Override
     public int hashCode() {
