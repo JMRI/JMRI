@@ -95,7 +95,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Use OutputPower=Off</label>
         <label xml:lang="cs">Použít OutputPower=Vypnuto</label>
-        <tooltip>Decoder will respond to DCC command with attribure OutputPower = Off.</tooltip>
+        <tooltip>Decoder will respond to DCC command with attribute OutputPower = Off.</tooltip>
         <tooltip xml:lang="cs">Dekodér bude reagovat na DCC příkaz s atributem OutputPower = Vypnuto.</tooltip>
       </variable>
     
