@@ -390,7 +390,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Send the expanded slot command for speed and direction on change of speed
      * Note we send our stored values as slot is updated via an echo
      * and may not have been updated yet when sending rapid commands
-     * @param new_spd the speed to set
+     * @param speed the speed to set
      */
     protected void sendExpSpeedAndDirection(int speed) {
         boolean isFwd;
