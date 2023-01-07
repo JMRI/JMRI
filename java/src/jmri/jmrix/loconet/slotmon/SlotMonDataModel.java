@@ -1199,9 +1199,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(0xd5);
         if (!tempF28) {
-            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF);
         } else {
-            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON);
         }
         msg.setElement(2, slot.getSlot() &  0x7F);
         msg.setElement(3, slot.id() & 0x7F);

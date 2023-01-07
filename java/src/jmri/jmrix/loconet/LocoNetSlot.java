@@ -232,6 +232,20 @@ public class LocoNetSlot {
     }
 
     /**
+     * Get the state of the Acquire Throttle / slot.
+     * It is fully initialized if this is true.
+     * If it is false then any changes to its state may be lost.
+     * @return true
+     */
+    public boolean getIsInitilized() {
+        return isInitialized;
+    }
+
+    protected void setIsInitialized(boolean state) {
+        isInitialized = state;
+    }
+
+    /**
      * Get consist status.
      * <p>
      * This returns only those bits of the slot's STAT byte which are related to
@@ -870,13 +884,13 @@ public class LocoNetSlot {
                     if ((l.getElement(1) & 0b00001000) != 0) {
                         dirf = dirf | 0b00100000;
                     }
-                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK) {
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6) {
                     // function grp 1
                     dirf = dirf & 0b11100000;
                     dirf = dirf | (l.getElement(4) & 0b00011111);
                     snd = snd & 0b11111100;
                     snd = snd | ((l.getElement(4) & 0b01100000) >> 5);
-                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK) {
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13) {
                     // function grp 2
                     snd = snd & 0b11110011;
                     snd = snd | ((l.getElement(4) & 0b00000011) << 2);
@@ -885,7 +899,7 @@ public class LocoNetSlot {
                     localF11 = ((l.getElement(4) & 0b00010000) != 0);
                     localF12 = ((l.getElement(4) & 0b00100000) != 0);
                     localF13 = ((l.getElement(4) & 0b01000000) != 0);
-                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK) {
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20) {
                     localF14 = ((l.getElement(4) & 0b00000001) != 0);
                     localF15 = ((l.getElement(4) & 0b00000010) != 0);
                     localF16 = ((l.getElement(4) & 0b00000100) != 0);
@@ -893,8 +907,8 @@ public class LocoNetSlot {
                     localF18 = ((l.getElement(4) & 0b00010000) != 0);
                     localF19 = ((l.getElement(4) & 0b00100000) != 0);
                     localF20 = ((l.getElement(4) & 0b01000000) != 0);
-                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK
-                        || (l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK) {
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF
+                        || (l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON) {
                     localF21 = ((l.getElement(4) & 0b00000001) != 0);
                     localF22 = ((l.getElement(4) & 0b00000010) != 0);
                     localF23 = ((l.getElement(4) & 0b00000100) != 0);
@@ -1424,6 +1438,7 @@ public class LocoNetSlot {
 
     // data values to echo slot contents
     final private int slot;   // <SLOT#> is the number of the slot that was read.
+    private boolean isInitialized; // set when full initilization is complete with the throttle ID.
     private int loconetProtocol; // protocol used by the slot.
     private SlotType slotType; // system, loco, unknown
     private int stat; // <STAT> is the status of the slot
