@@ -768,16 +768,16 @@ class createandshowGUI2(TableModelListener):
         self.buttonPane.add(button_apply)
         self.buttonPane.add(Box.createHorizontalGlue());
 
-        button_cancel = JButton("Close", actionPerformed = self.cancel_action)
-        self.buttonPane.add(button_cancel)
+        button_close = JButton("Close", actionPerformed = self.close_action)
+        self.buttonPane.add(button_close)
         self.buttonPane.add(Box.createHorizontalGlue());
 
-        button_cancel = JButton("Task", actionPerformed = self.task_action)
-        self.buttonPane.add(button_cancel)
+        button_task = JButton("Task", actionPerformed = self.task_action)
+        self.buttonPane.add(button_task)
         self.buttonPane.add(Box.createHorizontalGlue());
 
-        button_cancel = JButton("No. repetitions", actionPerformed = self.repetitions_action)
-        self.buttonPane.add(button_cancel)
+        button_repetitions = JButton("No. repetitions", actionPerformed = self.repetitions_action)
+        self.buttonPane.add(button_repetitions)
         self.buttonPane.add(Box.createHorizontalGlue());
 
         button_savetofile = JButton("Save To File", actionPerformed = self.savetofile_action)
@@ -833,7 +833,7 @@ class createandshowGUI2(TableModelListener):
         self.model = MyTableModel1()
         self.table = JTable(self.model)
         self.model.addTableModelListener(MyModelListener1(self, class_ResetButtonMaster));
-
+        self.class_ResetButtonMaster = class_ResetButtonMaster
 
 
         pass
@@ -962,9 +962,7 @@ class createandshowGUI2(TableModelListener):
             delay_name = str(self.model.data[row][delay])
             repetitions_name = str(self.model.data[row][repetitions])
             row_list = [train_name, route_name, task_name, delay_name, repetitions_name]
-            print "row_list", row_list
             my_list.append(row_list)
-        print "my_list "  , my_list
         self.write_list(my_list,file)
 
 
@@ -1014,34 +1012,25 @@ class createandshowGUI2(TableModelListener):
 
             trains_to_put_in_dropdown = [t for t in self.class_ResetButtonMaster.get_list_of_engines_to_move()]
             for row in reversed(range(len(self.model.data))):
-                #if len(self.model.data) >1:
-                print "row", row, "self.model.data[row][train_col]", self.model.data[row][train_col], "trains_to_put_in_dropdown", trains_to_put_in_dropdown
                 if self.model.data[row][train_col] not in trains_to_put_in_dropdown:
-                    print "popping train", self.model.data[row][train_col], row
                     self.model.data.pop(row)
 
             RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
             routes = [str(route) for route in RouteManager.getRoutesByNameList()]
             for row in reversed(range(len(self.model.data))):
-                # if len(self.model.data) >1:
-                print "row", row, "self.model.data[row][route_col]", self.model.data[row][route_col], "routes", routes
                 if self.model.data[row][route_col] not in routes:
-                    print "popping routes", self.model.data[row][route_col], row
                     self.model.data.pop(row)
             self.completeTablePanel()
 
-    def cancel_action(self, event):
+    def close_action(self, event):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
 
     def repetitions_action(self, event):
         [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]
         for row in reversed(range(len(self.model.data))):
-            print "row", row
             old_val = int(self.model.data[0][repetition_col])
-            print "old_val", old_val
             if old_val == None: old_val = 0
             new_val = self.new_val(old_val)
-            print "new_val", new_val
             self.model.data[row][repetition_col] = new_val
         self.completeTablePanel()
     def new_val(self, old_val):
@@ -1060,12 +1049,9 @@ class createandshowGUI2(TableModelListener):
     def task_action(self, event):
         [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]
         for row in reversed(range(len(self.model.data))):
-            print "row", row
             old_val = str(self.model.data[0][task_col])
-            print "old_val", old_val
             if old_val == None: old_val = 0
             new_val = self.new_task(old_val)
-            print "new_val", new_val
             self.model.data[row][task_col] = new_val
         self.completeTablePanel()
 
@@ -1084,15 +1070,14 @@ class createandshowGUI2(TableModelListener):
         [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]
         # print "apply action"
         for row in reversed(range(len(self.model.data))):
-            print "row", row
             train_name = str(self.model.data[row][train_col])
             route_name = str(self.model.data[row][route_col])
             delay_val = str(self.model.data[row][delay_col])
-            print "train_name", train_name
             if train_name != "" and route_name != "" and delay_val != "":
                 self.run_route(row, self.model, self, self.class_ResetButtonMaster)
             else:
-                print "not running route", route_name, "train", train_name
+                msg = "not running route, train, route or delay is not set"
+                OptionDialog().displayMessage(msg,"")
         self.completeTablePanel()
         if self.model.getRowCount() == 0:
             self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
@@ -1102,19 +1087,20 @@ class createandshowGUI2(TableModelListener):
         [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]
         route_name = str(model.getValueAt(row, route_col))
         if route_name == None:
-            print "no route name"
+            msg = "not running route is not set"
+            self.od.displayMessage(msg,"")
             return
-        print "route_name", route_name
         RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
         route = RouteManager.getRouteByName(route_name)
 
         train_name = str(model.getValueAt(row, train_col))
         if train_name == None or train_name == "":
-            print "no train name"
+            msg = "not running route, train is not set"
+            self.od.displayMessage(msg,"")
             return
         station_from = class_ResetButtonMaster.get_position_of_train(train_name)
 
-        option = "stop at end of route"
+        option = str(model.getValueAt(row, task_col))
 
         repeat = False
         dont_run_route = False
@@ -1130,27 +1116,33 @@ class createandshowGUI2(TableModelListener):
             repeat = True
         else:
             dont_run_route = True
-        if repeat:
-            no_repetitions = 3
 
-        delay = 1000
+        if repeat:
+            no_repetitions = str(model.getValueAt(row, repetition_col))
+        else:
+            no_repetitions = 0
+
+        # delay by delay_val before starting route
+        delay_val = int(model.getValueAt(row, delay_col)) *1000
 
         if dont_run_route == False:
             if self.logLevel > 0: print "station_from",    station_from, "station_to",station_to, \
                                         "repeat",repeat, "delay", delay
-            run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_name)
+            run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_name, delay_val)
+            #run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_name)
             run_train.setName("running_route_" + route_name)
             instanceList.append(run_train)
             run_train.start()
             model.data.pop(row)
             class_createandshowGUI2.completeTablePanel()
-    def set_train_selections(self, combobox):
-        pass
+
+
     def directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "routes"
         if not os.path.exists(path):
             os.makedirs(path)
         return path + java.io.File.separator
+
     def write_list(self, a_list, file):
         # store list in binary file so 'wb' mode
         #file = self.directory() + "blockDirections.txt"
@@ -1205,7 +1197,6 @@ class MyModelListener1(TableModelListener):
         self.logLevel = 1
     def tableChanged(self, e) :
         global trains_allocated
-        print "tablechanged"
         row = e.getFirstRow()
         column = e.getColumn()
         model = e.getSource()
@@ -1263,6 +1254,7 @@ class MyTableModel1 (DefaultTableModel):
     def populate(self, trains_to_put_in_dropdown):
         for row in reversed(range(len(self.data))):
             self.data.pop(row)
+        self.data = []
         # append all trains to put in dropdown
         for train in trains_to_put_in_dropdown:
             self.data.append([train, "", False, "stop at end of route", 10, 3])
@@ -1296,47 +1288,9 @@ class MyTableModel1 (DefaultTableModel):
     def isCellEditable(self, row, col) :
         # Note that the data/cell address is constant,
         # no matter where the cell appears onscreen.
-        if col != 2:
-            return True
-        else:
-            return False
+        return True
 
     # only include if data can change.
     def setValueAt(self, value, row, col) :
         self.data[row][col] = value
         self.fireTableCellUpdated(row, col)
-
-#     def registerDelAction():
-# {
-#         # Create AbstractAction
-#         # It is an implementation of javax.swing.Action
-#         a = AbstractAction()
-#
-#         # Write the handler
-#         def actionPerformed(self, ae)
-#     {
-#             jf = ae.getSource()
-#             try:
-#                 # Get the selected files
-#                 selectedFiles=jf.getSelectedFiles();
-#
-#                 #If some file is selected
-#                 if selectedFiles != None:
-#                     // If user confirms to delete
-#                     if askConfirm() == JOptionPane.YES_OPTION
-#
-#                 # Call Files.delete(), if any problem occurs
-#                 # the exception can be printed, it can be
-#                 # analysed
-#                 for f in selectedFiles:
-#                     java.nio.file.Files.delete(f.toPath())
-#
-#                 #Rescan the directory after deletion
-#                 jf.rescanCurrentDirectory()
-#
-#             catch(e):
-#                 print e
-#
-#         fileChooser.getActionMap().put("delAction", abstractAction);
-#
-#         fileChooser.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DELETE"), "delAction");

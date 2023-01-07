@@ -78,6 +78,10 @@ stopping_sensor_choice = "not_set" # has value
 FileResetButtonMaster = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/ResetButtonMaster.py')
 execfile(FileResetButtonMaster)
 
+FileResetButtonMaster = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/StopDispatcherSystem.py')
+execfile(FileResetButtonMaster)
+
+
 # FileMoveTrain has to go before CreateScheduler
 FileMoveTrain = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/MoveTrain.py')
 execfile(FileMoveTrain)
@@ -318,25 +322,40 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.waitSensorActive(self.stop_master_sensor)
         #stop all threads
         if self.logLevel > 0: print "instancelist", instanceList
-        msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
+        msg = "Choose how to stop"
         title = "Transits"
-        opt1 = "stop route threads"
-        opt2 = "stop all threads"
-        opt3 = "stop threads and delete transits"
-        requested_action = OptionDialog().customQuestionMessage3str(msg, title, opt1, opt2, opt3)
-        if requested_action == "stop route threads":
-            self.stop_route_threads()
-            self.stop_sensor = sensors.getSensor("stopMasterSensor")
-            self.stop_sensor.setKnownState(INACTIVE)
+        opt1 = "choose what to stop"
+        opt2 = "stop everything"
+        requested_action = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+        if requested_action == opt1:
+            self.stop_via_table()
+            self.stop_master_sensor.setKnownState(INACTIVE)
             return True
-        elif requested_action == "stop all threads":
-            self.remove_timebase_listener()
-            self.stop_all_threads()
-        else:  #stop all threads and delete transits
-            self.remove_timebase_listener()
-            self.delete_active_transits()
-            self.stop_all_threads()
-        if self.logLevel > 0: print "finished"
+        else:
+            msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
+            title = "Transits"
+            opt1 = "stop route threads"
+            opt2 = "stop all threads"
+            opt3 = "stop threads and delete transits"
+            requested_action = OptionDialog().customQuestionMessage3str(msg, title, opt1, opt2, opt3)
+            if requested_action == "stop route threads":
+                self.stop_route_threads()
+                self.stop_sensor = sensors.getSensor("stopMasterSensor")
+                self.stop_sensor.setKnownState(INACTIVE)
+                return True
+            elif requested_action == "stop all threads":
+                self.remove_timebase_listener()
+                self.stop_all_threads()
+            else:  #stop all threads and delete transits
+                self.remove_timebase_listener()
+                self.delete_active_transits()
+                self.stop_all_threads()
+            if self.logLevel > 0: print "finished"
+
+
+    def stop_via_table(self):
+        createandshowGUI3(self)
+
 
     def remove_timebase_listener(self):
         self.new_train_sensor = sensors.getSensor("startDispatcherSensor")
@@ -353,15 +372,19 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             return False
 
     def stop_route_threads(self):
-        #remove the train from the transit
-        msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
-        title = "Transits"
-        opt1 = "just remove the route threads (stops trains at end of current transit)"
-        opt2 = "delete transits as well (stops trains immediately)"
-        requested_delete_transits = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
-        self.remove_train_from_transit
+        # #remove the train from the transit
+        # msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
+        # title = "Transits"
+        # opt1 = "just remove the route threads (stops trains at end of current transit)"
+        # opt2 = "delete transits as well (stops trains immediately)"
+        # requested_delete_transits = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+        # self.remove_train_from_transit
+
+        instance_list = java.util.concurrent.CopyOnWriteArrayList()
+        for train in instanceList:
+            instance_list.add(train)
         #stop all threads
-        for thread in instanceList:
+        for thread in instance_list:
             thread_name = "" + thread.getName()
             if thread_name.startswith("running_route_"):
                 #determine the train nme
@@ -375,9 +398,11 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
                     if thread.isRunning():
                         if self.logLevel > 0: print 'Stop "{}" thread'.format(thread.getName())
                         thread.stop()
+                        instance_list = [instance for instance in instance_list if instance != thread]
                     else:
                         #need this for scheduler in wait state
                         thread.stop()
+                        instance_list = [instance for instance in instance_list if instance != thread]
 
     def determine_train_name(self,thread_name, thread):
         route = thread
@@ -403,14 +428,22 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         #     if self.logLevel > 0: print "train in trains_allocated", train, ": trains_allocated", trains_allocated
         #     if train == train_name:
         #         trains_allocated.remove(train)
+        trains_dispatched_list = java.util.concurrent.CopyOnWriteArrayList()
         for train in trains_dispatched:
+            trains_dispatched_list.add(train)
+
+        for train in trains_dispatched_list:
             #print "train in trains_alloceted", train, ": trains_allocated", trains_allocated
             if train == train_name:
                 trains_dispatched.remove(train)
 
     def stop_all_threads(self):
-        #stop all threads
+        #stop all
+        activeThreadList = java.util.concurrent.CopyOnWriteArrayList()
         for thread in instanceList:
+            activeThreadList.add(thread)
+
+        for thread in activeThreadList:
             if thread is not None:
                 if thread.isRunning():
                     if self.logLevel > 0: print 'Stop "{}" thread'.format(thread.getName())
@@ -418,6 +451,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
                 else:
                     #need this for scheduler in wait state
                     thread.stop()
+
 
     def remove_listener(self):
         try:
@@ -436,10 +470,22 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         #DF.setState(DF.ICONIFIED);
         activeTrainsList = DF.getActiveTrainsList()
-        for i in range(0, activeTrainsList.size()) :
-            activeTrain = activeTrainsList.get(i)
+        for activeTrain in activeTrainsList:
+            # print "i", i
+            # activeTrain = activeTrainsList.get(i)
+            print "active train", activeTrain
             DF.terminateActiveTrain(activeTrain)
         DF = None
+        #
+        # TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
+        # #if self.logLevel > 1: print "Section"
+        # TransitList = java.util.concurrent.CopyOnWriteArrayList()
+        # for transit in TransitManager.getNamedBeanSet():
+        #     TransitList.add(transit)
+        #
+        # for transit in TransitList:
+        #     if self.logLevel > 1: print "deleting Transit ", transit.getUserName()
+        #     TransitManager.deleteTransit(transit)
 
 # End of class StopMaster
 

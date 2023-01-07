@@ -624,6 +624,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
     def set_length(self, new_train_name):
         [engine,current_length] = self.get_train_length(new_train_name)
         if current_length == "0":
+            default = "10"
             current_length = default
             engine.setLength(default)
         #ask if want to change length

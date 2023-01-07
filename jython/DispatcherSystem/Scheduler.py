@@ -296,7 +296,7 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
 
 class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
-    def __init__(self, route, graph, station_from, station_to, no_repetitions, train_name):
+    def __init__(self, route, graph, station_from, station_to, no_repetitions, train_name, delay = 0):
         #note station_to and station_from are strings, while elements of route are locations
         self.logLevel = 0
         if route == None:
@@ -310,13 +310,17 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
             self.no_repetitions = no_repetitions
             self.mycount = 0
             self.train_name_in = train_name
+            self.delay = delay
 
     def handle(self):    # Need to overload handle
-
+        i = 0
+        if self.delay > 0 and i == 0:
+            self.waitMsec(self.delay)
         self.run_route()
         self.mycount += 1
         if int(self.mycount) <= int(self.no_repetitions):
             if self.logLevel > 0: print "returning true", "mycount", self.mycount, "reps" , self.no_repetitions
+            i += 1
             return True
         else:
             if self.logLevel > 0: print "returning true", "mycount", self.mycount, "reps" , self.no_repetitions
