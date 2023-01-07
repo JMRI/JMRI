@@ -68,6 +68,20 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      */
     public void sendInsteonSequence(InsteonSequence s, SerialListener l) {
     }
+    
+    /**
+     * Send a sequence of DMX messages to an adapter.
+     * <p>
+     * Makes them into the local messages and then queues in order.
+     * <p>
+     * This is a default, null implementation, which must be overridden in an
+     * adapter-specific subclass.
+     *
+     * @param unitid sequence to send
+     * @param newStep listener for reply
+     */
+    public void sendDmxSequence(int unitid, byte newStep) {
+    }
 
     /**
      * Provide the maximum number of dimming steps available.

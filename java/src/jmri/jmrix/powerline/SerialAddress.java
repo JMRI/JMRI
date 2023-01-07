@@ -27,6 +27,7 @@ public class SerialAddress {
     private Matcher hCodes = null;
     private Matcher aCodes = null;
     private Matcher iCodes = null;
+    private Matcher dCodes = null;
     private static final char MIN_HOUSE_CODE = 'A';
     private static final char MAX_HOUSE_CODE = 'P';
 
@@ -35,6 +36,7 @@ public class SerialAddress {
         hCodes = Pattern.compile("^(" + memo.getSystemPrefix() + ")([LTS])([" + MIN_HOUSE_CODE + "-" + MAX_HOUSE_CODE + "])(\\d++)$").matcher("");
         aCodes = Pattern.compile("^(" + memo.getSystemPrefix() + ")([LTS]).*$").matcher("");
         iCodes = Pattern.compile("^(" + memo.getSystemPrefix() + ")([LTS])(\\p{XDigit}\\p{XDigit})[.](\\p{XDigit}\\p{XDigit})[.](\\p{XDigit}\\p{XDigit})$").matcher("");
+        dCodes = Pattern.compile("^(" + memo.getSystemPrefix() + ")([L])(\\p{Digit}{1,3}+)$").matcher("");
     }
 
     SerialSystemConnectionMemo memo = null;
@@ -51,6 +53,7 @@ public class SerialAddress {
         boolean aTest = aCodes.reset(name).matches();
         boolean hTest = hCodes.reset(name).matches();
         boolean iTest = iCodes.reset(name).matches();
+        boolean dTest = dCodes.reset(name).matches();
         if (!aTest || aCodes.group(2).charAt(0) != type) {
             throw new NamedBean.BadSystemNameException(
                     Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidPrefix", memo.getSystemPrefix() + type),
@@ -81,6 +84,26 @@ public class SerialAddress {
                 throw new NamedBean.BadSystemNameException(
                         Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidInsteon", name),
                         Bundle.getMessage(locale, "InvalidSystemNameInvalidInsteon", name));
+            }
+        } else if (dTest) {
+            // This is a PLnnn address - validate the DMX address fields
+            if (dCodes.groupCount() != 3) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidDmx", name),
+                        Bundle.getMessage(locale, "InvalidSystemNameInvalidDmx", name));
+            }
+            try {
+                int num;
+                num = Integer.parseInt(dCodes.group(3));
+                if ((num < 1) || (num > 512)) {
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidDevice", name),
+                            Bundle.getMessage(locale, "InvalidSystemNameInvalidDevice", name));
+                }
+            } catch (NumberFormatException e) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidDevice", name),
+                        Bundle.getMessage(locale, "InvalidSystemNameInvalidDevice", name));
             }
         } else {
             throw new NamedBean.BadSystemNameException(
@@ -169,6 +192,8 @@ public class SerialAddress {
         int hCount = hCodes.groupCount();
         boolean iMatch = iCodes.reset(systemName).matches();
         int iCount = iCodes.groupCount();
+        boolean dMatch = dCodes.reset(systemName).matches();
+        int dCount = dCodes.groupCount();
         if (!aMatch || aCount != 2 || (validSystemNameFormat(systemName, aCodes.group(2).charAt(0)) != NameValidity.VALID)) {
             // No point in normalizing if a valid system name format is not present
             return "";
@@ -397,5 +422,34 @@ public class SerialAddress {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialAddress.class);
+    
+    /**
+     * Extract DMX unit id from system name.
+     * <p>
+     * If the supplied system name does not have a valid format, an empty string
+     * is returned.
+     *
+     * @param systemName name
+     * @return dmx unit id, -1 if invalid
+     */
+
+    public int unitIdCodeAsValueFromSystemName(String systemName) {
+        int dCode = -1;
+        // ensure that input system name has a valid format
+        if (!dCodes.reset(systemName).matches() || validSystemNameFormat(systemName, dCodes.group(2).charAt(0)) != NameValidity.VALID) {
+            // No point in normalizing if a valid system name format is not present
+        } else {
+            if (dCodes.groupCount() == 3) {
+                // This is a PLddd address
+                try {
+                    dCode = Integer.parseInt(dCodes.group(3));
+                } catch (NumberFormatException e) {
+                    log.error("illegal character in dmx unit id system name: {}", systemName);
+                    return -1;
+                }
+            }
+        }
+        return dCode;
+    }
 
 }

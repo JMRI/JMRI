@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import jmri.*;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
+import purejavacomm.SerialPort;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -45,6 +46,17 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnecti
         serialTrafficController = tc;
     }
 
+    /**
+     * Provide access to the serial port for this connection
+     * @return SerialPort
+     */
+    public SerialPort getActiveSerialPort() {
+        return serialPort;
+    }
+    private SerialPort serialPort;
+    public void setActiveSerialPort(SerialPort sp) {
+        serialPort = sp;
+    }
     /**
      * Provide access to a serialAddress for this particular connection
      *

@@ -72,3 +72,4 @@ RemoteSystemsTempFiles
 # OS junk files
 [Tt]humbs.db
 *.DS_Store
+java/.settings/Debug PanelPro.launch

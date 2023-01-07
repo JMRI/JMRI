@@ -72,6 +72,10 @@ abstract public class SerialLight extends AbstractVariableLight {
             idhighbyte = tc.getAdapterMemo().getSerialAddress().idHighCodeAsValueFromSystemName(getSystemName());
             idmiddlebyte = tc.getAdapterMemo().getSerialAddress().idMiddleCodeAsValueFromSystemName(getSystemName());
             idlowbyte = tc.getAdapterMemo().getSerialAddress().idLowCodeAsValueFromSystemName(getSystemName());
+            // if not Insteon, try DMX
+            if (idhighbyte == -1) {
+                unitid = tc.getAdapterMemo().getSerialAddress().unitIdCodeAsValueFromSystemName(getSystemName());
+            }
         }
     }
 
@@ -92,6 +96,7 @@ abstract public class SerialLight extends AbstractVariableLight {
     protected int idhighbyte = -1;
     protected int idmiddlebyte = -1;
     protected int idlowbyte = -1;
+    protected int unitid = -1;
 
     /**
      * Send a On/Off Command to the hardware
