@@ -27,12 +27,6 @@ public class SpecificSystemConnectionMemo extends jmri.jmrix.powerline.SerialSys
     public void configureManagers() {
         setLightManager(new jmri.jmrix.powerline.dmx512.SpecificLightManager(getTrafficController()));
         InstanceManager.setLightManager(getLightManager());
-        /** for now just consider it working with lights
-        setSensorManager(new jmri.jmrix.powerline.dmx512.SpecificSensorManager(getTrafficController()));
-        InstanceManager.setSensorManager(getSensorManager());
-        setTurnoutManager(new jmri.jmrix.powerline.SerialTurnoutManager(getTrafficController()));
-        InstanceManager.setTurnoutManager(getTurnoutManager());
-        */
         register();
     }
 

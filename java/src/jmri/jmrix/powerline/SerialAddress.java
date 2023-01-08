@@ -192,10 +192,9 @@ public class SerialAddress {
         int hCount = hCodes.groupCount();
         boolean iMatch = iCodes.reset(systemName).matches();
         int iCount = iCodes.groupCount();
-        boolean dMatch = dCodes.reset(systemName).matches();
-        int dCount = dCodes.groupCount();
         if (!aMatch || aCount != 2 || (validSystemNameFormat(systemName, aCodes.group(2).charAt(0)) != NameValidity.VALID)) {
             // No point in normalizing if a valid system name format is not present
+            // DMX addresses are normalized already
             return "";
         }
         String nName = "";
