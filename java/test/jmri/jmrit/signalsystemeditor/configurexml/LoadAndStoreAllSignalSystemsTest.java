@@ -250,7 +250,7 @@ public class LoadAndStoreAllSignalSystemsTest {
                 next1 = next1.replaceAll(" xmlns=\"\"", "");
 
                 // Remove xmlns=""
-                next2 = next1.replaceAll(" xmlns=\"\"", "");
+                next2 = next2.replaceAll(" xmlns=\"\"", "");
 
                 // Remove space before and after = sign
                 next2 = next2.replaceAll("\\s*=\\s*", "=");
