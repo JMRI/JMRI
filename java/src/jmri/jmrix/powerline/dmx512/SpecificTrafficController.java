@@ -140,7 +140,7 @@ public class SpecificTrafficController extends SerialTrafficController {
      */
     @Override
     synchronized public boolean sendDmxSequence(int unitid, byte newStep) {
-        log.info("Unit {} value {}", unitid, newStep);
+        // log.info("Unit {} value {}", unitid, (int) newStep);
         boolean didIt = setDmxIntensity(unitid, newStep);
         if (!didIt) {
             log.error("Invalid Dmx Message for unit {} value {}", unitid, newStep);
