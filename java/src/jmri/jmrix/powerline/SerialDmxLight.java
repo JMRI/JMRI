@@ -96,7 +96,7 @@ public class SerialDmxLight extends jmri.jmrix.powerline.SerialLight {
     }
 
     /**
-     * Send a Dim/Bright commands to the X10 hardware to reach a specific
+     * Send a Dim/Bright commands to the DMX hardware to reach a specific
      * intensity. Acts immediately, and changes no general state.
      * <p>
      * This sends "Dim" commands.
@@ -115,25 +115,9 @@ public class SerialDmxLight extends jmri.jmrix.powerline.SerialLight {
             log.error("newStep wrong: {} intensity: {}", newStep, intensity);
         }
 
-        if (newStep == 0) {
-            // nothing to do!
-            if (log.isDebugEnabled()) {
-                log.debug("intensity {} within current step, return", intensity);
-            }
-            return;
-
-        }
-
-        boolean didIt = false;
         // update dmxArray
         tc.sendDmxSequence(this.unitid, (byte) newStep);
-        if (!didIt) {
-            log.error("Invalid Dmx Message for unit {} value {}", unitid, newStep);
-        }
 
-        if (log.isDebugEnabled()) {
-            log.debug("sendIntensity({}) unitId {} intensity {} value {}: worked {}", this.unitid, intensity, newStep, didIt);
-        }
     }
 
     /**

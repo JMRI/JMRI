@@ -1,10 +1,7 @@
 package jmri.jmrix.powerline.dmx512;
 
-import java.util.List;
-import jmri.Sensor;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialTrafficController;
-import jmri.jmrix.powerline.X10Sequence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

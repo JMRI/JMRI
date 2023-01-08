@@ -56,24 +56,27 @@ public class SpecificTrafficController extends SerialTrafficController {
     @Override
     protected void transmitLoop() {
         if (oneTimeLog) {
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ignore) {
-                Thread.currentThread().interrupt();
-            }
             oneTimeLog = false;
             for (int i = 0; i < dmxArray.length; i++) {
                 dmxArray[i] = 0;
             }
             dmxArray[0] = (byte) 0; // type of buffer going out
-            activePort = memo.getActiveSerialPort();
-            if (activePort == null) {
-                log.info("failed to get activePort");
-            }
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ignore) {
-                Thread.currentThread().interrupt();
+            /**
+             * deal with thread sync of main tc still getting setup by time of
+             * first call in the transmit loop. Give it time and retry
+             */
+            int tryLimit = 0;
+            while ((activePort == null) && (tryLimit <= 10)) {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ignore) {
+                    Thread.currentThread().interrupt();
+                }
+                tryLimit++;
+                activePort = memo.getActiveSerialPort();
+                if (activePort == null) {
+                    log.info("try {} to get activePort", tryLimit);
+                }
             }
         }
 
@@ -112,6 +115,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         }
     }
 
+    // not used, no reback
     @Override
     public void receiveLoop() {
         try {
@@ -132,14 +136,16 @@ public class SpecificTrafficController extends SerialTrafficController {
     /**
      * Send a sequence of Dmx messages
      * <p>
-     * Makes them into the local messages and then queues in order
+     * Makes call to update array
      */
     @Override
-    synchronized public void sendDmxSequence(int unitid, byte newStep) {
+    synchronized public boolean sendDmxSequence(int unitid, byte newStep) {
+        log.info("Unit {} value {}", unitid, newStep);
         boolean didIt = setDmxIntensity(unitid, newStep);
         if (!didIt) {
             log.error("Invalid Dmx Message for unit {} value {}", unitid, newStep);
         }
+        return didIt;
     }
     private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class);
 

@@ -79,8 +79,10 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      *
      * @param unitid sequence to send
      * @param newStep listener for reply
+     * @return true on success
      */
-    public void sendDmxSequence(int unitid, byte newStep) {
+    public boolean sendDmxSequence(int unitid, byte newStep) {
+        return false;
     }
 
     /**
