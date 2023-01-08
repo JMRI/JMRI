@@ -427,6 +427,7 @@
           The action and expression stored the user name instead of the system name
           if the Entry/Exit. The user name of an Entry/Exit changes when the NX sensor
           or related signal mast is changed.</li>
+	  <li>Adds panel file XSLT formatting for display of Digital Boolean Actions in web browser</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
