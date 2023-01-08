@@ -949,6 +949,18 @@ value="<xsl:value-of select="@dataString"/>"
     </xsl:for-each>
 </xsl:template>
 
+<!-- *NEW******************************************** -->
+<xsl:template name="oneNGDigitalBooleanActionWithComment">
+        <xsl:param name="systemname"/>
+    <xsl:for-each select="/layout-config/LogixNGDigitalBooleanActions/*">
+		<xsl:if test='( systemName = $systemname )' >
+        <!-- found the right one -->
+            <td><xsl:value-of select="local-name()"/></td>
+            <td><xsl:value-of select="./comment"/></td>
+        </xsl:if>
+    </xsl:for-each>
+</xsl:template>
+
 <!-- *************************************************************************************** -->
 <xsl:template match="layout-config/LogixNGs/InitializationTable">
     <h2>LogixNG Initialization Table</h2>
@@ -991,6 +1003,19 @@ value="<xsl:value-of select="@dataString"/>"
         <xsl:param name="systemname"/>
 
     <xsl:for-each select="/layout-config/LogixNGDigitalActions/*">
+		<xsl:if test='( systemName = $systemname )' >
+        <!-- found the right one -->
+            <xsl:value-of select="local-name()"/>
+        </xsl:if>
+    </xsl:for-each>
+
+</xsl:template>
+
+<!-- *NEW******************************************** -->
+<xsl:template name="oneNGDigitalBooleanAction">
+        <xsl:param name="systemname"/>
+
+    <xsl:for-each select="/layout-config/LogixNGDigitalBooleanActions/*">
 		<xsl:if test='( systemName = $systemname )' >
         <!-- found the right one -->
             <xsl:value-of select="local-name()"/>
@@ -1049,6 +1074,41 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- template to show ConditionalNG Actions -->
 <xsl:template match="layout-config/LogixNGDigitalActions">
     <h2>LogixNG Digital Actions</h2>
+    <table border="1">
+        <tr>
+            <th>Type</th>
+            <th>System Name</th>
+            <th>Sensor</th>
+            <th>Turnout</th>
+            <th>Light</th>
+            <th>If</th>
+            <th>Then</th>
+            <th>Else</th>
+            <th>Comment</th>
+         </tr>
+    <!-- index through individual elements -->
+    <xsl:for-each select="./*">
+        <tr><td><xsl:value-of select="local-name()"/></td>
+            <td><xsl:value-of select="systemName"/></td>
+            <td><xsl:value-of select="./sensor"/></td>
+            <td><xsl:value-of select="./turnout"/></td>
+            <td><xsl:value-of select="./light"/></td>
+            <td><xsl:value-of select="./IfSocket/systemName"/></td>
+            <td><xsl:value-of select="./ThenSocket/systemName"/></td>
+            <td><xsl:value-of select="./ElseSocket/systemName"/></td>
+            <xsl:if test="string-length(comment)!=0" > <td><xsl:value-of select="comment"/></td></xsl:if>
+        </tr>
+
+            <!-- DO MORE HERE -->
+
+    </xsl:for-each>
+    </table>
+</xsl:template>
+
+<!-- *NEW************************************************************************************** -->
+<!-- template to show LogixNGDigitalBooleanActions -->
+<xsl:template match="layout-config/LogixNGDigitalBooleanActions">
+    <h2>LogixNG Digital Boolean Actions</h2>
     <table border="1">
         <tr>
             <th>Type</th>
