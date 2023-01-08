@@ -174,7 +174,11 @@ public class SignalSystemXml {
 
 
     public void save(SignalSystem signalSystem) {
-        String fileName = FileUtil.getProfilePath() + "xml/signals/" + signalSystem.getFolderName() + "/aspects.xml";
+        save(signalSystem, FileUtil.getProfilePath() + "xml/signals/");
+    }
+
+    public void save(SignalSystem signalSystem, String path) {
+        String fileName = path + signalSystem.getFolderName() + "/aspects.xml";
 
         XmlFile xmlFile = new XmlFile() {
         };

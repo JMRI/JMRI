@@ -13,6 +13,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -61,7 +62,39 @@ public class LoadAndStoreAllSignalSystemsTest {
         return getFiles(new File("xml/signals"), true, true);
     }
 
-    public static void checkFile(File inFile1, File inFile2) throws Exception {
+    /**
+     * Get all XML files in a directory and validate them.
+     *
+     * @param directory the directory containing XML files
+     * @param pass      if true, successful validation will pass; if false,
+     *                  successful validation will fail
+     * @return a stream of {@link Arguments}, where each Argument contains the
+     *         {@link java.io.File} with a filename ending in {@literal .xml} to
+     *         validate and a boolean matching the pass parameter
+     */
+    public static Stream<Arguments> getFolders(File directory, boolean pass) {
+        ArrayList<Arguments> files = new ArrayList<>();
+
+//        files.add(Arguments.of(new File("xml/signals/AAR-1946"), pass));
+
+//        if (directory.isDirectory() && false) {
+        if (directory.isDirectory()) {
+            for (File file : directory.listFiles()) {
+                if (file.isDirectory()) {
+                    files.add(Arguments.of(file, pass));
+                }
+            }
+        }
+        return files.stream();
+    }
+
+    public static Stream<Arguments> data2() {
+        return getFolders(new File("xml/signals"), true);
+    }
+
+    public static boolean checkFile(File inFile1, File inFile2) throws Exception {
+
+//        System.out.format("Check files: %s, %s%n", inFile1, inFile2);
 
         try ( // compare files, except for certain special lines
             BufferedReader fileStream1 = new BufferedReader( new InputStreamReader(
@@ -105,8 +138,7 @@ public class LoadAndStoreAllSignalSystemsTest {
                 next2 = next2.replace("<!-- The following references the \"Restricted Proceed\" aspect, which is undefined here-->", "");
                 next2 = next2.replace("<email></email>", "");
 
-                while (next2 != null && next2.isBlank()) {
-                    next2 = fileStream2.readLine();
+                while (next2 != null && next2.isBlank() && (next2 = fileStream2.readLine()) != null) {
                     next2 = next2.replace("<!-- Start of Specific Appearances list -->", "");
                     next2 = next2.replace("<!-- End of Specific Appearances list -->", "");
                     next2 = next2.replace("<!-- Start of Aspect Mapping -->", "");
@@ -217,6 +249,9 @@ public class LoadAndStoreAllSignalSystemsTest {
                 // Remove xmlns=""
                 next1 = next1.replaceAll(" xmlns=\"\"", "");
 
+                // Remove xmlns=""
+                next2 = next1.replaceAll(" xmlns=\"\"", "");
+
                 // Remove space before and after = sign
                 next2 = next2.replaceAll("\\s*=\\s*", "=");
                 // Remove space between " and >
@@ -244,6 +279,8 @@ public class LoadAndStoreAllSignalSystemsTest {
                 boolean match = false;  // assume failure (pessimist!)
 
                 if (!match && !line1.equals(line2)) {
+//                    System.out.format("Compare failed with file: %s%n", inFile1);
+//                    if (1==1) return false;
                     log.error("match failed in LoadAndStoreTest:");
                     log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
                     log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
@@ -277,6 +314,8 @@ public class LoadAndStoreAllSignalSystemsTest {
             // Ignore for now. Fix later
 //            log.warn("File not found: {}", ex.getMessage());
         }
+
+        return true;
     }
 
     public void loadAndStoreFileCheck(File file) throws Exception {
@@ -309,12 +348,54 @@ public class LoadAndStoreAllSignalSystemsTest {
         checkFile(compFile, file);
     }
 
+    public void loadAndStoreFileCheck2(File file, String newFolder) throws Exception {
+
+        // Ignore files in the folder
+        if (!file.isDirectory()) return;
+
+//        if (!file.getAbsolutePath().equals("F:\\Projekt\\Java\\GitHub\\JMRI\\xml\\signals\\DB-HV-1969\\appearance-block.xml")) return;
+
+        log.debug("Start check file {}", file.getCanonicalPath());
+
+        File signalSystemFolder = file.getCanonicalFile();
+//        String signalSystemName = signalSystemFolder.getName();
+
+        SignalSystemXml signalSystemXml = new SignalSystemXml();
+        SignalMastTypeXml signalMastXml = new SignalMastTypeXml();
+
+        SignalSystem signalSystem = signalSystemXml.load(new File(file+"/aspects.xml"));
+
+        signalSystemXml.save(signalSystem, newFolder);
+
+        for (SignalMastType signalMastType : signalSystem.getSignalMastTypes()) {
+            signalMastXml.save(signalSystem, signalMastType, newFolder);
+        }
+
+        File compFile = new File(newFolder + file.getName() + "/" + "/aspects.xml");
+        if (!checkFile(compFile, file)) return;
+
+        for (SignalMastType signalMastType : signalSystem.getSignalMastTypes()) {
+            File file2 = new File(file.getCanonicalPath() + "/" + signalMastType.getFileName());
+            File compFile2 = new File(newFolder + file.getName() + "/" + signalMastType.getFileName());
+            if (!checkFile(compFile2, file2)) return;
+        }
+    }
+
+    @Disabled
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
     public void loadAndStoreTest(File file, boolean pass) throws Exception {
         if (!file.getParent().equals("xml/signals") && !file.getParent().equals("xml\\signals")) {
             loadAndStoreFileCheck(file);
         }
+    }
+
+    @ParameterizedTest(name = "{index}: {0} (pass={1})")
+    @MethodSource("data2")
+    public void loadAndStoreTest2(File file, boolean pass) throws Exception {
+        System.out.format("File: %s%n", file);
+        loadAndStoreFileCheck2(file, jmri.util.FileUtil.getProfilePath() + "xml/signals/");
+        loadAndStoreFileCheck2(new File(jmri.util.FileUtil.getProfilePath() + "xml/signals/" + file.getName()), jmri.util.FileUtil.getProfilePath() + "xml/signals2/");
     }
 
     @BeforeEach
