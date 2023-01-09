@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import jmri.jmrit.signalsystemeditor.*;
+import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -396,10 +397,10 @@ public class LoadAndStoreAllSignalSystemsTest {
             checkImageLinks(signalSystem);
             signalSystemXml.save(signalSystem);
             for (SignalMastType signalMastType : signalSystem.getSignalMastTypes()) {
-                signalMastXml.save(signalSystem, signalMastType);
+                signalMastXml.save(signalSystem, signalMastType, true);
             }
 
-            File compFile = new File( jmri.util.FileUtil.getProfilePath()
+            File compFile = new File(FileUtil.getProfilePath()
                     + "xml/signals/" + "/" + file.getParentFile().getName() + "/" + file.getName() );
             checkFile(compFile, file);
         }
@@ -451,8 +452,8 @@ public class LoadAndStoreAllSignalSystemsTest {
     @MethodSource("data2")
     public void loadAndStoreTest2(File file, boolean pass) throws Exception {
 //        System.out.format("File: %s%n", file);
-        loadAndStoreFileCheck2(file, jmri.util.FileUtil.getProfilePath() + "xml/signals/");
-        loadAndStoreFileCheck2(new File(jmri.util.FileUtil.getProfilePath() + "xml/signals/" + file.getName()), jmri.util.FileUtil.getProfilePath() + "xml/signals2/");
+        loadAndStoreFileCheck2(file, FileUtil.getProfilePath() + "xml/signals/");
+        loadAndStoreFileCheck2(new File(FileUtil.getProfilePath() + "xml/signals/" + file.getName()), FileUtil.getProfilePath() + "xml/signals2/");
     }
 
     @BeforeEach

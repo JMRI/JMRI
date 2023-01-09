@@ -228,12 +228,12 @@ public class SignalMastTypeXml {
     }
 
 
-    public void save(SignalSystem signalSystem, SignalMastType signalMastType) {
-        save(signalSystem, signalMastType, FileUtil.getProfilePath() + "xml/signals/", true);
+    public void save(SignalSystem signalSystem, SignalMastType signalMastType, boolean makeBackup) {
+        save(signalSystem, signalMastType, FileUtil.getProfilePath(), makeBackup);
     }
 
     public void save(SignalSystem signalSystem, SignalMastType signalMastType, String path, boolean makeBackup) {
-        String fileName = path + signalSystem.getFolderName() + "/" + signalMastType.getFileName();
+        String fileName = path + "xml/signals/" + signalSystem.getFolderName() + "/" + signalMastType.getFileName();
 
         XmlFile xmlFile = new XmlFile();
         if (makeBackup) {
