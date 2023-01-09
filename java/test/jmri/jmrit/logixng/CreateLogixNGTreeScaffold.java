@@ -1746,6 +1746,7 @@ public class CreateLogixNGTreeScaffold {
         actionTimer.setDelay(0, 100);
         actionTimer.setStartImmediately(false);
         actionTimer.setRunContinuously(true);
+        actionTimer.setStartAndStopByStartExpression(true);
         maleSocket = digitalActionManager.registerAction(actionTimer);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -1757,6 +1758,20 @@ public class CreateLogixNGTreeScaffold {
         actionTimer.setDelay(2, 500);
         actionTimer.setStartImmediately(true);
         actionTimer.setRunContinuously(false);
+        actionTimer.setStartAndStopByStartExpression(true);
+        actionTimer.setNumActions(2);
+        maleSocket = digitalActionManager.registerAction(actionTimer);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionTimer = new ActionTimer(digitalActionManager.getAutoSystemName(), null);
+        actionTimer.setComment("A comment");
+        actionTimer.setNumActions(3);
+        actionTimer.setDelay(0, 20);
+        actionTimer.setDelay(1, 100);
+        actionTimer.setDelay(2, 50);
+        actionTimer.setStartImmediately(true);
+        actionTimer.setRunContinuously(false);
+        actionTimer.setStartAndStopByStartExpression(false);
         actionTimer.setNumActions(2);
         maleSocket = digitalActionManager.registerAction(actionTimer);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
