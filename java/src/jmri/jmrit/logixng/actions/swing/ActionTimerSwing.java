@@ -60,7 +60,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         _startImmediately = new JCheckBox(Bundle.getMessage("ActionTimerSwing_StartImmediately"));
         _runContinuously = new JCheckBox(Bundle.getMessage("ActionTimerSwing_RunContinuously"));
         _startAndStopByStartExpression = new JCheckBox(Bundle.getMessage(
-                "ActionTimerSwing_StartAndStopByStartExpression"));
+                "ActionTimer_StartAndStopByStartExpression"));
 
         _unitComboBox = new JComboBox<>();
         for (TimerUnit u : TimerUnit.values()) _unitComboBox.addItem(u);

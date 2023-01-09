@@ -378,7 +378,12 @@ public class ActionTimer extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionTimer_Long");
+        if (_startAndStopByStartExpression) {
+            return Bundle.getMessage(locale, "ActionTimer_Long2",
+                    Bundle.getMessage("ActionTimer_StartAndStopByStartExpression"));
+        } else {
+            return Bundle.getMessage(locale, "ActionTimer_Long");
+        }
     }
 
     public FemaleDigitalExpressionSocket getStartExpressionSocket() {
