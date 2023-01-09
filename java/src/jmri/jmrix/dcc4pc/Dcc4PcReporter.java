@@ -28,14 +28,16 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
     // data members
     transient RailComPacket[] rcPacket = new RailComPacket[3];
 
-    synchronized void setPacket(int[] arraytemp, int dcc_addr_type, int dcc_addr, int cvNumber, int speed, int packetTypeCmd) {
+    void setPacket(int[] arraytemp, int dcc_addr_type, int dcc_addr, int cvNumber, int speed, int packetTypeCmd) {
         log.debug("{} dcc_addr {} {} {}", getDisplayName(), dcc_addr, cvNumber, speed);
         RailComPacket rc = new RailComPacket(arraytemp, dcc_addr_type, dcc_addr, cvNumber, speed);
         decodeRailComInfo(rc, packetTypeCmd);
         rcPacket[2] = rcPacket[1];
         rcPacket[1] = rcPacket[0];
         rcPacket[0] = rc;
-        log.debug("Packets Seen {} in error {}", packetseen, packetsinerror);
+        synchronized(lock) {
+            log.debug("Packets Seen {} in error {}", packetseen, packetsinerror);
+        }
     }
 
     static class RailComPacket {
