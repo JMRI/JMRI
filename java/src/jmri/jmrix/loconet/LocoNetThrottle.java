@@ -6,7 +6,6 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
-import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,13 +41,13 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     // remember in expanded mode 2 throttle cannot be in control of a loco
 
     protected int new_spd;
-    protected boolean throttle_isFwd;
+    protected long new_spd_lastupdated;
+    protected boolean new_isFwd;
+    protected long new_isFwd_lastupdated;
 
     // slot status to be warned if slot released or dispatched
     protected int slotStatus;
     protected boolean isDisposing = false;
-    // set isInitialized to false to enable setting the throttle ID.
-    protected boolean isInitialized = false;
 
     /**
      * Constructor
@@ -59,6 +58,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public LocoNetThrottle(LocoNetSystemConnectionMemo memo, LocoNetSlot slot) {
         super(memo);
         this.slot = slot;
+        slot.setIsInitialized(false);
         network = memo.getLnTrafficController();
         throttleManager = (LnThrottleManager)memo.getThrottleManager();
 
@@ -114,7 +114,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         log.debug("constructed a new throttle using slot {} for loco address {}", slot.getSlot(), slot.locoAddr());
     }
 
-    /**
+    /**isin
      * Convert a LocoNet speed integer to a float speed value
      *
      * @param lSpeed LocoNet style speed value
@@ -316,7 +316,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 | (getFunction(4) ? LnConstants.DIRF_F4 : 0));
             LocoNetMessage msg = new LocoNetMessage(6);
             msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
-            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK );
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6 );
             msg.setElement(2,slot.getSlot() & 0b01111111);
             msg.setElement(3,slot.id() & 0x7F);
             msg.setElement(4, new_F0F6);
@@ -335,7 +335,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     | (getFunction(13) ? 0b01000000 : 0));
                 LocoNetMessage msg = new LocoNetMessage(6);
                 msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
-                msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK );
+                msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13 );
                 msg.setElement(2,slot.getSlot() & 0b01111111);
                 msg.setElement(3,slot.id() & 0x7F);
                 msg.setElement(4, new_F7F13);
@@ -355,7 +355,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 | (getFunction(20) ? 0b01000000 : 0));
             LocoNetMessage msg = new LocoNetMessage(6);
             msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
-            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK );
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20 );
             msg.setElement(2,slot.getSlot() & 0b01111111);
             msg.setElement(3,slot.id() & 0x7F);
             msg.setElement(4, new_F14F20);
@@ -376,9 +376,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
         if (!getFunction(28)) {
-            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF);
         } else {
-            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON);
         }
         msg.setElement(2, slot.getSlot() & 0b01111111);
         msg.setElement(3, slot.id() & 0x7F);
@@ -387,20 +387,54 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
-     * Send the expanded slot command for speed and direction.
+     * Send the expanded slot command for speed and direction on change of speed
      * Note we send our stored values as slot is updated via an echo
      * and may not have been updated yet when sending rapid commands
-     * @param new_spd the speed to set
+     * @param speed the speed to set
      */
-    protected void sendExpSpeedAndDirection(int new_spd) {
+    protected void sendExpSpeedAndDirection(int speed) {
+        boolean isFwd;
+        if (slot.getLastUpdateTime() <  new_isFwd_lastupdated) {
+            isFwd = new_isFwd;
+        } else {
+            isFwd = slot.isForward();
+        }
+        // save last speed update for change of direction;
+        new_spd = speed;
+        new_spd_lastupdated = System.currentTimeMillis();
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
-        msg.setElement(1, ((slot.getSlot() / 128) & 0x03) | (throttle_isFwd ? 0x00 : 0x08));
+        msg.setElement(1, ((slot.getSlot() / 128) & 0x03) | (isFwd ? 0x00 : 0x08));
         msg.setElement(2, slot.getSlot() & 0x7f);
         msg.setElement(3, (slot.id() & 0x7f));
-        msg.setElement(4, new_spd);
+        msg.setElement(4, speed);
         network.sendLocoNetMessage(msg);
     }
+
+    /**
+     * Send the expanded slot command for speed and direction on change of direction
+     * Note we send our stored speed if slot has not yet been updated by the echo
+     * @param isFwd new direction
+     */
+    protected void sendExpSpeedAndDirection(boolean isFwd) {
+        int speed;
+        if (slot.getLastUpdateTime() <  new_spd_lastupdated) {
+            speed = new_spd;
+        } else {
+            speed = slot.speed();
+        }
+        // save last speed update for change of direction;
+        new_isFwd = isFwd;
+        new_isFwd_lastupdated = System.currentTimeMillis();
+        LocoNetMessage msg = new LocoNetMessage(6);
+        msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+        msg.setElement(1, ((slot.getSlot() / 128) & 0x03) | (isFwd ? 0x00 : 0x08));
+        msg.setElement(2, slot.getSlot() & 0x7f);
+        msg.setElement(3, (slot.id() & 0x7f));
+        msg.setElement(4, speed);
+        network.sendLocoNetMessage(msg);
+    }
+
     /**
      * Send a LocoNet message to set the loco speed speed.
      *
@@ -519,8 +553,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
             sendFunctionGroup1();
         } else {
-            throttle_isFwd = forward;
-            sendExpSpeedAndDirection(new_spd);
+            sendExpSpeedAndDirection(forward);
         }
         firePropertyChange(ISFORWARD, old, this.isForward);
     }
@@ -639,10 +672,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             log.error("notified of change in different slot");
         }
 
-        if(!isInitialized && slot.slotStatus() == LnConstants.LOCO_IN_USE){
+        if(!slot.getIsInitilized() && slot.slotStatus() == LnConstants.LOCO_IN_USE){
            log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleManager.getThrottleID());
            network.sendLocoNetMessage(slot.writeThrottleID(throttleManager.getThrottleID()));
-           isInitialized = true;
+           // finally we are done...
+           slot.setIsInitialized(true);
+           throttleManager.notifyComplete(this, slot);
         }
 
         // Save current layout state of spd/dirf/snd so we won't run amok
@@ -758,7 +793,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     | LnConstants.DEC_MODE_128;
         }
         log.debug("New Slot Mode: {}", LnConstants.DEC_MODE(status));
-        if (isInitialized )
+        if (slot.getIsInitilized() )
             // check that the throttle is completely initialized.
         {
             network.sendLocoNetMessage(slot.writeMode(status));

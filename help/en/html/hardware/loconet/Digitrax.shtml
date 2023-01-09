@@ -402,7 +402,24 @@
             that by selecting "no flow control".<br>
             This box will be blank if you've selected LocoBuffer-NG, LocoBuffer-USB, PR3, PR4 or MS100.</li>
 
-            <li>Packetizer Type lets you choose Normal (recommended) or Strict.</li>
+            <li>Interrogate Sensors, Turnouts On Start. If set to "No" then JMRI will not attempt
+            to probe DS52s, 64s,74s, BDL16x etc. for the current state of their sensors.</li>
+
+            <li>Expanded Protocol(XP Slots) if set to "No" then JMRI will only use the original LocoNet
+            messages to control locomotives, but, slots greater than 120 in the DCS240 will not be accessed.
+            If set to "Auto" JMRI will use the Expanded LocoNet protocol used by Evolution series Command
+            Stations (DCS52,210,210+,240,240+) if available. If mixing older throttles, such as the UT4 or
+            DT402 without the upgraded firmware, on a DCS240 or DCS240+, attempting to use an address first
+            used on a newer throttle or on JMRI may result in confusion and delay until the slots have been
+            cleared.</li>
+
+            <li>Packetizer Type lets you choose "Normal" (recommended) or "Strict". The strict packetizer places
+            each LocoNet message on the wire and does not send the next one until its "sees" the first one echoed back. It also waits
+            for a response for those packets that are supposed to have a response. It will try 5 attempts
+            before giving up. It "backs off" sending more packets on recieving "Busy" messages.
+            It will help situations where packets appear to get lost during busy moments. When using "Strict"
+            it is best to have the command station powered up with track power "On" before starting JMRI.</li>
+
 
             <li>"Transponding Present" allows you indicate whether certain special hardware is
             present and configured. If you have LocoNet-attached boards that configure in "ops
