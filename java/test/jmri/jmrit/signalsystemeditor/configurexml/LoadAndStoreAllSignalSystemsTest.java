@@ -96,19 +96,19 @@ public class LoadAndStoreAllSignalSystemsTest {
 
     private boolean checkSpaces(SignalSystem signalSystem) throws IOException {
         boolean spacesRemoved = false;
-        List<String> fileNamesWithSpaces = new ArrayList<>();
+        List<String> filenamesWithSpaces = new ArrayList<>();
         Assert.assertFalse("The signal system folder name contains no spaces: " + signalSystem.getFolderName(), signalSystem.getFolderName().contains(" "));
 
         for (SignalMastType smt : signalSystem.getSignalMastTypes()) {
             boolean changed = false;
 
             for (Appearance appearance : smt.getAppearances()) {
-                changed |= checkImageLinksSpaces(appearance.getImageLinks(), fileNamesWithSpaces);
+                changed |= checkImageLinksSpaces(appearance.getImageLinks(), filenamesWithSpaces);
             }
-            changed |= checkImageLinksSpaces(smt.getAppearanceDanger().getImageLinks(), fileNamesWithSpaces);
-            changed |= checkImageLinksSpaces(smt.getAppearancePermissive().getImageLinks(), fileNamesWithSpaces);
-            changed |= checkImageLinksSpaces(smt.getAppearanceHeld().getImageLinks(), fileNamesWithSpaces);
-            changed |= checkImageLinksSpaces(smt.getAppearanceDark().getImageLinks(), fileNamesWithSpaces);
+            changed |= checkImageLinksSpaces(smt.getAppearanceDanger().getImageLinks(), filenamesWithSpaces);
+            changed |= checkImageLinksSpaces(smt.getAppearancePermissive().getImageLinks(), filenamesWithSpaces);
+            changed |= checkImageLinksSpaces(smt.getAppearanceHeld().getImageLinks(), filenamesWithSpaces);
+            changed |= checkImageLinksSpaces(smt.getAppearanceDark().getImageLinks(), filenamesWithSpaces);
 
             if (changed) {
                 SignalMastTypeXml signalMastXml = new SignalMastTypeXml();
@@ -118,14 +118,14 @@ public class LoadAndStoreAllSignalSystemsTest {
             spacesRemoved |= changed;
         }
 
-        if (!fileNamesWithSpaces.isEmpty()) {
-            if (1==1) return spacesRemoved;   // Ignore for now
-            for (String filename : fileNamesWithSpaces) {
-                log.error("File {} has spaces", filename);
+        if (!filenamesWithSpaces.isEmpty()) {
+//            if (1==1) return spacesRemoved;   // Ignore for now
+            for (String filename : filenamesWithSpaces) {
+                log.warn("File {} has spaces", filename);
             }
-            log.error("To remove spaces in filenames, run");
-            log.error("jmri.jmrit.signalsystemeditor.configurexml.LoadAndStoreAllSignalSystemsTest");
-            log.error("with REMOVE_SPACES = true");
+            log.warn("To remove spaces in filenames, run");
+            log.warn("jmri.jmrit.signalsystemeditor.configurexml.LoadAndStoreAllSignalSystemsTest");
+            log.warn("with REMOVE_SPACES = true");
         }
 
         return spacesRemoved;
