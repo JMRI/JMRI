@@ -209,66 +209,13 @@ public class LoadAndStoreAllSignalSystemsTest {
                     }
                 }
 
-/*
-                if (next2.startsWith("<reference>") && next2.startsWith(next1) && !next2.equals(next1)) {
-                    while (next2.startsWith(next1) && !next2.equals(next1)) {
-                        // \u00A0 is non breaking space
-                        next1 += fileStream1.readLine().strip().replaceAll("\u00A0", " ");
-                        lineNumber1++;
-                    }
-                }
-
-                if (next2.startsWith("<description>") && next2.startsWith(next1) && !next2.equals(next1)) {
-                    while (next2.startsWith(next1) && !next2.equals(next1)) {
-                        // \u00A0 is non breaking space
-                        next1 += fileStream1.readLine().strip().replaceAll("\u00A0", " ");
-                        lineNumber1++;
-                    }
-                }
-*/
-/*
-                if (next2.startsWith("<") && !next2.strip().endsWith(">")) {
-                    while (!next2.strip().endsWith(">")) {
-                        if (!next2.startsWith("<reference>")
-                                && !next2.startsWith("<revremark>")
-                                && !next2.startsWith("<indication>")
-                                && !next2.startsWith("<description>")
-                                && !next2.startsWith("<reference>")) {
-                            next2 += " ";
-                        }
-                        next2 += fileStream2.readLine().strip();
-                        lineNumber2++;
-                    }
-                }
-*/
-//                while (next2.strip().equals("<email></email>")) {
-//                    next2 = fileStream2.readLine().strip();
-//                    lineNumber2++;
-//                }
-
-                // Remove xmlns=""
-                next1 = next1.replaceAll(" xmlns=\"\"", "");
-
-                // Remove xmlns=""
-                next2 = next2.replaceAll(" xmlns=\"\"", "");
-
                 // Remove space before and after = sign
                 next2 = next2.replaceAll("\\s*=\\s*", "=");
                 // Remove space between " and >
                 next2 = next2.replaceAll("\"\\s+\\>", "\">");
-/*
-                if (next2.strip().equals("<!-- Start of Specific Appearances list -->")
-                        || next2.strip().equals("<!-- End of Specific Appearances list -->")
-                        || next2.strip().equals("<!-- Start of Aspect Mapping -->")
-                        || next2.strip().equals("<!-- End of Aspect Mapping -->")) {
-                    next2 = fileStream2.readLine().strip();
-                    lineNumber2++;
-                }
-*/
+
                 while (!next2.equals(next1) && next2.startsWith(next1)) {
                     next1 += fileStream1.readLine().strip();
-                    // Remove xmlns=""
-                    next1 = next1.replaceAll(" xmlns=\"\"", "");
                     lineNumber1++;
                 }
 
@@ -357,7 +304,7 @@ public class LoadAndStoreAllSignalSystemsTest {
 
         log.debug("Start check file {}", file.getCanonicalPath());
 
-        File signalSystemFolder = file.getCanonicalFile();
+//        File signalSystemFolder = file.getCanonicalFile();
 //        String signalSystemName = signalSystemFolder.getName();
 
         SignalSystemXml signalSystemXml = new SignalSystemXml();
@@ -381,7 +328,7 @@ public class LoadAndStoreAllSignalSystemsTest {
         }
     }
 
-    @Disabled
+//    @Disabled
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
     public void loadAndStoreTest(File file, boolean pass) throws Exception {
