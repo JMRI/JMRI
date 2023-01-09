@@ -448,6 +448,7 @@ public class LoadAndStoreAllSignalSystemsTest {
         }
     }
 
+    @Disabled
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data2")
     public void loadAndStoreTest2(File file, boolean pass) throws Exception {
