@@ -26,8 +26,7 @@ public class SignalSystemXml {
             log.error("appearance file (xml/{}) doesn't exist", file);
             throw new IllegalArgumentException("appearance file (xml/" + file + ") doesn't exist");
         }
-        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
-        };
+        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile();
         Element root;
         try {
             root = xf.rootFromURL(url);
@@ -180,8 +179,7 @@ public class SignalSystemXml {
     public void save(SignalSystem signalSystem, String path) {
         String fileName = path + signalSystem.getFolderName() + "/aspects.xml";
 
-        XmlFile xmlFile = new XmlFile() {
-        };
+        XmlFile xmlFile = new XmlFile();
         xmlFile.makeBackupFile(fileName);
         File file = new File(fileName);
         try {

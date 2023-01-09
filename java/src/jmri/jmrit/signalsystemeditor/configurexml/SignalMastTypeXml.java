@@ -30,8 +30,7 @@ public class SignalMastTypeXml {
             throw new IllegalArgumentException("appearance file (xml/" + file + ") doesn't exist");
         }
 
-        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
-        };
+        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile();
         Element root;
         try {
             root = xf.rootFromURL(url);
@@ -236,8 +235,7 @@ public class SignalMastTypeXml {
     public void save(SignalSystem signalSystem, SignalMastType signalMastType, String path, boolean makeBackup) {
         String fileName = path + signalSystem.getFolderName() + "/" + signalMastType.getFileName();
 
-        XmlFile xmlFile = new XmlFile() {
-        };
+        XmlFile xmlFile = new XmlFile();
         if (makeBackup) {
             xmlFile.makeBackupFile(fileName);
         }
