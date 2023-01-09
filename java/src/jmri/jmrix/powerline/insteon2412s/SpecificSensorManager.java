@@ -1,6 +1,5 @@
 package jmri.jmrix.powerline.insteon2412s;
 
-import java.util.List;
 import jmri.Sensor;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialTrafficController;

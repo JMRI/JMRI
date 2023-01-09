@@ -113,6 +113,7 @@ public class SerialDmxLight extends jmri.jmrix.powerline.SerialLight {
         // check for errors
         if ((newStep < 0) || (newStep > maxDimStep)) {
             log.error("newStep wrong: {} intensity: {}", newStep, intensity);
+            return;
         }
 
         // update dmxArray
@@ -149,8 +150,10 @@ public class SerialDmxLight extends jmri.jmrix.powerline.SerialLight {
             return;
         }
 
-        log.debug("set state {} house {} device {}", newState, housecode, devicecode);
+        log.debug("set state {} unitid {} value {}", newState, unitid, newDim);
 
+        // set new intensity, skip stepping
+        mCurrentIntensity = newDim;
         // send value to array
         tc.sendDmxSequence(this.unitid, newDim);
 

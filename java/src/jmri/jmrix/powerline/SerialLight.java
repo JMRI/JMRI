@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
  * For Insteon devices, uses direct setting of intensity level unless the value
  * is 0.0 or 1.0, in which case it uses on/off commands only.
  * <p>
+ * For DMX devices, use direct setting of the intensity level. But an on/off
+ * will skip any stepping of the change.
+ * <p>
  * For X10, since the dim/bright step of the hardware is unknown then the Light
  * object is first created, the first time the intensity (not state) is set to
  * other than 0.0 or 1.0, the output is run to it's maximum dim or bright step

@@ -75,6 +75,21 @@ public class SerialAddressTest {
     }
 
     @Test
+    public void testIsDmx512True() {
+        Assert.assertTrue("PL1", tc.getAdapterMemo().getSerialAddress().isInsteon("PL1"));
+        Assert.assertTrue("PLA256", tc.getAdapterMemo().getSerialAddress().isInsteon("PLA256"));
+        Assert.assertTrue("PLA512", tc.getAdapterMemo().getSerialAddress().isInsteon("PL512"));
+    }
+
+    @Test
+    public void testIsDmx512False() {
+        Assert.assertFalse("PLA1", tc.getAdapterMemo().getSerialAddress().isInsteon("PLA1"));
+        Assert.assertFalse("PL0", tc.getAdapterMemo().getSerialAddress().isInsteon("PL0"));
+        Assert.assertFalse("PL513", tc.getAdapterMemo().getSerialAddress().isInsteon("PL513"));
+        Assert.assertFalse("PL1110", tc.getAdapterMemo().getSerialAddress().isInsteon("PL1110"));
+    }
+
+    @Test
     public void testNormalizeSystemName() {
         Assert.assertEquals("normalize PLB7", "PLB7", tc.getAdapterMemo().getSerialAddress().normalizeSystemName("PLB7"));
     }

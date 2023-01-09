@@ -5,15 +5,11 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-import jmri.jmrix.powerline.SerialListener;
-import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialPortController;
-import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
