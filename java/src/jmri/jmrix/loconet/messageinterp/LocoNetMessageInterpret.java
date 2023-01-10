@@ -22,8 +22,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrix.loconet.alm.Alm;
-
 /**
  * A utility class for formatting LocoNet packets into human-readable text.
  * <p>
@@ -4834,10 +4832,10 @@ public class LocoNetMessageInterpret {
      */
     private static String interpretExtendedSlot_StatusData_Base(LocoNetMessage l, int slot) {
         String hwType = LnConstants.IPL_NAME(l.getElement(16));
-        int hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
+        int hwSerial = ((l.getElement(19) & 0x3f) * 128 ) + l.getElement(18);
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASE",
                 hwType,
-                hwSerial);
+                hwSerial + "(" + Integer.toHexString(hwSerial).toUpperCase() + ")");
     }
 
     /**
@@ -4851,12 +4849,15 @@ public class LocoNetMessageInterpret {
         double swVersion ;
         int hwSerial;
         String hwType = LnConstants.IPL_NAME(l.getElement(14));
-        hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
+        if ((l.getElement(19) & 0x40) == 0x40) {
+            hwType = hwType + Bundle.getMessage("LN_MSG_COMMAND_STATION");
+        }
+        hwSerial = ((l.getElement(19) & 0x3f) * 128 ) + l.getElement(18);
         hwVersion = ((double)(l.getElement(17) & 0x78) / 8 ) + ((double)(l.getElement(17) & 0x07) / 10 ) ;
         swVersion = ((double)(l.getElement(16) & 0x78) / 8 ) + ((double)(l.getElement(16) & 0x07) / 10 ) ;
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASEDETAIL",
                 hwType,
-                hwSerial,
+                hwSerial + "(" + Integer.toHexString(hwSerial).toUpperCase() + ")",
                 hwVersion,
                 swVersion);
     }
@@ -4908,7 +4909,17 @@ public class LocoNetMessageInterpret {
 
     private static String interpretExtendedSlot_StatusData_Flags(LocoNetMessage l, int slot) {
         //TODO need more sample data
-        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_FLAGS");
+        String msgRsyncMax = Bundle.getMessage("LN_MSG_OFF");
+        if ((l.getElement(4) & 0x80) == 0x80) {
+            msgRsyncMax = Bundle.getMessage("LN_MSG_ON");
+        }
+        String msgUSB = Bundle.getMessage("LN_MSG_OFF");
+        if ((l.getElement(5) & 0x20) == 0x20) {
+            msgUSB = Bundle.getMessage("LN_MSG_ON");
+        }
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_FLAGS",
+                msgRsyncMax,
+                msgUSB );
     }
 
     /**

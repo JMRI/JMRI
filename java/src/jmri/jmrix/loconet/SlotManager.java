@@ -206,7 +206,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     private final int SLOTS_DCS240 = 433;
     private int numSlots = SLOTS_DCS240;         // This is the largest number so far.
-    private int slot250CommandStationType;
+    private int slot248CommandStationType;
+    private int slot248CommandStationSerial;
     private int slot250InUseSlots;
     private int slot250IdleSlots;
     private int slot250FreeSlots;
@@ -229,7 +230,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @return model
      */
     public String getSlot250CommandStationType() {
-        return LnConstants.IPL_NAME(slot250CommandStationType);
+        return LnConstants.IPL_NAME(slot248CommandStationType);
     }
 
     /**
@@ -329,6 +330,20 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 }
             }
         }
+    }
+
+    javax.swing.Timer checkSpecialSlotTimer = null;
+
+    /**
+     * Request slot data for 248 and 250
+     * Runs delayed
+     * <p>
+     * This is intended to be called from the SpecialSlotCheckTimer
+     */
+    private void checkSpecialSlots() {
+        sendReadSlot(248);
+        try {Thread.sleep(100);} catch (Exception ex) {return;}
+        sendReadSlot(250);
     }
 
     /**
@@ -495,12 +510,21 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // TODO: Collect CS opswitch
         switch (slot) {
             case 250:
-                // slot info
-                if (LnConstants.IPL_NAME(m.getElement(16)).startsWith("DCS")) { // will do for now
-                    slot250CommandStationType = m.getElement(16);
+                // slot info if we have serial, the serial number in this slot
+                // does not indicate whether in booster or cs mode.
+                if (slot248CommandStationSerial == ((m.getElement(19) & 0x3F) * 128 ) + m.getElement(18)) { 
                     slot250InUseSlots = (m.getElement(4) + ((m.getElement(5) & 0x03) * 128));
                     slot250IdleSlots = (m.getElement(6) + ((m.getElement(7) & 0x03) * 128));
                     slot250FreeSlots = (m.getElement(8) + ((m.getElement(9) & 0x03) * 128));
+                }
+                break;
+            case 248:
+                // Base HW Information
+                // If a CS in CS mode then byte 19 bit 6 in on. else its in booster mode
+                // The device type is in byte 14
+                if ((m.getElement(19) & 0x40) == 0x40 ) {
+                    slot248CommandStationSerial = ((m.getElement(19) & 0x3F) * 128 ) + m.getElement(18);
+                    slot248CommandStationType = m.getElement(14);
                 }
                 break;
             default:
@@ -1156,6 +1180,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         slotMap = commandStationType.getSlotMap();
 
         loadSlots(false);
+
+        checkSpecialSlotTimer = new javax.swing.Timer(15000, new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                checkSpecialSlots();
+            }
+        });
+
+        checkSpecialSlotTimer.setRepeats(false);
+        checkSpecialSlotTimer.start();
 
         // We will scan the slot table every 0.3 s for in-use slots that are stale
         final int slotScanDelay = 300; // Must be short enough that 128 can be scanned in 90 seconds, see checkStaleSlots()
