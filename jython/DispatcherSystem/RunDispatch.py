@@ -481,7 +481,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         for activeTrain in active_trains_list:
             # print "i", i
             # activeTrain = activeTrainsList.get(i)
-            print "active train", activeTrain
+            if self.logLevel == 0: print "active train", activeTrain
             DF.terminateActiveTrain(activeTrain)
         DF = None
         #

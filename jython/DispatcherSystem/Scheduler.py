@@ -267,7 +267,7 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
                 repeat = False
                 if self.logLevel > 0: print "train_to_move", train_to_move
                 if train_to_move != None:
-                    if self.logLevel > -1: print "************************************moving train******************",train_to_move
+                    if self.logLevel > 0: print "************************************moving train******************",train_to_move
                     move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
                     move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
                     move_train = None
@@ -305,7 +305,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         # the route gives the stations on the route
 
         # note station_to and station_from are strings, while elements of route are locations
-        self.logLevel = 1
+        self.logLevel = 0
         if route == None:
             if self.logLevel > 0: print "RunRoute: route == None"
         else:
@@ -350,11 +350,6 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
             # ignore the number of repetitions if station_to was not set to station_from
             if self.station_list[0] != self.station_list[-1]:
                 self.no_repetitions = 0
-
-        if train_name == "shunter":
-            self.logLevel = 0
-        else:
-            self.logLevel = 1
 
     def handle(self):
         if self.delay > 0 and self. mycount == 0:  # only delay on the first iteration
