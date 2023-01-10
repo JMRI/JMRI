@@ -728,7 +728,7 @@ class createandshowGUI2(TableModelListener):
         #Create and set up the window.
 
         self.initialise_model(class_ResetButtonMaster)
-        self.frame = JFrame("Set up trains")
+        self.frame = JFrame("Allocate Routes")
         self.frame.setSize(600, 600);
 
         self.completeTablePanel()
@@ -1040,10 +1040,10 @@ class createandshowGUI2(TableModelListener):
             new_val = 10
         elif old_val < 30:
             new_val = 30
-        elif old_val < 1000:
-            new_val = 1000
+        elif old_val < 100:
+            new_val = 100
         else:
-            new_val = 0
+            new_val = 1
         return new_val
     
     def task_action(self, event):
@@ -1126,8 +1126,8 @@ class createandshowGUI2(TableModelListener):
         delay_val = int(model.getValueAt(row, delay_col)) *1000
 
         if dont_run_route == False:
-            if self.logLevel > 0: print "station_from",    station_from, "station_to",station_to, \
-                                        "repeat",repeat, "delay", delay
+            if self.logLevel > -1: print "station_from",    station_from, "station_to",station_to, \
+                                        "repeat",repeat, "delay", delay_val, "no_repetitions", no_repetitions
             run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_name, delay_val)
             #run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_name)
             run_train.setName("running_route_" + route_name)
@@ -1227,10 +1227,9 @@ class ComboBoxCellRenderer1 (TableCellRenderer):
         p.setBorder(BorderFactory.createLineBorder(Color.blue));
         return p;
 
-
 class MyTableModel1 (DefaultTableModel):
 
-    columnNames = ["Train", "Route", "Run Route", "Task", "Delay", "No. Repetitons"]
+    columnNames = ["Train", "Route", "Run Route", "Task", "Delay (secs)", "No. Repetitons"]
 
     def __init__(self):
         l1 = ["", "", False, "stop at end of route", 10, 0]
@@ -1252,16 +1251,22 @@ class MyTableModel1 (DefaultTableModel):
         # print "added"
 
     def populate(self, trains_to_put_in_dropdown):
-        for row in reversed(range(len(self.data))):
-            self.data.pop(row)
-        self.data = []
-        # append all trains to put in dropdown
-        for train in trains_to_put_in_dropdown:
-            self.data.append([train, "", False, "stop at end of route", 10, 3])
-        # # delete rows with no trains
         # for row in reversed(range(len(self.data))):
-        #     if self.data[row][1] == None or self.data[row][0] == "":
-        #         self.data.pop(row)
+        #     self.data.pop(row)
+        # self.data = []
+        # append all trains to put in dropdown
+        [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]
+        for train in trains_to_put_in_dropdown:
+            train_present = False
+            for row in reversed(range(len(self.data))):
+                if self.data[row][train_col] == train:
+                    train_present = True
+            if train_present == False:
+                self.data.append([train, "", False, "stop at end of route", 10, 3])
+        # delete rows with no trains
+        for row in reversed(range(len(self.data))):
+            if self.data[row][train_col] == None or self.data[row][train_col] == "":
+                self.data.pop(row)
 
     def getColumnCount(self) :
         return len(self.columnNames)

@@ -267,7 +267,7 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
                 repeat = False
                 if self.logLevel > 0: print "train_to_move", train_to_move
                 if train_to_move != None:
-                    if self.logLevel > 0: print "************************************moving train******************",train_to_move
+                    if self.logLevel > -1: print "************************************moving train******************",train_to_move
                     move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
                     move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
                     move_train = None
@@ -297,8 +297,15 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
 class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self, route, graph, station_from, station_to, no_repetitions, train_name, delay = 0):
-        #note station_to and station_from are strings, while elements of route are locations
-        self.logLevel = 0
+
+        # station_from is set to the initial position of the train, not necessarily
+        # the start position of the route
+        # station_to is set only if returning to start position
+        # in that case it is set to station_from
+        # the route gives the stations on the route
+
+        # note station_to and station_from are strings, while elements of route are locations
+        self.logLevel = 1
         if route == None:
             if self.logLevel > 0: print "RunRoute: route == None"
         else:
@@ -312,49 +319,66 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
             self.train_name_in = train_name
             self.delay = delay
 
-    def handle(self):    # Need to overload handle
-        i = 0
-        if self.delay > 0 and i == 0:
+            # set up station_list
+            station_list_locations = self.route.getLocationsBySequenceList()
+            #convert station_list to strings
+            station_list = [location.getName() for location in station_list_locations]
+
+            # prepend station_from if required
+            if self.logLevel > 0: print "station_list before", station_list, "self.station_from",self.station_from,"self.station_to",self.station_to,"station_list[0]",station_list[0]
+            if self.station_from == None:                       #ensure route starts at station_from
+                pass
+            elif self.station_from != station_list[0]:
+                station_list.insert(0,self.station_from)
+            if self.logLevel > 0: print "station_list",station_list
+
+            # append station_to if required
+            if self.station_to == None:                         #ensure route ends at station_to
+                pass
+            elif self.station_to != station_list[-1]:
+                station_list.append(self.station_to)
+            if self.logLevel > 0: print "station_list",station_list
+
+            # if repeating append station_from
+            if self.no_repetitions > 0:                             #ensure route end at start point if repeating
+                if self.station_to != self.station_from:
+                    station_list.append(self.station_to)
+            if self.logLevel > 0: print "station_list after", station_list
+
+            self.station_list = station_list
+
+            # ignore the number of repetitions if station_to was not set to station_from
+            if self.station_list[0] != self.station_list[-1]:
+                self.no_repetitions = 0
+
+        if train_name == "shunter":
+            self.logLevel = 0
+        else:
+            self.logLevel = 1
+
+    def handle(self):
+        if self.delay > 0 and self. mycount == 0:  # only delay on the first iteration
             self.waitMsec(self.delay)
-        self.run_route()
-        self.mycount += 1
         if int(self.mycount) <= int(self.no_repetitions):
-            if self.logLevel > 0: print "returning true", "mycount", self.mycount, "reps" , self.no_repetitions
-            i += 1
+            self.run_route()
+            if self.logLevel > 0: print "returning true", "train_name", self.train_name, "mycount", self.mycount, "reps" , self.no_repetitions
+            self.mycount += 1     # 0 first time round
             return True
         else:
-            if self.logLevel > 0: print "returning true", "mycount", self.mycount, "reps" , self.no_repetitions
+            if self.logLevel > 0: print "returning true", "train_name", self.train_name, "mycount", self.mycount, "reps" , self.no_repetitions
             return False
 
     def run_route(self):
         if self.logLevel > 0: print "************************************run train******************"
-        if self.logLevel > 0:  "!     start run_route"
-        station_list_locations = self.route.getLocationsBySequenceList()
-        #convert station_list to strings
-        station_list = [location.getName() for location in station_list_locations]
-        if self.logLevel > 0: print "station_list before", station_list, "self.station_from",self.station_from,"self.station_to",self.station_to,"station_list[0]",station_list[0]
-        if self.station_from == None:                       #ensure route starts at station_from
-            pass
-        elif self.station_from != station_list[0]:
-            station_list.insert(0,self.station_from)
-        if self.logLevel > 0: print "station_list",station_list
-        if self.station_to == None:                         #ensure route ends at station_to
-            pass
-        elif self.station_to != station_list[-1]:
+        if self.logLevel > 0:  print "!     start run_route"
 
-            station_list.append(self.station_to)
-        if self.logLevel > 0: print "station_list",station_list
-        if self.no_repetitions > 0:                             #ensure route end at start point if repeating
-            if self.station_to != self.station_from:
-                station_list.append(self.station_to)
-        if self.logLevel > 0: print "station_list after", station_list
         station_from = None
-        for station in station_list:
+        for station in self.station_list:
             if self.station_is_action(station):  #if the station_name is a python_file
                 self.execute_action(station)     # execite the python file
             else:
                 station_to = station  # both now strings
-                if station_from != None:
+                if station_from != None:    # first time round station_from is not set up
                     if self.logLevel > 0:  print "!     moving from", station_from, "to", station_to
                     self.station_from_name = station_from
                     self.station_to_name = station_to

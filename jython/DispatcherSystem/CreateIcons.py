@@ -40,7 +40,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # row number, user name, label name, x offset, y offset
     controlSensors = []
     controlSensors.append([1, 'startDispatcherSensor', 'Run Dispatcher System', 0, 0])
-    controlSensors.append([2, 'stopMasterSensor', 'Stop Dispatcher System', 0, 0])
+    controlSensors.append([2, 'stopMasterSensor', 'Stop/Modify Dispatcher System', 0, 0])
 
     controlSensors.append([3, 'Express', 'Express Train (no stopping)', 10, 5])
     controlSensors.append([4, 'newTrainSensor', 'Setup Train in Section', 10, 5])

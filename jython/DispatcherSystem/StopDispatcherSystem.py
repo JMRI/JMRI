@@ -9,6 +9,7 @@ from javax.swing.event import TableModelListener, TableModelEvent
 from javax.swing.filechooser import FileNameExtensionFilter
 from org.apache.commons.io import FilenameUtils
 from java.io import File
+import java.awt.Dimension
 
 class createandshowGUI3(TableModelListener):
 
@@ -23,7 +24,7 @@ class createandshowGUI3(TableModelListener):
         #Create and set up the window.
 
         self.initialise_model(class_StopMaster)
-        self.frame = JFrame("Set up trains")
+        self.frame = JFrame("Modify System")
         self.frame.setSize(600, 600);
 
         self.completeTablePanel()
@@ -39,7 +40,7 @@ class createandshowGUI3(TableModelListener):
         self.self_table()
 
         scrollPane = JScrollPane(self.table);
-        scrollPane.setSize(600,600);
+        scrollPane.setPreferredSize( Dimension(1000, 300))
 
         self.topPanel.add(scrollPane);
 
@@ -145,8 +146,9 @@ class createandshowGUI3(TableModelListener):
         # self.resizeColumnWidth(table)
         columnModel = self.table.getColumnModel();
 
-        [setup_train_col, del_setup_train_col,  transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5]
+        [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
         columnModel.getColumn(setup_train_col).setPreferredWidth(200);
+        columnModel.getColumn(active_train_col).setPreferredWidth(200);
         columnModel.getColumn(transit_col).setPreferredWidth(200);
         columnModel.getColumn(route_col).setPreferredWidth(200);
 
@@ -341,7 +343,7 @@ class createandshowGUI3(TableModelListener):
     #         # if either of the above are not valic we blank the entries
     #         # 3) Tidy
     #
-    #         [setup_train_col, del_setup_train_col,  transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5]
+    #         [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
     #
     #         # check the trains are valid
     #
@@ -361,7 +363,7 @@ class createandshowGUI3(TableModelListener):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
 
     # def repetitions_action(self, event):
-    #     [setup_train_col, del_setup_train_col,  transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5]
+    #     [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
     #     for row in reversed(range(len(self.model.data))):
     #         old_val = int(self.model.data[0][repetition_col])
     #         if old_val == None: old_val = 0
@@ -383,7 +385,7 @@ class createandshowGUI3(TableModelListener):
     #     return new_val
 
     # def task_action(self, event):
-    #     [setup_train_col, del_setup_train_col,  transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5]
+    #     [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
     #     for row in reversed(range(len(self.model.data))):
     #         old_val = str(self.model.data[0][task_col])
     #         if old_val == None: old_val = 0
@@ -403,7 +405,7 @@ class createandshowGUI3(TableModelListener):
 
 
     # def apply_del_trains(self, event):
-    #     [setup_train_col, del_setup_train_col,  transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5]
+    #     [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
     #     # print "apply action"
     #     for row in reversed(range(len(self.model.data))):
     #         train_name = str(self.model.data[row][train_col])
@@ -420,7 +422,7 @@ class createandshowGUI3(TableModelListener):
     #
 
     # def run_route(self, row, model, class_createandshowGUI2, class_StopMaster):
-    #     [setup_train_col, del_setup_train_col,  transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5]
+    #     [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
     #     route_name = str(model.getValueAt(row, route_col))
     #     if route_name == None:
     #         msg = "not running route is not set"
@@ -534,7 +536,7 @@ class MyModelListener3(TableModelListener):
         self.java_active_trains_list = DF.getActiveTrainsList()
 
     def tableChanged(self, e) :
-        [setup_train_col, del_setup_train_col,  transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5]
+        [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
 
         global trains_allocated
         row = e.getFirstRow()
@@ -647,10 +649,10 @@ class ComboBoxCellRenderer1 (TableCellRenderer):
 
 class MyTableModel3 (DefaultTableModel):
 
-    columnNames = ["Train", "Delete Train", "Transit", "Del Transit", "Route", "Del Route"]
+    columnNames = ["Train", "Delete Train", "Active Train", "Transit", "Del Transit", "Route", "Del Route"]
 
     def __init__(self):
-        l1 = ["", False, "", False, "", False]
+        l1 = ["", False, "", "", False, "", False]
         self.data = [l1]
 
     def remove_not_set_row(self):
@@ -662,7 +664,7 @@ class MyTableModel3 (DefaultTableModel):
         # print "addidn row"
         # if row < len(self.data):
         # print "add"
-        self.data.append(["", False, "", False, "", False])
+        self.data.append(["", False, "", "", False, "", False])
         # print self.data
         # print "added"
 
@@ -690,13 +692,18 @@ class MyTableModel3 (DefaultTableModel):
                 active_train_name = active_train.getTrainName()
                 transit = [active_train.getTransit() for active_train in java_active_trains_list \
                            if active_train.getTrainName() == active_train_name]
+                print "active_train_name", active_train_name
+                print "transit"  , transit
                 transit_name = transit[0].getUserName()
             else:
+                active_train = ""
                 active_train_name = ""
-            print("train", setup_train)
-            route_name = self.get_route(setup_train)
+                transit_name = ""
+            print("train", active_train)
+            print("transit_name", transit_name)
+            route_name = self.get_route(active_train_name)
             print ("route_name", route_name)
-            self.data.append([setup_train, False, transit_name, False, route_name, False])
+            self.data.append([setup_train, False, active_train_name, transit_name, False, route_name, False])
 
         active_trains_not_setup = [active_train_name for active_train_name in trains_dispatched \
                                    if active_train_name not in trains_allocated]
@@ -712,11 +719,13 @@ class MyTableModel3 (DefaultTableModel):
                            if active_train.getTrainName() == active_train_name]
                 transit_name = transit[0].getUserName()
             else:
+                active_train = ""
                 active_train_name = ""
+                transit_name = ""
             print("train", active_train_name)
             route_name = self.get_route(active_train_name)
             print ("route_name", route_name)
-            self.data.append(["", False, transit_name, False, route_name, False])
+            self.data.append(["", False, active_train_name, transit_name, False, route_name, False])
 
 
     def get_route(self, train_name):
@@ -729,12 +738,12 @@ class MyTableModel3 (DefaultTableModel):
             thread_name = "" + thread.getName()
             if thread_name.startswith("running_route_"):
                 route_name = thread_name.replace("running_route_", "")
-                # thread_train_name = StopMaster().determine_train_name(thread_name,thread)
+                thread_train_name = StopMaster().determine_train_name(thread_name,thread)
+                print "thread name", thread_name, "route_name", route_name, "thread_train_name", thread_train_name, "train_name", train_name
                 # #remove the train from the transit
-                # if train_name == thread_train_name:
-                #     return route_name
-                print "thread name", thread_name, "route_name", route_name
-                return route_name
+                if train_name == thread_train_name:
+                    return route_name
+                #return route_name
         return ""
 
 

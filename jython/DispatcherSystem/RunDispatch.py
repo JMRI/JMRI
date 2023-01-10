@@ -322,11 +322,15 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.waitSensorActive(self.stop_master_sensor)
         #stop all threads
         if self.logLevel > 0: print "instancelist", instanceList
-        msg = "Choose how to stop"
+        msg = "modify or stop"
         title = "Transits"
-        opt1 = "choose what to stop"
-        opt2 = "stop everything"
-        requested_action = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+        opt1 = "modify"
+        opt2 = "stop"
+        opd = OptionDialog()
+        requested_action = opd.customQuestionMessage2str(msg, title, opt1, opt2)
+        if opd.CLOSED_OPTION == True:
+            self.stop_master_sensor.setKnownState(INACTIVE)
+            return True
         if requested_action == opt1:
             self.stop_via_table()
             self.stop_master_sensor.setKnownState(INACTIVE)
@@ -390,10 +394,9 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
                 #determine the train nme
                 train_name = self.determine_train_name(thread_name,thread)
                 #remove the train from the transit
-                if requested_delete_transits:
-
-                    #remove the train from the list of trains
-                    self.remove_train_name(train_name)
+                # delete_transits:
+                #remove the train from the list of trains
+                self.remove_train_name(train_name)
                 if thread is not None:
                     if thread.isRunning():
                         if self.logLevel > 0: print 'Stop "{}" thread'.format(thread.getName())
@@ -406,7 +409,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def determine_train_name(self,thread_name, thread):
         route = thread
-        train_name = route.train_name
+        train_name = route.train_name_in
         return train_name
 
     def remove_train_from_transit(self, train_name):
@@ -470,7 +473,12 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         #DF.setState(DF.ICONIFIED);
         activeTrainsList = DF.getActiveTrainsList()
+
+        active_trains_list = java.util.concurrent.CopyOnWriteArrayList()
         for activeTrain in activeTrainsList:
+            active_trains_list.add(activeTrain)
+
+        for activeTrain in active_trains_list:
             # print "i", i
             # activeTrain = activeTrainsList.get(i)
             print "active train", activeTrain
@@ -1883,7 +1891,6 @@ class RunDispatcherMaster():
         global g
         global le
         import sys
-
 
         new_train_master = NewTrainMaster()
         instanceList.append(new_train_master)
