@@ -345,12 +345,7 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
      * Resets a single edit NV value to match the actual NV value.
      */
     public void resetSingleNv(int row) {
-        if ((newNVs == null) || ((newNVs != null) && (row >= newNVs.length))) {
-            // We don't know about the NV yet
-            resetNewNvs();
-        } else {
-            setValueAt( getValueAt(row,NV_CURRENT_VAL_COLUMN), row, NV_SELECT_COLUMN);
-        }
+        setValueAt( getValueAt(row,NV_CURRENT_VAL_COLUMN), row, NV_SELECT_COLUMN);
     }
     
     /**
