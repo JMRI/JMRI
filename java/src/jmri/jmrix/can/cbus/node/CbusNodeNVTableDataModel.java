@@ -44,7 +44,8 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
     public void propertyChange(PropertyChangeEvent ev){
         if (ev.getPropertyName().equals("SINGLENVUPDATE")) {
             int newValue = (Integer) ev.getNewValue();
-            resetNewNvs();
+//            resetNewNvs();    // Why do this for a single NV?
+            resetSingleNv(newValue);
             fireTableRowsUpdated(newValue,newValue);
         }
         else if (ev.getPropertyName().equals("ALLNVUPDATE")) {
@@ -337,6 +338,18 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
         for (int i = 0; i < getRowCount(); i++) {
             
             setValueAt( getValueAt(i,NV_CURRENT_VAL_COLUMN), i, NV_SELECT_COLUMN);
+        }
+    }
+    
+    /**
+     * Resets a single edit NV value to match the actual NV value.
+     */
+    public void resetSingleNv(int row) {
+        if ((newNVs == null) || ((newNVs != null) && (row >= newNVs.length))) {
+            // We don't know about the NV yet
+            resetNewNvs();
+        } else {
+            setValueAt( getValueAt(row,NV_CURRENT_VAL_COLUMN), row, NV_SELECT_COLUMN);
         }
     }
     
