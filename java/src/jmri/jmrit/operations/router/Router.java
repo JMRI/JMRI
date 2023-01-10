@@ -50,7 +50,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     private final List<Train> _lastLocationTrains = new ArrayList<>();
 
     protected static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
-    public static final String STATUS_NOT_THIS_TRAIN_PREFIX = Router.STATUS_NOT_THIS_TRAIN.substring(0, Router.STATUS_NOT_THIS_TRAIN.indexOf('('));
+    public static final String STATUS_NOT_THIS_TRAIN_PREFIX = STATUS_NOT_THIS_TRAIN.substring(0, STATUS_NOT_THIS_TRAIN.indexOf('('));
     protected static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
     protected static final String STATUS_ROUTER_DISABLED = Bundle.getMessage("RouterDisabled");
 
