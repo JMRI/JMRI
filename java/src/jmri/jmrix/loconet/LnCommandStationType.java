@@ -3,7 +3,6 @@ package jmri.jmrix.loconet;
 import jmri.ThrottleManager;
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

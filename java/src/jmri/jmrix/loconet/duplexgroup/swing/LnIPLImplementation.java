@@ -784,8 +784,14 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         String mfgName = getManufacturer(manuf);
         String devName = getDeviceName(manuf, device, smanuf, slave);
         if (mfgName == null) {
+            log.debug("Unknown Unknown Host Manufacturer/Device [{}]",Integer.toHexString(manuf));
             return "Unknown Host Manufacturer/Device";
         } else if (devName == null) {
+            log.debug("Unknown Device Manufacturer[{}] Device[{}] Slave manufacturer[{}] Slave device[{}]",
+                    Integer.toHexString(manuf),
+                    Integer.toHexString(device),
+                    Integer.toHexString(smanuf),
+                    Integer.toHexString(slave));
             return mfgName+" Unknown Device";
         }
         return mfgName+" "+devName;
@@ -1080,4 +1086,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     }
 
     private boolean waitingForIplReply;
+
+    private final static Logger log = LoggerFactory.getLogger(LnIPLImplementation.class);
 }

@@ -342,7 +342,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     private void checkSpecialSlots() {
         sendReadSlot(248);
-        try {Thread.sleep(100);} catch (Exception ex) {return;}
+        try {Thread.sleep(100);}
+        catch (InterruptedException ex) {
+            // nothing can be done
+            return;
+        }
         sendReadSlot(250);
     }
 
@@ -512,7 +516,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             case 250:
                 // slot info if we have serial, the serial number in this slot
                 // does not indicate whether in booster or cs mode.
-                if (slot248CommandStationSerial == ((m.getElement(19) & 0x3F) * 128 ) + m.getElement(18)) { 
+                if (slot248CommandStationSerial == ((m.getElement(19) & 0x3F) * 128 ) + m.getElement(18)) {
                     slot250InUseSlots = (m.getElement(4) + ((m.getElement(5) & 0x03) * 128));
                     slot250IdleSlots = (m.getElement(6) + ((m.getElement(7) & 0x03) * 128));
                     slot250FreeSlots = (m.getElement(8) + ((m.getElement(9) & 0x03) * 128));
