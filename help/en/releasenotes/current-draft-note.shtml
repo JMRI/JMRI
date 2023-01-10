@@ -427,6 +427,11 @@
           The action and expression stored the user name instead of the system name
           if the Entry/Exit. The user name of an Entry/Exit changes when the NX sensor
           or related signal mast is changed.</li>
+          <li>Fixes a bug with the action Timer. If the same sensor is used for both
+          start and stop of the timer, the timer didn't restarted after a stop.</li>
+          <li>The action Timer can now use the expression <i>Start</i> to both start
+          and stop the timer. This is useful if you want to start and stop the timer
+          from a single sensor.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
