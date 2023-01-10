@@ -145,7 +145,7 @@
 
       <ul>
         <li>
-          <a href="#codeclimate">CodeClimate</a>
+          <a href="#CodeClimate">CodeClimate</a>
         </li>
       </ul>
 
@@ -160,7 +160,7 @@
       <p>Code Climate is controlled by the .codeclimate.yml file.</p>
 
       <h2 id="independent">Independent Checks with Jenkins</h2>
-      <p>JMRI uses the <a href="http://jenkins-ci.org/">Jenkins</a> continuous integration engine for
+      <p>JMRI uses the <a href="https://www.jenkins.io/">Jenkins</a> continuous integration engine for
       integration and test builds. This includes keeping our <a href="WebSite.shtml">website</a>
       up to date as changes are committed, building installer packages from development builds, and
       building final releases.</p>
@@ -207,8 +207,8 @@
       possible to integrate feedback from the Jenkins Continuous Integration (CI) engine.</p>
 
       <p>Within the NetBeans environment, reference is made to the Hudson CI engine - Jenkins is a
-      <a href="http://en.wikipedia.org/wiki/Fork_(software_development)">"fork"</a> of the Hudson
-      code and supports the same <a href="http://en.wikipedia.org/wiki/API">API</a>.</p>
+      <a href="https://en.wikipedia.org/wiki/Fork_(software_development)">"fork"</a> of the Hudson
+      code and supports the same <a href="https://en.wikipedia.org/wiki/API">API</a>.</p>
 
       <p>Integration into NetBeans is achieved by executing the following steps:</p>
 

@@ -16,7 +16,7 @@
 
     <div id="mainContent">
       <h1>Hardware Support: Connecting to a Digitrax PR2</h1>
-      <a href="http://digitrax.com/prd_compint_pr2.php"><img src="images/PR2.jpg" alt=
+      <a href="https://www.digitrax.com/products/retired/computer-control/pr2/"><img src="images/PR2.jpg" alt=
       "PR2 picture"></a><br>
       The PR2 is a standalone programmer that can be used to set CV's in all decoders that
       DecoderPro supports. It can also be used to download sound information into Digitrax sound
@@ -33,9 +33,9 @@
       cable, and you should not plug a LocoNet cable into the PR2.</p>
 
       <p>For more information on the PR2 itself, please see the <a href=
-      "http://www.digitrax.com/products/computer-control/pr2/">Digitrax PR2 page</a> and the
-      <a href="http://www.digitrax.com/tsd/product/PR2/">PR2 support page</a> in the <a href=
-      "http://www.digitrax.com/tsd/">Digitrax Tech Support Depot</a>.</p>
+      "https://www.digitrax.com/products/retired/computer-control/pr2/">Digitrax PR2 page</a> and the
+      <a href="https://www.digitrax.com/tsd/product/PR2/">PR2 support page</a> in the <a href=
+      "https://www.digitrax.com/tsd/">Digitrax Tech Support Depot</a>.</p>
 
       <h2>Recommended setup</h2>
 
@@ -82,7 +82,7 @@
       to trip the PR2 internal circuit breakers. This will cause JMRI to mark track power as "off".
       Just wait a couple seconds and turn the track power back on to recover.</p>
 
-      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

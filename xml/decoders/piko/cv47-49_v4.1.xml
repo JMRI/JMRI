@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2022-11-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder 4.1</revremark>
+		</revision>
+	</revhistory>
+	<!--Motorola addresses - read only-->
+	<variable item="Motorola 1" CV="47" readOnly="yes" default="12">
+		<decVal/>
+		<label>Motorola 1st Trinary Address</label>
+		<label xml:lang="de">Motorola 1. trinäre Adresse</label>
+		<label xml:lang="nl">1e trinair Motorola adres</label>
+		<label xml:lang="cs">Motorola 1. trinární adresa</label>
+	</variable>
+	<variable item="Motorola 2" CV="48" readOnly="yes">
+		<decVal/>
+		<label>Motorola 2nd Trinary Address</label>
+		<label xml:lang="de">Motorola 2. trinäre Adresse</label>
+		<label xml:lang="nl">2e trinair Motorola adres</label>
+		<label xml:lang="cs">Motorola 2. trinární adresa</label>
+	</variable>
+	<variable item="Motorola 3" CV="49" readOnly="yes">
+		<decVal/>
+		<label>Motorola 3rd Trinary Address</label>
+		<label xml:lang="de">Motorola 3. trinäre Adresse</label>
+		<label xml:lang="nl">3e trinair Motorola adres</label>
+		<label xml:lang="cs">Motorola 3. trinární adresa</label>
+	</variable>
+</variables>

@@ -25,7 +25,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 
-import static jmri.jmrit.symbolicprog.AbstractValue.COLOR_UNKNOWN;
 import jmri.util.CvUtil;
 
 import org.slf4j.Logger;
@@ -154,7 +153,7 @@ public class SplitEnumVariableValue extends VariableValue
         // have to do when list is complete
         for (int i = 0; i < cvCount; i++) {
             cvList.get(i).thisCV.addPropertyChangeListener(this);
-            cvList.get(i).thisCV.setState(CvValue.FROMFILE);
+            cvList.get(i).thisCV.setState(ValueState.FROMFILE);
         }
         treeNodes.addLast(new DefaultMutableTreeNode(""));
     }
@@ -247,7 +246,7 @@ public class SplitEnumVariableValue extends VariableValue
         // finish initialization
         _value.setActionCommand("");
         _defaultColor = _value.getBackground();
-        _value.setBackground(COLOR_UNKNOWN);
+        _value.setBackground(ValueState.UNKNOWN.getColor());
         _value.setOpaque(true);
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);
@@ -258,9 +257,9 @@ public class SplitEnumVariableValue extends VariableValue
             return;
         }
         cv1.addPropertyChangeListener(this);
-        cv1.setState(CvValue.FROMFILE);
+        cv1.setState(ValueState.FROMFILE);
         cv2.addPropertyChangeListener(this);
-        cv2.setState(CvValue.FROMFILE);
+        cv2.setState(ValueState.FROMFILE);
     }
 
 
@@ -777,7 +776,7 @@ public class SplitEnumVariableValue extends VariableValue
           }
         }
         */
-        if (oldVal != value || getState() == VariableValue.UNKNOWN) {
+        if (oldVal != value || getState() == ValueState.UNKNOWN) {
             actionPerformed(null);
         }
         // TODO PENDING: the code used to fire value * mFactor + mOffset, which is a text representation;
@@ -902,7 +901,7 @@ public class SplitEnumVariableValue extends VariableValue
      * @param state The new state
      */
     @Override
-    public void setCvState(int state) {
+    public void setCvState(ValueState state) {
         for (int i = 0; i < cvCount; i++) {
             cvList.get(i).thisCV.setState(state);
         }
@@ -963,7 +962,7 @@ public class SplitEnumVariableValue extends VariableValue
         //super.setState(READ);
         //_value.setSelectedIndex(0); // start with a clean slate
         for (int i = 0; i < cvCount; i++) { // mark all Cvs as unknown otherwise problems occur
-            cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
+            cvList.get(i).thisCV.setState(ValueState.UNKNOWN);
         }
         //super.setState(READING_FIRST);
         _progState = READING_FIRST;
@@ -997,19 +996,19 @@ public class SplitEnumVariableValue extends VariableValue
      * @return Priority value from state, with UNKNOWN numerically highest
      */
     @SuppressFBWarnings(value = {"SF_SWITCH_NO_DEFAULT", "SF_SWITCH_FALLTHROUGH"}, justification = "Intentional fallthrough to produce correct value")
-    int priorityValue(int state) {
+    int priorityValue(ValueState state) {
         int value = 0;
         switch (state) {
-            case AbstractValue.UNKNOWN:
+            case UNKNOWN:
                 value++;
             //$FALL-THROUGH$
-            case AbstractValue.DIFF:
+            case DIFFERENT:
                 value++;
             //$FALL-THROUGH$
-            case AbstractValue.EDITED:
+            case EDITED:
                 value++;
             //$FALL-THROUGH$
-            case AbstractValue.FROMFILE:
+            case FROMFILE:
                 value++;
             //$FALL-THROUGH$
             default:
@@ -1031,8 +1030,8 @@ public class SplitEnumVariableValue extends VariableValue
                         setBusy(false);
                     }
                     if (_progState >= READING_FIRST){
-                        int curState = (cvList.get(Math.abs(_progState) - 1).thisCV).getState();
-                        if (curState == READ) {   // was the last read successful?
+                        ValueState curState = (cvList.get(Math.abs(_progState) - 1).thisCV).getState();
+                        if (curState == ValueState.READ) {   // was the last read successful?
                             retry = 0;
                             if (Math.abs(_progState) < cvCount) {   // read next CV
                                 _progState++;
@@ -1055,13 +1054,13 @@ public class SplitEnumVariableValue extends VariableValue
                                 setBusy(false);
                                 if (RETRY_COUNT > 0) {
                                     for (int i = 0; i < cvCount; i++) { // mark all CVs as unknown otherwise problems may occur
-                                        cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
+                                        cvList.get(i).thisCV.setState(ValueState.UNKNOWN);
                                     }
                                 }
                             }
                         }
                     } else  if (_progState <= WRITING_FIRST) {  // writing CVs
-                        if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == STORED) {   // was the last read successful?
+                        if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == ValueState.STORED) {   // was the last read successful?
                             if (Math.abs(_progState) < cvCount) {   // write next CV
                                 _progState--;
                                 log.info("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
@@ -1082,14 +1081,14 @@ public class SplitEnumVariableValue extends VariableValue
                 break;
             case "State": {
                 log.info("Possible {} variable state change due to CV state change, so propagate that", _name);
-                int varState = getState(); // AbstractValue.SAME;
-                log.info("{} variable state was {}", _name, stateNameFromValue(varState));
+                ValueState varState = getState(); // AbstractValue.SAME;
+                log.info("{} variable state was {}", _name, varState.getName());
                 for (int i = 0; i < cvCount; i++) {
-                    int state = cvList.get(i).thisCV.getState();
+                    ValueState state = cvList.get(i).thisCV.getState();
                     if (i == 0) {
                         varState = state;
                     } else if (priorityValue(state) > priorityValue(varState)) {
-                        varState = AbstractValue.UNKNOWN; // or should it be = state ?
+                        varState = ValueState.UNKNOWN; // or should it be = state ?
 //                        varState = state; // or should it be = state ?
                     }
                 }
@@ -1098,7 +1097,7 @@ public class SplitEnumVariableValue extends VariableValue
                     tree.setBackground(_value.getBackground());
                     //tree.setOpaque(true);
                 }
-                log.info("{} variable state set to {}", _name, stateNameFromValue(varState));
+                log.info("{} variable state set to {}", _name, varState.getName());
                 break;
             }
             case "Value": {
@@ -1116,9 +1115,9 @@ public class SplitEnumVariableValue extends VariableValue
                 updateVariableValue(intVals);
 
                 log.info("state change due to CV value change, so propagate that");
-                int varState = AbstractValue.SAME;
+                ValueState varState = ValueState.SAME;
                 for (int i = 0; i < cvCount; i++) {
-                    int state = cvList.get(i).thisCV.getState();
+                    ValueState state = cvList.get(i).thisCV.getState();
                     if (priorityValue(state) > priorityValue(varState)) {
                         varState = state;
                     }

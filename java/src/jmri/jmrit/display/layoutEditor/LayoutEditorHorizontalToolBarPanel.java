@@ -146,6 +146,8 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
             hTop4Center.add(textLabelTextField);
             hTop4Center.add(memoryButton);
             hTop4Center.add(textMemoryComboBox);
+            hTop4Center.add(globalVariableButton);
+            hTop4Center.add(textGlobalVariableComboBox);
             hTop4Center.add(blockContentsButton);
             hTop4Center.add(blockContentsComboBox);
             hTop4Panel.add(hTop4Center);
@@ -160,6 +162,8 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
             hTop5Left.add(textLabelTextField);
             hTop5Left.add(memoryButton);
             hTop5Left.add(textMemoryComboBox);
+            hTop5Left.add(globalVariableButton);
+            hTop5Left.add(textGlobalVariableComboBox);
             hTop5Left.add(blockContentsButton);
             hTop5Left.add(blockContentsComboBox);
             hTop5Left.add(Box.createHorizontalGlue());

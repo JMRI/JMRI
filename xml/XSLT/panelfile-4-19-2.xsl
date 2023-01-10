@@ -15,7 +15,7 @@
    [Changed some text alignment to center for readability]      (2022-03-02)
 -->
 
-<!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018, 2022.     -->
+<!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018, 2022, 2023.     -->
 
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -24,7 +24,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2023')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details

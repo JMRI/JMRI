@@ -76,7 +76,12 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Support for expanded slots and associated protocol.
+                    To enable this the advanced LocoNet preferences must be set XPSlots Auto Detect.
+                    If using DCS240(+) limited to less than 120 slots use DCS210 or DCS210+ to avoid needless reading of slots.
+                    When using a DCS240(+) be aware that when first opening a Slot Monitor window 430 odd slots are read, so avoid doing it during layout start.
+                    If using throttles that cannot access XP Slots along side those that can you may see the same loco number twice in the slotmon, which slot actually has control may vary.
+                </li>
             </ul>
 
         <h4>Maple</h4>
@@ -96,7 +101,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>A Reporter implementation is now available for MQTT connections.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -284,6 +289,11 @@
                 <li></li>
             </ul>
 
+        <h4>Piko</h4>
+            <ul>
+                <li>Piko Smart Decoder 4.1 and XP5.1</li>
+            </ul>
+
         <h4>Rautenhaus</h4>
             <ul>
                 <li></li>
@@ -301,7 +311,7 @@
 
         <h4>Tam Valley Depot</h4>
             <ul>
-                <li>QuadLN_S - support for new Semaphore Aspect and Servo Refresh in version 3.2 firmware</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -331,7 +341,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>New decoder file for Tillig BR 89 steam loco</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -362,7 +372,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Some internal state constants have been changed from integer values
+                to an enum.  This should not have any external effect.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -409,7 +420,13 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Fixes a bug when importing a Logix to LogixNG, where the Conditional
+          uses <i>Mixed</i>. The <i>Not</i> is ignored for the conditional
+          variables when using Mixed.</li>
+          <li>Fixes a bug with the action Entry/Exit and the expression Entry/Exit.
+          The action and expression stored the user name instead of the system name
+          if the Entry/Exit. The user name of an Entry/Exit changes when the NX sensor
+          or related signal mast is changed.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -470,16 +487,10 @@
             <li></li>
        </ul>
 
-    <h3>Turnouts, Lights, Sensors and other elements</h3>
-        <a id="TLae" name="TLae"></a>
-        <ul>
-            <li></li>
-        </ul>
-
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Kevin Appleby provided a script for doing serial transfer from the Light Table.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -489,7 +500,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Pino Di Biasi provided an Italian signal system</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -546,6 +557,12 @@
             <li></li>
         </ul>
 
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"></a>
+        <ul>
+            <li></li>
+        </ul>
+
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
@@ -573,7 +590,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>Update minimatch.js library from 3.0..4 to 3.0.8</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -585,6 +602,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Update commons-net library from 3.6 to 3.9.0</li>
+            <li></li>
         </ul>
 

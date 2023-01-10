@@ -88,7 +88,7 @@ stty speed 38400 &lt; /dev/ttyS0
         <li>Then click on "OK" and continue on.</li>
       </ul>
       This has been reported to work with both RH9 and FC3.
-      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com">Digitrax,
       Inc.</a></p>
 
       <hr class="hide">

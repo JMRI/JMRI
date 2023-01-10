@@ -17,6 +17,7 @@ import static jmri.ThrottleListener.DecisionType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * CBUS implementation of a ThrottleManager.
@@ -37,7 +38,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
     private boolean invalidErrorDialogVisible;
     private boolean _singleThrottleInUse = false; // For single throttle support
 
-    private final HashMap<Integer, CbusThrottle> softThrottles = new HashMap<>(CbusConstants.CBUS_MAX_SLOTS);
+    private final ConcurrentHashMap<Integer, CbusThrottle> softThrottles = new ConcurrentHashMap<>(CbusConstants.CBUS_MAX_SLOTS);
 
     public CbusThrottleManager(CanSystemConnectionMemo memo) {
         super(memo);

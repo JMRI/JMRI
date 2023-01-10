@@ -15,34 +15,23 @@
       <!-- Page Body -->
 
       <h1>JMRI: The Python/Jython language</h1>
-      <a href="http://www.python.org" target="_blank">Python</a> is a widely used scripting
+      <a href="https://www.python.org/" target="_blank">Python</a> is a widely used scripting
       language that's available on many types of computers. A Java-based variant, called <a href=
-      "http://www.jython.org" target="_blank">Jython</a>, has been integrated with JMRI to make it
+      "https://www.jython.org/" target="_blank">Jython</a>, has been integrated with JMRI to make it
       easy to control a model railroad from the command line of a computer. For our purposes, the
       two languages are completely the same.
       <p>If like me you prefer to read off paper, there are lots of books available on Python.
-      Perhaps one of the best for beginners is <a href="http://www.oreilly.com/catalog/lpython2/"
+      Perhaps one of the best for beginners is <a href="https://www.oreilly.com/library/view/learning-python-2nd/0596002815/"
       target="_blank">"Learning Python"</a> published by O'Reilly. It contains more than you really
       need to know, though.</p>
 
-      <p>The <a href="http://www.jython.org" target="_blank">jython.org site</a> has some
-      introductory information, though their <a href="http://www.python.org/doc/tut/tut.html"
-      target="_blank">tutorial</a> spends too much time on the engineering details at the
-      beginning. You might want to skip to the <a href="http://www.python.org/doc/tut/node5.html"
-      target="_blank">part about the language itself</a>.</p>
+      <p>The <a href="https://www.jython.org" target="_blank">jython.org site</a> has some
+      introductory information, also see the support on their Wiki, <a href="https://wiki.python.org/jython/"
+      target="_blank">https://wiki.python.org/jython/</a>.</p>
 
-      <p>Non-programmers might want to start with some of the <a href=
-      "http://www.python.org/moin/BeginnersGuide" target="_blank">resources for them</a> listed on
-      the python website.</p>
-
-      <p>If you are interested in the underlying technicalities of the language, IBM Developerworks
-      has two good articles <a href=
-      "http://www-106.ibm.com/developerworks/java/library/j-jython.html" target="_blank">here</a>
-      and <a href="http://www-106.ibm.com/developerworks/java/library/j-alj07064/" target=
-      "_blank">here</a>. They also have a nice tutorial <a href=
-      "http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02"
-      target="_blank">here</a>, although they require you to register with your email address to
-      access it.</p>
+      <p>Non-programmers might want to start with this <a href=
+      "https://wiki.python.org/moin/BeginnersGuide" target="_blank">Beginners Guide</a> listed on
+      the Jython wiki.</p>
 
       <p>Looking at the examples in the "jython" directory in the JMRI distribution will also be of
       value. See the <a href="Examples.shtml">examples page</a> for links to these sample
@@ -56,9 +45,6 @@
         restrictions on what you can do with the computer's configuration information, etc, in
         Jython, but these are not things a JMRI script is likely to need.</p>
 
-        <p>Some additional information on the differences is <a href=
-        "http://jython.sourceforge.net/docs/differences.html" target="_blank">available
-        here</a>.</p>
       </div>
 
       <h2>IMPORTANT INFORMATION ABOUT PROGRAM FORMATTING: INDENTATION MATTERS</h2>
@@ -92,7 +78,7 @@ your indentation isn't lined up.
 
       <a id="newJython"></a>
       <h2>Is JMRI's support for Python complete?</h2>
-      JMRI scripting uses <a href="http://www.jython.org" target="_blank">Jython</a>, a
+      JMRI scripting uses <a href="https://www.jython.org" target="_blank">Jython</a>, a
       Java-implemented form of the Python language. The basic language is pretty complete, but not
       all of the Python libraries are available. Some "import" statements that you might read in a
       book might not work because of missing libraries.

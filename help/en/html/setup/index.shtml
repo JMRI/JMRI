@@ -41,24 +41,24 @@
 
       <ul>
         <li>
-          <a href="https://jmri.org/install/WindowsNew.shtml">Windows</a>
+          <a href="https://www.jmri.org/install/WindowsNew.shtml">Windows</a>
         </li>
 
         <li>
-          <a href="https://jmri.org/install/MacOSX.shtml">macOS</a>
+          <a href="https://www.jmri.org/install/MacOSX.shtml">macOS</a>
         </li>
 
         <li>
-          <a href="https://jmri.org/install/Linux.shtml">Linux</a>
+          <a href="https://www.jmri.org/install/Linux.shtml">Linux</a>
           <ul>
             <li>
-              <a href="https://jmri.org/install/Raspbian.shtml">Raspberry Pi</a>
+              <a href="https://www.jmri.org/install/Raspbian.shtml">Raspberry Pi</a>
             </li>
           </ul>
         </li>
       </ul>
 
-      <p>JMRI&reg; requires that <a href="../../../../java/index.shtml"><em>Java</em></a> be installed:</p>
+      <p>JMRI&reg; requires that <a href="https://www.jmri.org/java/index.shtml"><em>Java</em></a> be installed:</p>
 
       <ul>
         <li>Version 2.12 can run on any computer system that will run Java 1.5 through Java 8 (also
@@ -73,7 +73,7 @@
 
         <li>Version 4.25.6 thru 4.26 requires Java 8 or Java 11 (recommended).</li>
 
-        <li>Version 4.99.x and beyond: REQUIRES <strong>JAVA 11 ONLY</strong>.  See <a href="../../../../java/index.shtml">our Java instructions</a>
+        <li>Version 4.99.x and beyond: REQUIRES <strong>JAVA 11 ONLY</strong>.  See <a href="https://www.jmri.org/java/index.shtml">our Java instructions</a>
          page on getting Java 11.</li>
       </ul>
 
@@ -125,7 +125,7 @@
         </li>
 
         <li>
-          <a href="Files.shtml">Configuration Files & Locations</a>
+          <a href="Files.shtml">Configuration Files &amp; Locations</a>
         </li>
       </ul>
 
@@ -133,7 +133,7 @@
 
       <ul>
         <li>
-          <a href="https://jmri.org/install/Debug.shtml">Debugging an installation</a>
+          <a href="https://www.jmri.org/install/Debug.shtml">Debugging an installation</a>
         </li>
 
         <li>
@@ -141,12 +141,12 @@
         </li>
 
         <li>
-          <a href="https://jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a> (Windows
+          <a href="https://www.jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a> (Windows
           only)
         </li>
 
         <li>
-          <a href="Faq.shtml">Frequently Asked Questions</a>
+          <a href="FAQ.shtml">Frequently Asked Questions</a>
         </li>
       </ul>
       <!--#include virtual="/Footer.shtml" -->

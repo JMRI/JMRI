@@ -33,42 +33,42 @@
       <aspectname>Depot</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Pancarte/DEPOT.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Pancarte/DEPOT.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Pancarte/DEPOT.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Pancarte/DEPOT.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Garage</aspectname>
       <show>red</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Pancarte/GARAGE.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Pancarte/GARAGE.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Pancarte/GARAGE.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Pancarte/GARAGE.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Heurtoir</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Pancarte/HEURTOIR.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Pancarte/HEURTOIR.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Pancarte/HEURTOIR.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Pancarte/HEURTOIR.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Impasse</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Pancarte/IMPASSE.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Pancarte/IMPASSE.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Pancarte/IMPASSE.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Pancarte/IMPASSE.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Sas</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Pancarte/SAS.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Pancarte/SAS.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Pancarte/SAS.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Pancarte/SAS.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Pancarte/DARK.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Pancarte/DARK.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Pancarte/DARK.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Pancarte/DARK.gif</imagelink>
     </appearance>
 

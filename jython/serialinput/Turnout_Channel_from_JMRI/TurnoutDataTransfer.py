@@ -4,12 +4,13 @@
 # Version 1.1
 # Connects JMRI Turnout "Watcher" to an Arduino Output Channel
 # Note that JMRI must be set up to have a valid
-# turnout table; if you're not using some other DCC connection, 
+# turnout table; if you're not using some other DCC connection,
 # configure JMRI to use LocoNet Simulator
 
 import jarray
 import jmri
 import java
+import java.beans
 import purejavacomm
 
 # find the port info and open the port
@@ -23,9 +24,9 @@ except purejavacomm.PortInUseException:
 extportin = port
 # set options on port
 baudrate = 19200
-port.setSerialPortParams(baudrate, 
-    purejavacomm.SerialPort.DATABITS_8, 
-    purejavacomm.SerialPort.STOPBITS_1, 
+port.setSerialPortParams(baudrate,
+    purejavacomm.SerialPort.DATABITS_8,
+    purejavacomm.SerialPort.STOPBITS_1,
     purejavacomm.SerialPort.PARITY_NONE)
 # Anticipate the Port Opening will restart the Arduino
 self.delayMsec(2000)
@@ -33,9 +34,9 @@ self.delayMsec(2000)
 inputStream = port.getInputStream()
 outputStream = port.getOutputStream()
 
-# define a turnout listener that will 
+# define a turnout listener that will
 class Datatransfer(java.beans.PropertyChangeListener):
-  # initialization 
+  # initialization
   # registers to receive events
   def __init__(self, id, value) :
         self.name = "AT"+str(id)
@@ -45,8 +46,8 @@ class Datatransfer(java.beans.PropertyChangeListener):
         turnout.addPropertyChangeListener(self)
         turnout.setCommandedState(CLOSED)
         return
-  
-  # on a property change event, first see if 
+
+  # on a property change event, first see if
   # right type, and then write appropriate
   # value to port based on new state
   def propertyChange(self, event):
@@ -61,7 +62,7 @@ class Datatransfer(java.beans.PropertyChangeListener):
       if (event.newValue == THROWN and event.oldValue != THROWN) :
         print "set THROWN for", event.source.userName
         outputStream.write(event.source.userName)
-        outputStream.write(",1")        
+        outputStream.write(",1")
     return
 
 # The olloewing will set up 68 listeers for Turnouts AT2 though AT69 (by username)
