@@ -752,10 +752,6 @@ class createandshowGUI2(TableModelListener):
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
         self.buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10))
 
-        button_add = JButton("Add Row", actionPerformed = self.add_row_action)
-        self.buttonPane.add(button_add);
-        self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
-
         button_populate = JButton("Populate", actionPerformed = self.populate_action)
         self.buttonPane.add(button_populate);
         self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
@@ -773,6 +769,10 @@ class createandshowGUI2(TableModelListener):
         self.buttonPane.add(Box.createHorizontalGlue());
 
         button_task = JButton("Task", actionPerformed = self.task_action)
+        self.buttonPane.add(button_task)
+        self.buttonPane.add(Box.createHorizontalGlue());
+
+        button_task = JButton("Delay", actionPerformed = self.delay_action)
         self.buttonPane.add(button_task)
         self.buttonPane.add(Box.createHorizontalGlue());
 
@@ -1024,6 +1024,27 @@ class createandshowGUI2(TableModelListener):
 
     def close_action(self, event):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
+
+    def delay_action(self, event):
+        [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]
+        for row in reversed(range(len(self.model.data))):
+            old_delay = int(self.model.data[0][delay_col])
+            if old_delay == None: old_delay = 0
+            new_delay = self.new_delay(old_delay)
+            self.model.data[row][delay_col] = new_delay
+        self.completeTablePanel()
+    def new_delay(self, old_val):
+        if old_val < 3:
+            new_val = 3
+        elif old_val < 5:
+            new_val = 5
+        elif old_val < 10:
+            new_val = 10
+        elif old_val < 15:
+            new_val = 15
+        else:
+            new_val = 0
+        return new_val        
 
     def repetitions_action(self, event):
         [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]

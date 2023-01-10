@@ -76,18 +76,6 @@ class createandshowGUI3(TableModelListener):
         self.buttonPane.add(button_cancel)
         self.buttonPane.add(Box.createHorizontalGlue());
 
-        # button_cancel = JButton("No. repetitions", actionPerformed = self.repetitions_action)
-        # self.buttonPane.add(button_cancel)
-        # self.buttonPane.add(Box.createHorizontalGlue());
-        #
-        # button_savetofile = JButton("Save To File", actionPerformed = self.savetofile_action)
-        # self.buttonPane.add(button_savetofile)
-        # self.buttonPane.add(Box.createHorizontalGlue());
-        #
-        # button_loadfromfile = JButton("Load From File", actionPerformed = self.loadfromfile_action)
-        # self.buttonPane.add(button_loadfromfile)
-        # self.buttonPane.add(Box.createHorizontalGlue());
-
         contentPane = self.frame.getContentPane()
 
         contentPane.removeAll()
@@ -96,11 +84,7 @@ class createandshowGUI3(TableModelListener):
 
         self.frame.pack();
         self.frame.setVisible(True)
-
         return
-
-
-
 
     def buttonPanel(self):
         row1_1_button = JButton("Add Row", actionPerformed = self.add_row_action)
@@ -137,13 +121,8 @@ class createandshowGUI3(TableModelListener):
 
     def self_table(self):
 
-        #table.setPreferredScrollableViewportSize(Dimension(500, 70));
-        #table.setFillsViewportHeight(True)
-        #self.table.getModel().addtableModelListener(self)
         self.table.setFillsViewportHeight(True);
         self.table.setRowHeight(30);
-        #table.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
-        # self.resizeColumnWidth(table)
         columnModel = self.table.getColumnModel();
 
         [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
@@ -151,42 +130,6 @@ class createandshowGUI3(TableModelListener):
         columnModel.getColumn(active_train_col).setPreferredWidth(200);
         columnModel.getColumn(transit_col).setPreferredWidth(200);
         columnModel.getColumn(route_col).setPreferredWidth(200);
-
-        # # first column is the trains
-        # self.active_train_col = self.table.getColumnModel().getColumn(active_train_col);
-        # self.combobox0 = JComboBox()
-        #
-        # for train in self.class_StopMaster.get_list_of_engines_to_move():
-        #     self.combobox0.addItem(train)
-        #
-        # self.trainColumn.setCellEditor(DefaultCellEditor(self.combobox0));
-        # renderer0 = ComboBoxCellRenderer1()
-        # self.trainColumn.setCellRenderer(renderer0);
-        #
-        # # second column is the routes
-        #
-        # self.routesColumn = self.table.getColumnModel().getColumn(route_col);
-        # self.combobox1 = JComboBox()
-        #
-        # RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
-        # routes = RouteManager.getRoutesByNameList()
-        # for route in routes:
-        #     self.combobox1.addItem(route)
-        # self.routesColumn.setCellEditor(DefaultCellEditor(self.combobox1));
-        # renderer1 = ComboBoxCellRenderer1()
-        # self.routesColumn.setCellRenderer(renderer1);
-        #
-        # # first column is the trains
-        # self.taskColumn = self.table.getColumnModel().getColumn(task_col);
-        # self.combobox3 = JComboBox()
-        #
-        # tasks = ["stop at end of route", "return to start position","return to start and repeat"]
-        # for task in tasks:
-        #     self.combobox3.addItem(task)
-        #
-        # self.taskColumn.setCellEditor(DefaultCellEditor(self.combobox3));
-        # renderer3 = ComboBoxCellRenderer1()
-        # self.taskColumn.setCellRenderer(renderer3);
 
         jpane = JScrollPane(self.table)
         panel = JPanel()
@@ -249,281 +192,8 @@ class createandshowGUI3(TableModelListener):
         self.delete_routes()
         self.completeTablePanel()
 
-    # def savetofile_action(self, event):
-    #
-    #     #Tidy
-    #     self.model.remove_not_set_row()
-    #     self.completeTablePanel()
-    #
-    #     if self.model.getRowCount() == 0:
-    #         msg = "There are no valid rows"
-    #         result = OptionDialog().displayMessage(msg)
-    #         return
-    #
-    #     msg = "Saving Valid rows"
-    #     result = OptionDialog().displayMessage(msg)
-    #
-    #
-    #     dir = self.directory()
-    #     j = JFileChooser(dir);
-    #     j.setAcceptAllFileFilterUsed(False)
-    #     filter = FileNameExtensionFilter("text files txt", ["txt"])
-    #     j.addChoosableFileFilter(filter);
-    #     j.setDialogTitle("Select a .txt file");
-    #
-    #
-    #
-    #     ret = j.showSaveDialog(None);
-    #     if (ret == JFileChooser.APPROVE_OPTION) :
-    #         file = j.getSelectedFile()
-    #         if file == "" or file == None:
-    #             msg = "No file selected"
-    #             result = OptionDialog().displayMessage(msg)
-    #             return
-    #         if FilenameUtils.getExtension(file.getName()).lower() == "txt" :
-    #             #filename is OK as-is
-    #             pass
-    #         else:
-    #             #file = File(file.toString() + ".txt");  # append .txt if "foo.jpg.txt" is OK
-    #             file = File(file.getParentFile(), FilenameUtils.getBaseName(file.getName())+".txt") # ALTERNATIVELY: remove the extension (if any) and replace it with ".xml"
-    #
-    #     else:
-    #         return
-    #     if self.logLevel > 0: print "savetofile action", file
-    #     my_list = []
-    #     [train, route, task, delay, repetitions] = [0, 1, 3, 4, 5]
-    #     for row in range(len(self.model.data)):
-    #         train_name = str(self.model.data[row][train])
-    #         route_name = str(self.model.data[row][route])
-    #         task_name = str(self.model.data[row][task])
-    #         delay_name = str(self.model.data[row][delay])
-    #         repetitions_name = str(self.model.data[row][repetitions])
-    #         row_list = [train_name, route_name, task_name, delay_name, repetitions_name]
-    #         my_list.append(row_list)
-    #     self.write_list(my_list,file)
-    #
-
-    # def loadfromfile_action(self, event):
-    #     # load the file
-    #     dir = self.directory()
-    #     j = JFileChooser(dir);
-    #     j.setAcceptAllFileFilterUsed(False)
-    #     filter = FileNameExtensionFilter("text files txt", ["txt"])
-    #     j.setDialogTitle("Select a .txt file");
-    #     j.addChoosableFileFilter(filter);
-    #     ret = j.showOpenDialog(None);
-    #     if (ret == JFileChooser.APPROVE_OPTION) :
-    #         file = j.getSelectedFile()
-    #         if self.logLevel > 0: print "about to read list", file
-    #         my_list = self.read_list(file)
-    #         if self.logLevel > 0: print "my_list", my_list
-    #         for row in reversed(range(len(self.model.data))):
-    #             self.model.data.pop(row)
-    #         i = 0
-    #         [train, route, task, delay, repetitions] = [0, 1, 3, 4, 5]
-    #         for row in my_list:
-    #             [train_val, route_val, task_val, delay_val, repetitions_val] = row
-    #             self.model.add_row()
-    #             self.model.data[i][train] = train_val.replace('"','')
-    #             self.model.data[i][route] = route_val.replace('"','')
-    #             self.model.data[i][task] = task_val.replace('"','')
-    #             self.model.data[i][delay] = delay_val.replace('"','')
-    #             self.model.data[i][repetitions] = repetitions_val.replace('"','')
-    #             i += 1
-    #         self.completeTablePanel()
-    #
-    #         msg = "Deleting invalid rows"
-    #         result = OptionDialog().displayMessage(msg)
-    #         if result == JOptionPane.NO_OPTION:
-    #             return
-    #
-    #         # check the loaded contents
-    #         # 1) check that the trains are valid
-    #         # 2) ckeck that the blocks are occupied by valid trains
-    #         # if either of the above are not valic we blank the entries
-    #         # 3) Tidy
-    #
-    #         [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
-    #
-    #         # check the trains are valid
-    #
-    #         trains_to_put_in_dropdown = [t for t in self.class_StopMaster.get_list_of_engines_to_move()]
-    #         for row in reversed(range(len(self.model.data))):
-    #             if self.model.data[row][train_col] not in trains_to_put_in_dropdown:
-    #                 self.model.data.pop(row)
-    #
-    #         RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
-    #         routes = [str(route) for route in RouteManager.getRoutesByNameList()]
-    #         for row in reversed(range(len(self.model.data))):
-    #             if self.model.data[row][route_col] not in routes:
-    #                 self.model.data.pop(row)
-    #         self.completeTablePanel()
-
     def cancel_action(self, event):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
-
-    # def repetitions_action(self, event):
-    #     [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
-    #     for row in reversed(range(len(self.model.data))):
-    #         old_val = int(self.model.data[0][repetition_col])
-    #         if old_val == None: old_val = 0
-    #         new_val = self.new_val(old_val)
-    #         self.model.data[row][repetition_col] = new_val
-    #     self.completeTablePanel()
-    #
-    # def new_val(self, old_val):
-    #     if old_val < 3:
-    #         new_val = 3
-    #     elif old_val < 10:
-    #         new_val = 10
-    #     elif old_val < 30:
-    #         new_val = 30
-    #     elif old_val < 1000:
-    #         new_val = 1000
-    #     else:
-    #         new_val = 0
-    #     return new_val
-
-    # def task_action(self, event):
-    #     [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
-    #     for row in reversed(range(len(self.model.data))):
-    #         old_val = str(self.model.data[0][task_col])
-    #         if old_val == None: old_val = 0
-    #         new_val = self.new_task(old_val)
-    #         self.model.data[row][task_col] = new_val
-    #     self.completeTablePanel()
-    #
-    # def new_task(self, old_val):
-    #     tasks = ["stop at end of route", "return to start position","return to start and repeat"]
-    #     if old_val == "stop at end of route":
-    #         new_val = "return to start position"
-    #     elif old_val == "return to start position":
-    #         new_val = "return to start and repeat"
-    #     else:
-    #         return "stop at end of route"
-    #     return new_val
-
-
-    # def apply_del_trains(self, event):
-    #     [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
-    #     # print "apply action"
-    #     for row in reversed(range(len(self.model.data))):
-    #         train_name = str(self.model.data[row][train_col])
-    #         route_name = str(self.model.data[row][route_col])
-    #         delay_val = str(self.model.data[row][delay_col])
-    #         if train_name != "" and route_name != "" and delay_val != "":
-    #             self.run_route(row, self.model, self, self.class_StopMaster)
-    #         else:
-    #             msg = "not running route, train, route or delay is not set"
-    #             self.od.displayMessage(msg,"")
-    #     self.completeTablePanel()
-    #     if self.model.getRowCount() == 0:
-    #         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
-    #
-
-    # def run_route(self, row, model, class_createandshowGUI2, class_StopMaster):
-    #     [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
-    #     route_name = str(model.getValueAt(row, route_col))
-    #     if route_name == None:
-    #         msg = "not running route is not set"
-    #         self.od.displayMessage(msg,"")
-    #         return
-    #     RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
-    #     route = RouteManager.getRouteByName(route_name)
-    #
-    #     train_name = str(model.getValueAt(row, train_col))
-    #     if train_name == None or train_name == "":
-    #         msg = "not running route, train is not set"
-    #         self.od.displayMessage(msg,"")
-    #         return
-    #     station_from = class_StopMaster.get_position_of_train(train_name)
-    #
-    #     option = str(model.getValueAt(row, task_col))
-    #
-    #     repeat = False
-    #     dont_run_route = False
-    #     no_repetitions = 0
-    #     if option == "stop at end of route":
-    #         station_to = None
-    #         repeat = False
-    #     elif option == "return to start position":
-    #         station_to = station_from
-    #         repeat = False
-    #     elif option == "return to start and repeat":
-    #         station_to = station_from
-    #         repeat = True
-    #     else:
-    #         dont_run_route = True
-    #
-    #     if repeat:
-    #         no_repetitions = str(model.getValueAt(row, repetition_col))
-    #     else:
-    #         no_repetitions = 0
-    #
-    #     # delay by delay_val before starting route
-    #     delay_val = int(model.getValueAt(row, delay_col)) *1000
-    #     self.class_StopMaster.waitMsec(delay_val)
-    #
-    #     if dont_run_route == False:
-    #         if self.logLevel > 0: print "station_from",    station_from, "station_to",station_to, \
-    #                                     "repeat",repeat, "delay", delay
-    #         run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_name)
-    #         run_train.setName("running_route_" + route_name )
-    #         instanceList.append(run_train)
-    #         run_train.start()
-    #         model.data.pop(row)
-    #         class_createandshowGUI2.completeTablePanel()
-    #
-    # def directory(self):
-    #     path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "routes"
-    #     if not os.path.exists(path):
-    #         os.makedirs(path)
-    #     return path + java.io.File.separator
-    #
-    # def write_list(self, a_list, file):
-    #     # store list in binary file so 'wb' mode
-    #     #file = self.directory() + "blockDirections.txt"
-    #     if self.logLevel > 0: print "block_info" , a_list
-    #     if self.logLevel > 0: print "file" , file
-    #     file = str(file)
-    #     with open(file, 'wb') as fp:
-    #         pass
-    #     if self.logLevel > 0: print "V"
-    #     with open(file, 'wb') as fp:
-    #         if self.logLevel > 0: print "B"
-    #         for items in a_list:
-    #             if self.logLevel > 0: print "C", items
-    #             i = 0
-    #             for item in items:
-    #                 if self.logLevel > 0: print "item", item
-    #                 fp.write('"%s"' %item)
-    #                 if i != 4: fp.write(",")
-    #                 i+=1
-    #             fp.write('\n')
-    #             #fp.write('\n'.join(item))
-    #             #fp.write(items)
-    #
-    # # Read list to memory
-    # def read_list(self, file):
-    #     file = str(file)
-    #     if self.logLevel > 0: print "read list", file
-    #     # for reading also binary mode is important
-    #     #file = self.directory() + "blockDirections.txt"
-    #     n_list = []
-    #     # try:
-    #     with open(file, 'rb') as fp:
-    #         for line in fp:
-    #             if self.logLevel > 0: print "line" , line
-    #             x = line[:-1]
-    #             if self.logLevel > 0: print x
-    #             y = x.split(",")
-    #             #y = [item.replace('"','') for item in y]
-    #             if self.logLevel > 0: print "y" , y
-    #             n_list.append(y)
-    #
-    #     return n_list
-    #     # except:
-    #     #     return ["",""]
 
 class MyModelListener3(TableModelListener):
 
@@ -548,8 +218,8 @@ class MyModelListener3(TableModelListener):
 
         if column == del_setup_train_col:
             train_name = str(model.getValueAt(row, setup_train_col))
-            print "trains_allocated", trains_allocated
-            print "train_name", train_name
+            if self.logLevel == 0: print "trains_allocated", trains_allocated
+            if self.logLevel == 0: print "train_name", train_name
             if train_name != "":
                 trains_allocated.remove(train_name)
             model.fireTableDataChanged()
@@ -628,7 +298,7 @@ class MyModelListener3(TableModelListener):
 
         active_train = [activeTrain for activeTrain in activeTrainList \
                         if activeTrain.getTrainName() == train_name]
-        print ("active_train", active_train)
+        if self.logLevel == 0: print ("active_train", active_train)
         if len(active_train) > 0:
             DF.terminateActiveTrain(active_train[0])
 
@@ -654,19 +324,12 @@ class MyTableModel3 (DefaultTableModel):
     def __init__(self):
         l1 = ["", False, "", "", False, "", False]
         self.data = [l1]
+        self.logLevel = 0
 
     def remove_not_set_row(self):
         for row in reversed(range(len(self.data))):
             if self.data[row][1] == "":
                 self.data.pop(row)
-
-    def add_row(self):
-        # print "addidn row"
-        # if row < len(self.data):
-        # print "add"
-        self.data.append(["", False, "", "", False, "", False])
-        # print self.data
-        # print "added"
 
     def populate(self):
         global trains_allocated
@@ -675,7 +338,7 @@ class MyTableModel3 (DefaultTableModel):
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         java_active_trains_list = DF.getActiveTrainsList()
         java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
-        print ("populate")
+        if self.logLevel == 0: print ("populate")
         for row in reversed(range(len(self.data))):
             self.data.pop(row)
         # append all active trains to put in dropdown
