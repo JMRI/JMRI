@@ -506,6 +506,9 @@
         <h4>Signal Systems</h4>
             <ul>
                 <li>Pino Di Biasi provided an Italian signal system</li>
+                <li>Spaces are no longer allowed in image file names for signal systems.
+                Use underscore instead of space. For example <i>ACEI_Acc_1_vela_giallo.gif</i>
+                instead of <i>ACEI Acc 1 vela giallo.gif</i></li>
             </ul>
 
         <h4>Signal Heads</h4>
