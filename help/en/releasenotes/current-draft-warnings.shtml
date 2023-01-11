@@ -5,8 +5,8 @@
         Spaces has been changed to underscore. It's images in the <i>resources/icons/ItalianSignals/ACEI</i>,
         <i>resources\icons\ItalianSignals\Prototypical</i>,
         <i>resources/icons/smallschematics/aspects/NW-1981</i>, <i>resources/icons/smallschematics/aspects/NYC-1956</i>,
-        <i>xml/signals/FS-1987</i>, <i>xml/signals/NW-1981</i> and <i>xml/signals/NYC-1956</i> folders that
-        have been renamed. If you are using these images directly, you will need to update the reference.
+        <i>xml/signals/FS-1987</i>, <i>xml/signals/NW-1981</i>, <i>xml/signals/NYC-1956</i> and <i>resources/icons/SNCF/Small</i>
+        folders that have been renamed. If you are using these images directly, you will need to update the reference.
     </li>
     <li>
     </li>
