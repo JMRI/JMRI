@@ -38,7 +38,7 @@ public class LoadAndStoreAllSignalSystemsTest {
     private void checkImageLinks(SignalSystem signalSystem, SignalMastType smt, List<ImageLink> imageLinks) throws IOException {
         for (ImageLink link : imageLinks) {
             if (link.getImageLink().startsWith("http:") || link.getImageLink().startsWith("http:")) {
-                log.warn(String.format("Signal system: %s, Signal mast: %s, File %s is a http link%n",
+                log.error(String.format("Signal system: %s, Signal mast: %s, File %s is a http link%n",
                         signalSystem.getFolderName(), smt.getFileName(), link.getImageLink()));
 //                System.out.format("Signal system: %s, Signal mast: %s, File %s is a http link%n",
 //                        signalSystem.getFolderName(), smt.getFileName(), link.getImageLink());
