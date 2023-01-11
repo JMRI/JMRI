@@ -122,11 +122,11 @@ public class LoadAndStoreAllSignalSystemsTest {
         if (!filenamesWithSpaces.isEmpty()) {
 //            if (1==1) return spacesRemoved;   // Ignore for now
             for (String filename : filenamesWithSpaces) {
-                log.warn("File {} has spaces", filename);
+                log.error("File {} has spaces", filename);
             }
-            log.warn("To remove spaces in filenames, run");
-            log.warn("jmri.jmrit.signalsystemeditor.configurexml.LoadAndStoreAllSignalSystemsTest");
-            log.warn("with REMOVE_SPACES = true");
+            log.error("To remove spaces in filenames, run");
+            log.error("jmri.jmrit.signalsystemeditor.configurexml.LoadAndStoreAllSignalSystemsTest");
+            log.error("with REMOVE_SPACES = true");
         }
 
         return spacesRemoved;
