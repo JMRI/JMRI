@@ -304,7 +304,7 @@ public class LoadAndStoreAllSignalSystemsTest {
                 while ((next1 = fileStream1.readLine()) != null) {
                     lineNumber1++;
                     if (!next1.isBlank()) {
-                        log.error("The file "+inFile1.getPath()+" has extra content: {}", next1.strip());
+                        log.warn("The file "+inFile1.getPath()+" has extra content: {}", next1.strip());
                     }
                 }
             }
@@ -313,7 +313,7 @@ public class LoadAndStoreAllSignalSystemsTest {
                 while ((next2 = fileStream2.readLine()) != null) {
                     lineNumber2++;
                     if (!next2.isBlank()) {
-                        log.error("The file "+inFile2.getPath()+" has extra content: {}", next2.strip());
+                        log.warn("The file "+inFile2.getPath()+" has extra content: {}", next2.strip());
                     }
                 }
             }
