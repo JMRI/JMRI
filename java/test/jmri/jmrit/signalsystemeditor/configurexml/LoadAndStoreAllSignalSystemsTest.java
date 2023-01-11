@@ -38,14 +38,14 @@ public class LoadAndStoreAllSignalSystemsTest {
     private void checkImageLinks(SignalSystem signalSystem, SignalMastType smt, List<ImageLink> imageLinks) throws IOException {
         for (ImageLink link : imageLinks) {
             if (link.getImageLink().startsWith("http:") || link.getImageLink().startsWith("http:")) {
-                log.warn(String.format("Signal system: %s, Signal mast: %s, File %s is a http link%n",
+                log.error(String.format("Signal system: %s, Signal mast: %s, File %s is a http link%n",
                         signalSystem.getFolderName(), smt.getFileName(), link.getImageLink()));
 //                System.out.format("Signal system: %s, Signal mast: %s, File %s is a http link%n",
 //                        signalSystem.getFolderName(), smt.getFileName(), link.getImageLink());
             } else {
                 File file = new File("xml/signals" + link.getImageLink());
                 if (!file.getCanonicalFile().exists()) {
-                    log.warn(String.format("Signal system: %s, Signal mast: %s, File %s does not exists%n",
+                    log.error(String.format("Signal system: %s, Signal mast: %s, File %s does not exists%n",
                             signalSystem.getFolderName(), smt.getFileName(), file.getCanonicalPath()));
 //                    System.out.format("Signal system: %s, Signal mast: %s, File %s does not exists%n",
 //                            signalSystem.getFolderName(), smt.getFileName(), file.getCanonicalPath());
