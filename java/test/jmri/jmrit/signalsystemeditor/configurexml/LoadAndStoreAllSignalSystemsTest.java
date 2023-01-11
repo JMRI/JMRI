@@ -299,7 +299,7 @@ public class LoadAndStoreAllSignalSystemsTest {
                 line1 = next1;
                 line2 = next2;
             }   // while readLine() != null
-/*
+
             if (next1 != null) {
                 while ((next1 = fileStream1.readLine()) != null) {
                     lineNumber1++;
@@ -317,7 +317,7 @@ public class LoadAndStoreAllSignalSystemsTest {
                     }
                 }
             }
-*/
+
         } catch (java.io.FileNotFoundException ex) {
             // Ignore for now. Fix later
 //            log.warn("File not found: {}", ex.getMessage());
