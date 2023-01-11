@@ -319,8 +319,14 @@ public class LoadAndStoreAllSignalSystemsTest {
             }
 
         } catch (java.io.FileNotFoundException ex) {
-            // Ignore for now. Fix later
-            log.error("File not found: {}", ex.getMessage());
+            // See this comment in PR #11736
+            // https://github.com/JMRI/JMRI/pull/11736#issuecomment-1379451919
+            // Once you create a signal mast, I think it will continue to
+            // reference the same appearance* file, even if that later
+            // disappears from the aspect file. It's possible that removing
+            // those three files will break some existing layout signal
+            // configurations because they're still pointing at those files.
+            log.warn("File not found: {}", ex.getMessage());
         }
 
         return true;
