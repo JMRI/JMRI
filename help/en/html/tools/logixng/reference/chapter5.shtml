@@ -857,7 +857,8 @@
 
         <dt>Start/Stop by Start expression</dt>
         <dd>When selected, the timer will start when the <strong>Start</strong> expression becomes
-        true and will stop when the <strong>Start</strong> expression becomes false.</dd>
+        true and will stop when the <strong>Start</strong> expression becomes false.  The <strong>
+        Stop</strong> expression is ignored.</dd>
 
         <dt>Combo Box</dt>
         <dd>Select the time unit.</dd>
