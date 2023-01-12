@@ -74,33 +74,33 @@
     <appearance>
       <aspectname>Hp00</aspectname>
       <show>red</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/exit/hp00.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/exit/hp00.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/exit/hp00.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit/hp00.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/exit/hp00.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/exit/hp00.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp0/Sh1</aspectname>
       <show>flashgreen</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/exit/hp0+sh1.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/exit/hp0+sh1.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/exit/hp0+sh1.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit/hp0+sh1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/exit/hp0+sh1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/exit/hp0+sh1.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp1</aspectname>
       <show>green</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/exit/hp1.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/exit/hp1.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/exit/hp1.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit/hp1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/exit/hp1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/exit/hp1.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp2</aspectname>
       <show>yellow</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/exit/hp2.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/exit/hp2.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/exit/hp2.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit/hp2.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/exit/hp2.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/exit/hp2.gif</imagelink>
     </appearance>
 
   </appearances>
