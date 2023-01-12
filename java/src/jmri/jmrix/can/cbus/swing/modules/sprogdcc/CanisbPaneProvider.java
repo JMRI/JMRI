@@ -36,6 +36,12 @@ public class CanisbPaneProvider extends CbusConfigPaneProvider {
     public static final int CAN_ERR_FREE_COUNT_HI = 14;
     public static final int CAN_DIAGNOSTICS_LO = 15;
     public static final int CAN_DIAGNOSTICS_HI = 16;
+    
+    // These may be overridden in scripts for unbusual use cases
+    public static int MIN_CANID = 100;
+    public static int MAX_CANID = 127;
+    public static int MIN_NN = 65520;
+    public static int MAX_NN = 65534;
 
     public CanisbPaneProvider() {
         super();

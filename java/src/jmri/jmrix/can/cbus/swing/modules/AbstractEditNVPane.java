@@ -64,7 +64,37 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
      */
     protected int getSelectValue(int row, int min) {
         try {
-            return (int)_dataModel.getValueAt(row - 1, NV_SELECT_COLUMN);
+            int val = (int)_dataModel.getValueAt(row - 1, NV_SELECT_COLUMN);
+            if (val < min) {
+                return min;
+            } else {
+                return (int)_dataModel.getValueAt(row - 1, NV_SELECT_COLUMN);
+            }
+        } catch (NullPointerException ex) {
+            // NVs are not available yet, e.g. during resync
+            return min;
+        }
+    }
+    
+    /**
+     * Get the NV value from NV_SELECT_COLUMN
+     * 
+     * @param row index of NV
+     * @param min minimum value to return
+     * @param max maximum value to return
+     * 
+     * @return the NV value, or min if NVs not available yet
+     */
+    protected int getSelectValue(int row, int min, int max) {
+        try {
+            int val = (int)_dataModel.getValueAt(row - 1, NV_SELECT_COLUMN);
+            if (val < min) {
+                return min;
+            } else if (val > max) {
+                return max;
+            } else {
+                return (int)_dataModel.getValueAt(row - 1, NV_SELECT_COLUMN);
+            }
         } catch (NullPointerException ex) {
             // NVs are not available yet, e.g. during resync
             return min;
@@ -77,15 +107,23 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
      * @param rowHi index of hi byte NV
      * @param rowLo index of lo byte NV
      * @param min minimum value to return
+     * @param max maximum value to return
      * 
      * @return the NV value, or min if NVs not available yet
      */
-    protected int getSelectValue(int rowHi, int rowLo, int min) {
-        int hi, lo;
+    protected int getSelectValue(int rowHi, int rowLo, int min, int max) {
+        int hi, lo, val;
         try {
             hi = (int)_dataModel.getValueAt(rowHi - 1, NV_SELECT_COLUMN);
             lo = (int)_dataModel.getValueAt(rowLo - 1, NV_SELECT_COLUMN);
-            return hi*256 + lo;
+            val = hi*256 + lo;
+            if (val < min) {
+                return min;
+            } else if (val > max) {
+                return max;
+            } else {
+                return hi*256 + lo;
+            }
         } catch (NullPointerException ex) {
             // NVs are not available yet, e.g. during resync
             return min;

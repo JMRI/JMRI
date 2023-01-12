@@ -56,9 +56,10 @@ public class CbusNodeNVManager {
         
         _nvArray = new int [(newnvs.length)]; // no need to compensate for index 0 being total
         for (int i = 0; i < newnvs.length; i++) {
-            setNV(i,newnvs[i]);
+            setNV(i,newnvs[i]);     // will notify SINGLENVUPDATE
         }
         
+        // Now ensure anyone only listening for ALLNVUPDATE sees the change
         _node.notifyPropertyChangeListener("ALLNVUPDATE", null, null);
     }
     

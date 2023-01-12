@@ -118,3 +118,6 @@ log4j.category.javax.jmdns.impl.tasks.state.DNSStateTask=ERROR
 #log4j.category.jmri.jmrit.display.layoutEditor=DEBUG
 #log4j.category.jmri.jmrit.display.layoutEditor.LayoutBlock=DEBUG
 #log4j.category.jmri.jmrit.operations=DEBUG
+
+log4j.category.jmri.jmrix.can.cbus.swing.modules=DEBUG
+log4j.category.jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel=DEBUG

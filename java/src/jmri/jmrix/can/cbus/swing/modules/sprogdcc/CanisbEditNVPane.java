@@ -42,6 +42,7 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
     int clearableErrors = rcTitle.length;
     JLabel[] rcText = new JLabel[clearableErrors];
     JTextField[] rcCount = new JTextField[clearableErrors];
+    JTextField[] rcOldCount = new JTextField[clearableErrors];
     JButton[] rcButton = new JButton[clearableErrors];
     // Read only error status
     String[] rTitle = {Bundle.getMessage("CanRxErrorCount"),
@@ -50,6 +51,7 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
     int rErrors = rTitle.length;
     JLabel[] rText = new JLabel[rErrors];
     JTextField[] rCount = new JTextField[rErrors];
+    JTextField[] rOldCount = new JTextField[rErrors];
     JButton[] rButton = new JButton[rErrors];
 
     protected CanisbEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
@@ -85,20 +87,24 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
             int nv = row + 1;
             int value = getSelectValue(nv);
             log.debug("canisb gui table changed NV: {} Value: {}", nv, value);
-            if (value >= 0) {
+            if ((nv==15) && (value==4)) {
+                log.debug("blah");
+            }
+            if (value >= -1) {
                 switch (nv) {
                     case CanisbPaneProvider.SETUP:
                         setup.setSelected(value != 0);
                         break;
 
                     case CanisbPaneProvider.CANID:
-                        canIdSpinner.setValue(value);
+                        canIdSpinner.setValue(getSelectValue(CanisbPaneProvider.CANID,
+                                CanisbPaneProvider.MIN_CANID, CanisbPaneProvider.MAX_CANID));
                         break;
 
                     case CanisbPaneProvider.NN_HI:
                     case CanisbPaneProvider.NN_LO:
                         nodeNumberSpinner.setValue(getSelectValue(CanisbPaneProvider.NN_HI,
-                                CanisbPaneProvider.NN_LO, 0));
+                                CanisbPaneProvider.NN_LO, CanisbPaneProvider.MIN_NN, CanisbPaneProvider.MAX_NN));
                         break;
 
                     case CanisbPaneProvider.RX_ERR_CNT:
@@ -219,14 +225,14 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
 
             canIdSpinner = new TitledSpinner(Bundle.getMessage("CanId"), CanisbPaneProvider.CANID, canIdUpdateFn);
             canIdSpinner.setToolTip(Bundle.getMessage("CanIdTt"));
-            canIdSpinner.init(getSelectValue(CanisbPaneProvider.CANID, 100), 100, 127, 1);
+            canIdSpinner.init(getSelectValue(CanisbPaneProvider.CANID, 100, 127), CanisbPaneProvider.MIN_CANID, CanisbPaneProvider.MAX_CANID, 1);
             gridPane.add(canIdSpinner, c);
             c.gridy++;
 
             nodeNumberSpinner = new TitledSpinner(Bundle.getMessage("NodeNumber"), CanisbPaneProvider.NN_HI, nodeNumberUpdateFn);
             nodeNumberSpinner.setToolTip(Bundle.getMessage("NodeNumberTt"));
-            int nn = getSelectValue(CanisbPaneProvider.NN_HI, CanisbPaneProvider.NN_LO, 65520);
-            nodeNumberSpinner.init(nn, 65520, 65534, 1);
+            int nn = getSelectValue(CanisbPaneProvider.NN_HI, CanisbPaneProvider.NN_LO, CanisbPaneProvider.MIN_NN, CanisbPaneProvider.MAX_NN);
+            nodeNumberSpinner.init(nn, CanisbPaneProvider.MIN_NN, CanisbPaneProvider.MAX_NN, 1);
             gridPane.add(nodeNumberSpinner, c);
             c.gridy++;
 
@@ -290,6 +296,11 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
                 gridPane.add(rcCount[i], c);
                 c.gridx++;
 
+                rcOldCount[i] = new JTextField("0", 5);
+                rcOldCount[i].setHorizontalAlignment(SwingConstants.RIGHT);
+                gridPane.add(rcOldCount[i], c);
+                c.gridx++;
+
                 rcButton[i] = new JButton(Bundle.getMessage("Clear"));
                 final int button = i;
                 rcButton[i].addActionListener((java.awt.event.ActionEvent e) -> {
@@ -310,6 +321,11 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
                 rCount[i] = new JTextField("0", 5);
                 rCount[i].setHorizontalAlignment(SwingConstants.RIGHT);
                 gridPane.add(rCount[i], c);
+                c.gridx++;
+
+                rOldCount[i] = new JTextField("0", 5);
+                rOldCount[i].setHorizontalAlignment(SwingConstants.RIGHT);
+                gridPane.add(rOldCount[i], c);
                 c.gridx = 0;
                 c.gridy++;
             }
