@@ -13,7 +13,8 @@
    [Added formatting for panel editor and layout editor.]       (2022-03-01)
    [Bug fix in SSL related to displaying sensor names.]         (2022-03-01)
    [Changed some text alignment to center for readability]      (2022-03-02)
-   [Added additional formatting for LogixNG.].                  (2023-01-12)
+   [Added additional formatting for LogixNG.].                  (2023-01-11)
+   [Added formatting for olcbsignalmast                         (2023-01-12)
 -->
 
 <!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018, 2022, 2023.     -->
@@ -432,8 +433,6 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
     </xsl:if>
 </xsl:template>
 
-
-
 <!-- *************************************************************************************** -->
 <!-- Index through ctcdata elements -->
 <xsl:template match="layout-config/ctcdata">
@@ -511,7 +510,6 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
         <xsl:apply-templates/>
     </table>
 </xsl:template>
-
 
 <!-- *************************************************************************************** -->
 <!-- Index through logixs elements       -->
@@ -1460,6 +1458,34 @@ value="<xsl:value-of select="@dataString"/>"
             <xsl:for-each select="aspect">
                 <xsl:value-of select="@defines"/>:
                 <xsl:value-of select="number"/><br/>
+            </xsl:for-each>
+        </td>
+    </tr>
+</xsl:template>
+<!-- ***NEW 01/13/2023 *************************************************************************** -->
+<xsl:template match="olcbsignalmast">
+    <tr><td><xsl:value-of select="systemName"/></td>
+        <td><xsl:value-of select="userName"/></td>
+        <td style="text-align:center">OLCB Mast</td>
+        <td style="text-align:center">
+            <xsl:for-each select="unlit">
+                <xsl:value-of select="@allowed"/><br/>
+            </xsl:for-each>
+        </td>
+        <td>
+            <xsl:for-each select="disabledAspects">
+                <xsl:for-each select="disabledAspect">
+                    <xsl:value-of select="."/><br/>
+                </xsl:for-each>
+            </xsl:for-each>
+        </td>
+        <td><xsl:value-of select="comment"/></td>
+        <td></td>
+        <td>
+            <xsl:for-each select="aspect">
+                 <xsl:value-of select="@defines"/>:
+                 <xsl:value-of select="event"/><br/>
+                 
             </xsl:for-each>
         </td>
     </tr>
