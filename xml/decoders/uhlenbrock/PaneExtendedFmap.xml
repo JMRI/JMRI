@@ -39,6 +39,12 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Erweitertes Fkt.-Mapping ergänzt</revremark>
 		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2023-01-08</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Added "Tillig 0423x" decoder</revremark>
+		</revision>	
 	</revhistory>
 	<name>Ext Function Map</name>
 	<name xml:lang="de">Erw Funktionsmap</name>
@@ -508,7 +514,7 @@
 								</label>
 							</griditem>
 						</group>
-						<group exclude="73105,73115,73145,73405,73415">
+						<group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
 							<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
 								<label>
 									<text>AUX5</text>
@@ -1111,7 +1117,7 @@
 								</label>
 							</griditem>
 						</group>
-						<group exclude="73105,73115,73145,73405,73415">
+						<group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
 							<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
 								<label>
 									<text>AUX5</text>
@@ -1714,7 +1720,7 @@
 								</label>
 							</griditem>
 						</group>
-						<group exclude="73105,73115,73145,73405,73415">
+						<group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
 							<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
 								<label>
 									<text>AUX5</text>
@@ -2317,7 +2323,7 @@
 								</label>
 							</griditem>
 						</group>
-						<group exclude="73105,73115,73145,73405,73415">
+						<group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
 							<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
 								<label>
 									<text>AUX5</text>
@@ -2920,7 +2926,7 @@
 								</label>
 							</griditem>
 						</group>
-						<group exclude="73105,73115,73145,73405,73415">
+						<group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
 							<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
 								<label>
 									<text>AUX5</text>
@@ -3523,7 +3529,7 @@
 								</label>
 							</griditem>
 						</group>
-						<group exclude="73105,73115,73145,73405,73415">
+						<group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
 							<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
 								<label>
 									<text>AUX5</text>
@@ -4126,7 +4132,7 @@
 								</label>
 							</griditem>
 						</group>
-						<group exclude="73105,73115,73145,73405,73415">
+						<group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
 							<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
 								<label>
 									<text>AUX5</text>
@@ -4729,7 +4735,7 @@
 								</label>
 							</griditem>
 						</group>
-						<group exclude="73105,73115,73145,73405,73415">
+						<group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
 							<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
 								<label>
 									<text>AUX5</text>
@@ -5332,7 +5338,7 @@
 								</label>
 							</griditem>
 						</group>
-						<group exclude="73105,73115,73145,73405,73415">
+						<group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
 							<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
 								<label>
 									<text>AUX5</text>
@@ -5948,7 +5954,7 @@
 									</label>
 								</griditem>
 							</group>
-							<group exclude="73105,73115,73145,73405,73415">
+							<group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
 								<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
 									<label>
 										<text>AUX5</text>

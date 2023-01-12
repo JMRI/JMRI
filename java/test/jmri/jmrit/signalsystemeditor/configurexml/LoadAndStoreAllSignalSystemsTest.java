@@ -2,17 +2,19 @@ package jmri.jmrit.signalsystemeditor.configurexml;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import jmri.jmrit.signalsystemeditor.SignalSystem;
-import jmri.jmrit.signalsystemeditor.SignalMastType;
+import jmri.jmrit.signalsystemeditor.*;
+import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -26,7 +28,112 @@ import org.junit.jupiter.params.provider.MethodSource;
  */
 public class LoadAndStoreAllSignalSystemsTest {
 
+
+    private final boolean REMOVE_SPACES = false;
+//    private final boolean REMOVE_SPACES = true;
+
     private static String lastSignalSystem = null;
+
+
+    private void checkImageLinks(SignalSystem signalSystem, SignalMastType smt, List<ImageLink> imageLinks) throws IOException {
+        for (ImageLink link : imageLinks) {
+            if (link.getImageLink().startsWith("http:") || link.getImageLink().startsWith("http:")) {
+                log.warn(String.format("Signal system: %s, Signal mast: %s, File %s is a http link%n",
+                        signalSystem.getFolderName(), smt.getFileName(), link.getImageLink()));
+//                System.out.format("Signal system: %s, Signal mast: %s, File %s is a http link%n",
+//                        signalSystem.getFolderName(), smt.getFileName(), link.getImageLink());
+            } else {
+                File file = new File("xml/signals" + link.getImageLink());
+                if (!file.getCanonicalFile().exists()) {
+                    log.warn(String.format("Signal system: %s, Signal mast: %s, File %s does not exists%n",
+                            signalSystem.getFolderName(), smt.getFileName(), file.getCanonicalPath()));
+//                    System.out.format("Signal system: %s, Signal mast: %s, File %s does not exists%n",
+//                            signalSystem.getFolderName(), smt.getFileName(), file.getCanonicalPath());
+                }
+            }
+        }
+    }
+
+    private void checkImageLinks(SignalSystem signalSystem) throws IOException {
+        for (SignalMastType smt : signalSystem.getSignalMastTypes()) {
+            for (Appearance appearance : smt.getAppearances()) {
+                checkImageLinks(signalSystem, smt, appearance.getImageLinks());
+            }
+            checkImageLinks(signalSystem, smt, smt.getAppearanceDanger().getImageLinks());
+            checkImageLinks(signalSystem, smt, smt.getAppearancePermissive().getImageLinks());
+            checkImageLinks(signalSystem, smt, smt.getAppearanceHeld().getImageLinks());
+            checkImageLinks(signalSystem, smt, smt.getAppearanceDark().getImageLinks());
+        }
+    }
+
+    private boolean checkFileForSpaces(ImageLink link, List<String> filenamesWithSpaces) throws IOException {
+        boolean changed = false;
+        if (link.getImageLink().contains(" ")) {
+            if (REMOVE_SPACES) {
+                String filename = link.getImageLink();
+                link.setImageLink(link.getImageLink().replace(" ", "_"));
+                String newFilename = link.getImageLink();
+                File file = new File("xml/signals" + filename).getCanonicalFile();
+                File newFile = new File("xml/signals" + newFilename).getCanonicalFile();
+//                System.out.format("Try to remove spaces from file %s%n", filename);
+//                System.out.format("%s -> %s%n", filename, newFilename);
+//                System.out.format("%s -> %s%n", file, newFile);
+                Assert.assertTrue(String.format("Can rename file %s to file %s", file, newFile), file.renameTo(newFile));
+                changed = true;
+            } else {
+                filenamesWithSpaces.add(link.getImageLink());
+            }
+        }
+        return changed;
+    }
+
+    private boolean checkImageLinksSpaces(List<ImageLink> imageLinks, List<String> filenamesWithSpaces) throws IOException {
+        boolean changed = false;
+        for (ImageLink link : imageLinks) {
+            changed |= checkFileForSpaces(link, filenamesWithSpaces);
+        }
+        return changed;
+    }
+
+    private boolean checkSpaces(SignalSystem signalSystem) throws IOException {
+        boolean spacesRemoved = false;
+        List<String> filenamesWithSpaces = new ArrayList<>();
+        Assert.assertFalse("The signal system folder name contains no spaces: " + signalSystem.getFolderName(), signalSystem.getFolderName().contains(" "));
+
+        for (SignalMastType smt : signalSystem.getSignalMastTypes()) {
+            boolean changed = false;
+
+            for (Appearance appearance : smt.getAppearances()) {
+                changed |= checkImageLinksSpaces(appearance.getImageLinks(), filenamesWithSpaces);
+            }
+            changed |= checkImageLinksSpaces(smt.getAppearanceDanger().getImageLinks(), filenamesWithSpaces);
+            changed |= checkImageLinksSpaces(smt.getAppearancePermissive().getImageLinks(), filenamesWithSpaces);
+            changed |= checkImageLinksSpaces(smt.getAppearanceHeld().getImageLinks(), filenamesWithSpaces);
+            changed |= checkImageLinksSpaces(smt.getAppearanceDark().getImageLinks(), filenamesWithSpaces);
+
+            if (changed) {
+                SignalMastTypeXml signalMastXml = new SignalMastTypeXml();
+                signalMastXml.save(signalSystem, smt, "", false);
+            }
+
+            spacesRemoved |= changed;
+        }
+
+        if (!filenamesWithSpaces.isEmpty()) {
+//            if (1==1) return spacesRemoved;   // Ignore for now
+            for (String filename : filenamesWithSpaces) {
+                log.warn("File {} has spaces", filename);
+            }
+            log.warn("To remove spaces in filenames, run");
+            log.warn("jmri.jmrit.signalsystemeditor.configurexml.LoadAndStoreAllSignalSystemsTest");
+            log.warn("with REMOVE_SPACES = true");
+        }
+
+        return spacesRemoved;
+    }
+
+
+
 
     /**
      * Get all XML files in a directory and validate them.
@@ -61,7 +168,39 @@ public class LoadAndStoreAllSignalSystemsTest {
         return getFiles(new File("xml/signals"), true, true);
     }
 
-    public static void checkFile(File inFile1, File inFile2) throws Exception {
+    /**
+     * Get all XML files in a directory and validate them.
+     *
+     * @param directory the directory containing XML files
+     * @param pass      if true, successful validation will pass; if false,
+     *                  successful validation will fail
+     * @return a stream of {@link Arguments}, where each Argument contains the
+     *         {@link java.io.File} with a filename ending in {@literal .xml} to
+     *         validate and a boolean matching the pass parameter
+     */
+    public static Stream<Arguments> getFolders(File directory, boolean pass) {
+        ArrayList<Arguments> files = new ArrayList<>();
+
+//        files.add(Arguments.of(new File("xml/signals/AAR-1946"), pass));
+
+//        if (directory.isDirectory() && false) {
+        if (directory.isDirectory()) {
+            for (File file : directory.listFiles()) {
+                if (file.isDirectory()) {
+                    files.add(Arguments.of(file, pass));
+                }
+            }
+        }
+        return files.stream();
+    }
+
+    public static Stream<Arguments> data2() {
+        return getFolders(new File("xml/signals"), true);
+    }
+
+    public static boolean checkFile(File inFile1, File inFile2) throws Exception {
+
+//        System.out.format("Check files: %s, %s%n", inFile1, inFile2);
 
         try ( // compare files, except for certain special lines
             BufferedReader fileStream1 = new BufferedReader( new InputStreamReader(
@@ -105,8 +244,7 @@ public class LoadAndStoreAllSignalSystemsTest {
                 next2 = next2.replace("<!-- The following references the \"Restricted Proceed\" aspect, which is undefined here-->", "");
                 next2 = next2.replace("<email></email>", "");
 
-                while (next2 != null && next2.isBlank()) {
-                    next2 = fileStream2.readLine();
+                while (next2 != null && next2.isBlank() && (next2 = fileStream2.readLine()) != null) {
                     next2 = next2.replace("<!-- Start of Specific Appearances list -->", "");
                     next2 = next2.replace("<!-- End of Specific Appearances list -->", "");
                     next2 = next2.replace("<!-- Start of Aspect Mapping -->", "");
@@ -177,63 +315,13 @@ public class LoadAndStoreAllSignalSystemsTest {
                     }
                 }
 
-/*
-                if (next2.startsWith("<reference>") && next2.startsWith(next1) && !next2.equals(next1)) {
-                    while (next2.startsWith(next1) && !next2.equals(next1)) {
-                        // \u00A0 is non breaking space
-                        next1 += fileStream1.readLine().strip().replaceAll("\u00A0", " ");
-                        lineNumber1++;
-                    }
-                }
-
-                if (next2.startsWith("<description>") && next2.startsWith(next1) && !next2.equals(next1)) {
-                    while (next2.startsWith(next1) && !next2.equals(next1)) {
-                        // \u00A0 is non breaking space
-                        next1 += fileStream1.readLine().strip().replaceAll("\u00A0", " ");
-                        lineNumber1++;
-                    }
-                }
-*/
-/*
-                if (next2.startsWith("<") && !next2.strip().endsWith(">")) {
-                    while (!next2.strip().endsWith(">")) {
-                        if (!next2.startsWith("<reference>")
-                                && !next2.startsWith("<revremark>")
-                                && !next2.startsWith("<indication>")
-                                && !next2.startsWith("<description>")
-                                && !next2.startsWith("<reference>")) {
-                            next2 += " ";
-                        }
-                        next2 += fileStream2.readLine().strip();
-                        lineNumber2++;
-                    }
-                }
-*/
-//                while (next2.strip().equals("<email></email>")) {
-//                    next2 = fileStream2.readLine().strip();
-//                    lineNumber2++;
-//                }
-
-                // Remove xmlns=""
-                next1 = next1.replaceAll(" xmlns=\"\"", "");
-
                 // Remove space before and after = sign
                 next2 = next2.replaceAll("\\s*=\\s*", "=");
                 // Remove space between " and >
                 next2 = next2.replaceAll("\"\\s+\\>", "\">");
-/*
-                if (next2.strip().equals("<!-- Start of Specific Appearances list -->")
-                        || next2.strip().equals("<!-- End of Specific Appearances list -->")
-                        || next2.strip().equals("<!-- Start of Aspect Mapping -->")
-                        || next2.strip().equals("<!-- End of Aspect Mapping -->")) {
-                    next2 = fileStream2.readLine().strip();
-                    lineNumber2++;
-                }
-*/
+
                 while (!next2.equals(next1) && next2.startsWith(next1)) {
                     next1 += fileStream1.readLine().strip();
-                    // Remove xmlns=""
-                    next1 = next1.replaceAll(" xmlns=\"\"", "");
                     lineNumber1++;
                 }
 
@@ -244,6 +332,8 @@ public class LoadAndStoreAllSignalSystemsTest {
                 boolean match = false;  // assume failure (pessimist!)
 
                 if (!match && !line1.equals(line2)) {
+//                    System.out.format("Compare failed with file: %s%n", inFile1);
+//                    if (1==1) return false;
                     log.error("match failed in LoadAndStoreTest:");
                     log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
                     log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
@@ -277,9 +367,11 @@ public class LoadAndStoreAllSignalSystemsTest {
             // Ignore for now. Fix later
 //            log.warn("File not found: {}", ex.getMessage());
         }
+
+        return true;
     }
 
-    public void loadAndStoreFileCheck(File file) throws Exception {
+    private void loadAndStoreFileCheck(File file) throws Exception {
 
 //        if (!file.getAbsolutePath().equals("F:\\Projekt\\Java\\GitHub\\JMRI\\xml\\signals\\DB-HV-1969\\appearance-block.xml")) return;
 
@@ -297,24 +389,72 @@ public class LoadAndStoreAllSignalSystemsTest {
 
             SignalSystem signalSystem = signalSystemXml.load(new File(file.getParent()+"/aspects.xml"));
 
-            signalSystemXml.save(signalSystem);
-
-            for (SignalMastType signalMastType : signalSystem.getSignalMastTypes()) {
-                signalMastXml.save(signalSystem, signalMastType);
+            if (checkSpaces(signalSystem)) {
+                // If spaces have been removed from the file names, reload the signal system
+                signalSystem = signalSystemXml.load(new File(file.getParent()+"/aspects.xml"));
             }
-        }
 
-        File compFile = new File( jmri.util.FileUtil.getProfilePath()
-                + "xml/signals/" + "/" + file.getParentFile().getName() + "/" + file.getName() );
-        checkFile(compFile, file);
+            checkImageLinks(signalSystem);
+            signalSystemXml.save(signalSystem);
+            for (SignalMastType signalMastType : signalSystem.getSignalMastTypes()) {
+                signalMastXml.save(signalSystem, signalMastType, true);
+            }
+
+            File compFile = new File(FileUtil.getProfilePath()
+                    + "xml/signals/" + "/" + file.getParentFile().getName() + "/" + file.getName() );
+            checkFile(compFile, file);
+        }
     }
 
+    public void loadAndStoreFileCheck2(File file, String newFolder) throws Exception {
+
+        // Ignore files in the folder
+        if (!file.isDirectory()) return;
+
+//        if (!file.getAbsolutePath().equals("F:\\Projekt\\Java\\GitHub\\JMRI\\xml\\signals\\DB-HV-1969\\appearance-block.xml")) return;
+
+        log.debug("Start check file {}", file.getCanonicalPath());
+
+//        File signalSystemFolder = file.getCanonicalFile();
+//        String signalSystemName = signalSystemFolder.getName();
+
+        SignalSystemXml signalSystemXml = new SignalSystemXml();
+        SignalMastTypeXml signalMastXml = new SignalMastTypeXml();
+
+        SignalSystem signalSystem = signalSystemXml.load(new File(file+"/aspects.xml"));
+
+        signalSystemXml.save(signalSystem, newFolder);
+
+        for (SignalMastType signalMastType : signalSystem.getSignalMastTypes()) {
+            signalMastXml.save(signalSystem, signalMastType, newFolder, false);
+        }
+
+        File compFile = new File(newFolder + file.getName() + "/" + "/aspects.xml");
+        if (!checkFile(compFile, file)) return;
+
+        for (SignalMastType signalMastType : signalSystem.getSignalMastTypes()) {
+            File file2 = new File(file.getCanonicalPath() + "/" + signalMastType.getFileName());
+            File compFile2 = new File(newFolder + file.getName() + "/" + signalMastType.getFileName());
+            if (!checkFile(compFile2, file2)) return;
+        }
+    }
+
+//    @Disabled
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
     public void loadAndStoreTest(File file, boolean pass) throws Exception {
         if (!file.getParent().equals("xml/signals") && !file.getParent().equals("xml\\signals")) {
             loadAndStoreFileCheck(file);
         }
+    }
+
+    @Disabled
+    @ParameterizedTest(name = "{index}: {0} (pass={1})")
+    @MethodSource("data2")
+    public void loadAndStoreTest2(File file, boolean pass) throws Exception {
+//        System.out.format("File: %s%n", file);
+        loadAndStoreFileCheck2(file, FileUtil.getProfilePath() + "xml/signals/");
+        loadAndStoreFileCheck2(new File(FileUtil.getProfilePath() + "xml/signals/" + file.getName()), FileUtil.getProfilePath() + "xml/signals2/");
     }
 
     @BeforeEach

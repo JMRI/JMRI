@@ -32,6 +32,12 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Initial version for Piko SmartDecoder 4.1</revremark>
 		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2023-01-08</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add CVs 100, 101 for Function Mapping Shift </revremark>
+		</revision>
 	</revhistory>
 	<name>Function Map</name>
 	<name xml:lang="ca">Mapejat de funcions</name>
@@ -74,6 +80,15 @@
 				<display item="Function Map Option 6"/>
 			</column>
 		</row>
+		<label>
+			<text>  </text>
+		</label>
+		<label>
+			<text>Function Mapping Shift input on Tab PIKO 2/2</text>
+			<text xml:lang="de">Function Mapping Shift eingeben auf Reiter PIKO 2/2</text>
+		</label>
+		<display item="Function Mapping Shift 1"/>
+		<display item="Function Mapping Shift 2"/>
 	</column>
 	<column>
 		<display item="Advanced Function Mapping" format="checkbox"/>
@@ -85,7 +100,7 @@
 		<label>
 			<text>  </text>
 		</label>
-		<grid gridy="1" weightx="1" ipadx="4" ipady="5">
+		<grid gridy="1" weightx="1" ipadx="4" ipady="1">
 			<griditem gridx="1" gridy="0" anchor="LINE_START">
 				<label>
 					<text>RG ein</text>
@@ -98,136 +113,156 @@
 			</griditem>
 			<griditem gridx="0" gridy="1" anchor="LINE_START">
 				<label>
-					<text>F1</text>
+					<text>   </text>
 				</label>
 			</griditem>
 			<griditem gridx="0" gridy="2" anchor="LINE_START">
 				<label>
-					<text>F2</text>
+					<text>F1</text>
 				</label>
 			</griditem>
 			<griditem gridx="0" gridy="3" anchor="LINE_START">
 				<label>
-					<text>F3</text>
+					<text>F2</text>
 				</label>
 			</griditem>
 			<griditem gridx="0" gridy="4" anchor="LINE_START">
 				<label>
-					<text>F4</text>
+					<text>F3</text>
 				</label>
 			</griditem>
 			<griditem gridx="0" gridy="5" anchor="LINE_START">
 				<label>
-					<text>F5</text>
+					<text>F4</text>
 				</label>
 			</griditem>
 			<griditem gridx="0" gridy="6" anchor="LINE_START">
 				<label>
-					<text>F6</text>
+					<text>F5</text>
 				</label>
 			</griditem>
 			<griditem gridx="0" gridy="7" anchor="LINE_START">
 				<label>
-					<text>F7</text>
+					<text>F6</text>
 				</label>
 			</griditem>
 			<griditem gridx="0" gridy="8" anchor="LINE_START">
 				<label>
-					<text>F8</text>
+					<text>F7</text>
 				</label>
 			</griditem>
 			<griditem gridx="0" gridy="9" anchor="LINE_START">
 				<label>
-					<text>F9</text>
+					<text>F8</text>
 				</label>
 			</griditem>
 			<griditem gridx="0" gridy="10" anchor="LINE_START">
 				<label>
-					<text>F10</text>
+					<text>F9</text>
 				</label>
 			</griditem>
 			<griditem gridx="0" gridy="11" anchor="LINE_START">
 				<label>
-					<text>F11</text>
+					<text>F10</text>
 				</label>
 			</griditem>
 			<griditem gridx="0" gridy="12" anchor="LINE_START">
 				<label>
+					<text>F11</text>
+				</label>
+			</griditem>
+			<griditem gridx="0" gridy="13" anchor="LINE_START">
+				<label>
 					<text>F12</text>
 				</label>
 			</griditem>
-			<griditem gridx="1" gridy="1">
+			<griditem gridx="1" gridy="2">
 				<display item="F1 controls shunting mode" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="2" gridy="1">
+			<griditem gridx="2" gridy="2">
 				<display item="F1 controls starting/stopping delay" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="1" gridy="2">
+			<griditem gridx="1" gridy="3">
 				<display item="F2 controls shunting mode" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="2" gridy="2">
+			<griditem gridx="2" gridy="3">
 				<display item="F2 controls starting/stopping delay" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="1" gridy="3">
+			<griditem gridx="1" gridy="4">
 				<display item="F3 controls shunting mode" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="2" gridy="3">
+			<griditem gridx="2" gridy="4">
 				<display item="F3 controls starting/stopping delay" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="1" gridy="4">
+			<griditem gridx="1" gridy="5">
 				<display item="F4 controls shunting mode" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="2" gridy="4">
+			<griditem gridx="2" gridy="5">
 				<display item="F4 controls starting/stopping delay" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="1" gridy="5">
+			<griditem gridx="1" gridy="6">
 				<display item="F5 controls shunting mode" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="2" gridy="5">
+			<griditem gridx="2" gridy="6">
 				<display item="F5 controls starting/stopping delay" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="1" gridy="6">
+			<griditem gridx="1" gridy="7">
 				<display item="F6 controls shunting mode" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="2" gridy="6">
+			<griditem gridx="2" gridy="7">
 				<display item="F6 controls starting/stopping delay" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="1" gridy="7">
+			<griditem gridx="1" gridy="8">
 				<display item="F7 controls shunting mode" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="2" gridy="7">
+			<griditem gridx="2" gridy="8">
 				<display item="F7 controls starting/stopping delay" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="1" gridy="8">
+			<griditem gridx="1" gridy="9">
 				<display item="F8 controls shunting mode" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="2" gridy="8">
+			<griditem gridx="2" gridy="9">
 				<display item="F8 controls starting/stopping delay" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="1" gridy="9">
+			<griditem gridx="1" gridy="10">
 				<display item="F9 controls shunting mode" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="2" gridy="9">
+			<griditem gridx="2" gridy="10">
 				<display item="F9 controls starting/stopping delay" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="1" gridy="10">
+			<griditem gridx="1" gridy="11">
 				<display item="F10 controls shunting mode" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="2" gridy="10">
+			<griditem gridx="2" gridy="11">
 				<display item="F10 controls starting/stopping delay" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="1" gridy="11">
+			<griditem gridx="1" gridy="12">
 				<display item="F11 controls shunting mode" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="2" gridy="11">
+			<griditem gridx="2" gridy="12">
 				<display item="F11 controls starting/stopping delay" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="1" gridy="12">
+			<griditem gridx="1" gridy="13">
 				<display item="F12 controls shunting mode" format="checkbox" label=""/>
 			</griditem>
-			<griditem gridx="2" gridy="12">
+			<griditem gridx="2" gridy="13">
 				<display item="F12 controls starting/stopping delay" format="checkbox" label=""/>
 			</griditem>
 		</grid>
+		<label>
+			<text>    </text>
+		</label>
+		<label>
+			<text>    </text>
+		</label>
+		<label>
+			<text>    </text>
+		</label>
+		<label>
+			<text>    </text>
+		</label>
+		<label>
+			<text>    </text>
+		</label>
 	</column>
 </pane>
