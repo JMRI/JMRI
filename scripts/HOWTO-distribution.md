@@ -253,7 +253,7 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i .bak s/5.1.7-SNAPSHOT/5.3.2-SNAPSHOT/g pom.xml
+        sed -i .bak s/5.3.1-SNAPSHOT/5.3.2-SNAPSHOT/g pom.xml
         git commit -m"5.3.2 until next release" pom.xml
 ```
 
