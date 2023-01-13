@@ -53,9 +53,14 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def move_between_stations(self, station_from_name, station_to_name, train_name, graph):
         if self.logLevel > 1: print "Moving from " + station_from_name + " to " + station_to_name
-        if self.check_train_in_start_block(train_name, station_from_name) == False:
-            print "cannot move"
-            return
+        i = 0
+        while self.check_train_in_start_block(train_name, station_from_name) == False:
+            print "cannot move , waiting
+            self.waitMsec(500)
+            i += 1
+            if i == 10: break
+        #     print "cannot move"
+        #     return
         #need to look up the required transit in the graph
         StateVertex_start = station_from_name
         StateVertex_end = station_to_name
