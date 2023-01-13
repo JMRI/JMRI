@@ -1150,7 +1150,6 @@ class createandshowGUI2(TableModelListener):
             if self.logLevel > -1: print "station_from",    station_from, "station_to",station_to, \
                                         "repeat",repeat, "delay", delay_val, "no_repetitions", no_repetitions
             run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_name, delay_val)
-            #run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_name)
             run_train.setName("running_route_" + route_name)
             instanceList.append(run_train)
             run_train.start()
@@ -1215,7 +1214,7 @@ class MyModelListener1(TableModelListener):
         self.class_createandshowGUI2 = class_createandshowGUI2
         self.class_ResetButtonMaster = class_ResetButtonMaster
         self.cancel = False
-        self.logLevel = 1
+        self.logLevel = 0
     def tableChanged(self, e) :
         global trains_allocated
         row = e.getFirstRow()

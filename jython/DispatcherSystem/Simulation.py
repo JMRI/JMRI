@@ -257,10 +257,9 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print "finished", "end position" , self.end_position, "len(block_list)-1", len(block_list)-1
             ret = "Finished"
         else:
-            #if self.activeTrain.getStatus() == self.activeTrain.RUNNING
             at_last_block_in_section = self.at_last_block_in_section()
             if self.logLevel > 0: print "*******"
-            if self.signal_ahead_clear() or not at_last_block_in_section:
+            if (self.signal_ahead_clear() or not at_last_block_in_section) and self.activeTrain.getStatus() == self.activeTrain.RUNNING:
                 self.end_position +=1
                 if self.logLevel > 0: print "end pos incremented", self.end_position
                 block_list[self.end_position].getSensor().setState(ACTIVE)
@@ -283,8 +282,14 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
 
     def current_section(self):
         allocatedSectionList = self.activeTrain.getAllocatedSectionList()
-        current_section_list = [ allocatedSection.getSection() for allocatedSection in allocatedSectionList \
+        current_section_list = [allocatedSection.getSection() for allocatedSection in allocatedSectionList \
                                  if self.block_list[self.end_position] in allocatedSection.getSection().getBlockList()]
+        if current_section_list == []:
+            print "******* current_section ****"
+            print "allocatedSectionList", [allocatedSection.getSection().getUserName() for allocatedSection in allocatedSectionList]
+            print "current_section_list", [section.getUserName() for section in current_section_list]
+            print "self.block_list[self.end_position]", self.block_list[self.end_position].getUserName()
+            print "******* current_section ****"
         current_section = current_section_list[0]
         return current_section
 

@@ -53,6 +53,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def move_between_stations(self, station_from_name, station_to_name, train_name, graph):
         if self.logLevel > 1: print "Moving from " + station_from_name + " to " + station_to_name
+        if self.check_train_in_start_block(train_name, station_from_name) == False:
+            print "cannot move"
+            return
         #need to look up the required transit in the graph
         StateVertex_start = station_from_name
         StateVertex_end = station_to_name
@@ -64,7 +67,15 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "paths", paths
         if self.logLevel > 0: print "returned from shortest path"
         if self.logLevel > 1: print "in move_between_stations trains = ", trains, "train_name = ", train_name
-        train = trains[train_name]
+
+        if train_name in trains:
+            train = trains[train_name]
+        else:
+            print "in case of key error: trains", trains
+            print "******"
+            print "train_name", train_name
+            print "************Not Moving Train************"
+            return
         if self.logLevel > 1: print "train" , train
         penultimate_block_name = train["penultimate_block_name"]
         if self.logLevel > 1: print "penultimate_block_name" , penultimate_block_name
@@ -159,6 +170,36 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             transit_direction = previous_direction
         return [transit_direction, transit_instruction]
 
+    def check_train_in_start_block(self, train_to_move, blockName):
+        block = blocks.getBlock(blockName)
+        if self.blockOccupied(block):
+            if block.getValue() == train_to_move:
+                return True
+            else:
+                "blockName" , blockName, "not occupied by", "train_to_move", train_to_move
+                blockName = [block for block in blocks.getNamedBeanSet() if block.getValue() == train_to_move]
+                if blockName != []:
+                    blockName = blockName[0]
+                else:
+                    blockName = "train not in any block"
+                print "train_to_move", train_to_move, "in" , blockName
+                return False
+        else:
+            print "train_to_move", train_to_move, "not in" , blockName
+            blockName = [block for block in blocks if block.getValue() == train_to_move]
+            if blockName != []:
+                blockName = blockName[0]
+            else:
+                blockName = "train not in any block"
+            print "train_to_move", train_to_move, "in" , blockName
+            return False
+
+    def blockOccupied(self, block):
+        if block.getState() == ACTIVE:
+            state = "ACTIVE"
+        else:
+            state ="INACTIVE"
+        return state
 
     def get_time_to_stop_in_station(self, edge, direction):
 
@@ -574,6 +615,8 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         opt2 = "several trains"
         opt3 = "other actions"
         reply = self.od.customQuestionMessage3str(msg, title, opt1, opt2, opt3)
+        if self.od.CLOSED_OPTION == True:
+            return "cancel"
         if reply == opt1:
             return opt1
         elif reply == opt2:
@@ -866,7 +909,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             trains_allocated.append(str(train_name))
 
         [engine,current_length] = self.get_train_length(train_name)
-        engine.setLength(train_length)
+        engine.setLength(str(train_length))
 
 
 
@@ -1267,7 +1310,7 @@ class createandshowGUI(TableModelListener):
         self.buttonPane.add(button_tidy);
         self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
 
-        button_apply = JButton("Apply", actionPerformed = self.apply_action)
+        button_apply = JButton("Setup Trains", actionPerformed = self.apply_action)
         self.buttonPane.add(button_apply)
         self.buttonPane.add(Box.createHorizontalGlue());
 
@@ -1522,10 +1565,7 @@ class createandshowGUI(TableModelListener):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
 
     def apply_action(self, event):
-        train = 0
-        block = 1
-        direction = 2
-        length = 4
+        [train, block, direction, length] = [0, 1, 2, 4]
         # print "apply action"
         for row in reversed(range(len(self.model.data))):
             train_name = self.model.data[row][train]
@@ -1535,6 +1575,9 @@ class createandshowGUI(TableModelListener):
             if train_name != "" and block_name != "":
                 self.super.add_to_train_list_and_set_new_train_location0(train_name, block_name,
                                                                          train_direction, train_length)
+                self.super.set_blockcontents(block_name, train_name)
+                [engine,current_length] = self.super.get_train_length(train_name)
+                engine.setLength(train_length)
                 self.model.data.pop(row)
         self.completeTablePanel()
         if self.model.getRowCount() == 0:

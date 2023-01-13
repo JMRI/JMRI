@@ -47,10 +47,10 @@ class createandshowGUI3(TableModelListener):
         self.buttonPane = JPanel();
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
         self.buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10))
-
-        button_add = JButton("Add Row", actionPerformed = self.add_row_action)
-        self.buttonPane.add(button_add);
-        self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
+        #
+        # button_add = JButton("Add Row", actionPerformed = self.add_row_action)
+        # self.buttonPane.add(button_add);
+        # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
 
         button_populate = JButton("Refresh", actionPerformed = self.populate_action)
         self.buttonPane.add(button_populate);
@@ -201,7 +201,7 @@ class MyModelListener3(TableModelListener):
         self.class_createandshowGUI3 = class_createandshowGUI3
         self.class_StopMaster = class_StopMaster
         self.cancel = False
-        self.logLevel = 1
+        self.logLevel = 0
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         self.java_active_trains_list = DF.getActiveTrainsList()
 
