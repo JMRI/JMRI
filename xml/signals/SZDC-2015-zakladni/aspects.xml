@@ -51,8 +51,6 @@
 
   <aspects>
   
-<!-- ČSD -->
-
     <aspect>
       <name>Stůj</name>
       <title>Stop</title>
@@ -446,6 +444,7 @@
 	<imagetype type="AŽD žzbz"/>
 	<imagetype type="AŽD žčb"/>
 	<imagetype type="AŽD žb"/>
+	<imagetype type="AŽD žbz"/>
 	
         <imagetype type="ESP z"/>
 	<imagetype type="ESP zč"/>
@@ -458,6 +457,7 @@
 	<imagetype type="ESP žzbz"/>
 	<imagetype type="ESP žčb"/>
 	<imagetype type="ESP žb"/>
+	<imagetype type="ESP žbz"/>
 	
 	<imagetype type="JOP hlavní"/>
 	<imagetype type="JOP seřaďovací"/>

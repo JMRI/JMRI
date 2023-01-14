@@ -20,10 +20,10 @@
       <img src="images/JMRIArduinoTitlepicBrackstone.jpg" alt="Benson Valley Railway" height="192"
       width="360">
       <p style="font-size:60%">Picture Credit: <a href=
-      "http://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target=
+      "https://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target=
       "_blank">http://www.motorhomesites.org.uk</a></p>
 
-      <p><a href="https://en.wikipedia.org/wiki/arduino" target="_blank">Arduino micro
+      <p><a href="https://en.wikipedia.org/wiki/Arduino" target="_blank">Arduino micro
       controllers</a> are special purpose computers that, with appropriate sensors and other
       electronics, can be used to emulate DCC command stations and decoders, control turnout
       machines, light buildings and scenery, and animate just about anything on your layout -- all
@@ -106,7 +106,7 @@
         </li>
 
         <li>For examples of animations, DCC decoders, and the like, see <a href=
-        "https://model-railroad-hobbyist.com/blog/geoff-bunza" target="_blank">Geoff Bunza's
+        "https://forum.mrhmag.com/post/geoff-bunzas-blogjournal-index-12218222" target="_blank">Geoff Bunza's
         blog</a>. [Many of these can easily be adapted to communicate with JMRI.]
         </li>
 
@@ -186,7 +186,7 @@
       the arduino C/MRI libraries and include it in your sketch (for example, the library by
       Michael Adams <a href="https://github.com/madleech/ArduinoCMRI" target="blank_">available on
       Github</a> ( see also <a href=
-      "http://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target="_blank">Stephen
+      "https://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target="_blank">Stephen
       Brackstone's website</a> for an example of its use). See also <a href=
       "#example-CMRI">below</a> for a set of steps to get up and operating with an arduino as CMRI
       node with JMRI.</p>
@@ -250,8 +250,9 @@
       <p>Arduinos can be directly connected to a USB port and use serial communications via a
       <a href="../../tools/scripting/index.shtml">Jython script</a> executed in JMRI. An example is
       included in <a href="../../../../../jython/SerialPortTest.py">the JMRI Jython directory.</a>
-      Geoff Bunza describes a <a href="https://model-railroad-hobbyist.com/node/34392" target=
-      "_blank">serial communication script for collecting sensor data</a> from an arduino. It is
+      Geoff Bunza describes a <a href=
+      "https://forum.mrhmag.com/post/sma28-jmri-sensor-channels-%E2%80%93-direct-arduino-to-jmri-communications-simple-support-for-lots-of-12210793"
+      target="_blank">serial communication script for collecting sensor data</a> from an arduino. It is
       not necessary to configure a JMRI system connection to use direct serial communications.</p>
 
       <p><a href="#top">[Go to top of page]</a>
@@ -274,7 +275,7 @@
       from multiple sources.</p>
 
       <p>See <a href=
-      "http://www.motorhomesites.org.uk/railway/JMRI_Two_Arduino_control_with_CMRI.php" target=
+      "https://www.motorhomesites.org.uk/railway/JMRI_Two_Arduino_control_with_CMRI.php" target=
       "_blank">Stephen Brackstone again</a> for a good description of how to do this setup.</p>
 
       <p>Then include a RS-485 library in your arduino sketch (for example, <a href=
@@ -320,8 +321,9 @@
         </li>
 
         <li>Multiple turnout control via serial communications: See step-by-step and code from
-        Geoff Bunza <a href="https://model-railroad-hobbyist.com/node/34417" target=
-        "_blank">here.</a>
+        Geoff Bunza <a
+        href="https://forum.mrhmag.com/post/sma29-jmri-turnout-channels-%E2%80%93-direct-jmri-to-arduino-communications-simple-support-for-lots-of-12210817"
+        target="_blank">here.</a>
         </li>
 
         <li>Logix triggering: Connect an arduino to a fascia panel switch or pushbutton. Define a
@@ -378,7 +380,7 @@
         <li>First connect whichever block occupancy detector (BOD) you are using to appropriate
         pins on the arduino.</li>
 
-        <li>Using the <a href="https://www.arduino.cc/en/main/software" target="_blank">arduino IDE
+        <li>Using the <a href="https://www.arduino.cc/en/software" target="_blank">arduino IDE
         (integrated development environment)</a> or other development environment, create (or
         download) a sketch (arduino program) that includes the CMRI library.
         </li>

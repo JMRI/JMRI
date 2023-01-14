@@ -34,7 +34,7 @@
       <show>dark</show>
       <reference>Disque</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_Dark.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_Dark.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_Dark.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_Dark.gif</imagelink>
     </appearance>
     <appearance>
@@ -42,7 +42,7 @@
       <show>lunar</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_30.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_30.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_30.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_30.gif</imagelink>
     </appearance>
     <appearance>
@@ -50,7 +50,7 @@
       <show>lunar</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_40.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_40.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_40.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_40.gif</imagelink>
     </appearance>
     <appearance>
@@ -58,7 +58,7 @@
       <show>lunar</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_50.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_50.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_50.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_50.gif</imagelink>
     </appearance>
     <appearance>
@@ -66,7 +66,7 @@
       <show>lunar</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_60.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_60.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_60.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_60.gif</imagelink>
     </appearance>
     <appearance>
@@ -74,7 +74,7 @@
       <show>lunar</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_70.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_70.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_70.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_70.gif</imagelink>
     </appearance>
     <appearance>
@@ -82,7 +82,7 @@
       <show>lunar</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_80.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_80.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_80.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_80.gif</imagelink>
     </appearance>
     <appearance>
@@ -90,7 +90,7 @@
       <show>lunar</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_90.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_90.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_90.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_90.gif</imagelink>
     </appearance>
     <appearance>
@@ -98,7 +98,7 @@
       <show>lunar</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_100.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_100.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_100.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_100.gif</imagelink>
     </appearance>
     <appearance>
@@ -106,54 +106,52 @@
       <show>lunar</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_110.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_110.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_110.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_110.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>TIVA120</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_120.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_120.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_120.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_120.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>TIVA130</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_130.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_130.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_130.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_130.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>TIVA140</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_140.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_140.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_140.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_140.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>TIVA150</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_150.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_150.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_150.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_150.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>TIVA160</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/TIV/TIV_A_160.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/TIV/TIV_A_160.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/TIV/TIV_A_160.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/TIV/TIV_A_160.gif</imagelink>
     </appearance>
  </appearances>
-
-  <specificappearances>
-  </specificappearances>
 
   <aspectMappings>
     <aspectMapping>
       <advancedAspect>TIVA160</advancedAspect>
       <ourAspect>TIVP</ourAspect>
-    </aspectMapping>    <aspectMapping>
+    </aspectMapping>
+    <aspectMapping>
       <advancedAspect>TIVA150</advancedAspect>
       <ourAspect>TIVP</ourAspect>
     </aspectMapping>

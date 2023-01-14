@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2012
  * @since 2.7.2
  */
-public class MemoryComboIcon extends PositionableJPanel
+public class MemoryComboIcon extends MemoryOrGVComboIcon
         implements java.beans.PropertyChangeListener, ActionListener {
 
     private final JComboBox<String> _comboBox;
@@ -74,35 +74,6 @@ public class MemoryComboIcon extends PositionableJPanel
     @Override
     public JComboBox<String> getTextComponent() {
         return _comboBox;
-    }
-
-    class ComboModel extends DefaultComboBoxModel<String> {
-
-        ComboModel() {
-            super();
-        }
-
-        ComboModel(String[] l) {
-            super(l);
-        }
-
-        @Override
-        public void addElement(String obj) {
-            if (getIndexOf(obj) >= 0) {
-                return;
-            }
-            super.addElement(obj);
-            updateMemory();
-        }
-
-        @Override
-        public void insertElementAt(String obj, int idx) {
-            if (getIndexOf(obj) >= 0) {
-                return;
-            }
-            super.insertElementAt(obj, idx);
-            updateMemory();
-        }
     }
 
     @Override
@@ -166,6 +137,7 @@ public class MemoryComboIcon extends PositionableJPanel
         return namedMemory.getBean();
     }
 
+    @Override
     public ComboModel getComboModel() {
         return _model;
     }
@@ -175,7 +147,7 @@ public class MemoryComboIcon extends PositionableJPanel
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        updateMemory();
+        update();
     }
 
     // update icon as state of Memory changes
@@ -197,7 +169,8 @@ public class MemoryComboIcon extends PositionableJPanel
         return name;
     }
 
-    private void updateMemory() {
+    @Override
+    protected void update() {
         if (namedMemory == null) {
             return;
         }

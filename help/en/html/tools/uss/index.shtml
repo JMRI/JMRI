@@ -30,43 +30,43 @@
 
       <ul>
         <li>The <a href=
-        "https://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py</a> sample
+        "https://www.jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py</a> sample
         script and it's associated
         <a href=
-        "https://jmri.org/jython/ctc/TwoColumnMachine.xml">jython/ctc/TwoColumnMachine.xml</a>
+        "https://www.jmri.org/jython/ctc/TwoColumnMachine.xml">jython/ctc/TwoColumnMachine.xml</a>
         panel file.
         </li>
 
         <li>The <a href=
-        "https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">Javadoc documentation
+        "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">Javadoc documentation
         on the various components</a>
         </li>
       </ul>
       The available tools are:
       <dl>
         <dt>
-          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeLine.html">Code Line</a>
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeLine.html">Code Line</a>
         </dt>
 
         <dd>Implements the code line between the CTC machine and the field. Can use a turnout
         output to tell e.g. a lamp to light or relays to make noise.</dd>
 
         <dt>
-          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/Station.html">Station</a>
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/Station.html">Station</a>
         </dt>
 
         <dd>Corresponds to a single station on the code line, usually a single column on the CTC
         machine and all the items in the field that are connected to it.</dd>
 
         <dt>
-          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeButton.html">Code Button</a>
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeButton.html">Code Button</a>
         </dt>
 
         <dd>One per section, this defines the connection to the code button (a sensor input) and
         the code lamp (a turnout output) on the panel.</dd>
 
         <dt>
-          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutSection.html">Turnout
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutSection.html">Turnout
           Section</a>
         </dt>
 
@@ -76,7 +76,7 @@
 
         <dt>
           <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/SignalHeadSection.html">SignalHead
+          "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/SignalHeadSection.html">SignalHead
           Section</a>
         </dt>
 
@@ -86,7 +86,7 @@
         take Lock objects to add prototypical locking.</dd>
 
         <dt>
-          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrackCircuitSection.html">Track
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrackCircuitSection.html">Track
           Circuit Section</a>
         </dt>
 
@@ -96,7 +96,7 @@
 
         <dt>
           <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/MaintainerCallSection.html">Maintainer
+          "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/MaintainerCallSection.html">Maintainer
           Call Section</a>
         </dt>
 
@@ -104,7 +104,7 @@
         the central panel (a sensor input).</dd>
 
         <dt>
-          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/OccupancyLock.html">Occupancy
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/OccupancyLock.html">Occupancy
           Lock</a>
         </dt>
 
@@ -112,21 +112,21 @@
         section (defined into the Lock) is occupied.</dd>
 
         <dt>
-          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/RouteLock.html">Route Lock</a>
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/RouteLock.html">Route Lock</a>
         </dt>
 
         <dd>When added to a Turnout section, this prevents changes while the OS section has a route
         cleared through the Turnout.</dd>
 
         <dt>
-          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TimeLock.html">Time Lock</a>
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TimeLock.html">Time Lock</a>
         </dt>
 
         <dd>When added to a Turnout section, this prevents changes while the OS section has signals
         running time.</dd>
 
         <dt>
-          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrafficLock.html">Traffic
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrafficLock.html">Traffic
           Lock</a>
         </dt>
 
@@ -136,7 +136,7 @@
         the siding.</dd>
 
         <dt>
-          <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutLock.html">Turnout
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutLock.html">Turnout
           Lock</a>
         </dt>
 

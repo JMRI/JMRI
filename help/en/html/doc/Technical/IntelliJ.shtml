@@ -141,7 +141,7 @@
       this file is used instead of the file located in the IntelliJ IDEA installation folder.</p>
 
       <p>More info on setting these important vmoptions is available on the <a href=
-      "https://www.jetbrains.com/idea/help/tuning-intellij-idea.html">Idea website</a>.<br>
+      "https://www.jetbrains.com/help/idea/tuning-the-ide.html">Idea website</a>.<br>
       Note: If you have a hint how to set this at the Project level instead of tinkering with local
       application settings, please tell <a href="https://groups.io/g/jmriusers">JMRI users</a> at
       Groups.io.</p>
@@ -784,7 +784,7 @@
       "IntelliJ Git Create PR Base Branch"></a></p>
 
       <p>To create a PR from GitHub web - outside IntelliJ - start by signing on to the <a href=
-      "http://github.com">GitHub website</a>, selecting your repository & branch and clicking the
+      "https://github.com">GitHub website</a>, selecting your repository & branch and clicking the
       <a href="gitdeveloper.shtml#pull">Pull Request button</a>. For more info, see the <a href=
       "gitdeveloper.shtml#pull">Git Developer Help</a> page.</p>
 
@@ -898,7 +898,7 @@
 
       <h2 id="more">More Help</h2>
 
-      <p>See the IntelliJ IDEA <a href="https://www.jetbrains.com/idea/help/reference.html">web
+      <p>See the IntelliJ IDEA <a href="https://www.jetbrains.com/help/idea/getting-started.html">web
       reference</a> for more specific information on using this IDE.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

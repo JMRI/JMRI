@@ -214,7 +214,7 @@
           within the grid. A value of gridx="0" puts the item in the leftmost column. A value of
           gridy="0" puts the item in the topmost row. Other attributes to control the format of the
           grid items are available and are documented in the <a href=
-          "http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target=
+          "https://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target=
           "_blank">Java&reg; GridBagLayout Tutorial</a>.</p>
 
           <ul>
@@ -224,7 +224,7 @@
             attribute of "grid".</li>
 
             <li>Both numeric and named constant values (as specified by the <a href=
-            "http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target=
+            "https://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target=
             "_blank">documentation</a>) can be used.
             </li>
 

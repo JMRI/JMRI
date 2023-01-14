@@ -57,6 +57,8 @@
         documentation Wiki</a>, which lets a lot of people easily contribute to building better
         documentation.</li>
 
+        <li>Kevin Appleby, who provided a script to do serial transfers from the Light table</li>
+
         <li>Chris Atkins helped improve the <a href=
         "https://jmri.org/help/en/html/tools/scripting/Python.shtml#newJython">instructions for using
         a separate jython install</a>
@@ -253,7 +255,8 @@
         <li>Nigel Cliffe, who updated the CT Elektronik decoder definitions, provided sample
         scripts, provided new Zimo MX620 and ZTC 471 definitions, provided MERG decoder
         definitions, created a script tool for setting Zimo function options, designed the
-        DecoderPro 3 GUI, and created a DCC Concepts decoder definition.</li>
+        DecoderPro 3 GUI, created a DCC Concepts decoder definition
+        and helped with creation of the MQTT Reporter.</li>
 
         <li>John Clutterbuck helped with Fleischmann decoder definitions</li>
 
@@ -316,6 +319,8 @@
         <li>Eddie Delozier, who write the TCS M1 decoder file.</li>
 
         <li>Luca Dentella, who contributed the CmdMapper script.</li>
+
+        <li>Pino Di Biasi, who contributed an Italian signal system</li>
 
         <li>Kevin Dickerson, who figured out the ECoS protocol so JMRI could connect to one and
         wrote code for ECoS throttles and turnouts, added turnout monitoring to the ECoS support,

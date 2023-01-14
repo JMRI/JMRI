@@ -43,7 +43,7 @@
       <h2>Details</h2>
 
       <p>Our source code up to JMRI version 4.1.2 was distributed using <a href=
-      "http://subversion.apache.org/">Subversion</a>. (Until then we also kept the <a href=
+      "https://subversion.apache.org/">Subversion</a>. (Until then we also kept the <a href=
       "WebSite.shtml">website</a> in Subversion, if you'd like to work with it directly.) If you
       want to work with the code, a few minutes installing Subversion is well worth it. We're
       sorry, but we just can't support other methods (sending .zip files, etc), as they're just too
@@ -51,7 +51,7 @@
 
       <p>A few computers will come with Subversion installed, mostly various Linux systems. If your
       computer does not have it installed, you will need to locate and install the needed client
-      software. See the <a href="http://subversion.apache.org/packages.html">Subversion binary
+      software. See the <a href="https://subversion.apache.org/packages.html">Subversion binary
       downloads</a> page for packages for many operating systems (including Mac OS X, Windows and
       different Linux flavors).</p>
 
@@ -59,9 +59,9 @@
       Subversion, either directly or as an add-on. Check the documentation for your favorite IDE to
       check on SVN support.</p>
 
-      <p>The <a href="https://sourceforge.net/apps/trac/sourceforge/wiki/Subversion">Subversion
-      server at SourceForge</a> does not require any user information when you check out a copy of
-      the code.</p>
+      <p>The Subversion server at SourceForge (
+      https://sourceforge.net/apps/trac/sourceforge/wiki/Subversion ) did not require any user
+      information when you checked out a copy of the code.</p>
 
       <p>If you have an existing copy of the code and want to update it to the most recent contents
       of the Subversion repository, the command is:</p>

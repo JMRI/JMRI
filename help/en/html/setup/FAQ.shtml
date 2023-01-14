@@ -8,7 +8,7 @@
   <script type="text/javascript">
     /*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/
   </script>
-  <link rel="stylesheet" type="text/css" href="/web/css/faq.css" media="screen"><!-- /FAQ-Head -->
+  <link rel="stylesheet" type="text/css" href="https://www.jmri.org/web/css/faq.css" media="screen"><!-- /FAQ-Head -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -41,8 +41,7 @@
   </div>
   <!-- closes #mBody-->
   <!-- FAQ-Tail -->
-  <script type="text/javascript" src="/web/js/faq.js"></script><!-- /FAQ-Tail -->
-   
+  <script type="text/javascript" src="https://www.jmri.org/web/js/faq.js"></script><!-- /FAQ-Tail -->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -244,8 +244,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         if (c == null) {
             return false; // if no CV was assigned to a decoder variable
         }
-        int state = c.getState();
-        return (state == CvValue.EDITED || state == CvValue.UNKNOWN);
+        ValueState state = c.getState();
+        return (state == ValueState.EDITED || state == ValueState.UNKNOWN);
     }
 
     // handle incoming parameter notification
@@ -441,7 +441,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      *
      * @return the current state of the Variable
      */
-    public int getState() {
+    public ValueState getState() {
         return _state;
     }
 
@@ -451,38 +451,14 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * @param state the desired state as per definitions in AbstractValue
      * @see AbstractValue
      */
-    public void setState(int state) {
-        switch (state) {
-            case UNKNOWN:
-                setColor(COLOR_UNKNOWN);
-                break;
-            case EDITED:
-                setColor(COLOR_EDITED);
-                break;
-            case READ:
-                setColor(COLOR_READ);
-                break;
-            case STORED:
-                setColor(COLOR_STORED);
-                break;
-            case FROMFILE:
-                setColor(COLOR_FROMFILE);
-                break;
-            case SAME:
-                setColor(COLOR_SAME);
-                break;
-            case DIFF:
-                setColor(COLOR_DIFF);
-                break;
-            default:
-                log.error("Inconsistent state: {}", _state);
-        }
-        if (_state != state || _state == UNKNOWN) {
-            prop.firePropertyChange("State", Integer.valueOf(_state), Integer.valueOf(state));
+    public void setState(ValueState state) {
+        setColor(state.getColor());
+        if (_state != state || _state == ValueState.UNKNOWN) {
+            prop.firePropertyChange("State", _state, state);
         }
         _state = state;
     }
-    private int _state = UNKNOWN;
+    private ValueState _state = ValueState.UNKNOWN;
 
     /**
      * {@inheritDoc}
@@ -590,7 +566,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      *
      * @param state the new state to set
      */
-    public abstract void setCvState(int state);
+    public abstract void setCvState(ValueState state);
 
     /**
      * Check if a variable is busy (during read, write operations).

@@ -256,7 +256,7 @@
         </li>
 
         <li>
-          <a href="http://catalog.hathitrust.org/Record/002567896">Railroad operation and railway
+          <a href="https://catalog.hathitrust.org/Record/002567896">Railroad operation and railway
           signaling</a> by Edmund J. Phillips, Jr., Simmons-Boardman Publ., 1942
         </li>
 
@@ -272,7 +272,7 @@
         </li>
 
         <li>
-          <a href="http://www.railroadsignals.us/basics/nomenclature.htm">US Circuit
+          <a href="https://railroadsignals.us/basics/nomenclature.htm">US Circuit
           Nomenclature</a> helps in prototypically naming parts of a signaling system.
         </li>
       </ul>
@@ -344,7 +344,7 @@
       <p>All the information in the Tables is saved with the configuration in an XML file, along
       with control panel setup, Logix, Routes, and similar stuff. For more information on creating
       and displaying panels, including how to show signals on your panels, please see the <a href=
-      "../../apps/PanelPro/Panels.shtml">Panels help page</a>.</p>
+      "../../apps/PanelPro/index.shtml">Panels help page</a>.</p>
 
       <p>What's next?</p>
 
@@ -510,10 +510,10 @@ signals.getSignalHead("IH1").setAppearance(YELLOW)
       JMRI provides classes to help you write Java code to control your layout. The most powerful
       of these are aimed at general automation and make it easy to code your own signal logic into
       the program; see the <a href="../automation/viaJava.shtml">Automation page</a>. The <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">"Siglet" class</a> and it's kin
+      "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">"Siglet" class</a> and it's kin
       are meant to make it easy to write complex custom signal logic; a variant of these was used
       by Nick Kulp's for signaling automation on his <a href=
-      "https://jmri.org/community/examples/Panels-Cornwall/CornwallRunning.html">Cornwall
+      "https://www.jmri.org/community/examples/Panels-Cornwall/CornwallRunning.shtml">Cornwall
       Railroad</a>.
       <p>Although Automation Classes require writing code instead of just filling out a GUI form,
       JMRI handles all of the details of reading status changes from the layout, writing desired

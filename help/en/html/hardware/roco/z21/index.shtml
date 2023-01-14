@@ -25,7 +25,7 @@
       "../../XPressNet/index.shtml">XPressNet</a> connection pages.</p>
 
       <p>This page specifies connecting to the z21/Z21 via the Ethernet port as documented on the
-      <a href="https://www.z21.eu/en/">Z21 website</a>.</p>
+      <a href="https://www.z21.eu/en">Z21 website</a>.</p>
 
       <ul>
         <!-- TOC -->
@@ -35,7 +35,7 @@
         </li>
 
         <li>
-          <a href="#limitations">Limitations</a>
+          <a href="#Limitations">Limitations</a>
         </li>
 
         <li>

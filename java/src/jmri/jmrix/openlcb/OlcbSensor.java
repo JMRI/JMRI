@@ -40,7 +40,7 @@ public class OlcbSensor extends AbstractSensor {
             (~BitProducerConsumer.LISTEN_INVALID_STATE);
 
     private TimerTask timerTask;
-    
+
     public OlcbSensor(String prefix, String address, OlcbInterface iface) {
         super(prefix + "S" + address);
         this.iface = iface;
@@ -282,14 +282,14 @@ public class OlcbSensor extends AbstractSensor {
     }
 
     /**
-     * {@inheritDoc} 
-     * 
+     * {@inheritDoc}
+     *
      * Sorts by decoded EventID(s)
      */
     @CheckReturnValue
     @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
-        return OlcbSystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
+        return OlcbAddress.compareSystemNameSuffix(suffix1, suffix2);
     }
 
     private final static Logger log = LoggerFactory.getLogger(OlcbSensor.class);
