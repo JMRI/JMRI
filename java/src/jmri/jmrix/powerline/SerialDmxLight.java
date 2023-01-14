@@ -91,7 +91,7 @@ public class SerialDmxLight extends jmri.jmrix.powerline.SerialLight {
         tc.sendDmxSequence(this.unitid, (byte) newStep);
 
         if (log.isDebugEnabled()) {
-            log.debug("sendIntensity({}) unitId {} intensity {} value {}: worked {}", this.unitid, intensity, newStep, didOk);
+            log.debug("sendIntensity() unitId {} intensity {} value {}: worked {}", this.unitid, intensity, newStep, didOk);
         }
     }
 
@@ -158,7 +158,7 @@ public class SerialDmxLight extends jmri.jmrix.powerline.SerialLight {
         tc.sendDmxSequence(this.unitid, newDim);
 
         if (log.isDebugEnabled()) {
-            log.debug("sendOnOff({}) unit {} state {} value {} ", this.unitid, newState, newDim);
+            log.debug("sendOnOff() unit {} state {} value {} ", this.unitid, newState, newDim);
         }
     }
 
