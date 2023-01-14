@@ -442,18 +442,28 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def stop_all_threads(self):
         #stop all
-        activeThreadList = java.util.concurrent.CopyOnWriteArrayList()
-        for thread in instanceList:
-            activeThreadList.add(thread)
+        # activeThreadList = java.util.concurrent.CopyOnWriteArrayList()
+        # for thread in instanceList:
+        #     activeThreadList.add(thread)
+        #
+        # for thread in activeThreadList:
+        #     if thread is not None:
+        #         if thread.isRunning():
+        #             if self.logLevel > 0: print 'Stop "{}" thread'.format(thread.getName())
+        #             thread.stop()
+        #         else:
+        #             #need this for scheduler in wait state
+        #             thread.stop()
 
-        for thread in activeThreadList:
-            if thread is not None:
-                if thread.isRunning():
-                    if self.logLevel > 0: print 'Stop "{}" thread'.format(thread.getName())
-                    thread.stop()
-                else:
-                    #need this for scheduler in wait state
-                    thread.stop()
+        # stop all thresds even if there are duplications
+        summary = jmri.jmrit.automat.AutomatSummary.instance()
+        automatsList = java.util.concurrent.CopyOnWriteArrayList()
+        for automat in summary.getAutomats():
+            automatsList.add(automat)
+
+        for automat in automatsList:
+            automat.stop()
+
 
 
     def remove_listener(self):
