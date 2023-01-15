@@ -76,12 +76,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Support for expanded slots and associated protocol.
-                    To enable this the advanced LocoNet preferences must be set XPSlots Auto Detect.
-                    If using DCS240(+) limited to less than 120 slots use DCS210 or DCS210+ to avoid needless reading of slots.
-                    When using a DCS240(+) be aware that when first opening a Slot Monitor window 430 odd slots are read, so avoid doing it during layout start.
-                    If using throttles that cannot access XP Slots along side those that can you may see the same loco number twice in the slotmon, which slot actually has control may vary.
-                </li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -101,7 +96,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>A Reporter implementation is now available for MQTT connections.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -289,11 +284,6 @@
                 <li></li>
             </ul>
 
-        <h4>Piko</h4>
-            <ul>
-                <li>Piko Smart Decoder 4.1 and XP5.1</li>
-            </ul>
-
         <h4>Rautenhaus</h4>
             <ul>
                 <li></li>
@@ -341,7 +331,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li>New decoder file for Tillig BR 89 steam loco</li>
+                <li></li>
             </ul>
 
         <h4>Umelec</h4>
@@ -372,8 +362,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Some internal state constants have been changed from integer values
-                to an enum.  This should not have any external effect.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -385,7 +374,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fix allocating over occupied blocks in IntermediateSections</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -420,13 +409,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Fixes a bug when importing a Logix to LogixNG, where the Conditional
-          uses <i>Mixed</i>. The <i>Not</i> is ignored for the conditional
-          variables when using Mixed.</li>
-          <li>Fixes a bug with the action Entry/Exit and the expression Entry/Exit.
-          The action and expression stored the user name instead of the system name
-          if the Entry/Exit. The user name of an Entry/Exit changes when the NX sensor
-          or related signal mast is changed.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -490,7 +473,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Kevin Appleby provided a script for doing serial transfer from the Light Table.</li>
+            <li>Cliff Anderson contributed a new TurnoutsMasterSlave.py script.
+            </li>
         </ul>
 
     <h3>Signals</h3>
@@ -500,7 +484,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Pino Di Biasi provided an Italian signal system</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
