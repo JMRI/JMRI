@@ -1911,7 +1911,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
             for (int i = 0; i < intermediateSections.size() - 1; i++) {  // ie do not check last section which is not an intermediate section
                 Section se = intermediateSections.get(i);
-                if (se.getState() == Section.FREE) {
+                if (se.getState() == Section.FREE  && se.getOccupancy() == Section.UNOCCUPIED) {
                     //If the section state is free, we need to look to see if any of the blocks are used else where
                     Section conflict = checkBlocksNotInAllocatedSection(se, null);
                     if (conflict != null) {
@@ -1929,11 +1929,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                             }
                         }
                     }
-                } else if (at.getLastAllocatedSection() != null && se.getState() != at.getLastAllocatedSection().getState()) {
-                    //Last allocated section and the checking section direction are not the same
+                } else if (se.getState() != Section.FREE
+                                && at.getLastAllocatedSection() != null
+                                && se.getState() != at.getLastAllocatedSection().getState())  {
+                    // train coming other way...
                     return null;
                 } else {
                     intermediatesOccupied = true;
+                    break;
                 }
             }
             //If the intermediate sections are already occupied or allocated then we clear the intermediate list and only allocate the original request.
