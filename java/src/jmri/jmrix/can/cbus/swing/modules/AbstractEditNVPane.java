@@ -6,9 +6,6 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import static jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel.NV_SELECT_COLUMN;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Abstract Node Variable edit Frame for a CBUS module
  *
@@ -161,6 +158,6 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractEditNVPane.class);
+//    private final static Logger log = LoggerFactory.getLogger(AbstractEditNVPane.class);
 
 }
