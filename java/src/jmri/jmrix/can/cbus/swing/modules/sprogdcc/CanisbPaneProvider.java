@@ -32,10 +32,26 @@ public class CanisbPaneProvider extends CbusConfigPaneProvider {
     public static final int CAN_ERR_STATUS = 10;
     public static final int CAN_NOM_BIT_RATE_RX_COUNT = 11;
     public static final int CAN_NOM_BIT_RATE_TX_COUNT = 12;
-    public static final int CAN_ERR_FREE_COUNT_LO = 13;
-    public static final int CAN_ERR_FREE_COUNT_HI = 14;
-    public static final int CAN_DIAGNOSTICS_LO = 15;
-    public static final int CAN_DIAGNOSTICS_HI = 16;
+    public static final int CAN_ERR_FREE_COUNT_HI = 13;
+    public static final int CAN_ERR_FREE_COUNT_LO = 14;
+    public static final int CAN_DIAGNOSTICS_HI = 15;
+    public static final int CAN_DIAGNOSTICS_LO = 16;
+    public static final int HOST_TX_CNT_T = 17;
+    public static final int HOST_TX_CNT_U = 18;
+    public static final int HOST_TX_CNT_H = 19;
+    public static final int HOST_TX_CNT_L = 20;
+    public static final int HOST_RX_CNT_T = 21;
+    public static final int HOST_RX_CNT_U = 22;
+    public static final int HOST_RX_CNT_H = 23;
+    public static final int HOST_RX_CNT_L = 24;
+    public static final int CAN_TX_CNT_T = 25;
+    public static final int CAN_TX_CNT_U = 26;
+    public static final int CAN_TX_CNT_H = 27;
+    public static final int CAN_TX_CNT_L = 28;
+    public static final int CAN_RX_CNT_T = 29;
+    public static final int CAN_RX_CNT_U = 30;
+    public static final int CAN_RX_CNT_H = 31;
+    public static final int CAN_RX_CNT_L = 32;
     
     // These may be overridden in scripts for unusual use cases
     public static int MIN_CANID = 100;
@@ -78,10 +94,26 @@ public class CanisbPaneProvider extends CbusConfigPaneProvider {
         result.put(CAN_ERR_STATUS, Bundle.getMessage("CanErrStatus"));
         result.put(CAN_NOM_BIT_RATE_RX_COUNT, Bundle.getMessage("CanNomBitRateRxCount"));
         result.put(CAN_NOM_BIT_RATE_TX_COUNT, Bundle.getMessage("CanNomBitRateTxCount"));
-        result.put(CAN_ERR_FREE_COUNT_LO, Bundle.getMessage("CanErrFreeCountHi"));
-        result.put(CAN_ERR_FREE_COUNT_HI, Bundle.getMessage("CanErrFreeCountLo"));
-        result.put(CAN_DIAGNOSTICS_LO, Bundle.getMessage("CanDiagnosticsLo"));
-        result.put(CAN_DIAGNOSTICS_HI, Bundle.getMessage("CanDiagnosticsHi"));
+        result.put(CAN_ERR_FREE_COUNT_HI, Bundle.getMessage("CanErrFreeCount")+" Hi");
+        result.put(CAN_ERR_FREE_COUNT_LO, Bundle.getMessage("CanErrFreeCount")+" Lo");
+        result.put(CAN_DIAGNOSTICS_HI, Bundle.getMessage("CanDiagnostics")+" Hi");
+        result.put(CAN_DIAGNOSTICS_LO, Bundle.getMessage("CanDiagnostics")+" Lo");
+        result.put(HOST_TX_CNT_T, Bundle.getMessage("HostTxCnt")+" Top");
+        result.put(HOST_TX_CNT_U, Bundle.getMessage("HostTxCnt")+" Upper");
+        result.put(HOST_TX_CNT_H, Bundle.getMessage("HostTxCnt")+" Hi");
+        result.put(HOST_TX_CNT_L, Bundle.getMessage("HostTxCnt")+" Lo");
+        result.put(HOST_RX_CNT_T, Bundle.getMessage("HostRxCnt")+" Top");
+        result.put(HOST_RX_CNT_U, Bundle.getMessage("HostRxCnt")+" Upper");
+        result.put(HOST_RX_CNT_H, Bundle.getMessage("HostRxCnt")+" Hi");
+        result.put(HOST_RX_CNT_L, Bundle.getMessage("HostRxCnt")+" Lo");
+        result.put(CAN_TX_CNT_T, Bundle.getMessage("CanTxCnt")+" Top");
+        result.put(CAN_TX_CNT_U, Bundle.getMessage("CanTxCnt")+" Upper");
+        result.put(CAN_TX_CNT_H, Bundle.getMessage("CanTxCnt")+" Hi");
+        result.put(CAN_TX_CNT_L, Bundle.getMessage("CanTxCnt")+" Lo");
+        result.put(CAN_RX_CNT_T, Bundle.getMessage("CanRxCnt")+" Top");
+        result.put(CAN_RX_CNT_U, Bundle.getMessage("CanRxCnt")+" Upper");
+        result.put(CAN_RX_CNT_H, Bundle.getMessage("CanRxCnt")+" Hi");
+        result.put(CAN_RX_CNT_L, Bundle.getMessage("CanRxCnt")+" Lo");
 
         return Collections.unmodifiableMap(result);
     }    

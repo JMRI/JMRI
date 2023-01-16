@@ -6,6 +6,9 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import static jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel.NV_SELECT_COLUMN;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Abstract Node Variable edit Frame for a CBUS module
  *
@@ -68,7 +71,7 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
             if (val < min) {
                 return min;
             } else {
-                return (int)_dataModel.getValueAt(row - 1, NV_SELECT_COLUMN);
+                return val;
             }
         } catch (NullPointerException ex) {
             // NVs are not available yet, e.g. during resync
@@ -93,7 +96,7 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
             } else if (val > max) {
                 return max;
             } else {
-                return (int)_dataModel.getValueAt(row - 1, NV_SELECT_COLUMN);
+                return val;
             }
         } catch (NullPointerException ex) {
             // NVs are not available yet, e.g. during resync
@@ -122,11 +125,43 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
             } else if (val > max) {
                 return max;
             } else {
-                return hi*256 + lo;
+                return val;
             }
         } catch (NullPointerException ex) {
             // NVs are not available yet, e.g. during resync
             return min;
         }
     }
+    
+    /**
+     * Get the value of a 4-byte (32-bit) NV from NV_SELECT_COLUMN
+     * 
+     * Hardware should retrurn a count in ranbge 0 .. max positive integer
+     * 
+     * @param rowT index of top (MSB) byte
+     * 
+     * @return the NV value, or 0 if NVs not available yet
+     */
+    protected int getSelectValue32(int rowT) {
+        int t, u, h, l;
+        try {
+            t = (int)_dataModel.getValueAt(rowT - 1, NV_SELECT_COLUMN);
+            u = (int)_dataModel.getValueAt(rowT, NV_SELECT_COLUMN);
+            h = (int)_dataModel.getValueAt(rowT + 1, NV_SELECT_COLUMN);
+            l = (int)_dataModel.getValueAt(rowT + 2, NV_SELECT_COLUMN);
+            int val = ((t*256 + u)*256 + h)*256 + l;
+            if (val < 0) {
+                log.error("Count value out of range {}", val);
+                return 0;
+            } else {
+                return val;
+            }
+        } catch (NullPointerException ex) {
+            // NVs are not available yet, e.g. during resync
+            return 0;
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(AbstractEditNVPane.class);
+
 }
