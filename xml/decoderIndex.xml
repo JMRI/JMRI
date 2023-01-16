@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.3.6plus+jake+20221223T1545Z+R62ddd5aa00 on Fri Dec 23 10:45:51 EST 2022-->
-  <decoderIndex version="37">
+  <!--Written by JMRI version 5.3.1plus+jake+20230112T1737Z+R27d6caaad8 on Thu Jan 12 12:38:13 EST 2023-->
+  <decoderIndex version="39">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -17535,9 +17535,48 @@
       <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive" file="NYB_dualmode.xml">
         <model model="NYB Dual Mode Decoder" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
-      <family name="PIKO SmartDecoder 4.1" mfg="PIKO" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_4.1_Sound_Next_18_40501-18.xml">
+      <family name="PIKO SmartDecoder 4.1" mfg="PIKO" lowVersionID="30" highVersionID="35" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_4.1_Sound.xml">
         <!-- to be checked by hardware owner -->
-        <model model="PIKO40501-18" numOuts="10" numFns="28" maxMotorCurrent="0.8A" formFactor="N" connector="Next18" productID="PIKO40501" comment="Piko SmartDecoder 4.1 Sound Diesel Loco V200.1/BR 221 N Next18 plug and RailCom(R) (Plus)">
+        <model model="PIKO40501-18" replacementFamily="PIKO SmartDecoder 4.1" numOuts="4" numFns="28" maxMotorCurrent="0.8A" formFactor="N" connector="Next18" productID="PIKO40501-18" comment="Piko SmartDecoder 4.1 Sound Next18-S Diesel loco BR 221 N / V200 and RailCom(R) (Plus)">
+          <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
+          <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
+          <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA" />
+          <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA" />
+          <output name="5" label=". A3*." connection="plug" maxcurrent="400 mA" />
+          <output name="6" label=". A4*." connection="plug" maxcurrent="400 mA" />
+          <output name="RG" label=". RG ." />
+          <!-- Rangieren -->
+          <output name="ABV" label=". ABV." />
+          <!-- Anfahren/Bremsen -->
+          <size length="21.5" width="10.5" height="3.7" units="mm" />
+        </model>
+        <model model="PIKO46440-18" replacementFamily="PIKO SmartDecoder 4.1" numOuts="4" numFns="28" maxMotorCurrent="0.8A" formFactor="TT" connector="Next18" productID="PIKO46440-18" comment="Piko SmartDecoder 4.1 Sound Next18-S Steam loco BR 55 plug and RailCom(R) (Plus)">
+          <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
+          <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
+          <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA" />
+          <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA" />
+          <output name="5" label=". A3*." connection="plug" maxcurrent="400 mA" />
+          <output name="6" label=". A4*." connection="plug" maxcurrent="400 mA" />
+          <output name="RG" label=". RG ." />
+          <!-- Rangieren -->
+          <output name="ABV" label=". ABV." />
+          <!-- Anfahren/Bremsen -->
+          <size length="21.5" width="10.5" height="3.7" units="mm" />
+        </model>
+        <model model="PIKO46442-16" replacementFamily="PIKO SmartDecoder 4.1" numOuts="4" numFns="28" maxMotorCurrent="1.2A" formFactor="TT" connector="PluX16" productID="PIKO46442-16" comment="Piko SmartDecoder 4.1 Sound PluX16 Diesel loco BR 130 plug and RailCom(R) (Plus)">
+          <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
+          <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
+          <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA" />
+          <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA" />
+          <output name="5" label=". A3*." connection="plug" maxcurrent="400 mA" />
+          <output name="6" label=". A4*." connection="plug" maxcurrent="400 mA" />
+          <output name="RG" label=". RG ." />
+          <!-- Rangieren -->
+          <output name="ABV" label=". ABV." />
+          <!-- Anfahren/Bremsen -->
+          <size length="30.2" width="16" height="3.8" units="mm" />
+        </model>
+        <model model="PIKO46443-22" replacementFamily="PIKO SmartDecoder 4.1" numOuts="9" numFns="28" maxMotorCurrent="1.2A" formFactor="TT" connector="PluX22" productID="PIKO46443-22" comment="Piko SmartDecoder 4.1 Sound PluX22 Diesel loco BR 119 plug and RailCom(R) (Plus)">
           <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
           <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
           <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA" />
@@ -17547,9 +17586,20 @@
           <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA" />
           <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA" />
           <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA" />
-          <output name="10" label=". A8 ." connection="plug" maxcurrent="400 mA" />
-          <output name="Shunting" label="mode" />
-          <output name="Start/brake" label="inertia" />
+          <output name="RG" label=". RG ." />
+          <!-- Rangieren -->
+          <output name="ABV" label=". ABV." />
+          <!-- Anfahren/Bremsen -->
+          <size length="30.2" width="16" height="3.8" units="mm" />
+        </model>
+      </family>
+      <family name="PIKO SmartDecoder XP5.1" mfg="PIKO" lowVersionID="5" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound.xml">
+        <!-- to be checked by hardware owner -->
+        <model model="PIKO46550-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus)">
+          <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
+          <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
+          <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA" />
+          <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA" />
           <size length="21.5" width="10.5" height="3.7" units="mm" />
         </model>
       </family>
@@ -17647,7 +17697,11 @@
         <model model="ARD-SCOM-TC" lowVersionID="10" highVersionID="19" productID="16843266" maxInputVolts="24V AC" maxTotalCurrent="0.2A" numOuts="16" connector="other" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_8VYH.xml">
-        <model model="UNI16ARD-8VYH" lowVersionID="40" highVersionID="59" productID="16843009" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+        <model model="UNI16ARD-8VYH" lowVersionID="00" highVersionID="39" productID="16843009" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+        <model model="UNI16ARD-8VYH-4" lowVersionID="40" highVersionID="49" productID="16843009" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+        <model model="UNI16ARD-8VYH-5" lowVersionID="50" highVersionID="59" productID="16843009" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+        <model model="UNI16ARD-8VYH-6" lowVersionID="60" highVersionID="69" productID="16843009" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+        <model model="UNI16ARD-8VYH-7" lowVersionID="70" highVersionID="79" productID="16843009" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV.xml">
         <model show="no" model="UNI16ARD-NAV" replacementModel="UNI16ARD-NAV-ST" replacementFamily="dccdoma.cz" lowVersionID="41" highVersionID="49" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
@@ -17660,6 +17714,9 @@
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV_ST.xml">
         <model model="UNI16ARD-NAV-ST" lowVersionID="41" highVersionID="49" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+      </family>
+      <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV_TC.xml">
+        <model model="UNI16ARD-NAV-TC" lowVersionID="10" highVersionID="19" productID="16843013" maxInputVolts="24V AC" maxTotalCurrent="0.2A" numOuts="16" connector="other" />
       </family>
       <family name="sidlo" mfg="Public-domain and DIY" file="Public_Domain_sidlo_ARD-LN-S88.xml">
         <model model="ARD-LN-S88" lowVersionID="10" highVersionID="19" productID="1" developerID="21" />
@@ -39980,6 +40037,18 @@
         <model model="Power8" productID="6328" maxTotalCurrent="7A" formFactor="Stationary" comment="7A Multiprotocol Booster">
           <versionCV />
           <size length="104" width="58" height="33" units="mm" />
+        </model>
+      </family>
+      <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_Tillig BR89_73xx5.xml">
+        <!-- to be checked by hardware owner -->
+        <model model="Tillig 0423x" highVersionID="27" numOuts="4" numFns="14" maxMotorCurrent="0.8A" formFactor="N" connector="Wires" productID="Tillig0423x" comment="Tillig BR 89 mit IntelliDrive2 Mini-Lokdecoder and RailCom(R) ohne Sound">
+          <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
+          <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
+          <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA" />
+          <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA" />
+          <output name="Shunting" label=". RG ." />
+          <output name="Start/brake" label=". ABV ." />
+          <size length="12" width="12" height="2.4" units="mm" />
         </model>
       </family>
       <family name="Track-Control" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_TrackControl_6922.xml">
