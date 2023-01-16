@@ -151,7 +151,6 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
             l = (int)_dataModel.getValueAt(rowT + 2, NV_SELECT_COLUMN);
             int val = ((t*256 + u)*256 + h)*256 + l;
             if (val < 0) {
-                log.error("Count value out of range {}", val);
                 return 0;
             } else {
                 return val;

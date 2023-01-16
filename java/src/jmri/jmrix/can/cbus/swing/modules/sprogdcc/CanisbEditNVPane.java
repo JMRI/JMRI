@@ -43,7 +43,9 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
     JLabel[] rcText = new JLabel[clearableErrors];
     JTextField[] rcCount = new JTextField[clearableErrors];
     JButton[] rcButton = new JButton[clearableErrors];
-    JButton allButton = new JButton();
+    JButton rcAllButton = new JButton();
+    JButton[] rcUpButton = new JButton[clearableErrors];
+    JButton rcAllUpButton = new JButton();
     // Translate clear button index to NV index
     int[] rcNvOffset = {CanisbPaneProvider.CAN_ERR_STATUS,
         CanisbPaneProvider.TX_FAIL_CNT,
@@ -62,7 +64,7 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
     int rErrors = rTitle.length;
     JLabel[] rText = new JLabel[rErrors];
     JTextField[] rCount = new JTextField[rErrors];
-    JButton[] rButton = new JButton[rErrors];
+    JButton[] rUpButton = new JButton[rErrors];
 
     String[] commsTitle = {Bundle.getMessage("HostTxCnt"),
         Bundle.getMessage("HostRxCnt"),
@@ -74,6 +76,8 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
     JTextField[] commsCount = new JTextField[commsItems];
     JButton[] commsButton = new JButton[commsItems];
     JButton commsAllButton = new JButton();
+    JButton[] commsUpButton = new JButton[commsItems];
+    JButton commsAllUpButton = new JButton();
     // Translate comms button index to NV index
     int[] commsNvOffset = {CanisbPaneProvider.HOST_TX_CNT_T,
         CanisbPaneProvider.HOST_RX_CNT_T,
@@ -252,7 +256,7 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
     }
 
     /**
-     * Clear button action
+     * Clearable errors clear button action
      * 
      * Translate the button index to the NV index and clear the NV.
      * 
@@ -278,7 +282,44 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
     }
     
     /**
-     * Communications button action
+     * Clearable errors update button action
+     * 
+     * Translate the button index to the NV index and clear the NV.
+     * 
+     * @param button the button index
+     */
+    public void rcUpButtonActionPerformed(int button) {
+        _node.send.nVRD(_node.getNodeNumber(), rcNvOffset[button]);
+        if (rcNvOffset[button] == CanisbPaneProvider.CAN_ERR_FREE_COUNT_HI) {
+            _node.send.nVRD(_node.getNodeNumber()+1, rcNvOffset[button]);
+        }
+    }
+
+    /**
+     * Read only errors update button action
+     * 
+     * Translate the button index to the NV index and clear the NV.
+     * 
+     * @param button the button index
+     */
+    public void rUpButtonActionPerformed(int button) {
+        _node.send.nVRD(_node.getNodeNumber(), rcNvOffset[button]);
+    }
+
+    /**
+     * Update all clearable and read only errors
+     */
+    public void rcAllUpButtonActionPerformed() {
+        for (int i = 0; i < clearableErrors; i++) {
+            rcUpButtonActionPerformed(i);
+        }
+        for (int i = 0; i < rErrors; i++) {
+            rUpButtonActionPerformed(i);
+        }
+    }
+    
+    /**
+     * Communications clear button action
      * 
      * Translate the button index to the NV index and clear the NV
      * 
@@ -295,11 +336,36 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
     }
 
     /**
-     * Clear all comms status
+     * Communications update button action
      */
     public void commsAllButtonActionPerformed() {
         for (int i = 0; i < commsItems; i++) {
             commsButtonActionPerformed(i);
+        }
+    }
+    
+    /**
+     * Communications button update action
+     * 
+     * Translate the button index to the NV index and update the NV
+     * 
+     * THese are all 4-byte NVs
+     * 
+     * @param button the button index
+     */
+    public void commsUpButtonActionPerformed(int button) {
+       _node.send.nVRD(_node.getNodeNumber(), commsNvOffset[button]);
+       _node.send.nVRD(_node.getNodeNumber()+1, commsNvOffset[button]);
+       _node.send.nVRD(_node.getNodeNumber()+2, commsNvOffset[button]);
+       _node.send.nVRD(_node.getNodeNumber()+3, commsNvOffset[button]);
+    }
+
+    /**
+     * Update all comms status
+     */
+    public void commsAllUpButtonActionPerformed() {
+        for (int i = 0; i < commsItems; i++) {
+            commsUpButtonActionPerformed(i);
         }
     }
     
@@ -376,11 +442,18 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
             gridPane.add(newCol, c);
             c.gridx++;
 
-            allButton = new JButton(Bundle.getMessage("ClearAll"));
-            allButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            rcAllButton = new JButton(Bundle.getMessage("ClearAll"));
+            rcAllButton.addActionListener((java.awt.event.ActionEvent e) -> {
                 allButtonActionPerformed();
             });
-            gridPane.add(allButton, c);
+            gridPane.add(rcAllButton, c);
+            c.gridx++;
+            
+            rcAllUpButton = new JButton(Bundle.getMessage("UpdateAll"));
+            rcAllUpButton.addActionListener((java.awt.event.ActionEvent e) -> {
+                rcAllUpButtonActionPerformed();
+            });
+            gridPane.add(rcAllUpButton, c);
             c.gridx = 0;
             c.gridy++;
 
@@ -396,13 +469,21 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
                 gridPane.add(rcCount[i], c);
                 c.gridx++;
 
-                rcButton[i] = new JButton(Bundle.getMessage("Clear"));
                 final int button = i;
+                
+                rcButton[i] = new JButton(Bundle.getMessage("Clear"));
                 rcButton[i].addActionListener((java.awt.event.ActionEvent e) -> {
                     rcButtonActionPerformed(button);
                 });
-
                 gridPane.add(rcButton[i], c);
+                c.gridx++;
+                
+                rcUpButton[i] = new JButton(Bundle.getMessage("Update"));
+                rcUpButton[i].addActionListener((java.awt.event.ActionEvent e) -> {
+                    rcUpButtonActionPerformed(button);
+                });
+                gridPane.add(rcUpButton[i], c);
+
                 c.gridx = 0;
                 c.gridy++;
             }
@@ -421,6 +502,17 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
                 rCount[i].setHorizontalAlignment(SwingConstants.RIGHT);
                 rCount[i].setEditable(false);
                 gridPane.add(rCount[i], c);
+                c.gridx++;
+                
+                c.gridx++;
+                
+                final int button = i;
+                
+                rUpButton[i] = new JButton(Bundle.getMessage("Update"));
+                rUpButton[i].addActionListener((java.awt.event.ActionEvent e) -> {
+                    rUpButtonActionPerformed(button);
+                });
+                gridPane.add(rUpButton[i], c);
                 c.gridx = 0;
                 c.gridy++;
             }
@@ -459,6 +551,13 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
                 commsAllButtonActionPerformed();
             });
             gridPane.add(commsAllButton, c);
+            c.gridx++;
+            
+            commsAllUpButton = new JButton(Bundle.getMessage("UpdateAll"));
+            commsAllUpButton.addActionListener((java.awt.event.ActionEvent e) -> {
+                commsAllUpButtonActionPerformed();
+            });
+            gridPane.add(commsAllUpButton, c);
             c.gridx = 0;
             c.gridy++;
 
@@ -474,13 +573,20 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
                 gridPane.add(commsCount[i], c);
                 c.gridx++;
 
-                commsButton[i] = new JButton(Bundle.getMessage("Clear"));
                 final int button = i;
+                
+                commsButton[i] = new JButton(Bundle.getMessage("Clear"));
                 commsButton[i].addActionListener((java.awt.event.ActionEvent e) -> {
                     commsButtonActionPerformed(button);
                 });
-
                 gridPane.add(commsButton[i], c);
+                c.gridx++;
+
+                commsUpButton[i] = new JButton(Bundle.getMessage("Update"));
+                commsUpButton[i].addActionListener((java.awt.event.ActionEvent e) -> {
+                    commsUpButtonActionPerformed(button);
+                });
+                gridPane.add(commsUpButton[i], c);
                 c.gridx = 0;
                 c.gridy++;
             }
