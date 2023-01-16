@@ -374,7 +374,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fix allocating over occupied blocks in IntermediateSections</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -474,7 +474,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Cliff Anderson contributed a new TurnoutsMasterSlave.py script.
+            </li>
         </ul>
 
     <h3>Signals</h3>
