@@ -58,8 +58,8 @@ public class SerialAddressTest {
     @Test
     public void testIsDmx512True() {
         Assert.assertTrue("PL1", tc.getAdapterMemo().getSerialAddress().isInsteon("PL1"));
-        Assert.assertTrue("PLA256", tc.getAdapterMemo().getSerialAddress().isInsteon("PLA256"));
-        Assert.assertTrue("PLA512", tc.getAdapterMemo().getSerialAddress().isInsteon("PL512"));
+        Assert.assertTrue("PL256", tc.getAdapterMemo().getSerialAddress().isInsteon("PL256"));
+        Assert.assertTrue("PL512", tc.getAdapterMemo().getSerialAddress().isInsteon("PL512"));
     }
 
     @Test
