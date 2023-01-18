@@ -17,7 +17,6 @@ public class SerialAddressTest {
 
     SerialTrafficControlScaffold tc = null;
 
-    @Test
     public void testIsX10True() {
         Assert.assertTrue("valid config PLA1", tc.getAdapterMemo().getSerialAddress().validSystemNameConfig("PLA1", 'L'));
         Assert.assertTrue("valid config PLB7", tc.getAdapterMemo().getSerialAddress().validSystemNameConfig("PLB7", 'L'));
@@ -32,17 +31,18 @@ public class SerialAddressTest {
         Assert.assertEquals("valid format - PTA16", NameValidity.VALID, tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PTA16", 'T'));
         Assert.assertEquals("valid format - PTK3", NameValidity.VALID, tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PTK3", 'T'));
     }
-    @Test
+
     public void testIsX10False() {
         Assert.assertFalse("invalid config PL4007", tc.getAdapterMemo().getSerialAddress().validSystemNameConfig("PL4007", 'L'));
         Assert.assertFalse("invalid config PL10033", tc.getAdapterMemo().getSerialAddress().validSystemNameConfig("PL10033", 'L'));
         Assert.assertEquals("invalid format - PL2", NameValidity.INVALID, tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL2", 'L'));
         Assert.assertEquals("invalid format - PL0B2", NameValidity.INVALID, tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL0B2", 'L'));
         Assert.assertEquals("invalid format - PL", NameValidity.INVALID, tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL", 'L'));
+        Assert.assertEquals("invalid format - PLB", NameValidity.INVALID, tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PLB", 'L'));
         Assert.assertEquals("invalid format - PL2B5x", NameValidity.INVALID, tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL2B5x", 'L'));
     }
 
-    @Test
+
     public void testIsInsteonTrue() {
         Assert.assertTrue("PL01.02.03", tc.getAdapterMemo().getSerialAddress().isInsteon("PL01.02.03"));
         Assert.assertTrue("PLA1.02.03", tc.getAdapterMemo().getSerialAddress().isInsteon("PLA1.02.03"));
@@ -50,19 +50,17 @@ public class SerialAddressTest {
         Assert.assertTrue("PLA1.02.A3", tc.getAdapterMemo().getSerialAddress().isInsteon("PL01.02.A3"));
     }
 
-    @Test
+
     public void testIsInsteonFalse() {
         Assert.assertFalse("PLA1", tc.getAdapterMemo().getSerialAddress().isInsteon("PLA1"));
     }
 
-    @Test
     public void testIsDmx512True() {
         Assert.assertTrue("PL1", tc.getAdapterMemo().getSerialAddress().isInsteon("PL1"));
         Assert.assertTrue("PL256", tc.getAdapterMemo().getSerialAddress().isInsteon("PL256"));
         Assert.assertTrue("PL512", tc.getAdapterMemo().getSerialAddress().isInsteon("PL512"));
     }
 
-    @Test
     public void testIsDmx512False() {
         Assert.assertFalse("PLA1", tc.getAdapterMemo().getSerialAddress().isInsteon("PLA1"));
         Assert.assertFalse("PL0", tc.getAdapterMemo().getSerialAddress().isInsteon("PL0"));

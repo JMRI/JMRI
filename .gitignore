@@ -73,3 +73,5 @@ RemoteSystemsTempFiles
 [Tt]humbs.db
 *.DS_Store
 java/.settings/Debug PanelPro.launch
+.classpath
+.settings/org.eclipse.ltk.core.refactoring.prefs

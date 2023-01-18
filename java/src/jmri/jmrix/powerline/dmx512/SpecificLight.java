@@ -12,7 +12,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * @author Ken Cameron Copyright (C) 2009 Converted to multiple connection
  * @author Ken Cameron Copyright (C) 2023
  */
-public class SpecificLight extends jmri.jmrix.powerline.SerialDmxLight {
+public class SpecificLight extends jmri.jmrix.powerline.dmx512.SpecificDmxLight {
 
     /**
      * Create a Light object, with only system name.

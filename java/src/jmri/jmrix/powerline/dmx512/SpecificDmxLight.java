@@ -1,21 +1,13 @@
-package jmri.jmrix.powerline;
+package jmri.jmrix.powerline.dmx512;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.powerline.SerialTrafficController;
 
 /**
- * Implementation of the Light class for X10-based subclasses.
+ * Implementation of the Light class for DMX based subclasses.
  * <p>
- * Uses X10 dimming commands to set intensity unless the value is 0.0 or 1.0, in
- * which case it uses on/off commands only.
- * <p>
- * Since the dim/bright step of the hardware is unknown then the Light object is
- * first created, the first time the intensity (not state) is set to other than
- * 0.0 or 1.0, the output is run to it's maximum dim or bright step so that we
- * know the count is right.
- * <p>
- * Keeps track of the controller's "dim count", and if not certain forces it to
- * zero to be sure.
+ * DMX maps the value of 0.0 to 1.0 to values of 0 to 255.
  * <p>
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -23,22 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2009, 2010 Converted to multiple connection
  * @author kcameron Copyright (C) 2023
  */
-public class SerialDmxLight extends jmri.jmrix.powerline.SerialLight {
-
-    // System-dependent instance variables
-    /**
-     * Current output step 0 to maxDimStep.
-     * <p>
-     * -1 means unknown
-     */
-    protected int lastOutputStep = -1;
-
-    /**
-     * Largest X10 dim step number available.
-     * <p>
-     * Loaded from SerialTrafficController.getNumberOfIntensitySteps();
-     */
-    protected int maxDimStep = 0;
+public class SpecificDmxLight extends jmri.jmrix.powerline.SerialLight {
 
     /**
      * Create a Light object, with only system name.
@@ -47,7 +24,7 @@ public class SerialDmxLight extends jmri.jmrix.powerline.SerialLight {
      * @param systemName system name
      * @param tc traffic controller
      */
-    public SerialDmxLight(String systemName, SerialTrafficController tc) {
+    public SpecificDmxLight(String systemName, SerialTrafficController tc) {
         super(systemName, tc);
         this.tc = tc;
         maxDimStep = tc.getNumberOfIntensitySteps();
@@ -61,50 +38,44 @@ public class SerialDmxLight extends jmri.jmrix.powerline.SerialLight {
      * @param tc traffic controller
      * @param userName user name
      */
-    public SerialDmxLight(String systemName, SerialTrafficController tc, String userName) {
+    public SpecificDmxLight(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, tc, userName);
         this.tc = tc;
         maxDimStep = tc.getNumberOfIntensitySteps();
     }
 
     SerialTrafficController tc = null;
+    protected int maxDimStep = 0;
 
     /**
-     * Optionally, force control to a known "dim count".
-     * <p>
-     * Invoked the first time intensity is set.
-     *
-     * @param intensity The next intensity value that will be set
-     */
-    @Override
-    protected void initIntensity(double intensity) {
-        if (log.isDebugEnabled()) {
-            log.debug("initIntensity({})", intensity);
-        }
-
-        maxDimStep = tc.getNumberOfIntensitySteps();
-        // find the new correct dim count
-        int newStep = (int) Math.round(intensity * maxDimStep);  // maxDimStep is full on, 0 is full off, etc
-
-        boolean didOk = false;
-        // update dmxArray
-        tc.sendDmxSequence(this.unitid, (byte) newStep);
-
-        if (log.isDebugEnabled()) {
-            log.debug("sendIntensity() unitId {} intensity {} value {}: worked {}", this.unitid, intensity, newStep, didOk);
-        }
-    }
-
-    /**
-     * Send a Dim/Bright commands to the DMX hardware to reach a specific
+     * Set the intensity for the DMX hardware to reach a specific
      * intensity. Acts immediately, and changes no general state.
-     * <p>
-     * This sends "Dim" commands.
      */
     @Override
     protected void sendIntensity(double intensity) {
+        // correct for out of range value
+        if ((intensity < mMinIntensity) || (intensity > mMaxIntensity)) {
+            log.debug("correcting out of range intensity: {}", intensity);
+            if (intensity < mMinIntensity) {
+                intensity = mMinIntensity;
+            }
+            if (intensity > mMaxIntensity) {
+                intensity = mMaxIntensity;
+            }
+        }
+        // test current too, if the change is out of range...
+        if ((mCurrentIntensity < mMinIntensity) || (mCurrentIntensity > mMaxIntensity)) {
+            log.debug("correcting out of range current intensity: {}", mCurrentIntensity);
+            if (mCurrentIntensity < mMinIntensity) {
+                mCurrentIntensity = mMinIntensity;
+            }
+            if (mCurrentIntensity > mMaxIntensity) {
+                mCurrentIntensity = mMaxIntensity;
+            }
+        }
+        
         if (log.isDebugEnabled()) {
-            log.debug("sendIntensity({}) lastOutputStep: {} maxDimStep: {}", intensity, lastOutputStep, maxDimStep);
+            log.debug("sendIntensity({}) maxDimStep: {}", intensity, maxDimStep);
         }
 
         // find the new correct dim count
@@ -112,13 +83,12 @@ public class SerialDmxLight extends jmri.jmrix.powerline.SerialLight {
 
         // check for errors
         if ((newStep < 0) || (newStep > maxDimStep)) {
-            log.error("newStep wrong: {} intensity: {}", newStep, intensity);
+            log.error("newStep wrong: {} intensity: {} mCurrentIntensity {}", newStep, intensity, mCurrentIntensity);
             return;
         }
 
         // update dmxArray
         tc.sendDmxSequence(this.unitid, (byte) newStep);
-
     }
 
     /**
@@ -143,17 +113,21 @@ public class SerialDmxLight extends jmri.jmrix.powerline.SerialLight {
         byte newDim;
         if (newState == ON) {
             newDim = (byte) maxDimStep;
+            // set new intensity, skip stepping
+            mCurrentIntensity = 1;
+            mTransitionTargetIntensity = 1;
         } else if (newState == OFF) {
             newDim = 0;
+            // set new intensity, skip stepping
+            mCurrentIntensity = 0;
+            mTransitionTargetIntensity = 0;
         } else {
             log.warn("illegal state requested for Light: {}", getSystemName());
             return;
         }
 
         log.debug("set state {} unitid {} value {}", newState, unitid, newDim);
-
-        // set new intensity, skip stepping
-        mCurrentIntensity = newDim;
+        
         // send value to array
         tc.sendDmxSequence(this.unitid, newDim);
 
@@ -162,7 +136,7 @@ public class SerialDmxLight extends jmri.jmrix.powerline.SerialLight {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDmxLight.class);
+    private final static Logger log = LoggerFactory.getLogger(SpecificDmxLight.class);
 }
 
 

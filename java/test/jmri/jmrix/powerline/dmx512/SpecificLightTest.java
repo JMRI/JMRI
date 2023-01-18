@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*;
  * Tests for SpecificLight class.
  *
  * @author Paul Bender Copyright (C) 2016
+ * @author Ken Cameron Copyright (C) 2023
  **/
 
 public class SpecificLightTest {
