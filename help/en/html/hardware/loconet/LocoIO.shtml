@@ -22,7 +22,7 @@
       turnout feedback or occupancy sensors) and outputs (fascia indicator LEDs, signal LED's,
       turnout motors etc.). The original <a href=
       "http://www.locobuffer.com/LocoIO/LocoIO.htm">LocoIO</a> design by John Jabour was further
-      developed by <a href="http://users.telenet.be/deloof/">Hans Deloof</a> from Belgium.<br>
+      developed by <a href="https://locohdl.synology.me/">Hans Deloof</a> from Belgium.<br>
       A typical board contains 16 signal pins, also called channels or ports. Each port can be
       individually programmed as an input or an output, and to perform a number of different things
       (depending on the module's hardware and firmware (PIC) version:</p>
@@ -123,7 +123,7 @@
       definition file.</p>
 
       <h2 id="current">LocoIO Programmer via Roster</h2>
-      <span class="since">Since <a href="https://jmri.org/releasenotes/jmri4.21.2.shtml" target=
+      <span class="since">Since <a href="https://www.jmri.org/releasenotes/jmri4.21.2.shtml" target=
       "_blank">JMRI 4.21.2</a></span>
       <p>The <a href=
       "../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO</a>
@@ -275,7 +275,7 @@
 
       <ul>
         <li>For more information on the LocoIO and how to use the boards, see <a href=
-        "http://users.telenet.be/deloof/">LocoHDL</a>.
+        "https://locohdl.synology.me/">LocoHDL</a>.
         </li>
 
         <li>Original LocoIO DIY project description is available at <a href=

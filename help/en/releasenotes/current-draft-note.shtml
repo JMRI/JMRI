@@ -374,7 +374,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fix allocating over occupied blocks in IntermediateSections</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -409,13 +409,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Fixes a bug when importing a Logix to LogixNG, where the Conditional
-          uses <i>Mixed</i>. The <i>Not</i> is ignored for the conditional
-          variables when using Mixed.</li>
-          <li>Fixes a bug with the action Entry/Exit and the expression Entry/Exit.
-          The action and expression stored the user name instead of the system name
-          if the Entry/Exit. The user name of an Entry/Exit changes when the NX sensor
-          or related signal mast is changed.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -479,7 +473,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Cliff Anderson contributed a new TurnoutsMasterSlave.py script.
+            </li>
         </ul>
 
     <h3>Signals</h3>

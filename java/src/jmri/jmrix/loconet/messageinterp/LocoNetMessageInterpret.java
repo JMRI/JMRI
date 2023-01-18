@@ -719,7 +719,7 @@ public class LocoNetMessageInterpret {
 
 //          TODO: put this back for intellibox cmd station.
 //            it conflicts with loconet speed/dir etc.
-            case LnConstants.RE_OPC_IB2_SPECIAL: { // 0xD4
+            case LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL: { // 0xD4
                 result = interpretIb2Special(l);
                 if (result.length() > 0) {
                     return result;
@@ -4696,10 +4696,10 @@ public class LocoNetMessageInterpret {
 
     private static String interpretPocExpLocoSpdDirFunction(LocoNetMessage l) {
         int slot = ((l.getElement(1) & 0x03) * 128) + (l.getElement(2) & 0x7f);
-        if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == 0) {
+        if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == LnConstants.OPC_EXP_SEND_SPEED_AND_DIR_FWD) {
             // speed and direction
             int spd = l.getElement(4);
-            String direction = Bundle.getMessage((l.getElement(1) & 0b00001000) != 0
+            String direction = Bundle.getMessage((l.getElement(1) & LnConstants.OPC_EXP_SEND_SPEED_AND_DIR_REV) != 0
                     ? "LN_MSG_DIRECTION_REV" : "LN_MSG_DIRECTION_FWD");
             String throttleID = Integer.toHexString(l.getElement(3));
             return Bundle.getMessage("LN_MSG_OPC_EXP_SPEED_DIRECTION", slot, spd, direction, throttleID);
@@ -4711,23 +4711,23 @@ public class LocoNetMessageInterpret {
                     : Bundle.getMessage("LN_MSG_FUNC_OFF");
         }
         if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F0_F6", slot, fn[3], fn[7], fn[6], fn[5], fn[4], fn[2],
                     fn[1]);
         } else if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F7_F13", slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1]);
         } else if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F14_F20",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1]);
         } else if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F21_F28",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1], Bundle.getMessage("LN_MSG_FUNC_OFF"));
         } else if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F21_F28", slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1], Bundle.getMessage("LN_MSG_FUNC_ON"));
         }
@@ -4833,28 +4833,8 @@ public class LocoNetMessageInterpret {
      * @return a format message.
      */
     private static String interpretExtendedSlot_StatusData_Base(LocoNetMessage l, int slot) {
-        String hwType = "";
-        int hwSerial;
-        switch (l.getElement(16)) {
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
-                hwType = "DCS240";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
-                hwType = "DCS210";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
-                hwType = "DCS52";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
-                hwType = "BXP88";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
-                hwType = "BXPA1";
-                break;
-            default:
-                hwType = "Unknown";
-        }
-        hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
+        String hwType = LnConstants.IPL_NAME(l.getElement(16));
+        int hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASE",
                 hwType,
                 hwSerial);
@@ -4870,32 +4850,7 @@ public class LocoNetMessageInterpret {
         double hwVersion ;
         double swVersion ;
         int hwSerial;
-        String hwType;
-        switch (l.getElement(14)) {
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
-                hwType = "DB210";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240PLUS:
-                hwType = "DCS240+";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210PLUS:
-                hwType = "DCS210+";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
-                hwType = "DCS240";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
-                hwType = "DCS210";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
-                hwType = "BXP88";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
-                hwType = "BXPA1";
-                break;
-            default:
-                hwType = "Unknown";
-        }
+        String hwType = LnConstants.IPL_NAME(l.getElement(14));
         hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
         hwVersion = ((double)(l.getElement(17) & 0x78) / 8 ) + ((double)(l.getElement(17) & 0x07) / 10 ) ;
         swVersion = ((double)(l.getElement(16) & 0x78) / 8 ) + ((double)(l.getElement(16) & 0x07) / 10 ) ;

@@ -64,7 +64,7 @@
       systems and model railroad layout device controls are also presented in Dr. Chubb's
       manuals.</p>
 
-      <p>If you are using microcontrollers such as the <a href="https://arduino.cc" target=
+      <p>If you are using microcontrollers such as the <a href="https://www.arduino.cc" target=
       "_blank">arduino</a> to emulate C/MRI hardware, additional information on their use with JMRI
       can be found on the <a href="../arduino/index.shtml">Using Arduinos with JMRI</a> help
       page.</p>
@@ -543,7 +543,7 @@
       - if the configuration says there are 24 input lines and 48 output lines, that's how many JMRI
       will assume when it sends a transmission to or receives a transmission from your C/MRI node (in this
       example, it will send C/MRI messages with 6 bytes of data and expect to receive 3 bytes of data).
-      See <a href="L391">below</a> for how to assign and name JMRI sensors, lights, and turnouts to use
+      See <a href="#L391">below</a> for how to assign and name JMRI sensors, lights, and turnouts to use
       the desired C/MRI bit.
       </p>
 
@@ -1697,11 +1697,11 @@
         </li>
 
         <li>
-          <a href="http://www.jlcenterprises.net/">JLC Enterprises website</a>
+          <a href="https://www.jlcenterprises.net/">JLC Enterprises website</a>
         </li>
 
         <li>
-          <a href="http://www.modelrailroadcontrolsystems.com/">Model Railroad Control Systems
+          <a href="https://www.modelrailroadcontrolsystems.com/">Model Railroad Control Systems
           (MRCS)</a>
         </li>
       </ul>

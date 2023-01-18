@@ -65,10 +65,9 @@
 
         <dd>
           <p>This was actually the second USB serial adapter I tried, after the Keyspan Dual Serial
-          Adapter (see below). This adapter provides a DB9 male plug, pinout available from the
-          <a href=
-          "http://www.keyspan.com/products/USB/PDAadapter/docs/mac/html/homepage29.html">Keyspan
-          product support page</a>. Note that there are both RTS and DTR outputs; these can be
+          Adapter (see below). This adapter provides a DB9 male plug, pinout previously available from
+          http://www.keyspan.com/products/USB/PDAadapter/docs/mac/html/homepage29.html , Keyspan
+          product support page. Note that there are both RTS and DTR outputs; these can be
           separately controlled to provide + and - voltage to the MS100.</p>
 
           <p>I connected it through a DB9 female to DB25 male adapter cable that I happened to
@@ -99,9 +98,9 @@ RI       9            22
 
         <dd>
           <p>The initial problem was that the USB adapter provides only one control line output
-          (see pinout on the <a href=
-          "http://www.keyspan.com/products/USB/usa28x/docs/swp/aPinOuts.html">Keyspan product
-          support page</a>. This means that the serial port can only provide one of the two + and -
+          ( pinout previously on 
+          http://www.keyspan.com/products/USB/usa28x/docs/swp/aPinOuts.html , the Keyspan product
+          support page. This means that the serial port can only provide one of the two + and -
           levels needed for the MS100. Since there are two ports, I build a small adapter to use
           the control line from the second port to provide the other level.</p>
 
@@ -131,7 +130,7 @@ RI       9            22
           enlarge)</a>
           </p>
 
-          <h3>Hardware & Software used</h3>
+          <h3>Hardware &amp; Software used</h3>
 
           <p>The tests were done with a PowerBook G4 400MHz, Mac OS 9.1. The test program was a
           Java application created with CodeWarrior 4.1.0.3 build 661. This program is available on
@@ -144,7 +143,7 @@ RI       9            22
         </dd>
       </dl>
 
-      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

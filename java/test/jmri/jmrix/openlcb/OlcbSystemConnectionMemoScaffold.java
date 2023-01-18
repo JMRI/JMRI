@@ -1,11 +1,12 @@
 package jmri.jmrix.openlcb;
 
+import java.util.List;
 import java.util.ResourceBundle;
+
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+
 import org.openlcb.OlcbInterface;
-import javax.annotation.Nonnull;
-import javax.annotation.CheckReturnValue;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -16,12 +17,12 @@ import javax.annotation.CheckReturnValue;
  *
  * @author Bob Jacobsen Copyright (C) 2015
  */
-public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnectionMemo {
+public class OlcbSystemConnectionMemoScaffold extends jmri.jmrix.can.CanSystemConnectionMemo {
 
-    public OlcbSystemConnectionMemo() {
+    public OlcbSystemConnectionMemoScaffold() {
         //super("M", "OpenLCB");
         register(); // registers general type
-        InstanceManager.store(this, OlcbSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, OlcbSystemConnectionMemoScaffold.class); // also register as specific type
     }
 
     final jmri.jmrix.swing.ComponentFactory cf = null;
@@ -35,12 +36,13 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
             return false;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            return getProgrammerManager().isGlobalProgrammerAvailable();
+            if (programmerManager == null) return false;
+            programmerManager.isGlobalProgrammerAvailable();
         }
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            return getProgrammerManager().isAddressedModePossible();
+            if (programmerManager == null) return false;
+            programmerManager.isAddressedModePossible();
         }
-
         if (type.equals(jmri.SensorManager.class)) {
             return true;
         }
@@ -60,12 +62,15 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
             return null;
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
-            return (T) getProgrammerManager();
+            if (programmerManager == null) return null;
+            if (!programmerManager.isGlobalProgrammerAvailable()) return null;
+            return (T)programmerManager;
         }
         if (T.equals(jmri.AddressedProgrammerManager.class)) {
-            return (T) getProgrammerManager();
+            if (programmerManager == null) return null;
+            if (!programmerManager.isAddressedModePossible()) return null;
+            return (T)programmerManager;
         }
-
         if (T.equals(jmri.SensorManager.class)) {
             return (T) getSensorManager();
         }
@@ -92,14 +97,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
 
         InstanceManager.setTurnoutManager(getTurnoutManager());
 
-        if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
-        }
-        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
-            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
-        }
         InstanceManager.store(getThrottleManager(), jmri.ThrottleManager.class);
-
     }
 
     /*
@@ -108,14 +106,17 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
     protected OlcbProgrammerManager programmerManager;
 
     public OlcbProgrammerManager getProgrammerManager() {
-        if (programmerManager == null) {
-            programmerManager = new OlcbProgrammerManager(new OlcbProgrammer());
-        }
         return programmerManager;
     }
 
     public void setProgrammerManager(OlcbProgrammerManager p) {
         programmerManager = p;
+        if (p.isAddressedModePossible()) {
+            InstanceManager.store(p, jmri.AddressedProgrammerManager.class);
+        }
+        if (p.isGlobalProgrammerAvailable()) {
+            InstanceManager.store(p, GlobalProgrammerManager.class);
+        }
     }
 
     protected OlcbTurnoutManager turnoutManager;
@@ -157,7 +158,17 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
     protected OlcbInterface olcbInterface;
 
     public OlcbInterface getInterface() {
-        return olcbInterface;
+        if (olcbInterface != null) {
+            return olcbInterface;
+        }
+        // We check if someone instantiated an OlcbConfigurationManager in the test or the fixture. If so, we use the
+        // interface from that object. (The superclass CanSystemConnectionMemo does instantiate an object like this and
+        // forwards the get<T>() calls to it, which does find the OlcbInterface there.)
+        List<OlcbConfigurationManager> l = InstanceManager.getList(OlcbConfigurationManager.class);
+        if (!l.isEmpty()) {
+            return l.get(l.size() - 1).getInterface();
+        }
+        return null;
     }
 
     public void setInterface(OlcbInterface iface) {
@@ -171,7 +182,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
 
     @Override
     public void dispose() {
-        InstanceManager.deregister(this, OlcbSystemConnectionMemo.class);
+        InstanceManager.deregister(this, OlcbSystemConnectionMemoScaffold.class);
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
@@ -184,31 +195,11 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         if (throttleManager != null) {
             InstanceManager.deregister(throttleManager, OlcbThrottleManager.class);
         }
+        if (programmerManager != null) {
+            InstanceManager.deregister(programmerManager, jmri.AddressedProgrammerManager.class);
+            InstanceManager.deregister(programmerManager, GlobalProgrammerManager.class);
+        }
         super.dispose();
     }
 
-    /**
-     * See {@link jmri.NamedBean#compareSystemNameSuffix} for background.
-     * This is a common implementation for OpenLCB Sensors and Turnouts
-     * of the comparison method.
-     *
-     * @param suffix1 1st suffix to compare.
-     * @param suffix2 2nd suffix to compare.
-     * @return true if suffixes match, else false.
-     */
-    @CheckReturnValue
-    public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
-
-        // extract addresses
-        OlcbAddress[] array1 = new OlcbAddress(suffix1).split();
-        OlcbAddress[] array2 = new OlcbAddress(suffix2).split();
-
-        // compare on content
-        for (int i = 0; i < Math.min(array1.length, array2.length); i++) {
-            int c = array1[i].compare(array2[i]);
-            if (c != 0) return c;
-        }
-        // check for different length (shorter sorts first)
-        return Integer.signum(array1.length - array2.length);
-    }
 }

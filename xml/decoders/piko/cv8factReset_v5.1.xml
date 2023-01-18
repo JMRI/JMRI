@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		-->
+<!-- Version 1 - Include file for Piko SmartDecoder XP5.1 (Ulrich Gerlach 2022-11-11) -->
+<resets xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<!--	<factReset label="Reset CVs 0-257" CV="8" default="1">
+		<label xml:lang="it">Reset CV 0-256 ai valori di fabbrica</label>
+		<label xml:lang="nl">Zet CV's 0-256 terug naar fabrieksinstelling</label>
+		<label xml:lang="de">Reset CV    0 - 256 (Werkseinstellungen &amp; RailCom Bank 7)</label>
+		<label xml:lang="cs">Reset CV    0-256 do továrního nastavení</label>
+	</factReset>
+	<factReset label="Reset CV 257 - 512 (RailCom Plus® Banks 5 &amp; 6)" CV="8" default="2">
+		<label xml:lang="de">Reset CV 257 - 512 (RailCom Plus® Banken 5 &amp; 6)</label>
+		<label xml:lang="cs">Reset CV 257 - 512 (RailCom Plus® Banky 5 &amp; 6)</label>
+	</factReset>
+	<factReset label="Reset CV 257 - 512 (extended Function Mapping Banks 1 &amp; 2)" CV="8" default="3">
+		<label xml:lang="de">Reset CV 257 - 512 (erweitertes Function Mapping Banken 1 &amp; 2)</label>
+		<label xml:lang="cs">Reset CV 257 - 512 (Rozšířené mapování funkcí Banky 1 &amp; 2)</label>
+	</factReset>
+	<factReset label="Reset CV 257 - 512 (PWM-Modulation Funktions outputs Banks 3 &amp; 4)" CV="8" default="4">
+		<label xml:lang="de">Reset CV 257 - 512 (PWM-Modulation Funktionsausgänge Banken 3 &amp; 4)</label>
+		<label xml:lang="cs">Reset CV 257 - 512 (PWM Modulace funkční výstupy Banky 3 &amp; 4)</label>
+	</factReset>-->
+	<factReset label="Reset Werkseinstellungen" CV="8" default="8">
+		<label xml:lang="de">Reset Werkseinstellungen (CV8 = 8)</label>
+		<label xml:lang="cs">Reset</label>
+	</factReset>
+</resets>
