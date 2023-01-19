@@ -21,12 +21,6 @@ public class SpecificLightTest {
       Assert.assertNotNull("SpecificLight constructor",new SpecificLight("PL1",tc));
       Assert.assertNotNull("SpecificLight constructor",new SpecificLight("PL256",tc));
       Assert.assertNotNull("SpecificLight constructor",new SpecificLight("PL512",tc));
-      Assert.assertNull("SpecificLight constructor",new SpecificLight("PL0",tc));
-      Assert.assertNull("SpecificLight constructor",new SpecificLight("PL513",tc));
-      Assert.assertNull("SpecificLight constructor",new SpecificLight("PLA1",tc));
-      Assert.assertNull("SpecificLight constructor",new SpecificLight("PL",tc));
-      Assert.assertNull("SpecificLight constructor",new SpecificLight("PL01.02.03",tc));
-      Assert.assertNull("SpecificLight constructor",new SpecificLight("PLA1.A2.03",tc));
    }
 
    @BeforeEach

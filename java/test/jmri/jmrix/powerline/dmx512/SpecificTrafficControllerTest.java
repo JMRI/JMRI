@@ -17,7 +17,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Bob Jacobsen Copyright 2005, 2007, 2008, 2009 Converted to multiple
  * connection
- * @author kcameron Copyright (C) 2011
+ * @author Ken Cameron Copyright (C) 2011,2023
  */
 public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTrafficControllerTest {
 
