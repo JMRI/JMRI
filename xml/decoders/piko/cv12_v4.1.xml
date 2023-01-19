@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2022-11-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder 4.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="DC Operation" CV="12" default="1" mask="XXXXXXXV">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Analog DC Mode</label>
+		<label xml:lang="de">Analog DC Modus</label>
+		<label xml:lang="nl">Analog DC modus</label>
+		<label xml:lang="cs">DC analogový režim</label>
+	</variable>
+	<variable item="AC Operation" CV="12" default="1" mask="XXXXXXVX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Analog AC Mode</label>
+		<label xml:lang="de">Analog AC Modus</label>
+		<label xml:lang="nl">Analog AC modus</label>
+		<label xml:lang="cs">AC analogový režim</label>
+	</variable>
+	<variable item="DCC Operation" CV="12" default="1" mask="XXXXXVXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>DCC Mode</label>
+		<label xml:lang="de">DCC Modus</label>
+		<label xml:lang="nl">DCC modus</label>
+		<label xml:lang="cs">DCC režim</label>
+	</variable>
+	<variable item="Motorola Operation" CV="12" default="1" mask="XXXXVXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Motorola Mode</label>
+		<label xml:lang="de">Motorola Modus</label>
+		<label xml:lang="nl">Motorola modus</label>
+		<label xml:lang="cs">Motorola režim</label>
+	</variable>
+	<variable item="Selectrix Operation" CV="12" default="1" mask="XXXVXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Selectrix Mode</label>
+		<label xml:lang="de">Selectrix Modus</label>
+		<label xml:lang="nl">Selectrix modus</label>
+		<label xml:lang="cs">Selectrix režim</label>
+	</variable>
+	<variable item="Mfx Operation" CV="12" default="1" mask="XXVXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Mfx Mode</label>
+		<label xml:lang="de">Mfx Modus</label>
+		<label xml:lang="nl">Mfx modus</label>
+		<label xml:lang="cs">Mfx režim</label>
+	</variable>
+</variables>

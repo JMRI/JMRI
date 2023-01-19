@@ -52,7 +52,7 @@
       "https://www.trainboard.com/highball/index.php?threads/dcc-2020-update-project-documentation.130401/">
       the DCC++ Documentation TrainBoard thread</a>. There's also information on the <a href=
       "https://github.com/DCC-EX">DCC++ GitHub repository</a> and <a href=
-      "https://dcc-ex.github.io/">associated documentation</a>. There was also an older <a href=
+      "https://dcc-ex.com/">associated documentation</a>. There was also an older <a href=
       "https://sites.google.com/site/dccppsite/home">DCC++ Website</a> and the <a href=
       "https://www.trainboard.com/highball/index.php?forums/dcc.177/">DCC++ Trainboard
       discussion</a>. The JMRI discussion groups can only provide limited support for DCC++
@@ -178,7 +178,7 @@
                 <li>Mac: No drivers should be required</li>
 
                 <li>
-                  <a href="http://playground.arduino.cc/Learning/Linux">Linux</a>
+                  <a href="https://playground.arduino.cc/Learning/Linux/">Linux</a>
                 </li>
               </ul>
               page<br>
@@ -324,16 +324,16 @@
 
         <li>
           <a href=
-          "http://www.trainboard.com/highball/index.php?threads/introducing-dcc-a-complete-open-source-dcc-station-and-interface.84800/">
+          "https://www.trainboard.com/highball/index.php?threads/introducing-dcc-a-complete-open-source-dcc-station-and-interface.84800/">
           Trainboard.com Discussion</a>
         </li>
 
         <li>
-          <a href="http://www.arduino.cc">Arduino Project Site</a>
+          <a href="https://www.arduino.cc/">Arduino Project Site</a>
         </li>
 
         <li>
-          <a href="http://www.sparkfun.com">Sparkfun</a> - one of many places to acquire hardware
+          <a href="https://www.sparkfun.com/">Sparkfun</a> - one of many places to acquire hardware
         </li>
       </ul>
       <!--#include virtual="/Footer.shtml" -->

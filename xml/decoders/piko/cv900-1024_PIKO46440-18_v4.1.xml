@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2022-11-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder 4.1 PIKO46440-1</revremark>
+		</revision>
+	</revhistory>
+	<!-- CV 900.4-931.4-->
+	<!-- Piko Info: Lautstärken 0-255 der Einzelgeräusche -->
+	<!-- Anfang PIKO46440-18 Lautstärke -->
+	<variable item="Bank E Sound Setting 1" CV="900.1021=4" default="180" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">900 Sound #1 Motorgeräusch</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 1</label>
+		<tooltip>Sound Slot #1 Volume</tooltip>
+		<tooltip xml:lang="de">Sound Slot #1 Lautstärke - Motor</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #1 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 2" CV="901.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">901 Sound #2 Drive Noise</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 2</label>
+		<tooltip>Sound Slot #2 Volume</tooltip>
+		<tooltip xml:lang="de">Sound Slot #2 Lautstärke - Drive Noise</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #2 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 3" CV="902.1021=4" default="192" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">902 Sound #3 Dampfpfeife kurz</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 3</label>
+		<tooltip xml:lang="de">Sound Slot #3 Lautstärke - Dampfpfeife kurz</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #3 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 4" CV="903.1021=4" default="192" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">903 Sound #4 Dampfpfeife lang</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 4</label>
+		<tooltip xml:lang="de">Sound Slot #4 Lautstärke - Dampfpfeife lang</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #4 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 5" CV="904.1021=4" default="192" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">904 Sound #5 Luftpumpe</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 5</label>
+		<tooltip xml:lang="de">Sound Slot #5 Lautstärke - Luftpumpe</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #5 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 6" CV="905.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">905 Sound #6 Wasserpumpe</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 6</label>
+		<tooltip xml:lang="de">Sound Slot #6 Lautstärke - Wasserpumpe</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #6 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 7" CV="906.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">906 Sound #7 Injektor</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 7</label>
+		<tooltip xml:lang="de">Sound Slot #7 Lautstärke - Injektor</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #7 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 8" CV="907.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">907 Sound #8 Kohle schaufeln</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 8</label>
+		<tooltip xml:lang="de">Sound Slot #8 Lautstärke - Kohle schaufeln</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #8 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 9" CV="908.1021=4" default="192" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">908 Sound #9 Führerstandstür</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 9</label>
+		<tooltip xml:lang="de">Sound Slot #9 Lautstärke - Führerstandstür</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #9 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 10" CV="909.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">909 Sound #10 Führerstandsfenster</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 10</label>
+		<tooltip xml:lang="de">Sound Slot #10 Lautstärke - Führerstandsfenster</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #10 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 11" CV="910.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">910 Sound #11 Zylinderdampf</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 11</label>
+		<tooltip xml:lang="de">Sound Slot #11 Lautstärke - Zylinderdampf ablassen</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #11 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 12" CV="911.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">911 Sound #12 Notbremse</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 12</label>
+		<tooltip xml:lang="de">Sound Slot #12 Lautstärke - Notbremse</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #12 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 13" CV="912.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">912 Sound #13 Zugbremse</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 13</label>
+		<tooltip xml:lang="de">Sound Slot #13 Lautstärke - Zugbremse</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #13 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 14" CV="913.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">913 Sound #14 Kuppeln</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 14</label>
+		<tooltip xml:lang="de">Sound Slot #14 Lautstärke - Kuppeln</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #14 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 15" CV="914.1021=4" default="192" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">914 Sound #15 Sicherheitsventil</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 15</label>
+		<tooltip xml:lang="de">Sound Slot #15 Lautstärke - Sicherheitsventil</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #15 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 16" CV="915.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">915 Sound #16 Ausschlacken</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 16</label>
+		<tooltip xml:lang="de">Sound Slot #16 Lautstärke - Ausschlacken</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #16 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 17" CV="916.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">916 Sound #17 Sanden</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 17</label>
+		<tooltip xml:lang="de">Sound Slot #17 Lautstärke - Sanden</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #17 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 18" CV="917.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">917 Sound #18 Kurvenquietschen</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 18</label>
+		<tooltip xml:lang="de">Sound Slot #18 Lautstärke - Kurvenquietschen</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #18 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 19" CV="918.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">918 Sound #19 Schienenstöße</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 19</label>
+		<tooltip xml:lang="de">Sound Slot #19 Lautstärke - Schienenstöße</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #19 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 20" CV="919.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">919 Sound #20 Luftpumpe Zufall</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 20</label>
+		<tooltip xml:lang="de">Sound Slot #20 Lautstärke - Luftpumpe Zufallsgeräusch</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #20 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 21" CV="920.1021=4" default="64" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">920 Sound #21 Glocke</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 21</label>
+		<tooltip xml:lang="de">Sound Slot #21 Lautstärke - Glocke</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #21 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 22" CV="921.1021=4" default="0" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">921 Sound #22</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 22</label>
+		<tooltip xml:lang="de">Sound Slot #22 Lautstärke - </tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #22 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 23" CV="922.1021=4" default="0" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">922 Sound #23</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 23</label>
+		<tooltip xml:lang="de">Sound Slot #23 Lautstärke - </tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #23 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 24" CV="923.1021=4" default="0" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">923 Sound #24</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 24</label>
+		<tooltip xml:lang="de">Sound Slot #24 Lautstärke - </tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #24 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 25" CV="924.1021=4" default="0" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">924 Sound #25</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 25</label>
+		<tooltip xml:lang="de">Sound Slot #25 Lautstärke - </tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #25 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 26" CV="925.1021=4" default="0" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">925 Sound #26</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 26</label>
+		<tooltip xml:lang="de">Sound Slot #26 Lautstärke - </tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #26 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 27" CV="926.1021=4" default="0" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">926 Sound #27</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 27</label>
+		<tooltip xml:lang="de">Sound Slot #27 Lautstärke - </tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #27 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 28" CV="927.1021=4" default="0" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">927 Sound #28</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 28</label>
+		<tooltip xml:lang="de">Sound Slot #28 Lautstärke - </tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #28 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 29" CV="928.1021=4" default="0" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">928 Sound #29</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 29</label>
+		<tooltip xml:lang="de">Sound Slot #29 Lautstärke - </tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #29 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 30" CV="929.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">929 Sound #30 Bremsgeräusch</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 30</label>
+		<tooltip xml:lang="de">Sound Slot #30 Lautstärke - Bremsgeräusch</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #30 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 31" CV="930.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">930 Sound #31 Bremsgeräusch aus</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 31</label>
+		<tooltip xml:lang="de">Sound Slot #31 Lautstärke - Bremsgeräusch deaktivieren</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #31 Hlasitost.</tooltip>
+	</variable>
+	<variable item="Bank E Sound Setting 32" CV="931.1021=4" default="128" include="PIKO46440-18">
+		<decVal/>
+		<label xml:lang="de">931 Sound #32 Zufallsgeräusche</label>
+		<label xml:lang="cs">Banka E nastavení zvuku 32</label>
+		<tooltip xml:lang="de">Sound Slot #32 Lautstärke - Zufallsgeräusche</tooltip>
+		<tooltip xml:lang="cs">Zvukový slot #32 Hlasitost.</tooltip>
+	</variable>
+	<!-- Ende PIKO46440-18 Lautstärke -->
+	<!--PIKO46440-18 sounds-->
+	<variable item="Bank F 900 activated sound" CV="900.1021=8" default="1" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>900 Fn activated sound</label>
+		<label xml:lang="de">900 Sound #1 Motorgeräusch        Fn</label>
+		<label xml:lang="nl">F0 speelt geluid:</label>
+		<label xml:lang="cs">F0 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 901 activated sound" CV="901.1021=8" default="1" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>901 Fn activated sound</label>
+		<label xml:lang="de">901 Sound #2 Drive Noise          Fn</label>
+		<label xml:lang="nl">F1 speelt geluid:</label>
+		<label xml:lang="cs">F1 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 902 activated sound" CV="902.1021=8" default="3" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>902 activated sound</label>
+		<label xml:lang="de">902 Sound #3 Dampfpfeife kurz     Fn</label>
+		<label xml:lang="nl">F2 speelt geluid:</label>
+		<label xml:lang="cs">F2 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 903 activated sound" CV="903.1021=8" default="4" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>903 activated sound</label>
+		<label xml:lang="de">903 Sound #4 Dampfpfeife lang     Fn</label>
+		<label xml:lang="nl">903 speelt geluid:</label>
+		<label xml:lang="cs">903 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 904 activated sound" CV="904.1021=8" default="14" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>904 activated sound</label>
+		<label xml:lang="de">904 Sound #5 Luftpumpe            Fn</label>
+		<label xml:lang="nl">904 speelt geluid:</label>
+		<label xml:lang="cs">904 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 905 activated sound" CV="905.1021=8" default="7" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>905 activated sound</label>
+		<label xml:lang="de">905 Sound #6 Wasserpumpe          Fn</label>
+		<label xml:lang="nl">905 speelt geluid:</label>
+		<label xml:lang="cs">905 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 906 activated sound" CV="906.1021=8" default="8" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>906 activated sound</label>
+		<label xml:lang="de">906 Sound #7 Injektor             Fn</label>
+		<label xml:lang="nl">906 speelt geluid:</label>
+		<label xml:lang="cs">906 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 907 activated sound" CV="907.1021=8" default="9" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>907 activated sound</label>
+		<label xml:lang="de">907 Sound #8 Kohle schaufeln      Fn</label>
+		<label xml:lang="nl">907 speelt geluid:</label>
+		<label xml:lang="cs">907 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 908 activated sound" CV="908.1021=8" default="10" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>908 activated sound</label>
+		<label xml:lang="de">908 Sound #9 Führerstandstür      Fn</label>
+		<label xml:lang="nl">908 speelt geluid:</label>
+		<label xml:lang="cs">908 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 909 activated sound" CV="909.1021=8" default="11" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>909 activated sound</label>
+		<label xml:lang="de">909 Sound #10 Führerstandsfenster Fn</label>
+		<label xml:lang="nl">909 speelt geluid:</label>
+		<label xml:lang="cs">909 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 910 activated sound" CV="910.1021=8" default="12" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>910 activated sound</label>
+		<label xml:lang="de">910 Sound Zylinderdampf ablassen  Fn</label>
+		<label xml:lang="nl">910 speelt geluid:</label>
+		<label xml:lang="cs">910 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 911 activated sound" CV="911.1021=8" default="13" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>911 activated sound</label>
+		<label xml:lang="de">911 Sound #12 Notbremse           Fn</label>
+		<label xml:lang="nl">911 speelt geluid:</label>
+		<label xml:lang="cs">911 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 912 activated sound" CV="912.1021=8" default="17" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>912 activated sound</label>
+		<label xml:lang="de">912 Sound #13 Zugbremse           Fn</label>
+		<label xml:lang="nl">912 speelt geluid:</label>
+		<label xml:lang="cs">912 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 913 activated sound" CV="913.1021=8" default="15" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>913 activated sound</label>
+		<label xml:lang="de">913 Sound #14 Kuppeln             Fn</label>
+		<label xml:lang="nl">913 speelt geluid:</label>
+		<label xml:lang="cs">913 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 914 activated sound" CV="914.1021=8" default="16" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>914 activated sound</label>
+		<label xml:lang="de">914 Sound #15 Sicherheitsventil   Fn</label>
+		<label xml:lang="nl">914 speelt geluid:</label>
+		<label xml:lang="cs">914 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 915 activated sound" CV="915.1021=8" default="18" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>915 activated sound</label>
+		<label xml:lang="de">915 Sound #16 Ausschlacken        Fn</label>
+		<label xml:lang="nl">915 speelt geluid:</label>
+		<label xml:lang="cs">915 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 916 activated sound" CV="916.1021=8" default="19" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>916 activated sound</label>
+		<label xml:lang="de">916 Sound #17 Sanden              Fn</label>
+		<label xml:lang="nl">916 speelt geluid:</label>
+		<label xml:lang="cs">916 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 917 activated sound" CV="917.1021=8" default="21" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>917 activated sound</label>
+		<label xml:lang="de">917 Sound #18 Kurvenquietschen    Fn</label>
+		<label xml:lang="nl">917 speelt geluid:</label>
+		<label xml:lang="cs">917 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 918 activated sound" CV="918.1021=8" default="20" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>918 activated sound</label>
+		<label xml:lang="de">918 Sound #19 Schienenstöße       Fn</label>
+		<label xml:lang="nl">918 speelt geluid:</label>
+		<label xml:lang="cs">918 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 919 activated sound" CV="919.1021=8" default="1" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>919 activated sound</label>
+		<label xml:lang="de">919 Sound #20 Luftpumpe Zufall    Fn</label>
+		<label xml:lang="nl">919 speelt geluid:</label>
+		<label xml:lang="cs">919 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 920 activated sound" CV="920.1021=8" default="5" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>920 activated sound</label>
+		<label xml:lang="de">920 Sound #21 Glocke              Fn</label>
+		<label xml:lang="nl">920 speelt geluid:</label>
+		<label xml:lang="cs">920 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 921 activated sound" CV="921.1021=8" default="0" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>921 activated sound</label>
+		<label xml:lang="de">921 Sound #22                     Fn</label>
+		<label xml:lang="nl">921 speelt geluid:</label>
+		<label xml:lang="cs">921 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 922 activated sound" CV="922.1021=8" default="255" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>922 activated sound</label>
+		<label xml:lang="de">922 Sound #23                     Fn</label>
+		<label xml:lang="nl">922 speelt geluid:</label>
+		<label xml:lang="cs">922 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 923 activated sound" CV="923.1021=8" default="255" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>923 activated sound</label>
+		<label xml:lang="de">923 Sound #24                     Fn</label>
+		<label xml:lang="nl">923 speelt geluid:</label>
+		<label xml:lang="cs">923 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 924 activated sound" CV="924.1021=8" default="255" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>924 activated sound</label>
+		<label xml:lang="de">924 Sound #25                     Fn</label>
+		<label xml:lang="nl">924 speelt geluid:</label>
+		<label xml:lang="cs">924 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 925 activated sound" CV="925.1021=8" default="255" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>925 activated sound</label>
+		<label xml:lang="de">925 Sound #26                     Fn</label>
+		<label xml:lang="nl">925 speelt geluid:</label>
+		<label xml:lang="cs">925 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 926 activated sound" CV="926.1021=8" default="255" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>926 activated sound</label>
+		<label xml:lang="de">926 Sound #27                     Fn</label>
+		<label xml:lang="nl">926 speelt geluid:</label>
+		<label xml:lang="cs">926 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 927 activated sound" CV="927.1021=8" default="255" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>927 activated sound</label>
+		<label xml:lang="de">927 Sound #28                     Fn</label>
+		<label xml:lang="nl">927 speelt geluid:</label>
+		<label xml:lang="cs">927 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 928 activated sound" CV="928.1021=8" default="255" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>928 activated sound</label>
+		<label xml:lang="de">928 Sound #29                     Fn</label>
+		<label xml:lang="nl">928 speelt geluid:</label>
+		<label xml:lang="cs">928 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 929 activated sound" CV="929.1021=8" default="1" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>929 activated sound</label>
+		<label xml:lang="de">929 Sound #30 Bremsgeräusch       Fn</label>
+		<label xml:lang="nl">929 speelt geluid:</label>
+		<label xml:lang="cs">929 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 930 activated sound" CV="930.1021=8" default="22" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>930 activated sound</label>
+		<label xml:lang="de">930 Sound #31 Bremsgeräusch aus   Fn</label>
+		<label xml:lang="nl">930 speelt geluid:</label>
+		<label xml:lang="cs">930 spustí zvuk</label>
+	</variable>
+	<variable item="Bank F 931 activated sound" CV="931.1021=8" default="1" include="PIKO46440-18">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>931 activated sound</label>
+		<label xml:lang="de">931 Sound #32 Zufallsgeräusche    Fn</label>
+		<label xml:lang="nl">931 speelt geluid:</label>
+		<label xml:lang="cs">931 spustí zvuk</label>
+	</variable>
+	<!--end PIKO46440-18-->
+</variables>

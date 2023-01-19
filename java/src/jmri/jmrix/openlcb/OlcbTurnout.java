@@ -300,14 +300,14 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
     }
 
     /**
-     * {@inheritDoc} 
-     * 
+     * {@inheritDoc}
+     *
      * Sorts by decoded EventID(s)
      */
     @CheckReturnValue
     @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
-        return OlcbSystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
+        return OlcbAddress.compareSystemNameSuffix(suffix1, suffix2);
     }
 
     private final static Logger log = LoggerFactory.getLogger(OlcbTurnout.class);

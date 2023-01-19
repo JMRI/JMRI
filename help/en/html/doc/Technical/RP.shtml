@@ -51,7 +51,7 @@
         data that's best kept in some sorted order; there's are very few good reasons for sorting
         data during normal running in JMRI. If none of these are adequate, consider incorporating a
         specialized collection type from <a href=
-        "http://commons.apache.org/proper/commons-collections/">Apache Commons Collections</a>
+        "https://commons.apache.org/proper/commons-collections/">Apache Commons Collections</a>
         instead of rolling your own.
         </li>
 
@@ -75,7 +75,7 @@
         "https://commons.apache.org/proper/commons-csv/">Apache Commons CSV API</a> if possible. We
         are already using that in a number of places, and will probably use it in more. If that
         does not provide enough functionality, we might eventually move to the <a href=
-        "http://opencsv.sourceforge.net/">opencsv API</a>, but since we only want to use one, the
+        "https://opencsv.sourceforge.net/">opencsv API</a>, but since we only want to use one, the
         conversion will be a lot of work.
         </li>
 
@@ -115,17 +115,12 @@
         <li>Consider using a <a href=
         "https://docs.oracle.com/javase/8/docs/api/java/util/TreeSet.html">TreeSet</a> for data
         that's best kept in some sorted order; there's are very few good reasons for sorting data
-        during normal running in JMRI. If you also need random access (e.g. "The 5th element")
-        consider <a href=
-        "http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeSet.html">
-          IndexedTreeSet</a> and <a href=
-          "http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeMap.html">
-          IndexedTreeMap</a>
+        during normal running in JMRI.
         </li>
       </ul>
 
       <h2 id="format">Code Format</h2>
-      The <a href="http://www.oracle.com/technetwork/java/codeconventions-150003.pdf">Java Code
+      The <a href="https://www.oracle.com/technetwork/java/codeconventions-150003.pdf">Java Code
       Conventions</a> (if that link is broken, try <a href=
       "https://web.archive.org/web/20080703230238/http://java.sun.com/docs/codeconv/">this one</a>
       from the Internet Archive) for names, formatting, etc are really useful. If you find that you
@@ -140,7 +135,7 @@
       For general interfaces that might be used externally to JMRI, such as in scripts and CATS, we
       prefer to leave the old interface in place for a while, marking it as "deprecated" so that
       people can discover that it will eventually go away. (The current list of those is available
-      as <a href="https://jmri.org/JavaDoc/doc/deprecated-list.html">part of the Javadocs</a>) The
+      as <a href="https://www.jmri.org/JavaDoc/doc/deprecated-list.html">part of the Javadocs</a>) The
       sequence is then:
       <ol>
         <li>Write the new methods.</li>
@@ -261,11 +256,11 @@
   } catch (Exception e) {
   }
 </pre>with a <a href=
-"http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#rec-exception-is-caught-when-exception-is-not-thrown-rec-catch-exception">
+"https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#rec-exception-is-caught-when-exception-is-not-thrown-rec-catch-exception">
       <code>REC_CATCH_EXCEPTION</code></a> and/or a <a href=
-      "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#de-method-might-ignore-exception-de-might-ignore">
+      "https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#de-method-might-ignore-exception-de-might-ignore">
       <code>DE_MIGHT_IGNORE</code></a> (less often <a href=
-      "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#de-method-might-drop-exception-de-might-drop">
+      "https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#de-method-might-drop-exception-de-might-drop">
       <code>DE_MIGHT_DROP</code></a>). This is an example of two problems:
       <ul>
         <li>Catching <code>Exception</code> instead of more specific types</li>
@@ -362,7 +357,7 @@ the log.
       class is the right way to provide "a method return type where there is a clear need to
       represent 'no result,' and where using <code>null</code> is likely to cause errors". There's
       some good background on use of Optional in an <a href=
-      "https://blogs.oracle.com/javamagazine/12-recipes-for-using-the-optional-class-as-its-meant-to-be-used">
+      "https://blogs.oracle.com/javamagazine/post/12-recipes-for-using-the-optional-class-as-its-meant-to-be-used">
       introductory Java Magazine article</a>. There's more info about how <code>null</code> makes
       errors likely is dicussed in a <a href=
       "https://www.oracle.com/technical-resources/articles/java/java8-optional.html">related

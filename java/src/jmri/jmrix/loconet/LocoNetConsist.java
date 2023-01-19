@@ -334,11 +334,25 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      * @param follow is the slot which will follow the leader
      */
     private void linkSlots(LocoNetSlot lead, LocoNetSlot follow) {
+        LocoNetMessage msg;
         if (lead != follow) {
-            LocoNetMessage msg = new LocoNetMessage(4);
-            msg.setOpCode(LnConstants.OPC_LINK_SLOTS);
-            msg.setElement(1, follow.getSlot());
-            msg.setElement(2, lead.getSlot());
+            if (slotManager.getLoconetProtocol() == LnConstants.LOCONETPROTOCOL_TWO) {
+                msg = new LocoNetMessage(6);
+                int dest1 = follow.getSlot() / 128;
+                int dest2 = follow.getSlot() % 128;
+                int src1 = lead.getSlot() / 128;
+                int src2 = lead.getSlot() % 128;
+                msg.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
+                msg.setElement(1, dest1 | 0b00111000);
+                msg.setElement(2, dest2 & 0x7F);
+                msg.setElement(3, src1  | 0b01000000);
+                msg.setElement(4, src2 & 0x7F);
+            } else {
+                msg = new LocoNetMessage(4);
+                msg.setOpCode(LnConstants.OPC_LINK_SLOTS);
+                msg.setElement(1, follow.getSlot());
+                msg.setElement(2, lead.getSlot());
+            }
             trafficController.sendLocoNetMessage(msg);
         } else {
           // lead == follow
@@ -360,11 +374,25 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      * @param follow is the slot which was following the leader
      */
     private void unlinkSlots(LocoNetSlot lead, LocoNetSlot follow) {
+        LocoNetMessage msg;
         if (lead != follow) {
-            LocoNetMessage msg = new LocoNetMessage(4);
-            msg.setOpCode(LnConstants.OPC_UNLINK_SLOTS);
-            msg.setElement(1, follow.getSlot());
-            msg.setElement(2, lead.getSlot());
+            if (slotManager.getLoconetProtocol() == LnConstants.LOCONETPROTOCOL_TWO) {
+                msg = new LocoNetMessage(6);
+                int src1 = lead.getSlot() / 128;
+                int src2 = lead.getSlot() % 128;
+                int dest1 = follow.getSlot() / 128;
+                int dest2 = follow.getSlot() % 128;
+                msg.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
+                msg.setElement(3, src1 | 0b01010000);
+                msg.setElement(4, src2 & 0x7F);
+                msg.setElement(1, dest1 | 0b00111000);
+                msg.setElement(2, dest2 & 0x7F);
+            } else {
+                msg = new LocoNetMessage(4);
+                msg.setOpCode(LnConstants.OPC_UNLINK_SLOTS);
+                msg.setElement(1, follow.getSlot());
+                msg.setElement(2, lead.getSlot());
+            }
             trafficController.sendLocoNetMessage(msg);
         } else {
           // lead == follow

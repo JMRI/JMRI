@@ -839,11 +839,30 @@
       <h4>Timer</h4>
 
       <p><strong>Timer</strong> has a number of actions, each executed after a period of time. The
-      time to wait can be 0, which means the related action is executed immediately. The Timer can
-      be configured to only execute the actions once or continuously. The Timer can also be
-      configured to start when the xml data file is loaded or only start when the "Start"
-      expression returns True. The Timer stops when the "Stop" expression returns True. The time
-      unit is selected from the combo box.</p>
+      time to wait can be 0, which means the related action is executed immediately.</p>
+
+      <p>Options:</p>
+      <dl style="margin-left: 2em;">
+        <dt>Start timer immediately on load</dt>
+        <dd>When selected, the timer steps will start when the LogixNG has been loaded.  If this
+        option is not selected, a <strong>Start</strong> expression will be used to start the timer
+        steps when the expression becomes true.</dd>
+
+        <dt>Run timer continuously</dt>
+        <dd>If not selected, the timer will run one time and then stop.  When selected, the timer
+        steps will repeat.  A <strong>Stop</strong> expression can be used to stop the timer
+        steps when the expression becomes true.  The Stop expression can use the same object, such
+        as a sensor that starts the timer when active and then stops the timer when the sensor is
+        inactive.</dd>
+
+        <dt>Start/Stop by Start expression</dt>
+        <dd>When selected, the timer will start when the <strong>Start</strong> expression becomes
+        true and will stop when the <strong>Start</strong> expression becomes false.  The <strong>
+        Stop</strong> expression is ignored.</dd>
+
+        <dt>Combo Box</dt>
+        <dd>Select the time unit.</dd>
+      </dl>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/timer_dialog.png"><img src="images/chapter5/timer_dialog.png" alt=

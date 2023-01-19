@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License   -->
+<!-- for more details.                                                       -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    
+    <enumChoice choice="Preset 0" value="0" >
+        <choice>0 Customer setting</choice>
+        <choice xml:lang="cs">0 Uživatelské nastavení</choice>
+    </enumChoice>
+    
+    <enumChoice choice="Preset 10" value="10" >
+        <choice>10 Stop | Clear</choice>
+        <choice xml:lang="cs">&lt;html&gt;10 &lt;span style=&quot;color: green;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt; Stůj | Volno&lt;/html&gt;</choice>
+    </enumChoice>
+    <enumChoice choice="Preset 11" value="11" >
+        <choice>11 Caution | Clear</choice>
+        <choice xml:lang="cs">&lt;html&gt;11 &lt;span style=&quot;color: yellow;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: green;&quot;&gt;&#9679;&lt;/span&gt; Výstraha | Volno&lt;/html&gt;</choice>
+    </enumChoice>
+    <enumChoice choice="Preset 12" value="12" >
+        <choice>12 Shunting not allowed | Shunting allowed</choice>
+        <choice xml:lang="cs">&lt;html&gt;12 &lt;span style=&quot;color: white;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: blue;&quot;&gt;&#9679;&lt;/span&gt; Posun zakázán | Posun dovolen&lt;/html&gt;</choice>
+    </enumChoice>
+
+    <enumChoice choice="Preset 20" value="20" >
+        <choice>20 Stop | Clear | Shunting allowed | Calling-on</choice>
+        <choice xml:lang="cs">&lt;html&gt;20 &lt;span style=&quot;color: green;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: white;&quot;&gt;&#9679;&lt;/span&gt; Stůj | Volno | Posun dovolen | Přivolávačka&lt;/html&gt;</choice>
+    </enumChoice>
+    <enumChoice choice="Preset 21" value="21" >
+        <choice>21 Stop | 40 and Clear | Shunting allowed | Calling-on</choice>
+        <choice xml:lang="cs">&lt;html&gt;21 &lt;span style=&quot;color: green;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: white;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: yellow;&quot;&gt;&#9679;&lt;/span&gt; Stůj | 40 a volno | Posun dovolen | Přivolávačka&lt;/html&gt;</choice>
+    </enumChoice>
+    <enumChoice choice="Preset 22" value="22" >
+        <choice>22 Stop | Clear | Caution | 40 and caution</choice>
+        <choice xml:lang="cs">&lt;html&gt;22 &lt;span style=&quot;color: yellow;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: green;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: yellow;&quot;&gt;&#9679;&lt;/span&gt; Stůj | Volno | Výstraha | 40 a výstraha&lt;/html&gt;</choice>
+    </enumChoice>    
+    <enumChoice choice="Preset 23" value="23" >
+        <choice>23 Caution | Clear | Expect 40</choice>
+        <choice xml:lang="cs">&lt;html&gt;23 &lt;span style=&quot;color: yellow;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: green;&quot;&gt;&#9679;&lt;/span&gt; Výstraha | Volno | Očekávej 40&lt;/html&gt;</choice>
+    </enumChoice>
+
+    <enumChoice choice="Preset 30" value="30" >
+        <choice>30 Stop | Clear | 40 and clear | Shunting allowed | Calling-on | Shunting allowed unlocked</choice>
+        <choice xml:lang="cs">&lt;html&gt;30 &lt;span style=&quot;color: green;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: white;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: yellow;&quot;&gt;&#9679;&lt;/span&gt; Stůj | Volno | 40 a volno | Posun dovolen | Přivolávačka | Posun dovolen nezabezpečený&lt;/html&gt;</choice>
+    </enumChoice>
+    <enumChoice choice="Preset 31" value="31" >
+        <choice>31 Stop | Clear | Caution | 40 and caution | 40 and expect 40 | Calling-on</choice>
+        <choice xml:lang="cs">&lt;html&gt;31 &lt;span style=&quot;color: yellow;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: green;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: white;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: yellow;&quot;&gt;&#9679;&lt;/span&gt; Stůj | Volno | Výstraha | 40 a výstraha | 40 a očekávej 40 | Přivolávačka&lt;/html&gt;</choice>
+    </enumChoice>
+
+    <enumChoice choice="Preset 40" value="40" >
+        <choice>40 Stop | Clear | Caution | Expect 40 | 40 and clear | 40 and caution | 40 and expect 40 | Calling-on</choice>
+        <choice xml:lang="cs">&lt;html&gt;40 &lt;span style=&quot;color: yellow;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: green;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: white;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: yellow;&quot;&gt;&#9679;&lt;/span&gt; Stůj | Volno | Výstraha | Očekávej 40 | 40 a volno | 40 a výstraha | 40 a očekávej 40 | Přivolávačka&lt;/html&gt;</choice>
+    </enumChoice>
+
+    <enumChoice choice="Preset 90" value="90" >
+        <choice>90 Caution | Annulment</choice>
+        <choice xml:lang="cs">&lt;html&gt;90 &lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt; Výstraha | Anulace&lt;/html&gt;</choice>
+    </enumChoice>
+    <enumChoice choice="Preset 91" value="91" >
+        <choice>91 Caution | Positive</choice>
+        <choice xml:lang="cs">&lt;html&gt;91 &lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: white;&quot;&gt;&#9679;&lt;/span&gt; Výstraha | Pozitivka&lt;/html&gt;</choice>
+    </enumChoice>
+    <enumChoice choice="Preset 92" value="92" >
+        <choice>92 Caution | Positive | Annulment</choice>
+        <choice xml:lang="cs">&lt;html&gt;92 &lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: red;&quot;&gt;&#9679;&lt;/span&gt;&lt;span style=&quot;color: white;&quot;&gt;&#9679;&lt;/span&gt; Výstraha | Pozitivka | Anulace&lt;/html&gt;</choice>
+    </enumChoice>
+    
+</enumVal>

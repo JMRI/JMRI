@@ -24,7 +24,7 @@
       <h3>Software settings</h3>
 
       <p>xAP devices that provide either the "input" or "output" form of the <a href=
-      "http://www.xapautomation.org/index.php?title=Basic_Status_and_Control_Schema">Basic Status
+      "https://en.wikipedia.org/wiki/XAP_Home_Automation_protocol">Basic Status
       and Control Schema</a> (BSC devices). "Input" devices are mapped to JMRI Sensor objects, and
       "Output" devices are mapped to JMRI Turnouts.</p>
 
@@ -48,7 +48,8 @@ desired.
       <h3>Third Party info</h3>
 
       <p>For more information on the protocol and available equipment, please see the <a href=
-      "http://www.xapautomation.org">xAP home page</a>.</p>
+      "https://en.wikipedia.org/wiki/XAP_Home_Automation_protocol">xAP wikiPedia page</a>,
+      or the http://www.xapautomation.org xAP home page</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

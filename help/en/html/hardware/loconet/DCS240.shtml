@@ -410,7 +410,7 @@
       <h2 id="Dcs240Drivers">DCS240 Drivers</h2>
       The DCS240 USB interface needs to have a driver installed when used with any Microsoft
       Windows Operating System. See the Digitrax <a href=
-      "http://www.digitrax.com/downloads/">"Downloads"</a> page for drivers. At the time this help
+      "https://www.digitrax.com/downloads/">"Downloads"</a> page for drivers. At the time this help
       page was written, Digitrax provides Windows drivers for the PR3 device. Those drivers are
       suitable for use with the DCS240 USB interface. Make sure to follow any instructions,
       particularly any instructions about the order of installing the drivers and plugging in the
@@ -418,7 +418,7 @@
       <p>You don't need to install a separate driver when using current versions of Mac OS X or
       Linux.</p>
 
-      <h1>See Also</h1>
+      <h1 id="SeeAlso">See Also</h1>
 
       <ul>
         <li>
@@ -435,23 +435,23 @@
         <li>For more information on the DCS240 itself, please consult the Digitrax website:
           <ul>
             <li>The Digitrax <a href=
-            "http://www.digitrax.com/products/command-stations-boosters/dcs240/">DCS240</a> product
+            "https://www.digitrax.com/products/retired/command-stations-boosters/dcs240/">DCS240</a> product
             page.
             </li>
 
-            <li>The Digitrax <a href="http://www.digitrax.com/tsd/product/DCS240/">DCS240
+            <li>The Digitrax <a href="https://www.digitrax.com/tsd/product/DCS240/">DCS240
             Support</a> page.
             </li>
 
             <li>Drivers for Windows-based machines may be found at the Digitrax <a href=
-            "http://www.digitrax.com/downloads/">Downloads</a> page. Note: Use the Digitrax PR3
+            "https://www.digitrax.com/downloads/">Downloads</a> page. Note: Use the Digitrax PR3
             drivers when connecting via the DCS240 USB interface.
             </li>
           </ul>
         </li>
       </ul>
 
-      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License   -->
+<!-- for more details.                                                       -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumChoice choice="Set 0" value="0" >
+        <choice>Set 0</choice>
+        <choice xml:lang="cs">ČSD základní</choice>
+    </enumChoice>
+    <enumChoice choice="Set 1" value="1" >
+        <choice>Set 1</choice>
+        <choice xml:lang="cs">ČSD cestová</choice>
+    </enumChoice>
+    <enumChoice choice="Set 2" value="2" >
+        <choice>Set 2</choice>
+        <choice xml:lang="cs">ČSD vložená</choice>
+    </enumChoice>
+    <enumChoice choice="Set 3" value="3" >
+        <choice>Set 3</choice>
+        <choice xml:lang="cs">SŽDC základní</choice>
+    </enumChoice>
+    <enumChoice choice="Set 4" value="4" >
+        <choice>Set 4</choice>
+        <choice xml:lang="cs">ČSD mechanická</choice>
+    </enumChoice>
+    <enumChoice choice="Set 5" value="5" >
+        <choice>Set 5</choice>
+        <choice xml:lang="cs">Přejezdy</choice>
+    </enumChoice>
+</enumVal>

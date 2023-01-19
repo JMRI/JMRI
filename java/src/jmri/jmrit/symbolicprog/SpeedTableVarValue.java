@@ -143,7 +143,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
             CvValue c = _cvMap.get(cvList[i]);
             c.setValue(_range * i / (nValues - 1) + _min);
             c.addPropertyChangeListener(this);
-            c.setState(CvValue.FROMFILE);
+            c.setState(ValueState.FROMFILE);
         }
 
         _defaultColor = (new JSlider()).getBackground();
@@ -320,35 +320,35 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
     }
 
     @Override
-    public int getState() {
+    public ValueState getState() {
         int i;
         for (i = 0; i < numCvs; i++) {
-            if (_cvMap.get(cvList[i]).getState() == UNKNOWN) {
-                return UNKNOWN;
+            if (_cvMap.get(cvList[i]).getState() == ValueState.UNKNOWN) {
+                return ValueState.UNKNOWN;
             }
         }
         for (i = 0; i < numCvs; i++) {
-            if (_cvMap.get(cvList[i]).getState() == EDITED) {
-                return EDITED;
+            if (_cvMap.get(cvList[i]).getState() == ValueState.EDITED) {
+                return ValueState.EDITED;
             }
         }
         for (i = 0; i < numCvs; i++) {
-            if (_cvMap.get(cvList[i]).getState() == FROMFILE) {
-                return FROMFILE;
+            if (_cvMap.get(cvList[i]).getState() == ValueState.FROMFILE) {
+                return ValueState.FROMFILE;
             }
         }
         for (i = 0; i < numCvs; i++) {
-            if (_cvMap.get(cvList[i]).getState() == READ) {
-                return READ;
+            if (_cvMap.get(cvList[i]).getState() == ValueState.READ) {
+                return ValueState.READ;
             }
         }
         for (i = 0; i < numCvs; i++) {
-            if (_cvMap.get(cvList[i]).getState() == STORED) {
-                return STORED;
+            if (_cvMap.get(cvList[i]).getState() == ValueState.STORED) {
+                return ValueState.STORED;
             }
         }
         log.error("getState did not decode a possible state");
-        return UNKNOWN;
+        return ValueState.UNKNOWN;
     }
 
     // to complete this class, fill in the routines to handle "Value" parameter
@@ -430,7 +430,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
             s.setOrientation(JSlider.VERTICAL);
             s.addChangeListener(this);
 
-            int currentState = cv.getState();
+            ValueState currentState = cv.getState();
             int currentValue = cv.getValue();
 
             DecVariableValue decVal = new DecVariableValue("val" + i, "", "", false, false, false, false,
@@ -705,7 +705,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
      *
      */
     @Override
-    public void setCvState(int state) {
+    public void setCvState(ValueState state) {
         _cvMap.get(cvList[0]).setState(state);
     }
 
@@ -756,7 +756,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
             log.error("unexpected write operation when readOnly is set");
         }
         setBusy(true);  // will be reset when value changes
-        super.setState(STORED);
+        super.setState(ValueState.STORED);
         if (_progState != IDLE) {
             log.warn("Programming state {}, not IDLE, in write()", _progState);
         }
@@ -802,7 +802,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         }
         setToWrite(false);
         setBusy(true);  // will be reset when value changes
-        super.setState(STORED);
+        super.setState(ValueState.STORED);
         if (_progState != IDLE) {
             log.warn("Programming state {}, not IDLE, in write()", _progState);
         }
@@ -820,7 +820,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         // read operation start/continue
         // check for retry if needed
         if ((_progState >= 0) && (retries < RETRY_MAX)
-                && (_cvMap.get(cvList[_progState]).getState() != CvValue.READ)) {
+                && (_cvMap.get(cvList[_progState]).getState() != ValueState.READ)) {
             // need to retry an error; leave progState (CV number) as it was
             retries++;
         } else {
@@ -839,7 +839,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         }
         // not done, proceed to do the next
         CvValue cv = _cvMap.get(cvList[_progState]);
-        int state = cv.getState();
+        ValueState state = cv.getState();
         if (log.isDebugEnabled()) {
             log.debug("invoke CV read index {} cv state {}", _progState, state);
         }
@@ -854,7 +854,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         // write operation start/continue
         // check for retry if needed
         if ((_progState >= 0) && (retries < RETRY_MAX)
-                && (_cvMap.get(cvList[_progState]).getState() != CvValue.STORED)) {
+                && (_cvMap.get(cvList[_progState]).getState() != ValueState.STORED)) {
             // need to retry an error; leave progState (CV number) as it was
             retries++;
         } else {
@@ -871,7 +871,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
             return;
         }
         CvValue cv = _cvMap.get(cvList[_progState]);
-        int state = cv.getState();
+        ValueState state = cv.getState();
         if (log.isDebugEnabled()) {
             log.debug("invoke CV write index {} cv state {}", _progState, state);
         }

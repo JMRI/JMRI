@@ -71,7 +71,7 @@ public class SplitVariableValue extends VariableValue
         _textField = new JTextField("0");
         _defaultColor = _textField.getBackground();
 
-        _textField.setBackground(COLOR_UNKNOWN);
+        _textField.setBackground(ValueState.UNKNOWN.getColor());
         _textField.getAccessibleContext().setAccessibleName(label());
 
         mFactor = pFactor;
@@ -139,7 +139,7 @@ public class SplitVariableValue extends VariableValue
         // have to do when list is complete
         for (int i = 0; i < cvCount; i++) {
             cvList.get(i).thisCV.addPropertyChangeListener(this);
-            cvList.get(i).thisCV.setState(CvValue.FROMFILE);
+            cvList.get(i).thisCV.setState(ValueState.FROMFILE);
         }
     }
 
@@ -537,7 +537,7 @@ public class SplitVariableValue extends VariableValue
         }
         log.debug("Variable={}; setValue with new value {} old value {}", _name, value, oldVal);
         _textField.setText(getTextFromValue(value * mFactor + mOffset));
-        if (oldVal != value || getState() == VariableValue.UNKNOWN) {
+        if (oldVal != value || getState() == ValueState.UNKNOWN) {
             actionPerformed(null);
         }
         // TODO PENDING: the code used to fire value * mFactor + mOffset, which is a text representation;
@@ -601,7 +601,7 @@ public class SplitVariableValue extends VariableValue
      * @param state The new state
      */
     @Override
-    public void setCvState(int state) {
+    public void setCvState(ValueState state) {
         for (int i = 0; i < cvCount; i++) {
             cvList.get(i).thisCV.setState(state);
         }
@@ -665,7 +665,7 @@ public class SplitVariableValue extends VariableValue
         }
         _textField.setText(""); // start with a clean slate
         for (int i = 0; i < cvCount; i++) { // mark all Cvs as unknown otherwise problems occur
-            cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
+            cvList.get(i).thisCV.setState(ValueState.UNKNOWN);
         }
         _progState = READING_FIRST;
         retry = 0;
@@ -698,19 +698,19 @@ public class SplitVariableValue extends VariableValue
      * @return Priority value from state, with UNKNOWN numerically highest
      */
     @SuppressFBWarnings(value = {"SF_SWITCH_NO_DEFAULT", "SF_SWITCH_FALLTHROUGH"}, justification = "Intentional fallthrough to produce correct value")
-    int priorityValue(int state) {
+    int priorityValue(ValueState state) {
         int value = 0;
         switch (state) {
-            case AbstractValue.UNKNOWN:
+            case UNKNOWN:
                 value++;
             //$FALL-THROUGH$
-            case AbstractValue.DIFF:
+            case DIFFERENT:
                 value++;
             //$FALL-THROUGH$
-            case AbstractValue.EDITED:
+            case EDITED:
                 value++;
             //$FALL-THROUGH$
-            case AbstractValue.FROMFILE:
+            case FROMFILE:
                 value++;
             //$FALL-THROUGH$
             default:
@@ -735,7 +735,7 @@ public class SplitVariableValue extends VariableValue
                 // It is definitely not an error condition, but needs to be ignored by this variable's state machine.
                 log.debug("Variable={}; Busy goes false with _progState IDLE, so ignore by state machine", _name);
             } else if (_progState >= READING_FIRST) {   // reading CVs
-                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == READ) {   // was the last read successful?
+                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == ValueState.READ) {   // was the last read successful?
                     retry = 0;
                     if (Math.abs(_progState) < cvCount) {   // read next CV
                         _progState++;
@@ -756,13 +756,13 @@ public class SplitVariableValue extends VariableValue
                         setBusy(false);
                         if (RETRY_COUNT > 0) {
                             for (int i = 0; i < cvCount; i++) { // mark all CVs as unknown otherwise problems may occur
-                                cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
+                                cvList.get(i).thisCV.setState(ValueState.UNKNOWN);
                             }
                         }
                     }
                 }
             } else {  // writing CVs
-                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == STORED) {   // was the last read successful?
+                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == ValueState.STORED) {   // was the last read successful?
                     if (Math.abs(_progState) < cvCount) {   // write next CV
                         _progState--;
                         log.debug("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
@@ -780,10 +780,10 @@ public class SplitVariableValue extends VariableValue
             }
         } else if (e.getPropertyName().equals("State")) {
             log.debug("Possible {} variable state change due to CV state change, so propagate that", _name);
-            int varState = getState(); // AbstractValue.SAME;
-            log.debug("{} variable state was {}", _name, stateNameFromValue(varState));
+            ValueState varState = getState(); // AbstractValue.SAME;
+            log.debug("{} variable state was {}", _name, varState.getName());
             for (int i = 0; i < cvCount; i++) {
-                int state = cvList.get(i).thisCV.getState();
+                var state = cvList.get(i).thisCV.getState();
                 if (i == 0) {
                     varState = state;
                 } else if (priorityValue(state) > priorityValue(varState)) {
@@ -792,7 +792,7 @@ public class SplitVariableValue extends VariableValue
                 }
             }
             setState(varState);
-            log.debug("{} variable state set to {}", _name, stateNameFromValue(varState));
+            log.debug("{} variable state set to {}", _name, varState.getName());
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             log.debug("update value of Variable {}", _name);
@@ -806,9 +806,9 @@ public class SplitVariableValue extends VariableValue
             updateVariableValue(intVals);
 
             log.debug("state change due to CV value change, so propagate that");
-            int varState = AbstractValue.SAME;
+            ValueState varState = ValueState.SAME;
             for (int i = 0; i < cvCount; i++) {
-                int state = cvList.get(i).thisCV.getState();
+                ValueState state = cvList.get(i).thisCV.getState();
                 if (priorityValue(state) > priorityValue(varState)) {
                     varState = state;
                 }

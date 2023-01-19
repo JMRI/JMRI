@@ -50,7 +50,7 @@ public class DecVarSlider extends JSlider implements ChangeListener {
         BoundedRangeModel r = j.getModel();
 
         _var.setIntValue(r.getValue());
-        _var.setState(AbstractValue.EDITED);
+        _var.setState(AbstractValue.ValueState.EDITED);
     }
 
     DecVariableValue _var;
