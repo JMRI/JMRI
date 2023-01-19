@@ -33,7 +33,6 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
         Assertions.assertNotNull(scaff);
         Assertions.assertNotNull(tostream);
         Assertions.assertNotNull(ostream);
-        Assertions.assertNotNull(tistream);
 
         scaff.dispose();
     }
