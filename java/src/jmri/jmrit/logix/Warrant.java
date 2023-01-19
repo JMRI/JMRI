@@ -1074,7 +1074,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     protected void abortWarrant(String msg) {
         log.error("Abort warrant \"{}\" - {} ", getDisplayName(), msg);
-        _engineer.stopRun(true, true);
+        stopWarrant(true, true);
     }
 
     /**
