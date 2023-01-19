@@ -73,12 +73,12 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
             return new int[] {};
         }
 
-        // returns the InputStream from the port
         @Override
         public DataInputStream getInputStream() {
-            return istream;
+            // no input for DMX, all output
+            return null;
         }
-
+        
         // returns the outputStream to the port
         @Override
         public DataOutputStream getOutputStream() {
@@ -90,13 +90,11 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
         public boolean status() {
             return true;
         }
+
     }
 
     private DataOutputStream ostream;  // Traffic controller writes to this
     private DataInputStream tostream; // so we can read it from this
-
-    private DataOutputStream tistream; // tests write to this
-    private DataInputStream istream;  // so the traffic controller can read from this
 
     @Override
     @BeforeEach
