@@ -4,7 +4,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
-import jmri.jmrix.powerline.insteon2412s.ConnectionConfig;
+import jmri.jmrix.powerline.dmx512.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java
