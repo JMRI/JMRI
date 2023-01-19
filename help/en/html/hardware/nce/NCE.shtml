@@ -295,7 +295,7 @@
 
       <ul>
         <li>On most computers, you'll need to install a driver for the <a href=
-        "https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx">CP201x USB to
+        "https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers">CP201x USB to
         UART Bridge VCP</a> used in the NCE USB Interface.
           <ul>
             <li>
@@ -306,20 +306,20 @@
 
             <li>
               <a href=
-              "https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip">Mac OS X
+              "https://www.silabs.com/documents/public/software/Mac_OSX_VCP_Driver.zip">Mac OS X
               driver</a>
             </li>
 
             <li>
               <a href=
-              "https://www.silabs.com/Support%20Documents/Software/cp210x-3.0.0.tar.gz">Linux
-              driver</a>
+              "https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads">Linux
+              drivers</a>
             </li>
 
             <li>If one of the above links doesn't work, you can perhaps find the needed driver on
             the <a href=
-            "https://www.silabs.com/products/interface/usbtouart/Pages/default.aspx">support web
-            site</a> for <a href="http://www.silabs.com/Pages/default.aspx">SiLabs</a> chips.
+            "https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers">support web
+            site</a> for <a href="https://www.silabs.com/">SiLabs</a> chips.
             </li>
           </ul>
           Download the proper file, unpack it, and execute the installer. Be sure to follow the
@@ -585,7 +585,7 @@ limitation when connected to a Power Pro.</p> -->
 
       <h3>Third Party info</h3>
 
-      <p><a href="http://www.ncedcc.com/">NCE Systems and Cabs Catalog</a>
+      <p><a href="https://www.ncedcc.com/">NCE Systems and Cabs Catalog</a>
       </p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

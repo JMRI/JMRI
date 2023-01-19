@@ -18,7 +18,7 @@
       <h1>Hardware Support: Connecting Multiple Computers to LocoNet&reg; via LbServer</h1>
 
       <p>This page describes how to configure multiple JMRI nodes to connect as clients to a single
-      <a href="http://loconetovertcp.sourceforge.net">LocoNetOverTCP LbServer</a>, which in turn is
+      <a href="https://loconetovertcp.sourceforge.net/">LocoNetOverTCP LbServer</a>, which in turn is
       connected to the layout.</p>
 
       <p>This connection, called LocoNetOverTCP, uses a separate non-Java server process, LbServer,
@@ -73,7 +73,7 @@
         number will also need to be passed into LbServer as a command line option.</li>
       </ul>
 
-      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com/">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

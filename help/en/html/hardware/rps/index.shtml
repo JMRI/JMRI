@@ -15,10 +15,10 @@
 
       <p><em>Please note that JMRI's RPS support is being rapidly improved. This page refers to
       most recent JMRI test version. If you're using an RPS system, you should update to new test
-      versions as they <a href="https://jmri.org/download/index.shtml">are announced</a>.</em>
+      versions as they <a href="https://www.jmri.org/download/index.shtml">are announced</a>.</em>
       </p>
 
-      <p>The <a href="http://www.proto87.com/model-trains-DCC-decoders.html">RPS System</a> allows
+      <p>The <a href="https://www.proto87.com/model-trains-DCC-decoders.html">RPS System</a> allows
       you to locate the exact position of locomotives and other rolling stock that have been
       equipped with transmitter decoders. The system makes up to 10 measurements per second and
       each reading is accurate to much better than an inch, which makes many imaginative uses
@@ -235,7 +235,7 @@
       <h3>Third Party info</h3>
 
       <p>More information on the <a href=
-      "http://www.proto87.com/model-trains-DCC-decoders.html">RPS Web Site</a>.</p>
+      "https://www.proto87.com/model-trains-DCC-decoders.html">RPS Web Site</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

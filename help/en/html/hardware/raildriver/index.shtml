@@ -20,7 +20,7 @@
       <h2 id="hardware">Supported Hardware</h2>
 
       <p>JMRI allows you to use a <a href="http://raildriver.com/">RailDriver</a> from <a href=
-      "http://www.piengineering.com/">PI Engineering</a> as a Hardware Throttle to run Locomotives
+      "https://xkeys.com/">P.I. Engineering</a> as a Hardware Throttle to run Locomotives
       with your DCC system.</p>
 
       <h2 id="connecting">Connecting</h2>

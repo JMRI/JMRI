@@ -18019,6 +18019,7 @@
       </Actions>
       <startImmediately>no</startImmediately>
       <runContinuously>no</runContinuously>
+      <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18094,6 +18095,7 @@
       </Actions>
       <startImmediately>no</startImmediately>
       <runContinuously>yes</runContinuously>
+      <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18177,6 +18179,7 @@
       </Actions>
       <startImmediately>yes</startImmediately>
       <runContinuously>no</runContinuously>
+      <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />

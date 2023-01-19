@@ -33,7 +33,7 @@
         lights (output), and one or two bits in the case of turnouts (see the CMRI help page
         <a href="../cmri/CMRI.shtml#L405">section on setting up turnouts and lights</a> for use
         with CMRI). With the introduction of microcontroller technology such as the <a href=
-        "https://arduino.cc" target="_blank">arduino</a> CMRI nodes need no longer be restricted to
+        "https://www.arduino.cc/" target="_blank">arduino</a> CMRI nodes need no longer be restricted to
         operate layout hardware based on single (or two) bit commands. Arduinos are quite capable
         computers that can process CMRINet messages and act on what they receive under local
         program control. <a href="index.shtml#CMRI">An arduino emulating a CMRI node</a> can be

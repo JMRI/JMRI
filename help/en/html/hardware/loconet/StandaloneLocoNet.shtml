@@ -1203,7 +1203,7 @@
       <h3>Third Party info</h3>
 
       <p>Information and support for Digitrax products may be found at <a href=
-      "http://www.digitrax.com/">the Digitrax website</a>.</p>
+      "https://www.digitrax.com">the Digitrax website</a>.</p>
 
       <p>Information and support for the LocoBuffer-II, the LocoBuffer-USB, the LocoBuffer-USB
       Rev-N and Rev-O, the LocoNet-Terminator, the SSB-Gateway, and other products by RR-CirKits
@@ -1224,7 +1224,7 @@
       <p>Information and support for products by M&ouml;llehem G&aring;rdsproduktion MGP) may be found at
       <a href="http://www.mollehem.se/index.php/en/">The M&ouml;llehem G&aring;rdsproduktion website</a>.</p>
 
-      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

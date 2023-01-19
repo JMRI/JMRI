@@ -18,6 +18,7 @@ fast_clock_rate = 10
 trains_to_be_scheduled = []
 run_train_dict = {}
 scheduled = {}
+RunTrain_instance = {}
 tListener = None
 
 class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
@@ -97,10 +98,11 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         for train in trains_to_be_scheduled:
             if scheduled[train] == False:
                 if self.logLevel > 0: print "train",train,"scheduled[train]",scheduled[train]
+                RunTrain_instance[train] = RunTrain()
                 if "stopping" in train.getDescription():
-                    run_train_dict[train] = RunTrain(train, g.g_stopping)
+                    run_train_dict[train] = RunTrain_instance[train].RunTrain(train, g.g_stopping)
                 else:
-                    run_train_dict[train] = RunTrain(train, g.g_express)
+                    run_train_dict[train] = RunTrain_instance[train].RunTrain(train, g.g_express)
                 run_train_dict[train].setName("schedule_" + train.getName())
                 run_train_dict[train].start()
                 scheduled[train] = True
@@ -215,7 +217,7 @@ class TimeListener(java.beans.PropertyChangeListener):
 
         if self.logLevel > 0: print "End of process_operations_trains", "trains_to_be_scheduled",trains_to_be_scheduled,"scheduled",scheduled
 
-class RunTrain(MoveTrain):
+class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self, train, graph):
         self.logLevel = 0
@@ -266,7 +268,9 @@ class RunTrain(MoveTrain):
                 if self.logLevel > 0: print "train_to_move", train_to_move
                 if train_to_move != None:
                     if self.logLevel > 0: print "************************************moving train******************",train_to_move
-                    self.move_between_stations(station_from, station_to, train_to_move, self.graph)
+                    move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
+                    move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
+                    move_train = None
                 else:
                     msg = "1No train in block for scheduled train starting from " + station_from
                     title = "Scheduling Error"
@@ -290,9 +294,9 @@ class RunTrain(MoveTrain):
         if self.logLevel > 0:  "!     finished run_train"
 
 
-class RunRoute(MoveTrain):
+class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
-    def __init__(self, route, graph, station_from, station_to, no_repetitions):
+    def __init__(self, route, graph, station_from, station_to, no_repetitions, train_name):
         #note station_to and station_from are strings, while elements of route are locations
         self.logLevel = 0
         if route == None:
@@ -305,6 +309,7 @@ class RunRoute(MoveTrain):
             self.station_to = station_to
             self.no_repetitions = no_repetitions
             self.mycount = 0
+            self.train_name_in = train_name
 
     def handle(self):    # Need to overload handle
 
@@ -341,53 +346,107 @@ class RunRoute(MoveTrain):
         if self.logLevel > 0: print "station_list after", station_list
         station_from = None
         for station in station_list:
-            station_to = station  # both now strings
-            if station_from != None:
-                if self.logLevel > 0:  print "!     moving from", station_from, "to", station_to
-                self.station_from_name = station_from
-                self.station_to_name = station_to
-                start_block = blocks.getBlock(station_from)
-                if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
-                train_to_move = start_block.getValue()
-                self.train_name = train_to_move
-                if self.logLevel > 0: print "calling move_between_stations","station_from",station_from,"station_to",station_to,"train_to_move",train_to_move
+            if self.station_is_action(station):  #if the station_name is a python_file
+                self.execute_action(station)     # execite the python file
+            else:
+                station_to = station  # both now strings
+                if station_from != None:
+                    if self.logLevel > 0:  print "!     moving from", station_from, "to", station_to
+                    self.station_from_name = station_from
+                    self.station_to_name = station_to
+                    start_block = blocks.getBlock(station_from)
+                    if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
+                    train_to_move = start_block.getValue()
+                    self.train_name = train_to_move
+                    if self.logLevel > 0: print "calling move_between_stations","station_from",station_from,"station_to",station_to,"train_to_move",train_to_move
 
-                doNotRun = False
-                repeat = False
-                if self.logLevel > 0: print "train_to_move", train_to_move
-                if train_to_move != None:
-                    if self.logLevel > 0: print "************************************moving train******************",train_to_move
-                    self.move_between_stations(station_from, station_to, train_to_move, self.graph)
-                    if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
-                    end_block = blocks.getBlock(station_to)  
-                    msg = "finished move between stations station_from = " + station_from + "state of block" + str(end_block.getState())
-                    if self.logLevel > 0: print "state of block" , end_block.getState()
-                    title = "Information after moving"
-                    opt1 = "OK"
+                    doNotRun = False
+                    repeat = False
+                    if self.logLevel > 0: print "train_to_move", train_to_move
+                    if train_to_move != None:
+                        if self.logLevel > 0: print "************************************moving train******************",train_to_move
+                        move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
+                        move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
+                        move_train = None
+                        if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
+                        end_block = blocks.getBlock(station_to)
+                        msg = "finished move between stations station_from = " + station_from + "state of block" + str(end_block.getState())
+                        if self.logLevel > 0: print "state of block" , end_block.getState()
+                        title = "Information after moving"
+                        opt1 = "OK"
 
-                    #OptionDialog().customMessage(msg, title, opt1)
-                    #end_block.setValue(train_to_move)
-                else:
-                    msg = "2No train in block for scheduled train starting from " + station_from
-                    title = "Scheduling Error"
-                    opt1 = "Not scheduling train"
-                    if train_to_move == None:
-                        if self.logLevel > 0: print "2No train in block for scheduled train starting from " + station_from
-                        OptionDialog().customMessage(msg, title, opt1)
-                        start_block = blocks.getBlock(station_from)
-                        LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
-                        layoutBlock = LayoutBlockManager.getLayoutBlock(start_block)
-                        if layoutBlock.getOccupancySensor().getKnownState() == INACTIVE:
-                            layoutBlock.getOccupancySensor().setKnownState(ACTIVE)
-                            self.waitMsec(2000)
-                        if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
-                        train_to_move = start_block.getValue()
+                        #OptionDialog().customMessage(msg, title, opt1)
+                        #end_block.setValue(train_to_move)
+                    else:
+                        msg = "2No train in block for scheduled train starting from " + station_from
+                        title = "Scheduling Error"
+                        opt1 = "Not scheduling train"
+                        if train_to_move == None:
+                            if self.logLevel > 0: print "2No train in block for scheduled train starting from " + station_from
+                            OptionDialog().customMessage(msg, title, opt1)
+                            start_block = blocks.getBlock(station_from)
+                            LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
+                            layoutBlock = LayoutBlockManager.getLayoutBlock(start_block)
+                            if layoutBlock.getOccupancySensor().getKnownState() == INACTIVE:
+                                layoutBlock.getOccupancySensor().setKnownState(ACTIVE)
+                                self.waitMsec(2000)
+                            if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
+                            train_to_move = start_block.getValue()
 
-                    self.move_between_stations(station_from, station_to, train_to_move, self.graph)
-                    if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
-                    end_block = blocks.getBlock(station_to)  #do following in case the block sensor is a bit dodgy
-                    end_block.setValue(train_to_move)
 
-            station_from = station_to
+                        move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
+                        move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
+                        move_train = None
+                        if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
+                        end_block = blocks.getBlock(station_to)  #do following in case the block sensor is a bit dodgy
+                        end_block.setValue(train_to_move)
+
+                station_from = station_to
+
         self.waitMsec(4000)
+
         if self.logLevel > 0:  "!     finished run_train"
+
+    def station_is_action(self, station):
+        if station[-3:] == ".py":
+            return True
+        else:
+            return False
+
+    def action_directory(self):
+        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "pythonfiles"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
+
+    def execute_action(self, action):
+        # execute a python file in the dispatcher directory
+        file = self.action_directory() + action
+        if self.logLevel > 0: print "file", file
+        with open(file) as f:
+            exec(open(file).read())     # execute the file
+        try:
+            with open(file) as f:
+                exec(open(file).read())     # execute the file
+        except:
+            msg = 'action file ' + action + ' could not be found'
+            if self.logLevel > 0: print(msg)
+            self.displayMessage(msg)
+
+    def displayMessage(self, msg, title = ""):
+        self.CLOSED_OPTION = False
+        s = JOptionPane.showOptionDialog(None,
+                                         msg,
+                                         title,
+                                         JOptionPane.YES_NO_OPTION,
+                                         JOptionPane.PLAIN_MESSAGE,
+                                         None,
+                                         ["OK"],
+                                         None)
+        #JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
+        if s == JOptionPane.CLOSED_OPTION:
+            self.CLOSED_OPTION = True
+            return
+        return s
+
+

@@ -23,18 +23,19 @@
       <h1>Hardware Support: XpressNet</h1>
 
       <p>XpressNet is a Command Bus developed by Lenz and used by: <a href=
-      "http://www.atlasrr.com">Atlas</a>, <a href="https://uk.hornby.com">Hornby</a>, <a href=
-      "http://www.lenz.com">Lenz</a>, <a href="http://www.opendcc.de/index_e.html">OpenDCC
-      (DIY)</a>, <a href="http://usuaris.tinet.cat/fmco/home_en.htm">Paco Canada (DIY)</a>,
-      <a href="https://www.roco.cc/en/home/index.html">Roco</a> (some models), <a href=
-      "http://www.viessmann-modell.com/">Viessmann</a> and ZTC Controls.</p>
+      "https://shop.atlasrr.com/">Atlas</a>, <a href="https://uk.hornby.com">Hornby</a>, <a href=
+      "https://www.lenz-elektronik.de/index.php">Lenz</a>, <a href="https://www.opendcc.de/index_e.html">OpenDCC
+      (DIY)</a>, <a href="https://usuaris.tinet.cat/fmco/home_en.htm">Paco Canada (DIY)</a>,
+      <a href="https://www.roco.cc/ren/">Roco</a> (some models), <a href=
+      "https://viessmann-modell.com/">Viessmann</a> and ZTC Controls.</p>
       <!-- https://www.roco.cc/en/home/index.html -->
       <!-- http://www.roco.com -->
       https://dccwiki.com/XpressNet_Protocol https://uk.hornby.com
-      <p>The XpressNet specification (available from the <a href=
-      "http://www.lenzusa.com/techinfo/index.htm">Lenz website</a>) specifies the electrical
-      communications standards and command set for devices to communicate with the command
-      station.</p>
+      <p>The XpressNet specification ( available from <a href=
+      "https://wiki.rocrail.net/lib/exe/fetch.php?media=xpressnet:xpressnet-v2.pdf"
+      >https://wiki.rocrail.net/lib/exe/fetch.php?media=xpressnet:xpressnet-v2.pdf</a>
+      ) specifies the electrical communications standards and command set for devices
+      to communicate with the command station.
 
       <ul>
         <!-- TOC -->
@@ -50,10 +51,6 @@
               <a href="#interfaces">Computer Interfaces</a>
             </li>
           </ul>
-        </li>
-
-        <li>
-          <a href="#limitations">Limitations</a>
         </li>
 
         <li>
@@ -131,7 +128,7 @@
         feedback, etc.)</li>
       </ul>
       The following table tries to show which systems support these three feature groups. System
-      specific limitations are also expressed in the <a href="#Limitations">Limitations</a> section
+      specific limitations are also expressed in the <a href="#limitations">Limitations</a> section
       of each system below.
       <div class="list">
         <dl>
@@ -241,10 +238,10 @@
         Internally, the device contains a USB to RS232 serial adapter, and an XpressNet interface
         circuit similar to that of the LI101F. Note: If you are using the XpressNet version 3.6
         update in your command station, you should also update your LI-USB to version 3.6. There
-        are instructions <a href=
-        "https://groups.yahoo.com/neo/groups/DigitalPlusbyLenz/conversations/topics/13501">in this
-        user group message</a> or on <a href=
-        "http://www.lenzusa.com/manuals/xpressnet/liusbupdatev36.pdf">the Lenz website</a>. The
+        were instructions 
+        https://groups.yahoo.com/neo/groups/DigitalPlusbyLenz/conversations/topics/13501 in this
+        user group message or on 
+        http://www.lenzusa.com/manuals/xpressnet/liusbupdatev36.pdf the Lenz website. The
         device is configured via a software tool provided by Lenz which runs on Windows only. JMRI
         provides a tool that will allow users of other operating systems to configure their LI-USB
         as well. On Windows, starting with version 2.7.2, JMRI supports interfacing with the LI-USB
@@ -293,20 +290,20 @@
         <strong>Note: The first JMRI release supporting the XnTcp adapter is version 2.1.5</strong>
         </li>
 
-        <li>Paco Canada's <a href="http://usuaris.tinet.cat/fmco/lokmaus_en.html#genli">GenLi</a>
+        <li>Paco Canada's <a href="https://usuaris.tinet.cat/fmco/lokmaus_en.html#genli">GenLi</a>
         is a do-it-yourself XpressNet interfaces that emulate an LI100. There is also a USB version
         of this device. To configure these devices in JMRI, please see the instructions for
         configuring the Lenz LI100.
         </li>
 
         <li>Paco Canada's <a href=
-        "http://usuaris.tinet.cat/fmco/lokmaus_en.html#genlis88">Gen-LI-S88</a> has the same
+        "https://usuaris.tinet.cat/fmco/lokmaus_en.html#genlis88">Gen-LI-S88</a> has the same
         functionality as a GenLI, plus adds an S88 feedback module. It can be used to add feedback
         to an existing XpressNet equipped layout. To configure this devices in JMRI, please see the
         instructions for configuring the Lenz LI100.
         </li>
 
-        <li>Paco Canada's <a href="http://usuaris.tinet.cat/fmco/rs_en.html#RS2PC">RS2PC</a>
+        <li>Paco Canada's <a href="https://usuaris.tinet.cat/fmco/rs_en.html#RS2PC">RS2PC</a>
         Interface allows adding Lenz (and compatible) RS Feedback Bus modules to a system that does
         not support the RS Feedback Bus. To configure this devices in JMRI, please see the
         instructions for configuring the Lenz LI100.
@@ -315,14 +312,14 @@
         <li>Like Paco Canada's GenLi project, there is an interface called <a href=
         "https://sleutelspoor.nl/wp-content/uploads/2015/12/Manual_S88XPressNetLI-V1.0-3.pdf">S88XpressNetLi</a>,
         which is designed and built by Karst Drenth and <a href=
-        "http://people.zeelandnet.nl/rosoft/">Wim Ros</a>, and consists of a small print (available
+        "https://people.zeelandnet.nl/rosoft/">Wim Ros</a>, and consists of a small print (available
         as kit or built module) with 2 XpressNet connectors, a serial interface (9,600baud at the
         moment), and a S88 connection (both traditional and S88-N connectors).
         </li>
 
         <li>The OpenDCC project has two interfaces for use with JMRI. The OpenDCC <a href=
-        "http://www.opendcc.de/elektronik/opendcc/opendcc_e.html">Command Station</a> and the
-        <a href="http://www.opendcc.de/elektronik/gateway/gateway.html">OpenDCC Gateway</a>. These
+        "https://www.opendcc.de/elektronik/opendcc/opendcc_e.html">Command Station</a> and the
+        <a href="https://www.opendcc.de/elektronik/gateway/gateway.html">OpenDCC Gateway</a>. These
         devices should be configured as LI100F devices with the port speed set to 19,200bps. The
         OpenDCC Command Station provides feedback via an S88 connection.
         </li>
@@ -430,7 +427,7 @@
           <dt class="left">OpenDCC</dt>
 
           <dd>
-            <p>The <a href="http://www.opendcc.de/elektronik/opendcc/opendcc_e.html">OpenDCC
+            <p>The <a href="https://www.opendcc.de/elektronik/opendcc/opendcc_e.html">OpenDCC
             Command Station</a> should be supported by JMRI through either the RS232 port or the
             built in USB port.</p>
 
@@ -561,9 +558,9 @@
               The device drivers for Linux are included with recent versions of the Linux
               kernel.<br>
               Device drivers for Linux, and MacOS (8,9 and X ) and Windows are available from the
-              <a href="http://www.ftdichip.com/">FTDI website</a> (direct link to the drivers
+              <a href="https://ftdichip.com/drivers/">FTDI website</a> (direct link to the drivers
               current as of this writing: <a href=
-              "http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>).
+              "https://ftdichip.com/drivers/vcp-drivers/">https://ftdichip.com/drivers/vcp-drivers/</a>).
             </li>
 
             <li>For the LI-USB-Ethernet (Lenz part Number 23151) in USB mode with JMRI, you must
@@ -724,9 +721,9 @@
           The device drivers for Windows are included on the CD that comes with the device.<br>
           The device drivers for Linux are included with recent versions of the Linux kernel.<br>
           Device drivers for Linux, and MacOS (8,9 and X ) and Windows are available from the
-          <a href="http://www.ftdichip.com/">FTDI website</a> (direct link to the drivers current
+          <a href="https://ftdichip.com/">FTDI website</a> (direct link to the drivers current
           as of this writing: <a href=
-          "http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>).</p>
+          "https://ftdichip.com/Drivers/VCP.htm">https://ftdichip.com/Drivers/VCP.htm</a>).</p>
 
           <p>When the device drivers are installed, and the LZV200 is connected to your PC, the
           LZV200 should have a Red LED turned on, indicating the USB connection is OK.</p>
@@ -789,9 +786,9 @@
           <p>The device drivers for Linux are included with recent versions of the Linux kernel</p>
 
           <p>Device drivers for Linux, and MacOS (8,9 and X ) and Windows are available from the
-          <a href="http://www.ftdichip.com/">FTDI website</a>. (direct link to the drivers current
+          <a href="https://ftdichip.com/">FTDI website</a>. (direct link to the drivers current
           as of this writing: <a href=
-          "http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>)</p>
+          "https://ftdichip.com/drivers/vcp-drivers/">https://ftdichip.com/drivers/vcp-drivers/</a>)</p>
 
           <p>When the device drivers are installed, and the ZTC640 is connected to both your PC and
           your DCC system, the ZTC640 should have a Red LED turned on, indicating the XpressNet
@@ -829,8 +826,8 @@
         <li>In order to use the Hornby Elite's built in USB port, you must first install a software
         driver on your computer.
           <p>The device drivers for Windows are included on the CD that comes with the device and
-          from the <a href=
-          "http://www.hornby.com/customer-support/downloads/elite-driver-download-and-installation,110,HAR.html">
+          were previously available from the
+          http://www.hornby.com/customer-support/downloads/elite-driver-download-and-installation,110,HAR.html
           Hornby Website</a>.</p>
 
           <p>It is unknown at this point if there are device drivers available for MacOS or
@@ -963,7 +960,7 @@
 
       <ul>
         <li>
-          <a href="http://www.atlasrr.com/dcc/CommanderManual1.pdf">Atlas Commander Manual</a> (pdf
+          <a href="http://download.atlasrr.com/DCC/Commandermanual1.pdf">Atlas Commander Manual</a> (pdf
           file; 363 kb)
         </li>
 
@@ -973,11 +970,15 @@
         </li>
 
         <li>
-          <a href="http://www.lenzusa.com/manuals/index.htm">Lenz Product Manuals</a>
+          http://www.lenzusa.com/manuals/index.htm Lenz Product Manuals
         </li>
 
         <li>
-          <a href="http://www.lenzusa.com/techinfo/index.htm">Lenz XpressNet Documentation</a>
+          http://www.lenzusa.com/techinfo/index.htm Lenz XpressNet Documentation 
+        </li>
+        
+        <li>
+          https://www.lenz-elektronik.de/index.php
         </li>
       </ul>
 
