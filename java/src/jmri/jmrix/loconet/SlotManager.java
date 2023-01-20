@@ -57,10 +57,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     public int slotScanInterval = 50; // this is public to allow changes via script and tests
 
-
     public int serviceModeReplyDelay = 20;  // this is public to allow changes via script and tests
 
     public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
+
+    public boolean pmManagerGotReply = false;  //this is public to allow changes via script and tests
 
      /**
      * a Map of the CS slots.
@@ -332,17 +333,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
     }
 
-    javax.swing.Timer checkSpecialSlotTimer = null;
 
     /**
      * Request slot data for 248 and 250
      * Runs delayed
      * <p>
-     * This is intended to be called from the SpecialSlotCheckTimer
+     * A call is trigger after the first slot response (PowerManager) received.
      */
-    private void checkSpecialSlots() {
+    private void pollSpecialSlots() {
         sendReadSlot(248);
-        try {Thread.sleep(100);}
+        try {Thread.sleep(10); }
         catch (InterruptedException ex) {
             // nothing can be done
             return;
@@ -511,12 +511,17 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Collect data from specific slots
      */
     void checkSpecialSlots(LocoNetMessage m, int slot) {
-        // TODO: Collect CS opswitch
+        if (!pmManagerGotReply &&
+                (m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA || m.getOpCode() == LnConstants.OPC_SL_RD_DATA)) {
+            pmManagerGotReply = true;
+            pollSpecialSlots();
+            return;
+        }
         switch (slot) {
             case 250:
                 // slot info if we have serial, the serial number in this slot
                 // does not indicate whether in booster or cs mode.
-                if (slot248CommandStationSerial == ((m.getElement(19) & 0x3F) * 128 ) + m.getElement(18)) {
+                if (slot248CommandStationSerial == ((m.getElement(19) & 0x3F) * 128) + m.getElement(18)) {
                     slot250InUseSlots = (m.getElement(4) + ((m.getElement(5) & 0x03) * 128));
                     slot250IdleSlots = (m.getElement(6) + ((m.getElement(7) & 0x03) * 128));
                     slot250FreeSlots = (m.getElement(8) + ((m.getElement(9) & 0x03) * 128));
@@ -524,10 +529,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 break;
             case 248:
                 // Base HW Information
-                // If a CS in CS mode then byte 19 bit 6 in on. else its in booster mode
+                // If a CS in CS mode then byte 19 bit 6 in on. else its in
+                // booster mode
                 // The device type is in byte 14
-                if ((m.getElement(19) & 0x40) == 0x40 ) {
-                    slot248CommandStationSerial = ((m.getElement(19) & 0x3F) * 128 ) + m.getElement(18);
+                if ((m.getElement(19) & 0x40) == 0x40) {
+                    slot248CommandStationSerial = ((m.getElement(19) & 0x3F) * 128) + m.getElement(18);
                     slot248CommandStationType = m.getElement(14);
                 }
                 break;
@@ -1184,16 +1190,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         slotMap = commandStationType.getSlotMap();
 
         loadSlots(false);
-
-        checkSpecialSlotTimer = new javax.swing.Timer(15000, new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                checkSpecialSlots();
-            }
-        });
-
-        checkSpecialSlotTimer.setRepeats(false);
-        checkSpecialSlotTimer.start();
 
         // We will scan the slot table every 0.3 s for in-use slots that are stale
         final int slotScanDelay = 300; // Must be short enough that 128 can be scanned in 90 seconds, see checkStaleSlots()

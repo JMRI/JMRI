@@ -1470,6 +1470,7 @@ public class CsOpSwAccessTest {
         jmri.util.JUnitUtil.setUp();
         lnis = new LocoNetInterfaceScaffold();
         sm = new SlotManager(lnis);
+        sm.pmManagerGotReply = true;  // do not probe
         memo = Mockito.mock(LocoNetSystemConnectionMemo.class);
         Mockito.when(memo.getLnTrafficController()).thenReturn(lnis);
         Mockito.when(memo.getSlotManager()).thenReturn(sm);
