@@ -1,5 +1,7 @@
 package jmri.jmrix.powerline.dmx512;
 
+import java.util.ResourceBundle;
+
 import jmri.InstanceManager;
 
 /**
@@ -28,6 +30,11 @@ public class SpecificSystemConnectionMemo extends jmri.jmrix.powerline.SerialSys
         setLightManager(new jmri.jmrix.powerline.dmx512.SpecificLightManager(getTrafficController()));
         InstanceManager.setLightManager(getLightManager());
         register();
+    }
+
+    @Override
+    protected ResourceBundle getActionModelResourceBundle() {
+        return ResourceBundle.getBundle("jmri.jmrix.powerline.dmx512.PowerlineActionListBundle");
     }
 
     @Override
