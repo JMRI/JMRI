@@ -18,8 +18,8 @@ public class DmxSequence {
     // array to hold the sequence; there's a practical limit to how
     // many Dmx commands anybody would want to send at once!
     private static final int MAXINDEX = 32;
-    int index = 0;
-    Command[] cmds = new Cmd[MAXINDEX];  // doesn't scale, but that's for another day
+    private int index = 0;
+    private Command[] cmds = new Cmd[MAXINDEX];  // doesn't scale, but that's for another day
 
     /**
      * Append a new "do command" operation to the sequence
