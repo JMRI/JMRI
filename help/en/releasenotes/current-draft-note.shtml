@@ -374,7 +374,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fix allocating over occupied blocks in IntermediateSections</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -421,7 +421,8 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem when a location has multiple spurs and the spur's schedule forwards the car to another spur
+            at the same location with a schedule.  The car's load can incorrectly change to the default "E" or "L" load.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -473,7 +474,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Cliff Anderson contributed a new TurnoutsMasterSlave.py script.
+            </li>
         </ul>
 
     <h3>Signals</h3>
@@ -585,6 +587,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added page breaks when printing panel XML files via browser (using XSLT)</li>
         </ul>
 

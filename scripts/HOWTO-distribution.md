@@ -259,7 +259,7 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i .bak s/release.build=6/release.build=1/g release.properties
+        sed -i .bak s/release.build=1/release.build=2/g release.properties
         git commit -m"5.3.2 until next release" release.properties
         git push github
 ```
@@ -379,7 +379,7 @@ Note that the purpose of this check is to make sure that the _files_ were built 
 
 ```
 
-- *Wait for some replies* before proceeding
+- *Wait for some replies about all three platforms* before proceeding
 
 ================================================================================
 ## Further Changes to Contents Before Release
@@ -473,7 +473,7 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
 
 - Fill out form:
 
-   - "tag version field" gets v5.3.2 (e.g. leading lower-case "v")
+   - "tag version field" gets v5.3.2 (note leading lower-case "v"!)
    - @ branch: select the release-5.3.2 release branch
    - "Release title" field gets "Prod/Test Release 5.3.2"
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
@@ -485,17 +485,17 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.3.2+R6e60208d29.dmg](https://github.com/JMRI/JMRI/releases/download/v5.3.2/JMRI.5.3.2+R6e60208d29.dmg) | ea4e4e8462a0db3e19ea18fa4d197ae2ff2e245953d4ffb582ca584767aed194
-[JMRI.5.3.2+R6e60208d29.exe](https://github.com/JMRI/JMRI/releases/download/v5.3.2/JMRI.5.3.2+R6e60208d29.exe) | 10e988dfb8621d982b29f8fe189bc0033fa5d73502607d80d4974791048b07ae
-[JMRI.5.3.2+R6e60208d29.tgz](https://github.com/JMRI/JMRI/releases/download/v5.3.2/JMRI.5.3.2+R6e60208d29.tgz) | 30d1e92f209f280d62b65b22bb3c859f1029c38ae8884c194b12dbad04285318
+[JMRI.5.3.2+R7ca3b1ca43.dmg](https://github.com/JMRI/JMRI/releases/download/v5.3.2/JMRI.5.3.2+R7ca3b1ca43.dmg) | b16f82f5f267ba37c65bdd122253e7e53cf10e1582fe040a69f3fe4a26b17082
+[JMRI.5.3.2+R7ca3b1ca43.exe](https://github.com/JMRI/JMRI/releases/download/v5.3.2/JMRI.5.3.2+R7ca3b1ca43.exe) | 7a223a0f11b9a2696eaaf9af5d99fe2f3ac489ab62f26b006b86d46cc3f0ee77
+[JMRI.5.3.2+R7ca3b1ca43.tgz](https://github.com/JMRI/JMRI/releases/download/v5.3.2/JMRI.5.3.2+R7ca3b1ca43.tgz) | 0b0fb33102fa772310fdda4348f799d3da574c5c38a86bf58d3b3f1d781880bf
 
 ```
 
-- Attach files by selecting them or dragging them in. Make sure that the Linux one is .tgz, not .tar.
+- Attach files by selecting them or dragging them in from the release/ subdirectory. Make sure that the Linux one is .tgz, not .tar.
 
-- [ ] it's slow to upload from a typical home connection; we wish we had a way to cross-load them from Jenkins (see below)
+   Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish; make sure all four files (three installers plus properties) are there.
 
-Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish; make sure all four files (three installers plus properties) are there.
+- [ ] It's slow to upload from a typical home connection; we wish we had a way to cross-load them from Jenkins (see below)
 
 - Click "Publish Release"
 
@@ -509,14 +509,10 @@ Note there's a little progress bar that has to go across & "Uploading your relea
 If there were changes once the release was tagged, it's important that those changes also get onto master. Normally this happens automatically with the procedure in "Further Changes" above. But we need to check. Start with your Git repository up to date on master and the release branch, and then (*need a cleaner, more robust mechanism for this*; maybe GitX or a PR?):
 
 ```
-git fetch
-git checkout master
-git pull
-git checkout -b temp-master
-git merge origin/release-5.3.2
+git diff master...release-5.3.2
 ```
 
-Note that you're testing the merge of the release branch back onto master.  This should report "Already up-to-date.", i.e. no changes, with the possible exception of some auto-generated files:
+Note that you're testing the merge of the release branch back onto master.  This should report no differences, with the possible exception of some auto-generated files:
 ```
 xml/decoderIndex.xml
 help/[en|fr]/webindex.shtml
@@ -535,8 +531,6 @@ If there are any changes in other files, do both of:
    - Make sure they get moved back to the master branch
 
    - Figure out what went wrong and fix it in these instructions
-
-- You can delete that temp-master local branch now
 
 ====================================================================================
 ## Update GitHub Status items
@@ -587,7 +581,7 @@ This is the next release in the 5.4 cycle. It's intended to be created from the 
 
 - Mail announcement to
 
-[jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20version%205.3.2%20of%20JMRI/DecoderPro%20is%20available%20for%20download&body=Test%20version%205.3.2%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20Summer%202023.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20versions%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20version,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.23.8%20or%20earlier,%20there%20is%20an%20update%20process%20that%20we%20strongly%20recommend.%20See%20the%20release%20note%20section%20on%20updates:%0A<https://www.jmri.org/releasenotes/jmri5.3.2.shtml#update>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.3.2%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.3.2.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.3.2.shtml>%0A)
+[jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20version%205.3.2%20of%20JMRI/DecoderPro%20is%20available%20for%20download&body=Test%20version%205.3.2%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20Summer%202023.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20versions%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20version,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.99.10%20or%20earlier,%20there%20is%20an%20update%20process%20that%20we%20strongly%20recommend.%20See%20the%20release%20note%20section%20on%20updates:%0A<https://www.jmri.org/releasenotes/jmri5.3.2.shtml#update>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.3.2%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.3.2.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.3.2.shtml>%0A)
 
 
 Subject:
@@ -602,7 +596,7 @@ Content:
 
     This is the next in a series of test releases that will culminate in a production release, hopefully in early Summer 2023. It's really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
 
-    If you are currently using JMRI 4.23.8 or earlier, there is an update process that we strongly recommend. See the release note section on updates:
+    If you are currently using JMRI 4.99.10 or earlier, there is an update process that we strongly recommend. See the release note section on updates:
     <https://www.jmri.org/releasenotes/jmri5.3.2.shtml#update>
 
     For more information on the issues, new features and bug fixes in 5.3.2 please see the release note:
