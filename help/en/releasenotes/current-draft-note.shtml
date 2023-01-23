@@ -475,6 +475,8 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>Cliff Anderson contributed a new TurnoutsMasterSlave.py script.
+            <li>Fixed the SetAllTurnoutsClosed so it would properly delay on polled systems such as C/MRI
+            <li>Added a new SetAllTurnoutsThrown script
             </li>
         </ul>
 
