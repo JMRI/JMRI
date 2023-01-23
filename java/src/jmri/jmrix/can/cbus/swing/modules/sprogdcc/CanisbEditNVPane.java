@@ -30,7 +30,8 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
     private JRadioButton disable;
 
     // Read/Clear error status
-    String[] rcTitle = {Bundle.getMessage("CanErrStatus"),
+    String[] rcTitle = {Bundle.getMessage("CanErrStatus")+" 1",
+        Bundle.getMessage("CanErrStatus")+" 2",
         Bundle.getMessage("CanTxFailureCount"),
         Bundle.getMessage("CanRxOverflowCount"),
         Bundle.getMessage("CanNomBitRateRxCount"),
@@ -47,7 +48,8 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
     JButton[] rcUpButton = new JButton[clearableErrors];
     JButton rcAllUpButton = new JButton();
     // Translate clear button index to NV index
-    int[] rcNvOffset = {CanisbPaneProvider.CAN_ERR_STATUS,
+    int[] rcNvOffset = {CanisbPaneProvider.CAN_ERR_STATUS_1,
+        CanisbPaneProvider.CAN_ERR_STATUS_2,
         CanisbPaneProvider.TX_FAIL_CNT,
         CanisbPaneProvider.RX_OVFLW_COUNT,
         CanisbPaneProvider.CAN_NOM_BIT_RATE_RX_COUNT,
@@ -145,32 +147,36 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
                         rCount[1].setText(Integer.toString(value));
                         break;
 
-                    case CanisbPaneProvider.CAN_ERR_STATUS:
+                    case CanisbPaneProvider.CAN_ERR_STATUS_1:
                         rcCount[0].setText(Integer.toString(value));
                         break;
 
-                    case CanisbPaneProvider.TX_FAIL_CNT:
+                    case CanisbPaneProvider.CAN_ERR_STATUS_2:
                         rcCount[1].setText(Integer.toString(value));
                         break;
 
-                    case CanisbPaneProvider.RX_OVFLW_COUNT:
+                    case CanisbPaneProvider.TX_FAIL_CNT:
                         rcCount[2].setText(Integer.toString(value));
                         break;
 
-                    case CanisbPaneProvider.CAN_NOM_BIT_RATE_RX_COUNT:
+                    case CanisbPaneProvider.RX_OVFLW_COUNT:
                         rcCount[3].setText(Integer.toString(value));
                         break;
 
-                    case CanisbPaneProvider.CAN_NOM_BIT_RATE_TX_COUNT:
+                    case CanisbPaneProvider.CAN_NOM_BIT_RATE_RX_COUNT:
                         rcCount[4].setText(Integer.toString(value));
                         break;
 
-                    case CanisbPaneProvider.CAN_DIAGNOSTICS_HI:
+                    case CanisbPaneProvider.CAN_NOM_BIT_RATE_TX_COUNT:
                         rcCount[5].setText(Integer.toString(value));
                         break;
 
-                    case CanisbPaneProvider.CAN_DIAGNOSTICS_LO:
+                    case CanisbPaneProvider.CAN_DIAGNOSTICS_HI:
                         rcCount[6].setText(Integer.toString(value));
+                        break;
+
+                    case CanisbPaneProvider.CAN_DIAGNOSTICS_LO:
+                        rcCount[7].setText(Integer.toString(value));
                         break;
 
                     case CanisbPaneProvider.CAN_ERR_FREE_COUNT_HI:
@@ -178,7 +184,7 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
                         break;
 
                     case CanisbPaneProvider.CAN_ERR_FREE_COUNT_LO:
-                        rcCount[7].setText(Integer.toString(value
+                        rcCount[8].setText(Integer.toString(value
                                 + (int)_dataModel.getValueAt(CanisbPaneProvider.CAN_ERR_FREE_COUNT_HI - 1, NV_SELECT_COLUMN)*256));
                         break;
 
@@ -432,14 +438,21 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
             c.gridx = 0;
             c.gridy = 0;
 
-            JLabel statusCol = new JLabel("Status");
-            statusCol.setHorizontalAlignment(SwingConstants.RIGHT);
+            JLabel errControl = new JLabel(Bundle.getMessage("CanErrControl"));
+            gridPane.add(errControl, c);
+            c.gridx++;
+            
+            JTextField errControlBits = new JTextField("0", 5);
+            errControlBits.setHorizontalAlignment(SwingConstants.RIGHT);
+            gridPane.add(errControlBits, c);
+
+            c.gridx = 0;
+            c.gridy++;
+            c.gridy++;
+            
+            JLabel statusCol = new JLabel(Bundle.getMessage("CanErrStatus"));
             gridPane.add(statusCol, c);
             c.gridx++;
-
-            JLabel newCol = new JLabel("New");
-            newCol.setHorizontalAlignment(SwingConstants.RIGHT);
-            gridPane.add(newCol, c);
             c.gridx++;
 
             rcAllButton = new JButton(Bundle.getMessage("ClearAll"));
