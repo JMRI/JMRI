@@ -11,9 +11,7 @@
 
 import jmri
 
-from time import sleep
-
-class TurnoutSetClosed(jmri.jmrit.automat.AbstractAutomaton) :
+class SetAllTurnoutsClosed(jmri.jmrit.automat.AbstractAutomaton) :
         # handle() is called just one when it returns false.
         def handle(self):
             # loop thru all defined turnouts
@@ -27,9 +25,9 @@ class TurnoutSetClosed(jmri.jmrit.automat.AbstractAutomaton) :
                 to.setState(CLOSED)
                 self.waitMsec(100) # pause for 1/10 second between commands
             print str(toCnt) + " turnouts found, " + str(chgCnt) + " changed to CLOSED"
-            return FALSE
+            return False
 
-TurnoutSetClosed().start()
+SetAllTurnoutsClosed().start()
 
 
 

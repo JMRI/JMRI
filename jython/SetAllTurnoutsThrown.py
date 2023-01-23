@@ -11,9 +11,7 @@
 
 import jmri
 
-from time import sleep
-
-class TurnoutSetThrown(jmri.jmrit.automat.AbstractAutomaton) :
+class SetAllTurnoutsThrown(jmri.jmrit.automat.AbstractAutomaton) :
         # handle() is called just one when it returns false.
         def handle(self):
             # loop thru all defined turnouts
@@ -27,9 +25,9 @@ class TurnoutSetThrown(jmri.jmrit.automat.AbstractAutomaton) :
                 to.setState(THROWN)
                 self.waitMsec(100) # pause for 1/10 second between commands
             print str(toCnt) + " turnouts found, " + str(chgCnt) + " changed to THROWN"
-            return FALSE
+            return False
 
-TurnoutSetThrown().start()
+SetAllTurnoutsThrown().start()
 
 
 
