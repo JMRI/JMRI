@@ -13,10 +13,10 @@ from java.io import File
 global g
 class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
-    # if a button is turned on, this routing turns it off
-    # another class will actually respond to the button and do something
-
-    # also monitors Setup Dispatch and Setup Route and also Run Route
+    # monitors station buttons and
+    # monitors sensors_requiring_use_of_station_buttons
+    # "setDispatchSensor", "setRouteSensor", "setStoppingDistanceSensor",
+    # "setStationWaitTimeSensor", "setStationDirectionSensor"
 
     button_sensors_to_watch = []
     count = 0
@@ -170,7 +170,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             #reset self.sensors_requiring_use_of_station_buttons to full list
             self.get_sensors_requiring_use_of_station_buttons()
             # inhibit the same sensor being pressed again
-            self.sensor_active_sensors_requiring_use_of_station_buttons_old = sensor
+            # self.sensor_active_sensors_requiring_use_of_station_buttons_old = sensor
 
         else:
             #error
@@ -182,7 +182,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
     def  process_sensors_requiring_use_of_station_buttons(self, sensor_changed):
 
         # all these sensors when active require the use of station buttons. Only one of these can be active at any one
-        # time, hence the grouing of these in a routine and the grouping of the buttons on the panel
+        # time, hence the grouping of these in a routine and the grouping of the buttons on the panel
 
         global stopping_sensor_choice
         self.count += 1
@@ -242,8 +242,8 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 return
             elif s == opt1:
                 #stopping_sensor_choice = "setAllStoppingSensors"
-                self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
                 self.modify_all_stopping_distances()
+                self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
             else:    #opt2
                 stopping_sensor_choice = "setIndividualStoppingSensors"
                 msg = "Press station buttons to select a section in order to\nset stopping length for that section"
@@ -323,7 +323,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         new_stopping_position = self.get_new_stopping_position()
         if new_stopping_position == None:
             return  # if one has cancelled
-        for e in g_express.edgeSet():
+        for e in g.g_express.edgeSet():
             from_station_name = g.g_stopping.getEdgeSource(e)
             to_station_name = g.g_stopping.getEdgeTarget(e)
             found_edge = e
@@ -353,6 +353,19 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             file = self.directory() + "blockDirections.txt"
             with open(file  ,'w') as f:  # empty the file containing the direction information
                 pass
+
+            # The traininfo files for the express routes need to be regenerated
+            print "Creating Transits"
+            CreateIcons = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateIcons.py')
+            exec(open (CreateIcons).read())
+            global dpg
+            dpg = DisplayProgress()
+
+            CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
+            exec(open (CreateTransits).read())
+            print "about to run CreateTransits"
+            CreateTransits().process_panels()
+
             g = StationGraph()        # recalculate the weights on the edges
             self.od.displayMessage("All stations set to 2-way working")
 
@@ -588,10 +601,11 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\n"
             title = "Cannot move train"
             opt1 = "continue"
-            opt2 = "reset all allocations"
+            opt2 = "stop all dispatches" \
+                   ""
             result = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
-            if result == "reset all allocations":
-                trains_dispatched = []
+            if result == "stop all dispatches":
+                delete_transits()
             return
         title = "what train do you want to move?"
         engine = self.od.List(title, trains_to_choose)
@@ -631,6 +645,23 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             run_train.setName("running_route_" + routeName)
             instanceList.append(run_train)
             run_train.start()
+
+    def delete_transits(self):
+        # need to avoid concurrency issues when deleting more that one transit
+        # use java.util.concurrent.CopyOnWriteArrayList  so can iterate through the transits while deleting
+        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+        #DF.setState(DF.ICONIFIED);
+
+        activeTrainList = java.util.concurrent.CopyOnWriteArrayList()
+        for activeTrain in DF.getActiveTrainsList():
+            activeTrainList.add(activeTrain)
+
+        for activeTrain in activeTrainList:
+            # print "i", i
+            # activeTrain = activeTrainsList.get(i)
+            if self.logLevel > 0: print ("active train", activeTrain)
+            DF.terminateActiveTrain(activeTrain)
+        DF = None
 
     def get_list_of_engines_to_move(self):
         global trains_allocated
