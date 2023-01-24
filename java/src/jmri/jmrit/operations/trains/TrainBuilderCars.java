@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -1215,7 +1213,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             return false;
         }
-        car.updateKernel();
         if (car.getDestinationTrack() != track) {
             track.bumpMoves();
             // car is being routed to this track
@@ -1224,6 +1221,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 track.bumpSchedule();
             }
         }
+        car.updateKernel();
         return true; // done, car has a new destination
     }
 
