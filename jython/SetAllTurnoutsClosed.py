@@ -12,7 +12,7 @@
 import jmri
 
 class SetAllTurnoutsClosed(jmri.jmrit.automat.AbstractAutomaton) :
-        # handle() is called just one when it returns false.
+        # handle() is called just once when it returns false.
         def handle(self):
             # loop thru all defined turnouts
             toCnt = 0
