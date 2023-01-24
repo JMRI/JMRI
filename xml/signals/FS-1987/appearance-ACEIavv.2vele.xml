@@ -55,7 +55,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <aspectname>Giallo</aspectname>
       <show>yellow</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Approach</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv2velegiallo.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv2velegiallo.gif</imagelink>
@@ -73,7 +73,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <aspectname>Giallo Lampeggiante</aspectname>
       <show>flashyellow</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Approach</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv2velegiallolamp.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv2velegiallolamp.gif</imagelink>
@@ -91,7 +91,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <aspectname>Verde</aspectname>
       <show>green</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Normal speed</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv2veleverde.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv2veleverde.gif</imagelink>
@@ -109,7 +109,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <aspectname>Giallo-Giallo</aspectname>
       <show>yellow</show>
       <show>yellow</show>
-      <reference></reference>
+      <reference />
       <comment>Diverging Approach</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv2velegiallo-giallo.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv2velegiallo-giallo.gif</imagelink>
@@ -127,7 +127,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <aspectname>Giallo-Verde</aspectname>
       <show>yellow</show>
       <show>green</show>
-      <reference></reference>
+      <reference />
       <comment>Next main signal is set to diverging speed 30Km/h</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv2velegiallo-verde.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv2velegiallo-verde.gif</imagelink>
@@ -145,7 +145,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <aspectname>Giallo-Verde Lampeggiante</aspectname>
       <show>flashyellow</show>
       <show>flashgreen</show>
-      <reference></reference>
+      <reference />
       <comment>Next main signal is set to diverging speed 60 Km/h</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv2velegiallo-verdelamp.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv2velegiallo-verdelamp.gif</imagelink>
@@ -163,7 +163,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <aspectname>Giallo-Verde Lampeggiante Alt.</aspectname>
       <show>flashyellow</show>
       <show>flashgreen</show>
-      <reference></reference>
+      <reference />
       <comment>Next main signal is set to diverging speed 100 Km/h</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv2velegiallo-verdelampalt.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv2velegiallo-verdelampalt.gif</imagelink>

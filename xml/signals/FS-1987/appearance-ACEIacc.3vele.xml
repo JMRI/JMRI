@@ -56,7 +56,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>red</show>
       <show>dark</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Stop</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso.gif</imagelink>
@@ -75,7 +75,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>yellow</show>
       <show>dark</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Approach</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velegiallo.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velegiallo.gif</imagelink>
@@ -94,7 +94,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>flashyellow</show>
       <show>dark</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Approach</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velegiallolamp.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velegiallolamp.gif</imagelink>
@@ -113,7 +113,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>green</show>
       <show>dark</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Normal speed</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3veleverde.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3veleverde.gif</imagelink>
@@ -132,7 +132,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>yellow</show>
       <show>green</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Approach</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velegiallo-verde.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velegiallo-verde.gif</imagelink>
@@ -151,7 +151,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>flashyellow</show>
       <show>flashgreen</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Approach</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velegiallo-verdelamp.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velegiallo-verdelamp.gif</imagelink>
@@ -170,7 +170,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>flashyellow</show>
       <show>flashgreen</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Approach</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velegiallo-verdelampalt.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velegiallo-verdelampalt.gif</imagelink>
@@ -189,7 +189,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>red</show>
       <show>yellow</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Normal speed</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-giallo.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo.gif</imagelink>
@@ -208,7 +208,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>red</show>
       <show>flashyellow</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Normal speed</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-giallolamp.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallolamp.gif</imagelink>
@@ -227,7 +227,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>red</show>
       <show>green</show>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Normal speed</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-verde.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-verde.gif</imagelink>
@@ -246,7 +246,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>red</show>
       <show>yellow</show>
       <show>yellow</show>
-      <reference></reference>
+      <reference />
       <comment>Restricted speed</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-giallo-giallo.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo-giallo.gif</imagelink>
@@ -265,7 +265,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>red</show>
       <show>yellow</show>
       <show>green</show>
-      <reference></reference>
+      <reference />
       <comment>Normal speed</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-giallo-verde.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo-verde.gif</imagelink>
@@ -284,7 +284,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>red</show>
       <show>flashyellow</show>
       <show>flashgreen</show>
-      <reference></reference>
+      <reference />
       <comment>Normal speed</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-giallo-verdelamp.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo-verdelamp.gif</imagelink>
@@ -303,7 +303,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <show>red</show>
       <show>flashyellow</show>
       <show>flashgreen</show>
-      <reference></reference>
+      <reference />
       <comment>Normal speed</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/v3velerosso-giallo-verdelampalt.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/AccoppiatiPrimacat/l3velerosso-giallo-verdelampalt.gif</imagelink>

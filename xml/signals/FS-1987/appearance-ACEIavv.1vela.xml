@@ -54,7 +54,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
     <appearance>
       <aspectname>Giallo</aspectname>
       <show>yellow</show>
-      <reference></reference>
+      <reference />
       <comment>Approach</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv1velagiallo.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv1velagiallo.gif</imagelink>
@@ -71,7 +71,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
     <appearance>
       <aspectname>Giallo Lampeggiante</aspectname>
       <show>flashyellow</show>
-      <reference></reference>
+      <reference />
       <comment>Approach</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv1velagiallolamp.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv1velagiallolamp.gif</imagelink>
@@ -89,7 +89,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
     <appearance>
       <aspectname>Verde</aspectname>
       <show>green</show>
-      <reference></reference>
+      <reference />
       <comment>Normal speed</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv1velaverde.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv1velaverde.gif</imagelink>
@@ -106,7 +106,7 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
     <appearance>
       <aspectname>Spento</aspectname>
       <show>dark</show>
-      <reference></reference>
+      <reference />
       <comment>Approach</comment>
       <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv1velagiallo.gif</imagelink>
       <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv1velagiallo.gif</imagelink>
