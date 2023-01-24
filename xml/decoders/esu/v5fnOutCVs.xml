@@ -1844,7 +1844,7 @@
             <decVal max="127"/>
         </variable>
         <!-- exclude AUX5 to AUX18 -->
-        <variables exclude="LokPilot 5 micro,LokPilot 5 micro DCC">
+        <variables exclude="LokPilot 5 micro,LokPilot 5 micro DCC,LokSound 5 micro DCC Direct Atlas Legacy">
             <!-- AUX5 Mode -->
             <variable label="AUX5 Mode" CV="16.0.307" default="1" item="ESU FnOut A5 Mode">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
