@@ -45,7 +45,7 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
      * 
      * @return the NV value, 0 if NV not available yet
      */
-    protected int getSelectValue(int row) {
+    protected int getSelectValue8(int row) {
         try {
             return (int)_dataModel.getValueAt(row - 1, NV_SELECT_COLUMN);
         } catch (NullPointerException ex) {
@@ -62,7 +62,7 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
      * 
      * @return the NV value, or min if NVs not available yet
      */
-    protected int getSelectValue(int row, int min) {
+    protected int getSelectValue8(int row, int min) {
         try {
             int val = (int)_dataModel.getValueAt(row - 1, NV_SELECT_COLUMN);
             if (val < min) {
@@ -85,7 +85,7 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
      * 
      * @return the NV value, or min if NVs not available yet
      */
-    protected int getSelectValue(int row, int min, int max) {
+    protected int getSelectValue8(int row, int min, int max) {
         try {
             int val = (int)_dataModel.getValueAt(row - 1, NV_SELECT_COLUMN);
             if (val < min) {
@@ -111,7 +111,7 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
      * 
      * @return the NV value, or min if NVs not available yet
      */
-    protected int getSelectValue(int rowHi, int rowLo, int min, int max) {
+    protected int getSelectValue16(int rowHi, int rowLo, int min, int max) {
         int hi, lo, val;
         try {
             hi = (int)_dataModel.getValueAt(rowHi - 1, NV_SELECT_COLUMN);

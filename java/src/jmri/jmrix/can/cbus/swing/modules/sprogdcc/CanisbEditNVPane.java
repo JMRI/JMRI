@@ -120,7 +120,7 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
         if (e.getType() == TableModelEvent.UPDATE) {
             int row = e.getFirstRow();
             int nv = row + 1;
-            int value = getSelectValue(nv);
+            int value = getSelectValue8(nv);
             log.debug("canisb gui table changed NV: {} Value: {}", nv, value);
             if (value >= -1) {
                 switch (nv) {
@@ -129,13 +129,13 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
                         break;
 
                     case CanisbPaneProvider.CANID:
-                        canIdSpinner.setValue(getSelectValue(CanisbPaneProvider.CANID,
+                        canIdSpinner.setValue(getSelectValue8(CanisbPaneProvider.CANID,
                                 CanisbPaneProvider.MIN_CANID, CanisbPaneProvider.MAX_CANID));
                         break;
 
                     case CanisbPaneProvider.NN_HI:
                     case CanisbPaneProvider.NN_LO:
-                        nodeNumberSpinner.setValue(getSelectValue(CanisbPaneProvider.NN_HI,
+                        nodeNumberSpinner.setValue(getSelectValue16(CanisbPaneProvider.NN_HI,
                                 CanisbPaneProvider.NN_LO, CanisbPaneProvider.MIN_NN, CanisbPaneProvider.MAX_NN));
                         break;
 
@@ -394,13 +394,13 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
 
             canIdSpinner = new TitledSpinner(Bundle.getMessage("CanId"), CanisbPaneProvider.CANID, canIdUpdateFn);
             canIdSpinner.setToolTip(Bundle.getMessage("CanIdTt"));
-            canIdSpinner.init(getSelectValue(CanisbPaneProvider.CANID, 100, 127), CanisbPaneProvider.MIN_CANID, CanisbPaneProvider.MAX_CANID, 1);
+            canIdSpinner.init(getSelectValue8(CanisbPaneProvider.CANID, 100, 127), CanisbPaneProvider.MIN_CANID, CanisbPaneProvider.MAX_CANID, 1);
             gridPane.add(canIdSpinner, c);
             c.gridy++;
 
             nodeNumberSpinner = new TitledSpinner(Bundle.getMessage("NodeNumber"), CanisbPaneProvider.NN_HI, nodeNumberUpdateFn);
             nodeNumberSpinner.setToolTip(Bundle.getMessage("NodeNumberTt"));
-            int nn = getSelectValue(CanisbPaneProvider.NN_HI, CanisbPaneProvider.NN_LO, CanisbPaneProvider.MIN_NN, CanisbPaneProvider.MAX_NN);
+            int nn = getSelectValue16(CanisbPaneProvider.NN_HI, CanisbPaneProvider.NN_LO, CanisbPaneProvider.MIN_NN, CanisbPaneProvider.MAX_NN);
             nodeNumberSpinner.init(nn, CanisbPaneProvider.MIN_NN, CanisbPaneProvider.MAX_NN, 1);
             gridPane.add(nodeNumberSpinner, c);
             c.gridy++;

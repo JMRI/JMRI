@@ -242,8 +242,8 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
         
         @Override
         public void setNewVal(int index) {
-            int newPos = getSelectValue(Servo8BasePaneProvider.STARTUP_POS) & (~(1<<(index-1)));
-            int newMove = getSelectValue(Servo8BasePaneProvider.STARTUP_MOVE) & (~(1<<(index-1)));
+            int newPos = getSelectValue8(Servo8BasePaneProvider.STARTUP_POS) & (~(1<<(index-1)));
+            int newMove = getSelectValue8(Servo8BasePaneProvider.STARTUP_MOVE) & (~(1<<(index-1)));
             
             // Startup action is in NV2 and NV3, 1 bit per output 
             if (servo[index].action.off.isSelected()) {
@@ -471,10 +471,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
             buttons.add(saved);
             setButtons();
             // Startup action is in NV2 and NV3, 1 bit per output 
-            if ((getSelectValue(Servo8BasePaneProvider.STARTUP_POS) & (1<<(_index-1)))>0) {
+            if ((getSelectValue8(Servo8BasePaneProvider.STARTUP_POS) & (1<<(_index-1)))>0) {
                 // 1x
                 off.setSelected(true);
-            } else if ((getSelectValue(Servo8BasePaneProvider.STARTUP_MOVE) & (1<<(_index-1)))>0) {
+            } else if ((getSelectValue8(Servo8BasePaneProvider.STARTUP_MOVE) & (1<<(_index-1)))>0) {
                 // 01
                 saved.setSelected(true);
             } else {
@@ -496,10 +496,10 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
          */
         public void setButtons() {
             // Startup action is in NV2 and NV3, 1 bit per output 
-            if ((getSelectValue(Servo8BasePaneProvider.STARTUP_POS) & (1<<(_index-1)))>0) {
+            if ((getSelectValue8(Servo8BasePaneProvider.STARTUP_POS) & (1<<(_index-1)))>0) {
                 // 1x
                 off.setSelected(true);
-            } else if ((getSelectValue(Servo8BasePaneProvider.STARTUP_MOVE) & (1<<(_index-1)))>0) {
+            } else if ((getSelectValue8(Servo8BasePaneProvider.STARTUP_MOVE) & (1<<(_index-1)))>0) {
                 // 01
                 saved.setSelected(true);
             } else {

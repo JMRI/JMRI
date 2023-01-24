@@ -45,6 +45,12 @@ public class Sprog3PlusPaneProvider extends CbusConfigPaneProvider {
     public static final int CAN_DISABLE = 22;
     public static final int USER_FLAGS_2 = 23;
     
+    // These may be overridden in scripts for unusual use cases
+    public static int MIN_CANID = 100;
+    public static int MAX_CANID = 127;
+    public static int MIN_NN = 65520;
+    public static int MAX_NN = 65535;
+
     public Sprog3PlusPaneProvider() {
         super();
     }
