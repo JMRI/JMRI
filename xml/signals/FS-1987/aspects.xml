@@ -40,7 +40,7 @@
     </author>
   </authorgroup>
 
-  <revhistory xmlns="http://docbook.org/ns/docbook">    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
      <revision>
        <revnumber>1</revnumber>
        <date>2023-01-01</date>
@@ -55,7 +55,7 @@
      </revision>
   </revhistory>
 
-  <aspects>    
+  <aspects>
     <aspect>
         <name>Rosso</name>
         <indication>Stop</indication>
@@ -101,7 +101,7 @@
 	  <description>Red-Yellow</description>
 	  <comment>da usare per 1. e 2. vela</comment>
       <speed>Restricted</speed>
-      <speed2></speed2>
+      <speed2 />
     </aspect>
 
     <aspect>
@@ -110,7 +110,7 @@
 	  <description>Red-Blinking Yellow</description>
 	  <comment>da usare per 1. e 2. vela</comment>
       <speed>Slow</speed>
-      <speed2></speed2>
+      <speed2 />
     </aspect>
 
     <aspect>
@@ -119,7 +119,7 @@
 	  <description>Red-Green</description>
 	  <comment>da usare per 1. e 2. vela</comment>
       <speed>Restricted</speed>
-      <speed2></speed2>
+      <speed2 />
     </aspect>
 
     <aspect>
@@ -128,7 +128,7 @@
 	  <description>Yellow-Yellow</description>
 	  <comment>da usare per 1. e 2. vela</comment>
       <speed>Restricted</speed>
-      <speed2></speed2>
+      <speed2 />
     </aspect>
 
     <aspect>
@@ -137,7 +137,7 @@
 	  <description>Yellow-Green</description>
 	  <comment>next main signal is set to diverging route max. 30 Km/h</comment>
       <speed>Slow</speed>
-      <speed2></speed2>
+      <speed2 />
     </aspect>
 
     <aspect>
@@ -146,7 +146,7 @@
 	  <description>Blinking Yellow-Green</description>
 	  <comment>next main signal is set to diverging route max. 60 Km/h</comment>
       <speed>Medium</speed>
-      <speed2></speed2>
+      <speed2 />
     </aspect>
 
     <aspect>
@@ -155,8 +155,8 @@
 	  <description>Alternate Blinking Yellow-Green</description>
 	  <comment>next main signal is set to diverging route max. 100 Km/h</comment>
       <speed>Limited</speed>
-      <speed2></speed2>
-    </aspect> 
+      <speed2 />
+    </aspect>
 
     <aspect>
       <name>Rosso-Giallo-Verde</name>
@@ -164,7 +164,7 @@
 	  <description>Alternate Blinking Yellow-Green</description>
 	  <comment>Diverging clear and next main signal is set to diverging route max. 30 Km/h</comment>
       <speed>Slow</speed>
-      <speed2></speed2>
+      <speed2 />
     </aspect>
 
     <aspect>
@@ -175,7 +175,7 @@
       <speed>Slow</speed>
       <speed2>Medium</speed2>
     </aspect>
-   
+
     <aspect>
       <name>Rosso-Giallo-Verde Lampeggiante Alt.</name>
       <indication>Diverging Approach</indication>
@@ -196,7 +196,7 @@
 
     <aspect>
       <name>Spento</name>
-      <indication>Unlit aspect = red - aspect used for squared single searchlight signal only</indication>
+      <indication>Unlit aspect=red - aspect used for squared single searchlight signal only</indication>
       <comment>Used on double-track mainline when direction is not inverted</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
@@ -208,7 +208,7 @@
 	  <description>Real: 2 horizontal white lamps - Panel: dark</description>
 	  <comment>Stop</comment>
       <speed>Stop</speed>
-      <speed2></speed2>
+      <speed2 />
     </aspect>
 
     <aspect>
@@ -217,7 +217,7 @@
 	  <description>Real: 2 vertical white lamps - Panel: white lamp</description>
 	  <comment>Diverging approach</comment>
       <speed>Restricted Slow</speed>
-      <speed2></speed2>
+      <speed2 />
     </aspect>
 
   </aspects>
