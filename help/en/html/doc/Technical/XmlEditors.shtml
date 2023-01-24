@@ -57,7 +57,7 @@
 
         <dd>
           <a href=
-          "http://www.snapfiles.com/get/edxor.html">http://www.snapfiles.com/get/edxor.html</a>
+          "https://www.majorgeeks.com/files/details/edxor.html">https://www.majorgeeks.com/files/details/edxor.html</a>
         </dd>
 
         <dt>jEdit</dt>
@@ -69,19 +69,19 @@
         <dt>Komodo Edit</dt>
 
         <dd>
-          <a href="http://www.openkomodo.com/">http://www.openkomodo.com/</a>
+          <a href="https://github.com/ActiveState/OpenKomodoIDE">https://github.com/ActiveState/OpenKomodoIDE</a>
         </dd>
 
         <dt>LopeEdit</dt>
 
         <dd>
-          <a href="http://www.lopesoft.com/en/index.html">http://www.lopesoft.com/en/index.html</a>
+          <a href="https://www.lopesoft.com/index.php/en/products/lopeedit">https://www.lopesoft.com/index.php/en/products/lopeedit</a>
         </dd>
 
         <dt>Notepad++</dt>
 
         <dd>
-          <a href="http://notepad-plus-plus.org/">http://notepad-plus-plus.org/</a>
+          <a href="https://notepad-plus-plus.org/">https://notepad-plus-plus.org/</a>
         </dd>
 
         <dt>XML Marker</dt>
@@ -100,22 +100,17 @@
       <h2>Commercial Editors</h2>
 
       <dl>
-        <dt>SynText</dt>
-
-        <dd>
-          <a href="http://www.syntext.com/">http://www.syntext.com/</a>
-        </dd>
 
         <dt>UltraEdit</dt>
 
         <dd>
-          <a href="http://www.ultraedit.com/">http://www.ultraedit.com/</a>
+          <a href="https://www.ultraedit.com/">https://www.ultraedit.com/</a>
         </dd>
 
         <dt>EditPlus</dt>
 
         <dd>
-          <a href="http://www.editplus.com/">http://www.editplus.com/</a>
+          <a href="https://www.editplus.com/">https://www.editplus.com/</a>
         </dd>
       </dl>
 

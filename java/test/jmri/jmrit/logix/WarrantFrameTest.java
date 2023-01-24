@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
-import javax.swing.JFrame;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -93,19 +92,20 @@ public class WarrantFrameTest {
         Warrant startW = _warrantMgr.getWarrant("WestBoundStart");
         Warrant endW = _warrantMgr.getWarrant("WestBoundFinish");
 
-        new Thread(() -> {
-            JFrameOperator jfo = new JFrameOperator(WarrantTableFrame.getDefault());
-            JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("QuestionTitle"));
-            JButtonOperator jbo = new JButtonOperator(jdo, Bundle.getMessage("ButtonNo"));
-            jbo.push();
-        }).start();
-        
+        Thread clickDialog = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"));
+        });
+        clickDialog.setName("WarrantFrameTest click Question No");
+        clickDialog.start();
+
         WarrantFrame warrantFrame= new WarrantFrame(startW, endW);
         assertThat(warrantFrame).withFailMessage("JoinWFrame exits").isNotNull();
 
         warrantFrame._userNameBox.setText("WestBound");
         JFrameOperator editFrame = new JFrameOperator(warrantFrame);
         JemmyUtil.pressButton(editFrame, Bundle.getMessage("ButtonSave"));
+
+        JUnitUtil.waitFor(() ->  { return !clickDialog.isAlive(); },"QuestionTitle ButtonNo clicked");
 
         Warrant w = _warrantMgr.getWarrant("WestBound");
         assertThat(w).withFailMessage("Concatenated Warrant exits").isNotNull();

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.symbolicprog.AbstractValue;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.VariableTableModel;
@@ -119,7 +120,7 @@ public class LocoFile extends XmlFile {
                 }
                 if (cvObject != null) {
                     cvObject.setValue(Integer.parseInt(value));
-                    cvObject.setState(CvValue.FROMFILE);
+                    cvObject.setState(AbstractValue.ValueState.FROMFILE);
                 }
             }
         } else {
@@ -131,7 +132,7 @@ public class LocoFile extends XmlFile {
         // CV17 to Edited.  This needs to be understood & fixed.
         cvObject = cvModel.allCvMap().get("17");
         if (cvObject != null) {
-            cvObject.setState(CvValue.FROMFILE);
+            cvObject.setState(AbstractValue.ValueState.FROMFILE);
         }
     }
 

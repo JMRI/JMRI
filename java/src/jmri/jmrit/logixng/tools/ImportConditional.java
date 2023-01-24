@@ -117,7 +117,7 @@ public class ImportConditional {
                 expression.getChild(0).connect(socket);
             }
         } else {
-            buildExpression(expression, conditionalVariables);
+            buildExpression(expression, conditionalVariables, ao != Conditional.AntecedentOperator.MIXED);
         }
 
         DigitalBooleanMany many =
@@ -139,13 +139,16 @@ public class ImportConditional {
     }
 
 
-    private void buildExpression(DigitalExpressionBean expression, List<ConditionalVariable> conditionalVariables)
+    private void buildExpression(
+            DigitalExpressionBean expression,
+            List<ConditionalVariable> conditionalVariables,
+            boolean allowNot)
             throws SocketAlreadyConnectedException, JmriException {
 
         for (int i=0; i < conditionalVariables.size(); i++) {
             jmri.ConditionalVariable cv = conditionalVariables.get(i);
             NamedBean nb = cv.getBean();
-            AtomicBoolean isNegated = new AtomicBoolean(cv.isNegated());
+            AtomicBoolean isNegated = new AtomicBoolean(cv.isNegated() && allowNot);
             DigitalExpressionBean newExpression;
             switch (cv.getType().getItemType()) {
                 case SENSOR:

@@ -1940,6 +1940,7 @@ public class Track extends PropertyChangeSupport {
                         car.getRoadName().equals(currentSi.getRoadName())) &&
                 (currentSi.getReceiveLoadName().equals(ScheduleItem.NONE) ||
                         car.getLoadName().equals(currentSi.getReceiveLoadName()))) {
+            car.setScheduleItemId(currentSi.getId());
             car.loadNext(currentSi);
             // bump schedule
             bumpSchedule();

@@ -410,7 +410,7 @@
           <dd>&nbsp;</dd>
 
           <dt class="im">
-            <a href="https://arduino.cc" target="_blank"><img src="arduino/images/arduinologo.png"
+            <a href="https://www.arduino.cc" target="_blank"><img src="arduino/images/arduinologo.png"
             width="56" height="42" alt="Arduino (micro-controller)"></a>
           </dt>
 
@@ -426,7 +426,7 @@
             <p>&nbsp;</p>
           </dd>
 
-          <dt class="im"><img src="http://www.cti-electronics.com/banner.gif" width="122" height=
+          <dt class="im"><img src="https://www.cti-electronics.com/banner.gif" width="122" height=
           "27" alt="CTI">
           </dt>
 
@@ -442,7 +442,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.digitrax.com/" target="_blank"><img src="images/Digitrax-logo.jpg"
+            <a href="https://www.digitrax.com/" target="_blank"><img src="images/Digitrax-logo.jpg"
             width="60" height="28" alt="Digitrax"></a>
           </dt>
 
@@ -550,8 +550,8 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.raspberrypi.org" target="_blank"><img src=
-            "https://www.raspberrypi.org/wp-content/uploads/2011/10/Raspi-PGB001-300x267.png"
+            <a href="https://www.raspberrypi.org/" target="_blank"><img src=
+            "https://www.raspberrypi.org/app/uploads/2011/10/Raspi-PGB001-300x267.png"
             width="60" height="58" alt="Raspberry Pi Foundation"></a>
           </dt>
 
@@ -570,7 +570,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.sprog-dcc.co.uk/"><img src="images/SprogDCCLarge.jpg" width="157"
+            <a href="https://www.sprog-dcc.co.uk/"><img src="images/SprogDCCLarge.jpg" width="157"
             height="40" alt="SPROG DCC Logo"></a>
           </dt>
 
@@ -658,7 +658,7 @@
           </dd>
 
           <dt class="im">
-            <a href="https://www.digikeijs.com" target="_blank"><img src=
+            <a href="https://www.digikeijs.com/en/" target="_blank"><img src=
             "images/digikeijs-logo.png" width="50" height="14" alt="Digikeijs"></a>
           </dt>
 
@@ -673,7 +673,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.digitrax.com/" target="_blank"><img src="images/Digitrax-logo.jpg"
+            <a href="https://www.digitrax.com/" target="_blank"><img src="images/Digitrax-logo.jpg"
             width="60" height="28" alt="Digitrax"></a>
           </dt>
 
@@ -740,8 +740,8 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.esu.eu/en/products/digital-control/" target="_blank"><img src=
-            "http://www.esu.eu/esu_logo.jpg" width="70" height="50" alt="ESU"></a>
+            <a href="https://www.esu.eu/en/products/digital-control/" target="_blank"><img src=
+            "https://www.esu.eu/esu_logo.jpg" width="70" height="50" alt="ESU"></a>
           </dt>
 
           <dt>
@@ -756,7 +756,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.fleischmann.de/en/home/index.html" target="_blank"><img src=
+            <a href="https://www.fleischmann.de/fde/" target="_blank"><img src=
             "images/ico-fl.gif" width="54" height="34" alt="Fleischmann"></a>
           </dt>
 
@@ -775,7 +775,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.hornby.com/uk-en/" target="_blank"><img src="images/hornby.png"
+            <a href="https://uk.hornby.com/" target="_blank"><img src="images/hornby.png"
             width="81" height="25" alt="Hornby"></a>
           </dt>
 
@@ -801,7 +801,7 @@
 
           <dt class="im">
             <a href=
-            "http://legacy.lionel.com/GettingStarted/LionelTechnology/legacy/legacyHome.cfm"
+            "https://www.lionel.com/getstarted"
             target="_blank"><img src="images/ico-lionel.gif" width="108" height="35" alt=
             "Lionel TMCC"></a>
           </dt>
@@ -819,7 +819,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.marklin.com/digital/" target="_blank"><img src=
+            <a href="https://www.marklin.com/" target="_blank"><img src=
             "images/marklin_logo.gif" width="101" height="22" alt="Marklin"></a>
           </dt>
 
@@ -835,7 +835,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.modelrectifier.com" target="_blank"><img src=
+            <a href="https://www.modelrectifier.com" target="_blank"><img src=
             "http://www.modelrectifier.com/v/vspfiles/templates/modelRecRes/images/template/desktop/client-logo.png"
             alt="MRC logo" height="43" width="103"></a>
           </dt>
@@ -855,7 +855,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.ncedcc.com/" target="_blank"><img src="images/ncelogo.jpg" width=
+            <a href="https://www.ncedcc.com/" target="_blank"><img src="images/ncelogo.jpg" width=
             "44" height="34" alt="NCE"></a>
           </dt>
 
@@ -931,7 +931,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.uhlenbrock.de/" target="_blank"><img src="images/ico-Ur.gif" width=
+            <a href="https://www.uhlenbrock.de/de_DE/index.htm" target="_blank"><img src="images/ico-Ur.gif" width=
             "66" height="52" alt="Uhlenbrock"></a>
           </dt>
 
@@ -955,7 +955,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.viessmann-modell.com/" target="_blank"><img src=
+            <a href="https://viessmann-modell.com/" target="_blank"><img src=
             "images/viessmann.png" width="75" height="74" alt="Viessmann"></a>
           </dt>
 
@@ -1044,7 +1044,7 @@
           <dd>&nbsp;</dd>
 
           <dt class="im">
-            <a href="http://www.jlcenterprises.net/" target="_blank">C/MRI</a>
+            <a href="https://www.jlcenterprises.net/" target="_blank">C/MRI</a>
           </dt>
 
           <dt>
@@ -1100,7 +1100,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.digitrax.com/" target="_blank"><img src="images/Digitrax-logo.jpg"
+            <a href="https://www.digitrax.com/" target="_blank"><img src="images/Digitrax-logo.jpg"
             width="60" height="28" alt="Digitrax"></a>
           </dt>
 
@@ -1175,7 +1175,7 @@
             <p>&nbsp;</p>
           </dd>
 
-          <dt class="im"><img src="http://www.modbus.org/images/logo_new.jpg" alt="Modbus logo"
+          <dt class="im"><img src="https://modbus.org/images/logo_new.jpg" alt="Modbus logo"
           height="27" width="96">
           </dt>
 
@@ -1202,7 +1202,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.proto87.com/model-trains-DCC-decoders.html" target=
+            <a href="https://www.proto87.com/model-trains-DCC-decoders.html" target=
             "_blank"><img src="images/RPS.gif" width="64" height="41" alt="RPS image"></a>
           </dt>
 
@@ -1218,7 +1218,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://openlcb.org/" target="_blank"><img src=
+            <a href="https://openlcb.org/" target="_blank"><img src=
             "http://openlcb.org/trunk/web/logo-ajs-dph.png" alt="OpenLCB logo" height="57" width=
             "138"></a>
           </dt>
@@ -1236,7 +1236,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://srcpd.sourceforge.net/" target="_blank"><img src=
+            <a href="https://srcpd.sourceforge.net/" target="_blank"><img src=
             "http://www.der-moba.de/skins/dermoba/wiki.png" height="55" width="78" alt="SRCP"></a>
           </dt>
 
@@ -1253,7 +1253,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://www.x10.com" target="_blank">X10</a>
+            <a href="https://www.x10.com/" target="_blank">X10</a>
           </dt>
 
           <dt>
@@ -1287,7 +1287,7 @@
           <dd>&nbsp;</dd>
 
           <dt class="im">
-            <a href="http://www.digitrax.com/" target="_blank"><img src="images/Digitrax-logo.jpg"
+            <a href="https://www.digitrax.com" target="_blank"><img src="images/Digitrax-logo.jpg"
             width="60" height="28" alt="Digitrax"></a>
           </dt>
 
@@ -1368,7 +1368,7 @@
           <!-- Anyma DMX goes here -->
 
           <dt class="im">
-            <a href="https://arduino.cc" target="_blank"><img src="arduino/images/arduinologo.png"
+            <a href="https://www.arduino.cc" target="_blank"><img src="arduino/images/arduinologo.png"
             width="56" height="42" alt="Arduino (micro-controller)"></a>
           </dt>
 
@@ -1415,9 +1415,7 @@
           </dd>
 
           <dt class="im">
-            <a href="https://www.dccspecialties.com" target="_blank"><img src=
-            "https://www.dccspecialties.com/common/top-logo.gif" width="60" height="26" alt=
-            "DCC Specialties"></a>
+           https://www.dccspecialties.com
           </dt>
 
           <dt>
@@ -1433,7 +1431,7 @@
 
           <dt class="im">
             <a href=
-            "https://kpf-zeller.de/kpf/rollenstand/index.php"
+            "https://kpf-zeller.de/"
             target="_blank"><img src="https://kpf-zeller.de/images/logos/logo_lang_logo_logo.png" width="100" height="33" alt=
             "Bachrus"></a>
           </dt>
@@ -1498,7 +1496,7 @@
           </dd>
 
           <dt class="im">
-            <a href="http://protrak.org" target="_blank"><img src=
+            <a href="https://protrak.org/wpt/" target="_blank"><img src=
             "http://protrak.org/wpt/wp-content/uploads/2015/05/ProTrak_Login2.png" alt=
             "ProTrak logo"></a>
           </dt>

@@ -12,9 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.Version;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
@@ -2617,42 +2615,43 @@ public class TrainBuilderBase extends TrainCommon {
                     !car.getFinalDestinationName().equals(car.getDestinationName())) {
                 continue;
             }
-            log.debug("Car ({}) destination track ({}) has final destination track ({}) location ({})", car.toString(),
-                    car.getDestinationTrackName(), car.getFinalDestinationTrackName(), car.getDestinationName()); // NOI18N
+            Track alternate = car.getFinalDestinationTrack().getAlternateTrack();
+            if (alternate == null || car.getDestinationTrack() != alternate) {
+                continue;
+            }
             // is the car in a kernel?
             if (car.getKernel() != null && !car.isLead()) {
                 continue;
             }
-            if (car.checkDestination(car.getFinalDestination(), car.getFinalDestinationTrack()).equals(Track.OKAY)) {
-                Track alternate = car.getFinalDestinationTrack().getAlternateTrack();
-                if (alternate != null &&
-                        car.getDestinationTrack() == alternate &&
-                        (alternate.isYard() || alternate.isInterchange()) &&
-                        checkDropTrainDirection(car, car.getRouteDestination(), car.getFinalDestinationTrack()) &&
-                        checkTrainCanDrop(car, car.getFinalDestinationTrack())) {
-                    log.debug("Car ({}) alternate track ({}) can be redirected to final destination track ({})",
-                            car.toString(), car.getDestinationTrackName(), car.getFinalDestinationTrackName());
-                    if (car.getKernel() != null) {
-                        for (Car k : car.getKernel().getCars()) {
-                            if (k.isLead()) {
-                                continue;
-                            }
-                            addLine(_buildReport, FIVE,
-                                    MessageFormat.format(Bundle.getMessage("buildRedirectFromAlternate"),
-                                            new Object[]{car.getFinalDestinationName(),
-                                                    car.getFinalDestinationTrackName(), k.toString(),
-                                                    car.getDestinationTrackName()}));
-                            // force car to track
-                            k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true);
+            log.debug("Car ({}) alternaten track ({}) has final destination track ({}) location ({})", car.toString(),
+                    car.getDestinationTrackName(), car.getFinalDestinationTrackName(), car.getDestinationName()); // NOI18N
+            if ((alternate.isYard() || alternate.isInterchange()) &&
+                    car.checkDestination(car.getFinalDestination(), car.getFinalDestinationTrack())
+                            .equals(Track.OKAY) &&
+                    checkDropTrainDirection(car, car.getRouteDestination(), car.getFinalDestinationTrack()) &&
+                    checkTrainCanDrop(car, car.getFinalDestinationTrack())) {
+                log.debug("Car ({}) alternate track ({}) can be redirected to final destination track ({})",
+                        car.toString(), car.getDestinationTrackName(), car.getFinalDestinationTrackName());
+                if (car.getKernel() != null) {
+                    for (Car k : car.getKernel().getCars()) {
+                        if (k.isLead()) {
+                            continue;
                         }
+                        addLine(_buildReport, FIVE,
+                                MessageFormat.format(Bundle.getMessage("buildRedirectFromAlternate"),
+                                        new Object[]{car.getFinalDestinationName(),
+                                                car.getFinalDestinationTrackName(), k.toString(),
+                                                car.getDestinationTrackName()}));
+                        // force car to track
+                        k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true);
                     }
-                    addLine(_buildReport, FIVE,
-                            MessageFormat.format(Bundle.getMessage("buildRedirectFromAlternate"),
-                                    new Object[] { car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
-                                            car.toString(), car.getDestinationTrackName() }));
-                    car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true);
-                    redirected = true;
                 }
+                addLine(_buildReport, FIVE,
+                        MessageFormat.format(Bundle.getMessage("buildRedirectFromAlternate"),
+                                new Object[]{car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
+                                        car.toString(), car.getDestinationTrackName()}));
+                car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true);
+                redirected = true;
             }
         }
         return redirected;
@@ -2725,10 +2724,10 @@ public class TrainBuilderBase extends TrainCommon {
     protected void showCarsNotRoutable() {
         // any cars not able to route?
         if (_notRoutable.size() > 0) {
-            _warnings++;
             addLine(_buildReport, ONE, BLANK_LINE);
             addLine(_buildReport, ONE, Bundle.getMessage("buildCarsNotRoutable"));
             for (Car car : _notRoutable) {
+                _warnings++;
                 addLine(_buildReport, ONE,
                         MessageFormat.format(Bundle.getMessage("buildCarNotRoutable"),
                                 new Object[] { car.toString(), car.getLocationName(), car.getTrackName(),

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License   -->
+<!-- for more details.                                                       -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumChoice choice="0" value="0" >
+        <choice>0</choice>
+        <choice xml:lang="cs">0 Stůj</choice>
+    </enumChoice>
+    <enumChoice choice="1" value="1" >
+        <choice>1</choice>
+        <choice xml:lang="cs">1 Volno</choice>
+    </enumChoice>
+    <enumChoice choice="2" value="2" >
+        <choice>2</choice>
+        <choice xml:lang="cs">2 Výstraha</choice>
+    </enumChoice>
+    <enumChoice choice="3" value="3" >
+        <choice>3</choice>
+        <choice xml:lang="cs">3 Očekávej 40</choice>
+    </enumChoice>
+    <enumChoice choice="4" value="4" >
+        <choice>4</choice>
+        <choice xml:lang="cs">4 Očekávej 60</choice>
+    </enumChoice>
+    <enumChoice choice="5" value="5" >
+        <choice>5</choice>
+        <choice xml:lang="cs">5</choice>
+    </enumChoice>
+    <enumChoice choice="6" value="6" >
+        <choice>6</choice>
+        <choice xml:lang="cs">6 Rychlost 40 a volno</choice>
+    </enumChoice>
+    <enumChoice choice="7" value="7" >
+        <choice>7</choice>
+        <choice xml:lang="cs">7 Rychlost 40 a výstraha</choice>
+    </enumChoice>
+    <enumChoice choice="8" value="8" >
+        <choice>8</choice>
+        <choice xml:lang="cs">8 Rychlost 40 a očekávej 40</choice>
+    </enumChoice>
+    <enumChoice choice="9" value="9" >
+        <choice>9</choice>
+        <choice xml:lang="cs">9 Rychlost 40 a očekávej 60</choice>
+    </enumChoice>
+    <enumChoice choice="10" value="10" >
+        <choice>10</choice>
+        <choice xml:lang="cs">10</choice>
+    </enumChoice>
+    <enumChoice choice="11" value="11" >
+        <choice>11</choice>
+        <choice xml:lang="cs">11 Rychlost 60 a volno</choice>
+    </enumChoice>
+    <enumChoice choice="12" value="12" >
+        <choice>12</choice>
+        <choice xml:lang="cs">12 Rychlost 60 a výstraha</choice>
+    </enumChoice>
+    <enumChoice choice="13" value="13" >
+        <choice>13</choice>
+        <choice xml:lang="cs">13 Rychlost 40 a očekávej 40</choice>
+    </enumChoice>
+    <enumChoice choice="14" value="14" >
+        <choice>14</choice>
+        <choice xml:lang="cs">14 Rychlost 40 a očekávej 60</choice>
+    </enumChoice>
+    <enumChoice choice="15" value="15" >
+        <choice>15</choice>
+        <choice xml:lang="cs">15</choice>
+    </enumChoice>
+    <enumChoice choice="16" value="16" >
+        <choice>16</choice>
+        <choice xml:lang="cs">16 Rychlost 40 a opakovaná výstraha</choice>
+    </enumChoice>
+    <enumChoice choice="17" value="17" >
+        <choice>17</choice>
+        <choice xml:lang="cs">17 Rychlost 40 a opakovaná očekávej 40</choice>
+    </enumChoice>
+    <enumChoice choice="18" value="18" >
+        <choice>18</choice>
+        <choice xml:lang="cs">18 Rychlost 40 a opakovaná očekávej 60</choice>
+    </enumChoice>
+    <enumChoice choice="19" value="19" >
+        <choice>19</choice>
+        <choice xml:lang="cs">19 Jízda podle rozhledových poměrů</choice>
+    </enumChoice>
+    <enumChoice choice="20" value="20" >
+        <choice>20</choice>
+        <choice xml:lang="cs">20 Rychlost 40 a jízda podle rozhledových poměrů</choice>
+    </enumChoice>
+    <enumChoice choice="21" value="21" >
+        <choice>21</choice>
+        <choice xml:lang="cs">21 Opakovaná volno</choice>
+    </enumChoice>
+    <enumChoice choice="22" value="22" >
+        <choice>22</choice>
+        <choice xml:lang="cs">22 Opakovaná výstraha</choice>
+    </enumChoice>
+    <enumChoice choice="23" value="23" >
+        <choice>23</choice>
+        <choice xml:lang="cs">23 Opakovaná očekávej 40</choice>
+    </enumChoice>
+    <enumChoice choice="24" value="24" >
+        <choice>24</choice>
+        <choice xml:lang="cs">24 Opakovaná očekávej 60</choice>
+    </enumChoice>
+    <enumChoice choice="25" value="25" >
+        <choice>25</choice>
+        <choice xml:lang="cs">25 Zhasnuto</choice>
+    </enumChoice>
+    <enumChoice choice="26" value="26" >
+        <choice>26</choice>
+        <choice xml:lang="cs">26 Jízda vlaku dovolena</choice>
+    </enumChoice>
+    <enumChoice choice="27" value="27" >
+        <choice>27</choice>
+        <choice xml:lang="cs">27 Posun zakázán</choice>
+    </enumChoice>
+    <enumChoice choice="28" value="28" >
+        <choice>28</choice>
+        <choice xml:lang="cs">28 Posun dovolen</choice>
+    </enumChoice>
+    <enumChoice choice="29" value="29" >
+        <choice>29</choice>
+        <choice xml:lang="cs">29 Posun dovolen - nezabezpečený</choice>
+    </enumChoice>
+    <enumChoice choice="30" value="30" >
+        <choice>30</choice>
+        <choice xml:lang="cs">30 Opatrně na přivolávací návěst bez červené</choice>
+    </enumChoice>
+    <enumChoice choice="31" value="31" >
+        <choice>31</choice>
+        <choice xml:lang="cs">31 Opatrně na přivolávací návěst</choice>
+    </enumChoice>
+</enumVal>

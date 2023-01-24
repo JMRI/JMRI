@@ -686,21 +686,21 @@
             <a href=
             "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusOpCodes.java">
             CbusOpCodes.java</a> <a href=
-            "https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusOpCodes.html">JavaDoc</a>
+            "https://www.jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusOpCodes.html">JavaDoc</a>
           </li>
 
           <li>
             <a href=
             "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusConstants.java">
             CbusConstants.java</a> <a href=
-            "https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusConstants.html">JavaDoc</a>
+            "https://www.jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusConstants.html">JavaDoc</a>
           </li>
 
           <li>
             <a href=
             "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusMessage.java">
             CbusMessage.java</a> <a href=
-            "https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusMessage.html">JavaDoc</a>
+            "https://www.jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusMessage.html">JavaDoc</a>
           </li>
 
           <li>
@@ -709,14 +709,6 @@
             CbusBundle.properties</a> for English text translations of OPCs.
           </li>
 
-          <li>
-            <a href=
-            "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusProgrammer.java">
-            CbusProgrammer.java</a> <a href=
-            "https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusProgrammer.html">JavaDoc</a>
-            Functions for dealing with Node programming ( Node Config Tool functions to be moved
-            here )
-          </li>
         </ul>
 
         <h4>Opcodes used in JMRI CBUS Tools</h4>

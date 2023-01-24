@@ -18,6 +18,8 @@ import org.junit.*;
  */
 public class SocketOperationTest {
 
+    private CreateLogixNGTreeScaffold createLogixNGTreeScaffold;
+
     @Test
     public void testAddRemoveChildren() throws PropertyVetoException, Exception {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
@@ -48,7 +50,7 @@ public class SocketOperationTest {
             throws PropertyVetoException, Exception {
 
         // Add new LogixNG actions and expressions to jmri.jmrit.logixng.CreateLogixNGTreeScaffold
-        CreateLogixNGTreeScaffold.createLogixNGTree();
+        createLogixNGTreeScaffold.createLogixNGTree();
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
 
@@ -181,13 +183,14 @@ public class SocketOperationTest {
 
     @Before
     public void setUp() {
-        CreateLogixNGTreeScaffold.setUp();
+        createLogixNGTreeScaffold = new CreateLogixNGTreeScaffold();
+        createLogixNGTreeScaffold.setUp();
     }
 
     @After
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
-        CreateLogixNGTreeScaffold.tearDown();
+        createLogixNGTreeScaffold.tearDown();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DeepCopyTest.class);

@@ -107,7 +107,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         // finish initialization
         _value.setActionCommand("");
         _defaultColor = _value.getBackground();
-        _value.setBackground(COLOR_UNKNOWN);
+        _value.setBackground(ValueState.UNKNOWN.getColor());
         _value.setOpaque(true);
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);
@@ -117,7 +117,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
             return;
         }
         cv.addPropertyChangeListener(this);
-        cv.setState(CvValue.FROMFILE);
+        cv.setState(ValueState.FROMFILE);
     }
 
     @Override
@@ -317,7 +317,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         log.debug("setValue in EnumVariableValue to {}", value);
         selectValue(value);
 
-        if (oldVal != value || getState() == VariableValue.UNKNOWN) {
+        if (oldVal != value || getState() == ValueState.UNKNOWN) {
             prop.firePropertyChange("Value", null, value);
         }
     }
@@ -440,7 +440,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
      * Notify the connected CVs of a state change from above
      */
     @Override
-    public void setCvState(int state) {
+    public void setCvState(ValueState state) {
         _cvMap.get(getCvNum()).setState(state);
     }
 
@@ -501,10 +501,10 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
                 break;
             case "State": {
                 CvValue cv = _cvMap.get(getCvNum());
-                if (cv.getState() == STORED) {
+                if (cv.getState() == ValueState.STORED) {
                     setToWrite(false);
                 }
-                if (cv.getState() == READ) {
+                if (cv.getState() == ValueState.READ) {
                     setToRead(false);
                 }
                 setState(cv.getState());

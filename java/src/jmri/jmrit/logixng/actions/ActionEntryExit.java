@@ -123,7 +123,7 @@ public class ActionEntryExit extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void setup() {
-        // Do nothing
+        getSelectNamedBean().setup();
     }
 
     /** {@inheritDoc} */

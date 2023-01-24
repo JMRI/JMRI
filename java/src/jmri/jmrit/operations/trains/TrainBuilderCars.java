@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -15,6 +13,7 @@ import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -1208,9 +1207,12 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     new Object[]{car.toString(), router.getStatus()}));
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
+            // don't move car if another train can
+            if (router.getStatus().startsWith(Router.STATUS_NOT_THIS_TRAIN_PREFIX)) {
+                _routeToTrackFound = true;
+            }
             return false;
         }
-        car.updateKernel();
         if (car.getDestinationTrack() != track) {
             track.bumpMoves();
             // car is being routed to this track
@@ -1219,6 +1221,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 track.bumpSchedule();
             }
         }
+        car.updateKernel();
         return true; // done, car has a new destination
     }
 

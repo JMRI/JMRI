@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 public class WebServerAction extends JmriAbstractAction {
 
     private static ServerThread serverThread = null;
+    private static final Object lock = new Object();
     private final static Logger log = LoggerFactory.getLogger(WebServerAction.class);
 
     public WebServerAction(String s, WindowInterface wi) {
@@ -31,7 +32,7 @@ public class WebServerAction extends JmriAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        synchronized (this) {
+        synchronized (lock) {
             if (serverThread == null) {
                 serverThread = new ServerThread();
                 serverThread.setName("WebServerAction action");
