@@ -732,7 +732,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     protected boolean checkLackTaskAccepted(int Byte2) {
         if (Byte2 == 1 // task accepted
                 || Byte2 == 0x23 || Byte2 == 0x2B || Byte2 == 0x6B// added as DCS51 fix
-                || Byte2 == 0x7F) {
+                /* || Byte2 == 0x7F */) {
             return true;
         } else {
             return false;
@@ -762,7 +762,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @return true if the programmer indicated a "blind operation", else false
      */
     protected boolean checkLackAcceptedBlind(int Byte2) {
-        if (Byte2 == 0x40) {
+        if (Byte2 == 0x40 || Byte2 == 0x7F ) {
             return true;
         } else {
             return false;
