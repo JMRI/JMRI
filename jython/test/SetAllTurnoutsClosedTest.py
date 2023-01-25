@@ -1,6 +1,7 @@
 
 # Test SetAllTurnoutsClosed.py script
 import jmri
+from time import sleep
 
 # test structure setup
 turnouts.provideTurnout("IS1").setState(UNKNOWN)
@@ -10,6 +11,8 @@ turnouts.provideTurnout("IS4").setState(INCONSISTENT)
 
 # run script
 execfile("jython/SetAllTurnoutsClosed.py")
+
+sleep(1.5)
 
 # test resuts
 if (turnouts.provideTurnout("IS1").getState() != CLOSED) : raise AssertionError('UNKNOWN not set to CLOSED')
