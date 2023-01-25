@@ -24,7 +24,7 @@ class SetUnknownTurnoutsClosed(jmri.jmrit.automat.AbstractAutomaton) :
               if (cs == UNKNOWN) :
                 chgCnt += 1
                 to.setState(CLOSED)
-                sleep(0.1) #pause for 1/10 second between commands
+                self.waitMsec(100) # pause for 1/10 second between commands
             print str(toCnt) + " turnouts checked, " + str(chgCnt) + " found in UNKNOWN state and changed to CLOSED"
             return False
 
