@@ -475,10 +475,11 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>Cliff Anderson contributed a new TurnoutsMasterSlave.py script.
-            <li>Fixed the SetAllTurnoutsClosed and SetUnknownTurnoutsClosed so they would properly
+            <li>Fixed the SetAllTurnoutsClosed.py and SetUnknownTurnoutsClosed.py scripts so they would properly
                 delay on polled systems such as C/MRI</li>
-            <li>Added a new <a href="https://jmri.org/jython/SetAllTurnoutsThrown.py">SetAllTurnoutsThrown</a> script and tests</li>
-            <li>Added a new <a href="https://jmri.org/jython/Shutdown.py">Shutdown</a> script to shut down JMRI.</li>
+            <li>Added a new <a href="https://jmri.org/jython/SetAllTurnoutsThrown.py">SetAllTurnoutsThrown.py</a> script and tests</li>
+            <li>Added a new <a href="https://jmri.org/jython/Shutdown.py">Shutdown.py</a> script to shut down JMRI.</li>
+            <li>Added a new <a href="https://jmri.org/jython/Restart.py">Restart.py</a> script to restart JMRI.</li>
         </ul>
 
     <h3>Signals</h3>
