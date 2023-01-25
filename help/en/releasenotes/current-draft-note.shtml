@@ -476,9 +476,9 @@
         <ul>
             <li>Cliff Anderson contributed a new TurnoutsMasterSlave.py script.
             <li>Fixed the SetAllTurnoutsClosed and SetUnknownTurnoutsClosed so they would properly
-                delay on polled systems such as C/MRI
-            <li>Added a new SetAllTurnoutsThrown script and tests
-            </li>
+                delay on polled systems such as C/MRI</li>
+            <li>Added a new <a href="https://jmri.org/jython/SetAllTurnoutsThrown.py">SetAllTurnoutsThrown</a> script and tests</li>
+            <li>Added a new <a href="https://jmri.org/jython/Shutdown.py">Shutdown</a> script to shut down JMRI.</li>
         </ul>
 
     <h3>Signals</h3>
