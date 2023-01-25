@@ -96,7 +96,10 @@ public class CbusNodeNVManager {
             return;
         }
         _nvArray[index]=newnv;
-        _node.notifyPropertyChangeListener("SINGLENVUPDATE",null,( index -1));
+        if (index > 0) {
+            // Ignore index 0 (number of NVs) as this would pass a negative value in the property change
+            _node.notifyPropertyChangeListener("SINGLENVUPDATE",null,( index -1));
+        }
         
     }
     
