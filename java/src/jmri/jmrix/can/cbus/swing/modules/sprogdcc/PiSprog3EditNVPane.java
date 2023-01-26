@@ -114,7 +114,7 @@ public class PiSprog3EditNVPane extends AbstractEditNVPane {
         if (e.getType() == TableModelEvent.UPDATE) {
             int row = e.getFirstRow();
             int nv = row + 1;
-            int value = getSelectValue(nv);
+            int value = getSelectValue8(nv);
             log.debug("pisprog3 gui table changed NV: {} Value: {}", nv, value);
             
             switch (nv) {
@@ -272,7 +272,7 @@ public class PiSprog3EditNVPane extends AbstractEditNVPane {
 
             for (int i = 0; i < 2; i++) {
                 csFlags[i] = new CmdStaFlags(i, PiSprog3PaneProvider.USER_FLAGS + i, flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
-                csFlags[i].setFlags(getSelectValue(PiSprog3PaneProvider.USER_FLAGS + i));
+                csFlags[i].setFlags(getSelectValue8(PiSprog3PaneProvider.USER_FLAGS + i));
                 flagPane[i] = csFlags[i].getContents();
             }
             
@@ -288,7 +288,7 @@ public class PiSprog3EditNVPane extends AbstractEditNVPane {
             // x = 1
             c.gridwidth = 3;
             modeList = new JComboBox<>(modeStrings);
-            modeList.setSelectedIndex(getSelectValue(PiSprog3PaneProvider.CMD_STATION_MODE));
+            modeList.setSelectedIndex(getSelectValue8(PiSprog3PaneProvider.CMD_STATION_MODE));
             modeList.addActionListener((ActionEvent e) -> {
                 modeActionListener(e);
             });
@@ -307,7 +307,7 @@ public class PiSprog3EditNVPane extends AbstractEditNVPane {
             
             mainSpinner = new TitledSpinner(Bundle.getMessage("MainLimit"), PiSprog3PaneProvider.CURRENT_LIMIT, currentLimitUpdateFn);
             mainSpinner.setToolTip(Bundle.getMessage("MainLimitTt"));
-            mainSpinner.init(getSelectValue(PiSprog3PaneProvider.CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
+            mainSpinner.init(getSelectValue8(PiSprog3PaneProvider.CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
             gridPane.add(mainSpinner, c);
             c.gridy++;
             c.gridx = 0;
@@ -359,13 +359,13 @@ public class PiSprog3EditNVPane extends AbstractEditNVPane {
             
             accyPktSpinner = new TitledSpinner(Bundle.getMessage("AccyPktCnt"), PiSprog3PaneProvider.ACCY_PACKET_REPEAT_COUNT, accyPktUpdateFn);
             accyPktSpinner.setToolTip(Bundle.getMessage("AccyPktCntTt"));
-            accyPktSpinner.init(getSelectValue(PiSprog3PaneProvider.ACCY_PACKET_REPEAT_COUNT, 1), 1, 7, 1);
+            accyPktSpinner.init(getSelectValue8(PiSprog3PaneProvider.ACCY_PACKET_REPEAT_COUNT, 1), 1, 7, 1);
             gridPane.add(accyPktSpinner, c);
             c.gridy++;
             
             preambleSpinner = new TitledSpinner(Bundle.getMessage("DccPreambles"), PiSprog3PaneProvider.DCC_PREAMBLE, preambleUpdateFn);
             preambleSpinner.setToolTip(Bundle.getMessage("DccPreamblesTt"));
-            preambleSpinner.init(getSelectValue(PiSprog3PaneProvider.DCC_PREAMBLE, 14), 14, 32, 1);
+            preambleSpinner.init(getSelectValue8(PiSprog3PaneProvider.DCC_PREAMBLE, 14), 14, 32, 1);
             gridPane.add(preambleSpinner, c);
                     
             add(gridPane);
