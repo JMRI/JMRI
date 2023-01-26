@@ -1871,6 +1871,7 @@ public class Track extends PropertyChangeSupport {
                 getScheduleModeName()); // NOI18N
 
         ScheduleItem si = getCurrentScheduleItem();
+        // code check, should never be null
         if (si == null) {
             log.error("Could not find schedule item id: ({}) for schedule ({})", getScheduleItemId(),
                     getScheduleName()); // NOI18N

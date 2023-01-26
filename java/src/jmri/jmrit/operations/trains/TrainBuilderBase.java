@@ -2167,7 +2167,6 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
         log.debug("Found track ({}) schedule item id ({}) for car ({})", track.getName(), si.getId(), car.toString());
-        car.setScheduleItemId(si.getId());
         return si;
     }
 
