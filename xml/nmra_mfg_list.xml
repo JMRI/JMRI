@@ -16,7 +16,7 @@
     the NMRA's definition.  (The formatting is ours, the content
     is the NMRA's; see https://www.jmri.org/k/summary.shtml)
     At the time of this writing, the NMRA's list was at
-        https://www.nmra.org/sites/default/files/standards/sandrp/pdf/appendix_a_s-9.2.2.pdf
+        https://www.nmra.org/sites/default/files/standards/sandrp/pdf/appendix_a_s-9_2_2_5.pdf
 
     The schema for this file may be found at
         http://jmri.org/xml/schema/nmra_mfg_list-4-19-1.xsd
@@ -39,6 +39,8 @@
                         easier to find changes.  It's not clear
                         what pattern they've used recently.
 
+    For convenience in updating, the order of this list is kept in synch
+    with the NMRAs very idiosyncratic form.
   -->
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
