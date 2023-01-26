@@ -1370,7 +1370,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             actionTableFrame = new JmriJFrame(rbx.getString("TitleViewActions"));
             actionTableFrame.addHelpMenu(
                     "package.jmri.jmrit.beantable.ViewSpecialActions", true);
-            actionTableFrame.setLocation(50, 60);
             Container contentPane = actionTableFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
@@ -1514,7 +1513,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             addEditActionFrame = new JmriJFrame(rbx.getString("TitleAddAction"));
             addEditActionFrame.addHelpMenu(
                     "package.jmri.jmrit.beantable.TransitSectionAddEditAction", true);
-            addEditActionFrame.setLocation(120, 80);
             Container contentPane = addEditActionFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             // to set When to start the action
