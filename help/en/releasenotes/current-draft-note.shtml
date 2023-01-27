@@ -362,7 +362,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Improve how filename extensions are handled when exporting the complete roster.</li>
         </ul>
 
     <h3>CTC Tool</h3>
