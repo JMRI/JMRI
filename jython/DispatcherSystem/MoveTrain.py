@@ -52,26 +52,41 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         return False
 
     def move_between_stations(self, station_from_name, station_to_name, train_name, graph):
-        if self.logLevel > 1: print "Moving from " + station_from_name + " to " + station_to_name
+        if self.logLevel > 0: print "Moving from " + station_from_name + " to " + station_to_name
         i = 0
+        if self.logLevel > 0: print "checking train in start block"
         while self.check_train_in_start_block(train_name, station_from_name) == False:
-            print "cannot move , waiting
-            self.waitMsec(500)
+            if i > 2: # allow some time to recover
+                title = ""
+                msg = "Cannot run train, train not in start block\n" + \
+                      train_name + " should be in block " + station_from_name + \
+                      "\nmove it there manually and it might recover"
+                opt1 = "have moved train, try again"
+                opt2 = "cancel moving train"
+                reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+                if reply == opt1:
+                    pass
+                else:  #opt2
+                    return
+            self.waitMsec(5000)
             i += 1
-            if i == 10: break
-        #     print "cannot move"
-        #     return
+        if self.logLevel > 0: print "train is in start block"
         #need to look up the required transit in the graph
         StateVertex_start = station_from_name
         StateVertex_end = station_to_name
         # for e in graph.edgeSet():
         # if self.logLevel > 1: print (graph.getEdgeSource(e) + " --> " + graph.getEdgeTarget(e))
-        if self.logLevel > 1: print "calling shortest path", StateVertex_start, StateVertex_end
+        if self.logLevel > 0: print "calling shortest path", StateVertex_start, StateVertex_end
         paths = DijkstraShortestPath.findPathBetween(graph, StateVertex_start, StateVertex_end)
+        if paths == None:
+            print "cannot find shortest path, paths found is empty"
+            print "end of move between ", station_from_name, station_to_name
+            return
+
         if self.logLevel > 0: print "graph", graph
         if self.logLevel > 0: print "paths", paths
         if self.logLevel > 0: print "returned from shortest path"
-        if self.logLevel > 1: print "in move_between_stations trains = ", trains, "train_name = ", train_name
+        if self.logLevel > 0: print "in move_between_stations trains = ", trains, "train_name = ", train_name
 
         if train_name in trains:
             train = trains[train_name]
@@ -116,6 +131,25 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             previous_block = BlockManager.getBlock(penultimate_block_name)
             current_block = BlockManager.getBlock(previous_edge.getItem("last_block_name"))
             next_block = BlockManager.getBlock(current_edge.getItem("second_block_name"))
+
+            # wait for the allocated time
+            speech_reqd = self.speech_required_flag()
+
+            # wait in station and announce the wait time (announcement only for debugging)
+            if 'transit_direction' not in locals():
+                td = "forwards"
+            else:
+                td = transit_direction
+            time_to_stop_in_station = self.get_time_to_stop_in_station(e, td)
+            t = time_to_stop_in_station / 1000
+            msg = "started waiting for " + str(int(t)) + " seconds"
+            if self.logLevel > 0: self.speak(msg)
+            # self.speak(msg)
+            self.waitMsec(int(time_to_stop_in_station))
+            msg = "finished waiting for " + str(int(t)) + " seconds"
+            if self.logLevel > 0: self.speak(msg)
+            #self.speak(msg)
+
             if count_path == 0:
                 # we are on a new path and must determine the direction
                 [transit_direction, transit_instruction]  = self.set_direction(previous_block, current_block, next_block, previous_direction)
@@ -130,24 +164,29 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                     transit_instruction = "stub"
                 else:
                     [transit_direction, transit_instruction] = self.set_direction(previous_block, current_block, next_block, previous_direction)
-
-                speech_reqd = self.speech_required_flag()
                 # make announcement as train enters platform
                 # print "making announcement"
                 self.announce1(e, transit_direction, transit_instruction, train)
-                time_to_stop_in_station = self.get_time_to_stop_in_station(e, transit_direction)
-                t = time_to_stop_in_station / 1000
-                msg = "started waiting for " + str(int(t)) + " seconds"
-                if self.logLevel > 0: self.speak(msg)
-                self.waitMsec(int(time_to_stop_in_station))
-                msg = "finished waiting for " + str(t) + " seconds"
-                if self.logLevel > 0: self.speak(msg)
+            iter = 0
+            result = False
+            while result == False:
+                result = self.move(e, transit_direction, transit_instruction,  train_name)
+                if self.logLevel > 1: print "returned from self.move, result = ", result
+                if result == False:
+                    if str(train_name) in trains_dispatched:
+                        trains_dispatched.remove(str(train_name))
+                if iter >= 1: #allow one retry without prompting
+                    msg = "Failure to dispatch train " + train + " retrying moving from " + from_name + " to " + to_name
+                    title = ""
+                    opt1 = "try again"
+                    opt2 = "cancel"
+                    reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+                    if opt1:
+                        pass
+                    else:
+                        break
+                iter += 1
 
-            result = self.move(e, transit_direction, transit_instruction,  train_name)
-            if self.logLevel > 1: print "returned from self.move, result = ", result
-            if result == False:
-                trains_dispatched.remove(str(train_name))
-                break
             #store the current edge for next move
             train["edge"] = e
             train["penultimate_block_name"] = e.getItem("penultimate_block_name")
@@ -176,27 +215,31 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         return [transit_direction, transit_instruction]
 
     def check_train_in_start_block(self, train_to_move, blockName):
+        # print "checking " , train_to_move, " in " , blockName
         block = blocks.getBlock(blockName)
         if self.blockOccupied(block):
+            # print " block Occupied ", self.blockOccupied(block), " value ", block.getValue()
             if block.getValue() == train_to_move:
                 return True
             else:
-                "blockName" , blockName, "not occupied by", "train_to_move", train_to_move
-                blockName = [block for block in blocks.getNamedBeanSet() if block.getValue() == train_to_move]
+                startBlock = block.getUserName()
+                print "trying to move from blockName" , blockName, "but not occupied by", "train_to_move", train_to_move
+                blockName = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == train_to_move]
                 if blockName != []:
                     blockName = blockName[0]
                 else:
                     blockName = "train not in any block"
-                print "train_to_move", train_to_move, "in" , blockName
+
+                print "train", train_to_move, "actually in in" , blockName
                 return False
         else:
-            print "train_to_move", train_to_move, "not in" , blockName
+            # print "train_to_move", train_to_move, "not in" , blockName
             blockName = [block for block in blocks if block.getValue() == train_to_move]
             if blockName != []:
                 blockName = blockName[0]
             else:
                 blockName = "train not in any block"
-            print "train_to_move", train_to_move, "in" , blockName
+            # print "train_to_move", train_to_move, "in" , blockName
             return False
 
     def blockOccupied(self, block):
@@ -213,9 +256,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
             station_wait_time = trainInfo_fwd.getWaitTime()
         else:
-            filename_fwd = self.get_filename(edge, "rvs")
-            trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
-            station_wait_time = trainInfo_fwd.getWaitTime()
+            filename_rvs = self.get_filename(edge, "rvs")
+            trainInfo_rvs = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_rvs)
+            station_wait_time = trainInfo_rvs.getWaitTime()
         if station_wait_time != None:
             return math.floor(float(station_wait_time+0)) * 1000  # set in milli secs
         else:
@@ -253,7 +296,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = self.call_dispatch(e, direction, train)
         if self.logLevel > 1: print "______________________"
         if result == True:
-            #Wait for the Active Trains List to have the
+            # Wait for the Active Trains List to not have the train monotored in it
             DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
             java_active_trains_list = DF.getActiveTrainsList()
             java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
@@ -267,7 +310,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.waitMsec(500)
                 DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
                 active_trains_list = DF.getActiveTrainsList()
-                active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
+                # active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
                 java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
                 active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
                 if self.logLevel > 1: print "!!!!!!!! train = ", train, "active_train_names_list", active_train_names_list
@@ -291,20 +334,65 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         return sound_flag
 
     def call_dispatch(self, e, direction, train):
+        global check_action_route_flag
+        global check_route_flag
+
+        # for information only
         if self.logLevel > 1: print ("in dispatch")
         to_name = e.getTarget()
         from_name = e.getSource()
         if self.logLevel > 1: print ("incall_dispatch: move from " + from_name + " to " + to_name)
 
+        # set traininfo filename
         if direction == "forward":
             filename = self.get_filename(e, "fwd")
         else:
             filename = self.get_filename(e, "rvs")
-
         if self.logLevel > 1: print "filename = ", filename, "direction = " , direction
-        result = self.doDispatch(filename, "ROSTER", train)
+
+        check_route_active_flag = sensors.getSensor("checkRouteSensor").getKnownState()
+        if check_route_active_flag == ACTIVE:
+            check_route_flag = True
+        else:
+            check_route_flag = False
+        if self.logLevel > 0: print "check_route_flag", check_route_flag
+        # initialise globals to False if not set
+        if 'check_action_route_flag' not in globals():
+            check_action_route_flag = False
+
+        # wait for blocks to be clear before allocating (if required)
+        if check_route_flag == True or check_action_route_flag == True:  # can ask for route to be checked globally or in action
+            while not self.route_is_not_allocated_or_occupied(filename, from_name):
+                if self.logLevel > 0: print "waiting for route", filename, "to be clear"
+                self.waitMsec(500)
+
+        # run dispatch
+        result = False
+        iter = 0
+        while result == False:
+            result = self.doDispatch(filename, "ROSTER", train)
+            # if we failed to run the transit try again once before letting the operator have a go
+            if result == False:
+                self.waitMsec(5000)  # wait 5 secs
+                msg = "Failure to dispatch train " + train + " retrying moving from " + from_name + " to " + to_name
+                title = ""
+                opt1 = "try again"
+                opt2 = "cancel"
+                if iter >= 1: # allow one auto retry
+                    reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+                    if opt1:
+                        pass
+                    else:
+                        break
+            iter += 1
+
+        #return result
         if self.logLevel > 1: print "result", result
         return result
+
+    def initialise_if_not_set(self, global_name, state):
+         if 'global_name' not in globals():
+            global_name = state
 
     def get_filename(self, e, suffix):
 
@@ -326,20 +414,43 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def doDispatch(self, traininfoFileName, type, value):
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        #try:
-        if self.logLevel > 1: print "traininfoFileName",traininfoFileName
-        result = DF.loadTrainFromTrainInfo(traininfoFileName, type, value)
-        if result == -1:
-            if self.logLevel > 1: print "result from dispatcher frame" , result
-            return False  #No train allocated
-        else:
-            if self.logLevel > 1: print "result from dispatcher frame" , result
-            return True
-        # except:
-        # if self.logLevel > 1: print ("FAILURE tried to run dispatcher with file {} type {} value {}".format(traininfoFileName,  type, value))
-        # pass
-        # return False
-        DF = None
+        try:
+            if self.logLevel > 1: print "traininfoFileName",traininfoFileName
+
+            result = DF.loadTrainFromTrainInfo(traininfoFileName, type, value)
+            if result == -1:
+                if self.logLevel > 1: print "result from dispatcher frame" , result
+                # delete the transit so can try loading the transit again
+                trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
+                transit_name = trainInfo.getTransitName()
+                # print "transit_name", transit_name
+                # TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
+                # transit = TransitManager.getTransit(transit_name)
+                # if transit != None:
+                #     TransitManager.deleteTransit(transit)
+                active_train_list = [active_Train for active_train in DF.getActiveTrainsList() \
+                                if active_train.getTransitName() == transit_name]
+                # print "active_train_list", active_train_list
+                # print "all active trains", DF.getActiveTrainsList()
+                if active_train_list == []:
+                    active_train = None
+                else:
+                    active_train = active_train_list[0]
+                    # print "deleting active train ", active_train
+                    DF.terminateActiveTrain(active_train)
+                    train_name == value
+                    if train_name in trains:
+                        trains.remove(train_name)
+                return False  #No train allocated
+            else:
+                if self.logLevel > 1: print "result from dispatcher frame" , result
+                DF = None
+                return True
+        except:
+            if self.logLevel > 1: print ("FAILURE tried to run dispatcher with file {} type {} value {}".format(traininfoFileName,  type, value))
+            DF = None
+            return False
+
 
 
     def set_sensor(self, sensorName, sensorState):
@@ -460,7 +571,42 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     def bell(self, bell_on = "True"):
         if bell_on == "True":
             snd = jmri.jmrit.Sound("resources/sounds/Bell.wav")
-            snd.play(snd)
+            snd.play()
+
+    def route_is_not_allocated_or_occupied(self, traininfoFileName, startBlockName):
+
+        [transit_name, transit_id] = self.get_transit(traininfoFileName)
+
+        TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
+        transit = TransitManager.getTransit(transit_name)
+        if self.logLevel > 0: print "transit_name", transit_name, "transit_id", transit_id
+        block_list = [block for block in transit.getInternalBlocksList() if block.getUserName() != startBlockName]
+        if self.logLevel > 0: print "block_list", [block.getUserName() for block in block_list]
+        route_is_clear = True
+        for block in block_list:
+            #getValue is set if the track is occupied
+            if block.getSensor().getKnownState() == ACTIVE:  # check if block is occupied
+                route_is_clear = False
+                if self.logLevel > 0: print block.getUserName() , "is not clear value =", block.getSensor().getKnownState()
+            else:
+                if self.logLevel > 0: print block.getUserName() , "is clear value =", block.getSensor().getKnownState()
+            # getExtraColor is set if the block is allocated
+            LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
+            layoutBlock = LayoutBlockManager.getLayoutBlock(block)
+            if layoutBlock.getUseExtraColor():
+                route_is_clear = False
+
+        if self.logLevel > 0: print "route_is_clear", route_is_clear
+        return route_is_clear
+        
+
+    def get_transit(self, filename):
+
+        trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename)
+        transit_name = trainInfo.getTransitName()
+        transit_id = trainInfo.getTransitId()
+        return  [transit_name, transit_id]
+
 
 class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
@@ -797,7 +943,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         break1 = False
         #print "no edges", g.g_stopping.edgeSet()
         # for e in g.g_stopping.edgeSet():
-        #     print "e" , e
+        #     # print "e" , e
         for e in g.g_stopping.edgeSet():
             j+=1
             LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
@@ -1303,9 +1449,9 @@ class createandshowGUI(TableModelListener):
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
         self.buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10))
 
-        button_add = JButton("Add Row", actionPerformed = self.add_row_action)
-        self.buttonPane.add(button_add);
-        self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
+        # button_add = JButton("Add Row", actionPerformed = self.add_row_action)
+        # self.buttonPane.add(button_add);
+        # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
 
         button_populate = JButton("Populate", actionPerformed = self.populate_action)
         self.buttonPane.add(button_populate);
