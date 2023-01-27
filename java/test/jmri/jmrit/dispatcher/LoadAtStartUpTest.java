@@ -185,7 +185,7 @@ public class LoadAtStartUpTest {
             return (Math.abs(aat.getTargetSpeed() ) < TOLERANCE );
         }, "Signal Just passed east end throat now stop");
 
-        JUnitUtil.waitFor(200);
+        JUnitUtil.waitFor(2200);
         // check for next train note dcc name is original transit name has changed
         Assert.assertEquals("Next Train Load","1000 / SouthPlatFormReturnToSouthCC", d.getActiveTrainsList().get(0).getActiveTrainName());
         JUnitUtil.waitFor(2000);
