@@ -42,6 +42,8 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JSpinner delaySpinner;
 
     JCheckBox momF2CB;
+    
+    JCheckBox exclusiveCB;
 
     JSpinner port;
 
@@ -82,6 +84,8 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         add(eStopDelayPanel());
         add(new JTitledSeparator(Bundle.getMessage("TitleFunctionsPanel")));
         add(functionsPanel());
+        add(new JTitledSeparator(Bundle.getMessage("TitleExclusivePanel")));
+        add(exclusivePanel());
         add(new JTitledSeparator(Bundle.getMessage("TitleNetworkPanel")));
         add(networkPanel());
         add(new JTitledSeparator(Bundle.getMessage("TitleControllersPanel")));
@@ -176,6 +180,15 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         return panel;
     }
 
+    private JPanel exclusivePanel() {
+        JPanel panel = new JPanel();
+
+        exclusiveCB = new JCheckBox(Bundle.getMessage("LabelExclusive"));
+        exclusiveCB.setToolTipText(Bundle.getMessage("ToolTipExclusive"));
+        panel.add(exclusiveCB);
+        return panel;
+    }
+    
     private JPanel networkPanel() {
         JPanel nPanelRow1 = new JPanel();
         JPanel nPanelRow2 = new JPanel();
