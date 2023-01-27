@@ -97,6 +97,8 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         delaySpinner.setValue(localPrefs.getEStopDelay());
 
         momF2CB.setSelected(localPrefs.isUseMomF2());
+        
+        exclusiveCB.setSelected(localPrefs.isExclusiveUseOfAddress());
 
         port.setValue(localPrefs.getPort());
         powerCB.setSelected(localPrefs.isAllowTrackPower());
@@ -126,6 +128,8 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         localPrefs.setEStopDelay((Integer) delaySpinner.getValue());
 
         localPrefs.setUseMomF2(momF2CB.isSelected());
+        
+        localPrefs.setExclusiveUseOfAddress(exclusiveCB.isSelected());
 
         int portNum;
         try {
