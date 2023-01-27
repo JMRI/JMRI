@@ -1,7 +1,9 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
-        None yet
+        The code for LocoNet programming operations was significantly changed in this release.
+        If you encounter any (new) troubles programming via LocoNet, please get in touch on the
+        <a href="https://groups.io/g/jmriusers">JMRIusers list</a>.
     </li>
     <li>
     </li>
