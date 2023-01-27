@@ -95,6 +95,7 @@ class RunDispatcherMaster():
         sensors.getSensor("simulateSensor").setKnownState(INACTIVE)
         sensors.getSensor("setDispatchSensor").setKnownState(ACTIVE)
         sensors.getSensor("checkRouteSensor").setKnownState(INACTIVE)
+        sensors.getSensor("checkRouteSensor").setKnownState(ACTIVE)
 
 
 if __name__ == '__builtin__':
