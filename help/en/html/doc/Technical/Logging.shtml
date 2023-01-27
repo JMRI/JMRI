@@ -82,8 +82,8 @@
       JMRI contains a version of the default.lcf file with extensive comments. (When running
       <a href="JUnit.shtml">JUnit tests</a>, a similar "<a href=
       "https://github.com/JMRI/JMRI/blob/master/tests.lcf">tests.lcf</a>" file is used.) Although
-      JMRI distributes the default.lcf file in the "Program Directory", it's better if you put your
-      own version in the "Preferences" directory, which can be found by selecting the "File Locations"
+      JMRI distributes the default.lcf file in the "Program Location", it's better if you put your
+      own version in the "Settings Location", which can be found by selecting the "File Locations"
       item in the main Help menu). The rest of this section describes the contents of a logging
       control file using the contents of <code>default.lcf</code> as an example.</p>
       <p>The line:</p>

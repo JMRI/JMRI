@@ -12,9 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.Version;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
@@ -2169,7 +2167,6 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
         log.debug("Found track ({}) schedule item id ({}) for car ({})", track.getName(), si.getId(), car.toString());
-        car.setScheduleItemId(si.getId());
         return si;
     }
 
@@ -2726,10 +2723,10 @@ public class TrainBuilderBase extends TrainCommon {
     protected void showCarsNotRoutable() {
         // any cars not able to route?
         if (_notRoutable.size() > 0) {
-            _warnings++;
             addLine(_buildReport, ONE, BLANK_LINE);
             addLine(_buildReport, ONE, Bundle.getMessage("buildCarsNotRoutable"));
             for (Car car : _notRoutable) {
+                _warnings++;
                 addLine(_buildReport, ONE,
                         MessageFormat.format(Bundle.getMessage("buildCarNotRoutable"),
                                 new Object[] { car.toString(), car.getLocationName(), car.getTrackName(),

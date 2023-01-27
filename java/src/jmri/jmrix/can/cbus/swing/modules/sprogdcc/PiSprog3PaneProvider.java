@@ -35,6 +35,12 @@ public class PiSprog3PaneProvider extends CbusConfigPaneProvider {
     public static final int USER_FLAGS = 12;
     public static final int OPERATIONS_FLAGS = 13;
     
+    // These may be overridden in scripts for unusual use cases
+    public static int MIN_CANID = 100;
+    public static int MAX_CANID = 127;
+    public static int MIN_NN = 65520;
+    public static int MAX_NN = 65535;
+
     public PiSprog3PaneProvider() {
         super();
     }

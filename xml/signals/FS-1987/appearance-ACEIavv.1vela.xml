@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 <appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -29,42 +29,114 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
-    <revision>
-      <revnumber>1</revnumber>
-      <date>2023-01-01</date>
-      <authorinitials>PDB</authorinitials>
-      <revremark>First version for Italian Signal System</revremark>
-    </revision>
+   <revision>
+        <revnumber>1</revnumber>
+       <date>2023-01-01</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>First version for Italian Signal System</revremark>
+   </revision>
+   <revision>
+        <revnumber>2</revnumber>
+       <date>2023-02-01</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>Second version for Italian Signal System</revremark>
+   </revision>
   </revhistory>
-  <aspecttable>FS 1987</aspecttable>
-  <name>ACEI Segnale di avviso 1 vela</name>
+
+<aspecttable>FS 1987</aspecttable>
+  <name>Segnale di avviso 1 vela</name>
   <reference>As described in Il Treno Company book “Inserimento in linea dei segnali FS” according to the
 Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovie dello Stato”, FS today RFI).</reference>
-  <description>Appearances for a one-searchlight approach signal head without other badging</description>
+  <description>Appearances for a one-searchlight distant signal without other badging</description>
+
   <appearances>
+
     <appearance>
       <aspectname>Giallo</aspectname>
       <show>yellow</show>
       <reference />
       <comment>Approach</comment>
-      <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI_Avv_1_vela_giallo.gif</imagelink>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv1velagiallo.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv1velagiallo.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/Avviso/rAvv1velagiallo.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/vqAvv1velagiallo.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/lqAvv1velagiallo.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/rqAvv1velagiallo.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/Avviso/lAvv1velagiallo.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/Avviso/rAvv1velagiallo.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/lqAvv1velagiallo.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/rqAvv1velagiallo.gif</imagelink>
     </appearance>
+
+    <appearance>
+      <aspectname>Giallo Lampeggiante</aspectname>
+      <show>flashyellow</show>
+      <reference />
+      <comment>Approach</comment>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv1velagiallolamp.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv1velagiallolamp.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/Avviso/rAvv1velagiallolamp.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/vqAvv1velagiallolamp.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/lqAvv1velagiallolamp.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/rqAvv1velagiallolamp.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/Avviso/LayoutEditor/lAvv1velagiallolampLE.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/Avviso/LayoutEditor/rAvv1velagiallolampLE.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/Avviso/LayoutEditor/lqAvv1velagiallolampLE.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/Avviso/LayoutEditor/rqAvv1velagiallolampLE.gif</imagelink>
+    </appearance>
+
+
     <appearance>
       <aspectname>Verde</aspectname>
       <show>green</show>
       <reference />
       <comment>Normal speed</comment>
-      <imagelink>../../../resources/icons/ItalianSignals/ACEI/ACEI_Avv_1_vela_verde.gif</imagelink>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv1velaverde.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv1velaverde.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/Avviso/rAvv1velaverde.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/vqAvv1velaverde.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/lqAvv1velaverde.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/rqAvv1velaverde.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/Avviso/lAvv1velaverde.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/Avviso/rAvv1velaverde.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/lqAvv1velaverde.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/rqAvv1velaverde.gif</imagelink>
     </appearance>
+
+    <appearance>
+      <aspectname>Spento</aspectname>
+      <show>dark</show>
+      <reference />
+      <comment>Approach</comment>
+      <imagelink type="vertical">../../../resources/icons/ItalianSignals/Avviso/vAvv1velagiallo.gif</imagelink>
+      <imagelink type="left">../../../resources/icons/ItalianSignals/Avviso/lAvv1velagiallo.gif</imagelink>
+      <imagelink type="right">../../../resources/icons/ItalianSignals/Avviso/rAvv1velagiallo.gif</imagelink>
+      <imagelink type="vertical squared">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/vqAvv1velaspento.gif</imagelink>
+      <imagelink type="left squared">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/lqAvv1velaspento.gif</imagelink>
+      <imagelink type="right squared">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/rqAvv1velaspento.gif</imagelink>
+      <imagelink type="left Layout Editor">../../../resources/icons/ItalianSignals/Avviso/lAvv1velagiallo.gif</imagelink>
+      <imagelink type="right Layout Editor">../../../resources/icons/ItalianSignals/Avviso/rAvv1velagiallo.gif</imagelink>
+      <imagelink type="left squared Layout Editor">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/lqAvv1velaspento.gif</imagelink>
+      <imagelink type="right squared Layout Editor">../../../resources/icons/ItalianSignals/Avviso/Velaquadrata/rqAvv1velaspento.gif</imagelink>
+    </appearance>
+
+
   </appearances>
+  <specificappearances>
+
+  </specificappearances>
+
   <aspectMappings>
     <aspectMapping>
       <advancedAspect>Giallo</advancedAspect>
       <ourAspect>Verde</ourAspect>
+
     </aspectMapping>
+
     <aspectMapping>
       <advancedAspect>Rosso</advancedAspect>
       <ourAspect>Giallo</ourAspect>
     </aspectMapping>
+
   </aspectMappings>
 </appearancetable>

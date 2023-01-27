@@ -140,7 +140,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
         if (e.getType() == TableModelEvent.UPDATE) {
             int row = e.getFirstRow();
             int nv = row + 1;
-            int value = getSelectValue(nv);
+            int value = getSelectValue8(nv);
             
             switch (nv) {
                 case CanCmdPaneProvider.CMD_STATION_NUMBER:
@@ -169,8 +169,10 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
                     
                 case CanCmdPaneProvider.NN_MAP_DCC_HI:
                 case CanCmdPaneProvider.NN_MAP_DCC_LO:
-                    nnMapDccSpinner.setValue(getSelectValue(CanCmdPaneProvider.NN_MAP_DCC_HI,
-                            CanCmdPaneProvider.NN_MAP_DCC_LO, 0));
+                    nnMapDccSpinner.setValue(getSelectValue16(CanCmdPaneProvider.NN_MAP_DCC_HI,
+                            CanCmdPaneProvider.NN_MAP_DCC_LO,
+                            CanCmdPaneProvider.MIN_NN,
+                            CanCmdPaneProvider.MAX_NN));
                     break;
                     
                 case CanCmdPaneProvider.WALKABOUT_TIMEOUT:
@@ -343,7 +345,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
 
             for (int i = 0; i < 3; i++) {
                 csFlags[i] = new CmdStaFlags(i, CanCmdPaneProvider.USER_FLAGS + i, flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
-                csFlags[i].setFlags(getSelectValue(CanCmdPaneProvider.USER_FLAGS + i));
+                csFlags[i].setFlags(getSelectValue8(CanCmdPaneProvider.USER_FLAGS + i));
                 flagPane[i] = csFlags[i].getContents();
             }
             
@@ -361,25 +363,25 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             
             walkaboutSpinner = new TitledSpinner(Bundle.getMessage("WalkaboutTimeout"), CanCmdPaneProvider.WALKABOUT_TIMEOUT, walkaboutUpdateFn);
             walkaboutSpinner.setToolTip(Bundle.getMessage("WalkaboutTimeoutTt"));
-            walkaboutSpinner.init(getSelectValue(CanCmdPaneProvider.WALKABOUT_TIMEOUT, 1), 1, 60, 255);
+            walkaboutSpinner.init(getSelectValue8(CanCmdPaneProvider.WALKABOUT_TIMEOUT, 1), 1, 60, 255);
             gridPane.add(walkaboutSpinner, c);
             c.gridy++;
             
             multSpinner = new TitledSpinner(Bundle.getMessage("CurrentMultiplier"), CanCmdPaneProvider.CURRENT_MULTIPLIER, multUpdateFn);
             multSpinner.setToolTip(Bundle.getMessage("CurrentMultiplierTt"));
-            multSpinner.init(getSelectValue(CanCmdPaneProvider.CURRENT_MULTIPLIER, 1), 1, 10, 255);
+            multSpinner.init(getSelectValue8(CanCmdPaneProvider.CURRENT_MULTIPLIER, 1), 1, 10, 255);
             gridPane.add(multSpinner, c);
             c.gridy++;
             
             ackSpinner = new TitledSpinner(Bundle.getMessage("IncCurrentForAck"), CanCmdPaneProvider.INC_CURRENT_FOR_ACK, ackUpdateFn);
             ackSpinner.setToolTip(Bundle.getMessage("IncCurrentForAckTt"));
-            ackSpinner.init(getSelectValue(CanCmdPaneProvider.INC_CURRENT_FOR_ACK, 1), 1, 3, 255);
+            ackSpinner.init(getSelectValue8(CanCmdPaneProvider.INC_CURRENT_FOR_ACK, 1), 1, 3, 255);
             gridPane.add(ackSpinner, c);
             c.gridy++;
             
             intervalSpinner = new TitledSpinner(Bundle.getMessage("SendCurrentInterval"), CanCmdPaneProvider.SEND_CURRENT_INTERVAL, intervalUpdateFn);
             intervalSpinner.setToolTip(Bundle.getMessage("SendCurrentIntervalTt"));
-            intervalSpinner.init(getSelectValue(CanCmdPaneProvider.SEND_CURRENT_INTERVAL), 0, 255, 1);
+            intervalSpinner.init(getSelectValue8(CanCmdPaneProvider.SEND_CURRENT_INTERVAL), 0, 255, 1);
             gridPane.add(intervalSpinner, c);
             c.gridy++;
             
@@ -387,13 +389,13 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             
             mainSpinner = new TitledSpinner(Bundle.getMessage("MainLimit"), CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             mainSpinner.setToolTip(Bundle.getMessage("MainLimitTt"));
-            mainSpinner.init(getSelectValue(CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT, 1), 1.0, 96.0, 255.0);
+            mainSpinner.init(getSelectValue8(CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT, 1), 1.0, 96.0, 255.0);
             gridPane.add(mainSpinner, c);
             c.gridy++;
             
             progSpinner = new TitledSpinner(Bundle.getMessage("ProgLimit"), CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             progSpinner.setToolTip(Bundle.getMessage("ProgLimitTt"));
-            progSpinner.init(getSelectValue(CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, 1), 1.0, 96.0, 255.0);
+            progSpinner.init(getSelectValue8(CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, 1), 1.0, 96.0, 255.0);
             gridPane.add(progSpinner, c);
             c.gridy++;
             c.gridx = 0;
@@ -431,7 +433,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             
             nnMapDccSpinner = new TitledSpinner(Bundle.getMessage("NnMapDcc"), CanCmdPaneProvider.NN_MAP_DCC_HI, nnMapUpdateFn);
             nnMapDccSpinner.setToolTip(Bundle.getMessage("NnMapDccTt"));
-            int nn = getSelectValue(CanCmdPaneProvider.NN_MAP_DCC_HI, CanCmdPaneProvider.NN_MAP_DCC_LO, 0);
+            int nn = getSelectValue16(CanCmdPaneProvider.NN_MAP_DCC_HI, CanCmdPaneProvider.NN_MAP_DCC_LO, CanCmdPaneProvider.MIN_NN, CanCmdPaneProvider.MAX_NN);
             nnMapDccSpinner.init(nn, 0, 65535, 1);
             gridPane.add(nnMapDccSpinner, c);
             c.gridy++;
@@ -461,7 +463,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
 
             sodDelaySpinner = new TitledSpinner(Bundle.getMessage("SodDelay"), CanCmdPaneProvider.SOD_DELAY, sodDelayUpdateFn);
             sodDelaySpinner.setToolTip(Bundle.getMessage("SodDelayTt"));
-            sodDelaySpinner.init(getSelectValue(CanCmdPaneProvider.SOD_DELAY), 0, 255, 1);
+            sodDelaySpinner.init(getSelectValue8(CanCmdPaneProvider.SOD_DELAY), 0, 255, 1);
             gridPane.add(sodDelaySpinner, c);
             c.gridy++;
 

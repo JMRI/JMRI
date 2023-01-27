@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -634,6 +632,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                             new Object[]{car.toString(), car.getKernelName(), car.getKernel().getSize(),
                                     car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()}));
         }
+        // save the car's load, should be the default empty
+        String oldCarLoad = car.getLoadName(); // 
         List<Track> tracks = locationManager.getTracksByMoves(Track.SPUR);
         log.debug("Found {} spurs", tracks.size());
         // show locations not serviced by departure track once
@@ -662,10 +662,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             if (si == null) {
                 continue; // no match
             }
-            // need to set car load so testDestination will work properly
-            String oldCarLoad = car.getLoadName(); // should be the default
-                                                   // empty
+            // need to set car load so testDestination will work properly       
             car.setLoadName(si.getReceiveLoadName());
+            car.setScheduleItemId(si.getId());
             String status = car.checkDestination(track.getLocation(), track);
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
                 addLine(_buildReport, SEVEN,
@@ -673,8 +672,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                 new Object[]{StringUtils.capitalize(track.getTrackTypeName()),
                                         track.getLocation().getName(), track.getName(),
                                         car.toString(), si.getReceiveLoadName(), status}));
-                // restore car's load
-                car.setLoadName(oldCarLoad);
                 continue;
             }
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrySpurLoad"),
@@ -698,8 +695,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                     new Object[]{track.getTrackTypeName(), track.getLocation().getName(),
                                             track.getName(), track.getDivisionName(), car.toString(),
                                             car.getLoadType().toLowerCase(), car.getLoadName()}));
-                    // restore car's load
-                    car.setLoadName(oldCarLoad);
                     continue;
                 }
             }
@@ -709,8 +704,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                 new Object[]{car.toString(), track.getLocation().getName(), track.getName(),
                                         track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
                                         Setup.getLengthUnit().toLowerCase(), track.getReservationFactor()}));
-                // restore car's load
-                car.setLoadName(oldCarLoad);
                 continue;
             }
             // try routing car
@@ -732,11 +725,12 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotRouteCar"), new Object[]{
                     car.toString(), si.getReceiveLoadName(), track.getLocation().getName(), track.getName()}));
             car.setDestination(null, null);
-            // restore load and final destination and track
-            car.setLoadName(oldCarLoad);
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
         }
+        // restore car's load
+        car.setLoadName(oldCarLoad);
+        car.setScheduleItemId(Car.NONE);
         addLine(_buildReport, SEVEN,
                 MessageFormat.format(Bundle.getMessage("buildUnableNewLoad"), new Object[]{car.toString()}));
         return false; // done, no load generated for this car
@@ -1215,7 +1209,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             return false;
         }
-        car.updateKernel();
         if (car.getDestinationTrack() != track) {
             track.bumpMoves();
             // car is being routed to this track
@@ -1224,6 +1217,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 track.bumpSchedule();
             }
         }
+        car.updateKernel();
         return true; // done, car has a new destination
     }
 

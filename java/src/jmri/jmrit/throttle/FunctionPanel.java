@@ -32,6 +32,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     
     private JPanel mainPanel;
     private FunctionButton[] functionButtons;
+    private boolean fnBtnUpdatedFromRoster = false; // avoid to reinit function button twice (from throttle xml and from roster)
     
     private AddressPanel addressPanel = null; // to access roster infos
 
@@ -282,6 +283,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         if (mThrottle != null && addressPanel != null) {                
             RosterEntry rosterEntry = addressPanel.getRosterEntry();
             if (rosterEntry != null) {
+                fnBtnUpdatedFromRoster = true;                
                 log.debug("RosterEntry found: {}", rosterEntry.getId());
             }
             for (int i = 0; i < functionButtons.length; i++) {
@@ -451,14 +453,16 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         Element window = e.getChild("window");
         WindowPreferences.setPreferences(this, window);
 
-        java.util.List<Element> buttonElements = e.getChildren("FunctionButton");
+        if (! fnBtnUpdatedFromRoster) {
+            java.util.List<Element> buttonElements = e.getChildren("FunctionButton");
 
-        if (buttonElements != null && buttonElements.size() > 0) {
-            // just in case
-            rebuildFnButons( buttonElements.size() );
-            int i = 0;
-            for (Element buttonElement : buttonElements) {
-                functionButtons[i++].setXml(buttonElement);
+            if (buttonElements != null && buttonElements.size() > 0) {
+                // just in case
+                rebuildFnButons( buttonElements.size() );
+                int i = 0;
+                for (Element buttonElement : buttonElements) {
+                    functionButtons[i++].setXml(buttonElement);
+                }
             }
         }
     }
@@ -488,6 +492,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             mThrottle.removePropertyChangeListener(this);
         }
         mThrottle = null;
+        fnBtnUpdatedFromRoster = false;
         resetFnButtons(); 
         setEnabled(false);
     }

@@ -88,14 +88,14 @@ public interface ShutDownManager extends PropertyChangeProvider {
     public List<Runnable> getRunnables();
 
     /**
-     * Run the shutdown tasks, and then terminate the program with status 100 if
+     * Run the shutdown tasks, and then terminate the program with status 210 if
      * not aborted. Does not return under normal circumstances. Returns false if
      * the shutdown was aborted by the user, in which case the program should
      * continue to operate.
      * <p>
-     * By exiting the program with status 100, the batch file (MS Windows) or
-     * shell script (Linux/macOS/UNIX) can catch the exit status and restart the
-     * java program.
+     * By exiting the program with status 210, the batch file (MS Windows) or
+     * shell script (Linux/macOS/UNIX) can catch the exit status and tell the
+     * operating system to restart.
      * <p>
      * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
      * this must return false to abort the shutdown.
@@ -105,14 +105,14 @@ public interface ShutDownManager extends PropertyChangeProvider {
     public boolean restartOS();
 
     /**
-     * Run the shutdown tasks, and then terminate the program with status 210 if
+     * Run the shutdown tasks, and then terminate the program with status 100 if
      * not aborted. Does not return under normal circumstances. Returns false if
      * the shutdown was aborted by the user, in which case the program should
      * continue to operate.
      * <p>
-     * By exiting the program with status 210, the batch file (MS Windows) or
-     * shell script (Linux/macOS/UNIX) can catch the exit status and tell the
-     * operating system to restart.
+     * By exiting the program with status 100, the batch file (MS Windows) or
+     * shell script (Linux/macOS/UNIX) can catch the exit status and restart the
+     * JMRI java program.
      *
      * @return false if any shutdown task aborts restarting the application
      */
