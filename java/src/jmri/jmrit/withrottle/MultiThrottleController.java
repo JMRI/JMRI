@@ -279,13 +279,15 @@ public class MultiThrottleController extends ThrottleController {
      */
     @Override
     protected void setAddress(int number, boolean isLong) {
-        if(jmri.InstanceManager.throttleManagerInstance().getThrottleUsageCount(number, isLong) == 0 || isStealAddress) {
+        if(isStealAddress
+                || jmri.InstanceManager.throttleManagerInstance().getThrottleUsageCount(number, isLong) == 0 
+                || ! InstanceManager.getDefault(WiThrottlePreferences.class).isExclusiveUseOfAddress()) {
             super.setAddress(number, isLong);
         }
         else {
             log.debug("Loco address {} already controlled by another JMRI throttle.", number);
             sendStealAddress();
-            notifyFailedThrottleRequest(new DccLocoAddress(number, isLong), "Steal from other JMRI throttle Required");
+            notifyFailedThrottleRequest(new DccLocoAddress(number, isLong), "Steal from other WiThrottle  or JMRI throttle Required");
         }
 
     }
