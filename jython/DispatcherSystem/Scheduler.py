@@ -12,6 +12,7 @@
 
 from javax.swing import JFrame, JPanel, JButton, BoxLayout, Box
 from java.awt import Dimension
+import os
 
 fast_clock_rate = 10
 
@@ -306,10 +307,10 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
         # note station_to and station_from are strings, while elements of route are locations
 
-        print "in init"
+        #print "in init"
 
         self.logLevel = 0
-        print "loglevel", self.logLevel
+        #print "loglevel", self.logLevel
 
         if route == None:
             if self.logLevel > 0: print "RunRoute: route == None"
@@ -361,13 +362,13 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                 self.no_repetitions = 0
 
     def handle(self):
-        print "in handle", self.mycount
+        #print "in handle", self.mycount
         if self.delay > 0 and self.mycount == 0:  # only delay on the first iteration
             self.waitMsec(self.delay)
         if int(self.mycount) <= int(self.no_repetitions):
-            print "station_list in handle", self.station_list, "in handle", self.mycount
+            #print "station_list in handle", self.station_list, "in handle", self.mycount
             self.run_route()
-            print "prepended", self.prepended
+            #print "prepended", self.prepended
             if self.mycount == 0 and self.prepended:
                 if self.logLevel > 0: print "station_list before pop", self.station_list
                 self.station_list.pop(0)
@@ -386,8 +387,13 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
         station_from = None
         for station in self.station_list:
+
             if self.station_is_action(station):  #if the station_name is a python_file
-                self.execute_action(station)     # execite the python file
+                # some of the python files take an argument of the dispatch
+                # make this the default for simplic
+                # [next_station, next_station_index] = self.get_next_item_in_list(station,self.station_list)
+                action = station
+                self.execute_action(action)     # execute the python file
             else:
                 station_to = station  # both now strings
                 if station_from != None:    # first time round station_from is not set up
@@ -444,11 +450,28 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                         end_block = blocks.getBlock(station_to)  #do following in case the block sensor is a bit dodgy
                         end_block.setValue(train_to_move)
 
+                    check_action_route_flag = False     # This flag may have been set by the action appearing in the route
+                                                    # before this move. It has to be reset.
                 station_from = station_to
 
         self.waitMsec(4000)
 
         if self.logLevel > 0:  "!     finished run_train"
+
+    def get_next_item_in_list(self,elem, li ):
+        if (li.index(elem))+1 != len(li):
+            thiselem = elem
+            nextelem = li[li.index(elem)+1]
+            indexNextElem = li.index(elem)+1
+            print 'thiselem',thiselem
+            print 'nextel',nextelem
+        else:
+            thiselem = elem
+            nextelem = elem
+            indexNextElem = li.index(elem)
+            print 'thiselem',li[li.index(elem)]
+            print 'nextel',li[li.index(elem)]
+        return [nextelem, indexNextElem]
 
     def check_train_in_start_block(self, train_to_move, blockName):
         block = blocks.getBlock(blockName)
@@ -487,6 +510,12 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         else:
             return False
 
+    def action_directory_in_DispatcherSystem(self):
+        path = jmri.util.FileUtil.getScriptsPath() + "DispatcherSystem" + java.io.File.separator + "actions"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
+
     def action_directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "pythonfiles"
         if not os.path.exists(path):
@@ -496,16 +525,31 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
     def execute_action(self, action):
         # execute a python file in the dispatcher directory
         file = self.action_directory() + action
+        if not os.path.isfile(file):
+            file = self.action_directory_in_DispatcherSystem() + action
+        if not os.path.isfile(file):
+            self.displayMessage("action file " + action + " does not exist, it must have been deleted\n" + \
+                                "should be in directories:\n" + \
+                                self.action_directory_in_DispatcherSystem() + " or\n" + \
+                                self.action_directory())
         if self.logLevel > 0: print "file", file
-        with open(file) as f:
+        if action == "checkRouteIsClearBeforeStarting.py":
+            print "calling checkRoute"
+            self.check_route()
+        else:
             exec(open(file).read())     # execute the file
-        try:
-            with open(file) as f:
-                exec(open(file).read())     # execute the file
-        except:
-            msg = 'action file ' + action + ' could not be found'
-            if self.logLevel > 0: print(msg)
-            self.displayMessage(msg)
+        # try:
+        #     command = "jython " + file + " " + self.route.getName()    # pass the route name as an argument
+        #     os.system(command)
+        # except:
+        #     print "could not run command " + command
+        # try:
+        #     with open(file) as f:
+        #         exec(open(file).read())     # execute the file
+        # except:
+        #     msg = 'action file ' + action + ' could not be found'
+        #     if self.logLevel > 0: print(msg)
+        #     self.displayMessage(msg)
 
     def displayMessage(self, msg, title = ""):
         self.CLOSED_OPTION = False
@@ -522,5 +566,10 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
             self.CLOSED_OPTION = True
             return
         return s
+
+    def check_route(self, station):
+        global check_action_route_flag
+        check_action_route_flag = True
+        # now whwn we run the route we will check this flag, and if it is set then we will check the route before moving
 
 
