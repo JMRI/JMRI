@@ -152,7 +152,6 @@ class createandshowGUI3(TableModelListener):
         trains_to_put_in_firstcol = self.activeTrainsList
         self.model.populate()
         self.completeTablePanel()
-        pass
 
     # def tidy_action(self,e):
     #     self.model.remove_not_set_row()
@@ -177,7 +176,7 @@ class createandshowGUI3(TableModelListener):
         for activeTrain in activeTrainList:
             # print "i", i
             # activeTrain = activeTrainsList.get(i)
-            if self.logLevel == 0: print ("active train", activeTrain)
+            if self.logLevel > 0: print ("active train", activeTrain)
             DF.terminateActiveTrain(activeTrain)
         DF = None
 
@@ -194,6 +193,10 @@ class createandshowGUI3(TableModelListener):
 
     def cancel_action(self, event):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
+    def refresh(self):
+        self.completeTablePanel()
+
+
 
 class MyModelListener3(TableModelListener):
 
@@ -218,11 +221,18 @@ class MyModelListener3(TableModelListener):
 
         if column == del_setup_train_col:
             train_name = str(model.getValueAt(row, setup_train_col))
-            if self.logLevel == 0: print "trains_allocated", trains_allocated
-            if self.logLevel == 0: print "train_name", train_name
-            if train_name != "":
-                trains_allocated.remove(train_name)
-            model.fireTableDataChanged()
+            if self.logLevel > 0: print "trains_allocated", trains_allocated
+            if self.logLevel > 0: print "train_name", train_name
+            for train in trains_allocated:
+                if train == train_name:
+                    trains_allocated.remove(train)
+            self.class_StopMaster.remove_values(train)
+
+            # model.fireTableDataChanged()
+            # self.class_createandshowGUI3.refresh()
+            # self.class_createandshowGUI3.completeTablePanel()
+            self.class_createandshowGUI3.populate_action(None)
+
         elif column == del_transit_col:
 
             transit = str(model.getValueAt(row, transit_col))
@@ -230,7 +240,9 @@ class MyModelListener3(TableModelListener):
                        if active_train.getTransit().getUserName() == transit]
             if len(train_name) > 0:
                 self.delete_transit(train_name[0])
-                model.fireTableDataChanged()
+                #tablemodel.fireTableDataChanged()
+                #self.class_createandshowGUI3.refresh()
+                self.class_createandshowGUI3.populate_action(None)
 
 
             # train_name = str(model.getValueAt(row, setup_train_col))
@@ -245,7 +257,9 @@ class MyModelListener3(TableModelListener):
             # train_name = str(model.getValueAt(row, setup_train_col))
             if len(train_name) > 0:
                 self.delete_route(train_name[0])
-                model.fireTableDataChanged()
+                #tablemodel.fireTableDataChanged()
+                #self.class_createandshowGUI3.refresh()
+                self.class_createandshowGUI3.populate_action(None)
         else:
             pass
 
@@ -298,7 +312,7 @@ class MyModelListener3(TableModelListener):
 
         active_train = [activeTrain for activeTrain in activeTrainList \
                         if activeTrain.getTrainName() == train_name]
-        if self.logLevel == 0: print ("active_train", active_train)
+        if self.logLevel > 0: print ("active_train", active_train)
         if len(active_train) > 0:
             DF.terminateActiveTrain(active_train[0])
 
@@ -338,7 +352,7 @@ class MyTableModel3 (DefaultTableModel):
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         java_active_trains_list = DF.getActiveTrainsList()
         java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
-        if self.logLevel == 0: print ("populate")
+        if self.logLevel > 0: print ("populate")
         for row in reversed(range(len(self.data))):
             self.data.pop(row)
         # append all active trains to put in dropdown
@@ -349,23 +363,23 @@ class MyTableModel3 (DefaultTableModel):
         for setup_train in trains_allocated:
             active_train = [active_train for active_train in java_active_trains_list \
                             if active_train.getTrainName() == setup_train]
-            if self.logLevel == 0: print "active_train", active_train, "len(active_train)", len(active_train)
+            if self.logLevel > 0: print "active_train", active_train, "len(active_train)", len(active_train)
             if len(active_train) > 0 :
                 active_train = active_train[0]
                 active_train_name = active_train.getTrainName()
                 transit = [active_train.getTransit() for active_train in java_active_trains_list \
                            if active_train.getTrainName() == active_train_name]
-                if self.logLevel == 0: print "active_train_name", active_train_name
-                if self.logLevel == 0: print "transit"  , transit
+                if self.logLevel > 0: print "active_train_name", active_train_name
+                if self.logLevel > 0: print "transit"  , transit
                 transit_name = transit[0].getUserName()
             else:
                 active_train = ""
                 active_train_name = ""
                 transit_name = ""
-            if self.logLevel == 0: print("train", active_train)
-            if self.logLevel == 0: print("transit_name", transit_name)
+            if self.logLevel > 0: print("train", active_train)
+            if self.logLevel > 0: print("transit_name", transit_name)
             route_name = self.get_route(active_train_name)
-            if self.logLevel == 0: print ("route_name", route_name)
+            if self.logLevel > 0: print ("route_name", route_name)
             self.data.append([setup_train, False, active_train_name, transit_name, False, route_name, False])
 
         active_trains_not_setup = [active_train_name for active_train_name in trains_dispatched \
@@ -385,9 +399,9 @@ class MyTableModel3 (DefaultTableModel):
                 active_train = ""
                 active_train_name = ""
                 transit_name = ""
-            if self.logLevel == 0: print("train", active_train_name)
+            if self.logLevel > 0: print("train", active_train_name)
             route_name = self.get_route(active_train_name)
-            if self.logLevel == 0: print ("route_name", route_name)
+            if self.logLevel > 0: print ("route_name", route_name)
             self.data.append(["", False, active_train_name, transit_name, False, route_name, False])
 
 
@@ -402,7 +416,7 @@ class MyTableModel3 (DefaultTableModel):
             if thread_name.startswith("running_route_"):
                 route_name = thread_name.replace("running_route_", "")
                 thread_train_name = StopMaster().determine_train_name(thread_name,thread)
-                if self.logLevel == 0: print "thread name", thread_name, "route_name", route_name, "thread_train_name", thread_train_name, "train_name", train_name
+                if self.logLevel > 0: print "thread name", thread_name, "route_name", route_name, "thread_train_name", thread_train_name, "train_name", train_name
                 # #remove the train from the transit
                 if train_name == thread_train_name:
                     return route_name
