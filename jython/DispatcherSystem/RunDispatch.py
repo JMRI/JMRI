@@ -63,7 +63,7 @@ from org.jgrapht.graph import DirectedWeightedMultigraph
 
 logLevel = 0          # for debugging
 trains = {}           # dictionary of trains shared over classes
-instanceList=[]       # instance list of threads shared over classes
+global instanceList       # instance list of threads shared over classes
 global g
 g = None              # graph shared over classes
 
@@ -78,8 +78,8 @@ stopping_sensor_choice = "not_set" # has value
 FileResetButtonMaster = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/ResetButtonMaster.py')
 execfile(FileResetButtonMaster)
 
-FileResetButtonMaster = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/StopDispatcherSystem.py')
-execfile(FileResetButtonMaster)
+StopDispatcherSystem = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/StopDispatcherSystem.py')
+execfile(StopDispatcherSystem)
 
 
 # FileMoveTrain has to go before CreateScheduler
@@ -491,9 +491,18 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         for activeTrain in active_trains_list:
             # print "i", i
             # activeTrain = activeTrainsList.get(i)
-            if self.logLevel == 0: print "active train", activeTrain
+            if self.logLevel > 0: print "active train", activeTrain
             DF.terminateActiveTrain(activeTrain)
         DF = None
+
+        # set the colours of the tracks back to normal
+        LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
+        for block in blocks.getNamedBeanSet():
+            layoutBlock = LayoutBlockManager.getLayoutBlock(block)
+            if layoutBlock != None:
+                layoutBlock.setUseExtraColor(False)
+
+
         #
         # TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
         # #if self.logLevel > 1: print "Section"
@@ -504,6 +513,11 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         # for transit in TransitList:
         #     if self.logLevel > 1: print "deleting Transit ", transit.getUserName()
         #     TransitManager.deleteTransit(transit)
+
+    def remove_values(self, train_name):
+        for block in blocks.getNamedBeanSet():
+            if block.getValue() == train_name:
+                block.setValue(None)
 
 # End of class StopMaster
 
@@ -711,6 +725,22 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
         elif modify_station_direction_sensor.getKnownState() == ACTIVE:
             if self.modify_individual_station_direction(sensor_changed, button_sensor_name, button_station_name):
+
+                # The traininfo files for the express routes need to be regenerated
+                # so that the express routes are the shortest path allowed
+                print "Creating Transits"
+                CreateIcons = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateIcons.py')
+                exec(open (CreateIcons).read())
+                global dpg
+                dpg = DisplayProgress()
+
+                CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
+                exec(open (CreateTransits).read())
+                print "about to run CreateTransits"
+                CreateTransits().process_panels()
+
+                g = StationGraph()        # recalculate the weights on the edges
+
                 sensor_changed.setKnownState(INACTIVE)
             else:
                 #cancelled: reset all buttons so we check all of them
@@ -850,6 +880,11 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print ("terminated dispatch")
         return True
 
+    def action_directory_in_DispatcherSystem(self):
+        path = jmri.util.FileUtil.getScriptsPath() + "DispatcherSystem" + java.io.File.separator + "actions"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
     def action_directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "pythonfiles"
         if not os.path.exists(path):
@@ -857,13 +892,19 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         return path + java.io.File.separator
 
     def add_action(self, route, LocationManager, button_station_name):
-        directory = self.action_directory()
+        directory = self.action_directory_in_DispatcherSystem()
         files = os.listdir(directory)
         python_files = [f for f in files if f.endswith(".py")]
+
+
+        directory = self.action_directory()
+        files = os.listdir(directory)
+        python_files2 = [f for f in files if f.endswith(".py")]
+        python_files.extend(python_files2)
         # display the list to select the required python file
         if python_files == []:
             msg =  "no python files in directory " + directory
-            if self.logLevel > 0: print msg
+            self.od.displayMessage((msg))
             return 'cancel'
         else:
             msg = "select action file \n(must be in deirectory " + directory + " )"
@@ -983,7 +1024,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.button_sensors_to_watch.remove(sensor_changed)
             sensor_changed.setKnownState(INACTIVE)
 
-        #go to trhis bit when complete == True
+        #go to this bit when complete == True
 
         #get traininfo and stopping fraction
         filename_fwd = self.get_filename(found_edge, "fwd")
@@ -1003,12 +1044,12 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         default_value = round(previous_stopping_position,1)
         title = "Stop train before end of section"
         msg = "Transit name: " + str(filename_fwd) + \
-                ".\nStopping fraction is: " + str(round(stopping_fraction,2)) + \
-                "\nLength of last section: " + str(round(length_of_last_section, 1)) + " cm " + \
-                "   (" + str(round(length_of_last_section/2.54, 1)) + " inches)" +\
-                "\nPrevious stopping position: " + str(round(previous_stopping_position,1)) + " cm " + \
-                "   (" + str(round(previous_stopping_position/2.54, 1)) + " inches )" +\
-                "\n\nEnter new stopping position in cm:"
+              ".\nStopping fraction is: " + str(round(stopping_fraction,2)) + \
+              "\nLength of last section: " + str(round(length_of_last_section, 1)) + " cm " + \
+              "   (" + str(round(length_of_last_section/2.54, 1)) + " inches)" + \
+              "\nPrevious stopping position: " + str(round(previous_stopping_position,1)) + " cm " + \
+              "   (" + str(round(previous_stopping_position/2.54, 1)) + " inches )" + \
+              "\n\nEnter new stopping position in cm:"
         new_stopping_position = self.od.input(msg, title, default_value)
         if new_stopping_position == None: return
         # print "new_stopping_position",  new_stopping_position
@@ -1181,6 +1222,10 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             button_sensor_name = sensor_changed.getUserName()
             button_station_name = self.get_block_name_from_button_sensor_name(button_sensor_name)
 
+            # We now have the blocks we want to use, provided the station blocks are next to each other.
+            # Probably they are not,
+            # so we need to find the two adjacent blocks on the route between the two station blocks
+
             # location = LocationManager.newLocation(button_station_name)
             # route.addLocation(location)
             last_station = button_station_name
@@ -1225,6 +1270,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             # filename_fwd = self.get_filename(found_edge, "fwd")
             # filename_rvs = self.get_filename(found_edge, "rvs")
 
+
+
             msg = "selected station " + button_station_name + ". \nDo you wish to modify the station direction ?"
             title = "Continue selecting stations"
 
@@ -1241,10 +1288,11 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 return False
             elif s == opt1:
                 sensor_changed.setKnownState(INACTIVE)
-                first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e)
-                # print "f2b before", first_two_blocks
+                print "first_station", first_station
+                first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e, first_station)
+                print "f2b before", first_two_blocks
                 first_two_blocks = self.swapPositions(first_two_blocks,0,1)
-                # print "f2b after", first_two_blocks
+                print "f2b after", first_two_blocks
                 list_of_inhibited_blocks = self.store_the_two_blocks(first_two_blocks)
                 #g.__init__()   # calculate the weights on the edges
                 g = StationGraph()  # recalculate the weights on the edges
@@ -1262,8 +1310,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 return True
             if s == opt2:
                 sensor_changed.setKnownState(INACTIVE)
-                first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e)
-                # print "f2b before", first_two_blocks
+                first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e, first_station)
+                print "f2b before", first_two_blocks
                 list_of_inhibited_blocks = self.store_the_two_blocks(first_two_blocks)
                 # g.__init__()
                 g = StationGraph() # recalculate the weights on the edges
@@ -1272,7 +1320,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 return True
             if s == opt3:
                 sensor_changed.setKnownState(INACTIVE)
-                first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e)
+                first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e, first_station)
                 list_of_inhibited_blocks = self.remove_the_two_blocks(first_two_blocks)
                 first_two_blocks = self.swapPositions(first_two_blocks,0,1)
                 list_of_inhibited_blocks = self.remove_the_two_blocks(first_two_blocks)  #remove from file
@@ -1291,10 +1339,19 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         #swap positions of list
         list[pos1], list[pos2] = list[pos2], list[pos1]
         return list
-    def getFirstTwoBlocksInAllowedDirection(self, e):
+
+    def getFirstTwoBlocksInAllowedDirection(self, e, first_station_block):
         path_name =  e.getItem("path_name")
-        # print "path name", path_name
-        return path_name[:2]
+        # get last occurence in path in case path goes through turntable and return
+        index = path_name[::-1].index(first_station_block)
+        print "index", index
+        position_of_station_block = len(path_name) - index - 1
+        print "position_of_station_block", position_of_station_block
+        first = path_name[position_of_station_block]
+        second = path_name[position_of_station_block+1]
+        first2blocks = [first,second]
+        print "first2blocks", first2blocks
+        return first2blocks
 
     def store_the_two_blocks(self, first_two_blocks):
         list_inhibited_blocks = self.read_list()
@@ -1586,7 +1643,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.button_sensors = [self.get_button_sensor_given_block_name(station_block_name) for station_block_name in g.station_block_list]
         self.button_sensor_states = [self.check_sensor_state(button_sensor) for button_sensor in self.button_sensors]
         # for button_sensor in self.button_sensors:
-            # self.button_dict[button_sensor] = self.check_sensor_state(button_sensor)
+        # self.button_dict[button_sensor] = self.check_sensor_state(button_sensor)
 
 
     def check_sensor_state(self, sensor):
@@ -1810,7 +1867,7 @@ class MonitorTrackMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.set_blockcontents(block_name,train_name)
 
     def get_block_position_of_train(self, train_name):
-            allocated_trains = self.get_allocated_trains()
+        allocated_trains = self.get_allocated_trains()
 
 
     def get_allocated_trains(self):
@@ -1895,71 +1952,6 @@ class MonitorTrackMaster(jmri.jmrit.automat.AbstractAutomaton):
         currentState = True if station_sensor.getKnownState() == ACTIVE else False
         return currentState
 
-class RunDispatcherMaster():
 
-    def __init__(self):
-        global g
-        global le
-        import sys
-
-        new_train_master = NewTrainMaster()
-        instanceList.append(new_train_master)
-        if new_train_master.setup():
-            new_train_master.setName('New Train Master')
-            new_train_master.start()
-
-        stop_master = StopMaster()
-        if stop_master.setup():
-            stop_master.setName('Stop Master')
-            stop_master.start()
-
-        reset_button_master = ResetButtonMaster()
-        instanceList.append(reset_button_master)
-        if reset_button_master.setup():
-            pass
-            reset_button_master.setName('Reset Button Master')
-            reset_button_master.start()
-
-        dispatch_master = DispatchMaster()
-        instanceList.append(dispatch_master)
-        if dispatch_master.setup():
-            dispatch_master.setName('Dispatch Master')
-            dispatch_master.start()
-
-        simulation_master = SimulationMaster()
-        instanceList.append(simulation_master)
-        if simulation_master.setup():
-            simulation_master.setName('Simulation Master')
-            simulation_master.start()
-
-        scheduler_master = SchedulerMaster()
-        instanceList.append(scheduler_master)
-        if scheduler_master.setup():
-            scheduler_master.setName('Scheduler Master')
-            scheduler_master.start()
-
-        monitorTrack_master = MonitorTrackMaster()
-        instanceList.append(monitorTrack_master)
-        if monitorTrack_master.setup():
-            monitorTrack_master.setName('Monitor Track Master')
-            monitorTrack_master.start()
-
-        off_action_master = OffActionMaster()
-        instanceList.append(off_action_master)
-
-        if off_action_master.setup():
-            off_action_master.setName('Off-Action Master')
-            off_action_master.start()
-        else:
-            if self.logLevel > 0: print("Off-Action Master not started")
-
-        #set default valus of buttons
-        sensors.getSensor("Express").setKnownState(ACTIVE)
-        sensors.getSensor("simulateSensor").setKnownState(INACTIVE)
-        sensors.getSensor("setDispatchSensor").setKnownState(ACTIVE)
-
-
-if __name__ == '__builtin__':
-    RunDispatcherMaster()
     # NewTrainMaster checksfor the new train in siding. Needs to inform what station we are in
     #DispatchMaster checks all button sensors
