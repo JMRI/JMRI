@@ -499,7 +499,7 @@ public class RosterSpeedProfile {
         } else {
             spd = getReverseSpeed(speedStep);
         }
-        if (spd <= 0.0f) {
+        if (spd < 0.0f) {
             log.error("Speed not available to compute distance travelled");
             return 0.0f;
         }
@@ -661,6 +661,7 @@ public class RosterSpeedProfile {
      * @param speed    the speed to set
      */
     public void changeLocoSpeed(DccThrottle t, float distance, float speed) {
+        log.debug("");   // breaks up the messages
         log.debug("Call to change speed over specific distance float {} distance {}", speed, distance);
         if (Float.compare(speed, t.getSpeedSetting()) == 0) {
             log.debug("Throttle and request speed setting are the same {} {} so will quit", speed, t.getSpeedSetting());
@@ -802,7 +803,7 @@ public class RosterSpeedProfile {
                 }
             } else {
                 calculatingStep = calculatingStep - calculatedStepInc;
-                if (calculatingStep < _throttle.getSpeedIncrement()) {
+                if (calculatingStep < stepIncrement) {
                     calculatingStep = 0.0f;
                     calculated = true;
                     timePerStep = 0;
@@ -826,7 +827,7 @@ public class RosterSpeedProfile {
             if (_throttle != null) {
                 calculatedDistance = calculatedDistance - getDistanceTravelled(_throttle.getIsForward(), calculatingStep, ((float) (timePerStep / 1000.0)));
             } else {
-                log.warn("Throttle destroyed before zero length[{}] remaining.",calculatedDistance);
+                log.warn("Throttle destroyed before zero length[{}] remaining. Train {}",calculatedDistance, _re.getDisplayName());
                 calculatedDistance = 0;
             }
             if (calculatedDistance <= 0 && !calculated) {
