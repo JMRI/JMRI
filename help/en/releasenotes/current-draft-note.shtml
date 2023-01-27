@@ -585,6 +585,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improve how fractional clock rates are displayed on the analog clock.</li>
         </ul>
 
