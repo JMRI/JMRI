@@ -592,5 +592,6 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Added page breaks when printing panel XML files via browser (using XSLT)</li>
+            <li>Improve how fractional clock rates are displayed on the analog clock.</li>
         </ul>
 
