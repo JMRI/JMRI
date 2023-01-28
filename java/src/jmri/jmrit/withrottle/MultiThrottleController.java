@@ -287,7 +287,7 @@ public class MultiThrottleController extends ThrottleController {
         else {
             log.debug("Loco address {} already controlled by another JMRI throttle.", number);
             sendStealAddress();
-            notifyFailedThrottleRequest(new DccLocoAddress(number, isLong), "Steal from other WiThrottle  or JMRI throttle Required");
+            notifyFailedThrottleRequest(new DccLocoAddress(number, isLong), "Steal from other WiThrottle or JMRI throttle Required");
         }
 
     }
