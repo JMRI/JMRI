@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.3.1plus+jake+20230112T1737Z+R27d6caaad8 on Thu Jan 12 12:38:13 EST 2023-->
-  <decoderIndex version="39">
-    <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
+  <!--Written by JMRI version 5.3.2plus+jake+20230126T2009Z+R0d8d7927e7 on Thu Jan 26 15:09:59 EST 2023-->
+  <decoderIndex version="45">
+    <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
+      <manufacturer mfg="AE Electronic Ltd" mfgID="169" />
       <manufacturer mfg="AMW" mfgID="19" />
       <manufacturer mfg="ANE Model Co, Ltd" mfgID="45" />
       <manufacturer mfg="AXJ Electronics" mfgID="110" />
@@ -65,6 +66,7 @@
       <manufacturer mfg="Hattons Model Railways" mfgID="79" />
       <manufacturer mfg="Heljan A/S" mfgID="28" />
       <manufacturer mfg="Heller Modelbahn" mfgID="67" />
+      <manufacturer mfg="Helvest Systems GmbH" mfgID="167" />
       <manufacturer mfg="Hornby" mfgID="48" />
       <manufacturer mfg="Integrated Signal Systems" mfgID="102" />
       <manufacturer mfg="Intelligent Command Control" mfgID="133" />
@@ -96,6 +98,7 @@
       <manufacturer mfg="Massoth Elektronik, GmbH" mfgID="123" />
       <manufacturer mfg="Mistral Train Models" mfgID="29" />
       <manufacturer mfg="MoBaTrain.de" mfgID="24" />
+      <manufacturer mfg="Model Train Technology" mfgID="168" />
       <manufacturer mfg="MyLocoSound" mfgID="116" />
       <manufacturer mfg="MÜT GmbH" mfgID="118" />
       <manufacturer mfg="Möllehem Gårdsproduktion" mfgID="126" />
