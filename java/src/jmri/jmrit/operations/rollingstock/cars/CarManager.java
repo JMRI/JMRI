@@ -237,11 +237,11 @@ public class CarManager extends RollingStockManager<Car>
      * <p>
      * The sort priority is as follows:
      * <ol>
-     * <li>Caboose or car with FRED to the end of the list
-     * <li>Passenger cars with positive blocking numbers to the end of the list,
-     * but before cabooses or car with FRED. Passenger cars with negative
-     * blocking numbers are placed at the front of the train. Passenger cars
-     * have blocking numbers which places them relative to each other.
+     * <li>Caboose or car with FRED to the end of the list, unless passenger.
+     * <li>Passenger cars have blocking numbers which places them relative to
+     * each other. Passenger cars with positive blocking numbers to the end of
+     * the list, but before cabooses or car with FRED. Passenger cars with
+     * negative blocking numbers are placed at the front of the train.
      * <li>Car's destination (alphabetical by location and track name or by
      * track blocking order)
      * <li>Car is hazardous (hazardous placed after a non-hazardous car)
@@ -302,9 +302,6 @@ public class CarManager extends RollingStockManager<Car>
                 if (!out.contains(car)) {
                     out.add(out.size() - lastCarsIndex, car);
                 }
-            } else if (car.isCaboose() || car.hasFred()) {
-                out.add(car); // place at end of list
-                lastCarsIndex++;
             } else if (car.isPassenger()) {
                 if (car.getBlocking() < 0) {
                     // block passenger cars with negative blocking numbers at
@@ -334,6 +331,9 @@ public class CarManager extends RollingStockManager<Car>
                     out.add(out.size() - index, car);
                     lastCarsIndex++;
                 }
+            } else if (car.isCaboose() || car.hasFred()) {
+                out.add(car); // place at end of list
+                lastCarsIndex++;
             }
             // group the cars in the kernel together, except passenger
             if (car.isLead()) {
