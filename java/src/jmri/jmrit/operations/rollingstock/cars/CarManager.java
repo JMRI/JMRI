@@ -1,17 +1,13 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -253,8 +249,9 @@ public class CarManager extends RollingStockManager<Car>
      * <li>Car's final destination (alphabetical by location and track name)
      * </ol>
      * <p>
-     * Cars in a kernel are placed together by their kernel blocking numbers.
-     * The kernel's position in the list is based on the lead car in the kernel.
+     * Cars in a kernel are placed together by their kernel blocking numbers,
+     * except if they are type passenger. The kernel's position in the list is
+     * based on the lead car in the kernel.
      * <p>
      * If the train is to be blocked by track blocking order, all of the tracks
      * at that location need a blocking number greater than 0.
@@ -272,7 +269,7 @@ public class CarManager extends RollingStockManager<Car>
         List<Car> out = new ArrayList<>();
         int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
         for (Car car : byDestination) {
-            if (car.getKernel() != null && !car.isLead()) {
+            if (car.getKernel() != null && !car.isLead() && !car.isPassenger()) {
                 continue; // not the lead car, skip for now.
             }
             if (!car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
@@ -338,12 +335,12 @@ public class CarManager extends RollingStockManager<Car>
                     lastCarsIndex++;
                 }
             }
-            // group the cars in the kernel together
+            // group the cars in the kernel together, except passenger
             if (car.isLead()) {
                 int index = out.indexOf(car);
                 int numberOfCars = 1; // already added the lead car to the list
                 for (Car kcar : car.getKernel().getCars()) {
-                    if (car != kcar) {
+                    if (car != kcar && !kcar.isPassenger()) {
                         // Block cars in kernel
                         for (int j = 0; j < numberOfCars; j++) {
                             if (kcar.getBlocking() < out.get(index + j).getBlocking()) {
