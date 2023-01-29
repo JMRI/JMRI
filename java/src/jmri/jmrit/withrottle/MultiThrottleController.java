@@ -271,6 +271,26 @@ public class MultiThrottleController extends ThrottleController {
         
         
     }
+    
+    /**
+     * Add option to not silently share ("steal") the requested address
+     * 
+     * {@inheritDoc}
+     */
+    @Override
+    protected void setAddress(int number, boolean isLong) {
+        if(isStealAddress
+                || jmri.InstanceManager.throttleManagerInstance().getThrottleUsageCount(number, isLong) == 0 
+                || ! InstanceManager.getDefault(WiThrottlePreferences.class).isExclusiveUseOfAddress()) {
+            super.setAddress(number, isLong);
+        }
+        else {
+            log.debug("Loco address {} already controlled by another JMRI throttle.", number);
+            sendStealAddress();
+            notifyFailedThrottleRequest(new DccLocoAddress(number, isLong), "Steal from other WiThrottle or JMRI throttle Required");
+        }
+
+    }
 
     // Encode a SpeedStepMode to a string.
     private static String encodeSpeedStepMode(SpeedStepMode mode) {

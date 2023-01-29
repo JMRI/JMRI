@@ -573,7 +573,7 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>Added an option to request steal from client when an address is already in use</li>
         </ul>
 
    <h3>Web Server</h3>
