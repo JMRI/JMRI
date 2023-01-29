@@ -364,6 +364,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
+            <li>Improve how filename extensions are handled when exporting the complete roster.</li>
             <li>Updated list of NMRA-registered manufacturer IDs</li>
         </ul>
 
