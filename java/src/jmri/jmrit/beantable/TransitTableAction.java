@@ -701,6 +701,13 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 }
             }
             sectionList.remove(j);
+            sequence.remove(j);
+            direction.remove(j);
+            action.remove(j);
+            alternate.remove(j);
+            safe.remove(j);
+            sensorStopAllocation.remove(j);
+
             initializeSectionCombos();
         }
         updateSeqNum();
