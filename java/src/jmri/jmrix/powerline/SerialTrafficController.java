@@ -77,8 +77,10 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      *
-     * @param unitid sequence to send
-     * @param newStep listener for reply
+     * DMX does work with a sequence, it directly updates the data array
+     * @param unitid which light
+     * @param newStep new intesity value
+     * 
      * @return true on success
      */
     public boolean sendDmxSequence(int unitid, byte newStep) {

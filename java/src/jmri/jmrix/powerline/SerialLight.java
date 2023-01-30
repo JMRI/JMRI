@@ -68,16 +68,16 @@ abstract public class SerialLight extends AbstractVariableLight {
      */
     protected void initializeLight() {
         // Convert to the two-part X10 address
-        housecode = tc.getAdapterMemo().getSerialAddress().houseCodeAsValueFromSystemName(getSystemName());
-        devicecode = tc.getAdapterMemo().getSerialAddress().deviceCodeAsValueFromSystemName(getSystemName());
+        housecode = tc.getAdapterMemo().getSerialAddress().x10HouseCodeAsValueFromSystemName(getSystemName());
+        devicecode = tc.getAdapterMemo().getSerialAddress().x10DeviceCodeAsValueFromSystemName(getSystemName());
         // not an X10, try Insteon
         if (housecode == -1) {
-            idhighbyte = tc.getAdapterMemo().getSerialAddress().idHighCodeAsValueFromSystemName(getSystemName());
-            idmiddlebyte = tc.getAdapterMemo().getSerialAddress().idMiddleCodeAsValueFromSystemName(getSystemName());
-            idlowbyte = tc.getAdapterMemo().getSerialAddress().idLowCodeAsValueFromSystemName(getSystemName());
+            idhighbyte = tc.getAdapterMemo().getSerialAddress().insteonIdHighCodeAsValueFromSystemName(getSystemName());
+            idmiddlebyte = tc.getAdapterMemo().getSerialAddress().insteonIdMiddleCodeAsValueFromSystemName(getSystemName());
+            idlowbyte = tc.getAdapterMemo().getSerialAddress().insteonIdLowCodeAsValueFromSystemName(getSystemName());
             // if not Insteon, try DMX
             if (idhighbyte == -1) {
-                unitid = tc.getAdapterMemo().getSerialAddress().unitIdCodeAsValueFromSystemName(getSystemName());
+                unitid = tc.getAdapterMemo().getSerialAddress().dmxUnitIdCodeAsValueFromSystemName(getSystemName());
             }
         }
     }

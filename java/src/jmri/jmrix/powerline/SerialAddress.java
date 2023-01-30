@@ -289,7 +289,7 @@ public class SerialAddress {
      * @param systemName name
      * @return valid 1-16, invalid, return -1
      */
-    public int houseCodeAsValueFromSystemName(String systemName) {
+    public int x10HouseCodeAsValueFromSystemName(String systemName) {
         int hCode = -1;
         // ensure that input system name has a valid format
         if ((!aCodes.reset(systemName).matches()) || (validSystemNameFormat(systemName, aCodes.group(2).charAt(0)) != NameValidity.VALID)) {
@@ -317,7 +317,7 @@ public class SerialAddress {
      * @param systemName name
      * @return value of X10 device code, -1 if invalid
      */
-    public int deviceCodeAsValueFromSystemName(String systemName) {
+    public int x10DeviceCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;
         // ensure that input system name has a valid format
         if ((!aCodes.reset(systemName).matches()) || (validSystemNameFormat(systemName, aCodes.group(2).charAt(0)) != NameValidity.VALID)) {
@@ -345,7 +345,7 @@ public class SerialAddress {
      * @param systemName name
      * @return Insteon high byte value
      */
-    public int idHighCodeAsValueFromSystemName(String systemName) {
+    public int insteonIdHighCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;
         // ensure that input system name has a valid format
         if (!iCodes.reset(systemName).matches() || validSystemNameFormat(systemName, iCodes.group(2).charAt(0)) != NameValidity.VALID) {
@@ -373,7 +373,7 @@ public class SerialAddress {
      * @param systemName name
      * @return Insteon middle id value, -1 if invalid
      */
-    public int idMiddleCodeAsValueFromSystemName(String systemName) {
+    public int insteonIdMiddleCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;
         // ensure that input system name has a valid format
         if (!iCodes.reset(systemName).matches() || validSystemNameFormat(systemName, iCodes.group(2).charAt(0)) != NameValidity.VALID) {
@@ -401,7 +401,7 @@ public class SerialAddress {
      * @param systemName name
      * @return Insteon low value id, -1 if invalid
      */
-    public int idLowCodeAsValueFromSystemName(String systemName) {
+    public int insteonIdLowCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;
         // ensure that input system name has a valid format
         if (!iCodes.reset(systemName).matches() || validSystemNameFormat(systemName, iCodes.group(2).charAt(0)) != NameValidity.VALID) {
@@ -420,8 +420,6 @@ public class SerialAddress {
         return dCode;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialAddress.class);
-    
     /**
      * Extract DMX unit id from system name.
      * <p>
@@ -432,7 +430,7 @@ public class SerialAddress {
      * @return dmx unit id, -1 if invalid
      */
 
-    public int unitIdCodeAsValueFromSystemName(String systemName) {
+    public int dmxUnitIdCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;
         // ensure that input system name has a valid format
         if (!dCodes.reset(systemName).matches() || validSystemNameFormat(systemName, dCodes.group(2).charAt(0)) != NameValidity.VALID) {
@@ -450,5 +448,7 @@ public class SerialAddress {
         }
         return dCode;
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(SerialAddress.class);
 
 }
