@@ -36,7 +36,13 @@ public class SpecificSystemConnectionMemo extends jmri.jmrix.powerline.SerialSys
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.powerline.dmx512.PowerlineActionListBundle");
     }
-
+ 
+    // DMX doesn't have any menu items, so empty list
+    @Override
+    public MenuItem[] provideMenuItemList() {
+        return new MenuItem[] {};
+    }
+    
     @Override
     public void dispose() {
         InstanceManager.deregister(this, SpecificSystemConnectionMemo.class);

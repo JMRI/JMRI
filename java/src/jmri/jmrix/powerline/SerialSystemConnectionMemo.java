@@ -80,6 +80,26 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnecti
         // now does nothing here, it's done by the specific class
         register(); // registers general type
     }
+    
+    // menu support parts
+    // subclasses can override to change menu items
+
+    public static class MenuItem {
+        MenuItem(String name, String load) {
+            this.name = name;
+            this.load = load;
+        }
+        public String name;
+        public String load;
+    }
+    private final MenuItem[] panelItems = new MenuItem[]{
+        new MenuItem("MenuItemCommandMonitor", "jmri.jmrix.powerline.swing.serialmon.SerialMonPane"),
+        new MenuItem("MenuItemSendCommand", "jmri.jmrix.powerline.swing.packetgen.SerialPacketGenPane")
+    };
+    
+    public MenuItem[] provideMenuItemList() {
+        return panelItems;
+    }
 
     public SerialTurnoutManager getTurnoutManager() {
         return (SerialTurnoutManager)get(TurnoutManager.class);
