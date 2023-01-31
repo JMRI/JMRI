@@ -38,6 +38,12 @@ public class CanCmdPaneProvider extends CbusConfigPaneProvider {
     public static final int UNUSED_NV15 = 15;
     public static final int UNUSED_NV16 = 16;
     
+    // These may be overridden in scripts for unusual use cases
+    public static int MIN_CANID = 100;
+    public static int MAX_CANID = 127;
+    public static int MIN_NN = 65520;
+    public static int MAX_NN = 65534;
+
     public CanCmdPaneProvider() {
         super();
     }

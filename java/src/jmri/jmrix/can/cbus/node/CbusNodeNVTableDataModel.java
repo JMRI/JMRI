@@ -45,10 +45,12 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
         if (ev.getPropertyName().equals("SINGLENVUPDATE")) {
             int newValue = (Integer) ev.getNewValue();
 //            resetNewNvs();    // Why do this for a single NV?
+            log.debug("SINGLENVUPDATE {}", newValue);
             resetSingleNv(newValue);
             fireTableRowsUpdated(newValue,newValue);
         }
         else if (ev.getPropertyName().equals("ALLNVUPDATE")) {
+            log.debug("ALLNVUPDATE");
             resetNewNvs();
             fireTableDataChanged();
         }
@@ -326,9 +328,11 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
         
         // setup a new fixed length array to hold new nv values
         if ( nodeOfInterest.getNodeNvManager().getNvArray() == null ) {
+            log.debug("Create newNVs[] of length 0");
             newNVs = new int[0];
         }
         else {
+            log.debug("Create newNVs[] of length {}", nodeOfInterest.getNodeNvManager().getNvArray().length);
             newNVs = new int[ ( nodeOfInterest.getNodeNvManager().getNvArray().length ) ];        
             newNVs = Arrays.copyOf(
                 nodeOfInterest.getNodeNvManager().getNvArray(),
