@@ -76,7 +76,9 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Changed handling of LACK messages during programming to
+                    avoid a recently-uncovered conflict with attached DT602D
+                    throttles.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -362,7 +364,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Improve how filename extensions are handled when exporting the complete roster.</li>
+            <li>Updated list of NMRA-registered manufacturer IDs</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -421,7 +424,8 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem when a location has multiple spurs and the spur's schedule forwards the car to another spur
+            at the same location with a schedule.  The car's load can incorrectly change to the default "E" or "L" load.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -474,7 +478,11 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>Cliff Anderson contributed a new TurnoutsMasterSlave.py script.
-            </li>
+            <li>Fixed the SetAllTurnoutsClosed.py and SetUnknownTurnoutsClosed.py scripts so they would properly
+                delay on polled systems such as C/MRI</li>
+            <li>Added a new <a href="https://jmri.org/jython/SetAllTurnoutsThrown.py">SetAllTurnoutsThrown.py</a> script and tests</li>
+            <li>Added a new <a href="https://jmri.org/jython/Shutdown.py">Shutdown.py</a> script to shut down JMRI.</li>
+            <li>Added a new <a href="https://jmri.org/jython/Restart.py">Restart.py</a> script to restart JMRI.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -484,7 +492,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Pino Di Biasi updated the Italian signal system</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -568,7 +576,7 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>Added an option to request steal from client when an address is already in use</li>
         </ul>
 
    <h3>Web Server</h3>
@@ -586,6 +594,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added page breaks when printing panel XML files via browser (using XSLT)</li>
+            <li>Improve how fractional clock rates are displayed on the analog clock.</li>
         </ul>
 

@@ -66,8 +66,8 @@ public class FullBackupExportAction
 
         String filename = chooser.getSelectedFile().getAbsolutePath();
 
-        if (!filename.endsWith(roster_filename_extension)) {
-            filename = filename.concat(roster_filename_extension);
+        if (!filename.endsWith("."+roster_filename_extension)) {
+            filename = filename.concat("."+roster_filename_extension);
         }
 
         try (ZipOutputStream zipper = new ZipOutputStream(new FileOutputStream(filename))) {
@@ -76,13 +76,13 @@ public class FullBackupExportAction
             for (RosterEntry entry : roster.getAllEntries()) {
                 try {
                     copyFileToStream(entry.getPathName(), "roster", zipper, "roster: "+entry.getId());
-                    
+
                     // process image files if present
                     if (entry.getImagePath() != null && ! entry.getImagePath().isEmpty())
                         copyFileToStream(entry.getImagePath(), "roster", zipper, "image: "+entry.getId());
                     if (entry.getIconPath() != null && ! entry.getIconPath().isEmpty())
                         copyFileToStream(entry.getIconPath(), "roster", zipper, "icon: "+entry.getId());
-                        
+
                 } catch (FileNotFoundException ex) {
                     log.error("Unable to find file in entry {}", entry.getId(), ex);
                 } catch (IOException ex) {
@@ -120,9 +120,9 @@ public class FullBackupExportAction
      */
     private void copyFileToStream(String filename, String dirname, ZipOutputStream zipper, String comment)
             throws IOException {
-            
+
         log.debug("write: {}", filename);
-        
+
         File file = new File(filename);
         String entryName;
 
