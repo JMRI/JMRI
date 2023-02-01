@@ -118,7 +118,9 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * @param systemName the system name to use for this light
      * @param userName   the user name to use for this light
      * @return the new light or null if unsuccessful
+     * @throws IllegalArgumentException something failed in the names
      */
+    @SuppressWarnings("javadoc")
     @Nonnull
     abstract protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
