@@ -132,16 +132,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             Bundle.getMessage("ReservedTt")
         }};
 
-    protected int _fwMaj = -1;
-    protected int _fwMin = -1;
-    protected int _fwBuild = -1;
-
     protected Sprog3PlusEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
-        _fwMaj = node.getNodeParamManager().getParameter(MAJOR_VER_IDX);
-        _fwMin = node.getNodeParamManager().getParameter(MINOR_VER_IDX);
-        _fwBuild = node.getNodeParamManager().getParameter(BETA_REV_IDX);
-        
     }
     
     /** {@inheritDoc} */

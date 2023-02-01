@@ -3,6 +3,7 @@ package jmri.jmrix.can.cbus.swing.modules;
 import javax.swing.event.TableModelEvent;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
+import static jmri.jmrix.can.cbus.node.CbusNodeConstants.*;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import static jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel.NV_SELECT_COLUMN;
 
@@ -15,11 +16,18 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
     
     protected CbusNodeNVTableDataModel _dataModel;
     protected CbusNode _node;
+    protected int _fwMaj = -1;
+    protected int _fwMin = -1;
+    protected int _fwBuild = -1;
+
     
     public AbstractEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super();
         _dataModel = dataModel;
         _node = node;
+        _fwMaj = node.getNodeParamManager().getParameter(MAJOR_VER_IDX);
+        _fwMin = node.getNodeParamManager().getParameter(MINOR_VER_IDX);
+        _fwBuild = node.getNodeParamManager().getParameter(BETA_REV_IDX);
     }
     
     /**
@@ -133,7 +141,7 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
     /**
      * Get the value of a 4-byte (32-bit) NV from NV_SELECT_COLUMN
      * 
-     * Hardware should retrurn a count in ranbge 0 .. max positive integer
+     * Hardware should return a count in range 0 .. max positive integer
      * 
      * @param rowT index of top (MSB) byte
      * 

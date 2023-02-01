@@ -54,6 +54,7 @@ public class CanisbPaneProvider extends CbusConfigPaneProvider {
     public static final int CAN_RX_CNT_U = 32;
     public static final int CAN_RX_CNT_H = 33;
     public static final int CAN_RX_CNT_L = 34;
+    public static final int CAN_TX_ARB_DELAY = 35;
     
     // These may be overridden in scripts for unusual use cases
     public static int MIN_CANID = 100;
@@ -118,6 +119,7 @@ public class CanisbPaneProvider extends CbusConfigPaneProvider {
         result.put(CAN_RX_CNT_U, Bundle.getMessage("CanRxCnt")+" Upper");
         result.put(CAN_RX_CNT_H, Bundle.getMessage("CanRxCnt")+" Hi");
         result.put(CAN_RX_CNT_L, Bundle.getMessage("CanRxCnt")+" Lo");
+        result.put(CAN_TX_ARB_DELAY, Bundle.getMessage("TxArbDelay"));
 
         return Collections.unmodifiableMap(result);
     }    
