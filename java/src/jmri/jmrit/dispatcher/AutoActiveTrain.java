@@ -587,11 +587,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 return;
             }
         } else if (b.getState() == Block.UNOCCUPIED) {
-            // careful: checks have been inserted as this logging statement causes errors if throttle is null
-            if (_activeTrain != null && _autoEngineer != null) {
-                log.debug("{}: handleBlockStateChange to UNOCCUPIED - Section {}, Block {}, speed {}", _activeTrain.getTrainName(),
-                        as.getSection().getDisplayName(USERSYS), b.getDisplayName(USERSYS),getTargetSpeed());
-            }
+            log.debug("{}: handleBlockStateChange to UNOCCUPIED - Section {}, Block {}, speed {}", _activeTrain.getTrainName(),
+                    as.getSection().getDisplayName(USERSYS), b.getDisplayName(USERSYS),getTargetSpeed());
             if (_stoppingByBlockOccupancy && (b == _stoppingBlock)) {
                 log.trace("{}: setStopNow by block occupancy from Block unoccupied, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                 _stoppingByBlockOccupancy = false;
@@ -1587,7 +1584,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 if (throttleSetting > 0.009) {
                     cancelStopInCurrentSection();
                     setTargetSpeed(applyMaxThrottleAndFactor(throttleSetting)); // apply speed factor and max
-                } else if (useSpeedProfile && _stopBySpeedProfile) {
+                 } else if (useSpeedProfile && _stopBySpeedProfile) {
                     setTargetSpeed(0.0f);
                     _stoppingUsingSpeedProfile = true;
                     _autoEngineer.setTargetSpeed(_currentAllocatedSection.getSection().getActualLength(), 0.0f);
