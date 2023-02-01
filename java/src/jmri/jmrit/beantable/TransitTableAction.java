@@ -933,7 +933,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             }
             for (int i = sectionList.size(); i >= seq; i--) {
                 if ((sequence.get(i) == seq) && alternate.get(i)) {
-                    removeSupportingArrayEntries(i);                }
+                    removeSupportingArrayEntries(i);
+                }
             }
             initializeSectionCombos();
         }
