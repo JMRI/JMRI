@@ -15,7 +15,7 @@
       <h1>Hardware Support: Powerline Controllers</h1>
 
       <p>This page describes how to configure JMRI to talk to Powerline controllers, e.g. X10,
-      Insteon.</p>
+      Insteon, DMX.</p>
 
       <h2 id="hardware">Supported Hardware</h2>
 
@@ -27,7 +27,7 @@
       <p>JMRI Lights work intuitively with Powerline devices. When a JMRI Light is set "ON", a
       command is sent to the remote device to set it "ON". Ditto for "OFF".</p>
 
-      <p>There's also limited support for dimming (variable brightness) Lights. See the JMRI
+      <p>There's also support for dimming (variable brightness) Lights. See the JMRI
       <a href="../../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">"Light Control"
       page</a> for more information on this.</p>
 

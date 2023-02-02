@@ -216,7 +216,7 @@
           <img src="images/DMX512-usb.jpg" alt="DMX512 usb interface">
           </td><!-- Image -->
 
-          <td>The biggest issue is finding the right one. It must be 
+          <td>The biggest issue is finding the right one. It must be a
           FTDI based USB that includes the serial
           port support in the drivers. Many do, but some do not.</td>
           <td>Support is available starting in JMRI 5.3.3<br>
