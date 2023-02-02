@@ -82,6 +82,18 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
     public String getAutoSystemName();
 
     /**
+     * Should the LogixNGs be started when the configuration file is loaded?
+     * @param value true if they should be started, false otherwise.
+     */
+    public void startLogixNGsOnLoad(boolean value);
+
+    /**
+     * Should the LogixNGs not be started when the configuration file is loaded?
+     * @return true if they should be started, false otherwise.
+     */
+    public boolean isStartLogixNGsOnLoad();
+
+    /**
      * Setup all LogixNGs. This method is called after a configuration file is
      * loaded.
      */

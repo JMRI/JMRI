@@ -32,6 +32,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     private final Map<String, Manager<? extends MaleSocket>> _managers = new HashMap<>();
     private final Clipboard _clipboard = new DefaultClipboard();
     private boolean _isActive = false;
+    private boolean _startLogixNGsOnLoad = true;
     private final List<Runnable> _setupTasks = new ArrayList<>();
 
 
@@ -153,6 +154,18 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLogixNGs" : "BeanNameLogixNG");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void startLogixNGsOnLoad(boolean value) {
+        _startLogixNGsOnLoad = value;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isStartLogixNGsOnLoad() {
+        return _startLogixNGsOnLoad;
     }
 
     /** {@inheritDoc} */
