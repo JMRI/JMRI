@@ -700,7 +700,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     prevSectionDirection = direction.get(k);
                 }
             }
-            sectionList.remove(j);
+            removeSupportingArrayEntries(j);
             initializeSectionCombos();
         }
         updateSeqNum();
@@ -745,13 +745,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 keep++;
             }
             for (int c = 0; c < keep ; c++) {
-                sequence.remove(0);
-                direction.remove(0);
-                action.remove(0);
-                alternate.remove(0);
-                safe.remove(0);
-                sensorStopAllocation.remove(0);
-                sectionList.remove(0);
+                removeSupportingArrayEntries(0);
                 curSequenceNum--;
             }
             initializeSectionCombos();
@@ -939,13 +933,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             }
             for (int i = sectionList.size(); i >= seq; i--) {
                 if ((sequence.get(i) == seq) && alternate.get(i)) {
-                    sequence.remove(i);
-                    direction.remove(i);
-                    action.remove(i);
-                    alternate.remove(i);
-                    safe.remove(i);
-                    sensorStopAllocation.remove(i);
-                    sectionList.remove(i);
+                    removeSupportingArrayEntries(i);
                 }
             }
             initializeSectionCombos();
@@ -1165,6 +1153,16 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             addFrame.dispose();  // remove addFrame from Windows menu
             addFrame = null;
         }
+    }
+    
+    private void removeSupportingArrayEntries(int index) {
+        sectionList.remove(index);
+        sequence.remove(index);
+        direction.remove(index);
+        action.remove(index);
+        alternate.remove(index);
+        safe.remove(index);
+        sensorStopAllocation.remove(index);
     }
 
     private boolean checkTransitInformation() {
