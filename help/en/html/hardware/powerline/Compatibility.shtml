@@ -153,7 +153,7 @@
 
         <tr>
           <td>
-           https://www.smarthome.com Smarthome.com 
+           <a href="https://www.smarthome.com Smarthome.com">Smart Home</a> 
           </td><!-- Manufacturer -->
 
           <td style="white-space: nowrap">Power Linc 2414U<br>
@@ -189,6 +189,41 @@
           Last Edited: 11 Nov 2015</td><!-- Type -->
         </tr>
       </table>
+      
+      <h3>DMX Adapters</h3>
+      <!-- start table of types -->
+
+      <table border="1">
+        <!-- header row -->
+
+        <tr>
+          <th>Manufacturer</th>
+          <th>Model</th>
+          <th>Image</th>
+          <th>Identification Help</th><!-- Comment -->
+
+          <th>JMRI Status</th>
+        </tr>
+
+        <tr>
+          <td>
+            Hard to tell. Amazon give very few details.
+          </td><!-- Manufacturer -->
+
+          <td>Mini USB to DMX512 - uDmx</td><!-- Model -->
+
+          <td>
+          <!-- <img src="images/DMX512-usb.jpg" alt="DMX512 usb interface"> -->
+          </td><!-- Image -->
+
+          <td>The biggest issue is finding the right one. It must be 
+          FTDI based USB that includes the serial
+          port support in the drivers. Many do, but some do not.</td>
+          <td>Support is available starting in JMRI 5.3.3<br>
+          Last Edited: 1 Feb 2023</td><!-- Type -->
+        </tr>
+      </table>
+      
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
