@@ -11,6 +11,7 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
+import jmri.jmrix.loconet.LnCommandStationType.SupportsSlot250;
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 
 import org.slf4j.Logger;
@@ -227,10 +228,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
-     * Get the Command Station type reported in slot 250 message
+     * Get the Command Station type reported in slot 248 message
      * @return model
      */
-    public String getSlot250CommandStationType() {
+    public String getSlot248CommandStationType() {
         return LnConstants.IPL_NAME(slot248CommandStationType);
     }
 
@@ -334,6 +335,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
 
+    java.util.TimerTask slot250Task = null;
     /**
      * Request slot data for 248 and 250
      * Runs delayed
@@ -342,12 +344,17 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     private void pollSpecialSlots() {
         sendReadSlot(248);
-        try {Thread.sleep(10); }
-        catch (InterruptedException ex) {
-            // nothing can be done
-            return;
-        }
-        sendReadSlot(250);
+        slot250Task = new java.util.TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    sendReadSlot(250);
+                } catch (Exception e) {
+                    log.error("Exception occurred while checking slot250", e);
+                }
+            }
+        };
+        jmri.util.TimerUtil.schedule(slot250Task,100);
     }
 
     /**
@@ -511,10 +518,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Collect data from specific slots
      */
     void checkSpecialSlots(LocoNetMessage m, int slot) {
-        if (!pmManagerGotReply &&
+        if (!pmManagerGotReply && slot == 0 &&
                 (m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA || m.getOpCode() == LnConstants.OPC_SL_RD_DATA)) {
             pmManagerGotReply = true;
-            pollSpecialSlots();
+            if (commandStationType.commandStationSupportSlot250() == SupportsSlot250.SLOT250_AVAILABLE) {
+                pollSpecialSlots();
+            }
             return;
         }
         switch (slot) {

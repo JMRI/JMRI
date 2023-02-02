@@ -39,14 +39,14 @@ public class SlotManagerAndPowerMan {
                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x15, 0x00,
                     0x02, 0x01, 0x12, 0x0B, 0x7A});  // not a CS a DB210
             lnis.sendTestMessage(csAnswer);
-            Assert.assertEquals("CS Type Blank","<unknown>",sm.getSlot250CommandStationType());
+            Assert.assertEquals("CS Type Blank","<unknown>",sm.getSlot248CommandStationType());
 
             csAnswer = new LocoNetMessage(new int[] {
                     0xE6, 0x15, 0x01, 0x78, 0x08, 0x00, 0x00, 0x00,
                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1A, 0x00,
                     0x01, 0x00, 0x37, 0x03, 0x12}); // a CS but not in Booster mode
             lnis.sendTestMessage(csAnswer);
-            Assert.assertEquals("CS Type Blank","<unknown>",sm.getSlot250CommandStationType());
+            Assert.assertEquals("CS Type Blank","<unknown>",sm.getSlot248CommandStationType());
 
             csAnswer = new LocoNetMessage(new int[] {
                     0xE6, 0x15, 0x01, 0x7A, 0x00, 0x00, 0x14, 0x00,
@@ -60,7 +60,7 @@ public class SlotManagerAndPowerMan {
                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1A, 0x00,
                     0x01, 0x00, 0x37, 0x43, 0x12}); // a CS in command station mode
             lnis.sendTestMessage(csAnswer);
-            Assert.assertEquals("CS Type Blank","DCS210PLUS",sm.getSlot250CommandStationType());
+            Assert.assertEquals("CS Type Blank","DCS210PLUS",sm.getSlot248CommandStationType());
 
             csAnswer = new LocoNetMessage(new int[] {
                     0xE6, 0x15, 0x01, 0x7A, 0x00, 0x00, 0x14, 0x00,
@@ -84,6 +84,7 @@ public class SlotManagerAndPowerMan {
             lnis = new LocoNetInterfaceScaffold();
             sm = new SlotManager(lnis);
             memo = new LocoNetSystemConnectionMemo(lnis, null);
+            memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS240,false,false,false,false,false);
             sm.setSystemConnectionMemo(memo);
             pwr = new LnPowerManager(memo);
         }

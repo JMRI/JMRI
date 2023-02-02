@@ -305,7 +305,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
             if (memo.getSlotManager().getSlot250CSSlots() > 0) {
                 showHideSlot250Data(true);
                 dcsSlots.setText(Integer.toString(memo.getSlotManager().getSlot250CSSlots()));
-                dcsType.setText(memo.getSlotManager().getSlot250CommandStationType());
+                dcsType.setText(memo.getSlotManager().getSlot248CommandStationType());
             }
         }
     }
