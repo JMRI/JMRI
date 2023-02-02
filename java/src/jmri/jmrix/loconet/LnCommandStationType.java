@@ -469,6 +469,14 @@ public enum LnCommandStationType {
         return progEndOp == ProgDepowersTrack.TRACK_TURNEDOFF_BY_PROGRAMMING;
     }
 
+    /**
+     * Does CS report slot availability in slot 250 ?
+     * @return true if it does
+     */
+    public boolean getSupportsSlot250() {
+        return supportsSlot250 == SupportsSlot250.SLOT250_AVAILABLE;
+    }
+
     static public LnCommandStationType getByName(String name) {
         for (LnCommandStationType p : LnCommandStationType.values()) {
             if (p.name.equals(name)) {

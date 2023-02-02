@@ -81,11 +81,11 @@ public class SlotManagerAndPowerMan {
         @BeforeEach
         public void setUp() {
             jmri.util.JUnitUtil.setUp();
-            lnis = new LocoNetInterfaceScaffold();
+            memo = new LocoNetSystemConnectionMemo();
+            lnis = new LocoNetInterfaceScaffold(memo);
+            memo.setLnTrafficController(lnis);
+            memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS240,false,false,false, false, false);
             sm = new SlotManager(lnis);
-            memo = new LocoNetSystemConnectionMemo(lnis, null);
-            memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS240,false,false,false,false,false);
-            sm.setSystemConnectionMemo(memo);
             pwr = new LnPowerManager(memo);
         }
 

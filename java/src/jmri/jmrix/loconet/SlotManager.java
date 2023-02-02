@@ -63,6 +63,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
 
     public boolean pmManagerGotReply = false;  //this is public to allow changes via script and tests
+    
+    public boolean supportsSlot250;
 
      /**
      * a Map of the CS slots.
@@ -521,7 +523,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (!pmManagerGotReply && slot == 0 &&
                 (m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA || m.getOpCode() == LnConstants.OPC_SL_RD_DATA)) {
             pmManagerGotReply = true;
-            if (commandStationType.commandStationSupportSlot250() == SupportsSlot250.SLOT250_AVAILABLE) {
+            if (supportsSlot250) {
                 pollSpecialSlots();
             }
             return;
@@ -1216,6 +1218,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mCanRead = value.getCanRead();
         mProgEndSequence = value.getProgPowersOff();
         slotMap = commandStationType.getSlotMap();
+        supportsSlot250 = value.getSupportsSlot250();
 
         loadSlots(false);
 
