@@ -373,6 +373,9 @@
         made it work with TCS decoders. He's helped with networking and various Macintosh issues,
         including the XML IO system.</li>
 
+        <li>Frank Fezzie, who helped test a fix to an obscure LocoNet bug.
+        </li>
+
         <li>Don Fiehmann provided MRC decoders for testing</li>
 
         <li>Bill Fitch, <!-- bill-fitch14; not it's his JMRI-1 repo -->
@@ -445,7 +448,7 @@
         implementation to do a background refresh of the function values.</li>
 
         <li>Jerry Grochow, <!-- jerryg2003 -->
-         who helped with the scripting documentation</li>
+         who helped with the scripting documentation and the XSLT panel viewer.</li>
 
         <li>Mark Gurries, who provided loaner equipment and great ideas. He's currently working on
         decoder definitions for DecoderPro <a id="H"></a>
@@ -723,6 +726,9 @@
 
         <li>Jeff Moonmaw, who provided the <a href=
         "http:jmri.org/xml/signals/WPRR-1971">WPRR 1971 </a> signal system definition.
+        </li>
+
+        <li>Bob Morningstar, who helped test a fix to an obscure LocoNet bug.
         </li>
 
         <li>Michael Mosher, who helped identify the way Digitrax decoder models are organized, has

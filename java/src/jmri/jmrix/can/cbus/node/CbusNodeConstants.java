@@ -504,8 +504,8 @@ public class CbusNodeConstants {
         result.put(3, "CAN SPROG programmer/command station.");
         result.put(4, "System booster");
         result.put(5, "Unsuppoerted module type");
-        result.put(6, "CBUS I/O module.");
-        result.put(7, "Isolated USB to CAN interface with CBUS node.");
+        result.put(6, "Isolated USB to CAN interface with CBUS node.");
+        result.put(7, "CBUS I/O module.");
         result.put(8, "8-channel servo I/O.");
         result.put(9, "8-channel twin-coil solenoid I/O.");
         return Collections.unmodifiableMap(result);

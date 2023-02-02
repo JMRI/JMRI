@@ -762,17 +762,14 @@ public class Car extends RollingStock {
 
     /**
      * Called when setting a car's destination to this spur. Loads the car with
-     * a final destination which is the ship address for the schedule item. Also
-     * loads the schedule id so the car can get updated from the schedule when
-     * it arrives.
+     * a final destination which is the ship address for the schedule item.
      * 
      * @param scheduleItem The schedule item to be applied this this car
      */
     public void loadNext(ScheduleItem scheduleItem) {
         if (scheduleItem == null) {
-            return;
+            return; // should never be null
         }
-        setScheduleItemId(scheduleItem.getId());
         // set the car's final destination and track
         setFinalDestination(scheduleItem.getDestination());
         setFinalDestinationTrack(scheduleItem.getDestinationTrack());

@@ -764,7 +764,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                 String blkName = bean.getCurrentBlockName();
                 String stateStr;
                 if (e.getOldValue()==null) {
-                    stateStr = Bundle.getMessage("engineerGone", blkName); 
+                    stateStr = blkName;
                 } else {
                     stateStr = ((String) e.getOldValue());
                 }
