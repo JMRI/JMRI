@@ -173,7 +173,7 @@ public abstract class Apps3 extends AppsBase {
                         if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent) e).getKeyCode() == 119) {     // F8
                             startupDebug();
                         } else if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent) e).getKeyCode() == 120) {  // F9
-                                InstanceManager.getDefault(LogixNG_Manager.class).startLogixNGsOnLoad(false);
+                            InstanceManager.getDefault(LogixNG_Manager.class).startLogixNGsOnLoad(false);
                         } else {
                             debugmsg = false;
                         }
