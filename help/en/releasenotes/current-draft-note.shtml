@@ -118,7 +118,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updated library to pick up fix to line-ends in hub.</li>
             </ul>
 
         <h4>RFID</h4>
