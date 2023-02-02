@@ -82,6 +82,12 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
     public String getAutoSystemName();
 
     /**
+     * Should the LogixNGs be disabled when the configuration file is loaded?
+     * @param value true if they should be disabled, false otherwise.
+     */
+    public void setLoadDisabled(boolean value);
+
+    /**
      * Should the LogixNGs be started when the configuration file is loaded?
      * @param value true if they should be started, false otherwise.
      */
@@ -144,13 +150,6 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param x the LogixNG to delete
      */
     void deleteLogixNG(LogixNG x);
-
-    /**
-     * Support for loading LogixNGs in a disabled state
-     *
-     * @param s true if LogixNG should be disabled when loaded
-     */
-    public void setLoadDisabled(boolean s);
 
     /**
      * Print the tree to a stream.

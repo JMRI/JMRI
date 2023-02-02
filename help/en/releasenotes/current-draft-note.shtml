@@ -412,6 +412,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>Pressing the F8 key when the spash screen is visible disables all the LogixNGs.</li>
           <li>Pressing the F9 key when the spash screen is visible prevents LogixNGs to be started.</li>
         </ul>
 

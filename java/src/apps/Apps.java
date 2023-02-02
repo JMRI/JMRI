@@ -736,7 +736,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     static protected JPanel splashDebugMsg() {
         JLabel panelLabelDisableLogix = new JLabel(Bundle.getMessage("PressF8ToDebug"));
         panelLabelDisableLogix.setFont(panelLabelDisableLogix.getFont().deriveFont(9f));
-        JLabel panelLabelDisableLogixNG = new JLabel(Bundle.getMessage("PressF9ToDisableLogixNG"));
+        JLabel panelLabelDisableLogixNG = new JLabel(Bundle.getMessage("PressF9ToInactivateLogixNG"));
         panelLabelDisableLogixNG.setFont(panelLabelDisableLogix.getFont().deriveFont(9f));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -760,6 +760,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             return;
         }
         InstanceManager.getDefault(jmri.LogixManager.class).setLoadDisabled(true);
+        InstanceManager.getDefault(LogixNG_Manager.class).setLoadDisabled(true);
         log.info("Requested loading with Logixs disabled.");
         debugmsg = false;
     }
