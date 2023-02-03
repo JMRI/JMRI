@@ -120,7 +120,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * @return the new light or null if unsuccessful
      * @throws IllegalArgumentException something failed in the names
      */
-    @SuppressWarnings("javadoc")
     @Nonnull
     abstract protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
