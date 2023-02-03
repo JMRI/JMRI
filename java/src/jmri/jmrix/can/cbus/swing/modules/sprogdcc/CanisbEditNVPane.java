@@ -23,12 +23,14 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
 
     private final UpdateNV canIdUpdateFn = new UpdateCanId();
     private final UpdateNV nodeNumberUpdateFn = new UpdateNodeNumber();
+    private final UpdateNV arbDelayUpdateFn = new UpdateArbDelay();
 
     private JRadioButton setup;
     private TitledSpinner canIdSpinner;
     private TitledSpinner nodeNumberSpinner;
     private JRadioButton disable;
-
+    private TitledSpinner arbDelaySpinner;
+    
     // Read/Clear error status
     String[] rcTitle = {Bundle.getMessage("CanErrStatus")+" 1",
         Bundle.getMessage("CanErrStatus")+" 2",
@@ -39,6 +41,16 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
         Bundle.getMessage("CanDiagnostics")+" Hi",
         Bundle.getMessage("CanDiagnostics")+" Lo",
         Bundle.getMessage("CanErrFreeCount")
+    };
+    String[] rcTt = {Bundle.getMessage("CanErrStatus1Tt"),
+        Bundle.getMessage("CanErrStatus2Tt"),
+        Bundle.getMessage("CanTxFailureCountTt"),
+        Bundle.getMessage("CanRxOverflowCountTt"),
+        Bundle.getMessage("CanNomBitRateRxCountTt"),
+        Bundle.getMessage("CanNomBitRateTxCountTt"),
+        Bundle.getMessage("CanDiagnosticsHiTt"),
+        Bundle.getMessage("CanDiagnosticsLoTt"),
+        Bundle.getMessage("CanErrFreeCountTt")
     };
     int clearableErrors = rcTitle.length;
     JLabel[] rcText = new JLabel[clearableErrors];
@@ -63,6 +75,9 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
     String[] rTitle = {Bundle.getMessage("CanRxErrorCount"),
         Bundle.getMessage("CanTxErrorCount")
     };
+    String[] rTt = {Bundle.getMessage("CanRxErrorCountTt"),
+        Bundle.getMessage("CanTxErrorCountTt")
+    };
     int rErrors = rTitle.length;
     JLabel[] rText = new JLabel[rErrors];
     JTextField[] rCount = new JTextField[rErrors];
@@ -72,6 +87,11 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
         Bundle.getMessage("HostRxCnt"),
         Bundle.getMessage("CanTxCnt"),
         Bundle.getMessage("CanRxCnt")
+    };
+    String[] commsToolTips = {Bundle.getMessage("HostTxCntTt"),
+        Bundle.getMessage("HostRxCntTt"),
+        Bundle.getMessage("CanTxCntTt"),
+        Bundle.getMessage("CanRxCntTt")
     };
     int commsItems = commsTitle.length;
     JLabel[] commsText = new JLabel[commsItems];
@@ -214,6 +234,11 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
                         commsCount[top/4].setText(Integer.toString(getSelectValue32(topNv)));
                         break;
                         
+                    case CanisbPaneProvider.CAN_TX_ARB_DELAY:
+                        arbDelaySpinner.setValue(getSelectValue8(CanisbPaneProvider.CAN_TX_ARB_DELAY,
+                                0, 15));
+                        break;
+                        
                     default:
                     // Not used, or row was -1
                     //                    log.debug("Update unknown NV {}", nv);
@@ -258,6 +283,20 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(nnHi, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
             _dataModel.setValueAt(nnLo, index, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+        }
+    }
+
+    /**
+     * Update the number of times a DCC accessory packet is repeated
+     */
+    protected class UpdateArbDelay implements UpdateNV {
+        
+        /** {@inheritDoc} */
+        @Override
+        public void setNewVal(int index) {
+            int cnt = arbDelaySpinner.getIntegerValue();
+            // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
+            _dataModel.setValueAt(cnt, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
     }
 
@@ -417,6 +456,12 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
             gridPane.add(disable, c);
             c.gridy++;
 
+            arbDelaySpinner = new TitledSpinner(Bundle.getMessage("TxArbDelay"), CanisbPaneProvider.CAN_TX_ARB_DELAY, arbDelayUpdateFn);
+            arbDelaySpinner.setToolTip(Bundle.getMessage("TxArbDelayTt"));
+            arbDelaySpinner.init(getSelectValue8(CanisbPaneProvider.CAN_TX_ARB_DELAY, 0, 15), 0, 15, 1);
+            gridPane.add(arbDelaySpinner, c);
+            c.gridy++;
+            
             add(gridPane);
         }
     }
@@ -443,6 +488,7 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
             c.gridx++;
             
             JTextField errControlBits = new JTextField("0", 5);
+            errControlBits.setToolTipText(Bundle.getMessage("CanErrControlTt"));
             errControlBits.setHorizontalAlignment(SwingConstants.RIGHT);
             gridPane.add(errControlBits, c);
 
@@ -478,6 +524,7 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
 
                 rcCount[i] = new JTextField("0", 5);
                 rcCount[i].setHorizontalAlignment(SwingConstants.RIGHT);
+                rcCount[i].setToolTipText(rcTt[i]);
                 rcCount[i].setEditable(false);
                 gridPane.add(rcCount[i], c);
                 c.gridx++;
@@ -513,6 +560,7 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
 
                 rCount[i] = new JTextField("0", 5);
                 rCount[i].setHorizontalAlignment(SwingConstants.RIGHT);
+                rCount[i].setToolTipText(rTt[i]);
                 rCount[i].setEditable(false);
                 gridPane.add(rCount[i], c);
                 c.gridx++;
@@ -582,6 +630,7 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
 
                 commsCount[i] = new JTextField("0", 10);
                 commsCount[i].setHorizontalAlignment(SwingConstants.RIGHT);
+                commsCount[i].setToolTipText(commsToolTips[i]);
                 commsCount[i].setEditable(false);
                 gridPane.add(commsCount[i], c);
                 c.gridx++;
