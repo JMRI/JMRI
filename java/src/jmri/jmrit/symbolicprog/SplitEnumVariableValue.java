@@ -1032,7 +1032,7 @@ public class SplitEnumVariableValue extends VariableValue
                         log.trace("propertyChange Busy _progState={} curState={}", _progState, curState);
                         if (curState == ValueState.READ) {   // was the last read successful?
                             retry = 0;
-                            log.debug("   Variable={}; Busy finds ValueState.READ cvCount={}", cvCount);
+                            log.debug("   Variable={}; Busy finds ValueState.READ cvCount={}", _name, cvCount);
                             if (Math.abs(_progState) < cvCount) {   // read next CV
                                 _progState++;
                                 log.debug("Reading CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
