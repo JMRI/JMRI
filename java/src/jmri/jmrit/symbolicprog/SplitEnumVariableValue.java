@@ -616,7 +616,7 @@ public class SplitEnumVariableValue extends VariableValue
         // if from an alternate rep, it will contain the value to select
         if (e != null){
             if (log.isDebugEnabled()) {
-                log.debug("Variable = {} start action event cmd=", label(), e.getActionCommand());
+                log.debug("Variable = {} start action event cmd={}", label(), e.getActionCommand());
             }
             if (!(e.getActionCommand().equals(""))) {
                 // is from alternate rep
