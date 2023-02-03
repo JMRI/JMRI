@@ -503,6 +503,7 @@ public class SplitEnumVariableValue extends VariableValue
      */
     void exitField(){
         // there may be a lost focus event left in the queue when disposed so protect
+        log.trace("exitField starts ****");
         if (_value != null && !oldContents.equals(_value.getSelectedItem())) {
             long newFieldVal = 0;
             try {
@@ -520,6 +521,7 @@ public class SplitEnumVariableValue extends VariableValue
                 prop.firePropertyChange("Value", oldVal, newVal);
             }
         }
+        log.trace("exitField ends  ****");
     }
 
     boolean _fieldShrink = false;
@@ -586,20 +588,23 @@ public class SplitEnumVariableValue extends VariableValue
     int[] getCvValsFromSingleInt(long newEntry) {
         // calculate resulting number
         long newVal = (newEntry - mOffset) / mFactor;
-        log.debug("Variable={};newEntry={};newVal={} with Offset={} + Factor={} applied", _name, newEntry, newVal, mOffset, mFactor);
+        log.debug("getCvValsFromSingleInt Variable={};newEntry={};newVal={} with Offset={} + Factor={} applied", _name, newEntry, newVal, mOffset, mFactor);
 
         int[] retVals = new int[cvCount];
 
         // extract individual values via masks
         for (int i = 0; i < cvCount; i++) {
+            log.trace("      Starting with newVal={} startOffset={} mask={} offsetVal={}",
+                        newVal, cvList.get(i).startOffset, maskValAsInt(cvList.get(i).cvMask), offsetVal(cvList.get(i).cvMask));
             retVals[i] = (((int) (newVal >>> cvList.get(i).startOffset))
                     & (maskValAsInt(cvList.get(i).cvMask) >>> offsetVal(cvList.get(i).cvMask)));
+            log.trace("      Calculated {} entry is {}", i, retVals[i]);
         }
         return retVals;
     }
 
     /**
-     * ActionListener implementation.
+     * ActionListener implementation. Called by new selection in the JComboBox representation.
      * <p>
      * Invokes {@link #exitField exitField()}
      *
@@ -611,7 +616,7 @@ public class SplitEnumVariableValue extends VariableValue
         // if from an alternate rep, it will contain the value to select
         if (e != null){
             if (log.isDebugEnabled()) {
-                log.debug("{} start action event: {}", label(), e);
+                log.debug("Variable = {} start action event cmd=", label(), e.getActionCommand());
             }
             if (!(e.getActionCommand().equals(""))) {
                 // is from alternate rep
@@ -645,19 +650,23 @@ public class SplitEnumVariableValue extends VariableValue
                 return;
             }
 
-            int oldCv = cv.getValue();
-            int newVal = getIntValue();
-            int max = (int)_maxVal;
-            int newCv = setValueInCV(oldCv, newVal, getMask(), max-1);
-            if (newCv != oldCv) {
-                cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
+            updatedDropDown(); //+
 
-                // notify  (this used to be before setting the values)
-                log.debug("{} about to firePropertyChange", label());
-                prop.firePropertyChange("Value", null, oldVal);
-                log.debug("{} returned to from firePropertyChange", label());
-            }
-            log.debug("{} end action event saw oldCv={} newVal={} newCv={}", label(), oldCv, newVal, newCv);
+//+             int oldCv = cv.getValue();
+//             int newVal = getIntValue();
+//
+//             log.debug("  cv={} oldCv value={} newVal={}", getCvNum(), oldCv, newVal);
+//             int max = (int)_maxVal;
+//             int newCv = setValueInCV(oldCv, newVal, getMask(), max-1);
+//             if (newCv != oldCv) {
+//                 cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
+//
+//                 // notify  (this used to be before setting the values)
+//                 log.debug("{} about to firePropertyChange", label());
+//                 prop.firePropertyChange("Value", null, oldVal);
+//                 log.debug("{} returned to from firePropertyChange", label());
+//             }
+//+             log.debug("{} end action event saw oldCv={} newVal={} newCv={}", label(), oldCv, newVal, newCv);
         }
         exitField();
     }
@@ -712,7 +721,7 @@ public class SplitEnumVariableValue extends VariableValue
         if (_value.getSelectedIndex() >= _valueArray.length || _value.getSelectedIndex() < 0) {
             log.error("trying to get value {} too large for array length {} in var {}", _value.getSelectedIndex(), _valueArray.length, label());
         }
-        log.debug("SelectedIndex={}", _value.getSelectedIndex());
+        log.debug("SelectedIndex={} value={}", _value.getSelectedIndex(), _valueArray[_value.getSelectedIndex()]);
         return _valueArray[_value.getSelectedIndex()];
     }
 
@@ -1104,12 +1113,13 @@ public class SplitEnumVariableValue extends VariableValue
                 // update value of Variable
 
                 //setLongValue(Long.parseLong((String)_value.getSelectedItem()));  // check for duplicate done inside setValue
-                log.info("update value of Variable {}", _name);
+                log.info("update value of Variable {} cvCount={}", _name, cvCount);
 
                 int[] intVals = new int[cvCount];
 
                 for (int i = 0; i < cvCount; i++) {
                     intVals[i] = (cvList.get(i).thisCV.getValue() & maskValAsInt(cvList.get(i).cvMask)) >>> offsetVal(cvList.get(i).cvMask);
+                    log.trace("   with intVal[{}] = {}", i, intVals[i]);
                 }
 
                 updateVariableValue(intVals);
