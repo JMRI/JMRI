@@ -191,9 +191,6 @@ public class AppsMainMenu {
 
     /**
      * The application decided to quit, handle that.
-     *
-     * @return true if successfully ran all shutdown tasks and can quit; false
-     *         otherwise
      */
     static private void handleQuit() {
         AppsBase.handleQuit();
