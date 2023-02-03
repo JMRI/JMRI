@@ -953,14 +953,14 @@ public class SplitEnumVariableValue extends VariableValue
         setBusy(true);  // will be reset when value changes
         //super.setState(READ);
         //_value.setSelectedIndex(0); // start with a clean slate
-        for (int i = 0; i < cvCount; i++) { // mark all Cvs as unknown otherwise problems occur
-            cvList.get(i).thisCV.setState(ValueState.UNKNOWN);
+        for (int i = 0; i < cvCount; i++) { // mark all Cvs as to be read
+            cvList.get(i).thisCV.setState(ValueState.READ);
         }
         //super.setState(READING_FIRST);
         _progState = READING_FIRST;
         retry = 0;
-        log.info("Variable={}; Start CV read", _name);
-        log.info("Reading CV={}", cvList.get(0).cvName);
+        log.debug("Variable={}; Start CV read", _name);
+        log.debug("    Reading CV={}", cvList.get(0).cvName);
         (cvList.get(0).thisCV).read(_status); // kick off the read sequence
     }
 
@@ -975,9 +975,14 @@ public class SplitEnumVariableValue extends VariableValue
         if (_progState != IDLE) {
             log.warn("Variable={}; Programming state {}, not IDLE, in write()", _name, _progState);
         }
-        _progState = WRITING_FIRST;
-        log.info("Variable={}; Start CV write", _name);
-        log.info("Writing CV={}", cvList.get(0).cvName);
+
+         for (int i = 0; i < cvCount; i++) { // mark all Cvs as to be written
+            cvList.get(i).thisCV.setState(ValueState.STORED);
+        }
+
+       _progState = WRITING_FIRST;
+        log.debug("Variable={}; Start CV write", _name);
+        log.debug("     Writing CV={}", cvList.get(0).cvName);
         (cvList.get(0).thisCV).write(_status); // kick off the write sequence
     }
 
@@ -1013,6 +1018,7 @@ public class SplitEnumVariableValue extends VariableValue
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // notification from CV; check for Value being changed
+        log.trace("propertyChange for {}", e.getPropertyName());
         switch (e.getPropertyName()) {
             case "Busy":
                 if (((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
@@ -1023,20 +1029,22 @@ public class SplitEnumVariableValue extends VariableValue
                     }
                     if (_progState >= READING_FIRST){
                         ValueState curState = (cvList.get(Math.abs(_progState) - 1).thisCV).getState();
+                        log.trace("propertyChange Busy _progState={} curState={}", _progState, curState);
                         if (curState == ValueState.READ) {   // was the last read successful?
                             retry = 0;
+                            log.debug("   Variable={}; Busy finds ValueState.READ cvCount={}", cvCount);
                             if (Math.abs(_progState) < cvCount) {   // read next CV
                                 _progState++;
-                                log.info("Reading CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
+                                log.debug("Reading CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
                                 (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
                             } else {  // finally done, set not busy
-                                log.info("Variable={}; Busy goes false with success READING _progState {}", _name, _progState);
+                                log.debug("Variable={}; Busy goes false with success READING _progState {}", _name, _progState);
                                 _progState = IDLE;
                                 setToRead(false);
                                 setBusy(false);
                             }
                         } else {   // read failed
-                            log.info("Variable={}; Busy goes false with failure READING _progState {}", _name, _progState);
+                            log.debug("   Variable={}; Busy goes false with failure READING _progState {}", _name, _progState);
                             if (retry < RETRY_COUNT) { //have we exhausted retry count?
                                 retry++;
                                 _progState++;
@@ -1055,16 +1063,16 @@ public class SplitEnumVariableValue extends VariableValue
                         if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == ValueState.STORED) {   // was the last read successful?
                             if (Math.abs(_progState) < cvCount) {   // write next CV
                                 _progState--;
-                                log.info("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
+                                log.debug("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
                                 (cvList.get(Math.abs(_progState) - 1).thisCV).write(_status);
                             } else {  // finally done, set not busy
-                                log.info("Variable={}; Busy goes false with success WRITING _progState {}", _name, _progState);
+                                log.debug("Variable={}; Busy goes false with success WRITING _progState {}", _name, _progState);
                                 _progState = IDLE;
                                 setBusy(false);
                                 setToWrite(false);
                             }
                         } else {   // read failed we're done!
-                            log.info("Variable={}; Busy goes false with failure WRITING _progState {}", _name, _progState);
+                            log.debug("Variable={}; Busy goes false with failure WRITING _progState {}", _name, _progState);
                             _progState = IDLE;
                             setBusy(false);
                         }
@@ -1072,9 +1080,9 @@ public class SplitEnumVariableValue extends VariableValue
                 }
                 break;
             case "State": {
-                log.info("Possible {} variable state change due to CV state change, so propagate that", _name);
+                log.debug("Possible {} variable state change due to CV state change, so propagate that", _name);
                 ValueState varState = getState(); // AbstractValue.SAME;
-                log.info("{} variable state was {}", _name, varState.getName());
+                log.debug("{} variable state was {}", _name, varState.getName());
                 for (int i = 0; i < cvCount; i++) {
                     ValueState state = cvList.get(i).thisCV.getState();
                     if (i == 0) {
@@ -1089,14 +1097,14 @@ public class SplitEnumVariableValue extends VariableValue
                     tree.setBackground(_value.getBackground());
                     //tree.setOpaque(true);
                 }
-                log.info("{} variable state set to {}", _name, varState.getName());
+                log.debug("{} variable state set to {}", _name, varState.getName());
                 break;
             }
             case "Value": {
                 // update value of Variable
 
                 //setLongValue(Long.parseLong((String)_value.getSelectedItem()));  // check for duplicate done inside setValue
-                log.info("update value of Variable {} cvCount={}", _name, cvCount);
+                log.debug("update value of Variable {} cvCount={}", _name, cvCount);
 
                 int[] intVals = new int[cvCount];
 
@@ -1107,7 +1115,7 @@ public class SplitEnumVariableValue extends VariableValue
 
                 updateVariableValue(intVals);
 
-                log.info("state change due to CV value change, so propagate that");
+                log.debug("state change due to CV value change, so propagate that");
                 ValueState varState = ValueState.SAME;
                 for (int i = 0; i < cvCount; i++) {
                     ValueState state = cvList.get(i).thisCV.getState();
