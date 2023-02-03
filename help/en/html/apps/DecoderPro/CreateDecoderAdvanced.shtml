@@ -828,14 +828,39 @@ delay is 500 milliseconds.
             </li>
           </ul>
         </li>
+
+
+        <li>A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitEnumVariableValue.html" target=
+        "_blank">splitEnumVal</a> type. This is like <a href=
+        "/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+        but uses the selection of one object from a specified list.
+          <ul>
+            <li>For examples, see this <a href=
+            "https://github.com/JMRI/JMRI/blob/master/xml/decoders/TCS_BachmannFT.xml"
+              target="_blank">decoder file</a>.
+            </li>
+            <li>For details of required/optional attributes and advanced features, see this
+              <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitEnumVariableValue.html" target=
+              "_blank">JavaDoc page</a>.
+            </li>
+          </ul>
+        </li>
+
       </ul>
       <p>The CVs to be used are specified in the <code>CV</code> attribute and masks (if required)
-        in the <code>mask</code> attribute. For example:</p>
+        in the <code>mask</code> attribute.
+        Both CVs and masks are specified lowest-value first order:
+        The least
+        significant bit of the value will be in the first CV and mask specified, and the most
+        significant bit of the value will be in the last CV and mask specified.
+        For example:</p>
 <pre style="font-family: monospace;">
   &lt;variable CV="1,27,13" mask="XXVVVVVV XXXXXVVV XXXXXVVV" item="Sample Item"&gt;
       &lt;splitVal/&gt;
   &lt;/variable&gt;
 </pre>
+      puts the least significant 6 bits of the value in CV1, and the most significant
+      three bits in CV 13.
       <p>In cases where a number of complex or contiguous CVs are used, there are a number of
       alternative more concise methods of specifying in the <code>CV</code> variable parameter:</p>
       <ul>
