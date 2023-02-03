@@ -641,8 +641,6 @@ public class SplitEnumVariableValue extends VariableValue
                 }
             }
 
-            int oldVal = getIntValue();
-
             // called for new values - set the CV as needed
             CvValue cv = _cvMap.get(getCvNum());
             if (cv == null) {
@@ -650,23 +648,8 @@ public class SplitEnumVariableValue extends VariableValue
                 return;
             }
 
-            updatedDropDown(); //+
+            updatedDropDown();
 
-//+             int oldCv = cv.getValue();
-//             int newVal = getIntValue();
-//
-//             log.debug("  cv={} oldCv value={} newVal={}", getCvNum(), oldCv, newVal);
-//             int max = (int)_maxVal;
-//             int newCv = setValueInCV(oldCv, newVal, getMask(), max-1);
-//             if (newCv != oldCv) {
-//                 cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
-//
-//                 // notify  (this used to be before setting the values)
-//                 log.debug("{} about to firePropertyChange", label());
-//                 prop.firePropertyChange("Value", null, oldVal);
-//                 log.debug("{} returned to from firePropertyChange", label());
-//             }
-//+             log.debug("{} end action event saw oldCv={} newVal={} newCv={}", label(), oldCv, newVal, newCv);
         }
         exitField();
     }
