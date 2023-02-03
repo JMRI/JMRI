@@ -249,10 +249,12 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 try {
                     if (Boolean.FALSE.equals(task.call())) {
                         setShuttingDown(false);
+                        return;
                     }
                 } catch (Exception ex) {
                     log.error("Unable to stop", ex);
                     setShuttingDown(false);
+                    return;
                 }
             }
             // close any open windows by triggering a closing event
