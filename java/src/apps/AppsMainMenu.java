@@ -195,8 +195,8 @@ public class AppsMainMenu {
      * @return true if successfully ran all shutdown tasks and can quit; false
      *         otherwise
      */
-    static private boolean handleQuit() {
-        return AppsBase.handleQuit();
+    static private void handleQuit() {
+        AppsBase.handleQuit();
     }
 
 //     static private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsMainMenu.class);

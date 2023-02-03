@@ -187,27 +187,23 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         public Result result = null;
 
         @Override
-        public boolean shutdown() {
+        public void shutdown() {
             result = Result.SHUTDOWN_JMRI;
-            return true;
         }
 
         @Override
-        public boolean restart() {
+        public void restart() {
             result = Result.RESTART_JMRI;
-            return true;
         }
 
         @Override
-        public boolean restartOS() {
+        public void restartOS() {
             result = Result.RESTART_OS;
-            return true;
         }
 
         @Override
-        public boolean shutdownOS() {
+        public void shutdownOS() {
             result = Result.SHUTDOWN_OS;
-            return true;
         }
     }
 

@@ -56,7 +56,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
 
     // 30secs to complete EarlyTasks, 30 secs to complete Main tasks.
     // package private for testing
-    int tasksTimeOutMilliSec = 30000; 
+    int tasksTimeOutMilliSec = 30000;
 
     private static final String NO_NULL_TASK = "Shutdown task cannot be null."; // NOI18N
     private static final String PROP_SHUTTING_DOWN = "shuttingDown"; // NOI18N
@@ -165,8 +165,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
-    public boolean shutdown() {
-        return shutdown(0, true);
+    public void shutdown() {
+        shutdown(0, true);
     }
 
     /**
@@ -174,8 +174,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
-    public boolean restart() {
-        return shutdown(100, true);
+    public void restart() {
+        shutdown(100, true);
     }
 
     /**
@@ -183,8 +183,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
-    public boolean restartOS() {
-        return shutdown(210, true);
+    public void restartOS() {
+        shutdown(210, true);
     }
 
     /**
@@ -192,8 +192,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
-    public boolean shutdownOS() {
-        return shutdown(200, true);
+    public void shutdownOS() {
+        shutdown(200, true);
     }
 
     /**
@@ -212,10 +212,32 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      * @param status integer status on program exit
      * @param exit   true if System.exit() should be called if all tasks are
      *               executed correctly; false otherwise
-     * @return false if shutdown or restart failed
+     */
+    protected void shutdown(int status, boolean exit) {
+        new Thread(() -> {
+            doShutdown(status, exit);
+        }).start();
+    }
+
+    /**
+     * First asks the shutdown tasks if shutdown is allowed.
+     * If not, return false.
+     * Return false if the shutdown was aborted by the user, in which case the program
+     * should continue to operate.
+     * <p>
+     * After this check does not return under normal circumstances.
+     * Closes any displayable windows.
+     * Executes all registered {@link jmri.ShutDownTask}
+     * Runs the Early shutdown tasks, the main shutdown tasks,
+     * then terminates the program with provided status.
+     * <p>
+     *
+     * @param status integer status on program exit
+     * @param exit   true if System.exit() should be called if all tasks are
+     *               executed correctly; false otherwise
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
-    protected boolean shutdown(int status, boolean exit) {
+    private void doShutdown(int status, boolean exit) {
         if (!shuttingDown) {
             jmri.configurexml.StoreAndCompare.requestStoreIfNeeded();
             Date start = new Date();
@@ -227,12 +249,10 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 try {
                     if (Boolean.FALSE.equals(task.call())) {
                         setShuttingDown(false);
-                        return false;
                     }
                 } catch (Exception ex) {
                     log.error("Unable to stop", ex);
                     setShuttingDown(false);
-                    return false;
                 }
             }
             // close any open windows by triggering a closing event
@@ -262,7 +282,6 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 System.exit(status);
             }
         }
-        return false;
     }
 
     // blocks the main Thread until tasks complete or timed out
@@ -276,7 +295,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         List<Future<?>> complete = new ArrayList<>();
         long timeoutEnd = new Date().getTime()+ tasksTimeOutMilliSec;
 
-        
+
         sDrunnables.forEach((runnable) -> {
              complete.add(executor.submit(runnable));
         });
@@ -364,14 +383,14 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     }
 
     private static class ShutDownThreadFactory implements ThreadFactory {
-        
+
         private final String threadName;
-        
+
         private ShutDownThreadFactory( String threadName ){
             super();
             this.threadName = threadName;
         }
-        
+
         @Override
         public Thread newThread(Runnable r) {
             return new Thread(r, threadName);
