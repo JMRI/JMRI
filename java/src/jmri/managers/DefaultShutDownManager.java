@@ -61,6 +61,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     private static final String NO_NULL_TASK = "Shutdown task cannot be null."; // NOI18N
     private static final String PROP_SHUTTING_DOWN = "shuttingDown"; // NOI18N
 
+    private boolean blockingShutdown = false;   // Used by tests
+
     /**
      * Create a new shutdown manager.
      */
@@ -79,6 +81,14 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         } catch (IllegalStateException ex) {
             // thrown only if System.exit() has been called, so ignore
         }
+    }
+
+    /**
+     * Set if shutdown should block GUI/Layout thread.
+     * @param value true if blocking, false otherwise
+     */
+    public void setBlockingShutdown(boolean value) {
+        blockingShutdown = value;
     }
 
     /**
@@ -214,9 +224,13 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      *               executed correctly; false otherwise
      */
     protected void shutdown(int status, boolean exit) {
-        new Thread(() -> {
-            doShutdown(status, exit);
-        }).start();
+        Runnable shutdownTask = () -> { doShutdown(status, exit); };
+
+        if (!blockingShutdown) {
+            new Thread(shutdownTask).start();
+        } else {
+            shutdownTask.run();
+        }
     }
 
     /**

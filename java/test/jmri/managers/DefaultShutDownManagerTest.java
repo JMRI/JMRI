@@ -411,6 +411,7 @@ public class DefaultShutDownManagerTest {
     public void setUp() {
         JUnitUtil.setUp();
         dsdm = new DefaultShutDownManager();
+        dsdm.setBlockingShutdown(true);
         dsdm.tasksTimeOutMilliSec = 100; // normal default 30000 msecs but this is a test
         runs = 0;
         InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);
