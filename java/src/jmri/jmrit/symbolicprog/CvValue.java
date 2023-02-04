@@ -95,7 +95,7 @@ public class CvValue extends AbstractValue implements ProgListener {
      * @param value new CV value.
      */
     public void setValueWithoutUpdate(int value) {
-        log.debug("CV {} value changed from {} to {}", number(), _value, value); // NOI18N
+        log.debug("CV {} value changed Without Update from {} to {}", number(), _value, value); // NOI18N
 
         setState(ValueState.EDITED);
         if (_value != value) {
