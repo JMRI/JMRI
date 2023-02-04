@@ -545,6 +545,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
         lnis = new LocoNetInterfaceScaffold();
         sm = new SlotManager(lnis);
+        sm.pmManagerGotReply = true; // tells slotman probing done
         memo = new LocoNetSystemConnectionMemo(lnis, sm);
         pl = new ProgListenerScaffold();
         programmer = lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 1, true);

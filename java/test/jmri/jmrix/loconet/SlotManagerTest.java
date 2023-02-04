@@ -1441,6 +1441,7 @@ public class SlotManagerTest {
         };
         slotmanager.slotMap = Arrays.asList(new SlotMapEntry(0,127,SlotType.LOCO)); // still all slots
         slotmanager.slotScanInterval = 5;  // 5ms instead of 50
+        slotmanager.pmManagerGotReply = true; // preventfurther probing
         status = -999;
         value = -999;
         startedShortTimer = false;
