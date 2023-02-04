@@ -1128,10 +1128,8 @@ public class SplitEnumVariableValue extends VariableValue
                 }
                 setState(varState);
 
-                int intMax = (int)_maxVal;
-                CvValue cv = _cvMap.get(getCvNum());
-                int newVal = getValueInCV(cv.getValue(), getMask(), intMax-1); // _maxVal value is count of possibles, i.e. radix
-                setValue(newVal);
+                updatedDropDown();
+
                 break;
             }
             default:
