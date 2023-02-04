@@ -480,7 +480,8 @@ public class SplitEnumVariableValue extends VariableValue
             long newVal = 0;
             for (int i = 0; i < intVals.length; i++) {
                 newVal = newVal | (((long) intVals[i]) << cvList.get(i).startOffset);
-                log.debug("Variable={}; i={}; newVal={}", _name, i, getTextFromValue(newVal));
+                log.debug("Variable={}; i={}; intVals={}; startOffset={}; newVal={}",
+                    _name, i, intVals[i], cvList.get(i).startOffset, getTextFromValue(newVal));
             }
             log.debug("Variable={}; set value to {}", _name, newVal);
             setLongValue(newVal);  // check for duplicate is done inside setLongValue
@@ -579,7 +580,7 @@ public class SplitEnumVariableValue extends VariableValue
             // cv updates here trigger updated property changes, which means
             // we're going to get notified sooner or later.
             if (newCvVal != oldCvVal) {
-                thisCV.setValue(newCvVal);
+                thisCV.setValueWithoutUpdate(newCvVal);
             }
         }
         log.debug("Variable={}; exit updatedDropDown", _name);
@@ -620,10 +621,9 @@ public class SplitEnumVariableValue extends VariableValue
             }
             if (!(e.getActionCommand().equals(""))) {
                 // is from alternate rep
+                log.debug("{} action event {} was from alternate rep <<<<<<<<<<<<<<<<", label(), e.getActionCommand());
                 _value.setSelectedItem(e.getActionCommand());
-                if (log.isDebugEnabled()) {
-                    log.debug("{} action event was from alternate rep", label());
-                }
+
                 // match and select in tree
                 if (_nstored > 0) {
                     for (int i = 0; i < _nstored; i++) {
@@ -745,6 +745,7 @@ public class SplitEnumVariableValue extends VariableValue
 
     public void setLongValue(long value) {
         log.debug("Variable={}; enter setLongValue {}", _name, value);
+        new Exception("traceback").printStackTrace();
         long oldVal;
         try {
             oldVal = (Long.parseLong((String)_value.getSelectedItem()) - mOffset) / mFactor;
@@ -756,7 +757,8 @@ public class SplitEnumVariableValue extends VariableValue
         int lengthOfArray = this._valueArray.length;
 
         for (int i = 0; i < lengthOfArray; i++) {
-          if(this._valueArray[i] == value){
+          if (this._valueArray[i] == value){
+              log.trace("{} setLongValue setSelectedIndex to {}    <<<<<<<<<<<<<<<<", _name, i);
               _value.setSelectedIndex(i);
           }
         }
@@ -862,6 +864,7 @@ public class SplitEnumVariableValue extends VariableValue
             for (int i = 0; i < _nstored; i++) {
                 if (_valueArray[i] == value) {
                     //found it, select it
+                    log.debug("{}: selectValue sets to {}   <<<<<<<<<<<<<<<<", _name, i);
                     _value.setSelectedIndex(i);
 
                     // now select in the tree
