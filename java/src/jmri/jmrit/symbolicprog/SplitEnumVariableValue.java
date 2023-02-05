@@ -580,7 +580,7 @@ public class SplitEnumVariableValue extends VariableValue
             // cv updates here trigger updated property changes, which means
             // we're going to get notified sooner or later.
             if (newCvVal != oldCvVal) {
-                thisCV.setValueWithoutUpdate(newCvVal);
+                thisCV.setValue(newCvVal);
             }
         }
         log.debug("Variable={}; exit updatedDropDown", _name);

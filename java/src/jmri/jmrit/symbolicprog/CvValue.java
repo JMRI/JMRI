@@ -88,23 +88,6 @@ public class CvValue extends AbstractValue implements ProgListener {
 
 
     /**
-     * Edit a new value into the CV without firing property listeners
-     * <p>
-     * Only use this for external edits, e.g. set from a GUI.
-     * Not for internal uses, as it sets the state to EDITED.
-     * @param value new CV value.
-     */
-    public void setValueWithoutUpdate(int value) {
-        log.debug("CV {} value changed Without Update from {} to {}", number(), _value, value); // NOI18N
-
-        setState(ValueState.EDITED);
-        if (_value != value) {
-            _value = value;
-            _tableEntry.setText("" + value);
-        }
-    }
-
-    /**
      * Edit a new value into the CV. Fires listeners
      * <p>
      * Only use this for external edits, e.g. set from a GUI.
