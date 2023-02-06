@@ -253,7 +253,9 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     private void doShutdown(int status, boolean exit) {
         if (!shuttingDown) {
-            jmri.configurexml.StoreAndCompare.requestStoreIfNeeded();
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                jmri.configurexml.StoreAndCompare.requestStoreIfNeeded();
+            });
             Date start = new Date();
             log.debug("Shutting down with {} callable and {} runnable tasks",
                 callables.size(), runnables.size());
