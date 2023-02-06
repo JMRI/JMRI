@@ -253,9 +253,6 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     private void doShutdown(int status, boolean exit) {
         if (!shuttingDown) {
-            jmri.util.ThreadingUtil.runOnGUI(() -> {
-                jmri.configurexml.StoreAndCompare.requestStoreIfNeeded();
-            });
             Date start = new Date();
             log.debug("Shutting down with {} callable and {} runnable tasks",
                 callables.size(), runnables.size());
@@ -288,8 +285,15 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 });
             }
             log.debug("windows completed closing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
+
             // wait for parallel tasks to complete
             runShutDownTasks(new HashSet<>(earlyRunnables), "JMRI ShutDown - Early Tasks");
+
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                jmri.configurexml.StoreAndCompare.requestStoreIfNeeded();
+            });
+
+            // wait for parallel tasks to complete
             runShutDownTasks(runnables, "JMRI ShutDown - Main Tasks");
 
             // success
