@@ -770,21 +770,18 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     /**
      * The application decided to quit, handle that.
      *
-     * @return true if successfully ran all shutdown tasks and can quit; false
-     *         otherwise
+     * @return always returns false
      */
     static public boolean handleQuit() {
-        return AppsBase.handleQuit();
+        AppsBase.handleQuit();
+        return false;
     }
 
     /**
      * The application decided to restart, handle that.
-     *
-     * @return true if successfully ran all shutdown tasks and can quit; false
-     *         otherwise
      */
-    static public boolean handleRestart() {
-        return AppsBase.handleRestart();
+    static public void handleRestart() {
+        AppsBase.handleRestart();
     }
 
     /**

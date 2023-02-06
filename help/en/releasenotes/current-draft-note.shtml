@@ -422,6 +422,7 @@
         <ul>
           <li>Pressing the F8 key when the spash screen is visible disables all the LogixNGs.</li>
           <li>Pressing the F9 key when the spash screen is visible prevents LogixNG being activated.</li>
+          <li>A bug that prevented the <i>Shut down task</i> action to work correctly has been fixed.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -605,5 +606,6 @@
         <ul>
             <li>Added page breaks when printing panel XML files via browser (using XSLT)</li>
             <li>Improve how fractional clock rates are displayed on the analog clock.</li>
+            <li>The shutdown process is now run in a separate thread and not on the GUI/Layout thread.</li>
         </ul>
 

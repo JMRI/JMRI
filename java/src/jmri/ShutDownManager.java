@@ -96,13 +96,8 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * By exiting the program with status 210, the batch file (MS Windows) or
      * shell script (Linux/macOS/UNIX) can catch the exit status and tell the
      * operating system to restart.
-     * <p>
-     * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
-     * this must return false to abort the shutdown.
-     *
-     * @return false if any shutdown task aborts restarting the application
      */
-    public boolean restartOS();
+    public void restartOS();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 100 if
@@ -113,10 +108,8 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * By exiting the program with status 100, the batch file (MS Windows) or
      * shell script (Linux/macOS/UNIX) can catch the exit status and restart the
      * JMRI java program.
-     *
-     * @return false if any shutdown task aborts restarting the application
      */
-    public boolean restart();
+    public void restart();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 200 if
@@ -126,27 +119,16 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * <p>
      * By exiting the program with status 200, the batch file (MS Windows) or
      * shell script (Linux/macOS/UNIX) can catch the exit status and shutdown the OS
-     * <p>
-     * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
-     * this must return false to abort the shutdown.
-     *
-     * @return false if any shutdown task aborts restarting the application
      */
-    public boolean shutdownOS();
+    public void shutdownOS();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 0 if
      * not aborted. Does not return under normal circumstances. Returns false if
      * the shutdown was aborted by the user, in which case the program should
      * continue to operate.
-     * <p>
-     * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
-     * this must return false to abort the shutdown.
-     *
-     * @return false if any shutdown task aborts the shutdown or if anything
-     *         goes wrong.
      */
-    public boolean shutdown();
+    public void shutdown();
 
     /**
      * Allow components that normally request confirmation to shutdown to

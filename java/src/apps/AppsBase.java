@@ -397,13 +397,12 @@ public abstract class AppsBase {
     /**
      * The application decided to quit, handle that.
      *
-     * @return true if successfully ran all shutdown tasks and can quit; false
-     *         otherwise
+     * @return always returns false
      */
     static public boolean handleQuit() {
         log.debug("Start handleQuit");
         try {
-            return InstanceManager.getDefault(jmri.ShutDownManager.class).shutdown();
+            InstanceManager.getDefault(jmri.ShutDownManager.class).shutdown();
         } catch (Exception e) {
             log.error("Continuing after error in handleQuit", e);
         }
@@ -412,18 +411,14 @@ public abstract class AppsBase {
 
     /**
      * The application decided to restart, handle that.
-     *
-     * @return true if successfully ran all shutdown tasks and can quit; false
-     *         otherwise
      */
-    static public boolean handleRestart() {
+    static public void handleRestart() {
         log.debug("Start handleRestart");
         try {
-            return InstanceManager.getDefault(jmri.ShutDownManager.class).restart();
+            InstanceManager.getDefault(jmri.ShutDownManager.class).restart();
         } catch (Exception e) {
             log.error("Continuing after error in handleRestart", e);
         }
-        return false;
     }
 
 
