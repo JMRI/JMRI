@@ -139,7 +139,7 @@ public class SpecificTrafficController extends SerialTrafficController {
      * Makes call to update array
      */
     @Override
-    synchronized public boolean sendDmxSequence(int unitid, byte newStep) {
+    public boolean sendDmxSequence(int unitid, byte newStep) {
         // log.info("Unit {} value {}", unitid, (int) newStep);
         boolean didIt = setDmxIntensity(unitid, newStep);
         if (!didIt) {

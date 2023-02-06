@@ -36,7 +36,7 @@
 	<!-- group hides/shows with CV 32 choice = 0 -->
 	<!-- Mapping Line 9 CV385 - 400 -->
 	<!-- Line 9 Mapping conditions On -->
-	<variable item="Z9 Direction Fw" CV="369.31=8.32=0" mask="VXXXXXXX" default="0">
+	<variable item="Z9 Direction Fw" CV="385.31=8.32=0" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Forward</label>
 		<label xml:lang="de">Vorwärts</label>
