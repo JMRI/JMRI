@@ -881,11 +881,13 @@ public class SplitEnumVariableValue extends VariableValue
 
     java.util.List<Component> reps = new java.util.ArrayList<>();
 
-    public int retry = 0;
-    int _progState = 0;
+    public int retry = 0; // counts retrys of a single CV
+
+    int _progState = 0; // coded by the following
     static final int IDLE = 0;
-    static final int READING_FIRST = 1;
-    static final int WRITING_FIRST = -1;
+    static final int READING_FIRST = 1; // positive values are reading, i.e. 2 is read 2nd CV
+    static final int WRITING_FIRST = -1; // negative values are writing, i.e. -2 is write 2nd CV
+
     static final int bitCount = Long.bitCount(~0);
     static final long intMask = Integer.toUnsignedLong(~0);
 
@@ -1020,15 +1022,19 @@ public class SplitEnumVariableValue extends VariableValue
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // notification from CV; check for Value being changed
-        log.trace("propertyChange for {} {} _progState = {}", e.getPropertyName(), e.getNewValue(), _progState);
+        log.trace("propertyChange for {} {} _progState = {} from {}", e.getPropertyName(), e.getNewValue(), _progState, e.getSource());
         switch (e.getPropertyName()) {
             case "Busy":
+
                 if (((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
-                    if ( 0 >= _progState){
-                        setToRead(false);
-                        setToWrite(false);  // some programming operation just finished
-                        setBusy(false);
+
+                    // check for expected cv
+                    if ( (_progState >= READING_FIRST || _progState <= WRITING_FIRST ) && e.getSource() != cvList.get(Math.abs(_progState) - 1).thisCV ) {
+                        log.trace("From \"{}\" but expected \"{}\", ignoring ----------------",
+                            e.getSource(), cvList.get(Math.abs(_progState) - 1).thisCV );
+                        break;
                     }
+
                     if (_progState >= READING_FIRST){
                         ValueState curState = (cvList.get(Math.abs(_progState) - 1).thisCV).getState();
                         log.trace("propertyChange Busy _progState={} curState={}", _progState, curState);
@@ -1054,6 +1060,7 @@ public class SplitEnumVariableValue extends VariableValue
                             } else {
                                 log.warn("Retry failed for CV{}" ,(cvList.get(Math.abs(_progState) - 1).thisCV).toString());
                                 _progState = IDLE;
+                                setToRead(false);
                                 setBusy(false);
                                 if (RETRY_COUNT > 0) {
                                     for (int i = 0; i < cvCount; i++) { // mark all CVs as unknown otherwise problems may occur
@@ -1074,9 +1081,10 @@ public class SplitEnumVariableValue extends VariableValue
                                 setBusy(false);
                                 setToWrite(false);
                             }
-                        } else {   // read failed we're done!
+                        } else {   // write failed we're done!
                             log.debug("Variable={}; Busy goes false with failure WRITING _progState {}", _name, _progState);
                             _progState = IDLE;
+                            setToWrite(false);
                             setBusy(false);
                         }
                     }
