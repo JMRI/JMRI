@@ -751,7 +751,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         Object[] options = {"Disable", "Enable"};
 
-        int retval = JOptionPane.showOptionDialog(null, "Start JMRI with Logix enabled or disabled?", "Start Up",
+        int retval = JOptionPane.showOptionDialog(null,
+                Bundle.getMessage("StartJMRIwithLogixEnabledDisabled"),
+                Bundle.getMessage("StartJMRIwithLogixEnabledDisabledTitle"),
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
