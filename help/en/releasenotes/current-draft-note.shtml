@@ -413,7 +413,7 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>Pressing the F8 key when the spash screen is visible disables all the LogixNGs.</li>
-          <li>Pressing the F9 key when the spash screen is visible prevents LogixNGs to be activated.</li>
+          <li>Pressing the F9 key when the spash screen is visible prevents LogixNG being activated.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
