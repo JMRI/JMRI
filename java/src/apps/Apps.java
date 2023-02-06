@@ -763,7 +763,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
         InstanceManager.getDefault(jmri.LogixManager.class).setLoadDisabled(true);
         InstanceManager.getDefault(LogixNG_Manager.class).setLoadDisabled(true);
-        log.info("Requested loading with Logixs disabled.");
+        log.info("Requested loading with Logixs and LogixNGs disabled.");
         debugmsg = false;
     }
 
