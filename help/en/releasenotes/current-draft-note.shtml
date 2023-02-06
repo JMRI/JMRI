@@ -318,7 +318,9 @@
 
         <h4>TCS</h4>
             <ul>
-                <li></li>
+                <li>Fixed problems in the sound CV definitions for
+                    Bachmann FT, Bachmann GP35, Bachmann RS3 and
+                    WOW Diesel V5-121 decoders.</li>
             </ul>
 
 	    <h4>Team Digital</h4>
@@ -371,6 +373,7 @@
         <ul>
             <li>Improve how filename extensions are handled when exporting the complete roster.</li>
             <li>Updated list of NMRA-registered manufacturer IDs</li>
+            <li>Improved how split enum-style variables are handled.</li>
         </ul>
 
     <h3>CTC Tool</h3>
