@@ -1,5 +1,10 @@
 package apps;
 
+import apps.gui3.tabbedpreferences.TabbedPreferences;
+import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
+import apps.plaf.macosx.Application;
+import apps.util.Log4JUtil;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.*;
@@ -10,23 +15,18 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
 import java.util.*;
-
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 
-import jmri.jmrit.logixng.LogixNGPreferences;
-
 import jmri.*;
-
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.jython.*;
+import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrix.*;
-
-import apps.plaf.macosx.Application;
-
 import jmri.profile.*;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.*;
@@ -35,10 +35,6 @@ import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.WindowInterface;
-
-import apps.gui3.tabbedpreferences.TabbedPreferences;
-import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
-import apps.util.Log4JUtil;
 
 /**
  * Base class for JMRI applications.
@@ -358,10 +354,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
-        jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
-                InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
+        LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         logixNG_Manager.setupAllLogixNGs();
-        if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
+        if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()
+                && InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class).isStartLogixNGsOnLoad()) {
             logixNG_Manager.activateAllLogixNGs();
         }
 
@@ -708,8 +704,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                             and the if the debugFired hasn't been set, this allows us to ensure that we don't
                             miss the user pressing F8, while we are checking*/
                             debugmsg = true;
-                            if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent) e).getKeyCode() == 119) {
+                            if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent) e).getKeyCode() == 119) {     // F8
                                 startupDebug();
+                            } else if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent) e).getKeyCode() == 120) {  // F9
+                                InstanceManager.getDefault(LogixNG_Manager.class).startLogixNGsOnLoad(false);
                             } else {
                                 debugmsg = false;
                             }
@@ -736,10 +734,14 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     static protected JPanel splashDebugMsg() {
-        JLabel panelLabel = new JLabel(Bundle.getMessage("PressF8ToDebug"));
-        panelLabel.setFont(panelLabel.getFont().deriveFont(9f));
+        JLabel panelLabelDisableLogix = new JLabel(Bundle.getMessage("PressF8ToDebug"));
+        panelLabelDisableLogix.setFont(panelLabelDisableLogix.getFont().deriveFont(9f));
+        JLabel panelLabelDisableLogixNG = new JLabel(Bundle.getMessage("PressF9ToInactivateLogixNG"));
+        panelLabelDisableLogixNG.setFont(panelLabelDisableLogix.getFont().deriveFont(9f));
         JPanel panel = new JPanel();
-        panel.add(panelLabel);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(panelLabelDisableLogix);
+        panel.add(panelLabelDisableLogixNG);
         return panel;
     }
 
@@ -749,7 +751,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         Object[] options = {"Disable", "Enable"};
 
-        int retval = JOptionPane.showOptionDialog(null, "Start JMRI with Logix enabled or disabled?", "Start Up",
+        int retval = JOptionPane.showOptionDialog(null,
+                Bundle.getMessage("StartJMRIwithLogixEnabledDisabled"),
+                Bundle.getMessage("StartJMRIwithLogixEnabledDisabledTitle"),
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
@@ -758,7 +762,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             return;
         }
         InstanceManager.getDefault(jmri.LogixManager.class).setLoadDisabled(true);
-        log.info("Requested loading with Logixs disabled.");
+        InstanceManager.getDefault(LogixNG_Manager.class).setLoadDisabled(true);
+        log.info("Requested loading with Logixs and LogixNGs disabled.");
         debugmsg = false;
     }
 
