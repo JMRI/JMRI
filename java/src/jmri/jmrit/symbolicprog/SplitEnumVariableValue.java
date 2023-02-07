@@ -755,20 +755,42 @@ public class SplitEnumVariableValue extends VariableValue
 
         int lengthOfArray = this._valueArray.length;
 
+        boolean foundIt = false; // did we find entry? If not, have to add one
         for (int i = 0; i < lengthOfArray; i++) {
           if (this._valueArray[i] == value){
               log.trace("{} setLongValue setSelectedIndex to {}    <<<<<<<<<<<<<<<<", _name, i);
               _value.setSelectedIndex(i);
+              foundIt = true;
           }
         }
-       /*
-        for (int i = 0; i < num; i++) {
-          Object item = _value.getItemAt(i);
-          if(Long.parseLong((String)item) == value){
-              _value.setSelectedIndex(i);
-          }
+        if (!foundIt) {
+            log.warn("Variable \"{}\" had to add reserved entry for {}", _name, value);
+            // We can be commanded to a number that hasn't been defined.
+            // But that's OK for certain applications.  Instead, we add them as needed
+            log.debug("Create new item with value {} count was {} in {}", value, _value.getItemCount(), label());
+            // lengthen arrays
+            _valueArray = java.util.Arrays.copyOf(_valueArray, _valueArray.length + 1);
+
+            _itemArray = java.util.Arrays.copyOf(_itemArray, _itemArray.length + 1);
+
+            _pathArray = java.util.Arrays.copyOf(_pathArray, _pathArray.length + 1);
+
+            addItem("Reserved value " + value, (int)value);
+
+            // update the JComboBox
+            _value.addItem(_itemArray[_nstored - 1]);
+            _value.setSelectedItem(_itemArray[_nstored - 1]);
+
+            // tell trees to redisplay & select
+            for (JTree tree : trees) {
+                ((DefaultTreeModel) tree.getModel()).reload();
+                tree.setSelectionPath(_pathArray[_nstored - 1]);
+                // ensure selection is in visible portion of JScrollPane
+                tree.scrollPathToVisible(_pathArray[_nstored - 1]);
+            }
         }
-        */
+
+
         if (oldVal != value || getState() == ValueState.UNKNOWN) {
             actionPerformed(null);
         }
@@ -858,6 +880,10 @@ public class SplitEnumVariableValue extends VariableValue
         }
     }
 
+    /**
+     * Select a specific value in the JComboBox display
+     * or, if need be, create another one
+     */
     protected void selectValue(int value) {
         if (_nstored > 0 && value != 0) {
             for (int i = 0; i < _nstored; i++) {
@@ -877,6 +903,31 @@ public class SplitEnumVariableValue extends VariableValue
                 }
             }
         }
+
+        // We can be commanded to a number that hasn't been defined.
+        // But that's OK for certain applications.  Instead, we add them as needed
+        log.debug("Create new item with value {} count was {} in {}", value, _value.getItemCount(), label());
+        // lengthen arrays
+        _valueArray = java.util.Arrays.copyOf(_valueArray, _valueArray.length + 1);
+
+        _itemArray = java.util.Arrays.copyOf(_itemArray, _itemArray.length + 1);
+
+        _pathArray = java.util.Arrays.copyOf(_pathArray, _pathArray.length + 1);
+
+        addItem("Reserved value " + value, value);
+
+        // update the JComboBox
+        _value.addItem(_itemArray[_nstored - 1]);
+        _value.setSelectedItem(_itemArray[_nstored - 1]);
+
+        // tell trees to redisplay & select
+        for (JTree tree : trees) {
+            ((DefaultTreeModel) tree.getModel()).reload();
+            tree.setSelectionPath(_pathArray[_nstored - 1]);
+            // ensure selection is in visible portion of JScrollPane
+            tree.scrollPathToVisible(_pathArray[_nstored - 1]);
+        }
+
     }
 
     java.util.List<Component> reps = new java.util.ArrayList<>();
