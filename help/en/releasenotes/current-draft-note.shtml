@@ -79,7 +79,10 @@
                 <li>Changed handling of LACK messages during programming to
                     avoid a recently-uncovered conflict with attached DT602D
                     throttles.</li>
-            </ul>
+                <li>Added a new jython/loconet directory to contain new LocoNet-specific scripts.<li>
+                <li>Added a jython/loconet/LoconetOpsModeSim.py that works with LocoNet simulator
+                    to simulate ops-mode writes and reads.</li>
+             </ul>
 
         <h4>Maple</h4>
             <ul>
@@ -493,6 +496,9 @@
             <li>Added a new <a href="https://jmri.org/jython/SetAllTurnoutsThrown.py">SetAllTurnoutsThrown.py</a> script and tests</li>
             <li>Added a new <a href="https://jmri.org/jython/Shutdown.py">Shutdown.py</a> script to shut down JMRI.</li>
             <li>Added a new <a href="https://jmri.org/jython/Restart.py">Restart.py</a> script to restart JMRI.</li>
+            <li>Added a new jython/loconet directory to contain new LocoNet-specific scripts.<li>
+            <li>Added a jython/loconet/LoconetOpsModeSim.py that works with LocoNet simulator
+                to simulate ops-mode writes and reads.</li>
         </ul>
 
     <h3>Signals</h3>
