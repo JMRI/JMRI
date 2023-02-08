@@ -883,13 +883,14 @@ public class SplitEnumVariableValue extends VariableValue
     /**
      * Select a specific value in the JComboBox display
      * or, if need be, create another one
+     * @param value The new numerical value for the complete enum variable.
      */
     protected void selectValue(int value) {
         if (_nstored > 0 && value != 0) {
             for (int i = 0; i < _nstored; i++) {
                 if (_valueArray[i] == value) {
                     //found it, select it
-                    log.debug("{}: selectValue sets to {}   <<<<<<<<<<<<<<<<", _name, i);
+                    log.debug("{}: selectValue sets to {}", _name, i);
                     _value.setSelectedIndex(i);
 
                     // now select in the tree
