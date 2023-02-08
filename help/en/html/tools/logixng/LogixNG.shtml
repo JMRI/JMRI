@@ -310,8 +310,8 @@
       before loading the file.</p>
 
       <p>If <strong>F9</strong> is selected, LogixNG will not start after layout data file loading
-      is done, whether as a start up action or manually.  The LogixNG table entries will enabled/disabled
-      based on their state in the xml file.  When the problem has been resolved then
+      is done, whether as a start up action or manually.  The LogixNG table entries will be
+      enabled/disabled based on their state in the xml file.  When the problem has been resolved then
       <strong>Tools &rArr; LogixNG &rArr; Start LogixNG</strong> can be used to activate LogixNG
       processing.</p>
 
