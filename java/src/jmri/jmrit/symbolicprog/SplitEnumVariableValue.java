@@ -442,30 +442,6 @@ public class SplitEnumVariableValue extends VariableValue
         return (Long.toUnsignedString(v));
     }
 
-    /*
-    int[] getCvValsFromTextField() {
-        long newEntry;  // entered value
-        try {
-            newEntry = Long.parseLong((String)_value.getSelectedItem());
-        } catch (java.lang.NumberFormatException ex) {
-            newEntry = 0;
-        }
-
-        // calculate resulting number
-        long newVal = (newEntry - mOffset) / mFactor;
-        log.debug("Variable={};newEntry={};newVal={} with Offset={} + Factor={} applied", _name, newEntry, newVal, mOffset, mFactor);
-
-        int[] retVals = new int[cvCount];
-
-        // extract individual values via masks
-        for (int i = 0; i < cvCount; i++) {
-            retVals[i] = (((int) (newVal >>> cvList.get(i).startOffset))
-                    & (maskValAsInt(cvList.get(i).cvMask) >>> offsetVal(cvList.get(i).cvMask)));
-        }
-        return retVals;
-    }
-    */
-
     /**
      * Contains numeric-value specific code.
      * <br><br>
@@ -504,7 +480,7 @@ public class SplitEnumVariableValue extends VariableValue
      */
     void exitField(){
         // there may be a lost focus event left in the queue when disposed so protect
-        log.trace("exitField starts ****");
+        log.trace("exitField starts");
         if (_value != null && !oldContents.equals(_value.getSelectedItem())) {
             long newFieldVal = 0;
             try {
@@ -522,43 +498,10 @@ public class SplitEnumVariableValue extends VariableValue
                 prop.firePropertyChange("Value", oldVal, newVal);
             }
         }
-        log.trace("exitField ends  ****");
+        log.trace("exitField ends");
     }
 
     boolean _fieldShrink = false;
-
-    /*
-    @Override
-    void updatedTextField() {
-        //log.debug("Variable='{}'; enter updatedTextField in {} with TextField='{}'", _name, (this.getClass().getSimpleName()), _textField.getText());
-        // called for new values in text field - set the CVs as needed
-
-        int[] retVals = getCvValsFromTextField();
-
-        // combine with existing values via mask
-        for (int j = 0; j < cvCount; j++) {
-            int i = j;
-            // special care needed if _textField is shrinking
-            if (_fieldShrink) {
-                i = (cvCount - 1) - j; // reverse CV updating order
-            }
-            log.debug("retVals[{}]={};cvList.get({}).cvMask{};offsetVal={}", i, retVals[i], i, cvList.get(i).cvMask, offsetVal(cvList.get(i).cvMask));
-            int cvMask = maskValAsInt(cvList.get(i).cvMask);
-            CvValue thisCV = cvList.get(i).thisCV;
-            int oldCvVal = thisCV.getValue();
-            int newCvVal = (oldCvVal & ~cvMask)
-                    | ((retVals[i] << offsetVal(cvList.get(i).cvMask)) & cvMask);
-            log.debug("{};cvMask={};oldCvVal={};retVals[{}]={};newCvVal={}", cvList.get(i).cvName, cvMask, oldCvVal, i, retVals[i], newCvVal);
-
-            // cv updates here trigger updated property changes, which means
-            // we're going to get notified sooner or later.
-            if (newCvVal != oldCvVal) {
-                thisCV.setValue(newCvVal);
-            }
-        }
-        log.debug("Variable={}; exit updatedTextField", _name);
-    }
-    */
 
     void updatedDropDown() {
         log.debug("Variable='{}'; enter updatedDropDown in {} with DropDownValue='{}'", _name, (this.getClass().getSimpleName()), _value.getSelectedIndex());
@@ -621,7 +564,7 @@ public class SplitEnumVariableValue extends VariableValue
             }
             if (!(e.getActionCommand().equals(""))) {
                 // is from alternate rep
-                log.debug("{} action event {} was from alternate rep <<<<<<<<<<<<<<<<", label(), e.getActionCommand());
+                log.debug("{} action event {} was from alternate rep", label(), e.getActionCommand());
                 _value.setSelectedItem(e.getActionCommand());
 
                 // match and select in tree
@@ -743,6 +686,35 @@ public class SplitEnumVariableValue extends VariableValue
         }
     }
 
+    private void addReservedEntry(long value) {
+        log.warn("Variable \"{}\" had to add reserved entry for {}", _name, value);
+        // We can be commanded to a number that hasn't been defined.
+        // But that's OK for certain applications.
+        // When this happens, we add enum values as needed
+        log.debug("Create new item with value {} count was {} in {}", value, _value.getItemCount(), label());
+
+        // lengthen arrays
+        _valueArray = java.util.Arrays.copyOf(_valueArray, _valueArray.length + 1);
+
+        _itemArray = java.util.Arrays.copyOf(_itemArray, _itemArray.length + 1);
+
+        _pathArray = java.util.Arrays.copyOf(_pathArray, _pathArray.length + 1);
+
+        addItem("Reserved value " + value, (int)value);
+
+        // update the JComboBox
+        _value.addItem(_itemArray[_nstored - 1]);
+        _value.setSelectedItem(_itemArray[_nstored - 1]);
+
+        // tell trees to redisplay & select
+        for (JTree tree : trees) {
+            ((DefaultTreeModel) tree.getModel()).reload();
+            tree.setSelectionPath(_pathArray[_nstored - 1]);
+            // ensure selection is in visible portion of JScrollPane
+            tree.scrollPathToVisible(_pathArray[_nstored - 1]);
+        }
+    }
+
     public void setLongValue(long value) {
         log.debug("Variable={}; enter setLongValue {}", _name, value);
         long oldVal;
@@ -758,38 +730,14 @@ public class SplitEnumVariableValue extends VariableValue
         boolean foundIt = false; // did we find entry? If not, have to add one
         for (int i = 0; i < lengthOfArray; i++) {
           if (this._valueArray[i] == value){
-              log.trace("{} setLongValue setSelectedIndex to {}    <<<<<<<<<<<<<<<<", _name, i);
+              log.trace("{} setLongValue setSelectedIndex to {}", _name, i);
               _value.setSelectedIndex(i);
               foundIt = true;
           }
         }
         if (!foundIt) {
-            log.warn("Variable \"{}\" had to add reserved entry for {}", _name, value);
-            // We can be commanded to a number that hasn't been defined.
-            // But that's OK for certain applications.  Instead, we add them as needed
-            log.debug("Create new item with value {} count was {} in {}", value, _value.getItemCount(), label());
-            // lengthen arrays
-            _valueArray = java.util.Arrays.copyOf(_valueArray, _valueArray.length + 1);
-
-            _itemArray = java.util.Arrays.copyOf(_itemArray, _itemArray.length + 1);
-
-            _pathArray = java.util.Arrays.copyOf(_pathArray, _pathArray.length + 1);
-
-            addItem("Reserved value " + value, (int)value);
-
-            // update the JComboBox
-            _value.addItem(_itemArray[_nstored - 1]);
-            _value.setSelectedItem(_itemArray[_nstored - 1]);
-
-            // tell trees to redisplay & select
-            for (JTree tree : trees) {
-                ((DefaultTreeModel) tree.getModel()).reload();
-                tree.setSelectionPath(_pathArray[_nstored - 1]);
-                // ensure selection is in visible portion of JScrollPane
-                tree.scrollPathToVisible(_pathArray[_nstored - 1]);
-            }
+            addReservedEntry(value);
         }
-
 
         if (oldVal != value || getState() == ValueState.UNKNOWN) {
             actionPerformed(null);
@@ -905,30 +853,8 @@ public class SplitEnumVariableValue extends VariableValue
             }
         }
 
-        // We can be commanded to a number that hasn't been defined.
-        // But that's OK for certain applications.  Instead, we add them as needed
-        log.debug("Create new item with value {} count was {} in {}", value, _value.getItemCount(), label());
-        // lengthen arrays
-        _valueArray = java.util.Arrays.copyOf(_valueArray, _valueArray.length + 1);
-
-        _itemArray = java.util.Arrays.copyOf(_itemArray, _itemArray.length + 1);
-
-        _pathArray = java.util.Arrays.copyOf(_pathArray, _pathArray.length + 1);
-
-        addItem("Reserved value " + value, value);
-
-        // update the JComboBox
-        _value.addItem(_itemArray[_nstored - 1]);
-        _value.setSelectedItem(_itemArray[_nstored - 1]);
-
-        // tell trees to redisplay & select
-        for (JTree tree : trees) {
-            ((DefaultTreeModel) tree.getModel()).reload();
-            tree.setSelectionPath(_pathArray[_nstored - 1]);
-            // ensure selection is in visible portion of JScrollPane
-            tree.scrollPathToVisible(_pathArray[_nstored - 1]);
-        }
-
+        // if we got to here, we need to add a new reserved value entry
+        addReservedEntry(value);
     }
 
     java.util.List<Component> reps = new java.util.ArrayList<>();
@@ -1082,7 +1008,7 @@ public class SplitEnumVariableValue extends VariableValue
 
                     // check for expected cv
                     if ( (_progState >= READING_FIRST || _progState <= WRITING_FIRST ) && e.getSource() != cvList.get(Math.abs(_progState) - 1).thisCV ) {
-                        log.trace("From \"{}\" but expected \"{}\", ignoring ----------------",
+                        log.trace("From \"{}\" but expected \"{}\", ignoring",
                             e.getSource(), cvList.get(Math.abs(_progState) - 1).thisCV );
                         break;
                     }
@@ -1104,7 +1030,7 @@ public class SplitEnumVariableValue extends VariableValue
                                 setBusy(false);
                             }
                         } else {   // read failed
-                            log.debug("   Variable={}; Busy finds other than ValueState.READ _progState {} ***************", _name, _progState);
+                            log.debug("   Variable={}; Busy finds other than ValueState.READ _progState {}", _name, _progState);
                             if (retry < RETRY_COUNT) { //have we exhausted retry count?
                                 retry++;
                                 // stay on same sequence number for retry, don't update _progState
