@@ -289,6 +289,32 @@
       LogixNG components that are similar to Logix. The <strong>Advance Features</strong> section
       covers new features that did not exist in Logix or were incomplete.</p>
 
+      <h2 id="disable">Disabling LogixNG during PanelPro start up</h2>
+
+      <p>In addition to the preference settings and the LogixNG tools, it is possible to disable
+      LogixNG during PanelPro startup.  This can be necessary if there is a bad logic that locks up
+      PanelPro immediately after file loading.</p>
+
+      <p>When the PanelPro startup splash dialog is displayed, press <strong>F8</strong> or
+      <strong>F9</strong>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="../../setup/images/StartDialog.png"><img src="../../setup/images/StartDialog.png" alt=
+        "PanelPro startup dialog"></a>
+      </div>
+
+      <p>If <strong>F8</strong> is selected <strong><em>and</em></strong> a layout data xml file is
+      being loaded using a start up action, the LogixNG table entries will be disabled. The F8 key
+      has no impact when a file is loaded using <strong>File &rArr; Load table content and panels...
+      </strong>.  In this case, use <strong>Tools &rArr; LogixNG &rArr; Stop LogixNG</strong>
+      before loading the file.</p>
+
+      <p>If <strong>F9</strong> is selected, LogixNG will not start after layout data file loading
+      is done, whether as a start up action or manually.  The LogixNG table entries will enabled/disabled
+      based on their state in the xml file.  When the problem has been resolved then
+      <strong>Tools &rArr; LogixNG &rArr; Start LogixNG</strong> can be used to activate LogixNG
+      processing.</p>
+
       <h2>Sample</h2>
 
       <p>This is a sample layout with LogixNG controlling the turnouts. The turnout sensors toggle
