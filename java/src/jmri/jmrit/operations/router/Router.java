@@ -2,24 +2,18 @@ package jmri.jmrit.operations.router;
 
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Router for car movement. This code attempts to find a way (a route) to move a
@@ -202,8 +196,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         // first try using 2 trains and an interchange track to route the car
         if (setCarDestinationTwoTrainsInterchange(car)) {
             if (car.getDestination() == null) {
-                log.debug("Was able to find a route via classification/interchange track, but not using train ({})" +
-                        " or car destination not set, try again using yard tracks", _train.getName()); // NOI18N
+                log.debug("Was able to find a route via classification/interchange track, but not using specified train" +
+                        " or car destination not set, try again using yard tracks"); // NOI18N
                 if (setCarDestinationTwoTrainsYard(car)) {
                     log.debug("Was able to find route via yard ({}, {}) for car ({})", car.getDestinationName(),
                             car.getDestinationTrackName(), car);

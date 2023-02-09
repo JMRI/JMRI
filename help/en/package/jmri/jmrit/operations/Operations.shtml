@@ -3566,8 +3566,9 @@
       train when the "Car Blocking Order" numbers are positive, and at the front of the train if the
       blocking numbers are negative. If the car is a caboose, has a FRED (Flashing Rear End Device),
       or is hazardous independent of the car's load, select the proper checkbox. The program uses
-      the caboose and FRED functions to place the car at the end of a train when the train requires
-      a caboose or car with FRED.
+      the caboose and FRED options to place the car at the end of a train when the train requires
+      a caboose or car with FRED. Note that you can also use the passenger blocking feature to place
+      a caboose or car with FRED anywhere needed in a train.
 
       <p>When the passenger checkbox is selected, a new field called "Car Blocking Order" will
         appear. The text box allows you to enter a number between -100 and 100 and this gives you
