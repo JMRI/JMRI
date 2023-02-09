@@ -76,13 +76,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Changed handling of LACK messages during programming to
-                    avoid a recently-uncovered conflict with attached DT602D
-                    throttles.</li>
-                <li>Added a new jython/loconet directory to contain new LocoNet-specific scripts.<li>
-                <li>Added a jython/loconet/LoconetOpsModeSim.py that works with LocoNet simulator
-                    to simulate ops-mode writes and reads.</li>
-             </ul>
+                <li></li>
+            </ul>
 
         <h4>Maple</h4>
             <ul>
@@ -121,12 +116,12 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Updated library to pick up fix to line-ends in hub.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
             <ul>
-                <li>Ken Cameron added DMX support</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -321,9 +316,7 @@
 
         <h4>TCS</h4>
             <ul>
-                <li>Fixed problems in the sound CV definitions for
-                    Bachmann FT, Bachmann GP35, Bachmann RS3 and
-                    WOW Diesel V5-121 decoders.</li>
+                <li></li>
             </ul>
 
 	    <h4>Team Digital</h4>
@@ -374,9 +367,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Improve how filename extensions are handled when exporting the complete roster.</li>
-            <li>Updated list of NMRA-registered manufacturer IDs</li>
-            <li>Improved how split enum-style variables are handled.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -388,7 +379,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Fix allocating over occupied blocks in IntermediateSections</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -423,9 +414,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Pressing the F8 key when the spash screen is visible disables all the LogixNGs.</li>
-          <li>Pressing the F9 key when the spash screen is visible prevents LogixNG being activated.</li>
-          <li>A bug that prevented the <i>Shut down task</i> action to work correctly has been fixed.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -437,8 +426,7 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Fixed a problem when a location has multiple spurs and the spur's schedule forwards the car to another spur
-            at the same location with a schedule.  The car's load can incorrectly change to the default "E" or "L" load.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -490,15 +478,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Cliff Anderson contributed a new TurnoutsMasterSlave.py script.
-            <li>Fixed the SetAllTurnoutsClosed.py and SetUnknownTurnoutsClosed.py scripts so they would properly
-                delay on polled systems such as C/MRI</li>
-            <li>Added a new <a href="https://jmri.org/jython/SetAllTurnoutsThrown.py">SetAllTurnoutsThrown.py</a> script and tests</li>
-            <li>Added a new <a href="https://jmri.org/jython/Shutdown.py">Shutdown.py</a> script to shut down JMRI.</li>
-            <li>Added a new <a href="https://jmri.org/jython/Restart.py">Restart.py</a> script to restart JMRI.</li>
-            <li>Added a new jython/loconet directory to contain new LocoNet-specific scripts.<li>
-            <li>Added a jython/loconet/LoconetOpsModeSim.py that works with LocoNet simulator
-                to simulate ops-mode writes and reads.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -508,8 +488,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Pino Di Biasi updated the Italian signal system</li>
-                <li>Robert Raggi provided the new Reading 1954 signal system.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -593,7 +572,7 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li>Added an option to request steal from client when an address is already in use</li>
+            <li></li>
         </ul>
 
    <h3>Web Server</h3>
@@ -611,8 +590,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Added page breaks when printing panel XML files via browser (using XSLT)</li>
-            <li>Improve how fractional clock rates are displayed on the analog clock.</li>
-            <li>The shutdown process is now run in a separate thread and not on the GUI/Layout thread.</li>
+            <li></li>
         </ul>
 
