@@ -814,6 +814,8 @@
         the OpenLCB support to their version 0.7, and added support for bean properties to the
         Tables</li>
 
+        <li>Robert Raggi, who contributed the Reading 1954 signal system definition.</li>
+
         <li>Steve Rawlinson, who fixed a bug in Layout Blocks and generously provided the previous
         Jenkins CI server.</li>
 
