@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - LocoNet&reg; Addressing</title>
+  <meta name="author" content="Bob M.">
+  <meta name="keywords" content="Digitrax SE74 with JMRI">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>Support: Digitrax SE74</h1>
+
+      <ul class="snav">
+        <li>
+          <a href="#general">Using the SE74 with JMRI"</a>
+          <ul>
+            <li>
+              <a href="#configuring">Configuring the SE74</a>
+            </li>
+
+            <li>
+              <a href="#signaling">SE74 and JMRI Signaling</a>
+            <ul>
+              <li>
+                <a href="#se8csig">Signaling when the SE74 is in "SE8C-compatible" mode</a>
+              </li>
+              <li>
+                <a href="#aspectsig">Signaling when the SE74 is in "aspect" mode</a>
+              </li>
+              <li>
+                <a href="#whichsigmode">Which SE74 signaling mode should I choose?</a>
+              </li>
+              <li>
+                <a href="#configAspectSignaljmri">Configuring SE74 "Aspect"-mode 
+                    "Signal Head" objects in JMRI</a>
+
+              </li>
+              <li>
+                <a href="#configSe8cSignaljmri">Configuring SE74 "SE8C"-mode "Signal 
+                    Head" objects in JMRI</a>
+              </li>
+              <li>
+                  <a href="#configSigMastjmri">Configuring SE74 Signal Heads on 
+                      Signal Masts in JMRI</a>
+              </li>
+            </ul>
+            </li>
+            <li><a href="#turnouts">Controlling SE74 "turnout" outputs</a></li>
+            <li><a href="#inputs">SE74 inputs</a></li>
+            <li><a href="#routes">SE74 Routes</a></li>
+          </ul>
+        </li>
+
+      <!-- h2 TOC -->
+      </ul>
+
+      <h1 id="general">Using the SE74 with JMRI</h1>
+
+      <p>The Digitrax SE74 provides a variety of features which may be used with JMRI.
+      JMRI-supported features include signal control, switch control, and inputs.
+      
+      <h2 id="configuring">Configuring the SE74 with JMRI</h2>
+      <p>JMRI is not able (at this time) to provide "configuration" of the SE74.
+      Digitrax introduced a different configuration mechanism with the generation of
+      devices which includes the DS74.  JMRI devlopers have not yet provided support 
+      for this new methodolgy, in part because it includes a mode which extends to 
+      non-LocoNet systems, but behaves in a way that is not consistent with other 
+      products which use a similar mechanism.
+      
+      <h2 id="signaling">Signaling using the SE74 with JMRI</h2>
+      
+      <p>The SE74 has two mutually-exclusive operating modes which determine how JMRI 
+      can control the signal heads.  As such, these instructions present two different 
+      ways of configuring JMRI to control the SE74 - one for each SE74 operating mode.  
+      One method is "SE8C-compatible" mode.  The other is "Aspect" mode.
+      
+      <p>The "Turnout" mode of controlling signals makes use of Turnout control
+      messages to convey the "aspect" information to the hardware.  It operates in
+      the same way as the SE8C device does, and JMRI support for this mode of operation
+      is the same as when using the SE8C device.
+      
+      <p>Alternately, control of SE74 signal heads is via an "Aspect".  This mechanism
+      uses different LocoNet messaging than SE8C mode, and requires different support
+      in JMRI.  SE74 "aspect" mode signaling has a few benefits over SE8C mode.  SE74
+      users are encouraged to make use of this mode of SE74 operation.
+      
+
+      
+      
+      
+      
+        <h3 id="aspectsig">Signaling when the SE74 is in "aspect" mode</h3>
+        <p>The SE74 offers an alternate mode for controlling signal head appearance.  
+        In the SE74 documentation, Digitrax refers to this mode as "aspect" mode.  
+        Control of each individual signal head is via DCC "Extended Accessory Decoder"
+        packets.  LocoNet-connected SE74 devices may get their control information 
+        directly from the LocoNet messaging, rather than from the DCC track signal.
+        
+        <p>The DCC "Extended Accessory Decoder" messaging uses an "address space" 
+        which is independent of the addressing used for turnout control messaging.
+        As such, a turnout with address 260 <em>does not</em> conflict with a
+        SE74 signal head at "aspect"-mode signaling address 260!  This also makes it
+        easier to configure SE74 addressing in a way that does not conflict with 
+        other "turnout"-type objects associated with the layout.
+
+        <p>When an SE74 is operating in "Aspect" mode and it sees such a message 
+        which is addressed to one of its signal heads, it extracts the aspect 
+        number from the message and updates the addressed head to reflect the 
+        aspect associated with the aspect number.
+
+        Note specifically that the "Aspect" mechanism Digitrax uses is controlled 
+        at the level of the "Signal Head".  This design choice provides compatibility 
+        with some 3rd-party LocoNet signaling hardware.  And it means that JMRI 
+        does not require SE74-specific support in its signaling implementation.  It 
+        also means that changing the aspect of a mast which has more than one head 
+        can require more than one message to be issued when the aspect changes.
+        (When a JMRI Signal Mast's aspect changes, the JMRI implementation will 
+        send a message to each Signal Head associated with the Signal Mast, regardless
+        of whether the head aspect has changed).
+        
+        <p>This SE74 behavior is notably different from the behavior seen in some 
+        other signaling implementations.  Some devices use a single single DCC extended 
+        accessory decoder control message to influence _all_ of the heads on the 
+        mast.  That difference means that it configuring a JMRI Signal Mast using 
+        other hardware types will be different than configuring a JMRI Signal Mast
+        for the SE74-controlled signal heads when the SE74 is configured for 
+        "Aspect"-mode signaling.
+
+        
+        
+        
+        
+        <h3 id="se8csig">Signaling when the SE74 is in "SE8C-compatible" signaling mode</h3>
+        <p>One of the SE74 signal control modes relies upon DCC Accessory Decoder (in other words. 
+        "Turnout") control mechanisms.  The SE74 Instruction Sheet refers to this mode of 
+        operation in several different ways:  "4 Turnout" mode, "SE8C Compatible" mode 
+        and "SW control" mode.  For the purposes of this documentation, the use 
+        "SE8C" mode shall be used.
+        
+        <p>As is implied by one of those names used in the Instruction Sheet, this 
+        SE74 mode uses the same LocoNet messaging and mechanisms to control the 
+        signal head behavior.
+        
+        <p>When operating in "SE8C" signaling mode, the SE74 may be used JMRI when
+        using any DCC system which supports control of turnouts from JMRI.
+        
+
+        <h3 id="whichsigmode">Which SE74 mode should I choose?</h3>
+        There are a few considerations when choosing an SE74 signal head control mode:
+        <ul>
+            <li>Does your DCC system support DCC Extended Accessory Decoder 
+            control messages <em>or</em> LocoNet?
+            <br>
+            If your DCC system supports neither, then SE8C mode is the only option.
+            <br>If your DCC system supports either or both, then either mode may be used.
+            </li>
+            <li>Do you already use SE8C-based signaling on your layout?
+                <br>If so, then it may make sense to continue to use SE8C mode, for 
+                the sake of consistency.
+            </li>
+            <li>Will your signals display any "flashing" aspects?
+                <br>When using SE8C mode, any head displaying a flashing aspect 
+                requires a control message <em>every</em> time the head aspect 
+                changes.  This message traffic can become problematic in some 
+                situations.  
+                <br>
+                However, when using SE74 "Aspect" mode signaling, 
+                only one message is needed to enable the flashing aspect for a 
+                signal head, and the head will remain flashing until some other 
+                aspect control message is directed to that head.  This can 
+                significantly reduce the signaling-related message traffic and can
+                reduce or avoid the problematic issues which may be seen with 
+                flashing aspects and "SE8C" mode signaling.
+            <li>If you want/need control over the AUX outputs on the S1 thru S4 
+                cables, you (apparently) must use Aspect mode, as there appears 
+                to be no way to control the AUX outputs in "SE8C Compatible" mode.  
+                JMRI does not have any reasonable way to control the AUX output 
+                (i.e. what SE74 documentation calls the "Lunar" aspect) when 
+                SE74 OpSw41 is "C"losed. 
+            </li>
+            <li>Because SE8C-mode signaling is controlled via "Turnout" operations,
+                it is necessary to program the SE8C so that its signal control
+                addresses do not "conflict" with any other turnout-controlled 
+                device on the layout.  SE74 "Aspect" mode signaling can only 
+                conflict with those devices which use the "Extended Accessory 
+                Decoder" messaging (or its LocoNet equivalent), thus making it <em>
+                    far</em> easier to void addressing conflicts.</li>
+            <li>Control of a "Lunar" aspect is not available when the SE74 operates 
+            in "SE8C" signaling mode.  When the SE74 operates in "Aspect" signaling 
+            mode, a "Lunar" aspect may be displayed.  Depending on the SE74 OpSw 
+            settings, the "Lunar" aspect may be displayed in addition to another 
+            aspect (Red/Yellow/Green/Flashing Red/Flashing Yellow/Flashing Green), 
+            or instead of that other aspect.</li>
+        </ul>
+        <p>In the author's <em>opinion</em>, "Aspect" mode is preferred over "SE8C 
+            Compatible mode" for any system which can support "Aspect" mode.
+            
+        <h3 id="configAspectSignaljmri">Configuring SE74 "Aspect"-mode "Signal Head" objects in JMRI</h3>
+
+        <p>This section describes how to associate a JMRI "Signal Head" object with the
+        SE74 hardware and one of its controlled Signal Heads, when the SE74 is 
+        configured to use "Aspect"-mode signaling.  This section does not apply 
+        when the SE74 is configured for "SE8C"-mode signaling; see <a href="#configSe8cSignalingjmri">
+        this section</a> for information on configuring JMRI Signal Head objects 
+        when using the SE74 in "SE8C"-mode.
+        
+        <p>It is assumed that you have JMRI configured to communicate with your 
+        DCC system, and that you have configured the SE74 for "Aspect" mode signaling
+        and that the SE74 has a base address which does not conflict with any other 
+        aspect-mode signaling hardware.  With those assumptions met, you may 
+        start configuring the JMRI "Signal Head" objects.
+        
+        <p>Within the JMRI Panel Pro application, open the Signal Heads" table 
+        (i.e. "Tools"-"Tables"-"Signal Heads").  This table shows all of the 
+        Signal Heads which have been defined.
+        
+        <p>To configure a new JMRI "Signal Head" object, it is necessary to "add" 
+        a signal head.  This is done by activating the "Add" button at the bottom 
+        of the Signal Heads table.  This will open an "Add Signal Head" window, 
+        where the specific information required to define a signal head may be 
+        entered.  An example image is shown below.
+        <br>
+        <img src="images/Se74AspectModeSignalHead.png" alt="Example of the add signal head window when adding a DCC controlled Signal Head">
+        
+        <ul>
+            <li>For use with SE74-controlled signal heads when the SE74 is configured
+        for "Aspect"-mode signaling, the "DCC Signal Decoder" control method 
+        is approporiate.  Select this control mode at the top of the window.
+        When the signal head control mode is changed to "DCC Signal 
+        Decoder", the window will be re-drawn to show only the signal head 
+        configuration information which applies to this method of controlling the 
+        signal head.</li>
+
+            <li>Select the appropriate "connection" type.  Choose the JMRI "connection" 
+            name which reflects the connection from which the SE74 will get its
+            control information.  When using the SE74 with a Digitrax-based layout, the
+            connection name will typically be "LocoNet".    
+            </li>
+            <li>Enter the "Hardware Address".  This is the address by which JMRI 
+            communicates with the individual signal head.  When the SE74 is used in
+            "Aspect" signaling mode with a LocoNet-based command station, the hardware 
+            address can be related to the SE74 "base address" using the following
+            equation:
+            <br>
+            <code>hardware address = (SE74 base address) + ((SE74 head number) +3)</code>
+            </li>
+            <li>The "Address offset" checkbox can be used to configure JMRI to adjust
+            the hardware address value for use on DCC systems which use a different 
+            interpretation of the NMRA "DCC Extended Accessory Decoder" message specification.
+            This offset is unneeded when used with Digitrax DCC systems, and should
+            remain unchecked in those cases.</li>
+            <li>The "Send Count" setting allows for the DCC system to repeatedly send an
+            aspect change message multiple times.  For LocoNet-connected SE74s, this 
+            parameter may be reduced to its lowest value.</li>
+            <li>In the "Add Signal Head" window, enter a "User name" for the signal head.  
+            It is common to specify a user name which gives the "location" of the 
+            signal mast upon which the head will be used, as well as which head it 
+            represents on the mast.  It may also be useful to give specific information about
+            how the Signal Head will be used on the layout.  Some User Name examples include:
+        <ul>
+            <li>"West Duluth Westward Main A Head", or, more compactly "W.D. WWD M A"</li>
+            <li>"Rangeley River Jct. Main 2 Eastward B Head", or, more-compactly, "RRJct M2 EWD B"</li>
+            <li>"Alleghany Eastward Siding Westward A Head", or, more-compactly, "Al. EWD Siding WWD A"</li>
+            <li>"132A", for the "A" (top) head on mast 132</li>
+        </ul></li>
+        <li>The JMRI "default" values for the aspect numbers are consistent with SE74 
+        aspect numbering and should not be modified.</li>
+        <li>Once you have updated all of the settings to reflect your needs for that head,
+        activate the "Create" button.</li>
+        <li>An additional head may be created by updating only those fields in the "Add 
+        New Signal Head" window which differ from the displayed data.  Typically this
+        means the "User Name" and "Hardware Address" fields will need to be changed.
+        Activate the "Create" button to add a new signal head using the modified 
+        information.</li>
+        </ul>
+
+        <p>Note that there is no JMRI requirement to select a user name that mentions the 
+        Digitrax "head letter", except that it will be easiest to wire and debug 
+        if you leave yourself sufficient hints.  Those hints may be left in the 
+        user name, in the "comments", or may be left out of the JMRI information 
+        altogether at the user's choice.  If you are able to compute the connector 
+        number and Digitrax "head" letter from the "head" address and the SE74 
+        base address, you may not need such hints.
+
+
+
+
+
+        
+        <h3 id="configSe8cSignaljmri">Configuring SE74 "SE8C"-mode "Signal Head" objects in JMRI</h3>
+        <p>It is assumed that you have JMRI configured to communicate with your DCC 
+            system, and that you have configured the SE74 for "SE8C Compatible" mode 
+            and that the SE74 has a base address which does not conflict with any of
+            your other hardware.  With those assumptions met, you may start 
+            configuring the JMRI "Signal Head"s.
+        <p>Within the JMRI Panel Pro application, open the Signal Heads" table (i.e. 
+            "Tools"-"Tables"-"Signal Heads").  This table shows all of the "JMRI 
+            Signal Heads" which are defined within JMRI.  A JMRI "Signal Head" 
+            provides a mechanism for JMRI to interact directly with a single signal 
+            head.
+        <p>Set up each individual signal head by "add"ing a signal head.  This is 
+            done using the "Add" button at the bottom of the Signal Heads table.  
+            This will open an "Add Signal Head" window, where the specific 
+            information required to define a signal head may be entered.
+        <br>
+        <img src="images/Se74CompatabilityModeSignalHead.png" alt"Example of configuring a JMRI Signal Head for a SE74 configured for SE8C-compatible signaling mode">
+
+        <ul>
+            <li>Select "SE8C 4 Aspect" at the top of the "Add New Signal Head" window.</li>
+            <li>Enter a "User name" for the signal head.  
+            It is common to specify a user name which gives the "location" of the 
+            signal mast upon which the head will be used, as well as which head it 
+            represents on the mast.  It may also be useful to give specific information about
+            how the Signal Head will be used on the layout.  Some User Name examples include:
+            <ul>
+                <li>"West Duluth Westward Main A Head", or, more compactly "W.D. WWD M A"</li>
+                <li>"Rangeley River Jct. Main 2 Eastward B Head", or, more-compactly, "RRJct M2 EWD B"</li>
+                <li>"Alleghany Eastward Siding Westward A Head", or, more-compactly, "Al. EWD Siding WWD A"</li>
+                <li>"132A", for the "A" (top) head on mast 132</li>
+            </ul></li>
+            <li>For each of the two turnouts which control the signal head hardware:
+                <ul>
+                    <li>Specify the connection type which will convey the "Turnout" control 
+                messages to the SE74.  For LocoNet-based systems, this will usually 
+                be the "LocoNet" connection.</li>
+                    <li>Specify whether JMRI should create a new Turnout Table entry 
+                        for the turnout, or to rely upon an already-existing Turnout
+                    Table entry for the turnout.  For LocoNet-based systems, if JMRI has
+                    already interrogated the hardware, then the entries
+                    may already exist in the Turnout Table.</li>
+                    <li>Specify the turnout address associated with the signal head.  
+                    The entries for "Turnout 1" and "Turnout 2" can be related to the SE74 "base 
+                    address" using the following equation:
+            <br>
+            <code>"Turnout 1" hardware address =  SE74 base address  + ( 2 * ( SE74 head number + 1 ))</code>
+            <br>
+            <code>"Turnout 2" hardware address =  SE74 base address  + ( 2 * ( SE74 head number + 1 )) + 1</code>
+            </li>
+                   
+            <li>Once you have updated all of the settings to reflect your needs for that head,
+            activate the "Create" button.</li>
+            <li>An additional head may be created by updating only those fields in the "Add 
+            New Signal Head" window which differ from the displayed data.  Typically this
+            means the "User Name" and "Hardware Address" fields will need to be changed.
+            Activate the "Create" button to add a new signal head using the modified 
+            information.</li>
+        </ul>
+
+        Note that JMRI does not support the SE8C's "Flashing Aspect" feature, and
+        therefore does not support the SE74's equivalent feature.  This limitation 
+        was chosen by JMRI designers because the SE8C "flashing aspect" feature would 
+        only be able to support one flashing color.  That limitation is inconsistent
+        with many prototypical signaling systems.  Instead, JMRI chose to make use of
+        the "dark" aspect as the fourth aspect, as JMRI could control the head's 
+        turnoutsin specific patterns in order to achieve Flashing aspects for any
+        of the head's colors.  When using the SE74's SE8C signaling mode, ensure 
+        that the OpSw settings are configured for "fourth aspect is dark" for any 
+        SE74 which will display any JMRI-controlled "flashing aspect".
+        
+        <h3 id="configSigMastjmri">Configuring SE74 Signal Heads on Signal Masts in JMRI</h3>
+        
+        <p>Once you have configured one  or more JMRI "Signal Head"s defined, you may 
+        then create one or more JMRI "Signal Mast"s which use those configured heads.  
+        Configuring JMRI Signal Mast objects is necessary for several forms of 
+        JMRI-controlled signaling, especially for JMRI "Signal Mast Logic"-based 
+        signaling.
+
+        <p>Creating a JMRI Signal Mast object using one or more JMRI Signal Head objects 
+        allows JMRI to hide any differences in Signal Head implementations at the Signal 
+        Head level.  That means that defining the Signal Mast ia <em>independent</em>
+        of the SE74's signaling mode setting - if you have configured the JMRI 
+        Signal Heads in a way which matches the SE74 signaling mode, then the JMRI
+        Signal Mast simply uses the Signal Heads, and "gets it right" automatically.
+
+        <p>The image below shows how to configure a JMRI Signal 
+        Mast based on the names used when creating the "SE8C compatible" JMRI 
+        Signal Heads as described above.   The specified "User Name" was chosen 
+        to describe the location of the mast, its direction, and is chosen to 
+        included the word "Mast" to help differentiate the Signal Mast's User 
+        Name from the User Names used for the Signal Heads.
+        <br>
+        <img src="images/SignalMastExample.png" alt="A Signal Mast Example showing a Signal Head Controlled Mast">
+            
+        <p>In the image, the "Signal System" selects JMRI's "Basic Model Signals" 
+        signaling system.  The Mast type is chosen as "Double Searchlight High 
+        Signal" for this example.  The Mast Type selection determines what 
+        signaling Indications "aspects" can be displayed on the mast, and 
+        defines how JMRI displays the signal mast on a JMRI panel.  That "Mast 
+        Type" choice does not necessarily limit the signal you connect to the 
+        SE74 - that is controlled by the capabilities of the SE74 hardware, 
+        your choice of physical signal model, and how you wire the SE74 to the 
+        signal.  
+
+        <p>The important part to remember is that the "Mast Type" selection 
+        determines two things: how many heads are available on the mast, and 
+        which aspects may be displayed on heads on the mast.  The JMRI "Signal 
+        Head" definition(s), the way in which the hardware (the SE74, in this 
+        case) interprets the control messaging, and the way in which the hardware 
+        controls the actual signal hardware will determine exactly what type of 
+        mast hardware can be connected and controlled via this definition.  See 
+        the SE74 Instruction Sheet for more information on the signal wiring 
+        options which are supported by the SE74.
+
+        <p>When configuring a multi-head mast using the JMRI "Signal Head 
+        controlled Mast" "Mast Driver" type, you must configure one JMRI Signal 
+        Head object per head on the mast.  For a single-head mast, only one 
+        selection box is provided.  For a mast requiring more than one head, 
+        multiple selection boxes will be provided, where the top-most selection box
+        specifies the "top" head on the mast.  Subsequent entry boxes specify the
+        sequentially-lower signal heads on the mast.  (When operating JMRI using 
+        a language other than English, the order in which the head selection boxes 
+        are displayed may be different.)
+
+        <p>In the example, the mast will always be "lit", because the "Unlit" aspect
+        is marked as "Disabled".  This choice makes sense for the type of signaling 
+        which I am implementing for this mast.  Other masts might make us of the 
+        "Unlit" feature, perhaps for so-called "approach lighting".
+
+        <p>Once the JMRI Signal Mast has been configured, any change to the "Aspect" 
+        displayed by the mast will cause the associated JMRI Signal Head object(s) 
+        to be changed to the individual head aspect(s) to match the mast's defintion
+        for that aspect.  Any such Signal Head aspect change(s) will be propagated, 
+        under the JMRI "Signal Head" object's direction, to the appropriate signaling
+        hardware (in this case, the SE74), so that the the hardware may update 
+        its outputs based on the control information which has been conveyed to it.
+
+        <p>Note that a change to the aspect of an individual Signal Head object 
+        (via the JMRI "Signal Heads" table, or via JMRI "Simple Signal Logic" or 
+        script action or turnout control message (when in SE8C Signaling mode) or 
+        otherwise) does not automatically update the Signal Mast aspect for any 
+        mast which uses that head.  This is a characteristic of the typical JMRI 
+        signaling implementation.
+
+      <h2 id="turnouts">Controlling SE74 "turnout" outputs</h2>
+      
+      <h2 id="inputs">SE74 inputs</h2>
+      
+      <h2 id="routes">SE74 Routes</h2>
+
+      
+      
+      
+      
+      
+      
+      
+      
+      <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com/">Digitrax,
+      Inc.</a></p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+</body>
+</html>
