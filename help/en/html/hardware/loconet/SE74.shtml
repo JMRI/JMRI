@@ -80,7 +80,7 @@
       non-LocoNet systems, but behaves in a way that is not consistent with other 
       products which use a similar mechanism.
       <p>As such, configuring the SE74 must be done using the methods described
-      1n the Digitrax documentation for the SE74.
+      in the Digitrax documentation for the SE74.
       
       <h2 id="signaling">Signaling using the SE74 with JMRI</h2>
       
@@ -131,10 +131,10 @@
         <p>This SE74 behavior is notably different from the behavior seen in some 
         other signaling implementations.  Some devices use a single single DCC extended 
         accessory decoder control message to influence _all_ of the heads on the 
-        mast.  That difference means that it configuring a JMRI Signal Mast using 
-        other hardware types will be different than configuring a JMRI Signal Mast
-        for the SE74-controlled signal heads when the SE74 is configured for 
-        "Aspect"-mode signaling.
+        mast.  That difference in hardware implementation and messaging usage 
+        means that configuring a JMRI Signal Mast using other hardware types will 
+        be different than configuring a JMRI Signal Mast for the SE74-controlled 
+        signal heads when the SE74 is configured for "Aspect"-mode signaling.
 
         <h3 id="se8csig">Signaling when the SE74 is in "SE8C-compatible" signaling mode</h3>
         <p>One of the SE74 signal control modes relies upon DCC Accessory Decoder (in other words. 
