@@ -994,7 +994,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         addLine(_buildReport, FIVE,
                 MessageFormat.format(Bundle.getMessage("buildSearchForSpur"),
                         new Object[]{car.toString(), car.getTypeName(), car.getLoadType().toLowerCase(),
-                                car.getLoadName(), car.getLocationName(), car.getTrackName()}));
+                                car.getLoadName(), car.getTrackType(), car.getLocationName(), car.getTrackName()}));
         if (car.getKernel() != null) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("buildCarLeadKernel"),
@@ -1286,8 +1286,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
 
         addLine(_buildReport, FIVE,
                 MessageFormat.format(Bundle.getMessage("buildCarRoutingBegins"),
-                        new Object[]{car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName(),
-                                car.getTrackName(), car.getFinalDestinationName(),
+                        new Object[]{car.toString(), car.getTypeName(), car.getLoadName(), car.getTrackType(),
+                                car.getLocationName(), car.getTrackName(), car.getFinalDestinationName(),
                                 car.getFinalDestinationTrackName()}));
 
         // no local moves for this train?
@@ -1592,7 +1592,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         addLine(_buildReport, FIVE,
                 MessageFormat.format(Bundle.getMessage("buildFindDestinationForCar"),
                         new Object[]{car.toString(), car.getTypeName(), car.getLoadType().toLowerCase(),
-                                car.getLoadName(), (car.getLocationName() + ", " + car.getTrackName())}));
+                                car.getLoadName(), car.getTrackType(), car.getLocationName(), car.getTrackName()}));
         if (car.getKernel() != null) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("buildCarLeadKernel"),
