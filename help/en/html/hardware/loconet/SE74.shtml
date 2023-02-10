@@ -72,6 +72,8 @@
       for this new methodolgy, in part because it includes a mode which extends to 
       non-LocoNet systems, but behaves in a way that is not consistent with other 
       products which use a similar mechanism.
+      <p>As such, configuring the SE74 must be done using the methods described
+      1n the Digitrax documentation for the SE74.
       
       <h2 id="signaling">Signaling using the SE74 with JMRI</h2>
       
@@ -226,7 +228,7 @@
         where the specific information required to define a signal head may be 
         entered.  An example image is shown below.
         <br>
-        <img src="images/Se74AspectModeSignalHead.png" alt="Example of the add signal head window when adding a DCC controlled Signal Head">
+        <img src="images/Se74AspectModeSignalAHead.png" alt="Example of the add signal head window when adding a DCC controlled Signal Head">
         
         <ul>
             <li>For use with SE74-controlled signal heads when the SE74 is configured
@@ -248,7 +250,7 @@
             address can be related to the SE74 "base address" using the following
             equation:
             <br>
-            <code>hardware address = (SE74 base address) + ((SE74 head number) +3)</code>
+            <code>Aspect Mode Hardware Address = (SE74 base address) + ((SE74 head number) - 1)</code>
             </li>
             <li>The "Address offset" checkbox can be used to configure JMRI to adjust
             the hardware address value for use on DCC systems which use a different 
@@ -287,11 +289,6 @@
         altogether at the user's choice.  If you are able to compute the connector 
         number and Digitrax "head" letter from the "head" address and the SE74 
         base address, you may not need such hints.
-
-
-
-
-
         
         <h3 id="configSe8cSignaljmri">Configuring SE74 "SE8C"-mode "Signal Head" objects in JMRI</h3>
         <p>It is assumed that you have JMRI configured to communicate with your DCC 
@@ -309,7 +306,7 @@
             This will open an "Add Signal Head" window, where the specific 
             information required to define a signal head may be entered.
         <br>
-        <img src="images/Se74CompatabilityModeSignalHead.png" alt"Example of configuring a JMRI Signal Head for a SE74 configured for SE8C-compatible signaling mode">
+        <img src="images/Se74CompatabilityModeSignalAHead.png" alt="Example of configuring a JMRI Signal Head for a SE74 configured for SE8C-compatible signaling mode">
 
         <ul>
             <li>Select "SE8C 4 Aspect" at the top of the "Add New Signal Head" window.</li>
@@ -349,19 +346,38 @@
             New Signal Head" window which differ from the displayed data.  Typically this
             means the "User Name" and "Hardware Address" fields will need to be changed.
             Activate the "Create" button to add a new signal head using the modified 
-            information.</li>
+            information.
+            <p>Extending the example above, a three-head mast would require two 
+            additional head definitions.  If the addtional heads are to be configured 
+            to be the next two heads on a SE8C-mode SE74, they would be defined as 
+            shown in the images below.
+            <br>
+        <img src="images/Se74CompatabilityModeSignalBHead.png" alt="Example of configuring 
+             a JMRI Signal Head for a SE74 configured for SE8C-compatible signaling mode">
+        
+        <img src="images/Se74CompatabilityModeSignalCHead.png" alt="Example of configuring 
+             a JMRI Signal Head for a SE74 configured for SE8C-compatible signaling mode">
+
+            </li>
         </ul>
 
-        Note that JMRI does not support the SE8C's "Flashing Aspect" feature, and
-        therefore does not support the SE74's equivalent feature.  This limitation 
-        was chosen by JMRI designers because the SE8C "flashing aspect" feature would 
-        only be able to support one flashing color.  That limitation is inconsistent
-        with many prototypical signaling systems.  Instead, JMRI chose to make use of
-        the "dark" aspect as the fourth aspect, as JMRI could control the head's 
-        turnoutsin specific patterns in order to achieve Flashing aspects for any
-        of the head's colors.  When using the SE74's SE8C signaling mode, ensure 
-        that the OpSw settings are configured for "fourth aspect is dark" for any 
-        SE74 which will display any JMRI-controlled "flashing aspect".
+        <p>Once you have defined your signal head(s), and you have your signaling hardware 
+        connected, you should verify that the JMRI Signal Heads actually control
+        the signal hadware appropriately.  You may check this by verifing that the
+        physical signal head is actually displaying the aspect which is shown for that
+        signal head in the Signal Heads table's "Appearance" column.
+        
+        <p>Note that JMRI supports displaying "flashing" aspects on SE8C-mode signal
+        heads, but it <em>does not</em> support the SE8C's "Flashing Aspect" feature, and
+        therefore does not support the SE74's equivalent feature.  Be sure that the
+        SE74's "fourth aspect" setting specifies "Dark" as the fourth aspect.This 
+        limitation was intentionally chosen by JMRI designers because the SE8C 
+        "flashing aspect" feature would only be able to support one flashing color.  
+        That limitation is inconsistent with many prototypical signaling systems.  
+        Instead, JMRI developers chose to make use of "dark" for the "fourth aspect"
+        as the fourth aspect, as JMRI could then control the head's 
+        turnouts in appropriate patterns in order to achieve "flashing" aspects for 
+        any of the head's colors.  
         
         <h3 id="configSigMastjmri">Configuring SE74 Signal Heads on Signal Masts in JMRI</h3>
         
@@ -379,44 +395,68 @@
         Signal Mast simply uses the Signal Heads, and "gets it right" automatically.
 
         <p>The image below shows how to configure a JMRI Signal 
-        Mast based on the names used when creating the "SE8C compatible" JMRI 
-        Signal Heads as described above.   The specified "User Name" was chosen 
-        to describe the location of the mast, its direction, and is chosen to 
+        Mast when the mast is controlled via JMRI "signal head" objects.  
+        
+        <p>The mast being defined is a three-head Searchlight mast using the AAR-1946 
+        "signal system", and will be used at "East Edsel".  The specified "User 
+        Name" was chosen to describe the location of the mast, and is chosen to 
         included the word "Mast" to help differentiate the Signal Mast's User 
-        Name from the User Names used for the Signal Heads.
+        Name from the User Names used for the Signal Heads.  If there were any other 
+        masts at East Edsel which governed movement in the opposite direction, then 
+        it would be appropriate to include some sort of "direction" in the user name,
+        such as "E. Edsel WWD Mast", where "WWD" is an abbreviation for "WestWarD".
+        
+        <p>The mast is comprised of the three signal heads - the three "SE8C-mode" 
+        SE74 signal heads defined above in the section on defining SE8C-mode SE74 
+        signal heads.  Note that if the mast were comprised instead of three "aspect-
+        mode" SE74 signal heads, the mast definition would <em>not be any different</em> 
+        - it would simply use the appropriate signal head "user name"s.
+                
+        <p>Also note that two "aspects" have been disabled - aspects associated with
+        "Limited Speed" indications, because in this example, the trackwork at 
+        East Edsel does not have any route which supports the "Limited" speed, so 
+        those aspects are not allowed to be displayed by this mast.
         <br>
         <img src="images/SignalMastExample.png" alt="A Signal Mast Example showing a Signal Head Controlled Mast">
             
-        <p>In the image, the "Signal System" selects JMRI's "Basic Model Signals" 
-        signaling system.  The Mast type is chosen as "Double Searchlight High 
-        Signal" for this example.  The Mast Type selection determines what 
-        signaling Indications "aspects" can be displayed on the mast, and 
-        defines how JMRI displays the signal mast on a JMRI panel.  That "Mast 
-        Type" choice does not necessarily limit the signal you connect to the 
-        SE74 - that is controlled by the capabilities of the SE74 hardware, 
-        your choice of physical signal model, and how you wire the SE74 to the 
-        signal.  
-
-        <p>The important part to remember is that the "Mast Type" selection 
-        determines two things: how many heads are available on the mast, and 
-        which aspects may be displayed on heads on the mast.  The JMRI "Signal 
-        Head" definition(s), the way in which the hardware (the SE74, in this 
-        case) interprets the control messaging, and the way in which the hardware 
-        controls the actual signal hardware will determine exactly what type of 
-        mast hardware can be connected and controlled via this definition.  See 
-        the SE74 Instruction Sheet for more information on the signal wiring 
-        options which are supported by the SE74.
-
-        <p>When configuring a multi-head mast using the JMRI "Signal Head 
-        controlled Mast" "Mast Driver" type, you must configure one JMRI Signal 
-        Head object per head on the mast.  For a single-head mast, only one 
-        selection box is provided.  For a mast requiring more than one head, 
-        multiple selection boxes will be provided, where the top-most selection box
-        specifies the "top" head on the mast.  Subsequent entry boxes specify the
-        sequentially-lower signal heads on the mast.  (When operating JMRI using 
-        a language other than English, the order in which the head selection boxes 
-        are displayed may be different.)
-
+        <p>To create such a mast, the following steps are necessary:
+            
+        <ul>
+            <li>Create the appropriate signal heads before creating the signal mast.</li>
+            <li>Open the Signal Masts Table - via "Tools"-"Tables"-"Signals"-"Signal Masts".</li>
+            <li>Activate the "Add..." button (at the bottom of the Signal Masts table window).</li>
+            <li>Enter an appropriate, meaningful User Name, such as "E. Edsel Mast"</li>
+            <li>Select the signaling system.  In this case, the railroad uses "AAR-1946" signaling.</li>
+            <li>Select the appropriate mast type.  In this case, the mast is a 
+                "triple searchlight high signal" mast.</li>
+            <li>Specify the "Mast Driver" as "Signal Head Controlled Mast".  This indicates 
+                that the mast will control the connected hardware via the defined signal 
+                heads.</li>
+            <li>Specify if the mast will be allowed to be "unlit" (i.e. "Dark").  Allowing 
+                a mast to be "unlit" is useful when implementing "approach lighting".
+                Since the example head is a 3-head signal, and in US-prototype signaling,
+                3-head signals are typically used as "home" signals at "interlockings", 
+                and since most US-prototype railroads keep their "home" signals lit 
+                constantly, the example leaves the checkbox un-checked.  The signal 
+                mast configured this way will <em>not</em> make use of the "unlit" state.</li>
+            <li>Specify the applicable "Signal Heads".  Note that the top-most entry 
+                corresponds to the head at the top of the mast.  The next-lower entry
+                corresponds to the next-lower head on the mast, etc., as appropriate 
+                for the mast type.</li>
+            <li>You may place a check-mark in the box labeled "Include previously used 
+                Signal Heads" in order to include, in the "drop-down" signal head lists,
+                those signal heads which have already been assigned to a JMRI signal mast.
+                Since it is very rare that any one JMRI signal head's indication can be used
+                on more than one signal mast, it is generally best to leave this box 
+                un-checked.</li>
+            <li>In the "Disable Specific Aspects" section, you may prevent the signaling
+                logic from displaying one or more of the mast's possible aspects by 
+                placing a check-mark next to the aspect(s) to be disabled.  In this
+                example, the "Limited"-type aspects are not appropriate, so they have
+                been "check-mark"ed.</li>
+            <li>When satisfied with the signal mast configuration, activate the "Create"
+                button at the bottom of the "Add/Edit Signal Mast" window.</li>
+            
         <p>In the example, the mast will always be "lit", because the "Unlit" aspect
         is marked as "Disabled".  This choice makes sense for the type of signaling 
         which I am implementing for this mast.  Other masts might make us of the 
