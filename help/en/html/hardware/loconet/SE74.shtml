@@ -15,15 +15,16 @@
 
     <div id="mainContent">
       <h1>Support: Digitrax SE74</h1>
-
+      
+      <table>
+                  <tr><td>
       <ul class="snav">
         <li>
-          <a href="#general">Using the SE74 with JMRI"</a>
+          <a href="#general">Using the SE74 with JMRI</a>
           <ul>
             <li>
               <a href="#configuring">Configuring the SE74</a>
             </li>
-
             <li>
               <a href="#signaling">SE74 and JMRI Signaling</a>
             <ul>
@@ -52,24 +53,30 @@
             </ul>
             </li>
             <li><a href="#turnouts">Controlling SE74 "turnout" outputs</a></li>
-            <li><a href="#inputs">SE74 inputs</a></li>
-            <li><a href="#routes">SE74 Routes</a></li>
+            <li><a href="#inputs">Using SE74 Inputs</a></li>
+            <li><a href="#routes">Using SE74 Routes</a></li>
           </ul>
         </li>
 
       <!-- h2 TOC -->
       </ul>
 
-      <h1 id="general">Using the SE74 with JMRI</h1>
+              </td><td>
+      <img src="images/Se74.png" alt="An image of the SE74 with one signal cable attached 
+           and one signal connected to that signal cable" >
+              
+              </td>    </table>
+  
 
-      <p>The Digitrax SE74 provides a variety of features which may be used with JMRI.
+      <h1 id="general">Using the SE74 with JMRI</h1>
+    <p>The Digitrax SE74 provides a variety of features which may be used with JMRI.
       JMRI-supported features include signal control, switch control, and inputs.
       
       <h2 id="configuring">Configuring the SE74 with JMRI</h2>
       <p>JMRI is not able (at this time) to provide "configuration" of the SE74.
       Digitrax introduced a different configuration mechanism with the generation of
-      devices which includes the DS74.  JMRI devlopers have not yet provided support 
-      for this new methodolgy, in part because it includes a mode which extends to 
+      devices which includes the DS74.  JMRI developers have not yet provided support 
+      for this new methodology, in part because it includes a mode which extends to 
       non-LocoNet systems, but behaves in a way that is not consistent with other 
       products which use a similar mechanism.
       <p>As such, configuring the SE74 must be done using the methods described
@@ -91,11 +98,6 @@
       uses different LocoNet messaging than SE8C mode, and requires different support
       in JMRI.  SE74 "aspect" mode signaling has a few benefits over SE8C mode.  SE74
       users are encouraged to make use of this mode of SE74 operation.
-      
-
-      
-      
-      
       
         <h3 id="aspectsig">Signaling when the SE74 is in "aspect" mode</h3>
         <p>The SE74 offers an alternate mode for controlling signal head appearance.  
@@ -134,10 +136,6 @@
         for the SE74-controlled signal heads when the SE74 is configured for 
         "Aspect"-mode signaling.
 
-        
-        
-        
-        
         <h3 id="se8csig">Signaling when the SE74 is in "SE8C-compatible" signaling mode</h3>
         <p>One of the SE74 signal control modes relies upon DCC Accessory Decoder (in other words. 
         "Turnout") control mechanisms.  The SE74 Instruction Sheet refers to this mode of 
@@ -157,7 +155,7 @@
         There are a few considerations when choosing an SE74 signal head control mode:
         <ul>
             <li>Does your DCC system support DCC Extended Accessory Decoder 
-            control messages <em>or</em> LocoNet?
+                control messages <em>or</em> LocoNet?
             <br>
             If your DCC system supports neither, then SE8C mode is the only option.
             <br>If your DCC system supports either or both, then either mode may be used.
@@ -348,7 +346,7 @@
             Activate the "Create" button to add a new signal head using the modified 
             information.
             <p>Extending the example above, a three-head mast would require two 
-            additional head definitions.  If the addtional heads are to be configured 
+            additional head definitions.  If the additional heads are to be configured 
             to be the next two heads on a SE8C-mode SE74, they would be defined as 
             shown in the images below.
             <br>
@@ -363,7 +361,7 @@
 
         <p>Once you have defined your signal head(s), and you have your signaling hardware 
         connected, you should verify that the JMRI Signal Heads actually control
-        the signal hadware appropriately.  You may check this by verifing that the
+        the signal hardware appropriately.  You may check this by verifying that the
         physical signal head is actually displaying the aspect which is shown for that
         signal head in the Signal Heads table's "Appearance" column.
         
@@ -389,7 +387,7 @@
 
         <p>Creating a JMRI Signal Mast object using one or more JMRI Signal Head objects 
         allows JMRI to hide any differences in Signal Head implementations at the Signal 
-        Head level.  That means that defining the Signal Mast ia <em>independent</em>
+        Head level.  That means that defining the Signal Mast is <em>independent</em>
         of the SE74's signaling mode setting - if you have configured the JMRI 
         Signal Heads in a way which matches the SE74 signaling mode, then the JMRI
         Signal Mast simply uses the Signal Heads, and "gets it right" automatically.
@@ -417,7 +415,8 @@
         East Edsel does not have any route which supports the "Limited" speed, so 
         those aspects are not allowed to be displayed by this mast.
         <br>
-        <img src="images/SignalMastExample.png" alt="A Signal Mast Example showing a Signal Head Controlled Mast">
+        <img src="images/SignalMastExample.png" alt="A Signal Mast Example showing 
+             a Signal Head Controlled Mast">
             
         <p>To create such a mast, the following steps are necessary:
             
@@ -432,13 +431,15 @@
             <li>Specify the "Mast Driver" as "Signal Head Controlled Mast".  This indicates 
                 that the mast will control the connected hardware via the defined signal 
                 heads.</li>
-            <li>Specify if the mast will be allowed to be "unlit" (i.e. "Dark").  Allowing 
-                a mast to be "unlit" is useful when implementing "approach lighting".
+            <li>Specify if the mast will be allowed to be "unlit" (i.e. "Dark") via the
+                "This mast can be unlit" checkbox.  Allowing a mast to be "unlit" 
+                is useful when implementing "approach lighting".
+                <br>
                 Since the example head is a 3-head signal, and in US-prototype signaling,
-                3-head signals are typically used as "home" signals at "interlockings", 
-                and since most US-prototype railroads keep their "home" signals lit 
-                constantly, the example leaves the checkbox un-checked.  The signal 
-                mast configured this way will <em>not</em> make use of the "unlit" state.</li>
+                the 3-head signal mast is typically used as a "home" signal at an 
+                "interlocking", and since most US-prototype railroads keep their 
+                "home" signals lit constantly, the example leaves the checkbox 
+                un-checked.
             <li>Specify the applicable "Signal Heads".  Note that the top-most entry 
                 corresponds to the head at the top of the mast.  The next-lower entry
                 corresponds to the next-lower head on the mast, etc., as appropriate 
@@ -456,40 +457,109 @@
                 been "check-mark"ed.</li>
             <li>When satisfied with the signal mast configuration, activate the "Create"
                 button at the bottom of the "Add/Edit Signal Mast" window.</li>
-            
-        <p>In the example, the mast will always be "lit", because the "Unlit" aspect
-        is marked as "Disabled".  This choice makes sense for the type of signaling 
-        which I am implementing for this mast.  Other masts might make us of the 
+        </ul>
+        <p>In the example, the mast will always be "lit", because the "This mast 
+        may be Unlit" feature has not been enabled (has not been "check-marked").
+        This choice makes sense for the type of signaling which is being implementing 
+        for this mast.  Other masts might make us of the 
         "Unlit" feature, perhaps for so-called "approach lighting".
 
-        <p>Once the JMRI Signal Mast has been configured, any change to the "Aspect" 
-        displayed by the mast will cause the associated JMRI Signal Head object(s) 
-        to be changed to the individual head aspect(s) to match the mast's defintion
+        <p>Once the JMRI Signal Mast has been configured, any change to the signal 
+        mast's "Appearance" will cause the associated JMRI Signal Head object(s) 
+        to be changed to the individual head aspect(s) to match the mast's definition
         for that aspect.  Any such Signal Head aspect change(s) will be propagated, 
         under the JMRI "Signal Head" object's direction, to the appropriate signaling
         hardware (in this case, the SE74), so that the the hardware may update 
-        its outputs based on the control information which has been conveyed to it.
-
-        <p>Note that a change to the aspect of an individual Signal Head object 
-        (via the JMRI "Signal Heads" table, or via JMRI "Simple Signal Logic" or 
-        script action or turnout control message (when in SE8C Signaling mode) or 
-        otherwise) does not automatically update the Signal Mast aspect for any 
-        mast which uses that head.  This is a characteristic of the typical JMRI 
-        signaling implementation.
+        its outputs based on the control information which has been conveyed to it.  
+        <p>This means that you can test the JMRI configuration of your SE74 hardware
+            using the following techniques.  (They also apply to other signaling 
+            configurations, too!)
+            <ul>
+                <li>You may test JMRI's ability to update the appropriate JMRI 
+                    Signal Head object(s) by changing the "Appearance" value for
+                    the JMRI Signal Mast object in the JMRI Signal Masts table.
+                    Change the "appearance" of the signal mast object, then check 
+                    the Signal Heads table to see that the appropriate head(s) 
+                    have been changed to the appropriate aspect(s).</li>
+                <li>Once you know that the JMRI Signal Head objects are properly 
+                    controlled by the JMRI Signal Mast "Appearance" setting, you can
+                    then check that the JMRI Signal Mast "Appearance" setting has
+                    the appropriate affect on the SE74-controlled signal.  Change
+                    the mast's "appearance" value and then check that the physical signal 
+                    changes to the appropriate "aspect".</li>
+            </ul>
+        
+        An example of this is shown in the image below.  The "E. Edsel Mast" was 
+        placed on a Layout Editor panel and associated with the "Anchor Point" 
+        located where two different blocks met, and the icon placed "to the right 
+        side" of the track line, as viewed from the cab of an approaching train.  
+        When the "Appearance" setting in the "Signal Masts" table for the "E. Edison 
+        Mast" was changed to "Advance Approach Medium", this caused JMRI to:
+        
+        <ol>
+            <li>Update the icon on the panel to show the appropriate mast aspect:
+                Green over Yellow over Red.</li>
+            <li>Propagate the appropriate "appearance" values to each of the Signal
+                Head objects associated with the mast:  
+                <ul>
+                    <li>"E. Edsel A" head to "Green"</li>
+                    <li>"E. Edsel B" head to "Yellow"</li>
+                    <li>"E. Edsel C" head to "Red"</li>
+                </ul></li>
+            <li>Propagate the changes to the signal head Appearance values to the
+                hardware, using the mechanisms appropriate for each head and as
+                defined by the JMRI "Signal Head" definition.</li>                        
+        </ol>
+        <img src="images/Se74MastOnPanel.png" alt="Image showing a JMRI Layout Editor panel 
+             with some track, a level crossing, and a three-head signal mast 
+             protecting leftward movement over the level crossing.">
+        <br>
+        <p>Note that any change to the "Appearance" value for an individual Signal 
+        Head object will propagate to the appropriate hardware, but a change of a
+        JMRI Signal Head object's Appearance will not propagate to a JMRI "Signal 
+        Mast" object.  This is a characteristic of the implementation of the
+        "Signal Head Controlled Mast" type of JMRI Signal Mast.
 
       <h2 id="turnouts">Controlling SE74 "turnout" outputs</h2>
+      <p>JMRI may control the SE74's "turnout" outputs just like it controls any 
+      other Turnout - via a JMRI "Turnout" object.  In general, JMRI Turnout objects are defined 
+      in the JMRI "Turnouts" table, and are discussed elsewhere.
+
+      <p>JMRI's LocoNet mechanisms provide a mechanism where JMRI can "discover"
+          LocoNet-connected turnouts.  That mechanism is able to discover 
+          SE74-related turnout objects, and will do so when the SE74 is powered and is
+          connected to LocoNet when JMRI starts up with a live connection to that
+          LocoNet.
       
       <h2 id="inputs">SE74 inputs</h2>
-      
+      <p>While the SE74's inputs may be used with JMRI, the behaviors of the SE74s 
+          inputs, at least for SE74 firmware versions available to the date of 
+          this writing, are "odd".  In general, the SE74 input pin behaviors do not 
+          match the behaviors of any previous Digitrax product.  The SE74 "SWx" input pins 
+          "sort-of" behave like the similarly-named DS64 input pins do when the DS64 is in 
+          configured one way.  The "SENSx" pins "sort-of" behave like the "AUXx"
+          DS64 input pins do for other DS64 configurations.
+      <p>With SE74 firmware implementations available in early 2023, the "default" 
+          values of SE74 OpSws 11 and 30 result in the SENSx input pins generating 
+          LocoNet messaging which is suitable for "general-purpose" sensor input.
+          Those inputs will be reflected as four JMRI "Sensor" objects, with sensor
+          hardware addresses of:
+          <br>
+          <code>SENS1 as hardware address = (2*(SE74 base address)) - 1</code>
+          <code>SENS2 as hardware address = (2*(SE74 base address)) + 1</code>
+          <code>SENS3 as hardware address = (2*(SE74 base address)) - 2</code>
+          <code>SENS4 as hardware address = (2*(SE74 base address)) + 3</code>
+                    
       <h2 id="routes">SE74 Routes</h2>
-
-      
-      
-      
-      
-      
-      
-      
+      <p>The SE74 provides "route" functionality, where each of 8 routes may be 
+          configured with a "trigger" switch control, and up to 7 additional switch
+          control messages to send when that trigger switch control is seen as a
+          message on LocoNet.  JMRI does not have a tool for configuring the SE74's 
+          "routes" functionality at this time.  Instead, use the mechanisms described
+          in the SE74 manual.
+          <p>JMRI may <em>trigger</em> an SE74 route by sending a LocoNet switch 
+              control message which matches the "trigger" entry for any one of 
+              the routes configured in the SE74.
       
       <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com/">Digitrax,
       Inc.</a></p>
