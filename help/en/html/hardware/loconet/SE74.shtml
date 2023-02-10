@@ -288,6 +288,11 @@
         number and Digitrax "head" letter from the "head" address and the SE74 
         base address, you may not need such hints.
         
+        <p>Note also that the SE74's "aspect-mode" signaling provides a SE74 setting 
+        where the "Lunar" aspect may be made "persistant".  JMRI is not able to 
+        understand the concept of a "persistant" aspect capability, so that feature
+        needs to be disabled in the SE74's OpSw settings.
+        
         <h3 id="configSe8cSignaljmri">Configuring SE74 "SE8C"-mode "Signal Head" objects in JMRI</h3>
         <p>It is assumed that you have JMRI configured to communicate with your DCC 
             system, and that you have configured the SE74 for "SE8C Compatible" mode 
