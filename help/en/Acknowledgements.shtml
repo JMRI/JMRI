@@ -553,6 +553,8 @@
         <li>Georg Kautzsch, who provided a decoder definition for the Uhlenbrock 67800 servo
         decoder.</li>
 
+        <li>Tim Kelley, who helped debug LocoNet device support </li>
+
         <li>Klaus Killinger, <!-- klk32003 -->
          who improved the sound support, has provided multiple sound projects,
          and helped with Intellibox development.</li>
