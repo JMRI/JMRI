@@ -231,7 +231,7 @@
         <ul>
             <li>For use with SE74-controlled signal heads when the SE74 is configured
         for "Aspect"-mode signaling, the "DCC Signal Decoder" control method 
-        is approporiate.  Select this control mode at the top of the window.
+        is appropriate.  Select this control mode at the top of the window.
         When the signal head control mode is changed to "DCC Signal 
         Decoder", the window will be re-drawn to show only the signal head 
         configuration information which applies to this method of controlling the 
