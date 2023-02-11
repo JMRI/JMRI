@@ -305,7 +305,8 @@
 				<label xml:lang="cs">Použití mapování pokročilých funkcí</label>
 			</variable>
 			<!-- CV 97 - 98 -->
-			<variable item="Ausgänge vorwärts" CV="97" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/piko/cv97-98_v5.1.xml"/>
+<!--			<variable item="Ausgänge vorwärts" CV="97" default="0">
 				<decVal/>
 				<label>Funktionsausgänge "Aus" vorwärts</label>
 				<label xml:lang="de">Funktionsausgänge "Aus" vorwärts</label>
@@ -318,7 +319,7 @@
 				<label xml:lang="de">Funktionsausgänge "Aus" rückwärts</label>
 				<tooltip>Bit 0 bis 7 -> A1 bis A8, Bit = 1 Ausgang aus</tooltip>
 				<tooltip xml:lang="de">Bit 0 bis 7 -> A1 bis A8, Bit = 1 Ausgang aus</tooltip>
-			</variable>
+			</variable>-->
 			<!-- CV 101 - 104 -->
 			<variable item="Analog Control slider 1" CV="101" default="100">
 				<decVal max="255"/>
