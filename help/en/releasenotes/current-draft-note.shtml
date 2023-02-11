@@ -283,6 +283,11 @@
             <ul>
                 <li></li>
             </ul>
+	    
+	<h4>Piko decoders</h4>
+            <ul>
+                <li>Bug fixes, improvements and functional enhancements</li>
+            </ul>
 
         <h4>QSI</h4>
             <ul>
