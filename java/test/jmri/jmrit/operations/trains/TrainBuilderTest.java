@@ -5881,7 +5881,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 273, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 274, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
