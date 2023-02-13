@@ -37,43 +37,43 @@
 	<variable item="SUSI_Bank_Switch" CV="1021" default="0">
 		<enumVal>
 			<enumChoice choice="Bank 0" value="0">
-				<choice>Bank 0</choice>
+				<choice>Bank 0 - Manufacturer</choice>
 				<choice xml:lang="de">Bank 0 - Hersteller</choice>
 				<choice xml:lang="nl">Bank 0 - </choice>
 				<choice xml:lang="cs">Banka 0 - </choice>
 			</enumChoice>
 			<enumChoice choice="Bank 1" value="1">
-				<choice>Bank 1 - Output 1 Drivers cab lighting</choice>
-				<choice xml:lang="de">Bank 1 - Ausgang 1 &amp; Ausgang 2</choice>
+				<choice>Bank 0 - Output 1 Drivers cab lighting</choice>
+				<choice xml:lang="de">Bank 0 - Ausgang 1 &amp; Ausgang 2</choice>
+				<choice xml:lang="nl">Bank 0 - ...</choice>
+				<choice xml:lang="cs">Banka 0 - ...</choice>
+			</enumChoice>
+			<enumChoice choice="Bank 2" value="2">
+				<choice>Bank 1 - Output 3</choice>
+				<choice xml:lang="de">Bank 1 - Ausgang 3 &amp; Ausgang 4</choice>
 				<choice xml:lang="nl">Bank 1 - ...</choice>
 				<choice xml:lang="cs">Banka 1 - ...</choice>
 			</enumChoice>
-			<enumChoice choice="Bank 2" value="2">
-				<choice>Bank 2 - Output 3</choice>
-				<choice xml:lang="de">Bank 2 - Ausgang 3 &amp; Ausgang 4</choice>
+			<enumChoice choice="Bank 3" value="3">
+				<choice>Bank 2 - Output 5</choice>
+				<choice xml:lang="de">Bank 2 - Ausgang 5 &amp; Ausgang 6</choice>
 				<choice xml:lang="nl">Bank 2 - ...</choice>
 				<choice xml:lang="cs">Banka 2 - ...</choice>
 			</enumChoice>
-			<enumChoice choice="Bank 3" value="3">
-				<choice>Bank 3 - Output 5</choice>
-				<choice xml:lang="de">Bank 3 - Ausgang 5 &amp; Ausgang 6</choice>
+			<enumChoice choice="Bank 4" value="4">
+				<choice>Bank 3 - PWM 1 - 6"</choice>
+				<choice xml:lang="de">Bank 3 - PWM von Ausgang 1 - 6</choice>
 				<choice xml:lang="nl">Bank 3 - ...</choice>
 				<choice xml:lang="cs">Banka 3 - ...</choice>
-			</enumChoice>
-			<enumChoice choice="Bank 4" value="4">
-				<choice>Bank 4 - PWM 1 - 6"</choice>
-				<choice xml:lang="de">Bank 4 - PWM von Ausgang 1 - 6</choice>
-				<choice xml:lang="nl">Bank 4 - ...</choice>
-				<choice xml:lang="cs">Banka 4 - ...</choice>
 			</enumChoice>
 		</enumVal>
 		<label>Program</label>
 		<label xml:lang="de">Programmieren</label>
 		<label xml:lang="nl">Programmeer</label>
 		<label xml:lang="cs">Programování</label>
-		<tooltip>Setting that determines which bank 0-4 is programmed. Reset to Bank 0 when done!</tooltip>
-		<tooltip xml:lang="de">Einstellung der zu programmierenden Bank 1 - 4. Zurückstellen nach Bank 0 wenn fertig!</tooltip>
-		<tooltip xml:lang="cs">Nastavení programování banky 1 - 4. Po dokončení obnovte na Banka 0!</tooltip>
+		<tooltip>Setting that determines which bank 0-3 is programmed. Reset to Bank 0 - Manufacturer when done!</tooltip>
+		<tooltip xml:lang="de">Auswahl der zu programmierenden Bank 0 - 3. Zurückstellen nach "Bank 0 - Hersteller" wenn fertig!</tooltip>
+		<tooltip xml:lang="cs">Nastavení programování banky 0 - 3. Po dokončení obnovte na Banka 0!</tooltip>
 	</variable>
 	<!-- Bank 0 variables -->
 	<variable item="Bank 0 Manufacturer ID" CV="980.1021=0" readOnly="yes" default="162">
