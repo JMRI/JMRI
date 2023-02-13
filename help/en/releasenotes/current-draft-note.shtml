@@ -206,7 +206,8 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Added SE74 usage information to the Digitrax/LocoNet hardware help page, 
+                    including specific guidance for configuring JMRI's signaling.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
