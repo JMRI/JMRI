@@ -38,6 +38,11 @@ public abstract class Category implements Comparable<Category> {
      */
     public static final Other OTHER = new Other();
 
+    /**
+     * Linux specific things.
+     */
+    public static final Linux LINUX = new Linux();
+
     static {
         // It's not often any item is added to this list so we use CopyOnWriteArrayList
         _categories = new CopyOnWriteArrayList<>();
@@ -45,6 +50,9 @@ public abstract class Category implements Comparable<Category> {
         registerCategory(COMMON);
         registerCategory(FLOW_CONTROL);
         registerCategory(OTHER);
+        if (jmri.util.SystemType.isLinux()) {
+            registerCategory(LINUX);
+        }
     }
 
     /**
@@ -140,6 +148,14 @@ public abstract class Category implements Comparable<Category> {
 
         public Other() {
             super("OTHER", Bundle.getMessage("CategoryOther"), 900);
+        }
+    }
+
+
+    public static final class Linux extends Category {
+
+        public Linux() {
+            super("LINUX", Bundle.getMessage("CategoryLinux"), 2000);
         }
     }
 
