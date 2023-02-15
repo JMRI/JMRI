@@ -18,7 +18,7 @@ public class DigitalFactory implements DigitalExpressionFactory {
     @Override
     public Set<Map.Entry<Category, Class<? extends DigitalExpressionBean>>> getExpressionClasses() {
         Set<Map.Entry<Category, Class<? extends DigitalExpressionBean>>> expressionClasses =
-                new HashSet(        // Set.of() returns an immutable set
+                new HashSet<>(      // Set.of() returns an immutable set
                         Set.of(
                                 new AbstractMap.SimpleEntry<>(Category.COMMON, And.class),
                                 new AbstractMap.SimpleEntry<>(Category.COMMON, Antecedent.class),
