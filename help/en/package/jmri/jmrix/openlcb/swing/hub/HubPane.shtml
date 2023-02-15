@@ -3,8 +3,9 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: Send CAN Frame</title>
+  <title>JMRI: OpenLCB Hub Control</title>
   <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="Steve Young">
   <meta name="keywords" content="JMRI Openlcb hub"><!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -13,15 +14,47 @@
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
       <h1>OpenLCB Hub Control</h1>
-      <a href="OpenLCB_Hub_Control.png"><img src="OpenLCB_Hub_Control.png" width="394" height="124"
+      <a href="OpenLCB_Hub_Control_464x245.png"><img src="OpenLCB_Hub_Control_464x245.png" width="464" height="245"
       alt="OpenLCB Hub Control" class="floatRight"></a><br>
 
       <p>The "OpenLCB Hub Control" tool enables a physical OpenLCB connection to be shared on a
       Network Connection.</p>
 
-      <p>The window displays the IP address and port of the Hub.</p>
+      <p>The window displays the IP address and port of the Hub, along with client connection and disconnections.</p>
+      
+      <p>If the IP addresses is flagged as a Loopback or LinkLocal, this is indicated.</p>
 
       <p>The OpenLCB Hub can be opened by adding as a system startup action.</p>
+      <p>This page can be opened from the Hub Control via Help > Window Help .</p>
+      
+      
+      <h3 id="lineTermination">Line Termination</h3>
+
+      
+      <p>You should not normally need to change this, however if you do so, you are advised to restart JMRI.</p>
+      
+      <h4>Line Termination Enabled</h4>
+      
+      <p>Default for OpenLCB Hub Control.</p>
+      
+      <p>Hub receives Frames whenever a line termination is received in the network stream.</p>
+      <p>Hub sends CAN Frames in the GridConnect Serial format, followed by a line termination character ( CR/LF ).</p>
+
+      <h4>Line Termination Disabled</h4>
+      
+      <p>Hub reads the GridConnect content between the start of the Serial Format ":", and end of format ";" characters.</p>
+      <p>Hub sends CAN Frames in the GridConnect Serial format, with NO line termination character.</p>
+      
+      <h4>Also see</h4>
+      
+      <p>The Grid Connect Serial specification is the documentation for their CANUSB Interface,
+      see section 2.7.1 Message String Syntax in the pdf at 
+      <a href="https://www.gridconnect.com/collections/can-pc-interfaces/products/canusb-com-fd-converter-usb-can-fd-interface#documents-and-drivers"
+      >gridconnect.com</a>.
+      <br/>Line terminations can be enabled / disabled in this USB devices output via a device setting.</p>
+
+
+      
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
