@@ -206,7 +206,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Added SE74 usage information to the Digitrax/LocoNet hardware help page, 
+                <li>Added SE74 usage information to the Digitrax/LocoNet hardware help page,
                     including specific guidance for configuring JMRI's signaling.</li>
             </ul>
 
@@ -284,7 +284,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	<h4>Piko decoders</h4>
             <ul>
                 <li>Bug fixes, improvements and functional enhancements</li>
@@ -597,6 +597,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Updated the plantuml library to version 1.2023.1.  This is used to
+            create program documentation.</li>
         </ul>
 
