@@ -144,18 +144,18 @@ public abstract class Category implements Comparable<Category> {
     }
 
 
-    public static final class Other extends Category {
-
-        public Other() {
-            super("OTHER", Bundle.getMessage("CategoryOther"), 900);
-        }
-    }
-
-
     public static final class Linux extends Category {
 
         public Linux() {
             super("LINUX", Bundle.getMessage("CategoryLinux"), 2000);
+        }
+    }
+
+
+    public static final class Other extends Category {
+
+        public Other() {
+            super("OTHER", Bundle.getMessage("CategoryOther"), Integer.MAX_VALUE);
         }
     }
 
