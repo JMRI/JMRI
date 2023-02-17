@@ -285,7 +285,7 @@
                 <li></li>
             </ul>
 
-	<h4>Piko decoders</h4>
+	    <h4>Piko decoders</h4>
             <ul>
                 <li>Bug fixes, improvements and functional enhancements</li>
             </ul>
@@ -373,7 +373,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>The decoder index is being written in a more compact form to improve the
+                time spent reading it at startup.</li>
         </ul>
 
     <h3>CTC Tool</h3>
