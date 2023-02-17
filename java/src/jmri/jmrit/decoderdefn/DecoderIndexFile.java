@@ -716,7 +716,7 @@ public class DecoderIndexFile extends XmlFile {
                 family.removeChildren("outputs");
                 family.removeChildren("output");
                 family.removeChildren("functionlabels");
-                famil.removeChildren("versionCV");
+                family.removeChildren("versionCV");
                 // and drop content of model elements
                 for (Element element : family.getChildren()) {
                     element.removeContent();
