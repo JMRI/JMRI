@@ -155,11 +155,13 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     // ------------ Button bar components ------------
     JPanel _leftButtonBar;
     JPanel _addButtonPanel;
+    JPanel _duplicateButtonPanel;
     JPanel _copyButtonPanel;
     JPanel _deleteButtonPanel;
     JPanel _moveButtonPanel;
     JPanel _graphButtonPanel;
     JButton _addButton = new JButton();
+    JButton _duplicateButton = new JButton();
     JButton _copyButton = new JButton();
     JButton _deleteButton = new JButton();
     JButton _displayButton = new JButton();
@@ -231,6 +233,19 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _addButtonPanel = new JPanel();
         _addButtonPanel.add(_addButton);
         _leftButtonBar.add(_addButtonPanel);
+
+        // ------------ Duplicate Button ------------
+        _duplicateButton = new JButton(Bundle.getMessage("DuplicateLayoutButtonText"));    // NOI18N
+        _duplicateButton.setToolTipText(Bundle.getMessage("HintDuplicateButton"));       // NOI18N
+        _duplicateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                duplicatePressed();
+            }
+        });
+        _duplicateButtonPanel = new JPanel();
+        _duplicateButtonPanel.add(_duplicateButton);
+        _leftButtonBar.add(_duplicateButtonPanel);
 
         // ------------ Copy Button ------------
         _copyButton = new JButton(Bundle.getMessage("CopyStopsButton"));    // NOI18N
@@ -363,6 +378,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         pack();
         _addButtonPanel.setVisible(false);
+        _duplicateButtonPanel.setVisible(false);
         _copyButtonPanel.setVisible(false);
         _deleteButtonPanel.setVisible(false);
         _graphButtonPanel.setVisible(false);
@@ -1012,6 +1028,45 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         // Switch to new node
         _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
+    }
+
+    /**
+     * Duplicate selected item.
+     */
+    void duplicatePressed() {
+        log.info("duplicatePressed: node = {}", _curNodeType);
+//         switch (_curNodeType) {
+//             case "Layout":     // NOI18N
+//                 addLayout();
+//                 break;
+//
+//             case "TrainTypes": // NOI18N
+//                 addTrainType();
+//                 break;
+//
+//             case "Segments":   // NOI18N
+//                 addSegment();
+//                 break;
+//
+//             case "Segment":    // NOI18N
+//                 addStation();
+//                 break;
+//
+//             case "Schedules":  // NOI18N
+//                 addSchedule();
+//                 break;
+//
+//             case "Schedule":   // NOI18N
+//                 addTrain();
+//                 break;
+//
+//             case "Train":      // NOI18N
+//                 addStop();
+//                 break;
+//
+//             default:
+//                 log.error("Add called for unsupported node type: '{}'", _curNodeType);  // NOI18N
+//         }
     }
 
     /**
@@ -2661,6 +2716,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         // Reset button bar
         _addButtonPanel.setVisible(false);
+        _duplicateButtonPanel.setVisible(false);
         _copyButtonPanel.setVisible(false);
         _deleteButtonPanel.setVisible(false);
         _moveButtonPanel.setVisible(false);
@@ -2670,6 +2726,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             case "Layout":     // NOI18N
                 _addButton.setText(Bundle.getMessage("AddLayoutButtonText"));  // NOI18N
                 _addButtonPanel.setVisible(true);
+                _duplicateButton.setText(Bundle.getMessage("DuplicateLayoutButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteLayoutButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
@@ -2682,6 +2740,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 break;
 
             case "TrainType":     // NOI18N
+                _duplicateButton.setText(Bundle.getMessage("DuplicateTrainTypeButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteTrainTypeButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
@@ -2696,6 +2756,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             case "Segment":     // NOI18N
                 _addButton.setText(Bundle.getMessage("AddStationButtonText"));  // NOI18N
                 _addButtonPanel.setVisible(true);
+                _duplicateButton.setText(Bundle.getMessage("DuplicateSegmentButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteSegmentButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 _graphButtonPanel.setVisible(true);
@@ -2703,6 +2765,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 break;
 
             case "Station":     // NOI18N
+                _duplicateButton.setText(Bundle.getMessage("DuplicateStationButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteStationButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
@@ -2717,6 +2781,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             case "Schedule":     // NOI18N
                 _addButton.setText(Bundle.getMessage("AddTrainButtonText"));  // NOI18N
                 _addButtonPanel.setVisible(true);
+                _duplicateButton.setText(Bundle.getMessage("DuplicateScheduleButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteScheduleButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
@@ -2731,12 +2797,16 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     _copyButtonPanel.setVisible(true);
                 }
 
+                _duplicateButton.setText(Bundle.getMessage("DuplicateTrainButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteTrainButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
                 break;
 
             case "Stop":     // NOI18N
+                _duplicateButton.setText(Bundle.getMessage("DuplicateStopButtonText"));  // NOI18N
+                _duplicateButtonPanel.setVisible(true);
                 _deleteButton.setText(Bundle.getMessage("DeleteStopButtonText"));  // NOI18N
                 _deleteButtonPanel.setVisible(true);
                 editPressed();
