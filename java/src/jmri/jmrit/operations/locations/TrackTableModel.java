@@ -345,8 +345,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 return getRestrictions(track);
             case LOAD_COLUMN:
                 return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS),
-                        track.getLoadOption().equals(Track.INCLUDE_LOADS)) +
-                        (track.isSpur() && track.isHoldCarsWithCustomLoadsEnabled() ? " H" : "");
+                        track.getLoadOption().equals(Track.INCLUDE_LOADS));
             case SHIP_COLUMN:
                 return getModifiedString(track.getShipLoadNames().length,
                         track.getShipLoadOption().equals(Track.ALL_LOADS),
