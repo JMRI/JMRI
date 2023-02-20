@@ -1035,38 +1035,121 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      */
     void duplicatePressed() {
         log.info("duplicatePressed: node = {}", _curNodeType);
-//         switch (_curNodeType) {
-//             case "Layout":     // NOI18N
-//                 addLayout();
-//                 break;
-//
-//             case "TrainTypes": // NOI18N
-//                 addTrainType();
-//                 break;
-//
-//             case "Segments":   // NOI18N
-//                 addSegment();
-//                 break;
-//
-//             case "Segment":    // NOI18N
-//                 addStation();
-//                 break;
-//
-//             case "Schedules":  // NOI18N
-//                 addSchedule();
-//                 break;
-//
-//             case "Schedule":   // NOI18N
-//                 addTrain();
-//                 break;
-//
-//             case "Train":      // NOI18N
-//                 addStop();
-//                 break;
-//
-//             default:
-//                 log.error("Add called for unsupported node type: '{}'", _curNodeType);  // NOI18N
-//         }
+        switch (_curNodeType) {
+            case "Layout":     // NOI18N
+                duplicateLayout();
+                break;
+
+            case "TrainType": // NOI18N
+                duplicateTrainType(0, _curNodeId, (TimeTableTreeNode) _curNode.getParent());
+                break;
+
+            case "Segment":    // NOI18N
+                duplicateSegment(0, _curNodeId,  (TimeTableTreeNode) _curNode.getParent());
+                break;
+
+            case "Station":    // NOI18N
+                duplicateStation(0, _curNodeId, (TimeTableTreeNode) _curNode.getParent());
+                break;
+
+            case "Schedule":  // NOI18N
+                duplicateSchedule();
+                break;
+
+            case "Train":   // NOI18N
+                duplicateTrain();
+                break;
+
+            case "Stop":      // NOI18N
+                duplicateStop();
+                break;
+
+            default:
+                log.error("Duplicate called for unsupported node type: '{}'", _curNodeType);  // NOI18N
+        }
+    }
+
+    void duplicateLayout() {
+        log.info("Duplicate Layout");
+    }
+
+    /**
+     * Create a copy of a train type.
+     * @param layoutId The id for the parent layout.  Zero if within the same layout.
+     * @param trainTypeId The id of the train type to be duplicated.
+     * @param typesNode The types node which will be parent for the new train type.
+     */
+    void duplicateTrainType(int layoutId, int typeId, TimeTableTreeNode typesNode) {
+        TrainType type = _dataMgr.getTrainType(typeId);
+        TrainType newType = type.getCopy(layoutId);
+        setShowReminder(true);
+
+        // Build tree components
+        _leafNode = new TimeTableTreeNode(newType.getTypeName(), "TrainType", newType.getTypeId(), 0);    // NOI18N
+        typesNode.add(_leafNode);
+        _timetableModel.nodeStructureChanged(typesNode);
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
+    }
+
+    /**
+     * Create a copy of a segment.
+     * @param layoutId The id for the parent layout.  Zero if within the same layout.
+     * @param segmentId The id of the segment to be duplicated.
+     * @param segmentsNode The segments node which will be parent for the new segment.
+     */
+    void duplicateSegment(int layoutId, int segmentId, TimeTableTreeNode segmentsNode) {
+        Segment segment = _dataMgr.getSegment(segmentId);
+        Segment newSegment = segment.getCopy(layoutId);
+        setShowReminder(true);
+
+        // Build tree components
+        _leafNode = new TimeTableTreeNode(newSegment.getSegmentName(), "Segment", newSegment.getSegmentId(), 0);    // NOI18N
+        segmentsNode.add(_leafNode);
+        _timetableModel.nodeStructureChanged(segmentsNode);
+
+        // Duplicate the stations using the stations from the orignal segment
+        List<Station> stationList = new ArrayList<>(_dataMgr.getStations(segmentId, true));
+        TimeTableTreeNode segmentNode = _leafNode;
+        for (Station station : stationList) {
+            duplicateStation(newSegment.getSegmentId(), station.getStationId(), segmentNode);
+        }
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
+    }
+
+    /**
+     * Create a copy of a station.
+     * @param segmentId The id for the parent segment.  Zero if within the same segment.
+     * @param stationId The id of the station to be duplicated.
+     * @param segmentNode The segment node which will be parent for the new station.
+     */
+    void duplicateStation(int segmentId, int stationId, TimeTableTreeNode segmentNode) {
+        Station station = _dataMgr.getStation(stationId);
+        Station newStation = station.getCopy(segmentId);
+        setShowReminder(true);
+
+        // Build tree components
+        _leafNode = new TimeTableTreeNode(newStation.getStationName(), "Station", newStation.getStationId(), 0);    // NOI18N
+        segmentNode.add(_leafNode);
+        _timetableModel.nodeStructureChanged(segmentNode);
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
+    }
+
+    void duplicateSchedule() {
+        log.info("Duplicate schedule");
+    }
+
+    void duplicateTrain() {
+        log.info("Duplicate train");
+    }
+
+    void duplicateStop() {
+        log.info("Duplicate stop");
     }
 
     /**
