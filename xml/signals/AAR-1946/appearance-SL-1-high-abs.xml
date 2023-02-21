@@ -51,6 +51,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Added mapping information</revremark>
      </revision>    
+     <revision>
+        <revnumber>2.3</revnumber>
+        <date>2023-02-21</date>
+        <authorinitials>DBM</authorinitials>
+        <revremark>Removed duplicate mappings, corrected one mapping</revremark>
+     </revision>    
   </revhistory>
 
   <aspecttable>AAR 1946</aspecttable>
@@ -152,7 +158,7 @@
 
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
-      <ourAspect>Approach</ourAspect>
+      <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
