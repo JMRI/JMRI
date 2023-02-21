@@ -114,9 +114,9 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
+        <h4><a href="https://openlcb.org/">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Hub Control - UI Update, line termination characters optional for incoming feeds.</li>
             </ul>
 
         <h4>Powerline</h4>
