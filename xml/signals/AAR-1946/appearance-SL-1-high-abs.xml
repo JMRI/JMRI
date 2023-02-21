@@ -160,16 +160,6 @@
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
-    <aspectMapping>
-      <advancedAspect>Clear</advancedAspect>
-      <ourAspect>Clear</ourAspect>
-    </aspectMapping>
-
-     <aspectMapping>
-      <advancedAspect>Approach</advancedAspect>
-      <ourAspect>Approach</ourAspect>
-    </aspectMapping>
-
      <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Approach</ourAspect>
