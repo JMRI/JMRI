@@ -22,7 +22,7 @@ import jmri.jmrix.can.swing.CanPanelInterface;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 
-// import org.openlcb.hub.Hub;
+import org.openlcb.hub.Hub;
 
 /**
  * Frame displaying,and more importantly starting, an OpenLCB TCP/IP hub
