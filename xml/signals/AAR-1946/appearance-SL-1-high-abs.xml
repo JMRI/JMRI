@@ -54,8 +54,8 @@
      <revision>
         <revnumber>2.3</revnumber>
         <date>2023-02-21</date>
-        <authorinitials>DBM</authorinitials>
-        <revremark>Removed duplicate mappings, corrected one mapping</revremark>
+        <authorinitials>BM</authorinitials>
+        <revremark>Removed duplicate mappings, corrected one mapping, added some missing mappings.</revremark>
      </revision>    
   </revhistory>
 
@@ -108,6 +108,11 @@
   <aspectMappings>
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear Alt</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
@@ -177,7 +182,32 @@
     </aspectMapping>
 
      <aspectMapping>
+      <advancedAspect>Stop and Proceed Medium</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Permissive</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Permissive Medium</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
