@@ -63,12 +63,12 @@
       <authorinitials>BM</authorinitials>
       <revremark>Remove ourAspect values which are not supported by this mast type</revremark>
     </revision>
-     <revision>
-        <revnumber>2.5</revnumber>
-        <date>2023-02-21</date>
-        <authorinitials>BM</authorinitials>
-        <revremark>Added some missing mappings</revremark>
-     </revision>    
+    <revision>
+      <revnumber>2.5</revnumber>
+      <date>2023-02-21</date>
+      <authorinitials>BM</authorinitials>
+      <revremark>Added some missing mappings</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>AAR 1946</aspecttable>
