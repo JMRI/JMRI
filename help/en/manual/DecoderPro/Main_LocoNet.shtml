@@ -61,13 +61,13 @@
       displayed.</p>
 
       <p style="margin-left: 40px;"><input name="checkbox" id="checkbox" type="checkbox">
-      <strong>Show unused slots</strong></p>
+      <strong>Show unused slots</strong> check box</p>
 
       <p style="margin-left: 40px;"><input name="checkbox2" id="checkbox2" type="checkbox">
-      <strong>Show system slots</strong></p>
+      <strong>Show system slots</strong> check box</p>
 
-      <p style="margin-left: 40px;"><strong><input name="button" id="button" value="estop all"
-      type="submit"></strong> Executes an <strong>Emergency Stop</strong> for all locomotives.</p>
+      <p style="margin-left: 40px;"><strong><span class="textbutton">estop all</span></strong>
+      button executes an <strong>Emergency Stop</strong> for all locomotives.</p>
 
       <p style="margin-left: 40px;">The columns are:</p>
 
