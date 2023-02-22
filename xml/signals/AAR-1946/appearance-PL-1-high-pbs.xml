@@ -152,6 +152,16 @@
     </aspectMapping>
 
     <aspectMapping>
+      <advancedAspect>Permissive</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Permissive Medium</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>

@@ -188,6 +188,11 @@
       <ourAspect>Slow Approach</ourAspect>
     </aspectMapping>
     <aspectMapping>
+      <advancedAspect>Permissive Medium</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Approach</ourAspect>
       <ourAspect>Slow Approach</ourAspect>
@@ -245,7 +250,7 @@
     </aspectMapping>
 
     <aspectMapping>
-      <advancedAspect>Advance Approach Limited</advancedAspect>
+      <advancedAspect>Advance Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
     </aspectMapping>
