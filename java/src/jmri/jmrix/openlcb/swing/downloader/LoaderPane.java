@@ -97,6 +97,9 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     @Override
     public void doRead(JFileChooser chooser) {
+        // has a file been selected? Might not been if Chooser was cancelled
+        if (chooser == null || chooser.getSelectedFile() == null) return;
+
         String fn = chooser.getSelectedFile().getPath();
         readFile(fn);
         bar.setValue(0);

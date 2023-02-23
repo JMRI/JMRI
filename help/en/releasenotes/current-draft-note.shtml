@@ -600,6 +600,9 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Updated the plantuml library to version 1.2023.1.  This is used to
-            create program documentation.</li>
+                create program documentation.</li>
+            <li>When downloading firmware to multiple boards, it can be a pain to have to select the file over and over.
+                This was changed to make the selected file (hence directory, etc) persistent from one download frame
+                to the next.
         </ul>
 
