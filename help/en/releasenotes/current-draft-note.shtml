@@ -487,7 +487,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Add a PanelControlsContents.py script which lets you
+                set a panel to controlling the layout or not.</li>
         </ul>
 
     <h3>Signals</h3>
