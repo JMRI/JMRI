@@ -50,7 +50,13 @@
       <date>2019-12-30</date>
       <authorinitials>BM</authorinitials>
       <revremark>Removed ourAspect values which are not supported by this mast 
-          type. Add missing "advancedAspect" mappings.</revremark>
+          type. </revremark>
+    </revision>    
+    <revision>
+      <revnumber>2.43</revnumber>
+      <date>2023-02-22</date>
+      <authorinitials>BM</authorinitials>
+      <revremark>Add missing "advancedAspect" mappings.</revremark>
     </revision>
   </revhistory>
 
