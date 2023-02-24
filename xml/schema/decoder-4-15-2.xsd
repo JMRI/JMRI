@@ -202,6 +202,8 @@
       </xs:sequence>
       <xs:attribute name="showEmptyPanes" type="yesNoType"/>
       <xs:attribute name="allowResetDefaults" type="yesNoType"/>
+      <xs:attribute name="suppressFunctionLabels" type="yesNoType" default="no"/>
+      <xs:attribute name="suppressRosterMedia" type="yesNoType" default="no"/>
     </xs:complexType>
   </xs:element>
 

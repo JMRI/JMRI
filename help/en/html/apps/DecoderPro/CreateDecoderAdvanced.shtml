@@ -288,6 +288,10 @@
           </ul>
         </li>
 
+        As a special case, the suppressFunctionLabels and suppressRosterMedia
+        attributes on the decoder-config element can be used to suppress the
+        Function Labels and Roster Media panes respectively whether or not they are empty.
+
         <li>Whether a specific empty pane (as defined in Empty Panes above) shows also depends on
         the pane type:
           <ul>
