@@ -42,7 +42,7 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
-      <reference>Page 92</reference>
+      <reference>Page 76</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-1-high-1low-abs/rule-281.png</imagelink>
     </appearance>
 
@@ -50,7 +50,7 @@
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
-      <reference>Page 98</reference>
+      <reference>Page 84</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-1-high-1low-abs/rule-285.png</imagelink>
     </appearance>
 
@@ -58,7 +58,7 @@
       <aspectname>Restricting</aspectname>
       <show>red</show>
       <show>yellow</show>
-      <reference>Page 105</reference>
+      <reference>Page 90</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-1-high-1low-abs/rule-290.png</imagelink>
     </appearance>
 
@@ -66,7 +66,7 @@
       <aspectname>Stop</aspectname>
       <show>red</show>
       <show>red</show>
-      <reference>Page 105</reference>
+      <reference>Page 93</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-1-high-1low-abs/rule-292.png</imagelink>
     </appearance>
 

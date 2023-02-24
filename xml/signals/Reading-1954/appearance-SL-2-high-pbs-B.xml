@@ -48,8 +48,7 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
-      <reference>Page 92</reference>
-      <comment>Unofficial Rule and Aspect Name to allow for optional appearance</comment>
+      <reference>Page 76</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-high-pbs/rule-281.gif</imagelink>
     </appearance>
 
@@ -57,7 +56,7 @@
       <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
       <show>green</show>
-      <reference>Page 93</reference>
+      <reference>Page 79</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-high-pbs/rule-282.gif</imagelink>
     </appearance>
 
@@ -65,7 +64,7 @@
       <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
       <show>yellow</show>
-      <reference>Page 94</reference>
+      <reference>Page 80</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-high-pbs/rule-282A.gif</imagelink>
     </appearance>
 
@@ -73,7 +72,7 @@
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
-      <reference>Page 45 B</reference>
+      <reference>Page 84</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-high-pbs/rule-285.gif</imagelink>
     </appearance>
 
@@ -81,7 +80,7 @@
       <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
       <show>red</show>
-      <reference>Page 104</reference>
+      <reference>Page 91</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-high-pbs/rule-291.gif</imagelink>
     </appearance>
 

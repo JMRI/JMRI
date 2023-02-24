@@ -41,21 +41,21 @@
     <appearance>
       <aspectname>Slow Clear</aspectname>
       <show>green</show>
-      <reference>Page 100</reference>
+      <reference>Page 87</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-1-low/rule-287.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>yellow</show>
-      <reference>Page 103</reference>
+      <reference>Page 90</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-1-low/rule-290.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
-      <reference>Page 105</reference>
+      <reference>Page 93</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-1-low/rule-292.gif</imagelink>
     </appearance>
 
