@@ -1,27 +1,15 @@
 package jmri.jmrix.openlcb.swing.eventtable;
 
-import java.awt.FlowLayout;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import jmri.jmrit.MemoryContents;
+import java.awt.*;
+import java.util.*;
+
+import javax.swing.*;
+import javax.swing.table.*;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import org.openlcb.Connection;
-import org.openlcb.LoaderClient;
-import org.openlcb.LoaderClient.LoaderStatusReporter;
-import org.openlcb.MimicNodeStore;
-import org.openlcb.NodeID;
-import org.openlcb.implementations.DatagramService;
-import org.openlcb.implementations.MemoryConfigurationService;
-import org.openlcb.swing.NodeSelector;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.openlcb.*;
+
 
 /**
  * Pane for displaying a table of relationships of nodes, producers and consumers
@@ -29,78 +17,44 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2023
  */
-public class EventTablePane extends jmri.jmrix.AbstractLoaderPane
+public class EventTablePane extends jmri.util.swing.JmriPanel
         implements jmri.jmrix.can.swing.CanPanelInterface {
 
     protected CanSystemConnectionMemo memo;
     Connection connection;
-    MemoryConfigurationService mcs;
-    DatagramService dcs;
-    MimicNodeStore store;
-    NodeSelector nodeSelector;
-    JPanel selectorPane;
-    JTextField spaceField;
-    JCheckBox lockNode;
-    LoaderClient loaderClient;
     NodeID nid;
 
+    MimicNodeStore store;
+    EventTableDataModel model;
+
     public String getTitle(String menuTitle) {
-        return Bundle.getMessage("TitleLoader");
+        return Bundle.getMessage("TitleEventTable");
     }
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
         this.connection = memo.get(Connection.class);
-        this.mcs = memo.get(MemoryConfigurationService.class);
-        this.dcs = memo.get(DatagramService.class);
-        this.store = memo.get(MimicNodeStore.class);
-        this.nodeSelector = new NodeSelector(store);
-        this.loaderClient = memo.get(LoaderClient.class);
         this.nid = memo.get(NodeID.class);
-        // We can add to GUI here
-        loadButton.setText("Load");
-        loadButton.setToolTipText("Start Load Process");
-        JPanel p;
 
-        p = new JPanel();
-        p.setLayout(new FlowLayout());
-        p.add(new JLabel("Target Node ID: "));
-        p.add(nodeSelector);
-        selectorPane.add(p);
+        this.store = memo.get(MimicNodeStore.class);
+        this.model = new EventTableDataModel();
 
-        p = new JPanel();
-        p.setLayout(new FlowLayout());
-        p.add(new JLabel("Address Space: "));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        spaceField = new JTextField("" + 0xEF);
-        p.add(spaceField);
-        selectorPane.add(p);
-        spaceField.setToolTipText("The decimal number of the address space, e.g. 239");
+        // Add to GUI here
 
-        p = new JPanel();
-        p.setLayout(new FlowLayout());
-        lockNode = new JCheckBox("Lock Node");
-        p.add(lockNode);
-        selectorPane.add(p);
+        var table = new JTable(model);
+        table.setAutoCreateRowSorter(true);
+        var scrollPane = new JScrollPane(table);
+        add(scrollPane);
 
-        // Verify not an option
-        verifyButton.setVisible(false);
-    }
+        var updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+        updateButton.addActionListener(this::sendRequestEvents);
+        add(updateButton);
 
-    @Override
-    protected void addChooserFilters(JFileChooser chooser) {
-    }
-
-    @Override
-    public void doRead(JFileChooser chooser) {
-        // has a file been selected? Might not been if Chooser was cancelled
-        if (chooser == null || chooser.getSelectedFile() == null) return;
-
-        String fn = chooser.getSelectedFile().getPath();
-        readFile(fn);
-        bar.setValue(0);
-        loadButton.setEnabled(true);
+        // hook up to receive traffic
+        memo.get(OlcbInterface.class).registerMessageListener(new Monitor(model));
     }
 
     public EventTablePane() {
@@ -108,125 +62,259 @@ public class EventTablePane extends jmri.jmrix.AbstractLoaderPane
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.openlcb.swing.downloader.LoaderFrame";
+        return "package.jmri.jmrix.openlcb.swing.eventtable.EventTablePane";
     }
 
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Firmware Downloader");
+            return (memo.getUserName() + " Event Table");
         }
-        return getTitle(Bundle.getMessage("TitleLoader"));
+        return getTitle(Bundle.getMessage("TitleEventTable"));
     }
 
-    @Override
-    protected void addOptionsPanel() {
-        selectorPane = new JPanel();
-        selectorPane.setLayout(new BoxLayout(selectorPane, BoxLayout.Y_AXIS));
-
-        add(selectorPane);
+    public void sendRequestEvents(java.awt.event.ActionEvent e) {
+        model.clear();
+        for (var memo : store.getNodeMemos()) {
+            var destNodeID = memo.getNodeID();
+            log.trace("sendRequestEvents {} {}", nid, destNodeID);
+            Message m = new IdentifyEventsAddressedMessage(nid, destNodeID);
+            connection.put(m, null);
+        }
     }
 
-    @Override
-    protected void handleOptionsInFileContent(MemoryContents inputContent) {
-    }
+    /**
+     * Nested class to hold data model
+     */
+    protected class EventTableDataModel extends AbstractTableModel {
 
-    @Override
-    protected void doLoad() {
-        super.doLoad();
-        setOperationAborted(false);
-        abortButton.setEnabled(false);
-        abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
-        int ispace = Integer.parseInt(spaceField.getText());
-        long addr = 0;
-        loaderClient.doLoad(nid, destNodeID(), ispace, addr, fdata, new LoaderStatusReporter() {
-            @Override
-            public void onProgress(float percent) {
-                updateGUI(Math.round(percent));
+        static final int COL_EVENTID = 0;
+        static final int COL_EVENTNAME = 1;
+        static final int COL_PRODUCER_NODE = 2;
+        static final int COL_PRODUCER_NAME = 3;
+        static final int COL_CONSUMER_NODE = 4;
+        static final int COL_CONSUMER_NAME = 5;
+        static final int COL_COUNT = 6;
+
+        @Override
+        public Object getValueAt(int row, int col) {
+            if (row >= memos.size()) {
+                log.warn("request out of range: {} greater than {}", row, memos.size());
+                return "Illegal col "+row+" "+col;
             }
+            var memo = memos.get(row);
+            switch (col) {
+                case COL_EVENTID: return memo.eventID.toShortString();
+                case COL_EVENTNAME: return memo.eventName;
+                case COL_PRODUCER_NODE: return memo.producer;
+                case COL_PRODUCER_NAME: return memo.producerName;
+                case COL_CONSUMER_NODE: return memo.consumer;
+                case COL_CONSUMER_NAME: return memo.consumerName;
+                default: return "Illegal row "+row+" "+col;
+            }
+        }
 
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
-                justification = "message String also used in status JLabel")
-            @Override
-            public void onDone(int errorCode, String errorString) {
-                if (errorCode == 0) {
-                    updateGUI(100); //draw bar to 100%
-                    if (errorString.isEmpty()) {
-                        status.setText(Bundle.getMessage("StatusDownloadOk"));
-                    } else {
-                        status.setText(Bundle.getMessage("StatusDownloadOkWithMessage", errorString));
+        @Override
+        public int getColumnCount() {
+            return COL_COUNT;
+        }
+
+        @Override
+        public String getColumnName(int col) {
+            switch (col) {
+                case COL_EVENTID:       return "Event ID";
+                case COL_EVENTNAME:     return "Event Name";
+                case COL_PRODUCER_NODE: return "Producer Node";
+                case COL_PRODUCER_NAME: return "Producer Node Name";
+                case COL_CONSUMER_NODE: return "Consumer Node";
+                case COL_CONSUMER_NAME: return "Consumer Node Name";
+                default: return "ERROR "+col;
+            }
+        }
+
+        @Override
+        public int getRowCount() {
+            return memos.size();
+        }
+
+        /**
+         * Remove all existing data, generally just in advance of an update
+         */
+        void clear() {
+            memos = new ArrayList<>();
+        }
+
+        ArrayList<TripleMemo> memos = new ArrayList<>();
+
+        /**
+         * Record an event-producer pair
+         */
+        void recordProducer(EventID eventID, NodeID nodeID) {
+            log.trace("recordProducer of {} in {}", eventID, nodeID);
+
+            var nodeMemo = store.findNode(nodeID);
+            String name = "";
+            if (nodeMemo != null) {
+                var ident = nodeMemo.getSimpleNodeIdent();
+                    if (ident != null) {
+                        name = ident.getUserName();
                     }
-                    setOperationAborted(false);
-                } else {
-                    String msg = Bundle.getMessage("StatusDownloadFailed", Integer.toHexString(errorCode), errorString);
-                    status.setText(msg);
-                    setOperationAborted(true);
-                    log.info(msg);
+            }
+
+
+            // if this already exists, skip storing it
+            // if you can, find a matching memo with an empty consumer value
+            TripleMemo empty = null;
+            for (var memo : memos) {
+                if (memo.eventID.equals(eventID) ) {
+                    // if matches, ignore
+                    if (memo.producer.equals(nodeID)) {
+                        return;
+                    }
+                    // if empty producer slot, remember it
+                    if (memo.producer == null) empty = memo;
                 }
-                enableDownloadVerifyButtons();
-            }
-        });
-    }
-
-    void updateGUI(final int value) {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            log.debug("updateGUI with {}",value);
-            // update progress bar
-            bar.setValue(value);
-        });
-    }
-
-    /**
-     * Get NodeID from the GUI
-     *
-     * @return selected node id
-     */
-    NodeID destNodeID() {
-        return nodeSelector.getSelectedItem();
-    }
-
-    @Override
-    protected void setDefaultFieldValues() {
-        // currently, doesn't do anything, as just loading raw hex files.
-        log.debug("setDefaultFieldValues leaves fields unchanged");
-    }
-
-    byte[] fdata;
-
-    public void readFile(String filename) {
-        File file = new File(filename);
-        try (FileInputStream fis = new FileInputStream(file)) {
-
-            log.info("Total file size to read (in bytes) : {}",fis.available());
-            fdata = new byte[fis.available()];
-            int i = 0;
-            int content;
-            while ((content = fis.read()) != -1) {
-                fdata[i++] = (byte) content;
             }
 
-        } catch (IOException e) {
-            log.error("Unable to read {}", filename, e);
+            // can we use the empty?
+            if (empty != null) {
+                // yes
+                log.trace("   reuse empty");
+                empty.producer = nodeID;
+                empty.producerName = name;
+                fireTableDataChanged();
+                return;
+            }
+
+            // have to make a new one
+            var memo = new TripleMemo(
+                            eventID,
+                            "",
+                            nodeID,
+                            name,
+                            null,
+                            ""
+                        );
+            memos.add(memo);
+            fireTableStructureChanged();
+        }
+
+        /**
+         * Record an event-consumer pair
+         */
+        void recordConsumer(EventID eventID, NodeID nodeID) {
+            log.trace("recordConsumer of {} in {}", eventID, nodeID);
+
+            var nodeMemo = store.findNode(nodeID);
+            String name = "";
+            if (nodeMemo != null) {
+                var ident = nodeMemo.getSimpleNodeIdent();
+                    if (ident != null) {
+                        name = ident.getUserName();
+                    }
+            }
+
+            // if this already exists, skip storing it
+            // if you can, find a matching memo with an empty consumer value
+            TripleMemo empty = null;
+            for (var memo : memos) {
+                if (memo.eventID.equals(eventID) ) {
+                    // if matches, ignore
+                    if (memo.consumer.equals(nodeID)) {
+                        return;
+                    }
+                    // if empty consumer slot, remember it
+                    if (memo.consumer == null) empty = memo;
+                }
+            }
+
+            // can we use the empty?
+            if (empty != null) {
+                // yes
+                log.trace("   reuse empty");
+                empty.consumer = nodeID;
+                empty.consumerName = name;
+                fireTableDataChanged();
+                return;
+            }
+
+            // have to make a new one
+            var memo = new TripleMemo(
+                            eventID,
+                            "",
+                            null,
+                            "",
+                            nodeID,
+                            name
+                        );
+            memos.add(memo);
+            fireTableStructureChanged();
+        }
+
+        class TripleMemo {
+            EventID eventID;
+            String eventName;
+            NodeID producer;
+            String producerName;
+            NodeID consumer;
+            String consumerName;
+
+            TripleMemo(EventID eventID, String eventName, NodeID producer, String producerName,
+                        NodeID consumer, String consumerName) {
+                this.eventID = eventID;
+                this.eventName = eventName;
+                this.producer = producer;
+                this.producerName = producerName;
+                this.consumer = consumer;
+                this.consumerName = consumerName;
+            }
         }
     }
 
     /**
-     * Checks the values in the GUI text boxes to determine if any are invalid.
-     * Intended for use immediately after reading a firmware file for the
-     * purpose of validating any key/value pairs found in the file. Also
-     * intended for use immediately before a "verify" or "download" operation to
-     * check that the user has not changed any of the GUI text values to ones
-     * that are unsupported.
-     * <p>
-     * Note that this method cannot guarantee that the values are suitable for
-     * the hardware being updated and/or for the particular firmware information
-     * which was read from the firmware file.
-     *
-     * @return false if one or more GUI text box contains an invalid value
+     * Internal class to watch OpenLCB traffic
      */
-    @Override
-    protected boolean parametersAreValid() {
-        return true;
+
+    class Monitor extends MessageDecoder {
+
+        Monitor(EventTableDataModel model) {
+            this.model = model;
+        }
+
+        EventTableDataModel model;
+
+        /**
+         * Handle "Producer/Consumer Event Report" message
+         * @param msg       message to handle
+         * @param sender    connection where it came from
+         */
+        public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
+            var nodeID = msg.getSourceNodeID();
+            var eventID = msg.getEventID();
+            model.recordProducer(eventID, nodeID);
+        }
+
+        /**
+         * Handle "Consumer Identified" message
+         * @param msg       message to handle
+         * @param sender    connection where it came from
+         */
+        public void handleConsumerIdentified(ConsumerIdentifiedMessage msg, Connection sender){
+            var nodeID = msg.getSourceNodeID();
+            var eventID = msg.getEventID();
+            model.recordConsumer(eventID, nodeID);
+        }
+
+        /**
+         * Handle "Producer Identified" message
+         * @param msg       message to handle
+         * @param sender    connection where it came from
+         */
+        public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender){
+            var nodeID = msg.getSourceNodeID();
+            var eventID = msg.getEventID();
+            model.recordProducer(eventID, nodeID);
+        }
     }
 
     /**
@@ -237,10 +325,10 @@ public class EventTablePane extends jmri.jmrix.AbstractLoaderPane
         public Default() {
             super("Openlcb Event Table",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    EventTableAction.class.getName(),
+                    EventTablePane.class.getName(),
                     jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(EventTablePane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTablePane.class);
 }
