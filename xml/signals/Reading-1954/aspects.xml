@@ -5,8 +5,8 @@
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
-  <name>Reading</name>
-  <date>1956</date>
+  <name>Reading-1954</name>
+  <date>1954</date>
   <reference>As described in the publication "Reading Company Rules for the Government of the Operating Department Effective January 1, 1954."</reference>
 
   <copyright xmlns="http://docbook.org/ns/docbook">
