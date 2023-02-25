@@ -3,7 +3,7 @@
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable-no-check.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -100,10 +100,6 @@
 
        <ourAspect>Clear</ourAspect>
 
-       <ourAspect>Limited Clear</ourAspect>
-
-       <ourAspect>Slow Clear</ourAspect>
-
      </aspectMapping>
 
 
@@ -114,31 +110,8 @@
 
         <ourAspect>Clear</ourAspect>
 
-        <ourAspect>Limited Clear</ourAspect>
-
-        <ourAspect>Slow Clear</ourAspect>
-
       </aspectMapping>
 
-
-
-      <aspectMapping>
-
-        <advancedAspect>Limited Clear</advancedAspect>
-
-        <ourAspect>Restricting</ourAspect>
-
-    </aspectMapping>
-
-
-
-    <aspectMapping>
-
-      <advancedAspect>Limited Approach</advancedAspect>
-
-        <ourAspect>Restricting</ourAspect>
-
-    </aspectMapping>
 
 
 
@@ -149,7 +122,6 @@
         <advancedAspect>Medium Clear</advancedAspect>
 
         <ourAspect>Approach Medium</ourAspect>
-        <ourAspect>Restricting</ourAspect>
       </aspectMapping>
 
 
@@ -158,10 +130,6 @@
         <advancedAspect>Approach Medium</advancedAspect>
 
         <ourAspect>Clear</ourAspect>
-        <ourAspect>Limited Clear</ourAspect>
-
-        <ourAspect>Restricting</ourAspect>
-
       </aspectMapping>
 
 
@@ -180,21 +148,8 @@
 
         <advancedAspect>Medium Approach Slow</advancedAspect>
 
-        <ourAspect>Restricting</ourAspect>
-
         <ourAspect>Approach Medium</ourAspect>
       </aspectMapping>
-
-
-
-    <aspectMapping>
-
-        <advancedAspect>Approach Slow</advancedAspect>
-
-        <ourAspect>Restricting</ourAspect>
-
-      </aspectMapping>
-
 
 
       <aspectMapping>
@@ -216,8 +171,6 @@
 
         <ourAspect>Approach Medium</ourAspect>
         <ourAspect>Approach</ourAspect>
-        <ourAspect>Restricting</ourAspect>
-
 
       </aspectMapping>
 
@@ -227,21 +180,10 @@
 
         <advancedAspect>Slow Clear</advancedAspect>
 
-        <ourAspect>Restricting</ourAspect>
-
         <ourAspect>Clear</ourAspect>
 
       </aspectMapping>
 
-
-
-    <aspectMapping>
-
-        <advancedAspect>Slow Approach</advancedAspect>
-
-        <ourAspect>Restricting</ourAspect>
-
-      </aspectMapping>
 
 
 
@@ -252,8 +194,6 @@
 
         <ourAspect>Approach</ourAspect>
 
-        <ourAspect>Restricting</ourAspect>
-
       </aspectMapping>
 
 
@@ -261,7 +201,6 @@
 
         <advancedAspect>Stop and Proceed</advancedAspect>
 
-        <ourAspect>Restricting</ourAspect>
         <ourAspect>Approach</ourAspect>
 
 
@@ -274,7 +213,6 @@
 
         <ourAspect>Approach</ourAspect>
 
-        <ourAspect>Restricting</ourAspect>
       </aspectMapping>
 
 

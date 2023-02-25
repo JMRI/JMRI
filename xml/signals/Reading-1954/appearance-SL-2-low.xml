@@ -139,11 +139,33 @@
       </aspectMapping>
 
 
+    <aspectMapping>
+
+        <advancedAspect>Advance Approach</advancedAspect>
+
+
+        <ourAspect>Clear</ourAspect>
+
+      </aspectMapping>
+
+      <aspectMapping>
+
+        <advancedAspect>Medium Clear</advancedAspect>
+
+        <ourAspect>Approach Medium</ourAspect>
+
+      </aspectMapping>
+
+
+
+
 
 
       <aspectMapping>
 
         <advancedAspect>Approach</advancedAspect>
+
+        <ourAspect>Advance Approach</ourAspect>
 
         <ourAspect>Clear</ourAspect>
       </aspectMapping>
