@@ -41,21 +41,21 @@
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-      <reference>Page 101</reference>
+      <reference>Page 76</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-1-high-abs/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Permissive</aspectname>
       <show>yellow</show>
-      <reference>Page 101</reference>
+      <reference>Page 89</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-1-high-abs/rule-289.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
-      <reference>Page 101</reference>
+      <reference>Page 93</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-1-high-abs/rule-292.gif</imagelink>
     </appearance>
 

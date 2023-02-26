@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
-    <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20230108"/>
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20230211"/>
     <!-- Accessory decoder  -->
     <!-- Description of circuit diagram https://sites.google.com/site/sidloweb1/ -->
     <!-- e-shop http://dccdoma.eshop-zdarma.cz/ -->
@@ -1860,12 +1860,16 @@
             </label>
             <separator/>
             <label>
-                <text>Any change on this tab will change the output assignment.</text>
-                <text xml:lang="cs">Při jakékoliv změně na této záložce dojde ke změně přiřazení výstupů.</text>
+                <text>Any change on this tab will change the output assignment and aspects.</text>
+                <text xml:lang="cs">Při jakékoliv změně na této záložce dojde ke změně přiřazení výstupů a návěstí.</text>
             </label>
             <label>
                 <text>Check the assignment of the outputs.</text>
                 <text xml:lang="cs">Zkontrolujte přiřazení výstupů.</text>
+            </label>
+            <label>
+                <text>When changing row Signal Mast n, check tab Signal Mast n.</text>
+                <text xml:lang="cs">Při změně řádku Návěstidlo n zkontrolujte záložku Návěstidlo n.</text>
             </label>
                 
         </column>
@@ -2629,11 +2633,6 @@
             
     <pane>
     <!--  Pane Signal mast 0 =============================================== -->
-        <qualifier>
-          <variableref>Preset SignalMast 0</variableref>
-          <relation>le</relation>
-          <value>0</value>
-        </qualifier>
 
         <name>Signal mast 0</name>
         <name xml:lang="cs">Návěstidlo 0</name>
@@ -2891,6 +2890,15 @@
                   
         </grid>
         
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+        <separator/>
+       	<label>
+                <text>When you make any changes on Preset tab Signal mast 0, you reload this tab.</text>
+                <text xml:lang="cs">Při  změně na záložce Přednastavení Návěstidlo 0 znovu načtete tuto záložku.</text>
+       	</label>
         </column>
         
     </pane>
@@ -2901,11 +2909,6 @@
           <variableref>Number of Signal</variableref>
           <relation>ge</relation>
           <value>2</value>
-        </qualifier>
-        <qualifier>
-          <variableref>Preset SignalMast 1</variableref>
-          <relation>le</relation>
-          <value>0</value>
         </qualifier>
     
         <name>Signal mast 1</name>
@@ -3164,6 +3167,15 @@
                   
         </grid>
         
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+        <separator/>
+       	<label>
+                <text>When you make any changes on Preset tab Signal mast 1, you reload this tab.</text>
+                <text xml:lang="cs">Při  změně na záložce Přednastavení Návěstidlo 1 znovu načtete tuto záložku.</text>
+       	</label>
         </column>
         
     </pane>
@@ -3174,11 +3186,6 @@
           <variableref>Number of Signal</variableref>
           <relation>ge</relation>
           <value>3</value>
-        </qualifier>
-        <qualifier>
-          <variableref>Preset SignalMast 2</variableref>
-          <relation>le</relation>
-          <value>0</value>
         </qualifier>
     
         <name>Signal mast 2</name>
@@ -3437,6 +3444,15 @@
                   
         </grid>
         
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+        <separator/>
+       	<label>
+                <text>When you make any changes on Preset tab Signal mast 2, you reload this tab.</text>
+                <text xml:lang="cs">Při  změně na záložce Přednastavení Návěstidlo 2 znovu načtete tuto záložku.</text>
+       	</label>
         </column>
         
     </pane>
@@ -3447,11 +3463,6 @@
           <variableref>Number of Signal</variableref>
           <relation>ge</relation>
           <value>4</value>
-        </qualifier>
-        <qualifier>
-          <variableref>Preset SignalMast 3</variableref>
-          <relation>le</relation>
-          <value>0</value>
         </qualifier>
     
         <name>Signal mast 3</name>
@@ -3710,6 +3721,15 @@
                   
         </grid>
         
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+        <separator/>
+       	<label>
+                <text>When you make any changes on Preset tab Signal mast 3, you reload this tab.</text>
+                <text xml:lang="cs">Při  změně na záložce Přednastavení Návěstidlo 3 znovu načtete tuto záložku.</text>
+       	</label>
         </column>
         
     </pane>
@@ -3720,11 +3740,6 @@
           <variableref>Number of Signal</variableref>
           <relation>ge</relation>
           <value>5</value>
-        </qualifier>
-        <qualifier>
-          <variableref>Preset SignalMast 4</variableref>
-          <relation>le</relation>
-          <value>0</value>
         </qualifier>
     
         <name>Signal mast 4</name>
@@ -3983,6 +3998,15 @@
                   
         </grid>
         
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+        <separator/>
+       	<label>
+                <text>When you make any changes on Preset tab Signal mast 4, you reload this tab.</text>
+                <text xml:lang="cs">Při  změně na záložce Přednastavení Návěstidlo 4 znovu načtete tuto záložku.</text>
+       	</label>
         </column>
         
     </pane>
@@ -3993,11 +4017,6 @@
           <variableref>Number of Signal</variableref>
           <relation>ge</relation>
           <value>6</value>
-        </qualifier>
-        <qualifier>
-          <variableref>Preset SignalMast 5</variableref>
-          <relation>le</relation>
-          <value>0</value>
         </qualifier>
     
         <name>Signal mast 5</name>
@@ -4256,6 +4275,15 @@
                   
         </grid>
         
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+        <separator/>
+       	<label>
+                <text>When you make any changes on Preset tab Signal mast 5, you reload this tab.</text>
+                <text xml:lang="cs">Při  změně na záložce Přednastavení Návěstidlo 5 znovu načtete tuto záložku.</text>
+       	</label>
         </column>
         
     </pane>
@@ -4266,11 +4294,6 @@
           <variableref>Number of Signal</variableref>
           <relation>ge</relation>
           <value>7</value>
-        </qualifier>
-        <qualifier>
-          <variableref>Preset SignalMast 6</variableref>
-          <relation>le</relation>
-          <value>0</value>
         </qualifier>
     
         <name>Signal mast 6</name>
@@ -4529,6 +4552,15 @@
                   
         </grid>
         
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+        <separator/>
+       	<label>
+                <text>When you make any changes on Preset tab Signal mast 6, you reload this tab.</text>
+                <text xml:lang="cs">Při  změně na záložce Přednastavení Návěstidlo 6 znovu načtete tuto záložku.</text>
+       	</label>
         </column>
         
     </pane>
@@ -4539,11 +4571,6 @@
           <variableref>Number of Signal</variableref>
           <relation>ge</relation>
           <value>8</value>
-        </qualifier>
-        <qualifier>
-          <variableref>Preset SignalMast 7</variableref>
-          <relation>le</relation>
-          <value>0</value>
         </qualifier>
     
         <name>Signal mast 7</name>
@@ -4802,6 +4829,15 @@
                   
         </grid>
         
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+        <separator/>
+       	<label>
+                <text>When you make any changes on Preset tab Signal mast 7, you reload this tab.</text>
+                <text xml:lang="cs">Při  změně na záložce Přednastavení Návěstidlo 7 znovu načtete tuto záložku.</text>
+       	</label>
         </column>
         
     </pane>

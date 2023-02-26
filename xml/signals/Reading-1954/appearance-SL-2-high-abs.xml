@@ -39,19 +39,10 @@
   <appearances>
 
     <appearance>
-      <aspectname>Clear alt</aspectname>
-      <show>green</show>
-      <show>green</show>
-      <reference>Page 92</reference>
-      <comment>Unofficial Rule and Aspect Name to allow for optional appearance</comment>
-      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-high-abs/rule-281-alt.gif</imagelink>
-    </appearance>
-
-    <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
-      <reference>Page 92</reference>
+      <reference>Page 76</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-high-abs/rule-281.gif</imagelink>
     </appearance>
 
@@ -59,7 +50,7 @@
       <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
       <show>green</show>
-      <reference>Page 94</reference>
+      <reference>Page 79</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-high-abs/rule-282.gif</imagelink>
     </appearance>
 
@@ -67,7 +58,7 @@
       <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
       <show>yellow</show>
-      <reference>Page 95</reference>
+      <reference>Page 80</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-high-abs/rule-282A.gif</imagelink>
     </appearance>
 
@@ -75,23 +66,15 @@
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
-      <reference>Page 98</reference>
+      <reference>Page 84</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-high-abs/rule-285.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricting</aspectname>
-      <show>red</show>
-      <show>yellow</show>
-      <reference>Page 103</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-high-abs/rule-290.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <show>red</show>
-      <reference>Page 105</reference>
+      <reference>Page 93</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-2-high-abs/rule-292.gif</imagelink>
     </appearance>
 

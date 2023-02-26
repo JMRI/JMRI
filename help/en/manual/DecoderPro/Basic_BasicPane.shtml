@@ -125,11 +125,10 @@
         shown as red.</dd>
       </dl>
 
-      <p>You will see examples of<br>
-      this throughout the manual.</p>
+      <p>You will see examples of this throughout the manual.</p>
       <a id="ReadData"></a> To read the actual settings for these options (and IF your system and
-      installed decoder will allow readback of decoder values), click on the <strong><input name=
-      "button" id="button" value="Read full sheet" type="button"></strong> . The individual
+      installed decoder will allow readback of decoder values), click on the <strong><span
+      class="textbutton">Read full sheet</span></strong> button. The individual
       settings will turn red while they are in the process of being read (clever, eh?), and will
       turn white once the values have been read successfully from the decoder. Once again,
       DecoderPro must play "Twenty Questions" to get this information, and sometimes even has to

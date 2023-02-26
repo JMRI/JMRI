@@ -45,7 +45,7 @@
       </p>
 
       <p>Opens the <strong>Send QSI command</strong> prompt to type in a <strong>Command:</strong>
-      and click on <input type="submit" name="button" id="button" value="Send"> .</p>
+      and click on <span class="textbutton">Send</span> .</p>
 
       <p><img src="images/Main_QSI_01.png" alt="Send Command" width="226" height="99">
       </p>
