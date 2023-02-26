@@ -58,8 +58,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         // Add to GUI here
 
         var table = new JTable(model);
+        model.table = table;
+        model.sorter = sorter;
         table.setAutoCreateRowSorter(true);
         table.setRowSorter(sorter);
+        table.setDefaultRenderer(String.class, new MultiLineCellRenderer());
+        table.setShowGrid(true);
+        table.setGridColor(Color.BLACK);
 
         var scrollPane = new JScrollPane(table);
         add(scrollPane);
@@ -160,6 +165,37 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         sorter.setRowFilter(rf);
     }
 
+    /**
+     * Nest class to display multiple lines in a cell
+     */
+    class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
+
+      public MultiLineCellRenderer() {
+        setLineWrap(true);
+        setWrapStyleWord(true);
+        setOpaque(true);
+      }
+
+      public Component getTableCellRendererComponent(JTable table, Object value,
+          boolean isSelected, boolean hasFocus, int row, int column) {
+        if (isSelected) {
+          setForeground(table.getSelectionForeground());
+          setBackground(table.getSelectionBackground());
+        } else {
+          setForeground(table.getForeground());
+          setBackground(table.getBackground());
+        }
+        setFont(table.getFont());
+        if (hasFocus) {
+          if (table.isCellEditable(row, column)) {
+            setForeground(UIManager.getColor("Table.focusCellForeground"));
+            setBackground(UIManager.getColor("Table.focusCellBackground"));
+          }
+        }
+        setText((value == null) ? "" : value.toString());
+        return this;
+      }
+    }
 
     /**
      * Nested class to hold data model
@@ -185,6 +221,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         MimicNodeStore store;
         EventTable stdEventTable;
         IdTagManager tagManager;
+        JTable table;
+        TableRowSorter<EventTableDataModel> sorter;
 
         TripleMemo getTripleMemo(int row) {
             if (row >= memos.size()) {
@@ -214,9 +252,32 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     return memo.consumer != null ? memo.consumer.toString() : "";
                 case COL_CONSUMER_NAME: return memo.consumerName;
                 case COL_CONTEXT_INFO:
+                    // set up for multi-line output
                     var result = "";
+                    var height = 2; // 2 margin
+                    int increment = table.getFont().getSize()*12/10; // 1.2 line spacing
+                    var first = true;   // no \n before first line
+
+                    // TODO: Remove debug lines
+                    // height+=increment;
+                    // first = false;
+                    // result = "FOO";
+
+                    // scan the event info as available
                     for (var entry : stdEventTable.getEventInfo(memo.eventID).getAllEntries()) {
-                        result += (" entry: "+entry.getDescription()) + ";";
+                        if (!first) result +="\n";
+                        first = false;
+                        height += increment;
+                        result += entry.getDescription();
+                    }
+                    // set height
+
+                    // When constrained, these rows don't match up, need to find constrained row
+                    var viewRow = sorter.convertRowIndexToView(row);
+                    if (height >= increment) {
+                        table.setRowHeight(viewRow, height);
+                    } else {
+                        table.setRowHeight(viewRow, increment); // when no lines, assume 1
                     }
                     return result;
                 default: return "Illegal row "+row+" "+col;
