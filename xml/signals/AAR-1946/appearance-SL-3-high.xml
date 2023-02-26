@@ -46,6 +46,12 @@
         <authorinitials>KC</authorinitials>
         <revremark>Normalize all aspect names to not have hyphens</revremark>
     </revision>
+     <revision>
+        <revnumber>1.4</revnumber>
+        <date>2023-02-21</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Added some missing mappings</revremark>
+     </revision>    
  </revhistory>
 
   <aspecttable>AAR 1946</aspecttable>
@@ -229,6 +235,14 @@
     </aspectMapping>
 
     <aspectMapping>
+      <advancedAspect>Clear Alt</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Advance Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
@@ -319,8 +333,36 @@
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
+    <aspectMapping>
+      <advancedAspect>Permissive</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Permissive Medium</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
      <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed Medium</advancedAspect>
       <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Approach</ourAspect>

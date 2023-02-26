@@ -150,6 +150,10 @@
         <turnout>IT10</turnout>
         <turnoutstate>closed</turnoutstate>
       </aspect>
+      <aspect defines="Permissive Medium">
+        <turnout />
+        <turnoutstate>thrown</turnoutstate>
+      </aspect>
       <disabledAspects>
         <disabledAspect>Stop and Proceed</disabledAspect>
       </disabledAspects>
@@ -181,6 +185,7 @@
         <bitString aspect="Restricting">111</bitString>
         <bitString aspect="Stop and Proceed" />
         <bitString aspect="Stop">000</bitString>
+        <bitString aspect="Permissive Medium" />
       </bitStrings>
       <disabledAspects>
         <disabledAspect>Advance Approach</disabledAspect>
@@ -221,6 +226,9 @@
       </aspect>
       <aspect defines="Stop">
         <number>10</number>
+      </aspect>
+      <aspect defines="Permissive Medium">
+        <number>-1</number>
       </aspect>
       <disabledAspects>
         <disabledAspect>Advance Approach</disabledAspect>
