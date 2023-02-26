@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- Copyright Bob Jacobsen 2008 -->
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: OpenLCB Event Table</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help send loconet packets">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+    <h1>OpenLCB Event Table Frame</h1>
+
+      This provides a table view of the Events, Producers and Consumers
+      in your OpenLCB network.
+      <p>
+      You can resize and sort the columns using the header row.
+      <p>
+      Pressing the "Update from Network" button will load the table from the network.
+      This might take a couple seconds.  You should press it again
+      after changes like adding nodes, changing their configuration, etc.
+      The table cannot detect those changes automatically.
+      <p>
+      If node names (4th and 6th columns) don't show up immediately, press
+      "Update from Network" a second time.
+      <p>
+      You can enter names for events in the 2nd column.  Click on the cell
+      to open it for editing. Hit return when done.  These will be
+      saved automatically and loaded when you next start JMRI.
+      <p>
+      Checking the "Require label" box will display only events with labels.
+      This lets you ignore events that you haven't labeled as interesting.
+      <p>
+      Checking the "Require both producer(s) and consumer(s)" box will
+      display only those events that have both at least one producer
+      and at least one consumer.  These are the events that actually do something
+      on your LCC network.
+      <p>
+      If you have a configuration window open on one or more events and
+      click "Update from Network", the right-hand column will show the
+      tree-walking display of where each event is referenced in those
+      configuration windows.  This can help you determine the function of
+      the producers and consumers. Note that you might need to resize the column
+      to see the complete entry.
+
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
+</body>
+</html>
