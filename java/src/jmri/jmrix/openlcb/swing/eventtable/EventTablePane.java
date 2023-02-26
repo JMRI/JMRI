@@ -168,7 +168,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     /**
      * Nest class to display multiple lines in a cell
      */
-    class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
+    static class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
 
       public MultiLineCellRenderer() {
         setLineWrap(true);
@@ -206,7 +206,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             this.store = store;
             this.stdEventTable = stdEventTable;
             tagManager = InstanceManager.getDefault(IdTagManager.class);
-            if (tagManager == null) log.error("no TagManager for persisting events");
         }
 
         static final int COL_EVENTID = 0;
@@ -253,7 +252,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 case COL_CONSUMER_NAME: return memo.consumerName;
                 case COL_CONTEXT_INFO:
                     // set up for multi-line output
-                    var result = "";
+                    var result = new StringBuilder();
                     var height = 2; // 2 margin
                     int increment = table.getFont().getSize()*12/10; // 1.2 line spacing
                     var first = true;   // no \n before first line
@@ -261,14 +260,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     // TODO: Remove debug lines
                     // height+=increment;
                     // first = false;
-                    // result = "FOO";
+                    // result.append("FOO");
 
                     // scan the event info as available
                     for (var entry : stdEventTable.getEventInfo(memo.eventID).getAllEntries()) {
-                        if (!first) result +="\n";
+                        if (!first) result.append("\n");
                         first = false;
                         height += increment;
-                        result += entry.getDescription();
+                        result.append(entry.getDescription());
                     }
                     // set height
 
@@ -279,7 +278,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     } else {
                         table.setRowHeight(viewRow, increment); // when no lines, assume 1
                     }
-                    return result;
+                    return new String(result);
                 default: return "Illegal row "+row+" "+col;
             }
         }
