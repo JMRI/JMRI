@@ -544,6 +544,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          * @param msg       message to handle
          * @param sender    connection where it came from
          */
+        @Override
         public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
             var nodeID = msg.getSourceNodeID();
             var eventID = msg.getEventID();
@@ -555,6 +556,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          * @param msg       message to handle
          * @param sender    connection where it came from
          */
+        @Override
         public void handleConsumerIdentified(ConsumerIdentifiedMessage msg, Connection sender){
             var nodeID = msg.getSourceNodeID();
             var eventID = msg.getEventID();
@@ -566,6 +568,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          * @param msg       message to handle
          * @param sender    connection where it came from
          */
+        @Override
         public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender){
             var nodeID = msg.getSourceNodeID();
             var eventID = msg.getEventID();
