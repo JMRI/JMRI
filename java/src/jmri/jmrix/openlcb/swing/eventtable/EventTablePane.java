@@ -79,6 +79,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             filter();
         });
         buttonPanel.add(showRequiresMatch);
+        buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
 
         // hook up to receive traffic
         memo.get(OlcbInterface.class).registerMessageListener(new Monitor(model));
@@ -102,11 +103,18 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
     public void sendRequestEvents(java.awt.event.ActionEvent e) {
         model.clear();
+        final int DELAY = 75; // msec between operations - 64 events at speed
+        int nextDelay = 0;
+
         for (var memo : store.getNodeMemos()) {
-            var destNodeID = memo.getNodeID();
-            log.trace("sendRequestEvents {} {}", nid, destNodeID);
-            Message m = new IdentifyEventsAddressedMessage(nid, destNodeID);
-            connection.put(m, null);
+
+            jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
+                var destNodeID = memo.getNodeID();
+                log.trace("sendRequestEvents {} {}", nid, destNodeID);
+                Message m = new IdentifyEventsAddressedMessage(nid, destNodeID);
+                connection.put(m, null);
+            }, nextDelay);
+            nextDelay += DELAY;
         }
     }
 
