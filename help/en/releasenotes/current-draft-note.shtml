@@ -375,6 +375,9 @@
         <ul>
             <li>The decoder index is being written in a more compact form to improve the
                 time spent reading it at startup.</li>
+            <li>Two new decoder-index attributes
+                suppressFunctionLabels and suppressRosterMedia
+                can be used to suppress those panes in the DecoderPro GUI.</li>
         </ul>
 
     <h3>CTC Tool</h3>
