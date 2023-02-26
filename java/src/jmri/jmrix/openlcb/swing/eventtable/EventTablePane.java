@@ -7,6 +7,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
+import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 import org.openlcb.*;
@@ -164,6 +165,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         EventTableDataModel(MimicNodeStore store) {
             this.store = store;
+            tagManager = InstanceManager.getDefault(IdTagManager.class);
+            if (tagManager == null) log.error("no TagManager for persisting events");
         }
 
         static final int COL_EVENTID = 0;
@@ -176,6 +179,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         static final int COL_COUNT = 6;
 
         MimicNodeStore store;
+        IdTagManager tagManager;
 
         TripleMemo getTripleMemo(int row) {
             if (row >= memos.size()) {
@@ -195,7 +199,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             switch (col) {
                 case COL_EVENTID: return memo.eventID.toShortString();
                 case COL_EVENTNAME:
-                    return memo.eventName != null ? memo.eventName.toString() : "";
+                    var tag = tagManager.getIdTag(tagPrefix+memo.eventID.toShortString());
+                    if (tag == null) return "";
+                    return tag.getUserName();
+                    // return memo.eventName != null ? memo.eventName.toString() : "";
                 case COL_PRODUCER_NODE:
                     return memo.producer != null ? memo.producer.toString() : "";
                 case COL_PRODUCER_NAME: return memo.producerName;
@@ -208,6 +215,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
         }
 
+        static final String tagPrefix = "ID_OpenLCB_";  // Prefix of IdTag system name
+
         @Override
         public void setValueAt(Object value, int row, int col) {
             if (col != COL_EVENTNAME) return;
@@ -216,8 +225,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 return;
             }
             var memo = memos.get(row);
-            memo.eventName = value.toString();
-
+            var tag = tagManager.provideIdTag("ID_OpenLCB_"+memo.eventID.toShortString());
+            tag.setUserName(memo.eventName);
         }
 
         @Override
@@ -432,7 +441,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         static class TripleMemo {
             EventID eventID;
-            String eventName;
+            // Event name is stored as an IdTag
             NodeID producer;
             String producerName;
             NodeID consumer;
