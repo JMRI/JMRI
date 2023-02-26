@@ -11,6 +11,7 @@ import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 import org.openlcb.*;
+import org.openlcb.implementations.*;
 
 
 /**
@@ -45,8 +46,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         this.nid = memo.get(NodeID.class);
 
         store = memo.get(MimicNodeStore.class);
+        EventTable stdEventTable = memo.get(OlcbInterface.class).getEventTable();
+        if (stdEventTable == null) log.warn("no OLCB EventTable found");
 
-        model = new EventTableDataModel(store);
+        model = new EventTableDataModel(store, stdEventTable);
         sorter = new TableRowSorter<>(model);
 
 
@@ -163,8 +166,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
      */
     protected static class EventTableDataModel extends AbstractTableModel {
 
-        EventTableDataModel(MimicNodeStore store) {
+        EventTableDataModel(MimicNodeStore store, EventTable stdEventTable) {
             this.store = store;
+            this.stdEventTable = stdEventTable;
             tagManager = InstanceManager.getDefault(IdTagManager.class);
             if (tagManager == null) log.error("no TagManager for persisting events");
         }
@@ -175,10 +179,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         static final int COL_PRODUCER_NAME = 3;
         static final int COL_CONSUMER_NODE = 4;
         static final int COL_CONSUMER_NAME = 5;
-        static final int COL_CONTEXT_INFO = 6; // TODO:  This is just a test column, not shown if COUNT == 6
-        static final int COL_COUNT = 6;
+        static final int COL_CONTEXT_INFO = 6;
+        static final int COL_COUNT = 7;
 
         MimicNodeStore store;
+        EventTable stdEventTable;
         IdTagManager tagManager;
 
         TripleMemo getTripleMemo(int row) {
@@ -202,7 +207,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     var tag = tagManager.getIdTag(tagPrefix+memo.eventID.toShortString());
                     if (tag == null) return "";
                     return tag.getUserName();
-                    // return memo.eventName != null ? memo.eventName.toString() : "";
                 case COL_PRODUCER_NODE:
                     return memo.producer != null ? memo.producer.toString() : "";
                 case COL_PRODUCER_NAME: return memo.producerName;
@@ -210,7 +214,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     return memo.consumer != null ? memo.consumer.toString() : "";
                 case COL_CONSUMER_NAME: return memo.consumerName;
                 case COL_CONTEXT_INFO:
-                    return new String[]{"foo", "bar", "biff"};
+                    var result = "";
+                    for (var entry : stdEventTable.getEventInfo(memo.eventID).getAllEntries()) {
+                        result += (" entry: "+entry.getDescription()) + ";";
+                    }
+                    return result;
                 default: return "Illegal row "+row+" "+col;
             }
         }
@@ -226,7 +234,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
             var memo = memos.get(row);
             var tag = tagManager.provideIdTag("ID_OpenLCB_"+memo.eventID.toShortString());
-            tag.setUserName(memo.eventName);
+            tag.setUserName(value.toString());
         }
 
         @Override
@@ -243,7 +251,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 case COL_PRODUCER_NAME: return "Producer Node Name";
                 case COL_CONSUMER_NODE: return "Consumer Node";
                 case COL_CONSUMER_NAME: return "Consumer Node Name";
-                case COL_CONTEXT_INFO:  return "";
+                case COL_CONTEXT_INFO:  return "Path(s) from Configure Dialog";
                 default: return "ERROR "+col;
             }
         }
@@ -273,8 +281,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         @Override
         public Class<?> getColumnClass(int col) {
-            if (col == COL_CONTEXT_INFO) return String[].class;
-            else return String.class;
+            return String.class;
         }
 
         /**
@@ -344,7 +351,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             // have to make a new one
             var memo = new TripleMemo(
                             eventID,
-                            "",
                             nodeID,
                             name,
                             null,
@@ -411,7 +417,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             // have to make a new one
             var memo = new TripleMemo(
                             eventID,
-                            "",
                             null,
                             "",
                             nodeID,
@@ -447,10 +452,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             NodeID consumer;
             String consumerName;
 
-            TripleMemo(EventID eventID, String eventName, NodeID producer, String producerName,
+            TripleMemo(EventID eventID, NodeID producer, String producerName,
                         NodeID consumer, String consumerName) {
                 this.eventID = eventID;
-                this.eventName = eventName;
                 this.producer = producer;
                 this.producerName = producerName;
                 this.consumer = consumer;
