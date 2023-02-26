@@ -116,7 +116,12 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>When downloading firmware to multiple boards, it can be a pain to have to select the file over and over.
+                    This was changed to make the selected file (hence directory, etc) persistent from one download frame
+                    to the next.
+                <li>Show more information in the node selector when doing firmware downloads.</li>
+                <li>Updated the default filename when doing backups to contain more identification info.</li>
+                <li>The OpenLCB library was updated to the current contents as of PR #214</li>
             </ul>
 
         <h4>Powerline</h4>
