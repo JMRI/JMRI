@@ -1,6 +1,7 @@
 package jmri.jmrix.openlcb.swing.eventtable;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
 
 import javax.swing.*;
@@ -27,6 +28,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     MimicNodeStore store;
     EventTableDataModel model;
 
+    JCheckBox showRequiresLabel;
+    JCheckBox showRequiresMatch; // requires at least one consumer and one producer exist
+
+    private transient TableRowSorter<EventTableDataModel> sorter;
+
     public String getTitle(String menuTitle) {
         return Bundle.getMessage("TitleEventTable");
     }
@@ -37,8 +43,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         this.connection = memo.get(Connection.class);
         this.nid = memo.get(NodeID.class);
 
-        this.store = memo.get(MimicNodeStore.class);
-        this.model = new EventTableDataModel(store);
+        store = memo.get(MimicNodeStore.class);
+
+        model = new EventTableDataModel(store);
+        sorter = new TableRowSorter<>(model);
+
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -46,12 +55,30 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         var table = new JTable(model);
         table.setAutoCreateRowSorter(true);
+        table.setRowSorter(sorter);
+
         var scrollPane = new JScrollPane(table);
         add(scrollPane);
 
+        var buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        add(buttonPanel);
+
         var updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
         updateButton.addActionListener(this::sendRequestEvents);
-        add(updateButton);
+        buttonPanel.add(updateButton);
+
+        showRequiresLabel = new JCheckBox(Bundle.getMessage("BoxShowRequiresLabel"));
+        showRequiresLabel.addActionListener((ActionEvent e) -> {
+            filter();
+        });
+        buttonPanel.add(showRequiresLabel);
+
+        showRequiresMatch = new JCheckBox(Bundle.getMessage("BoxShowRequiresMatch"));
+        showRequiresMatch.addActionListener((ActionEvent e) -> {
+            filter();
+        });
+        buttonPanel.add(showRequiresMatch);
 
         // hook up to receive traffic
         memo.get(OlcbInterface.class).registerMessageListener(new Monitor(model));
@@ -84,6 +111,45 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     }
 
     /**
+     * Set up filtering of displayed rows
+     */
+    private void filter() {
+        RowFilter<EventTableDataModel, Integer> rf = new RowFilter<EventTableDataModel, Integer>() {
+            /**
+             * @return true if row is to be displayed
+             */
+            @Override
+            public boolean include(RowFilter.Entry<? extends EventTableDataModel, ? extends Integer> entry) {
+                // default filter is IN-USE and regular systems slot
+                // the default is whatever the person last closed it with
+
+                int row = entry.getIdentifier();
+
+                var name = model.getValueAt(row, EventTableDataModel.COL_EVENTNAME);
+                if ( showRequiresLabel.isSelected() && (name == null || name.toString().isEmpty()) ) return false;
+
+                if ( showRequiresMatch.isSelected()) {
+                    var memo = model.getTripleMemo(row);
+
+                    if (memo.producer == null && !model.producerPresent(memo.consumer, memo.eventID)) {
+                        // no matching producer
+                        return false;
+                    }
+
+                    if (memo.consumer == null && !model.consumerPresent(memo.producer, memo.eventID)) {
+                        // no matching producer
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        };
+        sorter.setRowFilter(rf);
+    }
+
+
+    /**
      * Nested class to hold data model
      */
     protected static class EventTableDataModel extends AbstractTableModel {
@@ -98,10 +164,19 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         static final int COL_PRODUCER_NAME = 3;
         static final int COL_CONSUMER_NODE = 4;
         static final int COL_CONSUMER_NAME = 5;
-        static final int COL_CONTEXT_INFO = 6;
-        static final int COL_COUNT = 7;
+        static final int COL_CONTEXT_INFO = 6; // TODO:  This is just a test column, not shown if COUNT == 6
+        static final int COL_COUNT = 6;
 
         MimicNodeStore store;
+
+        TripleMemo getTripleMemo(int row) {
+            if (row >= memos.size()) {
+                log.warn("request out of range: {} greater than {}", row, memos.size());
+                return null;
+            }
+            return memos.get(row);
+        }
+
         @Override
         public Object getValueAt(int row, int col) {
             if (row >= memos.size()) {
@@ -111,10 +186,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             var memo = memos.get(row);
             switch (col) {
                 case COL_EVENTID: return memo.eventID.toShortString();
-                case COL_EVENTNAME: return memo.eventName;
-                case COL_PRODUCER_NODE: return memo.producer;
+                case COL_EVENTNAME:
+                    return memo.eventName != null ? memo.eventName.toString() : "";
+                case COL_PRODUCER_NODE:
+                    return memo.producer != null ? memo.producer.toString() : "";
                 case COL_PRODUCER_NAME: return memo.producerName;
-                case COL_CONSUMER_NODE: return memo.consumer;
+                case COL_CONSUMER_NODE:
+                    return memo.consumer != null ? memo.consumer.toString() : "";
                 case COL_CONSUMER_NAME: return memo.consumerName;
                 case COL_CONTEXT_INFO:
                     return new String[]{"foo", "bar", "biff"};
@@ -210,6 +288,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             // if this already exists, skip storing it
             // if you can, find a matching memo with an empty consumer value
             TripleMemo empty = null;
+            TripleMemo bestEmpty = null;
             for (var memo : memos) {
                 if (memo.eventID.equals(eventID) ) {
                     // if matches, ignore
@@ -217,8 +296,22 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         return;
                     }
                     // if empty producer slot, remember it
-                    if (memo.producer == null) empty = memo;
+                    if (memo.producer == null) {
+                        empty = memo;
+                        // best empty has matching consumer
+                        if (nodeID.equals(memo.consumer)) bestEmpty = memo;
+                    }
                 }
+            }
+
+            // can we use the bestEmpty?
+            if (bestEmpty != null) {
+                // yes
+                log.trace("   use bestEmpty");
+                bestEmpty.producer = nodeID;
+                bestEmpty.producerName = name;
+                fireTableDataChanged();
+                return;
             }
 
             // can we use the empty?
@@ -262,6 +355,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             // if this already exists, skip storing it
             // if you can, find a matching memo with an empty consumer value
             TripleMemo empty = null;
+            TripleMemo bestEmpty = null;
             for (var memo : memos) {
                 if (memo.eventID.equals(eventID) ) {
                     // if matches, ignore
@@ -269,8 +363,22 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         return;
                     }
                     // if empty consumer slot, remember it
-                    if (memo.consumer == null) empty = memo;
+                    if (memo.consumer == null) {
+                        empty = memo;
+                        // best empty has matching producer
+                        if (nodeID.equals(memo.producer)) bestEmpty = memo;
+                    }
                 }
+            }
+
+            // can we use the best empty?
+            if (bestEmpty != null) {
+                // yes
+                log.trace("   use bestEmpty");
+                bestEmpty.consumer = nodeID;
+                bestEmpty.consumerName = name;
+                fireTableDataChanged();
+                return;
             }
 
             // can we use the empty?
@@ -294,6 +402,24 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         );
             memos.add(memo);
             fireTableStructureChanged();
+        }
+
+        boolean consumerPresent(NodeID nodeID, EventID eventID) {
+            for (var memo : memos) {
+                if (memo.eventID.equals(eventID) ) {
+                    if (nodeID.equals(memo.consumer)) return true;
+                }
+            }
+            return false;
+        }
+
+        boolean producerPresent(NodeID nodeID, EventID eventID) {
+            for (var memo : memos) {
+                if (memo.eventID.equals(eventID) ) {
+                    if (nodeID.equals(memo.producer)) return true;
+                }
+            }
+            return false;
         }
 
         static class TripleMemo {
