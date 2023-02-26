@@ -355,6 +355,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         /**
          * Record an event-producer pair
+         * @param eventID Observed event
+         * @param nodeID  Node that is known to produce the event
          */
         void recordProducer(EventID eventID, NodeID nodeID) {
             log.trace("recordProducer of {} in {}", eventID, nodeID);
@@ -422,6 +424,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         /**
          * Record an event-consumer pair
+         * @param eventID Observed event
+         * @param nodeID  Node that is known to consume the event
          */
         void recordConsumer(EventID eventID, NodeID nodeID) {
             log.trace("recordConsumer of {} in {}", eventID, nodeID);
