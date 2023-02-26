@@ -65,6 +65,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         table.setDefaultRenderer(String.class, new MultiLineCellRenderer());
         table.setShowGrid(true);
         table.setGridColor(Color.BLACK);
+        table.getTableHeader().setBackground(Color.LIGHT_GRAY);
 
         var scrollPane = new JScrollPane(table);
         add(scrollPane);
