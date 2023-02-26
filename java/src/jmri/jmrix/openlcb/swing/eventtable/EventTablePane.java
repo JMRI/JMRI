@@ -94,7 +94,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         static final int COL_PRODUCER_NAME = 3;
         static final int COL_CONSUMER_NODE = 4;
         static final int COL_CONSUMER_NAME = 5;
-        static final int COL_COUNT = 6;
+        static final int COL_CONTEXT_INFO = 6;
+        static final int COL_COUNT = 7;
 
         @Override
         public Object getValueAt(int row, int col) {
@@ -110,8 +111,22 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 case COL_PRODUCER_NAME: return memo.producerName;
                 case COL_CONSUMER_NODE: return memo.consumer;
                 case COL_CONSUMER_NAME: return memo.consumerName;
+                case COL_CONTEXT_INFO:
+                    return new String[]{"foo", "bar", "biff"};
                 default: return "Illegal row "+row+" "+col;
             }
+        }
+
+        @Override
+        public void setValueAt(Object value, int row, int col) {
+            if (col != COL_EVENTNAME) return;
+            if (row >= memos.size()) {
+                log.warn("request out of range: {} greater than {}", row, memos.size());
+                return;
+            }
+            var memo = memos.get(row);
+            memo.eventName = value.toString();
+
         }
 
         @Override
@@ -128,6 +143,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 case COL_PRODUCER_NAME: return "Producer Node Name";
                 case COL_CONSUMER_NODE: return "Consumer Node";
                 case COL_CONSUMER_NAME: return "Consumer Node Name";
+                case COL_CONTEXT_INFO:  return "";
                 default: return "ERROR "+col;
             }
         }
@@ -137,6 +153,16 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             return memos.size();
         }
 
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            return col == COL_EVENTNAME;
+        }
+
+        @Override
+        public Class<?> getColumnClass(int col) {
+            if (col == COL_CONTEXT_INFO) return String[].class;
+            else return String.class;
+        }
         /**
          * Remove all existing data, generally just in advance of an update
          */
@@ -168,7 +194,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             for (var memo : memos) {
                 if (memo.eventID.equals(eventID) ) {
                     // if matches, ignore
-                    if (memo.producer.equals(nodeID)) {
+                    if (nodeID.equals(memo.producer)) {
                         return;
                     }
                     // if empty producer slot, remember it
@@ -220,7 +246,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             for (var memo : memos) {
                 if (memo.eventID.equals(eventID) ) {
                     // if matches, ignore
-                    if (memo.consumer.equals(nodeID)) {
+                    if (nodeID.equals(memo.consumer)) {
                         return;
                     }
                     // if empty consumer slot, remember it
