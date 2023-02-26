@@ -38,7 +38,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         this.nid = memo.get(NodeID.class);
 
         this.store = memo.get(MimicNodeStore.class);
-        this.model = new EventTableDataModel();
+        this.model = new EventTableDataModel(store);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -86,7 +86,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     /**
      * Nested class to hold data model
      */
-    protected class EventTableDataModel extends AbstractTableModel {
+    protected static class EventTableDataModel extends AbstractTableModel {
+
+        EventTableDataModel(MimicNodeStore store) {
+            this.store = store;
+        }
 
         static final int COL_EVENTID = 0;
         static final int COL_EVENTNAME = 1;
@@ -97,6 +101,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         static final int COL_CONTEXT_INFO = 6;
         static final int COL_COUNT = 7;
 
+        MimicNodeStore store;
         @Override
         public Object getValueAt(int row, int col) {
             if (row >= memos.size()) {
@@ -148,6 +153,19 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
         }
 
+        // TODO: Why is this not an @Override?  Doing nothing? See SlotMonDataModel
+        public int getPreferredWidth(int col) {
+            switch (col) {
+                case COL_EVENTID:
+                    return new JTextField(23+1).getPreferredSize().width;
+                case COL_PRODUCER_NODE:
+                case COL_CONSUMER_NODE:
+                    return new JTextField(17+1).getPreferredSize().width;
+                default:
+                    return 75; // default value from JavaDoc
+            }
+        }
+
         @Override
         public int getRowCount() {
             return memos.size();
@@ -163,6 +181,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             if (col == COL_CONTEXT_INFO) return String[].class;
             else return String.class;
         }
+
         /**
          * Remove all existing data, generally just in advance of an update
          */
@@ -277,7 +296,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             fireTableStructureChanged();
         }
 
-        class TripleMemo {
+        static class TripleMemo {
             EventID eventID;
             String eventName;
             NodeID producer;
@@ -301,7 +320,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
      * Internal class to watch OpenLCB traffic
      */
 
-    class Monitor extends MessageDecoder {
+    static class Monitor extends MessageDecoder {
 
         Monitor(EventTableDataModel model) {
             this.model = model;
