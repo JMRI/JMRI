@@ -273,7 +273,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 case COL_CONTEXT_INFO:
                     // set up for multi-line output
                     var result = new StringBuilder();
-                    var height = 2; // 2 margin
+                    var height = 2; // 2 for margin
                     int increment = table.getFont().getSize()*12/10; // 1.2 line spacing
                     var first = true;   // no \n before first line
 
@@ -291,7 +291,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     if (height >= increment) {
                         table.setRowHeight(viewRow, height);
                     } else {
-                        table.setRowHeight(viewRow, increment); // when no lines, assume 1
+                        table.setRowHeight(viewRow, height+increment); // when no lines, assume 1
                     }
                     return new String(result);
                 default: return "Illegal row "+row+" "+col;
@@ -351,6 +351,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          */
         void clear() {
             memos = new ArrayList<>();
+            fireTableDataChanged();
         }
 
         ArrayList<TripleMemo> memos = new ArrayList<>();
@@ -379,7 +380,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             TripleMemo bestEmpty = null;
             for (var memo : memos) {
                 if (memo.eventID.equals(eventID) ) {
-                    // if matches, ignore
+                    // if nodeID matches, already present; ignore
                     if (nodeID.equals(memo.producer)) {
                         return;
                     }
