@@ -690,7 +690,7 @@
           Train Requirements</a> for locomotives and caboose area alone for now. Save the train, close
         the window, and return to the Trains window. Press the <a href="#BuildingTrains">Build</a>
         button for the train. It should build. Now pressing the "Print" or "Preview" button will
-        produce a Manifest for your train depending on the state of "Preview" checkbox at the bottom
+        produce a <a href="#PrintingManifests">Manifest</a> for your train depending on the state of "Preview" checkbox at the bottom
         of the <a href="#Trains">Trains</a> window. Review the Manifest and you should see that the
         train serviced all car types. If you examine the <a href="#Cars">Cars</a> window you can see
         that cars are now assigned to your train.
@@ -907,8 +907,10 @@
       The program can convert actual inches into scale feet when entering car, locomotive, or track
       lengths. Just append a double quote (") to any length. The program can also convert from
       actual centimeters to scale meters, just append "cm" to any length.
+      
       <h4>Optional Year Modeled</h4>
       You can optionally enter the year you want printed on your train Manifests.
+      
       <h4>Add Operations Menu to Main Menu</h4>
       When selected, add the operations menu to the main menu bar. The operations menu will appear
       the next time you restart JMRI.
@@ -1336,13 +1338,18 @@
 
       <h3 id="ManifestOptions">Custom Manifests and Switch Lists</h3>
 
-      <h4>Generate CSV Manifests</h4>
-      If you want to create your own <a href="#SetupExcelProgram">Custom Manifest</a> using a comma
-      separated values (.csv) file, select this option. You can use a program like Excel to create a
-      Manifest to your liking. There's also a Java based program written by Tim Mann called <a
-        href="https://mrslamf.com/">Model Railroad Switch List and Manifest Formatter</a> that will
-      create custom Manifests and switch lists for you using the CSV files.
-      <p>You can find the CSV Manifest files created by OperationsPro&trade; in the operations
+   <h4>Generate CSV Manifests</h4>
+   If you want to create your own <a href="#SetupExcelProgram">Custom
+    Manifest</a> using a comma separated values (.csv) file, select this option. You can use a
+   program like Excel to create a Manifest to your liking. Dan Foltz who is a JMRI user/programmer
+   wrote the Excel based "Manifest Creator" and "Switch List Creator". You can find a copies of the
+   programs at
+   <a href="https://manifestcreator.weebly.com/">Manifest Creator - Add on to JMRI.</a> There's also
+   a Java based program written by Tim Mann called
+   <a href="https://mrslamf.com/">Model Railroad Switch List and Manifest Formatter</a> that will
+   create custom Manifests and switch lists for you using the CSV files.
+
+   <p>You can find the CSV Manifest files created by OperationsPro&trade; in the operations
         directory in a directory called "csvManifests". Each line of the file starts with a two to
         five letter code, followed by the code's description, and then any parameters associated
         with the code. Here's a list of the current codes and descriptions:</p>
@@ -1577,11 +1584,6 @@
         model, length, type, hp, location name, track name, destination name, destination track
         name, owner name, consist name, is lead loco in consist, loco comment, IDTag, DCC address.</p>
 
-      <p>
-        You can find some examples of custom manifests at <a
-          href="https://groups.io/g/jmriusers/files/Operations">https://groups.io/g/jmriusers/files/Operations</a>.
-      </p>
-
       <h4 id="GenerateCsvSwitchLists">Generate CSV Switch Lists</h4>
 
       <p>You can also generate custom switch lists using a comma separated values (.csv) files.
@@ -1711,7 +1713,7 @@
       locations by enabling this option.
 
       <h2 id="PrintOptions">Manifest Print Options</h2>
-      You can modify the how OperationsPro&trade; prints the train Manifests and the location switch
+      You can modify the how OperationsPro&trade; prints the train <a href="#PrintingManifests">Manifests</a> and the location switch
       lists. From the "Operations-&gt;Settings-&gt;Tools" menu select "Manifest Print Options" to
       open the window. Press the "Save" button located at the bottom of the window to enable your
       changes. The "Save" button will also cause the program to update the Manifests for all trains
@@ -3431,7 +3433,7 @@
       to add a car to your roster. The "Save" button stores the cars roster to a file. The "Find"
       button and the adjacent text window can be used to find a car by its road number. You can use
       the wild card "*" when entering a car number. For example if you want to find all cars with
-      numbers that ended with 345, enter *345, and press find. Each time you press find, the next
+      numbers that end with 345, enter *345, and press find. Each time you press find, the next
       car with a road number ending with "345" will be highlighted.
 
       <h3>Moves, Wait and Last Time Moved</h3>
@@ -3566,8 +3568,9 @@
       train when the "Car Blocking Order" numbers are positive, and at the front of the train if the
       blocking numbers are negative. If the car is a caboose, has a FRED (Flashing Rear End Device),
       or is hazardous independent of the car's load, select the proper checkbox. The program uses
-      the caboose and FRED functions to place the car at the end of a train when the train requires
-      a caboose or car with FRED.
+      the caboose and FRED options to place the car at the end of a train when the train requires
+      a caboose or car with FRED. Note that you can also use the passenger blocking feature to place
+      a caboose or car with FRED anywhere needed in a train.
 
       <p>When the passenger checkbox is selected, a new field called "Car Blocking Order" will
         appear. The text box allows you to enter a number between -100 and 100 and this gives you
@@ -5029,6 +5032,7 @@
       will report "Failed" if you haven't selected a train, or if the "Build" checkbox isn't
       selected for the train in the <a href="#Trains">Trains</a> window or if the train fails to
       build.
+      
       <h5>Preview or Print Train Manifest</h5>
       This action's name and function depends on the "Preview" checkbox in the <a href="#Trains">Trains</a>
       window. If the "Preview" checkbox is selected, then the action becomes "Preview Train
@@ -5217,7 +5221,7 @@
 
       <h4 id="SetupExcelProgram">Setup Excel Program (Manifest Creator)</h4>
       The ability to configure an Excel program to create custom manifests can be found under Trains
-      -&gt; Tools. Dan Foltz who is a JMRI user/programmer has developed the "Manifest Creator" and
+      -&gt; Tools. Dan Foltz who is a JMRI user/programmer wrote the "Manifest Creator" and
       "Switch List Creator". You can find a copies of the programs at <a
         href="https://manifestcreator.weebly.com/">Manifest Creator - Add on to JMRI.</a> Place
       the program "MC4JMRI.xls" or "SWC4JMRI.xlsm" along with any other files needed in the
@@ -5814,30 +5818,36 @@
         <img src="images/ManifestTwoColumnTrack.png" alt="">
       </p>
 
-      <p>
-        An alternative to using the Manifests provided by OperationsPro&trade; is to create a <a
-          href="#ManifestOptions">custom Manifest</a>. Shown below is a train Manifest (LS) and
-        switch list for locations Lakeview and Bakersfield using <a
-          href="https://groups.io/g/jmriusers/files/Operations">Dan Foltz's Switch List Creator
-          version 1.2 (SLC4JMRI.xlsm)</a>. This particular custom format allows you to use a half sheet
-        of paper for your crew. Note that the <a href="#CarTypes">Car Types</a> was changed in the <a
-          href="#Settings">Settings</a> window from "Descriptive" to "AAR Codes" before using Dan's
-        Excel program.
-      </p>
+   <p>
+    An alternative to using the Manifests provided by OperationsPro&trade; is to create a <a
+     href="#ManifestOptions">custom Manifest</a>. Shown below is a train Manifest (LS) and switch
+    list for locations Lakeview and Bakersfield using Dan Foltz's Switch List Creator version 1.2
+    (SLC4JMRI.xlsm). This and other versions may be found at <a
+     href="https://manifestcreator.weebly.com/"> www.ManifestCreator.Weebly.Com</a>. This particular
+    custom format allows you to use a half sheet of paper for your crew. Note that the <a
+     href="#CarTypes">Car Types</a> was changed in the <a href="#Settings">Settings</a> window from
+    "Descriptive" to "AAR Codes" before using Dan's Excel program.
+    </p>
 
-      <p>
-        <img src="images/SLC4JMRI_LS.png" alt="">
-      </p>
+   <p>
+    <img src="images/SLC4JMRI_LS.png" alt="">
+   </p>
 
-      <p>
-        <img src="images/SLC4JMRI_LS_LV.png" alt="">
-      </p>
+   <p>
+    <img src="images/SLC4JMRI_LS_LV.png" alt="">
+   </p>
 
-      <p>
-        <img src="images/SLC4JMRI_LS_BF.png" alt="">
-      </p>
+   <p>
+    <img src="images/SLC4JMRI_LS_BF.png" alt="">
+   </p>
 
-      <h3 id="SwitchList">Switch Lists</h3>
+   <p>
+    There's also a Java based program written by Tim Mann called <a href="https://mrslamf.com/">Model
+     Railroad Switch List and Manifest Formatter</a> that will create custom Manifests and switch lists
+    for you using the CSV files.
+   </p>
+
+   <h3 id="SwitchList">Switch Lists</h3>
       A switch list shows the work required to service all of the trains visiting that location.
       Normally a switch list is given to the person in charge of a yard or a location with many
       spurs or industries. You can modify the look of your switch lists from the <a

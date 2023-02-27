@@ -132,6 +132,12 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.True.class);
         map.put(Category.OTHER, classes);
 
+        if (jmri.util.SystemType.isLinux()) {
+            classes = new ArrayList<>();
+            classes.add(jmri.jmrit.logixng.expressions.ExpressionLinuxLinePower.class);
+            map.put(Category.LINUX, classes);
+        }
+
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }

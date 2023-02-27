@@ -17,6 +17,7 @@ import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import org.jdom2.Attribute;
+import org.jdom2.Comment;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -26,27 +27,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DecoderIndex represents the decoderIndex.xml (decoder types) and 
+ * DecoderIndex represents the decoderIndex.xml (decoder types) and
  * nmra_mfg_list.xml (Manufacturer ID list) files in memory.
  * <p>
  * This allows a program to navigate to various decoder descriptions without
  * having to manipulate files.
  * <p>
  * This class doesn't provide tools for defining the index; that's done
- * by {@link jmri.jmrit.decoderdefn.DecoderIndexCreateAction}, which 
+ * by {@link jmri.jmrit.decoderdefn.DecoderIndexCreateAction}, which
  * rebuilds it from the decoder files.
  * <p>
  * Multiple DecoderIndexFile objects don't make sense, so we use an "instance"
  * member to navigate to a single one.
  * <p>
- * Previous to JMRI 4.19.1, the manufacturer information was kept in the 
+ * Previous to JMRI 4.19.1, the manufacturer information was kept in the
  * decoderIndex.xml file. Starting with that version it's in the separate
- * nmra_mfg_list.xml file, but still written to decoderIndex.xml when 
+ * nmra_mfg_list.xml file, but still written to decoderIndex.xml when
  * one is created.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2019
  * @see jmri.jmrit.decoderdefn.DecoderIndexCreateAction
- * 
+ *
  */
 public class DecoderIndexFile extends XmlFile {
 
@@ -395,7 +396,7 @@ public class DecoderIndexFile extends XmlFile {
         ArrayList<String> al = new ArrayList<>();
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + DecoderFile.fileLocation);
         File fp = new File(FileUtil.getUserFilesPath() + DecoderFile.fileLocation);
-    
+
         if (fp.exists()) {
             String[] list = fp.list();
             if (list !=null) {
@@ -461,7 +462,7 @@ public class DecoderIndexFile extends XmlFile {
         if (log.isDebugEnabled()) {
             log.debug("readFile {}",name);
         }
-        
+
         // read file, find root
         Element root = rootFromName(name);
 
@@ -482,9 +483,9 @@ public class DecoderIndexFile extends XmlFile {
     }
 
     void readMfgSection() throws org.jdom2.JDOMException, java.io.IOException {
-        // always reads the file distributed with JMRI
+        // always reads the NMRA manufacturer file distributed with JMRI
         Element mfgList = rootFromName("nmra_mfg_list.xml");
-        
+
         if (mfgList != null) {
 
             Attribute a;
@@ -706,9 +707,22 @@ public class DecoderIndexFile extends XmlFile {
         for (String fileName : files) {
             DecoderFile d = new DecoderFile();
             try {
+                // get <family> element and add the file name
                 Element droot = d.rootFromName(DecoderFile.fileLocation + fileName);
                 Element family = droot.getChild("decoder").getChild("family").clone();
                 family.setAttribute("file", fileName);
+
+                // drop the decoder implementation content
+                family.removeChildren("outputs");
+                family.removeChildren("output");
+                family.removeChildren("functionlabels");
+                family.removeChildren("versionCV");
+                // and drop content of model elements
+                for (Element element : family.getChildren()) {
+                    element.removeContent();
+                }
+
+                // and store to output
                 familyList.addContent(family);
             } catch (org.jdom2.JDOMException exj) {
                 log.error("could not parse {}: {}", fileName, exj.getMessage());
@@ -722,6 +736,7 @@ public class DecoderIndexFile extends XmlFile {
             }
         }
 
+        index.addContent(new Comment("The manufacturer list is from the nmra_mfg_list.xml file"));
         index.addContent(mfgList);
         index.addContent(familyList);
 

@@ -39,6 +39,8 @@
 
       <ul>
         <li>Please report your experience</li>
+        <li>If your USB device supports a serial port interface, you may also be able to use
+        the Powerline class for interfacing to DMX</li>
       </ul>
 
       <h2 id="connecting">Connecting</h2>

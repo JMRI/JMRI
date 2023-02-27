@@ -33,6 +33,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Added mapping information</revremark>
      </revision>    
+     <revision>
+        <revnumber>1.2</revnumber>
+        <date>2023-02-21</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Removed duplicate mappings.  Added some missing mappings.</revremark>
+     </revision>    
   </revhistory>
 
   <aspecttable>AAR 1946</aspecttable>
@@ -107,16 +113,6 @@
     </aspectMapping>
 
     <aspectMapping>
-      <advancedAspect>Slow Clear</advancedAspect>
-      <ourAspect>Slow Clear</ourAspect>
-    </aspectMapping>
-
-    <aspectMapping>
-      <advancedAspect>Slow Approach</advancedAspect>
-      <ourAspect>Slow Clear</ourAspect>
-    </aspectMapping>
-
-    <aspectMapping>
       <advancedAspect>Permissive</advancedAspect>
       <ourAspect>Slow Approach</ourAspect>
     </aspectMapping>
@@ -132,8 +128,90 @@
     </aspectMapping>
 
     <aspectMapping>
+      <advancedAspect>Stop and Proceed Medium</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach Medium</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Limited</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear Alt</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Limited Clear</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Advance Approach</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach Slow</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Permissive Medium</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
   </aspectMappings>

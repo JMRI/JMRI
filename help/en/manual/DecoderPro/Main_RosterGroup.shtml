@@ -75,11 +75,10 @@
                   <p>Type the name of your new roster group in the Create new roster Group
                   <input name="textfield" id="textfield" type="text"></p>
 
-                  <p><input name="button" id="button" value="Cancel" type="submit"> if you do not
+                  <p>Click <span class="textbutton">Cancel</span> if you do not
                   want to create a new roster Group</p>
 
-                  <p><input name="button2" id="button2" value="OK" type="submit"> creates a new
-                  roster group</p>
+                  <p>The <span class="textbutton">OK</span> button creates a new roster Group.</p>
                 </td>
               </tr>
             </tbody>

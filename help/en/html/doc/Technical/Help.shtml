@@ -214,7 +214,7 @@
         entity <strong>ampersand-rArr-semicolon</strong>, and label the whole sequence as "strong".
         For example:<br>
         <strong>File &rArr; Store Panels</strong><br>
-        A non-blanking space can be used before the right arrow to control line breaks.</p>
+        A non-breaking space can be used before the right arrow to control line breaks.</p>
 
         <p>You cannot count on any particular location for your files on the local machine, so all
         links to other help pages need to be relative. Links to XML contents also need to be

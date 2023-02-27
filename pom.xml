@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.3.2-SNAPSHOT</version>
+    <version>5.3.3-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -25,7 +25,7 @@
         <jackson-databind.version>2.13.4.1</jackson-databind.version>
         <jackson-annotations.version>2.13.4</jackson-annotations.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.31</openlcb.version>
+        <openlcb.version>0.7.32</openlcb.version>
         <netbeans.version>RELEASE150</netbeans.version>
         <jacoco.version>0.8.5</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
@@ -1484,6 +1484,10 @@
                     <artifactId>xml-apis</artifactId>
                 </exclusion>
             </exclusions>
+
+            <!-- the following line forces openlcb.jar to be taken from the local lib directory -->
+            <scope>system</scope><systemPath>${project.basedir}/lib/openlcb.jar</systemPath>
+
         </dependency>
         <dependency>
             <groupId>org.usb4java</groupId>

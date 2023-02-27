@@ -4,6 +4,11 @@
 <!-- Used by default when the panel file is displayed in a web browser      -->
 <!-- This version corresponds to the 4.19.2 schema update                   -->
 
+<!-- TESTED with multiple web browsers (01/18/2023): 
+     Safari, Chrome, MS Edge, Brave ALL OK
+     Some issues with Firefox (table borders missing in Portrait mode for some xml files), Opera
+-->
+
 <!-- Updates made for 4.19.2 schema and additional JMRI capabilities:
    [Added formatting for logixNG and ctcdata]                   (2022-02-18)
    [Reformatting was done to logix display]                     (2022-02-18)
@@ -13,12 +18,14 @@
    [Added formatting for panel editor and layout editor.]       (2022-03-01)
    [Bug fix in SSL related to displaying sensor names.]         (2022-03-01)
    [Changed some text alignment to center for readability]      (2022-03-02)
-   [Added additional formatting for LogixNG.].                  (2023-01-12)
+   [Added additional formatting for LogixNG.].                  (2023-01-11)
+   [Added formatting for olcbsignalmast]                        (2023-01-12)
+   [Added page breaks by section]                               {2023-01-17)
 -->
 
 <!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018, 2022, 2023.     -->
 
-<xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">  <!-- REMEMBER: this is case sensitive -->
 
 <!-- Define the copyright year for the output page
      In batch work via running Ant, this is defined
@@ -44,6 +51,8 @@
      We also pick some stuff out explicitly in the head section using
      value-of instructions.
 -->
+
+<!-- *************************************************************************************** -->
 <xsl:template match='layout-config'>
 
 <html>
@@ -52,7 +61,8 @@
 	</head>
 
 	<body>
-		<h1>JMRI Panel File Contents</h1>
+		<h1>JMRI Panel File Contents: <!-- XSL 2.0 upgrade required to add: <xsl:value-of select="base-uri()"/> --> </h1>
+    <h3><!-- XSL 2.0 upgrade required to add: Created  <xsl:value-of select="current-date()"/> --> </h3>
         <h4>[Not all detailed attributes are displayed.  Please check the underlying XML file.]<br/>
         [Help maintain this JMRI capability: Please report any unformatted data to the JMRI Development Team.]</h4>
                 <xsl:apply-templates/>
@@ -66,6 +76,13 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 	</body>
 </html>
 
+</xsl:template>
+
+<!-- *************************************************************************************** -->
+<!-- Display version number in header -->
+<xsl:template match="layout-config/jmriversion">
+    <h3>JMRI version <xsl:value-of select="major"/>.<xsl:value-of select="minor"/>.<xsl:value-of select="test"/><xsl:value-of select="modifier"/>
+        was used to create the panel xml file displayed.</h3>
 </xsl:template>
 
 <!-- ***** Helper Functions ****************************************************************** -->
@@ -89,7 +106,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through turnouts types -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/turnouts">
-<h2>Turnouts (<xsl:call-template name="substring-after-last">
+<h2 style="page-break-before: always">Turnouts (<xsl:call-template name="substring-after-last">
   <xsl:with-param name="string" select="substring-before(@class,'ManagerXml')" /><xsl:with-param name="delimiter" select="'.'" />
   </xsl:call-template>
 )</h2>
@@ -131,7 +148,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through lights elements -->
 <!-- each one becomes a table      -->
 <xsl:template match="layout-config/lights">
-    <h2>Lights (<xsl:call-template name="substring-after-last">
+    <h2 style="page-break-before: always">Lights (<xsl:call-template name="substring-after-last">
   <xsl:with-param name="string" select="substring-before(@class,'ManagerXml')" /><xsl:with-param name="delimiter" select="'.'" />
   </xsl:call-template>
 )</h2>
@@ -150,7 +167,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through signalheads elements -->
 <!-- each one becomes a table           -->
 <xsl:template match="layout-config/signalheads">
-<h2>Signal Heads</h2>
+<h2 style="page-break-before: always">Signal Heads</h2>
     <table style="width:75%" border="1">
     <tr><th>System Name</th><th>User Name</th><th>Type</th><th>Output</th><th>Comment</th></tr>
     <!-- index through individual signalhead elements -->
@@ -162,7 +179,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through signalmasts elements -->
 <!-- each one becomes a table           -->
 <xsl:template match="layout-config/signalmasts">
-    <h2>Signal Masts (<xsl:call-template name="substring-after-last">
+    <h2 style="page-break-before: always">Signal Masts (<xsl:call-template name="substring-after-last">
         <xsl:with-param name="string" select="substring-before(@class,'ManagerXml')" /><xsl:with-param name="delimiter" select="'.'" />
         </xsl:call-template>
      )</h2>
@@ -178,7 +195,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through signalgroups elements -->
 <!-- each one becomes a table            -->
 <xsl:template match="layout-config/signalgroups">
-    <h2>Signal Groups</h2>
+    <h2 style="page-break-before: always">Signal Groups</h2>
     <table style="width:75%" border="1">
         <tr><th>System Name</th><th>User Name</th><th>Master</th><th>Members</th><th>Comment</th></tr>
         <!-- index through individual signalgroup elements -->
@@ -190,7 +207,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through signalmastlogics elements -->
 <!-- each one becomes a separate table       -->
 <xsl:template match="layout-config/signalmastlogics">
-<h2>Signal Mast Logics</h2>
+<h2 style="page-break-before: always">Signal Mast Logics</h2>
 Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
     <!-- index through individual signalmastlogic elements -->
     <xsl:call-template name="oneSML"/>
@@ -231,7 +248,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
 <!-- Index through sensors elements -->
 <!-- each one becomes a table       -->
 <xsl:template match="layout-config/sensors">
-<h2>Sensors (<xsl:call-template name="substring-after-last">
+<h2 style="page-break-before: always">Sensors (<xsl:call-template name="substring-after-last">
   <xsl:with-param name="string" select="substring-before(@class,'ManagerXml')" /><xsl:with-param name="delimiter" select="'.'" />
   </xsl:call-template>
 )</h2>
@@ -247,7 +264,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
 <!-- Index through memories elements -->
 <!-- each one becomes a table        -->
 <xsl:template match="layout-config/memories">
-<h2>Memory Variables</h2>
+<h2 style="page-break-before: always">Memory Variables</h2>
     <table style="width:50%" border="1">
     <tr><th>System Name</th><th>User Name</th><th>Comment</th><th>Value</th></tr>
     <!-- index through individual memory elements -->
@@ -259,7 +276,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
 <!-- Index through reporters elements -->
 <!-- each one becomes a table         -->
 <xsl:template match="layout-config/reporters">
-<h2>Reporters</h2>
+<h2 style="page-break-before: always">Reporters</h2>
     <table style="width:50%" border="1">
     <tr><th>System Name</th><th>User Name</th><th>Comment</th></tr>
     <!-- index through individual reporter elements -->
@@ -271,7 +288,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
 <!-- Index through routes elements -->
 <!-- each one becomes a table      -->
 <xsl:template match="layout-config/routes">
-<h2>Routes</h2>
+<h2 style="page-break-before: always">Routes</h2>
     <table style="width:100%" border="1">
     <tr><th>System Name</th><th>User Name</th>
     <th>In Sensors</th><th>In Turnouts</th>
@@ -288,7 +305,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
 <!-- Index through layoutblocks elements -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/layoutblocks">
-    <h2>Layout Blocks</h2>
+    <h2 style="page-break-before: always">Layout Blocks</h2>
     <table style="width:100%" border="1">
         <tr>
             <th>System Name</th>
@@ -309,7 +326,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
 <!-- Index through oblocks (occupancy blocks) elements -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/oblocks">
-    <h2>Occupancy Blocks</h2>
+    <h2 style="page-break-before: always">Occupancy Blocks</h2>
     <table style="width:100%" border="1">
         <tr>
             <th>System Name</th>
@@ -328,7 +345,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
 <!-- Index through sections elements -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/sections">
-    <h2>Sections</h2>
+    <h2 style="page-break-before: always">Sections</h2>
     <table style="width:75%" border="1">
         <tr><th>System Name</th><th>User Name</th><th>Entry (order)</th><th>Exit</th><th>Comment</th></tr>
         <!-- index through individual section elements -->
@@ -345,7 +362,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
     <xsl:if test="@class = 'jmri.configurexml.BlockManagerXml'" >
         <!-- Index through blocks elements -->
         <!-- each one becomes a table -->
-        <h2>Blocks</h2>
+        <h2 style="page-break-before: always">Blocks</h2>
             <table style="width:75%" border="1">
             <tr>
                 <th>System Name</th>
@@ -432,12 +449,10 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
     </xsl:if>
 </xsl:template>
 
-
-
 <!-- *************************************************************************************** -->
 <!-- Index through ctcdata elements -->
 <xsl:template match="layout-config/ctcdata">
-    <h2>CTC Data</h2>
+    <h2 style="page-break-before: always">CTC Data</h2>
     <h3>CTC Properties</h3>
     <table style="width:50%" border="1">
         <tr>
@@ -489,7 +504,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
 <!-- Index through warrants elements -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/warrants">
-    <h2>Warrants</h2>
+    <h2 style="page-break-before: always">Warrants</h2>
     Settings:
     <!--Haltstart = <xsl:value-of select="nxparams/haltstart"/>-->
     <!--Max.speed = <xsl:value-of select="nxparams/maxspeed"/>-->
@@ -504,7 +519,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
 <!-- Index through audio elements -->
 <!-- each one becomes a table           -->
 <xsl:template match="layout-config/audio">
-    <h2>Audio</h2>
+    <h2 style="page-break-before: always">Audio</h2>
     <table style="width:75%" border="1">
         <tr><th>Class</th><th>System Name</th><th>User Name</th><th>Type</th><th>URL</th><th>Comment</th></tr>
         <!-- index through individual audio elements -->
@@ -512,12 +527,11 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
     </table>
 </xsl:template>
 
-
 <!-- *************************************************************************************** -->
 <!-- Index through logixs elements       -->
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/logixs/logix">
-<h2>Logix <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
+<h2 style="page-break-before: always">Logix <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
 <xsl:if test="string-length(@userName)!=0" > (<xsl:value-of select="@userName"/>)</xsl:if>
 <xsl:if test="( @enabled = 'yes' )"> [Enabled] </xsl:if>
 <xsl:if test="( @enabled = 'no'  )"> [NOT Enabled]</xsl:if>
@@ -884,14 +898,14 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- Index through LogixNGs elements       -->
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/LogixNGs/Thread">
-<h2>LogixNG Thread <xsl:value-of select="id"/>
+<h2 style="page-break-before: always">LogixNG Thread <xsl:value-of select="id"/>
 <xsl:if test="string-length(name)!=0" > (<xsl:value-of select="name"/>)</xsl:if>
 </h2>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="layout-config/LogixNGs/LogixNG">
-<h2>LogixNG <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
+<h2 style="page-break-before: always">LogixNG <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
 <xsl:if test="string-length(@userName)!=0" > (<xsl:value-of select="@userName"/>)</xsl:if>
 <xsl:if test="( @enabled = 'yes' )"> [Enabled] </xsl:if>
 <xsl:if test="( @enabled = 'no'  )"> [NOT Enabled]</xsl:if>
@@ -952,7 +966,7 @@ value="<xsl:value-of select="@dataString"/>"
 
 <!-- *************************************************************************************** -->
 <xsl:template match="layout-config/LogixNGs/InitializationTable">
-    <h2>LogixNG Initialization Table</h2>
+    <h2 style="page-break-before: always">LogixNG Initialization Table</h2>
     <xsl:for-each select="./*">
         <xsl:value-of select="local-name()"/>
         <xsl:value-of select="."/>
@@ -989,7 +1003,7 @@ value="<xsl:value-of select="@dataString"/>"
 
 <!-- *************************************************************************************** -->
 <xsl:template match="layout-config/LogixNGs/Clipboard">
-    <h2>LogixNG Clipboard</h2>
+    <h2 style="page-break-before: always">LogixNG Clipboard</h2>
     <table style="width:75%" border="1">
         <tr>
             <th>Socket Name</th>
@@ -1016,7 +1030,7 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- ***MODIFIED/EXPANDED Jan 12 2023 ****************************************************************************** -->
 <!-- template to show ConditionalNG Actions -->
 <xsl:template match="layout-config/LogixNGDigitalExpressions">
-    <h2>LogixNG Digital Expressions</h2>
+    <h2 style="page-break-before: always">LogixNG Digital Expressions</h2>
     <table border="1">
         <tr>
             <th style="width:20%" >Type</th>
@@ -1064,7 +1078,7 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- ***MODIFIED/EXPANDED Jan 12 2023 ****************************************************************************** -->
 <!-- template to show ConditionalNG Actions -->
 <xsl:template match="layout-config/LogixNGDigitalActions">
-    <h2>LogixNG Digital Actions</h2>
+    <h2 style="page-break-before: always">LogixNG Digital Actions</h2>
     <table border="1">
         <tr>
             <th style="width:20%" >Type</th>
@@ -1121,7 +1135,7 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- ***NEW   Jan 12 2023 ******************************************************************************** -->
 <!-- template to show LogixNGDigitalBooleanActions -->
 <xsl:template match="layout-config/LogixNGDigitalBooleanActions">
-    <h2>LogixNG Digital Boolean Actions</h2>
+    <h2 style="page-break-before: always">LogixNG Digital Boolean Actions</h2>
     <table border="1">
         <tr>
             <th style="width:20%">Type</th>
@@ -1152,7 +1166,7 @@ value="<xsl:value-of select="@dataString"/>"
 
 <!-- *************************************************************************************** -->
 <xsl:template match="layout-config/paneleditor">
-<h2>Panel: <xsl:value-of select="@name"/></h2>
+<h2 style="page-break-before: always">Panel: <xsl:value-of select="@name"/></h2>
     <table style="width:50%" border="1">
     <!-- index through individual panel elements -->
     <tr>
@@ -1165,19 +1179,22 @@ value="<xsl:value-of select="@dataString"/>"
 
 <!-- *************************************************************************************** -->
 <xsl:template match="layout-config/LayoutEditor">
-<h2>Layout Panel: <xsl:value-of select="@name"/></h2>
+<h2 style="page-break-before: always">Layout Panel: <xsl:value-of select="@name"/></h2>
 
 <h3>Track Drawing Options</h3>
-<table style="width:50%" border="1">
-<xsl:for-each select="./layoutTrackDrawingOptions/*">
+    <table style="width:50%" border="1">
+    <tr>
+      <th>Item</th><th>Value</th>
+    </tr>
+    <xsl:for-each select="./layoutTrackDrawingOptions/*">
     <tr>
         <td><xsl:value-of select="name()"/></td>
         <td><xsl:value-of select="."/></td>
     </tr>
-</xsl:for-each>
-</table>
+    </xsl:for-each>
+    </table>
 
-<h3>Elements</h3>
+<h3>Panel Elements</h3>
     <table style="width:75%" border="1">
     <!-- index through individual panel elements -->
     <tr>
@@ -1187,7 +1204,7 @@ value="<xsl:value-of select="@dataString"/>"
     </table>
 </xsl:template>
 
-<!-- ****** layoutTrackDrawingOptions handled within Layout Editor ************************* -->
+<!-- ****** layoutTrackDrawingOptions handled within Layout Editor ****[To move the scanning past this set of xml]**** -->
 <xsl:template match="layoutTrackDrawingOptions">
 </xsl:template>
 
@@ -1201,7 +1218,7 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- SSL element groups -->
 <xsl:template name="signalelements">
     <!-- each one becomes a table -->
-    <h2>Simple Signal Logic</h2>
+    <h2 style="page-break-before: always">Simple Signal Logic</h2>
         <table style="width:100%" border="1">
         <tr><th>Controls Signal</th>
             <th><!-- match to --></th>
@@ -1460,6 +1477,34 @@ value="<xsl:value-of select="@dataString"/>"
             <xsl:for-each select="aspect">
                 <xsl:value-of select="@defines"/>:
                 <xsl:value-of select="number"/><br/>
+            </xsl:for-each>
+        </td>
+    </tr>
+</xsl:template>
+<!-- ***NEW 01/13/2023 *************************************************************************** -->
+<xsl:template match="olcbsignalmast">
+    <tr><td><xsl:value-of select="systemName"/></td>
+        <td><xsl:value-of select="userName"/></td>
+        <td style="text-align:center">OLCB Mast</td>
+        <td style="text-align:center">
+            <xsl:for-each select="unlit">
+                <xsl:value-of select="@allowed"/><br/>
+            </xsl:for-each>
+        </td>
+        <td>
+            <xsl:for-each select="disabledAspects">
+                <xsl:for-each select="disabledAspect">
+                    <xsl:value-of select="."/><br/>
+                </xsl:for-each>
+            </xsl:for-each>
+        </td>
+        <td><xsl:value-of select="comment"/></td>
+        <td></td>
+        <td>
+            <xsl:for-each select="aspect">
+                 <xsl:value-of select="@defines"/>:
+                 <xsl:value-of select="event"/><br/>
+                 
             </xsl:for-each>
         </td>
     </tr>
@@ -1875,19 +1920,13 @@ connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select=
 </xsl:template>
 
 <!-- *************************************************************************************** -->
-<!-- Display version number in header -->
-<xsl:template match="layout-config/jmriversion">
-    JMRI version used to create this panel xml file: <xsl:value-of select="major"/>.<xsl:value-of select="minor"/>.<xsl:value-of select="test"/><xsl:value-of select="modifier"/>
-</xsl:template>
-
-<!-- *************************************************************************************** -->
 <!-- At the bottom, display JMRI load history -->
 <xsl:template match="filehistory">
     <!-- title first time -->
     <xsl:for-each select="..">
       <xsl:choose>
         <xsl:when test="(name() != 'operation' )" >
-            <h2>History</h2>
+            <h2 style="page-break-before: always">History</h2>
         </xsl:when>
       </xsl:choose>
     </xsl:for-each>

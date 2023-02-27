@@ -39,6 +39,14 @@
 		<label>
 			<text>Extended Light Function available in this Piko SmartDecoder XP 5.1</text>
 		</label>
+		<label>
+			<text>Setting that determines which bank 0-3 is programmed. Reset to "Bank 0 - Manufacturer" when done!</text>
+			<text xml:lang="de">Auswahl der zu programmierenden Bank 0 - 3: (Zurückstellen nach "Bank 0 - Hersteller" wenn fertig!)</text>
+			<text xml:lang="cs">Nastavení programování banky 0 - 3. Po dokončení obnovte na Banka 0!</text>
+		</label>
+		<label>
+			<text> <!--Leerzeile-->   </text>
+		</label>
 		<column>
 			<row>
 				<display item="SUSI_Bank_Switch"/>
@@ -51,7 +59,6 @@
 				<value>0</value>
 			</qualifier>
 			<column>
-				<!--Bank 0-->
 				<display item="Bank 0 Manufacturer ID"/>
 				<display item="Bank 0 Software version"/>
 				<display item="Bank 0 Slave No"/>
@@ -63,7 +70,7 @@
 				<relation>eq</relation>
 				<value>1</value>
 			</qualifier>
-			<!--Bank 1 -->
+			<!--Bank 0 -->
 			<row>
 				<label>
 					<text>Output #1 - Conditions: </text>
@@ -629,7 +636,7 @@
 				<relation>eq</relation>
 				<value>2</value>
 			</qualifier>
-			<!--Bank 2 -->
+			<!--Bank 1 -->
 			<row>
 				<label>
 					<text>Output #3 - Conditions: </text>
@@ -1186,6 +1193,40 @@
 				<label>
 					<text>Output #4 - Conditions: </text>
 					<text xml:lang="de">Ausgang 4 (nicht belegt) - Bedingungen: </text>
+				</label>
+			</row>
+		</group>
+		<group>
+			<qualifier>
+				<variableref>SUSI_Bank_Switch</variableref>
+				<relation>eq</relation>
+				<value>3</value>
+			</qualifier>
+			<!--Bank 2 -->
+			<row>
+				<label>
+					<text>Output #5 - Conditions: </text>
+					<text xml:lang="de">Ausgang 5 (nicht belegt) - Bedingungen: </text>
+				</label>
+			</row>
+			<row>
+				<label>
+					<text>Output #6 - Conditions: </text>
+					<text xml:lang="de">Ausgang 6 (nicht belegt) - Bedingungen: </text>
+				</label>
+			</row>
+		</group>
+		<group>
+			<qualifier>
+				<variableref>SUSI_Bank_Switch</variableref>
+				<relation>eq</relation>
+				<value>4</value>
+			</qualifier>
+			<!--Bank 3 -->
+			<row>
+				<label>
+					<text>PWM 1 - 6: </text>
+					<text xml:lang="de">PWM 1 - 6 (nicht unterstützt): </text>
 				</label>
 			</row>
 		</group>

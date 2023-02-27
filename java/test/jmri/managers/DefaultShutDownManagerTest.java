@@ -188,7 +188,7 @@ public class DefaultShutDownManagerTest {
     @Test
     public void testShutDownisNotInterruptedByShutDownTask() {
         dsdm.register(new CallTrueShutDownTask("testShutDownisNotInterruptedByShutDownTask"));
-        Assertions.assertFalse(dsdm.shutdown(0, false));
+        dsdm.shutdown(0, false);
         assertThat(dsdm.isShuttingDown()).isTrue();
         assertThat(runs).isEqualTo(1);
     }
@@ -231,7 +231,7 @@ public class DefaultShutDownManagerTest {
     @Test
     public void testShutDownTaskTakesTooLong() {
         dsdm.register(new TakesOneSecondShutDownTask("testShutDownTaskTakesTooLong"));
-        Assertions.assertFalse(dsdm.shutdown(0, false));
+        dsdm.shutdown(0, false);
         JUnitAppender.assertErrorMessageStartsWith("Could not complete Shutdown Task in time:");
         Assertions.assertTrue(dsdm.isShuttingDown());
         JUnitUtil.waitFor(() -> { return runs == 2; } , "Second runs++ call eventually triggered");
@@ -240,7 +240,7 @@ public class DefaultShutDownManagerTest {
     @Test
     public void testEarlyShutDownTaskTakesTooLong() {
         dsdm.register(new TakesOneSecondEarlyShutDownTask("testEarlyShutDownTaskTakesTooLong"));
-        Assertions.assertFalse(dsdm.shutdown(0, false));
+        dsdm.shutdown(0, false);
         JUnitAppender.assertErrorMessageStartsWith("Could not complete Shutdown Task in time:");
         Assertions.assertTrue(dsdm.isShuttingDown());
         JUnitUtil.waitFor(() -> { return runs == 2; } , "Second runs++ call eventually triggered");
@@ -249,7 +249,7 @@ public class DefaultShutDownManagerTest {
     @Test
     public void testShutDownTaskThrowsException() {
         dsdm.register(new ThrowsExceptionShutDownTask("testShutDownTaskThrowsException"));
-        Assertions.assertFalse(dsdm.shutdown(0, false));
+        dsdm.shutdown(0, false);
         JUnitAppender.assertErrorMessageStartsWith("Issue Completing ShutdownTask :");
         Assertions.assertTrue(dsdm.isShuttingDown());
         Assertions.assertEquals( 1, runs, "run triggered");
@@ -262,7 +262,7 @@ public class DefaultShutDownManagerTest {
             dsdm.register(new CallTrueShutDownTask("testMoreThanEightTasks"+i));
         }
         Assertions.assertEquals(30, dsdm.getRunnables().size());
-        Assertions.assertFalse(dsdm.shutdown(0, false));
+        dsdm.shutdown(0, false);
         Assertions.assertTrue(dsdm.isShuttingDown());
         // Assertions.assertEquals(30, runs); // fails often with a few missing
         // JUnitUtil.waitFor times out every now and then, so we use concurrentRuns
@@ -301,11 +301,11 @@ public class DefaultShutDownManagerTest {
     }
 
     private class CallTrueShutDownTask extends AbstractShutDownTask {
-    
+
         CallTrueShutDownTask(String id){
             super("Call True Task " + id );
         }
-        
+
         @Override
         public Boolean call() {
             return true;
@@ -316,7 +316,7 @@ public class DefaultShutDownManagerTest {
             runs++;
             concurrentRuns.putIfAbsent(this.getName(), this.getName());
         }
-    
+
     }
 
     private class ThrowsExceptionShutDownTask extends AbstractShutDownTask {
@@ -324,7 +324,7 @@ public class DefaultShutDownManagerTest {
         ThrowsExceptionShutDownTask(String id){
             super("Throws NPE Task " + id );
         }
-        
+
         @Override
         public Boolean call() {
             return true;
@@ -335,15 +335,15 @@ public class DefaultShutDownManagerTest {
             runs++;
             throw new NullPointerException("ThrowsExceptionShutDownTask " + getName());
         }
-    
+
     }
 
     private class TakesOneSecondShutDownTask extends AbstractShutDownTask {
-    
+
         TakesOneSecondShutDownTask(String id){
             super("Takes Too Long " + id );
         }
-        
+
         @Override
         public Boolean call() {
             return true;
@@ -355,11 +355,11 @@ public class DefaultShutDownManagerTest {
             JUnitUtil.waitFor(1000);
             runs++;
         }
-    
+
     }
 
     private class TakesOneSecondEarlyShutDownTask extends AbstractShutDownTask {
-    
+
         TakesOneSecondEarlyShutDownTask(String id){
             super("Early SDT Takes Too Long " + id );
         }
@@ -380,7 +380,7 @@ public class DefaultShutDownManagerTest {
         public void run() {
             // does nothing
         }
-        
+
     }
 
     private class EarlyShutDownTask extends AbstractShutDownTask {
@@ -388,12 +388,12 @@ public class DefaultShutDownManagerTest {
         EarlyShutDownTask(String id){
             super("EarlyShutDownTask " + id );
         }
-        
+
         @Override
         public Boolean call() {
             return true;
         }
-        
+
         @Override
         public void runEarly() {
             concurrentEarlyRuns.putIfAbsent(this.getName(), this.getName());
@@ -411,6 +411,7 @@ public class DefaultShutDownManagerTest {
     public void setUp() {
         JUnitUtil.setUp();
         dsdm = new DefaultShutDownManager();
+        dsdm.setBlockingShutdown(true);
         dsdm.tasksTimeOutMilliSec = 100; // normal default 30000 msecs but this is a test
         runs = 0;
         InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);

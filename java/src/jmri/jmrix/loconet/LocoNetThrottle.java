@@ -114,7 +114,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         log.debug("constructed a new throttle using slot {} for loco address {}", slot.getSlot(), slot.locoAddr());
     }
 
-    /**isin
+    /**
      * Convert a LocoNet speed integer to a float speed value
      *
      * @param lSpeed LocoNet style speed value

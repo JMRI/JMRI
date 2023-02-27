@@ -3135,6 +3135,27 @@ public class CreateLogixNGTreeScaffold {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
+        ExpressionLinuxLinePower expressionLinuxLinePower =
+                new ExpressionLinuxLinePower(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLinuxLinePower);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLinuxLinePower =
+                new ExpressionLinuxLinePower(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLinuxLinePower.set_Is_IsNot(Is_IsNot_Enum.Is);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLinuxLinePower);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLinuxLinePower =
+                new ExpressionLinuxLinePower(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLinuxLinePower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLinuxLinePower);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
         ExpressionBlock expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
         maleSocket.setEnabled(false);
