@@ -9,6 +9,7 @@ import javax.swing.table.*;
 
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.swing.JmriJTablePersistenceManager;
 
 import org.openlcb.*;
 import org.openlcb.implementations.*;
@@ -19,6 +20,7 @@ import org.openlcb.implementations.*;
  * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2023
+ * @since 5.3.4
  */
 public class EventTablePane extends jmri.util.swing.JmriPanel
         implements jmri.jmrix.can.swing.CanPanelInterface {
@@ -29,6 +31,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
     MimicNodeStore store;
     EventTableDataModel model;
+    JTable table;
 
     JCheckBox showRequiresLabel;
     JCheckBox showRequiresMatch; // requires at least one consumer and one producer exist
@@ -57,7 +60,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         // Add to GUI here
 
-        var table = new JTable(model);
+        table = new JTable(model);
+
         model.table = table;
         model.sorter = sorter;
         table.setAutoCreateRowSorter(true);
@@ -66,8 +70,16 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         table.setShowGrid(true);
         table.setGridColor(Color.BLACK);
         table.getTableHeader().setBackground(Color.LIGHT_GRAY);
+        table.setName("jmri.jmrix.openlcb.swing.eventtable.EventTablePane.table");
 
-        var scrollPane = new JScrollPane(table);
+        var scrollPane = new JScrollPane(table);        // persist table options - see TODO below
+
+        // restore the column layout and start monitoring it
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
+            tpm.resetState(table);
+            tpm.persist(table);
+        });
+
         add(scrollPane);
 
         var buttonPanel = new JPanel();
@@ -96,6 +108,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     }
 
     public EventTablePane() {
+    }
+
+    @Override
+    public void dispose() {
+        // Save the column layout
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
+           tpm.stopPersisting(table);
+        });
     }
 
     @Override
@@ -226,7 +246,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         TripleMemo getTripleMemo(int row) {
             if (row >= memos.size()) {
-                log.warn("request out of range: {} greater than {}", row, memos.size());
                 return null;
             }
             return memos.get(row);
@@ -257,11 +276,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     var height = 2; // 2 margin
                     int increment = table.getFont().getSize()*12/10; // 1.2 line spacing
                     var first = true;   // no \n before first line
-
-                    // TODO: Remove debug lines
-                    // height+=increment;
-                    // first = false;
-                    // result.append("FOO");
 
                     // scan the event info as available
                     for (var entry : stdEventTable.getEventInfo(memo.eventID).getAllEntries()) {
@@ -314,19 +328,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 case COL_CONSUMER_NAME: return "Consumer Node Name";
                 case COL_CONTEXT_INFO:  return "Path(s) from Configure Dialog";
                 default: return "ERROR "+col;
-            }
-        }
-
-        // TODO: Why is this not an @Override?  Doing nothing? See SlotMonDataModel
-        public int getPreferredWidth(int col) {
-            switch (col) {
-                case COL_EVENTID:
-                    return new JTextField(23+1).getPreferredSize().width;
-                case COL_PRODUCER_NODE:
-                case COL_CONSUMER_NODE:
-                    return new JTextField(17+1).getPreferredSize().width;
-                default:
-                    return 75; // default value from JavaDoc
             }
         }
 
@@ -420,7 +421,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                             ""
                         );
             memos.add(memo);
-            fireTableStructureChanged();
+            fireTableDataChanged();
         }
 
         /**
@@ -488,7 +489,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                             name
                         );
             memos.add(memo);
-            fireTableStructureChanged();
+            fireTableDataChanged();
         }
 
         boolean consumerPresent(NodeID nodeID, EventID eventID) {
