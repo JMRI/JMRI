@@ -226,7 +226,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     /**
      * Creates a Menu List
      * <p>
-     * Settings > Line Termination
+     * Settings : Line Termination
      */
     @Override
     public List<JMenu> getMenus() {
