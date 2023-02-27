@@ -71,7 +71,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         table.setShowGrid(true);
         table.setGridColor(Color.BLACK);
         table.getTableHeader().setBackground(Color.LIGHT_GRAY);
-        table.setName("jmri.jmrix.openlcb.swing.eventtable.EventTablePane.table");
+        table.setName("jmri.jmrix.openlcb.swing.eventtable.EventTablePane.table"); // for persistence
+        table.setColumnSelectionAllowed(true);
+        table.setRowSelectionAllowed(true);
 
         var scrollPane = new JScrollPane(table);        // persist table options - see TODO below
 
@@ -146,10 +148,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
             jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
                 var destNodeID = memo.getNodeID();
-                log.trace("sendRequestEvents {} {}", nid, destNodeID);
+                log.trace("send IdentifyEventsAddressedMessage {} {}", nid, destNodeID);
                 Message m = new IdentifyEventsAddressedMessage(nid, destNodeID);
                 connection.put(m, null);
             }, nextDelay);
+
             nextDelay += DELAY;
         }
     }
@@ -362,11 +365,31 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          */
         void clear() {
             memos = new ArrayList<>();
-            fireTableDataChanged();
+            fireTableDataChanged();  // don't queue this one, must be immediate
         }
 
         // static so the data remains available through a window close-open cycle
         static ArrayList<TripleMemo> memos = new ArrayList<>();
+
+        /**
+         * Notify the table that the contents have changed.
+         * To reduce CPU load, this batches the changes
+         * @param start first row changed; -1 means entire table
+         * @param end   last row changed; -1 means entire table
+         */
+        void handleTableUpdate(int start, int end) {
+            final int DELAY = 250;
+
+            if (!pending) {
+                jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
+                    pending = false;
+                    fireTableDataChanged();
+                }, DELAY);
+                pending = true;
+            }
+
+        }
+        boolean pending = false;
 
         /**
          * Record an event-producer pair
@@ -375,6 +398,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          */
         void recordProducer(EventID eventID, NodeID nodeID) {
             log.trace("recordProducer of {} in {}", eventID, nodeID);
+
+            // update if the model has been cleared
+            if (memos.size() <= 1) {
+                handleTableUpdate(-1, -1);
+            }
 
             var nodeMemo = store.findNode(nodeID);
             String name = "";
@@ -390,14 +418,15 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             // if you can, find a matching memo with an empty consumer value
             TripleMemo empty = null;
             TripleMemo bestEmpty = null;
-            for (var memo : memos) {
+            for (int i = 1; i < memos.size(); i++) {
+                var memo = memos.get(i);
                 if (memo.eventID.equals(eventID) ) {
                     // if nodeID matches, already present; ignore
                     if (nodeID.equals(memo.producer)) {
                         // might be 2nd EventTablePane to process the data,
                         // hence memos would already have been processed. To
                         // handle that, always fire a change to the table.
-                        fireTableDataChanged();
+                        handleTableUpdate(i, i);
                         return;
                     }
                     // if empty producer slot, remember it
@@ -410,12 +439,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
 
             // can we use the bestEmpty?
+            // N.B. This doesn't always work. If c(A) arrives before c(B), p(B)
+            // will be slotted into c(A) before a "best" match is available.
             if (bestEmpty != null) {
                 // yes
                 log.trace("   use bestEmpty");
                 bestEmpty.producer = nodeID;
                 bestEmpty.producerName = name;
-                fireTableDataChanged();
+                handleTableUpdate(-1, -1);
                 return;
             }
 
@@ -425,7 +456,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 log.trace("   reuse empty");
                 empty.producer = nodeID;
                 empty.producerName = name;
-                fireTableDataChanged();
+                handleTableUpdate(-1, -1);
                 return;
             }
 
@@ -438,7 +469,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                             ""
                         );
             memos.add(memo);
-            fireTableDataChanged();
+            handleTableUpdate(memos.size()-1, memos.size()-1);
         }
 
         /**
@@ -448,6 +479,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          */
         void recordConsumer(EventID eventID, NodeID nodeID) {
             log.trace("recordConsumer of {} in {}", eventID, nodeID);
+
+            // update if the model has been cleared
+            if (memos.size() <= 1) {
+                handleTableUpdate(-1, -1);
+            }
 
             var nodeMemo = store.findNode(nodeID);
             String name = "";
@@ -462,14 +498,15 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             // if you can, find a matching memo with an empty consumer value
             TripleMemo empty = null;
             TripleMemo bestEmpty = null;
-            for (var memo : memos) {
+            for (int i = 1; i < memos.size(); i++) {
+                var memo = memos.get(i);
                 if (memo.eventID.equals(eventID) ) {
                     // if nodeID matches, already present; ignore
                     if (nodeID.equals(memo.consumer)) {
                         // might be 2nd EventTablePane to process the data,
                         // hence memos would already have been processed. To
                         // handle that, always fire a change to the table.
-                        fireTableDataChanged();
+                        handleTableUpdate(i, i);
                         return;
                     }
                     // if empty consumer slot, remember it
@@ -482,12 +519,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
 
             // can we use the best empty?
+            // N.B. This doesn't always work. If p(A) arrives before p(B), c(B)
+            // will be slotted into p(A) before a "best" match is available.
             if (bestEmpty != null) {
                 // yes
                 log.trace("   use bestEmpty");
                 bestEmpty.consumer = nodeID;
                 bestEmpty.consumerName = name;
-                fireTableDataChanged();
+                handleTableUpdate(-1, -1);
                 return;
             }
 
@@ -497,7 +536,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 log.trace("   reuse empty");
                 empty.consumer = nodeID;
                 empty.consumerName = name;
-                fireTableDataChanged();
+                handleTableUpdate(-1, -1);
                 return;
             }
 
@@ -510,7 +549,26 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                             name
                         );
             memos.add(memo);
-            fireTableDataChanged();
+            handleTableUpdate(memos.size()-1, memos.size()-1);
+         }
+
+        void highlightProducer(EventID eventID, NodeID nodeID) {
+            int row = -1;
+            for (int i = 1; i < memos.size(); i++) {
+                var memo = memos.get(i);
+                if (eventID.equals(memo.eventID) && nodeID.equals(memo.producer)) {
+                    try {
+                        var viewRow = sorter.convertRowIndexToView(i);
+                        log.debug("highlight event ID {} row {} viewRow {}", eventID.toShortString(), i, viewRow);
+                        if (viewRow >= 0) {
+                            table.changeSelection(viewRow, COL_PRODUCER_NODE, false, false);
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        // can happen on first encounter of an event before table is updated
+                        log.trace("failed to highlight event ID {} row {}", eventID.toShortString(), i);
+                    }
+                }
+            }
         }
 
         boolean consumerPresent(NodeID nodeID, EventID eventID) {
@@ -572,6 +630,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             var nodeID = msg.getSourceNodeID();
             var eventID = msg.getEventID();
             model.recordProducer(eventID, nodeID);
+            model.highlightProducer(eventID, nodeID);
         }
 
         /**
