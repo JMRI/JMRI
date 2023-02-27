@@ -448,7 +448,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             TripleMemo bestEmpty = null;
             for (var memo : memos) {
                 if (memo.eventID.equals(eventID) ) {
-                    // if matches, ignore
+                    // if nodeID matches, already present; ignore
                     if (nodeID.equals(memo.consumer)) {
                         return;
                     }
