@@ -32,6 +32,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     MimicNodeStore store;
     EventTableDataModel model;
     JTable table;
+    Monitor monitor;
 
     JCheckBox showRequiresLabel;
     JCheckBox showRequiresMatch; // requires at least one consumer and one producer exist
@@ -104,7 +105,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
 
         // hook up to receive traffic
-        memo.get(OlcbInterface.class).registerMessageListener(new Monitor(model));
+        monitor = new Monitor(model);
+        memo.get(OlcbInterface.class).registerMessageListener(monitor);
     }
 
     public EventTablePane() {
@@ -116,6 +118,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
            tpm.stopPersisting(table);
         });
+        // remove traffic connection
+        memo.get(OlcbInterface.class).unRegisterMessageListener(monitor);
+        // and complete this
+        super.dispose();
     }
 
     @Override
@@ -271,10 +277,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     return memo.consumer != null ? memo.consumer.toString() : "";
                 case COL_CONSUMER_NAME: return memo.consumerName;
                 case COL_CONTEXT_INFO:
-                    // set up for multi-line output
+                    // set up for multi-line output in the cell
                     var result = new StringBuilder();
-                    var height = 2; // 2 for margin
-                    int increment = table.getFont().getSize()*12/10; // 1.2 line spacing
+                    var height = 2; // for margins
+                    int increment = table.getFont().getSize()*15/10; // 1.5 line spacing
                     var first = true;   // no \n before first line
 
                     // scan the event info as available
@@ -288,11 +294,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
                     // When constrained, these rows don't match up, need to find constrained row
                     var viewRow = sorter.convertRowIndexToView(row);
-                    if (height >= increment) {
-                        table.setRowHeight(viewRow, height);
-                    } else {
-                        table.setRowHeight(viewRow, height+increment); // when no lines, assume 1
+                    if (height < increment) {
+                        height = height+increment; // when no lines, assume 1
                     }
+                    if (height != table.getRowHeight(row)) {
+                        table.setRowHeight(viewRow, height);
+                    }
+
                     return new String(result);
                 default: return "Illegal row "+row+" "+col;
             }
@@ -354,7 +362,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             fireTableDataChanged();
         }
 
-        ArrayList<TripleMemo> memos = new ArrayList<>();
+        // static so the data remains available through a window close-open cycle
+        static ArrayList<TripleMemo> memos = new ArrayList<>();
 
         /**
          * Record an event-producer pair
@@ -382,6 +391,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 if (memo.eventID.equals(eventID) ) {
                     // if nodeID matches, already present; ignore
                     if (nodeID.equals(memo.producer)) {
+                        // might be 2nd EventTablePane to process the data,
+                        // hence memos would already have been processed. To
+                        // handle that, always fire a change to the table.
+                        fireTableDataChanged();
                         return;
                     }
                     // if empty producer slot, remember it
@@ -450,6 +463,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 if (memo.eventID.equals(eventID) ) {
                     // if nodeID matches, already present; ignore
                     if (nodeID.equals(memo.consumer)) {
+                        // might be 2nd EventTablePane to process the data,
+                        // hence memos would already have been processed. To
+                        // handle that, always fire a change to the table.
+                        fireTableDataChanged();
                         return;
                     }
                     // if empty consumer slot, remember it
