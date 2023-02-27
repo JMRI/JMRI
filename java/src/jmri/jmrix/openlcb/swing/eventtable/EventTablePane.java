@@ -279,23 +279,24 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 case COL_CONTEXT_INFO:
                     // set up for multi-line output in the cell
                     var result = new StringBuilder();
-                    var height = 2; // for margins
-                    int increment = table.getFont().getSize()*15/10; // 1.5 line spacing
+                    if (lineIncrement <= 0) { // load cached value
+                        lineIncrement = table.getFont().getSize()*12/10; // 1.5 line spacing
+                    }
+                    var height = lineIncrement/3; // for margins
                     var first = true;   // no \n before first line
 
                     // scan the event info as available
                     for (var entry : stdEventTable.getEventInfo(memo.eventID).getAllEntries()) {
                         if (!first) result.append("\n");
                         first = false;
-                        height += increment;
+                        height += lineIncrement;
                         result.append(entry.getDescription());
                     }
-                    // set height
-
-                    // When constrained, these rows don't match up, need to find constrained row
+                    // When table is constrained, these rows don't match up, need to find constrained row
                     var viewRow = sorter.convertRowIndexToView(row);
-                    if (height < increment) {
-                        height = height+increment; // when no lines, assume 1
+                    // set height
+                    if (height < lineIncrement) {
+                        height = height+lineIncrement; // when no lines, assume 1
                     }
                     if (height != table.getRowHeight(row)) {
                         table.setRowHeight(viewRow, height);
@@ -305,6 +306,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 default: return "Illegal row "+row+" "+col;
             }
         }
+
+        int lineIncrement = -1; // cache the line spacing for multi-line cells
 
         static final String tagPrefix = "ID_OpenLCB_";  // Prefix of IdTag system name
 
