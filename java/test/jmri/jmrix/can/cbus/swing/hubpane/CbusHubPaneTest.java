@@ -4,11 +4,12 @@ import jmri.jmrix.can.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.netbeans.jemmy.operators.JFrameOperator;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * @author Steve Young Copyright(C) 2022
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class CbusHubPaneTest {
 
     CbusHubPane hub = null;
