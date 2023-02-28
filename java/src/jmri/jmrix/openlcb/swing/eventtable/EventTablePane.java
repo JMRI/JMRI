@@ -11,6 +11,8 @@ import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.swing.JmriJTablePersistenceManager;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import org.openlcb.*;
 import org.openlcb.implementations.*;
 
@@ -283,7 +285,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     // set up for multi-line output in the cell
                     var result = new StringBuilder();
                     if (lineIncrement <= 0) { // load cached value
-                        lineIncrement = table.getFont().getSize()*12/10; // 1.5 line spacing
+                        lineIncrement = table.getFont().getSize()*13/10; // line spacing
                     }
                     var height = lineIncrement/3; // for margins
                     var first = true;   // no \n before first line
@@ -363,6 +365,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         /**
          * Remove all existing data, generally just in advance of an update
          */
+        @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD") // Swing thread deconflicts
         void clear() {
             memos = new ArrayList<>();
             fireTableDataChanged();  // don't queue this one, must be immediate
@@ -552,8 +555,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             handleTableUpdate(memos.size()-1, memos.size()-1);
          }
 
+        // This caused the display to jump around as it tried to keep
+        // the selected cell visible.  A better approach might be to change
+        // the cell background color.  Temporarily commented out in
+        // handleProducerConsumerEventReport below.
         void highlightProducer(EventID eventID, NodeID nodeID) {
-            int row = -1;
             for (int i = 1; i < memos.size(); i++) {
                 var memo = memos.get(i);
                 if (eventID.equals(memo.eventID) && nodeID.equals(memo.producer)) {
@@ -630,7 +636,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             var nodeID = msg.getSourceNodeID();
             var eventID = msg.getEventID();
             model.recordProducer(eventID, nodeID);
-            model.highlightProducer(eventID, nodeID);
+            // model.highlightProducer(eventID, nodeID);
         }
 
         /**
