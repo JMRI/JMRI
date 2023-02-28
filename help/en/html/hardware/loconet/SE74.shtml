@@ -552,11 +552,49 @@
           LocoNet messaging which is suitable for "general-purpose" sensor input.
           Those inputs will be reflected as four JMRI "Sensor" objects, with sensor
           hardware addresses of:
-          <br>
-          <code>SENS1 as hardware address = (2*(SE74 base address)) - 1</code>
-          <code>SENS2 as hardware address = (2*(SE74 base address)) + 1</code>
-          <code>SENS3 as hardware address = (2*(SE74 base address)) - 2</code>
-          <code>SENS4 as hardware address = (2*(SE74 base address)) + 3</code>
+      <table border="2">
+          <tr>
+              <td>&nbsp;&nbsp;Sensor&nbsp;&nbsp;</td>
+              <td>&nbsp;&nbsp;Hardware Address&nbsp;&nbsp;</td>
+          </tr>
+          <tr>
+              <td><strong>SENS1</strong></td>
+              <td><strong>hardware address = (2*(SE74 base address)) - 1</strong></td>
+          </tr>
+          <tr><td><strong>SENS2</strong></td>
+              <td><strong>hardware address = (2*(SE74 base address)) + 1</strong></td>
+          </tr>
+          <tr><td><strong>SENS3</strong></td>
+              <td><strong>hardware address = (2*(SE74 base address)) + 3</strong></td>
+          </tr>
+          <tr><td><strong>SENS4</strong></td>
+              <td><strong>hardware address = (2*(SE74 base address)) + 5</strong></td>
+          </tr>
+      </table>
+        <br>
+        <p>Some examples include:
+        <table border="1">
+          <tr>
+            <th>&nbsp;Base Address&nbsp;</th>
+            <th>&nbsp;Input&nbsp;</th>
+            <th>&nbsp;Hardware Address&nbsp;</th>
+          </tr>
+
+            <tr><td rowspan="4">253 (factory default)</td ><td>&nbsp;SENS1&nbsp;</td><td>505</td></tr>
+            <tr><td>SENS2&nbsp;</td><td>507</td></tr>
+            <tr><td>SENS3&nbsp;</td><td>509</td></tr>
+            <tr><td>SENS4&nbsp;</td><td>511</td></tr>
+            
+            <tr><td rowspan="4">254</td ><td>&nbsp;SENS1&nbsp;</td><td>507</td></tr>
+            <tr><td>&nbsp;SENS2&nbsp;</td><td>508</td></tr>
+            <tr><td>&nbsp;SENS3&nbsp;</td><td>511</td></tr>
+            <tr><td>&nbsp;SENS4&nbsp;</td><td>513</td></tr>
+            
+            <tr><td rowspan="4">255</td ><td>&nbsp;SENS1&nbsp;</td><td>509</td></tr>
+            <tr><td>&nbsp;SENS2&nbsp;</td><td>511</td></tr>
+            <tr><td>&nbsp;SENS3&nbsp;</td><td>513</td></tr>
+            <tr><td>&nbsp;SENS4&nbsp;</td><td>515</td></tr>
+        </table>
 
       <h2 id="routes">SE74 Routes</h2>
       <p>The SE74 provides "route" functionality, where each of 8 routes may be
