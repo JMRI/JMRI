@@ -20,6 +20,7 @@ import org.apache.commons.csv.CSVPrinter;
 
 import org.openlcb.*;
 import org.openlcb.implementations.*;
+import org.openlcb.swing.*;
 
 
 /**
@@ -41,6 +42,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     JTable table;
     Monitor monitor;
 
+    JFormattedTextField findID;
     JCheckBox showRequiresLabel;
     JCheckBox showRequiresMatch; // requires at least one consumer and one producer exist
 
@@ -94,11 +96,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         var buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
+
         add(buttonPanel);
 
         var updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
         updateButton.addActionListener(this::sendRequestEvents);
         buttonPanel.add(updateButton);
+
+        buttonPanel.add(add(new JSeparator(JSeparator.VERTICAL)));
 
         showRequiresLabel = new JCheckBox(Bundle.getMessage("BoxShowRequiresLabel"));
         showRequiresLabel.addActionListener((ActionEvent e) -> {
@@ -111,6 +116,15 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             filter();
         });
         buttonPanel.add(showRequiresMatch);
+
+        buttonPanel.add(add(new JSeparator(JSeparator.VERTICAL)));
+
+        findID = EventIdTextField.getEventIdTextField();
+        buttonPanel.add(findID);
+        JButton find = new JButton("Find");
+        buttonPanel.add(find);
+        find.addActionListener(this::findRequested);
+
         buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
 
         // hook up to receive traffic
@@ -180,6 +194,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
             nextDelay += DELAY;
         }
+    }
+
+    public void findRequested(java.awt.event.ActionEvent e) {
+        log.debug("Request find event {}", findID.getText());
+        model.highlightEvent(new EventID(findID.getText()));
     }
 
     // CSV file chooser
@@ -626,7 +645,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         // the cell background color.  Temporarily commented out in
         // handleProducerConsumerEventReport below.
         void highlightProducer(EventID eventID, NodeID nodeID) {
-            for (int i = 1; i < memos.size(); i++) {
+            for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
                 if (eventID.equals(memo.eventID) && nodeID.equals(memo.producer)) {
                     try {
@@ -634,6 +653,27 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         log.debug("highlight event ID {} row {} viewRow {}", eventID.toShortString(), i, viewRow);
                         if (viewRow >= 0) {
                             table.changeSelection(viewRow, COL_PRODUCER_NODE, false, false);
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        // can happen on first encounter of an event before table is updated
+                        log.trace("failed to highlight event ID {} row {}", eventID.toShortString(), i);
+                    }
+                }
+            }
+        }
+
+        // highlights (selects) all the eventID cells with a particular event,
+        // Most LAFs will move the first of these on-scroll-view.
+        void highlightEvent(EventID eventID) {
+            table.clearSelection(); // clear existing selections
+            for (int i = 0; i < memos.size(); i++) {
+                var memo = memos.get(i);
+                if (eventID.equals(memo.eventID)) {
+                    try {
+                        var viewRow = sorter.convertRowIndexToView(i);
+                        log.trace("highlight event ID {} row {} viewRow {}", eventID.toShortString(), i, viewRow);
+                        if (viewRow >= 0) {
+                            table.changeSelection(viewRow, COL_EVENTID, true, false);
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
                         // can happen on first encounter of an event before table is updated
