@@ -212,7 +212,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         if (fileChooser == null) {
             fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Save CSV file");
         }
+        fileChooser.rescanCurrentDirectory();
+        fileChooser.setSelectedFile(new File("eventtable.csv"));
 
         int retVal = fileChooser.showSaveDialog(this);
 
