@@ -2,6 +2,8 @@ package jmri.jmrix.openlcb.swing.eventtable;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.nio.charset.StandardCharsets;
+import java.io.*;
 import java.util.*;
 
 import javax.swing.*;
@@ -12,6 +14,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.swing.JmriJTablePersistenceManager;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 import org.openlcb.*;
 import org.openlcb.implementations.*;
@@ -129,6 +134,24 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     }
 
     @Override
+    public java.util.List<JMenu> getMenus() {
+        // create a file menu
+        var retval = new ArrayList<JMenu>();
+        var fileMenu = new JMenu("File");
+        fileMenu.setMnemonic(KeyEvent.VK_F);
+        var csvItem = new JMenuItem("Save to CSV...", KeyEvent.VK_S);
+        KeyStroke ctrlSKeyStroke = KeyStroke.getKeyStroke("control S");
+        if (jmri.util.SystemType.isMacOSX()) {
+            ctrlSKeyStroke = KeyStroke.getKeyStroke("meta S");
+        }
+        csvItem.setAccelerator(ctrlSKeyStroke);
+        csvItem.addActionListener(this::writeToCsvFile);
+        fileMenu.add(csvItem);
+        retval.add(fileMenu);
+        return retval;
+    }
+
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.openlcb.swing.eventtable.EventTablePane";
     }
@@ -156,6 +179,49 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }, nextDelay);
 
             nextDelay += DELAY;
+        }
+    }
+
+    // CSV file chooser
+    // static to remember choice from one use to another.
+    static JFileChooser fileChooser = null;
+
+    /**
+     * Write out contents in CSV form
+     */
+    public void writeToCsvFile(ActionEvent e) {
+
+        if (fileChooser == null) {
+            fileChooser = new JFileChooser();
+        }
+
+        int retVal = fileChooser.showSaveDialog(this);
+
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            if (log.isDebugEnabled()) {
+                log.debug("start to export to CSV file {}", file);
+            }
+
+            try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
+                str.printRecord("Event ID", "Event Name", "Producer Node", "Producer Node Name",
+                                "Consumer Node", "Consumer Node Name", "Paths");
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    var memo = model.getTripleMemo(i);
+
+                    str.printRecord(model.getValueAt(i, model.COL_EVENTID),
+                                    model.getValueAt(i, model.COL_EVENTNAME),
+                                    model.getValueAt(i, model.COL_PRODUCER_NODE),
+                                    model.getValueAt(i, model.COL_PRODUCER_NAME),
+                                    model.getValueAt(i, model.COL_CONSUMER_NODE),
+                                    model.getValueAt(i, model.COL_CONSUMER_NAME),
+                                    model.getValueAt(i, model.COL_CONTEXT_INFO)
+                            );
+                }
+                str.flush();
+            } catch (IOException ex) {
+                log.error("Error writing file", ex);
+            }
         }
     }
 
