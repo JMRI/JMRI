@@ -207,6 +207,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
     /**
      * Write out contents in CSV form
+     * @param e Needed for signature of method, but ignored here
      */
     public void writeToCsvFile(ActionEvent e) {
 
@@ -229,16 +230,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 str.printRecord("Event ID", "Event Name", "Producer Node", "Producer Node Name",
                                 "Consumer Node", "Consumer Node Name", "Paths");
                 for (int i = 0; i < model.getRowCount(); i++) {
-                    var memo = model.getTripleMemo(i);
+                    String contextInfo = model.getValueAt(i, EventTableDataModel.COL_CONTEXT_INFO).toString().replace("\n", " / "); // multi-line cell
 
-                    String contextInfo = model.getValueAt(i, model.COL_CONTEXT_INFO).toString().replace("\n", " / "); // multi-line cell
-
-                    str.printRecord(model.getValueAt(i, model.COL_EVENTID),
-                                    model.getValueAt(i, model.COL_EVENTNAME),
-                                    model.getValueAt(i, model.COL_PRODUCER_NODE),
-                                    model.getValueAt(i, model.COL_PRODUCER_NAME),
-                                    model.getValueAt(i, model.COL_CONSUMER_NODE),
-                                    model.getValueAt(i, model.COL_CONSUMER_NAME),
+                    str.printRecord(model.getValueAt(i, EventTableDataModel.COL_EVENTID),
+                                    model.getValueAt(i, EventTableDataModel.COL_EVENTNAME),
+                                    model.getValueAt(i, EventTableDataModel.COL_PRODUCER_NODE),
+                                    model.getValueAt(i, EventTableDataModel.COL_PRODUCER_NAME),
+                                    model.getValueAt(i, EventTableDataModel.COL_CONSUMER_NODE),
+                                    model.getValueAt(i, EventTableDataModel.COL_CONSUMER_NAME),
                                     contextInfo
                             );
                 }
