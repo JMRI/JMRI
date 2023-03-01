@@ -42,9 +42,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     JTable table;
     Monitor monitor;
 
+    JCheckBox showRequiresLabel; // requires a user-provided name to display
+    JCheckBox showRequiresMatch; // requires at least one consumer and one producer exist to display
+
     JFormattedTextField findID;
-    JCheckBox showRequiresLabel;
-    JCheckBox showRequiresMatch; // requires at least one consumer and one producer exist
 
     private transient TableRowSorter<EventTableDataModel> sorter;
 
@@ -84,7 +85,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         table.setColumnSelectionAllowed(true);
         table.setRowSelectionAllowed(true);
 
-        var scrollPane = new JScrollPane(table);        // persist table options - see TODO below
+        var scrollPane = new JScrollPane(table);
 
         // restore the column layout and start monitoring it
         InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
@@ -489,7 +490,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          * @param nodeID  Node that is known to produce the event
          */
         void recordProducer(EventID eventID, NodeID nodeID) {
-            log.trace("recordProducer of {} in {}", eventID, nodeID);
+            log.debug("recordProducer of {} in {}", eventID, nodeID);
 
             // update if the model has been cleared
             if (memos.size() <= 1) {
@@ -570,7 +571,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          * @param nodeID  Node that is known to consume the event
          */
         void recordConsumer(EventID eventID, NodeID nodeID) {
-            log.trace("recordConsumer of {} in {}", eventID, nodeID);
+            log.debug("recordConsumer of {} in {}", eventID, nodeID);
 
             // update if the model has been cleared
             if (memos.size() <= 1) {
