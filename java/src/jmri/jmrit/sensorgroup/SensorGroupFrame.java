@@ -167,7 +167,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
             String uname = null;
             if (c !=null) {
                 uname = c.getUserName();
-            }            
+            }
             if (uname != null) {
                 groupModel.addElement(uname.substring(ConditionalUserPrefix.length()));
             }
@@ -334,7 +334,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
     void deleteGroup(boolean showMsg) {
         String group = _nameField.getText();
 
-        if (group == null || group.equals("")) {
+        if (group == null || group.isEmpty()) {
             if (showMsg) {
                 javax.swing.JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("MessageError3"), Bundle.getMessage("ErrorTitle"),
@@ -342,9 +342,9 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
             }
             return;
         }
-        String prefix = (namePrefix + group + nameDivider);
 
         // remove the old routes
+        String prefix = (namePrefix + group + nameDivider);
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         for (Route r : rm.getNamedBeanSet()) {
             String name = r.getSystemName();
@@ -354,44 +354,44 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 rm.deleteRoute(r);
             }
         }
-        String cSystemName = (ConditionalSystemPrefix + group);
-        String cUserName = ConditionalUserPrefix + group;
-        Logix logix = getSystemLogix();
-        for (int i = 0; i < logix.getNumConditionals(); i++) {
-            String name = logix.getConditionalByNumberOrder(i);
-            if (cSystemName.equals(name) || cUserName.equals(name)) {
-                Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(name);
-                if (c == null) {
-                    log.error("Conditional \"{}\" expected but NOT found in Logix {}", name, logix.getSystemName());
-                } else {
-                    logix.deleteConditional(cSystemName);
-                    break;
-                }
-            }
-        }
-        DefaultListModel<String> model = (DefaultListModel<String>) _sensorGroupList.getModel();
-        int index = model.indexOf(group);
-        if (index > -1) {
-            model.remove(index);
-        }
 
-        index = _sensorGroupList.getSelectedIndex();
-        if (index > -1) {
-            String sysName = ConditionalSystemPrefix + model.elementAt(index);
-            String[] msgs = logix.deleteConditional(sysName);
-            if (msgs != null) {
-                if (showMsg) {
-                    javax.swing.JOptionPane.showMessageDialog(this,
-                            Bundle.getMessage("MessageError41") + " " + msgs[0] + " (" + msgs[1] + ") "
-                            + Bundle.getMessage("MessageError42") + " " + msgs[2] + " (" + msgs[3] + "), "
-                            + Bundle.getMessage("MessageError43") + " " + msgs[4] + " (" + msgs[5] + "). "
-                            + Bundle.getMessage("MessageError44"),
-                            Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+        // remove Logix IX:SYS conditional
+        // Due to a change at 4.17.2, the system names are no longer forced to upper case.
+        // Older SYS conditionals will have an upper case name, so the user name is an alternate name.
+        Logix logix = getSystemLogix();
+        String cSystemName = ConditionalSystemPrefix + group;
+        String cUserName = ConditionalUserPrefix + group;
+
+        for (int i = 0; i < logix.getNumConditionals(); i++) {
+            String cdlName = logix.getConditionalByNumberOrder(i);
+            Conditional cdl = logix.getConditional(cdlName);
+            if (cdl != null) {
+                if (cSystemName.equals(cdl.getSystemName()) || cUserName.equals(cdl.getUserName())) {
+                    String[] msgs = logix.deleteConditional(cdlName);
+                    if (msgs == null) {
+                        break;
+                    }
+
+                    // Conditional delete failed or was vetoed
+                    if (showMsg) {
+                        javax.swing.JOptionPane.showMessageDialog(this,
+                                Bundle.getMessage("MessageError41") + " " + msgs[0] + " (" + msgs[1] + ") "
+                                + Bundle.getMessage("MessageError42") + " " + msgs[2] + " (" + msgs[3] + "), "
+                                + Bundle.getMessage("MessageError43") + " " + msgs[4] + " (" + msgs[5] + "). "
+                                + Bundle.getMessage("MessageError44"),
+                                Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                    }
+                    return;
                 }
             } else {
-                model.remove(index);
+                log.error("Conditional \"{}\" expected but NOT found in Logix {}", cdlName, logix.getSystemName());
+                return;
             }
         }
+
+        // remove from list
+        DefaultListModel<String> model = (DefaultListModel<String>) _sensorGroupList.getModel();
+        model.removeElement(group);
     }
 
     void undoGroupPressed() {

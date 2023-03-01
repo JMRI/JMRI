@@ -2,11 +2,16 @@ package jmri.jmrix.openlcb;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.annotation.CheckReturnValue;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+
 import org.openlcb.EventID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -22,8 +27,8 @@ import javax.annotation.Nonnull;
  * <dt>Full 8 byte ID as pairs separated by "."
  * </dl>
  * Note: the {@link #check()} routine does a full, expensive
- * validity check of the name.  All other operations 
- * assume correctness, diagnose some invalid-format strings, but 
+ * validity check of the name.  All other operations
+ * assume correctness, diagnose some invalid-format strings, but
  * may appear to successfully handle other invalid forms.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010, 2018
@@ -42,14 +47,14 @@ public class OlcbAddress {
         if (hCode == null)  hCode = Pattern.compile("^" + singleAddressPattern + "$").matcher("");
         return hCode;
     }
-    
+
     String aString;
     int[] aFrame = null;
     boolean match = false;
 
     static final int NODEFACTOR = 100000;
 
-    /** 
+    /**
      * Construct from OlcbEvent.
      *
      * @param e the event ID.
@@ -63,7 +68,7 @@ public class OlcbAddress {
         }
         aString = toCanonicalString();
     }
-    
+
     /**
      * Construct from string without leading system or type letters
      * @param s hex coded string of address
@@ -78,7 +83,7 @@ public class OlcbAddress {
             // dotted form, 7 dots
             String[] terms = s.split("\\.");
             if (terms.length != 8) {
-                log.error("unexpected number of terms: {}", terms.length);
+                log.error("unexpected number of terms: {}, address is {}", terms.length, s);
             }
             int[] tFrame = new int[terms.length];
             try {
@@ -100,7 +105,7 @@ public class OlcbAddress {
                     String two = aString.substring(2 * i, 2 * i + 2);
                     tFrame[i] = Integer.parseInt(two, 16);
                 }
-            } catch (NumberFormatException ex) { return; }  // leaving the string unparsed  
+            } catch (NumberFormatException ex) { return; }  // leaving the string unparsed
             aFrame = tFrame;
             match = true;
         }
@@ -141,11 +146,11 @@ public class OlcbAddress {
     public int compare(@Nonnull OlcbAddress opp) {
         // if neither matched, just do a lexical sort
         if (!match && !opp.match) return aString.compareTo(opp.aString);
-        
+
         // match sorts before non-matched
         if (match && !opp.match) return -1;
         if (!match && opp.match) return +1;
-        
+
         // usual case: comparing on content
         for (int i = 0; i < Math.min(aFrame.length, opp.aFrame.length); i++) {
             if (aFrame[i] != opp.aFrame[i]) return Integer.signum(aFrame[i] - opp.aFrame[i]);
@@ -153,7 +158,7 @@ public class OlcbAddress {
         // check for different length (shorter sorts first)
         return Integer.signum(aFrame.length - opp.aFrame.length);
     }
-    
+
     public CanMessage makeMessage() {
         CanMessage c = new CanMessage(aFrame, 0x195B4000);
         c.setExtended(true);
@@ -165,7 +170,7 @@ public class OlcbAddress {
      * valid.
      * <p>
      * This is an expensive call. It's complete-compliance done
-     * using a regular expression. It can reject some 
+     * using a regular expression. It can reject some
      * forms that the code will normally handle OK.
      * @return true if valid, else false.
      */
@@ -230,7 +235,7 @@ public class OlcbAddress {
             if (pStrings[i].equals("")) {
                 return null;
             }
-            
+
             // too expensive to do full regex check here, as this is used a lot in e.g. sorts
             // if (!getMatcher().reset(pStrings[i]).matches()) return null;
 
@@ -282,7 +287,7 @@ public class OlcbAddress {
         for (int i = 0; i < 8; ++i) b[i] = (byte)aFrame[i];
         return new EventID(b);
     }
-    
+
     /**
      * Validates Strings for OpenLCB format.
      * @param name   the system name to validate.
@@ -315,6 +320,31 @@ public class OlcbAddress {
                 throw new jmri.NamedBean.BadSystemNameException(locale,"InvalidSystemNameCustom","Wrong number of events in address: " + name);
         }
         return name;
+    }
+
+    /**
+     * See {@link jmri.NamedBean#compareSystemNameSuffix} for background.
+     * This is a common implementation for OpenLCB Sensors and Turnouts
+     * of the comparison method.
+     *
+     * @param suffix1 1st suffix to compare.
+     * @param suffix2 2nd suffix to compare.
+     * @return true if suffixes match, else false.
+     */
+    @CheckReturnValue
+    public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
+
+        // extract addresses
+        OlcbAddress[] array1 = new OlcbAddress(suffix1).split();
+        OlcbAddress[] array2 = new OlcbAddress(suffix2).split();
+
+        // compare on content
+        for (int i = 0; i < Math.min(array1.length, array2.length); i++) {
+            int c = array1[i].compare(array2[i]);
+            if (c != 0) return c;
+        }
+        // check for different length (shorter sorts first)
+        return Integer.signum(array1.length - array2.length);
     }
 
     private final static Logger log = LoggerFactory.getLogger(OlcbAddress.class);

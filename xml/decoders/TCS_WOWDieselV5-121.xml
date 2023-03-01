@@ -205,7 +205,7 @@
         </enumVal>
         <label>Select Prime Mover: </label>
       </variable>
-      <variable default="-1" item="Sound Option 4" mask="VVVVVVVV XVVVVVVV" CV="16.4.(258,257)">
+      <variable default="-1" item="Sound Option 4" mask="XVVVVVVV VVVVVVVV" CV="16.4.(258,257)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -284,7 +284,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F0</label>
       </variable>
-      <variable default="17" item="Sound Option 5" mask="VVVVVVVV XVVVVVVV" CV="16.4.(260,259)">
+      <variable default="17" item="Sound Option 5" mask="XVVVVVVV VVVVVVVV" CV="16.4.(260,259)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -363,7 +363,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F1</label>
       </variable>
-      <variable default="162" item="Sound Option 6" mask="VVVVVVVV XVVVVVVV" CV="16.4.(262,261)">
+      <variable default="162" item="Sound Option 6" mask="XVVVVVVV VVVVVVVV" CV="16.4.(262,261)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -442,7 +442,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F2</label>
       </variable>
-      <variable default="342" item="Sound Option 7" mask="VVVVVVVV XVVVVVVV" CV="16.4.(264,263)">
+      <variable default="342" item="Sound Option 7" mask="XVVVVVVV VVVVVVVV" CV="16.4.(264,263)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -521,7 +521,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F3</label>
       </variable>
-      <variable default="207" item="Sound Option 8" mask="VVVVVVVV XVVVVVVV" CV="16.4.(266,265)">
+      <variable default="207" item="Sound Option 8" mask="XVVVVVVV VVVVVVVV" CV="16.4.(266,265)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -600,7 +600,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F4</label>
       </variable>
-      <variable default="113" item="Sound Option 9" mask="VVVVVVVV XVVVVVVV" CV="16.4.(268,267)">
+      <variable default="113" item="Sound Option 9" mask="XVVVVVVV VVVVVVVV" CV="16.4.(268,267)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -679,7 +679,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F5</label>
       </variable>
-      <variable default="76" item="Sound Option 10" mask="VVVVVVVV XVVVVVVV" CV="16.4.(270,269)">
+      <variable default="76" item="Sound Option 10" mask="XVVVVVVV VVVVVVVV" CV="16.4.(270,269)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -758,7 +758,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F6</label>
       </variable>
-      <variable default="78" item="Sound Option 11" mask="VVVVVVVV XVVVVVVV" CV="16.4.(272,271)">
+      <variable default="78" item="Sound Option 11" mask="XVVVVVVV VVVVVVVV" CV="16.4.(272,271)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -837,7 +837,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F7</label>
       </variable>
-      <variable default="391" item="Sound Option 12" mask="VVVVVVVV XVVVVVVV" CV="16.4.(274,273)">
+      <variable default="391" item="Sound Option 12" mask="XVVVVVVV VVVVVVVV" CV="16.4.(274,273)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -916,7 +916,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F8</label>
       </variable>
-      <variable default="2945" item="Sound Option 13" mask="VVVVVVVV XVVVVVVV" CV="16.4.(276,275)">
+      <variable default="2945" item="Sound Option 13" mask="XVVVVVVV VVVVVVVV" CV="16.4.(276,275)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -995,7 +995,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F9</label>
       </variable>
-      <variable default="388" item="Sound Option 14" mask="VVVVVVVV XVVVVVVV" CV="16.4.(278,277)">
+      <variable default="388" item="Sound Option 14" mask="XVVVVVVV VVVVVVVV" CV="16.4.(278,277)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -1074,7 +1074,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F10</label>
       </variable>
-      <variable default="387" item="Sound Option 15" mask="VVVVVVVV XVVVVVVV" CV="16.4.(280,279)">
+      <variable default="387" item="Sound Option 15" mask="XVVVVVVV VVVVVVVV" CV="16.4.(280,279)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -1153,7 +1153,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F11</label>
       </variable>
-      <variable default="2834" item="Sound Option 16" mask="VVVVVVVV XVVVVVVV" CV="16.4.(282,281)">
+      <variable default="2834" item="Sound Option 16" mask="XVVVVVVV VVVVVVVV" CV="16.4.(282,281)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -1232,7 +1232,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F12</label>
       </variable>
-      <variable default="108" item="Sound Option 17" mask="VVVVVVVV XVVVVVVV" CV="16.4.(284,283)">
+      <variable default="108" item="Sound Option 17" mask="XVVVVVVV VVVVVVVV" CV="16.4.(284,283)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -1311,7 +1311,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F13</label>
       </variable>
-      <variable default="109" item="Sound Option 18" mask="VVVVVVVV XVVVVVVV" CV="16.4.(286,285)">
+      <variable default="109" item="Sound Option 18" mask="XVVVVVVV VVVVVVVV" CV="16.4.(286,285)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -1390,7 +1390,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F14</label>
       </variable>
-      <variable default="389" item="Sound Option 19" mask="VVVVVVVV XVVVVVVV" CV="16.4.(288,287)">
+      <variable default="389" item="Sound Option 19" mask="XVVVVVVV VVVVVVVV" CV="16.4.(288,287)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -1469,7 +1469,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F15</label>
       </variable>
-      <variable default="112" item="Sound Option 20" mask="VVVVVVVV XVVVVVVV" CV="16.4.(290,289)">
+      <variable default="112" item="Sound Option 20" mask="XVVVVVVV VVVVVVVV" CV="16.4.(290,289)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -1548,7 +1548,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F16</label>
       </variable>
-      <variable default="3035" item="Sound Option 21" mask="VVVVVVVV XVVVVVVV" CV="16.4.(292,291)">
+      <variable default="3035" item="Sound Option 21" mask="XVVVVVVV VVVVVVVV" CV="16.4.(292,291)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -1627,7 +1627,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F17</label>
       </variable>
-      <variable default="16" item="Sound Option 22" mask="VVVVVVVV XVVVVVVV" CV="16.4.(294,293)">
+      <variable default="16" item="Sound Option 22" mask="XVVVVVVV VVVVVVVV" CV="16.4.(294,293)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -1706,7 +1706,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F18</label>
       </variable>
-      <variable default="-1" item="Sound Option 23" mask="VVVVVVVV XVVVVVVV" CV="16.4.(296,295)">
+      <variable default="-1" item="Sound Option 23" mask="XVVVVVVV VVVVVVVV" CV="16.4.(296,295)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -1785,7 +1785,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F19</label>
       </variable>
-      <variable default="-1" item="Sound Option 24" mask="VVVVVVVV XVVVVVVV" CV="16.4.(298,297)">
+      <variable default="-1" item="Sound Option 24" mask="XVVVVVVV VVVVVVVV" CV="16.4.(298,297)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -1864,7 +1864,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F20</label>
       </variable>
-      <variable default="-1" item="Sound Option 25" mask="VVVVVVVV XVVVVVVV" CV="16.4.(300,299)">
+      <variable default="-1" item="Sound Option 25" mask="XVVVVVVV VVVVVVVV" CV="16.4.(300,299)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -1943,7 +1943,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F21</label>
       </variable>
-      <variable default="-1" item="Sound Option 26" mask="VVVVVVVV XVVVVVVV" CV="16.4.(302,301)">
+      <variable default="-1" item="Sound Option 26" mask="XVVVVVVV VVVVVVVV" CV="16.4.(302,301)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -2022,7 +2022,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F22</label>
       </variable>
-      <variable default="-1" item="Sound Option 27" mask="VVVVVVVV XVVVVVVV" CV="16.4.(304,303)">
+      <variable default="-1" item="Sound Option 27" mask="XVVVVVVV VVVVVVVV" CV="16.4.(304,303)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -2101,7 +2101,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F23</label>
       </variable>
-      <variable default="-1" item="Sound Option 28" mask="VVVVVVVV XVVVVVVV" CV="16.4.(306,305)">
+      <variable default="-1" item="Sound Option 28" mask="XVVVVVVV VVVVVVVV" CV="16.4.(306,305)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -2180,7 +2180,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F24</label>
       </variable>
-      <variable default="-1" item="Sound Option 29" mask="VVVVVVVV XVVVVVVV" CV="16.4.(308,307)">
+      <variable default="-1" item="Sound Option 29" mask="XVVVVVVV VVVVVVVV" CV="16.4.(308,307)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -2259,7 +2259,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F25</label>
       </variable>
-      <variable default="-1" item="Sound Option 30" mask="VVVVVVVV XVVVVVVV" CV="16.4.(310,309)">
+      <variable default="-1" item="Sound Option 30" mask="XVVVVVVV VVVVVVVV" CV="16.4.(310,309)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -2338,7 +2338,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F26</label>
       </variable>
-      <variable default="-1" item="Sound Option 31" mask="VVVVVVVV XVVVVVVV" CV="16.4.(312,311)">
+      <variable default="-1" item="Sound Option 31" mask="XVVVVVVV VVVVVVVV" CV="16.4.(312,311)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -2417,7 +2417,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F27</label>
       </variable>
-      <variable default="-1" item="Sound Option 32" mask="VVVVVVVV XVVVVVVV" CV="16.4.(314,313)">
+      <variable default="-1" item="Sound Option 32" mask="XVVVVVVV VVVVVVVV" CV="16.4.(314,313)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -2496,7 +2496,7 @@
         </splitEnumVal>
         <label>Sound Mapping for F28</label>
       </variable>
-      <variable default="8" item="Sound Option 33" mask="VVVVVVVV XVVVVVVV" CV="16.4.(316,315)">
+      <variable default="8" item="Sound Option 33" mask="XVVVVVVV VVVVVVVV" CV="16.4.(316,315)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -2575,7 +2575,7 @@
         </splitEnumVal>
         <label>Sound Mapping for R1</label>
       </variable>
-      <variable default="10" item="Sound Option 34" mask="VVVVVVVV XVVVVVVV" CV="16.4.(318,317)">
+      <variable default="10" item="Sound Option 34" mask="XVVVVVVV VVVVVVVV" CV="16.4.(318,317)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -2654,7 +2654,7 @@
         </splitEnumVal>
         <label>Sound Mapping for R2</label>
       </variable>
-      <variable default="-1" item="Sound Option 35" mask="VVVVVVVV XVVVVVVV" CV="16.4.(320,319)">
+      <variable default="-1" item="Sound Option 35" mask="XVVVVVVV VVVVVVVV" CV="16.4.(320,319)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -2733,7 +2733,7 @@
         </splitEnumVal>
         <label>Sound Mapping for R3</label>
       </variable>
-      <variable default="-1" item="Sound Option 36" mask="VVVVVVVV XVVVVVVV" CV="16.4.(322,321)">
+      <variable default="-1" item="Sound Option 36" mask="XVVVVVVV VVVVVVVV" CV="16.4.(322,321)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -2812,7 +2812,7 @@
         </splitEnumVal>
         <label>Sound Mapping for R4</label>
       </variable>
-      <variable default="208" item="Sound Option 37" mask="VVVVVVVV XVVVVVVV" CV="16.4.(324,323)">
+      <variable default="208" item="Sound Option 37" mask="XVVVVVVV VVVVVVVV" CV="16.4.(324,323)">
         <splitEnumVal xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <enumChoiceGroup>
             <enumChoice choice="Air Compressor - ALCO 251 compressor #503" value="0"/>
@@ -9168,11 +9168,11 @@
               </label><separator/><label>
                 <text> </text>
               </label>
-              
-              
+
+
   <row>
         <column>
-            <row> 
+            <row>
                   <display item="Function F0F effect generated"/><separator/>
                   <display item="Function F0R effect generated"/>
             </row>
@@ -9295,7 +9295,7 @@
               <label>
                  <text>Lighting Preset: 'Auto Mars'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="0">
               <display item="Lighting Preset 0 - Step 0 - Start Brightness">
@@ -9501,7 +9501,7 @@
               <label>
                  <text>Lighting Preset: 'Brake Lights'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="4">
               <display item="Lighting Preset 1 - Step 0 - Start Brightness">
@@ -9707,7 +9707,7 @@
               <label>
                  <text>Lighting Preset: 'Rotary Beacon (New Style)'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="8">
               <display item="Lighting Preset 2 - Step 0 - Start Brightness">
@@ -9913,7 +9913,7 @@
               <label>
                  <text>Lighting Preset: 'Constant Bright'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="12">
               <display item="Lighting Preset 3 - Step 0 - Start Brightness">
@@ -10119,7 +10119,7 @@
               <label>
                  <text>Lighting Preset: 'Flashing F.R.E.D.'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="16">
               <display item="Lighting Preset 4 - Step 0 - Start Brightness">
@@ -10325,7 +10325,7 @@
               <label>
                  <text>Lighting Preset: 'Constant Dim'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="20">
               <display item="Lighting Preset 5 - Step 0 - Start Brightness">
@@ -10531,7 +10531,7 @@
               <label>
                  <text>Lighting Preset: 'Ditch Light Side 2'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="24">
               <display item="Lighting Preset 6 - Step 0 - Start Brightness">
@@ -10737,7 +10737,7 @@
               <label>
                  <text>Lighting Preset: 'Ditch Light Side 1'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="28">
               <display item="Lighting Preset 7 - Step 0 - Start Brightness">
@@ -10943,7 +10943,7 @@
               <label>
                  <text>Lighting Preset: 'Single Pulse Strobe'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="32">
               <display item="Lighting Preset 8 - Step 0 - Start Brightness">
@@ -11149,7 +11149,7 @@
               <label>
                  <text>Lighting Preset: 'Firebox Flicker'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="36">
               <display item="Lighting Preset 9 - Step 0 - Start Brightness">
@@ -11355,7 +11355,7 @@
               <label>
                  <text>Lighting Preset: 'Custom Light 1'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="40">
               <display item="Lighting Preset 10 - Step 0 - Start Brightness">
@@ -11561,7 +11561,7 @@
               <label>
                  <text>Lighting Preset: 'Rotary Beacon (Old style)'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="44">
               <display item="Lighting Preset 11 - Step 0 - Start Brightness">
@@ -11767,7 +11767,7 @@
               <label>
                  <text>Lighting Preset: 'Gyra Light'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="48">
               <display item="Lighting Preset 12 - Step 0 - Start Brightness">
@@ -11973,7 +11973,7 @@
               <label>
                  <text>Lighting Preset: 'Double Pulse Strobe'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="52">
               <display item="Lighting Preset 13 - Step 0 - Start Brightness">
@@ -12179,7 +12179,7 @@
               <label>
                  <text>Lighting Preset: 'Mars Light'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="56">
               <display item="Lighting Preset 14 - Step 0 - Start Brightness">
@@ -12385,7 +12385,7 @@
               <label>
                  <text>Lighting Preset: 'Rule 17'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="60">
               <display item="Lighting Preset 15 - Step 0 - Start Brightness">
@@ -12591,7 +12591,7 @@
               <label>
                  <text>Lighting Preset: 'Custom Light 2'</text>
               </label>
-              
+
            </griditem>
            <griditem gridx="1" gridy="64">
               <display item="Lighting Preset 16 - Step 0 - Start Brightness">

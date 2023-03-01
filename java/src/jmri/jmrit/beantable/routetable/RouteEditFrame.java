@@ -25,6 +25,10 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
 
     private final String systemName;
 
+    public RouteEditFrame() {
+        this(Bundle.getMessage("TitleEditRoute"));
+    }
+
     public RouteEditFrame(String systemName) {
         this(Bundle.getMessage("TitleEditRoute"), systemName);
     }

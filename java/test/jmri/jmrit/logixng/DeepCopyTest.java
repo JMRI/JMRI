@@ -18,12 +18,14 @@ import org.junit.*;
  */
 public class DeepCopyTest {
 
+    private CreateLogixNGTreeScaffold createLogixNGTreeScaffold;
+
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Add new LogixNG actions and expressions to jmri.jmrit.logixng.CreateLogixNGTreeScaffold
-        CreateLogixNGTreeScaffold.createLogixNGTree();
+        createLogixNGTreeScaffold.createLogixNGTree();
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
 
@@ -85,13 +87,14 @@ public class DeepCopyTest {
 
     @Before
     public void setUp() {
-        CreateLogixNGTreeScaffold.setUp();
+        createLogixNGTreeScaffold = new CreateLogixNGTreeScaffold();
+        createLogixNGTreeScaffold.setUp();
     }
 
     @After
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
-        CreateLogixNGTreeScaffold.tearDown();
+        createLogixNGTreeScaffold.tearDown();
     }
 
 

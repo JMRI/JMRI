@@ -34,7 +34,6 @@
       <indication>Next signal displaying Kør or Kør igennem aspect</indication>
       <description>2 x green or blinking green Showing</description>
       <reference>Section 2.1, 2.2</reference>
-      <comment></comment>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
     </aspect>
@@ -43,7 +42,6 @@
       <name>Kør</name>
       <indication>Proceed: be prepared to find the next signal displaying Stop aspect</indication>
       <description>Single green or green + yellow Showing</description>
-      <comment></comment>
       <speed>Medium</speed>
       <speed2>Medium</speed2>
     </aspect>
@@ -53,7 +51,6 @@
       <name>Stop</name>
       <indication>Stop</indication>
       <description>Red or Red + Yellow</description>
-      <comment></comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
     </aspect>
@@ -62,7 +59,6 @@
       <name>Off</name>
       <indication>Proceed at Caution</indication>
       <description>Dark signal.</description>
-      <comment></comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
     </aspect>

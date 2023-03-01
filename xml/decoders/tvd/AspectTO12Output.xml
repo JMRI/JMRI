@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!-- Copyright (C) JMRI 2005, 2013 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- include for QUAD-LN_S -->
+<!-- aspect turnout choices  v1,0 -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Turnout 1" value="0"/>
+  <enumChoice choice="Lock 1" value="16"/>
+  <enumChoice choice="Turnout 2" value="1"/>
+  <enumChoice choice="Lock 2" value="17"/>
+  <enumChoice choice="Turnout 3" value="2"/>
+  <enumChoice choice="Lock 3" value="18"/>
+  <enumChoice choice="Turnout 4" value="3"/>
+  <enumChoice choice="Lock 4" value="19"/>
+  <enumChoice choice="Turnout 5" value="4"/>
+  <enumChoice choice="Lock 5" value="20"/>
+  <enumChoice choice="Turnout 6" value="5"/>
+  <enumChoice choice="Lock 6" value="21"/>
+  <enumChoice choice="Turnout 7" value="6"/>
+  <enumChoice choice="Lock 7" value="22"/>
+  <enumChoice choice="Turnout 8" value="7"/>
+  <enumChoice choice="Lock 8" value="23"/>
+  <enumChoice choice="Turnout 9" value="8"/>
+  <enumChoice choice="Lock 9" value="24"/>
+  <enumChoice choice="Turnout 10" value="9"/>
+  <enumChoice choice="Lock 10" value="25"/>
+  <enumChoice choice="Turnout 11" value="10"/>
+  <enumChoice choice="Lock 11" value="26"/>
+  <enumChoice choice="Turnout 12" value="11"/>
+  <enumChoice choice="Lock 12" value="27"/>
+</enumVal>
+

@@ -1,16 +1,16 @@
 #
 # This script will populate the tables with many default entries for a Signal LCC node.
 # It will populate:
-#	'inactive' sensors matching the logic cell default values.
-#	sensors for the I/O port event defaults
-#	and more things...
+#   'inactive' sensors matching the logic cell default values.
+#   sensors for the I/O port event defaults
+#   and more things...
 #
 # Ken Cameron, October 2022
 # Usage:
-#	run the script via the Scripting->Run Script...
-#	open Scripting->Script Entry
-#	enter createTowerLCCNodeDefaults('your_node_address','your_node_name_prefix')
-#	or you can call the individual parts if you only want one or more parts created
+#   run the script via the Scripting->Run Script...
+#   open Scripting->Script Entry
+#   enter createTowerLCCNodeDefaults('your_node_address','your_node_name_prefix')
+#   or you can call the individual parts if you only want one or more parts created
 
 import jmri
 

@@ -69,7 +69,7 @@
           "254"><br>
           Select each or all of the decoder items that you want to print</p>
 
-          <p>Click <input name="button" id="button" value="Okay" type="button"> to print then Print
+          <p>Click the <span class="textbutton">Okay</span> button to print, then normally the Print
           dialog for your computer system is displayed.</p>
         </li>
 

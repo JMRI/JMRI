@@ -38,7 +38,14 @@
         <date>2011-06-24</date>
         <authorinitials>DB</authorinitials>
         <revremark>Added mapping information</revremark>
+     </revision>
+     <revision>
+        <revnumber>2.1</revnumber>
+        <date>2023-02-21</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Added some missing mappings</revremark>
      </revision>    
+
   </revhistory>
 
   <aspecttable>AAR 1946</aspecttable>
@@ -123,6 +130,12 @@
     </aspectMapping>
 
     <aspectMapping>
+      <advancedAspect>Clear Alt</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Advance Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
@@ -190,7 +203,7 @@
       <ourAspect>Slow Clear</ourAspect>
     </aspectMapping>
 
-<aspectMapping>
+    <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
       <ourAspect>Slow Approach</ourAspect>
     </aspectMapping>
@@ -203,6 +216,30 @@
 
      <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed Medium</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Permissive</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Permissive Medium</advancedAspect>
       <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>

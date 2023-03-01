@@ -47,15 +47,15 @@
       <img src="http://www.openlcb.org/trunk/web/logo-ajs-dph.png" class="floatRight" alt=
       "OpenLCB logo" height="43" width="104">
       <p>OpenLCB is a group of hobbyists and manufacturers who have come together to produce a
-      future-oriented layout control bus, also called <a href="http://openlcb.org">OpenLCB</a>.<br>
+      future-oriented layout control bus, also called <a href="https://openlcb.org">OpenLCB</a>.<br>
       JMRI includes <a href="../openlcb/index.shtml">basic support for OpenLCB</a>, and more is
       being developed along with OpenLCB itself.</p>
-      <img src="http://www.nmra.org/common/nmra_logo.jpg" class="floatRight" alt="NMRA logo"
+      <img src="https://www.nmra.org/sites/default/files/common/nmra_logo.jpg" class="floatRight" alt="NMRA logo"
       height="45" width="55">
-      <p>The <a href="http://www.nmra.org">NMRA</a> has <a href=
-      "http://www.nmra.org/news/proposed-standard-layout-command-control-lcc-published-comments#">decided</a>
+      <p>The <a href="https://www.nmra.org">NMRA</a> has <a href=
+      "https://www.nmra.org/news/proposed-standard-layout-command-control-lcc-published-comments">decided</a>
       to adopt OpenLCB and standardize it as <a href=
-      "http://www.nmra.org/index-nmra-standards-and-recommended-practices#node-171">Layout Command
+      "https://www.nmra.org/index-nmra-standards-and-recommended-practices#node-171">Layout Command
       Control (LCC, formerly NMRAnet)</a>.</p>
 
       <h3><a href="cbus/index.shtml">CBUS&reg;</a>
@@ -134,19 +134,19 @@
         <dt>grid connect</dt>
 
         <dd>
-          <a href="https://gridconnect.com/pcan/can-adapters.html">GridConnect</a>
+          <a href="https://www.gridconnect.com/collections/can-pc-interfaces">GridConnect</a>
         </dd>
 
         <dt>lawicell</dt>
 
         <dd>
-          <a href="http://canusb.com/">LAWICEL AB</a> CANUSB and CAN232 adapters.
+          <a href="https://www.canusb.com/">LAWICEL AB</a> CANUSB and CAN232 adapters.
         </dd>
 
         <dt>MERG</dt>
 
         <dd>
-          <a href="https://www.merg.org.uk/kits.php">CANUSB4</a> A CBUS to USB interface, available
+          <a href="https://www.merg.org.uk/content/kits">CANUSB4</a> A CBUS to USB interface, available
           in kit form to MERG members.
         </dd>
 
@@ -181,13 +181,13 @@
         <dt>MERG</dt>
 
         <dd>
-          The <a href="https://www.merg.org.uk/kits.php">CANPICAP</a> enables direct CBUS
+          The <a href="https://www.merg.org.uk/content/kits">CANPICAP</a> enables direct CBUS
           connection to a Raspberry Pi via its 40 pin I/O connector, available in kit form to MERG
           members.
         </dd>
 
         <dd>
-          The <a href="https://www.merg.org.uk/kits.php">CANPiWi</a> is based on the Raspberry Pi
+          The <a href="https://www.merg.org.uk/content/kits">CANPiWi</a> is based on the Raspberry Pi
           Zero W, and is an interface between Engine Driver / WiThrottle and CBUS.
         </dd>
       </dl>
@@ -395,7 +395,7 @@
 
       <h3>Third Party info</h3>
 
-      <p><a href="http://www.openlcb.org">OpenLCB.org</a>
+      <p><a href="https://openlcb.org">OpenLCB.org</a>
       </p>
 
       <p><a href="https://www.merg.org.uk">merg.org.uk</a>

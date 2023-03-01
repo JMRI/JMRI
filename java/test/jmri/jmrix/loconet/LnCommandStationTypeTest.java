@@ -91,10 +91,38 @@ public class LnCommandStationTypeTest {
     }
 
     @Test
+    public void testGetSupportsSlot250() {
+        //DB150 only one that needs power turned back on after programmin
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS052.getSupportsSlot250());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210.getSupportsSlot250());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210PLUS.getSupportsSlot250());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240.getSupportsSlot250());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240PLUS.getSupportsSlot250());
+        // all others false
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS050.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS051.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS100.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS200.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR2_ALONE.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR3_ALONE.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR4_ALONE.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_USB_DCS240_ALONE.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_USB_DCS240PLUS_ALONE.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_USB_DCS52_ALONE.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_STANDALONE.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_LBPS.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_IBX_TYPE_1.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_IBX_TYPE_2.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_LBPS.getSupportsSlot250());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_MM.getSupportsSlot250());
+    }
+
+    @Test
     public void testGetSupportsMultimeter() {
         //DCS Evolution series supports MultiMeter
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS052.getSupportsMultimeter());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210.getSupportsMultimeter());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210PLUS.getSupportsMultimeter());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240.getSupportsMultimeter());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240PLUS.getSupportsMultimeter());
         // may be not true, but no harm

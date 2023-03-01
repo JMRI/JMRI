@@ -1,0 +1,1235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2022-11-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<name>Piko LightDecoder</name>
+	<name xml:lang="de">Piko LichtDecoder</name>
+	<group include="PIKO46550-18">
+		<!--Piko SmartDecoder XP5.1-->
+		<!-- BR83.10 TT -->
+		<label>
+			<text>Extended Light Function available in this Piko SmartDecoder XP 5.1</text>
+		</label>
+		<label>
+			<text>Setting that determines which bank 0-3 is programmed. Reset to "Bank 0 - Manufacturer" when done!</text>
+			<text xml:lang="de">Auswahl der zu programmierenden Bank 0 - 3: (Zurückstellen nach "Bank 0 - Hersteller" wenn fertig!)</text>
+			<text xml:lang="cs">Nastavení programování banky 0 - 3. Po dokončení obnovte na Banka 0!</text>
+		</label>
+		<label>
+			<text> <!--Leerzeile-->   </text>
+		</label>
+		<column>
+			<row>
+				<display item="SUSI_Bank_Switch"/>
+			</row>
+		</column>
+		<group>
+			<qualifier>
+				<variableref>SUSI_Bank_Switch</variableref>
+				<relation>eq</relation>
+				<value>0</value>
+			</qualifier>
+			<column>
+				<display item="Bank 0 Manufacturer ID"/>
+				<display item="Bank 0 Software version"/>
+				<display item="Bank 0 Slave No"/>
+			</column>
+		</group>
+		<group>
+			<qualifier>
+				<variableref>SUSI_Bank_Switch</variableref>
+				<relation>eq</relation>
+				<value>1</value>
+			</qualifier>
+			<!--Bank 0 -->
+			<row>
+				<label>
+					<text>Output #1 - Conditions: </text>
+					<text xml:lang="de">Ausgang 1 (FS Beleuchtung) - Bedingungen: </text>
+				</label>
+			</row>
+			<row>
+				<!-- BEGIN - Function Vorwärts ein Grid On1-4/Off1-4-->
+				<grid gridy="4" weightx="1" ipadx="4">
+					<!-- BEGIN - Row 1 (headers)-->
+					<griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+						<label>
+							<text>F0</text>
+						</label>
+					</griditem>
+					<griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F1</text>
+						</label>
+					</griditem>
+					<griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F2</text>
+						</label>
+					</griditem>
+					<griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F3</text>
+						</label>
+					</griditem>
+					<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F4</text>
+						</label>
+					</griditem>
+					<griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F5</text>
+						</label>
+					</griditem>
+					<griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F6</text>
+						</label>
+					</griditem>
+					<griditem gridx="7" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F7</text>
+						</label>
+					</griditem>
+					<griditem gridx="8" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F8</text>
+						</label>
+					</griditem>
+					<griditem gridx="9" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F9</text>
+						</label>
+					</griditem>
+					<griditem gridx="10" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F10</text>
+						</label>
+					</griditem>
+					<griditem gridx="11" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F11</text>
+						</label>
+					</griditem>
+					<griditem gridx="12" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F12</text>
+						</label>
+					</griditem>
+					<griditem gridx="13" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F13</text>
+						</label>
+					</griditem>
+					<griditem gridx="14" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F14</text>
+						</label>
+					</griditem>
+					<griditem gridx="15" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F15</text>
+						</label>
+					</griditem>
+					<griditem gridx="16" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F16</text>
+						</label>
+					</griditem>
+					<griditem gridx="17" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F17</text>
+						</label>
+					</griditem>
+					<griditem gridx="18" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F18</text>
+						</label>
+					</griditem>
+					<griditem gridx="19" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F19</text>
+						</label>
+					</griditem>
+					<griditem gridx="20" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F20</text>
+						</label>
+					</griditem>
+					<griditem gridx="21" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F21</text>
+						</label>
+					</griditem>
+					<griditem gridx="22" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F22</text>
+						</label>
+					</griditem>
+					<griditem gridx="23" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F23</text>
+						</label>
+					</griditem>
+					<griditem gridx="24" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F24</text>
+						</label>
+					</griditem>
+					<griditem gridx="25" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F25</text>
+						</label>
+					</griditem>
+					<griditem gridx="26" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F26</text>
+						</label>
+					</griditem>
+					<griditem gridx="27" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F27</text>
+						</label>
+					</griditem>
+					<griditem gridx="28" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F28</text>
+						</label>
+					</griditem>
+					<!-- TODO add F29 - F31 for all )-->
+					<!-- BEGIN - Row 2 (Slot 1)-->
+					<griditem gridx="0" gridy="1" anchor="LINE_END">
+						<display item="A1_F0_fw_On" format="checkbox">
+							<label>Forward On if:</label>
+							<label xml:lang="de">Vorwärts Ein wenn:</label>
+							<label xml:lang="nl">AAN als:</label>
+							<label xml:lang="cs">Zapnuto když:</label>
+						</display>
+					</griditem>
+					<griditem gridx="1" gridy="1" anchor="CENTER">
+						<display item="A1_F1_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="1" anchor="CENTER">
+						<display item="A1_F2_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="1" anchor="CENTER">
+						<display item="A1_F3_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="1" anchor="CENTER">
+						<display item="A1_F4_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="1" anchor="CENTER">
+						<display item="A1_F5_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="1" anchor="CENTER">
+						<display item="A1_F6_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="1" anchor="CENTER">
+						<display item="A1_F7_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="8" gridy="1" anchor="CENTER">
+						<display item="A1_F8_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="9" gridy="1" anchor="CENTER">
+						<display item="A1_F9_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="10" gridy="1" anchor="CENTER">
+						<display item="A1_F10_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="11" gridy="1" anchor="CENTER">
+						<display item="A1_F11_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="12" gridy="1" anchor="CENTER">
+						<display item="A1_F12_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="13" gridy="1" anchor="CENTER">
+						<display item="A1_F13_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="14" gridy="1" anchor="CENTER">
+						<display item="A1_F14_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="15" gridy="1" anchor="CENTER">
+						<display item="A1_F15_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="16" gridy="1" anchor="CENTER">
+						<display item="A1_F16_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="17" gridy="1" anchor="CENTER">
+						<display item="A1_F17_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="18" gridy="1" anchor="CENTER">
+						<display item="A1_F18_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="19" gridy="1" anchor="CENTER">
+						<display item="A1_F19_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="20" gridy="1" anchor="CENTER">
+						<display item="A1_F20_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="21" gridy="1" anchor="CENTER">
+						<display item="A1_F21_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="22" gridy="1" anchor="CENTER">
+						<display item="A1_F22_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="23" gridy="1" anchor="CENTER">
+						<display item="A1_F23_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="24" gridy="1" anchor="CENTER">
+						<display item="A1_F24_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="25" gridy="1" anchor="CENTER">
+						<display item="A1_F25_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="26" gridy="1" anchor="CENTER">
+						<display item="A1_F26_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="27" gridy="1" anchor="CENTER">
+						<display item="A1_F27_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="28" gridy="1" anchor="CENTER">
+						<display item="A1_F28_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<!-- TODO add F29 - F31)-->
+					<!-- BEGIN - Row 2 (Slot 2)-->
+					<griditem gridx="0" gridy="2" anchor="LINE_END">
+						<display item="A1_F0_bw_On" format="checkbox">
+							<label>Backward On if:</label>
+							<label xml:lang="de">Rückwärts Ein wenn:</label>
+							<label xml:lang="nl">UIT als:</label>
+							<label xml:lang="cs">Vypnuto když:</label>
+						</display>
+					</griditem>
+					<griditem gridx="1" gridy="2" anchor="CENTER">
+						<display item="A1_F1_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="2" anchor="CENTER">
+						<display item="A1_F2_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="2" anchor="CENTER">
+						<display item="A1_F3_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="2" anchor="CENTER">
+						<display item="A1_F4_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="2" anchor="CENTER">
+						<display item="A1_F5_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="2" anchor="CENTER">
+						<display item="A1_F6_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="2" anchor="CENTER">
+						<display item="A1_F7_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="8" gridy="2" anchor="CENTER">
+						<display item="A1_F8_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="9" gridy="2" anchor="CENTER">
+						<display item="A1_F9_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="10" gridy="2" anchor="CENTER">
+						<display item="A1_F10_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="11" gridy="2" anchor="CENTER">
+						<display item="A1_F11_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="12" gridy="2" anchor="CENTER">
+						<display item="A1_F12_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="13" gridy="2" anchor="CENTER">
+						<display item="A1_F13_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="14" gridy="2" anchor="CENTER">
+						<display item="A1_F14_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="15" gridy="2" anchor="CENTER">
+						<display item="A1_F15_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="16" gridy="2" anchor="CENTER">
+						<display item="A1_F16_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="17" gridy="2" anchor="CENTER">
+						<display item="A1_F17_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="18" gridy="2" anchor="CENTER">
+						<display item="A1_F18_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="19" gridy="2" anchor="CENTER">
+						<display item="A1_F19_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="20" gridy="2" anchor="CENTER">
+						<display item="A1_F20_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="21" gridy="2" anchor="CENTER">
+						<display item="A1_F21_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="22" gridy="2" anchor="CENTER">
+						<display item="A1_F22_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="23" gridy="2" anchor="CENTER">
+						<display item="A1_F23_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="24" gridy="2" anchor="CENTER">
+						<display item="A1_F24_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="25" gridy="2" anchor="CENTER">
+						<display item="A1_F25_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="26" gridy="2" anchor="CENTER">
+						<display item="A1_F26_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="27" gridy="2" anchor="CENTER">
+						<display item="A1_F27_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="28" gridy="2" anchor="CENTER">
+						<display item="A1_F28_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<!-- TODO add F29 - F31 for Piko )-->
+					<!-- BEGIN - Row 2 (Slot 3)-->
+					<griditem gridx="0" gridy="3" anchor="LINE_END">
+						<display item="A1_F0_fw_Off" format="checkbox">
+							<label>Forward On if:</label>
+							<label xml:lang="de">Vorwärts Aus wenn:</label>
+							<label xml:lang="nl">... als:</label>
+							<label xml:lang="cs">... když:</label>
+						</display>
+					</griditem>
+					<griditem gridx="1" gridy="3" anchor="CENTER">
+						<display item="A1_F1_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="3" anchor="CENTER">
+						<display item="A1_F2_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="3" anchor="CENTER">
+						<display item="A1_F3_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="3" anchor="CENTER">
+						<display item="A1_F4_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="3" anchor="CENTER">
+						<display item="A1_F5_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="3" anchor="CENTER">
+						<display item="A1_F6_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="3" anchor="CENTER">
+						<display item="A1_F7_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="8" gridy="3" anchor="CENTER">
+						<display item="A1_F8_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="9" gridy="3" anchor="CENTER">
+						<display item="A1_F9_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="10" gridy="3" anchor="CENTER">
+						<display item="A1_F10_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="11" gridy="3" anchor="CENTER">
+						<display item="A1_F11_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="12" gridy="3" anchor="CENTER">
+						<display item="A1_F12_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="13" gridy="3" anchor="CENTER">
+						<display item="A1_F13_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="14" gridy="3" anchor="CENTER">
+						<display item="A1_F14_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="15" gridy="3" anchor="CENTER">
+						<display item="A1_F15_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="16" gridy="3" anchor="CENTER">
+						<display item="A1_F16_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="17" gridy="3" anchor="CENTER">
+						<display item="A1_F17_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="18" gridy="3" anchor="CENTER">
+						<display item="A1_F18_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="19" gridy="3" anchor="CENTER">
+						<display item="A1_F19_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="20" gridy="3" anchor="CENTER">
+						<display item="A1_F20_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="21" gridy="3" anchor="CENTER">
+						<display item="A1_F21_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="22" gridy="3" anchor="CENTER">
+						<display item="A1_F22_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="23" gridy="3" anchor="CENTER">
+						<display item="A1_F23_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="24" gridy="3" anchor="CENTER">
+						<display item="A1_F24_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="25" gridy="3" anchor="CENTER">
+						<display item="A1_F25_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="26" gridy="3" anchor="CENTER">
+						<display item="A1_F26_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="27" gridy="3" anchor="CENTER">
+						<display item="A1_F27_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="28" gridy="3" anchor="CENTER">
+						<display item="A1_F28_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<!-- TODO add F29 - F31)-->
+					<!-- BEGIN - Row 2 (Slot 4)-->
+					<griditem gridx="0" gridy="4" anchor="LINE_END">
+						<display item="A1_F0_bw_Off" format="checkbox">
+							<label>Backward On if:</label>
+							<label xml:lang="de">Rückwärts Aus wenn:</label>
+							<label xml:lang="nl">UIT als:</label>
+							<label xml:lang="cs">Vypnuto když:</label>
+						</display>
+					</griditem>
+					<griditem gridx="1" gridy="4" anchor="CENTER">
+						<display item="A1_F1_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="4" anchor="CENTER">
+						<display item="A1_F2_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="4" anchor="CENTER">
+						<display item="A1_F3_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="4" anchor="CENTER">
+						<display item="A1_F4_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="4" anchor="CENTER">
+						<display item="A1_F5_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="4" anchor="CENTER">
+						<display item="A1_F6_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="4" anchor="CENTER">
+						<display item="A1_F7_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="8" gridy="4" anchor="CENTER">
+						<display item="A1_F8_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="9" gridy="4" anchor="CENTER">
+						<display item="A1_F9_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="10" gridy="4" anchor="CENTER">
+						<display item="A1_F10_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="11" gridy="4" anchor="CENTER">
+						<display item="A1_F11_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="12" gridy="4" anchor="CENTER">
+						<display item="A1_F12_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="13" gridy="4" anchor="CENTER">
+						<display item="A1_F13_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="14" gridy="4" anchor="CENTER">
+						<display item="A1_F14_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="15" gridy="4" anchor="CENTER">
+						<display item="A1_F15_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="16" gridy="4" anchor="CENTER">
+						<display item="A1_F16_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="17" gridy="4" anchor="CENTER">
+						<display item="A1_F17_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="18" gridy="4" anchor="CENTER">
+						<display item="A1_F18_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="19" gridy="4" anchor="CENTER">
+						<display item="A1_F19_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="20" gridy="4" anchor="CENTER">
+						<display item="A1_F20_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="21" gridy="4" anchor="CENTER">
+						<display item="A1_F21_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="22" gridy="4" anchor="CENTER">
+						<display item="A1_F22_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="23" gridy="4" anchor="CENTER">
+						<display item="A1_F23_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="24" gridy="4" anchor="CENTER">
+						<display item="A1_F24_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="25" gridy="4" anchor="CENTER">
+						<display item="A1_F25_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="26" gridy="4" anchor="CENTER">
+						<display item="A1_F26_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="27" gridy="4" anchor="CENTER">
+						<display item="A1_F27_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="28" gridy="4" anchor="CENTER">
+						<display item="A1_F28_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<!-- TODO add F29 - F31 for Piko )-->
+				</grid>
+				<!--end Grid-->
+			</row>
+			<row>
+				<label>
+					<text>   </text>
+				</label>
+			</row>
+			<row>
+				<display item="A1_Fade_in" format="checkbox"/>
+				<label>
+					<text>     </text>
+				</label>
+				<display item="A1_Fade_out" format="checkbox"/>
+			</row>
+			<row>
+				<label>
+					<text>   </text>
+				</label>
+			</row>
+			<row>
+				<label>
+					<text>Output #2 - Conditions: </text>
+					<text xml:lang="de">Ausgang 2 (nicht belegt) - Bedingungen: </text>
+				</label>
+			</row>
+		</group>
+		<group>
+			<qualifier>
+				<variableref>SUSI_Bank_Switch</variableref>
+				<relation>eq</relation>
+				<value>2</value>
+			</qualifier>
+			<!--Bank 1 -->
+			<row>
+				<label>
+					<text>Output #3 - Conditions: </text>
+					<text xml:lang="de">Ausgang 3 (Fahrwerk Beleuchtung) - Bedingungen: </text>
+				</label>
+			</row>
+			<row>
+				<!-- BEGIN - Function Vorwärts ein Grid On1-4/Off1-4-->
+				<grid gridy="4" weightx="1" ipadx="4">
+					<!-- BEGIN - Row 1 (headers)-->
+					<griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+						<label>
+							<text>F0</text>
+						</label>
+					</griditem>
+					<griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F1</text>
+						</label>
+					</griditem>
+					<griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F2</text>
+						</label>
+					</griditem>
+					<griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F3</text>
+						</label>
+					</griditem>
+					<griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F4</text>
+						</label>
+					</griditem>
+					<griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F5</text>
+						</label>
+					</griditem>
+					<griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F6</text>
+						</label>
+					</griditem>
+					<griditem gridx="7" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F7</text>
+						</label>
+					</griditem>
+					<griditem gridx="8" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F8</text>
+						</label>
+					</griditem>
+					<griditem gridx="9" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F9</text>
+						</label>
+					</griditem>
+					<griditem gridx="10" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F10</text>
+						</label>
+					</griditem>
+					<griditem gridx="11" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F11</text>
+						</label>
+					</griditem>
+					<griditem gridx="12" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F12</text>
+						</label>
+					</griditem>
+					<griditem gridx="13" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F13</text>
+						</label>
+					</griditem>
+					<griditem gridx="14" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F14</text>
+						</label>
+					</griditem>
+					<griditem gridx="15" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F15</text>
+						</label>
+					</griditem>
+					<griditem gridx="16" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F16</text>
+						</label>
+					</griditem>
+					<griditem gridx="17" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F17</text>
+						</label>
+					</griditem>
+					<griditem gridx="18" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F18</text>
+						</label>
+					</griditem>
+					<griditem gridx="19" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F19</text>
+						</label>
+					</griditem>
+					<griditem gridx="20" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F20</text>
+						</label>
+					</griditem>
+					<griditem gridx="21" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F21</text>
+						</label>
+					</griditem>
+					<griditem gridx="22" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F22</text>
+						</label>
+					</griditem>
+					<griditem gridx="23" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F23</text>
+						</label>
+					</griditem>
+					<griditem gridx="24" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F24</text>
+						</label>
+					</griditem>
+					<griditem gridx="25" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F25</text>
+						</label>
+					</griditem>
+					<griditem gridx="26" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F26</text>
+						</label>
+					</griditem>
+					<griditem gridx="27" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F27</text>
+						</label>
+					</griditem>
+					<griditem gridx="28" gridy="0" gridwidth="1" anchor="CENTER">
+						<label>
+							<text>F28</text>
+						</label>
+					</griditem>
+					<!-- TODO add F29 - F31 for all )-->
+					<!-- BEGIN - Row 2 (Slot 1)-->
+					<griditem gridx="0" gridy="1" anchor="LINE_END">
+						<display item="A3_F0_fw_On" format="checkbox">
+							<label>Forward On if:</label>
+							<label xml:lang="de">Vorwärts Ein wenn:</label>
+							<label xml:lang="nl">AAN als:</label>
+							<label xml:lang="cs">Zapnuto když:</label>
+						</display>
+					</griditem>
+					<griditem gridx="1" gridy="1" anchor="CENTER">
+						<display item="A3_F1_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="1" anchor="CENTER">
+						<display item="A3_F2_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="1" anchor="CENTER">
+						<display item="A3_F3_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="1" anchor="CENTER">
+						<display item="A3_F4_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="1" anchor="CENTER">
+						<display item="A3_F5_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="1" anchor="CENTER">
+						<display item="A3_F6_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="1" anchor="CENTER">
+						<display item="A3_F7_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="8" gridy="1" anchor="CENTER">
+						<display item="A3_F8_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="9" gridy="1" anchor="CENTER">
+						<display item="A3_F9_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="10" gridy="1" anchor="CENTER">
+						<display item="A3_F10_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="11" gridy="1" anchor="CENTER">
+						<display item="A3_F11_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="12" gridy="1" anchor="CENTER">
+						<display item="A3_F12_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="13" gridy="1" anchor="CENTER">
+						<display item="A3_F13_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="14" gridy="1" anchor="CENTER">
+						<display item="A3_F14_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="15" gridy="1" anchor="CENTER">
+						<display item="A3_F15_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="16" gridy="1" anchor="CENTER">
+						<display item="A3_F16_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="17" gridy="1" anchor="CENTER">
+						<display item="A3_F17_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="18" gridy="1" anchor="CENTER">
+						<display item="A3_F18_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="19" gridy="1" anchor="CENTER">
+						<display item="A3_F19_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="20" gridy="1" anchor="CENTER">
+						<display item="A3_F20_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="21" gridy="1" anchor="CENTER">
+						<display item="A3_F21_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="22" gridy="1" anchor="CENTER">
+						<display item="A3_F22_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="23" gridy="1" anchor="CENTER">
+						<display item="A3_F23_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="24" gridy="1" anchor="CENTER">
+						<display item="A3_F24_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="25" gridy="1" anchor="CENTER">
+						<display item="A3_F25_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="26" gridy="1" anchor="CENTER">
+						<display item="A3_F26_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="27" gridy="1" anchor="CENTER">
+						<display item="A3_F27_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="28" gridy="1" anchor="CENTER">
+						<display item="A3_F28_fw_On" format="checkbox" label=""/>
+					</griditem>
+					<!-- TODO add F29 - F31)-->
+					<!-- BEGIN - Row 2 (Slot 2)-->
+					<griditem gridx="0" gridy="2" anchor="LINE_END">
+						<display item="A3_F0_bw_On" format="checkbox">
+							<label>Backward On if:</label>
+							<label xml:lang="de">Rückwärts Ein wenn:</label>
+							<label xml:lang="nl">UIT als:</label>
+							<label xml:lang="cs">Vypnuto když:</label>
+						</display>
+					</griditem>
+					<griditem gridx="1" gridy="2" anchor="CENTER">
+						<display item="A3_F1_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="2" anchor="CENTER">
+						<display item="A3_F2_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="2" anchor="CENTER">
+						<display item="A3_F3_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="2" anchor="CENTER">
+						<display item="A3_F4_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="2" anchor="CENTER">
+						<display item="A3_F5_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="2" anchor="CENTER">
+						<display item="A3_F6_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="2" anchor="CENTER">
+						<display item="A3_F7_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="8" gridy="2" anchor="CENTER">
+						<display item="A3_F8_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="9" gridy="2" anchor="CENTER">
+						<display item="A3_F9_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="10" gridy="2" anchor="CENTER">
+						<display item="A3_F10_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="11" gridy="2" anchor="CENTER">
+						<display item="A3_F11_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="12" gridy="2" anchor="CENTER">
+						<display item="A3_F12_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="13" gridy="2" anchor="CENTER">
+						<display item="A3_F13_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="14" gridy="2" anchor="CENTER">
+						<display item="A3_F14_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="15" gridy="2" anchor="CENTER">
+						<display item="A3_F15_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="16" gridy="2" anchor="CENTER">
+						<display item="A3_F16_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="17" gridy="2" anchor="CENTER">
+						<display item="A3_F17_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="18" gridy="2" anchor="CENTER">
+						<display item="A3_F18_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="19" gridy="2" anchor="CENTER">
+						<display item="A3_F19_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="20" gridy="2" anchor="CENTER">
+						<display item="A3_F20_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="21" gridy="2" anchor="CENTER">
+						<display item="A3_F21_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="22" gridy="2" anchor="CENTER">
+						<display item="A3_F22_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="23" gridy="2" anchor="CENTER">
+						<display item="A3_F23_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="24" gridy="2" anchor="CENTER">
+						<display item="A3_F24_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="25" gridy="2" anchor="CENTER">
+						<display item="A3_F25_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="26" gridy="2" anchor="CENTER">
+						<display item="A3_F26_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="27" gridy="2" anchor="CENTER">
+						<display item="A3_F27_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="28" gridy="2" anchor="CENTER">
+						<display item="A3_F28_bw_On" format="checkbox" label=""/>
+					</griditem>
+					<!-- TODO add F29 - F31 for Piko )-->
+					<!-- BEGIN - Row 2 (Slot 3)-->
+					<griditem gridx="0" gridy="3" anchor="LINE_END">
+						<display item="A3_F0_fw_Off" format="checkbox">
+							<label>Forward On if:</label>
+							<label xml:lang="de">Vorwärts Aus wenn:</label>
+							<label xml:lang="nl">... als:</label>
+							<label xml:lang="cs">... když:</label>
+						</display>
+					</griditem>
+					<griditem gridx="1" gridy="3" anchor="CENTER">
+						<display item="A3_F1_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="3" anchor="CENTER">
+						<display item="A3_F2_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="3" anchor="CENTER">
+						<display item="A3_F3_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="3" anchor="CENTER">
+						<display item="A3_F4_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="3" anchor="CENTER">
+						<display item="A3_F5_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="3" anchor="CENTER">
+						<display item="A3_F6_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="3" anchor="CENTER">
+						<display item="A3_F7_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="8" gridy="3" anchor="CENTER">
+						<display item="A3_F8_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="9" gridy="3" anchor="CENTER">
+						<display item="A3_F9_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="10" gridy="3" anchor="CENTER">
+						<display item="A3_F10_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="11" gridy="3" anchor="CENTER">
+						<display item="A3_F11_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="12" gridy="3" anchor="CENTER">
+						<display item="A3_F12_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="13" gridy="3" anchor="CENTER">
+						<display item="A3_F13_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="14" gridy="3" anchor="CENTER">
+						<display item="A3_F14_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="15" gridy="3" anchor="CENTER">
+						<display item="A3_F15_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="16" gridy="3" anchor="CENTER">
+						<display item="A3_F16_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="17" gridy="3" anchor="CENTER">
+						<display item="A3_F17_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="18" gridy="3" anchor="CENTER">
+						<display item="A3_F18_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="19" gridy="3" anchor="CENTER">
+						<display item="A3_F19_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="20" gridy="3" anchor="CENTER">
+						<display item="A3_F20_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="21" gridy="3" anchor="CENTER">
+						<display item="A3_F21_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="22" gridy="3" anchor="CENTER">
+						<display item="A3_F22_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="23" gridy="3" anchor="CENTER">
+						<display item="A3_F23_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="24" gridy="3" anchor="CENTER">
+						<display item="A3_F24_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="25" gridy="3" anchor="CENTER">
+						<display item="A3_F25_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="26" gridy="3" anchor="CENTER">
+						<display item="A3_F26_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="27" gridy="3" anchor="CENTER">
+						<display item="A3_F27_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="28" gridy="3" anchor="CENTER">
+						<display item="A3_F28_fw_Off" format="checkbox" label=""/>
+					</griditem>
+					<!-- TODO add F29 - F31)-->
+					<!-- BEGIN - Row 2 (Slot 4)-->
+					<griditem gridx="0" gridy="4" anchor="LINE_END">
+						<display item="A3_F0_bw_Off" format="checkbox">
+							<label>Backward On if:</label>
+							<label xml:lang="de">Rückwärts Aus wenn:</label>
+							<label xml:lang="nl">UIT als:</label>
+							<label xml:lang="cs">Vypnuto když:</label>
+						</display>
+					</griditem>
+					<griditem gridx="1" gridy="4" anchor="CENTER">
+						<display item="A3_F1_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="2" gridy="4" anchor="CENTER">
+						<display item="A3_F2_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="3" gridy="4" anchor="CENTER">
+						<display item="A3_F3_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="4" gridy="4" anchor="CENTER">
+						<display item="A3_F4_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="5" gridy="4" anchor="CENTER">
+						<display item="A3_F5_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="6" gridy="4" anchor="CENTER">
+						<display item="A3_F6_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="7" gridy="4" anchor="CENTER">
+						<display item="A3_F7_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="8" gridy="4" anchor="CENTER">
+						<display item="A3_F8_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="9" gridy="4" anchor="CENTER">
+						<display item="A3_F9_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="10" gridy="4" anchor="CENTER">
+						<display item="A3_F10_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="11" gridy="4" anchor="CENTER">
+						<display item="A3_F11_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="12" gridy="4" anchor="CENTER">
+						<display item="A3_F12_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="13" gridy="4" anchor="CENTER">
+						<display item="A3_F13_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="14" gridy="4" anchor="CENTER">
+						<display item="A3_F14_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="15" gridy="4" anchor="CENTER">
+						<display item="A3_F15_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="16" gridy="4" anchor="CENTER">
+						<display item="A3_F16_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="17" gridy="4" anchor="CENTER">
+						<display item="A3_F17_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="18" gridy="4" anchor="CENTER">
+						<display item="A3_F18_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="19" gridy="4" anchor="CENTER">
+						<display item="A3_F19_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="20" gridy="4" anchor="CENTER">
+						<display item="A3_F20_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="21" gridy="4" anchor="CENTER">
+						<display item="A3_F21_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="22" gridy="4" anchor="CENTER">
+						<display item="A3_F22_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="23" gridy="4" anchor="CENTER">
+						<display item="A3_F23_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="24" gridy="4" anchor="CENTER">
+						<display item="A3_F24_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="25" gridy="4" anchor="CENTER">
+						<display item="A3_F25_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="26" gridy="4" anchor="CENTER">
+						<display item="A3_F26_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="27" gridy="4" anchor="CENTER">
+						<display item="A3_F27_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<griditem gridx="28" gridy="4" anchor="CENTER">
+						<display item="A3_F28_bw_Off" format="checkbox" label=""/>
+					</griditem>
+					<!-- TODO add F29 - F31 for Piko )-->
+				</grid>
+				<!--end Grid-->
+			</row>
+			<row>
+				<label>
+					<text>   </text>
+				</label>
+			</row>
+			<row>
+				<display item="A3_Fade_in" format="checkbox"/>
+				<label>
+					<text>     </text>
+				</label>
+				<display item="A3_Fade_out" format="checkbox"/>
+			</row>
+			<row>
+				<label>
+					<text>   </text>
+				</label>
+			</row>
+			<row>
+				<label>
+					<text>Output #4 - Conditions: </text>
+					<text xml:lang="de">Ausgang 4 (nicht belegt) - Bedingungen: </text>
+				</label>
+			</row>
+		</group>
+		<group>
+			<qualifier>
+				<variableref>SUSI_Bank_Switch</variableref>
+				<relation>eq</relation>
+				<value>3</value>
+			</qualifier>
+			<!--Bank 2 -->
+			<row>
+				<label>
+					<text>Output #5 - Conditions: </text>
+					<text xml:lang="de">Ausgang 5 (nicht belegt) - Bedingungen: </text>
+				</label>
+			</row>
+			<row>
+				<label>
+					<text>Output #6 - Conditions: </text>
+					<text xml:lang="de">Ausgang 6 (nicht belegt) - Bedingungen: </text>
+				</label>
+			</row>
+		</group>
+		<group>
+			<qualifier>
+				<variableref>SUSI_Bank_Switch</variableref>
+				<relation>eq</relation>
+				<value>4</value>
+			</qualifier>
+			<!--Bank 3 -->
+			<row>
+				<label>
+					<text>PWM 1 - 6: </text>
+					<text xml:lang="de">PWM 1 - 6 (nicht unterstützt): </text>
+				</label>
+			</row>
+		</group>
+	</group>
+</pane>
+		

@@ -49,7 +49,14 @@
       <revnumber>2.3</revnumber>
       <date>2019-12-30</date>
       <authorinitials>BM</authorinitials>
-      <revremark>Remove ourAspect values which are not supported by this mast type</revremark>
+      <revremark>Removed ourAspect values which are not supported by this mast 
+          type. </revremark>
+    </revision>    
+    <revision>
+      <revnumber>2.43</revnumber>
+      <date>2023-02-22</date>
+      <authorinitials>BM</authorinitials>
+      <revremark>Add missing "advancedAspect" mappings.</revremark>
     </revision>
   </revhistory>
 
@@ -142,6 +149,12 @@
     </aspectMapping>
 
     <aspectMapping>
+      <advancedAspect>Clear Alt</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Advance Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
@@ -214,6 +227,11 @@
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
      <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Approach</ourAspect>
@@ -222,6 +240,28 @@
      <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed Medium</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Permissive</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Permissive Medium</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
   </aspectMappings>

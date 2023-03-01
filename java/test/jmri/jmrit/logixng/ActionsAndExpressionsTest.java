@@ -298,7 +298,8 @@ public class ActionsAndExpressionsTest {
                     "Bundle",
                     "AbstractAnalogExpression","AnalogFactory",     // Analog
                     "AbstractDigitalExpression","AbstractScriptDigitalExpression","DigitalFactory",     // Digital
-                    "AbstractStringExpression","StringFactory"      // String
+                    "AbstractStringExpression","StringFactory",     // String
+                    "ExpressionLinuxLinePower"     // Only exists on Linux
                 });
 
         Assert.assertFalse("No errors found", errorsFound);

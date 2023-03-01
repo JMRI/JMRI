@@ -5,7 +5,7 @@ import org.junit.jupiter.api.*;
 import java.awt.GraphicsEnvironment;
 
 import jmri.util.JUnitUtil;
-import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold;
 
 
 /**
@@ -13,13 +13,13 @@ import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
  */
 public class ProtocolOptionsFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    OlcbSystemConnectionMemo scm;
+    OlcbSystemConnectionMemoScaffold scm;
 
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        scm = new OlcbSystemConnectionMemo();
+        scm = new OlcbSystemConnectionMemoScaffold();
         if(!GraphicsEnvironment.isHeadless()){
            frame = new ProtocolOptionsFrame(scm);
         }

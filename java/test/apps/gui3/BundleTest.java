@@ -1,5 +1,7 @@
 package apps.gui3;
 
+import java.util.Locale;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -30,4 +32,13 @@ public class BundleTest  {
         Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
     }
 
+    @Test public void testLocaleMessage() {
+        Assert.assertEquals("Chiudi", Bundle.getMessage(Locale.ITALY, "ButtonClose"));
+    }
+
+    @Test public void testLocaleMessageArg() {
+        Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
+        Assert.assertEquals("PanelPro 1234, parte del progetto JMRI®", Bundle.getMessage(Locale.ITALY, "PanelProVersionCredit", "1234"));
+    }
+    
 }

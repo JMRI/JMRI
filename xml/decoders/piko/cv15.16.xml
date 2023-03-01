@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2022-11-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable CV="15" item="Decoder Lock ID" default="0">
+		<decVal/>
+		<label>Decoder Lock ID</label>
+		<label xml:lang="de">Decoder Programmierschloss</label>
+		<label xml:lang="ca">Bloqueig decoder per ID</label>
+		<label xml:lang="cs">Zámek dekodéru</label>
+		<tooltip>Set this to match value below and decoder will unlock</tooltip>
+		<tooltip xml:lang="de">Setzen Sie diesen Wert auf den unten stehenden Wert und der Decoder wird entsperrt</tooltip>
+		<tooltip xml:lang="nl">Stel hier dezelfde waarde in als ID hieronder en de decoder kan geprogrammeerd worden</tooltip>
+		<tooltip xml:lang="cs">Nastavením této hodnoty na stejnou hodnotu která je uvedena níže se provede odemčení dekodéru</tooltip>
+	</variable>
+	<variable CV="16" item="Decoder Lock Index" default="0" readOnly="yes">
+		<decVal/>
+		<label>Preset Lock ID</label>
+		<label xml:lang="de">Decoder Programmierschloss Index</label>
+		<label xml:lang="ca">ID locomotora per tipus</label>
+		<label xml:lang="cs">ID typ dekodéru</label>
+		<tooltip>Set this to decoder type: 1=motor, 2=sound, 3=function etc.</tooltip>
+		<tooltip xml:lang="de">Definiert den Decoder Typ: 1 = Motor, 2 = Sound, 3 = Funktion etc.</tooltip>
+		<tooltip xml:lang="nl">Stel in als Decoder-type: 1=motor, 2=geluid, 3=functie e.d.</tooltip>
+		<tooltip xml:lang="cs">Nastaví typ dekodéru: 1=motor, 2=zvuk, 3=funkční atd.</tooltip>
+	</variable>
+</variables>

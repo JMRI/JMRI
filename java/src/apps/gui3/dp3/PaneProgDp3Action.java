@@ -725,14 +725,14 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
         public void setCVValue(String cv, int value) {
             if (_cvModel.getCvByNumber(cv) != null) {
                 (_cvModel.getCvByNumber(cv)).setValue(value);
-                (_cvModel.getCvByNumber(cv)).setState(AbstractValue.READ);
+                (_cvModel.getCvByNumber(cv)).setState(AbstractValue.ValueState.READ);
             }
         }
 
         public void setVariableValue(String variable, int value) {
             if (_varModel.findVar(variable) != null) {
                 _varModel.findVar(variable).setIntValue(value);
-                _varModel.findVar(variable).setState(AbstractValue.READ);
+                _varModel.findVar(variable).setState(AbstractValue.ValueState.READ);
             }
         }
 

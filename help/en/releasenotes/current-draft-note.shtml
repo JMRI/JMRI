@@ -44,11 +44,6 @@
                 <li></li>
             </ul>
 
-        <h4>EasyDCC</h4>
-            <ul>
-                <li>Now allows adding multiple new turnouts at the same time.</li>
-            </ul>
-
         <h4>ESU</h4>
             <ul>
                 <li></li>
@@ -81,13 +76,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>You can now select separate defaults (in the Preferences -> Defaults pane)
-                for additional types of LocoNet connections.
-                <p>
-                Note: Existing LocoNet connections might give a "The Defaults preferences are invalid"
-                warning when saving preferences.  In that case, click "yes" and then go set
-                all the default radio buttons on the "Defaults" pane to the LocoNet connection.  (You can also
-                click "no", but you'll get the message next time you store too)</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -125,7 +114,18 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
+        <h4><a href="https://openlcb.org/">OpenLCB</a> / LCC</h4>
+            <ul>
+                <li>Hub Control - UI Update, line termination characters optional for incoming feeds.</li>
+                <li>When downloading firmware to multiple boards, it can be a pain to have to select the file over and over.
+                    This was changed to make the selected file (hence directory, etc) persistent from one download frame
+                    to the next.
+                <li>Show more information in the node selector when doing firmware downloads.</li>
+                <li>Updated the default filename when doing backups to contain more identification info.</li>
+                <li>The OpenLCB library was updated to the current contents as of PR #214</li>
+            </ul>
+
+        <h4>Powerline</h4>
             <ul>
                 <li></li>
             </ul>
@@ -212,7 +212,8 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Added SE74 usage information to the Digitrax/LocoNet hardware help page,
+                    including specific guidance for configuring JMRI's signaling.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -290,6 +291,11 @@
                 <li></li>
             </ul>
 
+	    <h4>Piko decoders</h4>
+            <ul>
+                <li>Bug fixes, improvements and functional enhancements</li>
+            </ul>
+
         <h4>QSI</h4>
             <ul>
                 <li></li>
@@ -306,6 +312,11 @@
             </ul>
 
         <h4>SoundTraxx</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Tam Valley Depot</h4>
             <ul>
                 <li></li>
             </ul>
@@ -347,8 +358,7 @@
 
         <h4>Viessmann</h4>
             <ul>
-                <li>New decoder definition for Viessmann 4567 TT Motorized point machine</li>
-		<li>New decoder definition for Tillig 08335 TT Motor-driven double crossing point</li>
+                <li></li>
             </ul>
 
         <h4>Wangrow</h4>
@@ -358,9 +368,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>New decoder definitions for Firmware 40.18</li>
-                <li>Nigel Cliffe did a
-                <a href="https://github.com/JMRI/JMRI/issues/11608">large update to the Zimo definitions</a></li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -371,7 +379,11 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>The decoder index is being written in a more compact form to improve the
+                time spent reading it at startup.</li>
+            <li>Two new decoder-index attributes
+                suppressFunctionLabels and suppressRosterMedia
+                can be used to suppress those panes in the DecoderPro GUI.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -418,7 +430,8 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The Throttle action supports multiple throttle connections.</li>
+          <li>The expression <i>Linux Line Power</i> has been added.</li>
+
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -430,7 +443,8 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Improved passenger car blocking when using kernels, caboose, or car with FRED</li>
+            <li>Fix Java exception when using the Set Car window and a final destination.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -479,17 +493,11 @@
             <li></li>
        </ul>
 
-    <h3>Turnouts, Lights, Sensors and other elements</h3>
-        <a id="TLae" name="TLae"></a>
-        <ul>
-            <li></li>
-        </ul>
-
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Updated ControlPanel.py sample script to show the panel windows
-            instead of the panel editor windows.</li>
+            <li>Add a PanelControlsContents.py script which lets you
+                set a panel to controlling the layout or not.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -499,16 +507,13 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Updated AAR-1946 aspect mappings.</li>
+                <li>Updated the appearances in the Reading-1954 system.</li>
             </ul>
 
         <h4>Signal Heads</h4>
             <ul>
-                <li>"Single Output" signal heads had their Thrown and Reversed
-                positions
-                <a href="https://groups.io/g/jmriusers/message/210041">reversed in the "Add..." dialog</a>.
-                This is now corrected.
-                </li>
+                <li></li>
             </ul>
 
         <h4>Signal Masts</h4>
@@ -560,6 +565,12 @@
             <li></li>
         </ul>
 
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"></a>
+        <ul>
+            <li></li>
+        </ul>
+
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
@@ -599,6 +610,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>SpotBugs has been updated to 4.7.3</li>
+            <li>Updated the plantuml library to version 1.2023.1.  This is used to
+                create program documentation.</li>
+            <li>When downloading firmware to multiple boards, it can be a pain to have to select the file over and over.
+                This was changed to make the selected file (hence directory, etc) persistent from one download frame
+                to the next.
         </ul>
 

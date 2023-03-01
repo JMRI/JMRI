@@ -156,8 +156,13 @@ public class DefaultIdTagManagerXml extends XmlFile {
           log.debug("readFile sees {} idtags", l.size());
           for (Element e : l) {
               String systemName = e.getChild("systemName").getText(); // NOI18N
-              IdTag t = manager.provideIdTag(systemName);
-              t.load(e);
+              try {
+                IdTag t = manager.provideIdTag(systemName);
+                t.load(e);
+              } catch (jmri.NamedBean.BadSystemNameException ex) {
+                // could not create the tag
+                log.error("Could not create tag from ({}) during loading, ignored", systemName);
+              }
           }
       }
   }

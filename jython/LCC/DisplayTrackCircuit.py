@@ -18,16 +18,16 @@
 # Sensor name can be system name or user name
 # Memory name must be user name
 # If the sensors do not exist, they will be created with user names formed
-#	from the memory name and TC states
+#   from the memory name and TC states
 # You can also put these lines into Logix or LogixNG script features, like an initialzation script
 
-##a = DisplayTrackCircuit() # create one of these 
+##a = DisplayTrackCircuit() # create one of these
 ##a.init('MS02.01.57.10.00.66.01.A0', 'CP21 South Main TC') # invoke this for the track circuit
 ## or using a user name
 ##a.init('CP 21 South Main TC - Stop', 'CP21 South Main TC') # invoke this for the track circuit
 #
 # then create more, like this:
-##b = DisplayTrackCircuit() # create one of these 
+##b = DisplayTrackCircuit() # create one of these
 ##b.init('MS02.01.57.10.00.66.01.C0', 'CP21 South Side TC') # invoke this for the track circuit
 ## or using a user name
 ##b.init('CP 21 South Side TC - Stop', 'CP21 South Side TC') # invoke this for the track circuit
@@ -95,12 +95,12 @@ class DisplayTrackCircuit(java.beans.PropertyChangeListener) :
             l.setCallBack(self.sensorHandler)
             l.setSensor(s)
             idx = self.sensorList.index(s)
-            #print("setting up listener [" + str(idx) + "]: " + s.getUserName()) 
+            #print("setting up listener [" + str(idx) + "]: " + s.getUserName())
             l.setText(self.stateNames[idx])
             s.addPropertyChangeListener(l)
         print("TC: " + outMemory + " setup complete")
         return
-        
+
     # using sensor and memory name, find/create sensors
     def createSensorSet(self, inSensor, outMemory) :
         # test if sensor name is user name
@@ -175,7 +175,7 @@ class DisplayTrackCircuit(java.beans.PropertyChangeListener) :
             self.sensorNameList.append(testSys)
         return
 
-    #To detect sensor status, first define the listener. 
+    #To detect sensor status, first define the listener.
     class SensorListener(java.beans.PropertyChangeListener):
         cb = None
         thisSensor = None
@@ -197,7 +197,7 @@ class DisplayTrackCircuit(java.beans.PropertyChangeListener) :
             if (self.cb != None) :
                 self.cb(self.thisSensor, self.thisText, event)
             return
-    
+
     def sensorHandler(self, sensor, text, event) :
         # read event to see which sensor
         self.memory.setValue(text)

@@ -85,7 +85,7 @@
       <h2 id="classes">Where can I find more information on the JMRI classes?</h2>
 
       <div class="para">
-        The <a href="https://jmri.org/JavaDoc/doc/" target="_blank">class documentation pages</a>
+        The <a href="https://www.jmri.org/JavaDoc/doc/" target="_blank">class documentation pages</a>
         include automatically-built summary information on every class.
         <p>There are a lot of classes! To help you find things, it might be useful to look at the
         <a href="../../doc/Technical/Patterns.shtml">page on JMRI structure</a>, which is part of
@@ -95,14 +95,14 @@
         <p>Additional information can be found in the JavaDocs for specific types of classes, for
         example:</p>
 
-        <p><a href="https://jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html" target=
-        "_blank">https://jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html</a><br>
-        <a href="https://jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html" target=
-        "_blank">https://jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html</a><br>
-        <a href="https://jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html" target=
-        "_blank">https://jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html</a><br>
-        <a href="https://jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html" target=
-        "_blank">https://jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html</a>
+        <p><a href="https://www.jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html" target=
+        "_blank">https://www.jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html</a><br>
+        <a href="https://www.jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html" target=
+        "_blank">https://www.jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html</a><br>
+        <a href="https://www.jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html" target=
+        "_blank">https://www.jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html</a><br>
+        <a href="https://www.jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html" target=
+        "_blank">https://www.jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html</a>
         </p>
 
         <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a>
@@ -235,9 +235,9 @@
 
       <div class="para">
         <p>Some examples use the <a href=
-        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html" target=
+        "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html" target=
         "_blank">AbstractAutomaton</a> class as a base, while others use the <a href=
-        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html" target="_blank">Siglet</a>
+        "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html" target="_blank">Siglet</a>
         class. This is because those are intended for two different purposes.</p>
 
         <p>"Siglet" is meant to be used for driving signals. You provide two pieces of code:</p>
@@ -286,7 +286,7 @@
         do sequences of operations).
         <p>For more info on the routines that AbstractAutomaton provides to help you, see the
         <a href=
-        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary"
+        "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary"
         target="_blank">Javadocs</a> for the class. (Scroll down to the section called "Method
         Summary")</p>
 

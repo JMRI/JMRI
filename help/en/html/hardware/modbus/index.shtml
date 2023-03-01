@@ -11,7 +11,7 @@
     <!--#include virtual="../SidebarUp.shtml" -->
 
     <div id="mainContent">
-      <img src="http://www.modbus.org/images/logo_new.jpg" alt="Modbus logo" height="40" width=
+      <img src="https://modbus.org/images/logo_new.jpg" alt="Modbus logo" height="40" width=
       "145" class="floatRight">
       <h1>Hardware Support: Modbus</h1>
 
@@ -39,7 +39,7 @@
         </li>
       </ul>
 
-      <p><a href="http://www.modbus.org">Modbus is an industrial control system</a> that's usually
+      <p><a href="https://modbus.org">Modbus is an industrial control system</a> that's usually
       used with pretty tough, highly-engineering equipment. The Modbus nodes are often
       "programmable logic controllers" (PLCs) which can do their own calculations of how to control
       devices.</p>
@@ -165,7 +165,7 @@
 
       <h3>Third Party info</h3>
 
-      <p><a href="http://www.modbus.org">Modbus website</a>
+      <p><a href="https://modbus.org">Modbus website</a>
       </p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

@@ -586,24 +586,22 @@
       <div>
         <ul>
           <li>
-            <a href="https://www.merg.org.uk/merg_resources/cbus.php">MERG introduction to
+            <a href="https://www.merg.org.uk/resources/cbus">MERG introduction to
             CBUS</a>.
           </li>
 
           <li>
-            <a href="https://www.merg.org.uk/merg_wiki/doku.php?id=software:start#cbus">CBUS
-            Wiki</a> hosted on the Model Electronic Ralway Group MERG public website, with full
-            protocol specification.
+            <a href="https://cbus-traincontrol.com/">CBUS Layout Control Bus protocol</a>
           </li>
 
           <li>
             <a href=
-            "https://www.merg.org.uk/merg_resources/cbus-dcc.php">https://www.merg.org.uk/merg_resources/cbus-dcc.php</a>
-            The Model Electronic Railway Group MERG-DCC help page.
+            "https://www.merg.org.uk/resources/dcc">https://www.merg.org.uk/resources/dcc</a>
+            Model Electronic Railway Group DCC Resources.
           </li>
 
           <li>
-            <a href="https://www.merg.org.uk/kits.php#sect35">MERG kits for CBUS</a>.
+            <a href="https://www.merg.org.uk/content/kits">MERG kits for CBUS</a>.
           </li>
 
           <li>
@@ -637,7 +635,7 @@
         </ul>
       </div>
 
-      <p>CBUS is a registered trade mark of Dr Michael Bolton</p>
+      <p><a href="https://cbus-traincontrol.com/">CBUS</a> is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

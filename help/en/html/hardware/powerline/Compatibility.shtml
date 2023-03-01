@@ -37,7 +37,7 @@
 
         <tr>
           <td>
-            <a href="http://www.x10.com">X10.com</a>
+            <a href="https://www.x10.com/">X10.com</a>
           </td><!-- Manufacturer -->
 
           <td style="white-space: nowrap">CM11A<br>
@@ -57,12 +57,12 @@
 
         <tr>
           <td>
-            <a href="http://www.x10.com">X10.com</a>
+            <a href="https://www.x10.com/">X10.com</a>
           </td><!-- Manufacturer -->
 
           <td style="white-space: nowrap">CP290</td><!-- Model -->
 
-          <td><img src="http://www.eng.auburn.edu/~doug/cp290.gif" width="114" height="71" alt=
+          <td><img src="https://www.eng.auburn.edu/~doug/cp290.gif" width="114" height="71" alt=
           "cp290">
           </td><!-- Image -->
 
@@ -78,7 +78,7 @@
 
         <tr>
           <td>
-            <a href="http://www.x10.com">X10.com</a>
+            <a href="https://www.x10.com">X10.com</a>
           </td><!-- Manufacturer -->
 
           <td>CM15A</td><!-- Model -->
@@ -96,7 +96,7 @@
 
         <tr>
           <td>
-            <a href="http://www.x10.com">X10.com</a>
+            <a href="https://www.x10.com">X10.com</a>
           </td><!-- Manufacturer -->
 
           <td>CM17A</td><!-- Model -->
@@ -134,14 +134,15 @@
 
         <tr>
           <td>
-            <a href="http://www.smarthome.com/2412S/PowerLinc-INSTEON-Modem-Serial/p.aspx">Smart
+            <a href="http://cache.insteon.com/documentation/2413Sqs-en.pdf">Smart
             Home</a>
           </td><!-- Manufacturer -->
 
           <td>PowerLinc Modem 2412S</td><!-- Model -->
 
-          <td><img src="http://cache1.smarthome.com/images/2414s.jpg" width="138" height="138" alt=
-          "2414s">
+          <td>
+          <!-- <img src="http://cache1.smarthome.com/images/2414s.jpg" width="138" height="138" alt=
+          "2414s"> -->
           </td><!-- Image -->
 
           <td>This is the serial (not USB) Insteon adapter. It can control both Insteon and X10
@@ -152,7 +153,7 @@
 
         <tr>
           <td>
-            <a href="http://www.smarthome.com">Smarthome.com</a>
+           <a href="https://www.smarthome.com/">Smart Home</a> 
           </td><!-- Manufacturer -->
 
           <td style="white-space: nowrap">Power Linc 2414U<br>
@@ -171,13 +172,13 @@
 
         <tr>
           <td>
-            <a href="http://www.insteon.com">Insteon.com</a>
+            <a href="https://www.insteon.com/">Insteon.com</a>
           </td><!-- Manufacturer -->
 
           <td style="white-space: nowrap">Insteon Hub, Hub Pro</td><!-- Model -->
 
           <td><img src=
-          "http://static1.squarespace.com/static/53fce470e4b0374adfdd30bc/t/5489fdf4e4b02da9d6a5b81c/1418329589819/tech-specs-front-and-back.png?format=500w"
+          "https://images.squarespace-cdn.com/content/53fce470e4b0374adfdd30bc/1418329588203-YN5UQQ43EWMWH4YZINBF/tech-specs-front-and-back.png?format=500w&content-type=image%2Fpng"
           width="115" height="115" alt="500w">
           </td><!-- Image -->
 
@@ -188,6 +189,41 @@
           Last Edited: 11 Nov 2015</td><!-- Type -->
         </tr>
       </table>
+      
+      <h3>DMX Adapters</h3>
+      <!-- start table of types -->
+
+      <table border="1">
+        <!-- header row -->
+
+        <tr>
+          <th>Manufacturer</th>
+          <th>Model</th>
+          <th>Image</th>
+          <th>Identification Help</th><!-- Comment -->
+
+          <th>JMRI Status</th>
+        </tr>
+
+        <tr>
+          <td>
+            Hard to tell. Amazon give very few details.
+          </td><!-- Manufacturer -->
+
+          <td>Mini USB to DMX512 - uDmx</td><!-- Model -->
+
+          <td>
+          <img src="images/DMX512-usb.jpg" alt="DMX512 usb interface">
+          </td><!-- Image -->
+
+          <td>The biggest issue is finding the right one. It must be a
+          FTDI based USB that includes the serial
+          port support in the drivers. Many do, but some do not.</td>
+          <td>Support is available starting in JMRI 5.3.3<br>
+          Last Edited: 1 Feb 2023</td><!-- Type -->
+        </tr>
+      </table>
+      
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

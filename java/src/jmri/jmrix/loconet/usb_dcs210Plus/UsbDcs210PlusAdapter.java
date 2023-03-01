@@ -79,7 +79,7 @@ public class UsbDcs210PlusAdapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);  // never transponding!
+                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart, mLoconetProtocolAutoDetect);  // never transponding!
             this.getSystemConnectionMemo().configureManagersPR2();
             this.getSystemConnectionMemo().getSlotManager().serviceModeReplyDelay = 500;
 
@@ -100,6 +100,7 @@ public class UsbDcs210PlusAdapter extends LocoBufferAdapter {
             // get transponding option
             setTranspondingAvailable(getOptionState("TranspondingPresent"));
             setInterrogateOnStart(getOptionState("InterrogateOnStart"));
+            setLoconetProtocolAutoDetect(getOptionState("LoconetProtocolAutoDetect"));
             // connect to a packetizing traffic controller
             LnPacketizer packets = getPacketizer(getOptionState(option4Name));
             packets.connectPort(this);
@@ -108,7 +109,7 @@ public class UsbDcs210PlusAdapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);
+                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart, mLoconetProtocolAutoDetect);
 
             this.getSystemConnectionMemo().configureManagersMS100();
             this.getSystemConnectionMemo().getSlotManager().serviceModeReplyDelay = 500;

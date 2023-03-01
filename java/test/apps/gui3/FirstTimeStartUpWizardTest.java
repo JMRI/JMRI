@@ -1,80 +1,227 @@
 package apps.gui3;
 
+import java.io.File;
+import java.io.IOException;
+
+import jmri.InstanceManager;
+import jmri.jmrit.roster.RosterConfigManager;
+import jmri.util.JUnitAppender;
+
 import apps.gui3.dp3.DecoderPro3;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.gui.GuiLafPreferencesManager;
 
-import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.*;
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
+ * @author Steve Young Copyright (C) 2022
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class FirstTimeStartUpWizardTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         String[] args = {"DecoderProConfig3.xml"};
-        Apps3 a = new DecoderPro3(args) {
-            // force the application to not actually start.
-            // Just checking construction.
-            @Override
-            protected void start() {
-            }
+        Apps3 a = new DecoderPro3Implm(args); // creates new FirstTimeStartUpWizard frame
+        assertNotNull(a);
+        JFrameOperator jfo = new JFrameOperator("DecoderPro Wizard");
+        getCancelButton(jfo).doClick();
+        jfo.waitClosed();
+        JUnitUtil.waitFor(() -> {
+            return JUnitAppender.checkForMessageStartingWith("No pre-existing config file found, searched for ") != null;
+        }, "no existing config Info line seen");
+    }
 
-            @Override
-            protected void configureProfile() {
-                JUnitUtil.resetInstanceManager();
-            }
+    @Test
+    public void testLoadSim() {
+        String[] args = {"DecoderProConfig3.xml"};
+        Apps3 a = new DecoderPro3Implm(args);
+        assertNotNull(a);
 
-            @Override
-            protected void installConfigurationManager() {
-                JUnitUtil.initConfigureManager();
-                JUnitUtil.initDefaultUserMessagePreferences();
-            }
+        JFrameOperator jfo = new JFrameOperator("DecoderPro Wizard");
+        Assertions.assertNotNull(jfo);
+        assertEquals("Welcome to JMRI StartUp Wizard", getPageTitleOperator(jfo).getText());
+        assertFalse(getBackButton(jfo).isEnabled());
+        assertTrue(getNextButton(jfo).isEnabled());
+        assertTrue(getCancelButton(jfo).isEnabled());
 
-            @Override
-            protected void installManagers() {
-                JUnitUtil.initInternalTurnoutManager();
-                JUnitUtil.initInternalLightManager();
-                JUnitUtil.initInternalSensorManager();
-                JUnitUtil.initRouteManager();
-                JUnitUtil.initMemoryManager();
-                JUnitUtil.initDebugThrottleManager();
-            }
+        getNextButton(jfo).doClick();
+        getNextButton(jfo).getQueueTool().waitEmpty();
+        assertEquals("Set the Default Language and Owner", getPageTitleOperator(jfo).getText());
+        assertTrue(getBackButton(jfo).isEnabled());
+        assertTrue(getNextButton(jfo).isEnabled());
+        assertTrue(getCancelButton(jfo).isEnabled());
+        
+        getBackButton(jfo).doClick();
+        getBackButton(jfo).getQueueTool().waitEmpty();
+        assertEquals("Welcome to JMRI StartUp Wizard", getPageTitleOperator(jfo).getText());
+        getNextButton(jfo).doClick();
+        getNextButton(jfo).getQueueTool().waitEmpty();
 
-            @Override
-            public void createAndDisplayFrame() {
-                // called when wizard is disposed, but do nothing in tests
-            }
-        };
-        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("DecoderPro Wizard", false, false);
-        FirstTimeStartUpWizard t = new FirstTimeStartUpWizard(jf, a);
-        Assert.assertNotNull("exists", t);
+        JComboBoxOperator jcboLanguage = new JComboBoxOperator(jfo);
+        assertNotNull(jcboLanguage);
+        assertNotEquals(-1, jcboLanguage.getSelectedIndex());
 
-        new JFrameOperator("DecoderPro Wizard").requestClose();
-        t.dispose();
+        JTextFieldOperator jtfo = new JTextFieldOperator(jfo);
+        assertNotNull(jtfo);
+        jtfo.clearText();
+        jtfo.typeText("My FTSUWTest Name");
+
+        getNextButton(jfo).doClick();
+        getNextButton(jfo).getQueueTool().waitEmpty();
+
+        assertEquals("Select your DCC Connection", getPageTitleOperator(jfo).getText());
+        assertTrue(getBackButton(jfo).isEnabled());
+        assertTrue(getNextButton(jfo).isEnabled());
+        assertTrue(getCancelButton(jfo).isEnabled());
+
+        JComboBoxOperator jcboHardwareManufacturer = new JComboBoxOperator(jfo,0);
+        assertNotNull(jcboHardwareManufacturer);
+        jcboHardwareManufacturer.setSelectedItem("MERG");
+        jcboHardwareManufacturer.getQueueTool().waitEmpty();
+        jfo.getQueueTool().waitEmpty();
+        assertEquals("MERG",jcboHardwareManufacturer.getSelectedItem());
+
+        JComboBoxOperator jcboHardwareType = new JComboBoxOperator(jfo,1);
+        assertNotNull(jcboHardwareType);
+        jcboHardwareType.setSelectedItem("CAN Simulation");
+        jfo.getQueueTool().waitEmpty();
+        assertEquals("CAN Simulation",jcboHardwareType.getSelectedItem());
+
+        getNextButton(jfo).doClick();
+        getNextButton(jfo).getQueueTool().waitEmpty();
+
+        assertEquals("Finish and Connect", getPageTitleOperator(jfo).getText());
+        assertTrue(getBackButton(jfo).isEnabled());
+        assertTrue(getFinishButton(jfo).isEnabled());
+        assertTrue(getCancelButton(jfo).isEnabled());
+
+        getFinishButton(jfo).doClick();
+        jfo.waitClosed();
+        
+        var memo = InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class);
+        assertNotNull(memo);
+        memo.getTrafficController().terminateThreads();
+        JUnitUtil.waitFor(() -> {
+            return JUnitAppender.checkForMessageStartingWith("No pre-existing config file found, searched for ") != null;
+        }, "no existing config Info line seen");
+
+        Assertions.assertNotEquals(0, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize(),
+            "Font size should not be 0");
+
+    }
+
+    @Test
+    public void testDisplayDialogues(){
+        InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
+        InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
+
+        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("testDisplayDialogues", false, false);
+        FirstTimeStartUpWizard t = new FirstTimeStartUpWizard(jf, null);
+        assertNotNull(t);
+        t.createScreens();
+
+        Thread t1 = new Thread(() -> {
+            jmri.util.swing.JemmyUtil.pressDialogButton( "Error Opening Connection", "OK"); // not from JMRI Bundle
+        });
+        t1.setName("click OK after dialogue Thread");
+        t1.start();
+
+        Thread t2 = new Thread(() -> {
+            throw new IllegalArgumentException("Test IAE");
+        });
+        t2.setName("throw IAE Thread");
+        t2.setUncaughtExceptionHandler(t);
+        t2.start();
+
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        }, "Click ok Button in display exception dialogue didn't happen");
+
+        jmri.util.JUnitAppender.assertErrorMessageStartsWith("Exception: ");
+
         JUnitUtil.dispose(jf);
     }
 
+    private JLabelOperator getPageTitleOperator(JFrameOperator jfo) {
+        return new JLabelOperator(jfo,0);
+    }
+
+    private JButtonOperator getBackButton(JFrameOperator jfo){
+        return new JButtonOperator(jfo, "< Back");
+    }
+
+    private JButtonOperator getNextButton(JFrameOperator jfo){
+        return new JButtonOperator(jfo, "Next >");
+    }
+
+    private JButtonOperator getFinishButton(JFrameOperator jfo){
+        return new JButtonOperator(jfo, "Finish");
+    }
+
+    private JButtonOperator getCancelButton(JFrameOperator jfo){
+        return new JButtonOperator(jfo, "Cancel");
+    }
+
+    private static class DecoderPro3Implm extends DecoderPro3 {
+
+        DecoderPro3Implm(String[] args) {
+            super(args);
+        }
+    
+        // force the application to not actually start.
+        // Just checking construction.
+        @Override
+        protected void start() {
+        }
+
+        @Override
+        protected void configureProfile() {
+            JUnitUtil.resetInstanceManager();
+        }
+
+        @Override
+        protected void installConfigurationManager() {
+            JUnitUtil.initConfigureManager();
+            JUnitUtil.initDefaultUserMessagePreferences();
+        }
+
+        @Override
+        protected void installManagers() {
+            JUnitUtil.initInternalTurnoutManager();
+            JUnitUtil.initInternalLightManager();
+            JUnitUtil.initInternalSensorManager();
+            JUnitUtil.initRouteManager();
+            JUnitUtil.initMemoryManager();
+            JUnitUtil.initDebugThrottleManager();
+        }
+
+        @Override
+        public void createAndDisplayFrame() {
+            // called when wizard is disposed, but do nothing in tests
+        }
+
+    }
+
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File tempDir) throws IOException  {
         JUnitUtil.setUp();
         JUnitUtil.resetApplication();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
     }
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager();  // eventually want to test ShutDownTasks?
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.resetApplication();
-        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 
