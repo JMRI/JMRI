@@ -124,7 +124,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         JButton find = new JButton("Find");
         buttonPanel.add(find);
         find.addActionListener(this::findRequested);
-        find.setMnemonic('F');
 
         buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
 
