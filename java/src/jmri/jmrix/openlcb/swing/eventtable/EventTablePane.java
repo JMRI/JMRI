@@ -44,6 +44,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
     JCheckBox showRequiresLabel; // requires a user-provided name to display
     JCheckBox showRequiresMatch; // requires at least one consumer and one producer exist to display
+    JCheckBox popcorn;           // popcorn mode displays events in real time
 
     JFormattedTextField findID;
 
@@ -117,6 +118,12 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             filter();
         });
         buttonPanel.add(showRequiresMatch);
+
+        popcorn = new JCheckBox(Bundle.getMessage("BoxPopcorn"));
+        popcorn.addActionListener((ActionEvent e) -> {
+            popcornButtonChanged();
+        });
+        buttonPanel.add(popcorn);
 
         buttonPanel.add(add(new JSeparator(JSeparator.VERTICAL)));
 
@@ -197,6 +204,12 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         }
     }
 
+    void popcornButtonChanged() {
+        model.popcornModeActive = popcorn.isSelected();
+        log.info("Popcorn mode {}", model.popcornModeActive);
+    }
+
+
     public void findRequested(java.awt.event.ActionEvent e) {
         log.debug("Request find event {}", findID.getText());
         model.highlightEvent(new EventID(findID.getText()));
@@ -259,8 +272,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
              */
             @Override
             public boolean include(RowFilter.Entry<? extends EventTableDataModel, ? extends Integer> entry) {
-                // default filter is IN-USE and regular systems slot
-                // the default is whatever the person last closed it with
 
                 int row = entry.getIdentifier();
 
@@ -270,12 +281,12 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 if ( showRequiresMatch.isSelected()) {
                     var memo = model.getTripleMemo(row);
 
-                    if (memo.producer == null && !model.producerPresent(memo.consumer, memo.eventID)) {
+                    if (memo.producer == null && !model.producerPresent(memo.eventID)) {
                         // no matching producer
                         return false;
                     }
 
-                    if (memo.consumer == null && !model.consumerPresent(memo.producer, memo.eventID)) {
+                    if (memo.consumer == null && !model.consumerPresent(memo.eventID)) {
                         // no matching producer
                         return false;
                     }
@@ -344,6 +355,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         IdTagManager tagManager;
         JTable table;
         TableRowSorter<EventTableDataModel> sorter;
+        boolean popcornModeActive = false;
 
         TripleMemo getTripleMemo(int row) {
             if (row >= memos.size()) {
@@ -474,7 +486,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             final int DELAY = 250;
 
             if (!pending) {
-                jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
+                jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
                     pending = false;
                     fireTableDataChanged();
                 }, DELAY);
@@ -518,8 +530,12 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     if (nodeID.equals(memo.producer)) {
                         // might be 2nd EventTablePane to process the data,
                         // hence memos would already have been processed. To
-                        // handle that, always fire a change to the table.
-                        handleTableUpdate(i, i);
+                        // handle that, need to fire a change to the table.
+                        // On the other hand, this rapidly erases the
+                        // popcorn display, so we disable it for that.
+                        if (!popcornModeActive) {
+                            handleTableUpdate(i, i);
+                        }
                         return;
                     }
                     // if empty producer slot, remember it
@@ -645,17 +661,18 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             handleTableUpdate(memos.size()-1, memos.size()-1);
          }
 
-        // This caused the display to jump around as it tried to keep
+        // This causes the display to jump around as it tried to keep
         // the selected cell visible.  A better approach might be to change
-        // the cell background color.  Temporarily commented out in
-        // handleProducerConsumerEventReport below.
+        // the cell background color via a custom cell renderer
         void highlightProducer(EventID eventID, NodeID nodeID) {
+            if (!popcornModeActive) return;
+            log.trace("highlightProducer", eventID, nodeID);
             for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
                 if (eventID.equals(memo.eventID) && nodeID.equals(memo.producer)) {
                     try {
                         var viewRow = sorter.convertRowIndexToView(i);
-                        log.debug("highlight event ID {} row {} viewRow {}", eventID.toShortString(), i, viewRow);
+                        log.trace("highlight event ID {} row {} viewRow {}", eventID, i, viewRow);
                         if (viewRow >= 0) {
                             table.changeSelection(viewRow, COL_PRODUCER_NODE, false, false);
                         }
@@ -670,13 +687,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         // highlights (selects) all the eventID cells with a particular event,
         // Most LAFs will move the first of these on-scroll-view.
         void highlightEvent(EventID eventID) {
+            log.trace("highlightEvent", eventID);
             table.clearSelection(); // clear existing selections
             for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
                 if (eventID.equals(memo.eventID)) {
                     try {
                         var viewRow = sorter.convertRowIndexToView(i);
-                        log.trace("highlight event ID {} row {} viewRow {}", eventID.toShortString(), i, viewRow);
+                        log.trace("highlight event ID {} row {} viewRow {}", eventID, i, viewRow);
                         if (viewRow >= 0) {
                             table.changeSelection(viewRow, COL_EVENTID, true, false);
                         }
@@ -688,19 +706,19 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
         }
 
-        boolean consumerPresent(NodeID nodeID, EventID eventID) {
+        boolean consumerPresent(EventID eventID) {
             for (var memo : memos) {
                 if (memo.eventID.equals(eventID) ) {
-                    if (nodeID.equals(memo.consumer)) return true;
+                    if (memo.consumer!=null) return true;
                 }
             }
             return false;
         }
 
-        boolean producerPresent(NodeID nodeID, EventID eventID) {
+        boolean producerPresent(EventID eventID) {
             for (var memo : memos) {
                 if (memo.eventID.equals(eventID) ) {
-                    if (nodeID.equals(memo.producer)) return true;
+                    if (memo.producer!=null) return true;
                 }
             }
             return false;
@@ -747,7 +765,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             var nodeID = msg.getSourceNodeID();
             var eventID = msg.getEventID();
             model.recordProducer(eventID, nodeID);
-            // model.highlightProducer(eventID, nodeID);
+            model.highlightProducer(eventID, nodeID);
         }
 
         /**
