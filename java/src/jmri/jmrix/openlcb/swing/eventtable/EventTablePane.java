@@ -191,6 +191,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         final int DELAY = 75; // msec between operations - 64 events at speed
         int nextDelay = 0;
 
+        // assumes that a VerifyNodes has been done and all nodes are in the MimicNodeStore
         for (var memo : store.getNodeMemos()) {
 
             jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
@@ -202,6 +203,18 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
             nextDelay += DELAY;
         }
+        // Our reference to the node names in the MimicNodeStore will
+        // trigger a SNIP request if we don't have them yet.  In that case.
+        // we want to trigger a table refresh to make sure they get displayed.
+        // TODO: This might be better triggered by seeing a SNIP reply
+        final int INTERVAL = 5000;
+        jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
+            model.handleTableUpdate(0, model.getRowCount()-1);
+        }, INTERVAL);
+        jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
+            model.handleTableUpdate(0, model.getRowCount()-1);
+        }, INTERVAL*2);
+
     }
 
     void popcornButtonChanged() {
@@ -662,7 +675,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          }
 
         // This causes the display to jump around as it tried to keep
-        // the selected cell visible.  A better approach might be to change
+        // the selected cell visible.
+        // TODO: A better approach might be to change
         // the cell background color via a custom cell renderer
         void highlightProducer(EventID eventID, NodeID nodeID) {
             if (!popcornModeActive) return;
