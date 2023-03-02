@@ -50,8 +50,6 @@
 
   <aspects>
   
-<!-- ČSD -->
-
     <aspect>
       <name>Stůj</name>
       <title>Stop</title>
@@ -395,7 +393,6 @@
       <title>Unlit</title>
       <indication>Traffic locking in opposing direction on a banalized ABS</indication>
       <description>Unlit all lights</description>
-      <reference> </reference>
       <comment>Znasnuté návěstidlo v nesprávném směru</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>

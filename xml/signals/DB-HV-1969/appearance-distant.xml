@@ -73,25 +73,25 @@
     <appearance>
       <aspectname>Vr0</aspectname>
       <show>red</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/distant/vr0.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/distant/vr0.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/distant/vr0.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/distant/vr0.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/distant/vr0.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/distant/vr0.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Vr1</aspectname>
       <show>green</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/distant/vr1.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/distant/vr1.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/distant/vr1.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/distant/vr1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/distant/vr1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/distant/vr1.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Vr2</aspectname>
       <show>yellow</show>
-      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/distant/vr2.gif</imagelink>
-      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/distant/vr2.gif</imagelink>
-      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/distant/vr2.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/distant/vr2.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/distant/vr2.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/distant/vr2.gif</imagelink>
     </appearance>
 
   </appearances>

@@ -363,7 +363,7 @@
 
       <p>Search table cells for a cell that contains the string value in the bean local variable.
       When a match is found, a <strong>map</strong> of the cells for the row or column is in the row
-      local variable.  See <a href="chapter8#variableTypes">Local Variable Types</a>.</p>
+      local variable.  See <a href="chapter8.shtml#variableTypes">Local Variable Types</a>.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter11/find_table_row_col.png">

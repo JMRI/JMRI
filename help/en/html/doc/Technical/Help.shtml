@@ -142,7 +142,7 @@
 
         <ul>
           <li>Use ".shtml" file extensions so that the main web server will search the files for
-          <a href="https://httpd.apache.org/docs/1.3/howto/ssi.html">server-side includes</a>.
+          <a href="https://httpd.apache.org/docs/current/howto/ssi.html">server-side includes</a>.
           </li>
 
           <li>When you create a new page, start with a copy of either the
@@ -179,7 +179,7 @@
           <li>All the page formatting on JMRI help and other web pages is done through included CSS
           files, originally created by John Plocher. These are included from "/css" via Server-Side
           Includes (SSI). The main file is at <a href=
-          "../../../../../css/default.css">/css/default.css</a> and works with a few other files in
+          "https://www.jmri.org/css/default.css">/css/default.css</a> and works with a few other files in
           that same directory. Because JmriHelp ignores SSI, the CSS formatting is ignored when
           JmriHelp is displaying the pages. In that case, JmriHelp and the browser's default CSS
           provide the formatting.
@@ -214,7 +214,7 @@
         entity <strong>ampersand-rArr-semicolon</strong>, and label the whole sequence as "strong".
         For example:<br>
         <strong>File &rArr; Store Panels</strong><br>
-        A non-blanking space can be used before the right arrow to control line breaks.</p>
+        A non-breaking space can be used before the right arrow to control line breaks.</p>
 
         <p>You cannot count on any particular location for your files on the local machine, so all
         links to other help pages need to be relative. Links to XML contents also need to be

@@ -197,7 +197,7 @@
     </aspect>
 
     <aspect>
-      <name>Stop; Manual Block</name><!-- to avoid duplicating Stop below -->
+      <name comment="to avoid duplicating Stop below">Stop; Manual Block</name>
       <rule>Rule 289B</rule>
       <indication>Stop; Manual Block</indication>
       <reference>Page 102</reference>

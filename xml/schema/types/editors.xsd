@@ -844,6 +844,102 @@
       <xs:attribute name="memory" type="beanNameType"></xs:attribute>
     </xs:complexType>
 
+    <xs:complexType name="EditorGlobalVariableIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a GlobalVariableIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.GlobalVariableIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="globalVariableState" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="icon" type="xs:string" use="required"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="globalVariable" type="beanNameType"></xs:attribute>
+      <xs:attribute name="defaulticon" type="xs:string"></xs:attribute>
+      <xs:attribute name="selectable" type="yesNoType"></xs:attribute>
+      <xs:attribute name="colWidth" type="xs:int"></xs:attribute>
+      <xs:attribute name="updateBlockValue" type="yesNoType" default="yes"></xs:attribute>
+
+    </xs:complexType>
+
+    <xs:complexType name="EditorGlobalVariableInputIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a GlobalVariableInputIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.GlobalVariableInputIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="globalVariable" type="beanNameType"></xs:attribute>
+      <xs:attribute name="colWidth" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorGlobalVariableComboIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a GlobalVariableComboIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.GlobalVariableComboIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:all minOccurs="0" maxOccurs="1">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="itemList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+          <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                     <xs:attribute name="index" type="xs:int"></xs:attribute>
+                  </xs:extension>
+                </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:all>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="globalVariable" type="beanNameType"></xs:attribute>
+    </xs:complexType>
+
     <xs:complexType name="EditorFastClockIconType">
       <xs:annotation>
         <xs:documentation>

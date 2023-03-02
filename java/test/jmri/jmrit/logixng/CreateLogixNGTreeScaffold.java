@@ -34,8 +34,43 @@ public class CreateLogixNGTreeScaffold {
 
     private static boolean setupHasBeenCalled = false;
 
-    private static LocoNetSystemConnectionMemo _locoNetMemo;
-    private static MqttSystemConnectionMemo _mqttMemo;
+    private LocoNetSystemConnectionMemo _locoNetMemo;
+    private MqttSystemConnectionMemo _mqttMemo;
+
+    private Block block1;
+    private Block block2;
+    private Reporter reporter1;
+    private Light light1;
+    private Light light2;
+    private VariableLight variableLight1;
+    private Sensor sensor1;
+    private Sensor sensor2;
+    private Turnout turnout1;
+    private Turnout turnout2;
+    private Turnout turnout3;
+    private Turnout turnout4;
+    private Turnout turnout5;
+    private Memory memory1;
+    private Memory memory2;
+    private Memory memory3;
+    private NamedTable csvTable;
+
+    private LogixManager logixManager = InstanceManager.getDefault(LogixManager.class);
+    private ConditionalManager conditionalManager = InstanceManager.getDefault(ConditionalManager.class);
+
+    private jmri.Logix logixIX1 = logixManager.createNewLogix("IX1", null);
+    private Conditional conditionalIX1C1 = conditionalManager.createNewConditional("IX1C1", "First conditional");
+
+    private LogixNG_Manager logixNG_Manager;
+    private ConditionalNG_Manager conditionalNGManager;
+    private AnalogActionManager analogActionManager;
+    private AnalogExpressionManager analogExpressionManager;
+    private DigitalActionManager digitalActionManager;
+    private DigitalBooleanActionManager digitalBooleanActionManager;
+    private DigitalExpressionManager digitalExpressionManager;
+    private StringActionManager stringActionManager;
+    private StringExpressionManager stringExpressionManager;
+    private LogixNG_InitializationManager logixNG_InitializationManager;
 
 //    private AudioManager audioManager;
 
@@ -47,7 +82,7 @@ public class CreateLogixNGTreeScaffold {
         return null;
     }
 
-    public static void createLogixNGTree() throws PropertyVetoException, Exception {
+    public void createLogixNGTree() throws PropertyVetoException, Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Ensure the setUp() and tearDown() methods of this class are called.
@@ -62,49 +97,49 @@ public class CreateLogixNGTreeScaffold {
         AudioSource audioSource = (AudioSource) audioManager.provideAudio("IAS1");
         audioSource.setAssignedBuffer((AudioBuffer) audioManager.getNamedBean("IAB1"));
 */
-        Block block1 = InstanceManager.getDefault(BlockManager.class).provide("IB1");
+        block1 = InstanceManager.getDefault(BlockManager.class).provide("IB1");
         block1.setValue("Block 1 Value");
-        Block block2 = InstanceManager.getDefault(BlockManager.class).provide("IB2");
+        block2 = InstanceManager.getDefault(BlockManager.class).provide("IB2");
         block2.setUserName("Some block");
         block1.setValue("Block 2 Value");
-        Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
+        reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
         reporter1.setReport("Reporter 1 Value");
-        Light light1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
+        light1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light1.setCommandedState(Light.OFF);
-        Light light2 = InstanceManager.getDefault(LightManager.class).provide("IL2");
+        light2 = InstanceManager.getDefault(LightManager.class).provide("IL2");
         light2.setUserName("Some light");
         light2.setCommandedState(Light.OFF);
-        VariableLight variableLight1 = (VariableLight)InstanceManager.getDefault(LightManager.class).provide("ILVariable");
+        variableLight1 = (VariableLight)InstanceManager.getDefault(LightManager.class).provide("ILVariable");
         variableLight1.setCommandedState(Light.OFF);
-        Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
+        sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         sensor1.setCommandedState(Sensor.INACTIVE);
-        Sensor sensor2 = InstanceManager.getDefault(SensorManager.class).provide("IS2");
+        sensor2 = InstanceManager.getDefault(SensorManager.class).provide("IS2");
         sensor2.setCommandedState(Sensor.INACTIVE);
         sensor2.setUserName("Some sensor");
-        Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
+        turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         turnout1.setCommandedState(Turnout.CLOSED);
-        Turnout turnout2 = InstanceManager.getDefault(TurnoutManager.class).provide("IT2");
+        turnout2 = InstanceManager.getDefault(TurnoutManager.class).provide("IT2");
         turnout2.setCommandedState(Turnout.CLOSED);
         turnout2.setUserName("Some turnout");
-        Turnout turnout3 = InstanceManager.getDefault(TurnoutManager.class).provide("IT3");
+        turnout3 = InstanceManager.getDefault(TurnoutManager.class).provide("IT3");
         turnout3.setCommandedState(Turnout.CLOSED);
-        Turnout turnout4 = InstanceManager.getDefault(TurnoutManager.class).provide("IT4");
+        turnout4 = InstanceManager.getDefault(TurnoutManager.class).provide("IT4");
         turnout4.setCommandedState(Turnout.CLOSED);
-        Turnout turnout5 = InstanceManager.getDefault(TurnoutManager.class).provide("IT5");
+        turnout5 = InstanceManager.getDefault(TurnoutManager.class).provide("IT5");
         turnout5.setCommandedState(Turnout.CLOSED);
 
-        Memory memory1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        Memory memory2 = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
+        memory1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        memory2 = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         memory2.setUserName("Some memory");
-        Memory memory3 = InstanceManager.getDefault(MemoryManager.class).provide("IM3");
+        memory3 = InstanceManager.getDefault(MemoryManager.class).provide("IM3");
 
-        LogixManager logixManager = InstanceManager.getDefault(LogixManager.class);
-        ConditionalManager conditionalManager = InstanceManager.getDefault(ConditionalManager.class);
+        logixManager = InstanceManager.getDefault(LogixManager.class);
+        conditionalManager = InstanceManager.getDefault(ConditionalManager.class);
 
-        jmri.Logix logixIX1 = logixManager.createNewLogix("IX1", null);
+        logixIX1 = logixManager.createNewLogix("IX1", null);
         logixIX1.setEnabled(true);
 
-        Conditional conditionalIX1C1 = conditionalManager.createNewConditional("IX1C1", "First conditional");
+        conditionalIX1C1 = conditionalManager.createNewConditional("IX1C1", "First conditional");
         logixIX1.addConditional(conditionalIX1C1.getSystemName(), 0);
 
         InstanceManager.getDefault(SignalHeadManager.class)
@@ -127,20 +162,20 @@ public class CreateLogixNGTreeScaffold {
         warrant.addBlockOrder(new BlockOrder(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock("OB98")));
         warrant.addBlockOrder(new BlockOrder(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock("OB99")));
 
-        LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
-        ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
-        AnalogActionManager analogActionManager = InstanceManager.getDefault(AnalogActionManager.class);
-        AnalogExpressionManager analogExpressionManager = InstanceManager.getDefault(AnalogExpressionManager.class);
-        DigitalActionManager digitalActionManager = InstanceManager.getDefault(DigitalActionManager.class);
-        DigitalBooleanActionManager digitalBooleanActionManager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
-        DigitalExpressionManager digitalExpressionManager = InstanceManager.getDefault(DigitalExpressionManager.class);
-        StringActionManager stringActionManager = InstanceManager.getDefault(StringActionManager.class);
-        StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
-        LogixNG_InitializationManager logixNG_InitializationManager = InstanceManager.getDefault(LogixNG_InitializationManager.class);
+        logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
+        conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
+        analogActionManager = InstanceManager.getDefault(AnalogActionManager.class);
+        analogExpressionManager = InstanceManager.getDefault(AnalogExpressionManager.class);
+        digitalActionManager = InstanceManager.getDefault(DigitalActionManager.class);
+        digitalBooleanActionManager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
+        digitalExpressionManager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        stringActionManager = InstanceManager.getDefault(StringActionManager.class);
+        stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
+        logixNG_InitializationManager = InstanceManager.getDefault(LogixNG_InitializationManager.class);
 
 
         // Load table turnout_and_signals.csv
-        NamedTable csvTable = InstanceManager.getDefault(NamedTableManager.class)
+        csvTable = InstanceManager.getDefault(NamedTableManager.class)
                         .loadTableFromCSV("IQT1", null, "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
         Assert.assertNotNull(csvTable);
 
@@ -1746,6 +1781,7 @@ public class CreateLogixNGTreeScaffold {
         actionTimer.setDelay(0, 100);
         actionTimer.setStartImmediately(false);
         actionTimer.setRunContinuously(true);
+        actionTimer.setStartAndStopByStartExpression(true);
         maleSocket = digitalActionManager.registerAction(actionTimer);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -1757,6 +1793,20 @@ public class CreateLogixNGTreeScaffold {
         actionTimer.setDelay(2, 500);
         actionTimer.setStartImmediately(true);
         actionTimer.setRunContinuously(false);
+        actionTimer.setStartAndStopByStartExpression(true);
+        actionTimer.setNumActions(2);
+        maleSocket = digitalActionManager.registerAction(actionTimer);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionTimer = new ActionTimer(digitalActionManager.getAutoSystemName(), null);
+        actionTimer.setComment("A comment");
+        actionTimer.setNumActions(3);
+        actionTimer.setDelay(0, 20);
+        actionTimer.setDelay(1, 100);
+        actionTimer.setDelay(2, 50);
+        actionTimer.setStartImmediately(true);
+        actionTimer.setRunContinuously(false);
+        actionTimer.setStartAndStopByStartExpression(false);
         actionTimer.setNumActions(2);
         maleSocket = digitalActionManager.registerAction(actionTimer);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -2139,6 +2189,13 @@ public class CreateLogixNGTreeScaffold {
 
         WebBrowser webBrowser = new WebBrowser(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(webBrowser);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        jmri.jmrit.display.logixng.ActionLayoutTurnout actionLayoutTurnout =
+                new jmri.jmrit.display.logixng.ActionLayoutTurnout(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionLayoutTurnout);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -2689,6 +2746,17 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        RunOnce runOnceAction = new RunOnce(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(runOnceAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        Return returnAction2 = new Return(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(returnAction2);
+        maleSocket.setEnabled(false);
+        runOnceAction.getChild(0).connect(maleSocket);
+
+
         Sequence sequence =
                 new Sequence(digitalActionManager.getAutoSystemName(), null);
         sequence.setRunContinuously(false);
@@ -2971,12 +3039,18 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalActionManager.registerAction(triggerRoute);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        createLogixNGTreeSecond(actionManySocket, femaleRootSocket);
+    }
 
+    public void createLogixNGTreeSecond(MaleDigitalActionSocket actionManySocket, FemaleSocket femaleRootSocket)
+            throws PropertyVetoException, Exception {
 
-        ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
+        int indexAction = actionManySocket.getChildCount() - 1;
+
+        IfThenElse ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
         ifThenElse.setExecuteType(IfThenElse.ExecuteType.ExecuteOnChange);
-        maleSocket = digitalActionManager.registerAction(ifThenElse);
+        MaleSocket maleSocket = digitalActionManager.registerAction(ifThenElse);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -3058,6 +3132,27 @@ public class CreateLogixNGTreeScaffold {
         expressionCallModule.addParameter("Stu", InitialValueType.Reference, "{MyVar}", Module.ReturnValueType.LocalVariable, "SomeVar");
         expressionCallModule.addParameter("Vxy", InitialValueType.String, "Some string", Module.ReturnValueType.LocalVariable, "SomeVar");
         maleSocket = digitalExpressionManager.registerExpression(expressionCallModule);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
+        ExpressionLinuxLinePower expressionLinuxLinePower =
+                new ExpressionLinuxLinePower(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLinuxLinePower);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLinuxLinePower =
+                new ExpressionLinuxLinePower(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLinuxLinePower.set_Is_IsNot(Is_IsNot_Enum.Is);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLinuxLinePower);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLinuxLinePower =
+                new ExpressionLinuxLinePower(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLinuxLinePower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLinuxLinePower);
+        maleSocket.setEnabled(false);
         and.getChild(indexExpr++).connect(maleSocket);
 
 
@@ -3779,6 +3874,79 @@ public class CreateLogixNGTreeScaffold {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
+        ExpressionSensorEdge expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensorEdge);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensorEdge.setComment("A comment");
+        expressionSensorEdge.getSelectNamedBean().setNamedBean(sensor1);
+        expressionSensorEdge.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSensorEdge.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSensorEdge.getSelectNamedBean().setLocalVariable("index");
+        expressionSensorEdge.getSelectNamedBean().setReference("{IM1}");
+        expressionSensorEdge.getSelectEnumFromState().setEnum(ExpressionSensorEdge.SensorState.Inactive);
+        expressionSensorEdge.getSelectEnumFromState().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");
+        expressionSensorEdge.getSelectEnumFromState().setLocalVariable("index2");
+        expressionSensorEdge.getSelectEnumFromState().setReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensorEdge);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensorEdge.setComment("A comment");
+        expressionSensorEdge.getSelectNamedBean().setNamedBean(sensor1);
+        expressionSensorEdge.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSensorEdge.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSensorEdge.getSelectNamedBean().setLocalVariable("index");
+        expressionSensorEdge.getSelectNamedBean().setReference("{IM1}");
+        expressionSensorEdge.getSelectEnumFromState().setEnum(ExpressionSensorEdge.SensorState.Inactive);
+        expressionSensorEdge.getSelectEnumFromState().setAddressing(NamedBeanAddressing.Formula);
+        expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");
+        expressionSensorEdge.getSelectEnumFromState().setLocalVariable("index2");
+        expressionSensorEdge.getSelectEnumFromState().setReference("{IM2}");
+        expressionSensorEdge.getSelectEnumToState().setEnum(ExpressionSensorEdge.SensorState.Unknown);
+        expressionSensorEdge.getSelectEnumToState().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSensorEdge.getSelectEnumToState().setFormula("\"IT\"+index3");
+        expressionSensorEdge.getSelectEnumToState().setLocalVariable("index3");
+        expressionSensorEdge.getSelectEnumToState().setReference("{IM3}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensorEdge);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensorEdge.setComment("A comment");
+        expressionSensorEdge.getSelectNamedBean().setNamedBean(sensor1);
+        expressionSensorEdge.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionSensorEdge.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSensorEdge.getSelectNamedBean().setLocalVariable("index");
+        expressionSensorEdge.getSelectNamedBean().setReference("{IM1}");
+        expressionSensorEdge.getSelectEnumFromState().setEnum(ExpressionSensorEdge.SensorState.Inactive);
+        expressionSensorEdge.getSelectEnumFromState().setAddressing(NamedBeanAddressing.Reference);
+        expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");
+        expressionSensorEdge.getSelectEnumFromState().setLocalVariable("index2");
+        expressionSensorEdge.getSelectEnumFromState().setReference("{IM2}");
+        expressionSensorEdge.setOnlyTrueOnce(false);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensorEdge);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensorEdge.setComment("A comment");
+        expressionSensorEdge.getSelectNamedBean().setNamedBean(sensor1);
+        expressionSensorEdge.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionSensorEdge.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSensorEdge.getSelectNamedBean().setLocalVariable("index");
+        expressionSensorEdge.getSelectNamedBean().setReference("{IM1}");
+        expressionSensorEdge.getSelectEnumFromState().setEnum(ExpressionSensorEdge.SensorState.Inactive);
+        expressionSensorEdge.getSelectEnumFromState().setAddressing(NamedBeanAddressing.Direct);
+        expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");
+        expressionSensorEdge.getSelectEnumFromState().setLocalVariable("index2");
+        expressionSensorEdge.getSelectEnumFromState().setReference("{IM2}");
+        expressionSensorEdge.setOnlyTrueOnce(true);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensorEdge);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
         ExpressionSignalHead expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
         maleSocket.setEnabled(false);
@@ -4237,7 +4405,7 @@ public class CreateLogixNGTreeScaffold {
 
 
 
-        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        DoAnalogAction doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(doAnalogAction);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -4375,7 +4543,7 @@ public class CreateLogixNGTreeScaffold {
 
 
 
-        doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
+        DoStringAction doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(doStringAction);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -4766,7 +4934,7 @@ public class CreateLogixNGTreeScaffold {
     }
 
 
-    public static void setUp() {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
@@ -4800,7 +4968,7 @@ public class CreateLogixNGTreeScaffold {
         setupHasBeenCalled = true;
     }
 
-    public static void tearDown() {
+    public void tearDown() {
         setupHasBeenCalled = false;     // Reset for the next test
 
         _locoNetMemo = null;

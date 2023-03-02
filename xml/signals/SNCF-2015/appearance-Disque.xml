@@ -133,10 +133,6 @@
     </dark>
   </specificappearances>
 
-<!--
-  <comment>French~~.advancedaspect.=le signal suivant et .ourAspect. les états que le signal (le notre) peut avoir.</comment>
- -->
-
   <aspectMappings>
     <aspectMapping>
       <advancedAspect>Semaphore</advancedAspect>
@@ -178,19 +174,12 @@
       	<advancedAspect>GuidonMF</advancedAspect>
      	 <ourAspect>Disque</ourAspect>
     </aspectMapping>
-<!--
-   <comment>Nomaly not existing-normalement n'existe plus</comment>
- -->
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Approach</ourAspect>
       <ourAspect>Approach Restrict30</ourAspect>
       <ourAspect>Approach Restrict60</ourAspect>
     </aspectMapping>
-
-<!--
-   <comment>même si pas logique-not logic with rules</comment>
- -->
     <aspectMapping>
       <advancedAspect>Slow</advancedAspect>
       <ourAspect>Approach Restrict30</ourAspect>

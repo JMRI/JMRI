@@ -59,17 +59,17 @@
 
       <ul>
         <li>
-          <a href="https://jmri.org/jython/AddButton.py">AddButton.py</a> sample script adds a
+          <a href="https://www.jmri.org/jython/AddButton.py">AddButton.py</a> sample script adds a
           script button to the main window.
         </li>
 
         <li>
-          <a href="https://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a> shows how how
+          <a href="https://www.jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a> shows how how
           to modify the main window to remove the ops-mode programming button.
         </li>
 
         <li>
-          <a href="https://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
+          <a href="https://www.jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
           sample script is an even more advanced example that changes the appearance of items on
           panel screens.
         </li>
@@ -126,9 +126,9 @@
       <a href="#StartupActionFactory"><code>apps.startup.StartupActionFactory</code></a>.</p>
 
       <p>The <a href=
-      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample">jmri.jmrit.sample</a>
+      "https://github.com/JMRI/JMRI/tree/master/java/src/jmri/jmrit/sample">jmri.jmrit.sample</a>
       package is an example of this. (See <a href=
-      "https://jmri.org/JavaDoc/doc/jmri/jmrit/sample/package-summary.html">Javadoc</a>) If
+      "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/sample/package-summary.html">Javadoc</a>) If
       contains:</p>
 
       <ul>
@@ -181,7 +181,7 @@
       <dl>
         <dt id="StartupActionFactory">
           <a href=
-          "https://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a>
+          "https://www.jmri.org/JavaDoc/doc/jmri/util/startup/StartupActionFactory.html">StartupActionFactory</a>
         </dt>
 
         <dd>
@@ -199,7 +199,7 @@
 
         <dt>
           <a href=
-          "https://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a>
+          "https://www.jmri.org/JavaDoc/doc/jmri/util/startup/StartupModelFactory.html">StartupModelFactory</a>
         </dt>
 
         <dd>
@@ -209,7 +209,7 @@
           Implementations of this class appear under the "Add" button in the Startup pane of the
           Preferences.
           <p>One example is <a href=
-          "https://github.com/JMRI/JMRI/blob/master/java/src/apps/startup/PerformActionModelFactory.java">
+          "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/util/startup/PerformActionModelFactory.java">
           the PerformActionModelFactory class</a> which provides the Perform Action... item.
           PerformActionModelFactory makes the <a href=
           "#StartupActionFactory">StartupActionFactory</a> implementations available for the user
@@ -226,7 +226,7 @@
 
         <dt>
           <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html">ConnectionTypeList</a>
+          "https://www.jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html">ConnectionTypeList</a>
         </dt>
 
         <dd>
@@ -238,29 +238,29 @@
 
         <dt>
           <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a>
+          "https://www.jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a>
         </dt>
 
         <dd>
           Add new factories for creating default instances of objects managed by the <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">InstanceManager</a>.
+          "https://www.jmri.org/JavaDoc/doc/jmri/InstanceManager.html">InstanceManager</a>.
         </dd>
 
         <dt>
           <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a>
+          "https://www.jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a>
         </dt>
 
         <dd>
           The JMRI JSON services used in the JMRI web services can be extended using service
           implementations of this class. See the <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory
+          "https://www.jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory
           Javadocs</a> for details.
         </dd>
 
         <dt>
           <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a>
+          "https://www.jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a>
         </dt>
 
         <dd>Additional preferences can be displayed in the preferences window by providing an
@@ -268,7 +268,7 @@
 
         <dt>
           <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a>
+          "https://www.jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a>
         </dt>
 
         <dd>Add a new preferences manager to JMRI. Preferences managers store, retrieve, and
@@ -278,7 +278,7 @@
 
         <dt>
           <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.SignalMastAddPaneProvider.html">
+          "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.SignalMastAddPaneProvider.html">
           SignalMastAddPaneProvider</a>
         </dt>
 
@@ -296,9 +296,9 @@
 
         <dt>
           <a href=
-          "http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">HttpServlet</a>
+          "https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html">HttpServlet</a>
           with <a href=
-          "http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebServlet.html">WebServlet</a>
+          "https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebServlet.html">WebServlet</a>
           annotation
         </dt>
 
@@ -307,7 +307,7 @@
 
         <dt>
           <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a>
+          "https://www.jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a>
         </dt>
 
         <dd>Additional file paths, redirections, explicitly blocked paths in the JMRI web server

@@ -705,12 +705,12 @@ public final class FnMapPanelESU extends JPanel {
      */
     void updateSummaryLine(int row, int block) {
         StringBuilder retString = new StringBuilder("");
-        int retState = AbstractValue.SAME;
+        AbstractValue.ValueState retState = AbstractValue.ValueState.SAME;
 
         for (int item = outBlockStartCol[block]; item < (outBlockStartCol[block] + outBlockLength[block]); item++) {
             if (itemIsUsed[item]) {
                 int value = Integer.parseInt(varModel.getValString(iVarIndex[item][row]));
-                int state = varModel.getState(iVarIndex[item][row]);
+                var state = varModel.getState(iVarIndex[item][row]);
                 if ((item == outBlockStartCol[block]) || (priorityValue(state) > priorityValue(retState))) {
                     retState = state;
                 }
@@ -744,7 +744,7 @@ public final class FnMapPanelESU extends JPanel {
             retString.deleteCharAt(0);
         }
 
-        summaryLine[row][block].setBackground(AbstractValue.stateColorFromValue(retState));
+        summaryLine[row][block].setBackground(retState.getColor());
         summaryLine[row][block].setText(retString.toString());
         summaryLine[row][block].setToolTipText(retString.toString());
     }
@@ -756,19 +756,19 @@ public final class FnMapPanelESU extends JPanel {
      * @return the assigned priority value
      */
     @SuppressFBWarnings({"SF_SWITCH_NO_DEFAULT", "SF_SWITCH_FALLTHROUGH"})
-    int priorityValue(int state) {
+    int priorityValue(AbstractValue.ValueState state) {
         int value = 0;
         switch (state) {
-            case AbstractValue.UNKNOWN:
+            case UNKNOWN:
                 value++;
             //$FALL-THROUGH$
-            case AbstractValue.DIFF:
+            case DIFFERENT:
                 value++;
             //$FALL-THROUGH$
-            case AbstractValue.EDITED:
+            case EDITED:
                 value++;
             //$FALL-THROUGH$
-            case AbstractValue.FROMFILE:
+            case FROMFILE:
                 value++;
             //$FALL-THROUGH$
             default:

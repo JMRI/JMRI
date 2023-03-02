@@ -3,7 +3,7 @@
 <!-- Used by default when the throttle file is displayed in a web browser-->
 <!-- This is just a basic implementation for debugging purposes, without -->
 <!-- any real attempt at formatting -->
-<!-- This file is part of JMRI.  Copyright 2007-2022.                       -->
+<!-- This file is part of JMRI.  Copyright 2007-2023.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -29,7 +29,7 @@
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
 
-  <xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')"/>
+  <xsl:param name="JmriCopyrightYear" select="concat('1997','-','2023')"/>
 
   <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
@@ -86,7 +86,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <table border="border-width:thin" width="67%">
           <tr><td>Jynstrument Folder</td><td><xsl:value-of select="@JynstrumentFolder"/></td></tr>
       <!-- Future proofing: ["USBThottle" is only element at current time 2022/03/25] -->
-      <xsl:for-each select="./*"> 
+      <xsl:for-each select="./*">
         <tr>
           <td><xsl:value-of select="name()"/></td>
           <td><xsl:for-each select="@*"> <!-- Only one attribute at current time 2022/03/25 -->

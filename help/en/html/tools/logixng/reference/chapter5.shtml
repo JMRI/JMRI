@@ -641,6 +641,16 @@
       <p>The Throttle action controls a throttle.</p>
 
       <div style="margin-left: 2em">
+        <a href="images/chapter5/throttle_dialog.png"><img src="images/chapter5/throttle_dialog.png"
+        alt="Chapter 5 throttle dialog"></a>
+      </div>
+
+      <p>The LogixNG throttle can use either the default throttle connection or an alternate throttle
+      connection.  The default connection is defined in <strong>Preferences &rArr; Defaults</strong>.
+      If there is more than one connection, other connections <strong><em>might</em></strong>
+      support a throttle.</p>
+
+      <div style="margin-left: 2em">
         <a href="images/chapter5/throttle_action.png"><img src="images/chapter5/throttle_action.png"
         alt="Chapter 5 throttle action"></a>
       </div>
@@ -829,11 +839,30 @@
       <h4>Timer</h4>
 
       <p><strong>Timer</strong> has a number of actions, each executed after a period of time. The
-      time to wait can be 0, which means the related action is executed immediately. The Timer can
-      be configured to only execute the actions once or continuously. The Timer can also be
-      configured to start when the xml data file is loaded or only start when the "Start"
-      expression returns True. The Timer stops when the "Stop" expression returns True. The time
-      unit is selected from the combo box.</p>
+      time to wait can be 0, which means the related action is executed immediately.</p>
+
+      <p>Options:</p>
+      <dl style="margin-left: 2em;">
+        <dt>Start timer immediately on load</dt>
+        <dd>When selected, the timer steps will start when the LogixNG has been loaded.  If this
+        option is not selected, a <strong>Start</strong> expression will be used to start the timer
+        steps when the expression becomes true.</dd>
+
+        <dt>Run timer continuously</dt>
+        <dd>If not selected, the timer will run one time and then stop.  When selected, the timer
+        steps will repeat.  A <strong>Stop</strong> expression can be used to stop the timer
+        steps when the expression becomes true.  The Stop expression can use the same object, such
+        as a sensor that starts the timer when active and then stops the timer when the sensor is
+        inactive.</dd>
+
+        <dt>Start/Stop by Start expression</dt>
+        <dd>When selected, the timer will start when the <strong>Start</strong> expression becomes
+        true and will stop when the <strong>Start</strong> expression becomes false.  The <strong>
+        Stop</strong> expression is ignored.</dd>
+
+        <dt>Combo Box</dt>
+        <dd>Select the time unit.</dd>
+      </dl>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/timer_dialog.png"><img src="images/chapter5/timer_dialog.png" alt=
@@ -1063,6 +1092,16 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Run once<span class="since">since 5.3.1</span></h4>
+
+      <p>Run the assigned action only one time during a JMRI session.</p>
+
+      <p>The assigned action will be the <strong>Many</strong> action if there is more than one
+      action to be performed.  This provides an alternate method compared to <strong>Trigger once
+      </strong> for startup initialization.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Sequence</h4>
 
       <p>The Sequence action executes a series of action/expression pairs. For each pair, the
@@ -1126,6 +1165,26 @@
       <h4>Icon/Label on panel</h4>
 
       <p>Disable/Enable/Hide/Show an icon or label on a specific panel.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Turnout on LayoutPanel<span class="since">since 5.3.1</span></h4>
+
+      <p>Disable/Enable a turnout item on a specific Layout Editor panel.  A separate action is
+      needed since the turnout image on a Layout Editor panel is not an icon.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_turnout.png"><img src=
+        "images/chapter5/layout_turnout.png" alt="Chapter 5 layout turnout action"></a>
+      </div>
+
+      <p>The action applies to a single turnout item.  To change all of the turnouts, use a
+      <strong>For each</strong> action.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/layout_turnout_foreach.png"><img class="image-border" src=
+        "images/chapter5/layout_turnout_foreach.png" alt="Chapter 5 layout turnout for each"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1417,7 +1476,7 @@
       </div>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter5/show_dialog_button_process"><img src=
+        <a href="images/chapter5/show_dialog_button_process.png"><img src=
         "images/chapter5/show_dialog_button_process.png" alt="Chapter 5 show dialog button process"></a>
       </div>
 
@@ -1429,7 +1488,7 @@
       </div>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter5/show_dialog_ml_sample"><img src=
+        <a href="images/chapter5/show_dialog_ml_sample.png"><img src=
         "images/chapter5/show_dialog_ml_sample.png" alt="Chapter 5 show dialog multiline sample"></a>
       </div>
 
@@ -1452,7 +1511,7 @@
       <p>Create a task that will run before JMRI shutdown occurs.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter5/digital_action_shutdown_task"><img class="image-border" src=
+        <a href="images/chapter5/digital_action_shutdown_task.png"><img class="image-border" src=
         "images/chapter5/digital_action_shutdown_task.png" alt="Chapter 5 shutdown task"></a>
       </div>
 

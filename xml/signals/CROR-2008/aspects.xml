@@ -352,24 +352,24 @@
     </aspect>
   </aspects>
   <appearancefiles>
-    <appearancefile href="appearance-CROR-3-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-3A-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-3L-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-3D-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2S-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2SL-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2SD-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2O-Hi.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2OL-Hi.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-3-Hi.xml" />
+    <appearancefile href="appearance-CROR-3A-Hi.xml" />
+    <appearancefile href="appearance-CROR-3L-Hi.xml" />
+    <appearancefile href="appearance-CROR-3D-Hi.xml" />
+    <appearancefile href="appearance-CROR-2S-Hi.xml" />
+    <appearancefile href="appearance-CROR-2SL-Hi.xml" />
+    <appearancefile href="appearance-CROR-2SD-Hi.xml" />
+    <appearancefile href="appearance-CROR-2O-Hi.xml" />
+    <appearancefile href="appearance-CROR-2OL-Hi.xml" />
     <appearancefile href="appearance-CROR-2OD-Hi.xml" />
     <appearancefile href="appearance-CROR-1-Hi.xml" />
     <appearancefile href="appearance-CROR-1A-Hi.xml" />
     <appearancefile href="appearance-CROR-1R-Hi.xml" />
-    <appearancefile href="appearance-CROR-2-Lo.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2L-Lo.xml"></appearancefile>
-    <appearancefile href="appearance-CROR-2D-Lo.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-2-Lo.xml" />
+    <appearancefile href="appearance-CROR-2L-Lo.xml" />
+    <appearancefile href="appearance-CROR-2D-Lo.xml" />
     <appearancefile href="appearance-CROR-1-Lo.xml" />
-    <appearancefile href="appearance-CROR-1A-Lo.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-1A-Lo.xml" />
     <appearancefile href="appearance-CROR-1D-Lo.xml" />
   </appearancefiles>
 </aspecttable>

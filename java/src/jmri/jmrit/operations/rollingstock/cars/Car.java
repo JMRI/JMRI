@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
  * Represents a car on the layout
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014,
- *         2015
+ *         2015, 2023
  */
 public class Car extends RollingStock {
 
@@ -762,17 +762,14 @@ public class Car extends RollingStock {
 
     /**
      * Called when setting a car's destination to this spur. Loads the car with
-     * a final destination which is the ship address for the schedule item. Also
-     * loads the schedule id so the car can get updated from the schedule when
-     * it arrives.
+     * a final destination which is the ship address for the schedule item.
      * 
      * @param scheduleItem The schedule item to be applied this this car
      */
     public void loadNext(ScheduleItem scheduleItem) {
         if (scheduleItem == null) {
-            return;
+            return; // should never be null
         }
-        setScheduleItemId(scheduleItem.getId());
         // set the car's final destination and track
         setFinalDestination(scheduleItem.getDestination());
         setFinalDestinationTrack(scheduleItem.getDestinationTrack());
@@ -796,7 +793,7 @@ public class Car extends RollingStock {
             if (track.isSpur()) {
                 ScheduleItem si = getScheduleItem(track);
                 if (si == null) {
-                    log.debug("Schedule item ({}) null for car ({}) at spur ({})", getScheduleItemId(), toString(),
+                    log.debug("Schedule item ({}) is null for car ({}) at spur ({})", getScheduleItemId(), toString(),
                             track.getName());
                 } else {
                     setWait(si.getWait());
@@ -847,7 +844,9 @@ public class Car extends RollingStock {
         if (si != null) {
             loadName = si.getShipLoadName(); // can be NONE
         } else {
-        // for backwards compatibility before version 5.1.4
+            // for backwards compatibility before version 5.1.4
+            log.debug("Schedule item ({}) is null for car ({}) at spur ({}), using next load name", getScheduleItemId(),
+                    toString(), track.getName());
             loadName = getNextLoadName();
         }
         setNextLoadName(NONE);

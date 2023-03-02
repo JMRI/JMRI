@@ -164,6 +164,12 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
         vTop15Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop15Panel.getPreferredSize().height));
         labelsBorderPanel.add(vTop15Panel);
 
+        JPanel vTop17Panel = new JPanel(verticalContentLayout);
+        vTop17Panel.add(globalVariableButton);
+        vTop17Panel.add(textGlobalVariableComboBox);
+        vTop17Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop17Panel.getPreferredSize().height));
+        labelsBorderPanel.add(vTop17Panel);
+
         JPanel vTop16Panel = new JPanel(verticalContentLayout);
         vTop16Panel.add(blockContentsButton);
         vTop16Panel.add(blockContentsComboBox);

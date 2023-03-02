@@ -59,19 +59,7 @@ public class OlcbThrottle extends AbstractThrottle {
         if (address instanceof OpenLcbLocoAddress) {
             nid = ((OpenLcbLocoAddress) address).getNode();
         } else {
-            int dccAddress = this.address.getNumber();
-            // Here we make a guess at the OpenLCB Node ID that represents the given DCC address.
-            // This should be replaced by a lookup protocol, but we don't have code for that yet.
-            // 0x060100000000 is reserved by the OpenLCB Unique Identifiers Standard for DCC
-            // locomotives. Within that range we guess using a simple encoding of short address
-            // being as-is, long address being OR-ed with 0xC000. This is close to the DCC
-            // protocol's bit layout (e.g. CV17/CV18, CV1).
-            if (this.address.isLongAddress()) {
-                nid = new NodeID(new byte[]{6, 1, 0, 0, (byte) (((dccAddress >> 8) & 0xFF) | 0xC0),
-                        (byte) (dccAddress & 0xFF)});
-            } else {
-                nid = new NodeID(new byte[]{6, 1, 0, 0, 0, (byte) (dccAddress & 0xFF)});
-            }
+            nid = guessDCCNodeID(this.address.isLongAddress(), this.address.getNumber());
         }
         ot.start(new RemoteTrainNode(nid, iface));
 
@@ -89,6 +77,21 @@ public class OlcbThrottle extends AbstractThrottle {
                    updateFunction(finalI, state);
                 }
             });
+        }
+    }
+
+    public static NodeID guessDCCNodeID(boolean isLong, int dccAddress) {
+        // Here we make a guess at the OpenLCB Node ID that represents the given DCC address.
+        // This should be replaced by a lookup protocol, but we don't have code for that yet.
+        // 0x060100000000 is reserved by the OpenLCB Unique Identifiers Standard for DCC
+        // locomotives. Within that range we guess using a simple encoding of short address
+        // being as-is, long address being OR-ed with 0xC000. This is close to the DCC
+        // protocol's bit layout (e.g. CV17/CV18, CV1).
+        if (isLong) {
+            return new NodeID(new byte[]{6, 1, 0, 0, (byte) (((dccAddress >> 8) & 0xFF) | 0xC0),
+                    (byte) (dccAddress & 0xFF)});
+        } else {
+            return new NodeID(new byte[]{6, 1, 0, 0, 0, (byte) (dccAddress & 0xFF)});
         }
     }
 

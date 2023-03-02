@@ -223,6 +223,9 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
                 notifyStealRequest(s.locoAddr());
                 return;
             }
+            // shared throttle / already ours
+            notifyComplete(commitToAcquireThrottle(s),s);
+            return;
         }
         commitToAcquireThrottle(s);
     }
@@ -232,25 +235,41 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
      *
      * @param s slot to be acquired
      */
-    private void commitToAcquireThrottle(LocoNetSlot s) {
+    private DccThrottle commitToAcquireThrottle(LocoNetSlot s) {
         // haven't identified a particular reason to refuse throttle acquisition at this time...
-        DccThrottle throttle = createThrottle((LocoNetSystemConnectionMemo) adapterMemo, s);
-        s.notifySlotListeners();    // make sure other listeners for this slot know about what's going on!
-        notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(), isLongAddress(s.locoAddr())));
-        //end the waiting thread since we got a response
-        synchronized (this) {
-            if (waitingForNotification.containsKey(s.locoAddr())) {
-                log.debug("LnThrottleManager.notifyChangedSlot() - removing throttle acquisition notification flagging for address {}", s.locoAddr());
-                waitingForNotification.get(s.locoAddr()).interrupt();
-                waitingForNotification.remove(s.locoAddr());
-            } else {
-                log.debug("LnThrottleManager.notifyChangedSlot() - ignoring slot notification for slot {}, address {} account not attempting to acquire that address", s.getSlot(), s.locoAddr());
-            }
-            slotForAddress.remove(s.locoAddr());
-        }
-        requestOutstanding = false;
-        processQueuedThrottleSetupRequest();
-    }
+        return createThrottle((LocoNetSystemConnectionMemo) adapterMemo, s);
+        // the rest is done when the write of the throttle ID has been acknowledged  in the throttle
+        // by calling notifyComplete
+     }
+
+    /**
+     * Called from the throttle slot when the final write of throttle id has been
+     * completed, and the slot is set as initialized, or called directly for our own shared throttles.
+     * @param t the throttle
+     * @param s the lot.
+     */
+     protected void notifyComplete(DccThrottle t, LocoNetSlot s) {
+         // end the waiting thread since we got a response
+         s.notifySlotListeners(); // make sure other listeners for this slot
+                                  // know about what's going on!
+         notifyThrottleKnown(t, new DccLocoAddress(s.locoAddr(), isLongAddress(s.locoAddr())));
+         synchronized (this) {
+             if (waitingForNotification.containsKey(s.locoAddr())) {
+                 log.debug(
+                         "LnThrottleManager.notifyChangedSlot() - removing throttle acquisition notification flagging for address {}",
+                         s.locoAddr());
+                 waitingForNotification.get(s.locoAddr()).interrupt();
+                 waitingForNotification.remove(s.locoAddr());
+             } else {
+                 log.debug(
+                         "LnThrottleManager.notifyChangedSlot() - ignoring slot notification for slot {}, address {} account not attempting to acquire that address",
+                         s.getSlot(), s.locoAddr());
+             }
+             slotForAddress.remove(s.locoAddr());
+         }
+         requestOutstanding = false;
+         processQueuedThrottleSetupRequest();
+     }
 
     /**
      * Loco acquisition failed. Propagate the failure message to the (GUI)
@@ -570,6 +589,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
             }
             // Only continue if address is found in a slot
             if (slot != null) {
+                slot.setIsInitialized(false);
                 commitToAcquireThrottle(slot);
             } else {
                 log.error("Address {} not found in list of slots", address.getNumber());

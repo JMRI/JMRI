@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2022-11-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<name>Beschleunigungs-/Bremsverhalten</name>
+	<column>
+		<!--		<label>
+			<text>PanePikoAccelDecel.xml Mai 2022</text>
+		</label>
+		<separator/>  -->
+		<label>
+			<text>Accel/Decel Delays</text>
+			<text xml:lang="de">Anfahrt-/Bremsverzögerung</text>
+			<text xml:lang="nl">Wegrij-/Remvertraging</text>
+			<text xml:lang="cs">Zpoždění Zrychlení/Zpomalení</text>
+		</label>
+		<!-- Leerzeile -->
+		<row>
+			<label>
+				<text> </text>
+			</label>
+		</row>
+		<grid gridy="1" weightx="1" ipadx="4" ipady="2">
+			<griditem gridx="0" gridy="0" anchor="LINE_END">
+				<display item="Accel"/>
+			</griditem>
+			<griditem gridx="0" gridy="1" anchor="LINE_END">
+				<display item="Decel"/>
+			</griditem>
+			<griditem gridx="1" gridy="0" anchor="LINE_END">
+				<display item="Accel2"/>
+			</griditem>
+			<griditem gridx="1" gridy="1" anchor="LINE_END">
+				<display item="Decel2"/>
+			</griditem>
+			<griditem gridx="2" gridy="0" anchor="LINE_END">
+				<display item="Accel3"/>
+			</griditem>
+			<griditem gridx="2" gridy="1" anchor="LINE_END">
+				<display item="Decel3"/>
+			</griditem>
+		</grid>
+		<!-- Leerzeile -->
+		<row>
+			<label>
+				<text> </text>
+			</label>
+		</row>
+		<!--		<label>
+			<text>Constant Brakedist</text>
+			<text xml:lang="de">Konstanter Bremsweg</text>
+		</label>
+		<label>
+			<text> </text>
+		</label>
+		<grid gridy="1" weightx="1" ipadx="4" ipady="2">
+			<griditem gridx="0" gridy="0" anchor="LINE_END">
+				<display item="Constant Brakedist 1"/>
+			</griditem>
+			<griditem gridx="1" gridy="0" anchor="LINE_END">
+				<display item="Constant Brakedist 2"/>
+			</griditem>
+			<griditem gridx="2" gridy="0" anchor="LINE_END">
+				<display item="Constant Brakedist Threshold"/>
+			</griditem>
+			<griditem gridx="0" gridy="1" anchor="LINE_END">
+				<display item="Constant Brakedist Max"/>
+			</griditem>
+			<griditem gridx="1" gridy="1" anchor="LINE_END">
+				<display item="Constant Brakedist Rest"/>
+			</griditem>
+			<griditem gridx="2" gridy="1" anchor="LINE_END">
+				<display item="Constant Brakedist Trigger"/>
+			</griditem>
+		</grid>
+		<row>
+			<label>
+				<text> </text>
+			</label>
+		</row>-->
+		<separator/>
+		<row>
+			<label>
+				<text> </text>
+			</label>
+		</row>
+		<display item="Advanced Function Mapping"/>
+		<label>
+			<text> </text>
+		</label>
+		<grid gridy="1" weightx="1" ipadx="4" ipady="2">
+			<griditem gridx="0" gridy="0" anchor="LINE_END">
+				<display item="ABV AUS F Key"/>
+			</griditem>
+			<griditem gridx="0" gridy="1" anchor="LINE_END">
+				<display item="RG F Key"/>
+			</griditem>
+			<griditem gridx="1" gridy="0" anchor="LINE_END">
+				<display item="ABV2 F Key"/>
+			</griditem>
+			<griditem gridx="2" gridy="0" anchor="LINE_END">
+				<display item="ABV3 F Key"/>
+			</griditem>
+		</grid>
+		<!-- Leerzeile -->
+		<row>
+			<label>
+				<text> </text>
+			</label>
+		</row>
+		<row>
+			<display item="Anfahrrampe CV53"/>
+			<label>
+				<text>   </text>
+			</label>
+			<display item="Anfahrrampe CV53" format="hslider" label=""/>
+		</row>
+	</column>
+</pane>

@@ -25,7 +25,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2022"/>
+    <property name="jmri.copyright.year" value="1997-2023"/>
 
     <property environment="env"/>
 
@@ -141,7 +141,7 @@
         <pathelement location="${libdir}/jna-5.9.0.jar"/>
         <pathelement location="${libdir}/jna-platform-5.9.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
-        <pathelement location="${libdir}/commons-net-3.6.jar"/>
+        <pathelement location="${libdir}/commons-net-3.9.0.jar"/>
         <pathelement location="${libdir}/commons-logging-1.2.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
@@ -212,14 +212,6 @@
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
-    <!-- jars needed for i18n testing only -->
-    <path id="i18n.class.path">
-        <pathelement location="${ant.home}/lib/ant.jar"/>
-        <pathelement location="${libdir}/antlr-3.4-complete.jar"/>
-        <pathelement location="${libdir}/i18nchecker.jar"/>
-    </path>
-    <pathconvert property="i18n.class.jars" refid="i18n.class.path"/>
-
     <!-- jars that are needed at build and/or test time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
@@ -240,7 +232,6 @@
         <pathelement location="${libdir}/archunit-junit5-api-1.0.0-rc1.jar"/>
         <pathelement location="${libdir}/archunit-junit5-engine-1.0.0-rc1.jar"/>
         <pathelement location="${libdir}/archunit-junit5-engine-api-1.0.0-rc1.jar"/>
-        <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
         <!-- SpotBugs annotations -->
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
         <pathelement location="${libdir}/jsr305.jar"/>
@@ -1296,16 +1287,6 @@
         </java>
     </target>
 
-    <target name="i18n-consistency-check"  description="Verification of localized strings in source code" depends="jar">
-        <property name="i18n.modulefilter" value=""/>
-        <property name="i18n.logger" value="log" /> <!-- name of logging token to match with logging methods -->
-        <property name="i18n.loggerMethods" value="info,debug,error,warn" /> <!-- logging methods that should not be checked for i18n consistency -->
-        <echo>I18N Consistency Check - use modulefilter property if you want to see errors only from one module</echo>
-        <taskdef classname="org.i18nchecker.I18nChecker" name="i18nConsistencyCheck" classpathref="i18n.class.path"/>
-        <!-- check includes all .properties files including ones we use for non-translatable files -->
-        <i18nConsistencyCheck srcdir="${basedir}" topdirs="." allProperties="true" logger="${i18n.logger}" loggerMethods="${i18n.loggerMethods}" modulefilter="${i18n.modulefilter}"/>
-    </target>
-
     <!-- end of I18N test targets -->
 
     <!-- ============================================================================= -->
@@ -2274,7 +2255,7 @@
     <target name="tests-spotbugs" depends="dist-tests" description="generate SpotBugs (HTML) report over test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
         <spotbugs home="${spotbugs.home}"
                   output="html"
-                  outputFile="${jartarget}/spotbugs.html"
+                  outputFile="${jartarget}/tests-spotbugs.html"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs.xml"
@@ -2308,7 +2289,7 @@
     <target name="tests-spotbugs-check" depends="dist-tests" description="generate SpotBugs check-only (HTML) report over test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
         <spotbugs home="${spotbugs.home}"
                   output="html"
-                  outputFile="${jartarget}/spotbugs-check.html"
+                  outputFile="${jartarget}/tests-spotbugs-check.html"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs-check.xml"
@@ -2341,7 +2322,7 @@
     <target name="tests-spotbugs-ci" depends="dist-tests" description="generate SpotBugs CI (XML) report over test code. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
         <spotbugs home="${spotbugs.home}"
                   output="xml:withMessages"
-                  outputFile="spotbugs.xml"
+                  outputFile="tests-spotbugs.xml"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs.xml"
@@ -2374,7 +2355,7 @@
     <target name="tests-spotbugs-check-ci" depends="dist-tests" description="generate SpotBugs CI check-only (XML) report over test code. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
         <spotbugs home="${spotbugs.home}"
                   output="xml:withMessages"
-                  outputFile="spotbugs.xml"
+                  outputFile="tests-spotbugs-check.xml"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs-check.xml"

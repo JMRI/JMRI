@@ -12,8 +12,7 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.divisions.DivisionEditFrame;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -441,6 +440,56 @@ public class CarSetFrameTest extends OperationsTestCase {
                 Bundle.getMessage("ButtonYes"));
         Assert.assertEquals("car's track", track1, car.getTrack());
 
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testAppySchedule() {
+        JUnitOperationsUtil.initOperationsData();
+        JUnitOperationsUtil.createSchedules();
+        
+        // create new loads for car
+        CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
+        carLoads.addName("Boxcar", "Empty");
+        carLoads.addName("Boxcar", "Metal");
+        
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Location location = lmanager.getLocationByName("North Industries");
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
+        Car car = cManager.getByRoadAndNumber("CP", "888");
+        Track track = car.getTrack();
+
+        CarSetFrame f = new CarSetFrame();
+        f.initComponents();
+        f.load(car);
+
+        // change car's track to Test Spur 1 that has a schedule demanding a boxcar
+        // with an "Empty" load
+        Track track2 = location.getTrackByName("Test Spur 1", null);
+        track2.setLength(200);
+        f.trackLocationBox.setSelectedItem(track2);
+        // Save should cause dialog to appear asking to apply schedule
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle.getMessage("rsSpurHasSchedule"), track2.getName(),
+                track2.getScheduleName()), Bundle.getMessage("ButtonYes"));
+        // error message not able to apply schedule
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsApplyingScheduleFailed"), Bundle.getMessage("ButtonOK"));
+        
+        // confirm that car's track didn't change
+        Assert.assertEquals("car's track", track, car.getTrack());
+        
+        // Now change car load so applying schedule will work
+        f.loadComboBox.setSelectedItem("Empty");     
+        f.trackLocationBox.setSelectedItem(track2);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle.getMessage("rsSpurHasSchedule"), track2.getName(),
+                track2.getScheduleName()), Bundle.getMessage("ButtonYes"));
+        
+        Assert.assertEquals("car's track", track2, car.getTrack());
+        Assert.assertEquals("car's new load name", "Metal", car.getLoadName());
+        Assert.assertEquals("car's new final destination", location, car.getFinalDestination());
+        Assert.assertEquals("car's new final destination track", track, car.getFinalDestinationTrack());
+        
         JUnitUtil.dispose(f);
     }
 

@@ -64,7 +64,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         _status = status;
 
         // define just address CV at start, pending some variables
-        // boudreau: not sure why we need the statement below, 
+        // boudreau: not sure why we need the statement below,
         // messes up building CV table for CV #1 when in ops mode.
         //addCV("1", false, false, false);
     }
@@ -198,21 +198,21 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             case VALCOLUMN:
                 return _cvDisplayVector.elementAt(row).getTableEntry();
             case STATECOLUMN:
-                int state = _cvDisplayVector.elementAt(row).getState();
+                AbstractValue.ValueState state = _cvDisplayVector.elementAt(row).getState();
                 switch (state) {
-                    case CvValue.UNKNOWN:
+                    case UNKNOWN:
                         return Bundle.getMessage("CvStateUnknown");
-                    case CvValue.READ:
+                    case READ:
                         return Bundle.getMessage("CvStateRead");
-                    case CvValue.EDITED:
+                    case EDITED:
                         return Bundle.getMessage("CvStateEdited");
-                    case CvValue.STORED:
+                    case STORED:
                         return Bundle.getMessage("CvStateStored");
-                    case CvValue.FROMFILE:
+                    case FROMFILE:
                         return Bundle.getMessage("CvStateFromFile");
-                    case CvValue.SAME:
+                    case SAME:
                         return Bundle.getMessage("CvStateSame");
-                    case CvValue.DIFF:
+                    case DIFFERENT:
                         return Bundle.getMessage("CvStateDiff") + " "
                                 + _cvDisplayVector.elementAt(row).getDecoderValue();
                     default:
@@ -343,7 +343,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public boolean decoderDirty() {
         int len = _cvDisplayVector.size();
         for (int i = 0; i < len; i++) {
-            if (_cvDisplayVector.elementAt(i).getState() == CvValue.EDITED) {
+            if (_cvDisplayVector.elementAt(i).getState() == AbstractValue.ValueState.EDITED) {
                 if (log.isDebugEnabled()) {
                     log.debug("CV decoder dirty due to {}", _cvDisplayVector.elementAt(i).number());
                 }
@@ -389,9 +389,9 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 
         _cvAllMap.clear();
         _cvAllMap = null;
-        
+
         _status = null;
-        
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(CvTableModel.class);

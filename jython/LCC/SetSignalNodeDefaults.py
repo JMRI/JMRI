@@ -1,20 +1,20 @@
 #
 # This script will populate the tables with many default entries for a Signal LCC node.
 # It will populate:
-#	'inactive' sensors matching the logic cell default values
-#	sensors for masts and rules
-#	turnouts for direct lamp testing
-#	and more
-#	it will create the sensors if they don't exist
-#	once created or found AND the user name is blank, it adds the username
+#   'inactive' sensors matching the logic cell default values
+#   sensors for masts and rules
+#   turnouts for direct lamp testing
+#   and more
+#   it will create the sensors if they don't exist
+#   once created or found AND the user name is blank, it adds the username
 #
 # Ken Cameron, October 2022
 #
 # Usage:
-#	run the script via the Scripting->Run Script...
-#	open Scripting->Script Entry
-#	enter createSignalLCCNodeDefaults('your_node_address','your_node_name_prefix')
-#	or you can call the individual parts if you only want one or more parts created
+#   run the script via the Scripting->Run Script...
+#   open Scripting->Script Entry
+#   enter createSignalLCCNodeDefaults('your_node_address','your_node_name_prefix')
+#   or you can call the individual parts if you only want one or more parts created
 
 import jmri
 
@@ -105,7 +105,7 @@ def createSignalLCCMastDefaults( nodeAddr, nodeNamePrefix ) :
     while idxMast < 8 :
         idxRule = 0
         while idxRule < 8 :
-            addr = baseAddr + (32 * idxMast) + ( 3 * idxRule) + 8	# skip TC, other script handles that.
+            addr = baseAddr + (32 * idxMast) + ( 3 * idxRule) + 8   # skip TC, other script handles that.
             setter = "{0}.{1:02X}.{2:02X}".format(nBase, addr >> 8, (addr + 0) & 0xFF)
             active = "{0}.{1:02X}.{2:02X}".format(nBase, addr >> 8, (addr + 1) & 0xFF)
             inactive = "{0}.{1:02X}.{2:02X}".format(nBase, addr >> 8, (addr + 2) & 0xFF)

@@ -6,9 +6,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import jmri.*;
+import jmri.jmrit.display.logixng.ActionLayoutTurnout;
 import jmri.jmrit.display.logixng.ActionPositionable;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.DigitalMany;
 import jmri.jmrit.logixng.expressions.And;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
@@ -84,10 +86,20 @@ public class StoreAndLoadTest {
         maleSocket = digitalExpressionManager.registerExpression(expressionSlotUsage);
         and.getChild(2).connect(maleSocket);
 */
+        DigitalMany digitalMany = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
+        digitalMany.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(digitalMany);
+        ifThenElse.getChild(1).connect(maleSocket);
+
+        ActionLayoutTurnout actionLayoutTurnout = new ActionLayoutTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionLayoutTurnout.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(actionLayoutTurnout);
+        digitalMany.getChild(0).connect(maleSocket);
+
         ActionPositionable actionPositionable = new ActionPositionable(digitalActionManager.getAutoSystemName(), null);
         actionPositionable.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(actionPositionable);
-        ifThenElse.getChild(1).connect(maleSocket);
+        digitalMany.getChild(1).connect(maleSocket);
 
 //        ActionClearSlots actionClearSlots = new ActionClearSlots(digitalActionManager.getAutoSystemName(), null, null);
 //        actionClearSlots.setComment("A comment");

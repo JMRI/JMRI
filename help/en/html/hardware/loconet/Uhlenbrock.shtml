@@ -55,7 +55,7 @@
       <h2 id="limitations">Limitations</h2>
 
       <ul>
-        <li><span class="since">Since <a href="https://jmri.org/releasenotes/jmri3.11.1.shtml"
+        <li><span class="since">Since <a href="https://www.jmri.org/releasenotes/jmri3.11.1.shtml"
         target="_blank">JMRI 3.11.1</a></span>Full support of Intellibox-II has been added to JMRI
         in version 3.11.1 and up. It is not available in previous versions 3.10 and below.</li>
       </ul>
@@ -170,7 +170,7 @@
         <li>For either Intellibox connection, the single corresponding Command Station (group)
         choice will be selected automatically.</li>
 
-        <li><span class="since">Since <a href="https://jmri.org/releasenotes/jmri4.21.4.shtml"
+        <li><span class="since">Since <a href="https://www.jmri.org/releasenotes/jmri4.21.4.shtml"
         target="_blank">JMRI 4.21.4</a></span> The Uhlenbrock USB Adapter part #63120 will only
         work with a Windows OS, as it requires special Uhlenbrock supplied drivers to be installed.
         Follow the manufacturers instruction for that install. Basic connectivity was tested over
@@ -191,7 +191,7 @@
       <h2 id="tools">JMRI Uhlenbrock Tools</h2>
 
       <h3>LNCV Programmer</h3>
-      <span class="since">Since <a href="https://jmri.org/releasenotes/jmri4.21.4.shtml" target=
+      <span class="since">Since <a href="https://www.jmri.org/releasenotes/jmri4.21.4.shtml" target=
       "_blank">JMRI 4.21.4</a></span> <a href=
       "images/LncvProgrammer/LncvProgrammerPane.png"><img src=
       "images/LncvProgrammer/LncvProgrammerPane.png" class="floatRight" width="293" height="187"

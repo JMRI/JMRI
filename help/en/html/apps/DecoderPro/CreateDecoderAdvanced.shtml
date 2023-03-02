@@ -288,6 +288,10 @@
           </ul>
         </li>
 
+        As a special case, the suppressFunctionLabels and suppressRosterMedia
+        attributes on the decoder-config element can be used to suppress the
+        Function Labels and Roster Media panes respectively whether or not they are empty.
+
         <li>Whether a specific empty pane (as defined in Empty Panes above) shows also depends on
         the pane type:
           <ul>
@@ -641,7 +645,7 @@ here.
       "https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_SwitchPilot.xml" target=
       "_blank">xml/decoders/ESU_SwitchPilot.xml</a> file. In the case of this example decoder, the
       address is stored in CVs 1 and 9 as per <a href=
-      "http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf"
+      "https://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf"
       target="_blank">NMRA standard 9.2.2</a>.</p>
 
       <h4 id="opsdelayed">Ops Mode Delayed Programming</h4>
@@ -720,7 +724,7 @@ delay is 500 milliseconds.
       <h3 id="masks">Masks - inserting variables into part of a CV</h3>
       A mask attribute declared in a variable definition is a pattern to control which part in a CV
       contains our variable. Masks can be applied to a single CV, i.e. a decVal or enumVal type, or to
-      multiple CV's like <a href="#splitVal">splitVal</a>.<br>
+      multiple CV's like <a href="#splitval">splitVal</a>.<br>
       JMRI supports 2 mask types:
 
       <p>A string like <code>XXXVVVXX</code> where each "V" is a bit that's included, and "X"
@@ -748,8 +752,8 @@ delay is 500 milliseconds.
       A Radix mask can handle CVs that are coded in bases other than binary: Ones that store their parts
       as decimal digits (as our example), or even base 3 or 5. That's a bit more technical, it's rarely
       needed, but if you do need it, refer to the <a
-      href="https://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc</a> for
-      more details. The <a href="xml/decoders/Uhlenbrock_63410.xml">Uhlenbrock_63410</a> definition
+      href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc</a> for
+      more details. The <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/Uhlenbrock_63410.xml">Uhlenbrock_63410</a> definition
       provides an example on CV1. The decoder definition using a Radix mask should point to /schema/decoder-4-15-2.xsd.
 
       <h3 id="splitval">Split Variables - spread over multiple CVs</h3>
@@ -828,14 +832,39 @@ delay is 500 milliseconds.
             </li>
           </ul>
         </li>
+
+
+        <li>A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitEnumVariableValue.html" target=
+        "_blank">splitEnumVal</a> type. This is like <a href=
+        "/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+        but uses the selection of one object from a specified list.
+          <ul>
+            <li>For examples, see this <a href=
+            "https://github.com/JMRI/JMRI/blob/master/xml/decoders/TCS_BachmannFT.xml"
+              target="_blank">decoder file</a>.
+            </li>
+            <li>For details of required/optional attributes and advanced features, see this
+              <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitEnumVariableValue.html" target=
+              "_blank">JavaDoc page</a>.
+            </li>
+          </ul>
+        </li>
+
       </ul>
       <p>The CVs to be used are specified in the <code>CV</code> attribute and masks (if required)
-        in the <code>mask</code> attribute. For example:</p>
+        in the <code>mask</code> attribute.
+        Both CVs and masks are specified lowest-value first order:
+        The least
+        significant bit of the value will be in the first CV and mask specified, and the most
+        significant bit of the value will be in the last CV and mask specified.
+        For example:</p>
 <pre style="font-family: monospace;">
   &lt;variable CV="1,27,13" mask="XXVVVVVV XXXXXVVV XXXXXVVV" item="Sample Item"&gt;
       &lt;splitVal/&gt;
   &lt;/variable&gt;
 </pre>
+      puts the least significant 6 bits of the value in CV1, and the most significant
+      three bits in CV 13.
       <p>In cases where a number of complex or contiguous CVs are used, there are a number of
       alternative more concise methods of specifying in the <code>CV</code> variable parameter:</p>
       <ul>
@@ -859,7 +888,7 @@ delay is 500 milliseconds.
         </li>
 
         <li>The following example reads the RailCom&reg; Production Date as per <a href=
-        "http://www.nmra.org/sites/default/files/s-9.3.2_2012_12_10.pdf">NMRA standard 9.3.2</a>
+        "https://www.nmra.org/sites/default/files/s-9.3.2_2012_12_10.pdf">NMRA standard 9.3.2</a>
         from 4 contiguous indexed CVs.
         </li>
       </ul>
@@ -877,7 +906,7 @@ delay is 500 milliseconds.
       CVs, contiguous or not.</p>
 
       <p>CV1 and CV9 are standardized by NMRA for accessory decoders primary address, see <a href=
-      "http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">
+      "https://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">
       NMRA standard 9.2.2</a>.</p>
 
       <p>Long addresses can be accessed via "splitVal" type, as in the following example:</p>

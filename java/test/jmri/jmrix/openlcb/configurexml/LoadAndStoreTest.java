@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb.configurexml;
 
+import jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold;
 import jmri.configurexml.LoadAndStoreTestBase;
 import jmri.jmrix.openlcb.*;
 
@@ -47,7 +48,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     }
 
     // from here down is testing infrastructure
-    private OlcbSystemConnectionMemo memo;
+    private OlcbSystemConnectionMemoScaffold memo;
     private Connection connection;
     private NodeID nodeID;
     private ArrayList<Message> messages;
@@ -67,7 +68,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
             }
         };
 
-        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo = new OlcbSystemConnectionMemoScaffold(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
             @Override

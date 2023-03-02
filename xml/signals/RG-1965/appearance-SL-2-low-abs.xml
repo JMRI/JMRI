@@ -80,7 +80,7 @@
       <show>red</show>
       <show>flashyellow</show>
       <reference>Rule 281B</reference>
-      <imagelink>http://jmri.org/resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-281B.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-281B.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -88,7 +88,7 @@
       <show>red</show>
       <show>green</show>
       <reference>Rule 283</reference>
-      <imagelink>http://jmri.org/resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-283.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-283.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -96,7 +96,7 @@
       <show>red</show>
       <show>yellow</show>
       <reference>Rule 286</reference>
-      <imagelink>http://jmri.org/resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-286.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-286.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -104,7 +104,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Rule 292 (unofficial)</reference>
-      <imagelink>http://jmri.org/resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-292.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-292.gif</imagelink>
     </appearance>
 
   </appearances>

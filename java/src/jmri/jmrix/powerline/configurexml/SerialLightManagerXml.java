@@ -1,8 +1,6 @@
 package jmri.jmrix.powerline.configurexml;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring SerialLightManagers.
@@ -31,5 +29,4 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         return loadLights(shared);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(SerialLightManagerXml.class);
 }

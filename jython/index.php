@@ -140,14 +140,14 @@ function showFilesAndIcons() {
 //MAINLINE
 
 // show README if present
-if (file_exists("README")) {
-    echo "<pre>\n";
-    echo file_get_contents( "README" );
-    echo "</pre>\n";
-}
-elseif (file_exists("README.md")) {
+if (file_exists("README.md")) {
     echo "<pre>\n";
     echo file_get_contents( "README.md" );
+    echo "</pre>\n";
+}
+elseif (file_exists("README")) {
+    echo "<pre>\n";
+    echo file_get_contents( "README" );
     echo "</pre>\n";
 }
 elseif (file_exists("README.txt")) {
@@ -156,9 +156,9 @@ elseif (file_exists("README.txt")) {
     echo "</pre>\n";
 }
 
-
-showFilesAndIcons();
+//Show subdirs first since some examples will be in subdirs
 showSubdirs();
+showFilesAndIcons();
 
 ?>
 

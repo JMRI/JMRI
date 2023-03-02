@@ -513,6 +513,22 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h5>Sensor Edge<span class="since">since 5.1.7</span></h5>
+
+      <p>Returns True if the state of the sensor goes from one predefined state to another, for
+      example from "Active" to "Inactive".</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/expression_sensor_edge.png">
+        <img src="images/chapter6/expression_sensor_edge.png" alt="Chapter 6 expression sensor edge"></a>
+      </div>
+
+      <p>If the option <strong>Only true on the first occurrence</strong> is selected, the
+      expression will only return True once and there after return False. This is useful if you want
+      the expression to return True only the first time it is evaluated.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Signal head</h5>
 
       <ul>

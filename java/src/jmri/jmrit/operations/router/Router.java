@@ -44,6 +44,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     private final List<Train> _lastLocationTrains = new ArrayList<>();
 
     protected static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
+    public static final String STATUS_NOT_THIS_TRAIN_PREFIX = STATUS_NOT_THIS_TRAIN.substring(0, STATUS_NOT_THIS_TRAIN.indexOf('('));
     protected static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
     protected static final String STATUS_ROUTER_DISABLED = Bundle.getMessage("RouterDisabled");
 
@@ -195,8 +196,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         // first try using 2 trains and an interchange track to route the car
         if (setCarDestinationTwoTrainsInterchange(car)) {
             if (car.getDestination() == null) {
-                log.debug("Was able to find a route via classification/interchange track, but not using train ({})" +
-                        " or car destination not set, try again using yard tracks", _train.getName()); // NOI18N
+                log.debug("Was able to find a route via classification/interchange track, but not using specified train" +
+                        " or car destination not set, try again using yard tracks"); // NOI18N
                 if (setCarDestinationTwoTrainsYard(car)) {
                     log.debug("Was able to find route via yard ({}, {}) for car ({})", car.getDestinationName(),
                             car.getDestinationTrackName(), car);

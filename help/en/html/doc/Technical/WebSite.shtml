@@ -17,7 +17,7 @@
       <h1>JMRI: Web Site</h1>
 
       <p>This page discusses technical aspects behind the JMRI website at <a href=
-      "https://jmri.org">jmri.org</a> and also providing parts of the help system in JMRI.</p>
+      "https://www.jmri.org/">jmri.org</a> and also providing parts of the help system in JMRI.</p>
 
       <p>If you just want to know how to make a small change to a web or help page, please see the
       <a href="UpdatingDocs.shtml">Updating JMRI Documentation instructions</a>.</p>
@@ -62,7 +62,7 @@
       that you should leave the formatting to the style sheets, and minimize the explicit
       formatting that you do in HTML directly.</p>
 
-      <p>We are using <a href="http://httpd.apache.org/docs/2.2/howto/ssi.html">server-side
+      <p>We are using <a href="https://httpd.apache.org/docs/current/howto/ssi.html">server-side
       includes</a> to provide consistent headers, sidebars and footers. This allows us to share
       HTML content between the web and the JmriHelp system used by the program itself. Each page
       will contain just content, plus includes for files named "Header", "Sidebar" and "Footer"
@@ -72,7 +72,7 @@
 
       <p id="redirect">We are using .htaccess files to do redirects when a web page is removed.
       This lets older bookmarks continue to work. The <a href=
-      "https://github.com/JMRI/website/tree/master/hardware/.htaccess">hardware/.htaccess file</a>
+      "https://github.com/JMRI/website/blob/master/hardware/.htaccess">hardware/.htaccess file</a>
       provides an example. For more information on the syntax, see the <a href=
       "https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriterule">Apache mod_rewrite
       documentation</a>.</p>
@@ -110,8 +110,8 @@
       </ul>
 
       <p>Finally, some of the site is generated from the JMRI source itself, as opposed to being
-      contained in the source. The <a href="https://jmri.org/JavaDoc/doc/">Javadoc</a> is one such
-      section, along with some of the <a href="https://jmri.org/xml/XSLT">human-readable
+      contained in the source. The <a href="https://www.jmri.org/JavaDoc/doc/">Javadoc</a> is one such
+      section, along with some of the <a href="https://www.jmri.org/xml/XSLT/">human-readable
       information</a> about defined decoders.</p>
 
       <h2>Updating the jmri.org site</h2>
@@ -242,7 +242,7 @@
               By default, that's commented out with a leading # character.
               <p>JMRI's website uses index.shtml files as index pages. To make sure that those
               will display by default, e.g. if you use a partial URL like <a href=
-              "https://jmri.org/download">https://jmri.org/download</a>, find the line containing
+              "https://www.jmri.org/download/">https://www.jmri.org/download/</a>, find the line containing
               "DirectoryIndex" and add "index.shtml" to the existing list of index-like file
               names.</p>
 

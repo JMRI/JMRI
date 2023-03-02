@@ -98,7 +98,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     _icon = false;
                     updateSize();
                 } else if (val instanceof jmri.IdTag){
-                    // most IdTags are Reportable objects, so 
+                    // most IdTags are Reportable objects, so
                     // this needs to be before Reportable
                     setText(((jmri.IdTag)val).getDisplayName());
                     setIcon(null);

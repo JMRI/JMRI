@@ -1,11 +1,7 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
-        The way defaults for some LocoNet connections are handled has changed.
-        Existing LocoNet connections might give a "The Defaults preferences are invalid"
-        warning when saving preferences.  In that case, click "yes" and then go set
-        all the default radio buttons on the "Defaults" pane to the LocoNet connection.  (You can also
-        click "no", but you'll get the message next time you store too)
+        None yet
     </li>
     <li>
     </li>

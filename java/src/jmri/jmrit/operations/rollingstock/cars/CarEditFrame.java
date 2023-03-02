@@ -1,7 +1,9 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GridBagLayout;
-import java.text.*;
+import java.text.MessageFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,7 +14,9 @@ import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.*;
+import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
+import jmri.jmrit.operations.rollingstock.RollingStockEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
 import jmri.jmrit.operations.setup.Setup;
@@ -423,6 +427,9 @@ public class CarEditFrame extends RollingStockEditFrame {
                 }
             }
         }
+        
+        // place car on track after setting load name
+        checkAndSetLocationAndTrack(car);
 
         // update blocking
         pBlocking.setVisible(passengerCheckBox.isSelected() || car.getKernel() != null);
@@ -431,28 +438,25 @@ public class CarEditFrame extends RollingStockEditFrame {
         // is this car part of a kernel? Ask if all cars should have the same location and track
         if (car.getKernel() != null) {
             List<Car> cars = car.getKernel().getCars();
-            if (cars.size() > 1) {
-                for (Car kcar : cars) {
-                    if (kcar != car) {
-                        if (kcar.getLocation() != car.getLocation() || kcar.getTrack() != car.getTrack()) {
-                            int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                                    .getMessage("carInKernelLocation"),
-                                    new Object[]{car.toString(), car.getLocationName(), car.getTrackName()}),
-                                    MessageFormat
-                                            .format(Bundle.getMessage("carPartKernel"),
-                                                    new Object[]{car.getKernelName()}),
-                                    JOptionPane.YES_NO_OPTION);
-                            if (results == JOptionPane.NO_OPTION) {
-                                break; // done
-                            }
+            for (Car kcar : cars) {
+                if (kcar != car) {
+                    if (kcar.getLocation() != car.getLocation() || kcar.getTrack() != car.getTrack()) {
+                        int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+                                .getMessage("carInKernelLocation"),
+                                new Object[]{car.toString(), car.getLocationName(), car.getTrackName()}),
+                                MessageFormat
+                                        .format(Bundle.getMessage("carPartKernel"),
+                                                new Object[]{car.getKernelName()}),
+                                JOptionPane.YES_NO_OPTION);
+                        if (results == JOptionPane.YES_OPTION) {
                             // change the location for all cars in kernel
                             for (Car kcar2 : cars) {
                                 if (kcar2 != car) {
                                     setLocationAndTrack(kcar2);
                                 }
                             }
-                            break; // done
                         }
+                        break; // done
                     }
                 }
             }

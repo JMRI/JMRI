@@ -111,12 +111,6 @@ public class PortalManagerTest {
             return m.endsWith("Cmd #8.");
         }, "Train starts to move at 8th command");
 
-        JUnitAppender.assertWarnMessageStartingWith("block: WestApproach Path distance or SpeedProfile unreliable! pathDist= 1000.0,");
-        JUnitAppender.assertWarnMessageStartingWith("block: MidWest Path distance or SpeedProfile unreliable! pathDist= 1000.0,");
-        JUnitAppender.assertWarnMessageStartingWith("block: AnotherBlock Path distance or SpeedProfile unreliable! pathDist= 100.0,");
-        JUnitAppender.assertWarnMessageStartingWith("block: MidEast Path distance or SpeedProfile unreliable! pathDist= 1000.0,");
-        JUnitAppender.assertWarnMessageStartingWith("block: EastApproach Path distance or SpeedProfile unreliable! pathDist= 1000.0,");
-
        // OBlock of route
         String[] route1 = {"OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11"};
         OBlock block = _OBlockMgr.getOBlock("OB11");

@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
 public class TextItemPanel extends ItemPanel {
 
     private final ImagePanel _samplePanel;
-    
+
     private PositionablePopupUtil _util;
     private final HashMap<String, PositionableLabel> _samples;
 
@@ -104,7 +104,7 @@ public class TextItemPanel extends ItemPanel {
 //        _samplePanel.add(Box.createVerticalStrut(50));
         _samplePanel.setBorder(BorderFactory.createLineBorder(Color.black));
         _samplePanel.setName("SamplePanel");    // to find component for testing
-        _samplePanel.setImage(_frame.getPreviewBackground()); 
+        _samplePanel.setImage(_frame.getPreviewBackground());
     }
     JPanel dragger;
 
@@ -147,7 +147,7 @@ public class TextItemPanel extends ItemPanel {
         _util = item.getPopupUtility();
         item.remove();      // don't need copy any more. Removes ghost image of PositionableJPanels
         _isPositionableLabel = (pos instanceof PositionableLabel);
-        
+
         _previewPanel = new PreviewPanel(_frame, _samplePanel, null, false);
         sampleBgColorChange();
 
@@ -207,20 +207,16 @@ public class TextItemPanel extends ItemPanel {
             boolean addtextField;
             if (pos instanceof PositionableLabel) {
                 sample.setText(((PositionableLabel)pos).getUnRotatedText());
-                addtextField = !(pos instanceof jmri.jmrit.display.MemoryIcon);
+                addtextField = !(pos instanceof jmri.jmrit.display.MemoryOrGVIcon);
             } else {
                 // To display PositionableJPanel types as PositionableLabels, set fixed sizes.
                 util.setFixedWidth(pos.getWidth() - 2*_util.getBorderSize());
                 util.setFixedHeight(pos.getHeight() - 2*_util.getBorderSize());
-                if (pos instanceof jmri.jmrit.display.MemoryInputIcon) {
-                    JTextField field = (JTextField) pos.getTextComponent();
-                    sample.setText(field.getText());
-                    addtextField = false;
-                } else if (pos instanceof jmri.jmrit.display.MemoryComboIcon) {
-                    JComboBox<String> box = ((jmri.jmrit.display.MemoryComboIcon)pos).getTextComponent();
+                if (pos instanceof jmri.jmrit.display.MemoryOrGVComboIcon) {
+                    JComboBox<String> box = ((jmri.jmrit.display.MemoryOrGVComboIcon)pos).getTextComponent();
                     sample.setText(box.getSelectedItem() != null ? box.getSelectedItem().toString() : "");
                     addtextField = false;
-                } else if (pos instanceof jmri.jmrit.display.MemorySpinnerIcon) {
+                } else if (pos instanceof jmri.jmrit.display.PositionableJPanel) {
                     JTextField field = (JTextField) pos.getTextComponent();
                     sample.setText(field.getText());
                     addtextField = false;
@@ -480,7 +476,7 @@ public class TextItemPanel extends ItemPanel {
         panel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("FontDisplaySettings")));
-        
+
         ActionListener fontAction = ((ActionEvent event) -> {
             fontChange(); // callback
         });
@@ -568,15 +564,15 @@ public class TextItemPanel extends ItemPanel {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         _fontButton = makeColorRadioButton("FontColor", FOREGROUND_BUTTON);
         buttonPanel.add(_fontButton);
-        
+
         _backgroundButton = makeColorRadioButton("FontBackgroundColor", BACKGROUND_BUTTON);
         buttonPanel.add(_backgroundButton);
-        
+
         AJRadioButton button = makeColorRadioButton("transparentBack", TRANSPARENT_BUTTON);
         buttonPanel.add(button);
 
         _borderButton = makeColorRadioButton("borderColor", BORDERCOLOR_BUTTON);
-        buttonPanel.add(_borderButton);        
+        buttonPanel.add(_borderButton);
 
         panel.add(buttonPanel);
         if (addCaption) {
@@ -598,7 +594,7 @@ public class TextItemPanel extends ItemPanel {
                 setChooserColor();
             }
         });
-        _buttonGroup.add(button);            
+        _buttonGroup.add(button);
         return button;
     }
 
@@ -773,7 +769,7 @@ public class TextItemPanel extends ItemPanel {
         } else {
             PositionableLabel sample = _samples.get("Text");
             if ( pos instanceof PositionableLabel &&
-                !(pos instanceof jmri.jmrit.display.MemoryIcon)) {
+                !(pos instanceof jmri.jmrit.display.MemoryOrGVIcon)) {
                 ((PositionableLabel) pos).setText(sample.getText());
             }
             PositionablePopupUtil posUtil = pos.getPopupUtility();

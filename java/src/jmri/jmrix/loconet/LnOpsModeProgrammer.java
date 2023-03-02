@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;

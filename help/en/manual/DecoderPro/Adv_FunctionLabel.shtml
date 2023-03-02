@@ -96,7 +96,7 @@
               pressed again i.e. Function button labeled "Bell" would ring until pressed again.</p>
 
               <p><strong>Unlatched Function</strong> when pressed toggles on and then off. i.e.
-              Function Button labled "short horn", when pressed provides one blast of horn.</p>
+              Function Button labeled "short horn", when pressed provides one blast of horn.</p>
             </td>
           </tr>
 
@@ -132,7 +132,7 @@
       <p>You may also edit the function button text in the <strong><a href=
       "Main_Throttle.shtml">JMRI Throttle</a></strong> and save those changes to the selected
       Roster entry. To use these changed entries in the future, make sure you click on the
-      <input name="button" id="button" value="Save to Roster" type="submit"> to save these values
+      <span class="textbutton">Save to Roster</span> button  to save these values
       into the Roster entry that is in use.</p>
 
       <hr>

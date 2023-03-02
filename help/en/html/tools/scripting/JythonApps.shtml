@@ -18,7 +18,7 @@
       <p>Some JMRI users have implemented sophiticated capabilities using the JMRI jython scripting
       facilities. These are much more than the relatively simple examples presented on <a href=
       "Examples.shtml">the Scripting Examples</a> page. The developers have provided more
-      documentation for these "apps" (available in the <a href="../../scripthelp">"scripthelp"
+      documentation for these "apps" (available in the <a href="../../scripthelp/">"scripthelp"
       directory.</a> In fact, the distinguishing feature of apps listed here versus examples listed
       on the Examples page is that the developers have provided that additional documentation!</p>
 

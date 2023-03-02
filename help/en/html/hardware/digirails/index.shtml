@@ -46,7 +46,7 @@
 
         <li>Leave the port number at 15471</li>
 
-        <li>Click "Save" & restart</li>
+        <li>Click "Save" &amp; restart</li>
       </ul>
 
       <h4>Digitrax/LocoNet</h4>
@@ -70,7 +70,7 @@
 
       <h4>Via USB</h4>
       First, make sure your computer has the <a href=
-      "https://www.ftdichip.com/Drivers/VCP.htm">correct USB drivers installed</a>.
+      "https://ftdichip.com/drivers/vcp-drivers/">correct USB drivers installed</a>.
       <p>Then, set the JMRI connection preferences to:</p>
 
       <ul>

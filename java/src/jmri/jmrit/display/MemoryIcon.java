@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (c) 2004
  */
-public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener/*, DropTargetListener*/ {
+public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyChangeListener/*, DropTargetListener*/ {
 
     NamedIcon defaultIcon = null;
     // the map of icons
@@ -319,6 +319,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     /**
      * Drive the current state of the display from the state of the Memory.
      */
+    @Override
     public void displayState() {
         log.debug("displayState()");
 
@@ -506,10 +507,12 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         updateSize();
     }
 
+    @Override
     public int getOriginalX() {
         return originalX;
     }
 
+    @Override
     public int getOriginalY() {
         return originalY;
     }

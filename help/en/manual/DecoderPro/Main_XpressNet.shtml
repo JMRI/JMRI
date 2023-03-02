@@ -89,10 +89,9 @@
 
       <h4><a id="InfoDialog"></a>XPressNet System Information Dialog</h4>
 
-      <p>Click on the <input type="submit" name="button" id="button" value="Get System Info"> to
+      <p>Click on the <span class="textbutton">Get System Info</span> button to
       query the system (Lenz or other) for system information that will be displayed in the dialog.
-      Click on <input type="submit" name="button2" id="button2" value="Close"> to close the
-      dialog.</p>
+      Click on the <span class="textbutton">Close</span> button to close the dialog.</p>
 
       <p><img src="images/Main_XpressNet_01.png" alt="System Information">
       </p>

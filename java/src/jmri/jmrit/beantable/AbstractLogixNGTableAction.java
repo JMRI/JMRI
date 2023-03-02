@@ -347,6 +347,14 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         return false;
     }
 
+    protected boolean isExecuteSupported() {
+        return false;
+    }
+
+    protected void execute(@Nonnull E bean) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
     /**
      * Copy the bean as configured in the Copy set up pane.
      *
@@ -665,6 +673,19 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         deleteBean.delete(x, hasChildren(x), (t)->{deleteBean(t);},
                 (t,list)->{getListenerRefsIncludingChildren(t,list);},
                 getClassName());
+    }
+
+    /**
+     * Respond to the Execute combo selection bean window execute request.
+     *
+     * @param sName system name of bean to be deleted
+     */
+    void executePressed(String sName) {
+        final E x = getManager().getBySystemName(sName);
+
+        if (x == null) return;  // This should never happen
+
+        execute(x);
     }
 
     @Override
@@ -996,6 +1017,9 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
                 } else if (Bundle.getMessage("ButtonDelete").equals(value)) {  // NOI18N
                     deletePressed(sName);
+
+                } else if (Bundle.getMessage("LogixNG_ButtonExecute").equals(value)) {  // NOI18N
+                    executePressed(sName);
                 }
             } else if (col == ENABLECOL) {
                 // alternate
@@ -1073,6 +1097,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             editCombo.addItem(Bundle.getMessage("BrowserButton"));  // NOI18N
             if (isCopyBeanSupported()) editCombo.addItem(Bundle.getMessage("ButtonCopy"));  // NOI18N
             editCombo.addItem(Bundle.getMessage("ButtonDelete"));  // NOI18N
+            if (isExecuteSupported()) editCombo.addItem(Bundle.getMessage("LogixNG_ButtonExecute"));  // NOI18N
             TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
             col.setCellEditor(new DefaultCellEditor(editCombo));
         }

@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2022-11-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder 4.1</revremark>
+		</revision>
+	</revhistory>
+	<!-- Declaration of the "switch" CV, not for direct use but for checking value -->
+	<variable item="Bank_Switch" CV="1021" default="0">
+		<enumVal>
+			<enumChoice choice="Bank 0">
+				<choice>Bank 0</choice>
+				<choice xml:lang="de">Bank 0 - Hersteller</choice>
+				<choice xml:lang="nl">Bank 0</choice>
+				<choice xml:lang="cs">Banka 0 - Normální CV</choice>
+			</enumChoice>
+			<enumChoice choice="Bank 1">
+				<choice>Bank 1 - Hardware</choice>
+				<choice xml:lang="de">Bank 1 - Hardware</choice>
+				<choice xml:lang="nl">Bank 1 - Hardware</choice>
+				<choice xml:lang="cs">Banka 1 - Hardware</choice>
+			</enumChoice>
+			<enumChoice choice="Bank 2">
+				<choice>Bank 2 - Common</choice>
+				<choice xml:lang="de">Bank 2 - Allgemein</choice>
+				<choice xml:lang="nl">Bank 2 - Gedeeld</choice>
+				<choice xml:lang="cs">Banka 2 - Všeobecné</choice>
+			</enumChoice>
+			<enumChoice choice="Bank 3">
+				<choice>Bank 3 - Speed</choice>
+				<choice xml:lang="de">Bank 3 - Geschwindigkeit</choice>
+				<choice xml:lang="nl">Bank 3 - Snelheid</choice>
+				<choice xml:lang="cs">Banka 3 - Rychlost</choice>
+			</enumChoice>
+			<enumChoice choice="Bank 4" value="4">
+				<choice>Bank 4 - Volume</choice>
+				<choice xml:lang="de">Bank 4 - Lautstärke</choice>
+				<choice xml:lang="nl">Bank 4 - Volume</choice>
+				<choice xml:lang="cs">Banka 4 - Hlasitost</choice>
+			</enumChoice>
+			<enumChoice choice="Bank 8" value="8">
+				<choice>Bank 8 - Fn Keys</choice>
+				<choice xml:lang="de">Bank 8 - Fn Tasten</choice>
+				<choice xml:lang="nl">Bank 8 - Fn-toetsen</choice>
+				<choice xml:lang="cs">Banka 8 - Fn tlačítka</choice>
+			</enumChoice>
+		</enumVal>
+		<label>Program</label>
+		<label xml:lang="de">Programmieren</label>
+		<label xml:lang="nl">Programmeer</label>
+		<label xml:lang="cs">Programování</label>
+		<tooltip>Setting that determines which bank 1-8 is programmed. Reset to Normal CVs when done!</tooltip>
+		<tooltip xml:lang="de">Einstellung der zu programmierenden Bank 1 - 8. Zurückstellen nach Normale CVs wenn fertig!</tooltip>
+		<tooltip xml:lang="cs">Nastavení programování banky 1 - 8. Po dokončení obnovte na Normální CV!</tooltip>
+	</variable>
+	<!-- Bank A variables 0-Manufacturer -->
+	<variable item="Bank A Manufacturer ID" CV="900.1021=0" readOnly="yes" default="162">
+		<decVal/>
+		<label>Manufacturer ID: </label>
+		<label xml:lang="it">ID Costruttore: </label>
+		<label xml:lang="fr">ID constructeur: </label>
+		<label xml:lang="de">Hersteller ID: </label>
+		<label xml:lang="nl">Fabrikant-ID: </label>
+		<label xml:lang="cs">ID výrobce: </label>
+	</variable>
+	<variable item="Bank A Software version" CV="901.1021=0" readOnly="yes" default="1">
+		<decVal/>
+		<label>Manufacturer Version No: </label>
+		<label xml:lang="it">Versione Decoder: </label>
+		<label xml:lang="fr">Version décodeur: </label>
+		<label xml:lang="de">Decoder Version: </label>
+		<label xml:lang="nl">Versie van decoder: </label>
+		<label xml:lang="cs">Verze dekodéru: </label>
+	</variable>
+	<variable item="Bank A Reset" CV="902.1021=0" readOnly="no">
+		<decVal/>
+		<label>Reset to factory settings: </label>
+		<label xml:lang="de">Rücksetzen der CVs: </label>
+		<label xml:lang="nl">Zet terug naar fabrieksinstellingen: </label>
+		<label xml:lang="cs">Reset do továrního nastavení: </label>
+		<tooltip>To reset write a value other than 0</tooltip>
+		<tooltip xml:lang="de">zum Rücksetzen einen Wert ungleich 0 setzen</tooltip>
+		<tooltip xml:lang="cs">Pro Reset zapište hodnotu jinou než 0</tooltip>
+	</variable>
+	<!-- Bank B variables 1-Hardware -->
+	<!-- CVs 900.1 - 901.1 -->
+	<variable item="Bank B Hardware ID" CV="900.1021=1" readOnly="yes" default="16">
+		<decVal/>
+		<label>Hardware ID: </label>
+		<label xml:lang="de">Hardwarekennung: </label>
+		<label xml:lang="nl">Hardware-ID: </label>
+		<label xml:lang="cs">ID hardware: </label>
+	</variable>
+	<variable item="Bank B Subversion ID" CV="901.1021=1" readOnly="yes">
+		<decVal/>
+		<label>Sub Version Number: </label>
+		<label xml:lang="de">Unterversionsnummer: </label>
+		<label xml:lang="nl">Sub-versienummer: </label>
+		<label xml:lang="cs">Číslo podverze: </label>
+	</variable>
+	<!-- Bank C variables 2-General -->
+	<!-- CVs 900.2, 905.2-911.2 -->
+	<variable item="Bank C Sound Setting 1" CV="900.1021=2" default="160" tooltip="0-255">
+		<decVal/>
+		<label>Master Sound Volume</label>
+		<label xml:lang="de">Gesamtlautstärke</label>
+		<label xml:lang="nl">Geluidsvolume</label>
+		<label xml:lang="cs">Hlasitost zvuku</label>
+	</variable>
+	<variable item="Bank C Sound Setting 2" CV="905.1021=2" default="40" include="PIKO40501-18,PIKO46440-18,PIKO46442-16">
+		<decVal/>
+		<label>Minimum Random Period</label>
+		<label xml:lang="de">Minimale Zufallszeit</label>
+		<label xml:lang="nl">Min. toevalstijd</label>
+		<label xml:lang="cs">Minimální náhodná doba</label>
+		<tooltip>From what time (minimum) should a random sound be played?</tooltip>
+		<tooltip xml:lang="de">ab welcher Mindestzeit soll ein Zufallsgeräusch abgespielt werden?</tooltip>
+		<tooltip xml:lang="cs">Od jaké minimální doby mají být přehrávány náhodné zvuky.</tooltip>
+	</variable>
+	<variable item="Bank C Sound Setting 2" CV="905.1021=2" default="20" include="PIKO46443-22">
+		<decVal/>
+		<label>Minimum Random Period</label>
+		<label xml:lang="de">Minimale Zufallszeit</label>
+		<label xml:lang="nl">Min. toevalstijd</label>
+		<label xml:lang="cs">Minimální náhodná doba</label>
+		<tooltip>From what time (minimum) should a random sound be played?</tooltip>
+		<tooltip xml:lang="de">ab welcher Mindestzeit soll ein Zufallsgeräusch abgespielt werden?</tooltip>
+		<tooltip xml:lang="cs">Od jaké minimální doby mají být přehrávány náhodné zvuky.</tooltip>
+	</variable>
+	<variable item="Bank C Sound Setting 3" CV="906.1021=2" default="80" include="PIKO40501-18,PIKO46440-18,PIKO46442-16">
+		<decVal/>
+		<label>Maximum Random Period</label>
+		<label xml:lang="de">Maximale Zufallszeit</label>
+		<label xml:lang="nl">Max. toevalstijd</label>
+		<label xml:lang="cs">Maximální náhodná doba</label>
+		<tooltip>Until what time (maximum) should a random sound be played? (how often = combination with Min. Rand.Per)</tooltip>
+		<tooltip xml:lang="de">bis zu welcher Zeit soll ein Zufallsgeräusch abgespielt werden? (wie häufig - Kombination mit Mind. Zufallszeit)</tooltip>
+		<tooltip xml:lang="cs">Do jaké maximální doby mají být přehrávány náhodné zvuky. (jak často = kombinace s minimální náhodnou dobou)</tooltip>
+	</variable>
+	<variable item="Bank C Sound Setting 3" CV="906.1021=2" default="60" include="PIKO46443-22">
+		<decVal/>
+		<label>Maximum Random Period</label>
+		<label xml:lang="de">Maximale Zufallszeit</label>
+		<label xml:lang="nl">Max. toevalstijd</label>
+		<label xml:lang="cs">Maximální náhodná doba</label>
+		<tooltip>Until what time (maximum) should a random sound be played? (how often = combination with Min. Rand.Per)</tooltip>
+		<tooltip xml:lang="de">bis zu welcher Zeit soll ein Zufallsgeräusch abgespielt werden? (wie häufig - Kombination mit Mind. Zufallszeit)</tooltip>
+		<tooltip xml:lang="cs">Do jaké maximální doby mají být přehrávány náhodné zvuky. (jak často = kombinace s minimální náhodnou dobou)</tooltip>
+	</variable>
+	<variable item="Bank C Sound Setting 4" CV="907.1021=2" default="80">
+		<decVal/>
+		<label>Steam-/Rail-Trigger Param 1</label>
+		<label xml:lang="de">Dampfstoß-/Schienenstoß-Trigger Param 1</label>
+		<label xml:lang="nl">Stoom-/Rails-trigger Param 1</label>
+		<label xml:lang="cs">Pára/Koleje - Spouštěč Parametr 1</label>
+	</variable>
+	<variable item="Bank C Sound Setting 5" CV="908.1021=2" default="120">
+		<decVal/>
+		<label>Steam-/Rail-Trigger Param 2</label>
+		<label xml:lang="de">Dampfstoß-/Schienenstoß-Trigger Param 2</label>
+		<label xml:lang="nl">Stoom-/Rails-trigger Param 2</label>
+		<label xml:lang="cs">Pára/Koleje - Spouštěč Parametr 2</label>
+	</variable>
+	<variable item="Bank C Sound Setting 6" CV="910.1021=2" default="23" tooltip="0-28">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>Volume Control Function</label>
+		<label xml:lang="de">Funktionstaste für Lautstärke</label>
+		<label xml:lang="nl">Functieknop voor Volumeregelaar</label>
+		<label xml:lang="cs">Funkce pro regulaci hlasitosti</label>
+		<tooltip>Function mapping for Volume Control</tooltip>
+		<tooltip xml:lang="cs">Mapování funkcí pro regulaci hlasitosti</tooltip>
+	</variable>
+	<variable item="Bank C Sound Setting 7" CV="911.1021=2" default="24" tooltip="0-28">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF28Off255.xml"/>
+		<label>Soundfader Function</label>
+		<label xml:lang="de">Funktionstaste für Soundfader</label>
+		<label xml:lang="nl">Functieknop voor Soundfader</label>
+		<label xml:lang="cs">Funkce pro ztišení zvuku</label>
+		<tooltip>Function mapping for Soundfader</tooltip>
+		<tooltip xml:lang="cs">Mapování funkcí pro ztišení zvuku</tooltip>
+	</variable>
+	<!-- Bank D variables 3-Speed levek-->
+	<!-- CV 900.3-939.3-->
+	<!-- Piko Info: Fahrstufenschwellen 0-255 für Schaltgeräusche, z.B. das Getriebeschalten eines -->
+	<!-- Schienenbusses o. die Schützschaltung für eine Altbau E-Lok/speed steps for sound effects in the model-->
+	<variable item="Bank D Sound Setting 1" CV="900.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 1</label>
+		<tooltip>At which Speed Step should Switch Sound #1 be activated?</tooltip>
+		<tooltip xml:lang="de">Bei welchen Fahrstufe soll Schaltgeräusch #1 abgespielt werden?</tooltip>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #1.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 2" CV="901.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 2</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #2.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 3" CV="902.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 3</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #3.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 4" CV="903.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 4</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #4.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 5" CV="904.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 5</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #5.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 6" CV="905.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 6</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #6.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 7" CV="906.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 7</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #7.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 8" CV="907.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 8</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #8.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 9" CV="908.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 9</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #9.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 10" CV="909.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 10</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #10.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 11" CV="910.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 11</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #11.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 12" CV="911.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 12</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #12.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 13" CV="912.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 13</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #13.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 14" CV="913.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 14</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #14.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 15" CV="914.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 15</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #15.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 16" CV="915.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 16</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #16.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 17" CV="916.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 17</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #17.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 18" CV="917.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 18</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #18.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 19" CV="918.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 19</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #19.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 20" CV="919.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 20</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #20.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 21" CV="920.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 21</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #21.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 22" CV="921.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 22</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #22.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 23" CV="922.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 23</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #23.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 24" CV="923.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 24</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #24.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 25" CV="924.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 25</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #25.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 26" CV="925.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 26</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #26.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 27" CV="926.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 27</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #27.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 28" CV="927.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 28</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #28.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 29" CV="928.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 29</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #29.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 30" CV="929.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 30</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #30.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 31" CV="930.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 31</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #31.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 32" CV="931.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 32</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #32.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 33" CV="932.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 33</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #33.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 34" CV="933.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 34</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #34.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 35" CV="934.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 35</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #35.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 36" CV="935.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 36</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #36.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 37" CV="936.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 37</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #37.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 38" CV="937.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 38</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #38.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 39" CV="938.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 39</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #39.</tooltip>
+	</variable>
+	<variable item="Bank D Sound Setting 40" CV="939.1021=3">
+		<decVal/>
+		<label xml:lang="cs">Banka D nastavení zvuku 40</label>
+		<tooltip xml:lang="cs">Na kterém rychlostním kroku by měl být přehrán zvuk #40.</tooltip>
+	</variable>
+	<!-- CV 900.1021=4-931.1021=4-->
+	<!-- Piko Info: Lautstärken 0-255 der Einzelgeräusche -->
+<!--	<xi:include href="http://jmri.org/xml/decoders/piko/cv900-1024_PIKO40501-18_v4.1.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/piko/cv900-1024_PIKO46440-18_v4.1.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/piko/cv900-1024_PIKO46442-16_v4.1.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/piko/cv900-1024_PIKO46443-22_v4.1.xml"/>-->
+</variables>

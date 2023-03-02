@@ -33,14 +33,14 @@
       <aspectname>Clear</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Meca/VLMecabis.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Meca/VLMecabis.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Meca/VLMecabis.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Meca/VLMecabis.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Disque</aspectname>
       <show>red</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Meca/DisqueMecF.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Meca/DisqueMecF.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Meca/DisqueMecF.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Meca/DisqueMecF.gif</imagelink>
     </appearance>
  </appearances>

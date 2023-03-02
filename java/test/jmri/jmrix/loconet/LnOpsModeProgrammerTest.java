@@ -20,7 +20,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
     @Test
     public void testGetCanWriteAddress() {
         Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
-    }    
+    }
 
     @Test
     public void testSetMode() {
@@ -42,7 +42,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
     public void testGetCanReadWithTransponding() {
         // allow transponding
         sm.setTranspondingAvailable(true);
-        
+
         lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 1, true);
 
         Assert.assertEquals("ops mode can read with transponding", true,
@@ -503,7 +503,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
      }
 
      @Test
-     public void testOpsReadLocoNetModeLACKNotImplemented() throws ProgrammerException {
+     public void testOpsReadLocoNetModeLACKAcceptedBlind() throws ProgrammerException {
         // allow transponding
         sm.setTranspondingAvailable(false);
 
@@ -524,8 +524,8 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
 
-        // LACK "function not implemented" followed by Known-good message in reply
-        m = new LocoNetMessage(new int[]{0xB4, 0x6F, 0x7F, 0x5B});
+        // LACK "accepted blind" followed by Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xB4, 0x6F, 0x40, 0x64});
         lnopsmodeprogrammer.message(m);
         sm.message(m);
 
@@ -545,6 +545,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
         lnis = new LocoNetInterfaceScaffold();
         sm = new SlotManager(lnis);
+        sm.pmManagerGotReply = true; // tells slotman probing done
         memo = new LocoNetSystemConnectionMemo(lnis, sm);
         pl = new ProgListenerScaffold();
         programmer = lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 1, true);

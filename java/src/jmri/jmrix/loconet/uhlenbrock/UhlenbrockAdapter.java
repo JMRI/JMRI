@@ -56,7 +56,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart, false); //never Xp slots
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation

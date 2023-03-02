@@ -129,7 +129,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             "RunningLate", "WaitingForStart", "RecordingScript", "StopPending"};
 
     static final float BUFFER_DISTANCE = 50*12*25.4F / WarrantPreferences.getDefault().getLayoutScale(); // 50 scale feet for safety distance
-    protected boolean _trace = WarrantPreferences.getDefault().getTrace();
+    static protected boolean _trace = WarrantPreferences.getDefault().getTrace();
 
     // Speed states: steady, increasing, decreasing
     static final int AT_SPEED = 1;
@@ -841,6 +841,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
             time += 10;
         }
+        _engineer = null;
         log.debug("{}: engineer state {} after {}ms", getDisplayName(), eng.getState().toString(), time);
     }
 
@@ -859,7 +860,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (!_engineer.getState().equals(Thread.State.TERMINATED)) {
                 killEngineer(_engineer, abort, turnOffFunctions);
             }
-            _engineer = null;
             if (_trace || log.isDebugEnabled()) {
                 if (abort) {
                     log.info("{} at block {}", Bundle.getMessage("warrantAbort", getTrainName(), getDisplayName()), 
@@ -869,13 +869,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             getTrainName(), getDisplayName(), getBlockAt(_idxCurrentOrder).getDisplayName()));
                 }
             }
+        } else {
+            _runMode = MODE_NONE;
         }
 
         if (_addTracker && _idxCurrentOrder == _orders.size()-1) { // run was complete to end
             startTracker();
-            _runMode = MODE_MANUAL;
-        } else {
-            _runMode = MODE_NONE;
         }
         _addTracker = false;
 
@@ -1014,7 +1013,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 msg = Bundle.getMessage("noThrottle", _speedUtil.getDccAddress().getNumber());
             } else {
                 if (!tm.requestThrottle(dccAddress, this, false)) {
-                    return Bundle.getMessage("trainInUse", dccAddress.getNumber());
+                    msg = Bundle.getMessage("trainInUse", dccAddress.getNumber());
                 }
             }
         }
@@ -1069,12 +1068,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         getDisplayName(), Bundle.getMessage("noThrottle", throttle.getLocoAddress()),
                         Thread.currentThread().getName());
             }
+            _runMode = MODE_NONE;
         }
     }
 
     protected void abortWarrant(String msg) {
         log.error("Abort warrant \"{}\" - {} ", getDisplayName(), msg);
-        _engineer.stopRun(true, true);
+        stopWarrant(true, true);
     }
 
     /**
@@ -1377,6 +1377,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
 
         if (_engineer != null) {
+            info.append("\""); info.append("\n\tEngineer Stack trace:");
+            for (StackTraceElement elem : _engineer.getStackTrace()) {
+                info.append("\n\t\t");
+                info.append(elem.getClassName()); info.append("."); info.append(elem.getMethodName());
+                info.append(", line "); info.append(elem.getLineNumber());
+            }
             info.append(_engineer.debugInfo());
          } else {
             info.append("No engineer.");
@@ -1420,6 +1426,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _engineer.start();
 
             int runState = _engineer.getRunState();
+            if (_trace || log.isDebugEnabled()) {
+                log.info("Train \"{}\" on warrant \"{}\" launched. runState= {}", getTrainName(), getDisplayName(), RUN_STATE[runState]);
+            }
             if (runState != HALT && runState != RAMP_HALT) {
                 setMovement();
             }
@@ -1688,7 +1697,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         OBlock block = getBlockAt(0);
                         _idxCurrentOrder = 0;
                         if (_runMode == MODE_RUN && _engineer == null) {
-                            acquireThrottle();
+                            _message = acquireThrottle();
                         } else if (_runMode == MODE_MANUAL) {
                             fireRunStatus("ReadyToRun", -1, 0);   // ready to start msg
                             _delayStart = false;
@@ -3096,7 +3105,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         } else if (_waitForBlock) {
             reason = Bundle.getMessage("Occupancy");                
         } else {
-            reason ="Unspecified";
+            reason = Bundle.getMessage("Signal");
         }
 
         if (_trace || log.isDebugEnabled()) {
@@ -3119,7 +3128,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         String blkName = getBlockAt(endBlockIdx).getDisplayName();
         if (_trace || log.isDebugEnabled()) {
-            log.info(Bundle.getMessage("RampBegin", getTrainName(), reason, blkName, speedType));
+            log.info(Bundle.getMessage("RampBegin", getTrainName(), reason, blkName, speedType, waitSpeed));
         }
     }
 

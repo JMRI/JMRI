@@ -16,7 +16,7 @@ import org.openlcb.*;
  */
 public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
-    private static OlcbSystemConnectionMemo memo;
+    private static OlcbSystemConnectionMemoScaffold memo;
     static Connection connection;
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
@@ -420,7 +420,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
             }
         };
 
-        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo = new OlcbSystemConnectionMemoScaffold(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
             @Override
