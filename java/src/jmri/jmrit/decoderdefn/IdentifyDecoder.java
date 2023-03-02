@@ -145,7 +145,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             setOptionalCv(true);
             readCV("261");
             return false;
-        } else if (mfgID == 78 && (modelID == 3 || modelID == 5)) {  // Train-O-Matic Lokommander II
+        } else if (mfgID == 78) {  // Train-O-Matic
             statusUpdate("Read productID #1 CV 510");
             readCV("510");
             return false;
@@ -211,7 +211,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             }
             productID = value;
             return true;
-        } else if (mfgID == 78 && (modelID == 3 || modelID == 5)) {  // Train-O-Matic Lokommander II
+        } else if (mfgID == 78) {  // Train-O-Matic
             productIDhigh = value;
             statusUpdate("Read productID #2 CV 509");
             readCV("509");
@@ -253,7 +253,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder extended Version ID Low Byte");
             readCV("111");
             return false;
-        } else if (mfgID == 78 && (modelID == 3 || modelID == 5)) {  // Train-O-Matic Lokommander II
+        } else if (mfgID == 78) {  // Train-O-Matic
             productIDlow = value;
             statusUpdate("Read productID #3 CV 508");
             readCV("508");
@@ -285,7 +285,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder extended Version ID High Byte");
             readCV("110");
             return false;
-        } else if (mfgID == 78 && (modelID == 3 || modelID == 5)) {  // Train-O-Matic Lokommander II
+        } else if (mfgID == 78) {  // Train-O-Matic
             productID = value + (productIDlow * 256) + (productIDhigh * 256 * 256);
             return true;
         }
