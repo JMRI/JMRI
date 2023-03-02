@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.*;
@@ -1035,9 +1036,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      */
     void duplicatePressed() {
         log.info("duplicatePressed: node = {}", _curNodeType);
+        _dataMgr.setLockCalculate(true);
         switch (_curNodeType) {
             case "Layout":     // NOI18N
-                duplicateLayout();
+                duplicateLayout(_curNodeId);
                 break;
 
             case "TrainType": // NOI18N
@@ -1053,24 +1055,80 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 break;
 
             case "Schedule":  // NOI18N
-                duplicateSchedule();
+                duplicateSchedule(0, _curNodeId, (TimeTableTreeNode) _curNode.getParent());
                 break;
 
             case "Train":   // NOI18N
-                duplicateTrain();
+                duplicateTrain(0, _curNodeId, 0, (TimeTableTreeNode) _curNode.getParent());
                 break;
 
             case "Stop":      // NOI18N
-                duplicateStop();
+                duplicateStop(0, _curNodeId, 0, 0, (TimeTableTreeNode) _curNode.getParent());
                 break;
 
             default:
                 log.error("Duplicate called for unsupported node type: '{}'", _curNodeType);  // NOI18N
         }
+        _dataMgr.setLockCalculate(false);
     }
 
-    void duplicateLayout() {
-        log.info("Duplicate Layout");
+    // Trains have references to train types and stops have references to stations.
+    // When a layout is copied, the references have to be changed to the copied element.
+    private HashMap<Integer, Integer> typeMap = new HashMap<>();      // THe key is the source train type, the value is the destination train type.
+    private HashMap<Integer, Integer> stationMap = new HashMap<>();   // THe key is the source layout stations, the value is the destination stations.
+
+    private boolean dupLayout = false;
+
+    /**
+     * Create a copy of a layout.
+     * @param layoutId The id of the layout to be duplicated.
+     */
+    void duplicateLayout(int layoutId) {
+        dupLayout = true;
+        Layout layout = _dataMgr.getLayout(layoutId);
+        Layout newLayout = layout.getCopy();
+        setShowReminder(true);
+
+        // Build tree components
+        _curNode = new TimeTableTreeNode(newLayout.getLayoutName(), "Layout", newLayout.getLayoutId(), 0);    // NOI18N
+        _timetableRoot.add(_curNode);
+
+        _leafNode = new TimeTableTreeNode(buildNodeText("TrainTypes", null, 0), "TrainTypes", 0, 0);    // NOI18N
+        _curNode.add(_leafNode);
+        var typesNode = _leafNode;
+
+        _leafNode = new TimeTableTreeNode(buildNodeText("Segments", null, 0), "Segments", 0, 0);    // NOI18N
+        _curNode.add(_leafNode);
+        var segmentsNode = _leafNode;
+
+        _leafNode = new TimeTableTreeNode(buildNodeText("Schedules", null, 0), "Schedules", 0, 0);    // NOI18N
+        _curNode.add(_leafNode);
+        var schedlulesNode = _leafNode;
+
+        _timetableModel.nodeStructureChanged(_timetableRoot);
+
+
+        // Copy train types
+        typeMap.clear();
+        for (var type : _dataMgr.getTrainTypes(layoutId, true)) {
+            duplicateTrainType(newLayout.getLayoutId(), type.getTypeId(), (TimeTableTreeNode) typesNode);
+        }
+
+        // Copy segments
+        stationMap.clear();
+        for (var segment : _dataMgr.getSegments(layoutId, true)) {
+            duplicateSegment(newLayout.getLayoutId(), segment.getSegmentId(), (TimeTableTreeNode) segmentsNode);
+        }
+
+        // schedules
+        for (var schedule : _dataMgr.getSchedules(layoutId, true)) {
+            duplicateSchedule(newLayout.getLayoutId(), schedule.getScheduleId(), (TimeTableTreeNode) schedlulesNode);
+        }
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_curNode.getPath()));
+
+        dupLayout = false;
     }
 
     /**
@@ -1083,6 +1141,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         TrainType type = _dataMgr.getTrainType(typeId);
         TrainType newType = type.getCopy(layoutId);
         setShowReminder(true);
+
+        // If part of duplicating a layout, create a type map entry.
+        if (dupLayout) {
+            typeMap.put(type.getTypeId(), newType.getTypeId());
+        }
 
         // Build tree components
         _leafNode = new TimeTableTreeNode(newType.getTypeName(), "TrainType", newType.getTypeId(), 0);    // NOI18N
@@ -1110,9 +1173,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _timetableModel.nodeStructureChanged(segmentsNode);
 
         // Duplicate the stations using the stations from the orignal segment
-        List<Station> stationList = new ArrayList<>(_dataMgr.getStations(segmentId, true));
-        TimeTableTreeNode segmentNode = _leafNode;
-        for (Station station : stationList) {
+        var segmentNode = _leafNode;
+        for (var station : _dataMgr.getStations(segmentId, true)) {
             duplicateStation(newSegment.getSegmentId(), station.getStationId(), segmentNode);
         }
 
@@ -1131,6 +1193,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         Station newStation = station.getCopy(segmentId);
         setShowReminder(true);
 
+        // If part of duplicating a layout, create a station map entry.
+        if (dupLayout) {
+            stationMap.put(station.getStationId(), newStation.getStationId());
+        }
+
         // Build tree components
         _leafNode = new TimeTableTreeNode(newStation.getStationName(), "Station", newStation.getStationId(), 0);    // NOI18N
         segmentNode.add(_leafNode);
@@ -1140,16 +1207,91 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
     }
 
-    void duplicateSchedule() {
-        log.info("Duplicate schedule");
+    /**
+     * Create a copy of a schedule.
+     * @param layoutId The id for the parent layout.  Zero if within the same layout.
+     * @param scheduleId The id of the schedule to be duplicated.
+     * @param schedulesNode The schedules node which will be parent for the new schedule.
+     */
+    void duplicateSchedule(int layoutId, int scheduleId, TimeTableTreeNode schedulesNode) {
+        Schedule schedule = _dataMgr.getSchedule(scheduleId);
+        Schedule newSchedule = schedule.getCopy(layoutId);
+        setShowReminder(true);
+
+        // Build tree components
+        _leafNode = new TimeTableTreeNode(buildNodeText("Schedule", newSchedule, 0), "Schedule", newSchedule.getScheduleId(), 0);    // NOI18N
+        schedulesNode.add(_leafNode);
+        _timetableModel.nodeStructureChanged(schedulesNode);
+
+        // Duplicate the trains using the trains from the orignal schedule
+        TimeTableTreeNode scheduleNode = _leafNode;
+        for (Train train : _dataMgr.getTrains(scheduleId, 0, true)) {
+            duplicateTrain(newSchedule.getScheduleId(), train.getTrainId(), 0, scheduleNode);
+        }
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
     }
 
-    void duplicateTrain() {
-        log.info("Duplicate train");
+    /**
+     * Create a copy of a train.
+     * @param schedId The id for the parent schedule.  Zero if within the same schedule.
+     * @param trainId The id of the train to be duplicated.
+     * @param typeId The id of the train type.  If zero use the source train type.
+     * @param schedNode The schedule node which will be parent for the new train.
+     */
+    void duplicateTrain(int schedId, int trainId, int typeId, TimeTableTreeNode schedNode ) {
+        Train train = _dataMgr.getTrain(trainId);
+        if (typeMap != null && typeMap.containsKey(train.getTypeId())) typeId = typeMap.get(train.getTypeId());
+        Train newTrain = train.getCopy(schedId, typeId);
+        setShowReminder(true);
+
+        // If part of duplicating a layout, update the type reference.
+        if (dupLayout && typeMap.containsKey(train.getTypeId())) {
+            newTrain.setTypeId(typeMap.get(train.getTypeId()));
+        }
+
+        // Build tree components
+        _leafNode = new TimeTableTreeNode(newTrain.toString(), "Train", newTrain.getTrainId(), 0);    // NOI18N
+        schedNode.add(_leafNode);
+        _timetableModel.nodeStructureChanged(schedNode);
+
+        // Duplicate the stops using the stops from the orignal train
+        TimeTableTreeNode trainNode = _leafNode;
+        for (Stop stop : _dataMgr.getStops(trainId, 0, true)) {
+            duplicateStop(newTrain.getTrainId(), stop.getStopId(), 0, stop.getSeq(), trainNode);
+        }
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
     }
 
-    void duplicateStop() {
-        log.info("Duplicate stop");
+    /**
+     * Create a copy of a stop.
+     * @param trainId The id for the parent train.  Zero if within the same train.
+     * @param stopId The id of the stop to be duplicated.
+     * @param stationId The id of the station.  If zero use the source station.
+     * @param seq The sequence for the new stop.  If zero calculate the next sequence number.
+     * @param trainNode The train node which will be parent for the new stop.
+     */
+    void duplicateStop(int trainId, int stopId, int stationId, int seq, TimeTableTreeNode trainNode) {
+        Stop stop = _dataMgr.getStop(stopId);
+        if (seq == 0) seq = _dataMgr.getStops(stop.getTrainId(), 0, false).size() + 1;
+        Stop newStop = stop.getCopy(trainId, stationId, seq);
+        setShowReminder(true);
+
+        // If part of duplicating a layout, update the station reference.
+        if (dupLayout && stationMap.containsKey(stop.getStationId())) {
+            newStop.setStationId(stationMap.get(stop.getStationId()));
+        }
+
+        // Build tree components
+        _leafNode = new TimeTableTreeNode(buildNodeText("Stop", newStop, 0), "Stop", newStop.getStopId(), seq);    // NOI18N
+        trainNode.add(_leafNode);
+        _timetableModel.nodeStructureChanged(trainNode);
+
+        // Switch to new node
+        _timetableTree.setSelectionPath(new TreePath(_leafNode.getPath()));
     }
 
     /**
@@ -2016,6 +2158,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             return;
         }
 
+        _dataMgr.setLockCalculate(true);
+
         // Delete the components
         for (Schedule schedule : _dataMgr.getSchedules(_curNodeId, false)) {
             for (Train train : _dataMgr.getTrains(schedule.getScheduleId(), 0, false)) {
@@ -2049,6 +2193,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _curNode = null;
         _timetableModel.nodeStructureChanged(parentNode);
 //         _timetableTree.setSelectionPath(parentPath);
+        _dataMgr.setLockCalculate(false);
     }
 
     /**
