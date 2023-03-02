@@ -1111,18 +1111,18 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         // Copy train types
         typeMap.clear();
         for (var type : _dataMgr.getTrainTypes(layoutId, true)) {
-            duplicateTrainType(newLayout.getLayoutId(), type.getTypeId(), (TimeTableTreeNode) typesNode);
+            duplicateTrainType(newLayout.getLayoutId(), type.getTypeId(), typesNode);
         }
 
         // Copy segments
         stationMap.clear();
         for (var segment : _dataMgr.getSegments(layoutId, true)) {
-            duplicateSegment(newLayout.getLayoutId(), segment.getSegmentId(), (TimeTableTreeNode) segmentsNode);
+            duplicateSegment(newLayout.getLayoutId(), segment.getSegmentId(), segmentsNode);
         }
 
         // schedules
         for (var schedule : _dataMgr.getSchedules(layoutId, true)) {
-            duplicateSchedule(newLayout.getLayoutId(), schedule.getScheduleId(), (TimeTableTreeNode) schedlulesNode);
+            duplicateSchedule(newLayout.getLayoutId(), schedule.getScheduleId(), schedlulesNode);
         }
 
         // Switch to new node
@@ -1134,7 +1134,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     /**
      * Create a copy of a train type.
      * @param layoutId The id for the parent layout.  Zero if within the same layout.
-     * @param trainTypeId The id of the train type to be duplicated.
+     * @param typeId The id of the train type to be duplicated.
      * @param typesNode The types node which will be parent for the new train type.
      */
     void duplicateTrainType(int layoutId, int typeId, TimeTableTreeNode typesNode) {
