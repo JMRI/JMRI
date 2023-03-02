@@ -410,6 +410,8 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             if (!car.getLoadName().equals(load)) {
                 if (carLoads.containsName(car.getTypeName(), load)) {
                     car.setLoadName(load);
+                    car.setWait(0); // car could be at spur with schedule
+                    car.setScheduleItemId(Car.NONE);
                     updateComboBoxesLoadChange();
                 } else {
                     JOptionPane.showMessageDialog(this,
@@ -679,6 +681,8 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             // update car load
             if (!ignoreLoadCheckBox.isSelected() && carLoads.containsName(car.getTypeName(), _car.getLoadName())) {
                 car.setLoadName(_car.getLoadName());
+                car.setWait(0); // car could be at spur with schedule
+                car.setScheduleItemId(Car.NONE);
             }
             // update kernel
             if (!ignoreKernelCheckBox.isSelected()) {

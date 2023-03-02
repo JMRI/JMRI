@@ -145,6 +145,7 @@ public class CarsSetFrame extends CarSetFrame {
             }
         }
 
+        // don't ask for to change cars in a kernel when giving a selected group of cars a new kernel name
         askKernelChange = true;
 
         for (Car car : cars) {
