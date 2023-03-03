@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>JMRI: CBUS&reg; Hub Control</title>
+  <meta name="author" content="Steve Young">
+  <meta name="keywords" content="JMRI CBUS hub share can connection wifi network">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI : CBUS Hub Control</h1>
+
+      <img src="cbus-hub-control-445x228.png" width="445" height="228" alt="CBUS Hub Control" class="floatRight">
+      <span class="since">since 5.3.4</span>
+
+      <p>CBUS Hub Control enables a physical CAN connection to be shared across a Network Connection.</p>
+      <p>This connection is accessible on the local device, enabling other applications to send and receive CAN Frames.</p>
+
+      <p>The CBUS Hub Control borrows code extensively from the <a href="">OpenLCB Hub Control</a>.</p>
+
+      <p>The only differences being : </p>
+      <ul>
+      <li>The port number is set to 5550.</li>
+      <li>The default for sending line termination characters is set to false.</li>
+      <li>CAN Frames are converted into the CBUS variant of the GridConnect format.</li>
+      </ul>
+
+      <p>The Hub Control will need to be running on the host JMRI instance before remote connections connect.
+      <br>You can start the Hub by the Main JMRI Menubar, MERG ( or connection name ) &gt; CBUS Hub Control
+      <br>The CBUS Hub Control can also be opened by adding as a
+      <a href="../../../../../../apps/TabbedPreferences.shtml#Startup">System Startup Action</a>.</p>
+
+      <p>If you are connecting another JMRI instance to the Hub, it's sensible to set a different CAN ID for that connection.</p>
+      <ul>
+      <li>PanelPro > Edit Preferences > Connections</li>
+      <li>System Connection : MERG : CAN via MERG Network Interface</li>
+      <li>Enable Additional Connection Settings</li>
+      <li>Select a CAN ID which will be unique to that JMRI instance.</li>
+      <li>Click <span class="textbutton">Save</span>, at the bottom left of the window.</li>
+      </ul>
+
+      <h3>Sharing your CAN Connection with MERG CBUS FCU</h3>
+      <img src="fcu-network-setup-467x566.png" width="467" height="566" alt="FCU Network Setup" class="floatRight">
+
+      <p>After starting CBUS Hub Control, open up FCU.</p>
+      <ul>
+      <li>Communications &gt; Enable Ethernet</li>
+      <li>Communications &gt; Add Network ...</li>
+      <li>Add a name for the new Network Connection.</li>
+      <li>Add the local IP address from the CBUS Hub.
+        <br>In the screenshot above,
+        this is IP4 version of the loopback address, <code>127.0.0.1</code></li>
+      <li>The default port number of <code>5550</code> should be retained.</li>
+      <li>Click <span class="textbutton">OK</span></li>
+      <li>FCU Toolbar &gt; Communications &gt; Start Comms</li>
+      <li>Select the newly created connection and click <span class="textbutton">OK</span>.</li>
+      <li>FCU should display a Network Connected dialogue box and be able to communicate.</li>
+      </ul>
+
+      <p>Most users should not have to be concerned about CAN ID clashes when using both programs on the same CAN connection.
+      <br>The default for a JMRI MERG CAN-USB is 127 while FCU defaults to 125.</p>
+
+      <h3>JMRI Help</h3>
+
+      <p>You can view this help page within JMRI by selecting Help &gt; Window Help in the top bar
+      of the CBUS Hub Control window.</p>
+
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help
+      page</a>.</p>
+
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>
