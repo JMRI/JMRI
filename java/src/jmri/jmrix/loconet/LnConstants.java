@@ -510,6 +510,8 @@ public final class LnConstants {
                 return "RF24";
             case RE_IPL_DIGITRAX_HOST_PM74:
                 return "PM74";
+            case RE_IPL_DIGITRAX_HOST_SE74:
+                return "SE74";
             default: return "<unknown>"; // NOI18N
         }
     }
@@ -588,6 +590,7 @@ public final class LnConstants {
     public final static int RE_IPL_DIGITRAX_HOST_DT500 = 0x32;
     public final static int RE_IPL_DIGITRAX_HOST_DT602 = 0x3E;
     public final static int RE_IPL_DIGITRAX_HOST_DCS51 = 0x33;
+    public final static int RE_IPL_DIGITRAX_HOST_SE74 = 0x46;
     public final static int RE_IPL_DIGITRAX_HOST_PM74 = 0x4A;
     public final static int RE_IPL_DIGITRAX_HOST_BXPA1 = 0x51;
     public final static int RE_IPL_DIGITRAX_HOST_UR92 = 0x5C;
