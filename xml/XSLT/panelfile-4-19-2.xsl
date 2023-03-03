@@ -21,6 +21,7 @@
    [Added additional formatting for LogixNG.].                  (2023-01-11)
    [Added formatting for olcbsignalmast]                        (2023-01-12)
    [Added page breaks by section]                               {2023-01-17)
+   [Minor formatting changes at user request                    (2023-03-03)
 -->
 
 <!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018, 2022, 2023.     -->
@@ -1167,7 +1168,7 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- *************************************************************************************** -->
 <xsl:template match="layout-config/paneleditor">
 <h2 style="page-break-before: always">Panel: <xsl:value-of select="@name"/></h2>
-    <table style="width:50%" border="1">
+    <table style="width:75%" border="1">
     <!-- index through individual panel elements -->
     <tr>
       <th>Item</th><th>Name</th><th>Value/Description</th>
@@ -1193,9 +1194,10 @@ value="<xsl:value-of select="@dataString"/>"
     </tr>
     </xsl:for-each>
     </table>
-
-<h3>Panel Elements</h3>
-    <table style="width:75%" border="1">
+    
+<!-- Extra page break and wider line per user request to author 2023-02-28 -->
+<h3 style="page-break-before: always">Panel Elements</h3>
+    <table style="width:100%" border="1">
     <!-- index through individual panel elements -->
     <tr>
       <th>Item</th><th>Name</th><th>Value/Description</th>
