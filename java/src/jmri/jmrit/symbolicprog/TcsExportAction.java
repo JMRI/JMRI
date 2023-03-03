@@ -60,7 +60,7 @@ public class TcsExportAction extends AbstractAction {
 
     /**
      * Format the contents of the locomotive definition.
-     * This method is public static so it can be used for e.g.
+     * This method is public static so it can be used elsewhere for e.g.
      * direct writing to a node.
      * @param str receives the formatted definition String
      * @param rosterEntry defines the information to store
@@ -82,7 +82,32 @@ public class TcsExportAction extends AbstractAction {
 
         // TODO: Should check for the known strings and encode them in the Display attribute?
         for (int i = 0; i < 28; i++) { // TCS sample file went to 27?
-            str.println("Train.Functions("+i+").Display=0");
+            int displayValue = 0;
+            if (rosterEntry.getFunctionLabel(i) != null) {
+                switch (rosterEntry.getFunctionLabel(i)) {
+
+                    case "Light": displayValue = 1; break;
+                    case "Beamer": displayValue = 2; break;
+                    case "Bell": displayValue = 3; break;
+                    case "Horn": displayValue = 4; break;
+                    case "Shunting mode": displayValue = 5; break;
+                    case "Pantograph": displayValue = 6; break;
+                    case "Smoke": displayValue = 7; break;
+                    case "Momentum off": displayValue = 8; break;
+                    case "Whistle": displayValue = 9; break;
+                    case "Sound": displayValue = 10; break;
+                    case "F": displayValue = 11; break;
+                    case "Announce": displayValue = 12; break;
+                    case "Engine": displayValue = 13; break;
+                    case "Light1": displayValue = 14; break;
+                    case "Light2": displayValue = 15; break;
+                    case "Uncouple": displayValue = 17; break;
+
+                    default: displayValue = 0; break;
+                }
+            }
+
+            str.println("Train.Functions("+i+").Display="+displayValue);
             str.println("Train.Functions("+i+").Momentary="+(rosterEntry.getFunctionLockable(i) ? "0" : "1")); // Momentary == not locking
             str.println("Train.Functions("+i+").Consist Behavior=1");
             str.println("Train.Functions("+i+").Description="+(rosterEntry.getFunctionLabel(i)==null ? "" : rosterEntry.getFunctionLabel(i)) );
