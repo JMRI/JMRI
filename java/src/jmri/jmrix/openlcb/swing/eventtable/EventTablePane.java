@@ -680,7 +680,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         // the cell background color via a custom cell renderer
         void highlightProducer(EventID eventID, NodeID nodeID) {
             if (!popcornModeActive) return;
-            log.trace("highlightProducer", eventID, nodeID);
+            log.trace("highlightProducer {} {}", eventID, nodeID);
             for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
                 if (eventID.equals(memo.eventID) && nodeID.equals(memo.producer)) {
@@ -701,7 +701,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         // highlights (selects) all the eventID cells with a particular event,
         // Most LAFs will move the first of these on-scroll-view.
         void highlightEvent(EventID eventID) {
-            log.trace("highlightEvent", eventID);
+            log.trace("highlightEvent {}", eventID);
             table.clearSelection(); // clear existing selections
             for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
