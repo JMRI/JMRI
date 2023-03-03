@@ -1,25 +1,23 @@
-package jmri.jmrix.openlcb.swing.hub;
+package jmri.jmrix.can.cbus.swing.hubpane;
 
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TestTrafficController;
+import jmri.jmrix.can.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
- * @author Bob Jacobsen Copyright 2013
- * @author Paul Bender Copyright(C) 2016
+ * @author Steve Young Copyright(C) 2022
  */
-public class HubActionTest {
+public class CbusHubActionTest {
 
     CanSystemConnectionMemo memo = null;
-    jmri.jmrix.can.TrafficController tc = null;
+    TrafficController tc = null;
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCtor() {
-        HubAction h = new HubAction();
+        CbusHubAction h = new CbusHubAction();
         Assertions.assertNotNull(h, "Action object non-null");
     }
 
@@ -28,8 +26,8 @@ public class HubActionTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
-        memo  = new jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold();
-        tc = new TestTrafficController();
+        memo  = new CanSystemConnectionMemo();
+        tc = new TrafficControllerScaffold();
         memo.setTrafficController(tc);
         jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }

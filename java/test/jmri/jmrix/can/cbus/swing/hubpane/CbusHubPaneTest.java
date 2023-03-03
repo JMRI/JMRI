@@ -1,26 +1,25 @@
-package jmri.jmrix.openlcb.swing.hub;
+package jmri.jmrix.can.cbus.swing.hubpane;
 
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TestTrafficController;
+import jmri.jmrix.can.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
- * @author Bob Jacobsen Copyright 2013
- * @author Paul Bender Copyright(C) 2016
+ * @author Steve Young Copyright(C) 2022
  */
-public class HubActionTest {
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+public class CbusHubPaneTest {
 
+    CbusHubPane hub = null;
     CanSystemConnectionMemo memo = null;
-    jmri.jmrix.can.TrafficController tc = null;
+    TrafficController tc = null;
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCtor() {
-        HubAction h = new HubAction();
-        Assertions.assertNotNull(h, "Action object non-null");
+        Assertions.assertNotNull(hub, "hub pane creation");
+        // hub.initComponents(memo);
     }
 
     @BeforeEach
@@ -28,19 +27,21 @@ public class HubActionTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
-        memo  = new jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold();
-        tc = new TestTrafficController();
+        memo  = new CanSystemConnectionMemo();
+        tc = new TrafficControllerScaffold();
         memo.setTrafficController(tc);
         jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
+        hub = new CbusHubPane();
     }
 
     @AfterEach
     public void tearDown() {
+        hub.dispose();
+        hub = null;
         memo.dispose();
         memo = null;
         tc.terminateThreads();
         tc = null;
         JUnitUtil.tearDown();
-
     }
 }

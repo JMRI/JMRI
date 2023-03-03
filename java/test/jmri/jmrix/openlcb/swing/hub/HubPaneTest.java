@@ -7,20 +7,18 @@ import org.junit.jupiter.api.*;
 
 import jmri.jmrix.can.TestTrafficController;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * @author Bob Jacobsen Copyright 2013
  */
 public class HubPaneTest {
 
-    HubPane hub;
-    jmri.jmrix.can.CanSystemConnectionMemo memo;
-    jmri.jmrix.can.TrafficController tc;
+    HubPane hub = null;
+    CanSystemConnectionMemo memo = null;
+    jmri.jmrix.can.TrafficController tc = null;
 
     @Test
     public void testCtor() {
-        assertThat(hub).withFailMessage("hub pane creation").isNotNull();
+        Assertions.assertNotNull(hub, "hub pane creation");
         // this next step takes 30 seconds of clock time, so has been commented out
         //hub.initContext(memo);
     }
@@ -28,7 +26,8 @@ public class HubPaneTest {
     @BeforeAll
     static public void checkSeparate() {
        // this test is run separately because it leaves a lot of threads behind
-        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        Assumptions.assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"),
+            "Ignoring intermittent test");
     }
 
     @BeforeEach
@@ -45,7 +44,7 @@ public class HubPaneTest {
 
     @AfterEach
     public void tearDown() {
-        hub.stopHubThread();
+        hub.dispose();
         hub = null;
         memo.dispose();
         memo = null;

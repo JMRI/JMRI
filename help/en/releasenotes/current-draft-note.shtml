@@ -114,8 +114,9 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
+        <h4><a href="https://openlcb.org/">OpenLCB</a> / LCC</h4>
             <ul>
+                <li>Hub Control - UI Update, line termination characters optional for incoming feeds.</li>
                 <li>When downloading firmware to multiple boards, it can be a pain to have to select the file over and over.
                     This was changed to make the selected file (hence directory, etc) persistent from one download frame
                     to the next.
@@ -215,7 +216,7 @@
         <h4>Digitrax</h4>
             <ul>
                 <li>Added SE74 usage information to the Digitrax/LocoNet hardware help page,
-                    including specific guidance for configuring JMRI's signaling.</li>
+                    including specific guidance for configuring JMRI's signaling, and typo fixes.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
