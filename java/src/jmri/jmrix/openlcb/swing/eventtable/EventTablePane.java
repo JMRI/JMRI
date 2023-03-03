@@ -206,14 +206,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         // Our reference to the node names in the MimicNodeStore will
         // trigger a SNIP request if we don't have them yet.  In that case.
         // we want to trigger a table refresh to make sure they get displayed.
-        // TODO: This might be better triggered by seeing a SNIP reply
+        // TODO: This might be better triggered by seeing a SNIP reply below
         final int INTERVAL = 5000;
         jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
             model.handleTableUpdate(0, model.getRowCount()-1);
-        }, INTERVAL);
+        }, nextDelay+INTERVAL);
         jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
             model.handleTableUpdate(0, model.getRowCount()-1);
-        }, INTERVAL*2);
+        }, nextDelay+INTERVAL*2);
 
     }
 
