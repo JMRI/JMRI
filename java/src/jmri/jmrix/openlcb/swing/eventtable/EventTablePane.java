@@ -12,6 +12,7 @@ import javax.swing.table.*;
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.swing.JmriJTablePersistenceManager;
+import jmri.util.swing.MultiLineCellRenderer;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -206,13 +207,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         // Our reference to the node names in the MimicNodeStore will
         // trigger a SNIP request if we don't have them yet.  In that case.
         // we want to trigger a table refresh to make sure they get displayed.
-        // TODO: This might be better triggered by seeing a SNIP reply below
-        final int INTERVAL = 5000;
+        // TODO: This is a stand-in for the SNIP-triggered one below; neither are working?
+        final int INTERVAL = 2000;
         jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
-            model.handleTableUpdate(0, model.getRowCount()-1);
+            model.handleTableUpdate(-1,-1);
         }, nextDelay+INTERVAL);
         jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
-            model.handleTableUpdate(0, model.getRowCount()-1);
+            model.handleTableUpdate(-1,-1);
         }, nextDelay+INTERVAL*2);
 
     }
@@ -309,38 +310,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
         };
         sorter.setRowFilter(rf);
-    }
-
-    /**
-     * Nest class to display multiple lines in a cell
-     */
-    static class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
-
-      public MultiLineCellRenderer() {
-        setLineWrap(true);
-        setWrapStyleWord(true);
-        setOpaque(true);
-      }
-
-      public Component getTableCellRendererComponent(JTable table, Object value,
-          boolean isSelected, boolean hasFocus, int row, int column) {
-        if (isSelected) {
-          setForeground(table.getSelectionForeground());
-          setBackground(table.getSelectionBackground());
-        } else {
-          setForeground(table.getForeground());
-          setBackground(table.getBackground());
-        }
-        setFont(table.getFont());
-        if (hasFocus) {
-          if (table.isCellEditable(row, column)) {
-            setForeground(UIManager.getColor("Table.focusCellForeground"));
-            setBackground(UIManager.getColor("Table.focusCellBackground"));
-          }
-        }
-        setText((value == null) ? "" : value.toString());
-        return this;
-      }
     }
 
     /**
@@ -492,15 +461,17 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         /**
          * Notify the table that the contents have changed.
          * To reduce CPU load, this batches the changes
-         * @param start first row changed; -1 means entire table
-         * @param end   last row changed; -1 means entire table
+         * @param start first row changed; -1 means entire table (not used yet)
+         * @param end   last row changed; -1 means entire table (not used yet)
          */
         void handleTableUpdate(int start, int end) {
+            log.info("handleTableUpdated");
             final int DELAY = 250;
 
             if (!pending) {
                 jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
                     pending = false;
+                    log.info("handleTableUpdated fires table changed");
                     fireTableDataChanged();
                 }, DELAY);
                 pending = true;
@@ -568,7 +539,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 log.trace("   use bestEmpty");
                 bestEmpty.producer = nodeID;
                 bestEmpty.producerName = name;
-                handleTableUpdate(-1, -1);
+                handleTableUpdate(-1, -1); // should be rows for bestEmpty, bestEmpty
                 return;
             }
 
@@ -578,7 +549,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 log.trace("   reuse empty");
                 empty.producer = nodeID;
                 empty.producerName = name;
-                handleTableUpdate(-1, -1);
+                handleTableUpdate(-1, -1); // should be rows for empty, empty
                 return;
             }
 
@@ -648,7 +619,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 log.trace("   use bestEmpty");
                 bestEmpty.consumer = nodeID;
                 bestEmpty.consumerName = name;
-                handleTableUpdate(-1, -1);
+                handleTableUpdate(-1, -1);  // should be rows for bestEmpty, bestEmpty
                 return;
             }
 
@@ -658,7 +629,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 log.trace("   reuse empty");
                 empty.consumer = nodeID;
                 empty.consumerName = name;
-                handleTableUpdate(-1, -1);
+                handleTableUpdate(-1, -1);  // should be rows for empty, empty
                 return;
             }
 
@@ -804,6 +775,18 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             var nodeID = msg.getSourceNodeID();
             var eventID = msg.getEventID();
             model.recordProducer(eventID, nodeID);
+        }
+
+        /**
+         * Handle "Simple Node Ident Info Reply" message
+         * @param msg       message to handle
+         * @param sender    connection where it came from
+         */
+        @Override
+        public void handleSimpleNodeIdentInfoReply(SimpleNodeIdentInfoReplyMessage msg, Connection sender){
+            // might know about a new node name, so do an update
+            log.info("SNIP reply processed");
+            model.handleTableUpdate(-1, -1);
         }
     }
 
