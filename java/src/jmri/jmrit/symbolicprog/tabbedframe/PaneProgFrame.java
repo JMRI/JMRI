@@ -184,9 +184,10 @@ abstract public class PaneProgFrame extends JmriJFrame
         JMenu exportSubMenu = new JMenu(Bundle.getMessage("MenuExport"));
         fileMenu.add(exportSubMenu);
         exportSubMenu.add(new CsvExportAction(Bundle.getMessage("MenuExportCSV"), cvModel, this));
+        exportSubMenu.add(new CsvExportModifiedAction(Bundle.getMessage("MenuExportCSVModified"), cvModel, this));
         exportSubMenu.add(new Pr1ExportAction(Bundle.getMessage("MenuExportPr1DOS"), cvModel, this));
         exportSubMenu.add(new Pr1WinExportAction(Bundle.getMessage("MenuExportPr1WIN"), cvModel, this));
-        exportSubMenu.add(new CsvExportModifiedAction(Bundle.getMessage("MenuExportCSVModified"), cvModel, this));
+        exportSubMenu.add(new TcsExportAction(Bundle.getMessage("MenuExportTcs"), cvModel, _rosterEntry, this));
 
         // add "Import" submenu; this is hierarchical because
         // some of the names are so long, and we expect more formats
