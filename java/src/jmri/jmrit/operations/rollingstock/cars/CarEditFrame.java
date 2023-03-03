@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
+import java.text.*;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -14,9 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import jmri.jmrit.operations.rollingstock.RollingStockEditFrame;
+import jmri.jmrit.operations.rollingstock.*;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
 import jmri.jmrit.operations.setup.Setup;
@@ -407,6 +403,8 @@ public class CarEditFrame extends RollingStockEditFrame {
         }
         if (loadComboBox.getSelectedItem() != null && !car.getLoadName().equals(loadComboBox.getSelectedItem())) {
             car.setLoadName((String) loadComboBox.getSelectedItem());
+            car.setWait(0); // car could be at spur with schedule
+            car.setScheduleItemId(Car.NONE);
             // check to see if car is part of kernel, and ask if all the other cars in the kernel should be changed
             if (car.getKernel() != null) {
                 List<Car> cars = car.getKernel().getCars();
@@ -421,6 +419,8 @@ public class CarEditFrame extends RollingStockEditFrame {
                             if (InstanceManager.getDefault(CarLoads.class).containsName(c.getTypeName(),
                                     car.getLoadName())) {
                                 c.setLoadName(car.getLoadName());
+                                c.setWait(0); // car could be at spur with schedule
+                                c.setScheduleItemId(Car.NONE);
                             }
                         }
                     }

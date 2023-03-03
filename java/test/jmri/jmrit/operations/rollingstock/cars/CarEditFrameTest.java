@@ -884,6 +884,12 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("order", 2, car.getBlocking());
         Assert.assertTrue(car.getKernel().isLead(car));
         Assert.assertEquals("Track", "NI Yard", car2.getTrackName());
+        
+        // confirm that car's wait and schedule id gets updated when load changes
+        car.setWait(1);
+        car.setScheduleItemId("someId");
+        car2.setWait(1);
+        car2.setScheduleItemId("someId");
 
         // change the car's load
         f.loadComboBox.setSelectedItem("L");
@@ -895,7 +901,12 @@ public class CarEditFrameTest extends OperationsTestCase {
         JemmyUtil.waitFor(f);
 
         Assert.assertEquals("Load", "L", car.getLoadName());
+        Assert.assertEquals("Wait", 0, car.getWait());
+        Assert.assertEquals("Schedule id", Car.NONE, car.getScheduleItemId());
+        
         Assert.assertEquals("Load", "L", car2.getLoadName());
+        Assert.assertEquals("Wait", 0, car2.getWait());
+        Assert.assertEquals("Schedule id", Car.NONE, car2.getScheduleItemId());
 
         JUnitUtil.dispose(f);
     }

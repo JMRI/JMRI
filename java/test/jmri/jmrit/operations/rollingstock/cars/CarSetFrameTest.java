@@ -271,10 +271,17 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertEquals("empty loads", 2, f.loadReturnWhenEmptyBox.getItemCount());
         Assert.assertEquals("load loads", 1, f.loadReturnWhenLoadedBox.getItemCount());
         
+        // confirm that wait and schedule id get updated when load changes
+        car.setWait(1);
+        car.setScheduleItemId("someId");
+        
         // Confirm load change
         f.loadComboBox.setSelectedItem("NewLoad");
         JemmyUtil.enterClickAndLeave(f.saveButton);
+        
         Assert.assertEquals("load change", "NewLoad", car.getLoadName());
+        Assert.assertEquals("Wait", 0, car.getWait());
+        Assert.assertEquals("Schedule id", Car.NONE, car.getScheduleItemId());
         
         JUnitUtil.dispose(f);
     }
