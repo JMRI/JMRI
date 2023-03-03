@@ -14,7 +14,8 @@
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
     <h1>OpenLCB Event Table Frame</h1>
-
+      <a href="Event_Table.png">
+      <img src="Event_Table.png" align="right" width="442" height="256""/></a>
       This provides a table view of the Events, Producers and Consumers
       in your OpenLCB network.
       <p>
@@ -28,6 +29,13 @@
       If node names (4th and 6th columns) don't show up immediately, press
       "Update from Network" a second time.
       <p>
+      If you have a configuration window open on one or more events and
+      click "Update from Network", the right-hand column will show the
+      tree-walking display of where each event is referenced in those
+      configuration windows.  This can help you determine the function of
+      the producers and consumers. Note that you might need to resize the column
+      to see the complete entry.
+      <p>
       You can enter names for events in the 2nd column.  Click on the cell
       to open it for editing. Hit return when done.  These will be
       saved automatically and loaded when you next start JMRI.
@@ -40,13 +48,15 @@
       and at least one consumer.  These are the events that actually do something
       on your LCC network.
       <p>
-      If you have a configuration window open on one or more events and
-      click "Update from Network", the right-hand column will show the
-      tree-walking display of where each event is referenced in those
-      configuration windows.  This can help you determine the function of
-      the producers and consumers. Note that you might need to resize the column
-      to see the complete entry.
-
+      Checking the "Popcorn mode" will highlight the producer for every event that
+      JMRI sees being produced.
+      Since the window scrolls to show the event, this can result in the screen
+      jumping around when it's enabled.
+      If there's a lot of traffic, this can slow your
+      computer down significantly, so only enable it when you want to use it.
+      <p>
+      Entering an event ID in the find box and clicking "Find" will highlight every
+      occurrence of that event.  The window will scroll to show the first one if needed.
 
       <!--#include virtual="/Footer.shtml" -->
     </div>
