@@ -146,13 +146,25 @@ public class CarsSetFrame extends CarSetFrame {
         }
 
         // don't ask for to change cars in a kernel when giving a selected group of cars a new kernel name
-        askKernelChange = true;
+        askKernelChange = false;
+        
+        // determine if all cars in every kernel are selected
+        for (Car car : cars) {
+            if (car.getKernel() != null) {
+                for (Car c : car.getKernel().getCars()) {
+                    if (!cars.contains(c)) {
+                        askKernelChange = true; // not all selected
+                        break;
+                    }
+                }
+            }
+        }
 
         for (Car car : cars) {
             if (!super.change(car)) {
                 return false;
             } else if (car.getKernel() != null && !ignoreKernelCheckBox.isSelected()) {
-                askKernelChange = false;
+                askKernelChange = false; // changing kernel name
             }
         }
         return true;
