@@ -70,6 +70,9 @@ public class LocationsTableFrame extends OperationsFrame {
         // setup buttons
         addButtonAction(addButton);
 
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(sortByName);
+        buttonGroup.add(sortById);
         addRadioButtonAction(sortByName);
         addRadioButtonAction(sortById);
         
@@ -116,13 +119,10 @@ public class LocationsTableFrame extends OperationsFrame {
         // clear any sorts by column
         clearTableSort(locationsTable);
         if (ae.getSource() == sortByName) {
-            sortByName.setSelected(true);
-            sortById.setSelected(false);
             locationsModel.setSort(locationsModel.SORTBYNAME);
         }
         if (ae.getSource() == sortById) {
-            sortByName.setSelected(false);
-            sortById.setSelected(true);
+            InstanceManager.getDefault(LocationManager.class).setShowIdEnabled(true);
             locationsModel.setSort(locationsModel.SORTBYID);
         }
     }
@@ -130,7 +130,6 @@ public class LocationsTableFrame extends OperationsFrame {
     // add button
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-//  log.debug("location button activated");
         if (ae.getSource() == addButton) {
             LocationEditFrame f = new LocationEditFrame(null);
             f.setTitle(Bundle.getMessage("TitleLocationAdd"));
