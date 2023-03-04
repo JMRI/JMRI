@@ -1035,7 +1035,6 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      * Duplicate selected item.
      */
     void duplicatePressed() {
-        log.info("duplicatePressed: node = {}", _curNodeType);
         _dataMgr.setLockCalculate(true);
         switch (_curNodeType) {
             case "Layout":     // NOI18N
