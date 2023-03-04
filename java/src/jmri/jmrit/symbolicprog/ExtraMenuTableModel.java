@@ -72,7 +72,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
 
     protected void flagIfOpsMode(String mode) {
         log.trace(" flagIfOpsMode {}", mode);
-        if (mode.startsWith("OPS")) {
+        if (mode.contains("OPS")) {
             hasOpsModeFlag = true;
         }
     }
@@ -258,7 +258,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
                     }
                 }
 
-                if (mProgrammer.getMode().getStandardName().startsWith("OPS")) {
+                if (mProgrammer.getMode().getStandardName().contains("OPS")) {
                     if (!opsResetOk()) {
                         return;
                     }
