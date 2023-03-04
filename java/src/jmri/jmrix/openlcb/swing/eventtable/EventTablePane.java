@@ -505,8 +505,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
             // if this already exists, skip storing it
             // if you can, find a matching memo with an empty consumer value
-            TripleMemo empty = null;
-            TripleMemo bestEmpty = null;
+            TripleMemo empty = null;        // TODO: switch to int index for handle update below
+            TripleMemo bestEmpty = null;    // TODO: switch to int index for handle update below
             for (int i = 1; i < memos.size(); i++) {
                 var memo = memos.get(i);
                 if (memo.eventID.equals(eventID) ) {
@@ -539,7 +539,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 log.trace("   use bestEmpty");
                 bestEmpty.producer = nodeID;
                 bestEmpty.producerName = name;
-                handleTableUpdate(-1, -1); // should be rows for bestEmpty, bestEmpty
+                handleTableUpdate(-1, -1); // TODO: should be rows for bestEmpty, bestEmpty
                 return;
             }
 
@@ -549,7 +549,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 log.trace("   reuse empty");
                 empty.producer = nodeID;
                 empty.producerName = name;
-                handleTableUpdate(-1, -1); // should be rows for empty, empty
+                handleTableUpdate(-1, -1); // TODO: should be rows for empty, empty
                 return;
             }
 
