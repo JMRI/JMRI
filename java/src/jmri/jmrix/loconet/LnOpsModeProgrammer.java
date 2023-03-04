@@ -174,7 +174,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getLnTrafficController().sendLocoNetMessage(m);
             lncvAccessTimer.start();
         } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
-            // LOCONETOPSBOARD decoder 
+            // LOCONETOPSBOARD decoder
             memo.getSlotManager().setAcceptAnyLACK();
             memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         } else {
@@ -291,7 +291,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getLnTrafficController().sendLocoNetMessage(m);
             lncvAccessTimer.start();
         } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
-            // LOCONETOPSBOARD decoder 
+            // LOCONETOPSBOARD decoder
             memo.getSlotManager().setAcceptAnyLACK();
             memo.getSlotManager().readCVOpsMode(CV, pL, mAddress, mLongAddr);
         } else {
@@ -322,7 +322,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             readCV(CV, pL);
             //notifyProgListenerEnd(pL, 0, ProgListener.UnknownError);
         } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
-            // LOCONETOPSBOARD decoder 
+            // LOCONETOPSBOARD decoder
             memo.getSlotManager().setAcceptAnyLACK();
             memo.getSlotManager().confirmCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         } else {
@@ -432,7 +432,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
                 log.debug("returning SV programming reply: {}", m);
 
                 sv2AccessTimer.stop();    // kill the timeout timer
-                
+
                 int code = ProgListener.OK;
                 int val = (m.getElement(11)&0x7F)|(((m.getElement(10)&0x01) != 0x00)? 0x80:0x00);
 
@@ -581,6 +581,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>(4);
         ret.add(ProgrammingMode.OPSBYTEMODE);
+        ret.add(LnProgrammerManager.LOCONETBD7OPSWMODE);
         ret.add(LnProgrammerManager.LOCONETOPSBOARD);
         ret.add(LnProgrammerManager.LOCONETSV1MODE);
         ret.add(LnProgrammerManager.LOCONETSV2MODE);
