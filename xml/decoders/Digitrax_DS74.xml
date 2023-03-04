@@ -13,7 +13,7 @@
     <decoder>
 
         <family name="Series 7 Boards" mfg="Digitrax">
-            <model model="SE74"/>
+            <model model="DS74"/>
         </family>
 
         <programming direct="no" paged="yes" register="no" ops="no"><!-- paged yes allows initial setup and change of address -->
@@ -21,36 +21,27 @@
         </programming>
 
         <variables>
-          <variable CV="1" comment="Board address" item="Long Address" default="253" infoOnly="yes">
+
+          <variable CV="1" comment="Board address" item="Long Address" default="40" infoOnly="yes">
             <!-- needed to set the board address value -->
             <decVal min="1" max="2045" />
             <label>Board Address</label>
           </variable>
 
-          <variable CV="11" item="Turnout Type" default="0"
-                tooltip="OpSw01" mask="XXXXXXXV">
+           <variable CV="11" item="Output Type" default="0"
+                tooltip="OpSw1-4" mask="XXXXVVVV">
             <enumVal>
               <enumChoice>
-                <choice>Pulse/Solenoid Turnouts</choice>
+                <choice>pulse solenoid (4 outputs)</choice>
               </enumChoice>
               <enumChoice>
-                <choice>Slow Motion Turnouts</choice>
+                <choice>slow motion (4 outputs)</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice value="5">light mode (8 outputs)</choice>
               </enumChoice>
             </enumVal>
-            <label>Turnout Type is</label>
-          </variable>
-
-          <variable CV="11" item="Control Mode" default="0"
-                tooltip="OpSw05" mask="XXXVXXXX">
-            <enumVal>
-              <enumChoice>
-                <choice>Switch Command Mode</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice>DCC Aspect Control Mode</choice>
-              </enumChoice>
-            </enumVal>
-            <label>Control Mode is</label>
+            <label>Output type: </label>
           </variable>
 
           <variable CV="11" item="Internal Routes" default="0"
@@ -131,106 +122,10 @@
             <label>Solenoid Pulse</label>
           </variable>
 
-          <variable CV="14" item="SW Messages" default="0"
-                tooltip="OpSw30" mask="XVXXXXXX">
-            <enumVal>
-              <enumChoice>
-                <choice>normal B0 format</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice>special B2 format</choice>
-              </enumChoice>
-            </enumVal>
-            <label>For switch messages, send</label>
-          </variable>
-
-          <variable CV="15" item="Searchlight 2-wire" default="0"
-                tooltip="OpSw33" mask="XXXXXXXV">
-            <enumVal>
-              <enumChoice>
-                <choice>normal signals</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice>2-wire searchlight signals</choice>
-              </enumChoice>
-            </enumVal>
-            <label>Signals are</label>
-          </variable>
-
-          <variable CV="15" item="Searchlight Type" default="0"
-                tooltip="OpSw34" mask="XXXXXXVX">
-            <enumVal>
-              <enumChoice>
-                <choice>3-color signal type</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice>search light type</choice>
-              </enumChoice>
-            </enumVal>
-            <label>Signals are</label>
-          </variable>
-
-          <variable CV="15" item="Wiring" default="0"
-                tooltip="OpSw35" mask="XXXXXVXX">
-            <enumVal>
-              <enumChoice>
-                <choice>command anode</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice>common cathode</choice>
-              </enumChoice>
-            </enumVal>
-            <label>Signals wired as</label>
-          </variable>
-
-          <variable CV="15" item="Broadcast" default="0"
-                tooltip="OpSw37,36" mask="XXXVVXXX">
-            <enumVal>
-              <enumChoice>
-                <choice>flashing yellow</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice>dark</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice>flashing red</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice>flashing green</choice>
-              </enumChoice>
-            </enumVal>
-            <label>Fourth aspect is</label>
-          </variable>
-
-          <variable CV="15" item="1021 Broadcast" default="0"
-                tooltip="OpSw38" mask="XXVXXXXX">
-            <enumVal>
-              <enumChoice>
-                <choice>enabled</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice>disabled</choice>
-              </enumChoice>
-            </enumVal>
-            <label>SW1021/2022 signal broadcast: </label>
-          </variable>
-
-          <variable CV="16" item="Lunar" default="0"
-                tooltip="OpSw41" mask="XXXXXXXV">
-            <enumVal>
-              <enumChoice>
-                <choice>not persistent</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice>persistent</choice>
-              </enumChoice>
-            </enumVal>
-            <label>Lunar Aspects are</label>
-          </variable>
-
         </variables>
         <resets>
-            <factReset label="Reset All CVs" CV="15" default="128">
+            <mode>LOCONETBD7OPSWMODE</mode>
+            <factReset label="Factory Reset" CV="15" default="128">
                 <label>Reset All CVs</label>
             </factReset>
         </resets>
@@ -283,23 +178,14 @@
     <pane>
         <name>OpSw Settings</name>
         <column>
-            <display item="Turnout Type"/>
-            <display item="Control Mode"/>
+            <display item="Output Type"/>
             <display item="Internal Routes"/>
             <display item="Bushby"/>
+
             <display item="Input Lines"/>
             <display item="Command Source"/>
             <display item="Route Echo"/>
             <display item="Solenoid Pulse"/>
-            <display item="SW Messages"/>
-            <display item="Searchlight 2-wire"/>
-            <display item="Searchlight Type"/>
-            <display item="Wiring"/>
-            <display item=""/>
-            <display item="Broadcast"/>
-            <display item="Lunar"/>
-            <display item="1021 Broadcast"/>
-
         </column>
     </pane>
 
