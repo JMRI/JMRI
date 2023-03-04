@@ -76,7 +76,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Added support for the programming protocol used by
+                    Digitrax Series 7 boards (DS74, SE74, etc)</li>
             </ul>
 
         <h4>Maple</h4>
@@ -214,6 +215,7 @@
             <ul>
                 <li>Added SE74 usage information to the Digitrax/LocoNet hardware help page,
                     including specific guidance for configuring JMRI's signaling, and typo fixes.</li>
+                <li>Added DecoderPro definitions for the DS74 and SE74.<li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
