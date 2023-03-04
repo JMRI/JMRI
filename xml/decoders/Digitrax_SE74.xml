@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
+                showEmptyPanes="no">
+
+    <version author="Bob Jacobsen" version="1" lastUpdated="20230205" />
+
+    <decoder>
+
+        <family name="SE74" mfg="Digitrax">
+            <model model="SE74"/>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+            <mode>LOCONETBD7OPSWMODE</mode>
+        </programming>
+
+        <variables>
+          <variable CV="1" comment="Board address" item="Short Address" default="1" infoOnly="yes">
+            <!-- needed to set the board address value -->
+            <decVal min="1" max="128" />
+            <label>Board Address (Board ID)</label>
+          </variable>
+
+          <variable CV="113.01" item="Turnout Type" default="0"
+                tooltip="OpSw01">
+            <enumVal>
+              <enumChoice>
+                <choice>Pulse/Solenoid Turnouts</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Slow Motion Turnouts</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Turnout Type is</label>
+          </variable>
+
+          <variable CV="113.05" item="Control Mode" default="0"
+                tooltip="OpSw05">
+            <enumVal>
+              <enumChoice>
+                <choice>Switch Command Mode</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>DCC Aspect Control Mode</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Control Mode is</label>
+          </variable>
+
+          <variable CV="113.06" item="Internal Routes" default="0"
+                tooltip="OpSw06">
+            <enumVal>
+              <enumChoice>
+                <choice>Enabled</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Disabled</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Internal Routes are</label>
+          </variable>
+
+          <variable CV="113.10" item="Bushby" default="0"
+                tooltip="OpSw11">
+            <enumVal>
+              <enumChoice>
+                <choice>disabled</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>enabled</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Bushby Bit is</label>
+          </variable>
+
+          <variable CV="113.11" item="Input Lines" default="0"
+                tooltip="OpSw11">
+            <enumVal>
+              <enumChoice>
+                <choice>do turnout, sensor commands</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>trigger routes</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Input Lines</label>
+          </variable>
+
+          <variable CV="113.14" item="Command Source" default="0"
+                tooltip="OpSw14">
+            <enumVal>
+              <enumChoice>
+                <choice>Loconet Switch Commands</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>DCC Switch Commands Only</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Command source is</label>
+          </variable>
+
+          <variable CV="113.15" item="Route Echo" default="0"
+                tooltip="OpSw15">
+            <enumVal>
+              <enumChoice>
+                <choice>echo to Loconet</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>do not echo to Loconet</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Route Switch Commands</label>
+          </variable>
+
+          <variable CV="113.16" item="Solenoid Pulse" default="0"
+                tooltip="OpSw16">
+            <enumVal>
+              <enumChoice>
+                <choice>normal</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>high CD voltage</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Solenoid Pulse</label>
+          </variable>
+
+          <variable CV="113.30" item="SW Messages" default="0"
+                tooltip="OpSw30">
+            <enumVal>
+              <enumChoice>
+                <choice>normal B0 format</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>special B2 format</choice>
+              </enumChoice>
+            </enumVal>
+            <label>For switch messages, send</label>
+          </variable>
+
+          <variable CV="113.33" item="Searchlight 2-wire" default="0"
+                tooltip="OpSw33">
+            <enumVal>
+              <enumChoice>
+                <choice>normal signals</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>2-wire searchlight signals</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Signals are</label>
+          </variable>
+
+          <variable CV="113.34" item="Searchlight Type" default="0"
+                tooltip="OpSw34">
+            <enumVal>
+              <enumChoice>
+                <choice>3-color signal type</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>search light type</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Signals are</label>
+          </variable>
+
+          <variable CV="113.35" item="Wiring" default="0"
+                tooltip="OpSw35">
+            <enumVal>
+              <enumChoice>
+                <choice>command anode</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>common cathode</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Signals wired as</label>
+          </variable>
+
+
+
+
+          <variable CV="113.38" item="Broadcast" default="0"
+                tooltip="OpSw38">
+            <enumVal>
+              <enumChoice>
+                <choice>enabled</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>disabled</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Switch 1021/1022 broadcast</label>
+          </variable>
+
+          <variable CV="113.40" item="Default" default="0"
+                tooltip="OpSw38">
+            <enumVal>
+              <enumChoice>
+                <choice> </choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Reset to Factory Defaults</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Reset: </label>
+          </variable>
+
+          <variable CV="113.40" item="Lunar" default="0"
+                tooltip="OpSw38">
+            <enumVal>
+              <enumChoice>
+                <choice>not persistent</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>persistent</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Lunar Aspects are</label>
+          </variable>
+
+
+
+        </variables>
+    </decoder>
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>OpSws</name>
+    <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>gt</relation>
+          <value>0</value>
+
+    </qualifier>
+    <column>
+        <row>
+            <cvtable/>
+        </row>
+        <row>
+            <column>
+                <label>
+                    <text>&lt;html&gt;The "CV" column in the table above shows "OpSw"
+                        numbers, where the value "113." &lt;p&gt;is pre-pended to
+                        the OpSw Number.
+                        &lt;p&gt;&lt;p&gt;The top-most row above reflects the Board
+                        Address configured on the "Basic" sheet.
+                    </text>
+                </label>
+                <label>
+                    <text> </text>
+                </label>
+            </column>
+        </row>
+        <row>
+            <label>
+                <text>&lt;html&gt;
+                    &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.&lt;p&gt;
+                    &lt;/html&gt;&lt;/html&gt;
+                </text>
+            </label>
+
+        </row>
+    </column>
+
+  </pane>
+  <pane>
+      <name>Basic</name>
+      <column>
+          <display item="Short Address"/>
+          <label>
+              <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;p&gt;
+                Loconet messaging limits the supported Board Address (Board ID)
+                range to addresses between 1 and 128.  This tool cannot access
+                &lt;p&gt;devices outside of this range.
+                &lt;p&gt;
+                &lt;p&gt;This roster entry will only access the specified
+                board if the Board Address (Active Address), on the
+                &lt;p&gt;"Basic" sheet, is correct when the programmer is opened.
+                &lt;p&gt;
+                &lt;p&gt;If the Board Address (Active Address) has been changed since
+                the programmer was opened, the programmer will attempt to access the
+                &lt;p&gt;board address which was specified in the
+                Roster entry when the progammer was opened.
+                &lt;p&gt;
+                &lt;p&gt;After making a change to the Roster entry's Board Address
+                (Active Address) on the "Basic" sheet, save and close the programmer
+                &lt;p&gt;window and re-open the Roster entry to ensure that the
+                the programmer will use the modified Active Address for accesses
+                &lt;p&gt;to the device.
+                &lt;p&gt;
+                &lt;p&gt;Note that some documentation refers
+                to Board Address, while other documentation refers to
+                &lt;p&gt;Board ID.  These are equivalent concepts.
+            &lt;/html&gt;</text>
+          </label>
+      </column>
+  </pane>
+
+    <pane>
+        <name>Basic OpSw Settings</name>
+        <column>
+            <display item="Turnout Type"/>
+            <display item="Control Mode"/>
+            <display item="Internal Routes"/>
+            <display item="Bushby"/>
+            <display item="Input Lines"/>
+            <display item="Command Source"/>
+            <display item="Route Echo"/>
+            <display item="Solenoid Pulse"/>
+            <display item="SW Messages"/>
+            <display item="Searchlight 2-wire"/>
+            <display item="Searchlight Type"/>
+            <display item="Wiring"/>
+            <display item=""/>
+            <display item="Broadcast"/>
+            <display item="Lunar"/>
+            <label><text> </text></label><label><text> </text></label>
+            <display item="Default"/>
+
+        </column>
+    </pane>
+
+
+ <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>CVs</name>
+    <name xml:lang="it">CV</name>
+    <name xml:lang="de">CV-Tabelle</name>
+    <name xml:lang="ca">Taula-CV</name>
+    <name xml:lang="cs">Tabulka CV</name>
+    <name xml:lang="nl">CV-tabel</name>
+    <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+
+    </qualifier>
+    <column>
+        <label>
+            <text>This sheet intentionally un-populated.  See the "OpSws" tab.</text>
+        </label>
+    </column>
+
+  </pane>
+</decoder-config>
