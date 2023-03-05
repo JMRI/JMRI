@@ -48,7 +48,7 @@
       </p>
 
       <p>OperationsPro&trade; is included in the JMRI suite of tools and can be found under the
-        main menu heading "Tools-&gt;Operations".</p>
+        main menu heading "Tools-&gt;OperationsPro".</p>
 
       <p>
         <img src="images/MainMenuDecoderPro.png" alt="">
@@ -897,7 +897,7 @@
 
       <p>
         OperationsPro&trade; has two sets of car types for you to use. Descriptive provides type
-        names like "Boxcar" and "tank car", and AAR Codes provides type names like "XM" and "T" for
+        names like "Boxcar" and "Tank car", and AAR Codes provides type names like "XM" and "T" for
         boxcars and tank cars respectively. Select the one that you prefer. You can add or delete
         car types by using the <a href="#CarTypeLengthWeight">car type edit</a> window.
       </p>
@@ -5798,12 +5798,12 @@
         You can also access a train's Manifest and <a href="#BuildReports">Build Report</a> from the
         "Tools" menu in the edit train window. The "Tools" menu option allows you to recover the
         Manifest and build report for a train that has been terminated. Useful if you've
-        accidentally terminated a train before printing out the train's Manifest. Below is a train
-        Manifest using the "Standard" format, with blue text for car pick ups, and red text for car
-        set outs.
-      </p>
+        accidentally terminated a train before printing out the train's Manifest.</p>
 
-      <p>
+   <p>Below is a train Manifest using the "Standard" format, with blue text for car pick ups,
+    and red text for car set outs.</p>
+
+   <p>
         <img src="images/Manifest.png" alt="">
       </p>
 
