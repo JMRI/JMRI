@@ -387,6 +387,9 @@
             <li>You can now export a roster entry (from the File -> Export menu)
                 to a CDI backup file for restoring into a train entry in the
                 TCS CS-105 command station.
+                You can also import
+                (from the File -> Import menu) a CDI backup
+                file to a roster entry.</li>
         </ul>
 
     <h3>CTC Tool</h3>

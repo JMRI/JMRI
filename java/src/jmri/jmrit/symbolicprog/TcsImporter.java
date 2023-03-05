@@ -1,0 +1,143 @@
+package jmri.jmrit.symbolicprog;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Properties;
+
+import jmri.JmriException;
+import jmri.jmrit.roster.RosterEntry;
+
+/**
+ * Import CV values from a TCS backup file from a CDI backup
+ *
+ * @author Alex Shepherd Copyright (C) 2003 (original Pr1Importer)
+ * *author Bob Jacobsen  Copyright (C) 2023
+ */
+public class TcsImporter {
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcsImporter.class);
+    private static final String VERSION_KEY = "Version";
+    private static final String CV_PREFIX = "CV";
+    private static final int CV_INDEX_OFFSET = 2;
+
+    Properties tcsProperties;
+
+    // TODO: more general if this is from a Stream or Reader?
+    public TcsImporter(File file) throws IOException {
+        tcsProperties = new Properties();
+        FileInputStream fileStream = new FileInputStream(file);
+        try {
+            tcsProperties.load(fileStream);
+        } finally {
+            fileStream.close();
+        }
+    }
+
+    public void setRosterEntry(RosterEntry rosterEntry) {
+        // TODO: How to handle name?  Check for mismatch with ID? (Don't change ID?)
+        log.debug("found name {}", tcsProperties.get("Train.Name"));
+        // TODO: Confirm that address is correct?  How to handle that?
+        log.debug("found address {}", tcsProperties.get("Train.Address"));
+        log.debug("found step {}", tcsProperties.get("Train.Speed")); // note key truncated as space
+
+        // TODO: move the following to a static method ot allow reuse from elsewhere
+
+        // copy User Description to comment
+        var userDescription = tcsProperties.get("Train.User").toString(); // note key truncated as space
+        rosterEntry.setComment(userDescription);
+
+        for (int i=0; i < 27; i++) {
+            var momentary = tcsProperties.get("Train.Functions("+i+").Momentary").toString();
+            log.trace("Found momentary {} as {}", i, momentary);
+            if (momentary == null) continue; // no change if null
+
+            var display = tcsProperties.get("Train.Functions("+i+").Display").toString();
+            log.trace("Found display {} as {}", i, display);
+            if (display == null) continue; // no change if null
+
+            var description = tcsProperties.get("Train.Functions("+i+").Description").toString();
+            log.trace("Found description {} as {}", i, description);
+            if (description == null) continue; // no change if null
+
+            // Handle non-zero Display values by updating description value
+            description = unpackDescription(description, display);
+
+            // Here, we copy Description to the label
+            rosterEntry.setFunctionLabel(i+1, description);
+            // and momentary to the "locked" status
+            rosterEntry.setFunctionLockable(i+1, momentary.equals("1"));
+        }
+    }
+
+    static String unpackDescription(String description, String display) {
+        // if there is a description value, that wins
+        if (!description.isEmpty()) return description;
+
+        // there must be a value in display, unpack it.
+        // We do string switch in case of non-parseable garbage
+        switch (display) {
+
+            case "0":   return "Unassigned";
+            case "1":   return "Headlight";
+            case "13":  return "Bell";
+            case "14":  return "Horn";
+            case "15":  return "Whistle";
+            case "11":  return "Pantograph";
+            case "10":  return "Smoke";
+            case "4":   return "Engine";
+            case "74":  return "Light";
+            case "28":  return "Coupler Clank";
+            case "122": return "Couple";
+            case "9":   return "Uncouple";
+
+            case "7":   return "Shunting Mode";
+            case "8":   return "Momentum";
+
+            case "57":  return "Brake";
+            case "200": return "Brake Release";
+            case "41":  return "Dynamic Brake";
+            case "31":  return "Manual Notch Down";
+            case "30":  return "Manual Notch Up";
+            case "69":  return "Reverser";
+            case "100": return "Mute";
+
+            case "12":  return "Far Light";
+            case "3":   return "Cab Light";
+            case "48":  return "Ditch Lights";
+            case "98":  return "Step Lights";
+            case "62":  return "Tail Lights";
+            case "58":  return "Switching Lights";
+            case "51":  return "Dimmer";
+            case "2":   return "Interior Lights";
+
+            case "42":  return "Air Compressor";
+            case "45":  return "Air Pump";
+            case "60":  return "Injector";
+            case "108": return "Exhaust Fan";
+            case "17":  return "Radiator Fan";
+            case "66":  return "Steam Generator";
+            case "105": return "Blower";
+            case "56":  return "Blow Down";
+            case "38":  return "Safety";
+            case "55":  return "Sanding";
+            case "88":  return "Ash Dump";
+            case "18":  return "Shoveling";
+            case "35":  return "Water Fill";
+
+            case "103": return "Long Whistle";
+            case "64":  return "Short Whistle";
+            case "63":  return "Doppler Horn";
+
+            case "36":  return "Curve Squeal";
+            case "21":  return "Brake Squeal";
+            case "6":   return "Announce";
+            case "27":  return "Cab Chatter";
+
+            case "255": return "Unavailable_";
+
+            default:    return "<entry error \""+display+"\">";
+        }
+    }
+}

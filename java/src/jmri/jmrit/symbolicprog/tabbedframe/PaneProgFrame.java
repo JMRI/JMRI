@@ -178,6 +178,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         importSubMenu.add(new Pr1ImportAction(Bundle.getMessage("MenuImportPr1"), cvModel, this, progStatus));
         importSubMenu.add(new LokProgImportAction(Bundle.getMessage("MenuImportLokProg"), cvModel, this, progStatus));
         importSubMenu.add(new QuantumCvMgrImportAction(Bundle.getMessage("MenuImportQuantumCvMgr"), cvModel, this, progStatus));
+        importSubMenu.add(new TcsImportAction(Bundle.getMessage("MenuImportTcs"), cvModel, this, progStatus, _rosterEntry));
 
         // add "Export" submenu; this is hierarchical because
         // some of the names are so long, and we expect more formats
