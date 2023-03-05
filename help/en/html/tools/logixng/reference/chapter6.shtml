@@ -43,6 +43,10 @@
             </li>
 
             <li>
+              <a href="#digital_expression_linux">Linux <span class="since">since 5.3.4</span></a>
+            </li>
+
+            <li>
               <a href="#digital_expression_other">Other</a>
             </li>
           </ul>
@@ -708,6 +712,34 @@
       <div style="margin-left: 2em">
         <a href="images/chapter6/loconet_slot_usage.png"><img src=
         "images/chapter6/loconet_slot_usage.png" alt="Chapter 6 loconet slot usage"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="digital_expression_linux">Digital expression :: Linux</h3>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter6/digital_expression_linux.png"><img src=
+        "images/chapter6/digital_expression_linux.png" alt="Chapter 6 digital expression linux"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5>Linux Line Power<span class="since">since 5.3.4</span></h5>
+
+      <p>The Linux <strong>upower</strong> command line tool is used to determine if external power
+      is active. For example, if the external power is removed, then this tool can be used to do a
+      graceful shutdown before the battery dies.</p>
+
+      <p>The expression runs the <strong>upower</strong> command line tool every five seconds.  If
+      it detects a change, it triggers the execution of the ConditionalNG.</p>
+
+      <p>When the expression is added, the <strong>upower</strong> command is checked to make sure
+      it is present and working.  A warning message will be displayed if there is an issue.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter6/linux_line_power.png"><img src=
+        "images/chapter6/linux_line_power.png" alt="Chapter 6 linux line power"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
