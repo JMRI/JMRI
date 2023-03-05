@@ -220,7 +220,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
     void popcornButtonChanged() {
         model.popcornModeActive = popcorn.isSelected();
-        log.info("Popcorn mode {}", model.popcornModeActive);
+        log.debug("Popcorn mode {}", model.popcornModeActive);
     }
 
 
@@ -465,13 +465,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          * @param end   last row changed; -1 means entire table (not used yet)
          */
         void handleTableUpdate(int start, int end) {
-            log.info("handleTableUpdated");
+            log.trace("handleTableUpdated");
             final int DELAY = 250;
 
             if (!pending) {
                 jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
                     pending = false;
-                    log.info("handleTableUpdated fires table changed");
+                    log.debug("handleTableUpdated fires table changed");
                     fireTableDataChanged();
                 }, DELAY);
                 pending = true;
@@ -785,7 +785,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         @Override
         public void handleSimpleNodeIdentInfoReply(SimpleNodeIdentInfoReplyMessage msg, Connection sender){
             // might know about a new node name, so do an update
-            log.info("SNIP reply processed");
+            log.debug("SNIP reply processed");
             model.handleTableUpdate(-1, -1);
         }
     }
