@@ -556,7 +556,8 @@
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
         <ul>
-            <li></li>
+            <li>Add action buttons to <strong>duplicate</strong> the Timetable data items.</li>
+            <li>Add the logic to calculate the train route durations.</li>
         </ul>
 
    <h3>Tracker</h3>

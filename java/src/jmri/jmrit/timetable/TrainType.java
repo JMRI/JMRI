@@ -37,6 +37,19 @@ public class TrainType {
     private String _typeName = Bundle.getMessage("NewTypeName");  // NOI18N
     private String _typeColor = "#000000";  // NOI18N
 
+    /**
+     * Make a copy of the train type.
+     * @param layoutId The new layoutId, if zero use the current layout id.
+     * @return a new train type instance.
+     */
+    public TrainType getCopy(int layoutId) {
+        if (layoutId == 0) layoutId = getLayoutId();
+        TrainType copy = new TrainType(layoutId);
+        copy.setTypeName(Bundle.getMessage("DuplicateCopyName", _typeName));
+        copy.setTypeColor(_typeColor);
+        return copy;
+    }
+
     public int getTypeId() {
         return _typeId;
     }

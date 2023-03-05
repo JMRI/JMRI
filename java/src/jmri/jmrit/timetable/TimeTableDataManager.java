@@ -520,6 +520,9 @@ public class TimeTableDataManager {
         int elapseTime = 0;
         boolean firstStop = true;
 
+        int routeStart = currentTime;
+        int routeEnd = 0;
+
         for (Stop stop : stops) {
             Station station = getStation(stop.getStationId());
             Segment segment = getSegment(station.getSegmentId());
@@ -576,6 +579,7 @@ public class TimeTableDataManager {
             if (currentTime > 1439)
                 currentTime -= 1440;
             newDepart = currentTime;
+            routeEnd = currentTime;
 
             currentDistance = station.getDistance();
             currentSpeed = (stop.getNextSpeed() > 0) ? stop.getNextSpeed() : defaultSpeed;
@@ -590,6 +594,15 @@ public class TimeTableDataManager {
             } else {
                 throw new IllegalArgumentException(String.format("%s~%d~%s", TIME_OUT_OF_RANGE, stop.getSeq(), train.getTrainName()));  // NOI18N
             }
+        }
+        if (updateStops) {
+//             log.info("train {} route start {}, end {}", train.getTrainName(), routeStart, routeEnd);
+            var routeDuration = routeEnd - routeStart;
+            // Adjust for day wrap
+            if (routeEnd < routeStart) {
+                routeDuration = (1440 - routeStart) + routeEnd;
+            }
+            train.setRouteDuration(routeDuration);
         }
     }
 
