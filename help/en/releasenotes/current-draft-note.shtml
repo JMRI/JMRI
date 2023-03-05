@@ -384,6 +384,9 @@
             <li>Two new decoder-index attributes
                 suppressFunctionLabels and suppressRosterMedia
                 can be used to suppress those panes in the DecoderPro GUI.</li>
+            <li>You can now export a roster entry (from the File -> Export menu)
+                to a CDI backup file for restoring into a train entry in the
+                TCS CS-105 command station.
         </ul>
 
     <h3>CTC Tool</h3>
