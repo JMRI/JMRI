@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - OpenLCB on TCS Hardware</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>Hardware Support: OpenLCB on TCS hardware</h1>
+      <em>JMRI support for OpenLCB is rapidly evolving; the actual code might be ahead or behind
+      the documentation on any given day.</em>
+      <p>This page describes JMRI's support for TCS hardware via OpenLCB. It's part of JMRI's
+      <a href="index.shtml">documentation of its OpenLCB support</a>.</p>
+
+      <h2>The TCS CS-105 Command Station</h2>
+
+        <h3>Connections</h3>
+
+        JMRI can connect to a TCS CS-105 command station two ways:
+        <ul>
+            <li>Via the CAN bus and a USB-CAN adapter.
+            <li>Via a direct network connection.
+        </ul>
+
+        <h3>Roster Support</h3>
+            <span class="since">Since <a href="jmri5.3.4.shtml">JMRI 5.3.4</a></span>
+
+            To copy the function labels from a DecoderPro
+            roster entry to the CS-105 command station for use
+            on UWT-100 throttles:
+            <ul>
+                <li>Open the DecoderPro roster entry.
+                <li>In the File -> Export... menu, select "Roster Entry to TCS File..."
+                <li>Store to a file
+                <li>Open the CDI for the specific train node.
+                <li>Click Restore... at the bottom and select your file from above.
+            </ul>
+
+            To copy the function labels from a CS-105 command
+            station to a DecoderPro roster entry:
+            <ul>
+                <li>Open the CDI for the specific train node.
+                <li>Click Backup... at the bottom and save the
+                    contents to a file.
+                <li>Open the corresponding DecoderPro roster entry.
+                <li>In the File -> Import... menu, select "TCS Backup File..."
+                <li>Open the file you stored just above.
+                <li>Save your DecoderPro roster entry.
+            </ul>
+
+
+
+      <p>Back to the <a href="index.shtml">main OpenLCB Help page</a></p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>
