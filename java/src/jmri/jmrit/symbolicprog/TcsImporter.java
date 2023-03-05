@@ -46,20 +46,25 @@ public class TcsImporter {
 
         // copy User Description to comment
         var userDescription = tcsProperties.get("Train.User").toString(); // note key truncated as space
+        // remove the "Description=" at front (due to space in key=value pair in input)
+        userDescription = userDescription.substring("Description=".length());
         rosterEntry.setComment(userDescription);
 
         for (int i=0; i < 27; i++) {
-            var momentary = tcsProperties.get("Train.Functions("+i+").Momentary").toString();
-            log.trace("Found momentary {} as {}", i, momentary);
-            if (momentary == null) continue; // no change if null
+            var momentaryObj = tcsProperties.get("Train.Functions("+i+").Momentary");
+            log.trace("Found Momentary {} as {}", i, momentaryObj);
+            if (momentaryObj == null) continue; // no change if null
+            var momentary = momentaryObj.toString();
 
-            var display = tcsProperties.get("Train.Functions("+i+").Display").toString();
-            log.trace("Found display {} as {}", i, display);
-            if (display == null) continue; // no change if null
+            var displayObj = tcsProperties.get("Train.Functions("+i+").Display");
+            log.trace("Found Display {} as {}", i, displayObj);
+            if (displayObj == null) continue; // no change if null
+            var display = displayObj.toString();
 
-            var description = tcsProperties.get("Train.Functions("+i+").Description").toString();
-            log.trace("Found description {} as {}", i, description);
-            if (description == null) continue; // no change if null
+            var descriptionObj = tcsProperties.get("Train.Functions("+i+").Description");
+            log.trace("Found Description {} as {}", i, descriptionObj);
+            if (descriptionObj == null) continue; // no change if null
+            var description = descriptionObj.toString();
 
             // Handle non-zero Display values by updating description value
             description = unpackDescription(description, display);
