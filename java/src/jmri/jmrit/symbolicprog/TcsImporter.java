@@ -17,11 +17,6 @@ import jmri.jmrit.roster.RosterEntry;
  */
 public class TcsImporter {
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcsImporter.class);
-    private static final String VERSION_KEY = "Version";
-    private static final String CV_PREFIX = "CV";
-    private static final int CV_INDEX_OFFSET = 2;
-
     Properties tcsProperties;
 
     // TODO: more general if this is from a Stream or Reader?
@@ -145,4 +140,6 @@ public class TcsImporter {
             default:    return "<entry error \""+display+"\">";
         }
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcsImporter.class);
 }
