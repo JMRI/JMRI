@@ -75,42 +75,17 @@ public class TcsExportAction extends AbstractAction {
         // set "forced long address 128 steps" or "forced short address 128 steps"
         str.println("Train.Speed Step Mode="+(rosterEntry.isLongAddress() ? "15" : "14"));
 
-        // TODO: See if these can be obtained from standard CV locations
-        str.println("Train.F0.Consist Behavior=1");
-        str.println("Train.F0.Directional=0");
-        str.println("Train.F0.MU switch=0");
+        // Skip Consist, Directional and MU switch to allow round-trip
 
-        // TODO: Should check for the known strings and encode them in the Display attribute?
-        for (int i = 0; i < 28; i++) { // TCS sample file went to 27?
-            int displayValue = 0;
-            if (rosterEntry.getFunctionLabel(i) != null) {
-                switch (rosterEntry.getFunctionLabel(i)) {
-
-                    case "Light": displayValue = 1; break;
-                    case "Beamer": displayValue = 2; break;
-                    case "Bell": displayValue = 3; break;
-                    case "Horn": displayValue = 4; break;
-                    case "Shunting mode": displayValue = 5; break;
-                    case "Pantograph": displayValue = 6; break;
-                    case "Smoke": displayValue = 7; break;
-                    case "Momentum off": displayValue = 8; break;
-                    case "Whistle": displayValue = 9; break;
-                    case "Sound": displayValue = 10; break;
-                    case "F": displayValue = 11; break;
-                    case "Announce": displayValue = 12; break;
-                    case "Engine": displayValue = 13; break;
-                    case "Light1": displayValue = 14; break;
-                    case "Light2": displayValue = 15; break;
-                    case "Uncouple": displayValue = 17; break;
-
-                    default: displayValue = 0; break;
-                }
-            }
+        for (int i = 0; i < 27; i++) { // TCS sample file went to 27?
+            String label = rosterEntry.getFunctionLabel(i+1);
+            if (label == null) label = "";
+            int displayValue = intFromFunctionString(label);
 
             str.println("Train.Functions("+i+").Display="+displayValue);
-            str.println("Train.Functions("+i+").Momentary="+(rosterEntry.getFunctionLockable(i) ? "0" : "1")); // Momentary == not locking
-            str.println("Train.Functions("+i+").Consist Behavior=1");
-            str.println("Train.Functions("+i+").Description="+(rosterEntry.getFunctionLabel(i)==null ? "" : rosterEntry.getFunctionLabel(i)) );
+            str.println("Train.Functions("+i+").Momentary="+(rosterEntry.getFunctionLockable(i+1) ? "0" : "1")); // Momentary == not locking
+            str.println("Train.Functions("+i+").Consist Behavior=1"); // TODO:  Check for a CV21/22 value
+            str.println("Train.Functions("+i+").Description="+(displayValue != 0 ? "" : label) );
         }
 
         str.println("Train.Delete From Roster?=0");
@@ -118,6 +93,71 @@ public class TcsExportAction extends AbstractAction {
         str.flush();
         str.close();
     }
+
+    static int intFromFunctionString(String fn) {
+        if (fn == null) return 0;
+
+        switch (fn.toLowerCase().strip()) {
+
+            case "unassigned": return 0;
+            case "headlight": return 1;
+            case "bell": return 13;
+            case "horn": return 14;
+            case "whistle": return 15;
+            case "pantograph": return 11;
+            case "smoke": return 10;
+            case "engine": return 4;
+            case "light": return 74;
+            case "coupler clank": return 28;
+            case "couple": return 122;
+            case "uncouple": return 9;
+
+            case "shunting mode": return 7;
+            case "momentum": return 8;
+
+            case "brake": return 57;
+            case "brake release": return 200;
+            case "dynamic brake": return 41;
+            case "manual notch down": return 31;
+            case "manual notch up": return 30;
+            case "reverser": return 69;
+            case "mute": return 100;
+
+            case "far light": return 12;
+            case "cab light": return 3;
+            case "ditch lights": return 48;
+            case "step lights": return 98;
+            case "tail lights": return 62;
+            case "switching lights": return 58;
+            case "dimmer": return 51;
+            case "interior lights": return 2;
+
+            case "air compressor": return 42;
+            case "air pump": return 45;
+            case "injector": return 60;
+            case "exhaust fan": return 108;
+            case "radiator fan": return 17;
+            case "steam generator": return 66;
+            case "blower": return 105;
+            case "blow down": return 56;
+            case "safety": return 38;
+            case "sanding": return 55;
+            case "ash dump": return 88;
+            case "shoveling": return 18;
+            case "water fill": return 35;
+
+            case "long whistle": return 103;
+            case "short whistle": return 64;
+            case "doppler horn": return 63;
+
+            case "curve squeal": return 36;
+            case "brake squeal": return 21;
+            case "announce": return 6;
+            case "cab chatter": return 27;
+
+            default: return 0;
+        }
+}
 
     private final static Logger log = LoggerFactory.getLogger(TcsExportAction.class);
 }
