@@ -683,6 +683,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            //                   0xE4
             case LnConstants.OPC_LISSY_UPDATE: {
                 result = interpretOpcLissyUpdate(l);
                 if (result.length() > 0) {
@@ -691,6 +692,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            //                    0xED
             case LnConstants.OPC_IMM_PACKET: {
                 result = interpretOpcImmPacket(l);
                 if (result.length() > 0) {
@@ -699,6 +701,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            //                     0xD3
             case LnConstants.RE_OPC_PR3_MODE: {
                 result = interpretOpcPr3Mode(l);
                 if (result.length() > 0) {
@@ -707,6 +710,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            //                      0xA3
             case LnConstants.RE_OPC_IB2_F9_F12: {
                 result = interpretIb2F9_to_F12(l);
                 if (result.length() > 0) {
@@ -717,7 +721,8 @@ public class LocoNetMessageInterpret {
 
 //          TODO: put this back for intellibox cmd station.
 //            it conflicts with loconet speed/dir etc.
-            case LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL: { // 0xD4
+            //                        0xD4
+            case LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL: {
                 result = interpretIb2Special(l);
                 if (result.length() > 0) {
                     return result;
