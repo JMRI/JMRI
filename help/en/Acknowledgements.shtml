@@ -686,6 +686,9 @@
         Block Occupancy, Transponding and Simple Signal Logic.
         </li>
 
+       <li>Otis McGee, who allowed us to debug many C/MRI and signaling issues on his
+            beautiful SP Shasta railroad.
+
         <li>David McGowan, who handled many aspects of JMRI legal defense against Matt Katzer</li>
 
         <li>Elmer McKay, who provided a nice <a href=
@@ -746,6 +749,8 @@
          fixed some issues with international characters, improved the layout of the on-screen
         throttle when running Linux, added improved alignment options to the PanelEditor, improved
         adding text labels and worked on the MQTT coding.</li>
+
+        <li>Dan Mycio, who provided information on TCS hardware and software.
 
         <li>Robert Myers provided <a href="https://jmri.org/install/OLPC_XO.shtml">instructions for
         installing JMRI on an OLPC XO laptop</a> <a id="N"></a>
