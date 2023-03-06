@@ -238,7 +238,9 @@ public class Almir {
                 }
             } else if (Alm.isSe74CapsRpt(l)) { // element 10 observed at 0
                 mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
+                // addressing has already been set above
             } else {
+                be = bs;  // only show one address
                 mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
             }
 
