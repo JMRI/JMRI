@@ -162,8 +162,8 @@ public class Almir {
     private static String dealWithAlmStyle2(LocoNetMessage l) {
         int sn = getSN(l);
         String ser = Integer.toHexString(sn);
-        int bs = getBS(l);
-        int be;
+        int bs = getBS(l); // starting address
+        int be;            // ending address
         String enable;
         boolean enb = getEnb(l);
         enable = (enb ? Bundle.getMessage("LN_MSG_HELPER_DISABLED")
@@ -171,8 +171,8 @@ public class Almir {
         DevMode mod = getMode(l);
         String mode;
         String dev;
-        int rts;
-        int ents;
+        int rts;            // number of routes
+        int ents;           // number of entries in routes
         switch (l.getElement(9)) {
             case 0x74:
                 dev = "DS74"; //NOI18N
@@ -185,6 +185,12 @@ public class Almir {
                 rts = 16;
                 ents = 8;
                 be = ((mod == DevMode.DS78V_3_POS)?(bs + 15):(bs + 7));
+                break;
+            case 0x46:
+                dev = "SE74"; //NOI18N
+                rts = 64;
+                ents = 16;
+                be = bs + 36;
                 break;
             default:
                 dev = Bundle.getMessage("LN_MSG_ALM_HELPER_DEVICE_UNKNOWN");
@@ -202,33 +208,40 @@ public class Almir {
             return Bundle.getMessage("LN_MSG_ALM_SEL_ROUTE_QUERY", rn, re, re+3);
         }
 
-        if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l)) {
-            switch ((l.getElement(10) & 0x1e) >>1) {
-                case 0:
-                    mode = "LN_MSG_ALM_HELPER_DEV_MODE_PS"; // NOI18N
-                    be = bs + 3;
-                    break;
-                case 1:
-                    mode = "LN_MSG_ALM_HELPER_DEV_MODE_SM"; // NOI18N
-                    be = bs + 3;
-                    break;
-                case 2:
-                    mode = "LN_MSG_ALM_HELPER_DEV_MODE_S2"; // NOI18N
-                    be = bs + 7;
-                    break;
-                case 5:
-                    mode = "LN_MSG_ALM_HELPER_DEV_MODE_LT"; // NOI18N
-                    be = bs + 7;
-                    break;
-                case 6:
-                    mode = "LN_MSG_ALM_HELPER_DEV_MODE_S3"; // NOI18N
-                    be = bs + 15;
-                    break;
-                default:
-                    mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
-                    be = bs;
-                    break;
+        if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) || Alm.isSe74CapsRpt(l) ) {
+            if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) ) {
+                switch ((l.getElement(10) & 0x1e) >>1) {
+                    case 0:
+                        mode = "LN_MSG_ALM_HELPER_DEV_MODE_PS"; // NOI18N
+                        be = bs + 3;
+                        break;
+                    case 1:
+                        mode = "LN_MSG_ALM_HELPER_DEV_MODE_SM"; // NOI18N
+                        be = bs + 3;
+                        break;
+                    case 2:
+                        mode = "LN_MSG_ALM_HELPER_DEV_MODE_S2"; // NOI18N
+                        be = bs + 7;
+                        break;
+                    case 5:
+                        mode = "LN_MSG_ALM_HELPER_DEV_MODE_LT"; // NOI18N
+                        be = bs + 7;
+                        break;
+                    case 6:
+                        mode = "LN_MSG_ALM_HELPER_DEV_MODE_S3"; // NOI18N
+                        be = bs + 15;
+                        break;
+                    default:
+                        mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
+                        be = bs;
+                        break;
+                }
+            } else if (Alm.isSe74CapsRpt(l)) { // element 10 observed at 0
+                mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
+            } else {
+                mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
             }
+
             mode = Bundle.getMessage(mode);
             return Bundle.getMessage("LN_MSG_DEVICE_ROUTES_CAPABILITIES_REPLY",
                    dev, ser, mode, enable, bs, be, rts, ents );
