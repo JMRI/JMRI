@@ -124,6 +124,9 @@
                 <li>Show more information in the node selector when doing firmware downloads.</li>
                 <li>Updated the default filename when doing backups to contain more identification info.</li>
                 <li>The OpenLCB library was updated to the current contents as of PR #214</li>
+                <li>There's a new
+                    "<a href="https://help/en/package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>"
+                    tool that shows all the events on the network and which nodes produce and consume them.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -558,7 +561,8 @@
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
         <ul>
-            <li></li>
+            <li>Add action buttons to <strong>duplicate</strong> the Timetable data items.</li>
+            <li>Add the logic to calculate the train route durations.</li>
         </ul>
 
    <h3>Tracker</h3>
