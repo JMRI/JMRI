@@ -127,6 +127,10 @@
                 <li>There's a new
                     "<a href="https://help/en/package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>"
                     tool that shows all the events on the network and which nodes produce and consume them.</li>
+                <li>There's a new
+                    "<a href="https://help/en/package/jmri/jmrix/openlcb/swing/memtool/MemoryToolPane.shtml">Memory Tool</a>"
+                    that lets you get the contents of node memory spaces into a local binary file, and
+                    put the contents of a file back into a node memory space.</li>
             </ul>
 
         <h4>Powerline</h4>
