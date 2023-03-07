@@ -99,6 +99,7 @@ public class TcsExportAction extends AbstractAction {
         switch (fn.toLowerCase().strip()) {
 
             case "unassigned": return 0;
+
             case "headlight": return 1;
             case "bell": return 13;
             case "horn": return 14;

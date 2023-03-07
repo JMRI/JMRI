@@ -64,8 +64,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     String maxFnNumNew = "";
 
     RosterEntry _rosterEntry;
-    public RosterEntryPane _rPane = null;
-    public FunctionLabelPane _flPane = null;
+    RosterEntryPane _rPane = null;
+    FunctionLabelPane _flPane = null;
     RosterMediaPane _rMPane = null;
     String _frameEntryId;
 
@@ -98,6 +98,9 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     ShutDownTask decoderDirtyTask;
     ShutDownTask fileDirtyTask;
+
+    public RosterEntryPane getRosterPane() { return _rPane;}
+    public FunctionLabelPane getFnLabelPane() { return _flPane;}
 
     /**
      * Abstract method to provide a JPanel setting the programming mode, if

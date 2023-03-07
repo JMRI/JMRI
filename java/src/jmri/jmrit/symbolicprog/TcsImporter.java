@@ -91,7 +91,8 @@ public class TcsImporter {
         // We do string switch in case of non-parseable garbage
         switch (display) {
 
-            case "0":   return "Unassigned";
+            case "0":   return "";
+
             case "1":   return "Headlight";
             case "13":  return "Bell";
             case "14":  return "Horn";

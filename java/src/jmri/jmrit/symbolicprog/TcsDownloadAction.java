@@ -60,7 +60,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
         int addr = cvTable.holdsAddress();
         log.debug("computed address is {} long: {}", addr, isLong);
 
-        // Create the train's node ID
+        // Create the train's node ID from current values in GUI
         byte upperAddressByte = (byte) (isLong ? (192+(addr>>8)) : 0);
         byte lowerAddressByte = (byte) (addr & 0xFF);
         var nodeID = new NodeID(new byte[]{6,1,0,0,upperAddressByte, lowerAddressByte});
@@ -92,86 +92,172 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
                 log.debug("CDI read done");
 
                 // look for values
-
-                configRep.visit(new ConfigRepresentation.Visitor() {
-                    @Override
-                    public void visitString(ConfigRepresentation.StringEntry e) {
-                        log.trace("String entry {} is {}", e.key, e.getValue());
-
-                        if (e.key.startsWith("Train.User Description")) {
-                            log.info("setComment {}", e.getValue());
-                            rosterEntry.setComment(e.getValue());
-                            frame._rPane.updateGUI(rosterEntry);
-                         } else if (e.key.startsWith("Train.Functions")) {
-                            int index = getNumberField(e.key);
-                            if (index == -1) {
-                                log.warn("Unexpected format \"{}\"", e.key);
-                                return;
-                            }
-                            if (e.key.endsWith("Description")) {
-                                String value = e.getValue();
-                                if (value==null) {
-                                    value = "";
-                                }
-                                // Display has already written contents
-                                // to this.  If content here is empty, we defer to that;
-                                // if there are content here, overrides what Display wrote.
-                                if (!value.isEmpty()) {
-                                    rosterEntry.setFunctionLabel(index+1, value);
-                                    frame._flPane.updateFromEntry(rosterEntry);
-                                    log.trace("Description sets {} {} {}", index, e.getValue(), value);
-                                }
-                            } else {
-                                log.warn("Unexpected content \"{}\"", e.key);
-                            }
-                        }
-                    }
-
-                    // TODO: Have to update the Function Pane contents on every change
-                    //       so that the data is present for viewing and saving
-                    @Override
-                    public void visitInt(ConfigRepresentation.IntegerEntry e) {
-                        log.trace("Integer entry {} is {}", e.key, e.getValue());
-
-                        // is this the last entry?
-                        if (e.key.startsWith("Train.Delete From Roster")) {
-                            // TODO: This is firing much too soon
-                            JOptionPane.showMessageDialog(frame, "Download complete.");
-                        } else if (e.key.startsWith("Train.Functions")) {
-                            int index = getNumberField(e.key);
-                            if (index == -1) {
-                                log.warn("Unexpected format \"{}\"", e.key);
-                                return;
-                            }
-                            if (e.key.endsWith(".Momentary")) {
-                                boolean lockable = (e.getValue() == 0);
-                                rosterEntry.setFunctionLockable(index+1, lockable);
-                                frame._flPane.updateFromEntry(rosterEntry);
-                            } else if (e.key.endsWith(".Consist Behavior")) {
-                                // TODO: set value in consisting CVs
-                            } else if (e.key.endsWith(".Display")) {
-                                // do a reverse lookup and store every time,
-                                // will be overwritten by Description if needed
-                                var description = TcsImporter.unpackDescription("", ""+e.getValue());
-                                log.trace("Display sets {} {} {}", index, e.getValue(), description);
-                                rosterEntry.setFunctionLabel(index+1, description);
-                                frame._flPane.updateFromEntry(rosterEntry);
-                            } else {
-                                log.warn("Unexpected content \"{}\"", e.key);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void visitEvent(ConfigRepresentation.EventEntry e) {
-                        log.trace("Event entry {} is {}", e.key, e.getValue());
-                    }
-                });
+                processValuesToGUI();
                 return;
             default:
                 log.error("Unexpected PropertyChangeEvent {}", event);
                 return;
         }
+    }
+
+    /**
+     * Construct and execute a listener that processses
+     * the relevant CDI elements into RosterEntry.
+     *
+     * Intended for a bulk importer eventually.
+     *
+     * TODO: Should save the RosterEntry at end? Doesn't.
+     * TODO: Code further up takes initial address from GUI, not RosterEntry.
+     */
+    void processValuesToRosterElement() {
+        configRep.visit(new ConfigRepresentation.Visitor() {
+            @Override
+            public void visitString(ConfigRepresentation.StringEntry e) {
+                log.trace("String entry {} is {}", e.key, e.getValue());
+
+                if (e.key.startsWith("Train.User Description")) {
+                    log.info("setComment {}", e.getValue());
+                    rosterEntry.setComment(e.getValue());
+                 } else if (e.key.startsWith("Train.Functions")) {
+                    int index = getNumberField(e.key);
+                    if (index == -1) {
+                        log.warn("Unexpected format \"{}\"", e.key);
+                        return;
+                    }
+                    if (e.key.endsWith("Description")) {
+                        String value = e.getValue();
+                        if (value==null) {
+                            value = "";
+                        }
+                        // Display has already written contents
+                        // to this.  If content here is empty, we defer to that;
+                        // if there are content here, overrides what Display wrote.
+                        if (!value.isEmpty()) {
+                            rosterEntry.setFunctionLabel(index+1, value);
+                            log.trace("Description sets {} {} {}", index, e.getValue(), value);
+                        }
+                    } else {
+                        log.warn("Unexpected content \"{}\"", e.key);
+                    }
+                }
+            }
+
+            // TODO: Have to update the Function Pane contents on every change
+            //       so that the data is present for viewing and saving
+            @Override
+            public void visitInt(ConfigRepresentation.IntegerEntry e) {
+                log.trace("Integer entry {} is {}", e.key, e.getValue());
+
+                // is this the last entry?
+                if (e.key.startsWith("Train.Delete From Roster")) {
+                    // TODO: This is firing much too soon
+                    JOptionPane.showMessageDialog(frame, "Download complete.");
+                } else if (e.key.startsWith("Train.Functions")) {
+                    int index = getNumberField(e.key);
+                    if (index == -1) {
+                        log.warn("Unexpected format \"{}\"", e.key);
+                        return;
+                    }
+                    if (e.key.endsWith(".Momentary")) {
+                        boolean lockable = (e.getValue() == 0);
+                        rosterEntry.setFunctionLockable(index+1, lockable);
+                    } else if (e.key.endsWith(".Consist Behavior")) {
+                        // TODO: set value in consisting CVs
+                    } else if (e.key.endsWith(".Display")) {
+                        // do a reverse lookup and store every time,
+                        // will be overwritten by Description if needed
+                        var description = TcsImporter.unpackDescription("", ""+e.getValue());
+                        log.trace("Display sets {} {} {}", index, e.getValue(), description);
+                        rosterEntry.setFunctionLabel(index+1, description);
+                    } else {
+                        log.warn("Unexpected content \"{}\"", e.key);
+                    }
+                }
+            }
+
+            @Override
+            public void visitEvent(ConfigRepresentation.EventEntry e) {
+                log.trace("Event entry {} is {}", e.key, e.getValue());
+            }
+        });
+    }
+
+    /**
+     * Construct and execute a listener that processses
+     * the relevant CDI elements into the Roster and Function Label
+     * GUI elements.
+     */
+    void processValuesToGUI() {
+        configRep.visit(new ConfigRepresentation.Visitor() {
+            @Override
+            public void visitString(ConfigRepresentation.StringEntry e) {
+                log.trace("String entry {} is {}", e.key, e.getValue());
+
+                if (e.key.startsWith("Train.User Description")) {
+                    log.info("setComment {}", e.getValue());
+                    frame.getRosterPane().setComment(e.getValue());
+                 } else if (e.key.startsWith("Train.Functions")) {
+                    int index = getNumberField(e.key);
+                    if (index == -1) {
+                        log.warn("Unexpected format \"{}\"", e.key);
+                        return;
+                    }
+                    if (e.key.endsWith("Description")) {
+                        String value = e.getValue();
+                        if (value==null) {
+                            value = "";
+                        }
+                        // Display has already written contents
+                        // to this.  If content here is empty, we defer to that;
+                        // if there are content here, overrides what Display wrote.
+                        if (!value.isEmpty()) {
+                            frame.getFnLabelPane().getLabel(index+1).setText(value);
+                            log.trace("Description sets {} {} {}", index, e.getValue(), value);
+                        }
+                    } else {
+                        log.warn("Unexpected content \"{}\"", e.key);
+                    }
+                }
+            }
+
+            // TODO: Have to update the Function Pane contents on every change
+            //       so that the data is present for viewing and saving
+            @Override
+            public void visitInt(ConfigRepresentation.IntegerEntry e) {
+                log.trace("Integer entry {} is {}", e.key, e.getValue());
+
+                // is this the last entry?
+                if (e.key.startsWith("Train.Delete From Roster")) {
+                    // TODO: This is firing much too soon
+                    JOptionPane.showMessageDialog(frame, "Download complete.");
+                } else if (e.key.startsWith("Train.Functions")) {
+                    int index = getNumberField(e.key);
+                    if (index == -1) {
+                        log.warn("Unexpected format \"{}\"", e.key);
+                        return;
+                    }
+                    if (e.key.endsWith(".Momentary")) {
+                        boolean lockable = (e.getValue() == 0);
+                        frame.getFnLabelPane().getLockable(index+1).setSelected(lockable);
+                    } else if (e.key.endsWith(".Consist Behavior")) {
+                        // TODO: set value in consisting CVs
+                    } else if (e.key.endsWith(".Display")) {
+                        // do a reverse lookup and store every time,
+                        // will be overwritten by Description if needed
+                        var description = TcsImporter.unpackDescription("", ""+e.getValue());
+                        log.trace("Display sets {} {} {}", index, e.getValue(), description);
+                        frame.getFnLabelPane().getLabel(index+1).setText(description);
+                    } else {
+                        log.warn("Unexpected content \"{}\"", e.key);
+                    }
+                }
+            }
+
+            @Override
+            public void visitEvent(ConfigRepresentation.EventEntry e) {
+                log.trace("Event entry {} is {}", e.key, e.getValue());
+            }
+        });
     }
 
     // Extract the number from e.g. Train.Functions(25).Momentary
