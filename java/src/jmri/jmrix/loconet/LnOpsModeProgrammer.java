@@ -28,6 +28,7 @@ import static jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.createCvWriteReq
  * <li>LOCONETSV2MODE</li>
  * <li>LOCONETLNCVMODE</li>
  * <li>LOCONETBDOPSWMODE</li>
+ * <li>LOCONETBD7OPSWMODE</li>
  * <li>LOCONETCSOPSWMODE</li>
  * </ul>
  * as defined in {@link LnProgrammerManager}
@@ -112,7 +113,44 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             int bit = (state - 1) - loc * 8;
             m.setElement(4, loc * 16 + bit * 2  + (val&0x01));
 
-            // save a copy of the written value for use during reply
+            // save a copy of the written value low bit for use during reply
+            boardOpSwWriteVal = ((val & 0x01) == 1);
+
+            log.debug("  Message {}", m);
+            memo.getLnTrafficController().sendLocoNetMessage(m);
+            bdOpSwAccessTimer.start();
+
+        } else if (getMode().equals(LnProgrammerManager.LOCONETBD7OPSWMODE)) {
+            /*
+             * Normal CV format
+             */
+            if (bdOpSwAccessTimer == null) {
+                initializeBdOpsAccessTimer();
+            }
+            p = pL;
+            doingWrite = true;
+            // Board programming mode
+            log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
+
+            int address6th = ((mAddress-1) >> 2) & 0x3F;
+            int upper3 = ~(((mAddress-1) >> 8) & 0x07);
+            int lower2 = (mAddress-1) & 0x03;
+            int address7th = ((upper3 << 4) & 0x70) | (lower2 << 1) | 0x08;
+            int cv = Integer.parseInt(CV)-1;
+            // make message - send immediate packet with custom content
+            m = new LocoNetMessage(11);
+            m.setOpCode(0xED);
+            m.setElement(1, 0x0B);
+            m.setElement(2, 0x7F);
+            m.setElement(3, 0x54);
+            m.setElement(4, 0x07 | (((val >> 7) & 0x01)<<4));
+            m.setElement(5, address6th);
+            m.setElement(6, address7th);
+            m.setElement(7, 0x6C | ((cv >> 7) & 0x03));
+            m.setElement(8, cv&0x7F);  // CV number
+            m.setElement(9, val&0x7F); // Data
+
+            // save a copy of the written value low bit for use during reply
             boardOpSwWriteVal = ((val & 0x01) == 1);
 
             log.debug("  Message {}", m);
@@ -174,7 +212,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getLnTrafficController().sendLocoNetMessage(m);
             lncvAccessTimer.start();
         } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
-            // LOCONETOPSBOARD decoder 
+            // LOCONETOPSBOARD decoder
             memo.getSlotManager().setAcceptAnyLACK();
             memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         } else {
@@ -238,6 +276,40 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getLnTrafficController().sendLocoNetMessage(m);
             bdOpSwAccessTimer.start();
 
+        } else if (getMode().equals(LnProgrammerManager.LOCONETBD7OPSWMODE)) {
+            /*
+             * Normal CV format
+             */
+            if (bdOpSwAccessTimer == null) {
+                initializeBdOpsAccessTimer();
+            }
+            p = pL;
+            doingWrite = false;
+            // Board programming mode
+            log.debug("read CV \"{}\" addr:{}", CV, mAddress);
+
+            int address6th = ((mAddress-1) >> 2) & 0x3F;
+            int upper3 = ~(((mAddress-1) >> 8) & 0x07);
+            int lower2 = (mAddress-1) & 0x03;
+            int address7th = ((upper3 << 4) & 0x70) | (lower2 << 1) | 0x08;
+            int cv = Integer.parseInt(CV)-1;
+            // make message - send immediate packet with custom content
+            m = new LocoNetMessage(11);
+            m.setOpCode(0xED);
+            m.setElement(1, 0x0B);
+            m.setElement(2, 0x7F);
+            m.setElement(3, 0x54);
+            m.setElement(4, 0x07);
+            m.setElement(5, address6th);
+            m.setElement(6, address7th);
+            m.setElement(7, 0x64 | ((cv >> 7) & 0x03));
+            m.setElement(8, cv&0x7F);  // CV number
+            m.setElement(9, 0);
+
+            log.debug("  Message {}", m);
+            memo.getLnTrafficController().sendLocoNetMessage(m);
+            bdOpSwAccessTimer.start();
+
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             p = pL;
             doingWrite = false;
@@ -291,7 +363,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getLnTrafficController().sendLocoNetMessage(m);
             lncvAccessTimer.start();
         } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
-            // LOCONETOPSBOARD decoder 
+            // LOCONETOPSBOARD decoder
             memo.getSlotManager().setAcceptAnyLACK();
             memo.getSlotManager().readCVOpsMode(CV, pL, mAddress, mLongAddr);
         } else {
@@ -312,6 +384,8 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getSlotManager().readCV(CV, pL); // deal with this via service-mode programmer
         } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             readCV(CV, pL);
+        } else if (getMode().equals(LnProgrammerManager.LOCONETBD7OPSWMODE)) {
+            readCV(CV, pL);
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // SV2 mode
             log.warn("confirm CV \"{}\" addr:{} in SV2 mode not implemented", CV, mAddress);
@@ -322,7 +396,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             readCV(CV, pL);
             //notifyProgListenerEnd(pL, 0, ProgListener.UnknownError);
         } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
-            // LOCONETOPSBOARD decoder 
+            // LOCONETOPSBOARD decoder
             memo.getSlotManager().setAcceptAnyLACK();
             memo.getSlotManager().confirmCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         } else {
@@ -338,7 +412,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     public void message(LocoNetMessage m) {
         log.debug("LocoNet message received: {}", m);
         if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
-            // are we reading? If not, ignore
+            // are we programming? If not, ignore
             if (p == null) {
                 log.warn("received board-program reply message with no reply object: {}", m);
                 return;
@@ -370,6 +444,45 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             if ((m.getElement(2) == 0x7f)) {
                 code = ProgListener.UnknownError;
             }
+
+            ProgListener temp = p;
+            p = null;
+            notifyProgListenerEnd(temp, val, code);
+
+        } else if (getMode().equals(LnProgrammerManager.LOCONETBD7OPSWMODE)) {
+            // are we programming? If not, ignore
+            if (p == null) {
+                log.warn("received board-program reply message with no reply object: {}", m);
+                return;
+            }
+            // check for right type, unit
+            if (m.getOpCode() != LnConstants.OPC_LONG_ACK) return;
+            if (! (m.getElement(1) == 0x6E
+                   || ( m.getElement(1) == 0x6D)
+                        && (m.getElement(1) != 0x55 && m.getElement(1) != 0x5A) )) {
+                return;
+            }
+            // got a message that is LONG_ACK reply to an BdOpsSw access
+            bdOpSwAccessTimer.stop();    // kill the timeout timer
+            // LACK with 0x6E in byte 1; assume it's to us
+            if (doingWrite
+                    && m.getElement(1) == 0x6D
+                    && (m.getElement(2) == 0x55 || m.getElement(2) == 0x5A)) {
+                int code = ProgListener.OK;
+                int val = (boardOpSwWriteVal ? 1 : 0);
+                ProgListener temp = p;
+                p = null;
+                notifyProgListenerEnd(temp, val, code);
+                return;
+            }
+
+            if (m.getElement(1) != 0x6E) return;
+            // does this properly handle high bit of return value?
+            // Check the reply sequence for a 2nd 6D LACK?
+            int val = m.getElement(2);
+
+            // successful read always
+            int code = ProgListener.OK;
 
             ProgListener temp = p;
             p = null;
@@ -432,7 +545,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
                 log.debug("returning SV programming reply: {}", m);
 
                 sv2AccessTimer.stop();    // kill the timeout timer
-                
+
                 int code = ProgListener.OK;
                 int val = (m.getElement(11)&0x7F)|(((m.getElement(10)&0x01) != 0x00)? 0x80:0x00);
 
@@ -581,6 +694,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>(4);
         ret.add(ProgrammingMode.OPSBYTEMODE);
+        ret.add(LnProgrammerManager.LOCONETBD7OPSWMODE);
         ret.add(LnProgrammerManager.LOCONETOPSBOARD);
         ret.add(LnProgrammerManager.LOCONETSV1MODE);
         ret.add(LnProgrammerManager.LOCONETSV2MODE);
