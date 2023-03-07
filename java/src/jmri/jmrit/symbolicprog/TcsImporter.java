@@ -2,12 +2,20 @@ package jmri.jmrit.symbolicprog;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
 
 import jmri.JmriException;
 import jmri.jmrit.roster.RosterEntry;
+
+import org.openlcb.EventID;
+import org.openlcb.NodeID;
+import org.openlcb.OlcbInterface;
+import org.openlcb.cdi.CdiRep;
+import org.openlcb.cdi.cmd.BackupConfig;
+import org.openlcb.cdi.impl.ConfigRepresentation;
 
 /**
  * Import CV values from a TCS backup file from a CDI backup
@@ -19,7 +27,6 @@ public class TcsImporter {
 
     Properties tcsProperties;
 
-    // TODO: more general if this is from a Stream or Reader?
     public TcsImporter(File file) throws IOException {
         tcsProperties = new Properties();
         FileInputStream fileStream = new FileInputStream(file);
@@ -28,6 +35,11 @@ public class TcsImporter {
         } finally {
             fileStream.close();
         }
+    }
+
+    public TcsImporter(InputStream stream) throws IOException {
+        tcsProperties = new Properties();
+        tcsProperties.load(stream);
     }
 
     public void setRosterEntry(RosterEntry rosterEntry) {

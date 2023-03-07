@@ -229,6 +229,19 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
 
     /**
+     * Update contents from a RosterEntry object
+     * @param re the new contents
+     */
+    public void updateFromEntry(RosterEntry re) {
+        if (labels != null) {
+             for (int i = 0; i < labels.length; i++) {
+                labels[i].setText(re.getFunctionLabel(i));
+                lockable[i].setSelected(re.getFunctionLockable(i));
+             }
+        }
+    }
+
+    /**
      * Update a RosterEntry object from panel contents.
      *
      *
