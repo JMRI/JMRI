@@ -1344,6 +1344,7 @@
       <xs:enumeration value="LOCONETSV2MODE"/>
       <xs:enumeration value="LOCONETLNCVMODE"/>
       <xs:enumeration value="LOCONETBDOPSWMODE"/>
+      <xs:enumeration value="LOCONETBD7OPSWMODE"/>
       <xs:enumeration value="LOCONETCSOPSWMODE"/>
     </xs:restriction>
   </xs:simpleType>
