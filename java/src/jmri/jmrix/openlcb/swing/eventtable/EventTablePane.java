@@ -106,8 +106,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         updateButton.addActionListener(this::sendRequestEvents);
         buttonPanel.add(updateButton);
 
-        buttonPanel.add(add(new JSeparator(JSeparator.VERTICAL)));
-
         showRequiresLabel = new JCheckBox(Bundle.getMessage("BoxShowRequiresLabel"));
         showRequiresLabel.addActionListener((ActionEvent e) -> {
             filter();
@@ -126,13 +124,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         });
         buttonPanel.add(popcorn);
 
-        buttonPanel.add(add(new JSeparator(JSeparator.VERTICAL)));
-
-        findID = EventIdTextField.getEventIdTextField();
-        buttonPanel.add(findID);
         JButton find = new JButton("Find");
         buttonPanel.add(find);
         find.addActionListener(this::findRequested);
+
+        findID = EventIdTextField.getEventIdTextField();
+        findID.addActionListener(this::findRequested);
+        buttonPanel.add(findID);
 
         buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
 
