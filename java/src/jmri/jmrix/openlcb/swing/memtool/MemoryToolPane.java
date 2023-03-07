@@ -233,6 +233,19 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         service.requestRead(farID, space, address, CHUNKSIZE, cbr);
     }
 
+    MemoryConfigurationService.McsWriteHandler cb =
+        new MemoryConfigurationService.McsWriteHandler() {
+            @Override
+            public void handleFailure(int errorCode) {
+                log.error("Write failed. error code is {}", String.format("%016X", errorCode));
+            }
+
+            @Override
+            public void handleSuccess() {
+                log.info("Write succeeded");
+            }
+        };
+
     void pushedPutButton(ActionEvent e) {
         log.debug("Start get");
         if (fileChooser == null) {
@@ -249,7 +262,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         File file = fileChooser.getSelectedFile();
         log.debug("access {}", file);
 
-        var bytes = new byte[64];
+        var bytes = new byte[CHUNKSIZE];
         try {
             InputStream inputStream = new FileInputStream(file);
             int bytesRead = inputStream.read(bytes);
@@ -259,21 +272,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         }
 
         // do first memory write
-        MemoryConfigurationService.McsWriteHandler cb =
-            new MemoryConfigurationService.McsWriteHandler() {
-                @Override
-                public void handleFailure(int errorCode) {
-                    log.error("Write failed. error code is {}", String.format("%016X", errorCode));
-                }
-
-                @Override
-                public void handleSuccess() {
-                    log.info("Write succeeded");
-                }
-            };
         int address = 0;
-        int space = 0xFF;
-        var farID = new NodeID("06.01.00.00.C0.05");
         service.requestWrite(farID, space, address, bytes, cb);
     }
 
