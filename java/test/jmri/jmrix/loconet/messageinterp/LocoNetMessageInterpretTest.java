@@ -129,7 +129,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x01, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
         Assert.assertEquals("Transponding Bad Message 1",
-                "Unable to parse LocoNet message.\ncontents: E5 09 01 7D 03 00 12 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 09 01 7D 03 00 12 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x00, 0x04, 0x00, 0x00, 0x00, 0x2D});
@@ -528,7 +528,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x00, 0x00, 0x00, 0x00, 0x1D});
         Assert.assertEquals("not a known 7byte opcPeerXfer",
-                "Unable to parse LocoNet message.\ncontents: E5 07 00 00 00 00 1D\n",
+                "Unable to parse LocoNet message. contents: E5 07 00 00 00 00 1D\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
         l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x01, 0x49, 0x42, 0x40, 0x00});
         Assert.assertEquals("Uhlenbrock stop programming track",
@@ -542,22 +542,22 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x01, 0x49, 0x42, 0x42, 0x55});
         Assert.assertEquals("Uhlenbrock unknown programming track operation 1",
-                "Unable to parse LocoNet message.\ncontents: E5 07 01 49 42 42 55\n",
+                "Unable to parse LocoNet message. contents: E5 07 01 49 42 42 55\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x01, 0x49, 0x41, 0x40, 0x54});
         Assert.assertEquals("Uhlenbrock unknown programming track operation 2",
-                "Unable to parse LocoNet message.\ncontents: E5 07 01 49 41 40 54\n",
+                "Unable to parse LocoNet message. contents: E5 07 01 49 41 40 54\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x01, 0x48, 0x42, 0x40, 0x56});
         Assert.assertEquals("Uhlenbrock unknown programming track operation 3",
-                "Unable to parse LocoNet message.\ncontents: E5 07 01 48 42 40 56\n",
+                "Unable to parse LocoNet message. contents: E5 07 01 48 42 40 56\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x00, 0x49, 0x42, 0x40, 0x56});
         Assert.assertEquals("Uhlenbrock unknown programming track operation 4",
-                "Unable to parse LocoNet message.\ncontents: E5 07 00 49 42 40 56\n",
+                "Unable to parse LocoNet message. contents: E5 07 00 49 42 40 56\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
@@ -768,7 +768,7 @@ public class LocoNetMessageInterpretTest {
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x0A, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x0B});
-        Assert.assertEquals("SV2 test 27", "Unable to parse LocoNet message.\ncontents: E5 10 01 0A 02 10 01 02 03 04 10 05 06 07 08 0B\n"
+        Assert.assertEquals("SV2 test 27", "Unable to parse LocoNet message. contents: E5 10 01 0A 02 10 01 02 03 04 10 05 06 07 08 0B\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x0F, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x0E});
@@ -816,7 +816,7 @@ public class LocoNetMessageInterpretTest {
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x4A, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x4B});
-        Assert.assertEquals("SV2 test 37", "Unable to parse LocoNet message.\ncontents: E5 10 01 4A 02 10 01 02 03 04 10 05 06 07 08 4B\n"
+        Assert.assertEquals("SV2 test 37", "Unable to parse LocoNet message. contents: E5 10 01 4A 02 10 01 02 03 04 10 05 06 07 08 4B\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x4F, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x4E});
@@ -825,63 +825,63 @@ public class LocoNetMessageInterpretTest {
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x00, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x01});
-        Assert.assertEquals("SV2 test 39", "Unable to parse LocoNet message.\ncontents: E5 10 01 00 02 10 01 02 03 04 10 05 06 07 08 01\n"
+        Assert.assertEquals("SV2 test 39", "Unable to parse LocoNet message. contents: E5 10 01 00 02 10 01 02 03 04 10 05 06 07 08 01\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x11, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x10});
-        Assert.assertEquals("SV2 test 40", "Unable to parse LocoNet message.\ncontents: E5 10 01 11 02 10 01 02 03 04 10 05 06 07 08 10\n"
+        Assert.assertEquals("SV2 test 40", "Unable to parse LocoNet message. contents: E5 10 01 11 02 10 01 02 03 04 10 05 06 07 08 10\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x21, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x20});
-        Assert.assertEquals("SV2 test 41", "Unable to parse LocoNet message.\ncontents: E5 10 01 21 02 10 01 02 03 04 10 05 06 07 08 20\n"
+        Assert.assertEquals("SV2 test 41", "Unable to parse LocoNet message. contents: E5 10 01 21 02 10 01 02 03 04 10 05 06 07 08 20\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x31, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x30});
-        Assert.assertEquals("SV2 test 42", "Unable to parse LocoNet message.\ncontents: E5 10 01 31 02 10 01 02 03 04 10 05 06 07 08 30\n"
+        Assert.assertEquals("SV2 test 42", "Unable to parse LocoNet message. contents: E5 10 01 31 02 10 01 02 03 04 10 05 06 07 08 30\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x40, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x41});
-        Assert.assertEquals("SV2 test 43", "Unable to parse LocoNet message.\ncontents: E5 10 01 40 02 10 01 02 03 04 10 05 06 07 08 41\n"
+        Assert.assertEquals("SV2 test 43", "Unable to parse LocoNet message. contents: E5 10 01 40 02 10 01 02 03 04 10 05 06 07 08 41\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x51, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x50});
-        Assert.assertEquals("SV2 test 44", "Unable to parse LocoNet message.\ncontents: E5 10 01 51 02 10 01 02 03 04 10 05 06 07 08 50\n"
+        Assert.assertEquals("SV2 test 44", "Unable to parse LocoNet message. contents: E5 10 01 51 02 10 01 02 03 04 10 05 06 07 08 50\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x61, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x60});
-        Assert.assertEquals("SV2 test 45", "Unable to parse LocoNet message.\ncontents: E5 10 01 61 02 10 01 02 03 04 10 05 06 07 08 60\n"
+        Assert.assertEquals("SV2 test 45", "Unable to parse LocoNet message. contents: E5 10 01 61 02 10 01 02 03 04 10 05 06 07 08 60\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x71, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x70});
-        Assert.assertEquals("SV2 test 46", "Unable to parse LocoNet message.\ncontents: E5 10 01 71 02 10 01 02 03 04 10 05 06 07 08 70\n"
+        Assert.assertEquals("SV2 test 46", "Unable to parse LocoNet message. contents: E5 10 01 71 02 10 01 02 03 04 10 05 06 07 08 70\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x02, 0x00, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x10});
-        Assert.assertEquals("SV2 test 47", "Unable to parse LocoNet message.\ncontents: E5 10 01 01 02 00 01 02 03 04 10 05 06 07 08 10\n"
+        Assert.assertEquals("SV2 test 47", "Unable to parse LocoNet message. contents: E5 10 01 01 02 00 01 02 03 04 10 05 06 07 08 10\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x00, 0x05, 0x06, 0x07, 0x08, 0x10});
-        Assert.assertEquals("SV2 test 48", "Unable to parse LocoNet message.\ncontents: E5 10 01 01 02 10 01 02 03 04 00 05 06 07 08 10\n"
+        Assert.assertEquals("SV2 test 48", "Unable to parse LocoNet message. contents: E5 10 01 01 02 10 01 02 03 04 00 05 06 07 08 10\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x01, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x03});
-        Assert.assertEquals("SV2 test 49", "Unable to parse LocoNet message.\ncontents: E5 10 01 01 01 10 01 02 03 04 10 05 06 07 08 03\n"
+        Assert.assertEquals("SV2 test 49", "Unable to parse LocoNet message. contents: E5 10 01 01 01 10 01 02 03 04 10 05 06 07 08 03\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x01, 0x10, 0x01, 0x02, 0x03, 0x04, 0x11, 0x05, 0x06, 0x07, 0x08, 0x03});
-        Assert.assertEquals("SV2 test 50", "Unable to parse LocoNet message.\ncontents: E5 10 01 01 01 10 01 02 03 04 11 05 06 07 08 03\n"
+        Assert.assertEquals("SV2 test 50", "Unable to parse LocoNet message. contents: E5 10 01 01 01 10 01 02 03 04 11 05 06 07 08 03\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x01, 0x10, 0x01, 0x02, 0x03, 0x04, 0x12, 0x05, 0x06, 0x07, 0x08, 0x03});
-        Assert.assertEquals("SV2 test 51", "Unable to parse LocoNet message.\ncontents: E5 10 01 01 01 10 01 02 03 04 12 05 06 07 08 03\n"
+        Assert.assertEquals("SV2 test 51", "Unable to parse LocoNet message. contents: E5 10 01 01 01 10 01 02 03 04 12 05 06 07 08 03\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x01, 0x10, 0x01, 0x02, 0x03, 0x04, 0x14, 0x05, 0x06, 0x07, 0x08, 0x03});
-        Assert.assertEquals("SV2 test 52", "Unable to parse LocoNet message.\ncontents: E5 10 01 01 01 10 01 02 03 04 14 05 06 07 08 03\n"
+        Assert.assertEquals("SV2 test 52", "Unable to parse LocoNet message. contents: E5 10 01 01 01 10 01 02 03 04 14 05 06 07 08 03\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x01, 0x10, 0x01, 0x02, 0x03, 0x04, 0x18, 0x05, 0x06, 0x07, 0x08, 0x03});
-        Assert.assertEquals("SV2 test 53", "Unable to parse LocoNet message.\ncontents: E5 10 01 01 01 10 01 02 03 04 18 05 06 07 08 03\n"
+        Assert.assertEquals("SV2 test 53", "Unable to parse LocoNet message. contents: E5 10 01 01 01 10 01 02 03 04 18 05 06 07 08 03\n"
                 , LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
@@ -907,7 +907,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE4, 0x0B, 0x00, 0x69, 0x01, 0x01, 0x18, 0x00, 0x00, 0x62});
         Assert.assertEquals("Lissy message test 5",
-                "Unable to parse LocoNet message.\ncontents: E4 0B 00 69 01 01 18 00 00 62\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+                "Unable to parse LocoNet message. contents: E4 0B 00 69 01 01 18 00 00 62\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE4, 0x0A, 0x00, 0x69, 0x00, 0x11, 0x18, 0x00, 0x00, 0x62});
         Assert.assertEquals("Lissy message test 6",
@@ -960,7 +960,7 @@ public class LocoNetMessageInterpretTest {
         Assert.assertEquals("OpcAnalogIO message test ", "Lissy 85 IR Report: Block free\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x02, 0x21, 0x55, 0x01, 0x00, 0x35});
-        Assert.assertEquals("Unable to parse LocoNet message.\ncontents: E4 08 02 21 55 01 00 35\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+        Assert.assertEquals("Unable to parse LocoNet message. contents: E4 08 02 21 55 01 00 35\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
     }
 
@@ -1445,67 +1445,67 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08});
         Assert.assertEquals("IPL test 82",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 01 00 00 00 00 00 00 01 00 00 00 00 00 00 00 08\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 01 00 00 00 00 00 00 01 00 00 00 00 00 00 00 08\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL test 83",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 20 00 00 00 01 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 00 00 00 20 00 00 00 01 00 00 00 00 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL test 84",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 40 00 00 01 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 00 00 00 00 40 00 00 01 00 00 00 00 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL test 85",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 10 00 01 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 00 00 00 00 00 10 00 01 00 00 00 00 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL test 86",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 09 01 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 00 00 00 00 00 00 09 01 00 00 00 00 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL test 87",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 03 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 00 00 00 00 00 00 00 03 00 00 00 00 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL test 88",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 04 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 00 00 00 00 00 00 00 01 04 00 00 00 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL test 89",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 02 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 02 00 00 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL test 90",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 70 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 70 00 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL test 91",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 00 03 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 00 03 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL test 92",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 00 00 17 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 00 00 17 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x23, 0x00, 0x00});
         Assert.assertEquals("IPL test 93",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 00 00 00 23 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 00 00 00 23 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x45, 0x00});
         Assert.assertEquals("IPL test 94",
-                "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 00 00 00 00 45 00\n",
+                "Unable to parse LocoNet message. contents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 00 00 00 00 45 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x18, 0x01, 0x00, 0x00, 0x00, 0x6A, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3F});
@@ -1671,72 +1671,72 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 04",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 03 00 00 00 00 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 01 6E 0A 00 00 03 00 00 00 00 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 05",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 04 00 00 00 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 01 6E 0A 00 00 00 04 00 00 00 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 06",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 05 00 00 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 01 6E 0A 00 00 00 00 05 00 00 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 07",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 06 00 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 01 6E 0A 00 00 00 00 00 06 00 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 08",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 07 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 07 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 09",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 08 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 08 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 10",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 00 09 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 00 09 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0A, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 11",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 00 00 0A 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 00 00 0A 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0b, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 12",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 00 00 00 0B 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 00 00 00 0B 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x6B});
         Assert.assertEquals("IPL Ping test 13",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 00 00 00 00 0C 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 00 00 00 00 0C 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 14",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 15",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 16",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping test 17",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 70 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 08 70 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x01, 0x6E, 0x0A, 0x00, 0x24, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
@@ -1751,27 +1751,27 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping Reply test 01",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 10 00 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 10 00 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping Reply test 01",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 10 70 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 10 70 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping Reply test 01",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 10 10 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 10 10 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping Reply test 01",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 10 20 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 10 20 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL Ping Reply test 01",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 10 40 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 10 40 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
 
@@ -1806,7 +1806,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x07, 0x10, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x10, 0x00, 0x00, 0x09, 0x21, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL ping report test 02",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 10 01 6E 0A 00 00 10 00 00 09 21 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 10 01 6E 0A 00 00 10 00 00 09 21 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x01, 0x00, 0x0A, 0x00, 0x00, 0x10, 0x00, 0x00, 0x09, 0x21, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
@@ -1841,7 +1841,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x00, 0x00, 0x00, 0x00, 0x0, 0x10, 0x00, 0x00, 0x09, 0x21, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL ping report test 02",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 10 00 00 00 00 00 10 00 00 09 21 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 10 00 00 00 00 00 10 00 00 09 21 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x00, 0x01, 0x00, 0x00, 0x0, 0x10, 0x00, 0x00, 0x09, 0x21, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
@@ -1866,12 +1866,12 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x09, 0x02, 0x00, 0x03, 0x00, 0x0, 0x10, 0x00, 0x00, 0x09, 0x21, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL ping report test 02",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 09 02 00 03 00 00 10 00 00 09 21 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 09 02 00 03 00 00 10 00 00 09 21 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x11, 0x02, 0x00, 0x03, 0x00, 0x0, 0x10, 0x00, 0x00, 0x09, 0x21, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
         Assert.assertEquals("IPL ping report test 02",
-                "Unable to parse LocoNet message.\ncontents: E5 14 08 11 02 00 03 00 00 10 00 00 09 21 00 00 00 00 00 6B\n",
+                "Unable to parse LocoNet message. contents: E5 14 08 11 02 00 03 00 00 10 00 00 09 21 00 00 00 00 00 6B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
@@ -2833,12 +2833,12 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x13, 0x07, 0x4F, 0x2D, 0x5E, 0x08, 0x00, 0x16});
         Assert.assertEquals(" Immediate Packet test 09",
-                "Unable to parse LocoNet message.\ncontents: ED 0B 7F 13 07 4F 2D 5E 08 00 16\n",
+                "Unable to parse LocoNet message. contents: ED 0B 7F 13 07 4F 2D 5E 08 00 16\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x03, 0x07, 0x4F, 0x2D, 0x5E, 0x08, 0x00, 0x16});
         Assert.assertEquals(" Immediate Packet test 10",
-                "Unable to parse LocoNet message.\ncontents: ED 0B 7F 03 07 4F 2D 5E 08 00 16\n",
+                "Unable to parse LocoNet message. contents: ED 0B 7F 03 07 4F 2D 5E 08 00 16\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x23, 0x00, 0x4F, 0x2D, 0x5E, 0x08, 0x35, 0x16});
@@ -3192,7 +3192,7 @@ public class LocoNetMessageInterpretTest {
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x49, 0x42, 0x40, 0x5d, 0x00, 0x00, 0x00, 0x70, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals(" Immediate Packet test 78",
-                "Unable to parse LocoNet message.\ncontents: ED 1F 01 49 42 40 5D 00 00 00 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: ED 1F 01 49 42 40 5D 00 00 00 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
             LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x49, 0x42, 0x40, 0x6c, 0x00, 0x00, 0x00, 0x70, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
@@ -3348,55 +3348,55 @@ public class LocoNetMessageInterpretTest {
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x49, 0x42, 0x40, 0x00, 0x00, 0x00, 0x40, 0x70, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals(" Immediate Packet test 104",
-                "Unable to parse LocoNet message.\ncontents: ED 1F 01 49 42 40 00 00 00 40 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: ED 1F 01 49 42 40 00 00 00 40 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
             LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x1e, 0x01, 0x49, 0x42, 0x40, 0x71, 0x00, 0x00, 0x40, 0x70, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals(" Immediate Packet test 105",
-                "Unable to parse LocoNet message.\ncontents: ED 1E 01 49 42 40 71 00 00 40 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: ED 1E 01 49 42 40 71 00 00 40 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
             LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x04, 0x49, 0x42, 0x40, 0x71, 0x00, 0x00, 0x40, 0x70, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals(" Immediate Packet test 106",
-                "Unable to parse LocoNet message.\ncontents: ED 1F 04 49 42 40 71 00 00 40 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: ED 1F 04 49 42 40 71 00 00 40 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
             LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x51, 0x42, 0x40, 0x71, 0x00, 0x00, 0x40, 0x70, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals(" Immediate Packet test 107",
-                "Unable to parse LocoNet message.\ncontents: ED 1F 01 51 42 40 71 00 00 40 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: ED 1F 01 51 42 40 71 00 00 40 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
             LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x49, 0x30, 0x40, 0x71, 0x00, 0x00, 0x40, 0x70, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals(" Immediate Packet test 108",
-                "Unable to parse LocoNet message.\ncontents: ED 1F 01 49 30 40 71 00 00 40 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: ED 1F 01 49 30 40 71 00 00 40 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
             LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x49, 0x42, 0x40, 0x00, 0x00, 0x00, 0x40, 0x70, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals(" Immediate Packet test 109",
-                "Unable to parse LocoNet message.\ncontents: ED 1F 01 49 42 40 00 00 00 40 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: ED 1F 01 49 42 40 00 00 00 40 70 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
             LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x49, 0x42, 0x40, 0x71, 0x00, 0x00, 0x40, 0x6F, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals(" Immediate Packet test 110",
-                "Unable to parse LocoNet message.\ncontents: ED 1F 01 49 42 40 71 00 00 40 6F 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: ED 1F 01 49 42 40 71 00 00 40 6F 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
             LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x49, 0x42, 0x40, 0x71, 0x00, 0x00, 0x40, 0x70, 0x15, 0x00, 0x00, 0x00, 0x10, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals(" Immediate Packet test 111",
-                "Unable to parse LocoNet message.\ncontents: ED 1F 01 49 42 40 71 00 00 40 70 15 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: ED 1F 01 49 42 40 71 00 00 40 70 15 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
             LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x1f, 0x01, 0x49, 0x42, 0x40, 0x71, 0x00, 0x00, 0x40, 0x70, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals(" Immediate Packet test 112",
-                "Unable to parse LocoNet message.\ncontents: ED 1F 01 49 42 40 71 00 00 40 70 00 00 00 00 20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: ED 1F 01 49 42 40 71 00 00 40 70 00 00 00 00 20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
             LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         /*
@@ -3496,7 +3496,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xB0, 0x00, 0x40, 0x0F});
         Assert.assertEquals(" Turnout Control test 25",
-                "Unable to parse LocoNet message.\ncontents: B0 00 40 0F\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+                "Unable to parse LocoNet message. contents: B0 00 40 0F\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xB0, 0x78, 0x27, 0x0F});
         Assert.assertEquals("Interrogate 1",
@@ -3611,7 +3611,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xDF, 0x30, 0x01, 0x05, 0x00, 0x00});
         Assert.assertEquals(" Tetherless Query/Reply test 11",
-                "Unable to parse LocoNet message.\ncontents: DF 30 01 05 00 00\n",
+                "Unable to parse LocoNet message. contents: DF 30 01 05 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xD7, 0x17, 0x00, 0x00, 0x00, 0x3F});
@@ -3656,47 +3656,47 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xDF, 0x40, 0x00, 0x00, 0x00, 0x60});
         Assert.assertEquals(" Tetherless Query/Reply test 20",
-                "Unable to parse LocoNet message.\ncontents: DF 40 00 00 00 60\n",
+                "Unable to parse LocoNet message. contents: DF 40 00 00 00 60\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xDF, 0x01, 0x00, 0x00, 0x00, 0x60});
         Assert.assertEquals(" Tetherless Query/Reply test 20",
-                "Unable to parse LocoNet message.\ncontents: DF 01 00 00 00 60\n",
+                "Unable to parse LocoNet message. contents: DF 01 00 00 00 60\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xDF, 0x01, 0x01, 0x00, 0x00, 0x60});
         Assert.assertEquals(" Tetherless Query/Reply test 20",
-                "Unable to parse LocoNet message.\ncontents: DF 01 01 00 00 60\n",
+                "Unable to parse LocoNet message. contents: DF 01 01 00 00 60\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xDF, 0x01, 0x08, 0x00, 0x00, 0x60});
         Assert.assertEquals(" Tetherless Query/Reply test 20",
-                "Unable to parse LocoNet message.\ncontents: DF 01 08 00 00 60\n",
+                "Unable to parse LocoNet message. contents: DF 01 08 00 00 60\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xDF, 0x01, 0x29, 0x00, 0x00, 0x60});
         Assert.assertEquals(" Tetherless Query/Reply test 20",
-                "Unable to parse LocoNet message.\ncontents: DF 01 29 00 00 60\n",
+                "Unable to parse LocoNet message. contents: DF 01 29 00 00 60\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xDF, 0x01, 0x00, 0x01, 0x00, 0x60});
         Assert.assertEquals(" Tetherless Query/Reply test 20",
-                "Unable to parse LocoNet message.\ncontents: DF 01 00 01 00 60\n",
+                "Unable to parse LocoNet message. contents: DF 01 00 01 00 60\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xDF, 0x01, 0x00, 0x40, 0x00, 0x60});
         Assert.assertEquals(" Tetherless Query/Reply test 20",
-                "Unable to parse LocoNet message.\ncontents: DF 01 00 40 00 60\n",
+                "Unable to parse LocoNet message. contents: DF 01 00 40 00 60\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xDF, 0x01, 0x00, 0x00, 0x08, 0x60});
         Assert.assertEquals(" Tetherless Query/Reply test 20",
-                "Unable to parse LocoNet message.\ncontents: DF 01 00 00 08 60\n",
+                "Unable to parse LocoNet message. contents: DF 01 00 00 08 60\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xDF, 0x01, 0x00, 0x00, 0x7f, 0x60});
         Assert.assertEquals(" Tetherless Query/Reply test 20",
-                "Unable to parse LocoNet message.\ncontents: DF 01 00 00 7F 60\n",
+                "Unable to parse LocoNet message. contents: DF 01 00 00 7F 60\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
     }
@@ -3804,27 +3804,27 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xD3, 0x09, 0x03, 0x00, 0x00, 0x3D});
         Assert.assertEquals("PR3 mode test 4",
-                "Unable to parse LocoNet message.\ncontents: D3 09 03 00 00 3D\n",
+                "Unable to parse LocoNet message. contents: D3 09 03 00 00 3D\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xD3, 0x10, 0x07, 0x00, 0x00, 0x3D});
         Assert.assertEquals("PR3 mode test 5",
-                "Unable to parse LocoNet message.\ncontents: D3 10 07 00 00 3D\n",
+                "Unable to parse LocoNet message. contents: D3 10 07 00 00 3D\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xD3, 0x10, 0x03, 0x01, 0x00, 0x3D});
         Assert.assertEquals("PR3 mode test 6",
-                "Unable to parse LocoNet message.\ncontents: D3 10 03 01 00 3D\n",
+                "Unable to parse LocoNet message. contents: D3 10 03 01 00 3D\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xD3, 0x10, 0x03, 0x00, 0x10, 0x3D});
         Assert.assertEquals("PR3 mode test 7",
-                "Unable to parse LocoNet message.\ncontents: D3 10 03 00 10 3D\n",
+                "Unable to parse LocoNet message. contents: D3 10 03 00 10 3D\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xD3, 0x10, 0x01, 0x00, 0x00, 0x3D});
         Assert.assertEquals("PR3 mode test 8",
-                "Unable to parse LocoNet message.\ncontents: D3 10 01 00 00 3D\n",
+                "Unable to parse LocoNet message. contents: D3 10 01 00 00 3D\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
     }
@@ -3936,7 +3936,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x05, 0x74, 0x79, 0x4C});
         Assert.assertEquals("PM42 OpSws test 8",
-                "Unable to parse LocoNet message.\ncontents: D0 62 05 74 79 4C\n",
+                "Unable to parse LocoNet message. contents: D0 62 05 74 79 4C\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
     }
@@ -4881,7 +4881,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x05, 0x00, 0x00, 0x7f});
         Assert.assertEquals("PeerXfer 1",
-                "Unable to parse LocoNet message.\ncontents: E5 05 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 05 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
     }
@@ -4952,7 +4952,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7e, 0x00, 0x00, 0x0, 1, 2, 0, 0, 0x70, 0, 0, 0, 0, 0x00});
         Assert.assertEquals("Throttle message 1",
-                "Unable to parse LocoNet message.\ncontents: E5 10 7E 00 00 00 01 02 00 00 70 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 10 7E 00 00 00 01 02 00 00 70 00 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7f, 0x05, 0x00, 0x0, 0x30, 0x30, 0x30, 0x30, 0x70, 0x30, 0x30, 0x30, 0x30, 0x00});
@@ -5068,12 +5068,12 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xBB, 0x7D, 0x00, 0x39} );
         Assert.assertEquals(" Slot test 7",
-                "Unable to parse LocoNet message.\ncontents: BB 7D 00 39\n",
+                "Unable to parse LocoNet message. contents: BB 7D 00 39\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7D, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6C} );
         Assert.assertEquals(" Slot test 8",
-                "Unable to parse LocoNet message.\ncontents: E7 0E 7D 00 00 00 00 05 00 00 00 00 00 6C\n",
+                "Unable to parse LocoNet message. contents: E7 0E 7D 00 00 00 00 05 00 00 00 00 00 6C\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBB, 0x7E, 0x00, 0x3A} );
@@ -5392,17 +5392,17 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xBB, 0x79, 0x00, 0x4D} );
         Assert.assertEquals(" Slot test 75",
-                "Unable to parse LocoNet message.\ncontents: BB 79 00 4D\n",
+                "Unable to parse LocoNet message. contents: BB 79 00 4D\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBB, 0x7A, 0x00, 0x4D} );
         Assert.assertEquals(" Slot test 76",
-                "Unable to parse LocoNet message.\ncontents: BB 7A 00 4D\n",
+                "Unable to parse LocoNet message. contents: BB 7A 00 4D\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBB, 0x7D, 0x00, 0x4D} );
         Assert.assertEquals(" Slot test 77",
-                "Unable to parse LocoNet message.\ncontents: BB 7D 00 4D\n",
+                "Unable to parse LocoNet message. contents: BB 7D 00 4D\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBB, 0x7E, 0x00, 0x4D} );
@@ -5423,37 +5423,37 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x79, 0x38});
         Assert.assertEquals(" Slot test 82",
-                "Unable to parse LocoNet message.\ncontents: BA 04 79 38\n",
+                "Unable to parse LocoNet message. contents: BA 04 79 38\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x7A, 0x3b});
         Assert.assertEquals(" Slot test 83",
-                "Unable to parse LocoNet message.\ncontents: BA 04 7A 3B\n",
+                "Unable to parse LocoNet message. contents: BA 04 7A 3B\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x7b, 0x3a});
         Assert.assertEquals(" Slot test 84",
-                "Unable to parse LocoNet message.\ncontents: BA 04 7B 3A\n",
+                "Unable to parse LocoNet message. contents: BA 04 7B 3A\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x7c, 0x3d});
         Assert.assertEquals(" Slot test 85",
-                "Unable to parse LocoNet message.\ncontents: BA 04 7C 3D\n",
+                "Unable to parse LocoNet message. contents: BA 04 7C 3D\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x7d, 0x3c});
         Assert.assertEquals(" Slot test 86",
-                "Unable to parse LocoNet message.\ncontents: BA 04 7D 3C\n",
+                "Unable to parse LocoNet message. contents: BA 04 7D 3C\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x7e, 0x3f});
         Assert.assertEquals(" Slot test 87",
-                "Unable to parse LocoNet message.\ncontents: BA 04 7E 3F\n",
+                "Unable to parse LocoNet message. contents: BA 04 7E 3F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x7f, 0x3e});
         Assert.assertEquals(" Slot test 87",
-                "Unable to parse LocoNet message.\ncontents: BA 04 7F 3E\n",
+                "Unable to parse LocoNet message. contents: BA 04 7F 3E\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x00, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
@@ -5573,7 +5573,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x40, 0x26});
         Assert.assertEquals(" Slot test 110",
-                "Unable to parse LocoNet message.\ncontents: B6 2F 40 26\n",
+                "Unable to parse LocoNet message. contents: B6 2F 40 26\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xEF, 0x0E, 0x08, 0x33, 0x15, 0x00, 0x00, 0x27, 0x00, 0x0E, 0x00, 0x04, 0x44, 0x79});
@@ -5970,7 +5970,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xBD, 0x00, 0x40, 0x02});
         Assert.assertEquals("Switch test 29",
-                "Unable to parse LocoNet message.\ncontents: BD 00 40 02\n",
+                "Unable to parse LocoNet message. contents: BD 00 40 02\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBC, 0x00, 0x10, 0x53});
@@ -5985,12 +5985,12 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xBC, 0x00, 0x40, 0x33});
         Assert.assertEquals("Switch test 32",
-                "Unable to parse LocoNet message.\ncontents: BC 00 40 33\n",
+                "Unable to parse LocoNet message. contents: BC 00 40 33\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBD, 0x00, 0x40, 0x00});
         Assert.assertEquals("Switch test 33",
-                "Unable to parse LocoNet message.\ncontents: BD 00 40 00\n",
+                "Unable to parse LocoNet message. contents: BD 00 40 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBC, 0x05, 0x30, 0x76});
@@ -6005,7 +6005,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xA1, 0x55, 0x44, 0x49});
         Assert.assertEquals(" Slot test 37",
-                "Unable to parse LocoNet message.\ncontents: A1 55 44 49\n",
+                "Unable to parse LocoNet message. contents: A1 55 44 49\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
     }
@@ -6025,7 +6025,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x01, 0x01, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex receiver query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 01 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 01 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x02, 0x08, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
@@ -6060,7 +6060,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x02, 0x09, 1, 0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex bogus request",
-                "Unable to parse LocoNet message.\ncontents: E5 14 02 09 01 00 00 00 00 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 02 09 01 00 00 00 00 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x08, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
@@ -6277,62 +6277,62 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x30,0x30,0x2F,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 30 30 2F 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 00 00 30 30 30 2F 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x30,0x30,0x3D,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 30 30 3D 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 00 00 30 30 30 3D 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x30,0x30,0x7f,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 30 30 7F 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 00 00 30 30 30 7F 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x30,0x2F,0x30,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 30 2F 30 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 00 00 30 30 2F 30 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x30,0x3D,0x30,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 30 3D 30 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 00 00 30 30 3D 30 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x30,0x7f,0x30,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 30 7F 30 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 00 00 30 30 7F 30 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x2F,0x30,0x30,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 2F 30 30 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 00 00 30 2F 30 30 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x3D,0x30,0x30,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 3D 30 30 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 00 00 30 3D 30 30 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x7f,0x30,0x30,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 7F 30 30 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 00 00 30 7F 30 30 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x2F,0x30,0x30,0x30,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 2F 30 30 30 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 00 00 2F 30 30 30 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x3D,0x30,0x30,0x30,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 3D 30 30 30 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 00 00 3D 30 30 30 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x7f,0x30,0x30,0x30,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 7F 30 30 30 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 00 00 7F 30 30 30 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x10, 0x08, 0x00,0x00,0x00,0x00,0x00,0,0,0,0,0,0,0,0,0,0x7f});
@@ -6367,7 +6367,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x10, 0x01, 0,0x00,0x00,0x00,0x00,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group RSSI query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 10 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 10 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x10, 0x10, 0,0x00,0x00,0x00,0x00,0,0,0,0,0,0,0,0,0,0x7f});
@@ -6387,27 +6387,27 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x04, 0x01, 1, 0x16, 0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex ID query (bogus)",
-                "Unable to parse LocoNet message.\ncontents: E5 14 04 01 01 16 00 00 00 00 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 04 01 01 16 00 00 00 00 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x02, 0x02,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex nzme set",
-                "Unable to parse LocoNet message.\ncontents: E5 14 03 02 02 46 61 64 65 00 32 42 6C 6B 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 03 02 02 46 61 64 65 00 32 42 6C 6B 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x01, 0, 0x36, 0x39,0x33,0x32,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 07 01 00 36 39 33 32 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 07 01 00 36 39 33 32 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x02, 0x01, 0, 0x36, 0x39,0x33,0x32,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 02 01 00 36 39 33 32 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 02 01 00 36 39 33 32 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x01, 0x01, 0, 0x36, 0x39,0x33,0x32,0,0,0,0,0,0,0,0,0,0x7f});
         Assert.assertEquals("duplex Group Password query",
-                "Unable to parse LocoNet message.\ncontents: E5 14 01 01 00 36 39 33 32 00 00 00 00 00 00 00 00 00 7F\n",
+                "Unable to parse LocoNet message. contents: E5 14 01 01 00 36 39 33 32 00 00 00 00 00 00 00 00 00 7F\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
 
@@ -6464,7 +6464,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7F, 0x7f, 0x7f, 0x40, 0x00, 0x03, 0x00, 0x08, 0x63, 0x01, 0x02, 0x04, 0x08, 0x00});
         Assert.assertEquals("IPL firmware address 7",
-                "Unable to parse LocoNet message.\ncontents: E5 10 7F 7F 7F 40 00 03 00 08 63 01 02 04 08 00\n",
+                "Unable to parse LocoNet message. contents: E5 10 7F 7F 7F 40 00 03 00 08 63 01 02 04 08 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
 
@@ -6649,22 +6649,22 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7E, 0x7f, 0x7f, 0x40, 0x00, 0x00, 0x00, 0x00, 0x30, 0x00, 0x00, 0x00, 0x12, 0x00});
         Assert.assertEquals("IPL firmware verify data 8b",
-                "Unable to parse LocoNet message.\ncontents: E5 10 7E 7F 7F 40 00 00 00 00 30 00 00 00 12 00\n",
+                "Unable to parse LocoNet message. contents: E5 10 7E 7F 7F 40 00 00 00 00 30 00 00 00 12 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7F, 0x7E, 0x7f, 0x40, 0x00, 0x00, 0x00, 0x00, 0x30, 0x00, 0x00, 0x00, 0x12, 0x00});
         Assert.assertEquals("IPL firmware verify data 8b",
-                "Unable to parse LocoNet message.\ncontents: E5 10 7F 7E 7F 40 00 00 00 00 30 00 00 00 12 00\n",
+                "Unable to parse LocoNet message. contents: E5 10 7F 7E 7F 40 00 00 00 00 30 00 00 00 12 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7F, 0x7F, 0x7E, 0x40, 0x00, 0x00, 0x00, 0x00, 0x30, 0x00, 0x00, 0x00, 0x12, 0x00});
         Assert.assertEquals("IPL firmware verify data 8b",
-                "Unable to parse LocoNet message.\ncontents: E5 10 7F 7F 7E 40 00 00 00 00 30 00 00 00 12 00\n",
+                "Unable to parse LocoNet message. contents: E5 10 7F 7F 7E 40 00 00 00 00 30 00 00 00 12 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7F, 0x7F, 0x7E, 0x30, 0x00, 0x00, 0x00, 0x00, 0x30, 0x00, 0x00, 0x00, 0x12, 0x00});
         Assert.assertEquals("IPL firmware verify data 8b",
-                "Unable to parse LocoNet message.\ncontents: E5 10 7F 7F 7E 30 00 00 00 00 30 00 00 00 12 00\n",
+                "Unable to parse LocoNet message. contents: E5 10 7F 7F 7E 30 00 00 00 00 30 00 00 00 12 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
 
@@ -6677,24 +6677,24 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7F, 0x7f, 0x7f, 0x40, 0x00, 0x00, 0x00, 0x00, 0x50, 0x00, 0x00, 0x00, 0x12, 0x00});
         Assert.assertEquals("Unknown firmware 1",
-                "Unable to parse LocoNet message.\ncontents: E5 10 7F 7F 7F 40 00 00 00 00 50 00 00 00 12 00\n",
+                "Unable to parse LocoNet message. contents: E5 10 7F 7F 7F 40 00 00 00 00 50 00 00 00 12 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7F, 0x7f, 0x7f, 0x40, 0x00, 0x00, 0x00, 0x00, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL firmware end 1",
-                "Unable to parse LocoNet message.\ncontents: E5 10 7F 7F 7F 40 00 00 00 00 60 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 10 7F 7F 7F 40 00 00 00 00 60 00 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7F, 0x7f, 0x7f, 0x40, 0x00, 0x00, 0x00, 0x00, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL firmware end 1",
-                "Unable to parse LocoNet message.\ncontents: E5 10 7F 7F 7F 40 00 00 00 00 61 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 10 7F 7F 7F 40 00 00 00 00 61 00 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7F, 0x7f, 0x7f, 0x40, 0x00, 0x00, 0x00, 0x00, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00});
         Assert.assertEquals("IPL firmware end 1",
-                "Unable to parse LocoNet message.\ncontents: E5 10 7F 7F 7F 40 00 00 00 00 70 00 00 00 00 00\n",
+                "Unable to parse LocoNet message. contents: E5 10 7F 7F 7F 40 00 00 00 00 70 00 00 00 00 00\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x7F, 0x7f, 0x7f, 0x40, 0x00, 0x01, 0x02, 0x04, 0x00, 0x08, 0x10, 0x20, 0x40, 0x00});
