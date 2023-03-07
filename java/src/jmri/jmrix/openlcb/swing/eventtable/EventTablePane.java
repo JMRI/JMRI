@@ -497,6 +497,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 var ident = nodeMemo.getSimpleNodeIdent();
                     if (ident != null) {
                         name = ident.getUserName();
+                        if (name.isEmpty()) {
+                            name = ident.getMfgName()+" - "+ident.getModelName();
+                        }
                     }
             }
 
