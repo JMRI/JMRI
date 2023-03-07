@@ -18,7 +18,12 @@ import org.openlcb.cdi.cmd.BackupConfig;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 
 /**
- * Import CV values from a TCS backup file from a CDI backup
+ * Import CV values from a TCS backup file (from a CDI backup)
+ 8 directly into a RosterEntry.
+ *<p>
+ * Note that this does not update any GUI that's showing the
+ * RosterEntry, e.g. a RosterPane or FunctionLabelPane. Those
+ * must have their updates triggered elsewhere, e.g. TcsImportAction.
  *
  * @author Alex Shepherd Copyright (C) 2003 (original Pr1Importer)
  * *author Bob Jacobsen  Copyright (C) 2023
@@ -88,7 +93,7 @@ public class TcsImporter {
         if (!description.isEmpty()) return description;
 
         // there must be a value in display, unpack it.
-        // We do string switch in case of non-parseable garbage
+        // We do string switch in case of non-numerically-parseable garbage
         switch (display) {
 
             case "0":   return "";

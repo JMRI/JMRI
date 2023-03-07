@@ -417,7 +417,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
     }
 
     /**
-     * File GUI from roster contents.
+     * Fill GUI from roster contents.
      *
      * @param r the roster entry to display
      */
