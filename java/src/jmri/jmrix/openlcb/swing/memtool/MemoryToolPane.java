@@ -16,9 +16,6 @@ import jmri.util.swing.MultiLineCellRenderer;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-
 import org.openlcb.*;
 import org.openlcb.implementations.*;
 import org.openlcb.swing.*;
@@ -39,11 +36,19 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
     NodeID nid;
 
     MimicNodeStore store;
-    Monitor monitor;
+    MemoryConfigurationService service;
+    NodeSelector nodeSelector;
 
     public String getTitle(String menuTitle) {
         return Bundle.getMessage("TitleMemoryTool");
     }
+
+    static final int CHUNKSIZE = 64;
+
+    JTextField spaceField;
+    JLabel statusField;
+    boolean cancelled = false;
+    boolean running = false;
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
@@ -54,15 +59,40 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         store = memo.get(MimicNodeStore.class);
         EventTable stdEventTable = memo.get(OlcbInterface.class).getEventTable();
         if (stdEventTable == null) log.warn("no OLCB EventTable found");
+        service = memo.get(MemoryConfigurationService.class);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Add to GUI here
+        nodeSelector = new org.openlcb.swing.NodeSelector(store, Integer.MAX_VALUE);
+        add(nodeSelector);
 
+        var ms = new JPanel();
+        ms.setLayout(new FlowLayout());
+        add(ms);
+        ms.add(new JLabel("Memory Space:"));
+        spaceField = new JTextField("255");
+        ms.add(spaceField);
 
-        // hook up to receive traffic
-        monitor = new Monitor();
-        memo.get(OlcbInterface.class).registerMessageListener(monitor);
+        var bb = new JPanel();
+        bb.setLayout(new FlowLayout());
+        add(bb);
+        var gb = new JButton("Get...");
+        bb.add(gb);
+        gb.addActionListener(this::pushedGetButton);
+        var pb = new JButton("Put...");
+        bb.add(pb);
+        pb.addActionListener(this::pushedPutButton);
+        var cb = new JButton("Cancel");
+        bb.add(cb);
+        cb.addActionListener(this::pushedCancel);
+
+        bb = new JPanel();
+        bb.setLayout(new FlowLayout());
+        add(bb);
+        statusField = new JLabel("                          ",SwingConstants.CENTER);
+        bb.add(statusField);
+
     }
 
     public MemoryToolPane() {
@@ -70,28 +100,8 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
 
     @Override
     public void dispose() {
-        // remove traffic connection
-        memo.get(OlcbInterface.class).unRegisterMessageListener(monitor);
         // and complete this
         super.dispose();
-    }
-
-    @Override
-    public java.util.List<JMenu> getMenus() {
-        // create a file menu
-        var retval = new ArrayList<JMenu>();
-        var fileMenu = new JMenu("File");
-        fileMenu.setMnemonic(KeyEvent.VK_F);
-        var csvItem = new JMenuItem("Save to CSV...", KeyEvent.VK_S);
-        KeyStroke ctrlSKeyStroke = KeyStroke.getKeyStroke("control S");
-        if (jmri.util.SystemType.isMacOSX()) {
-            ctrlSKeyStroke = KeyStroke.getKeyStroke("meta S");
-        }
-        csvItem.setAccelerator(ctrlSKeyStroke);
-        csvItem.addActionListener(this::writeToCsvFile);
-        fileMenu.add(csvItem);
-        retval.add(fileMenu);
-        return retval;
     }
 
     @Override
@@ -102,112 +112,173 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Event Table");
+            return (memo.getUserName() + " Memory Tool");
         }
         return getTitle(Bundle.getMessage("TitleEventTable"));
     }
 
-
-    void popcornButtonChanged() {
+    void pushedCancel(ActionEvent e) {
+        if (running) {
+            cancelled = true;
+        }
     }
 
+    int space = 0xFF;
 
-    public void findRequested(java.awt.event.ActionEvent e) {
-    }
+    NodeID farID = new NodeID("0.0.0.0.0.0");
 
-    // CSV file chooser
-    // static to remember choice from one use to another.
-    static JFileChooser fileChooser = null;
+    MemoryConfigurationService.McsReadHandler cbr =
+        new MemoryConfigurationService.McsReadHandler() {
+            @Override
+            public void handleFailure(int errorCode) {
+                if (errorCode == 0x1082) {
+                    statusField.setText("Done reading");
+                } if (errorCode == 0x1081) {
+                    log.error("Read failed. Address space not known");
+                    statusField.setText("Read failed. Address space not known");
+                } else {
+                    log.error("Read failed. Error code is {}", String.format("%04X", errorCode));
+                    statusField.setText("Read failed. Error code is "+String.format("%04X", errorCode));
+                }
+                try {
+                    outputStream.flush();
+                    outputStream.close();
+                } catch (IOException ex) {
+                    log.warn("Error closing file", ex);
+                    statusField.setText("Error closing output file");
+                }
+                running = false;
+            }
+
+            @Override
+            public void handleReadData(NodeID dest, int readSpace, long readAddress, byte[] readData) {
+                log.trace("read succeed with {} bytes at {}", readData.length, readAddress);
+                statusField.setText("Read "+readAddress+" bytes");
+                try {
+                    outputStream.write(readData);
+                } catch (IOException ex) {
+                    log.error("Error writing data to file", ex);
+                    statusField.setText("Error writing data to file");
+                    return; // stop now
+                }
+                if (readData.length != CHUNKSIZE) {
+                    // short read is another way to indicate end
+                    statusField.setText("Done reading");
+                    log.warn("Stopping read due to short reply");
+                    try {
+                        outputStream.flush();
+                        outputStream.close();
+                    } catch (IOException ex) {
+                        log.warn("Error closing file", ex);
+                        statusField.setText("Error closing output file");
+                    }
+                }
+                // fire another
+                if (!cancelled) {
+                    service.requestRead(farID, space, readAddress+readData.length, CHUNKSIZE, cbr);
+                } else {
+                    running = false;
+                    cancelled = false;
+                    log.info("Get operation cancelled");
+                    statusField.setText("Cancelled");
+                }
+            }
+        };
+
+    OutputStream outputStream;
 
     /**
-     * Write out contents in CSV form
-     * @param e Needed for signature of method, but ignored here
+     * Starts reading from node and writing to file
+     * @param e not used
      */
-    public void writeToCsvFile(ActionEvent e) {
-
+    void pushedGetButton(ActionEvent e) {
+        running = true;
+        farID = nodeSelector.getSelectedItem();
+        try {
+            space = Integer.parseInt(spaceField.getText().trim());
+        } catch (NumberFormatException ex) {
+            log.error("error parsing the space field value \"{}\"", spaceField.getText());
+            statusField.setText("Error parsing the space value");
+            running = false;
+            return;
+        }
+        log.debug("Start put");
         if (fileChooser == null) {
             fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Save CSV file");
         }
+        fileChooser.setDialogTitle("Read into binary file");
         fileChooser.rescanCurrentDirectory();
-        fileChooser.setSelectedFile(new File("eventtable.csv"));
+        fileChooser.setSelectedFile(new File("memory.bin"));
 
         int retVal = fileChooser.showSaveDialog(this);
-
-        if (retVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            if (log.isDebugEnabled()) {
-                log.debug("start to export to CSV file {}", file);
-            }
-
-            try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
-                str.printRecord("Event ID", "Event Name", "Producer Node", "Producer Node Name",
-                                "Consumer Node", "Consumer Node Name", "Paths");
-                //for (int i = 0; i < model.getRowCount(); i++) {
-                    //String contextInfo = model.getValueAt(i, EventTableDataModel.COL_CONTEXT_INFO).toString().replace("\n", " / "); // multi-line cell
-
-                    //str.printRecord(1,2,3,4);
-                //}
-                str.flush();
-            } catch (IOException ex) {
-                log.error("Error writing file", ex);
-            }
+        if (retVal != JFileChooser.APPROVE_OPTION) {
+            running = false;
+            return;
         }
+
+        // open file
+        File file = fileChooser.getSelectedFile();
+        log.debug("access {}", file);
+        try {
+            outputStream = new FileOutputStream(file);
+        } catch (IOException ex) {
+            log.error("Error opening file", ex);
+            statusField.setText("Error opening file");
+            running = false;
+            return;
+        }
+
+        // do first memory read
+        int address = 0;
+        service.requestRead(farID, space, address, CHUNKSIZE, cbr);
     }
 
-    /**
-     * Internal class to watch OpenLCB traffic
-     */
+    void pushedPutButton(ActionEvent e) {
+        log.debug("Start get");
+        if (fileChooser == null) {
+            fileChooser = new JFileChooser();
+        }
+        fileChooser.setDialogTitle("Upload binary file");
+        fileChooser.rescanCurrentDirectory();
+        fileChooser.setSelectedFile(new File("memory.bin"));
 
-    static class Monitor extends MessageDecoder {
+        int retVal = fileChooser.showOpenDialog(this);
+        if (retVal != JFileChooser.APPROVE_OPTION) { return; }
 
-        Monitor() {
+        // open file and read first 64 bytes
+        File file = fileChooser.getSelectedFile();
+        log.debug("access {}", file);
+
+        var bytes = new byte[64];
+        try {
+            InputStream inputStream = new FileInputStream(file);
+            int bytesRead = inputStream.read(bytes);
+            log.info("read {} bytes", bytesRead);
+        } catch (IOException ex) {
+            log.error("Error reading file",ex);
         }
 
-        /**
-         * Handle "Producer/Consumer Event Report" message
-         * @param msg       message to handle
-         * @param sender    connection where it came from
-         */
-        @Override
-        public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
-            var nodeID = msg.getSourceNodeID();
-            var eventID = msg.getEventID();
-        }
+        // do first memory write
+        MemoryConfigurationService.McsWriteHandler cb =
+            new MemoryConfigurationService.McsWriteHandler() {
+                @Override
+                public void handleFailure(int errorCode) {
+                    log.error("Write failed. error code is {}", String.format("%016X", errorCode));
+                }
 
-        /**
-         * Handle "Consumer Identified" message
-         * @param msg       message to handle
-         * @param sender    connection where it came from
-         */
-        @Override
-        public void handleConsumerIdentified(ConsumerIdentifiedMessage msg, Connection sender){
-            var nodeID = msg.getSourceNodeID();
-            var eventID = msg.getEventID();
-        }
-
-        /**
-         * Handle "Producer Identified" message
-         * @param msg       message to handle
-         * @param sender    connection where it came from
-         */
-        @Override
-        public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender){
-            var nodeID = msg.getSourceNodeID();
-            var eventID = msg.getEventID();
-        }
-
-        /**
-         * Handle "Simple Node Ident Info Reply" message
-         * @param msg       message to handle
-         * @param sender    connection where it came from
-         */
-        @Override
-        public void handleSimpleNodeIdentInfoReply(SimpleNodeIdentInfoReplyMessage msg, Connection sender){
-            // might know about a new node name, so do an update
-            log.debug("SNIP reply processed");
-        }
+                @Override
+                public void handleSuccess() {
+                    log.info("Write succeeded");
+                }
+            };
+        int address = 0;
+        int space = 0xFF;
+        var farID = new NodeID("06.01.00.00.C0.05");
+        service.requestWrite(farID, space, address, bytes, cb);
     }
+
+    // static to remember choice from one use to another.
+    static JFileChooser fileChooser = null;
 
     /**
      * Nested class to create one of these using old-style defaults
