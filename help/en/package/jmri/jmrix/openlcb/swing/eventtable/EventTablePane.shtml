@@ -44,7 +44,16 @@
     available in the Event Table.
 
     <li>Provide a document record of your Events and their Consumer and Producer relationships.
-    Exported as a *.csv file and then viewed and manipulated through a suitable program like Excel, this provides a reference or documentation of all of the Event IDs and their associated Consumer/Producer relationships as known by JMRI at the time of the export. This document can also be used as a reference source of Event IDs that may cut & pasted into a node configuration dialog as you build additional Consumer/Producer relationships on your network. This is the same data as displayed in the Event Table at the time of the export so the more information available, the more complete the export. It is envisioned that the user re-export this reference documentation regularly as the network evolves rather than try to maintain the resulting document independently.
+    Exported as a *.csv file and then viewed and manipulated through a suitable program like Excel,
+    this provides a reference or documentation of all of the Event IDs and their associated
+    Consumer/Producer relationships as known by JMRI at the time of the export.
+    This document can also be used as a reference source of Event IDs that
+    may be cut & pasted into a node configuration dialog as you build additional
+    Consumer/Producer relationships on your network.
+    This is the same data as displayed in the Event Table at the time of the export
+    so the more information available, the more complete the export.
+    It is envisioned that the user re-export this reference documentation regularly
+    as the network evolves rather than try to maintain the resulting document independently.
     </ul>
       <p>
       You can resize and sort the columns using the header row.
