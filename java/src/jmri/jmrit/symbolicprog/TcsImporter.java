@@ -19,7 +19,7 @@ import org.openlcb.cdi.impl.ConfigRepresentation;
 
 /**
  * Import CV values from a TCS backup file (from a CDI backup)
- 8 directly into a RosterEntry.
+ * directly into a RosterEntry.
  *<p>
  * Note that this does not update any GUI that's showing the
  * RosterEntry, e.g. a RosterPane or FunctionLabelPane. Those
