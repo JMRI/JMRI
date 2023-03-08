@@ -61,7 +61,10 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
 
         store = memo.get(MimicNodeStore.class);
         EventTable stdEventTable = memo.get(OlcbInterface.class).getEventTable();
-        if (stdEventTable == null) log.warn("no OLCB EventTable found");
+        if (stdEventTable == null) {
+            log.error("no OLCB EventTable found");
+            return;
+        }
         service = memo.get(MemoryConfigurationService.class);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -148,8 +151,10 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         new MemoryConfigurationService.McsReadHandler() {
             @Override
             public void handleFailure(int errorCode) {
+                setRunning(false);
                 if (errorCode == 0x1082) {
                     statusField.setText("Done reading");
+                    log.debug("Stopping read due to 0x1082 status");
                 } if (errorCode == 0x1081) {
                     log.error("Read failed. Address space not known");
                     statusField.setText("Read failed. Address space not known");
@@ -161,10 +166,9 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     outputStream.flush();
                     outputStream.close();
                 } catch (IOException ex) {
-                    log.warn("Error closing file", ex);
+                    log.error("Error closing file", ex);
                     statusField.setText("Error closing output file");
                 }
-                setRunning(false);
             }
 
             @Override
@@ -176,24 +180,34 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                 } catch (IOException ex) {
                     log.error("Error writing data to file", ex);
                     statusField.setText("Error writing data to file");
+                    setRunning(false);
                     return; // stop now
                 }
                 if (readData.length != CHUNKSIZE) {
                     // short read is another way to indicate end
                     statusField.setText("Done reading");
-                    log.warn("Stopping read due to short reply");
+                    log.debug("Stopping read due to short reply");
+                    setRunning(false);
                     try {
                         outputStream.flush();
                         outputStream.close();
                     } catch (IOException ex) {
-                        log.warn("Error closing file", ex);
+                        log.error("Error closing file", ex);
                         statusField.setText("Error closing output file");
                     }
                     return;
                 }
-                // fire another
+                // fire another unless at endingAddress
+                if (readAddress+readData.length >= endingAddress) {
+                    // done
+                    setRunning(false);
+                    log.debug("Get operation ending on length");
+                    statusField.setText("Done Reading");
+                }
                 if (!cancelled) {
-                    service.requestRead(farID, space, readAddress+readData.length, CHUNKSIZE, cbr);
+                    service.requestRead(farID, space, readAddress+readData.length,
+                                        (int)Math.min(CHUNKSIZE, endingAddress-(readAddress+readData.length)),
+                                        cbr);
                 } else {
                     setRunning(false);
                     cancelled = false;
@@ -204,6 +218,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         };
 
     OutputStream outputStream;
+    long endingAddress = 0;
 
     /**
      * Starts reading from node and writing to file
@@ -246,9 +261,27 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             return;
         }
 
-        // do first memory read
         int address = 0;
-        service.requestRead(farID, space, address, CHUNKSIZE, cbr);
+
+        // request address space info; reply will start read operations
+        MemoryConfigurationService.McsAddrSpaceMemo cbq =
+            new MemoryConfigurationService.McsAddrSpaceMemo(farID, space) {
+                @Override
+                public void handleWriteReply(int errorCode) {
+                    log.error("Get failed with code {}"+String.format("%04X", errorCode));
+                    statusField.setText("Get failed with code"+String.format("%04X", errorCode));
+                    setRunning(false);
+                }
+
+                @Override
+                public void handleAddrSpaceData(NodeID dest, int space, long hiAddress, long lowAddress, int flags, String desc) {
+                    // check contents
+                    log.debug("received length of {}", hiAddress);
+                    endingAddress = hiAddress;
+                    service.requestRead(farID, space, address, (int)Math.min(CHUNKSIZE, endingAddress), cbr);
+                }
+            };
+        service.request(cbq);
     }
 
     MemoryConfigurationService.McsWriteHandler cbw =
