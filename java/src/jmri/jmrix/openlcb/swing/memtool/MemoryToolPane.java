@@ -47,6 +47,9 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
 
     JTextField spaceField;
     JLabel statusField;
+    JButton gb;
+    JButton pb;
+    JButton cb;
     boolean cancelled = false;
     boolean running = false;
 
@@ -77,13 +80,13 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         var bb = new JPanel();
         bb.setLayout(new FlowLayout());
         add(bb);
-        var gb = new JButton("Get...");
+        gb = new JButton("Get...");
         bb.add(gb);
         gb.addActionListener(this::pushedGetButton);
-        var pb = new JButton("Put...");
+        pb = new JButton("Put...");
         bb.add(pb);
         pb.addActionListener(this::pushedPutButton);
-        var cb = new JButton("Cancel");
+        cb = new JButton("Cancel");
         bb.add(cb);
         cb.addActionListener(this::pushedCancel);
 
@@ -93,6 +96,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         statusField = new JLabel("                          ",SwingConstants.CENTER);
         bb.add(statusField);
 
+        setRunning(false);
     }
 
     public MemoryToolPane() {
@@ -123,6 +127,19 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         }
     }
 
+    void setRunning(boolean t) {
+        if (t) {
+            gb.setEnabled(false);
+            pb.setEnabled(false);
+            cb.setEnabled(true);
+        } else {
+            gb.setEnabled(true);
+            pb.setEnabled(true);
+            cb.setEnabled(false);
+        }
+        running = t;
+    }
+
     int space = 0xFF;
 
     NodeID farID = new NodeID("0.0.0.0.0.0");
@@ -147,7 +164,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     log.warn("Error closing file", ex);
                     statusField.setText("Error closing output file");
                 }
-                running = false;
+                setRunning(false);
             }
 
             @Override
@@ -178,7 +195,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                 if (!cancelled) {
                     service.requestRead(farID, space, readAddress+readData.length, CHUNKSIZE, cbr);
                 } else {
-                    running = false;
+                    setRunning(false);
                     cancelled = false;
                     log.info("Get operation cancelled");
                     statusField.setText("Cancelled");
@@ -193,14 +210,14 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
      * @param e not used
      */
     void pushedGetButton(ActionEvent e) {
-        running = true;
+        setRunning(true);
         farID = nodeSelector.getSelectedItem();
         try {
             space = Integer.parseInt(spaceField.getText().trim());
         } catch (NumberFormatException ex) {
             log.error("error parsing the space field value \"{}\"", spaceField.getText());
             statusField.setText("Error parsing the space value");
-            running = false;
+            setRunning(false);
             return;
         }
         log.debug("Start put");
@@ -213,7 +230,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
 
         int retVal = fileChooser.showSaveDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) {
-            running = false;
+            setRunning(false);
             return;
         }
 
@@ -225,7 +242,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         } catch (IOException ex) {
             log.error("Error opening file", ex);
             statusField.setText("Error opening file");
-            running = false;
+            setRunning(false);
             return;
         }
 
@@ -234,7 +251,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         service.requestRead(farID, space, address, CHUNKSIZE, cbr);
     }
 
-    MemoryConfigurationService.McsWriteHandler cb =
+    MemoryConfigurationService.McsWriteHandler cbw =
         new MemoryConfigurationService.McsWriteHandler() {
             @Override
             public void handleFailure(int errorCode) {
@@ -248,7 +265,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     log.error("Write failed. error code is {}", String.format("%04X", errorCode));
                     statusField.setText("Write failed. error code is "+String.format("%016X", errorCode));
                 }
-                running = false;
+                setRunning(false);
                 // return because we're done.
             }
 
@@ -259,7 +276,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                 if (cancelled) {
                     log.info("Cancelled");
                     statusField.setText("Cancelled");
-                    running = false;
+                    setRunning(false);
                     cancelled = false;
                 }
                 // next operation
@@ -270,7 +287,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     dataRead = getBytes();
                     if (dataRead == null) {
                         // end of read present
-                        running = false;
+                        setRunning(false);
                         log.info("Completed");
                         statusField.setText("Completed.");
                         inputStream.close();
@@ -282,7 +299,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     log.error("Error reading file",ex);
                     return;
                 }
-                service.requestWrite(farID, space, address, dataRead, cb);
+                service.requestWrite(farID, space, address, dataRead, cbw);
             }
         };
 
@@ -321,8 +338,8 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
 
         // do first memory write
         address = 0;
-        running = true;
-        service.requestWrite(farID, space, address, dataRead, cb);
+        setRunning(true);
+        service.requestWrite(farID, space, address, dataRead, cbw);
     }
 
     byte[] bytes = new byte[CHUNKSIZE];
