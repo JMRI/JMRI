@@ -14,14 +14,24 @@
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
     <h1>OpenLCB Memory Tool</h1>
-
+        <a href="MemTool.png">
+            <img src="MemTool.png" height="80" width="404" align="right">
+        </a>
         This lets you get the contents of a specific memory space in
         a node and place it into a binary file. It also lets you
         read a binary file and put it into a specific memory space
         in a node.
 
         <p>
-        Hopefully, the controls are self-explanatory.
+        Hopefully, most of the controls are self-explanatory.
+
+        <p>
+        The "Trust Status Info" checkbox is normally checked. OpenLCB
+        defines a message to get the length of an address space which
+        the tool uses to determine how much data to get. Some nodes
+        don't reply to this message or give a wrong value.  In that
+        case, you can uncheck the box and rely solely error checking
+        to determine the amount of data returned from the node.
 
         <p>
         Be careful when putting data back to a node.  This tool
