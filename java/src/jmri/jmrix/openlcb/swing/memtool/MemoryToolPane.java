@@ -197,7 +197,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                 } else {
                     setRunning(false);
                     cancelled = false;
-                    log.info("Get operation cancelled");
+                    log.debug("Get operation cancelled");
                     statusField.setText("Cancelled");
                 }
             }
@@ -271,10 +271,10 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
 
             @Override
             public void handleSuccess() {
-                log.info("Write succeeded {} bytes", address+bytesRead);
+                log.trace("Write succeeded {} bytes", address+bytesRead);
 
                 if (cancelled) {
-                    log.info("Cancelled");
+                    log.debug("Cancelled");
                     statusField.setText("Cancelled");
                     setRunning(false);
                     cancelled = false;
@@ -288,13 +288,13 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     if (dataRead == null) {
                         // end of read present
                         setRunning(false);
-                        log.info("Completed");
+                        log.debug("Completed");
                         statusField.setText("Completed.");
                         inputStream.close();
                         return;
                     }
                     bytesRead = dataRead.length;
-                    log.info("write {} bytes", bytesRead);
+                    log.trace("write {} bytes", bytesRead);
                 } catch (IOException ex) {
                     log.error("Error reading file",ex);
                     return;
@@ -325,12 +325,12 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             dataRead = getBytes();
             if (dataRead == null) {
                 // end of read present
-                log.info("Completed");
+                log.debug("Completed");
                 inputStream.close();
                 return;
             }
             bytesRead = dataRead.length;
-            log.info("read {} bytes", bytesRead);
+            log.trace("read {} bytes", bytesRead);
         } catch (IOException ex) {
             log.error("Error reading file",ex);
             return;
