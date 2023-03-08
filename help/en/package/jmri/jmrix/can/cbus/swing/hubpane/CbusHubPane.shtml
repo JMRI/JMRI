@@ -11,7 +11,7 @@
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-      <h1>JMRI : CBUS Hub Control</h1>
+      <h1>JMRI : CBUS&reg; Hub Control</h1>
 
       <img src="cbus-hub-control-445x228.png" width="445" height="228" alt="CBUS Hub Control" class="floatRight">
       <span class="since">since 5.3.4</span>
@@ -19,7 +19,7 @@
       <p>CBUS Hub Control enables a physical CAN connection to be shared across a Network Connection.</p>
       <p>This connection is accessible on the local device, enabling other applications to send and receive CAN Frames.</p>
 
-      <p>The CBUS Hub Control borrows code extensively from the <a href="">OpenLCB Hub Control</a>.</p>
+      <p>The CBUS Hub Control borrows code extensively from the <a href="../../../../openlcb/swing/hub/HubPane.shtml">OpenLCB Hub Control</a>.</p>
 
       <p>The only differences being : </p>
       <ul>
@@ -52,7 +52,7 @@
       <li>Add a name for the new Network Connection.</li>
       <li>Add the local IP address from the CBUS Hub.
         <br>In the screenshot above,
-        this is IP4 version of the loopback address, <code>127.0.0.1</code></li>
+        this is the IP4 version of the loopback address, <code>127.0.0.1</code></li>
       <li>The default port number of <code>5550</code> should be retained.</li>
       <li>Click <span class="textbutton">OK</span></li>
       <li>FCU Toolbar &gt; Communications &gt; Start Comms</li>

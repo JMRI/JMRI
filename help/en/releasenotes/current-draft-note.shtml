@@ -21,7 +21,8 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>The <a href="https://www.jmri.org/help/en/package/jmri/jmrix/can/cbus/swing/hubpane/CbusHubPane.shtml"
+                >CBUS Hub Control</a> can be used to share the CBUS connection locally and onto a LAN.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -125,7 +126,7 @@
                 <li>Updated the default filename when doing backups to contain more identification info.</li>
                 <li>The OpenLCB library was updated to the current contents as of PR #214</li>
                 <li>There's a new
-                    "<a href="https://help/en/package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>"
+                    "<a href="https://www.jmri.org/help/en/package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>"
                     tool that shows all the events on the network and which nodes produce and consume them.</li>
                 <li>There's a new
                     "<a href="https://help/en/package/jmri/jmrix/openlcb/swing/memtool/MemoryToolPane.shtml">Memory Tool</a>"
@@ -400,7 +401,7 @@
                 (from the File -> Import menu) a CDI backup
                 file to a roster entry.
                 More information
-                <a href="https://jmri.org/help/en/html/hardware/openlcb/TCS.shtml">here</a>.</li>
+                <a href="https://www.jmri.org/help/en/html/hardware/openlcb/TCS.shtml">here</a>.</li>
         </ul>
 
     <h3>CTC Tool</h3>

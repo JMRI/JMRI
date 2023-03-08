@@ -49,6 +49,8 @@
       <a href="https://www.gridconnect.com/collections/can-pc-interfaces/products/canusb-com-fd-converter-usb-can-fd-interface#documents-and-drivers"
       >gridconnect.com</a>.
       <br>Line terminations can be enabled / disabled in this USB devices output via a device setting.</p>
+      
+      <p>The <a href="../../../can/cbus/swing/hubpane/CbusHubPane.shtml">CBUS&reg; Hub Control</a> borrows code extensively from OpenLCB Hub Control.</p>
 
 
       
