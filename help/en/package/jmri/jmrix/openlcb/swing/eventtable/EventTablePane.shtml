@@ -18,20 +18,34 @@
       <img src="Event_Table.png" align="right" width="442" height="256""/></a>
       This provides a table view of the Events, Producers and Consumers
       in your OpenLCB network.
-      
+      <p>
       The primary purpose of the Event Table is three fold:
-      
-1) Display the Events used on your OpenLCB network along with all of their related Producers and Consumers.
-This is created initially in real time through a query of the actual nodes on your network and supplemented by any additional information available to JMRI at the time, most usefully open node configuration dialog windows (displaying the node's CDI) and JMRI data such as User names from the Turnout or Sensor tables. As you open and close the configuration dialog windows for additional nodes, these contributions will be added and removed from the Event table in real time. For the most complete view of your network's Events and Consumer/Producer relationships, open the configuration dialog windows for all of your nodes however you may find it more manageable to open just the subset of nodes relevant to your task at hand. If the information from all node configuration dialogs are to be considered, on a large network open these windows prior to the Event Table for the fastest initial response. This information is not retained between sessions.
+    <ul>
+    <li>Display the Events used on your OpenLCB network along with all of their related
+    Producers and Consumers.
+    This is created initially in real time through a query of the actual nodes on your
+    network and supplemented by any additional information available to JMRI at the time,
+    most usefully open node configuration dialog windows (displaying the node's CDI)
+    and JMRI data such as User names from the Turnout or Sensor tables.
+    As you open and close the configuration dialog windows for additional nodes,
+    these contributions will be added and removed from the Event table in real time.
+    For the most complete view of your network's Events and Consumer/Producer relationships,
+    open the configuration dialog windows for all of your nodes however you may find
+    it more manageable to open just the subset of nodes relevant to your task at hand.
+    If the information from all node configuration dialogs are to be considered,
+    on a large network open these windows prior to the Event Table for the
+    fastest initial response. This information is not retained between sessions.
 
-2) Apply User names to Events. 
+    <li>Apply User names to Events.
+    Similar to the use of User defined names in the Turnout or Sensor Tables,
+    the Event Table allows you to apply names to Events that are more meaningful as
+    to their purpose than just the Event ID itself.
+    This information is retained between sessions and is currently only
+    available in the Event Table.
 
-Similar to the use of User defined names in the Turnout or Sensor Tables, the Event Table allows you to apply names to Events that are more meaningful as to their purpose than just the Event ID itself. This information is retained between sessions and is currently only available in the Event Table. 
-
-3) Provide a document record of your Events and their Consumer and Producer relationships. 
-
-Exported as a *.csv file and then viewed and manipulated through a suitable program like Excel, this provides a reference or documentation of all of the Event IDs and their associated Consumer/Producer relationships as known by JMRI at the time of the export. This document can also be used as a reference source of Event IDs that may cut & pasted into a node configuration dialog as you build additional Consumer/Producer relationships on your network. This is the same data as displayed in the Event Table at the time of the export so the more information available, the more complete the export. It is envisioned that the user re-export this reference documentation regularly as the network evolves rather than try to maintain the resulting document independently.
-
+    <li>Provide a document record of your Events and their Consumer and Producer relationships.
+    Exported as a *.csv file and then viewed and manipulated through a suitable program like Excel, this provides a reference or documentation of all of the Event IDs and their associated Consumer/Producer relationships as known by JMRI at the time of the export. This document can also be used as a reference source of Event IDs that may cut & pasted into a node configuration dialog as you build additional Consumer/Producer relationships on your network. This is the same data as displayed in the Event Table at the time of the export so the more information available, the more complete the export. It is envisioned that the user re-export this reference documentation regularly as the network evolves rather than try to maintain the resulting document independently.
+    </ul>
       <p>
       You can resize and sort the columns using the header row.
       <p>
