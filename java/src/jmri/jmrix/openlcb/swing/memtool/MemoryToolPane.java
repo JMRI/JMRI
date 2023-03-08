@@ -245,7 +245,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     log.error("Write failed. Address space not writable");
                     statusField.setText("Write failed. Address space not writeable.");
                 } else {
-                    log.error("Write failed. error code is {}", String.format("%016X", errorCode));
+                    log.error("Write failed. error code is {}", String.format("%04X", errorCode));
                     statusField.setText("Write failed. error code is "+String.format("%016X", errorCode));
                 }
                 running = false;
