@@ -53,6 +53,8 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
     boolean cancelled = false;
     boolean running = false;
 
+    JCheckBox trustStatusReply;
+
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
@@ -79,6 +81,10 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         ms.add(new JLabel("Memory Space:"));
         spaceField = new JTextField("255");
         ms.add(spaceField);
+
+        trustStatusReply = new JCheckBox("Trust Status Info");
+        trustStatusReply.setSelected(true);
+        ms.add(trustStatusReply);
 
         var bb = new JPanel();
         bb.setLayout(new FlowLayout());
@@ -218,10 +224,10 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         };
 
     OutputStream outputStream;
-    long endingAddress = 0;
+    long endingAddress = 0x1000; // token 1MB max if decide not to enquire about it & other methods fail
 
     /**
-     * Starts reading from node and writing to file
+     * Starts reading from node and writing to file process
      * @param e not used
      */
     void pushedGetButton(ActionEvent e) {
@@ -261,8 +267,6 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             return;
         }
 
-        int address = 0;
-
         // request address space info; reply will start read operations
         MemoryConfigurationService.McsAddrSpaceMemo cbq =
             new MemoryConfigurationService.McsAddrSpaceMemo(farID, space) {
@@ -281,7 +285,14 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     service.requestRead(farID, space, address, (int)Math.min(CHUNKSIZE, endingAddress), cbr);
                 }
             };
-        service.request(cbq);
+        if (trustStatusReply.isSelected()) {
+            // start the process by sending the address space request. It's
+            // reply handler will do the first read.
+            service.request(cbq);
+        } else {
+            // kick of read directly, relying on error reply and/or short read for end
+            service.requestRead(farID, space, 0, CHUNKSIZE, cbr);
+        }
     }
 
     MemoryConfigurationService.McsWriteHandler cbw =
