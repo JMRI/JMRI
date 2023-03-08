@@ -172,6 +172,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                         log.warn("Error closing file", ex);
                         statusField.setText("Error closing output file");
                     }
+                    return;
                 }
                 // fire another
                 if (!cancelled) {
@@ -237,12 +238,51 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         new MemoryConfigurationService.McsWriteHandler() {
             @Override
             public void handleFailure(int errorCode) {
-                log.error("Write failed. error code is {}", String.format("%016X", errorCode));
+                if (errorCode == 0x1081) {
+                    log.error("Write failed. Address space not known");
+                    statusField.setText("Write failed. Address space not known.");
+                } else if (errorCode == 0x1083) {
+                    log.error("Write failed. Address space not writable");
+                    statusField.setText("Write failed. Address space not writeable.");
+                } else {
+                    log.error("Write failed. error code is {}", String.format("%016X", errorCode));
+                    statusField.setText("Write failed. error code is "+String.format("%016X", errorCode));
+                }
+                running = false;
+                // return because we're done.
             }
 
             @Override
             public void handleSuccess() {
-                log.info("Write succeeded");
+                log.info("Write succeeded {} bytes", address+bytesRead);
+
+                if (cancelled) {
+                    log.info("Cancelled");
+                    statusField.setText("Cancelled");
+                    running = false;
+                    cancelled = false;
+                }
+                // next operation
+                address = address+bytesRead;
+
+                byte[] dataRead = new byte[0];
+                try {
+                    dataRead = getBytes();
+                    if (dataRead == null) {
+                        // end of read present
+                        running = false;
+                        log.info("Completed");
+                        statusField.setText("Completed.");
+                        inputStream.close();
+                        return;
+                    }
+                    bytesRead = dataRead.length;
+                    log.info("write {} bytes", bytesRead);
+                } catch (IOException ex) {
+                    log.error("Error reading file",ex);
+                    return;
+                }
+                service.requestWrite(farID, space, address, dataRead, cb);
             }
         };
 
@@ -262,18 +302,40 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         File file = fileChooser.getSelectedFile();
         log.debug("access {}", file);
 
-        var bytes = new byte[CHUNKSIZE];
+        byte[] dataRead = new byte[0];
         try {
-            InputStream inputStream = new FileInputStream(file);
-            int bytesRead = inputStream.read(bytes);
+            inputStream = new FileInputStream(file);
+            dataRead = getBytes();
+            if (dataRead == null) {
+                // end of read present
+                log.info("Completed");
+                inputStream.close();
+                return;
+            }
+            bytesRead = dataRead.length;
             log.info("read {} bytes", bytesRead);
         } catch (IOException ex) {
             log.error("Error reading file",ex);
+            return;
         }
 
         // do first memory write
-        int address = 0;
-        service.requestWrite(farID, space, address, bytes, cb);
+        address = 0;
+        running = true;
+        service.requestWrite(farID, space, address, dataRead, cb);
+    }
+
+    byte[] bytes = new byte[CHUNKSIZE];
+    int bytesRead;
+    InputStream inputStream;
+    int address;
+
+    byte[] getBytes() throws IOException {
+        int bytesRead = inputStream.read(bytes);
+        if (bytesRead == -1) return null;  // file done
+        if (bytesRead == CHUNKSIZE) return bytes;
+        // less data received, have to adjust size of return array
+        return Arrays.copyOf(bytes, bytesRead);
     }
 
     // static to remember choice from one use to another.
