@@ -408,14 +408,6 @@
                 </ul>
                 For more information see
                 <a href="https://jmri.org/help/en/html/hardware/openlcb/TCS.shtml">the TCS CS-105 page</a>.</li>
-            <li>You can now export a roster entry (from the File -> Export menu)
-                to a CDI backup file for restoring into a train entry in the
-                TCS CS-105 command station.
-                You can also import
-                (from the File -> Import menu) a CDI backup
-                file to a roster entry.
-                More information
-                <a href="https://www.jmri.org/help/en/html/hardware/openlcb/TCS.shtml">here</a>.</li>
         </ul>
 
     <h3>CTC Tool</h3>
