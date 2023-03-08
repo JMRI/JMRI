@@ -56,7 +56,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         //panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
         panel.setAttribute("showtooltips", "" + (p.showToolTip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
-        panel.setAttribute("hide", p.isVisible() ? "no" : "yes");
+        panel.setAttribute("hide", p.showHidden() ? "yes" : "no");  // 5.3.4 hide redefined as showHidden
         panel.setAttribute("panelmenu", p.isPanelMenuVisible() ? "yes" : "no");
         panel.setAttribute("scrollable", p.getScrollable());
         if (p.getBackgroundColor() != null) {
@@ -167,7 +167,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         //panel.setShowCoordinates(shared.getAttributeValue("showcoordinates","no").equals("yes"));
         panel.setAllShowToolTip(!shared.getAttributeValue("showtooltips","yes").equals("no"));
         panel.setAllControlling(!shared.getAttributeValue("controlling", "yes").equals("no"));
-        panel.setShowHidden(shared.getAttributeValue("hide","no").equals("yes"));
+        panel.setShowHidden(!shared.getAttributeValue("hide","yes").equals("no"));  // 5.3.4 hide redefined as showHidden
         panel.setPanelMenuVisible(!shared.getAttributeValue("panelmenu","yes").equals("no"));
         panel.setScroll(shared.getAttributeValue("scrollable","both"));
 
