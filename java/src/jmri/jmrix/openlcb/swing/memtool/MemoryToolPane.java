@@ -267,25 +267,26 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             return;
         }
 
-        // request address space info; reply will start read operations
-        MemoryConfigurationService.McsAddrSpaceMemo cbq =
-            new MemoryConfigurationService.McsAddrSpaceMemo(farID, space) {
-                @Override
-                public void handleWriteReply(int errorCode) {
-                    log.error("Get failed with code {}"+String.format("%04X", errorCode));
-                    statusField.setText("Get failed with code"+String.format("%04X", errorCode));
-                    setRunning(false);
-                }
-
-                @Override
-                public void handleAddrSpaceData(NodeID dest, int space, long hiAddress, long lowAddress, int flags, String desc) {
-                    // check contents
-                    log.debug("received length of {}", hiAddress);
-                    endingAddress = hiAddress;
-                    service.requestRead(farID, space, address, (int)Math.min(CHUNKSIZE, endingAddress), cbr);
-                }
-            };
         if (trustStatusReply.isSelected()) {
+            // request address space info; reply will start read operations.
+            // Memo has to be created here to carry appropriate farID
+            MemoryConfigurationService.McsAddrSpaceMemo cbq =
+                new MemoryConfigurationService.McsAddrSpaceMemo(farID, space) {
+                    @Override
+                    public void handleWriteReply(int errorCode) {
+                        log.error("Get failed with code {}", String.format("%04X", errorCode));
+                        statusField.setText("Get failed with code"+String.format("%04X", errorCode));
+                        setRunning(false);
+                    }
+
+                    @Override
+                    public void handleAddrSpaceData(NodeID dest, int space, long hiAddress, long lowAddress, int flags, String desc) {
+                        // check contents
+                        log.debug("received length of {}", hiAddress);
+                        endingAddress = hiAddress;
+                        service.requestRead(farID, space, address, (int)Math.min(CHUNKSIZE, endingAddress), cbr);
+                    }
+                };
             // start the process by sending the address space request. It's
             // reply handler will do the first read.
             service.request(cbq);
@@ -326,7 +327,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                 // next operation
                 address = address+bytesRead;
 
-                byte[] dataRead = new byte[0];
+                byte[] dataRead;
                 try {
                     dataRead = getBytes();
                     if (dataRead == null) {
@@ -363,7 +364,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         File file = fileChooser.getSelectedFile();
         log.debug("access {}", file);
 
-        byte[] dataRead = new byte[0];
+        byte[] dataRead;
         try {
             inputStream = new FileInputStream(file);
             dataRead = getBytes();
@@ -391,8 +392,15 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
     InputStream inputStream;
     int address;
 
+    /**
+     * Read the next bytes, using the 'bytes' member array.
+     *
+     * @return null if has reached end of File
+     * @throws IOException from underlying file access
+     */
+    @SuppressFBWarnings(value="PZLA_PREFER_ZERO_LENGTH_ARRAYS", justification="null indicates end of file")
     byte[] getBytes() throws IOException {
-        int bytesRead = inputStream.read(bytes);
+        int bytesRead = inputStream.read(bytes); // returned actual number read
         if (bytesRead == -1) return null;  // file done
         if (bytesRead == CHUNKSIZE) return bytes;
         // less data received, have to adjust size of return array
