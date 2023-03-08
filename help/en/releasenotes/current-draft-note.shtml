@@ -219,7 +219,11 @@
             <ul>
                 <li>Added SE74 usage information to the Digitrax/LocoNet hardware help page,
                     including specific guidance for configuring JMRI's signaling, and typo fixes.</li>
-                <li>Added DecoderPro definitions for the DS74 and SE74.<li>
+                <li>Added DecoderPro definitions for the DS74 and SE74 OpSwitches.<li>
+                <li>Added a
+                    <a href="http://jmri.org/jython/loconet/LnEditEvolutionRoutesAndOpSw.py">loconet/LnEditEvolutionRoutesAndOpSw.py</a>
+                    script that lets you configure the routes in a Digitrax Series 7 board
+                    e.g. DS74 and DS74.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
