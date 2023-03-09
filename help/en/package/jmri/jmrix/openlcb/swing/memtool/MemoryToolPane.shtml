@@ -39,6 +39,11 @@
         node. If you load an invalid file, you might badly mess up
         the node, up to and including bricking it.
 
+        <p>
+        You can use the "Configuration" option under the "Supported Protocols"
+        item in the
+        <a href="../networktree/NetworkTreePane.shtml">Configure Nodes tool</a>.
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
