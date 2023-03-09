@@ -99,6 +99,9 @@ abstract public class PaneProgFrame extends JmriJFrame
     ShutDownTask decoderDirtyTask;
     ShutDownTask fileDirtyTask;
 
+    public RosterEntryPane getRosterPane() { return _rPane;}
+    public FunctionLabelPane getFnLabelPane() { return _flPane;}
+
     /**
      * Abstract method to provide a JPanel setting the programming mode, if
      * appropriate.
@@ -178,7 +181,10 @@ abstract public class PaneProgFrame extends JmriJFrame
         importSubMenu.add(new Pr1ImportAction(Bundle.getMessage("MenuImportPr1"), cvModel, this, progStatus));
         importSubMenu.add(new LokProgImportAction(Bundle.getMessage("MenuImportLokProg"), cvModel, this, progStatus));
         importSubMenu.add(new QuantumCvMgrImportAction(Bundle.getMessage("MenuImportQuantumCvMgr"), cvModel, this, progStatus));
-        importSubMenu.add(new TcsImportAction(Bundle.getMessage("MenuImportTcs"), cvModel, this, progStatus, _rosterEntry));
+        importSubMenu.add(new TcsImportAction(Bundle.getMessage("MenuImportTcsFile"), cvModel, this, progStatus, _rosterEntry));
+        if (TcsDownloadAction.willBeEnabled()) {
+            importSubMenu.add(new TcsDownloadAction(Bundle.getMessage("MenuImportTcsCS"), cvModel, this, progStatus, _rosterEntry));
+        }
 
         // add "Export" submenu; this is hierarchical because
         // some of the names are so long, and we expect more formats
@@ -188,7 +194,10 @@ abstract public class PaneProgFrame extends JmriJFrame
         exportSubMenu.add(new CsvExportModifiedAction(Bundle.getMessage("MenuExportCSVModified"), cvModel, this));
         exportSubMenu.add(new Pr1ExportAction(Bundle.getMessage("MenuExportPr1DOS"), cvModel, this));
         exportSubMenu.add(new Pr1WinExportAction(Bundle.getMessage("MenuExportPr1WIN"), cvModel, this));
-        exportSubMenu.add(new TcsExportAction(Bundle.getMessage("MenuExportTcs"), cvModel, _rosterEntry, this));
+        exportSubMenu.add(new TcsExportAction(Bundle.getMessage("MenuExportTcsFile"), cvModel, _rosterEntry, this));
+        if (TcsDownloadAction.willBeEnabled()) {
+            exportSubMenu.add(new TcsUploadAction(Bundle.getMessage("MenuExportTcsCS"), cvModel, _rosterEntry, this));
+        }
 
         // add "Import" submenu; this is hierarchical because
         // some of the names are so long, and we expect more formats

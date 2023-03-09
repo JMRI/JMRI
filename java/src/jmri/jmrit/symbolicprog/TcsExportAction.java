@@ -8,26 +8,32 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to export the CV values to a TCS-format data file.
+ * Action to export the RosterEntry values to a TCS-format data file.
+ * <p>
+ * TODO: Note: This first does an update of the RosterEntry from the GUI,
+ * then writes out from the Roster entry.  This means that they (RE and GUI)
+ * now agree, which has the side effect of erasing the dirty state.  Better
+ * would be to do the export directly from the GUI.
  *
- * @author Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003, 2023
  */
 public class TcsExportAction extends AbstractAction {
 
-    public TcsExportAction(String actionName, CvTableModel pModel, RosterEntry rosterEntry, JFrame pParent) {
+    public TcsExportAction(String actionName, CvTableModel pModel, RosterEntry rosterEntry, PaneProgFrame pParent) {
         super(actionName);
         mModel = pModel;
-        mParent = pParent;
+        frame = pParent;
         this.rosterEntry = rosterEntry;
     }
 
     JFileChooser fileChooser;
-    JFrame mParent;
+    PaneProgFrame frame;
     RosterEntry rosterEntry;
 
     /**
@@ -42,13 +48,17 @@ public class TcsExportAction extends AbstractAction {
             fileChooser = new JFileChooser();
         }
 
-        int retVal = fileChooser.showSaveDialog(mParent);
+        int retVal = fileChooser.showSaveDialog(frame);
 
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             if (log.isDebugEnabled()) {
                 log.debug("start to export to TCS file {}", file);
             }
+
+            // update the RosterEntry from the GUI
+            frame.getRosterPane().update(rosterEntry);
+            frame.getFnLabelPane().update(rosterEntry);
 
             try ( PrintStream str = new PrintStream(new FileOutputStream(file)); ) {
                 formatTcsVirtualNodeDefinition(str, rosterEntry, mModel);
@@ -99,6 +109,7 @@ public class TcsExportAction extends AbstractAction {
         switch (fn.toLowerCase().strip()) {
 
             case "unassigned": return 0;
+
             case "headlight": return 1;
             case "bell": return 13;
             case "horn": return 14;

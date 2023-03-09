@@ -6,31 +6,44 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 
 /**
- * Action to import the CV values from a TCS data file.
+ * Action to import the RosterEntry values from a TCS data file.
+ * <p>
+ * TODO: Note: This ends with an update of the GUI from the RosterEntry.
+ * This means that they (RE and GUI)
+ * now agree, which has the side effect of erasing the dirty state.  Better
+ * would be to do the import directly into the GUI. See TcsImporter.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2023
  * @author Dave Heap Copyright (C) 2015
  */
 public class TcsImportAction extends GenericImportAction {
 
-    public TcsImportAction(String actionName, CvTableModel pModel, JFrame pParent, JLabel pStatus, RosterEntry re) {
+    public TcsImportAction(String actionName, CvTableModel pModel, PaneProgFrame pParent, JLabel pStatus, RosterEntry re) {
         super(actionName, pModel, pParent, pStatus, "TCS files", "txt", null);
         this.rosterEntry = re;
+        this.frame = pParent;
     }
 
     RosterEntry rosterEntry;
+    PaneProgFrame frame;
 
     @Override
     boolean launchImporter(File file, CvTableModel tableModel) {
-            try {
-                // ctor launches operation
-                var importer = new TcsImporter(file);
-                importer.setRosterEntry(rosterEntry);
-                return true;
-            } catch (IOException ex) {
-                return false;
+        try {
+            // ctor launches operation
+            var importer = new TcsImporter(file);
+            importer.setRosterEntry(rosterEntry);
+
+            // now update the GUI from the roster entry
+            frame.getRosterPane().updateGUI(rosterEntry);
+            frame.getFnLabelPane().updateFromEntry(rosterEntry);
+
+            return true;
+        } catch (IOException ex) {
+            return false;
         }
     }
 }

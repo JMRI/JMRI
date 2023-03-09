@@ -132,6 +132,7 @@
                     "<a href="https://help/en/package/jmri/jmrix/openlcb/swing/memtool/MemoryToolPane.shtml">Memory Tool</a>"
                     that lets you get the contents of node memory spaces into a local binary file, and
                     put the contents of a file back into a node memory space.</li>
+                <li>Now shows more about JMRI nodes in the Configure Nodes window.
             </ul>
 
         <h4>Powerline</h4>
@@ -394,14 +395,24 @@
             <li>Two new decoder-index attributes
                 suppressFunctionLabels and suppressRosterMedia
                 can be used to suppress those panes in the DecoderPro GUI.</li>
-            <li>You can now export a roster entry (from the File -> Export menu)
-                to a CDI backup file for restoring into a train entry in the
-                TCS CS-105 command station.
-                You can also import
-                (from the File -> Import menu) a CDI backup
-                file to a roster entry.
-                More information
-                <a href="https://www.jmri.org/help/en/html/hardware/openlcb/TCS.shtml">here</a>.</li>
+            <li>Two new import and two new export options have been added to DecoderPro.
+                <ul>
+                    <li>
+                        You can directly export a DecoderPro roster entry to a TCS CS-105
+                        command station roster entry.
+                    <li>
+                        You can directly import a TCS CS-105 command station roster entry
+                        to a DecoderPro roster entry.
+                    <li>
+                        You can export a roster entry
+                        to a CDI backup file for restoring into a train entry in the
+                        TCS CS-105 command station.
+                    <li>
+                        You can import a CDI backup
+                        file to a roster entry.
+                </ul>
+                For more information see
+                <a href="https://jmri.org/help/en/html/hardware/openlcb/TCS.shtml">the TCS CS-105 page</a>.</li>
         </ul>
 
     <h3>CTC Tool</h3>

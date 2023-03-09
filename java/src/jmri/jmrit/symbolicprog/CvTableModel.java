@@ -394,5 +394,16 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 
     }
 
+    int holdsAddress() {
+        int shortAddr = getCvByNumber("1").getValue();
+        int longAddr = ((getCvByNumber("17").getValue()-192)<<8)+getCvByNumber("18").getValue();
+        int addr = holdsLongAddress() ? longAddr : shortAddr;
+        return addr;
+    }
+
+    boolean holdsLongAddress() {
+        return (getCvByNumber("29").getValue() & 0x20) != 0;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(CvTableModel.class);
 }

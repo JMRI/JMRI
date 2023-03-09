@@ -22,7 +22,7 @@
 
         <h3>Connections</h3>
 
-        JMRI can connect to a TCS CS-105 command station two ways:
+        JMRI can connect to a TCS CS-105 command station using OpenLCB/LCC two ways:
         <ul>
             <li>Via the CAN bus and a USB-CAN adapter.
             <li>Via a direct network connection.
@@ -36,24 +36,27 @@
             on UWT-100 throttles:
             <ul>
                 <li>Open the DecoderPro roster entry.
-                <li>In the File -> Export... menu, select "Roster Entry to TCS File..."
-                <li>Store to a file
-                <li>Open the CDI for the specific train node.
-                <li>Click Restore... at the bottom and select your file from above.
+                <li>In the File -> Export... menu, select "Roster Entry to TCS CS-105"
+                <li>Wait for the completion dialog.
             </ul>
 
             To copy the function labels from a CS-105 command
             station to a DecoderPro roster entry:
             <ul>
-                <li>Open the CDI for the specific train node.
-                <li>Click Backup... at the bottom and save the
-                    contents to a file.
                 <li>Open the corresponding DecoderPro roster entry.
-                <li>In the File -> Import... menu, select "TCS Backup File..."
-                <li>Open the file you stored just above.
+                <li>In the File -> Import... menu, select "TCS CS-105 Roster Entry"
+                <li>Wait for the completion dialog.
                 <li>Save your DecoderPro roster entry.
             </ul>
 
+            With the File -> Export -> "TCS backup file..." menu item, you can also
+            create formatted backup files suitable for
+            restoring to a TCS train node using the "Restore..."
+            button on the Configure Nodes screen.
+            <p>
+            With the File -> Import -> "TCS backup file..." menu item, you can read
+            a file created by the "Backup..." button on the Configure Nodes
+            screen into your roster entry.
 
 
       <p>Back to the <a href="index.shtml">main OpenLCB Help page</a></p>

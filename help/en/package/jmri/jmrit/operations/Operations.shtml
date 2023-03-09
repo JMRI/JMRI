@@ -696,7 +696,15 @@
         that cars are now assigned to your train.
       </p>
 
-      <p>
+   <p>
+    OperationsPro&trade; when building a train also produces a <a href="#BuildReports">Build Report</a>.
+    The build report provides details on how the program built the train. It shows the available
+    locomotives and cars found along the train's route, and how the program attempted to find
+    destinations for them. When the program fails to build a train due to requirements requested by
+    you, the build report can help determine what the issue was and how to correct.
+   </p>
+
+   <p>
         Now try limiting the car types that the train will service by modifying some of the car
         types checkboxes in the <a href="#TrainEdit">Edit Train</a> window. Use the train <a
           href="#TrainReset">reset</a> to release the cars that were assigned to the train so you
@@ -763,7 +771,12 @@
           Instructions</a> are also available on the JMRI.org site.
       </p>
 
-      <p>
+   <p>
+    If you want to know more on how OperationsPro&trade; builds trains see the section on <a
+     href="#BuildReports">Build Reports</a>.
+   </p>
+
+   <p>
         Help is also available at the <a href="https://groups.io/g/jmriusers">JMRI users</a> which
         is part of the Groups.io. Another good source for help is a series of articles written by
         David Haynes <a
@@ -2012,7 +2025,7 @@
 
       <h3 id="ManageAutoBackups">Manage Auto Backups</h3>
 
-      When "Auto Backup" in the <a href="#Settings">Settings</a> window is enabled, OperationsPro
+      When "Auto Backup" in the <a href="#Settings">Settings</a> window is enabled, OperationsPro&trade;
       will create a backup of the operations files each time the program is started. To delete older
       obsolete files, use this tool.
 
@@ -5203,7 +5216,7 @@
       by the needed "Wait for" action.
 
       <h5>Select Start Automation</h5>
-      This tool will allow you to select an automation to run when OperationsPro starts.
+      This tool will allow you to select an automation to run when OperationsPro&trade; starts.
       <p>This is the end of the automation section.</p>
 
       <h4 id="TrainsCopyTrain">Copy Train</h4>
