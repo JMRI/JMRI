@@ -479,13 +479,15 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>The show hidden items selection was not being stored properly.  The fix may cause
+            unexpected changes the first time a PE panel is loaded.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>The show hidden items selection was not being stored properly.  The fix may cause
+            unexpected changes the first time a CPE panel is loaded.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
