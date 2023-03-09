@@ -55,7 +55,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         //panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
         panel.setAttribute("showtooltips", "" + (p.showToolTip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
-        panel.setAttribute("hide", p.showHidden() ? "yes" : "no");  // 5.3.4 hide redefined as showHidden
+        panel.setAttribute("hide", p.showHidden() ? "no" : "yes");  // hide=no means showHidden enabled
         panel.setAttribute("panelmenu", p.isPanelMenuVisible() ? "yes" : "no");
         panel.setAttribute("scrollable", p.getScrollable());
         if (p.getBackgroundColor() != null) {
@@ -205,8 +205,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.setAllControlling(value);
 
         value = true;
-        // 5.3.4 hide redefined as showHidden
-        if ((a = shared.getAttribute("hide")) != null && a.getValue().equals("no")) {
+        if ((a = shared.getAttribute("hide")) != null && a.getValue().equals("yes")) {
             value = false;
         }
         panel.setShowHidden(value);
