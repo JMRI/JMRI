@@ -22,7 +22,11 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
 
     JTextField[] labels;
+    public JTextField getLabel(int index) { return labels[index]; }
+
     JCheckBox[] lockable;
+    public JCheckBox getLockable(int index) { return lockable[index]; }
+
     JRadioButton[] shunterMode;
     ButtonGroup shunterModeGroup;
     EditableResizableImagePanel[] _imageFilePath;
@@ -229,8 +233,21 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
 
     /**
+     * Update contents from a RosterEntry object
+     * <p>TODO: This doesn't do every element.
+     * @param re the new contents
+     */
+    public void updateFromEntry(RosterEntry re) {
+        if (labels != null) {
+             for (int i = 0; i < labels.length; i++) {
+                labels[i].setText(re.getFunctionLabel(i));
+                lockable[i].setSelected(re.getFunctionLockable(i));
+             }
+        }
+    }
+
+    /**
      * Update a RosterEntry object from panel contents.
-     *
      *
      * @param r the roster entry to update
      */

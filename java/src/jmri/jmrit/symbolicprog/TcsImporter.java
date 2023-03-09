@@ -2,6 +2,7 @@ package jmri.jmrit.symbolicprog;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -9,8 +10,20 @@ import java.util.Properties;
 import jmri.JmriException;
 import jmri.jmrit.roster.RosterEntry;
 
+import org.openlcb.EventID;
+import org.openlcb.NodeID;
+import org.openlcb.OlcbInterface;
+import org.openlcb.cdi.CdiRep;
+import org.openlcb.cdi.cmd.BackupConfig;
+import org.openlcb.cdi.impl.ConfigRepresentation;
+
 /**
- * Import CV values from a TCS backup file from a CDI backup
+ * Import CV values from a TCS backup file (from a CDI backup)
+ * directly into a RosterEntry.
+ *<p>
+ * Note that this does not update any GUI that's showing the
+ * RosterEntry, e.g. a RosterPane or FunctionLabelPane. Those
+ * must have their updates triggered elsewhere, e.g. TcsImportAction.
  *
  * @author Alex Shepherd Copyright (C) 2003 (original Pr1Importer)
  * *author Bob Jacobsen  Copyright (C) 2023
@@ -19,7 +32,6 @@ public class TcsImporter {
 
     Properties tcsProperties;
 
-    // TODO: more general if this is from a Stream or Reader?
     public TcsImporter(File file) throws IOException {
         tcsProperties = new Properties();
         FileInputStream fileStream = new FileInputStream(file);
@@ -28,6 +40,11 @@ public class TcsImporter {
         } finally {
             fileStream.close();
         }
+    }
+
+    public TcsImporter(InputStream stream) throws IOException {
+        tcsProperties = new Properties();
+        tcsProperties.load(stream);
     }
 
     public void setRosterEntry(RosterEntry rosterEntry) {
@@ -76,10 +93,11 @@ public class TcsImporter {
         if (!description.isEmpty()) return description;
 
         // there must be a value in display, unpack it.
-        // We do string switch in case of non-parseable garbage
+        // We do string switch in case of non-numerically-parseable garbage
         switch (display) {
 
-            case "0":   return "Unassigned";
+            case "0":   return "";
+
             case "1":   return "Headlight";
             case "13":  return "Bell";
             case "14":  return "Horn";
