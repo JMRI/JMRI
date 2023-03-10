@@ -258,7 +258,7 @@ for opt in "$@"; do
     fi
 done
 
-if [ -z $settingsdir ]; then
+if [ -z "$settingsdir" ]; then
    # set OS-specific settingsdir if not on cmd line
    case "${OS}" in
      macosx|Darwin*)
