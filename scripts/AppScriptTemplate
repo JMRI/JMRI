@@ -238,6 +238,7 @@ case "${OS}" in
      ;;
 esac
 ARCH=${ARCH:-}
+settingsdir=${settingsdir:-}
 
 # get the settings directory if set on command line
 found_settingsdir=""
