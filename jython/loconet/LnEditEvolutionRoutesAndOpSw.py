@@ -272,7 +272,7 @@ class cvTableModel( DefaultTableModel ) :
             return True
         return True
     def getCVRow(self,CV) :
-        for row in range(0,	self.getRowCount()) :
+        for row in range(0, self.getRowCount()) :
             if (CV == self.getValueAt(row,0)) :
                 return row
         return -1
