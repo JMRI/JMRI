@@ -89,13 +89,13 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         var bb = new JPanel();
         bb.setLayout(new FlowLayout());
         add(bb);
-        gb = new JButton("Get...");
+        gb = new JButton(Bundle.getMessage("ButtonGet"));
         bb.add(gb);
         gb.addActionListener(this::pushedGetButton);
-        pb = new JButton("Put...");
+        pb = new JButton(Bundle.getMessage("ButtonPut"));
         bb.add(pb);
         pb.addActionListener(this::pushedPutButton);
-        cb = new JButton("Cancel");
+        cb = new JButton(Bundle.getMessage("ButtonCancel"));
         bb.add(cb);
         cb.addActionListener(this::pushedCancel);
 
@@ -282,9 +282,9 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     @Override
                     public void handleAddrSpaceData(NodeID dest, int space, long hiAddress, long lowAddress, int flags, String desc) {
                         // check contents
-                        log.debug("received length of {}", hiAddress);
+                        log.debug("received high Address of {}, low address of {}", hiAddress, lowAddress);
                         endingAddress = hiAddress;
-                        service.requestRead(farID, space, address, (int)Math.min(CHUNKSIZE, endingAddress), cbr);
+                        service.requestRead(farID, space, lowAddress, (int)Math.min(CHUNKSIZE, endingAddress-lowAddress+1), cbr);
                     }
                 };
             // start the process by sending the address space request. It's
@@ -292,7 +292,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             service.request(cbq);
         } else {
             // kick of read directly, relying on error reply and/or short read for end
-            service.requestRead(farID, space, 0, CHUNKSIZE, cbr);
+            service.requestRead(farID, space, 0, CHUNKSIZE, cbr);  // assume starting address is zero
         }
     }
 
@@ -388,7 +388,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
     }
 
     byte[] bytes = new byte[CHUNKSIZE];
-    int bytesRead;
+    int bytesRead;          // Number bytes read into the bytes[] array from the file. Used for put operation only.
     InputStream inputStream;
     int address;
 
