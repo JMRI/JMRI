@@ -204,7 +204,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     return;
                 }
                 // fire another unless at endingAddress
-                if (readAddress+readData.length >= endingAddress) {
+                if (readAddress+readData.length-1 >= endingAddress) { // last address read is length-1 past starting address
                     // done
                     setRunning(false);
                     log.debug("Get operation ending on length");
@@ -212,7 +212,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                 }
                 if (!cancelled) {
                     service.requestRead(farID, space, readAddress+readData.length,
-                                        (int)Math.min(CHUNKSIZE, endingAddress-(readAddress+readData.length)),
+                                        (int)Math.min(CHUNKSIZE, endingAddress-(readAddress+readData.length-1)),
                                         cbr);
                 } else {
                     setRunning(false);
