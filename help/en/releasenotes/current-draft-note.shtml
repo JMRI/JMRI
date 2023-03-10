@@ -129,6 +129,9 @@
                     "<a href="https://www.jmri.org/help/en/package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>"
                     tool that shows all the events on the network and which nodes produce and consume them.</li>
                 <li>Now shows more about JMRI nodes in the Configure Nodes window.
+                <li>Updated the openlcb.jar library to version
+                    <a href="https://github.com/openlcb/OpenLCB_Java/releases/tag/release-0.7.32">0.7.32</a>
+                    including multiple GUI, functional and error handling improvements.
             </ul>
 
         <h4>Powerline</h4>
