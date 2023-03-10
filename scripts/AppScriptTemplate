@@ -228,22 +228,16 @@ OS=${OS:-}
 if [ -z "${OS}" ] ; then
   OS=$( uname -s )
 fi
-ARCH=${ARCH:-}
-
-# set OS-specific settings
+# sanitize os names
 case "${OS}" in
-    macosx|Darwin*)
-        settingsdir="${HOME}/Library/Preferences/JMRI"
-        OS="macosx"
-        ;;
-    Linux*)
-        settingsdir="${HOME}/.jmri"
-        OS="linux"
-        ;;
-    *)
-        settingsdir="${HOME}/.jmri"
-        ;;
+  macosx|Darwin*)
+     OS="macosx"
+     ;;
+  Linux*)
+     OS="linux"
+     ;;
 esac
+ARCH=${ARCH:-}
 
 # get the settings directory if set on command line
 found_settingsdir=""
@@ -263,6 +257,18 @@ for opt in "$@"; do
         break;
     fi
 done
+
+if [ -z $settingsdir ]; then
+   # set OS-specific settingsdir if not on cmd line
+   case "${OS}" in
+     macosx|Darwin*)
+        settingsdir="${HOME}/Library/Preferences/JMRI"
+        ;;
+     Linux*|*)
+        settingsdir="${HOME}/.jmri"
+        ;;
+   esac
+fi
 
 # log to $settingsdir/log/launcher.log for debugging purposes
 launcher_log=${settingsdir}/log/launcher.log
