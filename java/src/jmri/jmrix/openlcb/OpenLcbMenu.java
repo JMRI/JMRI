@@ -35,11 +35,12 @@ public class OpenLcbMenu extends JMenu {
 
     final Item[] panelItems = new Item[]{
         new Item("MenuItemTrafficMonitor", "jmri.jmrix.openlcb.swing.monitor.MonitorPane"), // NOI18N
-        new Item("MenuItemSendFrame", "jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"), // NOI18N
         new Item("MenuItemConfigNodes", "jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"), // NOI18N
         new Item("MenuItemStartHub", "jmri.jmrix.openlcb.swing.hub.HubPane"), // NOI18N
         new Item("MenuItemFirmwareUpdate", "jmri.jmrix.openlcb.swing.downloader.LoaderPane"), // NOI18N
         new Item("MenuItemEventTable", "jmri.jmrix.openlcb.swing.eventtable.EventTablePane"), // NOI18N
+        new Item("MenuItemSendFrame", "jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"), // NOI18N
+        new Item("MenuItemMemoryTool", "jmri.jmrix.openlcb.swing.memtool.MemoryToolPane"), // NOI18N
     };
 
     static class Item {
