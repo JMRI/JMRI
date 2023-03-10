@@ -79,6 +79,7 @@
             <ul>
                 <li>Added support for the programming protocol used by
                     Digitrax Series 7 boards (DS74, SE74, etc)</li>
+                <li>Simplified the display of LocoNet sensor messages in the monitor</li>
             </ul>
 
         <h4>Maple</h4>

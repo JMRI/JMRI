@@ -2600,41 +2600,19 @@ public class LocoNetMessageInterpret {
         if (sensor != null) {
             String uname = sensor.getUserName();
             if ((uname != null) && (!uname.isEmpty())) {
-                sensorUserName = uname;
+                sensorUserName = "("+uname+") ";
             }
         }
 
         int sensorid = (SENSOR_ADR(in1, in2) - 1) * 2
                 + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1);
 
-        int bdlid = ((sensorid - 1) / 16) + 1;
-        int bdlin = ((sensorid - 1) % 16) + 1;
-        String bdl = Bundle.getMessage("LN_MSG_OPC_INPUT_REP_BDL_INFO",
-                bdlid, bdlin);
-
-        int boardid = ((sensorid - 1) / 8) + 1;
-        int boardindex = ((sensorid - 1) % 8);
-        String otherBoardsNames;
-        String otherBoardsInputs;
-        if (sensorid < 289) {
-            otherBoardsNames = Bundle.getMessage("LN_MSG_OPC_INPUT_REP_ALL_EQUIV_BOARDS", boardid);
-            otherBoardsInputs = Bundle.getMessage("LN_MSG_OPC_INPUT_REPORT_INPUT_NAMES_ALL_EQUIV_BOARDS",
-                    ds54sensors[boardindex], ds64sensors[boardindex],
-                    se8csensors[boardindex]);
-        } else {
-            otherBoardsNames = Bundle.getMessage("LN_MSG_OPC_INPUT_REP_NO_SE8C", boardid);
-            otherBoardsInputs = Bundle.getMessage("LN_MSG_OPC_INPUT_REPORT_INPUT_NAMES_NO_SE8C",
-                    ds54sensors[boardindex], ds64sensors[boardindex]);
-        }
-
         // There is no way to tell what kind of a board sent the message.
         // To be user friendly, we just print all the known combos.
         return Bundle.getMessage("LN_MSG_OPC_INPUT_REP",
                 sensorSystemName, sensorUserName,
                 Bundle.getMessage((in2 & LnConstants.OPC_INPUT_REP_HI) != 0
-                        ? "LN_MSG_SENSOR_STATE_HIGH" : "LN_MSG_SENSOR_STATE_LOW"),
-                bdl,
-                otherBoardsNames, otherBoardsInputs);
+                        ? "LN_MSG_SENSOR_STATE_HIGH" : "LN_MSG_SENSOR_STATE_LOW"));
     }
 
     private static String interpretOpcSwRep(LocoNetMessage l, String turnoutPrefix) {
