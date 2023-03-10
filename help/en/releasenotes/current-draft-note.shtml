@@ -21,8 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>The <a href="https://www.jmri.org/help/en/package/jmri/jmrix/can/cbus/swing/hubpane/CbusHubPane.shtml"
-                >CBUS Hub Control</a> can be used to share the CBUS connection locally and onto a LAN.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -77,8 +76,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Added support for the programming protocol used by
-                    Digitrax Series 7 boards (DS74, SE74, etc)</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -116,26 +114,9 @@
                 <li></li>
             </ul>
 
-        <h4><a href="https://openlcb.org/">OpenLCB</a> / LCC</h4>
+        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Hub Control - UI Update, line termination characters optional for incoming feeds.</li>
-                <li>When downloading firmware to multiple boards, it can be a pain to have to select the file over and over.
-                    This was changed to make the selected file (hence directory, etc) persistent from one download frame
-                    to the next.
-                <li>Show more information in the node selector when doing firmware downloads.</li>
-                <li>Updated the default filename when doing backups to contain more identification info.</li>
-                <li>The OpenLCB library was updated to the current contents as of PR #214</li>
-                <li>There's a new
-                    "<a href="https://www.jmri.org/help/en/package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>"
-                    tool that shows all the events on the network and which nodes produce and consume them.</li>
-                <li>There's a new
-                    "<a href="https://help/en/package/jmri/jmrix/openlcb/swing/memtool/MemoryToolPane.shtml">Memory Tool</a>"
-                    that lets you get the contents of node memory spaces into a local binary file, and
-                    put the contents of a file back into a node memory space.</li>
-                <li>Now shows more about JMRI nodes in the Configure Nodes window.
-                <li>Updated the openlcb.jar library to version
-                    <a href="https://github.com/openlcb/OpenLCB_Java/releases/tag/release-0.7.32">0.7.32</a>
-                    including multiple GUI, functional and error handling improvements.
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -225,13 +206,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Added SE74 usage information to the Digitrax/LocoNet hardware help page,
-                    including specific guidance for configuring JMRI's signaling, and typo fixes.</li>
-                <li>Added DecoderPro definitions for the DS74 and SE74 OpSwitches.<li>
-                <li>Added a
-                    <a href="http://jmri.org/jython/loconet/LnEditEvolutionRoutesAndOpSw.py">loconet/LnEditEvolutionRoutesAndOpSw.py</a>
-                    script that lets you configure the routes in a Digitrax Series 7 board
-                    e.g. DS74 and DS74.</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -307,11 +282,6 @@
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
-            </ul>
-
-	    <h4>Piko decoders</h4>
-            <ul>
-                <li>Bug fixes, improvements and functional enhancements</li>
             </ul>
 
         <h4>QSI</h4>
@@ -397,29 +367,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>The decoder index is being written in a more compact form to improve the
-                time spent reading it at startup.</li>
-            <li>Two new decoder-index attributes
-                suppressFunctionLabels and suppressRosterMedia
-                can be used to suppress those panes in the DecoderPro GUI.</li>
-            <li>Two new import and two new export options have been added to DecoderPro.
-                <ul>
-                    <li>
-                        You can directly export a DecoderPro roster entry to a TCS CS-105
-                        command station roster entry.
-                    <li>
-                        You can directly import a TCS CS-105 command station roster entry
-                        to a DecoderPro roster entry.
-                    <li>
-                        You can export a roster entry
-                        to a CDI backup file for restoring into a train entry in the
-                        TCS CS-105 command station.
-                    <li>
-                        You can import a CDI backup
-                        file to a roster entry.
-                </ul>
-                For more information see
-                <a href="https://jmri.org/help/en/html/hardware/openlcb/TCS.shtml">the TCS CS-105 page</a>.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -466,8 +414,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The expression <i>Linux Line Power</i> has been added.</li>
-
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -479,22 +426,19 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Improved passenger car blocking when using kernels, caboose, or car with FRED</li>
-            <li>Fix Java exception when using the Set Car window and a final destination.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>The show hidden items selection was not being stored properly.  The fix may cause
-            unexpected changes the first time a PE panel is loaded.</li>
+            <li></li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>The show hidden items selection was not being stored properly.  The fix may cause
-            unexpected changes the first time a CPE panel is loaded.</li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -534,8 +478,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Add a PanelControlsContents.py script which lets you
-                set a panel to controlling the layout or not.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -545,8 +488,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Updated AAR-1946 aspect mappings.</li>
-                <li>Updated the appearances in the Reading-1954 system.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -594,8 +536,7 @@
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
         <ul>
-            <li>Add action buttons to <strong>duplicate</strong> the Timetable data items.</li>
-            <li>Add the logic to calculate the train route durations.</li>
+            <li></li>
         </ul>
 
    <h3>Tracker</h3>
@@ -649,10 +590,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Updated the plantuml library to version 1.2023.1.  This is used to
-                create program documentation.</li>
-            <li>When downloading firmware to multiple boards, it can be a pain to have to select the file over and over.
-                This was changed to make the selected file (hence directory, etc) persistent from one download frame
-                to the next.
+            <li></li>
         </ul>
 
