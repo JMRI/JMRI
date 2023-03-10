@@ -133,6 +133,9 @@
                     that lets you get the contents of node memory spaces into a local binary file, and
                     put the contents of a file back into a node memory space.</li>
                 <li>Now shows more about JMRI nodes in the Configure Nodes window.
+                <li>Updated the openlcb.jar library to version
+                    <a href="https://github.com/openlcb/OpenLCB_Java/releases/tag/release-0.7.32">0.7.32</a>
+                    including multiple GUI, functional and error handling improvements.
             </ul>
 
         <h4>Powerline</h4>
