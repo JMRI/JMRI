@@ -479,15 +479,17 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```
+
 [Release notes](https://jmri.org/releasenotes/jmri5.3.4.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.3.4+R77156098f8.dmg](https://github.com/JMRI/JMRI/releases/download/v5.3.4/JMRI.5.3.4+R77156098f8.dmg) | e675400d4a13602769412c907cb568a1bb77ec515bbe8927b5cfc79638cab2cc
-[JMRI.5.3.4+R77156098f8.exe](https://github.com/JMRI/JMRI/releases/download/v5.3.4/JMRI.5.3.4+R77156098f8.exe) | 5827299d67ba5195b8a404e1bb293c08de5cfbd0ec3d96735a87eb06f6c7de6a
-[JMRI.5.3.4+R77156098f8.tgz](https://github.com/JMRI/JMRI/releases/download/v5.3.4/JMRI.5.3.4+R77156098f8.tgz) | be3a9f78359cfbcf922f5fa3e1eeed00d3041219401eb0b783d31d06afb7eaac
+[JMRI.5.3.4+Rd7c66df2d0.dmg](https://github.com/JMRI/JMRI/releases/download/v5.3.4/JMRI.5.3.4+Rd7c66df2d0.dmg) | 284c20cbd50b40317a558129cca9ac893fe1938ceae8b2de67790fc0ddcf27f5
+[JMRI.5.3.4+Rd7c66df2d0.exe](https://github.com/JMRI/JMRI/releases/download/v5.3.4/JMRI.5.3.4+Rd7c66df2d0.exe) | 4111f6822df4a3b99f916fcb9b688c66a1c121fe011e4ab7c041e6b1359ca7c1
+[JMRI.5.3.4+Rd7c66df2d0.tgz](https://github.com/JMRI/JMRI/releases/download/v5.3.4/JMRI.5.3.4+Rd7c66df2d0.tgz) | 3ea4efa27a5ef984737c4e77288de2bf63e0d45cee588150227b9059db56766f
+
 
 ```
 
