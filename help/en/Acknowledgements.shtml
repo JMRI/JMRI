@@ -619,6 +619,9 @@
         <li>Alain Le Marchand, <!-- GitHub: AlanUS -->
          who provided a number of decoder definitions and updates</li>
 
+        <li>Ralf Lang, <!-- ralflang -->
+        who contributed the Markin CdB connection code.
+
         <li>Karl Johan Lisby, <!-- kjlisby  -->
          who made large improvements to the Uhlenbrock Intellibox support and contributed the
         Signal Controlled Warrant support</li>
