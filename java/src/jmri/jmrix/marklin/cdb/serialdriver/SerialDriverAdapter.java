@@ -17,7 +17,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Implements SerialPortAdapter for the TAMS system.
+ * Implements SerialPortAdapter for the Marklin CDB system.
  * <p>
  * This connects a CC-Schnitte command station via a serial usb port.
  * <p>
