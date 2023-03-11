@@ -1,7 +1,7 @@
 package jmri.jmrix.marklin.cdb;
 
 /**
- * Identifying class representing a Tams communications port Based on work by
+ * Identifying class representing a Marklin CDB communications port Based on work by
  * Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright (C) 2012
