@@ -14,29 +14,29 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * Provides standard access for resource bundles in a package.
- * 
+ *
  * Convention is to provide a subclass of this name
  * in each package, working off the local resource bundle name.
  *
  * @author      Bob Jacobsen  Copyright (C) 2012
  * @since       3.7.2
  */
-public class Bundle extends jmri.jmrix.marklin.Bundle {
+public class Bundle extends jmri.jmrix.marklin.cdb.Bundle {
 
-    @CheckForNull private static final String name = "jmri.jmrix.marklin.cdb.serialdriver.Bundle"; // No local resources
+    @CheckForNull private static final String name = null; // no local resources
 
     //
     // below here is boilerplate to be copied exactly
     //
-    
+
     /**
-     * Provides a translated string for a given 
-     * key from the package resource bundle or 
+     * Provides a translated string for a given
+     * key from the package resource bundle or
      * parent.
      * <p>
      * Note that this is intentionally package-local
      * access.
-     * 
+     *
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
@@ -44,11 +44,11 @@ public class Bundle extends jmri.jmrix.marklin.Bundle {
         return getBundle().handleGetMessage(key);
     }
     /**
-     * Merges user data with a translated string for a given 
-     * key from the package resource bundle or 
+     * Merges user data with a translated string for a given
+     * key from the package resource bundle or
      * parent.
      * <p>
-     * Uses the transformation conventions of 
+     * Uses the transformation conventions of
      * the Java MessageFormat utility.
      * <p>
      * Note that this is intentionally package-local
@@ -80,14 +80,14 @@ public class Bundle extends jmri.jmrix.marklin.Bundle {
     static String getMessage(Locale locale, String key, Object... subs) {
         return getBundle().handleGetMessage(locale, key, subs);
     }
-   
+
     private final static Bundle b = new Bundle();
     @Override @CheckForNull protected String bundleName() {return name; }
     protected static jmri.Bundle getBundle() { return b; }
 
-    @Override 
-    protected String retry(Locale locale,String key) { 
-        return super.getBundle().handleGetMessage(locale,key); 
+    @Override
+    protected String retry(Locale locale,String key) {
+        return super.getBundle().handleGetMessage(locale,key);
     }
 
 }
