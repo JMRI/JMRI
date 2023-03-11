@@ -21,9 +21,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author      Bob Jacobsen  Copyright (C) 2012
  * @since       3.7.2
  */
-public class Bundle extends jmri.jmrix.tams.Bundle {
+public class Bundle extends jmri.jmrix.marklin.Bundle {
 
-    @CheckForNull private static final String name = null; // No local resources
+    @CheckForNull private static final String name = "jmri.jmrix.marklin.cdb.serialdriver.Bundle"; // No local resources
 
     //
     // below here is boilerplate to be copied exactly
