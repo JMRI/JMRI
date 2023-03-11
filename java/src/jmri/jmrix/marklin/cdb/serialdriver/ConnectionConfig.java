@@ -1,7 +1,7 @@
 package jmri.jmrix.marklin.cdb.serialdriver;
 
 /**
- * Definition of objects to handle configuring a layout connection via an TAMS
+ * Definition of objects to handle configuring a layout connection via an Marklin CDB
  * SerialDriverAdapter object.
  *
  * @author Kevin Dickerson Copyright (C) 2012
