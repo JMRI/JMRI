@@ -31,7 +31,7 @@ import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 public class CdBSystemConnectionMemo extends MarklinSystemConnectionMemo {
 
     public CdBSystemConnectionMemo(MarklinTrafficController et) {
-        super("C", "CdB");
+        super("M", "CdB");
         this.et = et;
         et.setAdapterMemo(this);
         InstanceManager.store(this, CdBSystemConnectionMemo.class);
@@ -40,7 +40,7 @@ public class CdBSystemConnectionMemo extends MarklinSystemConnectionMemo {
     }
 
     public CdBSystemConnectionMemo() {
-        super("C", "CdB");
+        super("M", "CdB");
         InstanceManager.store(this, CdBSystemConnectionMemo.class);
         InstanceManager.store(cf = new jmri.jmrix.marklin.swing.MarklinComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
