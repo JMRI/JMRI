@@ -116,7 +116,9 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Add event user name to Monitor display</li>
+                <li>Add memory space window display to Memory Tool</li>
+                <li>Better ordering for overlapping events in Event Table</li>
             </ul>
 
         <h4>Powerline</h4>
