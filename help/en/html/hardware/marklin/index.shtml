@@ -74,7 +74,16 @@
       <h2 id="cdb">CdB CC-Schnitte 2</h2>
 
       <p><span class="since">Since <a href="jmri5.3.5.shtml">JMRI 5.3.5</a></span>
-      JMRI can connect to a M&auml;rklin Command Station 2 using a USB interface.</p>
+      JMRI can connect using a CC-Schnitte USB interface.</p>
+
+      <p>The CC-Schnitte is a third party USB interface for the Marklin CAN Bus.
+      It is usually directly attached to the 60113 Digital Connector Box,
+      with the MobileStation 2 attached to the second port.
+      In the Marklin system, the Connector Box receives commands from devices attached to the CAN Bus.
+      It acts as a mini booster, but also translates them into a proper DCC/mm2/mfx signal.
+      CC-Schnitte combines with the Connector Box in a fashion similar as the
+      already supported CentralStation 2.
+
 
       <h3 id="limitations">Limitations</h3>
       <strong>This interface is still under development; if you find any issues then please raise a
