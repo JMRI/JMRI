@@ -506,8 +506,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
             // if this already exists, skip storing it
             // if you can, find a matching memo with an empty consumer value
-            TripleMemo empty = null;        // TODO: switch to int index for handle update below
-            TripleMemo bestEmpty = null;    // TODO: switch to int index for handle update below
+            TripleMemo empty = null;    // an existing empty cell                       // TODO: switch to int index for handle update below
+            TripleMemo bestEmpty = null;// an existing empty cell with matching consumer// TODO: switch to int index for handle update below
+            TripleMemo sameNodeID = null;// cell with matching consumer                 // TODO: switch to int index for handle update below
             for (int i = 1; i < memos.size(); i++) {
                 var memo = memos.get(i);
                 if (memo.eventID.equals(eventID) ) {
@@ -529,12 +530,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         // best empty has matching consumer
                         if (nodeID.equals(memo.consumer)) bestEmpty = memo;
                     }
+                    // if same consumer slot, remember it
+                    if (nodeID == memo.consumer) {
+                        sameNodeID = memo;
+                    }
                 }
             }
 
             // can we use the bestEmpty?
-            // N.B. This doesn't always work. If c(A) arrives before c(B), p(B)
-            // will be slotted into c(A) before a "best" match is available.
             if (bestEmpty != null) {
                 // yes
                 log.trace("   use bestEmpty");
@@ -544,14 +547,27 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 return;
             }
 
-            // can we use the empty?
-            if (empty != null) {
+            // can we just insert into the empty?
+            if (empty != null && sameNodeID == null) {
                 // yes
                 log.trace("   reuse empty");
                 empty.producer = nodeID;
                 empty.producerName = name;
                 handleTableUpdate(-1, -1); // TODO: should be rows for empty, empty
                 return;
+            }
+
+            // is there a sameNodeID to insert into?
+            if (sameNodeID != null) {
+                // yes
+                log.trace("   switch to sameID");
+                var fromSaveNodeID = sameNodeID.producer;
+                var fromSaveNodeIDName = sameNodeID.producerName;
+                sameNodeID.producer = nodeID;
+                sameNodeID.producerName = name;
+                // now leave behind old cell to make new one in next block
+                nodeID = fromSaveNodeID;
+                name = fromSaveNodeIDName;
             }
 
             // have to make a new one
@@ -590,8 +606,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
             // if this already exists, skip storing it
             // if you can, find a matching memo with an empty consumer value
-            TripleMemo empty = null;
-            TripleMemo bestEmpty = null;
+            TripleMemo empty = null;    // an existing empty cell                       // TODO: switch to int index for handle update below
+            TripleMemo bestEmpty = null;// an existing empty cell with matching producer// TODO: switch to int index for handle update below
+            TripleMemo sameNodeID = null;// cell with matching consumer                 // TODO: switch to int index for handle update below
             for (int i = 1; i < memos.size(); i++) {
                 var memo = memos.get(i);
                 if (memo.eventID.equals(eventID) ) {
@@ -609,12 +626,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         // best empty has matching producer
                         if (nodeID.equals(memo.producer)) bestEmpty = memo;
                     }
+                    // if same producer slot, remember it
+                    if (nodeID == memo.producer) {
+                        sameNodeID = memo;
+                    }
                 }
             }
 
             // can we use the best empty?
-            // N.B. This doesn't always work. If p(A) arrives before p(B), c(B)
-            // will be slotted into p(A) before a "best" match is available.
             if (bestEmpty != null) {
                 // yes
                 log.trace("   use bestEmpty");
@@ -624,14 +643,27 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 return;
             }
 
-            // can we use the empty?
-            if (empty != null) {
+            // can we just insert into the empty?
+            if (empty != null && sameNodeID == null) {
                 // yes
                 log.trace("   reuse empty");
                 empty.consumer = nodeID;
                 empty.consumerName = name;
                 handleTableUpdate(-1, -1);  // should be rows for empty, empty
                 return;
+            }
+
+            // is there a sameNodeID to insert into?
+            if (sameNodeID != null) {
+                // yes
+                log.trace("   switch to sameID");
+                var fromSaveNodeID = sameNodeID.consumer;
+                var fromSaveNodeIDName = sameNodeID.consumerName;
+                sameNodeID.consumer = nodeID;
+                sameNodeID.consumerName = name;
+                // now leave behind old cell to make new one
+                nodeID = fromSaveNodeID;
+                name = fromSaveNodeIDName;
             }
 
             // have to make a new one
