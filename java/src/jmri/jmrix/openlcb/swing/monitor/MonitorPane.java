@@ -249,23 +249,31 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                     if (descr.length > 0) {
                         sb.append("\n  Event: ");
                         var tag = tagManager.getIdTag(tagPrefix+ev.toShortString());
-                        if (tag != null && tag.getUserName() != null && ! tag.getUserName().isEmpty()) {
-                            sb.append(tag.getUserName());
-                            sb.append("\n         ");
+                        String name;
+                        if (tag != null
+                                && (name = tag.getUserName()) != null) {
+                            if (! name.isEmpty()) {
+                                sb.append(name);
+                                sb.append("\n         ");
+                            }
                         }
                         sb.append(descr[0].getDescription());
 
                         if (eventAllCheckBox.isSelected()) {
-                            for (int i = 1; i < descr.length; i++) {
+                            for (int i = 1; i < descr.length; i++) {  // entry 0 done above, so skipped here
                                 sb.append("\n         ");
                                 sb.append(descr[i].getDescription());
                             }
                         }
                     } else {
                         var tag = tagManager.getIdTag(tagPrefix+ev.toShortString());
-                        if (tag != null && tag.getUserName() != null && ! tag.getUserName().isEmpty()) {
-                            sb.append("\n  Event: ");
-                            sb.append(tag.getUserName());
+                        String name;
+                        if (tag != null
+                                && (name = tag.getUserName()) != null) {
+                            if (! name.isEmpty()) {
+                                sb.append(name);
+                                sb.append("\n         ");
+                            }
                         }
                     }
                 }
