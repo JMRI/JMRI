@@ -271,8 +271,8 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                         if (tag != null
                                 && (name = tag.getUserName()) != null) {
                             if (! name.isEmpty()) {
+                                sb.append("\n  Event: ");
                                 sb.append(name);
-                                sb.append("\n         ");
                             }
                         }
                     }
