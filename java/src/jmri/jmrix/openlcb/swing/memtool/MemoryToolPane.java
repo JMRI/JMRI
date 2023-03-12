@@ -153,10 +153,36 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
     void pushedCheckButton(ActionEvent e) {
         var node = nodeSelector.getSelectedItem();
         JmriJFrame f = new JmriJFrame();
-        f.setTitle("Configuration Capabilities " + node);
+        f.setTitle("Configuration Capabilities");
+
+        var p = new JPanel();
+        f.add(p);
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+
+        JPanel q = new JPanel();
+        q.setLayout(new java.awt.FlowLayout());
+        p.add(q);
+        q.add(new JLabel(node.toString()));
+
+        p.add(new JSeparator(SwingConstants.HORIZONTAL));
+
+        var nodeMemo = store.findNode(node);
+        String name = "";
+        if (nodeMemo != null) {
+            var ident = nodeMemo.getSimpleNodeIdent();
+                if (ident != null) {
+                    name = ident.getUserName();
+                    q = new JPanel();
+                    q.setLayout(new java.awt.FlowLayout());
+                    q.add(new JLabel(name));
+                    p.add(q);
+                }
+        }
+
         MemConfigDescriptionPane mc = new MemConfigDescriptionPane(node, store, service);
-        f.add(mc);
+        p.add(mc);
         mc.initComponents();
+
         f.pack();
         f.setVisible(true);
     }
