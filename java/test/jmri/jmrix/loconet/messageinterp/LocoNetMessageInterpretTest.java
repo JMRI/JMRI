@@ -2580,7 +2580,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xB2, 0x0B, 0x70, 0x36});
         Assert.assertEquals(" basic Transponding Test 03",
-                "Sensor LS24 () is High.  (BDL16 # 2, DS8; DS54/DS64/SE8c # 3, SwiD/S4/DS08).\n",
+                "Sensor LS24 is High\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00, 0x2D});
@@ -2602,7 +2602,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xB2, 0x0B, 0x60, 0x26});
         Assert.assertEquals(" basic Transponding Test 07",
-                "Sensor LS24 () is Low.  (BDL16 # 2, DS8; DS54/DS64/SE8c # 3, SwiD/S4/DS08).\n",
+                "Sensor LS24 is Low\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x00, 0x01, 0x00, 0x00, 0x00, 0x2D});
@@ -2666,42 +2666,42 @@ public class LocoNetMessageInterpretTest {
         LocoNetMessage l;
 
         l = new LocoNetMessage(new int[] {0xB2, 0x20, 0x41, 0x2C});
-        Assert.assertEquals(" basic Sensor Report Test 01", "Sensor LS321 () is Low.  (BDL16 # 21, DS1; DS54/DS64 # 41, AuxA/A1).\n",
+        Assert.assertEquals(" basic Sensor Report Test 01", "Sensor LS321 is Low\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xB2, 0x20, 0x61, 0x0C});
         Assert.assertEquals(" basic Sensor Report Test 02",
-                "Sensor LS322 () is Low.  (BDL16 # 21, DS2; DS54/DS64 # 41, SwiA/S1).\n",
+                "Sensor LS322 is Low\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xB2, 0x23, 0x41, 0x2C});
         Assert.assertEquals(" basic Sensor Report Test 03",
-                "Sensor LS327 () is Low.  (BDL16 # 21, DS7; DS54/DS64 # 41, AuxD/A4).\n",
+                "Sensor LS327 is Low\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xB2, 0x23, 0x61, 0x0C});
         Assert.assertEquals(" basic Sensor Report Test 04",
-                "Sensor LS328 () is Low.  (BDL16 # 21, DS8; DS54/DS64 # 41, SwiD/S4).\n",
+                "Sensor LS328 is Low\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xB2, 0x00, 0x10, 0x0C});
         Assert.assertEquals(" basic Sensor Report Test 05",
-                "Sensor LS1 () is High.  (BDL16 # 1, DS1; DS54/DS64/SE8c # 1, AuxA/A1/DS01).\n",
+                "Sensor LS1 is High\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xB2, 0x00, 0x20, 0x0C});
         Assert.assertEquals(" basic Sensor Report Test 06",
-                "Sensor LS2 () is Low.  (BDL16 # 1, DS2; DS54/DS64/SE8c # 1, SwiA/S1/DS02).\n",
+                "Sensor LS2 is Low\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xB2, 0x00, 0x00, 0x0C});
         Assert.assertEquals(" basic Sensor Report Test 07",
-                "Sensor LS1 () is Low.  (BDL16 # 1, DS1; DS54/DS64/SE8c # 1, AuxA/A1/DS01).\n",
+                "Sensor LS1 is Low\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xB2, 0x00, 0x70, 0x0C});
         Assert.assertEquals(" basic Sensor Report Test 08",
-                "Sensor LS2 () is High.  (BDL16 # 1, DS2; DS54/DS64/SE8c # 1, SwiA/S1/DS02).\n",
+                "Sensor LS2 is High\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
