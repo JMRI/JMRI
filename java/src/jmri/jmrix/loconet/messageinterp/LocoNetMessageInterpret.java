@@ -2600,7 +2600,7 @@ public class LocoNetMessageInterpret {
         if (sensor != null) {
             String uname = sensor.getUserName();
             if ((uname != null) && (!uname.isEmpty())) {
-                sensorUserName = uname;
+                sensorUserName = " ("+uname+")";
             }
         }
 
