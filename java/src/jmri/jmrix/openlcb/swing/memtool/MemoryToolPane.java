@@ -12,6 +12,7 @@ import javax.swing.table.*;
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.swing.JmriJTablePersistenceManager;
+import jmri.util.JmriJFrame;
 import jmri.util.swing.MultiLineCellRenderer;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -19,6 +20,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.openlcb.*;
 import org.openlcb.implementations.*;
 import org.openlcb.swing.*;
+import org.openlcb.swing.memconfig.MemConfigDescriptionPane;
 
 
 /**
@@ -53,6 +55,18 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
     boolean cancelled = false;
     boolean running = false;
 
+    /**
+     * if checked (the default), the Address Space Status
+     * reply will be used to set the length of the read.
+     * The read will also stop on a short-data reply or ann
+     * error reply, including the normal 0x1082 end of data message.
+     * If unchecked, the Address Space Status is skipped
+     * and the read ends on short-data reply or error reply.
+     * <p>
+     * We do not persist this as a preference, because
+     8 we want the default to be trusted and the user to
+     * reselect (or really unselect) as needed.
+     */
     JCheckBox trustStatusReply;
 
     @Override
@@ -72,8 +86,14 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Add to GUI here
+        var ns = new JPanel();
+        ns.setLayout(new FlowLayout());
+        add(ns);
         nodeSelector = new org.openlcb.swing.NodeSelector(store, Integer.MAX_VALUE);
-        add(nodeSelector);
+        ns.add(nodeSelector);
+        JButton check = new JButton("Check");
+        ns.add(check);
+        check.addActionListener(this::pushedCheckButton);
 
         var ms = new JPanel();
         ms.setLayout(new FlowLayout());
@@ -128,6 +148,17 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             return (memo.getUserName() + " Memory Tool");
         }
         return getTitle(Bundle.getMessage("TitleEventTable"));
+    }
+
+    void pushedCheckButton(ActionEvent e) {
+        var node = nodeSelector.getSelectedItem();
+        JmriJFrame f = new JmriJFrame();
+        f.setTitle("Configuration Capabilities " + node);
+        MemConfigDescriptionPane mc = new MemConfigDescriptionPane(node, store, service);
+        f.add(mc);
+        mc.initComponents();
+        f.pack();
+        f.setVisible(true);
     }
 
     void pushedCancel(ActionEvent e) {
