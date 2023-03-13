@@ -234,8 +234,15 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                 if (nodeNameCheckBox.isSelected() && olcbInterface != null) {
                     var ptr = olcbInterface.getNodeStore().findNode(list.get(0).getSourceNodeID());
                     if (ptr != null && ptr.getSimpleNodeIdent() != null) {
-                        String name = ptr.getSimpleNodeIdent().getUserName();
-                        if (name != null && !name.equals("")) {
+                        String name = "";
+                        var ident = ptr.getSimpleNodeIdent();
+                        if (ident != null) {
+                            name = ident.getUserName();
+                            if (name.isEmpty()) {
+                                name = ident.getMfgName()+" - "+ident.getModelName();
+                            }
+                        }
+                        if (name != null && !name.isBlank()) {
                             sb.append("\n  Src: ");
                             sb.append(name);
                         }
