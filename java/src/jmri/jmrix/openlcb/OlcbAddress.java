@@ -310,7 +310,7 @@ public class OlcbAddress {
         OlcbAddress a = new OlcbAddress(oAddr);
         OlcbAddress[] v = a.split();
         if (v == null) {
-            throw new jmri.NamedBean.BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " to a valid Olcb sensor address");
+            throw new jmri.NamedBean.BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " to a valid Olcb address");
         }
         switch (v.length) {
             case 1:
