@@ -1,12 +1,10 @@
 package jmri.jmrix.openlcb;
 
-import java.util.*;
-
-import javax.annotation.Nonnull;
 import jmri.BooleanPropertyDescriptor;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
+import jmri.Reporter;
 import jmri.Sensor;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -16,20 +14,26 @@ import org.openlcb.OlcbInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 /**
  * Manage the OpenLCB-specific Sensor implementation.
  *
- * System names are "MSnnn", where M is the user configurable system prefix,
- * nnn is the sensor number without padding.
+ * System names are "MRaa.aa.aa.aa.aa.aa.a0.00", where M is the user configurable system prefix,
+ * aa.aa....aa is an OpenLCB Event ID with the last fourteen bits as zero.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
+ * @author Balazs Racz Copyright (C) 2023
  */
-public class OlcbSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
+public class OlcbReporterManager extends jmri.managers.AbstractReporterManager {
 
-    // Whether we accumulate partially loaded objects in pendingSensors.
+    // Whether we accumulate loaded objects in pendingReporters.
     private boolean isLoading = false;
     // Turnouts that are being loaded from XML.
-    private final ArrayList<OlcbSensor> pendingSensors = new ArrayList<>();
+    private final ArrayList<OlcbReporter> pendingReporters = new ArrayList<>();
 
     /**
      * {@inheritDoc}
@@ -79,7 +83,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     // Implemented ready for new system connection memo
-    public OlcbSensorManager(CanSystemConnectionMemo memo) {
+    public OlcbReporterManager(CanSystemConnectionMemo memo) {
         super(memo);
         memo.getTrafficController().addCanListener(this);
     }
@@ -93,22 +97,22 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     @Nonnull
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
         justification = "passing exception text")
-    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemNamePrefix().length());
         // first, check validity
         try {
             validateSystemNameFormat(systemName,Locale.getDefault());
-        } catch (jmri.NamedBean.BadSystemNameException e) {
+        } catch (NamedBean.BadSystemNameException e) {
             log.error(e.getMessage());
             throw e;
         }
         // OK, make
-        OlcbSensor s = new OlcbSensor(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
+        OlcbReporter s = new OlcbReporter(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         s.setUserName(userName);
 
-        synchronized (pendingSensors) {
+        synchronized (pendingReporters) {
             if (isLoading) {
-                pendingSensors.add(s);
+                pendingReporters.add(s);
             } else {
                 s.finishLoad();
             }
@@ -118,32 +122,34 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
 
     /**
      * This function is invoked before an XML load is started. We defer initialization of the
-     * newly created Sensors until finishLoad because the feedback type might be changing as we
-     * are parsing the XML.
+     * newly created Reporters until finishLoad. This avoids certain quadratic run-time
+     * operations due to update listeners.
      */
     public void startLoad() {
-        log.debug("Sensor manager : start load");
-        synchronized (pendingSensors) {
+        log.debug("Reporter manager : start load");
+        synchronized (pendingReporters) {
             isLoading = true;
         }
     }
 
     /**
-     * This function is invoked after the XML load is complete and all Sensors are instantiated
+     * This function is invoked after the XML load is complete and all Reporters are instantiated
      * and their feedback type is read in. We use this hook to finalize the construction of the
      * OpenLCB objects whose instantiation was deferred until the feedback type was known.
      */
     public void finishLoad() {
-        log.debug("Sensor manager : finish load");
-        synchronized (pendingSensors) {
-            pendingSensors.forEach(OlcbSensor::finishLoad);
-            pendingSensors.clear();
+        log.debug("Reporter manager : finish load");
+        synchronized (pendingReporters) {
+            pendingReporters.forEach(OlcbReporter::finishLoad);
+            pendingReporters.clear();
             isLoading = false;
         }
     }
 
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
+        // @TODO we should allow multi-add and auto-increment the event IDs by
+        // 14 bits.
         return false;
     }
 
@@ -155,7 +161,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         try {
             OlcbAddress.validateSystemNameFormat(tmpSName,Locale.getDefault(),tmpPrefix);
         }
-        catch ( jmri.NamedBean.BadSystemNameException ex ){
+        catch ( NamedBean.BadSystemNameException ex ){
             throw new JmriException(ex.getMessage());
         }
         // don't check for integer; should check for validity here
@@ -163,10 +169,10 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    @javax.annotation.Nonnull
+    @Nonnull
     @javax.annotation.CheckReturnValue
     public String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
-        throw new jmri.JmriException("getNextValidSystemName should not have been called");
+        throw new JmriException("getNextValidSystemName should not have been called");
     }
 
     /**
@@ -174,29 +180,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     public String getEntryToolTip() {
-        return Bundle.getMessage("AddSensorEntryToolTip");
-    }
-
-    // listen for sensors, creating them as needed
-    @Override
-    public void reply(CanReply l) {
-        // doesn't do anything, because for now
-        // we want you to create manually
-    }
-
-    @Override
-    public void message(CanMessage l) {
-        // doesn't do anything, because
-        // messages come from us
-    }
-
-    /**
-     * No mechanism currently exists to request status updates from all layout
-     * sensors.
-     */
-    @Override
-    public void updateAll() {
-        // no current mechanisim to request status updates from all layout sensors
+        return Bundle.getMessage("AddReporterEntryToolTip");
     }
 
     /**
@@ -205,13 +189,13 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     @Nonnull
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws NamedBean.BadSystemNameException {
         name = super.validateSystemNameFormat(name,locale);
         name = OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix());
         return name;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OlcbSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbReporterManager.class);
 
 }
 

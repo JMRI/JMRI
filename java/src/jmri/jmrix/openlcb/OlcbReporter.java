@@ -1,46 +1,47 @@
 package jmri.jmrix.openlcb;
 
 import jmri.NamedBean;
-import jmri.Sensor;
-import jmri.implementation.AbstractSensor;
+import jmri.implementation.AbstractReporter;
+import org.openlcb.Connection;
+import org.openlcb.ConsumerRangeIdentifiedMessage;
+import org.openlcb.EventID;
+import org.openlcb.EventState;
+import org.openlcb.Message;
 import org.openlcb.OlcbInterface;
-import org.openlcb.implementations.BitProducerConsumer;
+import org.openlcb.ProducerConsumerEventReportMessage;
+import org.openlcb.ProducerIdentifiedMessage;
 import org.openlcb.implementations.EventTable;
-import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import java.util.TimerTask;
 
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010, 2011
  */
-public class OlcbReporter extends AbstractSensor {
+public class OlcbReporter extends AbstractReporter {
 
-    static final int ON_TIME = 500; // time that sensor is active after being tripped
+    /// How many bits does a reporter event range contain.
+    private static final int REPORTER_BIT_COUNT = 14;
+    /// Next bit in the event ID beyond the reporter event range.
+    private static final long REPORTER_LSB = (1L << REPORTER_BIT_COUNT);
+    /// Mask for the bits which are the actual report.
+    private static final long REPORTER_EVENT_MASK = REPORTER_LSB - 1;
 
-    OlcbAddress addrActive;    // go to active state
-    OlcbAddress addrInactive;  // go to inactive state
-    final OlcbInterface iface;
+    private OlcbAddress baseAddress;    // event ID for zero report
+    private EventID baseEventID;
+    private long baseEventNumber;
+    private final OlcbInterface iface;
+    private final Connection messageListener = new Receiver();
 
-    VersionedValueListener<Boolean> sensorListener;
-    BitProducerConsumer pc;
-    EventTable.EventTableEntryHolder activeEventTableEntryHolder = null;
-    EventTable.EventTableEntryHolder inactiveEventTableEntryHolder = null;
-    private static final boolean DEFAULT_IS_AUTHORITATIVE = true;
-    private static final boolean DEFAULT_LISTEN = true;
-    private static final int PC_DEFAULT_FLAGS = BitProducerConsumer.DEFAULT_FLAGS &
-            (~BitProducerConsumer.LISTEN_INVALID_STATE);
-
-    private TimerTask timerTask;
+    EventTable.EventTableEntryHolder baseEventTableEntryHolder = null;
 
     public OlcbReporter(String prefix, String address, OlcbInterface iface) {
-        super(prefix + "S" + address);
+        super(prefix + "R" + address);
         this.iface = iface;
         init(address);
     }
@@ -51,6 +52,7 @@ public class OlcbReporter extends AbstractSensor {
      *
      */
     private void init(String address) {
+        iface.registerMessageListener(messageListener);
         // build local addresses
         OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
@@ -60,18 +62,13 @@ public class OlcbReporter extends AbstractSensor {
         }
         switch (v.length) {
             case 1:
-                // momentary sensor
-                addrActive = v[0];
-                addrInactive = null;
-                break;
-            case 2:
-                addrActive = v[0];
-                addrInactive = v[1];
+                baseAddress = v[0];
+                baseEventID = baseAddress.toEventID();
+                baseEventNumber = baseEventID.toLong();
                 break;
             default:
-                log.error("Can't parse OpenLCB Sensor system name: {}", address);
+                log.error("Can't parse OpenLCB Reporter system name: {}", address);
         }
-
     }
 
     /**
@@ -80,49 +77,43 @@ public class OlcbReporter extends AbstractSensor {
      * XML.
      */
     void finishLoad() {
-        int flags = PC_DEFAULT_FLAGS;
-        flags = OlcbUtils.overridePCFlagsFromProperties(this, flags);
-        log.debug("Sensor Flags: default {} overridden {} listen bit {}", PC_DEFAULT_FLAGS, flags,
-                    BitProducerConsumer.LISTEN_EVENT_IDENTIFIED);
-        disposePc();
-        if (addrInactive == null) {
-            pc = new BitProducerConsumer(iface, addrActive.toEventID(), BitProducerConsumer.nullEvent, flags);
+        if (baseEventTableEntryHolder != null) {
+            baseEventTableEntryHolder.release();
+            baseEventTableEntryHolder = null;
+        }
+        baseEventTableEntryHolder = iface.getEventTable().addEvent(baseEventID, getEventName());
+        // Reports identified message.
+        Message m = new ConsumerRangeIdentifiedMessage(iface.getNodeId(), getEventRangeID());
+        iface.getOutputConnection().put(m, messageListener);
+    }
 
-            sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
-                @Override
-                public void update(Boolean value) {
-                    setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
-                    if (value) {
-                        setTimeout();
-                    }
-                }
-            };
-        } else {
-            pc = new BitProducerConsumer(iface, addrActive.toEventID(),
-                    addrInactive.toEventID(), flags);
-            sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
-                @Override
-                public void update(Boolean value) {
-                    setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
-                }
-            };
+    /**
+     * Computes the 64-bit representation of the event range covered by this reporter.
+     * This is defined for the Producer/Consumer Range identified messages in the OpenLCB
+     * standards.
+     * @return Event ID representing the event base address and the mask.
+     */
+    private EventID getEventRangeID() {
+        long eventRange = baseEventNumber;
+        if ((baseEventNumber & REPORTER_LSB) == 0) {
+            eventRange |= REPORTER_EVENT_MASK;
         }
-        activeEventTableEntryHolder = iface.getEventTable().addEvent(addrActive.toEventID(), getEventName(true));
-        if (addrInactive != null) {
-            inactiveEventTableEntryHolder = iface.getEventTable().addEvent(addrInactive.toEventID(), getEventName(false));
+        byte[] contents = new byte[8];
+        for (int i = 1; i <= 8; i++) {
+            contents[8-i] = (byte)(eventRange & 0xff);
+            eventRange >>= 8;
         }
+        return new EventID(contents);
     }
 
     /**
      * Computes the display name of a given event to be entered into the Event Table.
-     * @param isActive true for sensor active, false for inactive.
      * @return user-visible string to represent this event.
      */
-    private String getEventName(boolean isActive) {
+    private String getEventName() {
         String name = getUserName();
         if (name == null) name = mSystemName;
-        String msgName = isActive ? "SensorActiveEventName": "SensorInactiveEventName";
-        return Bundle.getMessage(msgName, name);
+        return Bundle.getMessage("ReporterEventName", name);
     }
 
     /**
@@ -134,149 +125,19 @@ public class OlcbReporter extends AbstractSensor {
     @OverridingMethodsMustInvokeSuper
     public void setUserName(String s) throws BadUserNameException {
         super.setUserName(s);
-        if (activeEventTableEntryHolder != null) {
-            activeEventTableEntryHolder.getEntry().updateDescription(getEventName(true));
+        if (baseEventTableEntryHolder != null) {
+            baseEventTableEntryHolder.getEntry().updateDescription(getEventName());
         }
-        if (inactiveEventTableEntryHolder != null) {
-            inactiveEventTableEntryHolder.getEntry().updateDescription(getEventName(false));
-        }
-    }
-
-    /**
-     * Request an update on status by sending an OpenLCB message.
-     */
-    @Override
-    public void requestUpdateFromLayout() {
-        if (pc != null) {
-            pc.resetToDefault();
-            pc.sendQuery();
-        }
-    }
-
-    /**
-     * User request to set the state, which means that we broadcast that to all
-     * listeners by putting it out on CBUS. In turn, the code in this class
-     * should use setOwnState to handle internal sets and bean notifies.
-     *
-     */
-    @Override
-    public void setKnownState(int s) {
-        if (s == Sensor.ACTIVE) {
-            sensorListener.setFromOwnerWithForceNotify(true);
-            if (addrInactive == null) {
-                setTimeout();
-            }
-        } else if (s == Sensor.INACTIVE) {
-            sensorListener.setFromOwnerWithForceNotify(false);
-        } else if (s == Sensor.UNKNOWN) {
-            if (pc != null) {
-                pc.resetToDefault();
-            }
-        }
-        setOwnState(s);
-    }
-
-    /**
-     * Have sensor return to inactive after delay, used if no inactive event was
-     * specified
-     */
-    void setTimeout() {
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                timerTask = null;
-                jmri.util.ThreadingUtil.runOnGUI(() -> setKnownState(Sensor.INACTIVE));
-            }
-        };
-        jmri.util.TimerUtil.schedule(timerTask, ON_TIME);
-    }
-
-    /**
-     * Changes how the turnout reacts to inquire state events. With authoritative == false the
-     * state will always be reported as UNKNOWN to the layout when queried.
-     *
-     * @param authoritative whether we should respond true state or unknown to the layout event
-     *                      state inquiries.
-     */
-    public void setAuthoritative(boolean authoritative) {
-        boolean recreate = (authoritative != isAuthoritative()) && (pc != null);
-        setProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, authoritative);
-        if (recreate) {
-            finishLoad();
-        }
-    }
-
-    /**
-     * @return whether this producer/consumer is enabled to return state to the layout upon queries.
-     */
-    public boolean isAuthoritative() {
-        Boolean value = (Boolean) getProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE);
-        if (value != null) {
-            return value;
-        }
-        return DEFAULT_IS_AUTHORITATIVE;
-    }
-
-    @Override
-    public void setProperty(@Nonnull String key, Object value) {
-        Object old = getProperty(key);
-        super.setProperty(key, value);
-        if (value.equals(old)) return;
-        if (pc == null) return;
-        finishLoad();
-    }
-
-    /**
-     * @return whether this producer/consumer is always listening to state declaration messages.
-     */
-    public boolean isListeningToStateMessages() {
-        Boolean value = (Boolean) getProperty(OlcbUtils.PROPERTY_LISTEN);
-        if (value != null) {
-            return value;
-        }
-        return DEFAULT_LISTEN;
-    }
-
-    /**
-     * Changes how the turnout reacts to state declaration messages. With listen == true state
-     * declarations will update local state at all times. With listen == false state declarations
-     * will update local state only if local state is unknown.
-     *
-     * @param listen whether we should always listen to state declaration messages.
-     */
-    public void setListeningToStateMessages(boolean listen) {
-        boolean recreate = (listen != isListeningToStateMessages()) && (pc != null);
-        setProperty(OlcbUtils.PROPERTY_LISTEN, listen);
-        if (recreate) {
-            finishLoad();
-        }
-    }
-
-    /*
-     * since the events that drive a sensor can be whichever state a user
-     * wants, the order of the event pair determines what is the 'active' state
-     */
-    @Override
-    public boolean canInvert() {
-        return false;
     }
 
     @Override
     public void dispose() {
-        disposePc();
-        if (timerTask!=null) timerTask.cancel();
+        if (baseEventTableEntryHolder != null) {
+            baseEventTableEntryHolder.release();
+            baseEventTableEntryHolder = null;
+        }
+        iface.unRegisterMessageListener(messageListener);
         super.dispose();
-    }
-
-    private void disposePc() {
-        if (sensorListener != null) {
-            sensorListener.release();
-            sensorListener = null;
-        }
-        if (pc != null) {
-            pc.release();
-            pc = null;
-        }
     }
 
     /**
@@ -288,6 +149,60 @@ public class OlcbReporter extends AbstractSensor {
     @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
         return OlcbAddress.compareSystemNameSuffix(suffix1, suffix2);
+    }
+
+    /**
+     * State is always an integer, which is the numeric value from the last loco
+     * address that we reported, or -1 if the last update was an exit.
+     *
+     * @return loco address number or -1 if the last message specified exiting
+     */
+    @Override
+    public int getState() {
+        return lastLoco;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setState(int s) {
+        lastLoco = s;
+    }
+    int lastLoco = -1;
+
+    /**
+     * Callback from the message decoder when a relevant event message arrives.
+     * @param reportBits The bottom 14 bits of the event report. (THe top bits are already checked against our base event number)
+     * @param isEntry true for entry, false for exit
+     */
+    private void handleReport(long reportBits, boolean isEntry) {
+        /// @TODO implement
+    }
+    private class Receiver extends org.openlcb.MessageDecoder {
+        @Override
+        public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender) {
+            long id = msg.getEventID().toLong();
+            if ((id & ~REPORTER_EVENT_MASK) != baseEventNumber) {
+                // Not for us.
+                return;
+            }
+            handleReport(id & REPORTER_EVENT_MASK, true);
+        }
+
+        @Override
+        public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender) {
+            long id = msg.getEventID().toLong();
+            if ((id & ~REPORTER_EVENT_MASK) != baseEventNumber) {
+                // Not for us.
+                return;
+            }
+            if (msg.getEventState() == EventState.Invalid) {
+                handleReport(id & REPORTER_EVENT_MASK, false);
+            } else if (msg.getEventState() == EventState.Valid) {
+                handleReport(id & REPORTER_EVENT_MASK, true);
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(OlcbReporter.class);
