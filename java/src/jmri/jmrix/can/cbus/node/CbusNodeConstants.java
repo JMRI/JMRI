@@ -347,8 +347,8 @@ public class CbusNodeConstants {
         result.put(4, "SBOOST"); // NOI18N
         result.put(5, "Unsupported"); // NOI18N
 
-        result.put(8, "CANSOLNOID"); // NOI18N matches MERG CANSOL
-        result.put(50, "CANSERVOIO"); // NOI18N matches MERG canmio-svo
+        result.put(8, "CANSOLNOID"); // NOI18N. Matches MERG CANSOL
+        result.put(50, "CANSERVOIO"); // NOI18N. Matches MERG canmio-svo
         
         result.put(100, "CANISB"); // NOI18N
         result.put(101, "CANSOLIO"); // NOI18N
@@ -515,13 +515,7 @@ public class CbusNodeConstants {
         return Collections.unmodifiableMap(result);
     }   
 
-//        result.put(8, "CANSOLNOID"); // NOI18N matches MERG CANSOL
-//        result.put(50, "CANSVO"); // NOI18N matches MERG canmio-svo
-//        
-//        result.put(100, "CANISB"); // NOI18N
-//        result.put(101, "CANSERVOIO"); // NOI18N
-//        result.put(102, "CANSOLIO"); // NOI18N
-    
+  
     /**
      * Return a string representation of Module Support Link
      * @param man int manufacturer ID
