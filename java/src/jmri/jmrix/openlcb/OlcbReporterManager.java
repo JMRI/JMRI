@@ -22,7 +22,7 @@ import java.util.Locale;
 /**
  * Manage the OpenLCB-specific Sensor implementation.
  *
- * System names are "MRaa.aa.aa.aa.aa.aa.a0.00", where M is the user configurable system prefix,
+ * System names are "MRaa.aa.aa.aa.aa.aa.(0|4|8|c)0.00", where M is the user configurable system prefix,
  * aa.aa....aa is an OpenLCB Event ID with the last fourteen bits as zero.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
@@ -78,14 +78,12 @@ public class OlcbReporterManager extends jmri.managers.AbstractReporterManager {
     // to free resources when no longer used
     @Override
     public void dispose() {
-        getMemo().getTrafficController().removeCanListener(this);
         super.dispose();
     }
 
     // Implemented ready for new system connection memo
     public OlcbReporterManager(CanSystemConnectionMemo memo) {
         super(memo);
-        memo.getTrafficController().addCanListener(this);
     }
 
     /**
