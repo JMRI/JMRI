@@ -1,6 +1,10 @@
 package jmri.jmrix.openlcb;
 
+import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.RailCom;
+import jmri.RailComManager;
+import jmri.implementation.AbstractIdTagReporter;
 import jmri.implementation.AbstractReporter;
 import org.openlcb.Connection;
 import org.openlcb.ConsumerRangeIdentifiedMessage;
@@ -23,7 +27,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010, 2011
  */
-public class OlcbReporter extends AbstractReporter {
+public class OlcbReporter extends AbstractIdTagReporter {
 
     /// How many bits does a reporter event range contain.
     private static final int REPORTER_BIT_COUNT = 14;
@@ -31,6 +35,11 @@ public class OlcbReporter extends AbstractReporter {
     private static final long REPORTER_LSB = (1L << REPORTER_BIT_COUNT);
     /// Mask for the bits which are the actual report.
     private static final long REPORTER_EVENT_MASK = REPORTER_LSB - 1;
+
+    /// The high bits of the report for a DCC short address.
+    private static final int HIBITS_SHORTADDRESS = 0x28;
+    /// The high bits of the report for a DCC consist address.
+    private static final int HIBITS_CONSIST = 0x29;
 
     private OlcbAddress baseAddress;    // event ID for zero report
     private EventID baseEventID;
@@ -177,7 +186,29 @@ public class OlcbReporter extends AbstractReporter {
      * @param isEntry true for entry, false for exit
      */
     private void handleReport(long reportBits, boolean isEntry) {
-        /// @TODO implement
+        if (!isEntry) {
+            notify(null);
+            return;
+        }
+        int address = 0;
+        int hiBits = (int) ((reportBits >> 8) & 0x3f);
+        int direction = (int) ((reportBits >> 14) & 1);
+        if (reportBits < 0x2800) {
+            address = (int) reportBits;
+        } else if (hiBits == HIBITS_SHORTADDRESS) {
+            address = (int) (reportBits & 0xff);
+        } else if (hiBits == HIBITS_CONSIST) {
+            address = (int) (reportBits & 0x7f);
+        }
+        RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
+        if (direction != 0) {
+            tag.setOrientation(RailCom.ORIENTB);
+        } else {
+            tag.setOrientation(RailCom.ORIENTA);
+        }
+        // The extra notify with null is necessary to clear past notifications.
+        notify(null);
+        notify(tag);
     }
     private class Receiver extends org.openlcb.MessageDecoder {
         @Override
