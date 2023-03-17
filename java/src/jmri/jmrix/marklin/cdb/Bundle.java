@@ -1,4 +1,4 @@
-package jmri.jmrix.marklin.cdb.serialdriver;
+package jmri.jmrix.marklin.cdb;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -21,7 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author      Bob Jacobsen  Copyright (C) 2012
  * @since       3.7.2
  */
-public class Bundle extends jmri.jmrix.marklin.cdb.Bundle {
+public class Bundle extends jmri.jmrix.marklin.Bundle {
 
     @CheckForNull private static final String name = null; // no local resources
 

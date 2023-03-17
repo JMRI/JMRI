@@ -5,7 +5,7 @@ import jmri.jmrix.marklin.cdb.serialdriver.ConnectionConfig;
 import jmri.jmrix.marklin.cdb.serialdriver.SerialDriverAdapter;
 
 /**
- * Handle XML persistatams of layout connections by persistening the
+ * Handle XML persistance of layout connections by persisting the
  * SerialDriverAdapter (and connections). Note this is named as the XML version
  * of a ConnectionConfig object, but it's actually persisting the
  * SerialDriverAdapter.
