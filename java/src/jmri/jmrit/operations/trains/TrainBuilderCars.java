@@ -1101,6 +1101,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      */
     private boolean sendCarToDestinationSpur(Car car, Track track) {
         if (!checkBasicMoves(car, track)) {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("trainCanNotDeliverToDestination"),
+                    new Object[]{_train.getName(), car.toString(), track.getLocation().getName(), track.getName()}));
             return false;
         }
         String status = car.checkDestination(track.getLocation(), track);
@@ -1230,6 +1232,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      */
     private boolean sendCarToDestinationTrack(Car car, Track track) {
         if (!checkBasicMoves(car, track)) {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("trainCanNotDeliverToDestination"),
+                    new Object[]{_train.getName(), car.toString(), track.getLocation().getName(), track.getName()}));
             return false;
         }
         String status = car.checkDestination(track.getLocation(), track);
