@@ -51,6 +51,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
     private transient TableRowSorter<EventTableDataModel> sorter;
 
+    // public so it can be referenced from elsewhere
+    static public final String tagPrefix = "IDOpenLCB$";  // Prefix of IdTag system name; ID is required system prefix
+
     public String getTitle(String menuTitle) {
         return Bundle.getMessage("TitleEventTable");
     }
@@ -187,6 +190,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
     public void sendRequestEvents(java.awt.event.ActionEvent e) {
         model.clear();
+
+        model.loadIdTagEventIDs();
+        model.handleTableUpdate(-1, -1);
+
         final int DELAY = 75; // msec between operations - 64 events at speed
         int nextDelay = 0;
 
@@ -319,6 +326,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             this.store = store;
             this.stdEventTable = stdEventTable;
             tagManager = InstanceManager.getDefault(IdTagManager.class);
+
+            loadIdTagEventIDs();
         }
 
         static final int COL_EVENTID = 0;
@@ -343,6 +352,27 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
             return memos.get(row);
         }
+
+        void loadIdTagEventIDs() {
+            // are there events in the IdTags? If so, add them
+            log.debug("Found {} tags", tagManager.getNamedBeanSet().size());
+            for (var tag: tagManager.getNamedBeanSet()) {
+                if (tag.getSystemName().startsWith(tagPrefix)) {
+                    var id = tag.getSystemName().replace(tagPrefix, "");
+                    log.trace("Found initial entry for {}", id);
+                    var eventID = new EventID(id);
+                    var memo = new TripleMemo(
+                                    eventID,
+                                    null,
+                                    "",
+                                    null,
+                                    ""
+                                );
+                    memos.add(memo);
+                }
+            }
+        }
+
 
         @Override
         public Object getValueAt(int row, int col) {
@@ -396,8 +426,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         int lineIncrement = -1; // cache the line spacing for multi-line cells
 
-        static final String tagPrefix = "ID_OpenLCB_";  // Prefix of IdTag system name
-
         @Override
         public void setValueAt(Object value, int row, int col) {
             if (col != COL_EVENTNAME) return;
@@ -406,7 +434,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 return;
             }
             var memo = memos.get(row);
-            var tag = tagManager.provideIdTag("ID_OpenLCB_"+memo.eventID.toShortString());
+            var tag = tagManager.provideIdTag("tagPrefix"+memo.eventID.toShortString());
             tag.setUserName(value.toString());
         }
 
