@@ -103,7 +103,7 @@ public class CbusNodeConstants {
             }
         } else if ( node.getNodeParamManager().getParameter(1) == SPROG_DCC ) {    // SPROG DCC module
             switch (node.getNodeParamManager().getParameter(3)) {           // Module Type ID Number
-                case MTYP_CANSERVOIO: // CANPAN
+                case MTYP_CANSERVOIO:
                     node.setnvWriteInLearnOnly(true);
                     break;
                     
