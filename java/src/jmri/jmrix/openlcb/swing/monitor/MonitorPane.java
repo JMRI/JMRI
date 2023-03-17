@@ -242,7 +242,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                                 name = ident.getMfgName()+" - "+ident.getModelName();
                             }
                         }
-                        if (name != null && !name.isBlank()) {
+                        if (!name.isBlank()) {
                             sb.append("\n  Src: ");
                             sb.append(name);
                         }
