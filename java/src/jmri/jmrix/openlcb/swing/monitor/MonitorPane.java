@@ -8,6 +8,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanPanelInterface;
+import jmri.jmrix.openlcb.OlcbConstants;
 
 import org.openlcb.EventID;
 import org.openlcb.EventMessage;
@@ -43,7 +44,6 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     OlcbInterface olcbInterface;
 
     IdTagManager tagManager;
-    static final String tagPrefix = Bundle.getMessage("TagPrefix");
 
     /** show source node name on a separate line when available */
     final JCheckBox nodeNameCheckBox = new JCheckBox();
@@ -255,7 +255,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                             olcbInterface.getEventTable().getEventInfo(ev).getAllEntries();
                     if (descr.length > 0) {
                         sb.append("\n  Event: ");
-                        var tag = tagManager.getIdTag(tagPrefix+ev.toShortString());
+                        var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+ev.toShortString());
                         String name;
                         if (tag != null
                                 && (name = tag.getUserName()) != null) {
@@ -273,7 +273,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                             }
                         }
                     } else {
-                        var tag = tagManager.getIdTag(tagPrefix+ev.toShortString());
+                        var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+ev.toShortString());
                         String name;
                         if (tag != null
                                 && (name = tag.getUserName()) != null) {

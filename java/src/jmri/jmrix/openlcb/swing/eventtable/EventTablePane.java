@@ -11,6 +11,8 @@ import javax.swing.table.*;
 
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbConstants;
+
 import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.swing.MultiLineCellRenderer;
 
@@ -50,8 +52,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     JFormattedTextField findID;
 
     private transient TableRowSorter<EventTableDataModel> sorter;
-
-    static final String tagPrefix = Bundle.getMessage("TagPrefix");
 
     public String getTitle(String menuTitle) {
         return Bundle.getMessage("TitleEventTable");
@@ -356,8 +356,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             // are there events in the IdTags? If so, add them
             log.debug("Found {} tags", tagManager.getNamedBeanSet().size());
             for (var tag: tagManager.getNamedBeanSet()) {
-                if (tag.getSystemName().startsWith(tagPrefix)) {
-                    var id = tag.getSystemName().replace(tagPrefix, "");
+                if (tag.getSystemName().startsWith(OlcbConstants.tagPrefix)) {
+                    var id = tag.getSystemName().replace(OlcbConstants.tagPrefix, "");
                     log.trace("Found initial entry for {}", id);
                     var eventID = new EventID(id);
                     var memo = new TripleMemo(
@@ -383,7 +383,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             switch (col) {
                 case COL_EVENTID: return memo.eventID.toShortString();
                 case COL_EVENTNAME:
-                    var tag = tagManager.getIdTag(tagPrefix+memo.eventID.toShortString());
+                    var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+memo.eventID.toShortString());
                     if (tag == null) return "";
                     return tag.getUserName();
                 case COL_PRODUCER_NODE:
@@ -433,7 +433,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 return;
             }
             var memo = memos.get(row);
-            var tag = tagManager.provideIdTag("tagPrefix"+memo.eventID.toShortString());
+            var tag = tagManager.provideIdTag(OlcbConstants.tagPrefix+memo.eventID.toShortString());
             tag.setUserName(value.toString());
         }
 
