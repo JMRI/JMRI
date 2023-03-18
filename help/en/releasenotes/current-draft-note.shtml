@@ -86,7 +86,7 @@
 
         <h4>Marklin CS2</h4>
             <ul>
-                <li></li>
+                <li>New connection subtype for the CdB system via USB.</li>
             </ul>
 
         <h4>MERG</h4>
@@ -414,7 +414,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Cleanup LogixNG controlled Dispatcher train when the train has been terminated by an external action.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
