@@ -51,8 +51,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
     private transient TableRowSorter<EventTableDataModel> sorter;
 
-    // public so it can be referenced from elsewhere
-    static public final String tagPrefix = "IDOpenLCB$";  // Prefix of IdTag system name; ID is required system prefix
+    static final String tagPrefix = Bundle.getMessage("TagPrefix");
 
     public String getTitle(String menuTitle) {
         return Bundle.getMessage("TitleEventTable");

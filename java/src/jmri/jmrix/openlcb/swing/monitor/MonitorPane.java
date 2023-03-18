@@ -43,7 +43,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     OlcbInterface olcbInterface;
 
     IdTagManager tagManager;
-    static final String tagPrefix = jmri.jmrix.openlcb.swing.eventtable.EventTablePane.tagPrefix;
+    static final String tagPrefix = Bundle.getMessage("TagPrefix");
 
     /** show source node name on a separate line when available */
     final JCheckBox nodeNameCheckBox = new JCheckBox();
