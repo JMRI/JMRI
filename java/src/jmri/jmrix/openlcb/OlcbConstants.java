@@ -1,22 +1,17 @@
 package jmri.jmrix.openlcb;
 
 /**
- * OlcbConstants.java
- *
- * Left over from CBUS migration, these references should go to the OpenLCB
- * libraries instead
+ * Various common constants for OpenLCB
  *
  * @author Andrew Crosland Copyright (C) 2008
- * @author Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010, 2023
  */
-public final class OlcbConstants {
+public interface OlcbConstants {
 
-    private OlcbConstants(){
-        // class of constants
-    }
-
-    public static final int DEFAULT_STANDARD_ID = 0x7a;
-    public static final int DEFAULT_EXTENDED_ID = 0x7a;
+    /**
+     * Prefix for EventIDs stored as IdTags
+     */
+    public static final String tagPrefix = "ID_OpenLCB_";
 }
 
 
