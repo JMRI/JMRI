@@ -43,8 +43,11 @@ public class CreateLogixNGTreeScaffold {
     private Light light1;
     private Light light2;
     private VariableLight variableLight1;
+    private Section section1;
+    private Section section2;
     private Sensor sensor1;
     private Sensor sensor2;
+    private Transit transit1;
     private Turnout turnout1;
     private Turnout turnout2;
     private Turnout turnout3;
@@ -116,6 +119,13 @@ public class CreateLogixNGTreeScaffold {
         sensor2 = InstanceManager.getDefault(SensorManager.class).provide("IS2");
         sensor2.setCommandedState(Sensor.INACTIVE);
         sensor2.setUserName("Some sensor");
+
+        section1 = InstanceManager.getDefault(SectionManager.class).createNewSection("Section_1");
+        section2 = InstanceManager.getDefault(SectionManager.class).createNewSection("Section_2");
+        transit1 = InstanceManager.getDefault(TransitManager.class).createNewTransit("Transit_1");
+        transit1.addTransitSection(new TransitSection(section1, 1, Section.FORWARD));
+        transit1.addTransitSection(new TransitSection(section2, 2, Section.FORWARD));
+
         turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         turnout1.setCommandedState(Turnout.CLOSED);
         turnout2 = InstanceManager.getDefault(TurnoutManager.class).provide("IT2");
@@ -4113,6 +4123,42 @@ public class CreateLogixNGTreeScaffold {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
+        ExpressionTransit expressionTransit = new ExpressionTransit(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionTransit);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+// Direct / Direct :: Idle
+        expressionTransit = new ExpressionTransit(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTransit.setComment("Direct / Direct :: Idle");
+
+        expressionTransit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionTransit.getSelectNamedBean().setNamedBean(transit1);
+
+        expressionTransit.set_Is_IsNot(Is_IsNot_Enum.Is);
+
+        expressionTransit.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionTransit.getSelectEnum().setEnum(ExpressionTransit.TransitState.Idle);
+
+        maleSocket = digitalExpressionManager.registerExpression(expressionTransit);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+// Reference / Direct :: Assigned
+        expressionTransit = new ExpressionTransit(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTransit.setComment("Reference / Direct :: Assigned");
+
+        expressionTransit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionTransit.getSelectNamedBean().setReference("{IM1}");
+
+        expressionTransit.set_Is_IsNot(Is_IsNot_Enum.Is);
+
+        expressionTransit.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionTransit.getSelectEnum().setEnum(ExpressionTransit.TransitState.Assigned);
+
+        maleSocket = digitalExpressionManager.registerExpression(expressionTransit);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
         ExpressionTurnout expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
         maleSocket.setEnabled(false);
@@ -4843,7 +4889,10 @@ public class CreateLogixNGTreeScaffold {
     /**
      * Delete all the LogixNGs, ConditionalNGs, and so on.
      */
-    public static void cleanup() {
+    public void cleanup() {
+        InstanceManager.getDefault(TransitManager.class).deleteTransit(transit1);
+        InstanceManager.getDefault(SectionManager.class).deleteSection(section1);
+        InstanceManager.getDefault(SectionManager.class).deleteSection(section2);
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
@@ -4949,6 +4998,7 @@ public class CreateLogixNGTreeScaffold {
         JUnitUtil.initDefaultSignalMastManager();
 //        JUnitUtil.initSignalMastLogicManager();
         JUnitUtil.initOBlockManager();
+        JUnitUtil.initSectionManager();
         JUnitUtil.initWarrantManager();
 
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();

@@ -75,7 +75,7 @@ public class StoreAndLoadTest {
             //**********************************
             // Delete all the LogixNGs, ConditionalNGs, and so on before reading the file.
             //**********************************
-            CreateLogixNGTreeScaffold.cleanup();
+            createLogixNGTreeScaffold.cleanup();
 
             LogixNG_Thread.stopAllLogixNGThreads();
             LogixNG_Thread.assertLogixNGThreadNotRunning();
