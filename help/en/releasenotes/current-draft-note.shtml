@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Changed SPROG DCC module IDs to match similar MERG modules, to work around an issue with the FCU tool.</li>
             </ul>
 
         <h4>C/MRI</h4>
