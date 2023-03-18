@@ -116,7 +116,12 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Add event user name to Monitor display</li>
+                <li>Add memory space window display to Memory Tool</li>
+                <li>Better ordering for overlapping events in Event Table</li>
+                <li>Event table loads all saved event names when opened</li>
+                <li>Ensure JMRI source nodes are identified in the Monitor display</li>
+                <li>Complete the information in the memory space window</li>
             </ul>
 
         <h4>Powerline</h4>
