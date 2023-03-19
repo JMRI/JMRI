@@ -30,8 +30,6 @@ public class ExpressionTransitTest extends AbstractDigitalExpressionTestBase {
     private ExpressionTransit expressionTransit;
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
-    private Section section1;
-    private Section section2;
     private Transit transit1;
 
 
@@ -382,6 +380,6 @@ public class ExpressionTransitTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlockTest.class);
+//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlockTest.class);
 
 }
