@@ -547,7 +547,15 @@
           Instructions</a> are available on the JMRI.org site.
       </p>
 
-      <h3 id="MultipleLayouts">Multiple Layout Support</h3>
+   <h3 id="BritishRailways">British Railways</h3>
+
+   <p>OperationsPro&trade; supports an alternate set of railway terminology for our British
+    modelers. To use British terminologies, change the JMRI Display Locale to English (United
+    Kingdom). With British terminology, trains travel Up/Down and East/West, and some British
+    railway names and wagon types are provided to get you started.</p>
+
+
+   <h3 id="MultipleLayouts">Multiple Layout Support</h3>
       You can create and manage multiple layouts using OperationsPro&trade;. From the main menu bar
       under "Edit" select "Preferences..." then "Config Profiles". Create a new <a
         href="../../../apps/TabbedPreferences.shtml#Profiles">Configuration Profile</a> for each
@@ -788,14 +796,7 @@
         you will find many useful functions, like the ability to print the contents of the window.
       </p>
 
-      <h3 id="BritishRailways">British Railways</h3>
-
-      <p>OperationsPro&trade; supports an alternate set of railway terminology for our British
-        modelers. To use British terminologies, change the JMRI Display Locale to English (United
-        Kingdom). With British terminology, trains travel Up/Down and East/West, and some British
-        railway names and wagon types are provided to get you started.</p>
-
-      <h2 id="TroubleShooting">Trouble Shooting</h2>
+      <h3 id="TroubleShooting">Trouble Shooting</h3>
       The best tool for trouble shooting train build problems is the <a href="#BuildReports">Train
         Build Report</a>.
       <p>

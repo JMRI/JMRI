@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Changed SPROG DCC module IDs to match similar MERG modules, to work around an issue with the FCU tool.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -116,7 +116,12 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Add event user name to Monitor display</li>
+                <li>Add memory space window display to Memory Tool</li>
+                <li>Better ordering for overlapping events in Event Table</li>
+                <li>Event table loads all saved event names when opened</li>
+                <li>Ensure JMRI source nodes are identified in the Monitor display</li>
+                <li>Complete the information in the memory space window</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -414,6 +419,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>Cleanup LogixNG controlled Dispatcher train when the train has been terminated by an external action.</li>
           <li>Add a <strong>Transit Expression</strong> which is used to get the state of transit.
           The state can be <strong>Idle</strong> or <strong>Assigned</strong>.</li>
         </ul>

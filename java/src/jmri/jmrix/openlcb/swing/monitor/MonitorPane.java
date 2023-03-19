@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb.swing.monitor;
 
+import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.can.CanListener;
@@ -7,6 +8,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanPanelInterface;
+import jmri.jmrix.openlcb.OlcbConstants;
 
 import org.openlcb.EventID;
 import org.openlcb.EventMessage;
@@ -33,15 +35,26 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     public MonitorPane() {
         super();
         pm = InstanceManager.getDefault(UserPreferencesManager.class);
+        tagManager = InstanceManager.getDefault(IdTagManager.class);
     }
 
     CanSystemConnectionMemo memo;
     AliasMap aliasMap;
     MessageBuilder messageBuilder;
     OlcbInterface olcbInterface;
+
+    IdTagManager tagManager;
+
+    /** show source node name on a separate line when available */
     final JCheckBox nodeNameCheckBox = new JCheckBox();
+
+    /** Show the first EventID in the message on a separate line */
     final JCheckBox eventCheckBox = new JCheckBox();
+
+    /** Show all EventIDs in the message each on a separate line */
     final JCheckBox eventAllCheckBox = new JCheckBox();
+
+    /* Preferences setup */
     final String nodeNameCheck = this.getClass().getName() + ".NodeName";
     final String eventCheck = this.getClass().getName() + ".Event";
     final String eventAllCheck = this.getClass().getName() + ".EventAll";
@@ -74,7 +87,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         }
         return Bundle.getMessage("MonitorTitle");
     }
-    
+
     @Override
     protected void init() {
     }
@@ -219,24 +232,55 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                 sb.append(": ");
                 sb.append(list.get(0).toString());
                 if (nodeNameCheckBox.isSelected() && olcbInterface != null) {
-                    String name = olcbInterface.getNodeStore().findNode(list.get(0).getSourceNodeID()).getSimpleNodeIdent().getUserName();
-                    if (name != null && !name.equals("")) {
-                        sb.append("\n  Src: ");
-                        sb.append(name);
+                    var ptr = olcbInterface.getNodeStore().findNode(list.get(0).getSourceNodeID());
+                    if (ptr != null && ptr.getSimpleNodeIdent() != null) {
+                        String name = "";
+                        var ident = ptr.getSimpleNodeIdent();
+                        if (ident != null) {
+                            name = ident.getUserName();
+                            if (name.isEmpty()) {
+                                name = ident.getMfgName()+" - "+ident.getModelName();
+                            }
+                        }
+                        if (!name.isBlank()) {
+                            sb.append("\n  Src: ");
+                            sb.append(name);
+                        }
                     }
                 }
                 if ((eventCheckBox.isSelected() || eventAllCheckBox.isSelected()) && olcbInterface != null && msg instanceof EventMessage) {
                     EventID ev = ((EventMessage) msg).getEventID();
+                    log.debug("event message with event {}", ev);
                     EventTable.EventTableEntry[] descr =
                             olcbInterface.getEventTable().getEventInfo(ev).getAllEntries();
                     if (descr.length > 0) {
                         sb.append("\n  Event: ");
+                        var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+ev.toShortString());
+                        String name;
+                        if (tag != null
+                                && (name = tag.getUserName()) != null) {
+                            if (! name.isEmpty()) {
+                                sb.append(name);
+                                sb.append("\n         ");
+                            }
+                        }
                         sb.append(descr[0].getDescription());
-                    }
-                    if (eventAllCheckBox.isSelected()) {
-                        for (int i = 1; i < descr.length; i++) {
-                            sb.append("\n  Event: ");
-                            sb.append(descr[i].getDescription());
+
+                        if (eventAllCheckBox.isSelected()) {
+                            for (int i = 1; i < descr.length; i++) {  // entry 0 done above, so skipped here
+                                sb.append("\n         ");
+                                sb.append(descr[i].getDescription());
+                            }
+                        }
+                    } else {
+                        var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+ev.toShortString());
+                        String name;
+                        if (tag != null
+                                && (name = tag.getUserName()) != null) {
+                            if (! name.isEmpty()) {
+                                sb.append("\n  Event: ");
+                                sb.append(name);
+                            }
                         }
                     }
                 }
