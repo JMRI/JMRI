@@ -37,7 +37,7 @@ public class OlcbReporterManagerXmlTest {
         OlcbReporterManager mgr = t.configurationManager.getReporterManager();
         OlcbReporterManagerXml xmlmgr = new OlcbReporterManagerXml();
 
-        OlcbReporter r = (OlcbReporter)mgr.newReporter("MR1.2.3.4.5.6.0.0", "rep1");
+        mgr.newReporter("MR1.2.3.4.5.6.0.0", "rep1");
         t.flush();
         t.assertSentMessage(":X194a4c4cN010203040506ffff;");
         t.assertNoSentMessages();

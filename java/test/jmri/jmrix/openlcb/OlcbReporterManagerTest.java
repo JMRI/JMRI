@@ -29,8 +29,7 @@ public class OlcbReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     // For some reason this test hardcodes system name "1" and "2"
     @Override
     public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, IllegalAccessException {
-        testRegisterDuplicateSystemName((OlcbReporterManager)l,
-                l.makeSystemName(getNameToTest1()), l.makeSystemName(getNameToTest2()));
+        testRegisterDuplicateSystemName(l, l.makeSystemName(getNameToTest1()), l.makeSystemName(getNameToTest2()));
     }
 
     // OpenLCB can not create a reporter just by number.
