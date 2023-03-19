@@ -33,7 +33,7 @@ import java.util.Locale;
  * @author Balazs Racz Copyright (C) 2023
  * @since 5.3.5
  */
-public class OlcbReporterManager extends jmri.managers.AbstractReporterManager implements NameIncrementingManager {
+public class OlcbReporterManager extends jmri.managers.AbstractReporterManager {
 
     // Whether we accumulate loaded objects in pendingReporters.
     private boolean isLoading = false;
