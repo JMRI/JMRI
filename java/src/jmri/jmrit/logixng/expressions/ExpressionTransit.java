@@ -205,8 +205,8 @@ public class ExpressionTransit extends AbstractDigitalExpression
     }
 
     public enum TransitState {
-        Idle(2, Bundle.getMessage("Transit_StateIdle")),
-        Assigned(4, Bundle.getMessage("Transit_StateAssigned"));
+        Idle(Transit.IDLE, Bundle.getMessage("Transit_StateIdle")),
+        Assigned(Transit.ASSIGNED, Bundle.getMessage("Transit_StateAssigned"));
 
         private final int _id;
         private final String _text;

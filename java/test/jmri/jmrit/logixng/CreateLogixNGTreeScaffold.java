@@ -4890,9 +4890,14 @@ public class CreateLogixNGTreeScaffold {
      * Delete all the LogixNGs, ConditionalNGs, and so on.
      */
     public void cleanup() {
-        InstanceManager.getDefault(TransitManager.class).deleteTransit(transit1);
-        InstanceManager.getDefault(SectionManager.class).deleteSection(section1);
-        InstanceManager.getDefault(SectionManager.class).deleteSection(section2);
+        if (transit1 != null) {
+            InstanceManager.getDefault(TransitManager.class).deleteTransit(transit1);
+            InstanceManager.getDefault(SectionManager.class).deleteSection(section1);
+            InstanceManager.getDefault(SectionManager.class).deleteSection(section2);
+            transit1 = null;
+            section1 = null;
+            section2 = null;
+        }
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
