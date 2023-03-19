@@ -20,13 +20,16 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Manage the OpenLCB-specific Sensor implementation.
+ * Manage the OpenLCB-specific Reporter implementation.
  *
- * System names are "MRaa.aa.aa.aa.aa.aa.(0|4|8|c)0.00", where M is the user configurable system prefix,
- * aa.aa....aa is an OpenLCB Event ID with the last fourteen bits as zero.
+ * System names are "MRaa.aa.aa.aa.aa.aa.00.00", where M is the user configurable system prefix,
+ * aa.aa....aa is an OpenLCB Event ID with the last two bytes as zero.
+ *
+ * Typical event IDs for reporters come out of the range 06.8* and 06.9*.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
  * @author Balazs Racz Copyright (C) 2023
+ * @since 5.3.5
  */
 public class OlcbReporterManager extends jmri.managers.AbstractReporterManager {
 

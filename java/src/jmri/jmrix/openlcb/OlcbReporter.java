@@ -23,9 +23,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
- * Extend jmri.AbstractSensor for OpenLCB controls.
+ * Implement jmri.AbstractReporter for OpenLCB protocol.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010, 2011
+ * @author Balazs Racz Copyright (C) 2023
+ * @since 5.3.5
  */
 public class OlcbReporter extends AbstractIdTagReporter {
 
