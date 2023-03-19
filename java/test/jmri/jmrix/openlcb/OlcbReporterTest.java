@@ -36,7 +36,7 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
     @Test
     public void testPacketReceived() {
         // Entry.
-        ti.sendMessage(":X195B4123N010203040506C100;");
+        ti.sendMessage(":X195B4123N0102030405060100;");
         ti.flush();
         Assert.assertEquals("Report mismatch","RD256",r.getCurrentReport().toString());
         RailCom report = (RailCom) r.getCurrentReport();
@@ -54,7 +54,7 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
     @Test
     public void testEventTable() {
         EventTable.EventTableEntry[] elist = ti.iface.getEventTable()
-                .getEventInfo(new EventID("1.2.3.4.5.6.C0.00")).getAllEntries();
+                .getEventInfo(new EventID("1.2.3.4.5.6.00.00")).getAllEntries();
 
         Assert.assertEquals(1, elist.length);
         Assert.assertTrue("Incorrect name: " + elist[0].getDescription(),
@@ -63,7 +63,7 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
         r.setUserName("MyInput");
 
         elist = ti.iface.getEventTable()
-                .getEventInfo(new EventID("1.2.3.4.5.6.C0.00")).getAllEntries();
+                .getEventInfo(new EventID("1.2.3.4.5.6.00.00")).getAllEntries();
 
         Assert.assertEquals(1, elist.length);
         Assert.assertEquals("Reporter MyInput Report", elist[0].getDescription());
@@ -76,7 +76,7 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
     @Test
     public void testIdentified() {
         // Upon construction, a consumer range identified message was sent out.
-        ti.assertSentMessage(":X194a4c4cN010203040506C000;");
+        ti.assertSentMessage(":X194a4c4cN010203040506ffff;");
         ti.assertNoSentMessages();
     }
 
@@ -89,7 +89,7 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
         // prepare an interface
         ti = new OlcbTestInterface();
         ti.waitForStartup();
-        r = new OlcbReporter("M", "1.2.3.4.5.6.C0.00", ti.iface);
+        r = new OlcbReporter("M", "1.2.3.4.5.6.00.00", ti.iface);
         ((OlcbReporter) r).finishLoad();
     }
 

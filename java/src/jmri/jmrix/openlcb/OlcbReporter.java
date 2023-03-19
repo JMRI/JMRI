@@ -30,15 +30,22 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 public class OlcbReporter extends AbstractIdTagReporter {
 
     /// How many bits does a reporter event range contain.
-    private static final int REPORTER_BIT_COUNT = 14;
+    private static final int REPORTER_BIT_COUNT = 16;
     /// Next bit in the event ID beyond the reporter event range.
     private static final long REPORTER_LSB = (1L << REPORTER_BIT_COUNT);
     /// Mask for the bits which are the actual report.
     private static final long REPORTER_EVENT_MASK = REPORTER_LSB - 1;
 
-    /// The high bits of the report for a DCC short address.
+    /// When this bit is set, the report is an exit report.
+    private static final long EXIT_BIT = (1L << 14);
+    /// When this bit is set, the orientation of the locomotive is reverse, when clear it is normal.
+    private static final long ORIENTATION_BIT = (1L << 15);
+
+    /// Mask for the address bits of the reporter.
+    private static final long ADDRESS_MASK = (1L << 14) - 1;
+    /// The high bits of the address report for a DCC short address.
     private static final int HIBITS_SHORTADDRESS = 0x28;
-    /// The high bits of the report for a DCC consist address.
+    /// The high bits of the address report for a DCC consist address.
     private static final int HIBITS_CONSIST = 0x29;
 
     private OlcbAddress baseAddress;    // event ID for zero report
@@ -186,19 +193,21 @@ public class OlcbReporter extends AbstractIdTagReporter {
      * @param isEntry true for entry, false for exit
      */
     private void handleReport(long reportBits, boolean isEntry) {
-        if (!isEntry) {
-            notify(null);
+        // The extra notify with null is necessary to clear past notifications even if we have a new report.
+        notify(null);
+        if (!isEntry || ((reportBits & EXIT_BIT) != 0)) {
             return;
         }
+        long addressBits = reportBits & ADDRESS_MASK;
         int address = 0;
-        int hiBits = (int) ((reportBits >> 8) & 0x3f);
-        int direction = (int) ((reportBits >> 14) & 1);
-        if (reportBits < 0x2800) {
-            address = (int) reportBits;
+        int hiBits = (int) ((addressBits >> 8) & 0x3f);
+        int direction = (int) (reportBits & ORIENTATION_BIT);
+        if (addressBits < 0x2800) {
+            address = (int) addressBits;
         } else if (hiBits == HIBITS_SHORTADDRESS) {
-            address = (int) (reportBits & 0xff);
+            address = (int) (addressBits & 0xff);
         } else if (hiBits == HIBITS_CONSIST) {
-            address = (int) (reportBits & 0x7f);
+            address = (int) (addressBits & 0x7f);
         }
         RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
         if (direction != 0) {
@@ -206,8 +215,6 @@ public class OlcbReporter extends AbstractIdTagReporter {
         } else {
             tag.setOrientation(RailCom.ORIENTA);
         }
-        // The extra notify with null is necessary to clear past notifications.
-        notify(null);
         notify(tag);
     }
     private class Receiver extends org.openlcb.MessageDecoder {
