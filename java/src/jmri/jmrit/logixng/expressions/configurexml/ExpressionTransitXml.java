@@ -48,7 +48,6 @@ public class ExpressionTransitXml extends jmri.managers.configurexml.AbstractNam
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Transit>();
         var selectEnumXml = new LogixNG_SelectEnumXml<ExpressionTransit.TransitState>();
-        var selectStringXml = new LogixNG_SelectStringXml();
 
         element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
