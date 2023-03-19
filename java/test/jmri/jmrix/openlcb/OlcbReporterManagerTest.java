@@ -3,6 +3,7 @@ package jmri.jmrix.openlcb;
 import jmri.InstanceManager;
 import jmri.RailComManager;
 import jmri.util.JUnitUtil;
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,6 @@ public class OlcbReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Override
     public void testReporterProvideByNumber() {}
 
-
     @Test
     public void testIdentified() {
         l.provideReporter(getNameToTest2());
@@ -47,6 +47,16 @@ public class OlcbReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         // Upon construction, a consumer range identified message was sent out.
         ti.assertSentMessage(":X194a4c4cN06800D1122330000;");
         ti.assertNoSentMessages();
+    }
+
+    @Test
+    public void testIncrement() {
+        OlcbReporterManager om = (OlcbReporterManager) l;
+        Assert.assertEquals("MR06.80.0D.11.22.33.00.00", om.incrementSystemName("MR06.80.0D.11.22.32.00.00"));
+        Assert.assertEquals("MR06.80.0D.11.22.3A.00.00", om.incrementSystemName("MR06.80.0D.11.22.39.00.00"));
+        Assert.assertEquals("MR06.80.0D.11.22.40.00.00", om.incrementSystemName("MR06.80.0D.11.22.3F.00.00"));
+        Assert.assertEquals("MR06.80.0D.11.23.00.00.00", om.incrementSystemName("MR06.80.0D.11.22.FF.00.00"));
+        Assert.assertEquals("MR06.81.00.00.00.00.00.00", om.incrementSystemName("MR06.80.FF.FF.FF.FF.00.00"));
     }
 
     @Override

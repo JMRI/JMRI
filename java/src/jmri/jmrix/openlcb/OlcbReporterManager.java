@@ -2,10 +2,12 @@ package jmri.jmrix.openlcb;
 
 import jmri.BooleanPropertyDescriptor;
 import jmri.JmriException;
+import jmri.NameIncrementingManager;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.Reporter;
 import jmri.Sensor;
+import jmri.VariableControlSpanBean;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -31,7 +33,7 @@ import java.util.Locale;
  * @author Balazs Racz Copyright (C) 2023
  * @since 5.3.5
  */
-public class OlcbReporterManager extends jmri.managers.AbstractReporterManager {
+public class OlcbReporterManager extends jmri.managers.AbstractReporterManager implements NameIncrementingManager {
 
     // Whether we accumulate loaded objects in pendingReporters.
     private boolean isLoading = false;
@@ -148,13 +150,6 @@ public class OlcbReporterManager extends jmri.managers.AbstractReporterManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
-        // @TODO we should allow multi-add and auto-increment the event IDs by
-        // 14 bits.
-        return false;
-    }
-
-    @Override
     @Nonnull
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         String tmpPrefix = prefix + typeLetter();
@@ -170,10 +165,42 @@ public class OlcbReporterManager extends jmri.managers.AbstractReporterManager {
     }
 
     @Override
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+        return true;
+    }
+
+    @Override
     @Nonnull
     @javax.annotation.CheckReturnValue
     public String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
-        throw new JmriException("getNextValidSystemName should not have been called");
+        String currentName = currentBean.getSystemName();
+        return incrementSystemName(currentName);
+    }
+
+    /**
+     * Computes the system name for the next block sensor. This increments the unique ID
+     * of the first 6 components by one.
+     * @param currentName system name for a reporter of a given block
+     * @return next block's system name.
+     */
+    public String incrementSystemName(String currentName) {
+        String oAddr = currentName.substring(getSystemNamePrefix().length());
+        OlcbAddress a = new OlcbAddress(oAddr);
+        // Increments address elements 6 with overflow.
+        int[] e = a.elements();
+        int idx = 5;
+        while(idx > 0) {
+            e[idx]++;
+            if (e[idx] > 255) {
+                e[idx] = 0;
+                --idx;
+            } else {
+                break;
+            }
+        }
+        // Render new value.
+        String newValue = a.toDottedString();
+        return getSystemNamePrefix() + newValue;
     }
 
     /**
