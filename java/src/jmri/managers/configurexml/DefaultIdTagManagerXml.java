@@ -31,8 +31,8 @@ public class DefaultIdTagManagerXml extends XmlFile {
     private final IdTagManager manager;
 
     public DefaultIdTagManagerXml(IdTagManager tagMan, String baseFileName){
-         manager = tagMan;
-         IDTAG_BASE_FILENAME = baseFileName;
+        manager = tagMan;
+        IDTAG_BASE_FILENAME = baseFileName;
     }
 
     public void store() throws java.io.IOException {
@@ -118,82 +118,81 @@ public class DefaultIdTagManagerXml extends XmlFile {
            log.debug("Writing IdTag: {}", t.getSystemName());
            values.addContent(t.store(manager.isStateStored()));
         }
-         writeXML(file, doc);
-      }
+        writeXML(file, doc);
+    }
 
-      private void readFile(String fileName) throws org.jdom2.JDOMException, java.io.IOException, IllegalArgumentException {
-      // Check file exists
-      if (findFile(fileName) == null) {
-          log.debug("{} file could not be found", fileName);
-          return;
-      }
+    private void readFile(String fileName) throws org.jdom2.JDOMException, java.io.IOException, IllegalArgumentException {
+        // Check file exists
+        if (findFile(fileName) == null) {
+            log.debug("{} file could not be found", fileName);
+            return;
+        }
 
-      // Find root
-      Element root = rootFromName(fileName);
-      if (root == null) {
-          log.debug("{} file could not be read", fileName);
-          return;
-      }
+        // Find root
+        Element root = rootFromName(fileName);
+        if (root == null) {
+            log.debug("{} file could not be read", fileName);
+            return;
+        }
 
-      // First read configuration
-      if (root.getChild("configuration") != null) { // NOI18N
-          List<Element> l = root.getChild("configuration").getChildren(); // NOI18N
-          log.debug("readFile sees {} configurations", l.size());
-          for (Element e : l) {
-              log.debug("Configuration {} value {}", e.getName(), e.getValue());
-              if (e.getName().equals("storeState")) { // NOI18N
-                  manager.setStateStored(e.getValue().equals("yes")); // NOI18N
-              }
-              if (e.getName().equals("useFastClock")) { // NOI18N
-                  manager.setFastClockUsed(e.getValue().equals("yes")); // NOI18N
-              }
-          }
-      }
+        // First read configuration
+        if (root.getChild("configuration") != null) { // NOI18N
+            List<Element> l = root.getChild("configuration").getChildren(); // NOI18N
+            log.debug("readFile sees {} configurations", l.size());
+            for (Element e : l) {
+                log.debug("Configuration {} value {}", e.getName(), e.getValue());
+                if (e.getName().equals("storeState")) { // NOI18N
+                    manager.setStateStored(e.getValue().equals("yes")); // NOI18N
+                }
+                if (e.getName().equals("useFastClock")) { // NOI18N
+                    manager.setFastClockUsed(e.getValue().equals("yes")); // NOI18N
+                }
+            }
+        }
 
-      // Now read tag information
-      if (root.getChild("idtags") != null) { // NOI18N
-          List<Element> l = root.getChild("idtags").getChildren("idtag"); // NOI18N
-          log.debug("readFile sees {} idtags", l.size());
-          for (Element e : l) {
-              String systemName = e.getChild("systemName").getText(); // NOI18N
-              try {
-                IdTag t = manager.provideIdTag(systemName);
-                t.load(e);
-              } catch (jmri.NamedBean.BadSystemNameException ex) {
-                // could not create the tag
-                log.error("Could not create tag from ({}) during loading, ignored", systemName);
-              }
-          }
-      }
-  }
+        // Now read tag information
+        if (root.getChild("idtags") != null) { // NOI18N
+            List<Element> l = root.getChild("idtags").getChildren("idtag"); // NOI18N
+            log.debug("readFile sees {} idtags", l.size());
+            for (Element e : l) {
+                String systemName = e.getChild("systemName").getText(); // NOI18N
+                try {
+                    IdTag t = manager.provideIdTag(systemName);
+                    t.load(e);
+                } catch (jmri.NamedBean.BadSystemNameException ex) {
+                    log.error("Could not create tag from ({}) during loading, ignored", systemName);
+                }
+            }
+        }
+    }
 
-  public String getDefaultIdTagFileName() {
-      return getFileLocation() + getIdTagDirectoryName() + File.separator + getIdTagFileName();
-  }
+    public String getDefaultIdTagFileName() {
+        return getFileLocation() + getIdTagDirectoryName() + File.separator + getIdTagFileName();
+    }
 
-  private static final String IDTAG_DIRECTORY_NAME = "idtags"; // NOI18N
+    private static final String IDTAG_DIRECTORY_NAME = "idtags"; // NOI18N
 
-  public String getIdTagDirectoryName() {
-     return IDTAG_DIRECTORY_NAME;
-  }
+    public String getIdTagDirectoryName() {
+        return IDTAG_DIRECTORY_NAME;
+    }
 
-  private String IDTAG_BASE_FILENAME = "IdTags.xml"; // NOI18N
+    private String IDTAG_BASE_FILENAME = "IdTags.xml"; // NOI18N
 
-  public String getIdTagFileName() {
-      return Application.getApplicationName() + IDTAG_BASE_FILENAME;
-  }
+    public String getIdTagFileName() {
+        return Application.getApplicationName() + IDTAG_BASE_FILENAME;
+    }
 
-  /**
-   * Absolute path to location of IdTag files.
-   *
-   * @return path to location
-   */
-   public String getFileLocation() {
-       return FILE_LOCATION;
-   }
+    /**
+     * Absolute path to location of IdTag files.
+     *
+     * @return path to location
+     */
+    public String getFileLocation() {
+        return FILE_LOCATION;
+    }
 
-   private final String FILE_LOCATION = FileUtil.getUserFilesPath();
+    private final String FILE_LOCATION = FileUtil.getUserFilesPath();
 
-   private final Logger log = LoggerFactory.getLogger(DefaultIdTagManagerXml.class);
+    private final Logger log = LoggerFactory.getLogger(DefaultIdTagManagerXml.class);
 
 }

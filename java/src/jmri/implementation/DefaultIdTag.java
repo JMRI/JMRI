@@ -1,7 +1,8 @@
 package jmri.implementation;
 
-import java.text.DateFormat;
-import java.text.ParseException;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
+import java.text.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -80,10 +81,6 @@ public class DefaultIdTag extends AbstractIdTag {
             : Calendar.getInstance().getTime();
     }
 
-    private String getDateElementText(Date date) {
-        return DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(date);
-    }
-
     private void setCurrentState(int state) {
         try {
             setState(state);
@@ -105,11 +102,9 @@ public class DefaultIdTag extends AbstractIdTag {
     @Override
     public Element store(boolean storeState) {
         Element e = new Element("idtag"); // NOI18N
-        // e.setAttribute("systemName", this.mSystemName); // not needed from 2.11.1
         e.addContent(new Element("systemName").addContent(this.mSystemName)); // NOI18N
         String uName = this.getUserName();
         if (uName != null && !uName.isEmpty()) {
-            // e.setAttribute("userName", this.getUserName()); // not needed from 2.11.1
             e.addContent(new Element("userName").addContent(uName)); // NOI18N
         }
         String comment = this.getComment();
@@ -121,11 +116,20 @@ public class DefaultIdTag extends AbstractIdTag {
             e.addContent(new Element("whereLastSeen").addContent(whereLast.getSystemName())); // NOI18N
         }
         if (this.getWhenLastSeen() != null && storeState) {
-            e.addContent(new Element("whenLastSeen").addContent(getDateElementText(this.getWhenLastSeen()))); // NOI18N
+            e.addContent(new Element("whenLastSeen").addContent(new StdDateFormat().format(this.getWhenLastSeen())));
         }
         return e;
     }
 
+    /**
+     * Load an idtag xml element.
+     * whenLastSeen formats accepted JMRI 5.3.6 include
+     * yyyy-MM-dd'T'HH:mm:ss.SSSX
+     * yyyy-MM-dd'T'HH:mm:ss.SSS
+     * EEE, dd MMM yyyy HH:mm:ss zzz
+     * 
+     * @param e element to load.
+     */
     @Override
     public void load(Element e) {
         if (e.getName().equals("idtag")) { // NOI18N
@@ -143,20 +147,26 @@ public class DefaultIdTag extends AbstractIdTag {
                     this.setWhereLastSeen(r);
                     this.whenLastSeen = null;
                 } catch (IllegalArgumentException ex) {
-                    log.warn("Failed to provide Reporter \"{}\" in load", e.getChild("whereLastSeen").getText());
+                    log.warn("Failed to provide Reporter \"{}\" in load of \"{}\"", e.getChild("whereLastSeen").getText(), getDisplayName());
                 }
             }
             if (e.getChild("whenLastSeen") != null) { // NOI18N
-                log.debug("When Last Seen: {}", e.getChild("whenLastSeen").getText());
-                try {
-                    this.whenLastSeen = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(e.getChild("whenLastSeen").getText()); // NOI18N
+                String lastSeenText = e.getChildText("whenLastSeen");
+                log.debug("Loading {} When Last Seen: {}", getDisplayName(), lastSeenText);
+                try { // parse using ISO 8601 date format
+                    this.whenLastSeen = new StdDateFormat().parse(lastSeenText);
                 } catch (ParseException ex) {
-                    log.warn("Error parsing when last seen: {}", ex.getMessage());
-                    log.warn("Expected format is \"{}\" ",getDateElementText(getDateNow()));
+                    log.debug("ParseException in whenLastSeen ISO attempt: \"{}\"", lastSeenText, ex);
+                    // next, try parse using how it was saved by JMRI < 5.3.5
+                    try {
+                        this.whenLastSeen = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(lastSeenText);
+                    } catch (ParseException ex2) {
+                        log.warn("During load of IdTag \"{}\" {}", getDisplayName(), ex.getMessage());
+                    }
                 }
             }
         } else {
-            log.error("Not an IdTag element: {}", e.getName());
+            log.error("Not an IdTag element: \"{}\" for Tag \"{}\"", e.getName(), this.getDisplayName());
         }
     }
 
