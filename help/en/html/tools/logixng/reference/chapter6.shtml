@@ -587,6 +587,18 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h5>Transit<span class="since">since 5.3.5</span></h5>
+
+      <ul>
+        <li><strong>Idle:</strong> Evaluate to true if the state of the selected transit is
+        idle.  This indicates that the transit is not been assigned to an active train.</li>
+
+        <li><strong>Assigned:</strong> Evaluate to true if the selected transit is assigned to an
+        active train by the Dispatcher tool.</li>
+      </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Turnout</h5>
 
       <ul>

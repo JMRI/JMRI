@@ -420,6 +420,8 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>Cleanup LogixNG controlled Dispatcher train when the train has been terminated by an external action.</li>
+          <li>Add a <strong>Transit Expression</strong> which is used to get the state of transit.
+          The state can be <strong>Idle</strong> or <strong>Assigned</strong>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
