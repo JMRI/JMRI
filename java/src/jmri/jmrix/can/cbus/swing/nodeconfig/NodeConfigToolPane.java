@@ -285,8 +285,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
             getTabs().get(tabindex).setNode( getNodeModel().getNodeByNodeNum(_selectedNode) );
 
-            if (progMan != null) {
+            try {
                 ((CbusDccProgrammer)(progMan.getGlobalProgrammer())).setNodeOfInterest(getNodeModel().getNodeByNodeNum(_selectedNode));
+            } catch(NullPointerException e) {
+                log.info("No programmer available fro NV programming");
             }
         }
         else {
