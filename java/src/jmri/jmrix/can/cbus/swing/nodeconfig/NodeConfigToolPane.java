@@ -86,7 +86,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         _selectedNode = -1;
 
         preferences = memo.get(jmri.jmrix.can.cbus.CbusPreferences.class);
-        progMan = memo.get(CbusConfigurationManager.class).get(GlobalProgrammerManager.class);
+        try {
+            progMan = memo.get(CbusConfigurationManager.class).get(GlobalProgrammerManager.class);
+        } catch (NullPointerException e) {
+            log.info("No Global Programmer available for NV programming");
+        }
         init();
 
     }
@@ -281,8 +285,9 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
             getTabs().get(tabindex).setNode( getNodeModel().getNodeByNodeNum(_selectedNode) );
 
-            ((CbusDccProgrammer)(progMan.getGlobalProgrammer())).setNodeOfInterest(getNodeModel().getNodeByNodeNum(_selectedNode));
-        
+            if (progMan != null) {
+                ((CbusDccProgrammer)(progMan.getGlobalProgrammer())).setNodeOfInterest(getNodeModel().getNodeByNodeNum(_selectedNode));
+            }
         }
         else {
             tabbedPane.setEnabled(false);

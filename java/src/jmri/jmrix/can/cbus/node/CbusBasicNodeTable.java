@@ -55,7 +55,7 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
         _memo = memo;
         try {
             progMan = memo.get(CbusConfigurationManager.class).get(GlobalProgrammerManager.class);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             log.info("No Global Programmer available for NV programming");
         }
     }
