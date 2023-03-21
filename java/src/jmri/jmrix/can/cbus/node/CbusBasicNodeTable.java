@@ -14,7 +14,6 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.*;
-import jmri.jmrix.can.cbus.node.Bundle;
 import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
