@@ -35,14 +35,14 @@
     If the information from all node configuration dialogs are to be considered,
     on a large network open these windows prior to the Event Table for the
     fastest initial response. This information is not retained between sessions.
-
+    <p>
     <li>Apply User names to Events.
     Similar to the use of User defined names in the Turnout or Sensor Tables,
     the Event Table allows you to apply names to Events that are more meaningful as
     to their purpose than just the Event ID itself.
-    This information is retained between sessions and is currently only
-    available in the Event Table.
-
+    The Event's user assigned name is retained between sessions and is also shown in the
+    OpenLCB Traffic Monitor as an additional aid when the Event box is checked therein.
+    <p>
     <li>Provide a document record of your Events and their Consumer and Producer relationships.
     Exported as a *.csv file and then viewed and manipulated through a suitable program like Excel,
     this provides a reference or documentation of all of the Event IDs and their associated

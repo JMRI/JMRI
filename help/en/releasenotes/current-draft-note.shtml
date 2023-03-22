@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Changed SPROG DCC module IDs to match similar MERG modules, to work around an issue with the FCU tool.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -420,6 +420,8 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>Cleanup LogixNG controlled Dispatcher train when the train has been terminated by an external action.</li>
+          <li>Add a <strong>Transit Expression</strong> which is used to get the state of transit.
+          The state can be <strong>Idle</strong> or <strong>Assigned</strong>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -553,7 +555,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Preferred format for IdTag xml whenLastSeen field updated to ISO 8601.</li>
         </ul>
 
    <h3>Warrants</h3>
