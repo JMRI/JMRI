@@ -36,10 +36,10 @@ public final class CbusConstants {
     public static final int MTYP_CANSPROG = 3;
     public static final int MTYP_SBOOST = 4;
     //public static final int Unsupported = 5;
-    public static final int MTYP_CANISB = 6;
-    public static final int MTYP_CANCBUSIO = 7;
-    public static final int MTYP_CANSERVOIO = 8;    // Servo I/O module similar to MERG CANSERVO
-    public static final int MTYP_CANSOLIO = 9;      // Solenoid I/O module similar to MERG CANSOL
+    public static final int MTYP_CANSOLNOID = 8;   // Servo I/O module similar to MERG CANSOLIIO
+    public static final int MTYP_CANSERVOIO = 50;   // Servo I/O module similar to MERG CANMIO-SVO
+    public static final int MTYP_CANISB = 100;
+    public static final int MTYP_CANSOLIO = 101;    // Solenoid I/O module with inputs
 
     /**
      * CBUS Opcodes
