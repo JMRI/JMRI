@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.table.*;
 
 import jmri.*;
@@ -491,7 +492,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          */
         void handleTableUpdate(int start, int end) {
             log.trace("handleTableUpdated");
-            final int DELAY = 250;
+            final int DELAY = 500;
 
             if (!pending) {
                 jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
@@ -837,17 +838,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             model.recordProducer(eventID, nodeID);
         }
 
-        /**
-         * Handle "Simple Node Ident Info Reply" message
-         * @param msg       message to handle
-         * @param sender    connection where it came from
+        /*
+         * We no longer handle "Simple Node Ident Info Reply" messages because of
+         * excessive redisplays.  Instead, we expect the MimicNodeStore to handle
+         * these and provide the information when requested.
          */
-        @Override
-        public void handleSimpleNodeIdentInfoReply(SimpleNodeIdentInfoReplyMessage msg, Connection sender){
-            // might know about a new node name, so do an update
-            log.debug("SNIP reply processed");
-            model.handleTableUpdate(-1, -1);
-        }
     }
 
     /**
