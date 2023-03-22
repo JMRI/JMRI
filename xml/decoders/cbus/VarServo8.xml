@@ -79,7 +79,7 @@
     <variable CV="10024" default="7" item="offSpd5">
         <xi:include href="http://jmri.org/xml/decoders/cbus/enum-ServoSpeed-0-7.xml"/>
     </variable>
-    <variable default="1" item="startupPosition5" mask="XXXXVXXX XXXXVXXX" CV="3,2">
+    <variable default="1" item="startupPosition5" mask="XXXVXXXX XXXVXXXX" CV="3,2">
         <xi:include href="http://jmri.org/xml/decoders/cbus/enum-ServoStartup.xml"/>
     </variable>
   
@@ -95,7 +95,7 @@
     <variable CV="10028" default="7" item="offSpd6">
         <xi:include href="http://jmri.org/xml/decoders/cbus/enum-ServoSpeed-0-7.xml"/>
     </variable>
-    <variable default="1" item="startupPosition6" mask="XXXXVXXX XXXXVXXX" CV="3,2">
+    <variable default="1" item="startupPosition6" mask="XXVXXXXX XXVXXXXX" CV="3,2">
         <xi:include href="http://jmri.org/xml/decoders/cbus/enum-ServoStartup.xml"/>
     </variable>
   
@@ -111,7 +111,7 @@
     <variable CV="10032" default="7" item="offSpd7">
         <xi:include href="http://jmri.org/xml/decoders/cbus/enum-ServoSpeed-0-7.xml"/>
     </variable>
-    <variable default="1" item="startupPosition7" mask="XXXXVXXX XXXXVXXX" CV="3,2">
+    <variable default="1" item="startupPosition7" mask="XVXXXXXX XVXXXXXX" CV="3,2">
         <xi:include href="http://jmri.org/xml/decoders/cbus/enum-ServoStartup.xml"/>
     </variable>
   
@@ -127,7 +127,7 @@
     <variable CV="10036" default="7" item="offSpd8">
         <xi:include href="http://jmri.org/xml/decoders/cbus/enum-ServoSpeed-0-7.xml"/>
     </variable>
-    <variable default="1" item="startupPosition8" mask="XXXXVXXX XXXXVXXX" CV="3,2">
+    <variable default="1" item="startupPosition8" mask="VXXXXXXX VXXXXXXX" CV="3,2">
         <xi:include href="http://jmri.org/xml/decoders/cbus/enum-ServoStartup.xml"/>
     </variable>
 </variables>
