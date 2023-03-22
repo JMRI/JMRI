@@ -67,7 +67,7 @@
                 </enumVal>
             </variable>
             <variable CV="10010" default="0" item="meter">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-noYes.xml"/>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             </variable>
             <variable CV="10013" default="0" item="iLimMain">
                 <decVal/>
