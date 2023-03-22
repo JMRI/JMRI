@@ -300,6 +300,15 @@
     </xs:annotation>
   </xs:element>
 
+  <xs:element name="splitEnumVal" type="SplitEnumValType">
+    <xs:annotation>
+      <xs:documentation>
+        Provides a base element that can be used in "splitEnumVal" fragment files, those
+        little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="enumChoiceGroup" type="EnumChoiceGroupType">
     <xs:annotation>
       <xs:documentation>
