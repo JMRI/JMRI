@@ -76,7 +76,25 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         // Add to GUI here
 
-        table = new JTable(model);
+        table = new JTable(model) {
+        // The following three routines are for use in performance tuning.
+        // They're a pain to recreate, so I'm leaving them here
+        // temporarily just commented out.  Will remove
+        // once performance issues are known to be resolved. - BobJ
+        //
+        //             public void valueChanged(ListSelectionEvent e) {
+        //                 new Exception("traceback").printStackTrace();
+        //                 super.valueChanged(e);
+        //             }
+        //             public void tableChanged(TableModelEvent e) {
+        //                 new Exception("traceback").printStackTrace();
+        //                 super.tableChanged(e);
+        //             }
+        //             public void resizeAndRepaint() {
+        //                 new Exception("traceback").printStackTrace();
+        //                 super.resizeAndRepaint();
+        //             }
+        };
 
         model.table = table;
         model.sorter = sorter;
@@ -143,6 +161,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     }
 
     public EventTablePane() {
+        // interface and connections built in initComponents(..)
     }
 
     @Override
@@ -153,6 +172,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         });
         // remove traffic connection
         memo.get(OlcbInterface.class).unRegisterMessageListener(monitor);
+        // drop model connections
+        model = null;
+        monitor = null;
         // and complete this
         super.dispose();
     }
@@ -415,7 +437,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     if (height < lineIncrement) {
                         height = height+lineIncrement; // when no lines, assume 1
                     }
-                    if (height != table.getRowHeight(row)) {
+                   if (Math.abs(height - table.getRowHeight(row)) > lineIncrement/2) {
                         table.setRowHeight(viewRow, height);
                     }
 
