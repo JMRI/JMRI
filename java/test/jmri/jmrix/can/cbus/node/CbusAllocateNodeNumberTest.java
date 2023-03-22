@@ -29,7 +29,7 @@ public class CbusAllocateNodeNumberTest {
     @Test
     public void testCTor() {
 
-        assertEquals(1, tcis.numListeners(),"1 listener " + tcis.getListeners());
+        assertEquals(2, tcis.numListeners(),"2 listener " + tcis.getListeners());
 
         t = new CbusAllocateNodeNumber(memo,nodeModel);
         assertNotNull(t);

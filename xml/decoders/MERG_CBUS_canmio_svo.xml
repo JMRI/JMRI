@@ -39,9 +39,9 @@
         <programming direct="yes" ops="yes" paged="yes" register="yes">
         </programming>
         <variables>
-            <xi:include href="http://jmri.org/xml/decoders/cbus/varServo8.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/cbus/varServoCutoff.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/cbus/varServoWait.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/cbus/VarServo8.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/cbus/VarServoCutoff.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/cbus/VarServoWait.xml"/>
         </variables>
     </decoder>
     <xi:include href="http://jmri.org/xml/decoders/cbus/PaneServo8.xml"/>
