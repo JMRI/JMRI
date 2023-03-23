@@ -53,32 +53,32 @@
         <decVal min="0" max="127"/>
     </variable>
         
-    <variable default="1" item="startupActtion1" mask="XXXXXXXV XXXXXXXV" CV="11,10">
+    <variable default="1" item="startupActtion1" mask="XXXXXXXV XXXXXXXV" CV="10011,10010">
         <xi:include href="http://jmri.org/xml/decoders/cbus/EnumAccStartup.xml"/>
     </variable>
-    <variable default="1" item="startupActtion2" mask="XXXXXXVX XXXXXXVX" CV="11,10">
+    <variable default="1" item="startupActtion2" mask="XXXXXXVX XXXXXXVX" CV="10011,10010">
         <xi:include href="http://jmri.org/xml/decoders/cbus/EnumAccStartup.xml"/>
     </variable>
-    <variable default="1" item="startupActtion3" mask="XXXXXVXX XXXXXVXX" CV="11,10">
+    <variable default="1" item="startupActtion3" mask="XXXXXVXX XXXXXVXX" CV="10011,10010">
         <xi:include href="http://jmri.org/xml/decoders/cbus/EnumAccStartup.xml"/>
     </variable>
-    <variable default="1" item="startupActtion4" mask="XXXXVXXX XXXXVXXX" CV="11,10">
+    <variable default="1" item="startupActtion4" mask="XXXXVXXX XXXXVXXX" CV="10011,10010">
         <xi:include href="http://jmri.org/xml/decoders/cbus/EnumAccStartup.xml"/>
     </variable>
-    <variable default="1" item="startupActtion5" mask="XXXVXXXX XXXVXXXX" CV="11,10">
+    <variable default="1" item="startupActtion5" mask="XXXVXXXX XXXVXXXX" CV="10011,10010">
         <xi:include href="http://jmri.org/xml/decoders/cbus/EnumAccStartup.xml"/>
     </variable>
-    <variable default="1" item="startupActtion6" mask="XXVXXXXX XXVXXXXX" CV="11,10">
+    <variable default="1" item="startupActtion6" mask="XXVXXXXX XXVXXXXX" CV="10011,10010">
         <xi:include href="http://jmri.org/xml/decoders/cbus/EnumAccStartup.xml"/>
     </variable>
-    <variable default="1" item="startupActtion7" mask="XVXXXXXX XVXXXXXX" CV="11,10">
+    <variable default="1" item="startupActtion7" mask="XVXXXXXX XVXXXXXX" CV="10011,10010">
         <xi:include href="http://jmri.org/xml/decoders/cbus/EnumAccStartup.xml"/>
     </variable>
-    <variable default="1" item="startupActtion8" mask="VXXXXXXX VXXXXXXX" CV="11,10">
+    <variable default="1" item="startupActtion8" mask="VXXXXXXX VXXXXXXX" CV="10011,10010">
         <xi:include href="http://jmri.org/xml/decoders/cbus/EnumAccStartup.xml"/>
     </variable>
         
-    <variable default ="0" item="delay" CV="9">
+    <variable default ="0" item="delay" CV="10009">
         <decVal min="0" max="255"/>
     </variable>
 </variables>
