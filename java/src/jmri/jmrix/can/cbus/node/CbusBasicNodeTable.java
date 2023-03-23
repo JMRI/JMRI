@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -217,14 +217,12 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
                     p.setVisible(true);
                 } else {
                     log.info("No xml, or no programmer found for node {}", title);
-                    log.info("Using Edit NV tab instead");
-                    // TODO:
-                    // Display the edit gui tab if provider available
-                   
-                    // Otherwise display the generic tab
-                   
-                   
-                   
+                    JOptionPane pane = new JOptionPane("<html><h3>No programmer or no decoder file" +
+                        "</h3><p>Use Node Variables tab</p></html>");
+                    pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                    JDialog dialog = pane.createDialog("Node Search Complete");
+                    dialog.setModal(false);
+                    dialog.setVisible(true);
                 }
                 break;
             default:
