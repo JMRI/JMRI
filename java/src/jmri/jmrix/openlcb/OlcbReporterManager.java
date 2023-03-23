@@ -27,7 +27,7 @@ import java.util.Locale;
  * System names are "MRaa.aa.aa.aa.aa.aa.00.00", where M is the user configurable system prefix,
  * aa.aa....aa is an OpenLCB Event ID with the last two bytes as zero.
  *
- * Typical event IDs for reporters come out of the range 06.8* and 06.9*.
+ * Typical event IDs for reporters come out of the range 06.4* and 06.5*.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
  * @author Balazs Racz Copyright (C) 2023
@@ -179,17 +179,17 @@ public class OlcbReporterManager extends jmri.managers.AbstractReporterManager {
 
     /**
      * Computes the system name for the next block sensor. This increments the unique ID
-     * of the first 6 components by one.
+     * of the manufacturer-assigned range (bytes 4-5-6) by one.
      * @param currentName system name for a reporter of a given block
      * @return next block's system name.
      */
     public String incrementSystemName(String currentName) {
         String oAddr = currentName.substring(getSystemNamePrefix().length());
         OlcbAddress a = new OlcbAddress(oAddr);
-        // Increments address elements 6 with overflow.
+        // Increments address elements 4-5-6 with overflow.
         int[] e = a.elements();
         int idx = 5;
-        while(idx > 0) {
+        while(idx > 2) {
             e[idx]++;
             if (e[idx] > 255) {
                 e[idx] = 0;

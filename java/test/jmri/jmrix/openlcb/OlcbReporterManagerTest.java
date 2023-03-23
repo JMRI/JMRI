@@ -52,11 +52,13 @@ public class OlcbReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Test
     public void testIncrement() {
         OlcbReporterManager om = (OlcbReporterManager) l;
-        Assert.assertEquals("MR06.80.0D.11.22.33.00.00", om.incrementSystemName("MR06.80.0D.11.22.32.00.00"));
-        Assert.assertEquals("MR06.80.0D.11.22.3A.00.00", om.incrementSystemName("MR06.80.0D.11.22.39.00.00"));
-        Assert.assertEquals("MR06.80.0D.11.22.40.00.00", om.incrementSystemName("MR06.80.0D.11.22.3F.00.00"));
-        Assert.assertEquals("MR06.80.0D.11.23.00.00.00", om.incrementSystemName("MR06.80.0D.11.22.FF.00.00"));
-        Assert.assertEquals("MR06.81.00.00.00.00.00.00", om.incrementSystemName("MR06.80.FF.FF.FF.FF.00.00"));
+        Assert.assertEquals("MR06.40.0D.11.22.33.00.00", om.incrementSystemName("MR06.40.0D.11.22.32.00.00"));
+        Assert.assertEquals("MR06.40.0D.11.22.3A.00.00", om.incrementSystemName("MR06.40.0D.11.22.39.00.00"));
+        Assert.assertEquals("MR06.40.0D.11.22.40.00.00", om.incrementSystemName("MR06.40.0D.11.22.3F.00.00"));
+        Assert.assertEquals("MR06.40.0D.11.23.00.00.00", om.incrementSystemName("MR06.40.0D.11.22.FF.00.00"));
+        Assert.assertEquals("MR06.40.0D.12.00.00.00.00", om.incrementSystemName("MR06.40.0D.11.FF.FF.00.00"));
+        // There is no increment above the manufacturer ID range. Instead, the 24-bit field gets reset to all zeros.
+        Assert.assertEquals("MR06.40.FF.00.00.00.00.00", om.incrementSystemName("MR06.40.FF.FF.FF.FF.00.00"));
     }
 
     @Override
