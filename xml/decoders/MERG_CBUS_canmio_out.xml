@@ -34,7 +34,7 @@
     </revhistory>
     <decoder>
         <family name="CBUS" mfg="MERG" comment="CANACC8 is a CBUS 8 outpout module.">
-            <model model="CANACC8" lowVersionID="10" highVersionID="10"/>
+            <model model="CANMIO_OUT" lowVersionID="10" highVersionID="10"/>
         </family>
         <programming direct="yes" ops="yes" paged="yes" register="yes">
         </programming>
