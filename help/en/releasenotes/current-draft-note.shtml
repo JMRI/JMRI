@@ -96,7 +96,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Fix typo in Sensor default name; should not have visible effect.</li>
             </ul>
 
         <h4>MRC</h4>
