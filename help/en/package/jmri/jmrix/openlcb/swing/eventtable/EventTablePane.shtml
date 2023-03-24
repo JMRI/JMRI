@@ -15,10 +15,11 @@
     <div id="mainContent" class="no-sidebar">
     <h1>OpenLCB Event Table Frame</h1>
       <a href="Event_Table.png">
-      <img src="Event_Table.png" align="right" width="442" height="256""/></a>
       This provides a table view of the Events, Producers and Consumers
       in your OpenLCB network.
       <p>
+        <img src="Event_Table.png" width="1237" height="425""/></a>
+     <p>
       The primary purpose of the Event Table is three fold:
     <ul>
     <li>Display the Events used on your OpenLCB network along with all of their related
