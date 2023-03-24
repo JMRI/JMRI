@@ -127,9 +127,9 @@
         <li>Ian Birchenough, who contributed (with Phil Grainger) six ZTC decoder definition files,
         plus the ZTC 4007, and the Lenz Standard decoder.</li>
 
-        <li>Rodney Black, who has worked on refining the JMRI interfaces as part of creating his
-        <a href="http://cats4ctc.org/">CATS</a> system.
-        </li>
+        <li>Rodney Black, <!-- Sturbee -->
+        who has worked on refining the JMRI interfaces as part of creating his
+        <a href="http://cats4ctc.org/">CATS</a> system.</li>
 
         <li>Bob Blackwell, who moderates the jmriusers mailing list, accumulating the decoder ID
         info, and updated the DecoderPro manual</li>
