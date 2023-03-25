@@ -198,7 +198,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         model.loadIdTagEventIDs();
         model.handleTableUpdate(-1, -1);
 
-        final int DELAY = 75; // msec between operations - 64 events at speed
+        final int IDENTIFY_EVENTS_DELAY = 125; // msec between operations - 64 events at speed
         int nextDelay = 0;
 
         // assumes that a VerifyNodes has been done and all nodes are in the MimicNodeStore
@@ -211,19 +211,21 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 connection.put(m, null);
             }, nextDelay);
 
-            nextDelay += DELAY;
+            nextDelay += IDENTIFY_EVENTS_DELAY;
         }
         // Our reference to the node names in the MimicNodeStore will
-        // trigger a SNIP request if we don't have them yet.  In that case.
+        // trigger a SNIP request if we don't have them yet.  In case that happens
         // we want to trigger a table refresh to make sure they get displayed.
-        // TODO: This is a stand-in for the SNIP-triggered one below; neither are working?
-        final int INTERVAL = 2000;
+        final int REFRESH_INTERVAL = 1000;
         jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
             model.handleTableUpdate(-1,-1);
-        }, nextDelay+INTERVAL);
+        }, nextDelay+REFRESH_INTERVAL);
         jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
             model.handleTableUpdate(-1,-1);
-        }, nextDelay+INTERVAL*2);
+        }, nextDelay+REFRESH_INTERVAL*2);
+        jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
+            model.handleTableUpdate(-1,-1);
+        }, nextDelay+REFRESH_INTERVAL*4);
 
     }
 
