@@ -1,0 +1,75 @@
+package jmri.jmrit.logixng.actions;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
+import java.util.ArrayList;
+
+import jmri.*;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
+import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * Test WebRequest
+ *
+ * @author Daniel Bergqvist 2023
+ */
+public class WebRequestTest {
+
+    @Test
+    public void testWebRequest() {
+        WebRequest.HttpsClient.main(null);
+    }
+
+    // The minimal setup for log4J
+    @Before
+    public void setUp() throws SocketAlreadyConnectedException {
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initLogixNGManager();
+/*
+        _category = Category.ITEM;
+        _isExternal = true;
+
+        light = InstanceManager.getDefault(LightManager.class).provide("IL1");
+        light.setCommandedState(Light.OFF);
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
+        conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        InstanceManager.getDefault(ConditionalNG_Manager.class).register(conditionalNG);
+        logixNG.addConditionalNG(conditionalNG);
+        conditionalNG.setRunDelayed(false);
+        conditionalNG.setEnabled(true);
+        actionLight = new ActionLight(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
+        actionLight.getSelectNamedBean().setNamedBean(light);
+        actionLight.getSelectEnum().setEnum(ActionLight.LightState.On);
+        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLight);
+        conditionalNG.getChild(0).connect(socket);
+
+        _base = actionLight;
+        _baseMaleSocket = socket;
+
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
+        logixNG.setEnabled(true);
+*/
+    }
+
+    @After
+    public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.tearDown();
+    }
+
+}
