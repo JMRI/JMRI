@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.table.*;
 
 import jmri.*;
@@ -142,6 +143,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     }
 
     public EventTablePane() {
+        // interface and connections built in initComponents(..)
     }
 
     @Override
@@ -152,6 +154,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         });
         // remove traffic connection
         memo.get(OlcbInterface.class).unRegisterMessageListener(monitor);
+        // drop model connections
+        model = null;
+        monitor = null;
         // and complete this
         super.dispose();
     }
@@ -414,7 +419,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     if (height < lineIncrement) {
                         height = height+lineIncrement; // when no lines, assume 1
                     }
-                    if (height != table.getRowHeight(row)) {
+                   if (Math.abs(height - table.getRowHeight(row)) > lineIncrement/2) {
                         table.setRowHeight(viewRow, height);
                     }
 
@@ -491,7 +496,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          */
         void handleTableUpdate(int start, int end) {
             log.trace("handleTableUpdated");
-            final int DELAY = 250;
+            final int DELAY = 500;
 
             if (!pending) {
                 jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
@@ -525,7 +530,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     if (ident != null) {
                         name = ident.getUserName();
                         if (name.isEmpty()) {
-                            name = ident.getMfgName()+" - "+ident.getModelName();
+                            name = ident.getMfgName()+" - "+ident.getModelName()+" - "+ident.getHardwareVersion();
                         }
                     }
             }
@@ -837,17 +842,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             model.recordProducer(eventID, nodeID);
         }
 
-        /**
-         * Handle "Simple Node Ident Info Reply" message
-         * @param msg       message to handle
-         * @param sender    connection where it came from
+        /*
+         * We no longer handle "Simple Node Ident Info Reply" messages because of
+         * excessive redisplays.  Instead, we expect the MimicNodeStore to handle
+         * these and provide the information when requested.
          */
-        @Override
-        public void handleSimpleNodeIdentInfoReply(SimpleNodeIdentInfoReplyMessage msg, Connection sender){
-            // might know about a new node name, so do an update
-            log.debug("SNIP reply processed");
-            model.handleTableUpdate(-1, -1);
-        }
     }
 
     /**

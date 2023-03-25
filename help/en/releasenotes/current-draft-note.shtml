@@ -122,6 +122,12 @@
                 <li>Event table loads all saved event names when opened</li>
                 <li>Ensure JMRI source nodes are identified in the Monitor display</li>
                 <li>Complete the information in the memory space window</li>
+                <li>Performance improvements in the Event Table</li>
+                <li>Fix an error preventing multiple configuration windows from working properly</li>
+                <li>Fix a timeout error in the hub when running on Windows</li>
+                <li>Improved help pages for several tools</li>
+                <li>Updated OpenLCB library (openlcb.jar) through its
+                    <a href="https://github.com/openlcb/OpenLCB_Java/pull/221">PR 221</a>.
             </ul>
 
         <h4>Powerline</h4>
