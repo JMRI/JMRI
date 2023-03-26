@@ -1,48 +1,24 @@
 package jmri.jmrit.logixng.actions;
 
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import java.beans.*;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.swing.*;
+import javax.net.ssl.HttpsURLConnection;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
-import jmri.jmrit.logixng.util.ReferenceUtil;
-import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
+import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.*;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
-
-
-
-
-
-
-
-
-
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.cert.Certificate;
-import java.io.*;
-
-import java.net.URLEncoder;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLPeerUnverifiedException;
-
-
-
-
-
-
-
-
-
 
 /**
  * This action sends a web request.
@@ -55,27 +31,28 @@ public class WebRequest extends AbstractDigitalAction
     private static final ResourceBundle rbx =
             ResourceBundle.getBundle("jmri.jmrit.logixng.implementation.ImplementationBundle");
 
-    private String _validateSocketSystemName;
-    private final FemaleDigitalExpressionSocket _validateSocket;
+    private boolean _useThread = true;
+
+    private GetPostType _getPostType = GetPostType.Get;
+//    private GetPostType _getPostType = GetPostType.Post;
+
+    private final LogixNG_SelectString _selectUrl =
+            new LogixNG_SelectString(this, this);
+
+//    private final LogixNG_SelectEnum<MimeType> _selectMime =
+//            new LogixNG_SelectEnum<>(this, MimeType.values(), MimeType.TextHtml, this);
+
     private String _executeSocketSystemName;
     private final FemaleDigitalActionSocket _executeSocket;
-    private Set<Button> _enabledButtons = new HashSet<>();
-    private String _localVariableForSelectedButton = "";
-    private String _localVariableForInputString = "";
-    private boolean _modal = true;
-    private boolean _multiLine = false;
-    private FormatType _formatType = FormatType.OnlyText;
-    private String _format = "";
-    private final List<Data> _dataList = new ArrayList<>();
+    private String _localVariableForPostContent = "";
+    private String _localVariableForResponseCode = "";
+    private String _localVariableForReplyContent = "";
     private final InternalFemaleSocket _internalSocket = new InternalFemaleSocket();
-    private JDialog _dialog;
 
 
     public WebRequest(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-        _validateSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, Bundle.getMessage("ShowDialog_SocketValidate"));
         _executeSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, Bundle.getMessage("ShowDialog_SocketExecute"));
     }
@@ -89,61 +66,66 @@ public class WebRequest extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         WebRequest copy = new WebRequest(sysName, userName);
         copy.setComment(getComment());
-        for (Button button : _enabledButtons) {
-            copy.getEnabledButtons().add(button);
-        }
-        copy.setLocalVariableForSelectedButton(_localVariableForSelectedButton);
-        copy.setLocalVariableForInputString(_localVariableForInputString);
-        copy.setModal(_modal);
-        copy.setMultiLine(_multiLine);
-        copy.setFormat(_format);
-        copy.setFormatType(_formatType);
-        for (Data data : _dataList) {
-            copy.getDataList().add(new Data(data));
-        }
+        copy.setGetPostType(_getPostType);
+        getSelectUrl().copy(copy._selectUrl);
+//        getSelectMime().copy(copy._selectMime);
+        copy.setLocalVariableForPostContent(_localVariableForPostContent);
+        copy.setLocalVariableForResponseCode(_localVariableForResponseCode);
+        copy.setLocalVariableForReplyContent(_localVariableForReplyContent);
+//        copy.setModal(_modal);
+//        copy.setMultiLine(_multiLine);
+//        copy.setFormat(_format);
+//        copy.setFormatType(_formatType);
+//        for (Data data : _dataList) {
+//            copy.getDataList().add(new Data(data));
+//        }
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
-    /**
-     * Return the list of buttons.
-     * @return the list of buttons.
-     */
-    public Set<Button> getEnabledButtons() {
-        return this._enabledButtons;
+    public LogixNG_SelectString getSelectUrl() {
+        return _selectUrl;
     }
 
-    public void setModal(boolean modal) {
-        _modal = modal;
+//    public LogixNG_SelectEnum<MimeType> getSelectMime() {
+//        return _selectMime;
+//    }
+
+    public void setUseThread(boolean value) {
+        _useThread = value;
     }
 
-    public boolean getModal() {
-        return _modal;
+    public void setGetPostType(GetPostType value) {
+        _getPostType = value;
     }
 
-    public void setMultiLine(boolean multiLine) {
-        _multiLine = multiLine;
+    public GetPostType getGetPostType() {
+        return _getPostType;
     }
 
-    public boolean getMultiLine() {
-        return _multiLine;
+    public void setLocalVariableForPostContent(String localVariable) {
+        _localVariableForPostContent = localVariable;
     }
 
-    public void setLocalVariableForSelectedButton(String localVariable) {
-        _localVariableForSelectedButton = localVariable;
+    public String getLocalVariableForPostContent() {
+        return _localVariableForPostContent;
     }
 
-    public String getLocalVariableForSelectedButton() {
-        return _localVariableForSelectedButton;
+    public void setLocalVariableForResponseCode(String localVariable) {
+        _localVariableForResponseCode = localVariable;
     }
 
-    public void setLocalVariableForInputString(String localVariableForInputString) {
-        _localVariableForInputString = localVariableForInputString;
+    public String getLocalVariableForResponseCode() {
+        return _localVariableForResponseCode;
     }
 
-    public String getLocalVariableForInputString() {
-        return _localVariableForInputString;
+    public void setLocalVariableForReplyContent(String localVariable) {
+        _localVariableForReplyContent = localVariable;
     }
 
+    public String getLocalVariableForReplyContent() {
+        return _localVariableForReplyContent;
+    }
+/*
     public void setFormatType(FormatType formatType) {
         _formatType = formatType;
     }
@@ -163,7 +145,7 @@ public class WebRequest extends AbstractDigitalAction
     public List<Data> getDataList() {
         return _dataList;
     }
-
+*/
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
 /*
@@ -188,7 +170,7 @@ public class WebRequest extends AbstractDigitalAction
     public Category getCategory() {
         return Category.OTHER;
     }
-
+/*
     private List<Object> getDataValues() throws JmriException {
         List<Object> values = new ArrayList<>();
         for (Data _data : _dataList) {
@@ -222,8 +204,202 @@ public class WebRequest extends AbstractDigitalAction
         }
         return values;
     }
+*/
+
+
+
+
 
     /** {@inheritDoc} */
+    @Override
+    public void execute() throws JmriException {
+
+        final boolean useThread = this._useThread;
+
+        final ConditionalNG conditionalNG = getConditionalNG();
+        final DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG.getSymbolTable());
+
+        String urlString = _selectUrl.evaluateValue(conditionalNG);
+//        String mime = _selectMime.evaluateEnum(conditionalNG)._mime;
+
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("firstName", "Daniel");
+        parameters.put("lastName", "Bergqvist");
+        parameters.put("address", "Åbenråvägen 2");
+
+        String parameters11;
+        URL url;
+        try {
+            parameters11 = ParameterStringBuilder.getParamsString(parameters);
+            if (_getPostType == GetPostType.Get) {
+                urlString += "?" + parameters11;
+//                urlString += "?name=Daniel&sur=Bergqvist";
+            }
+//            urlString += "?name=Daniel&sur=Bergqvist&some=thing";
+            url = new URL(urlString);
+            System.out.format("URL: %s, query: %s, userInfo: %s%n", url.toString(), url.getQuery(), url.getUserInfo());
+//            System.out.format("Host: %s, Port: %d, DefaultPort: %d, File: %s, Protocol: %s, Authority: %s, Path: %s, Query: %s, Ref: %s, UserInfo: %s%n", url.getHost(), url.getPort(), url.getDefaultPort(), url.getFile(), url.getProtocol(), url.getAuthority(), url.getPath(), url.getQuery(), url.getRef(), url.getUserInfo());
+//            if (1==1) return;
+            if (!urlString.contains("LogixNG_WebRequest_Test.php")) return;
+        } catch (UnsupportedEncodingException | MalformedURLException ex) {
+            throw new JmriException(ex.getMessage(), ex);
+        }
+
+        boolean useHttps = urlString.toLowerCase().startsWith("https://");
+
+        Runnable runnable = () -> {
+//            String https_url = "https://www.google.com/";
+//            String https_url = "https://jmri.bergqvist.se/LogixNG_WebRequest_Test.php";
+            try {
+
+                long startTime = System.currentTimeMillis();
+
+//                if (!_localVariableForPostContent.isEmpty()) {
+//                    postContent = newSymbolTable.getValue(_localVariableForPostContent);
+//                }
+
+                HttpURLConnection con;
+                if (useHttps) {
+                    con = (HttpsURLConnection) url.openConnection();
+                } else {
+                    con = (HttpURLConnection) url.openConnection();
+                }
+
+
+////DANIEL                con.setRequestProperty("Content-Type", "text/html");
+//                con.setRequestProperty("Content-Type", mime);
+
+//                con.setRequestProperty("Content-Type", "application/json");
+//                con.setRequestProperty("Content-Type", "application/html");
+//                con.setRequestProperty("Content-Type", "text/html");
+//                con.setRequestProperty("Content-Type", "text/plain");
+//                con.setRequestProperty("Content-Type", "text/csv");
+//                con.setRequestProperty("Content-Type", "text/markdown");
+
+                switch (_getPostType) {
+                    case Get:
+                        con.setRequestMethod("GET");
+/*
+                        con.setDoOutput(true);
+                        try (DataOutputStream out = new DataOutputStream(con.getOutputStream())) {
+                            out.writeBytes(parameters11);
+                            out.flush();
+                        }
+*/
+                        break;
+
+                    case Post:
+                        con.setRequestMethod("POST");
+                        con.setDoOutput(true);
+                        try (DataOutputStream out = new DataOutputStream(con.getOutputStream())) {
+                            out.writeBytes(parameters11);
+                            out.flush();
+                        }
+                        break;
+
+                    default:
+                        throw new IllegalArgumentException("_getPostType has unknown value: "+_getPostType.name());
+                }
+
+
+
+
+
+
+
+                //dumpl all cert info
+//                print_https_cert(con);
+                //dump all the content
+                print_content(con);
+
+                System.out.println("Response Code : " + con.getResponseCode());
+
+                long time = System.currentTimeMillis() - startTime;
+
+                System.out.format("Total time: %d%n", time);
+
+                if (useThread) {
+                    synchronized (WebRequest.this) {
+                        _internalSocket.conditionalNG = conditionalNG;
+                        _internalSocket.newSymbolTable = newSymbolTable;
+//                        _internalSocket.selectedButton = button._value;
+//                        _internalSocket.inputValue = textField.getText();
+                        conditionalNG.execute(_internalSocket);
+                    }
+                } else {
+                    synchronized (WebRequest.this) {
+                        _internalSocket.conditionalNG = conditionalNG;
+                        _internalSocket.newSymbolTable = newSymbolTable;
+                        _internalSocket.execute();
+                    }
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JmriException ex) {
+                log.error("An exception has occurred: {}", ex.getMessage(), ex);
+            }
+        };
+
+        if (useThread) {
+            ThreadingUtil.newThread(runnable, "LogixNG action WebRequest").start();
+        } else {
+            runnable.run();
+        }
+    }
+
+    public static class ParameterStringBuilder {
+
+        public static String getParamsString(Map<String, String> params)
+                throws UnsupportedEncodingException {
+            StringBuilder result = new StringBuilder();
+
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+                result.append("&");
+            }
+
+            String resultString = result.toString();
+            return resultString.length() > 0
+                    ? resultString.substring(0, resultString.length() - 1)
+                    : resultString;
+        }
+    }
+
+    private void print_content(HttpURLConnection con) {
+        if (con != null) {
+
+            try {
+
+                System.out.println("****** Content of the URL ********");
+                BufferedReader br
+                        = new BufferedReader(
+                                new InputStreamReader(con.getInputStream()));
+
+                String input;
+
+                while ((input = br.readLine()) != null) {
+                    System.out.println(input);
+                }
+                br.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+
+
+
+
+    /** {@inheritDoc} *./
     @Override
     public void execute() throws JmriException {
 
@@ -321,14 +497,11 @@ public class WebRequest extends AbstractDigitalAction
             _dialog.setVisible(true);
         });
     }
-
+*/
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
-                return _validateSocket;
-
-            case 1:
                 return _executeSocket;
 
             default:
@@ -339,14 +512,12 @@ public class WebRequest extends AbstractDigitalAction
 
     @Override
     public int getChildCount() {
-        return 2;
+        return 1;
     }
 
     @Override
     public void connected(FemaleSocket socket) {
-        if (socket == _validateSocket) {
-            _validateSocketSystemName = socket.getConnectedSocket().getSystemName();
-        } else if (socket == _executeSocket) {
+        if (socket == _executeSocket) {
             _executeSocketSystemName = socket.getConnectedSocket().getSystemName();
         } else {
             throw new IllegalArgumentException("unkown socket");
@@ -355,9 +526,7 @@ public class WebRequest extends AbstractDigitalAction
 
     @Override
     public void disconnected(FemaleSocket socket) {
-        if (socket == _validateSocket) {
-            _validateSocketSystemName = null;
-        } else if (socket == _executeSocket) {
+        if (socket == _executeSocket) {
             _executeSocketSystemName = null;
         } else {
             throw new IllegalArgumentException("unkown socket");
@@ -366,11 +535,13 @@ public class WebRequest extends AbstractDigitalAction
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ShowDialog_Short");
+        return Bundle.getMessage(locale, "WebRequest_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
+        return Bundle.getMessage("WebRequest_Long", _selectUrl.getDescription(locale));
+/*
         String bundleKey;
         switch (_formatType) {
             case OnlyText:
@@ -386,18 +557,7 @@ public class WebRequest extends AbstractDigitalAction
                 throw new RuntimeException("_formatType has unknown value: "+_formatType.name());
         }
         return Bundle.getMessage(locale, bundleKey, _format);
-    }
-
-    public FemaleDigitalExpressionSocket getValidateSocket() {
-        return _validateSocket;
-    }
-
-    public String getValidateSocketSystemName() {
-        return _validateSocketSystemName;
-    }
-
-    public void setValidateSocketSystemName(String systemName) {
-        _validateSocketSystemName = systemName;
+*/
     }
 
     public FemaleDigitalActionSocket getExecuteSocket() {
@@ -416,29 +576,6 @@ public class WebRequest extends AbstractDigitalAction
     @Override
     public void setup() {
         try {
-            if (!_validateSocket.isConnected()
-                    || !_validateSocket.getConnectedSocket().getSystemName()
-                            .equals(_validateSocketSystemName)) {
-
-                String socketSystemName = _validateSocketSystemName;
-
-                _validateSocket.disconnect();
-
-                if (socketSystemName != null) {
-                    MaleSocket maleSocket =
-                            InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .getBySystemName(socketSystemName);
-                    if (maleSocket != null) {
-                        _validateSocket.connect(maleSocket);
-                        maleSocket.setup();
-                    } else {
-                        log.error("cannot load digital expression {}", socketSystemName);
-                    }
-                }
-            } else {
-                _validateSocket.getConnectedSocket().setup();
-            }
-
             if (!_executeSocket.isConnected()
                     || !_executeSocket.getConnectedSocket().getSystemName()
                             .equals(_executeSocketSystemName)) {
@@ -507,6 +644,27 @@ public class WebRequest extends AbstractDigitalAction
     }
 
 
+    public enum GetPostType {
+        Get(Bundle.getMessage("WebRequest_GetPostType_Get", "GET")),        // "GET" should not be i11n
+        Post(Bundle.getMessage("WebRequest_GetPostType_Post", "POST"));     // "POST" should not be i11n
+
+        private final String _text;
+
+        private GetPostType(String text) {
+            this._text = text;
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
+
+    }
+
+
+
+
+/*
     public enum FormatType {
         OnlyText(Bundle.getMessage("ShowDialog_FormatType_TextOnly"), true, false),
         CommaSeparatedList(Bundle.getMessage("ShowDialog_FormatType_CommaSeparatedList"), false, true),
@@ -537,7 +695,7 @@ public class WebRequest extends AbstractDigitalAction
 
     }
 
-
+/*
     public enum Button {
         Ok(1, Bundle.getMessage("ButtonOK")),
         Cancel(2, Bundle.getMessage("ButtonCancel")),
@@ -562,8 +720,33 @@ public class WebRequest extends AbstractDigitalAction
         }
 
     }
+*/
+/*
+    public enum MimeType {
+        TextPlain(Bundle.getMessage("WebRequest_MimeType_TextPlain"), "text/plain"),
+        TextHtml(Bundle.getMessage("WebRequest_MimeType_TextHtml"), "text/html"),
+        ApplicationJson(Bundle.getMessage("WebRequest_MimeType_ApplicationJson"), "application/json");
 
+        private final String _text;
+        private final String _mime;
 
+        private MimeType(String text, String mime) {
+            this._text = text;
+            this._mime = mime;
+        }
+
+        public String getMime() {
+            return _mime;
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
+
+    }
+*/
+/*
     public enum DataType {
         LocalVariable(Bundle.getMessage("ShowDialog_Operation_LocalVariable")),
         Memory(Bundle.getMessage("ShowDialog_Operation_Memory")),
@@ -632,13 +815,13 @@ public class WebRequest extends AbstractDigitalAction
         public String getData() { return _data; }
 
     }
-
+*/
 
     private class InternalFemaleSocket extends jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket {
 
         private ConditionalNG conditionalNG;
         private SymbolTable newSymbolTable;
-        private int selectedButton;
+        private int responseCode;
         private String inputValue;
 
         public InternalFemaleSocket() {
@@ -662,20 +845,13 @@ public class WebRequest extends AbstractDigitalAction
                 try {
                     SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
                     conditionalNG.setSymbolTable(newSymbolTable);
-                    if (!_localVariableForSelectedButton.isEmpty()) {
-                        newSymbolTable.setValue(_localVariableForSelectedButton, selectedButton);
+                    if (!_localVariableForResponseCode.isEmpty()) {
+                        newSymbolTable.setValue(_localVariableForResponseCode, responseCode);
                     }
-                    if (!_localVariableForInputString.isEmpty()) {
-                        newSymbolTable.setValue(_localVariableForInputString, inputValue);
+                    if (!_localVariableForReplyContent.isEmpty()) {
+                        newSymbolTable.setValue(_localVariableForReplyContent, inputValue);
                     }
-                    boolean result = true;
-                    if (_validateSocket.isConnected()) {
-                        result = _validateSocket.evaluate();
-                    }
-                    if (result) {
-                        _dialog.dispose();
-                        _executeSocket.execute();
-                    }
+                    _executeSocket.execute();
                     conditionalNG.setSymbolTable(oldSymbolTable);
                 } catch (JmriException e) {
                     if (e.getErrors() != null) {
@@ -715,8 +891,6 @@ public class WebRequest extends AbstractDigitalAction
 
 
 
-    public static class HttpsClient {
-
 /*
 
         https://jmri.bergqvist.se/LogixNG_WebRequest_Test.php
@@ -732,7 +906,7 @@ public class WebRequest extends AbstractDigitalAction
 
         Do a Simple HTTP Request in Java
         https://www.baeldung.com/java-http-request
-        
+
 
 
         Java HttpsURLConnection example
@@ -765,158 +939,5 @@ public class WebRequest extends AbstractDigitalAction
 
 
 */
-
-
-
-
-
-
-        public static void main(String[] args) {
-            new HttpsClient().testIt();
-        }
-
-        private void testIt() {
-
-//            String https_url = "https://www.google.com/";
-            String https_url = "https://jmri.bergqvist.se/LogixNG_WebRequest_Test.php";
-            URL url;
-            try {
-
-                url = new URL(https_url);
-                HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-
-//                con.setRequestProperty("Content-Type", "application/json");
-//                con.setRequestProperty("Content-Type", "application/html");
-//                con.setRequestProperty("Content-Type", "text/html");
-//                con.setRequestProperty("Content-Type", "text/plain");
-//                con.setRequestProperty("Content-Type", "text/csv");
-//                con.setRequestProperty("Content-Type", "text/markdown");
-
-                Map<String, String> parameters = new HashMap<>();
-                parameters.put("firstName", "Daniel");
-                parameters.put("lastName", "Bergqvist");
-                parameters.put("address", "Åbenråvägen 2");
-
-                con.setDoOutput(true);
-                try (DataOutputStream out = new DataOutputStream(con.getOutputStream())) {
-                    out.writeBytes(ParameterStringBuilder.getParamsString(parameters));
-                    out.flush();
-                }
-
-
-
-                //dumpl all cert info
-//                print_https_cert(con);
-
-                //dump all the content
-                print_content(con);
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        public static class ParameterStringBuilder {
-
-            public static String getParamsString(Map<String, String> params)
-                    throws UnsupportedEncodingException {
-                StringBuilder result = new StringBuilder();
-
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-                    result.append("=");
-                    result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-                    result.append("&");
-                }
-
-                String resultString = result.toString();
-                return resultString.length() > 0
-                        ? resultString.substring(0, resultString.length() - 1)
-                        : resultString;
-            }
-        }
-
-
-
-
-
-        private void print_https_cert(HttpsURLConnection con) {
-
-            if (con != null) {
-
-                try {
-
-                    System.out.println("Response Code : " + con.getResponseCode());
-                    System.out.println("Cipher Suite : " + con.getCipherSuite());
-                    System.out.println("\n");
-
-                    Certificate[] certs = con.getServerCertificates();
-                    for (Certificate cert : certs) {
-                        System.out.println("Cert Type : " + cert.getType());
-                        System.out.println("Cert Hash Code : " + cert.hashCode());
-                        System.out.println("Cert Public Key Algorithm : "
-                                + cert.getPublicKey().getAlgorithm());
-                        System.out.println("Cert Public Key Format : "
-                                + cert.getPublicKey().getFormat());
-                        System.out.println("\n");
-                    }
-
-                } catch (SSLPeerUnverifiedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        }
-
-        private void print_content(HttpsURLConnection con) {
-            if (con != null) {
-
-                try {
-
-                    System.out.println("****** Content of the URL ********");
-                    BufferedReader br
-                            = new BufferedReader(
-                                    new InputStreamReader(con.getInputStream()));
-
-                    String input;
-
-                    while ((input = br.readLine()) != null) {
-                        System.out.println(input);
-                    }
-                    br.close();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        }
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

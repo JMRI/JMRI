@@ -21,11 +21,62 @@ import org.junit.Test;
  *
  * @author Daniel Bergqvist 2023
  */
-public class WebRequestTest {
+public class WebRequestTest extends AbstractDigitalActionTestBase {
+
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private WebRequest webRequest;
+//    private Light light;
+
 
     @Test
-    public void testWebRequest() {
-        WebRequest.HttpsClient.main(null);
+    public void testWebRequest() throws JmriException {
+        webRequest.getSelectUrl().setValue("https://jmri.bergqvist.se/LogixNG_WebRequest_Test.php");
+        conditionalNG.execute();
+    }
+
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return conditionalNG;
+    }
+
+    @Override
+    public LogixNG getLogixNG() {
+        return logixNG;
+    }
+
+    @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format(
+                "Web request for https://www.jmri.org/ ::: Use default%n" +
+                "   ! Execute%n" +
+                "      Socket not connected%n");
+    }
+
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "LogixNG: A logixNG%n" +
+                "   ConditionalNG: A conditionalNG%n" +
+                "      ! A%n" +
+                "         Web request for https://www.jmri.org/ ::: Use default%n" +
+                "            ! Execute%n" +
+                "               Socket not connected%n");
+    }
+
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new WebRequest(systemName, null);
+    }
+
+    @Override
+    public boolean addNewSocket() {
+        return false;
     }
 
     // The minimal setup for log4J
@@ -38,31 +89,32 @@ public class WebRequestTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
-/*
+
         _category = Category.ITEM;
         _isExternal = true;
 
-        light = InstanceManager.getDefault(LightManager.class).provide("IL1");
-        light.setCommandedState(Light.OFF);
+//        light = InstanceManager.getDefault(LightManager.class).provide("IL1");
+//        light.setCommandedState(Light.OFF);
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
         conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
         InstanceManager.getDefault(ConditionalNG_Manager.class).register(conditionalNG);
         logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
-        actionLight = new ActionLight(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        actionLight.getSelectNamedBean().setNamedBean(light);
-        actionLight.getSelectEnum().setEnum(ActionLight.LightState.On);
-        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLight);
+        webRequest = new WebRequest(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
+        webRequest.setUseThread(false);
+        webRequest.getSelectUrl().setValue("https://www.jmri.org/");
+//        actionWebRequest.getSelectNamedBean().setNamedBean(light);
+//        actionWebRequest.getSelectEnum().setEnum(ActionLight.LightState.On);
+        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(webRequest);
         conditionalNG.getChild(0).connect(socket);
 
-        _base = actionLight;
+        _base = webRequest;
         _baseMaleSocket = socket;
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.activate();
         logixNG.setEnabled(true);
-*/
     }
 
     @After
