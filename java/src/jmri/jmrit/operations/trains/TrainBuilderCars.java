@@ -980,7 +980,12 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // locations not reachable
         List<Location> locationsNotServiced = new ArrayList<>();
         for (Track track : tracks) {
-            if (car.getTrack() == track || track.getSchedule() == null) {
+            if (car.getTrack() == track) {
+                continue;
+            }
+            if (track.getSchedule() == null) {
+                addLine(_buildReport, SEVEN, Bundle.getMessage("buildSpurNoSchedule",
+                        track.getLocation().getName(), track.getName()));
                 continue;
             }
             if (locationsNotServiced.contains(track.getLocation())) {
