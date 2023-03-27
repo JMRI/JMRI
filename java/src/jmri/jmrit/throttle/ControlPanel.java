@@ -1377,8 +1377,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 if (speedLabels != null && speedLabels.length>0) {
                     verticalLabelMap = new HashMap<>(speedLabels.length *2 );
                     horizontalLabelMap = new HashMap<>(speedLabels.length *2 );
+                    JLabel label;
                     for (SpeedLabel sp : speedLabels) {                            
-                        JLabel label = new JLabel( sp.label, speedLabelVerticalImageIcon, SwingConstants.LEFT );
+                        label = new JLabel( sp.label, speedLabelVerticalImageIcon, SwingConstants.LEFT );
+                        label.setVerticalTextPosition(JLabel.CENTER);
                         verticalLabelMap.put( sp.value, label);
                         verticalLabelMap.put( -sp.value, label);
 
