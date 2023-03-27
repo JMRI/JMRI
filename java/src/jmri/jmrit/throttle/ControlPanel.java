@@ -250,7 +250,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *                      SpeedStepMode.NMRA_DCC_14 step mode
      */
     public void setSpeedStepsMode(SpeedStepMode speedStepMode) {
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         internalAdjust = true;
         int maxSpeedPCT = 100;
         if (addressPanel != null && addressPanel.getRosterEntry() != null) {
@@ -697,7 +696,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinner.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "giveUpFocus");
 
         EnumSet<SpeedStepMode> speedStepModes = throttleManager.supportedSpeedModes();
-        speedStepBox = new JComboBox<>(speedStepModes.toArray(new SpeedStepMode[speedStepModes.size()]));
+        speedStepBox = new JComboBox<>(speedStepModes.toArray(SpeedStepMode[]::new));
 
         forwardButton = new JRadioButton();
         reverseButton = new JRadioButton();
@@ -1117,7 +1116,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     /**
      * Apply current throttles preferences to this panel
      */
-    void applyPreferences() {
+    final void applyPreferences() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
 
         if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
@@ -1423,8 +1422,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         
         if (! labelTable.isEmpty()) {
             // setLabelTable() only likes Colection which is a HashTable
-            speedSlider.setLabelTable(new Hashtable<Integer, JLabel>(labelTable));
-            speedSliderContinuous.setLabelTable(new Hashtable<Integer, JLabel>(labelTable));
+            speedSlider.setLabelTable(new Hashtable<>(labelTable));
+            speedSliderContinuous.setLabelTable(new Hashtable<>(labelTable));
             speedSlider.setPaintLabels(true);
             speedSliderContinuous.setPaintLabels(true);
         } else {
