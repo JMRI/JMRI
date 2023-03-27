@@ -1394,7 +1394,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     updateSlidersLabelDisplay();
                 }
             } catch (JsonProcessingException ex) {
-                log.error("Exception trying to parse speedLabels attribute from roster entry: {} ", ex);
+                log.error("Exception trying to parse speedLabels attribute from roster entry: {} ", ex.getMessage());
+                
             }                                             
         } else {
             verticalLabelMap = null;
