@@ -574,7 +574,7 @@ public class ThrottleWindow extends JmriJFrame {
         updateGUI();
     }
 
-    public void previousRunningThrottleFrame() {
+    public void nextRunningThrottleFrame() {
         if (!throttleFrames.isEmpty()) {
             ThrottleFrame cf = this.getCurrentThrottleFrame();
             ThrottleFrame nf = null;
@@ -582,7 +582,7 @@ public class ThrottleWindow extends JmriJFrame {
             for (ThrottleFrame tf : throttleFrames.values()) {
                 if (tf != cf) {
                     if ((tf.getAddressPanel() != null) && (tf.getAddressPanel().getThrottle() != null) && (tf.getAddressPanel().getThrottle().getSpeedSetting() > 0)) {
-                        if (passed) { // if we found something and passed current value, then break
+                        if (passed) { // if we passed the curent one, and found something then return it
                             nf = tf;
                             break;
                         } else if (nf == null) {
@@ -599,15 +599,15 @@ public class ThrottleWindow extends JmriJFrame {
         }
     }
 
-    public void nextRunningThrottleFrame() {
+    public void previousRunningThrottleFrame() {
         if (!throttleFrames.isEmpty()) {
             ThrottleFrame cf = this.getCurrentThrottleFrame();
-            ThrottleFrame nf = null;
+            ThrottleFrame nf = null;            
             for (ThrottleFrame tf : throttleFrames.values()) {
                 if ((tf != cf) && (tf.getAddressPanel() != null) && (tf.getAddressPanel().getThrottle() != null) && (tf.getAddressPanel().getThrottle().getSpeedSetting() > 0)) {
                     nf = tf;
                 }
-                if ((tf == cf) && (nf != null)) { // if we found something, then break, else go to end
+                if ((tf == cf) && (nf != null)) { // return the last one found before the curent one
                     break;
                 }
             }

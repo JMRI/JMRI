@@ -1378,7 +1378,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     verticalLabelMap = new HashMap<>(speedLabels.length *2 );
                     horizontalLabelMap = new HashMap<>(speedLabels.length *2 );
                     JLabel label;
-                    for (SpeedLabel sp : speedLabels) {                            
+                    for (SpeedLabel sp : speedLabels) {
                         label = new JLabel( sp.label, speedLabelVerticalImageIcon, SwingConstants.LEFT );
                         label.setVerticalTextPosition(JLabel.CENTER);
                         verticalLabelMap.put( sp.value, label);
@@ -1491,11 +1491,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
     }
     
-    // For Jackson
+    // For Jackson pasing of roster entry property holding speed labels (if any)
     private static class SpeedLabel {
-        public int value;
-        public String label;
-        
+        public int value = -1;
+        public String label = "";      
     }
 
     // initialize logging
