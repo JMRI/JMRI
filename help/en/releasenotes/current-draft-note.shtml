@@ -603,7 +603,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The NamedIcon class will now search Locations.ALL for files. This means
+            <li>The NamedIcon class will now search <i>Locations.ALL</i> for files. This means
                 <ul>
                 <li>Files and filepaths will be found in the user area first for all
                     subclasses of
