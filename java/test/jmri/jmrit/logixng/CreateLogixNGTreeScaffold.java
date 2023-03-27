@@ -3814,6 +3814,42 @@ public class CreateLogixNGTreeScaffold {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
+        ExpressionSection expressionSection = new ExpressionSection(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSection);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+// Direct / Direct :: Free
+        expressionSection = new ExpressionSection(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSection.setComment("Direct / Direct :: Free");
+
+        expressionSection.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSection.getSelectNamedBean().setNamedBean(section1);
+
+        expressionSection.set_Is_IsNot(Is_IsNot_Enum.Is);
+
+        expressionSection.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionSection.getSelectEnum().setEnum(ExpressionSection.SectionState.Free);
+
+        maleSocket = digitalExpressionManager.registerExpression(expressionSection);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+// Reference / Direct :: Forward
+        expressionSection = new ExpressionSection(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSection.setComment("Reference / Direct :: Forwar");
+
+        expressionSection.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionSection.getSelectNamedBean().setReference("{IM1}");
+
+        expressionSection.set_Is_IsNot(Is_IsNot_Enum.Is);
+
+        expressionSection.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionSection.getSelectEnum().setEnum(ExpressionSection.SectionState.Forward);
+
+        maleSocket = digitalExpressionManager.registerExpression(expressionSection);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
         ExpressionSensor expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
         maleSocket.setEnabled(false);

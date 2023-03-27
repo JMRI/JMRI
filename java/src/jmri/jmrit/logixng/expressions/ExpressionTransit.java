@@ -6,8 +6,6 @@ import java.util.*;
 import javax.annotation.Nonnull;
 
 import jmri.*;
-// import jmri.Transit;
-// import jmri.TransitManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
@@ -95,30 +93,6 @@ public class ExpressionTransit extends AbstractDigitalExpression
         TransitState checkTransitState = _selectEnum.evaluateEnum(conditionalNG);
 
         int currentState = transit.getState();
-
-//         switch (checkTransitState) {
-//             case Other:
-//                 if (currentState != Block.OCCUPIED && currentState != Block.UNOCCUPIED) {
-//                     currentState = BlockState.Other.getID();
-//                 } else {
-//                     currentState = 0;
-//                 }
-//                 break;
-//
-//             case Allocated:
-//                 boolean cuurrentAllocation = isBlockAllocated(block);
-//                 currentState = cuurrentAllocation ? BlockState.Allocated.getID() : 0;
-//                 break;
-//
-//             case ValueMatches:
-//                 String blockValue = _selectBlockValue.evaluateValue(conditionalNG);
-//                 currentState = blockValue.equals(block.getValue())
-//                         ? BlockState.ValueMatches.getID() : 0;
-//                 break;
-//
-//             default:
-//                 break;
-//         }
 
         if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentState == checkTransitState.getID();

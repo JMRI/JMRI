@@ -94,30 +94,6 @@ public class ExpressionSection extends AbstractDigitalExpression
 
         int currentState = section.getState();
 
-//         switch (checkTransitState) {
-//             case Other:
-//                 if (currentState != Block.OCCUPIED && currentState != Block.UNOCCUPIED) {
-//                     currentState = BlockState.Other.getID();
-//                 } else {
-//                     currentState = 0;
-//                 }
-//                 break;
-//
-//             case Allocated:
-//                 boolean cuurrentAllocation = isBlockAllocated(block);
-//                 currentState = cuurrentAllocation ? BlockState.Allocated.getID() : 0;
-//                 break;
-//
-//             case ValueMatches:
-//                 String blockValue = _selectBlockValue.evaluateValue(conditionalNG);
-//                 currentState = blockValue.equals(block.getValue())
-//                         ? BlockState.ValueMatches.getID() : 0;
-//                 break;
-//
-//             default:
-//                 break;
-//         }
-
         if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentState == checkSectionState.getID();
         } else {

@@ -102,6 +102,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.ExpressionReference.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionReporter.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionScript.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionSection.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSensor.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSensorEdge.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSignalHead.class);
