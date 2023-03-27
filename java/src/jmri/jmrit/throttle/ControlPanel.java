@@ -669,7 +669,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinner = new JSpinner();
         speedSpinnerModel = new SpinnerNumberModel(0, 0, intSpeedSteps, 1);
         speedSpinner.setModel(speedSpinnerModel);
-        speedSpinner.setMinimumSize(new Dimension(20,20));
 
         // customize speed spinner keyboard and focus interactions to not conflict with throttle keyboard shortcuts
         speedSpinner.getActionMap().put("doNothing", new AbstractAction() {
@@ -1381,9 +1380,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     horizontalLabelMap = new HashMap<>(speedLabels.length *2 );
                     for (SpeedLabel sp : speedLabels) {                            
                         JLabel label = new JLabel( sp.label, speedLabelVerticalImageIcon, SwingConstants.LEFT );
-//                        Dimension d = label.getPreferredSize();
-//                        d.width = Math.min( 64, label.getPreferredSize().width);
-//                        label.setPreferredSize(d);
                         verticalLabelMap.put( sp.value, label);
                         verticalLabelMap.put( -sp.value, label);
 
@@ -1405,7 +1401,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
     }
         
-    
+    // update slider label display depending on context (vertical|horizontal & normal|large)
     private void updateSlidersLabelDisplay() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         Map<Integer, JLabel> labelTable = new HashMap<>(10);
@@ -1426,8 +1422,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
         
         if (! labelTable.isEmpty()) {
-            speedSlider.setLabelTable(new Hashtable(labelTable));
-            speedSliderContinuous.setLabelTable(new Hashtable(labelTable));
+            // setLabelTable() only likes Colection which is a HashTable
+            speedSlider.setLabelTable(new Hashtable<Integer, JLabel>(labelTable));
+            speedSliderContinuous.setLabelTable(new Hashtable<Integer, JLabel>(labelTable));
             speedSlider.setPaintLabels(true);
             speedSliderContinuous.setPaintLabels(true);
         } else {
