@@ -603,6 +603,17 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The NamedIcon class will now search Locations.ALL for files. This means
+                <ul>
+                <li>Files and filepaths will be found in the user area first for all
+                    subclasses of
+                    <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/catalog/NamedIcon.html">NamedIcon</a>.
+                <li>This change might result in different graphics in some cases,
+                    where it hadn't been
+                    searching before and a file was not being found (even though it
+                    really should have been). Please check your graphics carefully to
+                    see if there are any issues.
+                </ul>
+            </li>
         </ul>
 
