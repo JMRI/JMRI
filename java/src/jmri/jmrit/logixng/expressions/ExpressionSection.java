@@ -20,8 +20,9 @@ import jmri.util.TypeConversionUtil;
  * This expression evaluates the state of a Section.
  * The supported characteristics are:
  * <ul>
- *   <li>Is [not] Idle</li>
- *   <li>Is [not] Assigned</li>
+ *   <li>Is [not] Free</li>
+ *   <li>Is [not] Forward</li>
+ *   <li>Is [not] Reverse</li>
  * </ul>
  * @author Dave Sand Copyright 2023
  */
