@@ -2485,21 +2485,31 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                                 LayoutBlock tempLB;
                                 if (turnoutList.get(x).getExpectedState() == Turnout.THROWN) {
                                     if (lt.getLayoutBlock() == lblks.get(i) || lt.getLayoutBlockC() == lblks.get(i)) {
+                                        // A or C, add B and D to remove list unless A=B or C=D
                                         if ((tempLB = lt.getLayoutBlockB()) != null) {
-                                            dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            if (!tempLB.equals(lt.getLayoutBlock())) {
+                                                dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            }
                                             block.put(tempLB.getBlock(), Block.UNOCCUPIED);
                                         }
                                         if ((tempLB = lt.getLayoutBlockD()) != null) {
-                                            dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            if (!tempLB.equals(lt.getLayoutBlockC())) {
+                                                dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            }
                                             block.put(tempLB.getBlock(), Block.UNOCCUPIED);
                                         }
                                     } else if (lt.getLayoutBlockB() == lblks.get(i) || lt.getLayoutBlockD() == lblks.get(i)) {
+                                        // B or D, add A and C to remove list unless A=B or C=D
                                         if ((tempLB = lt.getLayoutBlock()) != null) {
-                                            dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            if (!tempLB.equals(lt.getLayoutBlockB())) {
+                                                dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            }
                                             block.put(tempLB.getBlock(), Block.UNOCCUPIED);
                                         }
                                         if ((tempLB = lt.getLayoutBlockC()) != null) {
-                                            dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            if (!tempLB.equals(lt.getLayoutBlockD())) {
+                                                dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            }
                                             block.put(tempLB.getBlock(), Block.UNOCCUPIED);
                                         }
                                     }
