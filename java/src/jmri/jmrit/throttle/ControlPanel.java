@@ -816,6 +816,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 }
             }
         });
+        computeLabelsTable();
         updateSlidersLabelDisplay();
 
         spinnerPanel = new JPanel();
