@@ -501,7 +501,12 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Updated several definitions to replace invalid <i>speed</i> and
+                    <i>speed2</i> values with proper speed indications.
+                    The invalid values had been previously interpreted as zero.</li>
+                <li>Updated the <i>xml/schema/aspecttable.xsd</i> schema to ensure that
+                    only valid <i>speed</i> and <i>speed2</i> values will occur in
+                    signal system definitions.</li>
             </ul>
 
         <h4>Signal Heads</h4>
