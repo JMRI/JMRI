@@ -460,7 +460,7 @@ public class CarManager extends RollingStockManager<Car>
     }
     
     /**
-     * Used to determine is any car has been assigned a division
+     * Used to determine if any car has been assigned a division
      * 
      * @return true if any car has been assigned a division, otherwise false
      */
