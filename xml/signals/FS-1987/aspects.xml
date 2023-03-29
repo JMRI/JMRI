@@ -101,7 +101,7 @@
 	  <description>Red-Yellow</description>
 	  <comment>da usare per 1. e 2. vela</comment>
       <speed>Restricted</speed>
-      <speed2 />
+      <speed2>Restricted</speed2>
     </aspect>
 
     <aspect>
@@ -110,7 +110,7 @@
 	  <description>Red-Blinking Yellow</description>
 	  <comment>da usare per 1. e 2. vela</comment>
       <speed>Slow</speed>
-      <speed2 />
+      <speed2>Slow</speed2>
     </aspect>
 
     <aspect>
@@ -119,7 +119,7 @@
 	  <description>Red-Green</description>
 	  <comment>da usare per 1. e 2. vela</comment>
       <speed>Restricted</speed>
-      <speed2 />
+      <speed2>Restricted</speed2>
     </aspect>
 
     <aspect>
@@ -128,7 +128,7 @@
 	  <description>Yellow-Yellow</description>
 	  <comment>da usare per 1. e 2. vela</comment>
       <speed>Restricted</speed>
-      <speed2 />
+      <speed2>Restricted</speed2>
     </aspect>
 
     <aspect>
@@ -137,7 +137,7 @@
 	  <description>Yellow-Green</description>
 	  <comment>next main signal is set to diverging route max. 30 Km/h</comment>
       <speed>Slow</speed>
-      <speed2 />
+      <speed2>Slow</speed2>
     </aspect>
 
     <aspect>
@@ -146,7 +146,7 @@
 	  <description>Blinking Yellow-Green</description>
 	  <comment>next main signal is set to diverging route max. 60 Km/h</comment>
       <speed>Medium</speed>
-      <speed2 />
+      <speed2>Medium</speed2>
     </aspect>
 
     <aspect>
@@ -155,7 +155,7 @@
 	  <description>Alternate Blinking Yellow-Green</description>
 	  <comment>next main signal is set to diverging route max. 100 Km/h</comment>
       <speed>Limited</speed>
-      <speed2 />
+      <speed2>Limited</speed2>
     </aspect>
 
     <aspect>
@@ -164,7 +164,7 @@
 	  <description>Alternate Blinking Yellow-Green</description>
 	  <comment>Diverging clear and next main signal is set to diverging route max. 30 Km/h</comment>
       <speed>Slow</speed>
-      <speed2 />
+      <speed2>Slow</speed2>
     </aspect>
 
     <aspect>
@@ -190,8 +190,8 @@
       <indication>Diverging Approach</indication>
 	  <description>Alternate Blinking Yellow-Green</description>
 	  <comment>Diverging approach</comment>
-      <speed>Restricted Slow</speed>
-      <speed2>Diverging Clear</speed2>
+      <speed>RestrictedSlow</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
     <aspect>
@@ -208,7 +208,7 @@
 	  <description>Real: 2 horizontal white lamps - Panel: dark</description>
 	  <comment>Stop</comment>
       <speed>Stop</speed>
-      <speed2 />
+      <speed2>Stop</speed2>
     </aspect>
 
     <aspect>
@@ -216,8 +216,8 @@
       <indication>Shunting-Clear</indication>
 	  <description>Real: 2 vertical white lamps - Panel: white lamp</description>
 	  <comment>Diverging approach</comment>
-      <speed>Restricted Slow</speed>
-      <speed2 />
+      <speed>RestrictedSlow</speed>
+      <speed2>RestrictedSlow</speed2>
     </aspect>
 
   </aspects>

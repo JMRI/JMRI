@@ -151,16 +151,16 @@
     <aspect>
       <name>Permissive</name>
       <indication>Proceed with caution</indication>
-      <speed>Restricting</speed>
-      <speed2>Restricting</speed2>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
       <route>Either</route>
       <dccAspect>2</dccAspect>
     </aspect>
     <aspect>
       <name>Take Siding</name>
       <indication>Proceed with caution</indication>
-      <speed>Restricting</speed>
-      <speed2>Restricting</speed2>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
       <route>Diverging</route>
       <dccAspect>1</dccAspect>
     </aspect>
