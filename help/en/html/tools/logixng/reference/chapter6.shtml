@@ -502,6 +502,21 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h5>Section<span class="since">since 5.3.5</span></h5>
+
+      <ul>
+        <li><strong>Free:</strong> Evaluate to true if the state of the selected section is
+        not being used by a transit.</li>
+
+        <li><strong>Forward:</strong> Evaluate to true if the selected section is being used by
+        a transit and is set for the forward direction.</li>
+
+        <li><strong>Reverse:</strong> Evaluate to true if the selected section is being used by
+        a transit and is set for the reverse direction.</li>
+      </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Sensor</h5>
 
       <ul>

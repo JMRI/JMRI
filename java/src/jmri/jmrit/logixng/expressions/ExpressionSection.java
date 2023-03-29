@@ -17,27 +17,28 @@ import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.TypeConversionUtil;
 
 /**
- * This expression evaluates the state of a Transit.
+ * This expression evaluates the state of a Section.
  * The supported characteristics are:
  * <ul>
- *   <li>Is [not] Idle</li>
- *   <li>Is [not] Assigned</li>
+ *   <li>Is [not] Free</li>
+ *   <li>Is [not] Forward</li>
+ *   <li>Is [not] Reverse</li>
  * </ul>
  * @author Dave Sand Copyright 2023
  */
-public class ExpressionTransit extends AbstractDigitalExpression
+public class ExpressionSection extends AbstractDigitalExpression
         implements PropertyChangeListener {
 
-    private final LogixNG_SelectNamedBean<Transit> _selectNamedBean =
+    private final LogixNG_SelectNamedBean<Section> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Transit.class, InstanceManager.getDefault(TransitManager.class), this);
+                    this, Section.class, InstanceManager.getDefault(SectionManager.class), this);
 
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
 
-    private final LogixNG_SelectEnum<TransitState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, TransitState.values(), TransitState.Idle, this);
+    private final LogixNG_SelectEnum<SectionState> _selectEnum =
+            new LogixNG_SelectEnum<>(this, SectionState.values(), SectionState.Free, this);
 
-    public ExpressionTransit(String sys, String user)
+    public ExpressionSection(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
@@ -48,7 +49,7 @@ public class ExpressionTransit extends AbstractDigitalExpression
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        ExpressionTransit copy = new ExpressionTransit(sysName, userName);
+        ExpressionSection copy = new ExpressionSection(sysName, userName);
         copy.setComment(getComment());
 
         _selectNamedBean.copy(copy._selectNamedBean);
@@ -59,11 +60,11 @@ public class ExpressionTransit extends AbstractDigitalExpression
         return manager.registerExpression(copy);
     }
 
-    public LogixNG_SelectNamedBean<Transit> getSelectNamedBean() {
+    public LogixNG_SelectNamedBean<Section> getSelectNamedBean() {
         return _selectNamedBean;
     }
 
-    public LogixNG_SelectEnum<TransitState> getSelectEnum() {
+    public LogixNG_SelectEnum<SectionState> getSelectEnum() {
         return _selectEnum;
     }
 
@@ -86,18 +87,18 @@ public class ExpressionTransit extends AbstractDigitalExpression
     public boolean evaluate() throws JmriException {
         ConditionalNG conditionalNG = getConditionalNG();
 
-        Transit transit = _selectNamedBean.evaluateNamedBean(conditionalNG);
+        Section section = _selectNamedBean.evaluateNamedBean(conditionalNG);
 
-        if (transit == null) return false;
+        if (section == null) return false;
 
-        TransitState checkTransitState = _selectEnum.evaluateEnum(conditionalNG);
+        SectionState checkSectionState = _selectEnum.evaluateEnum(conditionalNG);
 
-        int currentState = transit.getState();
+        int currentState = section.getState();
 
         if (_is_IsNot == Is_IsNot_Enum.Is) {
-            return currentState == checkTransitState.getID();
+            return currentState == checkSectionState.getID();
         } else {
-            return currentState != checkTransitState.getID();
+            return currentState != checkSectionState.getID();
         }
     }
 
@@ -113,7 +114,7 @@ public class ExpressionTransit extends AbstractDigitalExpression
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Transit_Short");
+        return Bundle.getMessage(locale, "Section_Short");
     }
 
     @Override
@@ -123,8 +124,8 @@ public class ExpressionTransit extends AbstractDigitalExpression
 
         switch (_selectEnum.getAddressing()) {
             case Direct:
-                TransitState transitState = _selectEnum.getEnum();
-                state = Bundle.getMessage(locale, "AddressByDirect", transitState._text);
+                SectionState sectionState = _selectEnum.getEnum();
+                state = Bundle.getMessage(locale, "AddressByDirect", sectionState._text);
                 break;
 
             case Reference:
@@ -138,7 +139,7 @@ public class ExpressionTransit extends AbstractDigitalExpression
         }
 
 
-        return Bundle.getMessage(locale, "Transit_Long", namedBean, _is_IsNot.toString(), state);
+        return Bundle.getMessage(locale, "Section_Long", namedBean, _is_IsNot.toString(), state);
     }
 
     /** {@inheritDoc} */
@@ -178,14 +179,15 @@ public class ExpressionTransit extends AbstractDigitalExpression
     public void disposeMe() {
     }
 
-    public enum TransitState {
-        Idle(Transit.IDLE, Bundle.getMessage("Transit_StateIdle")),
-        Assigned(Transit.ASSIGNED, Bundle.getMessage("Transit_StateAssigned"));
+    public enum SectionState {
+        Free(Section.FREE, Bundle.getMessage("Section_StateFree")),
+        Forward(Section.FORWARD, Bundle.getMessage("Section_StateForward")),
+        Reverse(Section.REVERSE, Bundle.getMessage("Section_StateReverse"));
 
         private final int _id;
         private final String _text;
 
-        private TransitState(int id, String text) {
+        private SectionState(int id, String text) {
             this._id = id;
             this._text = text;
         }
@@ -203,10 +205,10 @@ public class ExpressionTransit extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ExpressionTransit: bean = {}, report = {}", cdl, report);
+        log.debug("getUsageReport :: ExpressionSection: bean = {}, report = {}", cdl, report);
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTransit.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSection.class);
 
 }

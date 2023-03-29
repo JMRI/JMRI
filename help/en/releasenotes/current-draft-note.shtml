@@ -426,7 +426,9 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>Cleanup LogixNG controlled Dispatcher train when the train has been terminated by an external action.</li>
-          <li>Add a <strong>Transit Expression</strong> which is used to get the state of transit.
+          <li>Add a <strong>Section Expression</strong> which is used to get the state of a section.
+          The state can be <strong>Free</strong>, <strong>Forward</strong> or <strong>Reverse</strong>.</li>
+          <li>Add a <strong>Transit Expression</strong> which is used to get the state of a transit.
           The state can be <strong>Idle</strong> or <strong>Assigned</strong>.</li>
         </ul>
 
