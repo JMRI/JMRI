@@ -310,7 +310,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     }
 
                     if (memo.consumer == null && !model.consumerPresent(memo.eventID)) {
-                        // no matching producer
+                        // no matching consumer
                         return false;
                     }
                 }
