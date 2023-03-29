@@ -545,7 +545,9 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Added a feature to allow custom markers on speed sliders, see <a href="https://www.jmri.org/help/en/html/tools/throttle/RostersMediaPane.shtml"> documention on Roster Media Pane page</a> (Custom attributes section)</li>
+            <li>Small bugs fixes :  previous and next running throttle buttons were reversed, large horizontal speed slider thumb was resized, large speed slider track computation was buggy</li>        
+            <li> Throttle related Jynstruments code was refactored to use non deprecated Function methods</li>
         </ul>
 
     <h3>Timetable</h3>
