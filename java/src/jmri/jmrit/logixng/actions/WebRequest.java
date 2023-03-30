@@ -7,13 +7,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.*;
@@ -31,16 +30,23 @@ public class WebRequest extends AbstractDigitalAction
     private static final ResourceBundle rbx =
             ResourceBundle.getBundle("jmri.jmrit.logixng.implementation.ImplementationBundle");
 
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox
+    private static final String DEFAULT_USER_AGENT = "Mozilla/5.0";
+
     private boolean _useThread = true;
 
-    private GetPostType _getPostType = GetPostType.Get;
-//    private GetPostType _getPostType = GetPostType.Post;
-
+    // Note that it's valid if the url has parameters as well, like https://www.mysite.org/somepage.php?name=Jim&city=Boston
+    // The parameters are the string after the question mark.
     private final LogixNG_SelectString _selectUrl =
             new LogixNG_SelectString(this, this);
 
-//    private final LogixNG_SelectEnum<MimeType> _selectMime =
-//            new LogixNG_SelectEnum<>(this, MimeType.values(), MimeType.TextHtml, this);
+    private final LogixNG_SelectEnum<RequestMethodType> _selectRequestMethod =
+            new LogixNG_SelectEnum<>(this, RequestMethodType.values(), RequestMethodType.Get, this);
+
+    private final LogixNG_SelectString _selectUserAgent =
+            new LogixNG_SelectString(this, DEFAULT_USER_AGENT, this);
+
+    private final List<Parameter> _parameters = new ArrayList<>();
 
     private String _executeSocketSystemName;
     private final FemaleDigitalActionSocket _executeSocket;
@@ -66,8 +72,10 @@ public class WebRequest extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         WebRequest copy = new WebRequest(sysName, userName);
         copy.setComment(getComment());
-        copy.setGetPostType(_getPostType);
         getSelectUrl().copy(copy._selectUrl);
+        getSelectRequestMethod().copy(copy._selectRequestMethod);
+        getSelectUserAgent().copy(copy._selectUserAgent);
+        copy._parameters.addAll(_parameters);
 //        getSelectMime().copy(copy._selectMime);
         copy.setLocalVariableForPostContent(_localVariableForPostContent);
         copy.setLocalVariableForResponseCode(_localVariableForResponseCode);
@@ -86,20 +94,24 @@ public class WebRequest extends AbstractDigitalAction
         return _selectUrl;
     }
 
+    public LogixNG_SelectEnum<RequestMethodType> getSelectRequestMethod() {
+        return _selectRequestMethod;
+    }
+
+    public LogixNG_SelectString getSelectUserAgent() {
+        return _selectUserAgent;
+    }
+
+    public List<Parameter> getParameters() {
+        return _parameters;
+    }
+
 //    public LogixNG_SelectEnum<MimeType> getSelectMime() {
 //        return _selectMime;
 //    }
 
     public void setUseThread(boolean value) {
         _useThread = value;
-    }
-
-    public void setGetPostType(GetPostType value) {
-        _getPostType = value;
-    }
-
-    public GetPostType getGetPostType() {
-        return _getPostType;
     }
 
     public void setLocalVariableForPostContent(String localVariable) {
@@ -220,32 +232,49 @@ public class WebRequest extends AbstractDigitalAction
         final DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG.getSymbolTable());
 
         String urlString = _selectUrl.evaluateValue(conditionalNG);
-//        String mime = _selectMime.evaluateEnum(conditionalNG)._mime;
+        String userAgent = _selectUserAgent.evaluateValue(conditionalNG);
+        RequestMethodType requestMethodType = _selectRequestMethod.evaluateEnum(conditionalNG);
 
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("firstName", "Daniel");
-        parameters.put("lastName", "Bergqvist");
-        parameters.put("address", "Åbenråvägen 2");
-
-        String parameters11;
         URL url;
+        StringBuilder paramString = new StringBuilder();
+
         try {
-            parameters11 = ParameterStringBuilder.getParamsString(parameters);
-            if (_getPostType == GetPostType.Get) {
-                urlString += "?" + parameters11;
-//                urlString += "?name=Daniel&sur=Bergqvist";
+            for (Parameter parameter : _parameters) {
+
+                Object v = SymbolTable.getInitialValue(
+                        parameter._valueType,
+                        parameter._valueData,
+                        newSymbolTable,
+                        newSymbolTable.getSymbols());
+
+                String value;
+                if (v != null) value = v.toString();
+                else value = "";
+                paramString.append(URLEncoder.encode(parameter._name, "UTF-8"));
+                paramString.append("=");
+                paramString.append(URLEncoder.encode(value, "UTF-8"));
+                paramString.append("&");
             }
-//            urlString += "?name=Daniel&sur=Bergqvist&some=thing";
+
+            if (paramString.length() > 0) {
+                paramString.deleteCharAt(paramString.length() - 1);
+            }
+
+            if (requestMethodType == RequestMethodType.Get) {
+                if (!urlString.contains("?")) urlString += "?";
+                urlString +=  paramString.toString();
+            }
+
             url = new URL(urlString);
             System.out.format("URL: %s, query: %s, userInfo: %s%n", url.toString(), url.getQuery(), url.getUserInfo());
-//            System.out.format("Host: %s, Port: %d, DefaultPort: %d, File: %s, Protocol: %s, Authority: %s, Path: %s, Query: %s, Ref: %s, UserInfo: %s%n", url.getHost(), url.getPort(), url.getDefaultPort(), url.getFile(), url.getProtocol(), url.getAuthority(), url.getPath(), url.getQuery(), url.getRef(), url.getUserInfo());
-//            if (1==1) return;
             if (!urlString.contains("LogixNG_WebRequest_Test.php")) return;
         } catch (UnsupportedEncodingException | MalformedURLException ex) {
             throw new JmriException(ex.getMessage(), ex);
         }
 
         boolean useHttps = urlString.toLowerCase().startsWith("https://");
+
+        final String tempUrlString = urlString;
 
         Runnable runnable = () -> {
 //            String https_url = "https://www.google.com/";
@@ -265,6 +294,9 @@ public class WebRequest extends AbstractDigitalAction
                     con = (HttpURLConnection) url.openConnection();
                 }
 
+                con.setRequestMethod(requestMethodType._identifier);
+                con.setRequestProperty("User-Agent", userAgent);
+
 
 ////DANIEL                con.setRequestProperty("Content-Type", "text/html");
 //                con.setRequestProperty("Content-Type", mime);
@@ -276,29 +308,13 @@ public class WebRequest extends AbstractDigitalAction
 //                con.setRequestProperty("Content-Type", "text/csv");
 //                con.setRequestProperty("Content-Type", "text/markdown");
 
-                switch (_getPostType) {
-                    case Get:
-                        con.setRequestMethod("GET");
-/*
-                        con.setDoOutput(true);
-                        try (DataOutputStream out = new DataOutputStream(con.getOutputStream())) {
-                            out.writeBytes(parameters11);
-                            out.flush();
-                        }
-*/
-                        break;
-
-                    case Post:
-                        con.setRequestMethod("POST");
-                        con.setDoOutput(true);
-                        try (DataOutputStream out = new DataOutputStream(con.getOutputStream())) {
-                            out.writeBytes(parameters11);
-                            out.flush();
-                        }
-                        break;
-
-                    default:
-                        throw new IllegalArgumentException("_getPostType has unknown value: "+_getPostType.name());
+                if (requestMethodType == RequestMethodType.Post) {
+                    con.setRequestMethod("POST");
+                    con.setDoOutput(true);
+                    try (DataOutputStream out = new DataOutputStream(con.getOutputStream())) {
+                        out.writeBytes(paramString.toString());
+                        out.flush();
+                    }
                 }
 
 
@@ -309,8 +325,15 @@ public class WebRequest extends AbstractDigitalAction
 
                 //dumpl all cert info
 //                print_https_cert(con);
-                //dump all the content
-                print_content(con);
+
+
+                if (tempUrlString.contains("https://www.modulsyd.se/")) {
+                    //dump all the content
+                    print_content(con);
+                }
+
+
+
 
                 System.out.println("Response Code : " + con.getResponseCode());
 
@@ -347,26 +370,6 @@ public class WebRequest extends AbstractDigitalAction
             ThreadingUtil.newThread(runnable, "LogixNG action WebRequest").start();
         } else {
             runnable.run();
-        }
-    }
-
-    public static class ParameterStringBuilder {
-
-        public static String getParamsString(Map<String, String> params)
-                throws UnsupportedEncodingException {
-            StringBuilder result = new StringBuilder();
-
-            for (Map.Entry<String, String> entry : params.entrySet()) {
-                result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-                result.append("=");
-                result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-                result.append("&");
-            }
-
-            String resultString = result.toString();
-            return resultString.length() > 0
-                    ? resultString.substring(0, resultString.length() - 1)
-                    : resultString;
         }
     }
 
@@ -644,14 +647,16 @@ public class WebRequest extends AbstractDigitalAction
     }
 
 
-    public enum GetPostType {
-        Get(Bundle.getMessage("WebRequest_GetPostType_Get", "GET")),        // "GET" should not be i11n
-        Post(Bundle.getMessage("WebRequest_GetPostType_Post", "POST"));     // "POST" should not be i11n
+    public enum RequestMethodType {
+        Get("WebRequest_GetPostType_Get", "GET"),        // "GET" should not be i11n
+        Post("WebRequest_GetPostType_Post", "POST");     // "POST" should not be i11n
 
         private final String _text;
+        private final String _identifier;
 
-        private GetPostType(String text) {
-            this._text = text;
+        private RequestMethodType(String text, String identifier) {
+            this._text = Bundle.getMessage(text, identifier);
+            this._identifier = identifier;
         }
 
         @Override
@@ -662,90 +667,22 @@ public class WebRequest extends AbstractDigitalAction
     }
 
 
+    public static class Parameter {
 
+        public String _name;
+        public InitialValueType _valueType;
+        public String _valueData;
 
-/*
-    public enum FormatType {
-        OnlyText(Bundle.getMessage("ShowDialog_FormatType_TextOnly"), true, false),
-        CommaSeparatedList(Bundle.getMessage("ShowDialog_FormatType_CommaSeparatedList"), false, true),
-        StringFormat(Bundle.getMessage("ShowDialog_FormatType_StringFormat"), true, true);
-
-        private final String _text;
-        private final boolean _useFormat;
-        private final boolean _useData;
-
-        private FormatType(String text, boolean useFormat, boolean useData) {
-            this._text = text;
-            this._useFormat = useFormat;
-            this._useData = useData;
+        public Parameter(String name, InitialValueType valueType, String valueData) {
+            this._name = name;
+            this._valueType = valueType;
+            this._valueData = valueData;
         }
-
-        @Override
-        public String toString() {
-            return _text;
-        }
-
-        public boolean getUseFormat() {
-            return _useFormat;
-        }
-
-        public boolean getUseData() {
-            return _useData;
-        }
-
     }
 
-/*
-    public enum Button {
-        Ok(1, Bundle.getMessage("ButtonOK")),
-        Cancel(2, Bundle.getMessage("ButtonCancel")),
-        Yes(3, Bundle.getMessage("ButtonYes")),
-        No(4, Bundle.getMessage("ButtonNo"));
 
-        private final int _value;
-        private final String _text;
 
-        private Button(int value, String text) {
-            this._value = value;
-            this._text = text;
-        }
 
-        public int getValue() {
-            return _value;
-        }
-
-        @Override
-        public String toString() {
-            return _text;
-        }
-
-    }
-*/
-/*
-    public enum MimeType {
-        TextPlain(Bundle.getMessage("WebRequest_MimeType_TextPlain"), "text/plain"),
-        TextHtml(Bundle.getMessage("WebRequest_MimeType_TextHtml"), "text/html"),
-        ApplicationJson(Bundle.getMessage("WebRequest_MimeType_ApplicationJson"), "application/json");
-
-        private final String _text;
-        private final String _mime;
-
-        private MimeType(String text, String mime) {
-            this._text = text;
-            this._mime = mime;
-        }
-
-        public String getMime() {
-            return _mime;
-        }
-
-        @Override
-        public String toString() {
-            return _text;
-        }
-
-    }
-*/
 /*
     public enum DataType {
         LocalVariable(Bundle.getMessage("ShowDialog_Operation_LocalVariable")),

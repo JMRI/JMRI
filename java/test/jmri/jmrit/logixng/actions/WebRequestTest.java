@@ -32,6 +32,20 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     @Test
     public void testWebRequest() throws JmriException {
         webRequest.getSelectUrl().setValue("https://jmri.bergqvist.se/LogixNG_WebRequest_Test.php");
+//        webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
+        webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Post);
+        webRequest.getParameters().add(new WebRequest.Parameter("name", SymbolTable.InitialValueType.String, "Daniel123"));
+        webRequest.getParameters().add(new WebRequest.Parameter("address", SymbolTable.InitialValueType.String, "Adenravagen 2"));
+        conditionalNG.execute();
+    }
+
+    @Test
+    public void testWebRequest2() throws JmriException {
+        webRequest.getSelectUrl().setValue("https://www.modulsyd.se/forum_3.3/index.php");
+//        webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
+        webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Post);
+        webRequest.getParameters().add(new WebRequest.Parameter("name", SymbolTable.InitialValueType.String, "Daniel123"));
+        webRequest.getParameters().add(new WebRequest.Parameter("address", SymbolTable.InitialValueType.String, "Adenravagen 2"));
         conditionalNG.execute();
     }
 

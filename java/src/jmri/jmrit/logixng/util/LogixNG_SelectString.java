@@ -48,6 +48,12 @@ public class LogixNG_SelectString implements VetoableChangeListener {
     }
 
 
+    public LogixNG_SelectString(AbstractBase base, String defaultValue, PropertyChangeListener listener) {
+        this(base, listener);
+        _value = defaultValue;
+    }
+
+
     public void copy(LogixNG_SelectString copy) throws ParserException {
         copy.setAddressing(_addressing);
         copy.setValue(_value);
