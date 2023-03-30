@@ -18,7 +18,7 @@
     <author>
         <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
         <email>sidlo64@hotmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -27,29 +27,29 @@
         <date>2016-12-28</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>2</revnumber>
         <date>2018-09-22</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>3</revnumber>
         <date>2019-02-21</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Test set</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>4</revnumber>
         <date>2020-07-15</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Image types</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
-  
+
     <aspect>
       <name>Stůj</name>
       <title>Stop</title>
@@ -103,7 +103,7 @@
       <reference>Aspect 7</reference>
       <comment>Pomalu, u hlavního návěstidla rychlost 40 km/h</comment>
       <speed>Normal</speed>
-      <speed2>40 km/h</speed2>
+      <speed2>Slow</speed2>
       <route>Normal</route>
       <dccAspect>3</dccAspect>
     </aspect>
@@ -131,7 +131,7 @@
       <description>Two green lights</description>
       <reference>Aspect 23</reference>
       <comment>Vjezd odbočkou, rychlost 40 km/h</comment>
-      <speed>40 km/h</speed>
+      <speed>Slow</speed>
       <speed2>Stop</speed2>
       <route>Diverging</route>
       <dccAspect>7</dccAspect>
@@ -198,7 +198,7 @@
       <description>Three white light arranged to triangl</description>
       <reference>Aspect 203</reference>
       <comment>Opatrně na přivolávací návěst</comment>
-      <speed>Slowly</speed>
+      <speed>Slow</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
       <dccAspect>31</dccAspect>
@@ -209,7 +209,7 @@
   <imagetypes>
 	<imagetype type="prototype"/>
 	<imagetype type="prototype-night"/>
-        
+
 	<imagetype type="hlavní-1R"/>
 	<imagetype type="hlavní-2R"/>
 	<imagetype type="hlavní-2RP"/>
@@ -219,35 +219,35 @@
 	<imagetype type="vložená"/>
 	<imagetype type="uzávěry"/>
 	<imagetype type="vyčkávací"/>
-	
+
         <imagetype type="AŽD b"/>
-	
+
         <imagetype type="ESP b"/>
-	
+
   </imagetypes>
 
   <appearancefiles>
 
     <appearancefile href="appearance-entry_auxiliary.xml"/>
     <appearancefile href="appearance-entry_distant_auxiliary.xml"/>
-    
+
     <appearancefile href="appearance-entry.xml"/>
     <appearancefile href="appearance-entry_distant.xml"/>
-    
+
 
     <appearancefile href="appearance-exit.xml"/>
-        
+
     <appearancefile href="appearance-block.xml"/>
     <appearancefile href="appearance-block_distant.xml"/>
-    
+
     <appearancefile href="appearance-shunting.xml"/>
-        
+
     <appearancefile href="appearance-waiting.xml"/>
-        
+
     <appearancefile href="appearance-embedded.xml"/>
-    
+
     <appearancefile href="appearance-protection.xml"/>
-      
+
     <appearancefile href="appearance-test.xml"/>
 
   </appearancefiles>

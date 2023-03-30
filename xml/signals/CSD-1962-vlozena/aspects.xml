@@ -18,7 +18,7 @@
     <author>
         <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
         <email>sidlo64@hotmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -27,23 +27,23 @@
         <date>2016-11-27</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>2</revnumber>
         <date>2018-09-22</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>3</revnumber>
         <date>2019-02-20</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Test set</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
-  
+
     <aspect>
       <name>Stůj</name>
       <title>Stop</title>
@@ -91,7 +91,7 @@
       <reference>Aspect 16</reference>
       <comment>Očekávejte rychlost 40 km/h</comment>
       <speed>Normal</speed>
-      <speed2>40 km/h</speed2>
+      <speed2>Slow</speed2>
       <route>Normal</route>
       <dccAspect>3</dccAspect>
     </aspect>
@@ -129,7 +129,7 @@
       <description>Lower light yellow, upper light yellow</description>
       <reference>Aspect 23</reference>
       <comment>Rychlost 40 km/h a výstraha</comment>
-      <speed>40 km/h</speed>
+      <speed>Slow</speed>
       <speed2>Stop</speed2>
       <route>Diverging</route>
       <dccAspect>7</dccAspect>
@@ -168,8 +168,8 @@
       <description>Lower light white, upper light white</description>
       <reference>Aspect 110</reference>
       <comment>Sunout pomalu</comment>
-      <speed>Push slowly</speed>
-      <speed2>Push slowly</speed2>
+      <speed>RestrictedSlow</speed>
+      <speed2>RestrictedSlow</speed2>
       <route>Either</route>
       <dccAspect>17</dccAspect>
     </aspect>
@@ -181,8 +181,8 @@
       <description>Upper light white</description>
       <reference>Aspect 111</reference>
       <comment>Sunout rychleji</comment>
-      <speed>Push speedily</speed>
-      <speed2>Push speedily</speed2>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
       <route>Either</route>
       <dccAspect>18</dccAspect>
     </aspect>
@@ -194,8 +194,8 @@
       <description>Red light with white letter Z</description>
       <reference>Aspect 112</reference>
       <comment>Zpět</comment>
-      <speed>Reverse</speed>
-      <speed2>Reverse</speed2>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
       <route>Either</route>
       <dccAspect>19</dccAspect>
     </aspect>
@@ -207,8 +207,8 @@
       <description>Blue light with white letter Z</description>
       <reference>Aspect 112</reference>
       <comment>Zpět opakovaná</comment>
-      <speed>Reverse</speed>
-      <speed2>Reverse</speed2>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
       <route>Either</route>
       <dccAspect>20</dccAspect>
     </aspect>
@@ -247,7 +247,7 @@
       <reference>Aspect 27</reference>
       <comment>Opakovaná očekávejte rychlost 40 km/h</comment>
       <speed>Normal</speed>
-      <speed2>40 km/h</speed2>
+      <speed2>Slow</speed2>
       <route>Normal</route>
       <dccAspect>23</dccAspect>
     </aspect>
@@ -324,7 +324,7 @@
       <description>One white light</description>
       <reference>Aspect 203</reference>
       <comment>Opatrně na přivolávací návěst</comment>
-      <speed>Slowly</speed>
+      <speed>Slow</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
       <dccAspect>31</dccAspect>
@@ -334,15 +334,15 @@
 
   <imagetypes>
 	<imagetype type="prototype"/>
-	
+
 	<imagetype type="AŽD žzčb"/>
         <imagetype type="AŽD z"/>
         <imagetype type="AŽD b"/>
-	
+
 	<imagetype type="ESP žzčb"/>
         <imagetype type="ESP z"/>
         <imagetype type="ESP b"/>
-	
+
   </imagetypes>
 
   <appearancefiles>
@@ -350,9 +350,9 @@
     <appearancefile href="appearance-entry.xml"/>
     <appearancefile href="appearance-entry_distant.xml"/>
     <appearancefile href="appearance-entry_distant_repeater.xml"/>
-    
+
     <appearancefile href="appearance-embedded.xml"/>
-    
+
     <appearancefile href="appearance-exit.xml"/>
 
     <appearancefile href="appearance-shunting.xml"/>
