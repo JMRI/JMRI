@@ -92,6 +92,7 @@ public class ThrottleWindow extends JmriJFrame {
         if (powerMgr == null) {
             log.info("No power manager instance found, panel not active");
         }
+        pcs.addPropertyChangeListener(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel());        
         initGUI();
         applyPreferences();
     }
@@ -536,6 +537,14 @@ public class ThrottleWindow extends JmriJFrame {
     public JCheckBoxMenuItem getViewSpeedPanel() {
         return viewSpeedPanel;
     }
+    
+    private void updateCurentThrottleFrame() {
+        for (Component comp : throttlesPanel.getComponents()) {
+            if (comp instanceof ThrottleFrame && comp.isVisible()) {
+                currentThrottleFrame = (ThrottleFrame) comp;
+            }
+        }
+    }
 
     public ThrottleFrame getCurrentThrottleFrame() {
         return currentThrottleFrame;
@@ -562,16 +571,24 @@ public class ThrottleWindow extends JmriJFrame {
             throttlesLayout.invalidateLayout(throttlesPanel);
         }
         updateGUI();
+        updateCurentThrottleFrame();
+        pcs.firePropertyChange("ThrottleFrame", tf, getCurrentThrottleFrame());
     }
 
     public void nextThrottleFrame() {
+        ThrottleFrame otf = getCurrentThrottleFrame();
         throttlesLayout.next(throttlesPanel);
+        updateCurentThrottleFrame();
         updateGUI();
+        pcs.firePropertyChange("ThrottleFrame", otf, getCurrentThrottleFrame());
     }
 
     public void previousThrottleFrame() {
+        ThrottleFrame otf = getCurrentThrottleFrame();
         throttlesLayout.previous(throttlesPanel);
+        updateCurentThrottleFrame();
         updateGUI();
+        pcs.firePropertyChange("ThrottleFrame", otf, getCurrentThrottleFrame());
     }
 
     public void nextRunningThrottleFrame() {
@@ -595,6 +612,8 @@ public class ThrottleWindow extends JmriJFrame {
             }
             if (nf != null) {
                 nf.toFront();
+                updateCurentThrottleFrame();
+                pcs.firePropertyChange("ThrottleFrame", cf, nf);
             }
         }
     }
@@ -613,6 +632,8 @@ public class ThrottleWindow extends JmriJFrame {
             }
             if (nf != null) {
                 nf.toFront();
+                updateCurentThrottleFrame();
+                pcs.firePropertyChange("ThrottleFrame", cf, nf);
             }
         }
     }
@@ -622,6 +643,7 @@ public class ThrottleWindow extends JmriJFrame {
     }
 
     public void addThrottleFrame(ThrottleFrame tp) {
+        ThrottleFrame otf = getCurrentThrottleFrame();
         cardCounterID++;
         cardCounterNB++;
         String txt = "Card-" + cardCounterID;
@@ -632,7 +654,9 @@ public class ThrottleWindow extends JmriJFrame {
         if (!isEditMode) {
             tp.setEditMode(isEditMode);
         }
+        updateCurentThrottleFrame();
         updateGUI();
+        pcs.firePropertyChange("ThrottleFrame", otf, tp);
     }
 
     public ThrottleFrame addThrottleFrame() {
@@ -643,10 +667,13 @@ public class ThrottleWindow extends JmriJFrame {
     }
 
     public void toFront(String throttleFrameTitle) {
+        ThrottleFrame otf = getCurrentThrottleFrame();
         throttlesLayout.show(throttlesPanel, throttleFrameTitle);
+        updateCurentThrottleFrame();
         setVisible(true);
         requestFocus();
         toFront();
+        pcs.firePropertyChange("ThrottleFrame", otf, getCurrentThrottleFrame());
     }
 
     public String getTitleTextType() {

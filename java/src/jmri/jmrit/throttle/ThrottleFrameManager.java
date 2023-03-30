@@ -189,7 +189,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         if (throttlesListFrame == null) {
             buildThrottleListFrame();
         }
-        throttlesListFrame.setVisible(!throttlesListFrame.isVisible());
+        throttlesListFrame.setVisible(true);
     }
 
     /*
