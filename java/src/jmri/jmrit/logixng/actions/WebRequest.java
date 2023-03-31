@@ -468,7 +468,6 @@ public class WebRequest extends AbstractDigitalAction
 /*
     private void print_content(HttpURLConnection con) {
         if (con != null) {
-
             try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
 
                 System.out.println("****** Content of the URL ********");
@@ -482,114 +481,10 @@ public class WebRequest extends AbstractDigitalAction
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
-
     }
 */
 
-
-
-
-    /** {@inheritDoc} *./
-    @Override
-    public void execute() throws JmriException {
-
-        String str;
-        String strMultiLine;
-
-        switch (_formatType) {
-            case OnlyText:
-                str = _format;
-                break;
-
-            case CommaSeparatedList:
-                StringBuilder sb = new StringBuilder();
-                for (Object value : getDataValues()) {
-                    if (sb.length() > 0) sb.append(", ");
-                    sb.append(value != null ? value.toString() : "null");
-                }
-                str = sb.toString();
-                break;
-
-            case StringFormat:
-                str = String.format(_format, getDataValues().toArray());
-                break;
-
-            default:
-                throw new IllegalArgumentException("_formatType has invalid value: "+_formatType.name());
-        }
-
-        final ConditionalNG conditionalNG = getConditionalNG();
-        final DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG.getSymbolTable());
-
-        if (_multiLine) strMultiLine = "<html>" + str + "</html>";
-        else strMultiLine = str;
-
-        Object value = null;
-        if (!_localVariableForInputString.isEmpty()) {
-           value = newSymbolTable.getValue(_localVariableForInputString);
-        }
-        final Object currentValue = value;
-
-        ThreadingUtil.runOnGUIEventually(() -> {
-
-            if (_dialog != null) _dialog.dispose();
-
-            _dialog = new JDialog(
-                    (JFrame)null,
-                    Bundle.getMessage("ShowDialog_Title"),
-                    _modal);
-
-            _dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    _dialog = null;
-                }
-            });
-
-            JPanel panel = new JPanel();
-            panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            _dialog.getContentPane().add(panel);
-
-            panel.add(new JLabel(strMultiLine));
-
-            JTextField textField = new JTextField(20);
-            if (!_localVariableForInputString.isEmpty()) {
-                if (currentValue != null) {
-                    String strValue = TypeConversionUtil.convertToString(currentValue, false);
-                    textField.setText(strValue);
-                }
-                panel.add(textField);
-            }
-
-            JPanel buttonPanel = new JPanel();
-            buttonPanel.setLayout(new FlowLayout());
-
-            for (Button button : Button.values()) {
-                if (_enabledButtons.contains(button)) {
-                    JButton jbutton = new JButton(button._text);
-                    jbutton.addActionListener((ActionEvent e) -> {
-                        synchronized(WebRequest.this) {
-                            _internalSocket.conditionalNG = conditionalNG;
-                            _internalSocket.newSymbolTable = newSymbolTable;
-                            _internalSocket.selectedButton = button._value;
-                            _internalSocket.inputValue = textField.getText();
-                            conditionalNG.execute(_internalSocket);
-                        }
-                    });
-                    buttonPanel.add(jbutton);
-                }
-            }
-            panel.add(buttonPanel);
-
-            _dialog.pack();
-            _dialog.setLocationRelativeTo(null);
-            _dialog.setVisible(true);
-        });
-    }
-*/
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
