@@ -147,7 +147,7 @@
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
         <pathelement location="${libdir}/jackson-core-2.13.4.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.13.4.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.13.4.1.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.13.4.2.jar"/>
         <pathelement location="${libdir}/jetty-http-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-io-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-security-9.4.28.v20200408.jar"/>
