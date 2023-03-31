@@ -2203,6 +2203,12 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        WebRequest webRequest = new WebRequest(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(webRequest);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         jmri.jmrit.display.logixng.ActionLayoutTurnout actionLayoutTurnout =
                 new jmri.jmrit.display.logixng.ActionLayoutTurnout(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionLayoutTurnout);

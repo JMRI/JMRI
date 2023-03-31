@@ -47,8 +47,8 @@ public class WebRequest extends AbstractDigitalAction
 
     private final List<Parameter> _parameters = new ArrayList<>();
 
-    private String _executeSocketSystemName;
-    private final FemaleDigitalActionSocket _executeSocket;
+    private String _socketSystemName;
+    private final FemaleDigitalActionSocket _socket;
     private String _localVariableForPostContent = "";
     private String _localVariableForResponseCode = "";
     private String _localVariableForReplyContent = "";
@@ -59,7 +59,7 @@ public class WebRequest extends AbstractDigitalAction
     public WebRequest(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-        _executeSocket = InstanceManager.getDefault(DigitalActionManager.class)
+        _socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, Bundle.getMessage("ShowDialog_SocketExecute"));
     }
 
@@ -576,7 +576,7 @@ public class WebRequest extends AbstractDigitalAction
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
-                return _executeSocket;
+                return _socket;
 
             default:
                 throw new IllegalArgumentException(
@@ -591,8 +591,8 @@ public class WebRequest extends AbstractDigitalAction
 
     @Override
     public void connected(FemaleSocket socket) {
-        if (socket == _executeSocket) {
-            _executeSocketSystemName = socket.getConnectedSocket().getSystemName();
+        if (socket == _socket) {
+            _socketSystemName = socket.getConnectedSocket().getSystemName();
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -600,8 +600,8 @@ public class WebRequest extends AbstractDigitalAction
 
     @Override
     public void disconnected(FemaleSocket socket) {
-        if (socket == _executeSocket) {
-            _executeSocketSystemName = null;
+        if (socket == _socket) {
+            _socketSystemName = null;
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -634,43 +634,43 @@ public class WebRequest extends AbstractDigitalAction
 */
     }
 
-    public FemaleDigitalActionSocket getExecuteSocket() {
-        return _executeSocket;
+    public FemaleDigitalActionSocket getSocket() {
+        return _socket;
     }
 
-    public String getExecuteSocketSystemName() {
-        return _executeSocketSystemName;
+    public String getSocketSystemName() {
+        return _socketSystemName;
     }
 
-    public void setExecuteSocketSystemName(String systemName) {
-        _executeSocketSystemName = systemName;
+    public void setSocketSystemName(String systemName) {
+        _socketSystemName = systemName;
     }
 
     /** {@inheritDoc} */
     @Override
     public void setup() {
         try {
-            if (!_executeSocket.isConnected()
-                    || !_executeSocket.getConnectedSocket().getSystemName()
-                            .equals(_executeSocketSystemName)) {
+            if (!_socket.isConnected()
+                    || !_socket.getConnectedSocket().getSystemName()
+                            .equals(_socketSystemName)) {
 
-                String socketSystemName = _executeSocketSystemName;
+                String socketSystemName = _socketSystemName;
 
-                _executeSocket.disconnect();
+                _socket.disconnect();
 
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalActionManager.class)
                                     .getBySystemName(socketSystemName);
                     if (maleSocket != null) {
-                        _executeSocket.connect(maleSocket);
+                        _socket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
                         log.error("cannot load digital action {}", socketSystemName);
                     }
                 }
             } else {
-                _executeSocket.getConnectedSocket().setup();
+                _socket.getConnectedSocket().setup();
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.
@@ -849,7 +849,7 @@ public class WebRequest extends AbstractDigitalAction
 
         @Override
         public void execute() throws JmriException {
-            if (_executeSocket != null) {
+            if (_socket != null) {
                 MaleSocket maleSocket = (MaleSocket)WebRequest.this.getParent();
                 try {
                     SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
@@ -871,7 +871,7 @@ public class WebRequest extends AbstractDigitalAction
                     } else {
                         System.out.format("Local variable for cookies is empty!!!%n");
                     }
-                    _executeSocket.execute();
+                    _socket.execute();
                     conditionalNG.setSymbolTable(oldSymbolTable);
                 } catch (JmriException e) {
                     if (e.getErrors() != null) {
