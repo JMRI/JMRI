@@ -90,6 +90,7 @@ public class ExpressionClockSwing extends AbstractDigitalExpressionSwing {
         int minutes = 0;
         try {
             LocalTime newHHMM = LocalTime.parse(timeField.getText().trim(), DateTimeFormatter.ofPattern("H:mm"));
+
             minutes = newHHMM.getHour() * 60 + newHHMM.getMinute();
             if (minutes < 0 || minutes > 1439) {
                 errorMessages.add(Bundle.getMessage("Clock_RangeError"));
@@ -104,7 +105,7 @@ public class ExpressionClockSwing extends AbstractDigitalExpressionSwing {
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         ExpressionClock expression = new ExpressionClock(systemName, userName);
-        expression.setType(ExpressionClock.Type.FastClock);
+        updateObject(expression);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }
 
