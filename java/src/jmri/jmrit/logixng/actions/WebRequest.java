@@ -397,6 +397,17 @@ public class WebRequest extends AbstractDigitalAction
                 //dump all the content
 //DANIEL                print_content(con);
 
+                List<String> reply = new ArrayList<>();
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+                    String input;
+                    while ((input = br.readLine()) != null) {
+                        System.out.println(input);
+                        reply.add(input);
+                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+                }
+
 
 
                 List<String> cookies = new ArrayList<>();
@@ -415,18 +426,20 @@ public class WebRequest extends AbstractDigitalAction
 
                 if (useThread) {
                     synchronized (WebRequest.this) {
-                        _internalSocket.conditionalNG = conditionalNG;
-                        _internalSocket.newSymbolTable = newSymbolTable;
-                        _internalSocket.cookies = cookies;
+                        _internalSocket._conditionalNG = conditionalNG;
+                        _internalSocket._newSymbolTable = newSymbolTable;
+                        _internalSocket._cookies = cookies;
+                        _internalSocket._responseCode = con.getResponseCode();
+                        _internalSocket._reply = reply;
 //                        _internalSocket.selectedButton = button._value;
 //                        _internalSocket.inputValue = textField.getText();
                         conditionalNG.execute(_internalSocket);
                     }
                 } else {
                     synchronized (WebRequest.this) {
-                        _internalSocket.conditionalNG = conditionalNG;
-                        _internalSocket.newSymbolTable = newSymbolTable;
-                        _internalSocket.cookies = cookies;
+                        _internalSocket._conditionalNG = conditionalNG;
+                        _internalSocket._newSymbolTable = newSymbolTable;
+                        _internalSocket._cookies = cookies;
                         _internalSocket.execute();
                     }
                 }
@@ -447,7 +460,7 @@ public class WebRequest extends AbstractDigitalAction
             runnable.run();
         }
     }
-
+/*
     private void print_content(HttpURLConnection con) {
         if (con != null) {
 
@@ -468,7 +481,7 @@ public class WebRequest extends AbstractDigitalAction
         }
 
     }
-
+*/
 
 
 
@@ -827,11 +840,11 @@ public class WebRequest extends AbstractDigitalAction
 
     private class InternalFemaleSocket extends jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket {
 
-        private ConditionalNG conditionalNG;
-        private SymbolTable newSymbolTable;
-        private int responseCode;
-        private List<String> cookies;
-        private String inputValue;
+        private ConditionalNG _conditionalNG;
+        private SymbolTable _newSymbolTable;
+        private int _responseCode;
+        private List<String> _cookies;
+        private List<String> _reply;
 
         public InternalFemaleSocket() {
             super(null, new FemaleSocketListener(){
@@ -852,27 +865,27 @@ public class WebRequest extends AbstractDigitalAction
             if (_socket != null) {
                 MaleSocket maleSocket = (MaleSocket)WebRequest.this.getParent();
                 try {
-                    SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
-                    conditionalNG.setSymbolTable(newSymbolTable);
+                    SymbolTable oldSymbolTable = _conditionalNG.getSymbolTable();
+                    _conditionalNG.setSymbolTable(_newSymbolTable);
                     if (!_localVariableForResponseCode.isEmpty()) {
-                        newSymbolTable.setValue(_localVariableForResponseCode, responseCode);
+                        _newSymbolTable.setValue(_localVariableForResponseCode, _responseCode);
                     }
                     if (!_localVariableForReplyContent.isEmpty()) {
-                        newSymbolTable.setValue(_localVariableForReplyContent, inputValue);
+                        _newSymbolTable.setValue(_localVariableForReplyContent, _reply);
                     }
                     if (!_localVariableForCookies.isEmpty()) {
                         System.out.format("Set cookies:%n");
-                        for (String s : cookies) {
+                        for (String s : _cookies) {
                             System.out.format("Set cookies: '%s'%n", s);
                         }
-                        if (!cookies.isEmpty()) {
-                           newSymbolTable.setValue(_localVariableForCookies, cookies);
+                        if (!_cookies.isEmpty()) {
+                           _newSymbolTable.setValue(_localVariableForCookies, _cookies);
                         }
                     } else {
                         System.out.format("Local variable for cookies is empty!!!%n");
                     }
                     _socket.execute();
-                    conditionalNG.setSymbolTable(oldSymbolTable);
+                    _conditionalNG.setSymbolTable(oldSymbolTable);
                 } catch (JmriException e) {
                     if (e.getErrors() != null) {
                         maleSocket.handleError(WebRequest.this, rbx.getString("ExceptionExecuteMulti"), e.getErrors(), e, log);
