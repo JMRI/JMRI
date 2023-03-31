@@ -234,6 +234,7 @@ public class WebRequest extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
+    @SuppressWarnings("unchecked")
     public void execute() throws JmriException {
 
         final boolean useThread = this._useThread;
@@ -320,10 +321,10 @@ public class WebRequest extends AbstractDigitalAction
 
                     Object cookiesObject = newSymbolTable.getValue(_localVariableForCookies);
                     if (cookiesObject instanceof List) {
-                        System.out.format("Set cookies to connection. Count: %d%n", ((List<Object>)cookiesObject).size());
                         if (!(cookiesObject instanceof List)) {
                             throw new IllegalArgumentException(String.format("The value of the local variable '%s' must be a List", _localVariableForCookies));
                         }
+                        System.out.format("Set cookies to connection. Count: %d%n", ((List<Object>)cookiesObject).size());
                         for (Object o : ((List<Object>)cookiesObject)) {
                             if (!(o instanceof String)) {
                                 throw new JmriException(String.format("The local variable \"%s\" has List but the item \"%s\" is not a string", _localVariableForCookies, o));
