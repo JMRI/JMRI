@@ -2208,6 +2208,19 @@ public class CreateLogixNGTreeScaffold {
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        webRequest = new WebRequest(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
+        webRequest.getSelectUrl().setValue("https://www.jmri.org/");
+        webRequest.getSelectUserAgent().setValue(WebRequest.DEFAULT_USER_AGENT);
+        webRequest.setLocalVariableForPostContent("postContent");
+        webRequest.setLocalVariableForResponseCode("responseCode");
+        webRequest.setLocalVariableForReplyContent("replyContent");
+        webRequest.setLocalVariableForCookies("cookies");
+        maleSocket = digitalActionManager.registerAction(webRequest);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
 
         jmri.jmrit.display.logixng.ActionLayoutTurnout actionLayoutTurnout =
                 new jmri.jmrit.display.logixng.ActionLayoutTurnout(digitalActionManager.getAutoSystemName(), null);

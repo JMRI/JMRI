@@ -30,7 +30,7 @@ public class WebRequest extends AbstractDigitalAction
             ResourceBundle.getBundle("jmri.jmrit.logixng.implementation.ImplementationBundle");
 
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox
-    private static final String DEFAULT_USER_AGENT = "Mozilla/5.0";
+    public static final String DEFAULT_USER_AGENT = "Mozilla/5.0";
 
     private boolean _useThread = true;
 

@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions.swing;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -9,9 +11,12 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.WebRequest;
+import jmri.jmrit.logixng.actions.WebRequest.RequestMethodType;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.TimerUnit;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectStringSwing;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -21,20 +26,15 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class WebRequestSwing extends AbstractDigitalActionSwing {
 
-//    private final JLabel _unitLabel = new JLabel(Bundle.getMessage("WebRequestSwing_Unit"));
-//    private JComboBox<TimerUnit> _unitComboBox;
-//    private JCheckBox _resetIfAlreadyStarted;
-//    private JCheckBox _useIndividualTimers;
+    private LogixNG_SelectStringSwing _selectUrlSwing;
+    private LogixNG_SelectEnumSwing<RequestMethodType> _selectRequestMethodSwing;
+    private LogixNG_SelectStringSwing _selectUserAgentSwing;
 
-//    private JTabbedPane _tabbedPaneDelay;
-//    private JFormattedTextField _timerDelay;
-//    private JPanel _panelDelayDirect;
-//    private JPanel _panelDelayReference;
-//    private JPanel _panelDelayLocalVariable;
-//    private JPanel _panelDelayFormula;
-//    private JTextField _delayReferenceTextField;
-//    private JTextField _delayLocalVariableTextField;
-//    private JTextField _delayFormulaTextField;
+    private JTextField _localVariableForPostContentTextField;
+    private JTextField _localVariableForResponseCodeTextField;
+    private JTextField _localVariableForReplyContentTextField;
+    private JTextField __localVariableForCookiesTextField;
+
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -42,39 +42,101 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an WebRequest but is a: "+object.getClass().getName());
         }
 
+        _selectUrlSwing = new LogixNG_SelectStringSwing(getJDialog(), this);
+        _selectRequestMethodSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
+        _selectUserAgentSwing = new LogixNG_SelectStringSwing(getJDialog(), this);
+
         WebRequest action = (WebRequest)object;
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-/*
-        _tabbedPaneDelay = new JTabbedPane();
-        _panelDelayDirect = new javax.swing.JPanel();
-        _panelDelayReference = new javax.swing.JPanel();
-        _panelDelayLocalVariable = new javax.swing.JPanel();
-        _panelDelayFormula = new javax.swing.JPanel();
 
-        _tabbedPaneDelay.addTab(NamedBeanAddressing.Direct.toString(), _panelDelayDirect);
-        _tabbedPaneDelay.addTab(NamedBeanAddressing.Reference.toString(), _panelDelayReference);
-        _tabbedPaneDelay.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelDelayLocalVariable);
-        _tabbedPaneDelay.addTab(NamedBeanAddressing.Formula.toString(), _panelDelayFormula);
+        JPanel tabbedPaneUrl;
+        JPanel tabbedPaneRequestMethod;
+        JPanel tabbedPaneUserAgent;
 
-        _timerDelay = new JFormattedTextField("0");
-        _timerDelay.setColumns(7);
+        if (action != null) {
+            tabbedPaneUrl = _selectUrlSwing.createPanel(action.getSelectUrl());
+            tabbedPaneRequestMethod = _selectRequestMethodSwing.createPanel(action.getSelectRequestMethod(), RequestMethodType.values());
+            tabbedPaneUserAgent = _selectUserAgentSwing.createPanel(action.getSelectUserAgent());
+        } else {
+            tabbedPaneUrl = _selectUrlSwing.createPanel(null);
+            tabbedPaneRequestMethod = _selectRequestMethodSwing.createPanel(null, RequestMethodType.values());
+            tabbedPaneUserAgent = _selectUserAgentSwing.createPanel(null);
+        }
 
-        _panelDelayDirect.add(_timerDelay);
 
-        _delayReferenceTextField = new JTextField();
-        _delayReferenceTextField.setColumns(30);
-        _panelDelayReference.add(_delayReferenceTextField);
+        JLabel selectUrlLabel = new JLabel(Bundle.getMessage("WebRequestSwing_Url"));
+        JLabel selectRequestMethodLabel = new JLabel(Bundle.getMessage("WebRequestSwing_RequestMethod"));
+        JLabel selectUserAgentLabel = new JLabel(Bundle.getMessage("WebRequestSwing_UserAgent"));
 
-        _delayLocalVariableTextField = new JTextField();
-        _delayLocalVariableTextField.setColumns(30);
-        _panelDelayLocalVariable.add(_delayLocalVariableTextField);
+        JLabel localVariableForPostContentLabel = new JLabel(Bundle.getMessage("WebRequestSwing_LocalVariableForPostContent"));
+        _localVariableForPostContentTextField = new JTextField();
+        _localVariableForPostContentTextField.setColumns(30);
 
-        _delayFormulaTextField = new JTextField();
-        _delayFormulaTextField.setColumns(30);
-        _panelDelayFormula.add(_delayFormulaTextField);
-*/
+        JLabel localVariableForResponseCodeLabel = new JLabel(Bundle.getMessage("WebRequestSwing_LocalVariableForResponseCode"));
+        _localVariableForResponseCodeTextField = new JTextField();
+        _localVariableForResponseCodeTextField.setColumns(30);
+
+        JLabel localVariableForReplyContentLabel = new JLabel(Bundle.getMessage("WebRequestSwing_LocalVariableForReplyContent"));
+        _localVariableForReplyContentTextField = new JTextField();
+        _localVariableForReplyContentTextField.setColumns(30);
+
+        JLabel localVariableForCookiesLabel = new JLabel(Bundle.getMessage("WebRequestSwing_LocalVariableForCookies"));
+        __localVariableForCookiesTextField = new JTextField();
+        __localVariableForCookiesTextField.setColumns(30);
+
+
+
+
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints constraint = new GridBagConstraints();
+        constraint.gridwidth = 1;
+        constraint.gridheight = 1;
+        constraint.gridx = 0;
+        constraint.gridy = 0;
+        constraint.anchor = GridBagConstraints.EAST;
+        panel.add(selectUrlLabel, constraint);
+        selectUrlLabel.setLabelFor(tabbedPaneUrl);
+        constraint.gridy = 1;
+        panel.add(selectRequestMethodLabel, constraint);
+        selectRequestMethodLabel.setLabelFor(tabbedPaneRequestMethod);
+        constraint.gridy = 2;
+        panel.add(selectUserAgentLabel, constraint);
+        selectUserAgentLabel.setLabelFor(tabbedPaneUserAgent);
+
+        constraint.gridy = 3;
+        panel.add(localVariableForPostContentLabel, constraint);
+        localVariableForPostContentLabel.setLabelFor(_localVariableForPostContentTextField);
+        constraint.gridy = 4;
+        panel.add(localVariableForResponseCodeLabel, constraint);
+        localVariableForResponseCodeLabel.setLabelFor(_localVariableForResponseCodeTextField);
+        constraint.gridy = 5;
+        panel.add(localVariableForReplyContentLabel, constraint);
+        localVariableForReplyContentLabel.setLabelFor(_localVariableForReplyContentTextField);
+        constraint.gridy = 6;
+        panel.add(localVariableForCookiesLabel, constraint);
+        localVariableForCookiesLabel.setLabelFor(__localVariableForCookiesTextField);
+
+        constraint.gridx = 1;
+        constraint.gridy = 0;
+        constraint.anchor = GridBagConstraints.WEST;
+        panel.add(tabbedPaneUrl, constraint);
+        constraint.gridy = 1;
+        panel.add(tabbedPaneRequestMethod, constraint);
+        constraint.gridy = 2;
+        panel.add(tabbedPaneUserAgent, constraint);
+
+        constraint.gridy = 3;
+        panel.add(_localVariableForPostContentTextField, constraint);
+        constraint.gridy = 4;
+        panel.add(_localVariableForResponseCodeTextField, constraint);
+        constraint.gridy = 5;
+        panel.add(_localVariableForReplyContentTextField, constraint);
+        constraint.gridy = 6;
+        panel.add(__localVariableForCookiesTextField, constraint);
+
+
 
         if (action != null) {
 /*
@@ -91,49 +153,6 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
             _delayFormulaTextField.setText(action.getDelayFormula());
 */
         }
-/*
-        JComponent[] components = new JComponent[]{
-            _tabbedPaneDelay};
-
-        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
-                Bundle.getMessage("WebRequest_Components"), components);
-
-        JPanel delayPanel = new JPanel();
-        for (JComponent c : componentList) delayPanel.add(c);
-
-        panel.add(delayPanel);
-
-
-        JPanel unitPanel = new JPanel();
-        unitPanel.add(_unitLabel);
-
-        _unitComboBox = new JComboBox<>();
-        for (TimerUnit u : TimerUnit.values()) _unitComboBox.addItem(u);
-        JComboBoxUtil.setupComboBoxMaxRows(_unitComboBox);
-        if (action != null) _unitComboBox.setSelectedItem(action.getUnit());
-        unitPanel.add(_unitComboBox);
-
-        panel.add(unitPanel);
-
-        _resetIfAlreadyStarted = new JCheckBox(Bundle.getMessage("WebRequestSwing_ResetIfAlreadyStarted"));
-        if (action != null) _resetIfAlreadyStarted.setSelected(action.getResetIfAlreadyStarted());
-        panel.add(_resetIfAlreadyStarted);
-
-        _useIndividualTimers = new JCheckBox(Bundle.getMessage("WebRequestSwing_UseIndividualTimers"));
-        if (action != null) {
-            _useIndividualTimers.setSelected(action.getUseIndividualTimers());
-            _resetIfAlreadyStarted.setEnabled(!action.getUseIndividualTimers());
-        }
-        _useIndividualTimers.addActionListener((evt)->{
-            if (_useIndividualTimers.isSelected()) {
-                _resetIfAlreadyStarted.setEnabled(false);
-                _resetIfAlreadyStarted.setSelected(false);
-            } else {
-                _resetIfAlreadyStarted.setEnabled(true);
-            }
-        });
-        panel.add(_useIndividualTimers);
-*/
     }
 
     /** {@inheritDoc} */
