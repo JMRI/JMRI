@@ -233,8 +233,8 @@ public class WebRequest extends AbstractDigitalAction
 
 
     /** {@inheritDoc} */
-    @Override
     @SuppressWarnings("unchecked")
+    @Override
     public void execute() throws JmriException {
 
         final boolean useThread = this._useThread;
