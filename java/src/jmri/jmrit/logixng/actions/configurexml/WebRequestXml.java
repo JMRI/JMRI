@@ -3,10 +3,10 @@ package jmri.jmrit.logixng.actions.configurexml;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.ActionSensor;
 import jmri.jmrit.logixng.actions.WebRequest;
-import jmri.jmrit.logixng.util.TimerUnit;
-import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.actions.WebRequest.RequestMethodType;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringXml;
 
 import org.jdom2.Element;
 
@@ -50,20 +50,22 @@ public class WebRequestXml extends jmri.managers.configurexml.AbstractNamedBeanM
             e2.addContent(new Element("systemName").addContent(socketSystemName));
         }
         element.addContent(e2);
-/*
-        element.addContent(new Element("delayAddressing").addContent(p.getDelayAddressing().name()));
-        element.addContent(new Element("delay").addContent(Integer.toString(p.getDelay())));
-        element.addContent(new Element("delayReference").addContent(p.getDelayReference()));
-        element.addContent(new Element("delayLocalVariable").addContent(p.getDelayLocalVariable()));
-        element.addContent(new Element("delayFormula").addContent(p.getDelayFormula()));
 
-        element.addContent(new Element("unit").addContent(p.getUnit().name()));
-        element.addContent(new Element("resetIfAlreadyStarted").addContent(p.getResetIfAlreadyStarted() ? "yes" : "no"));  // NOI18N
+        var selectRequestMethodXml = new LogixNG_SelectEnumXml<RequestMethodType>();
+        var selectUrlXml = new LogixNG_SelectStringXml();
+        var selectUserAgentXml = new LogixNG_SelectStringXml();
 
-        if (p.getUseIndividualTimers()) {   // Only set this element if true, to keep backward compability if not used
-            element.addContent(new Element("useIndividualTimers").addContent(p.getUseIndividualTimers() ? "yes" : "no"));  // NOI18N
-        }
-*/
+        element.addContent(selectRequestMethodXml.store(p.getSelectRequestMethod(), "requestMethod"));
+        element.addContent(selectUrlXml.store(p.getSelectUrl(), "url"));
+        element.addContent(selectUserAgentXml.store(p.getSelectUserAgent(), "userAgent"));
+
+        element.addContent(new Element("localVariableForPostContent").addContent(p.getLocalVariableForPostContent()));
+        element.addContent(new Element("localVariableForResponseCode").addContent(p.getLocalVariableForResponseCode()));
+        element.addContent(new Element("localVariableForReplyContent").addContent(p.getLocalVariableForReplyContent()));
+        element.addContent(new Element("_localVariableForCookies").addContent(p.getLocalVariableForCookies()));
+
+        //DANIEL --- Store parameters!!!
+
         return element;
     }
 
@@ -77,13 +79,7 @@ public class WebRequestXml extends jmri.managers.configurexml.AbstractNamedBeanM
         if (socketSystemNameElement != null) {
             socketSystemName = socketSystemNameElement.getTextTrim();
         }
-/*
-        Element delayElement = shared.getChild("delay");
-        int delay = 0;
-        if (delayElement != null) {
-            delay = Integer.parseInt(delayElement.getText());
-        }
-*/
+
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         WebRequest h = new WebRequest(sys, uname);
@@ -92,45 +88,29 @@ public class WebRequestXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
         h.getChild(0).setName(socketName);
         h.setSocketSystemName(socketSystemName);
-/*
-        h.setDelay(delay);
 
-        Element unit = shared.getChild("unit");
-        if (unit != null) {
-            h.setUnit(TimerUnit.valueOf(unit.getTextTrim()));
-        }
+        var selectRequestMethodXml = new LogixNG_SelectEnumXml<RequestMethodType>();
+        var selectUrlXml = new LogixNG_SelectStringXml();
+        var selectUserAgentXml = new LogixNG_SelectStringXml();
 
-        String resetIfAlreadyStarted = "no";
-        if (shared.getChild("resetIfAlreadyStarted") != null) {  // NOI18N
-            resetIfAlreadyStarted = shared.getChild("resetIfAlreadyStarted").getTextTrim();  // NOI18N
-        }
-        h.setResetIfAlreadyStarted("yes".equals(resetIfAlreadyStarted));
+        selectRequestMethodXml.load(shared.getChild("requestMethod"), h.getSelectRequestMethod());
+        selectUrlXml.load(shared.getChild("url"), h.getSelectUrl());
+        selectUserAgentXml.load(shared.getChild("userAgent"), h.getSelectUserAgent());
 
-        String useIndividualTimers = "no";
-        if (shared.getChild("useIndividualTimers") != null) {  // NOI18N
-            useIndividualTimers = shared.getChild("useIndividualTimers").getTextTrim();  // NOI18N
-        }
-        h.setUseIndividualTimers("yes".equals(useIndividualTimers));
+        Element elem = shared.getChild("localVariableForPostContent");
+        if (elem != null) h.setLocalVariableForPostContent(elem.getTextTrim());
 
-        try {
-            Element elem = shared.getChild("delayAddressing");
-            if (elem != null) {
-                h.setDelayAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
+        elem = shared.getChild("localVariableForResponseCode");
+        if (elem != null) h.setLocalVariableForResponseCode(elem.getTextTrim());
 
-            elem = shared.getChild("delayReference");
-            if (elem != null) h.setDelayReference(elem.getTextTrim());
+        elem = shared.getChild("localVariableForReplyContent");
+        if (elem != null) h.setLocalVariableForReplyContent(elem.getTextTrim());
 
-            elem = shared.getChild("delayLocalVariable");
-            if (elem != null) h.setDelayLocalVariable(elem.getTextTrim());
+        elem = shared.getChild("_localVariableForCookies");
+        if (elem != null) h.setLocalVariableForCookies(elem.getTextTrim());
 
-            elem = shared.getChild("delayFormula");
-            if (elem != null) h.setDelayFormula(elem.getTextTrim());
+        //DANIEL --- Load parameters!!!
 
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
-*/
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
