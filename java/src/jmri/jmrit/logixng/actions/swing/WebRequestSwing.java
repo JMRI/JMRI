@@ -33,7 +33,7 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
     private JTextField _localVariableForPostContentTextField;
     private JTextField _localVariableForResponseCodeTextField;
     private JTextField _localVariableForReplyContentTextField;
-    private JTextField __localVariableForCookiesTextField;
+    private JTextField _localVariableForCookiesTextField;
 
 
     @Override
@@ -83,11 +83,8 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         _localVariableForReplyContentTextField.setColumns(30);
 
         JLabel localVariableForCookiesLabel = new JLabel(Bundle.getMessage("WebRequestSwing_LocalVariableForCookies"));
-        __localVariableForCookiesTextField = new JTextField();
-        __localVariableForCookiesTextField.setColumns(30);
-
-
-
+        _localVariableForCookiesTextField = new JTextField();
+        _localVariableForCookiesTextField.setColumns(30);
 
         panel.setLayout(new GridBagLayout());
         GridBagConstraints constraint = new GridBagConstraints();
@@ -116,7 +113,7 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         localVariableForReplyContentLabel.setLabelFor(_localVariableForReplyContentTextField);
         constraint.gridy = 6;
         panel.add(localVariableForCookiesLabel, constraint);
-        localVariableForCookiesLabel.setLabelFor(__localVariableForCookiesTextField);
+        localVariableForCookiesLabel.setLabelFor(_localVariableForCookiesTextField);
 
         constraint.gridx = 1;
         constraint.gridy = 0;
@@ -134,24 +131,13 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         constraint.gridy = 5;
         panel.add(_localVariableForReplyContentTextField, constraint);
         constraint.gridy = 6;
-        panel.add(__localVariableForCookiesTextField, constraint);
-
-
+        panel.add(_localVariableForCookiesTextField, constraint);
 
         if (action != null) {
-/*
-            switch (action.getDelayAddressing()) {
-                case Direct: _tabbedPaneDelay.setSelectedComponent(_panelDelayDirect); break;
-                case Reference: _tabbedPaneDelay.setSelectedComponent(_panelDelayReference); break;
-                case LocalVariable: _tabbedPaneDelay.setSelectedComponent(_panelDelayLocalVariable); break;
-                case Formula: _tabbedPaneDelay.setSelectedComponent(_panelDelayFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getDelayAddressing().name());
-            }
-            _timerDelay.setText(Integer.toString(action.getDelay()));
-            _delayReferenceTextField.setText(action.getDelayReference());
-            _delayLocalVariableTextField.setText(action.getDelayLocalVariable());
-            _delayFormulaTextField.setText(action.getDelayFormula());
-*/
+            _localVariableForPostContentTextField.setText(action.getLocalVariableForPostContent());
+            _localVariableForResponseCodeTextField.setText(action.getLocalVariableForResponseCode());
+            _localVariableForReplyContentTextField.setText(action.getLocalVariableForReplyContent());
+            _localVariableForCookiesTextField.setText(action.getLocalVariableForCookies());
         }
     }
 
@@ -160,34 +146,11 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
         WebRequest action = new WebRequest("IQDA1", null);
-/*
-        try {
-            if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayReference) {
-                action.setDelayReference(_delayReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
 
-        try {
-            action.setDelayFormula(_delayFormulaTextField.getText());
-            if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayDirect) {
-                action.setDelayAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayReference) {
-                action.setDelayAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayLocalVariable) {
-                action.setDelayAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayFormula) {
-                action.setDelayAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-            return false;
-        }
-*/
+        _selectUrlSwing.validate(action.getSelectUrl(), errorMessages);
+        _selectRequestMethodSwing.validate(action.getSelectRequestMethod(), errorMessages);
+        _selectUserAgentSwing.validate(action.getSelectUserAgent(), errorMessages);
+
         return true;
     }
 
@@ -207,33 +170,15 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         }
 
         WebRequest action = (WebRequest)object;
-/*
-        action.setUnit(_unitComboBox.getItemAt(_unitComboBox.getSelectedIndex()));
-        action.setResetIfAlreadyStarted(_resetIfAlreadyStarted.isSelected());
-        action.setUseIndividualTimers(_useIndividualTimers.isSelected());
 
+        _selectUrlSwing.updateObject(action.getSelectUrl());
+        _selectRequestMethodSwing.updateObject(action.getSelectRequestMethod());
+        _selectUserAgentSwing.updateObject(action.getSelectUserAgent());
 
-
-        try {
-            if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayDirect) {
-                action.setDelayAddressing(NamedBeanAddressing.Direct);
-                action.setDelay(Integer.parseInt(_timerDelay.getText()));
-            } else if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayReference) {
-                action.setDelayAddressing(NamedBeanAddressing.Reference);
-                action.setDelayReference(_delayReferenceTextField.getText());
-            } else if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayLocalVariable) {
-                action.setDelayAddressing(NamedBeanAddressing.LocalVariable);
-                action.setDelayLocalVariable(_delayLocalVariableTextField.getText());
-            } else if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayFormula) {
-                action.setDelayAddressing(NamedBeanAddressing.Formula);
-                action.setDelayFormula(_delayFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneDelay has unknown selection");
-            }
-        } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
-        }
-*/
+        action.setLocalVariableForPostContent(_localVariableForPostContentTextField.getText());
+        action.setLocalVariableForResponseCode(_localVariableForResponseCodeTextField.getText());
+        action.setLocalVariableForReplyContent(_localVariableForReplyContentTextField.getText());
+        action.setLocalVariableForCookies(_localVariableForCookiesTextField.getText());
     }
 
     /** {@inheritDoc} */
@@ -244,6 +189,9 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void dispose() {
+        _selectUrlSwing.dispose();
+        _selectRequestMethodSwing.dispose();
+        _selectUserAgentSwing.dispose();
     }
 
 }
