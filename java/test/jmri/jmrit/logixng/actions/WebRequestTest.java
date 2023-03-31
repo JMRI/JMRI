@@ -14,6 +14,7 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -29,6 +30,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 //    private Light light;
 
 
+//    @Ignore
     @Test
     public void testWebRequest() throws JmriException {
         webRequest.getSelectUrl().setValue("https://jmri.bergqvist.se/LogixNG_WebRequest_Test.php");
@@ -39,14 +41,63 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         conditionalNG.execute();
     }
 
+//    @Ignore
     @Test
     public void testWebRequest2() throws JmriException {
-        webRequest.getSelectUrl().setValue("https://www.modulsyd.se/forum_3.3/index.php");
-//        webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
+        MaleSocket socketWebRequest1 = conditionalNG.getFemaleSocket().getConnectedSocket();
+        socketWebRequest1.addLocalVariable("cookies", SymbolTable.InitialValueType.String, "");
+
+        conditionalNG.unregisterListeners();
+
+        WebRequest webRequest2 = new WebRequest("IQDA322", null);
+        MaleSocket socketWebRequest2 =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(webRequest2);
+        socketWebRequest1.getChild(0).connect(socketWebRequest2);
+
+        WebRequest webRequest3 = new WebRequest("IQDA323", null);
+        MaleSocket socketWebRequest3 =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(webRequest3);
+        socketWebRequest2.getChild(0).connect(socketWebRequest3);
+
+        webRequest2.setUseThread(false);
+        webRequest3.setUseThread(false);
+
+        conditionalNG.registerListeners();
+
+        webRequest.setLocalVariableForCookies("cookies");
+        webRequest2.setLocalVariableForCookies("cookies");
+        webRequest3.setLocalVariableForCookies("cookies");
+
+
+
+
+
+        webRequest.getSelectUrl().setValue("https://www.modulsyd.se/forum_3.3/index.php?aaaa=1");
+        webRequest2.getSelectUrl().setValue("https://www.modulsyd.se/forum_3.3/index.php?aaaa=2");
+        webRequest3.getSelectUrl().setValue("https://www.modulsyd.se/forum_3.3/index.php?aaaa=3");
+//        webRequest3.getSelectUrl().setValue("https://jmri.bergqvist.se/LogixNG_WebRequest_Test.php");
+
+
+        webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
+        webRequest2.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
+        webRequest3.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
+/*
         webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Post);
+        webRequest2.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Post);
+        webRequest3.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Post);
         webRequest.getParameters().add(new WebRequest.Parameter("name", SymbolTable.InitialValueType.String, "Daniel123"));
-        webRequest.getParameters().add(new WebRequest.Parameter("address", SymbolTable.InitialValueType.String, "Adenravagen 2"));
+        webRequest2.getParameters().add(new WebRequest.Parameter("name", SymbolTable.InitialValueType.String, "Daniel123"));
+        webRequest3.getParameters().add(new WebRequest.Parameter("name", SymbolTable.InitialValueType.String, "Daniel123"));
+        webRequest.getParameters().add(new WebRequest.Parameter("name", SymbolTable.InitialValueType.String, "Daniel123"));
+        webRequest2.getParameters().add(new WebRequest.Parameter("name", SymbolTable.InitialValueType.String, "Daniel123"));
+        webRequest3.getParameters().add(new WebRequest.Parameter("name", SymbolTable.InitialValueType.String, "Daniel123"));
+*/
+//        logixNG.setEnabled(true);
         conditionalNG.execute();
+
+//        webRequest.setLocalVariableForCookies("cookies");
+//        conditionalNG.execute();
+//        conditionalNG.execute();
     }
 
     @Override

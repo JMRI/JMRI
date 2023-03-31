@@ -17,7 +17,6 @@ import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.*;
 import jmri.util.ThreadingUtil;
-import jmri.util.TypeConversionUtil;
 
 /**
  * This action sends a web request.
@@ -53,6 +52,7 @@ public class WebRequest extends AbstractDigitalAction
     private String _localVariableForPostContent = "";
     private String _localVariableForResponseCode = "";
     private String _localVariableForReplyContent = "";
+    private String _localVariableForCookies = "";
     private final InternalFemaleSocket _internalSocket = new InternalFemaleSocket();
 
 
@@ -80,6 +80,7 @@ public class WebRequest extends AbstractDigitalAction
         copy.setLocalVariableForPostContent(_localVariableForPostContent);
         copy.setLocalVariableForResponseCode(_localVariableForResponseCode);
         copy.setLocalVariableForReplyContent(_localVariableForReplyContent);
+        copy.setLocalVariableForCookies(_localVariableForCookies);
 //        copy.setModal(_modal);
 //        copy.setMultiLine(_multiLine);
 //        copy.setFormat(_format);
@@ -136,6 +137,14 @@ public class WebRequest extends AbstractDigitalAction
 
     public String getLocalVariableForReplyContent() {
         return _localVariableForReplyContent;
+    }
+
+    public void setLocalVariableForCookies(String localVariable) {
+        _localVariableForCookies = localVariable;
+    }
+
+    public String getLocalVariableForCookies() {
+        return _localVariableForCookies;
     }
 /*
     public void setFormatType(FormatType formatType) {
@@ -267,16 +276,17 @@ public class WebRequest extends AbstractDigitalAction
 
             url = new URL(urlString);
             System.out.format("URL: %s, query: %s, userInfo: %s%n", url.toString(), url.getQuery(), url.getUserInfo());
-            if (!urlString.contains("LogixNG_WebRequest_Test.php")) return;
+//            if (!urlString.contains("LogixNG_WebRequest_Test.php") && !urlString.contains("https://www.modulsyd.se/")) return;
+//            if (!urlString.contains("LogixNG_WebRequest_Test.php")) return;
+//            if (!urlString.contains("https://www.modulsyd.se/")) return;
         } catch (UnsupportedEncodingException | MalformedURLException ex) {
             throw new JmriException(ex.getMessage(), ex);
         }
 
         boolean useHttps = urlString.toLowerCase().startsWith("https://");
 
-        final String tempUrlString = urlString;
-
         Runnable runnable = () -> {
+            System.out.format("Runnable.start%n");
 //            String https_url = "https://www.google.com/";
 //            String https_url = "https://jmri.bergqvist.se/LogixNG_WebRequest_Test.php";
             try {
@@ -296,6 +306,54 @@ public class WebRequest extends AbstractDigitalAction
 
                 con.setRequestMethod(requestMethodType._identifier);
                 con.setRequestProperty("User-Agent", userAgent);
+
+
+//                con.setRequestProperty("Cookie", "phpbb3_tm7zs_sid=5b33176e78318082f439a0a302fa4c25; expires=Fri, 29-Mar-2024 18:22:48 GMT; path=/; domain=.modulsyd.se; secure; HttpOnly");
+//                con.setRequestProperty("Cookie", "Daniel=Hej; expires=Fri, 29-Mar-2024 18:22:48 GMT; path=/; domain=.modulsyd.se; secure; HttpOnly");
+//                con.setRequestProperty("Cookie", "DanielAA=Hej; expires=Fri, 29-Mar-2024 18:22:48 GMT; path=/; domain=.modulsyd.se; secure; HttpOnly");
+//                con.setRequestProperty("Cookie", "DanielBB=Hej; expires=Fri, 29-Mar-2024 18:22:48 GMT; path=/; domain=.modulsyd.se; secure; HttpOnly");
+//                con.setRequestProperty("Cookie", "Aaa=Abb; Abb=Add; Acc=Aff");
+
+                if (!_localVariableForCookies.isEmpty()) {
+                    StringBuilder cookies = new StringBuilder();
+
+                    Object cookiesObject = newSymbolTable.getValue(_localVariableForCookies);
+                    if (cookiesObject instanceof List) {
+                        System.out.format("Set cookies to connection. Count: %d%n", ((List<Object>)cookiesObject).size());
+                        for (Object o : ((List<Object>)cookiesObject)) {
+                            if (!(o instanceof String)) {
+                                throw new JmriException(String.format("The local variable \"%s\" has List but the item \"%s\" is not a string", _localVariableForCookies, o));
+                            }
+                            String c = o.toString();
+                            if (c.contains(";")) c = c.substring(0, c.indexOf(";"));
+                            if (cookies.length() > 0) {
+                                cookies.append("; ");
+                            }
+                            cookies.append(c);
+//                            System.out.format("Set cookie to connection: '%s'%n", o.toString());
+//                            con.setRequestProperty("Cookie", o.toString());
+//                            con.setRequestProperty("Cookie", "phpbb3_tm7zs_sid=5b33176e78318082f439a0a302fa4c25; expires=Fri, 29-Mar-2024 18:22:48 GMT; path=/; domain=.modulsyd.se; secure; HttpOnly");
+//                            con.setRequestProperty("Cookie", "Daniel=Hej; expires=Fri, 29-Mar-2024 18:22:48 GMT; path=/; domain=.modulsyd.se; secure; HttpOnly");
+                        }
+                        if (cookies.length() > 0) {
+                            System.out.format("Set cookie to connection: '%s'%n", cookies.toString());
+                            con.setRequestProperty("Cookie", cookies.toString());
+                        } else {
+                            System.out.format("Set cookie to connection: 'NULL' - ERROR ERROR ERROR ERROR ERROR ERROR ERROR%n");
+                        }
+                    } else {
+                        System.out.format("The local variable \"%s\" is \"%s\"%n", _localVariableForCookies, cookiesObject);
+                        if ((cookiesObject != null)
+                                && !((cookiesObject instanceof String) && cookiesObject.toString().isBlank())) {
+                            System.out.format("ERROR: The local variable \"%s\" doesn't contain a List%n", _localVariableForCookies);
+                            throw new JmriException(String.format("The local variable \"%s\" doesn't contain a List", _localVariableForCookies));
+                        }
+                    }
+                }
+
+
+
+
 
 
 ////DANIEL                con.setRequestProperty("Content-Type", "text/html");
@@ -327,15 +385,29 @@ public class WebRequest extends AbstractDigitalAction
 //                print_https_cert(con);
 
 
-                if (tempUrlString.contains("https://www.modulsyd.se/")) {
-                    //dump all the content
-                    print_content(con);
+                System.out.println("Response Code: " + con.getResponseCode());
+
+                System.out.println("Header fields:");
+                for (var entry : con.getHeaderFields().entrySet()) {
+                    for (String value : entry.getValue()) {
+                        System.out.format("Header: %s, value: %s%n", entry.getKey(), value);
+                    }
                 }
 
+                //dump all the content
+//DANIEL                print_content(con);
 
 
 
-                System.out.println("Response Code : " + con.getResponseCode());
+                List<String> cookies = new ArrayList<>();
+                for (var entry : con.getHeaderFields().entrySet()) {
+                    if ("Set-Cookie".equals(entry.getKey())) {
+                        for (String value : entry.getValue()) {
+                            cookies.add(value);
+                        }
+                    }
+                }
+
 
                 long time = System.currentTimeMillis() - startTime;
 
@@ -345,6 +417,7 @@ public class WebRequest extends AbstractDigitalAction
                     synchronized (WebRequest.this) {
                         _internalSocket.conditionalNG = conditionalNG;
                         _internalSocket.newSymbolTable = newSymbolTable;
+                        _internalSocket.cookies = cookies;
 //                        _internalSocket.selectedButton = button._value;
 //                        _internalSocket.inputValue = textField.getText();
                         conditionalNG.execute(_internalSocket);
@@ -353,6 +426,7 @@ public class WebRequest extends AbstractDigitalAction
                     synchronized (WebRequest.this) {
                         _internalSocket.conditionalNG = conditionalNG;
                         _internalSocket.newSymbolTable = newSymbolTable;
+                        _internalSocket.cookies = cookies;
                         _internalSocket.execute();
                     }
                 }
@@ -362,8 +436,9 @@ public class WebRequest extends AbstractDigitalAction
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JmriException ex) {
-                log.error("An exception has occurred: {}", ex.getMessage(), ex);
+                log.error("An exception has occurred: {}", ex, ex);
             }
+            System.out.format("Runnable.end%n");
         };
 
         if (useThread) {
@@ -376,15 +451,11 @@ public class WebRequest extends AbstractDigitalAction
     private void print_content(HttpURLConnection con) {
         if (con != null) {
 
-            try {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
 
                 System.out.println("****** Content of the URL ********");
-                BufferedReader br
-                        = new BufferedReader(
-                                new InputStreamReader(con.getInputStream()));
 
                 String input;
-
                 while ((input = br.readLine()) != null) {
                     System.out.println(input);
                 }
@@ -759,6 +830,7 @@ public class WebRequest extends AbstractDigitalAction
         private ConditionalNG conditionalNG;
         private SymbolTable newSymbolTable;
         private int responseCode;
+        private List<String> cookies;
         private String inputValue;
 
         public InternalFemaleSocket() {
@@ -787,6 +859,17 @@ public class WebRequest extends AbstractDigitalAction
                     }
                     if (!_localVariableForReplyContent.isEmpty()) {
                         newSymbolTable.setValue(_localVariableForReplyContent, inputValue);
+                    }
+                    if (!_localVariableForCookies.isEmpty()) {
+                        System.out.format("Set cookies:%n");
+                        for (String s : cookies) {
+                            System.out.format("Set cookies: '%s'%n", s);
+                        }
+                        if (!cookies.isEmpty()) {
+                           newSymbolTable.setValue(_localVariableForCookies, cookies);
+                        }
+                    } else {
+                        System.out.format("Local variable for cookies is empty!!!%n");
                     }
                     _executeSocket.execute();
                     conditionalNG.setSymbolTable(oldSymbolTable);
