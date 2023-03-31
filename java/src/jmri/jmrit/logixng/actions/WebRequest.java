@@ -277,7 +277,7 @@ public class WebRequest extends AbstractDigitalAction
             }
 
             url = new URL(urlString);
-            System.out.format("URL: %s, query: %s, userInfo: %s%n", url.toString(), url.getQuery(), url.getUserInfo());
+//            System.out.format("URL: %s, query: %s, userInfo: %s%n", url.toString(), url.getQuery(), url.getUserInfo());
 //            if (!urlString.contains("LogixNG_WebRequest_Test.php") && !urlString.contains("https://www.modulsyd.se/")) return;
 //            if (!urlString.contains("LogixNG_WebRequest_Test.php")) return;
 //            if (!urlString.contains("https://www.modulsyd.se/")) return;
@@ -288,12 +288,12 @@ public class WebRequest extends AbstractDigitalAction
         boolean useHttps = urlString.toLowerCase().startsWith("https://");
 
         Runnable runnable = () -> {
-            System.out.format("Runnable.start%n");
+//            System.out.format("Runnable.start%n");
 //            String https_url = "https://www.google.com/";
 //            String https_url = "https://jmri.bergqvist.se/LogixNG_WebRequest_Test.php";
             try {
 
-                long startTime = System.currentTimeMillis();
+//                long startTime = System.currentTimeMillis();
 
 //                if (!_localVariableForPostContent.isEmpty()) {
 //                    postContent = newSymbolTable.getValue(_localVariableForPostContent);
@@ -324,7 +324,7 @@ public class WebRequest extends AbstractDigitalAction
                         if (!(cookiesObject instanceof List)) {
                             throw new IllegalArgumentException(String.format("The value of the local variable '%s' must be a List", _localVariableForCookies));
                         }
-                        System.out.format("Set cookies to connection. Count: %d%n", ((List<Object>)cookiesObject).size());
+//                        System.out.format("Set cookies to connection. Count: %d%n", ((List<Object>)cookiesObject).size());
                         for (Object o : ((List<Object>)cookiesObject)) {
                             if (!(o instanceof String)) {
                                 throw new JmriException(String.format("The local variable \"%s\" has List but the item \"%s\" is not a string", _localVariableForCookies, o));
@@ -341,16 +341,16 @@ public class WebRequest extends AbstractDigitalAction
 //                            con.setRequestProperty("Cookie", "Daniel=Hej; expires=Fri, 29-Mar-2024 18:22:48 GMT; path=/; domain=.modulsyd.se; secure; HttpOnly");
                         }
                         if (cookies.length() > 0) {
-                            System.out.format("Set cookie to connection: '%s'%n", cookies.toString());
+//                            System.out.format("Set cookie to connection: '%s'%n", cookies.toString());
                             con.setRequestProperty("Cookie", cookies.toString());
-                        } else {
-                            System.out.format("Set cookie to connection: 'NULL' - ERROR ERROR ERROR ERROR ERROR ERROR ERROR%n");
+//                        } else {
+//                            System.out.format("Set cookie to connection: 'NULL' - ERROR ERROR ERROR ERROR ERROR ERROR ERROR%n");
                         }
                     } else {
-                        System.out.format("The local variable \"%s\" is \"%s\"%n", _localVariableForCookies, cookiesObject);
+//                        System.out.format("The local variable \"%s\" is \"%s\"%n", _localVariableForCookies, cookiesObject);
                         if ((cookiesObject != null)
                                 && !((cookiesObject instanceof String) && cookiesObject.toString().isBlank())) {
-                            System.out.format("ERROR: The local variable \"%s\" doesn't contain a List%n", _localVariableForCookies);
+//                            System.out.format("ERROR: The local variable \"%s\" doesn't contain a List%n", _localVariableForCookies);
                             throw new JmriException(String.format("The local variable \"%s\" doesn't contain a List", _localVariableForCookies));
                         }
                     }
@@ -390,15 +390,15 @@ public class WebRequest extends AbstractDigitalAction
 //                print_https_cert(con);
 
 
-                System.out.println("Response Code: " + con.getResponseCode());
-
+//                System.out.println("Response Code: " + con.getResponseCode());
+/*
                 System.out.println("Header fields:");
                 for (var entry : con.getHeaderFields().entrySet()) {
                     for (String value : entry.getValue()) {
                         System.out.format("Header: %s, value: %s%n", entry.getKey(), value);
                     }
                 }
-
+*/
                 //dump all the content
 //DANIEL                print_content(con);
 
@@ -406,7 +406,7 @@ public class WebRequest extends AbstractDigitalAction
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
                     String input;
                     while ((input = br.readLine()) != null) {
-                        System.out.println(input);
+//                        System.out.println(input);
                         reply.add(input);
                     }
 //                } catch (IOException e) {
@@ -425,9 +425,9 @@ public class WebRequest extends AbstractDigitalAction
                 }
 
 
-                long time = System.currentTimeMillis() - startTime;
+//                long time = System.currentTimeMillis() - startTime;
 
-                System.out.format("Total time: %d%n", time);
+//                System.out.format("Total time: %d%n", time);
 
                 if (useThread) {
                     synchronized (WebRequest.this) {
@@ -456,7 +456,7 @@ public class WebRequest extends AbstractDigitalAction
             } catch (JmriException ex) {
                 log.error("An exception has occurred: {}", ex, ex);
             }
-            System.out.format("Runnable.end%n");
+//            System.out.format("Runnable.end%n");
         };
 
         if (useThread) {
@@ -774,15 +774,15 @@ public class WebRequest extends AbstractDigitalAction
                         _newSymbolTable.setValue(_localVariableForReplyContent, _reply);
                     }
                     if (!_localVariableForCookies.isEmpty()) {
-                        System.out.format("Set cookies:%n");
-                        for (String s : _cookies) {
-                            System.out.format("Set cookies: '%s'%n", s);
-                        }
+//                        System.out.format("Set cookies:%n");
+//                        for (String s : _cookies) {
+//                            System.out.format("Set cookies: '%s'%n", s);
+//                        }
                         if (!_cookies.isEmpty()) {
                            _newSymbolTable.setValue(_localVariableForCookies, _cookies);
                         }
-                    } else {
-                        System.out.format("Local variable for cookies is empty!!!%n");
+//                    } else {
+//                        System.out.format("Local variable for cookies is empty!!!%n");
                     }
                     _socket.execute();
                     _conditionalNG.setSymbolTable(oldSymbolTable);
