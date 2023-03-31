@@ -449,11 +449,12 @@ public class WebRequest extends AbstractDigitalAction
                     }
                 }
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JmriException ex) {
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            } catch (JmriException ex) {
+            } catch (IOException | IllegalArgumentException | JmriException ex) {
                 log.error("An exception has occurred: {}", ex, ex);
             }
 //            System.out.format("Runnable.end%n");
