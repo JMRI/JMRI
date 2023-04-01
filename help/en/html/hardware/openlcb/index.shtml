@@ -107,8 +107,6 @@
                                   they are authoritative. This can confuse JMRI (because
                                   typically both are invalid). In this case,
                                   "Always Listen" needs to be unchecked.
-
-
       </dl>
 
       <h4>Turnouts</h4>
@@ -118,6 +116,15 @@
       "<code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".</p>
 
       <p>Turnouts have Authoritative and Always Listen checkboxes that work the same as the
+      checkboxes on Sensors.
+
+      <h4>Lights</h4>
+
+      <p>The scheme for Lights is similar to Sensors above, except JMRI is emitting the OpenLCB
+      frames instead of receiving them, and the type letter is "L" instead of "S", e.g.
+      "<code>ML1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".</p>
+
+      <p>Lights have Authoritative and Always Listen checkboxes that work the same as the
       checkboxes on Sensors.
 
 
