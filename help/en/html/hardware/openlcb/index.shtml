@@ -74,7 +74,7 @@
       <dl>
         <dt>Authoritative</dt><dd>Normally checked, this means that the JMRI Sensor
                                   will report its state when a query comes from another
-                                  OpenLCB node.  That will then allow that other ndoe
+                                  OpenLCB node.  That will then allow that other node
                                   to adjust its own state to be consistent.
                                   <p>
                                   When not checked, JMRI will report the state of the
@@ -82,14 +82,33 @@
                                   user of these events to be the authoritative
                                   source.
                                   </dd>
-        <dt>Always listen</dt><dd>Normally checked, this means that the JMRI Sensor
-                                  will adjust its state when it sees the corresponding
-                                  events on the OpenLCB network.
+        <dt>Always listen</dt><dd>When checked, all state reports will update local Sensor state.
+                                  When unchecked, state reports will update local Sensor state
+                                  only if the local state is UNKNOWN. State change messages (Event
+                                  Reports) always change local state.
+                                  Might be helpful to uncheck this if the Sensor state flip-flops
+                                  multiple times after a query, which means that the
+                                  Sensor does not have a consistent distributed state.
                                   <p>
-                                  When not checked, only JMRI internal operations will
-                                  change the state of the Sensor. External changes
-                                  will not.
-                                  </dd>
+                                  Typically when Authoritative is checked,
+                                  then this is better unchecked.
+                                  <p>
+                                  If there is only one authoritative source
+                                  for state, then having this checked is good,
+                                  because it will make JMRI converge to the correct state
+                                  irrespective of how long JMRI has been running.
+                                  This is particularly important if the authoritative
+                                  producer / consumer of the event does not save its
+                                  state between reboots.
+                                  <p>
+                                  There's also the case where you have two momentary pushbuttons
+                                  for setting the Sensor (or more usually, for setting a Turnout),
+                                  and those input lines believe that
+                                  they are authoritative. This can confuse JMRI (because
+                                  typically both are invalid). In this case,
+                                  "Always Listen" needs to be unchecked.
+
+
       </dl>
 
       <h4>Turnouts</h4>
