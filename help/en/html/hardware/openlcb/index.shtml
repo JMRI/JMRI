@@ -69,11 +69,38 @@
       INACTIVE shortly after. This can be used for events that indicate momentary things on the
       layout like "it's noon".</p>
 
+      <p>When "Show System-specific columns" is checked in the table, there are two additional
+      columns shown that are specific to OpenLCB Sensors:
+      <dl>
+        <dt>Authoritative</dt><dd>Normally checked, this means that the JMRI Sensor
+                                  will report its state when a query comes from another
+                                  OpenLCB node.  That will then allow that other ndoe
+                                  to adjust its own state to be consistent.
+                                  <p>
+                                  When not checked, JMRI will report the state of the
+                                  Sensor as "unknown".  This will allow some other
+                                  user of these events to be the authoritative
+                                  source.
+                                  </dd>
+        <dt>Always listen</dt><dd>Normally checked, this means that the JMRI Sensor
+                                  will adjust its state when it sees the corresponding
+                                  events on the OpenLCB network.
+                                  <p>
+                                  When not checked, only JMRI internal operations will
+                                  change the state of the Sensor. External changes
+                                  will not.
+                                  </dd>
+      </dl>
+
       <h4>Turnouts</h4>
 
       <p>The scheme for Turnouts is similar to Sensors above, except JMRI is emitting the OpenLCB
       frames instead of receiving them, and the type letter is "T" instead of "S", e.g.
       "<code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".</p>
+
+      <p>Turnouts have Authoritative and Always Listen checkboxes that work the same as the
+      checkboxes on Sensors.
+
 
       <h4>Signals</h4>
 
