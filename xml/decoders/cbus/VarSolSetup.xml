@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2023 All rights reserved -->
+<!-- Variables for 8 solenoids -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <variable item="recharge" CV="10009" default="500">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable item="delay" CV="10010" default="0">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable item="enable" CV="10011" default="0">
+        <decVal min="0" max="255"/>
+    </variable>
+  
+</variables>

@@ -11,7 +11,7 @@ import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
 
 
 /**
- * Pane providing a Cbus event editing gui
+ * Pane providing a Cbus NV editing gui
  *
  * @author Andrew Crosland Copyright (C) 2021
  */

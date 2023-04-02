@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2023 All rights reserved -->
+<!-- Variables for 8 servos -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <variable CV="10005" default="127" item="onPos1">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10006" default="127" item="offPos1">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10007" default="7" item="onSpd1">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable CV="10008" default="7" item="offSpd1">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable default="1" item="startupPosition1" mask="XXXXXXXV XXXXXXXV" CV="10003,10002">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoStartup.xml"/>
+    </variable>
+  
+    <variable CV="10009" default="127" item="onPos2">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10010" default="127" item="offPos2">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10011" default="7" item="onSpd2">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable CV="10012" default="7" item="offSpd2">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable default="1" item="startupPosition2" mask="XXXXXXVX XXXXXXVX" CV="10003,10002">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoStartup.xml"/>
+    </variable>
+  
+    <variable CV="10013" default="127" item="onPos3">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10014" default="127" item="offPos3">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10015" default="7" item="onSpd3">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable CV="10016" default="7" item="offSpd3">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable default="1" item="startupPosition3" mask="XXXXXVXX XXXXXVXX" CV="10003,10002">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoStartup.xml"/>
+    </variable>
+  
+    <variable CV="10017" default="127" item="onPos4">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10018" default="127" item="offPos4">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10019" default="7" item="onSpd4">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable CV="10020" default="7" item="offSpd4">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable default="1" item="startupPosition4" mask="XXXXVXXX XXXXVXXX" CV="10003,10002">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoStartup.xml"/>
+    </variable>
+  
+    <variable CV="10021" default="127" item="onPos5">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10022" default="127" item="offPos5">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10023" default="7" item="onSpd5">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable CV="10024" default="7" item="offSpd5">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable default="1" item="startupPosition5" mask="XXXVXXXX XXXVXXXX" CV="10003,10002">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoStartup.xml"/>
+    </variable>
+  
+    <variable CV="10025" default="127" item="onPos6">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10026" default="127" item="offPos6">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10027" default="7" item="onSpd6">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable CV="10028" default="7" item="offSpd6">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable default="1" item="startupPosition6" mask="XXVXXXXX XXVXXXXX" CV="10003,10002">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoStartup.xml"/>
+    </variable>
+  
+    <variable CV="10029" default="127" item="onPos7">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10030" default="127" item="offPos7">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10031" default="7" item="onSpd7">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable CV="10032" default="7" item="offSpd7">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable default="1" item="startupPosition7" mask="XVXXXXXX XVXXXXXX" CV="10003,10002">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoStartup.xml"/>
+    </variable>
+  
+    <variable CV="10033" default="127" item="onPos8">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10034" default="127" item="offPos8">
+        <decVal min="0" max="255"/>
+    </variable>
+    <variable CV="10035" default="7" item="onSpd8">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable CV="10036" default="7" item="offSpd8">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoSpeed-0-7.xml"/>
+    </variable>
+    <variable default="1" item="startupPosition8" mask="VXXXXXXX VXXXXXXX" CV="10003,10002">
+        <xi:include href="http://jmri.org/xml/decoders/cbus/EnumServoStartup.xml"/>
+    </variable>
+</variables>

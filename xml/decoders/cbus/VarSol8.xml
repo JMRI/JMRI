@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2023 All rights reserved -->
+<!-- Variables for 8 solenoids -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <variable item="pulseWidth0" CV="10001" default="50">
+    <decVal min="0" max="255"/>
+  </variable>
+  <variable item="pulseWidth1" CV="10002" default="50">
+    <decVal min="0" max="255"/>
+  </variable>
+  <variable item="pulseWidth2" CV="10003" default="50">
+    <decVal min="0" max="255"/>
+  </variable>
+  <variable item="pulseWidth3" CV="10004" default="50">
+    <decVal min="0" max="255"/>
+  </variable>
+  <variable item="pulseWidth4" CV="10005" default="50">
+    <decVal min="0" max="255"/>
+  </variable>
+  <variable item="pulseWidth5" CV="10006" default="50">
+    <decVal min="0" max="255"/>
+  </variable>
+  <variable item="pulseWidth6" CV="10007" default="50">
+    <decVal min="0" max="255"/>
+  </variable>
+  <variable item="pulseWidth7" CV="10008" default="50">
+    <decVal min="0" max="255"/>
+  </variable>
+</variables>
