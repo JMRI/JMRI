@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2023 All rights reserved -->
+<!-- Panes for solenoid setup -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <name>CBUS Setup</name>
+    <column>
+        <row>
+            <column>
+                <label>
+                    <text>CAN ID and Node Number are normally fixed for host interfaces</text>
+                </label>
+                <label>
+                    <text>Use this pane to change them for advanced use cases.</text>
+                </label>
+            </column>
+        </row>
+        <row>
+            <label>
+                <text> </text>
+            </label>
+        </row>
+        <row>
+            <display item="id" layout="above" label="CAN ID" tooltip="CBUS CAN Id - use with care" />
+        </row>
+        <row>
+            <label>
+                <text> </text>
+            </label>
+        </row>
+        <row>
+            <display item="nodeNumber" layout="above" label="Node Number" tooltip="CBUS Node Number - use with care" />
+        </row>
+    </column>
+</pane>

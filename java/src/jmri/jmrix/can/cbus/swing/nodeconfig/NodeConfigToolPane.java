@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import jmri.GlobalProgrammerManager;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.*;
@@ -71,6 +72,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     private final JRadioButtonMenuItem fiveBackups;
     private final JRadioButtonMenuItem tenBackups;
     private final JRadioButtonMenuItem twentyBackups;
+    private CbusDccProgrammerManager progMan;
 
     /**
      * {@inheritDoc}
@@ -84,6 +86,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         _selectedNode = -1;
 
         preferences = memo.get(jmri.jmrix.can.cbus.CbusPreferences.class);
+        try {
+            progMan = memo.get(CbusConfigurationManager.class).get(GlobalProgrammerManager.class);
+        } catch (NullPointerException e) {
+            log.info("No Global Programmer available for NV programming");
+        }
         init();
 
     }
@@ -278,6 +285,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
             getTabs().get(tabindex).setNode( getNodeModel().getNodeByNodeNum(_selectedNode) );
 
+            try {
+                ((CbusDccProgrammer)(progMan.getGlobalProgrammer())).setNodeOfInterest(getNodeModel().getNodeByNodeNum(_selectedNode));
+            } catch(NullPointerException e) {
+                log.info("No programmer available fro NV programming");
+            }
         }
         else {
             tabbedPane.setEnabled(false);
