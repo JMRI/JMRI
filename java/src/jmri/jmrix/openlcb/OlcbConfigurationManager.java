@@ -19,15 +19,7 @@ import jmri.jmrix.can.TrafficController;
 import jmri.profile.ProfileManager;
 import jmri.util.ThreadingUtil;
 
-import org.openlcb.Connection;
-import org.openlcb.LoaderClient;
-import org.openlcb.MessageDecoder;
-import org.openlcb.MimicNodeStore;
-import org.openlcb.NodeID;
-import org.openlcb.OlcbInterface;
-import org.openlcb.SimpleNodeIdentInfoReplyMessage;
-import org.openlcb.SimpleNodeIdentInfoRequestMessage;
-import org.openlcb.Version;
+import org.openlcb.*;
 import org.openlcb.can.AliasMap;
 import org.openlcb.can.CanInterface;
 import org.openlcb.can.MessageBuilder;
@@ -184,6 +176,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         iface.registerMessageListener(loaderClient);
 
         iface.registerMessageListener(new SimpleNodeIdentInfoHandler());
+        iface.registerMessageListener(new PipRequestHandler());
 
         initializeFastClock();
 
@@ -496,6 +489,16 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 }
             }
         }
+    }
+
+    class PipRequestHandler extends MessageDecoder {
+
+        @Override
+        public void handleProtocolIdentificationRequest(ProtocolIdentificationRequestMessage msg, Connection sender) {
+            long flags = 0x00041000000000L;  // PC, SNIP protocols
+            getInterface().getOutputConnection().put(new ProtocolIdentificationReplyMessage(nodeID, msg.getSourceNodeID(), flags), this);
+        }
+
     }
 
     @Override
