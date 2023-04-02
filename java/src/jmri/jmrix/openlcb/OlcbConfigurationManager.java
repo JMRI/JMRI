@@ -450,9 +450,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
          * Helper function to add a string value to the sequence of bytes to send for SNIP
          * response content.
          *
-         * @param addString    string to render into byte stream
-         * @param contents represents the byte stream that will be sent.
-         * @param maxlength maximum number of characters to include, not counting terminating null
+         * @param addString  string to render into byte stream
+         * @param contents   represents the byte stream that will be sent.
+         * @param maxlength  maximum number of characters to include, not counting terminating null
          */
         private void  addStringPart(String addString, List<Byte> contents, int maxlength) {
             if (addString != null && !addString.isEmpty()) {
@@ -468,9 +468,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         SimpleNodeIdentInfoHandler() {
             List<Byte> l = new ArrayList<>(256);
+
             l.add((byte)4); // version byte
-            addStringPart("JMRI", l, 40);
-            addStringPart("PanelPro", l, 40);
+            addStringPart("JMRI", l, 40);  // mfg field; 40 char limit in Standard, not counting final null
+            addStringPart("PanelPro", l, 40);  // model
             String name = ProfileManager.getDefault().getActiveProfileName();
             if (name != null) {
                 addStringPart(name, l, 20); // hardware version
@@ -478,9 +479,11 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 addStringPart("", l, 20); // hardware version
             }
             addStringPart(jmri.Version.name(), l, 20); // software version
+
             l.add((byte)2); // version byte
             addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_USERNAME), l, 62);
             addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_DESCRIPTION), l, 63);
+
             content = new byte[l.size()];
             for (int i = 0; i < l.size(); ++i) {
                 content[i] = l.get(i);
