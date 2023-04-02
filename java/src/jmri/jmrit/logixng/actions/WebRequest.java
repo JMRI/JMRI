@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.*;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -38,6 +39,9 @@ public class WebRequest extends AbstractDigitalAction
     // The parameters are the string after the question mark.
     private final LogixNG_SelectString _selectUrl =
             new LogixNG_SelectString(this, this);
+
+    private final LogixNG_SelectCharset _selectCharset =
+            new LogixNG_SelectCharset(this, this);
 
     private final LogixNG_SelectEnum<RequestMethodType> _selectRequestMethod =
             new LogixNG_SelectEnum<>(this, RequestMethodType.values(), RequestMethodType.Get, this);
@@ -74,6 +78,7 @@ public class WebRequest extends AbstractDigitalAction
         WebRequest copy = new WebRequest(sysName, userName);
         copy.setComment(getComment());
         getSelectUrl().copy(copy._selectUrl);
+        getSelectCharset().copy(copy._selectCharset);
         getSelectRequestMethod().copy(copy._selectRequestMethod);
         getSelectUserAgent().copy(copy._selectUserAgent);
         copy._parameters.addAll(_parameters);
@@ -94,6 +99,10 @@ public class WebRequest extends AbstractDigitalAction
 
     public LogixNG_SelectString getSelectUrl() {
         return _selectUrl;
+    }
+
+    public LogixNG_SelectCharset getSelectCharset() {
+        return _selectCharset;
     }
 
     public LogixNG_SelectEnum<RequestMethodType> getSelectRequestMethod() {
@@ -147,90 +156,12 @@ public class WebRequest extends AbstractDigitalAction
     public String getLocalVariableForCookies() {
         return _localVariableForCookies;
     }
-/*
-    public void setFormatType(FormatType formatType) {
-        _formatType = formatType;
-    }
-
-    public FormatType getFormatType() {
-        return _formatType;
-    }
-
-    public void setFormat(String format) {
-        _format = format;
-    }
-
-    public String getFormat() {
-        return _format;
-    }
-
-    public List<Data> getDataList() {
-        return _dataList;
-    }
-*/
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-/*
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    setMemory((Memory)null);
-                }
-            }
-        }
-*/
-    }
 
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.OTHER;
     }
-/*
-    private List<Object> getDataValues() throws JmriException {
-        List<Object> values = new ArrayList<>();
-        for (Data _data : _dataList) {
-            switch (_data._dataType) {
-                case LocalVariable:
-                    values.add(getConditionalNG().getSymbolTable().getValue(_data._data));
-                    break;
-
-                case Memory:
-                    MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
-                    Memory memory = memoryManager.getMemory(_data._data);
-                    if (memory == null) throw new IllegalArgumentException("Memory '" + _data._data + "' not found");
-                    values.add(memory.getValue());
-                    break;
-
-                case Reference:
-                    values.add(ReferenceUtil.getReference(
-                            getConditionalNG().getSymbolTable(), _data._data));
-                    break;
-
-                case Formula:
-                    if (_data._expressionNode != null) {
-                        values.add(_data._expressionNode.calculate(getConditionalNG().getSymbolTable()));
-                    }
-
-                    break;
-
-                default:
-                    throw new IllegalArgumentException("_formatType has invalid value: "+_formatType.name());
-            }
-        }
-        return values;
-    }
-*/
-
-
-
-
 
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
@@ -243,6 +174,7 @@ public class WebRequest extends AbstractDigitalAction
         final DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG.getSymbolTable());
 
         String urlString = _selectUrl.evaluateValue(conditionalNG);
+        Charset charset = _selectCharset.evaluateCharset(conditionalNG);
         String userAgent = _selectUserAgent.evaluateValue(conditionalNG);
         RequestMethodType requestMethodType = _selectRequestMethod.evaluateEnum(conditionalNG);
 
@@ -261,9 +193,9 @@ public class WebRequest extends AbstractDigitalAction
                 String value;
                 if (v != null) value = v.toString();
                 else value = "";
-                paramString.append(URLEncoder.encode(parameter._name, "UTF-8"));
+                paramString.append(URLEncoder.encode(parameter._name, charset));
                 paramString.append("=");
-                paramString.append(URLEncoder.encode(value, "UTF-8"));
+                paramString.append(URLEncoder.encode(value, charset));
                 paramString.append("&");
             }
 
@@ -281,7 +213,7 @@ public class WebRequest extends AbstractDigitalAction
 //            if (!urlString.contains("LogixNG_WebRequest_Test.php") && !urlString.contains("https://www.modulsyd.se/")) return;
 //            if (!urlString.contains("LogixNG_WebRequest_Test.php")) return;
 //            if (!urlString.contains("https://www.modulsyd.se/")) return;
-        } catch (UnsupportedEncodingException | MalformedURLException ex) {
+        } catch (MalformedURLException ex) {
             throw new JmriException(ex.getMessage(), ex);
         }
 

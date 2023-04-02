@@ -100,6 +100,16 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 //        conditionalNG.execute();
     }
 
+    @Test
+    public void testCharsets() {
+        System.out.format("%n%n%nList of charsets%n");
+        var charsets = java.nio.charset.Charset.availableCharsets();
+        for (var entry : charsets.entrySet()) {
+            System.out.format("Charset: %s, %s%n", entry.getKey(), entry.getValue().displayName());
+        }
+        System.out.format("%n%n%n");
+    }
+
     @Override
     public ConditionalNG getConditionalNG() {
         return conditionalNG;

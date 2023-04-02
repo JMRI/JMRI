@@ -40,19 +40,21 @@ public class LogixNG_SelectString implements VetoableChangeListener {
     private ExpressionNode _expressionNode;
 
 
-    public LogixNG_SelectString(AbstractBase base, PropertyChangeListener listener) {
+    public LogixNG_SelectString(AbstractBase base, InUse inUse, PropertyChangeListener listener) {
         _base = base;
-        _inUse = () -> true;
+        _inUse = inUse;
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
         _listener = listener;
     }
 
+    public LogixNG_SelectString(AbstractBase base, PropertyChangeListener listener) {
+        this(base, () -> true, listener);
+    }
 
     public LogixNG_SelectString(AbstractBase base, String defaultValue, PropertyChangeListener listener) {
         this(base, listener);
         _value = defaultValue;
     }
-
 
     public void copy(LogixNG_SelectString copy) throws ParserException {
         copy.setAddressing(_addressing);
