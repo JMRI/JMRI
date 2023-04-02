@@ -455,8 +455,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
          * @param maxlength maximum number of characters to include, not counting terminating null
          */
         private void  addStringPart(String addString, List<Byte> contents, int maxlength) {
-            String value = addString.substring(0,Math.min(maxlength, addString.length()));
-            if (value != null && !value.isEmpty()) {
+            if (addString != null && !addString.isEmpty()) {
+                String value = addString.substring(0,Math.min(maxlength, addString.length()));
                 byte[] bb = value.getBytes(StandardCharsets.UTF_8);
                 for (byte b : bb) {
                     contents.add(b);
