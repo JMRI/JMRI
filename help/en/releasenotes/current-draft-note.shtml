@@ -430,6 +430,9 @@
           The state can be <strong>Free</strong>, <strong>Forward</strong> or <strong>Reverse</strong>.</li>
           <li>Add a <strong>Transit Expression</strong> which is used to get the state of a transit.
           The state can be <strong>Idle</strong> or <strong>Assigned</strong>.</li>
+          <li>Apply the <strong>Clock Expression</strong> settings when creating a new expression.</li>
+          <li>Enable the <strong>Light Action</strong> data input fields when <strong>Set Intensity
+          </strong> or <strong>Set Transition Time</strong> is selected.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -551,7 +554,7 @@
         <a id="throttle" name="throttle"></a>
         <ul>
             <li>Added a feature to allow custom markers on speed sliders, see <a href="https://www.jmri.org/help/en/html/tools/throttle/RostersMediaPane.shtml"> documention on Roster Media Pane page</a> (Custom attributes section)</li>
-            <li>Small bugs fixes :  previous and next running throttle buttons were reversed, large horizontal speed slider thumb was resized, large speed slider track computation was buggy</li>        
+            <li>Small bugs fixes :  previous and next running throttle buttons were reversed, large horizontal speed slider thumb was resized, large speed slider track computation was buggy</li>
             <li> Throttle related Jynstruments code was refactored to use non deprecated Function methods</li>
         </ul>
 
