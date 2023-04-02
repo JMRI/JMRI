@@ -28,15 +28,15 @@ public class LogixNG_SelectCharset {
 
     private Addressing _addressing = Addressing.Standard;
     private Charset _standardValue = StandardCharsets.UTF_8;
-    private Charset _listValue = StandardCharsets.UTF_8;
-    private final LogixNG_SelectString _selectString;
+    private Charset _allValue = StandardCharsets.UTF_8;
+    private final LogixNG_SelectString _selectUserSpecifiedCharset;
 
 
     public LogixNG_SelectCharset(AbstractBase base, PropertyChangeListener listener) {
         _base = base;
         _inUse = () -> _addressing == Addressing.UserSpecified;
 //        _listener = listener;
-        _selectString = new LogixNG_SelectString(base, _inUse, listener);
+        _selectUserSpecifiedCharset = new LogixNG_SelectString(base, _inUse, listener);
         _standardCharsets = new ArrayList<>();
         _standardCharsets.add(StandardCharsets.US_ASCII);
         _standardCharsets.add(StandardCharsets.ISO_8859_1);
@@ -49,8 +49,8 @@ public class LogixNG_SelectCharset {
     public void copy(LogixNG_SelectCharset copy) throws ParserException {
         copy.setAddressing(_addressing);
         copy.setStandardValue(_standardValue);
-        copy.setListValue(_standardValue);
-        _selectString.copy(copy._selectString);
+        copy.setAllValue(_standardValue);
+        _selectUserSpecifiedCharset.copy(copy._selectUserSpecifiedCharset);
     }
 
     public void setAddressing(@Nonnull Addressing addressing) {
@@ -70,17 +70,17 @@ public class LogixNG_SelectCharset {
         return _standardValue;
     }
 
-    public void setListValue(@Nonnull Charset charset) {
+    public void setAllValue(@Nonnull Charset charset) {
         _base.assertListenersAreNotRegistered(log, "setListValue");
-        _listValue = charset;
+        _allValue = charset;
     }
 
-    public Charset getListValue() {
-        return _listValue;
+    public Charset getAllValue() {
+        return _allValue;
     }
 
-    public LogixNG_SelectString getSelectString() {
-        return _selectString;
+    public LogixNG_SelectString getSelectUserSpecified() {
+        return _selectUserSpecifiedCharset;
     }
 
     public Charset evaluateCharset(ConditionalNG conditionalNG) throws JmriException {
@@ -93,7 +93,7 @@ public class LogixNG_SelectCharset {
                 return _standardValue;
 
             case UserSpecified:
-                String charsetName = _selectString.evaluateValue(conditionalNG);
+                String charsetName = _selectUserSpecifiedCharset.evaluateValue(conditionalNG);
                 return Charset.forName(charsetName);
 
             default:
