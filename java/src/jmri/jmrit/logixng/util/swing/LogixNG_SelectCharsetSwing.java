@@ -45,10 +45,10 @@ public class LogixNG_SelectCharsetSwing {
         _panelStandard = new javax.swing.JPanel();
         _panelAll = new javax.swing.JPanel();
 
-        _standardValueComboBox = new JComboBox();
+        _standardValueComboBox = new JComboBox<>();
         _panelStandard.add(_standardValueComboBox);
 
-        _allValueComboBox = new JComboBox();
+        _allValueComboBox = new JComboBox<>();
         _panelAll.add(_allValueComboBox);
 
         if (selectCharset != null) {
