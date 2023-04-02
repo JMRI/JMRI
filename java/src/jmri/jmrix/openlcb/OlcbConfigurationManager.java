@@ -450,10 +450,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
          * Helper function to add a string value to the sequence of bytes to send for SNIP
          * response content.
          *
-         * @param value    string to render into byte stream
+         * @param addString    string to render into byte stream
          * @param contents represents the byte stream that will be sent.
+         * @param maxlength maximum number of characters to include, not counting terminating null
          */
-        private void  addStringPart(String value, List<Byte> contents) {
+        private void  addStringPart(String addString, List<Byte> contents, int maxlength) {
+            String value = addString.substring(0,Math.min(maxlength, addString.length()));
             if (value != null && !value.isEmpty()) {
                 byte[] bb = value.getBytes(StandardCharsets.UTF_8);
                 for (byte b : bb) {
@@ -467,18 +469,18 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         SimpleNodeIdentInfoHandler() {
             List<Byte> l = new ArrayList<>(256);
             l.add((byte)4); // version byte
-            addStringPart("JMRI", l);
-            addStringPart("PanelPro", l);
+            addStringPart("JMRI", l, 40);
+            addStringPart("PanelPro", l, 40);
             String name = ProfileManager.getDefault().getActiveProfileName();
             if (name != null) {
-                addStringPart("Profile " + name, l); // hardware version
+                addStringPart(name, l, 20); // hardware version
             } else {
-                addStringPart("", l); // hardware version
+                addStringPart("", l, 20); // hardware version
             }
-            addStringPart(jmri.Version.name(), l); // software version
+            addStringPart(jmri.Version.name(), l, 20); // software version
             l.add((byte)2); // version byte
-            addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_USERNAME), l);
-            addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_DESCRIPTION), l);
+            addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_USERNAME), l, 62);
+            addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_DESCRIPTION), l, 63);
             content = new byte[l.size()];
             for (int i = 0; i < l.size(); ++i) {
                 content[i] = l.get(i);
