@@ -7,7 +7,6 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.util.FileUtil;
-import jmri.util.swing.JmriJFileChooser;
 
 /**
  * Base implementation for the load and store actions.
@@ -42,7 +41,7 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
     static private JFileChooser userFileChooser = null;
 
     static private JFileChooser getXmlFileChooser(String path) {
-        JFileChooser chooser = new JmriJFileChooser(path);
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser(path);
         chooser.setFileFilter(new FileNameExtensionFilter("XML files", "xml")); // NOI18N
         return chooser;
     }
