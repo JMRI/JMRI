@@ -45,6 +45,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final String VERTICAL_TOOLBAR = "verticalToolBar";
     public static final String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
     public static final String EDITOR_USE_OLD_LOC_SIZE = "editorUseOldLocSize";
+    public static final String JFILECHOOSER_FORMAT = "jfilechooserformat";
     public static final String MAX_COMBO_ROWS = "maxComboRows";
     /**
      * Smallest font size a user can set the font size to other than zero
@@ -74,6 +75,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private boolean graphicTableState = false;
     private boolean oblockEditTabbed = false;
     private boolean editorUseOldLocSize = false;
+    private int jFileChooserFormat = 0;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
     private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
     private int maxComboRows = 0;
@@ -111,6 +113,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             this.setGraphicTableState(preferences.getBoolean(GRAPHIC_TABLE_STATE, this.isGraphicTableState()));
             this.setOblockEditTabbed(preferences.getBoolean(OBLOCK_EDIT_TABBED, this.isOblockEditTabbed()));
             this.setEditorUseOldLocSize(preferences.getBoolean(EDITOR_USE_OLD_LOC_SIZE, this.isEditorUseOldLocSize()));
+            this.setJFileChooserFormat(preferences.getInt(JFILECHOOSER_FORMAT, this.getJFileChooserFormat()));
             this.setMaxComboRows(preferences.getInt(MAX_COMBO_ROWS, this.getMaxComboRows()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
 
@@ -172,6 +175,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         preferences.putBoolean(GRAPHIC_TABLE_STATE, this.isGraphicTableState());
         preferences.putBoolean(OBLOCK_EDIT_TABBED, this.isOblockEditTabbed());
         preferences.putBoolean(EDITOR_USE_OLD_LOC_SIZE, this.isEditorUseOldLocSize());
+        preferences.putInt(JFILECHOOSER_FORMAT, this.jFileChooserFormat);
         preferences.putInt(MAX_COMBO_ROWS, this.getMaxComboRows());
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
@@ -445,6 +449,23 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         boolean oldEditorUseOldLocSize = this.editorUseOldLocSize;
         this.editorUseOldLocSize = editorUseOldLocSize;
         firePropertyChange(EDITOR_USE_OLD_LOC_SIZE, oldEditorUseOldLocSize, editorUseOldLocSize);
+    }
+
+    /**
+     * JFileChooser Type
+     * @return 0 default, 1 List 2 Detail
+     */
+    public int getJFileChooserFormat() {
+        return jFileChooserFormat;
+    }
+
+    /**
+     * @param jFileChooserFormat the JFileChooser 0 default, 1 list, 2 detail
+     */
+    public void setJFileChooserFormat( int jFileChooserFormat) {
+        int oldjFileChooserFormat = this.jFileChooserFormat;
+        this.jFileChooserFormat = jFileChooserFormat;
+        firePropertyChange(JFILECHOOSER_FORMAT, oldjFileChooserFormat, jFileChooserFormat);
     }
 
     /**

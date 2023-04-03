@@ -300,7 +300,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         }
         log.debug("Start put");
         if (fileChooser == null) {
-            fileChooser = new JFileChooser();
+            fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
         fileChooser.setDialogTitle("Read into binary file");
         fileChooser.rescanCurrentDirectory();
@@ -408,7 +408,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
     void pushedPutButton(ActionEvent e) {
         log.debug("Start get");
         if (fileChooser == null) {
-            fileChooser = new JFileChooser();
+            fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
         fileChooser.setDialogTitle("Upload binary file");
         fileChooser.rescanCurrentDirectory();

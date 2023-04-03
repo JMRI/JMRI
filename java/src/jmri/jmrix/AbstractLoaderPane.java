@@ -226,7 +226,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             name = FileUtil.getUserFilesPath();
         }
         if (chooser == null) {
-            chooser = new JFileChooser(name);
+            chooser = new jmri.util.swing.JmriJFileChooser(name);
             addChooserFilters(chooser);
         }
         inputFileName.setText("");  // clear out in case of failure

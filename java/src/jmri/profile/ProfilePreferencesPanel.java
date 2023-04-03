@@ -368,7 +368,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }//GEN-LAST:event_profilesPopupMenuPopupMenuWillBecomeVisible
 
     private void btnAddSearchPathActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAddSearchPathActionPerformed
-        JFileChooser chooser = new JFileChooser(FileUtil.getHomePath());
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getHomePath());
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setFileFilter(new ProfileFileFilter());
         chooser.setFileView(new ProfileFileView());
@@ -414,7 +414,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             // abort if selection does not match an existing profile
             return;
         }
-        JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser();
         chooser.setFileFilter(new FileNameExtensionFilter("ZIP Archives", "zip"));
         chooser.setFileView(new ProfileFileView());
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -544,7 +544,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }//GEN-LAST:event_btnDeleteProfileActionPerformed
 
     private void btnOpenExistingProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnOpenExistingProfileActionPerformed
-        JFileChooser chooser = new JFileChooser(FileUtil.getHomePath());
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getHomePath());
         chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         chooser.setFileFilter(new ProfileFileFilter());
         chooser.setFileView(new ProfileFileView());

@@ -15,7 +15,7 @@ import jmri.script.JmriScriptEngineManager;
  *
  * @author Randall Wood
  */
-public class ScriptFileChooser extends JFileChooser {
+public class ScriptFileChooser extends jmri.util.swing.JmriJFileChooser {
 
     public ScriptFileChooser() {
         super(FileUtil.getScriptsPath());

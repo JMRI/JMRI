@@ -57,7 +57,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
     @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by logic")
     private File getDirectory(String msg, boolean recurse) {
         if (_directoryChooser == null) {
-            _directoryChooser = new JFileChooser(FileSystemView.getFileSystemView());
+            _directoryChooser = new jmri.util.swing.JmriJFileChooser(FileSystemView.getFileSystemView());
             _directoryChooser.setFileFilter(new FileNameExtensionFilter("Graphics Files", CatalogTreeManager.IMAGE_FILTER)); // NOI18N
         }
         _directoryChooser.setDialogTitle(Bundle.getMessage(msg));
