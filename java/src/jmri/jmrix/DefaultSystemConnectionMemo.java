@@ -357,7 +357,10 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
      * @param type Class type, eg. SensorManager.class
      */
     public <T> void store(@Nonnull T item, @Nonnull Class<T> type){
-        classObjectMap.put(type,item);
+        if ( !classObjectMap.containsValue(item) ) {
+            classObjectMap.put(type,item);
+            propertyChangeSupport.firePropertyChange(STORE, null, item);
+        }
     }
 
     /**
@@ -370,7 +373,10 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
      * @param type Class type, eg. SensorManager.class
      */
     public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type){
-        classObjectMap.remove(type,item);
+        if ( classObjectMap.containsValue(item) ) {
+            classObjectMap.remove(type,item);
+            propertyChangeSupport.firePropertyChange(DEREGISTER, item, null);
+        }
     }
 
     /**
