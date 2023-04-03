@@ -275,7 +275,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
      */
     @CheckForNull
     private CbusNode nodeFromSelectedList() {
-        String obj = (String) nodeToTeachTolist.getSelectedValue();
+        String obj = nodeToTeachTolist.getSelectedValue();
         if ( obj == null ) {
             return null;
         }
