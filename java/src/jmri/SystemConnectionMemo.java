@@ -39,6 +39,8 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
     public static final String USER_NAME = "ConnectionNameChanged";
     public static final String SYSTEM_PREFIX = "ConnectionPrefixChanged";
     public static final String INTERVAL = "OutputInterval";
+    public static final String STORE = "Store";
+    public static final String DEREGISTER = "Deregister";
 
     /**
      * Provide a factory for getting startup actions.
