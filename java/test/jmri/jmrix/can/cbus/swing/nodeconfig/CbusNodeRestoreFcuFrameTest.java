@@ -105,13 +105,13 @@ public class CbusNodeRestoreFcuFrameTest extends jmri.util.JmriJFrameTestBase {
         Assertions.assertEquals(2, evTable.getRowCount(),"2 events imported");
         Assertions.assertEquals(127, (int)evTable.getValueAt(0, 0),"node 127");
         Assertions.assertEquals(100, (int)evTable.getValueAt(0, 1),"event 100");
-        Assertions.assertEquals("SOD Request DC CANPAN from JMRI", (String)evTable.getValueAt(0, 4),"event name imported");
-        Assertions.assertEquals("2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255", (String)evTable.getValueAt(0, 5), "ev variables imported");
+        Assertions.assertEquals("SOD Request DC CANPAN from JMRI", evTable.getValueAt(0, 4),"event name imported");
+        Assertions.assertEquals("2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255", evTable.getValueAt(0, 5), "ev variables imported");
 
         Assertions.assertEquals(127, (int)evTable.getValueAt(1, 0));
         Assertions.assertEquals(205, (int)evTable.getValueAt(1, 1));
-        Assertions.assertEquals("LED DC On", (String)evTable.getValueAt(1, 4));
-        Assertions.assertEquals("1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13", (String)evTable.getValueAt(1, 5));
+        Assertions.assertEquals("LED DC On", evTable.getValueAt(1, 4));
+        Assertions.assertEquals("1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13", evTable.getValueAt(1, 5));
 
         JListOperator jlo = new JListOperator(jfo);
         jlo.setSelectedIndex(0);
