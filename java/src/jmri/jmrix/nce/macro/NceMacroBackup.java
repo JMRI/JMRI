@@ -84,7 +84,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
     public void run() {
 
         // get file to write to
-        JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser fc = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         fc.addChoosableFileFilter(new TextFilter());
 
         File fs = new File("NCE macro backup.txt"); // NOI18N

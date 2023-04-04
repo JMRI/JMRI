@@ -35,7 +35,7 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
     JFileChooser fc;
 
     public RosterConfigPane() {
-        fc = new JFileChooser(FileUtil.getUserFilesPath());
+        fc = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         // filter to only show the roster.xml file
         FileFilter filt = new FileFilter() {
             @Override

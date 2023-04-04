@@ -206,7 +206,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         repaint();
     }
 
-    JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    JFileChooser userFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
 
     /**
      * Save the where used textarea content to a text file.
