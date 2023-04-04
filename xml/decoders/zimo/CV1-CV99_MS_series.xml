@@ -1744,7 +1744,7 @@
     <tooltip> </tooltip>
     <tooltip xml:lang="de">Zykluszeit (Zehner-), Aus-Verlängerung (Einerstelle)</tooltip>
   </variable>
-  <variable item="Global lighting option 4" CV="64" default="5" exclude="228,226,232,235,247,MX689_v30">
+  <variable item="Global lighting option 4" CV="64" default="5">
     <decVal min="0" max="15"/>
     <label>Ditch Light Off Time</label>
     <label xml:lang="it">Tempo di Off luci Ditch</label>
