@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import jmri.jmrit.logixng.util.LineEnding;
+
 import java.beans.*;
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -48,6 +50,12 @@ public class WebRequest extends AbstractDigitalAction
 
     private final LogixNG_SelectString _selectUserAgent =
             new LogixNG_SelectString(this, DEFAULT_USER_AGENT, this);
+
+    private final LogixNG_SelectEnum<ReplyType> _selectReplyType =
+            new LogixNG_SelectEnum<>(this, ReplyType.values(), ReplyType.String, this);
+
+    private final LogixNG_SelectEnum<LineEnding> _selectLineEnding =
+            new LogixNG_SelectEnum<>(this, LineEnding.values(), LineEnding.System, this);
 
     private final List<Parameter> _parameters = new ArrayList<>();
 
@@ -113,6 +121,14 @@ public class WebRequest extends AbstractDigitalAction
         return _selectUserAgent;
     }
 
+    public LogixNG_SelectEnum<ReplyType> getSelectReplyType() {
+        return _selectReplyType;
+    }
+
+    public LogixNG_SelectEnum<LineEnding> getSelectLineEnding() {
+        return _selectLineEnding;
+    }
+
     public List<Parameter> getParameters() {
         return _parameters;
     }
@@ -168,6 +184,8 @@ public class WebRequest extends AbstractDigitalAction
     @Override
     public void execute() throws JmriException {
 
+//        System.out.format("WebRequest.execute()%n");
+
         final boolean useThread = this._useThread;
 
         final ConditionalNG conditionalNG = getConditionalNG();
@@ -177,6 +195,8 @@ public class WebRequest extends AbstractDigitalAction
         Charset charset = _selectCharset.evaluateCharset(conditionalNG);
         String userAgent = _selectUserAgent.evaluateValue(conditionalNG);
         RequestMethodType requestMethodType = _selectRequestMethod.evaluateEnum(conditionalNG);
+        ReplyType replyType = _selectReplyType.evaluateEnum(conditionalNG);
+        LineEnding lineEnding = _selectLineEnding.evaluateEnum(conditionalNG);
 
         URL url;
         StringBuilder paramString = new StringBuilder();
@@ -334,16 +354,31 @@ public class WebRequest extends AbstractDigitalAction
                 //dump all the content
 //DANIEL                print_content(con);
 
-                List<String> reply = new ArrayList<>();
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
-                    String input;
-                    while ((input = br.readLine()) != null) {
-//                        System.out.println(input);
-                        reply.add(input);
+                Object reply;
+
+                if (replyType == ReplyType.Bytes) {
+                    reply = con.getInputStream().readAllBytes();
+                } else if (replyType == ReplyType.String || replyType == ReplyType.ListOfStrings) {
+                    List<String> list = new ArrayList<>();
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+                        String input;
+                        while ((input = br.readLine()) != null) {
+    //                        System.out.println(input);
+                            list.add(input);
+                        }
+    //                } catch (IOException e) {
+    //                    e.printStackTrace();
                     }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
+
+                    if (replyType == ReplyType.String) {
+                        reply = String.join(lineEnding.getLineEnding(), list);
+                    } else {
+                        reply = list;
+                    }
+                } else {
+                    throw new IllegalArgumentException("replyType has unknown value: " + replyType.name());
                 }
+
 
 
 
@@ -361,22 +396,16 @@ public class WebRequest extends AbstractDigitalAction
 
 //                System.out.format("Total time: %d%n", time);
 
-                if (useThread) {
-                    synchronized (WebRequest.this) {
-                        _internalSocket._conditionalNG = conditionalNG;
-                        _internalSocket._newSymbolTable = newSymbolTable;
-                        _internalSocket._cookies = cookies;
-                        _internalSocket._responseCode = con.getResponseCode();
-                        _internalSocket._reply = reply;
-//                        _internalSocket.selectedButton = button._value;
-//                        _internalSocket.inputValue = textField.getText();
+                synchronized (WebRequest.this) {
+                    _internalSocket._conditionalNG = conditionalNG;
+                    _internalSocket._newSymbolTable = newSymbolTable;
+                    _internalSocket._cookies = cookies;
+                    _internalSocket._responseCode = con.getResponseCode();
+                    _internalSocket._reply = reply;
+
+                    if (useThread) {
                         conditionalNG.execute(_internalSocket);
-                    }
-                } else {
-                    synchronized (WebRequest.this) {
-                        _internalSocket._conditionalNG = conditionalNG;
-                        _internalSocket._newSymbolTable = newSymbolTable;
-                        _internalSocket._cookies = cookies;
+                    } else {
                         _internalSocket.execute();
                     }
                 }
@@ -584,6 +613,25 @@ public class WebRequest extends AbstractDigitalAction
     }
 
 
+    public enum ReplyType {
+        String(Bundle.getMessage("WebRequest_ReplyType_String")),
+        ListOfStrings(Bundle.getMessage("WebRequest_ReplyType_ListOfStrings")),
+        Bytes(Bundle.getMessage("WebRequest_ReplyType_Bytes"));
+
+        private final String _text;
+
+        private ReplyType(String text) {
+            this._text = text;
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
+
+    }
+
+
     public static class Parameter {
 
         public String _name;
@@ -677,7 +725,7 @@ public class WebRequest extends AbstractDigitalAction
         private SymbolTable _newSymbolTable;
         private int _responseCode;
         private List<String> _cookies;
-        private List<String> _reply;
+        private Object _reply;
 
         public InternalFemaleSocket() {
             super(null, new FemaleSocketListener(){
@@ -695,6 +743,7 @@ public class WebRequest extends AbstractDigitalAction
 
         @Override
         public void execute() throws JmriException {
+//            System.out.format("WebRequest.InternalSocket.execute()%n");
             if (_socket != null) {
                 MaleSocket maleSocket = (MaleSocket)WebRequest.this.getParent();
                 try {
