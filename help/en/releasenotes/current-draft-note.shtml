@@ -368,6 +368,8 @@
         <h4>ZIMO</h4>
             <ul>
                 <li> Include CV's 190-191 for Decoder FW V.37+ </li>
+                <li>Added MS950 and MS990 model info</li>
+                <li>Updated CV64 in MS models to have a maximum of 15, was 9</li>
             </ul>
 
         <h4>Miscellaneous</h4>
