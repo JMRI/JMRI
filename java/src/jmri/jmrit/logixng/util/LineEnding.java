@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  *
  * @author Daniel Bergqvist (C) 2023
  */
-@SuppressWarnings("VA_FORMAT_STRING_USES_NEWLINE")  // This class lets the user select the line ending
+@SuppressFBWarnings("VA_FORMAT_STRING_USES_NEWLINE")  // This class lets the user select the line ending
 
 public enum LineEnding {
 

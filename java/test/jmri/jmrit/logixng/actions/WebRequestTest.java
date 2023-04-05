@@ -174,7 +174,6 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         forEach.getChild(0).connect(maleSocket);
 
         WebRequest webRequest = new WebRequest("IQDA103", null);
-        webRequest.setUseThread(false);
         webRequest.getSelectUrl().setValue(WEB_REQUEST_URL);
         webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
         webRequest.getParameters().add(new WebRequest.Parameter("action", SymbolTable.InitialValueType.String, "throw"));
@@ -265,7 +264,6 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         forEach.getChild(0).connect(maleSocket);
 
         WebRequest webRequest = new WebRequest("IQDA203", null);
-        webRequest.setUseThread(false);
         webRequest.getSelectUrl().setValue(WEB_REQUEST_URL);
         webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
         webRequest.getParameters().add(new WebRequest.Parameter("action", SymbolTable.InitialValueType.String, "cookies"));
@@ -326,7 +324,6 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         ifThenElse.getChild(0).connect(maleSocket);
 
         WebRequest webRequest = new WebRequest("IQDA302", null);
-        webRequest.setUseThread(false);
         webRequest.getSelectUrl().setValue(WEB_REQUEST_URL);
         webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Post);
         webRequest.getParameters().add(new WebRequest.Parameter("action", SymbolTable.InitialValueType.String, "login"));

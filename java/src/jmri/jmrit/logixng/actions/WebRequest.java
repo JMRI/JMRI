@@ -33,8 +33,6 @@ public class WebRequest extends AbstractDigitalAction
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox
     public static final String DEFAULT_USER_AGENT = "Mozilla/5.0";
 
-    private boolean _useThread = true;
-
     // Note that it's valid if the url has parameters as well, like https://www.mysite.org/somepage.php?name=Jim&city=Boston
     // The parameters are the string after the question mark.
     private final LogixNG_SelectString _selectUrl =
@@ -131,14 +129,6 @@ public class WebRequest extends AbstractDigitalAction
         return _parameters;
     }
 
-//    public LogixNG_SelectEnum<MimeType> getSelectMime() {
-//        return _selectMime;
-//    }
-
-    public void setUseThread(boolean value) {
-        _useThread = value;
-    }
-
     public void setLocalVariableForPostContent(String localVariable) {
         _localVariableForPostContent = localVariable;
     }
@@ -182,10 +172,9 @@ public class WebRequest extends AbstractDigitalAction
     @Override
     public void execute() throws JmriException {
 
-        final boolean useThread = this._useThread;
-
         final ConditionalNG conditionalNG = getConditionalNG();
         final DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG.getSymbolTable());
+        final boolean useThread = conditionalNG.getRunDelayed();
 
         String urlString = _selectUrl.evaluateValue(conditionalNG);
         Charset charset = _selectCharset.evaluateCharset(conditionalNG);
