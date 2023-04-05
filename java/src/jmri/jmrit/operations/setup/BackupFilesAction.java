@@ -45,7 +45,7 @@ public class BackupFilesAction extends AbstractAction {
         BackupBase backup = new DefaultBackup();
 
         // get directory to write to
-        JFileChooser fc = new JFileChooser(backup.getBackupRoot());
+        JFileChooser fc = new jmri.util.swing.JmriJFileChooser(backup.getBackupRoot());
         fc.addChoosableFileFilter(new FileFilter());
 
         File fs = new File(backup.suggestBackupSetName());

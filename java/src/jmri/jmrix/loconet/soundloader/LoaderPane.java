@@ -147,7 +147,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             name = FileUtil.getUserFilesPath();
         }
         if (chooser == null) {
-            chooser = new JFileChooser(name);
+            chooser = new jmri.util.swing.JmriJFileChooser(name);
         }
         inputFileName.setText("");  // clear out in case of failure
         int retVal = chooser.showOpenDialog(this);

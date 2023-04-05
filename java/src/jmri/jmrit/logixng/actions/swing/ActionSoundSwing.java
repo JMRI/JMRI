@@ -89,7 +89,7 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
         _actionSelectFileButton.setMaximumSize(_actionSelectFileButton.getPreferredSize());
         _actionSelectFileButton.setToolTipText(Bundle.getMessage("FileButtonHint"));  // NOI18N
         _actionSelectFileButton.addActionListener((ActionEvent e) -> {
-            soundFileChooser = new JFileChooser(System.getProperty("user.dir") // NOI18N
+            soundFileChooser = new jmri.util.swing.JmriJFileChooser(System.getProperty("user.dir") // NOI18N
                     + java.io.File.separator + "resources" // NOI18N
                     + java.io.File.separator + "sounds");  // NOI18N
             soundFileChooser.setFileFilter(new FileNameExtensionFilter("wav sound files", "wav")); // NOI18N

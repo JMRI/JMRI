@@ -38,7 +38,7 @@ abstract public class SprogUpdateFrame
     protected SprogVersion sv;
 
     // to find and remember the hex file
-    final javax.swing.JFileChooser hexFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    final javax.swing.JFileChooser hexFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
 
     JLabel statusBar = new JLabel();
 

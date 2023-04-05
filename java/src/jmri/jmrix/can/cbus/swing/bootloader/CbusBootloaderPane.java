@@ -92,7 +92,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
     // to find and remember the hex file
     final javax.swing.JFileChooser hexFileChooser =
-            new JFileChooser(FileUtil.getUserFilesPath());
+            new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
     // File to hold name of hex file
     transient HexFile hexFile = null;
 

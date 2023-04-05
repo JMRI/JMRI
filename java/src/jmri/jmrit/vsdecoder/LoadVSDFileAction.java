@@ -73,7 +73,7 @@ public class LoadVSDFileAction extends AbstractAction {
 
             log.debug("Using path: {}", start_dir);
 
-            fileChooser = new JFileChooser(start_dir);
+            fileChooser = new jmri.util.swing.JmriJFileChooser(start_dir);
             fileChooser.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"), "vsd", "zip")); // NOI18N
             fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
             fileChooser.setCurrentDirectory(new File(start_dir));

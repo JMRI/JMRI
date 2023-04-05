@@ -54,7 +54,7 @@ public class FullBackupExportAction
 
         String roster_filename_extension = "roster";
 
-        JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "JMRI full roster files", roster_filename_extension);
         chooser.setFileFilter(filter);
