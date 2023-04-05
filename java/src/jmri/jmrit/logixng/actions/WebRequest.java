@@ -209,8 +209,13 @@ public class WebRequest extends AbstractDigitalAction
             }
 
             if (requestMethodType == RequestMethodType.Get) {
-                if (!urlString.contains("?")) urlString += "?";
+                if (urlString.contains("?")) {
+                    urlString += "&";
+                } else {
+                    urlString += "?";
+                }
                 urlString +=  paramString.toString();
+//                System.out.format("Param string: \"%s\". URL: \"%s\"%n", paramString, urlString);
             }
 
             url = new URL(urlString);
