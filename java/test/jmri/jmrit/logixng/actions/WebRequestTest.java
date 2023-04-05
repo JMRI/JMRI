@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import jmri.*;
+import static jmri.configurexml.StoreAndCompare.checkFile;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionLight;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
@@ -353,6 +354,12 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         many.getChild(0).connect(maleSocket);
     }
 
+    @Test
+    public void testStoreFile() throws IOException {
+        // This test only updates the xml file in the LogixNG documentation
+        storeXmlFile();
+    }
+
 
     private void storeXmlFile() throws IOException {
 
@@ -377,6 +384,34 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
             // Add the header comment to the xml file
             addHeader(firstFile, secondFile);
+
+
+
+
+            try {
+                boolean result = false;
+
+                File file1 = new File(FileUtil.getProgramPath() + "help/en/html/tools/logixng/reference/WebRequestExample/" + "WebRequest.xml");
+
+                try {
+                    result = checkFile(file1, secondFile);
+                } catch (FileNotFoundException e) {
+                    // Ignore this. If this happens, just copy the new file to the documentation folder
+                }
+
+                if (!result) {
+                    java.nio.file.Files.copy(secondFile.toPath(), file1.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                    System.out.format("File copied from %s to %s%n", secondFile, file1);
+                }
+
+                System.out.format("File compare resulted in: %b%n", result);
+            } catch (Exception ex) {
+                log.debug("checkFile exception: ", ex);
+                throw new RuntimeException("An exception occurred", ex);
+            }
+
+
+
         }
     }
 
@@ -432,8 +467,6 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         _logixNG.activate();
         _logixNG.setEnabled(true);
-
-        storeXmlFile();
     }
 
     @After
