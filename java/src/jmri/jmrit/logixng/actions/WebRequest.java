@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.util.LineEnding;
-
 import java.beans.*;
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -17,8 +15,8 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
-import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.*;
+import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -631,79 +629,6 @@ public class WebRequest extends AbstractDigitalAction
         }
     }
 
-
-
-
-/*
-    public enum DataType {
-        LocalVariable(Bundle.getMessage("ShowDialog_Operation_LocalVariable")),
-        Memory(Bundle.getMessage("ShowDialog_Operation_Memory")),
-        Reference(Bundle.getMessage("ShowDialog_Operation_Reference")),
-        Formula(Bundle.getMessage("ShowDialog_Operation_Formula"));
-
-        private final String _text;
-
-        private DataType(String text) {
-            this._text = text;
-        }
-
-        @Override
-        public String toString() {
-            return _text;
-        }
-
-    }
-
-
-    public static class Data {
-
-        private DataType _dataType = DataType.LocalVariable;
-        private String _data = "";
-        private ExpressionNode _expressionNode;
-
-        public Data(Data data) throws ParserException {
-            _dataType = data._dataType;
-            _data = data._data;
-            calculateFormula();
-        }
-
-        public Data(DataType dataType, String data) throws ParserException {
-            if (dataType != null) {
-                _dataType = dataType;
-            } else {
-                // Sometimes data entered in a JTable is not updated correctly
-                log.warn("dataType is null");
-            }
-            _data = data;
-            calculateFormula();
-        }
-
-        private void calculateFormula() throws ParserException {
-            if (_dataType == DataType.Formula) {
-                Map<String, Variable> variables = new HashMap<>();
-                RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-                _expressionNode = parser.parseExpression(_data);
-            } else {
-                _expressionNode = null;
-            }
-        }
-
-        public void setDataType(DataType dataType) {
-            if (dataType != null) {
-                _dataType = dataType;
-            } else {
-                // Sometimes data entered in a JTable is not updated correctly
-                log.warn("dataType is null");
-            }
-        }
-
-        public DataType getDataType() { return _dataType; }
-
-        public void setData(String data) { _data = data; }
-        public String getData() { return _data; }
-
-    }
-*/
 
     private class InternalFemaleSocket extends jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket {
 

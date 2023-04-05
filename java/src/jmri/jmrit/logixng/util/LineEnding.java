@@ -8,6 +8,8 @@ import java.util.List;
  *
  * @author Daniel Bergqvist (C) 2023
  */
+@SuppressWarnings("VA_FORMAT_STRING_USES_NEWLINE")  // This class lets the user select the line ending
+
 public enum LineEnding {
 
     WindowsCrLf(Bundle.getMessage("LineEnding_WindowsCrLf"), String.format("\r\n"), true),
