@@ -270,7 +270,7 @@ public class WebRequest extends AbstractDigitalAction
                             }
                             String[] cookieParts = entry.getValue().split("; ");
                             cookies.append(cookieParts[0]);
-                            System.out.format("Set cookie to connection: '%s=%s'%n", entry.getKey(), entry.getValue());
+//                            System.out.format("Set cookie to connection: '%s=%s'%n", entry.getKey(), entry.getValue());
                         }
                         if (cookies.length() > 0) {
 //                            System.out.format("Set cookie to connection: '%s'%n", cookies.toString());
