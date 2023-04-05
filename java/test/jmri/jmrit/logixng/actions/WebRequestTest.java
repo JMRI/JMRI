@@ -355,13 +355,13 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     }
 
     @Test
-    public void testStoreFile() throws IOException {
+    public void testStoreFile() throws Exception {
         // This test only updates the xml file in the LogixNG documentation
         storeXmlFile();
     }
 
 
-    private void storeXmlFile() throws IOException {
+    private void storeXmlFile() throws Exception {
 
         jmri.ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm == null) {
@@ -372,8 +372,8 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
             File secondFile = new File(FileUtil.getUserFilesPath() + "temp/" + "WebRequest.xml");
             log.info("Temporary first file: {}", firstFile.getAbsoluteFile());
             log.info("Temporary second file: {}", secondFile.getAbsoluteFile());
-            System.out.format("Temporary first file: %s%n", firstFile.getAbsoluteFile());
-            System.out.format("Temporary second file: %s%n", secondFile.getAbsoluteFile());
+//            System.out.format("Temporary first file: %s%n", firstFile.getAbsoluteFile());
+//            System.out.format("Temporary second file: %s%n", secondFile.getAbsoluteFile());
 
             boolean results = cm.storeUser(firstFile);
             log.debug(results ? "store was successful" : "store failed");
@@ -385,34 +385,25 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
             // Add the header comment to the xml file
             addHeader(firstFile, secondFile);
 
+            boolean dataHasChanged = true;
 
-
+            File fileInDocumentationFolder =
+                    new File(FileUtil.getProgramPath() + "help/en/html/tools/logixng/reference/WebRequestExample/" + "WebRequest.xml");
 
             try {
-                boolean dataHasChanged = true;
-
-                File file1 = new File(FileUtil.getProgramPath() + "help/en/html/tools/logixng/reference/WebRequestExample/" + "WebRequest.xml");
-
-                try {
-                    dataHasChanged = checkFile(file1, secondFile);
-                } catch (FileNotFoundException e) {
-                    // Ignore this. If this happens, just copy the new file to the documentation folder
-                    System.out.format("File not found!!! %s%n", e.getMessage());
-                }
-
-                if (dataHasChanged) {
-                    java.nio.file.Files.copy(secondFile.toPath(), file1.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-                    System.out.format("File copied from %s to %s%n", secondFile, file1);
-                }
-
-                System.out.format("File compare %s with %s resulted in: %b%n", file1, secondFile, dataHasChanged);
-            } catch (Exception ex) {
-                log.debug("checkFile exception: ", ex);
-                throw new RuntimeException("An exception occurred", ex);
+                // Note: The comparision is made with the first xml file that doesn't have the header comment.
+                dataHasChanged = checkFile(fileInDocumentationFolder, firstFile);
+            } catch (FileNotFoundException e) {
+                // Ignore this. If this happens, just copy the new file to the documentation folder
+                System.out.format("File not found!!! %s%n", e.getMessage());
             }
 
+            if (dataHasChanged) {
+                java.nio.file.Files.copy(secondFile.toPath(), fileInDocumentationFolder.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+//                System.out.format("File copied from %s to %s%n", secondFile, fileInDocumentationFolder);
+            }
 
-
+//            System.out.format("File compare %s with %s resulted in: %b%n", fileInDocumentationFolder, secondFile, dataHasChanged);
         }
     }
 
