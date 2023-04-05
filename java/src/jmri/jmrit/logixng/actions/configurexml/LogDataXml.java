@@ -19,7 +19,7 @@ public class LogDataXml extends jmri.managers.configurexml.AbstractNamedBeanMana
 
     public LogDataXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -33,14 +33,14 @@ public class LogDataXml extends jmri.managers.configurexml.AbstractNamedBeanMana
         Element element = new Element("LogData");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
-        
+
         element.addContent(new Element("logToLog").addContent(p.getLogToLog() ? "yes" : "no"));
         element.addContent(new Element("logToScriptOutput").addContent(p.getLogToScriptOutput() ? "yes" : "no"));
         element.addContent(new Element("formatType").addContent(p.getFormatType().name()));
         element.addContent(new Element("format").addContent(p.getFormat()));
-        
+
         Element parameters = new Element("DataList");
         for (LogData.Data data : p.getDataList()) {
             Element elementParameter = new Element("Data");
@@ -49,10 +49,10 @@ public class LogDataXml extends jmri.managers.configurexml.AbstractNamedBeanMana
             parameters.addContent(elementParameter);
         }
         element.addContent(parameters);
-        
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
@@ -60,43 +60,42 @@ public class LogDataXml extends jmri.managers.configurexml.AbstractNamedBeanMana
         LogData h = new LogData(sys, uname);
 
         loadCommon(h, shared);
-        
+
         Element elem = shared.getChild("logToLog");  // NOI18N
         h.setLogToLog((elem != null) ? elem.getTextTrim().equals("yes") : false);  // NOI18N
-        
+
         elem = shared.getChild("logToScriptOutput");  // NOI18N
         h.setLogToScriptOutput((elem != null) ? elem.getTextTrim().equals("yes") : false);  // NOI18N
-        
+
         elem = shared.getChild("formatType");  // NOI18N
         h.setFormatType((elem != null) ? LogData.FormatType.valueOf(elem.getTextTrim()) : LogData.FormatType.OnlyText);
-        
+
         elem = shared.getChild("format");  // NOI18N
         h.setFormat((elem != null) ? elem.getValue() : "");
-        
+
         List<Element> dataList = shared.getChild("DataList").getChildren();  // NOI18N
         log.debug("Found {} dataList", dataList.size() );  // NOI18N
-        
+
         for (Element e : dataList) {
             LogData.DataType type = LogData.DataType.LocalVariable;
             Element elementType = e.getChild("type");
             if (elementType != null) {
                 type = LogData.DataType.valueOf(elementType.getTextTrim());
             }
-            
-            Element elementName = e.getChild("data");
-            
-            if (elementName == null) throw new IllegalArgumentException("Element 'name' does not exists");
-            
+
+            Element elementData = e.getChild("data");
+            if (elementData == null) throw new IllegalArgumentException("Element 'name' does not exists");
+
             try {
-                h.getDataList().add(new LogData.Data(type, elementName.getTextTrim()));
+                h.getDataList().add(new LogData.Data(type, elementData.getTextTrim()));
             } catch (ParserException ex) {
-                log.warn("Could not load {} to data list : {}", elementName.getTextTrim(), ex.getMessage());
+                log.warn("Could not load {} to data list : {}", elementData.getTextTrim(), ex.getMessage());
             }
         }
-        
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogDataXml.class);
 }

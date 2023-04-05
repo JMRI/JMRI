@@ -190,8 +190,8 @@ public class WebRequest extends AbstractDigitalAction
             for (Parameter parameter : _parameters) {
 
                 Object v = SymbolTable.getInitialValue(
-                        parameter._valueType,
-                        parameter._valueData,
+                        parameter._type,
+                        parameter._data,
                         newSymbolTable,
                         newSymbolTable.getSymbols());
 
@@ -613,14 +613,24 @@ public class WebRequest extends AbstractDigitalAction
     public static class Parameter {
 
         public String _name;
-        public InitialValueType _valueType;
-        public String _valueData;
+        public InitialValueType _type;
+        public String _data;
 
-        public Parameter(String name, InitialValueType valueType, String valueData) {
+        public Parameter(String name, InitialValueType type, String data) {
             this._name = name;
-            this._valueType = valueType;
-            this._valueData = valueData;
+            this._type = type;
+            this._data = data;
         }
+
+        public void setName(String name) { _name = name; }
+        public String getName() { return _name; }
+
+        public void setType(InitialValueType dataType) { _type = dataType; }
+        public InitialValueType getType() { return _type; }
+
+        public void setData(String valueData) { _data = valueData; }
+        public String getData() { return _data; }
+
     }
 
 

@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
+import java.util.List;
+
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
@@ -64,7 +66,15 @@ public class WebRequestXml extends jmri.managers.configurexml.AbstractNamedBeanM
         element.addContent(new Element("localVariableForReplyContent").addContent(p.getLocalVariableForReplyContent()));
         element.addContent(new Element("_localVariableForCookies").addContent(p.getLocalVariableForCookies()));
 
-        //DANIEL --- Store parameters!!!
+        Element parameters = new Element("Parameters");
+        for (WebRequest.Parameter parameter : p.getParameters()) {
+            Element elementParameter = new Element("Parameter");
+            elementParameter.addContent(new Element("name").addContent(parameter.getName()));
+            elementParameter.addContent(new Element("type").addContent(parameter.getType().name()));
+            elementParameter.addContent(new Element("data").addContent(parameter.getData()));
+            parameters.addContent(elementParameter);
+        }
+        element.addContent(parameters);
 
         return element;
     }
@@ -109,11 +119,28 @@ public class WebRequestXml extends jmri.managers.configurexml.AbstractNamedBeanM
         elem = shared.getChild("_localVariableForCookies");
         if (elem != null) h.setLocalVariableForCookies(elem.getTextTrim());
 
-        //DANIEL --- Load parameters!!!
+        List<Element> parameters = shared.getChild("Parameters").getChildren();  // NOI18N
+        log.debug("Found {} dataList", parameters.size() );  // NOI18N
+
+        for (Element e : parameters) {
+            Element elementName = e.getChild("name");
+            if (elementName == null) throw new IllegalArgumentException("Element 'name' does not exists");
+
+            SymbolTable.InitialValueType type = SymbolTable.InitialValueType.LocalVariable;
+            Element elementType = e.getChild("type");
+            if (elementType != null) {
+                type = SymbolTable.InitialValueType.valueOf(elementType.getTextTrim());
+            }
+
+            Element elementData = e.getChild("data");
+            if (elementData == null) throw new IllegalArgumentException("Element 'data' does not exists");
+
+            h.getParameters().add(new WebRequest.Parameter(elementName.getTextTrim(), type, elementData.getTextTrim()));
+        }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebRequestXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebRequestXml.class);
 }
