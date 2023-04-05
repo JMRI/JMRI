@@ -471,7 +471,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     private File selectFile() {
         if (fc == null) {
-            fc = new JFileChooser(
+            fc = new jmri.util.swing.JmriJFileChooser(
                     InstanceManager.getDefault(TrainManagerXml.class).getDefaultCsvSwitchListDirectoryName());
             fc.setFileFilter(new FileNameExtensionFilter("Comma Separated Values", "csv")); // NOI18N
             fc.setDialogTitle(Bundle.getMessage("TitleSwitchLists"));

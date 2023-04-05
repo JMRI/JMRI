@@ -130,7 +130,7 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
         # Throttle assigned to current frame, control it  
         if (self.throttle != None):
             if ( evt.wasReleased(WRButtonEvent.HOME) ):  # LIGHTS
-                self.throttle.setF0( not self.throttle.getF0() )
+                self.throttle.setFunction(0, not self.throttle.getFunction(0) )
                 return
             if ( evt.wasReleased(WRButtonEvent.PLUS) ):  # FORWARD
                 self.throttle.setIsForward(True)

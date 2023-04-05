@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import jmri.ProgrammingMode;
@@ -9,6 +10,7 @@ import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.cbus.node.CbusNode;
 
 /**
  * Implements the jmri.Programmer interface via commands for the CBUS
@@ -51,13 +53,25 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int MODESENT = 1;   // waiting reply to command to go into programming mode
-    static final int COMMANDSENT = 2;  // read/write command sent, waiting reply
-    static final int RETURNSENT = 4;  // waiting reply to go back to ops mode
+    static final int MODESENT = 1;      // waiting reply to command to go into programming mode
+    static final int COMMANDSENT = 2;   // read/write command sent, waiting reply
+    static final int RETURNSENT = 4;    // waiting reply to go back to ops mode
+    static final int NVCOMMANDSENT = 8; // read/write command sent, waiting reply
     boolean _progRead = false;
-    int _val; // remember the value being read/written for confirmative reply
-    int _cv; // remember the cv being read/written
+    int _val;                           // remember the value being read/written for confirmative reply
+    int _cv;                            // remember the cv being read/written
+    static final int _nvOffset = 10000; // Offset to acces CBUS node NVs rather than DCC decoder CVs
+    private CbusNode _nodeOfInterest;   // Sets the node to be used for CBUS module programming
 
+    /**
+     * Set the CBUS Node to be used for NV programming
+     * 
+     * @param n a CBUS node
+     */
+    public void setNodeOfInterest(CbusNode n) {
+        _nodeOfInterest = n;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -74,7 +88,13 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         try {
             startLongTimer();
             // write was in progress - send write command
-            tc.sendCanMessage(CbusMessage.getWriteCV(_cv, _val, getMode(), tc.getCanid()), this);
+            if (_cv < _nvOffset) {
+                progState = COMMANDSENT;
+                tc.sendCanMessage(CbusMessage.getWriteCV(_cv, _val, getMode(), tc.getCanid()), this);
+            } else {
+                progState = NVCOMMANDSENT;
+                _nodeOfInterest.send.nVSET(_nodeOfInterest.getNodeNumber(), CV - _nvOffset, _val);
+            }
         } catch (Exception e) {
             // program op failed, go straight to end
             log.error("Write operation failed",e);
@@ -114,10 +134,16 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         try {
             startLongTimer();
             // read was in progress - send read command
-            if (_memo.supportsCVHints()) {
-                tc.sendCanMessage(CbusMessage.getVerifyCV(_cv, getMode(), startVal, tc.getCanid()), this);
+            if (_cv < _nvOffset) {
+                progState = COMMANDSENT;
+                if (_memo.supportsCVHints()) {
+                    tc.sendCanMessage(CbusMessage.getVerifyCV(_cv, getMode(), startVal, tc.getCanid()), this);
+                } else {
+                    tc.sendCanMessage(CbusMessage.getReadCV(_cv, getMode(), tc.getCanid()), this);
+                }
             } else {
-                tc.sendCanMessage(CbusMessage.getReadCV(_cv, getMode(), tc.getCanid()), this);
+                progState = NVCOMMANDSENT;
+                _nodeOfInterest.send.nVRD(_nodeOfInterest.getNodeNumber(), CV - _nvOffset);
             }
         } catch (Exception e) {
             // program op failed, go straight to end
@@ -195,6 +221,29 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
                     // Carry on waiting
                     log.debug("Reply ignored: {}", m);
                 }
+            }
+        } else if (progState == NVCOMMANDSENT) {
+            log.debug("reply in NVCOMMANDSENT state");
+            // operation done, capture result, then have to leave programming mode
+            // see why waiting
+            if (_progRead && (m.getElement(0) == CbusConstants.CBUS_NVANS)) {
+                // read was in progress - received report CV message
+                _val = m.getElement(4);
+                progState = NOTPROGRAMMING;
+                stopTimer();
+                // if this was a read, we cached the value earlier.  If its a
+                // write, we're to return the original write value
+                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+            } else if ((!_progRead) && (m.getElement(0) == CbusConstants.CBUS_WRACK)) {
+                // write was in progress - acknowledge received
+                progState = NOTPROGRAMMING;
+                stopTimer();
+                // if this was a read, we cached the value earlier.  If its a
+                // write, we're to return the original write value
+                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+            } else {
+                // Carry on waiting
+                log.debug("Reply ignored: {}", m);
             }
         }
     }

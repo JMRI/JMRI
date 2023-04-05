@@ -77,7 +77,7 @@ public class PrintSavedBuildReportAction extends AbstractAction implements java.
             pathName = InstanceManager.getDefault(TrainManagerXml.class)
                     .getBackupBuildStatusDirectoryName(_train.getName());
         }
-        JFileChooser fc = new JFileChooser(pathName);
+        JFileChooser fc = new jmri.util.swing.JmriJFileChooser(pathName);
         fc.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("TextFiles"), "txt"));
         int retVal = fc.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {

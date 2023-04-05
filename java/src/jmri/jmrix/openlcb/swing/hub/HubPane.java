@@ -141,13 +141,13 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
 
     private void addInetAddresses(){
         ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
-        Set<InetAddress> addresses = manager.getAddresses(ZeroConfServiceManager.Protocol.All, false, true);
+        Set<InetAddress> addresses = manager.getAddresses(ZeroConfServiceManager.Protocol.All, true, true);
         for (InetAddress ha : addresses) {
             textArea.append( System.lineSeparator() + Bundle.getMessage(("IpAddressLine"), // NOI18N
             !ha.getHostAddress().equals(ha.getHostName()) ? ha.getHostName() : "",
             ha.isLoopbackAddress() ? " Loopback" : "", // NOI18N
             ha.isLinkLocalAddress() ? " LinkLocal" : "", // NOI18N
-            ha.getHostAddress() + ":" + hub.getPort()));
+            ha.getHostAddress(), String.valueOf(hub.getPort())));
         }
     }
 

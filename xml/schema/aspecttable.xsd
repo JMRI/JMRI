@@ -104,8 +104,46 @@
                     <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     <xs:element name="comment" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     <xs:element name="imagelink" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
-                    <xs:element name="speed" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
-                    <xs:element name="speed2" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+                    <xs:element name="speed" minOccurs="1" maxOccurs="1">
+                     <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:annotation><xs:documentation>
+                            These come from xml/signals/signalSpeeds.xml and must be kept consistent
+                          </xs:documentation></xs:annotation>
+                          <xs:enumeration value="Cab"/>
+                          <xs:enumeration value="Maximum"/>
+                          <xs:enumeration value="Normal"/>
+                          <xs:enumeration value="Sixty"/>
+                          <xs:enumeration value="Fifty"/>
+                          <xs:enumeration value="Limited"/>
+                          <xs:enumeration value="Medium"/>
+                          <xs:enumeration value="Slow"/>
+                          <xs:enumeration value="Restricted"/>
+                          <xs:enumeration value="RestrictedSlow"/>
+                          <xs:enumeration value="Stop"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="speed2" minOccurs="1" maxOccurs="1">
+                     <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:annotation><xs:documentation>
+                            These come from xml/signals/signalSpeeds.xml and must be kept consistent
+                          </xs:documentation></xs:annotation>
+                          <xs:enumeration value="Cab"/>
+                          <xs:enumeration value="Maximum"/>
+                          <xs:enumeration value="Normal"/>
+                          <xs:enumeration value="Sixty"/>
+                          <xs:enumeration value="Fifty"/>
+                          <xs:enumeration value="Limited"/>
+                          <xs:enumeration value="Medium"/>
+                          <xs:enumeration value="Slow"/>
+                          <xs:enumeration value="Restricted"/>
+                          <xs:enumeration value="RestrictedSlow"/>
+                          <xs:enumeration value="Stop"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
                     <xs:element name="route" minOccurs="0" maxOccurs="1">
                      <xs:simpleType>
                         <xs:restriction base="xs:string">

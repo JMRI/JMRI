@@ -231,7 +231,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
     void replWavButtonPressed(Object value, int row, int col) {
         if (chooser == null) {
-            setChooser( new JFileChooser(FileUtil.getUserFilesPath()));
+            setChooser( new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath()));
         }
         EditorTableDataModel.chooser.rescanCurrentDirectory();
         int retVal = EditorTableDataModel.chooser.showOpenDialog(null);

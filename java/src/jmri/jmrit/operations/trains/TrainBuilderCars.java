@@ -937,7 +937,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
         }
         addLine(_buildReport, SEVEN,
-                Bundle.getMessage("buildCouldNotFindTrack", trackType, car.toString(), car.getLoadName()));
+                Bundle.getMessage("buildCouldNotFindTrack", trackType.toLowerCase(), car.toString(),
+                        car.getLoadType().toLowerCase(), car.getLoadName()));
         addLine(_buildReport, FIVE, BLANK_LINE);
         return false;
     }
@@ -980,7 +981,12 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // locations not reachable
         List<Location> locationsNotServiced = new ArrayList<>();
         for (Track track : tracks) {
-            if (car.getTrack() == track || track.getSchedule() == null) {
+            if (car.getTrack() == track) {
+                continue;
+            }
+            if (track.getSchedule() == null) {
+                addLine(_buildReport, SEVEN, Bundle.getMessage("buildSpurNoSchedule",
+                        track.getLocation().getName(), track.getName()));
                 continue;
             }
             if (locationsNotServiced.contains(track.getLocation())) {
@@ -997,8 +1003,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 return true;
             }
         }
-        addLine(_buildReport, SEVEN, Bundle.getMessage("buildCouldNotFindTrack", Track.getTrackTypeName(Track.SPUR),
-                car.toString(), car.getLoadName()));
+        addLine(_buildReport, SEVEN, Bundle.getMessage("buildCouldNotFindTrack", Track.getTrackTypeName(Track.SPUR).toLowerCase(),
+                car.toString(), car.getLoadType().toLowerCase(), car.getLoadName()));
         if (_routeToTrackFound &&
                 !_train.isSendCarsWithCustomLoadsToStagingEnabled() &&
                 !car.getLocation().isStaging()) {
@@ -1121,8 +1127,10 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 }
             }
         }
-        addLine(_buildReport, SEVEN, Bundle.getMessage("buildSetFinalDestination", car.toString(), car.getLoadName(),
-                track.getLocation().getName(), track.getName(), track.getTrackTypeName()));
+        addLine(_buildReport, SEVEN,
+                Bundle.getMessage("buildSetFinalDestDiv", track.getTrackTypeName(), track.getLocation().getName(),
+                        track.getName(), track.getDivisionName(), car.toString(), car.getLoadType().toLowerCase(),
+                        car.getLoadName()));
 
         // show if track is requesting cars with custom loads to only go to
         // spurs
@@ -1190,7 +1198,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
     }
 
     /**
-     * Destination track can be yard or staging, NOT a spur.
+     * Destination track can be division yard or staging, NOT a spur.
      * 
      * @param car   the car
      * @param track the car's destination track
@@ -1216,9 +1224,11 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                             track.getReservedInRoute(), Setup.getLengthUnit().toLowerCase()));
             return false;
         }
-        // try to send car to this track
-        addLine(_buildReport, SEVEN, Bundle.getMessage("buildSetFinalDestination", car.toString(), car.getLoadName(),
-                track.getLocation().getName(), track.getName(), track.getTrackTypeName()));
+        // try to send car to this division track
+        addLine(_buildReport, SEVEN,
+                Bundle.getMessage("buildSetFinalDestDiv", track.getTrackTypeName(), track.getLocation().getName(),
+                        track.getName(), track.getDivisionName(), car.toString(), car.getLoadType().toLowerCase(),
+                        car.getLoadName()));
         car.setFinalDestination(track.getLocation());
         car.setFinalDestinationTrack(track);
         // test to see if destination is reachable by this train

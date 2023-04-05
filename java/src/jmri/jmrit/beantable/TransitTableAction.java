@@ -931,7 +931,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             if (seq == 0) {
                 return;
             }
-            for (int i = sectionList.size(); i >= seq; i--) {
+            for (int i = sectionList.size() - 1; i >= seq; i--) {
                 if ((sequence.get(i) == seq) && alternate.get(i)) {
                     removeSupportingArrayEntries(i);
                 }

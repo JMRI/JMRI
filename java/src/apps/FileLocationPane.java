@@ -54,7 +54,7 @@ public final class FileLocationPane extends JPanel implements PreferencesPanel {
     private JPanel scriptsLocation() {
         JButton bScript = new JButton(ConfigBundle.getMessage("ButtonSetDots"));
         final JFileChooser fcScript;
-        fcScript = new JFileChooser(FileUtil.getScriptsPath());
+        fcScript = new jmri.util.swing.JmriJFileChooser(FileUtil.getScriptsPath());
 
         fcScript.setDialogTitle(ConfigBundle.getMessage("MessageSelectDirectory"));
         fcScript.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -81,7 +81,7 @@ public final class FileLocationPane extends JPanel implements PreferencesPanel {
 
         JButton bUser = new JButton(ConfigBundle.getMessage("ButtonSetDots"));
         final JFileChooser fcUser;
-        fcUser = new JFileChooser(FileUtil.getUserFilesPath());
+        fcUser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
 
         fcUser.setDialogTitle(ConfigBundle.getMessage("MessageSelectDirectory"));
         fcUser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

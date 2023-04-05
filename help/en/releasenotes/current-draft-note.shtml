@@ -96,7 +96,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Fix typo in Sensor default name; should not have visible effect.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -367,7 +367,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li> Include CV's 190-191 for Decoder FW V.37+ </li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -426,8 +426,13 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>Cleanup LogixNG controlled Dispatcher train when the train has been terminated by an external action.</li>
-          <li>Add a <strong>Transit Expression</strong> which is used to get the state of transit.
+          <li>Add a <strong>Section Expression</strong> which is used to get the state of a section.
+          The state can be <strong>Free</strong>, <strong>Forward</strong> or <strong>Reverse</strong>.</li>
+          <li>Add a <strong>Transit Expression</strong> which is used to get the state of a transit.
           The state can be <strong>Idle</strong> or <strong>Assigned</strong>.</li>
+          <li>Apply the <strong>Clock Expression</strong> settings when creating a new expression.</li>
+          <li>Enable the <strong>Light Action</strong> data input fields when <strong>Set Intensity
+          </strong> or <strong>Set Transition Time</strong> is selected.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -501,7 +506,12 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Updated several definitions to replace invalid <i>speed</i> and
+                    <i>speed2</i> values with proper speed indications.
+                    The invalid values had been previously interpreted as zero.</li>
+                <li>Updated the <i>xml/schema/aspecttable.xsd</i> schema to ensure that
+                    only valid <i>speed</i> and <i>speed2</i> values will occur in
+                    signal system definitions.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -543,7 +553,9 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Added a feature to allow custom markers on speed sliders, see <a href="https://www.jmri.org/help/en/html/tools/throttle/RostersMediaPane.shtml"> documention on Roster Media Pane page</a> (Custom attributes section)</li>
+            <li>Small bugs fixes :  previous and next running throttle buttons were reversed, large horizontal speed slider thumb was resized, large speed slider track computation was buggy</li>
+            <li> Throttle related Jynstruments code was refactored to use non deprecated Function methods</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -603,6 +615,17 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The NamedIcon class will now search <i>Locations.ALL</i> for files. This means
+                <ul>
+                <li>Files and filepaths will be found in the user area first for all
+                    subclasses of
+                    <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/catalog/NamedIcon.html">NamedIcon</a>.
+                <li>This change might result in different graphics in some cases,
+                    where it hadn't been
+                    searching before and a file was not being found (even though it
+                    really should have been). Please check your graphics carefully to
+                    see if there are any issues.
+                </ul>
+            </li>
         </ul>
 

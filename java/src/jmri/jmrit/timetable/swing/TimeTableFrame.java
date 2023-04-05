@@ -2611,7 +2611,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
     List<String> feedbackList;
     void importCsvPressed() {
-        fileChooser = new JFileChooser(jmri.util.FileUtil.getUserFilesPath());
+        fileChooser = new jmri.util.swing.JmriJFileChooser(jmri.util.FileUtil.getUserFilesPath());
         fileChooser.setFileFilter(new FileNameExtensionFilter("Import File", "csv"));
         int retVal = fileChooser.showOpenDialog(null);
         if (retVal == JFileChooser.APPROVE_OPTION) {
@@ -2725,7 +2725,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             scheduleId = schedule.getScheduleId();
         }
 
-        fileChooser = new JFileChooser(jmri.util.FileUtil.getUserFilesPath());
+        fileChooser = new jmri.util.swing.JmriJFileChooser(jmri.util.FileUtil.getUserFilesPath());
         fileChooser.setFileFilter(new FileNameExtensionFilter("Export as CSV File", "csv"));  // NOI18N
         int retVal = fileChooser.showSaveDialog(null);
         if (retVal == JFileChooser.APPROVE_OPTION) {

@@ -83,7 +83,7 @@ public class OlcbAddress {
             // dotted form, 7 dots
             String[] terms = s.split("\\.");
             if (terms.length != 8) {
-                log.error("unexpected number of terms: {}, address is {}", terms.length, s);
+                log.debug("unexpected number of terms: {}, address is {}", terms.length, s);
             }
             int[] tFrame = new int[terms.length];
             try {
@@ -298,14 +298,6 @@ public class OlcbAddress {
      */
     @Nonnull
     public static String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale, @Nonnull String prefix) throws jmri.NamedBean.BadSystemNameException {
-        //System.err.printf("*** OlcbAddress.validateSystemNameFormat(%s,[locale],%s)\n",name,prefix);
-        //StackTraceElement traceback[] = Thread.currentThread().getStackTrace();
-        //for (int i=1; i < 6 && i < traceback.length; i++) {
-        //    StackTraceElement tb = traceback[i];
-        //    System.err.printf("*** %s.%s (%s at %d)\n",
-        //              tb.getClassName(),tb.getMethodName(),
-        //              tb.getFileName(),tb.getLineNumber());
-        //}
         String oAddr = name.substring(prefix.length());
         OlcbAddress a = new OlcbAddress(oAddr);
         OlcbAddress[] v = a.split();

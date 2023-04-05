@@ -101,9 +101,9 @@ class Sequence(Thread):
         self.timeSleep = 500
         
     def run(self):
-        funVal = self.throttle.getF0()
-        self.throttle.setF0( not funVal )   # HERE!
+        funVal = self.throttle.getFunction(0)
+        self.throttle.setFunction(0, not funVal )   # HERE!
         print self.timeSleep
         Thread.sleep(self.timeSleep)
-        self.throttle.setF0( funVal )   # HERE!        
+        self.throttle.setFunction(0, funVal )   # HERE!        
 
