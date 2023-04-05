@@ -389,22 +389,23 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
 
             try {
-                boolean result = false;
+                boolean dataHasChanged = true;
 
                 File file1 = new File(FileUtil.getProgramPath() + "help/en/html/tools/logixng/reference/WebRequestExample/" + "WebRequest.xml");
 
                 try {
-                    result = checkFile(file1, secondFile);
+                    dataHasChanged = checkFile(file1, secondFile);
                 } catch (FileNotFoundException e) {
                     // Ignore this. If this happens, just copy the new file to the documentation folder
+                    System.out.format("File not found!!! %s%n", e.getMessage());
                 }
 
-                if (!result) {
+                if (dataHasChanged) {
                     java.nio.file.Files.copy(secondFile.toPath(), file1.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
                     System.out.format("File copied from %s to %s%n", secondFile, file1);
                 }
 
-                System.out.format("File compare resulted in: %b%n", result);
+                System.out.format("File compare %s with %s resulted in: %b%n", file1, secondFile, dataHasChanged);
             } catch (Exception ex) {
                 log.debug("checkFile exception: ", ex);
                 throw new RuntimeException("An exception occurred", ex);
