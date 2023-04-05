@@ -34,6 +34,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     private GlobalVariable _responseCodeVariable;
     private GlobalVariable _replyVariable;
+    private GlobalVariable _cookiesVariable;
 
 //    private WebRequest webRequest;
 //    private Light light;
@@ -108,16 +109,6 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 //        conditionalNG.execute();
 //        conditionalNG.execute();
     }
-
-    @Test
-    public void testCharsets() {
-        System.out.format("%n%n%nList of charsets%n");
-        var charsets = java.nio.charset.Charset.availableCharsets();
-        for (var entry : charsets.entrySet()) {
-            System.out.format("Charset: %s, %s%n", entry.getKey(), entry.getValue().displayName());
-        }
-        System.out.format("%n%n%n");
-    }
 */
     @Override
     public ConditionalNG getConditionalNG() {
@@ -151,13 +142,28 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
                 "LogixNG: A logixNG%n" +
-                "   ConditionalNG: A conditionalNG%n" +
+                "   ConditionalNG: Throw turnouts%n" +
                 "      ! A%n" +
                 "         For each value, set variable \"bean\" and execute action A. Values from Turnouts ::: Use default%n" +
                 "            ::: Local variable \"bean\", init to None \"null\"%n" +
                 "            ::: Local variable \"turnout\", init to None \"null\"%n" +
                 "            ! A%n" +
-                "               Listen on the bean in the local variable \"bean\" of type Light ::: Use default%n" +
+                "               Listen on the bean in the local variable \"bean\" of type Turnout ::: Use default%n" +
+                "                  ! Execute%n" +
+                "                     Web request for %s ::: Use default%n" +
+                "                        ! Execute%n" +
+                "                           Many ::: Use default%n" +
+                "                              ! A1%n" +
+                "                                 Log local variables ::: Use default%n" +
+                "                              ! A2%n" +
+                "                                 Socket not connected%n" +
+                "   ConditionalNG: Test cookies%n" +
+                "      ! A%n" +
+                "         For each value, set variable \"bean\" and execute action A. Values from Sensors ::: Use default%n" +
+                "            ::: Local variable \"bean\", init to None \"null\"%n" +
+                "            ::: Local variable \"sensor\", init to None \"null\"%n" +
+                "            ! A%n" +
+                "               Listen on the bean in the local variable \"bean\" of type Sensor ::: Use default%n" +
                 "                  ! Execute%n" +
                 "                     Web request for %s ::: Use default%n" +
                 "                        ! Execute%n" +
@@ -166,7 +172,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
                 "                                 Log local variables ::: Use default%n" +
                 "                              ! A2%n" +
                 "                                 Socket not connected%n",
-                WEB_REQUEST_URL);
+                WEB_REQUEST_URL, WEB_REQUEST_URL);
     }
 
     @Override
@@ -201,45 +207,35 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     }
 
     private void setupThrowTurnoutsConditionalNG() throws SocketAlreadyConnectedException, ParserException {
-
-        _responseCodeVariable = InstanceManager.getDefault(GlobalVariableManager.class).createGlobalVariable("responseCode");
-        _replyVariable = InstanceManager.getDefault(GlobalVariableManager.class).createGlobalVariable("reply");
-
         InstanceManager.getDefault(TurnoutManager.class).newTurnout("IT1", "Chicago32");
         InstanceManager.getDefault(TurnoutManager.class).newTurnout("IT2", "MiamiWest");
         InstanceManager.getDefault(TurnoutManager.class).newTurnout("IT3", "TorontoFirst");
 
-        _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "Throw turnouts");  // NOI18N;
         InstanceManager.getDefault(ConditionalNG_Manager.class).register(_conditionalNG);
         _logixNG.addConditionalNG(_conditionalNG);
         _conditionalNG.setRunDelayed(false);
         _conditionalNG.setEnabled(true);
 
-
-//        DigitalMany many = new DigitalMany("IQDA001", null);
-//        MaleSocket maleSocketRoot =
-//                InstanceManager.getDefault(DigitalActionManager.class).registerAction(many);
-//        maleSocketRoot.addLocalVariable("turnout", SymbolTable.InitialValueType.None, null);
-//        conditionalNG.getChild(0).connect(maleSocketRoot);
-
-        ForEach forEach = new ForEach("IQDA002", null);
+        ForEach forEach = new ForEach("IQDA101", null);
         forEach.setLocalVariableName("bean");
         forEach.setUseCommonSource(true);
-        forEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        forEach.setCommonManager(CommonManager.Turnouts);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(forEach);
         maleSocket.addLocalVariable("bean", SymbolTable.InitialValueType.None, null);
         maleSocket.addLocalVariable("turnout", SymbolTable.InitialValueType.None, null);
         _conditionalNG.getChild(0).connect(maleSocket);
 
-        ActionListenOnBeansLocalVariable listenOnBeans = new ActionListenOnBeansLocalVariable("IQDA321", null);
+        ActionListenOnBeansLocalVariable listenOnBeans = new ActionListenOnBeansLocalVariable("IQDA102", null);
+        listenOnBeans.setNamedBeanType(NamedBeanType.Turnout);
         listenOnBeans.setLocalVariableBeanToListenOn("bean");
         listenOnBeans.setLocalVariableNamedBean("turnout");
         maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(listenOnBeans);
         forEach.getChild(0).connect(maleSocket);
 
-        WebRequest webRequest = new WebRequest(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
+        WebRequest webRequest = new WebRequest("IQDA103", null);
         webRequest.setUseThread(false);
         webRequest.getSelectUrl().setValue(WEB_REQUEST_URL);
         webRequest.getParameters().add(new WebRequest.Parameter("action", SymbolTable.InitialValueType.String, "throw"));
@@ -249,10 +245,168 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         webRequest.getSelectReplyType().setEnum(WebRequest.ReplyType.String);
 //        webRequest.getSelectLineEnding().setEnum(LineEnding.MacLinuxLf);
         webRequest.getSelectLineEnding().setEnum(LineEnding.Space);
+        maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(webRequest);
+        listenOnBeans.getChild(0).connect(maleSocket);
+        // These are used by super class for its testing
+        _base = webRequest;
+        _baseMaleSocket = maleSocket;
+
+        DigitalMany many = new DigitalMany("IQDA104", null);
+        maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(many);
+        webRequest.getChild(0).connect(maleSocket);
+
+        LogLocalVariables log = new LogLocalVariables("IQDA105", null);
+        maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(log);
+        many.getChild(0).connect(maleSocket);
+    }
+
+    @Test
+    public void testCookies() throws JmriException {
+        _responseCodeVariable.setValue(null);
+        _replyVariable.setValue(null);
+        _cookiesVariable.setValue(null);
+        InstanceManager.getDefault(SensorManager.class).getByUserName("Green").setState(Sensor.ACTIVE);
+//        InstanceManager.getDefault(TurnoutManager.class).getByUserName("Chicago32").setState(Turnout.THROWN);
+        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
+        Assert.assertEquals("Cookie Green is set. Cookies from client: ", _replyVariable.getValue());
+        String cookies = _cookiesVariable.getValue().toString();
+        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
+        Assert.assertEquals("{Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
+
+        _responseCodeVariable.setValue(null);
+        _replyVariable.setValue(null);
+        InstanceManager.getDefault(SensorManager.class).getByUserName("Yellow").setState(Sensor.ACTIVE);
+        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
+        Assert.assertEquals("Cookie Yellow is set. Cookies from client: Green=GreenGreen!", _replyVariable.getValue());
+        cookies = _cookiesVariable.getValue().toString();
+        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
+        Assert.assertEquals("{Yellow=Yellow=YellowYellow%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
+
+        _responseCodeVariable.setValue(null);
+        _replyVariable.setValue(null);
+        InstanceManager.getDefault(SensorManager.class).getByUserName("Blue").setState(Sensor.ACTIVE);
+        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
+        Assert.assertEquals("Cookie Blue is set. Cookies from client: Yellow=YellowYellow!, Green=GreenGreen!", _replyVariable.getValue());
+        cookies = _cookiesVariable.getValue().toString();
+        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
+        Assert.assertEquals("{Yellow=Yellow=YellowYellow%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Blue=Blue=BlueBlue%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
+    }
+
+    private void setupCookiesConditionalNG() throws SocketAlreadyConnectedException, ParserException {
+
+        _cookiesVariable = InstanceManager.getDefault(GlobalVariableManager.class).createGlobalVariable("cookies");
+
+        InstanceManager.getDefault(SensorManager.class).newSensor("IS1", "Blue");
+        InstanceManager.getDefault(SensorManager.class).newSensor("IS2", "Green");
+        InstanceManager.getDefault(SensorManager.class).newSensor("IS3", "Yellow");
+
+        _conditionalNG = new DefaultConditionalNGScaffold("IQC2", "Test cookies");  // NOI18N;
+        InstanceManager.getDefault(ConditionalNG_Manager.class).register(_conditionalNG);
+        _logixNG.addConditionalNG(_conditionalNG);
+        _conditionalNG.setRunDelayed(false);
+        _conditionalNG.setEnabled(true);
+
+        ForEach forEach = new ForEach("IQDA201", null);
+        forEach.setLocalVariableName("bean");
+        forEach.setUseCommonSource(true);
+        forEach.setCommonManager(CommonManager.Sensors);
+        MaleSocket maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(forEach);
+        maleSocket.addLocalVariable("bean", SymbolTable.InitialValueType.None, null);
+        maleSocket.addLocalVariable("sensor", SymbolTable.InitialValueType.None, null);
+        _conditionalNG.getChild(0).connect(maleSocket);
+
+        ActionListenOnBeansLocalVariable listenOnBeans = new ActionListenOnBeansLocalVariable("IQDA202", null);
+        listenOnBeans.setNamedBeanType(NamedBeanType.Sensor);
+        listenOnBeans.setLocalVariableBeanToListenOn("bean");
+        listenOnBeans.setLocalVariableNamedBean("sensor");
+        maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(listenOnBeans);
+        forEach.getChild(0).connect(maleSocket);
+
+        WebRequest webRequest = new WebRequest("IQDA203", null);
+        webRequest.setUseThread(false);
+        webRequest.getSelectUrl().setValue(WEB_REQUEST_URL);
+        webRequest.getParameters().add(new WebRequest.Parameter("action", SymbolTable.InitialValueType.String, "cookies"));
+        webRequest.getParameters().add(new WebRequest.Parameter("cookie", SymbolTable.InitialValueType.LocalVariable, "sensor"));
+        webRequest.setLocalVariableForResponseCode("responseCode");
+        webRequest.setLocalVariableForReplyContent("reply");
+        webRequest.setLocalVariableForCookies("cookies");
+        webRequest.getSelectReplyType().setEnum(WebRequest.ReplyType.String);
+//        webRequest.getSelectLineEnding().setEnum(LineEnding.MacLinuxLf);
+        webRequest.getSelectLineEnding().setEnum(LineEnding.Space);
+        maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(webRequest);
+        listenOnBeans.getChild(0).connect(maleSocket);
+        // These are used by super class for its testing
+        _base = webRequest;
+        _baseMaleSocket = maleSocket;
+
+        DigitalMany many = new DigitalMany("IQDA204", null);
+        maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(many);
+        webRequest.getChild(0).connect(maleSocket);
+
+        LogLocalVariables log = new LogLocalVariables("IQDA205", null);
+        maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(log);
+        many.getChild(0).connect(maleSocket);
+    }
+/*
+    @Test
+    public void testCookies() throws JmriException {
+        _responseCodeVariable.setValue(null);
+        _replyVariable.setValue(null);
+        InstanceManager.getDefault(SensorManager.class).getByUserName("TestCookiesSensor").setState(Sensor.ACTIVE);
+        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
+        Assert.assertEquals("Turnout MiamiWest is thrown", _replyVariable.getValue());
+
+        _responseCodeVariable.setValue(null);
+        _replyVariable.setValue(null);
+        InstanceManager.getDefault(TurnoutManager.class).getByUserName("Chicago32").setState(Turnout.THROWN);
+        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
+        Assert.assertEquals("Turnout Chicago32 is thrown", _replyVariable.getValue());
+
+        _responseCodeVariable.setValue(null);
+        _replyVariable.setValue(null);
+        InstanceManager.getDefault(TurnoutManager.class).getByUserName("TorontoFirst").setState(Turnout.THROWN);
+        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
+        Assert.assertEquals("Turnout TorontoFirst is thrown", _replyVariable.getValue());
+    }
+
+    private void setupCookiesConditionalNG() throws SocketAlreadyConnectedException, ParserException {
+
+        InstanceManager.getDefault(SensorManager.class).newSensor("IS1", "TestCookiesSensor");
+
+        _conditionalNG = new DefaultConditionalNGScaffold("IQC2", "Test cookies");  // NOI18N;
+        InstanceManager.getDefault(ConditionalNG_Manager.class).register(_conditionalNG);
+        _logixNG.addConditionalNG(_conditionalNG);
+        _conditionalNG.setRunDelayed(false);
+        _conditionalNG.setEnabled(true);
+
+        IfThenElse ifThenElse = new IfThenElse("IQDA201", null);
+        MaleSocket maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
+        _conditionalNG.getChild(0).connect(maleSocket);
+
+        ExpressionSensor expressionSensor = new ExpressionSensor("IQDE201", null);
+        maleSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
+        ifThenElse.getChild(0).connect(maleSocket);
+
+        WebRequest webRequest = new WebRequest("IQDA202", null);
+        webRequest.setUseThread(false);
+        webRequest.getSelectUrl().setValue(WEB_REQUEST_URL);
+        webRequest.getParameters().add(new WebRequest.Parameter("action", SymbolTable.InitialValueType.String, "cookies"));
+        webRequest.getParameters().add(new WebRequest.Parameter("turnout", SymbolTable.InitialValueType.LocalVariable, "turnout"));
+        webRequest.setLocalVariableForResponseCode("responseCode");
+        webRequest.setLocalVariableForReplyContent("reply");
+        webRequest.getSelectReplyType().setEnum(WebRequest.ReplyType.String);
+//        webRequest.getSelectLineEnding().setEnum(LineEnding.MacLinuxLf);
+        webRequest.getSelectLineEnding().setEnum(LineEnding.Space);
 //        actionWebRequest.getSelectNamedBean().setNamedBean(light);
 //        actionWebRequest.getSelectEnum().setEnum(ActionLight.LightState.On);
         maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(webRequest);
-        listenOnBeans.getChild(0).connect(maleSocket);
+        ifThenElse.getChild(1).connect(maleSocket);
         // These are used by super class for its testing
         _base = webRequest;
         _baseMaleSocket = maleSocket;
@@ -277,17 +431,6 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
 
 /*
-        IfThenElse ifThenElse = new IfThenElse("IQDA003", null);
-        maleSocket =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
-        many.getChild(1).connect(maleSocket);
-
-        ExpressionSensor expressionSensor = new ExpressionSensor("IQDE001", null);
-        MaleSocket maleSocket2 =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
-        ifThenElse.getChild(0).connect(maleSocket2);
-*/
-/*
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null);
         maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
@@ -310,7 +453,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         // These are used by super class for its testing
         _base = webRequest;
         _baseMaleSocket = socket;
-*/
+*./
 
 
 
@@ -333,9 +476,9 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         // Test post
 
 
-*/
+*./
     }
-
+*/
 
 
 
@@ -352,6 +495,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
+        jmri.jmrit.logixng.actions.NamedBeanType.reset();
 
         _category = Category.ITEM;
         _isExternal = true;
@@ -360,13 +504,11 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 //        light.setCommandedState(Light.OFF);
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
 
-
-
-
-
+        _responseCodeVariable = InstanceManager.getDefault(GlobalVariableManager.class).createGlobalVariable("responseCode");
+        _replyVariable = InstanceManager.getDefault(GlobalVariableManager.class).createGlobalVariable("reply");
 
         setupThrowTurnoutsConditionalNG();
-//        setupTestCookiesConditionalNG();
+        setupCookiesConditionalNG();
 //        setupTestPostConditionalNG();
 
 

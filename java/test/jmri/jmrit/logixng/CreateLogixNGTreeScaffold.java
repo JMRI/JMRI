@@ -2563,7 +2563,7 @@ public class CreateLogixNGTreeScaffold {
         actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
         actionForEach.setComment("A comment");
         actionForEach.setUseCommonSource(false);
-        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setCommonManager(CommonManager.Turnouts);
         actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Variable);
         actionForEach.setFormula("turnouts");
         actionForEach.setLocalVariableName("myVar");
@@ -2573,7 +2573,7 @@ public class CreateLogixNGTreeScaffold {
         actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
         actionForEach.setComment("A comment");
         actionForEach.setUseCommonSource(false);
-        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setCommonManager(CommonManager.Turnouts);
         actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Memory);
         actionForEach.setFormula("turnouts");
         actionForEach.setLocalVariableName("myVar");
@@ -2583,14 +2583,14 @@ public class CreateLogixNGTreeScaffold {
         actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
         actionForEach.setComment("A comment");
         actionForEach.setUseCommonSource(false);
-        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setCommonManager(CommonManager.Turnouts);
         actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Formula);
         actionForEach.setFormula("turnouts");
         actionForEach.setLocalVariableName("myVar");
         maleSocket = digitalActionManager.registerAction(actionForEach);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        for (ForEach.CommonManager manager : ForEach.CommonManager.values()) {
+        for (CommonManager manager : CommonManager.values()) {
             actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
             actionForEach.setComment("A comment");
             actionForEach.setUseCommonSource(true);
