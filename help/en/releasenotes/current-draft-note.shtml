@@ -574,6 +574,7 @@
         <a id="TLae" name="TLae"></a>
         <ul>
             <li>Preferred format for IdTag xml whenLastSeen field updated to ISO 8601.</li>
+            <li>Memory Variable Table - If a Memory Variable value is not empty, the Java Class of the value is displayed as a tooltip.</li>
         </ul>
 
    <h3>Warrants</h3>
