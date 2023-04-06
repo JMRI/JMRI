@@ -127,7 +127,7 @@
                 <li>Fix a timeout error in the hub when running on Windows</li>
                 <li>Improved help pages for several tools</li>
                 <li>Updated OpenLCB library (openlcb.jar) through its
-                    <a href="https://github.com/openlcb/OpenLCB_Java/pull/221">PR 221</a>.
+                    <a href="https://github.com/openlcb/OpenLCB_Java/pull/224">PR 224</a>.
             </ul>
 
         <h4>Powerline</h4>
