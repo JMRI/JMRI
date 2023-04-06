@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import jmri.*;
 import static jmri.configurexml.StoreAndCompare.checkFile;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.expressions.ExpressionLight;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.LineEnding;
@@ -75,13 +77,19 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
                 "            ! A%n" +
                 "               Listen on the bean in the local variable \"bean\" of type Turnout ::: Use default%n" +
                 "                  ! Execute%n" +
-                "                     Web request for %s ::: Use default%n" +
-                "                        ! Execute%n" +
-                "                           Many ::: Use default%n" +
-                "                              ! A1%n" +
-                "                                 Log local variables ::: Use default%n" +
-                "                              ! A2%n" +
-                "                                 Socket not connected%n" +
+                "                     If Then Else. Always execute ::: Use default%n" +
+                "                        ? If%n" +
+                "                           Turnout by local variable \"turnout\" is Thrown ::: Use default%n" +
+                "                        ! Then%n" +
+                "                           Web request for https://jmri.bergqvist.se/LogixNG_WebRequest_Test.php ::: Use default%n" +
+                "                              ! Execute%n" +
+                "                                 Many ::: Use default%n" +
+                "                                    ! A1%n" +
+                "                                       Log local variables ::: Use default%n" +
+                "                                    ! A2%n" +
+                "                                       Socket not connected%n" +
+                "                        ! Else%n" +
+                "                           Socket not connected%n" +
                 "   ConditionalNG: Test cookies%n" +
                 "      ! A%n" +
                 "         For each value, set variable \"bean\" and execute action A. Values from Sensors ::: Use default%n" +
@@ -177,7 +185,23 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(listenOnBeans);
         forEach.getChild(0).connect(maleSocket);
 
-        WebRequest webRequest = new WebRequest("IQDA103", null);
+        IfThenElse ifThenElse = new IfThenElse("IQDA103", null);
+        ifThenElse.setExecuteType(IfThenElse.ExecuteType.AlwaysExecute);
+        maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
+        listenOnBeans.getChild(0).connect(maleSocket);
+
+        ExpressionTurnout expressionTurnout = new ExpressionTurnout("IQDE104", null);
+        expressionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionTurnout.getSelectNamedBean().setLocalVariable("turnout");
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionTurnout.setStateAddressing(NamedBeanAddressing.Direct);
+        expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
+        maleSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTurnout);
+        ifThenElse.getChild(0).connect(maleSocket);
+
+        WebRequest webRequest = new WebRequest("IQDA105", null);
         webRequest.getSelectUrl().setValue(WEB_REQUEST_URL);
         webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
         webRequest.getParameters().add(new WebRequest.Parameter("action", SymbolTable.InitialValueType.String, "throw"));
@@ -188,17 +212,17 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 //        webRequest.getSelectLineEnding().setEnum(LineEnding.MacLinuxLf);
         webRequest.getSelectLineEnding().setEnum(LineEnding.Space);
         maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(webRequest);
-        listenOnBeans.getChild(0).connect(maleSocket);
+        ifThenElse.getChild(1).connect(maleSocket);
         // These are used by super class for its testing
         _base = webRequest;
         _baseMaleSocket = maleSocket;
 
-        DigitalMany many = new DigitalMany("IQDA104", null);
+        DigitalMany many = new DigitalMany("IQDA106", null);
         maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(many);
         webRequest.getChild(0).connect(maleSocket);
 
-        LogLocalVariables log = new LogLocalVariables("IQDA105", null);
+        LogLocalVariables log = new LogLocalVariables("IQDA107", null);
         maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(log);
         many.getChild(0).connect(maleSocket);
     }
