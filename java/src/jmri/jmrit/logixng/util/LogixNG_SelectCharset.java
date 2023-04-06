@@ -3,9 +3,7 @@ package jmri.jmrit.logixng.util;
 import java.beans.PropertyChangeListener;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
@@ -21,7 +19,8 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  */
 public class LogixNG_SelectCharset {
 
-    public final List<Charset> _standardCharsets;
+    public static final List<Charset> STANDARD_CHARSETS = getStandardCharsets();
+
     private final AbstractBase _base;
     private final InUse _inUse;
 //    private final PropertyChangeListener _listener;
@@ -37,13 +36,17 @@ public class LogixNG_SelectCharset {
         _inUse = () -> _addressing == Addressing.UserSpecified;
 //        _listener = listener;
         _selectUserSpecifiedCharset = new LogixNG_SelectString(base, _inUse, listener);
-        _standardCharsets = new ArrayList<>();
-        _standardCharsets.add(StandardCharsets.US_ASCII);
-        _standardCharsets.add(StandardCharsets.ISO_8859_1);
-        _standardCharsets.add(StandardCharsets.UTF_8);
-        _standardCharsets.add(StandardCharsets.UTF_16);
-        _standardCharsets.add(StandardCharsets.UTF_16BE);
-        _standardCharsets.add(StandardCharsets.UTF_16LE);
+    }
+
+    private static List<Charset> getStandardCharsets() {
+        List<Charset> standardCharsets = new ArrayList<>();
+        standardCharsets.add(StandardCharsets.US_ASCII);
+        standardCharsets.add(StandardCharsets.ISO_8859_1);
+        standardCharsets.add(StandardCharsets.UTF_8);
+        standardCharsets.add(StandardCharsets.UTF_16);
+        standardCharsets.add(StandardCharsets.UTF_16BE);
+        standardCharsets.add(StandardCharsets.UTF_16LE);
+        return Collections.unmodifiableList(standardCharsets);
     }
 
     public void copy(LogixNG_SelectCharset copy) throws ParserException {

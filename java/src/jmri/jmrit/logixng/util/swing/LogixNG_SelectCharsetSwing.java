@@ -11,6 +11,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.LogixNG_SelectCharset;
 import jmri.jmrit.logixng.util.LogixNG_SelectCharset.Addressing;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Swing class for jmri.jmrit.logixng.util.LogixNG_SelectCharset.
@@ -46,9 +47,19 @@ public class LogixNG_SelectCharsetSwing {
         _panelAll = new javax.swing.JPanel();
 
         _standardValueComboBox = new JComboBox<>();
+        _standardValueComboBox = new JComboBox<>();
+        for (Charset charset : LogixNG_SelectCharset.STANDARD_CHARSETS) {
+            _standardValueComboBox.addItem(charset);
+        }
+        JComboBoxUtil.setupComboBoxMaxRows(_standardValueComboBox);
         _panelStandard.add(_standardValueComboBox);
 
         _allValueComboBox = new JComboBox<>();
+        _allValueComboBox = new JComboBox<>();
+        for (Charset charset : Charset.availableCharsets().values()) {
+            _allValueComboBox.addItem(charset);
+        }
+        JComboBoxUtil.setupComboBoxMaxRows(_allValueComboBox);
         _panelAll.add(_allValueComboBox);
 
         if (selectCharset != null) {
@@ -57,9 +68,9 @@ public class LogixNG_SelectCharsetSwing {
             _panelUserSpecified = _selectUserSpecified.createPanel(null);
         }
 
-        _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelStandard);
-        _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelAll);
-        _tabbedPane.addTab(NamedBeanAddressing.Table.toString(), _panelUserSpecified);
+        _tabbedPane.addTab(Addressing.Standard.toString(), _panelStandard);
+        _tabbedPane.addTab(Addressing.All.toString(), _panelAll);
+        _tabbedPane.addTab(Addressing.UserSpecified.toString(), _panelUserSpecified);
 
 
         if (selectCharset != null) {
