@@ -84,7 +84,7 @@ public class LogDataXml extends jmri.managers.configurexml.AbstractNamedBeanMana
             }
 
             Element elementData = e.getChild("data");
-            if (elementData == null) throw new IllegalArgumentException("Element 'name' does not exists");
+            if (elementData == null) throw new IllegalArgumentException("Element 'data' does not exists");
 
             try {
                 h.getDataList().add(new LogData.Data(type, elementData.getTextTrim()));
