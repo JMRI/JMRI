@@ -71,8 +71,12 @@
       click "Update from Network", the right-hand column will show the
       tree-walking display of where each event is referenced in those
       configuration windows.  This can help you determine the function of
-      the producers and consumers. Note that you might need to resize the column
+      the producers and consumers. You might need to resize the column
       to see the complete entry.
+      <p>
+      Note that the "Update from Network" button does a "Verify Events" operation
+      on the network.  Some nodes consider this to be a start-of-day, power-up
+      operation and might change the status of their outputs due to that.
       <p>
       You can enter names for events in the 2nd column.  Click on the cell
       to open it for editing. Hit return when done.  These will be
