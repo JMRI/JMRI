@@ -39,7 +39,7 @@
         <junit5.version>5.9.1</junit5.version>
         <junit.platform.version>1.9.1</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
-        <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
+        <argLine>-Xmx1536m -Duser.language=en -Duser.region=US -Dnashorn.args=--no-deprecation-warning</argLine>
         <!-- define argLines to allow running surefire:test -->
         <surefire.argLine></surefire.argLine>
         <failsafe.argLine></failsafe.argLine>
