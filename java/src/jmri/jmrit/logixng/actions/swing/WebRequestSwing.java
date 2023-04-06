@@ -181,6 +181,16 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
             _logDataTableModel.add();
         });
 
+        JLabel parametersLabel = new JLabel(Bundle.getMessage("WebRequest_Parameters"));
+        parametersLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        scrollpane.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JPanel tablePanel = new JPanel();
+        tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.PAGE_AXIS));
+        tablePanel.add(parametersLabel);
+        tablePanel.add(scrollpane);
+
+
 
         panel.setLayout(new GridBagLayout());
         GridBagConstraints constraint = new GridBagConstraints();
@@ -194,7 +204,7 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         panel.add(_tabbedPane, constraint);
         constraint.gridy = 1;
         constraint.insets = new Insets(10,0,10,0);
-        panel.add(scrollpane, constraint);
+        panel.add(tablePanel, constraint);
 
         constraint.gridwidth = 1;
         constraint.gridy = 2;
