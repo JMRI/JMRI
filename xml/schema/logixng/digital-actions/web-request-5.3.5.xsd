@@ -59,6 +59,22 @@
               <xs:element name="localVariableForReplyContent" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="_localVariableForCookies" type="xs:string" minOccurs="0" maxOccurs="1" />
 
+              <xs:element name="Parameters" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Parameter" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="type" type="LogixNG_LocalVariable_InitialValueType_Type" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="data" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>

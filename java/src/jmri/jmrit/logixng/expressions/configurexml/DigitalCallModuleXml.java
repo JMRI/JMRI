@@ -46,7 +46,7 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
         for (ParameterData pd : p.getParameterData()) {
             Element elementParameter = new Element("Parameter");
             elementParameter.addContent(new Element("name").addContent(pd._name));
-            elementParameter.addContent(new Element("initalValueType").addContent(pd._initialValueType.name()));
+            elementParameter.addContent(new Element("initialValueType").addContent(pd._initialValueType.name()));
             elementParameter.addContent(new Element("initialValueData").addContent(pd._initialValueData));
             elementParameter.addContent(new Element("returnValueType").addContent(pd._returnValueType.name()));
             elementParameter.addContent(new Element("returnValueData").addContent(pd._returnValueData));
@@ -76,7 +76,10 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
             Element elementName = e.getChild("name");
 
             SymbolTable.InitialValueType initialValueType = null;
-            Element elementType = e.getChild("initalValueType");
+            Element elementType = e.getChild("initialValueType");
+            if (elementType == null) {
+                elementType = e.getChild("initalValueType");    // Spelling error in previous versions of JMRI
+            }
             if (elementType != null) {
                 initialValueType = SymbolTable.InitialValueType.valueOf(elementType.getTextTrim());
             }
@@ -92,7 +95,7 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
             Element elementReturnValueData = e.getChild("returnValueData");
 
             if (elementName == null) throw new IllegalArgumentException("Element 'name' does not exists");
-            if (initialValueType == null) throw new IllegalArgumentException("Element 'initalValueType' does not exists");
+            if (initialValueType == null) throw new IllegalArgumentException("Element 'initialValueType' does not exists");
             if (elementInitialValueData == null) throw new IllegalArgumentException("Element 'initialValueData' does not exists");
             if (returnValueType == null) throw new IllegalArgumentException("Element 'returnValueType' does not exists");
             if (elementReturnValueData == null) throw new IllegalArgumentException("Element 'returnValueData' does not exists");
