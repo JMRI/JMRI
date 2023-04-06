@@ -184,6 +184,7 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
 
         panel.setLayout(new GridBagLayout());
         GridBagConstraints constraint = new GridBagConstraints();
+        Insets defaultInsets = constraint.insets;
         constraint.gridwidth = 1;
         constraint.gridheight = 1;
         constraint.gridx = 0;
@@ -192,11 +193,13 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         constraint.anchor = GridBagConstraints.CENTER;
         panel.add(_tabbedPane, constraint);
         constraint.gridy = 1;
+        constraint.insets = new Insets(10,0,10,0);
         panel.add(scrollpane, constraint);
 
         constraint.gridwidth = 1;
         constraint.gridy = 2;
         constraint.anchor = GridBagConstraints.EAST;
+        constraint.insets = defaultInsets;
         panel.add(localVariableForPostContentLabel, constraint);
         localVariableForPostContentLabel.setLabelFor(_localVariableForPostContentTextField);
         constraint.gridy = 3;
