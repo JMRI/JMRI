@@ -64,7 +64,7 @@ public class WebRequestXml extends jmri.managers.configurexml.AbstractNamedBeanM
         element.addContent(new Element("localVariableForPostContent").addContent(p.getLocalVariableForPostContent()));
         element.addContent(new Element("localVariableForResponseCode").addContent(p.getLocalVariableForResponseCode()));
         element.addContent(new Element("localVariableForReplyContent").addContent(p.getLocalVariableForReplyContent()));
-        element.addContent(new Element("_localVariableForCookies").addContent(p.getLocalVariableForCookies()));
+        element.addContent(new Element("localVariableForCookies").addContent(p.getLocalVariableForCookies()));
 
         Element parameters = new Element("Parameters");
         for (WebRequest.Parameter parameter : p.getParameters()) {
@@ -116,7 +116,7 @@ public class WebRequestXml extends jmri.managers.configurexml.AbstractNamedBeanM
         elem = shared.getChild("localVariableForReplyContent");
         if (elem != null) h.setLocalVariableForReplyContent(elem.getTextTrim());
 
-        elem = shared.getChild("_localVariableForCookies");
+        elem = shared.getChild("localVariableForCookies");
         if (elem != null) h.setLocalVariableForCookies(elem.getTextTrim());
 
         List<Element> parameters = shared.getChild("Parameters").getChildren();  // NOI18N
