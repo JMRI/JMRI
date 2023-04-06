@@ -1,20 +1,26 @@
 package jmri.jmrit.logixng.actions.swing;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.*;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.WebRequest;
 import jmri.jmrit.logixng.actions.WebRequest.RequestMethodType;
+import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectCharsetSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectStringSwing;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
 
 /**
  * Configures an WebRequest object with a Swing JPanel.
@@ -38,6 +44,9 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
     private JTextField _localVariableForResponseCodeTextField;
     private JTextField _localVariableForReplyContentTextField;
     private JTextField _localVariableForCookiesTextField;
+
+    private JTable _logDataTable;
+    private WebRequestTableModel _logDataTableModel;
 
 
     @Override
@@ -125,63 +134,92 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         _localVariableForCookiesTextField = new JTextField();
         _localVariableForCookiesTextField.setColumns(30);
 
+
+        _logDataTable = new JTable();
+
+        if (action != null) {
+            List<WebRequest.Parameter> dataList
+                    = new ArrayList<>(action.getParameters());
+
+            _logDataTableModel = new WebRequestTableModel(dataList);
+        } else {
+            _logDataTableModel = new WebRequestTableModel(null);
+        }
+
+        _logDataTable.setModel(_logDataTableModel);
+        _logDataTable.setDefaultRenderer(InitialValueType.class,
+                new WebRequestTableModel.CellRenderer());
+        _logDataTable.setDefaultEditor(InitialValueType.class,
+                new WebRequestTableModel.DataTypeCellEditor());
+        _logDataTableModel.setColumnsForComboBoxes(_logDataTable);
+        _logDataTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
+        _logDataTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
+
+        JButton testButton = new JButton("XXXXXX");  // NOI18N
+        _logDataTable.setRowHeight(testButton.getPreferredSize().height);
+        TableColumn deleteColumn = _logDataTable.getColumnModel()
+                .getColumn(WebRequestTableModel.COLUMN_DUMMY);
+        deleteColumn.setMinWidth(testButton.getPreferredSize().width);
+        deleteColumn.setMaxWidth(testButton.getPreferredSize().width);
+        deleteColumn.setResizable(false);
+
+        // The dummy column is used to be able to force update of the
+        // other columns when the panel is closed.
+        TableColumn dummyColumn = _logDataTable.getColumnModel()
+                .getColumn(WebRequestTableModel.COLUMN_DUMMY);
+        dummyColumn.setMinWidth(0);
+        dummyColumn.setPreferredWidth(0);
+        dummyColumn.setMaxWidth(0);
+
+        JScrollPane scrollpane = new JScrollPane(_logDataTable);
+        scrollpane.setPreferredSize(new Dimension(400, 200));
+
+        // Add parameter
+        JButton add = new JButton(Bundle.getMessage("WebRequest_TableAdd"));
+        buttonPanel.add(add);
+        add.addActionListener((ActionEvent e) -> {
+            _logDataTableModel.add();
+        });
+
+
         panel.setLayout(new GridBagLayout());
         GridBagConstraints constraint = new GridBagConstraints();
         constraint.gridwidth = 1;
         constraint.gridheight = 1;
         constraint.gridx = 0;
         constraint.gridy = 0;
-        constraint.anchor = GridBagConstraints.EAST;
-
         constraint.gridwidth = 2;
+        constraint.anchor = GridBagConstraints.CENTER;
         panel.add(_tabbedPane, constraint);
-        constraint.gridwidth = 1;
-/*
-        panel.add(selectUrlLabel, constraint);
-        selectUrlLabel.setLabelFor(tabbedPaneUrl);
         constraint.gridy = 1;
-        panel.add(selectCharsetLabel, constraint);
-        selectCharsetLabel.setLabelFor(tabbedPaneCharset);
+        panel.add(scrollpane, constraint);
+
+        constraint.gridwidth = 1;
         constraint.gridy = 2;
-        panel.add(selectRequestMethodLabel, constraint);
-        selectRequestMethodLabel.setLabelFor(tabbedPaneRequestMethod);
-        constraint.gridy = 3;
-        panel.add(selectUserAgentLabel, constraint);
-        selectUserAgentLabel.setLabelFor(tabbedPaneUserAgent);
-*/
-        constraint.gridy = 4;
+        constraint.anchor = GridBagConstraints.EAST;
         panel.add(localVariableForPostContentLabel, constraint);
         localVariableForPostContentLabel.setLabelFor(_localVariableForPostContentTextField);
-        constraint.gridy = 5;
+        constraint.gridy = 3;
         panel.add(localVariableForResponseCodeLabel, constraint);
         localVariableForResponseCodeLabel.setLabelFor(_localVariableForResponseCodeTextField);
-        constraint.gridy = 6;
+        constraint.gridy = 4;
         panel.add(localVariableForReplyContentLabel, constraint);
         localVariableForReplyContentLabel.setLabelFor(_localVariableForReplyContentTextField);
-        constraint.gridy = 7;
+        constraint.gridy = 5;
         panel.add(localVariableForCookiesLabel, constraint);
         localVariableForCookiesLabel.setLabelFor(_localVariableForCookiesTextField);
 
         constraint.gridx = 1;
-/*
-        constraint.gridy = 0;
-        constraint.anchor = GridBagConstraints.WEST;
-        panel.add(tabbedPaneUrl, constraint);
-        constraint.gridy = 1;
-        panel.add(tabbedPaneCharset, constraint);
         constraint.gridy = 2;
-        panel.add(tabbedPaneRequestMethod, constraint);
-        constraint.gridy = 3;
-        panel.add(tabbedPaneUserAgent, constraint);
-*/
-        constraint.gridy = 4;
+        constraint.anchor = GridBagConstraints.EAST;
         panel.add(_localVariableForPostContentTextField, constraint);
-        constraint.gridy = 5;
+        constraint.gridy = 3;
         panel.add(_localVariableForResponseCodeTextField, constraint);
-        constraint.gridy = 6;
+        constraint.gridy = 4;
         panel.add(_localVariableForReplyContentTextField, constraint);
-        constraint.gridy = 7;
+        constraint.gridy = 5;
         panel.add(_localVariableForCookiesTextField, constraint);
+
 
         if (action != null) {
             _localVariableForPostContentTextField.setText(action.getLocalVariableForPostContent());
@@ -202,7 +240,19 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         _selectRequestMethodSwing.validate(action.getSelectRequestMethod(), errorMessages);
         _selectUserAgentSwing.validate(action.getSelectUserAgent(), errorMessages);
 
-        return true;
+        for (WebRequest.Parameter data : _logDataTableModel.getDataList()) {
+            if (data.getType() == InitialValueType.Formula) {
+                try {
+                    Map<String, Variable> variables = new HashMap<>();
+                    RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+                    parser.parseExpression(data.getData());
+                } catch (ParserException e) {
+                    errorMessages.add(e.getLocalizedMessage());
+                }
+            }
+        }
+
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -231,6 +281,15 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         action.setLocalVariableForResponseCode(_localVariableForResponseCodeTextField.getText());
         action.setLocalVariableForReplyContent(_localVariableForReplyContentTextField.getText());
         action.setLocalVariableForCookies(_localVariableForCookiesTextField.getText());
+
+        // Do this to force update of the table
+        _logDataTable.editCellAt(0, 2);
+
+        action.getParameters().clear();
+
+        for (WebRequest.Parameter data : _logDataTableModel.getDataList()) {
+            action.getParameters().add(data);
+        }
     }
 
     /** {@inheritDoc} */
