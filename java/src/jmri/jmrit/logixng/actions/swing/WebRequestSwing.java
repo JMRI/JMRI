@@ -12,13 +12,9 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.WebRequest;
 import jmri.jmrit.logixng.actions.WebRequest.RequestMethodType;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.util.TimerUnit;
-import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectCharsetSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectStringSwing;
-import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an WebRequest object with a Swing JPanel.
@@ -26,6 +22,12 @@ import jmri.util.swing.JComboBoxUtil;
  * @author Daniel Bergqvist Copyright (C) 2021
  */
 public class WebRequestSwing extends AbstractDigitalActionSwing {
+
+    private JTabbedPane _tabbedPane;
+    private JPanel _panelUrl;
+    private JPanel _panelCharset;
+    private JPanel _panelRequestMethod;
+    private JPanel _panelUserAgent;
 
     private LogixNG_SelectStringSwing _selectUrlSwing;
     private LogixNG_SelectCharsetSwing _selectCharsetSwing;
@@ -43,6 +45,12 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         if ((object != null) && !(object instanceof WebRequest)) {
             throw new IllegalArgumentException("object must be an WebRequest but is a: "+object.getClass().getName());
         }
+
+        _tabbedPane = new JTabbedPane();
+        _panelUrl = new JPanel();
+        _panelCharset = new JPanel();
+        _panelRequestMethod = new JPanel();
+        _panelUserAgent = new JPanel();
 
         _selectUrlSwing = new LogixNG_SelectStringSwing(getJDialog(), this);
         _selectCharsetSwing = new LogixNG_SelectCharsetSwing(getJDialog(), this);
@@ -73,9 +81,33 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
 
 
         JLabel selectUrlLabel = new JLabel(Bundle.getMessage("WebRequestSwing_Url"));
+        selectUrlLabel.setLabelFor(tabbedPaneUrl);
+
         JLabel selectCharsetLabel = new JLabel(Bundle.getMessage("WebRequestSwing_Charset"));
+        selectCharsetLabel.setLabelFor(tabbedPaneCharset);
+
         JLabel selectRequestMethodLabel = new JLabel(Bundle.getMessage("WebRequestSwing_RequestMethod"));
+        selectRequestMethodLabel.setLabelFor(tabbedPaneRequestMethod);
+
         JLabel selectUserAgentLabel = new JLabel(Bundle.getMessage("WebRequestSwing_UserAgent"));
+        selectUserAgentLabel.setLabelFor(tabbedPaneUserAgent);
+
+        _panelUrl.add(selectUrlLabel);
+        _panelUrl.add(tabbedPaneUrl);
+
+        _panelCharset.add(selectCharsetLabel);
+        _panelCharset.add(tabbedPaneCharset);
+
+        _panelRequestMethod.add(selectRequestMethodLabel);
+        _panelRequestMethod.add(tabbedPaneRequestMethod);
+
+        _panelUserAgent.add(selectUserAgentLabel);
+        _panelUserAgent.add(tabbedPaneUserAgent);
+
+        _tabbedPane.addTab(Bundle.getMessage("WebRequestSwing_Url"), _panelUrl);
+        _tabbedPane.addTab(Bundle.getMessage("WebRequestSwing_Charset"), _panelCharset);
+        _tabbedPane.addTab(Bundle.getMessage("WebRequestSwing_RequestMethod"), _panelRequestMethod);
+        _tabbedPane.addTab(Bundle.getMessage("WebRequestSwing_UserAgent"), _panelUserAgent);
 
         JLabel localVariableForPostContentLabel = new JLabel(Bundle.getMessage("WebRequestSwing_LocalVariableForPostContent"));
         _localVariableForPostContentTextField = new JTextField();
@@ -100,6 +132,11 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         constraint.gridx = 0;
         constraint.gridy = 0;
         constraint.anchor = GridBagConstraints.EAST;
+
+        constraint.gridwidth = 2;
+        panel.add(_tabbedPane, constraint);
+        constraint.gridwidth = 1;
+/*
         panel.add(selectUrlLabel, constraint);
         selectUrlLabel.setLabelFor(tabbedPaneUrl);
         constraint.gridy = 1;
@@ -111,7 +148,7 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         constraint.gridy = 3;
         panel.add(selectUserAgentLabel, constraint);
         selectUserAgentLabel.setLabelFor(tabbedPaneUserAgent);
-
+*/
         constraint.gridy = 4;
         panel.add(localVariableForPostContentLabel, constraint);
         localVariableForPostContentLabel.setLabelFor(_localVariableForPostContentTextField);
@@ -126,6 +163,7 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         localVariableForCookiesLabel.setLabelFor(_localVariableForCookiesTextField);
 
         constraint.gridx = 1;
+/*
         constraint.gridy = 0;
         constraint.anchor = GridBagConstraints.WEST;
         panel.add(tabbedPaneUrl, constraint);
@@ -135,7 +173,7 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         panel.add(tabbedPaneRequestMethod, constraint);
         constraint.gridy = 3;
         panel.add(tabbedPaneUserAgent, constraint);
-
+*/
         constraint.gridy = 4;
         panel.add(_localVariableForPostContentTextField, constraint);
         constraint.gridy = 5;

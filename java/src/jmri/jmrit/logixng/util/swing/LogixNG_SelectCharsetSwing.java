@@ -7,7 +7,6 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.LogixNG_SelectCharset;
 import jmri.jmrit.logixng.util.LogixNG_SelectCharset.Addressing;
