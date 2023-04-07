@@ -11,6 +11,7 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -703,8 +704,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
      * @param teachEvents true to teach events
      * @param frame the frame to which dialogue boxes can be attached to
      */
-    protected void showConfirmThenSave( CbusNode fromNode, CbusNode toNode,
-        boolean teachNVs, boolean clearEvents, boolean teachEvents, JFrame frame){
+    protected void showConfirmThenSave( @Nonnull CbusNode fromNode, @Nonnull CbusNode toNode,
+        boolean teachNVs, boolean clearEvents, boolean teachEvents, @CheckForNull JFrame frame){
 
         _clearEvents = clearEvents;
         _teachEvents = teachEvents;
