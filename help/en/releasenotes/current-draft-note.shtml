@@ -367,7 +367,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li> Include CV's 190-191 for Decoder FW V.37+ </li>
+                <li>Include CV's 190-191 for Decoder FW V.37+</li>
                 <li>Added MS950 and MS990 model info</li>
                 <li>Updated CV64 in MS models to have a maximum of 15, was 9</li>
             </ul>
@@ -380,7 +380,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Improved the labelling of service mode vs ops mode programming</li>
+            <li>Fixed the display of multiple programming tracks</li>
         </ul>
 
     <h3>CTC Tool</h3>
