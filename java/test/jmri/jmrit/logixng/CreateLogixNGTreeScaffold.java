@@ -13,8 +13,7 @@ import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.*;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.jmrit.logixng.expressions.*;
-import jmri.jmrit.logixng.util.LogixNG_SelectTable;
-import jmri.jmrit.logixng.util.LogixNG_Thread;
+import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
@@ -2203,6 +2202,43 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        WebRequest webRequest = new WebRequest(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(webRequest);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        webRequest = new WebRequest(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
+        webRequest.getSelectUrl().setValue("https://www.jmri.org/");
+        webRequest.getSelectUserAgent().setValue(WebRequest.DEFAULT_USER_AGENT);
+        webRequest.setLocalVariableForPostContent("postContent");
+        webRequest.setLocalVariableForResponseCode("responseCode");
+        webRequest.setLocalVariableForReplyContent("replyContent");
+        webRequest.setLocalVariableForCookies("cookies");
+        maleSocket = digitalActionManager.registerAction(webRequest);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        webRequest = new WebRequest(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        webRequest.getSelectUrl().setValue("https://www.jmri.org/");
+        webRequest.getSelectCharset().setStandardValue(java.nio.charset.StandardCharsets.ISO_8859_1);
+        webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Post);
+        webRequest.getSelectUserAgent().setValue("JmriWebBrowser");
+        webRequest.getSelectReplyType().setEnum(WebRequest.ReplyType.Bytes);
+        webRequest.getSelectLineEnding().setEnum(LineEnding.WindowsCrLf);
+        webRequest.getParameters().add(new WebRequest.Parameter("action", SymbolTable.InitialValueType.String, "throw"));
+        webRequest.getParameters().add(new WebRequest.Parameter("turnout", SymbolTable.InitialValueType.LocalVariable, "turnout"));
+        webRequest.setLocalVariableForPostContent("postContent");
+        webRequest.setLocalVariableForResponseCode("responseCode");
+        webRequest.setLocalVariableForReplyContent("replyContent");
+        webRequest.setLocalVariableForCookies("cookies");
+        maleSocket = digitalActionManager.registerAction(webRequest);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         jmri.jmrit.display.logixng.ActionLayoutTurnout actionLayoutTurnout =
                 new jmri.jmrit.display.logixng.ActionLayoutTurnout(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionLayoutTurnout);
@@ -2544,7 +2580,7 @@ public class CreateLogixNGTreeScaffold {
         actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
         actionForEach.setComment("A comment");
         actionForEach.setUseCommonSource(false);
-        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setCommonManager(CommonManager.Turnouts);
         actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Variable);
         actionForEach.setFormula("turnouts");
         actionForEach.setLocalVariableName("myVar");
@@ -2554,7 +2590,7 @@ public class CreateLogixNGTreeScaffold {
         actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
         actionForEach.setComment("A comment");
         actionForEach.setUseCommonSource(false);
-        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setCommonManager(CommonManager.Turnouts);
         actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Memory);
         actionForEach.setFormula("turnouts");
         actionForEach.setLocalVariableName("myVar");
@@ -2564,14 +2600,14 @@ public class CreateLogixNGTreeScaffold {
         actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
         actionForEach.setComment("A comment");
         actionForEach.setUseCommonSource(false);
-        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setCommonManager(CommonManager.Turnouts);
         actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Formula);
         actionForEach.setFormula("turnouts");
         actionForEach.setLocalVariableName("myVar");
         maleSocket = digitalActionManager.registerAction(actionForEach);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        for (ForEach.CommonManager manager : ForEach.CommonManager.values()) {
+        for (CommonManager manager : CommonManager.values()) {
             actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
             actionForEach.setComment("A comment");
             actionForEach.setUseCommonSource(true);

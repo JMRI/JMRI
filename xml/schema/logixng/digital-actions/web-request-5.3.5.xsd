@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_CallModuleType">
+    <xs:complexType name="LogixNG_DigitalAction_WebRequestType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a CallModule class.
+          Define the XML stucture for storing the contents of a WebRequest class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.CallModuleXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.WebRequestXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         
@@ -41,11 +41,23 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-              <xs:element name="namedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="Socket" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
 
-              <!-- These are for backwards compability up until JMRI 4.99.7 -->
-              <xs:element name="module" type="beanNameType" minOccurs="0" maxOccurs="1"/>
-              <!-- These are for backwards compability up until JMRI 4.99.7 -->
+              <xs:element name="requestMethod" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="url" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="userAgent" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="localVariableForPostContent" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="localVariableForResponseCode" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="localVariableForReplyContent" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="localVariableForCookies" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="Parameters" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
@@ -54,26 +66,8 @@
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
-
-                          <xs:element name="initialValueType" type="LogixNG_LocalVariable_InitialValueType_Type" minOccurs="0" maxOccurs="1"/>
-                          <!-- This are for backwards compability up until JMRI 5.3.5 due to spelling error -->
-                          <xs:element name="initalValueType" type="LogixNG_LocalVariable_InitialValueType_Type" minOccurs="0" maxOccurs="1"/>
-                          <!-- This are for backwards compability up until JMRI 5.3.5 due to spelling error -->
-
-                          <xs:element name="initialValueData" type="xs:string" minOccurs="1" maxOccurs="1"/>
-
-                          <xs:element name="returnValueType" minOccurs="1" maxOccurs="1">
-                            <xs:simpleType>
-                              <xs:restriction base="xs:token">
-                                <xs:enumeration value="None"/>
-                                <xs:enumeration value="LocalVariable"/>
-                                <xs:enumeration value="Memory"/>
-                              </xs:restriction>
-                            </xs:simpleType>
-                          </xs:element>
-
-                          <xs:element name="returnValueData" type="xs:string" minOccurs="1" maxOccurs="1"/>
-
+                          <xs:element name="type" type="LogixNG_LocalVariable_InitialValueType_Type" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="data" type="xs:string" minOccurs="1" maxOccurs="1"/>
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>

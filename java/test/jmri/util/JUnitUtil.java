@@ -997,6 +997,9 @@ public class JUnitUtil {
         }
         InstanceManager.setDefault(StringExpressionManager.class, m9);
 
+        jmri.jmrit.logixng.actions.NamedBeanType.reset();
+        jmri.jmrit.logixng.actions.CommonManager.reset();
+
         if (activate) m1.activateAllLogixNGs(false, false);
     }
 
@@ -1509,7 +1512,7 @@ public class JUnitUtil {
                                 // empirically. jemmy leaves anonymous threads
                                 String details = traces[7].getClassName() + "." + traces[7].getMethodName()
                                     +" [" + traces[7].getFileName() + "." + traces[7].getLineNumber() + "]";
-                                        
+
                                 log.warn("Jemmy remnant thread running {}", details );
                                 if ( failRemnantThreads ) {
                                     Assertions.fail("Jemmy remnant thread running " + details);

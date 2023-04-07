@@ -9,7 +9,7 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ForEach;
-import jmri.jmrit.logixng.actions.ForEach.CommonManager;
+import jmri.jmrit.logixng.actions.CommonManager;
 import jmri.jmrit.logixng.actions.ForEach.UserSpecifiedSource;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;

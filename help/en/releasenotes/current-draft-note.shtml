@@ -435,6 +435,7 @@
           <li>Apply the <strong>Clock Expression</strong> settings when creating a new expression.</li>
           <li>Enable the <strong>Light Action</strong> data input fields when <strong>Set Intensity
           </strong> or <strong>Set Transition Time</strong> is selected.</li>
+          <li>Add the <strong>Web request</strong> action that sends a HTTP or HTTPS request to a web server.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
