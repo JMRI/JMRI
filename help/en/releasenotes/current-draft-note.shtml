@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Changed SPROG DCC module IDs to match similar MERG modules, to work around an issue with the FCU tool.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -76,7 +76,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Simplified the display of LocoNet sensor messages in the monitor</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -86,7 +86,7 @@
 
         <h4>Marklin CS2</h4>
             <ul>
-                <li>New connection subtype for the CdB system via USB.</li>
+                <li></li>
             </ul>
 
         <h4>MERG</h4>
@@ -96,7 +96,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Fix typo in Sensor default name; should not have visible effect.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -116,18 +116,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Add event user name to Monitor display</li>
-                <li>Add memory space window display to Memory Tool</li>
-                <li>Better ordering for overlapping events in Event Table</li>
-                <li>Event table loads all saved event names when opened</li>
-                <li>Ensure JMRI source nodes are identified in the Monitor display</li>
-                <li>Complete the information in the memory space window</li>
-                <li>Performance improvements in the Event Table</li>
-                <li>Fix an error preventing multiple configuration windows from working properly</li>
-                <li>Fix a timeout error in the hub when running on Windows</li>
-                <li>Improved help pages for several tools</li>
-                <li>Updated OpenLCB library (openlcb.jar) through its
-                    <a href="https://github.com/openlcb/OpenLCB_Java/pull/224">PR 224</a>.
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -367,9 +356,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Include CV's 190-191 for Decoder FW V.37+</li>
-                <li>Added MS950 and MS990 model info</li>
-                <li>Updated CV64 in MS models to have a maximum of 15, was 9</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -380,8 +367,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Improved the labelling of service mode vs ops mode programming</li>
-            <li>Fixed the display of multiple programming tracks</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -428,15 +414,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Cleanup LogixNG controlled Dispatcher train when the train has been terminated by an external action.</li>
-          <li>Add a <strong>Section Expression</strong> which is used to get the state of a section.
-          The state can be <strong>Free</strong>, <strong>Forward</strong> or <strong>Reverse</strong>.</li>
-          <li>Add a <strong>Transit Expression</strong> which is used to get the state of a transit.
-          The state can be <strong>Idle</strong> or <strong>Assigned</strong>.</li>
-          <li>Apply the <strong>Clock Expression</strong> settings when creating a new expression.</li>
-          <li>Enable the <strong>Light Action</strong> data input fields when <strong>Set Intensity
-          </strong> or <strong>Set Transition Time</strong> is selected.</li>
-          <li>Add the <strong>Web request</strong> action that sends a HTTP or HTTPS request to a web server.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -476,9 +454,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>Added a <strong>File Chooser Dialog file view</strong> option to the <strong>Display
-            </strong> preference.  This provides the ability to choose a <strong>List</strong> or
-            <strong>Detail</strong> view for file dialogs.</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -512,12 +488,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Updated several definitions to replace invalid <i>speed</i> and
-                    <i>speed2</i> values with proper speed indications.
-                    The invalid values had been previously interpreted as zero.</li>
-                <li>Updated the <i>xml/schema/aspecttable.xsd</i> schema to ensure that
-                    only valid <i>speed</i> and <i>speed2</i> values will occur in
-                    signal system definitions.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -559,9 +530,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Added a feature to allow custom markers on speed sliders, see <a href="https://www.jmri.org/help/en/html/tools/throttle/RostersMediaPane.shtml"> documention on Roster Media Pane page</a> (Custom attributes section)</li>
-            <li>Small bugs fixes :  previous and next running throttle buttons were reversed, large horizontal speed slider thumb was resized, large speed slider track computation was buggy</li>
-            <li> Throttle related Jynstruments code was refactored to use non deprecated Function methods</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -579,8 +548,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Preferred format for IdTag xml whenLastSeen field updated to ISO 8601.</li>
-            <li>Memory Variable Table - If a Memory Variable value is not empty, the Java Class of the value is displayed as a tooltip.</li>
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
@@ -622,17 +590,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The NamedIcon class will now search <i>Locations.ALL</i> for files. This means
-                <ul>
-                <li>Files and filepaths will be found in the user area first for all
-                    subclasses of
-                    <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/catalog/NamedIcon.html">NamedIcon</a>.
-                <li>This change might result in different graphics in some cases,
-                    where it hadn't been
-                    searching before and a file was not being found (even though it
-                    really should have been). Please check your graphics carefully to
-                    see if there are any issues.
-                </ul>
-            </li>
+            <li></li>
         </ul>
 
