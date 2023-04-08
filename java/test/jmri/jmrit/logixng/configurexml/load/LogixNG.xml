@@ -30924,7 +30924,6 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <value>Mozilla/5.0</value>
         <listenToMemory>no</listenToMemory>
       </userAgent>
-      <localVariableForPostContent />
       <localVariableForResponseCode />
       <localVariableForReplyContent />
       <localVariableForCookies />
@@ -31021,7 +31020,6 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <value>Mozilla/5.0</value>
         <listenToMemory>no</listenToMemory>
       </userAgent>
-      <localVariableForPostContent>postContent</localVariableForPostContent>
       <localVariableForResponseCode>responseCode</localVariableForResponseCode>
       <localVariableForReplyContent>replyContent</localVariableForReplyContent>
       <localVariableForCookies>cookies</localVariableForCookies>
@@ -31118,7 +31116,6 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <value>JmriWebBrowser</value>
         <listenToMemory>no</listenToMemory>
       </userAgent>
-      <localVariableForPostContent>postContent</localVariableForPostContent>
       <localVariableForResponseCode>responseCode</localVariableForResponseCode>
       <localVariableForReplyContent>replyContent</localVariableForReplyContent>
       <localVariableForCookies>cookies</localVariableForCookies>

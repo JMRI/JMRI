@@ -40,7 +40,6 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
     private LogixNG_SelectEnumSwing<RequestMethodType> _selectRequestMethodSwing;
     private LogixNG_SelectStringSwing _selectUserAgentSwing;
 
-    private JTextField _localVariableForPostContentTextField;
     private JTextField _localVariableForResponseCodeTextField;
     private JTextField _localVariableForReplyContentTextField;
     private JTextField _localVariableForCookiesTextField;
@@ -117,10 +116,6 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         _tabbedPane.addTab(Bundle.getMessage("WebRequestSwing_Charset"), _panelCharset);
         _tabbedPane.addTab(Bundle.getMessage("WebRequestSwing_RequestMethod"), _panelRequestMethod);
         _tabbedPane.addTab(Bundle.getMessage("WebRequestSwing_UserAgent"), _panelUserAgent);
-
-        JLabel localVariableForPostContentLabel = new JLabel(Bundle.getMessage("WebRequestSwing_LocalVariableForPostContent"));
-        _localVariableForPostContentTextField = new JTextField();
-        _localVariableForPostContentTextField.setColumns(30);
 
         JLabel localVariableForResponseCodeLabel = new JLabel(Bundle.getMessage("WebRequestSwing_LocalVariableForResponseCode"));
         _localVariableForResponseCodeTextField = new JTextField();
@@ -210,32 +205,26 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         constraint.gridy = 2;
         constraint.anchor = GridBagConstraints.EAST;
         constraint.insets = defaultInsets;
-        panel.add(localVariableForPostContentLabel, constraint);
-        localVariableForPostContentLabel.setLabelFor(_localVariableForPostContentTextField);
-        constraint.gridy = 3;
         panel.add(localVariableForResponseCodeLabel, constraint);
         localVariableForResponseCodeLabel.setLabelFor(_localVariableForResponseCodeTextField);
-        constraint.gridy = 4;
+        constraint.gridy = 3;
         panel.add(localVariableForReplyContentLabel, constraint);
         localVariableForReplyContentLabel.setLabelFor(_localVariableForReplyContentTextField);
-        constraint.gridy = 5;
+        constraint.gridy = 4;
         panel.add(localVariableForCookiesLabel, constraint);
         localVariableForCookiesLabel.setLabelFor(_localVariableForCookiesTextField);
 
         constraint.gridx = 1;
         constraint.gridy = 2;
         constraint.anchor = GridBagConstraints.EAST;
-        panel.add(_localVariableForPostContentTextField, constraint);
-        constraint.gridy = 3;
         panel.add(_localVariableForResponseCodeTextField, constraint);
-        constraint.gridy = 4;
+        constraint.gridy = 3;
         panel.add(_localVariableForReplyContentTextField, constraint);
-        constraint.gridy = 5;
+        constraint.gridy = 4;
         panel.add(_localVariableForCookiesTextField, constraint);
 
 
         if (action != null) {
-            _localVariableForPostContentTextField.setText(action.getLocalVariableForPostContent());
             _localVariableForResponseCodeTextField.setText(action.getLocalVariableForResponseCode());
             _localVariableForReplyContentTextField.setText(action.getLocalVariableForReplyContent());
             _localVariableForCookiesTextField.setText(action.getLocalVariableForCookies());
@@ -290,7 +279,6 @@ public class WebRequestSwing extends AbstractDigitalActionSwing {
         _selectRequestMethodSwing.updateObject(action.getSelectRequestMethod());
         _selectUserAgentSwing.updateObject(action.getSelectUserAgent());
 
-        action.setLocalVariableForPostContent(_localVariableForPostContentTextField.getText());
         action.setLocalVariableForResponseCode(_localVariableForResponseCodeTextField.getText());
         action.setLocalVariableForReplyContent(_localVariableForReplyContentTextField.getText());
         action.setLocalVariableForCookies(_localVariableForCookiesTextField.getText());
