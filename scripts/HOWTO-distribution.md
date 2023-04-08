@@ -48,6 +48,8 @@ This is the next release in the 5.4 cycle. It's intended to be created from the 
 ================================================================================
 ## Update Content
 
+- Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number. If there are any items open still (except the main "create release" one) either close them or change/remove the milestone.  We do this now so that maintainers will put the next milestone on future PRs
+
 - Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
  - Make sure `git status` shows "up to date", not "ahead".
@@ -290,8 +292,6 @@ For each, if it doesn't have the right milestone set, add the current milestone.
         git push github
 ```
 
-- Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number. If there are any items open still (except the main "create release" one) either close them or change/remove the milestone.  We do this now so that maintainers will put the next milestone on future PRs
-
 - Put the following comment in the [release GitHub item](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+5.3.5%22) saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE, see just below)
 
 ```
@@ -373,7 +373,7 @@ First JMRI 5.3.5 files are available in the usual way at:
 
 https://builds.jmri.org/jenkins/job/testreleases/job/5.3.5/
 
-Feedback appreciated. I would like to release this later today or tomorrow morning if the files are OK.
+Feedback appreciated! I would like to release this later today or tomorrow morning if the files are OK on macOS, Linux and Windows.
 
 Note that the purpose of this check is to make sure that the _files_ were built OK.  If you find any new problems in the code, great, let's fix those for the next test release.  (Or even better, let's learn to do better functional checking of the development releases leading up to the test release build)
 
@@ -486,9 +486,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.3.5+Raae2040ea3.dmg](https://github.com/JMRI/JMRI/releases/download/v5.3.5/JMRI.5.3.5+Raae2040ea3.dmg) | 0642e310c89ba0b20048f4a6bd217b912b3c43d91ea4fe6188b15d5830acaeec
-[JMRI.5.3.5+Raae2040ea3.exe](https://github.com/JMRI/JMRI/releases/download/v5.3.5/JMRI.5.3.5+Raae2040ea3.exe) | cd9b1a17728c69d1a38d583e1b6e8320487042b835e6e28922604a3e0e31c2cc
-[JMRI.5.3.5+Raae2040ea3.tgz](https://github.com/JMRI/JMRI/releases/download/v5.3.5/JMRI.5.3.5+Raae2040ea3.tgz) | 1e043adc75273ae9639b35f776648e8b8ce89ea97a620dc97929dad8e8ffa4ff
+[JMRI.5.3.5+Rff6cfe01dc.dmg](https://github.com/JMRI/JMRI/releases/download/v5.3.5/JMRI.5.3.5+Rff6cfe01dc.dmg) | c75447d94dd21efa48320985649fb6a834773806da9cb6fba4642039aa7f7027
+[JMRI.5.3.5+Rff6cfe01dc.exe](https://github.com/JMRI/JMRI/releases/download/v5.3.5/JMRI.5.3.5+Rff6cfe01dc.exe) | e441b3a1db1b732ed881c7f043f63dd8aee47b6b4b2a6ad0a218a4b1339cecc1
+[JMRI.5.3.5+Rff6cfe01dc.tgz](https://github.com/JMRI/JMRI/releases/download/v5.3.5/JMRI.5.3.5+Rff6cfe01dc.tgz) | cce5ce4bd5747a0666d5ca00570ca129515f957a9a3b6da7098310f594c7bd64
 
 
 ```
