@@ -1568,7 +1568,125 @@
 
       <h4>Web browser</h4>
 
-      <p>The web browser action opens a web page in the web browser.</p>
+      <p>The <strong>Web Browser</strong> action opens a web page in the default web browser.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_web_browser.png"><img src=
+        "images/chapter5/digital_action_web_browser.png" alt="web browser"></a>
+      </div>
+
+      <p>The URL is supplied using a string expression.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Web request<span class="since">since 5.3.5</span></h4>
+
+      <p>The <strong>Web Request</strong> action sends a <strong>GET</strong> or <strong>POST</strong>
+      request to a web server.  When the request has completed, the <strong>Execute</strong> action
+      is performed.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/web_request_execute.png"><img src=
+        "images/chapter5/web_request_execute.png" alt="web request execute"></a>
+      </div>
+
+      <p>The request information is defined using the <strong>Web Request</strong> dialog. The
+      dialog settings will depend on the web server application requirements.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_web_request.png"><img src=
+        "images/chapter5/digital_action_web_request.png" alt="web request dialog"></a>
+      </div>
+
+      <p class="noted">Note: The <strong>LogixNG_WebRequest_Test.php</strong> portion of the URL is a sample
+      application.</p>
+
+      <h5>Top Level Tabs</h5>
+
+      <dl>
+        <dt>URL</dt>
+
+        <dd>
+          <p>The URL contains the address of the web server.
+
+          For <strong>GET</strong> requests, parameters can be added to the URL using the
+          <strong><em>?name=value&amp;name2=value2</em></strong> format.  Parameters in the Parameter
+          section are also added to the GET request URL.</p>
+
+          <p>For <strong>POST</strong> requests, the parameters are defined in the <strong>
+          Parameters</strong> section.</p>
+        </dd>
+
+        <dt>Charset</dt>
+        <dd>
+          <p>Specify the character set to used for the application.</p>
+
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/web_request_charset.png"><img src=
+          "images/chapter5/web_request_charset.png" alt="web request character set"></a>
+          </div>
+        </dd>
+
+        <dt>Request method</dt>
+        <dd>
+          <p>Specify the request method to used for the application.</p>
+          <div style="margin-left: 2em;">
+          <a href="images/chapter5/web_request_method.png"><img src=
+          "images/chapter5/web_request_method.png" alt="web request method"></a>
+          </div>
+        </dd>
+
+        <dt>User agent</dt>
+        <dd>
+          <p>Specify the user agent to be used for the request.  The default is <strong><em>Mozilla/5.0
+          </em></strong>.</p>
+        </dd>
+      </dl>
+
+      <h5>Local Variables</h5>
+
+      <dl>
+        <dt>Local variable for post content</dt>
+        <dd>
+          <p>This is an advanced feature that will be available in a future release.</p>
+        </dd>
+
+        <dt>Local variable for response code</dt>
+        <dd>
+          <p>The value of the local variable will be the numeric response code from the server.  For
+          successful requests, the value will be 200.</p>
+        </dd>
+
+        <dt>Local variable for reply content</dt>
+        <dd>
+          <p>The value of the local variable will be the content returned from the server.  Sometimes
+          the content will have error messages detected by the server or the application.</p>
+        </dd>
+
+        <dt>Local variable for cookies</dt>
+        <dd>
+          <p>The value of the local variable will have a copy of the current cookie.  If the cookie
+          needs to be shared by different ConditionalNGs, use a global variable.
+        </dd>
+      </dl>
+
+      <h5>Examples</h5>
+
+      <p>There are two example files included in the JMRI distribution.  They are located at
+      help/en/html/tools/logixng/reference/WebRequestExample</p>
+
+      <dl>
+        <dt>WebRequest.xml</dt>
+        <dd>
+          <p>This is a layout config xml file that has sample table entries.</p>
+        </dd>
+
+        <dt>LogixNG_WebRequest_Test.php</dt>
+        <dd>
+          <p>This is a <strong>PHP</strong> program that acts as a web based application.  This needs
+          to be installed in a web server that has been configured to run PHP programs.</p>
+        </dd>
+      </dl>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
