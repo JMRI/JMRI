@@ -61,7 +61,6 @@ public class WebRequestXml extends jmri.managers.configurexml.AbstractNamedBeanM
         element.addContent(selectUrlXml.store(p.getSelectUrl(), "url"));
         element.addContent(selectUserAgentXml.store(p.getSelectUserAgent(), "userAgent"));
 
-        element.addContent(new Element("localVariableForPostContent").addContent(p.getLocalVariableForPostContent()));
         element.addContent(new Element("localVariableForResponseCode").addContent(p.getLocalVariableForResponseCode()));
         element.addContent(new Element("localVariableForReplyContent").addContent(p.getLocalVariableForReplyContent()));
         element.addContent(new Element("localVariableForCookies").addContent(p.getLocalVariableForCookies()));
@@ -107,10 +106,7 @@ public class WebRequestXml extends jmri.managers.configurexml.AbstractNamedBeanM
         selectUrlXml.load(shared.getChild("url"), h.getSelectUrl());
         selectUserAgentXml.load(shared.getChild("userAgent"), h.getSelectUserAgent());
 
-        Element elem = shared.getChild("localVariableForPostContent");
-        if (elem != null) h.setLocalVariableForPostContent(elem.getTextTrim());
-
-        elem = shared.getChild("localVariableForResponseCode");
+        Element elem = shared.getChild("localVariableForResponseCode");
         if (elem != null) h.setLocalVariableForResponseCode(elem.getTextTrim());
 
         elem = shared.getChild("localVariableForReplyContent");

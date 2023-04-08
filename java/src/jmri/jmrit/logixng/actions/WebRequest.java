@@ -57,7 +57,6 @@ public class WebRequest extends AbstractDigitalAction
 
     private String _socketSystemName;
     private final FemaleDigitalActionSocket _socket;
-    private String _localVariableForPostContent = "";
     private String _localVariableForResponseCode = "";
     private String _localVariableForReplyContent = "";
     private String _localVariableForCookies = "";
@@ -87,7 +86,6 @@ public class WebRequest extends AbstractDigitalAction
         getSelectUserAgent().copy(copy._selectUserAgent);
         copy._parameters.addAll(_parameters);
 //        getSelectMime().copy(copy._selectMime);
-        copy.setLocalVariableForPostContent(_localVariableForPostContent);
         copy.setLocalVariableForResponseCode(_localVariableForResponseCode);
         copy.setLocalVariableForReplyContent(_localVariableForReplyContent);
         copy.setLocalVariableForCookies(_localVariableForCookies);
@@ -127,14 +125,6 @@ public class WebRequest extends AbstractDigitalAction
 
     public List<Parameter> getParameters() {
         return _parameters;
-    }
-
-    public void setLocalVariableForPostContent(String localVariable) {
-        _localVariableForPostContent = localVariable;
-    }
-
-    public String getLocalVariableForPostContent() {
-        return _localVariableForPostContent;
     }
 
     public void setLocalVariableForResponseCode(String localVariable) {
@@ -235,10 +225,6 @@ public class WebRequest extends AbstractDigitalAction
             try {
 
 //                long startTime = System.currentTimeMillis();
-
-//                if (!_localVariableForPostContent.isEmpty()) {
-//                    postContent = newSymbolTable.getValue(_localVariableForPostContent);
-//                }
 
                 HttpURLConnection con;
                 if (useHttps) {

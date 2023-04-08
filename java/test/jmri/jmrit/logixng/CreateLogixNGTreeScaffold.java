@@ -2212,7 +2212,6 @@ public class CreateLogixNGTreeScaffold {
         webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
         webRequest.getSelectUrl().setValue("https://www.jmri.org/");
         webRequest.getSelectUserAgent().setValue(WebRequest.DEFAULT_USER_AGENT);
-        webRequest.setLocalVariableForPostContent("postContent");
         webRequest.setLocalVariableForResponseCode("responseCode");
         webRequest.setLocalVariableForReplyContent("replyContent");
         webRequest.setLocalVariableForCookies("cookies");
@@ -2230,7 +2229,6 @@ public class CreateLogixNGTreeScaffold {
         webRequest.getSelectLineEnding().setEnum(LineEnding.WindowsCrLf);
         webRequest.getParameters().add(new WebRequest.Parameter("action", SymbolTable.InitialValueType.String, "throw"));
         webRequest.getParameters().add(new WebRequest.Parameter("turnout", SymbolTable.InitialValueType.LocalVariable, "turnout"));
-        webRequest.setLocalVariableForPostContent("postContent");
         webRequest.setLocalVariableForResponseCode("responseCode");
         webRequest.setLocalVariableForReplyContent("replyContent");
         webRequest.setLocalVariableForCookies("cookies");
