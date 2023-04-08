@@ -430,7 +430,8 @@
 
         <li>Martin Gostling, who provided CML and Digitrax decoder definitions</li>
 
-        <li>Phil Grainger, who wrote articles about DecoderPro in the UK press, greatly helped with
+        <li>Phil Grainger, <!-- philguk -->
+        who wrote articles about DecoderPro in the UK press, greatly helped with
         ZTC decoder definitions, provided the DH83FX definition, and many great suggestions</li>
 
         <li>Bill Gray suggested web page improvements</li>
