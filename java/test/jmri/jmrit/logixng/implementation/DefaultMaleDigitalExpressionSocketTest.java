@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Test ExpressionTimer
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
@@ -35,34 +35,34 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         return InstanceManager.getDefault(DigitalExpressionManager.class)
                 .getAutoSystemName();
     }
-    
+
     @Test
     public void testCtor() {
         DigitalExpressionBean expression = new And("IQDE321", null);
         Assert.assertNotNull("exists", new DefaultMaleDigitalExpressionSocket(manager, expression));
     }
-    
+
     @Test
     public void testEvaluate() throws JmriException {
         ConditionalNG conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
-        
+
         MyDigitalExpression expression = new MyDigitalExpression("IQDE321");
         expression.setParent(conditionalNG);
-        
+
         DefaultMaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(manager, expression);
         Assert.assertNotNull("exists", socket);
-        
+
         socket.setParent(conditionalNG);
         socket.setEnabled(true);
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
-        
+
         expression.je = null;
         expression.re = null;
         expression.result = true;
         Assert.assertTrue(socket.evaluate());
         expression.result = false;
         Assert.assertFalse(socket.evaluate());
-        
+
         expression.je = new JmriException("Test JmriException");
         expression.re = null;
         Throwable thrown = catchThrowable( () -> socket.evaluate());
@@ -71,7 +71,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
                 .isNotNull()
                 .isInstanceOf(JmriException.class)
                 .hasMessage("Test JmriException");
-        
+
         expression.je = null;
         expression.re = new RuntimeException("Test RuntimeException");
         thrown = catchThrowable( () -> socket.evaluate());
@@ -80,7 +80,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
                 .isNotNull()
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("Test RuntimeException");
-        
+
         // If the socket is not enabled, it shouldn't do anything
         socket.setEnabled(false);
         expression.re = new RuntimeException("Test RuntimeException");
@@ -88,7 +88,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         assertThat(thrown)
                 .withFailMessage("Evaluate does nothing")
                 .isNull();
-        
+
         // Test debug config
         socket.setEnabled(true);
         DigitalExpressionDebugConfig config = new DigitalExpressionDebugConfig();
@@ -102,15 +102,15 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         config._forceResult = false;
         Assert.assertFalse(socket.evaluate());
     }
-    
+
     @Test
     public void testVetoableChange() {
         MyDigitalExpression action = new MyDigitalExpression("IQDE321");
         DefaultMaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
-        
+
         PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
-        
+
         action._vetoChange = true;
         Throwable thrown = catchThrowable( () -> socket.vetoableChange(evt));
         assertThat(thrown)
@@ -118,22 +118,22 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
                 .isNotNull()
                 .isInstanceOf(PropertyVetoException.class)
                 .hasMessage("Veto change");
-        
+
         action._vetoChange = false;
         thrown = catchThrowable( () -> socket.vetoableChange(evt));
         assertThat(thrown)
                 .withFailMessage("vetoableChange() does not throw")
                 .isNull();
     }
-    
+
     @Test
     public void testCompareSystemNameSuffix() {
         MyDigitalExpression expression1 = new MyDigitalExpression("IQDE1");
         DefaultMaleDigitalExpressionSocket socket1 = new DefaultMaleDigitalExpressionSocket(manager, expression1);
-        
+
         MyDigitalExpression expression2 = new MyDigitalExpression("IQDE01");
         DefaultMaleDigitalExpressionSocket socket2 = new DefaultMaleDigitalExpressionSocket(manager, expression2);
-        
+
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
                 -1, socket1.compareSystemNameSuffix("01", "1", socket2));
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
@@ -143,7 +143,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
                 +1, socket1.compareSystemNameSuffix("1", "01", socket2));
     }
-    
+
     // The minimal setup for log4J
     @BeforeEach
     @Override
@@ -155,19 +155,19 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
+
         DigitalExpressionBean expressionA = new ExpressionTurnout("IQDE321", null);
         Assert.assertNotNull("exists", expressionA);
         DigitalExpressionBean expressionB = new MyDigitalExpression("IQDE322");
         Assert.assertNotNull("exists", expressionA);
-        
+
         manager = InstanceManager.getDefault(DigitalExpressionManager.class);
-        
+
         maleSocketA =
                 InstanceManager.getDefault(DigitalExpressionManager.class)
                         .registerExpression(expressionA);
         Assert.assertNotNull("exists", maleSocketA);
-        
+
         maleSocketB =
                 InstanceManager.getDefault(DigitalExpressionManager.class)
                         .registerExpression(expressionB);
@@ -178,21 +178,22 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
     @Override
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
-    
+
+
     /**
      * This action is different from action And and is used to test the
      * male socket.
      */
     private class MyDigitalExpression extends AbstractDigitalExpression {
-        
+
         JmriException je = null;
         RuntimeException re = null;
         boolean result = false;
         boolean _vetoChange = false;
-        
+
         MyDigitalExpression(String sysName) {
             super(sysName, null);
         }
@@ -248,7 +249,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
             if (re != null) throw re;
             return result;
         }
-        
+
         @Override
         public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
             if (_vetoChange) throw new java.beans.PropertyVetoException("Veto change", evt);
@@ -263,7 +264,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
-        
+
     }
-    
+
 }

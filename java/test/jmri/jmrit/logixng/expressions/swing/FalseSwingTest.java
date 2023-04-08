@@ -15,7 +15,7 @@ import org.junit.Test;
 
 /**
  * Test FalseSwing
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class FalseSwingTest {
@@ -23,30 +23,30 @@ public class FalseSwingTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         FalseSwing t = new FalseSwing();
         Assert.assertNotNull("exists",t);
     }
-    
+
     @Test
     public void testPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         FalseSwing t = new FalseSwing();
         JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
-    
+
     @Test
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         Assert.assertTrue("panel is not null",
             null != new FalseSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
             null != new FalseSwing().getConfigPanel(new False("IQDE1", null), new JPanel()));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -60,7 +60,8 @@ public class FalseSwingTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }
