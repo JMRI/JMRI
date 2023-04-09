@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.3.4plus+jake+20230408T1128Z+R2a72c09404 on Sat Apr 08 07:29:00 EDT 2023-->
-  <decoderIndex version="73">
+  <!--Written by JMRI version 5.3.5plus+jake+20230409T1837Z+Rd5d87c7a2e on Sun Apr 09 14:38:00 EDT 2023-->
+  <decoderIndex version="75">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -3734,10 +3734,12 @@
       </family>
       <family name="Jan 2000" mfg="Train Control Systems" comment="TCS FW Starting January 2000. Only shows models not upgraded to higher FW versions." file="TCS_X-Jan2000.xml">
         <model model="AMD1" numOuts="2" numFns="8" lowVersionID="37" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" />
-        <model model="DP5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" />
-        <model show="no" model="MC6" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC6" replacementFamily="Jun 2007" />
+        <model model="DP5X" numOuts="5" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" />
+        <model show="no" model="TH150DP" numOuts="5" numFns="6" lowVersionID="30" highVersionID="40" />
+        <model model="MC6" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC6" replacementFamily="Jun 2007" />
         <model model="T5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" />
         <model model="W5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" />
+        <model model="TH150W" numOuts="5" numFns="6" lowVersionID="30" highVersionID="40" />
       </family>
       <family name="TCS X Series Decoders" mfg="Train Control Systems" file="TCS_X.xml">
         <model show="no" model="A4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="A4X" replacementFamily="Jan 2000" />
