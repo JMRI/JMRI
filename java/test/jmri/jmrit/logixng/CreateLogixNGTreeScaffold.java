@@ -13,8 +13,7 @@ import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.*;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.jmrit.logixng.expressions.*;
-import jmri.jmrit.logixng.util.LogixNG_SelectTable;
-import jmri.jmrit.logixng.util.LogixNG_Thread;
+import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
@@ -43,8 +42,11 @@ public class CreateLogixNGTreeScaffold {
     private Light light1;
     private Light light2;
     private VariableLight variableLight1;
+    private Section section1;
+    private Section section2;
     private Sensor sensor1;
     private Sensor sensor2;
+    private Transit transit1;
     private Turnout turnout1;
     private Turnout turnout2;
     private Turnout turnout3;
@@ -116,6 +118,13 @@ public class CreateLogixNGTreeScaffold {
         sensor2 = InstanceManager.getDefault(SensorManager.class).provide("IS2");
         sensor2.setCommandedState(Sensor.INACTIVE);
         sensor2.setUserName("Some sensor");
+
+        section1 = InstanceManager.getDefault(SectionManager.class).createNewSection("Section_1");
+        section2 = InstanceManager.getDefault(SectionManager.class).createNewSection("Section_2");
+        transit1 = InstanceManager.getDefault(TransitManager.class).createNewTransit("Transit_1");
+        transit1.addTransitSection(new TransitSection(section1, 1, Section.FORWARD));
+        transit1.addTransitSection(new TransitSection(section2, 2, Section.FORWARD));
+
         turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         turnout1.setCommandedState(Turnout.CLOSED);
         turnout2 = InstanceManager.getDefault(TurnoutManager.class).provide("IT2");
@@ -2193,6 +2202,41 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        WebRequest webRequest = new WebRequest(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(webRequest);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        webRequest = new WebRequest(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Get);
+        webRequest.getSelectUrl().setValue("https://www.jmri.org/");
+        webRequest.getSelectUserAgent().setValue(WebRequest.DEFAULT_USER_AGENT);
+        webRequest.setLocalVariableForResponseCode("responseCode");
+        webRequest.setLocalVariableForReplyContent("replyContent");
+        webRequest.setLocalVariableForCookies("cookies");
+        maleSocket = digitalActionManager.registerAction(webRequest);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        webRequest = new WebRequest(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        webRequest.getSelectUrl().setValue("https://www.jmri.org/");
+        webRequest.getSelectCharset().setStandardValue(java.nio.charset.StandardCharsets.ISO_8859_1);
+        webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Post);
+        webRequest.getSelectUserAgent().setValue("JmriWebBrowser");
+        webRequest.getSelectReplyType().setEnum(WebRequest.ReplyType.Bytes);
+        webRequest.getSelectLineEnding().setEnum(LineEnding.WindowsCrLf);
+        webRequest.getParameters().add(new WebRequest.Parameter("action", SymbolTable.InitialValueType.String, "throw"));
+        webRequest.getParameters().add(new WebRequest.Parameter("turnout", SymbolTable.InitialValueType.LocalVariable, "turnout"));
+        webRequest.setLocalVariableForResponseCode("responseCode");
+        webRequest.setLocalVariableForReplyContent("replyContent");
+        webRequest.setLocalVariableForCookies("cookies");
+        maleSocket = digitalActionManager.registerAction(webRequest);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         jmri.jmrit.display.logixng.ActionLayoutTurnout actionLayoutTurnout =
                 new jmri.jmrit.display.logixng.ActionLayoutTurnout(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionLayoutTurnout);
@@ -2534,7 +2578,7 @@ public class CreateLogixNGTreeScaffold {
         actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
         actionForEach.setComment("A comment");
         actionForEach.setUseCommonSource(false);
-        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setCommonManager(CommonManager.Turnouts);
         actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Variable);
         actionForEach.setFormula("turnouts");
         actionForEach.setLocalVariableName("myVar");
@@ -2544,7 +2588,7 @@ public class CreateLogixNGTreeScaffold {
         actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
         actionForEach.setComment("A comment");
         actionForEach.setUseCommonSource(false);
-        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setCommonManager(CommonManager.Turnouts);
         actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Memory);
         actionForEach.setFormula("turnouts");
         actionForEach.setLocalVariableName("myVar");
@@ -2554,14 +2598,14 @@ public class CreateLogixNGTreeScaffold {
         actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
         actionForEach.setComment("A comment");
         actionForEach.setUseCommonSource(false);
-        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setCommonManager(CommonManager.Turnouts);
         actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Formula);
         actionForEach.setFormula("turnouts");
         actionForEach.setLocalVariableName("myVar");
         maleSocket = digitalActionManager.registerAction(actionForEach);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        for (ForEach.CommonManager manager : ForEach.CommonManager.values()) {
+        for (CommonManager manager : CommonManager.values()) {
             actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
             actionForEach.setComment("A comment");
             actionForEach.setUseCommonSource(true);
@@ -3132,6 +3176,27 @@ public class CreateLogixNGTreeScaffold {
         expressionCallModule.addParameter("Stu", InitialValueType.Reference, "{MyVar}", Module.ReturnValueType.LocalVariable, "SomeVar");
         expressionCallModule.addParameter("Vxy", InitialValueType.String, "Some string", Module.ReturnValueType.LocalVariable, "SomeVar");
         maleSocket = digitalExpressionManager.registerExpression(expressionCallModule);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
+        ExpressionLinuxLinePower expressionLinuxLinePower =
+                new ExpressionLinuxLinePower(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLinuxLinePower);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLinuxLinePower =
+                new ExpressionLinuxLinePower(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLinuxLinePower.set_Is_IsNot(Is_IsNot_Enum.Is);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLinuxLinePower);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLinuxLinePower =
+                new ExpressionLinuxLinePower(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLinuxLinePower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLinuxLinePower);
+        maleSocket.setEnabled(false);
         and.getChild(indexExpr++).connect(maleSocket);
 
 
@@ -3783,6 +3848,42 @@ public class CreateLogixNGTreeScaffold {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
+        ExpressionSection expressionSection = new ExpressionSection(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSection);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+// Direct / Direct :: Free
+        expressionSection = new ExpressionSection(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSection.setComment("Direct / Direct :: Free");
+
+        expressionSection.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSection.getSelectNamedBean().setNamedBean(section1);
+
+        expressionSection.set_Is_IsNot(Is_IsNot_Enum.Is);
+
+        expressionSection.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionSection.getSelectEnum().setEnum(ExpressionSection.SectionState.Free);
+
+        maleSocket = digitalExpressionManager.registerExpression(expressionSection);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+// Reference / Direct :: Forward
+        expressionSection = new ExpressionSection(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSection.setComment("Reference / Direct :: Forwar");
+
+        expressionSection.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionSection.getSelectNamedBean().setReference("{IM1}");
+
+        expressionSection.set_Is_IsNot(Is_IsNot_Enum.Is);
+
+        expressionSection.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionSection.getSelectEnum().setEnum(ExpressionSection.SectionState.Forward);
+
+        maleSocket = digitalExpressionManager.registerExpression(expressionSection);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
         ExpressionSensor expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
         maleSocket.setEnabled(false);
@@ -4089,6 +4190,42 @@ public class CreateLogixNGTreeScaffold {
         expressionSignalMast.setAspectLocalVariable("index3");
         expressionSignalMast.setAspectReference("{IM3}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
+        ExpressionTransit expressionTransit = new ExpressionTransit(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionTransit);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+// Direct / Direct :: Idle
+        expressionTransit = new ExpressionTransit(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTransit.setComment("Direct / Direct :: Idle");
+
+        expressionTransit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionTransit.getSelectNamedBean().setNamedBean(transit1);
+
+        expressionTransit.set_Is_IsNot(Is_IsNot_Enum.Is);
+
+        expressionTransit.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionTransit.getSelectEnum().setEnum(ExpressionTransit.TransitState.Idle);
+
+        maleSocket = digitalExpressionManager.registerExpression(expressionTransit);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+// Reference / Direct :: Assigned
+        expressionTransit = new ExpressionTransit(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTransit.setComment("Reference / Direct :: Assigned");
+
+        expressionTransit.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionTransit.getSelectNamedBean().setReference("{IM1}");
+
+        expressionTransit.set_Is_IsNot(Is_IsNot_Enum.Is);
+
+        expressionTransit.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionTransit.getSelectEnum().setEnum(ExpressionTransit.TransitState.Assigned);
+
+        maleSocket = digitalExpressionManager.registerExpression(expressionTransit);
         and.getChild(indexExpr++).connect(maleSocket);
 
 
@@ -4822,7 +4959,15 @@ public class CreateLogixNGTreeScaffold {
     /**
      * Delete all the LogixNGs, ConditionalNGs, and so on.
      */
-    public static void cleanup() {
+    public void cleanup() {
+        if (transit1 != null) {
+            InstanceManager.getDefault(TransitManager.class).deleteTransit(transit1);
+            InstanceManager.getDefault(SectionManager.class).deleteSection(section1);
+            InstanceManager.getDefault(SectionManager.class).deleteSection(section2);
+            transit1 = null;
+            section1 = null;
+            section2 = null;
+        }
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
@@ -4928,6 +5073,7 @@ public class CreateLogixNGTreeScaffold {
         JUnitUtil.initDefaultSignalMastManager();
 //        JUnitUtil.initSignalMastLogicManager();
         JUnitUtil.initOBlockManager();
+        JUnitUtil.initSectionManager();
         JUnitUtil.initWarrantManager();
 
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();

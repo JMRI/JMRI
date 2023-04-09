@@ -457,8 +457,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_DESTINATION_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_LOAD_COLUMN), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), false);
-
+        
         tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OWNER_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(VALUE_COLUMN), false);
@@ -474,6 +473,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), true);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), true);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), true);
+        
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), carManager.isThereDivisions());
     }
 
     @Override

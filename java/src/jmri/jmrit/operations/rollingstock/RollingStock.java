@@ -24,7 +24,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Represents rolling stock, both powered (locomotives) and not powered (cars)
  * on the layout.
  *
- * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013
+ * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013, 2023
  */
 public abstract class RollingStock extends PropertyChangeSupport implements Identifiable, PropertyChangeListener {
 
@@ -189,19 +189,19 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         String old = _length;
         if (!old.equals(length)) {
             // adjust used length if rolling stock is at a location
-            if (_location != null && _track != null) {
-                _location.setUsedLength(_location.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
-                _track.setUsedLength(_track.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
-                if (_destination != null && _trackDestination != null && !_lengthChange) {
+            if (getLocation() != null && getTrack() != null) {
+                getLocation().setUsedLength(getLocation().getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
+                getTrack().setUsedLength(getTrack().getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
+                if (getDestination() != null && getDestinationTrack() != null && !_lengthChange) {
                     _lengthChange = true; // prevent recursive loop, and we want the "old" engine length
-                    log.debug("Rolling stock ({}) has destination ({}, {})", this, _destination.getName(),
-                            _trackDestination.getName());
-                    _track.deletePickupRS(this);
-                    _trackDestination.deleteDropRS(this);
+                    log.debug("Rolling stock ({}) has destination ({}, {})", this, getDestination().getName(),
+                            getDestinationTrack().getName());
+                    getTrack().deletePickupRS(this);
+                    getDestinationTrack().deleteDropRS(this);
                     // now change the length and update tracks
                     _length = length;
-                    _track.addPickupRS(this);
-                    _trackDestination.addDropRS(this);
+                    getTrack().addPickupRS(this);
+                    getDestinationTrack().addDropRS(this);
                     _lengthChange = false; // done
                 }
             }
@@ -345,8 +345,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * @return empty string if rolling stock isn't on layout
      */
     public String getLocationName() {
-        if (_location != null) {
-            return _location.getName();
+        if (getLocation() != null) {
+            return getLocation().getName();
         }
         return NONE;
     }
@@ -357,8 +357,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * @return empty string if rolling stock isn't on the layout
      */
     public String getLocationId() {
-        if (_location != null) {
-            return _location.getId();
+        if (getLocation() != null) {
+            return getLocation().getId();
         }
         return NONE;
     }
@@ -387,8 +387,15 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * @return empty string if rolling stock isn't on a track
      */
     public String getTrackName() {
-        if (_track != null) {
-            return _track.getName();
+        if (getTrack() != null) {
+            return getTrack().getName();
+        }
+        return NONE;
+    }
+    
+    public String getTrackType() {
+        if (getTrack() != null) {
+            return getTrack().getTrackTypeName();
         }
         return NONE;
     }
@@ -399,8 +406,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * @return empty string if rolling stock isn't on a track
      */
     public String getTrackId() {
-        if (_track != null) {
-            return _track.getId();
+        if (getTrack() != null) {
+            return getTrack().getId();
         }
         return NONE;
     }
@@ -430,8 +437,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      *         "length" if the rolling stock length didn't fit.
      */
     public String setLocation(Location location, Track track, boolean force) {
-        Location oldLocation = _location;
-        Track oldTrack = _track;
+        Location oldLocation = getLocation();
+        Track oldTrack = getTrack();
         // first determine if rolling stock can be move to the new location
         if (!force && (oldLocation != location || oldTrack != track)) {
             String status = testLocation(location, track);
@@ -455,7 +462,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                     oldTrack.deleteRS(this);
                     oldTrack.removePropertyChangeListener(this);
                     // if there's a destination then pickup complete
-                    if (_destination != null) {
+                    if (getDestination() != null) {
                         oldLocation.deletePickupRS();
                         oldTrack.deletePickupRS(this);
                         // don't update rs's previous location if just re-staging
@@ -465,19 +472,19 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                     }
                 }
             }
-            if (_location != null) {
-                _location.addRS(this);
+            if (getLocation() != null) {
+                getLocation().addRS(this);
                 // Need to know if location name changes so we can forward to listeners
-                _location.addPropertyChangeListener(this);
+                getLocation().addPropertyChangeListener(this);
             }
-            if (_track != null) {
-                _track.addRS(this);
+            if (getTrack() != null) {
+                getTrack().addRS(this);
                 // Need to know if location name changes so we can forward to listeners
-                _track.addPropertyChangeListener(this);
+                getTrack().addPropertyChangeListener(this);
                 // if there's a destination then there's a pick up
-                if (_destination != null) {
-                    _location.addPickupRS();
-                    _track.addPickupRS(this);
+                if (getDestination() != null) {
+                    getLocation().addPickupRS();
+                    getTrack().addPickupRS(this);
                 }
             }
             setDirtyAndFirePropertyChange(TRACK_CHANGED_PROPERTY, oldTrack, track);
@@ -538,9 +545,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             }
         }
         // now set the rolling stock destination!
-        Location oldDestination = _destination;
+        Location oldDestination = getDestination();
         _destination = destination;
-        Track oldTrack = _trackDestination;
+        Track oldTrack = getDestinationTrack();
         _trackDestination = track;
 
         if (oldDestination != destination || oldTrack != track) {
@@ -548,28 +555,28 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                 oldDestination.deleteDropRS();
                 oldDestination.removePropertyChangeListener(this);
                 // delete pick up in case destination is null
-                if (_location != null && _track != null) {
-                    _location.deletePickupRS();
-                    _track.deletePickupRS(this);
+                if (getLocation() != null && getTrack() != null) {
+                    getLocation().deletePickupRS();
+                    getTrack().deletePickupRS(this);
                 }
             }
             if (oldTrack != null) {
                 oldTrack.deleteDropRS(this);
                 oldTrack.removePropertyChangeListener(this);
             }
-            if (_destination != null) {
-                _destination.addDropRS();
-                if (_location != null && _track != null) {
-                    _location.addPickupRS();
-                    _track.addPickupRS(this);
+            if (getDestination() != null) {
+                getDestination().addDropRS();
+                if (getLocation() != null && getTrack() != null) {
+                    getLocation().addPickupRS();
+                    getTrack().addPickupRS(this);
                 }
                 // Need to know if destination name changes so we can forward to listeners
-                _destination.addPropertyChangeListener(this);
+                getDestination().addPropertyChangeListener(this);
             }
-            if (_trackDestination != null) {
-                _trackDestination.addDropRS(this);
+            if (getDestinationTrack() != null) {
+                getDestinationTrack().addDropRS(this);
                 // Need to know if destination name changes so we can forward to listeners
-                _trackDestination.addPropertyChangeListener(this);
+                getDestinationTrack().addPropertyChangeListener(this);
             } else {
                 // rolling stock has been terminated or reset
                 if (getTrain() != null && getTrain().getRoute() != null) {
@@ -625,15 +632,15 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     public String getDestinationName() {
-        if (_destination != null) {
-            return _destination.getName();
+        if (getDestination() != null) {
+            return getDestination().getName();
         }
         return NONE;
     }
 
     public String getDestinationId() {
-        if (_destination != null) {
-            return _destination.getId();
+        if (getDestination() != null) {
+            return getDestination().getId();
         }
         return NONE;
     }
@@ -658,15 +665,15 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     public String getDestinationTrackName() {
-        if (_trackDestination != null) {
-            return _trackDestination.getName();
+        if (getDestinationTrack() != null) {
+            return getDestinationTrack().getName();
         }
         return NONE;
     }
 
     public String getDestinationTrackId() {
-        if (_trackDestination != null) {
-            return _trackDestination.getId();
+        if (getDestinationTrack() != null) {
+            return getDestinationTrack().getId();
         }
         return NONE;
     }
@@ -762,11 +769,11 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      */
     public void setRouteLocation(RouteLocation routeLocation) {
         // a couple of error checks before setting the route location
-        if (_location == null && routeLocation != null) {
+        if (getLocation() == null && routeLocation != null) {
             log.debug("WARNING rolling stock ({}) does not have an assigned location", this); // NOI18N
-        } else if (routeLocation != null && _location != null && !routeLocation.getName().equals(_location.getName())) {
+        } else if (routeLocation != null && getLocation() != null && !routeLocation.getName().equals(getLocation().getName())) {
             log.error("ERROR route location name({}) not equal to location name ({}) for rolling stock ({})",
-                    routeLocation.getName(), _location.getName(), this); // NOI18N
+                    routeLocation.getName(), getLocation().getName(), this); // NOI18N
         }
         RouteLocation old = _routeLocation;
         _routeLocation = routeLocation;
@@ -785,8 +792,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     public String getRouteLocationId() {
-        if (_routeLocation != null) {
-            return _routeLocation.getId();
+        if (getRouteLocation() != null) {
+            return getRouteLocation().getId();
         }
         return NONE;
     }
@@ -1098,10 +1105,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      */
     public void setRouteDestination(RouteLocation routeDestination) {
         if (routeDestination != null &&
-                _destination != null &&
-                !routeDestination.getName().equals(_destination.getName())) {
+                getDestination() != null &&
+                !routeDestination.getName().equals(getDestination().getName())) {
             log.debug("WARNING route destination name ({}) not equal to destination name ({}) for rolling stock ({})",
-                    routeDestination.getName(), _destination.getName(), this); // NOI18N
+                    routeDestination.getName(), getDestination().getName(), this); // NOI18N
         }
         RouteLocation old = _routeDestination;
         _routeDestination = routeDestination;
@@ -1115,8 +1122,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     public String getRouteDestinationId() {
-        if (_routeDestination != null) {
-            return _routeDestination.getId();
+        if (getRouteDestination() != null) {
+            return getRouteDestination().getId();
         }
         return NONE;
     }
@@ -1492,23 +1499,23 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             setDirtyAndFirePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
         }
         if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
-            if (e.getSource() == _location) {
+            if (e.getSource() == getLocation()) {
                 log.debug("delete location for rolling stock: ({})", this);
                 setLocation(null, null);
             }
-            if (e.getSource() == _destination) {
+            if (e.getSource() == getDestination()) {
                 log.debug("delete destination for rolling stock: ({})", this);
                 setDestination(null, null);
             }
         }
         if (e.getPropertyName().equals(Track.DISPOSE_CHANGED_PROPERTY)) {
-            if (e.getSource() == _track) {
+            if (e.getSource() == getTrack()) {
                 log.debug("delete location for rolling stock: ({})", this);
-                setLocation(_location, null);
+                setLocation(getLocation(), null);
             }
-            if (e.getSource() == _trackDestination) {
+            if (e.getSource() == getDestinationTrack()) {
                 log.debug("delete destination for rolling stock: ({})", this);
-                setDestination(_destination, null);
+                setDestination(getDestination(), null);
             }
         }
         if (e.getPropertyName().equals(Train.DISPOSE_CHANGED_PROPERTY) && e.getSource() == getTrain()) {

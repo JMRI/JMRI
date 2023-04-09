@@ -700,7 +700,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     prevSectionDirection = direction.get(k);
                 }
             }
-            sectionList.remove(j);
+            removeSupportingArrayEntries(j);
             initializeSectionCombos();
         }
         updateSeqNum();
@@ -745,13 +745,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 keep++;
             }
             for (int c = 0; c < keep ; c++) {
-                sequence.remove(0);
-                direction.remove(0);
-                action.remove(0);
-                alternate.remove(0);
-                safe.remove(0);
-                sensorStopAllocation.remove(0);
-                sectionList.remove(0);
+                removeSupportingArrayEntries(0);
                 curSequenceNum--;
             }
             initializeSectionCombos();
@@ -937,15 +931,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             if (seq == 0) {
                 return;
             }
-            for (int i = sectionList.size(); i >= seq; i--) {
+            for (int i = sectionList.size() - 1; i >= seq; i--) {
                 if ((sequence.get(i) == seq) && alternate.get(i)) {
-                    sequence.remove(i);
-                    direction.remove(i);
-                    action.remove(i);
-                    alternate.remove(i);
-                    safe.remove(i);
-                    sensorStopAllocation.remove(i);
-                    sectionList.remove(i);
+                    removeSupportingArrayEntries(i);
                 }
             }
             initializeSectionCombos();
@@ -1166,6 +1154,16 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             addFrame = null;
         }
     }
+    
+    private void removeSupportingArrayEntries(int index) {
+        sectionList.remove(index);
+        sequence.remove(index);
+        direction.remove(index);
+        action.remove(index);
+        alternate.remove(index);
+        safe.remove(index);
+        sensorStopAllocation.remove(index);
+    }
 
     private boolean checkTransitInformation() {
         //transits can now be of length 1 segmant.
@@ -1370,7 +1368,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             actionTableFrame = new JmriJFrame(rbx.getString("TitleViewActions"));
             actionTableFrame.addHelpMenu(
                     "package.jmri.jmrit.beantable.ViewSpecialActions", true);
-            actionTableFrame.setLocation(50, 60);
             Container contentPane = actionTableFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
@@ -1514,7 +1511,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             addEditActionFrame = new JmriJFrame(rbx.getString("TitleAddAction"));
             addEditActionFrame.addHelpMenu(
                     "package.jmri.jmrit.beantable.TransitSectionAddEditAction", true);
-            addEditActionFrame.setLocation(120, 80);
             Container contentPane = addEditActionFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             // to set When to start the action

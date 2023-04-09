@@ -53,6 +53,20 @@ public class Layout implements VetoableChangeListener {
     private double _scaleMK;          // Scale mile (real feet) or km (real meter)
 
     /**
+     * Make a copy of the layout.
+     * @return a new layout instance.
+     */
+    public Layout getCopy() {
+        Layout copy = new Layout();
+        copy.setLayoutName(Bundle.getMessage("DuplicateCopyName", _layoutName));
+        copy.setScale(_scale);
+        copy.setFastClock(_fastClock);
+        copy.setThrottles(_throttles);
+        copy.setMetric(_metric);
+        return copy;
+    }
+
+    /**
      * Calculate the length of a scale mile or scale kilometer.
      * The values are adjusted for scale and fast clock ratio.
      * The resulting value is the real feet or meters.

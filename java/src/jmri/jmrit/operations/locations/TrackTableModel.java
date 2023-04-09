@@ -137,10 +137,11 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
         addTableColumnListeners();
     }
 
-    // only show "Schedule", "Load", "Ship", "Road", "Destination", "Planned",
-    // "Pool" "Alternate" "Order" "Reporter" "Moves" if they are needed
+    // only show columns if they are needed
     private void setColumnsVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(ID_COLUMN),
+                InstanceManager.getDefault(LocationManager.class).isShowIdEnabled());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(SCHEDULE_COLUMN),
                 _location.hasSchedules() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RESTRICTION_COLUMN), _location.hasServiceRestrictions());
@@ -345,8 +346,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 return getRestrictions(track);
             case LOAD_COLUMN:
                 return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS),
-                        track.getLoadOption().equals(Track.INCLUDE_LOADS)) +
-                        (track.isSpur() && track.isHoldCarsWithCustomLoadsEnabled() ? " H" : "");
+                        track.getLoadOption().equals(Track.INCLUDE_LOADS));
             case SHIP_COLUMN:
                 return getModifiedString(track.getShipLoadNames().length,
                         track.getShipLoadOption().equals(Track.ALL_LOADS),

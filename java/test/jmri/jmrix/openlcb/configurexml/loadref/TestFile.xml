@@ -117,6 +117,9 @@
       <aspect defines="Stop">
         <event>00.00.00.00.00.00.00.0A</event>
       </aspect>
+      <aspect defines="Permissive Medium">
+        <event>00.00.00.00.00.00.00.00</event>
+      </aspect>
       <disabledAspects>
         <disabledAspect>Medium Clear</disabledAspect>
         <disabledAspect>Slow Approach</disabledAspect>

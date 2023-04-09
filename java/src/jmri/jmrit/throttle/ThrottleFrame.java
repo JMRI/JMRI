@@ -105,7 +105,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         throttleManager = tm;
         initGUI();
         applyPreferences();
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().addThrottleFrame(this);
+        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().addThrottleFrame(tw,this);
     }
 
     public ThrottleWindow getThrottleWindow() {

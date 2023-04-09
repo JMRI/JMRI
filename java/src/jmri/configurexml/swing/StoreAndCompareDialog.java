@@ -53,14 +53,12 @@ public class StoreAndCompareDialog {
 
             noButton.addActionListener((ActionEvent e) -> {
                 dialog.dispose();
-                return;
             });
 
             yesButton.addActionListener((ActionEvent e) -> {
                 dialog.setVisible(false);
                 performStore();
                 dialog.dispose();
-                return;
             });
 
             container.setAlignmentX(Component.CENTER_ALIGNMENT);

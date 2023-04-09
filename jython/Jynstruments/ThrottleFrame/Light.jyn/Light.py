@@ -51,14 +51,14 @@ class Light(Jynstrument, PropertyChangeListener, AddressListener, MouseListener)
 
     def switch(self):      # actually do function value change
         if self.throttle != None :
-            self.throttle.setF0( not self.throttle.getF0() )   # HERE!
+            self.throttle.setFunction(0, not self.throttle.getFunction(0) )   # HERE!
         self.setIcon()
 
     def setIcon(self):     # update appearance
         cl = self.getLayout()
         if self.throttle == None :
             cl.show(self, "off")
-        elif self.throttle.getF0() :
+        elif self.throttle.getFunction(0) :
             cl.show(self, "on")
         else :
             cl.show(self, "off")

@@ -119,6 +119,11 @@
                 <li></li>
             </ul>
 
+        <h4>Powerline</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>RFID</h4>
             <ul>
                 <li></li>
@@ -374,7 +379,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Fix allocating over occupied blocks in IntermediateSections</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -473,8 +478,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Cliff Anderson contributed a new TurnoutsMasterSlave.py script.
-            </li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>

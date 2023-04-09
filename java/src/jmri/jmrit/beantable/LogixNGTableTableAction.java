@@ -219,7 +219,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         selectFileButton.setMaximumSize(selectFileButton.getPreferredSize());
         selectFileButton.setToolTipText(Bundle.getMessage("LogixNG_FileButtonHint"));  // NOI18N
         selectFileButton.addActionListener((ActionEvent e) -> {
-            JFileChooser csvFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+            JFileChooser csvFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
             csvFileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv", "txt", "tsv")); // NOI18N
             csvFileChooser.rescanCurrentDirectory();
             int retVal = csvFileChooser.showOpenDialog(null);

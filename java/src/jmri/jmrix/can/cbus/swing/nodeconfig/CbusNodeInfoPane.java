@@ -58,7 +58,7 @@ public class CbusNodeInfoPane extends CbusNodeConfigTab {
      */
     @Override
     public String getTitle(){
-        return "Node Info";
+        return Bundle.getMessage("NodeInfo");
     }
 
     /**

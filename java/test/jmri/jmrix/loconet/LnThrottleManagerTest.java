@@ -1242,6 +1242,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
         memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false, false);
+        memo.getSlotManager().pmManagerGotReply=true; //turn off more probing by saying done.
         memo.configureManagers(); // lnThrottleManager created by memo + added to instancemanager here
         tm = memo.get(ThrottleManager.class);
         Assertions.assertTrue(tm == InstanceManager.getDefault(ThrottleManager.class),"tm is Instance tm");

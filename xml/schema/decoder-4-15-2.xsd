@@ -202,6 +202,8 @@
       </xs:sequence>
       <xs:attribute name="showEmptyPanes" type="yesNoType"/>
       <xs:attribute name="allowResetDefaults" type="yesNoType"/>
+      <xs:attribute name="suppressFunctionLabels" type="yesNoType" default="no"/>
+      <xs:attribute name="suppressRosterMedia" type="yesNoType" default="no"/>
     </xs:complexType>
   </xs:element>
 
@@ -293,6 +295,15 @@
     <xs:annotation>
       <xs:documentation>
         Provides a base element that can be used in "enumVal" fragment files, those
+        little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="splitEnumVal" type="SplitEnumValType">
+    <xs:annotation>
+      <xs:documentation>
+        Provides a base element that can be used in "splitEnumVal" fragment files, those
         little files that are XIncluded into primary decoder files.
       </xs:documentation>
     </xs:annotation>
@@ -1342,6 +1353,7 @@
       <xs:enumeration value="LOCONETSV2MODE"/>
       <xs:enumeration value="LOCONETLNCVMODE"/>
       <xs:enumeration value="LOCONETBDOPSWMODE"/>
+      <xs:enumeration value="LOCONETBD7OPSWMODE"/>
       <xs:enumeration value="LOCONETCSOPSWMODE"/>
     </xs:restriction>
   </xs:simpleType>

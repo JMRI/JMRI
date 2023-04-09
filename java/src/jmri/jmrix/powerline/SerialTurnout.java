@@ -35,8 +35,8 @@ public class SerialTurnout extends AbstractTurnout {
         super(systemName, userName);
         this.tc = tc;
         // Convert to the two-part X10 address
-        housecode = tc.getAdapterMemo().getSerialAddress().houseCodeAsValueFromSystemName(getSystemName());
-        devicecode = tc.getAdapterMemo().getSerialAddress().deviceCodeAsValueFromSystemName(getSystemName());
+        housecode = tc.getAdapterMemo().getSerialAddress().x10HouseCodeAsValueFromSystemName(getSystemName());
+        devicecode = tc.getAdapterMemo().getSerialAddress().x10DeviceCodeAsValueFromSystemName(getSystemName());
     }
 
     private SerialTrafficController tc = null;

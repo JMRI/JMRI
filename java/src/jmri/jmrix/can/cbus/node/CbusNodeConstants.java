@@ -103,7 +103,7 @@ public class CbusNodeConstants {
             }
         } else if ( node.getNodeParamManager().getParameter(1) == SPROG_DCC ) {    // SPROG DCC module
             switch (node.getNodeParamManager().getParameter(3)) {           // Module Type ID Number
-                case MTYP_CANSERVOIO: // CANPAN
+                case MTYP_CANSERVOIO:
                     node.setnvWriteInLearnOnly(true);
                     break;
                     
@@ -346,10 +346,12 @@ public class CbusNodeConstants {
         result.put(3, "CANSPROG"); // NOI18N
         result.put(4, "SBOOST"); // NOI18N
         result.put(5, "Unsupported"); // NOI18N
-        result.put(6, "CANISB"); // NOI18N
-        result.put(7, "CANCBUSIO"); // NOI18N
-        result.put(8, "CANSERVOIO"); // NOI18N
-        result.put(9, "CANSOLIO"); // NOI18N
+
+        result.put(8, "CANSOLNOID"); // NOI18N. Matches MERG CANSOL
+        result.put(50, "CANSERVOIO"); // NOI18N. Matches MERG canmio-svo
+        
+        result.put(100, "CANISB"); // NOI18N
+        result.put(101, "CANSOLIO"); // NOI18N
         return Collections.unmodifiableMap(result);
     }
     
@@ -503,15 +505,17 @@ public class CbusNodeConstants {
         result.put(2, "SPROG 3 Plus programmer/command station.");
         result.put(3, "CAN SPROG programmer/command station.");
         result.put(4, "System booster");
-        result.put(5, "Unsuppoerted module type");
-        result.put(6, "CBUS I/O module.");
-        result.put(7, "Isolated USB to CAN interface with CBUS node.");
-        result.put(8, "8-channel servo I/O.");
-        result.put(9, "8-channel twin-coil solenoid I/O.");
+        result.put(5, "Unsupported module type");
+        
+        result.put(8, "8-channel twin-coil solenoid, like MERG CANACC4_2.");
+        result.put(50, "8-channel servo I/O, like MERG CANMIO_SVO.");
+        
+        result.put(100, "Isolated USB to CAN interface with CBUS node.");
+        result.put(101, "8-channel twin-coil solenoid I/O.");
         return Collections.unmodifiableMap(result);
     }   
 
-    
+  
     /**
      * Return a string representation of Module Support Link
      * @param man int manufacturer ID
@@ -646,10 +650,10 @@ public class CbusNodeConstants {
         result.put(3, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         result.put(4, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         result.put(5, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
-        result.put(6, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
-        result.put(7, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         result.put(8, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
-        result.put(9, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(50, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(100, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(101, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         return Collections.unmodifiableMap(result);
     }
     

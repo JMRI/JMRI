@@ -10,7 +10,7 @@ import org.junit.*;
 
 /**
  * Test VariableTableModel
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 public class VariableTableModelTest {
@@ -20,7 +20,7 @@ public class VariableTableModelTest {
         LocalVariableTableModel obj = new LocalVariableTableModel(null);
         Assert.assertNotNull(obj);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws IOException {
@@ -35,7 +35,8 @@ public class VariableTableModelTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

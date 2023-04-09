@@ -63,7 +63,7 @@ public class JTableToCsvAction extends AbstractAction {
         _model = model;
         _defaultFileName = defaultFileName;
         _excludedCols = excludedCols;
-        _fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+        _fileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
     }
     
     /**

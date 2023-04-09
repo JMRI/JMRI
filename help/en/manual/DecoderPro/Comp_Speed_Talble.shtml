@@ -77,8 +77,8 @@
       usually selected by a drop-down list.</p>
 
       <p>The default speed table for most decoders is a straight line from zero on the left to
-      maximum on the right. The <strong><input name="button" id="button" value="Force Straight"
-      type="button"></strong> below the table duplicates that in the table..</p>
+      maximum on the right. The <strong><span class="textbutton">Force Straight</span></strong>
+      button below the table duplicates that in the table..</p>
 
       <h1 class="dp-ctr"><img style="width: 799px; height: 697px;" src=
       "images/Speed_Table_Straight.png" alt="speed table">

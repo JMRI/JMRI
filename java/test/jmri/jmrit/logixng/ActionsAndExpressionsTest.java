@@ -274,6 +274,7 @@ public class ActionsAndExpressionsTest {
                 classes,
                 new String[]{
                     "Bundle",
+                    "CommonManager",
                     "NamedBeanType",
                     "AbstractAnalogAction","AnalogFactory",         // Analog
                     "AbstractDigitalAction","ActionAtomicBoolean","AbstractScriptDigitalAction","DigitalFactory",   // Digital
@@ -298,7 +299,8 @@ public class ActionsAndExpressionsTest {
                     "Bundle",
                     "AbstractAnalogExpression","AnalogFactory",     // Analog
                     "AbstractDigitalExpression","AbstractScriptDigitalExpression","DigitalFactory",     // Digital
-                    "AbstractStringExpression","StringFactory"      // String
+                    "AbstractStringExpression","StringFactory",     // String
+                    "ExpressionLinuxLinePower"     // Only exists on Linux
                 });
 
         Assert.assertFalse("No errors found", errorsFound);

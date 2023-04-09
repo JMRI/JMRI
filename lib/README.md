@@ -127,7 +127,8 @@ which checks the dates of the control files to make sure they've been updated wh
 - from http://www.slf4j.org
 
 ##### openlcb.jar
- - 0.7.31 from https://github.com/openlcb/OpenLCB_Java
+ - 0.7.32 from https://github.com/openlcb/OpenLCB_Java
+ - Through PR#224 included
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -145,7 +146,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.0.6
 - from <jdom.org>
 
-##### jackson-annotations-2.13.4.jar, jackson-core-2.13.4.jar, jackson-databind-2.13.4.1.jar
+##### jackson-annotations-2.13.4.jar, jackson-core-2.13.4.jar, jackson-databind-2.13.4.2.jar
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
 
@@ -447,8 +448,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ##### PlantUML
 - plantuml.jar
-    was from plantuml.org, now from https://github.com/plantuml/plantuml.git
-    pulled July 14, 2022 post PR-1057
+    from plantuml.org
+    1.2023.1
 - umldoclet.jar
     downloaded as umldoclet-2.0.10-javadoc.jar
     from https://github.com/talsma-ict/umldoclet/releases

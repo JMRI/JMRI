@@ -824,14 +824,19 @@
           </dt>
 
           <dt>
-            <a href="marklin/index.shtml">M&auml;rklin</a>
+            <a href="marklin/index.shtml#cs2">M&auml;rklin CS2</a>
           </dt>
-
           <dd>
             <p class="dl">Configure connection to <a href="marklin/index.shtml">CS2</a> Command
             Station 2.</p>
-            <a href="ecos/index.shtml">CS</a> Command Station - see ESU ECoS
-            <p>&nbsp;</p>
+          </dd>
+
+          <dt>
+            <a href="marklin/index.shtml#cdb">M&auml;rklin CdB CC-Schnitte</a>
+          </dt>
+          <dd>
+            <p class="dl">Configure connection to <a href="marklin/index.shtml">CdB CC-Schnitte</a> Command
+            Station 2.</p>
           </dd>
 
           <dt class="im">

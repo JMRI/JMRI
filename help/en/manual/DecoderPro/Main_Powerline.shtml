@@ -45,7 +45,7 @@
       </p>
 
       <p>Opens the <strong>Send power line device command</strong> prompt to allow you to type in a
-      <strong>Command</strong> and <input type="button" name="button" id="button" value="Send"> it
+      <strong>Command</strong> and <span class="textbutton">Send</span> it
       to the Powerline device.</p>
 
       <p><img src="images/Main_PowerControl_01.png" alt="Send Command" width="325" height="143">

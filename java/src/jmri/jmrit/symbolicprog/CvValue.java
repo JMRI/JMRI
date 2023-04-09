@@ -86,8 +86,9 @@ public class CvValue extends AbstractValue implements ProgListener {
         prop.firePropertyChange("Value", null, value);
     }
 
+
     /**
-     * Edit a new value into the CV.
+     * Edit a new value into the CV. Fires listeners
      * <p>
      * Only use this for external edits, e.g. set from a GUI.
      * Not for internal uses, as it sets the state to EDITED.

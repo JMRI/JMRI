@@ -78,7 +78,7 @@ public class CsvExportAction extends AbstractAction implements ReadingListener {
 
         // initialize chooser
         if (fileChooser == null) {
-            fileChooser = new JFileChooser();
+            fileChooser = new jmri.util.swing.JmriJFileChooser();
         } else {
             fileChooser.rescanCurrentDirectory();
         }

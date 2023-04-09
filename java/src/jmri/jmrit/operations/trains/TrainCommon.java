@@ -2100,7 +2100,7 @@ public class TrainCommon {
     public static String getTextColorString(String string) {
         String text = string;
         if (string.contains(TEXT_COLOR_START)) {
-            text = string.substring(0, string.indexOf(TEXT_COLOR_START)) + string.substring(string.indexOf(">") + 1);
+            text = string.substring(0, string.indexOf(TEXT_COLOR_START)) + string.substring(string.indexOf("\">") + 2);
         }
         if (text.contains(TEXT_COLOR_END)) {
             text = text.substring(0, text.indexOf(TEXT_COLOR_END)) +
@@ -2112,7 +2112,7 @@ public class TrainCommon {
     public static Color getTextColor(String string) {
         Color color = Color.black;
         if (string.contains(TEXT_COLOR_START)) {
-            String c = string.substring(string.indexOf("\"") + 1);
+            String c = string.substring(string.indexOf(TEXT_COLOR_START) + TEXT_COLOR_START.length());
             c = c.substring(0, c.indexOf("\""));
             color = ColorUtil.stringToColor(c);
         }

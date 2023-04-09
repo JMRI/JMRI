@@ -1,17 +1,9 @@
 package jmri.jmrit.throttle;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.RenderingHints;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.GeneralPath;
-import javax.swing.JComponent;
-import javax.swing.JSlider;
-import javax.swing.SwingConstants;
+
+import javax.swing.*;
 import javax.swing.plaf.basic.BasicSliderUI;
 
 /**
@@ -39,12 +31,12 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
     }
     
     @Override
-    public void paint(Graphics g, JComponent c) {
+    public void paint(Graphics g, JComponent c) {     
         if (g instanceof Graphics2D) {
             Graphics2D g2d = (Graphics2D) g;
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            super.paint(g, c);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);            
         }
+        super.paint(g,c);
     }
 
     @Override
@@ -97,12 +89,12 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
                 double x0 = trackRect.x + trackRect.width * doublerel0Pos;
                 double widthRect = thumbRect.x + (double)thumbRect.width/2 - x0;
                 if (widthRect>0) {
-                    g2d.fillRect( (int)Math.round(x0), trackRect.y, (int)Math.round(widthRect), trackRect.height);
+                    g2d.fillRect( (int)Math.round(x0), trackRect.y, (int)Math.round(widthRect), trackRect.height );
                 } else {
-                    g2d.fillRect( (int)Math.round(x0+widthRect), trackRect.y, (int)Math.round(-widthRect), trackRect.height);
+                    g2d.fillRect( (int)Math.round(x0+widthRect), trackRect.y, (int)Math.round(-widthRect), trackRect.height );
                 }
             } else {           
-                g2d.fillRect(trackRect.x, trackRect.y, thumbRect.x-thumbRect.width/2, trackRect.height);
+                g2d.fillRect(trackRect.x, trackRect.y, thumbRect.x-thumbRect.width/2, trackRect.height );
             }
         } else {
             if (slider.getMinimum()<0 && slider.getMaximum()>0) {
@@ -115,7 +107,7 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
                     g2d.fillRect( trackRect.x, (int)Math.round(y0+heightRect), trackRect.width, (int)Math.round(-heightRect));
                 }                
             } else {
-                g2d.fillRect(trackRect.x, thumbRect.y+thumbRect.height/2, trackRect.width, trackRect.height - thumbRect.y+thumbRect.height - trackRect.y  );
+                g2d.fillRect(trackRect.x, thumbRect.y +thumbRect.height/2, trackRect.width, trackRect.height - ( thumbRect.y-trackRect.y +thumbRect.height/2)  );
             }
         }
         g2d.setPaint(oldPaint);
@@ -127,13 +119,22 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
             return;
         }
         Graphics2D g2d = (Graphics2D) g;
+        Paint oldPaint = g2d.getPaint();
         int x1 = thumbRect.x + 3;
         int x2 = thumbRect.x + thumbRect.width - 5;
+        int y1 = thumbRect.y+1;
+        int y2 = thumbRect.y+thumbRect.height-2;        
+        if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
+            x1 = thumbRect.x + 1;
+            x2 = thumbRect.x + thumbRect.width - 2;
+            y1 = thumbRect.y+3;
+            y2 = thumbRect.y+thumbRect.height-5;          
+        }
         GeneralPath shape = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
-        shape.moveTo(x1, thumbRect.y+1);        
-        shape.lineTo(x2, thumbRect.y+1);
-        shape.lineTo(x2, thumbRect.y+thumbRect.height-2);
-        shape.lineTo(x1, thumbRect.y+thumbRect.height-2);
+        shape.moveTo(x1, y1);        
+        shape.lineTo(x2, y1);
+        shape.lineTo(x2, y2);
+        shape.lineTo(x1, y2);        
         shape.closePath();
         if (slider.isEnabled()) {
             if (slider.getValue()==0) {
@@ -150,5 +151,6 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
         g2d.setPaint(THUMB_CONTOUR_COLOR);
         g2d.draw(shape);
         g2d.setStroke(old);
-    }      
+        g2d.setPaint(oldPaint);
+    }
 }

@@ -1,29 +1,26 @@
 package jmri.jmrix.openlcb.swing.hub;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TestTrafficController;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
-import jmri.jmrix.can.TestTrafficController;
 /**
  * @author Bob Jacobsen Copyright 2013
  * @author Paul Bender Copyright(C) 2016
  */
 public class HubActionTest {
 
-    jmri.jmrix.can.CanSystemConnectionMemo memo;
-    jmri.jmrix.can.TrafficController tc;
+    CanSystemConnectionMemo memo = null;
+    jmri.jmrix.can.TrafficController tc = null;
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         HubAction h = new HubAction();
-        Assert.assertNotNull("Action object non-null", h);
+        Assertions.assertNotNull(h, "Action object non-null");
     }
 
     @BeforeEach

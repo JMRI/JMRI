@@ -370,40 +370,6 @@ public class ForEach extends AbstractDigitalAction
     }
 
 
-    public static enum CommonManager {
-
-        Sensors(InstanceManager.getNullableDefault(SensorManager.class), Bundle.getMessage("ForEach_CommonManager_Sensors")),
-        Turnouts(InstanceManager.getNullableDefault(TurnoutManager.class), Bundle.getMessage("ForEach_CommonManager_Turnouts")),
-        Lights(InstanceManager.getNullableDefault(LightManager.class), Bundle.getMessage("ForEach_CommonManager_Lights")),
-        SignalHeads(InstanceManager.getNullableDefault(SignalHeadManager.class), Bundle.getMessage("ForEach_CommonManager_SignalHeads")),
-        SignalMasts(InstanceManager.getNullableDefault(SignalMastManager.class), Bundle.getMessage("ForEach_CommonManager_SignalMasts")),
-        Routes(InstanceManager.getNullableDefault(RouteManager.class), Bundle.getMessage("ForEach_CommonManager_Routes")),
-        Blocks(InstanceManager.getNullableDefault(BlockManager.class), Bundle.getMessage("ForEach_CommonManager_Blocks")),
-        Reporters(InstanceManager.getNullableDefault(ReporterManager.class), Bundle.getMessage("ForEach_CommonManager_Reporters")),
-        Memories(InstanceManager.getNullableDefault(MemoryManager.class), Bundle.getMessage("ForEach_CommonManager_Memories")),
-        Audio(InstanceManager.getNullableDefault(AudioManager.class), Bundle.getMessage("ForEach_CommonManager_Audio")),
-        LayoutBlocks(InstanceManager.getNullableDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class), Bundle.getMessage("ForEach_CommonManager_LayoutBlocks")),
-        Warrants(InstanceManager.getNullableDefault(jmri.jmrit.logix.WarrantManager.class), Bundle.getMessage("ForEach_CommonManager_Warrants")),
-        Sections(InstanceManager.getNullableDefault(SectionManager.class), Bundle.getMessage("ForEach_CommonManager_Sections")),
-        Transits(InstanceManager.getNullableDefault(TransitManager.class), Bundle.getMessage("ForEach_CommonManager_Transits"));
-
-        private final Manager<? extends NamedBean> _manager;
-        private final String _description;
-
-        private CommonManager(Manager<? extends NamedBean> manager, String description) {
-            _manager = manager;
-            _description = description;
-        }
-
-        public Manager<? extends NamedBean> getManager() {
-            return _manager;
-        }
-
-        @Override
-        public String toString() {
-            return _description;
-        }
-    }
 
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ForEach.class);
