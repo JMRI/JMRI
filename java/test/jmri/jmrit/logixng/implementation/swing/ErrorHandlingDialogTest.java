@@ -8,7 +8,7 @@ import org.junit.*;
 
 /**
  * Test ErrorHandlingDialog
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 public class ErrorHandlingDialogTest {
@@ -18,7 +18,7 @@ public class ErrorHandlingDialogTest {
         ErrorHandlingDialog obj = new ErrorHandlingDialog();
         Assert.assertNotNull(obj);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws IOException {
@@ -33,7 +33,8 @@ public class ErrorHandlingDialogTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

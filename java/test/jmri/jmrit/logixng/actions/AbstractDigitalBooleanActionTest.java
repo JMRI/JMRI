@@ -19,7 +19,7 @@ import org.junit.Test;
 
 /**
  * Test AbstractDigitalBooleanAction
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 public class AbstractDigitalBooleanActionTest {
@@ -39,8 +39,8 @@ public class AbstractDigitalBooleanActionTest {
             hasThrown = true;
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
-        
-        
+
+
         DigitalBooleanOnChange action2 = new DigitalBooleanOnChange("IQDB1", null, DigitalBooleanOnChange.Trigger.CHANGE);
         Assert.assertEquals("New socket name is correct", "A1", action2.getNewSocketName());
     }
@@ -58,10 +58,11 @@ public class AbstractDigitalBooleanActionTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
-    
+
+
     // The purpose of this class is to test the method
     // AbstractDigitalAction.getNewSocketName(). We want
     // to test that the method throws an exception if no
@@ -74,11 +75,11 @@ public class AbstractDigitalBooleanActionTest {
     private static class MyAction extends AbstractDigitalBooleanAction implements FemaleSocketListener {
 
         private final MyFemaleSocket child = new MyFemaleSocket(this, this, "A1");
-        
+
         public MyAction() {
             super(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null);
         }
-        
+
         @Override
         protected void registerListenersForThisClass() {
             throw new UnsupportedOperationException("Not supported.");
@@ -160,16 +161,16 @@ public class AbstractDigitalBooleanActionTest {
         public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
-        
+
     }
-    
-    
+
+
     private static class MyFemaleSocket extends AbstractFemaleSocket {
-    
+
         public MyFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
             super(parent, listener, name);
         }
-        
+
         @Override
         public void disposeMe() {
             throw new UnsupportedOperationException("Not supported.");
@@ -194,7 +195,7 @@ public class AbstractDigitalBooleanActionTest {
         public String getLongDescription(Locale locale) {
             throw new UnsupportedOperationException("Not supported.");
         }
-    
+
     }
-    
+
 }

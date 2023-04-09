@@ -31,15 +31,15 @@ public class DefaultLogixNGManagerXmlTest {
     public void testLoad() {
         DefaultLogixNGManagerXml b = new DefaultLogixNGManagerXml();
         Assert.assertNotNull("exists", b);
-        
+
         // Test loading a logixng without system name
         Element e = new Element("LogixNGs");
         Element e2 = new Element("LogixNG");
         e.addContent(e2);
         b.loadLogixNGs(e);
         JUnitAppender.assertWarnMessage("unexpected null in systemName [Element: <LogixNG/>]");
-        
-        
+
+
         // Test load LogixNG without attribute "enable"
         e = new Element("LogixNGs");
         e2 = new Element("LogixNG");
@@ -48,7 +48,7 @@ public class DefaultLogixNGManagerXmlTest {
         e2.addContent(eConditionals);
         e.addContent(e2);
         b.loadLogixNGs(e);
-        
+
         // Test load LogixNG with bad conditionalng (no systemName in the conditionalNG)
         e = new Element("LogixNGs");
         e2 = new Element("LogixNG");
@@ -61,7 +61,7 @@ public class DefaultLogixNGManagerXmlTest {
         b.loadLogixNGs(e);
 //        JUnitAppender.assertWarnMessage("unexpected null in systemName [Element: <conditionalng/>]");
 //        JUnitAppender.assertErrorMessage("exception thrown");
-        
+
         // Test loading a LogixNG that already exists
         e = new Element("LogixNGs");
         e2 = new Element("LogixNG");
@@ -71,7 +71,7 @@ public class DefaultLogixNGManagerXmlTest {
         e2.addContent(new Element("systemName").addContent(systemName));
         e.addContent(e2);
         b.loadLogixNGs(e);
-        
+
         // Test load LogixNG with attribute "enable" as empty string
         e = new Element("LogixNGs");
         e2 = new Element("LogixNG");
@@ -84,7 +84,7 @@ public class DefaultLogixNGManagerXmlTest {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ1003");
         Assert.assertNotNull("bean is not null", logixNG);
         Assert.assertFalse("bean is not enabled", logixNG.isEnabled());
-        
+
         // Test load LogixNG with attribute "enable" as invalid value
         e = new Element("LogixNGs");
         e2 = new Element("LogixNG");
@@ -97,7 +97,7 @@ public class DefaultLogixNGManagerXmlTest {
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ1004");
         Assert.assertNotNull("bean is not null", logixNG);
         Assert.assertFalse("bean is not enabled", logixNG.isEnabled());
-        
+
         // Test load LogixNG with attribute "enable" as yes
         e = new Element("LogixNGs");
         e2 = new Element("LogixNG");
@@ -110,8 +110,8 @@ public class DefaultLogixNGManagerXmlTest {
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ1005");
         Assert.assertNotNull("bean is not null", logixNG);
         Assert.assertTrue("bean is enabled", logixNG.isEnabled());
-        
-/*        
+
+/*
         // Test loading the same class twice, in order to check field "xmlClasses"
         e = new Element("LogixNGs");
         e2 = new Element("existing_class");
@@ -119,14 +119,14 @@ public class DefaultLogixNGManagerXmlTest {
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQAA1"));
         b.loadLogixNGs(e);
-        
+
         e = new Element("LogixNGs");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQAA2"));
         b.loadLogixNGs(e);
-/*        
+/*
         // Test trying to load a class with private constructor
         e = new Element("LogixNGs");
         e2 = new Element("existing_class");
@@ -134,7 +134,7 @@ public class DefaultLogixNGManagerXmlTest {
         e.addContent(e2);
         b.loadLogixNGs(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");
-        
+
         // Test trying to load a class which throws an exception
         e = new Element("LogixNGs");
         e2 = new Element("existing_class");
@@ -156,7 +156,7 @@ public class DefaultLogixNGManagerXmlTest {
     @Ignore("LogixNG thread is already started so this test fails")
     @Test
     public void testReplaceActionManagerWithoutConfigManager() {
-/*        
+/*
         // if old manager exists, remove it from configuration process
         if (InstanceManager.getNullableDefault(jmri.jmrit.logixng.AnalogActionManager.class) != null) {
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -174,35 +174,35 @@ public class DefaultLogixNGManagerXmlTest {
         if (cmOD != null) {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNGS);
         }
-        
+
         Assert.assertTrue("manager is a MyManager",
                 InstanceManager.getDefault(LogixNG_Manager.class)
                         instanceof MyManager);
-        
+
         // Test replacing the manager
         DefaultLogixNGManagerXml b = new DefaultLogixNGManagerXml();
         b.replaceLogixNGManager();
-        
+
         Assert.assertFalse("manager is not a MyManager",
                 InstanceManager.getDefault(LogixNG_Manager.class)
                         instanceof MyManager);
-        
+
         // Test replace the manager when where is no manager registered yet
         InstanceManager.deregister(
                 InstanceManager.getDefault(LogixNG_Manager.class),
                 LogixNG_Manager.class);
-        
+
         Assert.assertNotNull("manager is not null",
                 InstanceManager.getDefault(LogixNG_Manager.class));
     }
-    
+
     @Ignore("LogixNG thread is already started so this test fails")
 //    @Ignore("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
     @Test
     public void testReplaceActionManagerWithConfigManager() {
-        
+
         JUnitUtil.initConfigureManager();
-/*        
+/*
         // if old manager exists, remove it from configuration process
         if (InstanceManager.getNullableDefault(jmri.jmrit.logixng.AnalogActionManager.class) != null) {
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -220,20 +220,20 @@ public class DefaultLogixNGManagerXmlTest {
         if (cmOD != null) {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNGS);
         }
-        
+
         Assert.assertTrue("manager is a MyManager",
                 InstanceManager.getDefault(LogixNG_Manager.class)
                         instanceof MyManager);
-        
+
         // Test replacing the manager
         DefaultLogixNGManagerXml b = new DefaultLogixNGManagerXml();
         b.replaceLogixNGManager();
-        
+
         Assert.assertFalse("manager is not a MyManager",
                 InstanceManager.getDefault(LogixNG_Manager.class)
                         instanceof MyManager);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -247,26 +247,27 @@ public class DefaultLogixNGManagerXmlTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
-/*    
+
+/*
     private class MyLogixNG extends jmri.jmrit.logixng.implementation.DefaultLogixNG {
-        
+
         MyLogixNG() {
             super("IQ9999");
         }
-        
+
     }
-    
-/*    
+
+/*
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
     class PrivateConstructorXml extends DefaultLogixNGXml {
         private PrivateConstructorXml() {
         }
     }
-    
+
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
     class ThrowExceptionXml extends DefaultLogixNGXml {
@@ -275,8 +276,8 @@ public class DefaultLogixNGManagerXmlTest {
             throw new JmriConfigureXmlException();
         }
     }
-*/    
+*/
     class MyManager extends DefaultLogixNGManager {
     }
-    
+
 }

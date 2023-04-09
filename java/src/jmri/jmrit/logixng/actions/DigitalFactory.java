@@ -74,7 +74,8 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(Category.FLOW_CONTROL, TableForEach.class),
                         new AbstractMap.SimpleEntry<>(Category.OTHER, Timeout.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, TriggerRoute.class),
-                        new AbstractMap.SimpleEntry<>(Category.OTHER, WebBrowser.class)
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, WebBrowser.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, WebRequest.class)
                 );
 
         return digitalActionClasses;

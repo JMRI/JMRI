@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.3.3plus+jake+20230310T1833Z+R53d85023e5 on Fri Mar 10 13:33:59 EST 2023-->
-  <decoderIndex version="65">
+  <!--Written by JMRI version 5.3.4plus+jake+20230408T1128Z+R2a72c09404 on Sat Apr 08 07:29:00 EDT 2023-->
+  <decoderIndex version="73">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -1499,6 +1499,18 @@
         <model model="DCCACC5 to V5.1" productID="51" />
         <model model="DCCACC5 from V5.2" productID="52" />
       </family>
+      <family name="CBUS" mfg="MERG" comment="CANACC8 is a CBUS 8 outpout module." file="MERG_CBUS_canacc8.xml">
+        <model model="CANACC8" lowVersionID="10" highVersionID="10" />
+      </family>
+      <family name="CBUS" mfg="MERG" comment="CANACC8 is a CBUS 8 outpout module." file="MERG_CBUS_canmio_out.xml">
+        <model model="CANMIO_OUT" lowVersionID="10" highVersionID="10" />
+      </family>
+      <family name="CBUS" mfg="MERG" comment="CANMIOSVO is a CBUS servo driver with 8 inputs." file="MERG_CBUS_canmio_svo.xml">
+        <model model="CANMIO_SVO" lowVersionID="10" highVersionID="10" />
+      </family>
+      <family name="CBUS" mfg="MERG" comment="CANSOL is a CBUS module for solenoids." file="MERG_CBUS_cansol.xml">
+        <model model="CANSOL" lowVersionID="10" highVersionID="10" />
+      </family>
       <family name="DCCACC" mfg="MERG" comment="DCCACC is a stationary decoder, but it can be programmed in the usual way" file="MERG_DCCACC.xml">
         <model model="DCCACC" />
       </family>
@@ -2550,6 +2562,18 @@
       </family>
       <family name="Tortoise driver" mfg="Electroniscript, inc" comment="DCC speaking driver for Tortoise" file="SDD-001.xml">
         <model model="SDD-001" lowVersionID="1" />
+      </family>
+      <family name="CBUS" mfg="SPROG DCC" comment="CANISB is an isolated USB-CBUS interface." file="SPROG_DCC_CBUS_canisb.xml">
+        <model model="CANISB" lowVersionID="10" highVersionID="10" />
+      </family>
+      <family name="CBUS" mfg="SPROG DCC" comment="CANSERVOIO is a CBUS servo driver with 8 inputs." file="SPROG_DCC_CBUS_canservoio.xml">
+        <model model="CANSERVOIO" lowVersionID="10" highVersionID="10" />
+      </family>
+      <family name="CBUS" mfg="SPROG DCC" comment="CANSOLNOID is a CBUS module for solenoids." file="SPROG_DCC_CBUS_cansolnoid.xml">
+        <model model="CANSOLNOID" lowVersionID="10" highVersionID="10" />
+      </family>
+      <family name="CBUS" mfg="SPROG DCC" comment="CANSPROG3P is a CBUS command station." file="SPROG_DCC_CBUS_cansprog3p.xml">
+        <model model="CANSPROG3P" lowVersionID="10" highVersionID="10" />
       </family>
       <family name="Servo Accessory Decoders" mfg="SPROG DCC" comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513..." file="SPROG_DCC_Servo6.xml">
         <model model="Servo6" lowVersionID="10" highVersionID="10" />
@@ -4194,6 +4218,8 @@
       <family name="MS Sound (version 4+)" mfg="Zimo" file="Zimo_MS_small_v4.xml">
         <model model="MS440 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="4" />
         <model model="MS450 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="6" />
+        <model model="MS950 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="9" />
+        <model model="MS990 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="7" />
         <model model="MS480 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="8" numFns="14" productID="2" />
         <model model="MS490 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="3" />
         <model model="MS500 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="1" />
