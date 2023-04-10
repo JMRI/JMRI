@@ -3852,16 +3852,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 boolean popupSet = false;
                 popupSet |= p.setRotateOrthogonalMenu(popup);
                 popupSet |= p.setRotateMenu(popup);
-                if (popupSet) {
-                    popup.addSeparator();
-                    popupSet = false;
-                }
                 popupSet |= p.setScaleMenu(popup);
                 if (popupSet) {
                     popup.addSeparator();
                     popupSet = false;
                 }
-                
                 popupSet |= p.setEditIconMenu(popup);
                 popupSet |= p.setTextEditMenu(popup);
 
