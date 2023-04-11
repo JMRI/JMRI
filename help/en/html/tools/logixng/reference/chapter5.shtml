@@ -1679,7 +1679,8 @@
         <dt>LogixNG_WebRequest_Test.php</dt>
         <dd>
           <p>This is a <strong>PHP</strong> program that acts as a web based application.  This needs
-          to be installed in a web server that has been configured to run PHP programs.</p>
+          to be installed in a web server that has been configured to run PHP programs. The source code
+          can be downloaded from <a href="https://github.com/JMRI/JMRI/blob/master/help/en/html/tools/logixng/reference/WebRequestExample/LogixNG_WebRequest_Test.php">GitHub</a>.</p>
         </dd>
       </dl>
 
