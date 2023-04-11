@@ -8,7 +8,6 @@ import jmri.*;
 import static jmri.configurexml.StoreAndCompare.checkFile;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
-import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.expressions.ExpressionLight;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.LineEnding;
@@ -28,7 +27,8 @@ import org.junit.Test;
  */
 public class WebRequestTest extends AbstractDigitalActionTestBase {
 
-    private static final String WEB_REQUEST_URL = "https://jmri.bergqvist.se/LogixNG_WebRequest_Test.php";
+    private static final String WEB_REQUEST_URL =
+            "https://www.jmri.org/help/en/html/tools/logixng/reference/WebRequestExample/LogixNG_WebRequest_Test.php";
 
     private LogixNG _logixNG;
     private ConditionalNG _conditionalNG;
@@ -81,7 +81,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
                 "                        ? If%n" +
                 "                           Turnout by local variable \"turnout\" is Thrown ::: Use default%n" +
                 "                        ! Then%n" +
-                "                           Web request for https://jmri.bergqvist.se/LogixNG_WebRequest_Test.php ::: Use default%n" +
+                "                           Web request for %s ::: Use default%n" +
                 "                              ! Execute%n" +
                 "                                 Many ::: Use default%n" +
                 "                                    ! A1%n" +
@@ -120,6 +120,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
                 "                           Socket not connected%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n",
+                WEB_REQUEST_URL,
                 WEB_REQUEST_URL,
                 WEB_REQUEST_URL,
                 WEB_REQUEST_URL);
