@@ -118,6 +118,7 @@
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li></li>
+                <li>Fix an NPE from incorrect input when making a Sensor or Turnout</li>
             </ul>
 
         <h4>Powerline</h4>
