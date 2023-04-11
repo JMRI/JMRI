@@ -1646,11 +1646,6 @@
       <h5>Local Variables</h5>
 
       <dl>
-        <dt>Local variable for post content</dt>
-        <dd>
-          <p>This is an advanced feature that will be available in a future release.</p>
-        </dd>
-
         <dt>Local variable for response code</dt>
         <dd>
           <p>The value of the local variable will be the numeric response code from the server.  For
