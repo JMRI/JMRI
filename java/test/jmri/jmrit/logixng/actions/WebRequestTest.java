@@ -1,8 +1,11 @@
 package jmri.jmrit.logixng.actions;
 
 import java.io.*;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import jmri.*;
 import static jmri.configurexml.StoreAndCompare.checkFile;
@@ -16,6 +19,7 @@ import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
+import org.junit.Assume;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,8 +31,12 @@ import org.junit.Test;
  */
 public class WebRequestTest extends AbstractDigitalActionTestBase {
 
+    private static final String JMRI_ORG_URL = "https://www.jmri.org/";
+
     private static final String WEB_REQUEST_URL =
             "https://www.jmri.org/help/en/html/tools/logixng/reference/WebRequestExample/LogixNG_WebRequest_Test.php";
+
+    private static final boolean CAN_ACCESS_JMRI_ORG = tryAccessJmriOrg();
 
     private LogixNG _logixNG;
     private ConditionalNG _conditionalNG;
@@ -36,6 +44,24 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     private GlobalVariable _replyVariable;
     private GlobalVariable _cookiesVariable;
 
+
+    private static boolean tryAccessJmriOrg() {
+        try {
+            URL url = new URL(JMRI_ORG_URL);
+            HttpURLConnection con = (HttpsURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("User-Agent", WebRequest.DEFAULT_USER_AGENT);
+
+            // If the HTTPS request has response code HTTP 200 OK, assume we can
+            // access the test script on the JMRI web server.
+            return con.getResponseCode() == 200;
+        } catch (UnknownHostException e) {
+            // We couldn't access the web site
+            return false;
+        } catch (IOException e) {
+            throw new RuntimeException("Exception thrown", e);
+        }
+    }
 
     @Override
     public ConditionalNG getConditionalNG() {
@@ -138,6 +164,8 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testThrowTurnouts() throws JmriException {
+        Assume.assumeTrue("We can access " + JMRI_ORG_URL, CAN_ACCESS_JMRI_ORG);
+
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
         InstanceManager.getDefault(TurnoutManager.class).getByUserName("MiamiWest").setState(Turnout.THROWN);
@@ -230,6 +258,8 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCookies() throws JmriException {
+        Assume.assumeTrue("We can access " + JMRI_ORG_URL, CAN_ACCESS_JMRI_ORG);
+
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
         _cookiesVariable.setValue(null);
@@ -321,6 +351,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testPostRequest() throws JmriException {
+        Assume.assumeTrue("We can access " + JMRI_ORG_URL, CAN_ACCESS_JMRI_ORG);
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
         InstanceManager.getDefault(LightManager.class).getByUserName("TestPostRequestLight").setState(Light.ON);
