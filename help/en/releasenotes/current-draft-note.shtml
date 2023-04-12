@@ -119,6 +119,7 @@
             <ul>
                 <li></li>
                 <li>Fix an NPE from incorrect input when making a Sensor or Turnout</li>
+                <li>Add a factory reset option to the configuration More... menu.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -399,7 +400,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>Add a scale item to popup menu.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
