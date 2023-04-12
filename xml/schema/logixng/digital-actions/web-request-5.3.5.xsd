@@ -54,10 +54,6 @@
               <xs:element name="url" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1" />
               <xs:element name="userAgent" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1" />
 
-              <!-- This might be in xml files for 5.3.5 but not later ones -->
-              <xs:element name="localVariableForPostContent" type="xs:string" minOccurs="0" maxOccurs="1" />
-              <!-- This might be in xml files for 5.3.5 but not later ones -->
-
               <xs:element name="localVariableForResponseCode" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="localVariableForReplyContent" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="localVariableForCookies" type="xs:string" minOccurs="0" maxOccurs="1" />
