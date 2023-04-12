@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.signalling.SignallingGuiTools;
+import jmri.jmrit.display.ToolTip;
 
 /**
  * LayoutTurnout is the abstract base for classes representing various types of turnout on the layout.
@@ -2890,6 +2891,35 @@ abstract public class LayoutTurnout extends LayoutTrack {
     @Override
     public String getTypeName() {
         return Bundle.getMessage("TypeName_Turnout");
+    }
+
+    // Tooltip support
+    protected ToolTip _tooltip;
+    protected boolean _showTooltip;
+
+    public void setShowToolTip(boolean set) {
+        _showTooltip = set;
+    }
+
+    public boolean showToolTip() {
+        return _showTooltip;
+    }
+
+    public void setToolTip(ToolTip tip) {
+        _tooltip = tip;
+    }
+
+    public ToolTip getToolTip() {
+        return _tooltip;
+    }
+
+    @Nonnull
+    public  String getNameString() {
+        var turnout = getTurnout();
+        if (turnout != null) {
+            return turnout.getDisplayName(jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+        }
+        return getId();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnout.class);
