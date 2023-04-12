@@ -207,7 +207,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Added a decoder definition for the PM74 board.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
