@@ -561,8 +561,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
 <xsl:if test="string-length(@userName)!=0" > (<xsl:value-of select="@userName"/>)</xsl:if>
 <xsl:if test="( @enabled = 'yes' )"> [Enabled] </xsl:if>
 <xsl:if test="( @enabled = 'no'  )"> [NOT Enabled]</xsl:if></h2>
-<h4><xsl:if test="string-length(comment) !=0" > [<xsl:value-of select="comment"/>]</xsl:if>
-</h4>
+<h4><xsl:if test="string-length(comment) !=0" > [<xsl:value-of select="comment"/>]</xsl:if></h4>
     <!-- index through individual logix elements -->
         <xsl:call-template name="oneLogix"/>
 </xsl:template>
