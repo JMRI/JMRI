@@ -980,6 +980,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
      * @return the turnout display names or the Id.
      */
     @Nonnull
+    @Override
     public  String getNameString() {
         var turnout = getTurnout();
         var turnoutB = getTurnoutB();

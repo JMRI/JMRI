@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -121,6 +123,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         super(id, models);
 
         type = t;
+        createTooltip(models);
     }
 
     protected LayoutTurnout(@Nonnull String id,
@@ -152,6 +155,15 @@ abstract public class LayoutTurnout extends LayoutTrack {
         disableWhenOccupied = false;
         type = t;
         version = v;
+        createTooltip(models);
+
+    }
+
+    private void createTooltip(LayoutEditor models) {
+        var tt = new ToolTip(null, 0, 0, new Font("SansSerif", Font.PLAIN, 12),
+                Color.black, new Color(215, 225, 255), Color.black, null);
+        setToolTip(tt);
+        setShowToolTip(models.showToolTip());
     }
 
     // Defined constants for turnout types
@@ -2894,8 +2906,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     // Tooltip support
-    protected ToolTip _tooltip;
-    protected boolean _showTooltip;
+    private ToolTip _tooltip;
+    private boolean _showTooltip;
 
     public void setShowToolTip(boolean set) {
         _showTooltip = set;

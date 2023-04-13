@@ -8247,16 +8247,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         unionToPanelBounds(v.getBounds()); // temporary - this should probably _not_ be in the topological part
 
-        // Add tooltips to layout turnouts
-        if (trk instanceof LayoutTurnout) {
-            var lt = (LayoutTurnout) trk;
-            var tt = new ToolTip(null, 0, 0, new Font("SansSerif", Font.PLAIN, 12),
-                Color.black, new Color(215, 225, 255), Color.black, null);
-            lt.setToolTip(tt);
-            lt.setShowToolTip(showToolTip());
-            log.debug("Layout turnout tooltip added: {}", lt);
-        }
-
     }
 
     /**
