@@ -284,7 +284,7 @@ public class OlcbAddress {
 
     public EventID toEventID() {
         byte[] b = new byte[8];
-        for (int i = 0; i < 8; ++i) b[i] = (byte)aFrame[i];
+        for (int i = 0; i < Math.min(8, aFrame.length); ++i) b[i] = (byte)aFrame[i];
         return new EventID(b);
     }
 

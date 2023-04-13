@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.3.4plus+jake+20230408T1128Z+R2a72c09404 on Sat Apr 08 07:29:00 EDT 2023-->
-  <decoderIndex version="73">
+  <!--Written by JMRI version 5.3.5plus+jake+20230411T1521Z+Rb915641061 on Tue Apr 11 11:21:40 EDT 2023-->
+  <decoderIndex version="75">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -621,6 +621,9 @@
       <family name="PM4x" mfg="Digitrax" file="Digitrax_PM4.xml">
         <model model="PM4" />
         <model model="PM42" />
+      </family>
+      <family name="Series 7 Boards" mfg="Digitrax" file="Digitrax_PM74.xml">
+        <model model="PM74" />
       </family>
       <family name="Series 7 Boards" mfg="Digitrax" file="Digitrax_SE74.xml">
         <model model="SE74" />
@@ -1436,6 +1439,7 @@
         <model model="Silver+ mini NEM651 10311-02" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A" />
         <model model="Silver+ NEM652 10331-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" />
         <model model="Silver+ PluX12 10312-01" numOuts="5" numFns="31" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A" />
+        <model model="Silver+ PluX22 10322-01" numOuts="8" numFns="31" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A" />
         <model model="Silver+ Next18 10312-01" numOuts="5" numFns="31" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A" comment="New in 2014" />
         <model model="Silver+ 21 10321-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" />
         <model model="Silver+ direct 10330-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" />
