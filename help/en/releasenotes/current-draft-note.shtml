@@ -77,6 +77,7 @@
         <h4>Lenz XPressNet</h4>
             <ul>
                 <li>Clarify some internal implementation terminology.</li>
+                <li>Add support for up to Fn68 when the Lenz hardware is version 4.0 or later</li>
             </ul>
 
         <h4>LocoNet</h4>
