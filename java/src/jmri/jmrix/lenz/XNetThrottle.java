@@ -41,7 +41,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     protected int address;
 
-    // static so it can be called during super(..)
+    // Get the number of valid functions from the software version number.
+    // Declared static private so it can be called as an argument to super(..)
     static private int numberOfFuns(XNetTrafficController controller) {
         int version = (int) controller.getCommandStation().getCommandStationSoftwareVersionBCD();
         if (version < 0x36) return 12;
@@ -55,10 +56,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     public XNetThrottle(XNetSystemConnectionMemo memo, XNetTrafficController controller) {
         super(memo, numberOfFuns(controller));
-        System.out.println("ctor 1 "+controller.getCommandStation().getCommandStationSoftwareVersionBCD());
         tc = controller;
         requestList = new LinkedBlockingQueue<>();
-        log.debug("XNetThrottle constructor");
+
+        log.info("Throttle created with no address and version {}", controller.getCommandStation().getCommandStationSoftwareVersionBCD());
     }
 
     /**
@@ -69,7 +70,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     public XNetThrottle(XNetSystemConnectionMemo memo, LocoAddress address, XNetTrafficController controller) {
         super(memo, numberOfFuns(controller));
-        System.out.println("ctor 2 "+controller.getCommandStation().getCommandStationSoftwareVersionBCD());
         this.tc = controller;
         this.setDccAddress(address.getNumber());
         this.speedStepMode = jmri.SpeedStepMode.NMRA_DCC_128;
@@ -77,7 +77,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
         requestList = new LinkedBlockingQueue<>();
         sendStatusInformationRequest();
-        log.debug("XNetThrottle constructor called for address {}", address);
+        log.info("Throttle created for address {} with version {}",
+            address, controller.getCommandStation().getCommandStationSoftwareVersionBCD());
     }
 
     /*
