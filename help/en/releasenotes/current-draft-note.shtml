@@ -74,6 +74,11 @@
                 <li></li>
             </ul>
 
+        <h4>Lenz XPressNet</h4>
+            <ul>
+                <li>Clarify some internal implementation terminology.</li>
+            </ul>
+
         <h4>LocoNet</h4>
             <ul>
                 <li>Fixed a problem introduced in JMRI 5.3.3 that caused
