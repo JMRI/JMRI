@@ -1377,10 +1377,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
-    /**
-     * Generate a Function Group Operation Request message.
-     */
-    public static XNetMessage getFunctionGroupNOpsMsg(int address, int byte1,
+    // Generate a Function Group Operation Request message for some specific case.
+    private static XNetMessage getFunctionGroupNOpsMsg(int address, int byte1,
             boolean fA,
             boolean fB,
             boolean fC,
@@ -1462,7 +1460,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             fA, fB, fC, fD, fE, fF, fG, fH);
     }
 
-    public static XNetMessage getFunctionGroupNSetMomMsg(int address, int byte1,
+    private static XNetMessage getFunctionGroupNSetMomMsg(int address, int byte1,
             boolean fA,
             boolean fB,
             boolean fC,
