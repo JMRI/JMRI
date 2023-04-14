@@ -117,9 +117,13 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
-                <li>Fix an NPE from incorrect input when making a Sensor or Turnout</li>
-                <li>Add a factory reset option to the configuration More... menu.</li>
+                <li>Update <a href="https://github.com/openlcb/OpenLCB_Java">OpenLCB_Java library</a> through
+                    <a href="https://github.com/openlcb/OpenLCB_Java/pulls?q=is%3Apr">PR #228</a> which includes
+                    <ul>
+                        <li>Add a factory reset option to the configuration More... menu,</li>
+                        <li>Limited retry of CDI reads in case of errors.</li>
+                    </ul>
+                <li>Fix an NPE from incorrect input when making a Sensor or Turnout.</li>
             </ul>
 
         <h4>Powerline</h4>
