@@ -1646,11 +1646,6 @@
       <h5>Local Variables</h5>
 
       <dl>
-        <dt>Local variable for post content</dt>
-        <dd>
-          <p>This is an advanced feature that will be available in a future release.</p>
-        </dd>
-
         <dt>Local variable for response code</dt>
         <dd>
           <p>The value of the local variable will be the numeric response code from the server.  For
@@ -1672,8 +1667,8 @@
 
       <h5>Examples</h5>
 
-      <p>There are two example files included in the JMRI distribution.  They are located at
-      help/en/html/tools/logixng/reference/WebRequestExample</p>
+      <p>There are two example files included in the JMRI distribution. They are located at
+      <a href="https://www.jmri.org/help/en/html/tools/logixng/reference/WebRequestExample/">help/en/html/tools/logixng/reference/WebRequestExample</a></p>
 
       <dl>
         <dt>WebRequest.xml</dt>
@@ -1684,7 +1679,8 @@
         <dt>LogixNG_WebRequest_Test.php</dt>
         <dd>
           <p>This is a <strong>PHP</strong> program that acts as a web based application.  This needs
-          to be installed in a web server that has been configured to run PHP programs.</p>
+          to be installed in a web server that has been configured to run PHP programs. The source code
+          can be downloaded from <a href="https://github.com/JMRI/JMRI/blob/master/help/en/html/tools/logixng/reference/WebRequestExample/LogixNG_WebRequest_Test.php">GitHub</a>.</p>
         </dd>
       </dl>
 

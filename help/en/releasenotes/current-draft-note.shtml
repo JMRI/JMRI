@@ -76,7 +76,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Fixed a problem introduced in JMRI 5.3.3 that caused
+                    certain ops-mode programming operations to fail.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -117,6 +118,8 @@
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li></li>
+                <li>Fix an NPE from incorrect input when making a Sensor or Turnout</li>
+                <li>Add a factory reset option to the configuration More... menu.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -206,7 +209,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Added a decoder definition for the PM74 board.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -403,6 +406,7 @@
           has not been assigned to a turnout or slip, the internal TOnn or SLnn id will be displayed.
           The tooltips are shown based on the <strong>Options &rArr; Show Icon tooltips </strong>
           settings used by the regular icon tooltips.  Custom tooltips are not available.</li>
+	        <li>Add a scale item to popup menu.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -455,6 +459,12 @@
             <ul>
                 <li></li>
             </ul>
+
+    <h3>PanelPro</h3>
+        <a id="PanelPro" name="PanelPro"></a>
+        <ul>
+            <li>Add clickable table of contents to Panel File display/print capability (when you open a panel xml file via the JMRI web server)</li>
+        </ul>
 
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
@@ -595,6 +605,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Add clickable table of contents to Panel File display/print capability (when you open a panel xml file via the JMRI web server)</li>
         </ul>
 

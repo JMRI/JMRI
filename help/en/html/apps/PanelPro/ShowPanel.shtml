@@ -26,6 +26,10 @@
       <p>JMRI provides a tool, called an "XSLT transform", to convert the JMRI panel file into a
       more readable web page. You open your panel file with a web browser, and can then read it,
       print it, copy and paste into a file of another form, etc.</p>
+      
+      <p><span class="since">Since 5.3.6</span>A "clickable" table of contents is provided right after
+      the introductory information.</p>
+      
       <img src="images/PanelFileView.png" alt="screen shot of xml preview" class="floatRight"
       width="462" height="164">
       <p>A large example of this is available as a <a href=
@@ -33,7 +37,7 @@
       configuration information, including routes, Logix, etc, for the <a href=
       "https://www.jmri.org/community/examples/SPShasta.shtml">SP Shasta Route</a> layout.</p>
 
-      <p>To view your own panel file, the easiest approach is to view it via JMRI's web server
+      <p class="note">To view your own panel file, the easiest approach is to view it via JMRI's web server
       which knows how to find all the needed formating files automatically. The steps are:</p>
 
       <ol>
@@ -55,6 +59,9 @@
         
         <li>Print out your panel file (either to a printer of PDF file) using the appropriate browser
         function.  Printout will be nicely formatted* with page breaks at major sections.</li>
+
+        <li><span class="since">Since 5.3.6</span> If you created a PDF file, the table of contents
+        will contain clickable links that take you to the indicated pages.</li>
       </ol>
       
       <p>* NOTE: Some formatting, particularly borders, may be different in some of the lesser-used browsers.

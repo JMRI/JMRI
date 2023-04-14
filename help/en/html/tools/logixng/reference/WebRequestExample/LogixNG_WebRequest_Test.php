@@ -47,7 +47,7 @@ if ($action === "menu") {
         </p>
         </body>
         </html>
-    END_STARTPAGE;
+END_STARTPAGE;
 
 
 

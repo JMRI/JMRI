@@ -364,6 +364,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             lncvAccessTimer.start();
         } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
             // LOCONETOPSBOARD decoder
+            log.trace("LOCONETOPSBOARD start operation");
             memo.getSlotManager().setAcceptAnyLACK();
             memo.getSlotManager().readCVOpsMode(CV, pL, mAddress, mLongAddr);
         } else {
