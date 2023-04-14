@@ -280,6 +280,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                         currentSpeedStep = m.getElement(4);
                         reply = okReply();
                         break;
+
                     case XNetConstants.LOCO_SET_FUNC_GROUP1:
                         functionGroup1 = m.getElement(4);
                         reply = okReply();
@@ -300,26 +301,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                         functionGroup5 = m.getElement(4);
                         reply = okReply();
                         break;
-                    case XNetConstants.LOCO_SET_FUNC_GROUP6:
-                        //functionGroup6 = m.getElement(4);
-                        reply = okReply();
-                        break;
-                    case XNetConstants.LOCO_SET_FUNC_GROUP7:
-                        //functionGroup7 = m.getElement(4);
-                        reply = okReply();
-                        break;
-                    case XNetConstants.LOCO_SET_FUNC_GROUP8:
-                        //functionGroup8 = m.getElement(4);
-                        reply = okReply();
-                        break;
-                    case XNetConstants.LOCO_SET_FUNC_GROUP9:
-                        //functionGroup9 = m.getElement(4);
-                        reply = okReply();
-                        break;
-                    case XNetConstants.LOCO_SET_FUNC_GROUP10:
-                        //functionGroup10 = m.getElement(4);
-                        reply = okReply();
-                        break;
+
                     case XNetConstants.LOCO_SET_FUNC_GROUP1_MOMENTARY:
                         momentaryGroup1 = m.getElement(4);
                         reply = okReply();
@@ -340,26 +322,49 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                         momentaryGroup5 = m.getElement(4);
                         reply = okReply();
                         break;
+
+
+                    case XNetConstants.LOCO_SET_FUNC_GROUP6:
+                        //functionGroup6 = m.getElement(4);
+                        //reply = okReply();
+                        //break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP7:
+                        //functionGroup7 = m.getElement(4);
+                        //reply = okReply();
+                        //break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP8:
+                        //functionGroup8 = m.getElement(4);
+                        //reply = okReply();
+                        //break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP9:
+                        //functionGroup9 = m.getElement(4);
+                        //reply = okReply();
+                        //break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP10:
+                        //functionGroup10 = m.getElement(4);
+                        //reply = okReply();
+                        //break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP6_MOMENTARY:
                         //momentaryGroup6 = m.getElement(4);
-                        reply = okReply();
-                        break;
+                        //reply = okReply();
+                        //break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP7_MOMENTARY:
                         //momentaryGroup7 = m.getElement(4);
-                        reply = okReply();
-                        break;
+                        //reply = okReply();
+                        //break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP8_MOMENTARY:
                         //momentaryGroup8 = m.getElement(4);
-                        reply = okReply();
-                        break;
+                        //reply = okReply();
+                        //break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP9_MOMENTARY:
                         //momentaryGroup9 = m.getElement(4);
-                        reply = okReply();
-                        break;
+                        //reply = okReply();
+                        //break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP10_MOMENTARY:
                         //momentaryGroup10 = m.getElement(4);
                         reply = okReply();
                         break;
+
                     case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:
                     case XNetConstants.LOCO_REM_MULTI_UNIT_REQ:
                     case XNetConstants.LOCO_IN_MULTI_UNIT_REQ_FORWARD:

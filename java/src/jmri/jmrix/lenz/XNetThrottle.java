@@ -88,7 +88,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         tc = controller;
     }
 
-    protected boolean csVersionSupportFn13to28() {
+    protected synchronized boolean csVersionSupportFn13to28() {
         if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x36) {
             log.info("Functions F13-F28 unavailable in CS software version {}",
                     tc.getCommandStation().getCommandStationSoftwareVersion());
@@ -97,7 +97,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         return true;
     }
 
-    protected boolean csVersionSupportFn29to68() {
+    protected synchronized boolean csVersionSupportFn29to68() {
         if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x40) {
             log.info("Functions F29-68 unavailable in CS software version {}",
                     tc.getCommandStation().getCommandStationSoftwareVersion());
