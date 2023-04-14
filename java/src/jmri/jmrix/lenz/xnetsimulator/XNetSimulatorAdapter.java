@@ -52,21 +52,22 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private int functionGroup3 = 0;
     private int functionGroup4 = 0;
     private int functionGroup5 = 0;
-    private int functionGroup6 = 0;
-    private int functionGroup7 = 0;
-    private int functionGroup8 = 0;
-    private int functionGroup9 = 0;
-    private int functionGroup10 = 0;
+    //private int functionGroup6 = 0;
+    //private int functionGroup7 = 0;
+    //private int functionGroup8 = 0;
+    //private int functionGroup9 = 0;
+    //private int functionGroup10 = 0;
+
     private int momentaryGroup1 = 0;
     private int momentaryGroup2 = 0;
     private int momentaryGroup3 = 0;
     private int momentaryGroup4 = 0;
     private int momentaryGroup5 = 0;
-    private int momentaryGroup6 = 0;
-    private int momentaryGroup7 = 0;
-    private int momentaryGroup8 = 0;
-    private int momentaryGroup9 = 0;
-    private int momentaryGroup10 = 0;
+    //private int momentaryGroup6 = 0;
+    //private int momentaryGroup7 = 0;
+    //private int momentaryGroup8 = 0;
+    //private int momentaryGroup9 = 0;
+    //private int momentaryGroup10 = 0;
 
     /**
      * Accessory state cache. A "1" bit means THROWN, "0" means
@@ -300,23 +301,23 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP6:
-                        functionGroup6 = m.getElement(4);
+                        //functionGroup6 = m.getElement(4);
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP7:
-                        functionGroup7 = m.getElement(4);
+                        //functionGroup7 = m.getElement(4);
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP8:
-                        functionGroup8 = m.getElement(4);
+                        //functionGroup8 = m.getElement(4);
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP9:
-                        functionGroup9 = m.getElement(4);
+                        //functionGroup9 = m.getElement(4);
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP10:
-                        functionGroup10 = m.getElement(4);
+                        //functionGroup10 = m.getElement(4);
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP1_MOMENTARY:
@@ -340,23 +341,23 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP6_MOMENTARY:
-                        momentaryGroup6 = m.getElement(4);
+                        //momentaryGroup6 = m.getElement(4);
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP7_MOMENTARY:
-                        momentaryGroup7 = m.getElement(4);
+                        //momentaryGroup7 = m.getElement(4);
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP8_MOMENTARY:
-                        momentaryGroup8 = m.getElement(4);
+                        //momentaryGroup8 = m.getElement(4);
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP9_MOMENTARY:
-                        momentaryGroup9 = m.getElement(4);
+                        //momentaryGroup9 = m.getElement(4);
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP10_MOMENTARY:
-                        momentaryGroup10 = m.getElement(4);
+                        //momentaryGroup10 = m.getElement(4);
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:

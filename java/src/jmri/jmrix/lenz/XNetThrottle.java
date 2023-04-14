@@ -341,9 +341,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         if (csVersionSupportFn29to68()) {
             int i = 37;
             XNetMessage msg = XNetMessage.getFunctionGroup7SetMomMsg(this.getDccAddress(),
-                getFunctionMomentary(21), getFunctionMomentary(22), getFunctionMomentary(23),
-                getFunctionMomentary(24), getFunctionMomentary(25), getFunctionMomentary(26),
-                getFunctionMomentary(27), getFunctionMomentary(28));
+                getFunctionMomentary(i), getFunctionMomentary(i+1), getFunctionMomentary(i+2),
+                getFunctionMomentary(i+3), getFunctionMomentary(i+4), getFunctionMomentary(i+5),
+                getFunctionMomentary(i+6), getFunctionMomentary(i+7));
             // now, queue the message for sending to the command station
             queueMessage(msg, THROTTLEFUNCSENT);
         }
