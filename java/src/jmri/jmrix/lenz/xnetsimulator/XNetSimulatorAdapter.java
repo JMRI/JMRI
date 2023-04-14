@@ -52,11 +52,21 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private int functionGroup3 = 0;
     private int functionGroup4 = 0;
     private int functionGroup5 = 0;
+    private int functionGroup6 = 0;
+    private int functionGroup7 = 0;
+    private int functionGroup8 = 0;
+    private int functionGroup9 = 0;
+    private int functionGroup10 = 0;
     private int momentaryGroup1 = 0;
     private int momentaryGroup2 = 0;
     private int momentaryGroup3 = 0;
     private int momentaryGroup4 = 0;
     private int momentaryGroup5 = 0;
+    private int momentaryGroup6 = 0;
+    private int momentaryGroup7 = 0;
+    private int momentaryGroup8 = 0;
+    private int momentaryGroup9 = 0;
+    private int momentaryGroup10 = 0;
 
     /**
      * Accessory state cache. A "1" bit means THROWN, "0" means
@@ -289,6 +299,26 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                         functionGroup5 = m.getElement(4);
                         reply = okReply();
                         break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP6:
+                        functionGroup6 = m.getElement(4);
+                        reply = okReply();
+                        break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP7:
+                        functionGroup7 = m.getElement(4);
+                        reply = okReply();
+                        break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP8:
+                        functionGroup8 = m.getElement(4);
+                        reply = okReply();
+                        break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP9:
+                        functionGroup9 = m.getElement(4);
+                        reply = okReply();
+                        break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP10:
+                        functionGroup10 = m.getElement(4);
+                        reply = okReply();
+                        break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP1_MOMENTARY:
                         momentaryGroup1 = m.getElement(4);
                         reply = okReply();
@@ -307,6 +337,26 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                         break;
                     case XNetConstants.LOCO_SET_FUNC_GROUP5_MOMENTARY:
                         momentaryGroup5 = m.getElement(4);
+                        reply = okReply();
+                        break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP6_MOMENTARY:
+                        momentaryGroup6 = m.getElement(4);
+                        reply = okReply();
+                        break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP7_MOMENTARY:
+                        momentaryGroup7 = m.getElement(4);
+                        reply = okReply();
+                        break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP8_MOMENTARY:
+                        momentaryGroup8 = m.getElement(4);
+                        reply = okReply();
+                        break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP9_MOMENTARY:
+                        momentaryGroup9 = m.getElement(4);
+                        reply = okReply();
+                        break;
+                    case XNetConstants.LOCO_SET_FUNC_GROUP10_MOMENTARY:
+                        momentaryGroup10 = m.getElement(4);
                         reply = okReply();
                         break;
                     case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:
@@ -463,7 +513,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         XNetReply reply = new XNetReply();
         reply.setOpCode(XNetConstants.CS_SERVICE_MODE_RESPONSE);
         reply.setElement(1, XNetConstants.CS_SOFTWARE_VERSION);
-        reply.setElement(2, 0x36); // indicate we are version 3.6
+        reply.setElement(2, 0x40); // indicate we are version 4.0
         reply.setElement(3, 0x00 ); // indicate we are an LZ100
         reply.setElement(4, 0x00); // set the parity byte to 0
         reply.setParity();

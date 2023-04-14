@@ -1378,6 +1378,173 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
+     * Generate a Function Group Operation Request message.
+     */
+    public static XNetMessage getFunctionGroupNOpsMsg(int address, int byte1,
+            boolean fA,
+            boolean fB,
+            boolean fC,
+            boolean fD,
+            boolean fE,
+            boolean fF,
+            boolean fG,
+            boolean fH) {
+        XNetMessage msg = new XNetMessage(6);
+        msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
+        msg.setElement(1, byte1);
+        msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
+        // set to the upper byte of the  DCC address
+        msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
+        // set to the lower byte of the DCC address
+        // Now, we need to figure out what to send in element 3
+        int element4value = 0;
+        if (fA) {
+            element4value += 1;
+        }
+        if (fB) {
+            element4value += 2;
+        }
+        if (fC) {
+            element4value += 4;
+        }
+        if (fD) {
+            element4value += 8;
+        }
+        if (fE) {
+            element4value += 16;
+        }
+        if (fF) {
+            element4value += 32;
+        }
+        if (fG) {
+            element4value += 64;
+        }
+        if (fH) {
+            element4value += 128;
+        }
+        msg.setElement(4, element4value);
+        msg.setParity(); // Set the parity bit
+        return msg;
+    }
+
+    public static XNetMessage getFunctionGroup6OpsMsg(int address,
+            boolean fA, boolean fB, boolean fC, boolean fD,
+            boolean fE, boolean fF, boolean fG, boolean fH) {
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP6,
+            fA, fB, fC, fD, fE, fF, fG, fH);
+    }
+
+    public static XNetMessage getFunctionGroup7OpsMsg(int address,
+            boolean fA, boolean fB, boolean fC, boolean fD,
+            boolean fE, boolean fF, boolean fG, boolean fH) {
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP7,
+            fA, fB, fC, fD, fE, fF, fG, fH);
+    }
+
+    public static XNetMessage getFunctionGroup8OpsMsg(int address,
+            boolean fA, boolean fB, boolean fC, boolean fD,
+            boolean fE, boolean fF, boolean fG, boolean fH) {
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP8,
+            fA, fB, fC, fD, fE, fF, fG, fH);
+    }
+
+    public static XNetMessage getFunctionGroup9OpsMsg(int address,
+            boolean fA, boolean fB, boolean fC, boolean fD,
+            boolean fE, boolean fF, boolean fG, boolean fH) {
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP9,
+            fA, fB, fC, fD, fE, fF, fG, fH);
+    }
+
+    public static XNetMessage getFunctionGroup10OpsMsg(int address,
+            boolean fA, boolean fB, boolean fC, boolean fD,
+            boolean fE, boolean fF, boolean fG, boolean fH) {
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP10,
+            fA, fB, fC, fD, fE, fF, fG, fH);
+    }
+
+    public static XNetMessage getFunctionGroupNSetMomMsg(int address, int byte1,
+            boolean fA,
+            boolean fB,
+            boolean fC,
+            boolean fD,
+            boolean fE,
+            boolean fF,
+            boolean fG,
+            boolean fH) {
+        XNetMessage msg = new XNetMessage(6);
+        msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
+        msg.setElement(1, byte1);
+        msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
+        // set to the upper byte of the  DCC address
+        msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
+        // set to the lower byte of the DCC address
+        // Now, we need to figure out what to send in element 3
+        int element4value = 0;
+        if (fA) {
+            element4value += 1;
+        }
+        if (fB) {
+            element4value += 2;
+        }
+        if (fC) {
+            element4value += 4;
+        }
+        if (fD) {
+            element4value += 8;
+        }
+        if (fE) {
+            element4value += 16;
+        }
+        if (fF) {
+            element4value += 32;
+        }
+        if (fG) {
+            element4value += 64;
+        }
+        if (fH) {
+            element4value += 128;
+        }
+        msg.setElement(4, element4value);
+        msg.setParity(); // Set the parity bit
+        return msg;
+    }
+
+    public static XNetMessage getFunctionGroup6SetMomMsg(int address,
+            boolean fA, boolean fB, boolean fC, boolean fD,
+            boolean fE, boolean fF, boolean fG, boolean fH) {
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP6_MOMENTARY,
+            fA, fB, fC, fD, fE, fF, fG, fH);
+    }
+
+    public static XNetMessage getFunctionGroup7SetMomMsg(int address,
+            boolean fA, boolean fB, boolean fC, boolean fD,
+            boolean fE, boolean fF, boolean fG, boolean fH) {
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP7_MOMENTARY,
+            fA, fB, fC, fD, fE, fF, fG, fH);
+    }
+
+    public static XNetMessage getFunctionGroup8SetMomMsg(int address,
+            boolean fA, boolean fB, boolean fC, boolean fD,
+            boolean fE, boolean fF, boolean fG, boolean fH) {
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP8_MOMENTARY,
+            fA, fB, fC, fD, fE, fF, fG, fH);
+    }
+
+    public static XNetMessage getFunctionGroup9SetMomMsg(int address,
+            boolean fA, boolean fB, boolean fC, boolean fD,
+            boolean fE, boolean fF, boolean fG, boolean fH) {
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP9_MOMENTARY,
+            fA, fB, fC, fD, fE, fF, fG, fH);
+    }
+
+    public static XNetMessage getFunctionGroup10SetMomMsg(int address,
+            boolean fA, boolean fB, boolean fC, boolean fD,
+            boolean fE, boolean fF, boolean fG, boolean fH) {
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP10_MOMENTARY,
+            fA, fB, fC, fD, fE, fF, fG, fH);
+    }
+
+    /**
      * Build a Resume operations Message.
      * @return resume message.
      */
@@ -1750,6 +1917,21 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                 case XNetConstants.LOCO_SET_FUNC_GROUP5:
                     text = text + buildSetFunctionGroup5MonitorString();
                     break;
+                case XNetConstants.LOCO_SET_FUNC_GROUP6:
+                    text = text + buildSetFunctionGroup6MonitorString();
+                    break;
+                case XNetConstants.LOCO_SET_FUNC_GROUP7:
+                    text = text + buildSetFunctionGroup7MonitorString();
+                    break;
+                case XNetConstants.LOCO_SET_FUNC_GROUP8:
+                    text = text + buildSetFunctionGroup8MonitorString();
+                    break;
+                case XNetConstants.LOCO_SET_FUNC_GROUP9:
+                    text = text + buildSetFunctionGroup9MonitorString();
+                    break;
+                case XNetConstants.LOCO_SET_FUNC_GROUP10:
+                    text = text + buildSetFunctionGroup10MonitorString();
+                    break;
                 case XNetConstants.LOCO_SET_FUNC_GROUP1_MOMENTARY:
                     text = text + buildSetFunctionGroup1MomentaryMonitorString();
                     break;
@@ -1764,6 +1946,21 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     break;
                 case XNetConstants.LOCO_SET_FUNC_GROUP5_MOMENTARY:
                     text = text + buildSetFunctionGroup5MomentaryMonitorString();
+                    break;
+                case XNetConstants.LOCO_SET_FUNC_GROUP6_MOMENTARY:
+                    text = text + buildSetFunctionGroup6MomentaryMonitorString();
+                    break;
+                case XNetConstants.LOCO_SET_FUNC_GROUP7_MOMENTARY:
+                    text = text + buildSetFunctionGroup7MomentaryMonitorString();
+                    break;
+                case XNetConstants.LOCO_SET_FUNC_GROUP8_MOMENTARY:
+                    text = text + buildSetFunctionGroup8MomentaryMonitorString();
+                    break;
+                case XNetConstants.LOCO_SET_FUNC_GROUP9_MOMENTARY:
+                    text = text + buildSetFunctionGroup9MomentaryMonitorString();
+                    break;
+                case XNetConstants.LOCO_SET_FUNC_GROUP10_MOMENTARY:
+                    text = text + buildSetFunctionGroup10MomentaryMonitorString();
                     break;
                 case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:
                     text = Bundle.getMessage("XNetMessageAddToConsistDirNormalRequest",
@@ -2051,7 +2248,239 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return text;
     }
 
-        private String buildSetFunctionGroup1MomentaryMonitorString() {
+    private String buildSetFunctionGroup6MonitorString() {
+        String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X, 6) + " " + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+        int element4 = getElement(4);
+        if ((element4 & 0x01) != 0) {
+            text += "F29 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F29 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x02) != 0) {
+            text += "F30 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F30 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x04) != 0) {
+            text += "F31 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F31 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x08) != 0) {
+            text += "F32 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F32 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x10) != 0) {
+            text += "F33 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F33 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x20) != 0) {
+            text += "F34 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F34 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x40) != 0) {
+            text += "F35 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F35 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x80) != 0) {
+            text += "F36 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F36 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        return text;
+    }
+
+    private String buildSetFunctionGroup7MonitorString() {
+        String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X, 7) + " " + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+        int element4 = getElement(4);
+        if ((element4 & 0x01) != 0) {
+            text += "F37 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F37 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x02) != 0) {
+            text += "F38 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F38 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x04) != 0) {
+            text += "F39 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F39 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x08) != 0) {
+            text += "F40 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F40 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x10) != 0) {
+            text += "F41 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F41 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x20) != 0) {
+            text += "F42 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F42 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x40) != 0) {
+            text += "F43 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F43 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x80) != 0) {
+            text += "F44 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F44 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        return text;
+    }
+
+    private String buildSetFunctionGroup8MonitorString() {
+        String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X, 8) + " " + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+        int element4 = getElement(4);
+        if ((element4 & 0x01) != 0) {
+            text += "F45 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F45 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x02) != 0) {
+            text += "F46 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F46 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x04) != 0) {
+            text += "F47 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F47 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x08) != 0) {
+            text += "F48 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F48 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x10) != 0) {
+            text += "F49 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F49 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x20) != 0) {
+            text += "F50 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F50 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x40) != 0) {
+            text += "F51 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F51 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x80) != 0) {
+            text += "F52 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F52 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        return text;
+    }
+
+    private String buildSetFunctionGroup9MonitorString() {
+        String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X, 9) + " " + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+        int element4 = getElement(4);
+        if ((element4 & 0x01) != 0) {
+            text += "F53 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F53 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x02) != 0) {
+            text += "F54 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F54 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x04) != 0) {
+            text += "F55 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F55 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x08) != 0) {
+            text += "F56 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F56 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x10) != 0) {
+            text += "F57 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F57 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x20) != 0) {
+            text += "F58 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F58 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x40) != 0) {
+            text += "F59 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F59 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x80) != 0) {
+            text += "F60 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F60 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        return text;
+    }
+
+    private String buildSetFunctionGroup10MonitorString() {
+        String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X, 10) + " " + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+        int element4 = getElement(4);
+        if ((element4 & 0x01) != 0) {
+            text += "F61 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F61 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x02) != 0) {
+            text += "F62 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F62 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x04) != 0) {
+            text += "F63 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F63 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x08) != 0) {
+            text += "F64 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F64 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x10) != 0) {
+            text += "F65 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F65 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x20) != 0) {
+            text += "F66 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F66 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x40) != 0) {
+            text += "F67 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F67 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        if ((element4 & 0x80) != 0) {
+            text += "F68 " + Bundle.getMessage(POWER_STATE_ON) + "; ";
+        } else {
+            text += "F68 " + Bundle.getMessage(POWER_STATE_OFF) + "; ";
+        }
+        return text;
+    }
+
+
+
+    private String buildSetFunctionGroup1MomentaryMonitorString() {
             String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X_MOMENTARY, 1) + " "
                 + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
         int element4 = getElement(4);
@@ -2136,7 +2565,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return text;
     }
 
-
     private String buildSetFunctionGroup4MomentaryMonitorString() {
         String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X_MOMENTARY, 4) + " "
                 + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
@@ -2182,7 +2610,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             text += "F20 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
         }
         return text;
-}
+    }
 
     private String buildSetFunctionGroup5MomentaryMonitorString() {
         String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X_MOMENTARY, 5) + " " + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
@@ -2226,6 +2654,236 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             text += "F28 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
         } else {
             text += "F28 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        return text;
+    }
+
+    private String buildSetFunctionGroup6MomentaryMonitorString() {
+        String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X_MOMENTARY, 6) + " " + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+        int element4 = getElement(4);
+        if ((element4 & 0x01) == 0) {
+            text += "F29 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F29 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x02) == 0) {
+            text += "F30 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F30 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x04) == 0) {
+            text += "F31 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F31 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x08) == 0) {
+            text += "F32 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F32 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x10) == 0) {
+            text += "F33 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F33 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x20) == 0) {
+            text += "F34 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F34 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x40) == 0) {
+            text += "F35 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F35 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x80) == 0) {
+            text += "F36 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F36 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        return text;
+    }
+
+    private String buildSetFunctionGroup7MomentaryMonitorString() {
+        String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X_MOMENTARY, 7) + " " + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+        int element4 = getElement(4);
+        if ((element4 & 0x01) == 0) {
+            text += "F37 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F37 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x02) == 0) {
+            text += "F38 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F38 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x04) == 0) {
+            text += "F39 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F39 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x08) == 0) {
+            text += "F40 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F40 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x10) == 0) {
+            text += "F41 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F41 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x20) == 0) {
+            text += "F42 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F42 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x40) == 0) {
+            text += "F43 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F43 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x80) == 0) {
+            text += "F44 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F44 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        return text;
+    }
+
+    private String buildSetFunctionGroup8MomentaryMonitorString() {
+        String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X_MOMENTARY, 8) + " " + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+        int element4 = getElement(4);
+        if ((element4 & 0x01) == 0) {
+            text += "F45 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F45 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x02) == 0) {
+            text += "F46 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F46 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x04) == 0) {
+            text += "F47 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F47 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x08) == 0) {
+            text += "F48 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F48 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x10) == 0) {
+            text += "F49 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F49 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x20) == 0) {
+            text += "F50 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F50 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x40) == 0) {
+            text += "F51 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F51 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x80) == 0) {
+            text += "F52 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F52 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        return text;
+    }
+
+    private String buildSetFunctionGroup9MomentaryMonitorString() {
+        String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X_MOMENTARY, 9) + " " + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+        int element4 = getElement(4);
+        if ((element4 & 0x01) == 0) {
+            text += "F53 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F53 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x02) == 0) {
+            text += "F54 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F54 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x04) == 0) {
+            text += "F55 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F55 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x08) == 0) {
+            text += "F56 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F56 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x10) == 0) {
+            text += "F57 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F57 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x20) == 0) {
+            text += "F58 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F58 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x40) == 0) {
+            text += "F59 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F59 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x80) == 0) {
+            text += "F60 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F60 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        return text;
+    }
+
+    private String buildSetFunctionGroup10MomentaryMonitorString() {
+        String text = Bundle.getMessage(X_NET_MESSAGE_SET_FUNCTION_GROUP_X_MOMENTARY, 10) + " " + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+        int element4 = getElement(4);
+        if ((element4 & 0x01) == 0) {
+            text += "F61 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F61 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x02) == 0) {
+            text += "F62 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F62 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x04) == 0) {
+            text += "F63 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F63 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x08) == 0) {
+            text += "F64 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F64 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x10) == 0) {
+            text += "F65 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F65 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x20) == 0) {
+            text += "F66 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F66 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x40) == 0) {
+            text += "F67 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F67 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
+        }
+        if ((element4 & 0x80) == 0) {
+            text += "F68 " + Bundle.getMessage(FUNCTION_CONTINUOUS) + "; ";
+        } else {
+            text += "F68 " + Bundle.getMessage(FUNCTION_MOMENTARY) + "; ";
         }
         return text;
     }
