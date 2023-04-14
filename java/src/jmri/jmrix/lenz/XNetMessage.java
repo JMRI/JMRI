@@ -1460,53 +1460,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             fA, fB, fC, fD, fE, fF, fG, fH);
     }
 
-    private static XNetMessage getFunctionGroupNSetMomMsg(int address, int byte1,
-            boolean fA,
-            boolean fB,
-            boolean fC,
-            boolean fD,
-            boolean fE,
-            boolean fF,
-            boolean fG,
-            boolean fH) {
-        XNetMessage msg = new XNetMessage(6);
-        msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1, byte1);
-        msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
-        // set to the upper byte of the  DCC address
-        msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
-        // set to the lower byte of the DCC address
-        // Now, we need to figure out what to send in element 3
-        int element4value = 0;
-        if (fA) {
-            element4value += 1;
-        }
-        if (fB) {
-            element4value += 2;
-        }
-        if (fC) {
-            element4value += 4;
-        }
-        if (fD) {
-            element4value += 8;
-        }
-        if (fE) {
-            element4value += 16;
-        }
-        if (fF) {
-            element4value += 32;
-        }
-        if (fG) {
-            element4value += 64;
-        }
-        if (fH) {
-            element4value += 128;
-        }
-        msg.setElement(4, element4value);
-        msg.setParity(); // Set the parity bit
-        return msg;
-    }
-
     public static XNetMessage getFunctionGroup6SetMomMsg(int address,
             boolean fA, boolean fB, boolean fC, boolean fD,
             boolean fE, boolean fF, boolean fG, boolean fH) {
