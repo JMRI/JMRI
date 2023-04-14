@@ -397,7 +397,12 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+          <li>Tooltips have been enabled for turnouts and slips on Layout Editor panels. The tooltip
+          displays the name of the assigned turnout. The format is <strong>system</strong> or
+          <strong>user (system)</strong>. For slips, both turnout names are displayed.  If a turnout
+          has not been assigned to a turnout or slip, the internal TOnn or SLnn id will be displayed.
+          The tooltips are shown based on the <strong>Options &rArr; Show Icon tooltips </strong>
+          settings used by the regular icon tooltips.  Custom tooltips are not available.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
