@@ -17,6 +17,7 @@ import javax.annotation.concurrent.GuardedBy;
  * connection.
  *
  * @author Paul Bender (C) 2002-2019
+ * @author Bob Jacobsen (C) 2023
  */
 public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
@@ -45,9 +46,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     // Declared static private so it can be called as an argument to super(..)
     static private int numberOfFuns(XNetTrafficController controller) {
         int version = (int) controller.getCommandStation().getCommandStationSoftwareVersionBCD();
-        if (version < 0x36) return 12;
-        if (version < 0x40) return 28;
-        return 69;
+        if (version < 0x40) return 29;  // 0 - 28
+        return 69;                      // 0 - 68
     }
     /**
      * Constructor
