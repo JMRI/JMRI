@@ -50,6 +50,10 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
         element.setAttribute("disableWhenOccupied", "" + (p.isDisabledWhenOccupied() ? "yes" : "no"));
 
+        if (p.showToolTip()) {
+            element.setAttribute("showtooltip", "yes");
+        }
+
         element.setAttribute("continuing", "" + p.getContinuingSense());
 
         Point2D coords = pv.getCoordsCenter();
@@ -391,6 +395,14 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
         } catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout hidden attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
+        }
+
+        l.setShowToolTip(false);
+        a = element.getAttribute("showtooltip");
+        if (a != null) {
+            if ("yes".equals(a.getValue())) {
+                l.setShowToolTip(true);
+            }
         }
 
         if (version == 2) {
