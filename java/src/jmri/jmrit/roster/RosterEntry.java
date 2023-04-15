@@ -137,7 +137,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      *
      * @see "http://normen.railcommunity.de/RCN-212.pdf"
      */
-    public int getMAXFNNUM() {
+    public int getMaxFnNumAsInt() {
         return Integer.parseInt(getMaxFnNum());
     }
 

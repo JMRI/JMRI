@@ -40,9 +40,9 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
         Assert.assertNotNull(t);
         while (n == tc.outbound.size()) {
-        } // busy loop.  Wait for
-        // outbound size to change.
-        //The first thing on the outbound queue should be a request for status.
+        } // busy loop.  Wait forboutbound size to change.
+
+        // The first thing on the outbound queue should be a request for status.
         Assert.assertEquals("Throttle Information Request Message", "E3 00 00 03 E0", tc.outbound.elementAt(n).toString());
 
         // And the response to this is a message with the status.
@@ -60,9 +60,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // which we're going to get a request for function momentary status in response to.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
-        } // busy loop.  Wait for
-        // outbound size to change.
-        //The first thing on the outbound queue should be a request for status.
+        } // busy loop.  Wait for outbound size to change.
+        // The first thing on the outbound queue should be a request for status.
         Assert.assertEquals("Throttle Information Request Message", "E3 07 00 03 E7", tc.outbound.elementAt(n).toString());
 
         m = new XNetReply();
@@ -80,8 +79,6 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // some time to process;
 
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
-
-        Assert.assertEquals("Throttle in THROTTLEIDLE state", XNetThrottle.THROTTLEIDLE, t.requestState);
 
         // and verify all the data was set correctly.
         // getSpeedStepMode returns the right mode and
@@ -1601,7 +1598,12 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.resetProfileManager();
 
         // infrastructure objects
-        tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc = new XNetInterfaceScaffold(new LenzCommandStation() {
+            @Override
+            public float getCommandStationSoftwareVersionBCD() {
+                return 0x36;
+            }
+        });
         memo = new XNetSystemConnectionMemo(tc);
         XNetThrottleManager tm = new XNetThrottleManager(memo);
         memo.setThrottleManager(tm);

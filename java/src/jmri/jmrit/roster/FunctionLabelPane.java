@@ -49,7 +49,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
 
     private void initGUI() {
-        maxfunction = re.getMAXFNNUM();
+        maxfunction = re.getMaxFnNumAsInt();
         GridBagLayout gbLayout = new GridBagLayout();
         GridBagConstraints cL = new GridBagConstraints();
         setLayout(gbLayout);
