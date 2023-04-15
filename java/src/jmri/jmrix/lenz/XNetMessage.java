@@ -942,7 +942,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             boolean f4) {
         XNetMessage msg = new XNetMessage(6);
         msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_Group1);
+        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_GROUP1_MOMENTARY);
         msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
         // set to the upper byte of the  DCC address
         msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
@@ -1027,7 +1027,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             boolean f8) {
         XNetMessage msg = new XNetMessage(6);
         msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_Group2);
+        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_GROUP2_MOMENTARY);
         msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
         // set to the upper byte of the  DCC address
         msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
@@ -1109,7 +1109,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             boolean f12) {
         XNetMessage msg = new XNetMessage(6);
         msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_Group3);
+        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_GROUP3_MOMENTARY);
         msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
         // set to the upper byte of the  DCC address
         msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
@@ -1219,7 +1219,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             boolean f20) {
         XNetMessage msg = new XNetMessage(6);
         msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_Group4);
+        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_GROUP4_MOMENTARY);
         msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
         // set to the upper byte of the  DCC address
         msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
@@ -1341,7 +1341,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             boolean f28) {
         XNetMessage msg = new XNetMessage(6);
         msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_Group5);
+        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_GROUP5_MOMENTARY);
         msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
         // set to the upper byte of the  DCC address
         msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
@@ -1750,19 +1750,19 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                 case XNetConstants.LOCO_SET_FUNC_GROUP5:
                     text = text + buildSetFunctionGroup5MonitorString();
                     break;
-                case XNetConstants.LOCO_SET_FUNC_Group1:
+                case XNetConstants.LOCO_SET_FUNC_GROUP1_MOMENTARY:
                     text = text + buildSetFunctionGroup1MomentaryMonitorString();
                     break;
-                case XNetConstants.LOCO_SET_FUNC_Group2:
+                case XNetConstants.LOCO_SET_FUNC_GROUP2_MOMENTARY:
                     text = text + buildSetFunctionGroup2MomentaryMonitorString();
                     break;
-                case XNetConstants.LOCO_SET_FUNC_Group3:
+                case XNetConstants.LOCO_SET_FUNC_GROUP3_MOMENTARY:
                     text = text + buildSetFunctionGroup3MomentaryMonitorString();
                     break;
-                case XNetConstants.LOCO_SET_FUNC_Group4:
+                case XNetConstants.LOCO_SET_FUNC_GROUP4_MOMENTARY:
                     text = text + buildSetFunctionGroup4MomentaryMonitorString();
                     break;
-                case XNetConstants.LOCO_SET_FUNC_Group5:
+                case XNetConstants.LOCO_SET_FUNC_GROUP5_MOMENTARY:
                     text = text + buildSetFunctionGroup5MomentaryMonitorString();
                     break;
                 case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:

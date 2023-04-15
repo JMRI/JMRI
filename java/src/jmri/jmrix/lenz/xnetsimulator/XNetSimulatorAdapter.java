@@ -289,23 +289,23 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                         functionGroup5 = m.getElement(4);
                         reply = okReply();
                         break;
-                    case XNetConstants.LOCO_SET_FUNC_Group1:
+                    case XNetConstants.LOCO_SET_FUNC_GROUP1_MOMENTARY:
                         momentaryGroup1 = m.getElement(4);
                         reply = okReply();
                         break;
-                    case XNetConstants.LOCO_SET_FUNC_Group2:
+                    case XNetConstants.LOCO_SET_FUNC_GROUP2_MOMENTARY:
                         momentaryGroup2 = m.getElement(4);
                         reply = okReply();
                         break;
-                    case XNetConstants.LOCO_SET_FUNC_Group3:
+                    case XNetConstants.LOCO_SET_FUNC_GROUP3_MOMENTARY:
                         momentaryGroup3 = m.getElement(4);
                         reply = okReply();
                         break;
-                    case XNetConstants.LOCO_SET_FUNC_Group4:
+                    case XNetConstants.LOCO_SET_FUNC_GROUP4_MOMENTARY:
                         momentaryGroup4 = m.getElement(4);
                         reply = okReply();
                         break;
-                    case XNetConstants.LOCO_SET_FUNC_Group5:
+                    case XNetConstants.LOCO_SET_FUNC_GROUP5_MOMENTARY:
                         momentaryGroup5 = m.getElement(4);
                         reply = okReply();
                         break;
