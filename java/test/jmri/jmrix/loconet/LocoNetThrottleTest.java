@@ -871,6 +871,8 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         // prepare an interface
+        maxFns = 69;
+
         lnis = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(lnis);
 
