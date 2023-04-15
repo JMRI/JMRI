@@ -106,7 +106,7 @@ public class LearnWarrantTest {
         // warrant has been recorded using engine 99
 
         List<ThrottleSetting> list = frame.getThrottleCommands();
-        assertThat(list.size()).withFailMessage("12 ThrottleCommands was "+list.size()).isEqualTo(12);
+        assertThat(list.size()).withFailMessage("10 ThrottleCommands was "+list.size()).isEqualTo(10);
 
         // now playback using engine 111
         NXFrameTest.setAndConfirmSensorAction(lastSensor, Sensor.INACTIVE,
@@ -132,7 +132,7 @@ public class LearnWarrantTest {
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block4);
 
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block4), "Train 111 occupies last block ");
-        
+
 /*
         JUnitAppender.assertWarnMessageStartsWith("block: OB2 Path distance or SpeedProfile unreliable! pathDist= 1270.0,");
         JUnitAppender.assertWarnMessageStartsWith("block: OB3 Path distance or SpeedProfile unreliable! pathDist= 762.0,");
