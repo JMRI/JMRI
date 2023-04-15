@@ -549,7 +549,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Some minor internal cleanup.</li>
         </ul>
 
     <h3>Timetable</h3>
