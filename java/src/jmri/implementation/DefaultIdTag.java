@@ -46,6 +46,9 @@ public class DefaultIdTag extends AbstractIdTag {
         setWhereLastSeen(null);
     }
 
+    public final static String PROPERTY_WHEN_LAST_SEEN = "whenLastSeen";
+    public final static String PROPERTY_WHERE_LAST_SEEN = "whereLastSeen";
+
     @Override
     public int compareTo(NamedBean n2) {
         Objects.requireNonNull(n2);
@@ -71,8 +74,8 @@ public class DefaultIdTag extends AbstractIdTag {
             this.whenLastSeen = null;
         }
         setCurrentState(r != null ? SEEN : UNSEEN);
-        firePropertyChange("whereLastSeen", oldWhere, this.whereLastSeen); // NOI18N
-        firePropertyChange("whenLastSeen", oldWhen, this.whenLastSeen);    // NOI18N
+        firePropertyChange(PROPERTY_WHERE_LAST_SEEN, oldWhere, this.whereLastSeen);
+        firePropertyChange(PROPERTY_WHEN_LAST_SEEN, oldWhen, this.whenLastSeen);
     }
 
     private Date getDateNow() {
@@ -113,10 +116,10 @@ public class DefaultIdTag extends AbstractIdTag {
         }
         Reporter whereLast = this.getWhereLastSeen();
         if (whereLast != null && storeState) {
-            e.addContent(new Element("whereLastSeen").addContent(whereLast.getSystemName())); // NOI18N
+            e.addContent(new Element(PROPERTY_WHERE_LAST_SEEN).addContent(whereLast.getSystemName()));
         }
         if (this.getWhenLastSeen() != null && storeState) {
-            e.addContent(new Element("whenLastSeen").addContent(new StdDateFormat().format(this.getWhenLastSeen())));
+            e.addContent(new Element(PROPERTY_WHEN_LAST_SEEN).addContent(new StdDateFormat().format(this.getWhenLastSeen())));
         }
         return e;
     }
@@ -140,18 +143,18 @@ public class DefaultIdTag extends AbstractIdTag {
             if (e.getChild("comment") != null) { // NOI18N
                 this.setComment(e.getChild("comment").getText()); // NOI18N
             }
-            if (e.getChild("whereLastSeen") != null) { // NOI18N
+            if (e.getChild(PROPERTY_WHERE_LAST_SEEN) != null) {
                 try {
                     Reporter r = InstanceManager.getDefault(ReporterManager.class)
-                                    .provideReporter(e.getChild("whereLastSeen").getText()); // NOI18N
+                                    .provideReporter(e.getChild(PROPERTY_WHERE_LAST_SEEN).getText());
                     this.setWhereLastSeen(r);
                     this.whenLastSeen = null;
                 } catch (IllegalArgumentException ex) {
-                    log.warn("Failed to provide Reporter \"{}\" in load of \"{}\"", e.getChild("whereLastSeen").getText(), getDisplayName());
+                    log.warn("Failed to provide Reporter \"{}\" in load of \"{}\"", e.getChild(PROPERTY_WHERE_LAST_SEEN).getText(), getDisplayName());
                 }
             }
-            if (e.getChild("whenLastSeen") != null) { // NOI18N
-                String lastSeenText = e.getChildText("whenLastSeen");
+            if (e.getChild(PROPERTY_WHEN_LAST_SEEN) != null) {
+                String lastSeenText = e.getChildText(PROPERTY_WHEN_LAST_SEEN);
                 log.debug("Loading {} When Last Seen: {}", getDisplayName(), lastSeenText);
                 try { // parse using ISO 8601 date format
                     this.whenLastSeen = new StdDateFormat().parse(lastSeenText);
