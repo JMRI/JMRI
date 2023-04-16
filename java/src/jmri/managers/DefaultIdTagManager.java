@@ -32,6 +32,8 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     private boolean useFastClock = false;
     private Runnable shutDownTask = null;
 
+    public final static String PROPERTY_INITIALISED = "initialised";
+
     public DefaultIdTagManager(SystemConnectionMemo memo) {
         super(memo);
     }
@@ -61,6 +63,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
             dirty = false;
             initShutdownTask();
             initialised = true;
+            propertyChangeSupport.firePropertyChange("PROPERTY_INITLIASED", false, true);
         }
     }
 
