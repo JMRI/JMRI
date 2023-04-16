@@ -550,7 +550,8 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li></li>
+            <li>Change the way user names are displayed in the cell contents. This
+                allows word breaks onto additional lines in the display.</li>
         </ul>
 
     <h3>Throttle</h3>
