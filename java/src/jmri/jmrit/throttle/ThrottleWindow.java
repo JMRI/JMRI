@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.net.URI;
@@ -511,13 +512,24 @@ public class ThrottleWindow extends JmriJFrame {
      */
     @Override
     public void dispose() {
+        log.debug("Disposing {}", getTitle());
+        URIDrop.remove(throttleToolBar);
         if ((throttleFrames != null) && (!throttleFrames.isEmpty())) {
             throttleFrames.values().forEach((throttleFrame) -> {
                 throttleFrame.dispose();
             });
+            throttleFrames.clear();
         }
         throttleFrames = null;
-        throttlesPanel.removeAll();
+        currentThrottleFrame  = null;
+        for (PropertyChangeListener pcl : pcs.getPropertyChangeListeners()) {
+            pcs.removePropertyChangeListener(pcl);
+        }
+        for (MouseWheelListener mwl : getMouseWheelListeners()) {
+            removeMouseWheelListener(mwl);
+        }
+        getRootPane().getActionMap().clear();
+        throttlesPanel.removeAll();        
         removeAll();
         super.dispose();
     }

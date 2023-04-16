@@ -363,7 +363,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         }
     }
 
-    private static class MyTranscoder extends ImageTranscoder {
+    private class MyTranscoder extends ImageTranscoder {
         private BufferedImage image = null;
         @Override
         public BufferedImage createImage(int w, int h) {

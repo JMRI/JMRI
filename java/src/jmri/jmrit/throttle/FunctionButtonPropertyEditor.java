@@ -282,4 +282,14 @@ public final class FunctionButtonPropertyEditor extends JDialog {
         _imageFilePath.setDropFolder(dropFolder);
         _imagePressedFilePath.setDropFolder(dropFolder);
     }
+
+    void destroy() {
+        if (_imageFilePath != null) {
+            _imageFilePath.RemoveDnd();
+        }
+        if (_imagePressedFilePath != null) {
+            _imagePressedFilePath.RemoveDnd();
+        }
+
+    }
 }

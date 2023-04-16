@@ -45,6 +45,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private final ThrottleManager throttleManager;
 
     private DccThrottle throttle;
+    private boolean isConsist = false;
 
     private JSlider speedSlider;
     private JSlider speedSliderContinuous;
@@ -170,6 +171,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     public void destroy() {
         if (addressPanel != null) {
             addressPanel.removeAddressListener(this);
+            addressPanel = null;
         }
         if (throttle != null) {
             throttle.removePropertyChangeListener(this);
@@ -574,9 +576,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private ImageIcon scaleTo(ImageIcon imic, int s ) {
         return new ImageIcon(imic.getImage().getScaledInstance(s, s, Image.SCALE_SMOOTH));
     }
+    
+    MyTranscoder transcoder = new MyTranscoder();
 
     private ImageIcon scaleTo(Document svgImage, Float f ) {
-        MyTranscoder transcoder = new MyTranscoder();
+        
         TranscodingHints hints = new TranscodingHints();
         hints.put(ImageTranscoder.KEY_WIDTH, f );
         hints.put(ImageTranscoder.KEY_HEIGHT, f );
@@ -769,6 +773,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                         log.debug("stateChanged: slider pos: {} speed: {}", speedSlider.getValue(), newSpeed);
                     }
                     if (sliderPanel.isVisible() && throttle != null) {
+                        log.debug("setting throttle {} to speed {}", throttle.getLocoAddress(), newSpeed);                        
                         throttle.setSpeedSetting(newSpeed);
                     }
                     speedSpinnerModel.setValue(speedSlider.getValue());
@@ -806,6 +811,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                         log.debug("stateChanged: slider pos: {} speed: {} dir: {}", speedSliderContinuous.getValue(), newSpeed, newDir);
                     }
                     if (speedSliderContinuousPanel.isVisible() && throttle != null) {
+                        log.debug("setting throttle {} to speed {}", throttle.getLocoAddress(), newSpeed);
                         throttle.setSpeedSetting(newSpeed);
                         if ((newSpeed > 0) && (newDir != forwardButton.isSelected())) {
                             throttle.setIsForward(newDir);
@@ -1288,7 +1294,13 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     @Override
     public void notifyAddressChosen(LocoAddress l) {
     }
+    
+    @Override
+    public void notifyConsistAddressChosen(LocoAddress l) {
+        notifyAddressChosen(l);
+    }
 
+       
     @Override
     public void notifyAddressReleased(LocoAddress la) {
         this.setEnabled(false);
@@ -1303,14 +1315,28 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     @Override
-    public void notifyAddressThrottleFound(DccThrottle t) {
-        log.debug("control panel received new throttle");
-        throttle = t;
+    public void notifyConsistAddressReleased(LocoAddress la) {
+        notifyAddressReleased(la);
+        isConsist = false;
+    }
+    
+    private void addressThrottleFound() {
         setEnabled(true);
         setIsForward(throttle.getIsForward());
         setSpeedStepsMode(throttle.getSpeedStepMode());
         setSpeedValues(throttle.getSpeedIncrement(), throttle.getSpeedSetting());
         throttle.addPropertyChangeListener(this);
+    }
+
+    @Override
+    public void notifyAddressThrottleFound(DccThrottle t) {
+        log.debug("control panel received new throttle");
+        if (isConsist) {
+            // ignore if is a consist
+            return;
+        }
+        throttle = t;
+        addressThrottleFound();
 
         if ((addressPanel != null) && (addressPanel.getRosterEntry() != null) && (addressPanel.getRosterEntry().getShuntingFunction() != null)) {
             prevShuntingFn = getSwitchSliderFunction();
@@ -1325,17 +1351,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     @Override
-    public void notifyConsistAddressChosen(int newAddress, boolean isLong) {
-    }
-
-    @Override
-    public void notifyConsistAddressReleased(int address, boolean isLong) {
-    }
-
-    @Override
-    public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
+    public void notifyConsistAddressThrottleFound(DccThrottle t) {
         log.debug("control panel received consist throttle");
-        notifyAddressThrottleFound(throttle);
+        isConsist = true;
+        throttle = t;
+        addressThrottleFound();
     }
 
     public void setSwitchSliderFunction(String fn) {
@@ -1453,7 +1473,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         Roster.getDefault().writeRoster();
     }
 
-   private static class MyTranscoder extends ImageTranscoder {
+   private class MyTranscoder extends ImageTranscoder {
         private BufferedImage image = null;
         @Override
         public BufferedImage createImage(int w, int h) {
