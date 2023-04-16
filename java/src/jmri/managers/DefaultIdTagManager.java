@@ -63,7 +63,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
             dirty = false;
             initShutdownTask();
             initialised = true;
-            propertyChangeSupport.firePropertyChange("PROPERTY_INITLIASED", false, true);
+            propertyChangeSupport.firePropertyChange(PROPERTY_INITIALISED, false, true);
         }
     }
 
