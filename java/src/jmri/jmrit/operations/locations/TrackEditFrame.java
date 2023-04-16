@@ -215,7 +215,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
 
         pDestinationOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Destinations")));
         pDestinationOption.add(destinationOptionButton);
-        destinationOptionButton.addActionListener(new TrackDestinationEditAction(_track));
+        destinationOptionButton.addActionListener(new TrackDestinationEditAction(this));
 
         panelRoadAndLoadStatus.add(pRoadOption);
         panelRoadAndLoadStatus.add(pLoadOption);

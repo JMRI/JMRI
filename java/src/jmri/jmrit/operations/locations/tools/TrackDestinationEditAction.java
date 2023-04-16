@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.TrackEditFrame;
 
 /**
  * Action to create the TrackDestinationEditFrame.
@@ -14,12 +14,12 @@ import jmri.jmrit.operations.locations.Track;
  */
 public class TrackDestinationEditAction extends AbstractAction {
 
-    private Track _track;
+    private TrackEditFrame _tef = null;
     private TrackDestinationEditFrame tdef = null;
 
-    public TrackDestinationEditAction(Track track) {
+    public TrackDestinationEditAction(TrackEditFrame tef) {
         super(Bundle.getMessage("MenuItemDestinations"));
-        _track = track;
+       _tef = tef;
     }
 
     @Override
@@ -28,6 +28,6 @@ public class TrackDestinationEditAction extends AbstractAction {
             tdef.dispose();
         }
         tdef = new TrackDestinationEditFrame();
-        tdef.initComponents(_track);
+        tdef.initComponents(_tef);
     }
 }
