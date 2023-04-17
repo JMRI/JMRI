@@ -1490,14 +1490,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     static class DateRenderer extends DefaultTableCellRenderer {
 
-        private static final DateFormat DATE_FORMAT = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+        private final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 
         @Override
         public Component getTableCellRendererComponent( JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
             JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if ( value instanceof Date) {
-                c.setText(DATE_FORMAT.format(value));
+                c.setText(dateFormat.format(value));
             }
             return c;
         }
