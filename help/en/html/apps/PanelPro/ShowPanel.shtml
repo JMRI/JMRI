@@ -64,8 +64,9 @@
         will contain clickable links that take you to the indicated pages.</li>
       </ol>
       
-      <p>* NOTE: Some formatting, particularly borders, may be different in some of the lesser-used browsers.
-      This has been tested to work with Safari, Chrome, and Microsoft Edge.</p> 
+      <p>* NOTE: This has been tested to work with Safari, Chrome, and Microsoft Edge (links not clickable 
+      in PDF created from MS Edge). Some formatting, particularly borders, may be different in some of the 
+      lesser-used browsers. </p> 
 
       <p>For technical information on this, see the <a href=
       "../../doc/Technical/XmlUsage.shtml">JMRI XML page</a>.</p>
