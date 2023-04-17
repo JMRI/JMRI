@@ -231,8 +231,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         updateGUIOnThrottleFound(true);
         
         // send notification of new address
-        // work on a clone because some new listeners may be added while notifying the existing ones
-        ((ArrayList<AddressListener>) listeners.clone()).forEach((l) -> {
+        // work on a copy because some new listeners may be added while notifying the existing ones        
+        (new ArrayList<AddressListener>(listeners)).forEach((l) -> {
             // log.debug("Notify address listener of address change {}", l.getClass());
             l.notifyAddressThrottleFound(t);
         });
@@ -351,7 +351,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                 
         // send notification of new address
         // work on a clone because some new listeners may be added while notifying the existing ones
-        ((ArrayList<AddressListener>) listeners.clone()).forEach((l) -> {
+        (new ArrayList<AddressListener>(listeners)).forEach((l) -> {
             l.notifyConsistAddressThrottleFound(t);
         });
         
