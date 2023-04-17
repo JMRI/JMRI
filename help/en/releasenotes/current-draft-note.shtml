@@ -84,6 +84,7 @@
             <ul>
                 <li>Fixed a problem introduced in JMRI 5.3.3 that caused
                     certain ops-mode programming operations to fail.</li>
+                <li>LocoNet connections now support decoder functions up to F68</li>
             </ul>
 
         <h4>Maple</h4>

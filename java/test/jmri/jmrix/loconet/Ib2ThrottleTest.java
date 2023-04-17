@@ -12,7 +12,7 @@ import org.junit.jupiter.api.*;
  */
 public class Ib2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
-    private LocoNetSystemConnectionMemo memo; 
+    private LocoNetSystemConnectionMemo memo;
 
     @Test
     public void testCTor() {
@@ -414,6 +414,7 @@ public class Ib2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo.setThrottleManager(new Ib2ThrottleManager(memo));
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
         instance = new Ib2Throttle(memo,new LocoNetSlot(5));
+        maxFns = 69;
     }
 
     @AfterEach
