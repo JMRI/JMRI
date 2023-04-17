@@ -59,7 +59,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
      * Cleanup the DnD from this component
      *
      */
-    public void RemoveDnd() {
+    public void removeDnd() {
         URIDrop.remove(this);
     }
 

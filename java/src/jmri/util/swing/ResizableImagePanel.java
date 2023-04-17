@@ -363,7 +363,8 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         }
     }
 
-    private class MyTranscoder extends ImageTranscoder {
+    // to handle svg transformation to displayable images
+    private static class MyTranscoder extends ImageTranscoder {
         private BufferedImage image = null;
         @Override
         public BufferedImage createImage(int w, int h) {

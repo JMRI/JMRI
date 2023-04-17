@@ -627,7 +627,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         listeners.forEach((l) -> {
             l.notifyAddressChosen(currentAddress);
         });
-        log.debug("Requesting new slot for consist address {} rosterEntry {}",consistAddress);        
+        log.debug("Requesting new slot for consist address {}",consistAddress);        
         boolean requestOK = throttleManager.requestThrottle(consistAddress, this, true);
         requestedAddress = consistAddress;
         if (!requestOK) {

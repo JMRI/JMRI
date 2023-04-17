@@ -166,6 +166,12 @@ public class RosterMediaPane extends JPanel {
         if (log.isDebugEnabled()) {
             log.debug("dispose");
         }
+        if (_imageFilePath != null) {
+            _imageFilePath.removeDnd();
+        }
+        if (_iconFilePath != null) {
+            _iconFilePath.removeDnd();
+        }
     }
 
     private static class RosterAttributesTableModel extends AbstractTableModel {

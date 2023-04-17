@@ -285,10 +285,10 @@ public final class FunctionButtonPropertyEditor extends JDialog {
 
     void destroy() {
         if (_imageFilePath != null) {
-            _imageFilePath.RemoveDnd();
+            _imageFilePath.removeDnd();
         }
         if (_imagePressedFilePath != null) {
-            _imagePressedFilePath.RemoveDnd();
+            _imagePressedFilePath.removeDnd();
         }
 
     }
