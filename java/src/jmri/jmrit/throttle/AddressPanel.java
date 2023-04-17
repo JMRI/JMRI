@@ -62,8 +62,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     private JButton progButton;
     private JButton setButton;
     private RosterEntrySelectorPanel rosterBox;
-    private ConsistComboBox conRosterBox;
-    private JComboBox<String> nceConRosterBox;
+    @SuppressWarnings("rawtypes") // TBD: once JMRI consists vs NCE consists resolved, can be removed
+    private JComboBox conRosterBox;
     private boolean isUpdatingUI = false;
 
     private RosterEntry rosterEntry;
@@ -80,8 +80,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     }
 
     public void destroy() { // Handle disposing of the throttle
-        if (conRosterBox != null) {
-            conRosterBox.dispose();
+        if (conRosterBox != null && conRosterBox instanceof ConsistComboBox) {
+            ((ConsistComboBox)conRosterBox).dispose();
         }
         if ( requestedAddress != null ) {
             throttleManager.cancelThrottleRequest(requestedAddress, this);
@@ -382,15 +382,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                 conRosterBox.setSelectedItem(Bundle.getMessage("NoConsistSelected"));
             }
             conRosterBox.setEnabled(!throttleActive);
-        }
-        if (nceConRosterBox != null) {
-            if (throttleActive && consistThrottle != null) {
-                nceConRosterBox.setSelectedItem(consistThrottle.getLocoAddress());
-            } else {
-                nceConRosterBox.setSelectedItem(Bundle.getMessage("NoConsistSelected"));
-            }
-            nceConRosterBox.setEnabled(!throttleActive);
-        }        
+        }     
         if (throttleManager.hasDispatchFunction()) {
             dispatchButton.setEnabled(throttleActive);
         }  
@@ -460,6 +452,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     /**
      * Create, initialize and place the GUI objects.
      */
+    @SuppressWarnings("unchecked") //for the onRosterBox.insertItemAt(), to be a removed once NCE consists clarified
     private void initGUI() {
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         mainPanel = new JPanel();
@@ -490,12 +483,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
         if (InstanceManager.getDefault(NceConsistRoster.class).numEntries() > 0) { // NCE consists
             // NCE implementation of consists is specific, TODO: refactor to use generic JMRI consists
-            nceConRosterBox = InstanceManager.getDefault(NceConsistRoster.class).fullRosterComboBox();
-            nceConRosterBox.insertItemAt(Bundle.getMessage("NoConsistSelected"), 0);  // empty entry
-            nceConRosterBox.setSelectedIndex(0);
-            nceConRosterBox.setToolTipText(Bundle.getMessage("SelectConsistFromRosterTT"));
-            nceConRosterBox.addActionListener(e -> nceConsistRosterSelected());
-            topPanel.add(nceConRosterBox);
+            conRosterBox = InstanceManager.getDefault(NceConsistRoster.class).fullRosterComboBox();
+            conRosterBox.insertItemAt(Bundle.getMessage("NoConsistSelected"), 0);  // empty entry
+            conRosterBox.setSelectedIndex(0);
+            conRosterBox.setToolTipText(Bundle.getMessage("SelectConsistFromRosterTT"));
+            conRosterBox.addActionListener(e -> nceConsistRosterSelected());
+            topPanel.add(conRosterBox);
         } else {                      
             if ((consistManager != null) && (consistManager.isEnabled())) {  // JMRI consists
                 JPanel consistPanel = new JPanel();
@@ -555,8 +548,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         if (isUpdatingUI) {
             return;
         }
-        if (!(Objects.equals(nceConRosterBox.getSelectedItem(), Bundle.getMessage("NoConsistSelected")))) {
-            String rosterEntryTitle = Objects.requireNonNull(nceConRosterBox.getSelectedItem()).toString();
+        if (!(Objects.equals(conRosterBox.getSelectedItem(), Bundle.getMessage("NoConsistSelected")))) {
+            String rosterEntryTitle = Objects.requireNonNull(conRosterBox.getSelectedItem()).toString();
             NceConsistRosterEntry nceConsistRosterEntry = InstanceManager.getDefault(NceConsistRoster.class)
                     .entryFromTitle(rosterEntryTitle);
 
