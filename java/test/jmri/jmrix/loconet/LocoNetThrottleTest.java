@@ -627,7 +627,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertTrue("check opcode",funcOnMess.equals(lnis.outbound.get(0)));
         instance.setFunction(func,false);
         Assert.assertEquals("check send OFF function" + func, 2, lnis.outbound.size());
-        Assert.assertTrue("check opcode",funcOnMess.equals(lnis.outbound.get(0)));
+        Assert.assertTrue("check opcode",funcOffMess.equals(lnis.outbound.get(1)));
     }
 
     /**
