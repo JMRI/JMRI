@@ -188,7 +188,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             1, 1, 1, 1, 1, 1, 1, /** 0-6 */
             2, 2, 2, 2, 2, 2, 2, /** 7 - 13 */
             3, 3, 3, 3, 3, 3, 3, /** 14 -20 */
-            4, 4, 4, 4, 4, 4, 4, 4 /** 11 - 28 */
+            4, 4, 4, 4, 4, 4, 4, 4, /** 11 - 28 */
+            5, 5, 5, 5, 5, 5, 5, 5, /** 29 - 36 */
+            6, 6, 6, 6, 6, 6, 6, 6, /** 37 - 44 */
+            7, 7, 7, 7, 7, 7, 7, 7, /** 45 - 52 */
+            8, 8, 8, 8, 8, 8, 8, 8, /** 53 - 60 */
+            9, 9, 9, 9, 9, 9, 9, 9 /** 61 - 68 */
     };
 
     /**
@@ -214,6 +219,21 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 break;
             case 4:
                 if (momentary) sendMomentaryFunctionGroup4(); else sendExpFunctionGroup4();
+                break;
+            case 5:
+                if (momentary) sendMomentaryFunctionGroup5(); else sendExpFunctionGroup5();
+                break;
+            case 6:
+                if (momentary) sendMomentaryFunctionGroup6(); else sendExpFunctionGroup6();
+                break;
+            case 7:
+                if (momentary) sendMomentaryFunctionGroup7(); else sendExpFunctionGroup7();
+                break;
+            case 8:
+                if (momentary) sendMomentaryFunctionGroup8(); else sendExpFunctionGroup8();
+                break;
+            case 9:
+                if (momentary) sendMomentaryFunctionGroup9(); else sendExpFunctionGroup9();
                 break;
             default:
                 break;
@@ -463,6 +483,131 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         msg.setElement(2, slot.getSlot() & 0b01111111);
         msg.setElement(3, slot.id() & 0x7F);
         msg.setElement(4, new_F2128);
+        network.sendLocoNetMessage(msg);
+    }
+
+    /**
+     * Sends Expanded loconet message F29 thru F36 Message.
+     */
+    protected void sendExpFunctionGroup5() {
+        log.error("sendExpFunctionGroup5 not fully implemented yet");
+        int new_Fns = ((getFunction(29) ? 0b00000001 : 0) |
+                (getFunction(30) ? 0b00000010 : 0) |
+                (getFunction(31) ? 0b00000100 : 0) |
+                (getFunction(32) ? 0b00001000 : 0) |
+                (getFunction(33) ? 0b00010000 : 0) |
+                (getFunction(34) ? 0b00100000 : 0) |
+                (getFunction(35) ? 0b01000000 : 0));
+        LocoNetMessage msg = new LocoNetMessage(6);
+        msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+        if (!getFunction(36)) {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF);
+        } else {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON);
+        }
+        msg.setElement(2, slot.getSlot() & 0b01111111);
+        msg.setElement(3, slot.id() & 0x7F);
+        msg.setElement(4, new_Fns);
+        network.sendLocoNetMessage(msg);
+    }
+
+    /**
+     * Sends Expanded loconet message F37 thru F44 Message.
+     */
+    protected void sendExpFunctionGroup6() {
+        log.error("sendExpFunctionGroup6 not fully implemented yet");
+        int new_Fns = ((getFunction(37) ? 0b00000001 : 0) |
+                (getFunction(38) ? 0b00000010 : 0) |
+                (getFunction(39) ? 0b00000100 : 0) |
+                (getFunction(40) ? 0b00001000 : 0) |
+                (getFunction(41) ? 0b00010000 : 0) |
+                (getFunction(42) ? 0b00100000 : 0) |
+                (getFunction(43) ? 0b01000000 : 0));
+        LocoNetMessage msg = new LocoNetMessage(6);
+        msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+        if (!getFunction(44)) {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF);
+        } else {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON);
+        }
+        msg.setElement(2, slot.getSlot() & 0b01111111);
+        msg.setElement(3, slot.id() & 0x7F);
+        msg.setElement(4, new_Fns);
+        network.sendLocoNetMessage(msg);
+    }
+
+    /**
+     * Sends Expanded loconet message F45 thru F52 Message.
+     */
+    protected void sendExpFunctionGroup7() {
+        log.error("sendExpFunctionGroup7 not fully implemented yet");
+        int new_Fns = ((getFunction(45) ? 0b00000001 : 0) |
+                (getFunction(46) ? 0b00000010 : 0) |
+                (getFunction(47) ? 0b00000100 : 0) |
+                (getFunction(48) ? 0b00001000 : 0) |
+                (getFunction(49) ? 0b00010000 : 0) |
+                (getFunction(50) ? 0b00100000 : 0) |
+                (getFunction(51) ? 0b01000000 : 0));
+        LocoNetMessage msg = new LocoNetMessage(6);
+        msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+        if (!getFunction(52)) {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF);
+        } else {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON);
+        }
+        msg.setElement(2, slot.getSlot() & 0b01111111);
+        msg.setElement(3, slot.id() & 0x7F);
+        msg.setElement(4, new_Fns);
+        network.sendLocoNetMessage(msg);
+    }
+
+    /**
+     * Sends Expanded loconet message F53 thru F60 Message.
+     */
+    protected void sendExpFunctionGroup8() {
+        log.error("sendExpFunctionGroup8 not fully implemented yet");
+        int new_Fns = ((getFunction(53) ? 0b00000001 : 0) |
+                (getFunction(54) ? 0b00000010 : 0) |
+                (getFunction(55) ? 0b00000100 : 0) |
+                (getFunction(56) ? 0b00001000 : 0) |
+                (getFunction(57) ? 0b00010000 : 0) |
+                (getFunction(58) ? 0b00100000 : 0) |
+                (getFunction(59) ? 0b01000000 : 0));
+        LocoNetMessage msg = new LocoNetMessage(6);
+        msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+        if (!getFunction(60)) {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF);
+        } else {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON);
+        }
+        msg.setElement(2, slot.getSlot() & 0b01111111);
+        msg.setElement(3, slot.id() & 0x7F);
+        msg.setElement(4, new_Fns);
+        network.sendLocoNetMessage(msg);
+    }
+
+    /**
+     * Sends Expanded loconet message F61 thru F68 Message.
+     */
+    protected void sendExpFunctionGroup9() {
+        log.error("sendExpFunctionGroup9 not fully implemented yet");
+        int new_Fns = ((getFunction(61) ? 0b00000001 : 0) |
+                (getFunction(62) ? 0b00000010 : 0) |
+                (getFunction(63) ? 0b00000100 : 0) |
+                (getFunction(64) ? 0b00001000 : 0) |
+                (getFunction(65) ? 0b00010000 : 0) |
+                (getFunction(66) ? 0b00100000 : 0) |
+                (getFunction(67) ? 0b01000000 : 0));
+        LocoNetMessage msg = new LocoNetMessage(6);
+        msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+        if (!getFunction(68)) {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF);
+        } else {
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON);
+        }
+        msg.setElement(2, slot.getSlot() & 0b01111111);
+        msg.setElement(3, slot.id() & 0x7F);
+        msg.setElement(4, new_Fns);
         network.sendLocoNetMessage(msg);
     }
 
