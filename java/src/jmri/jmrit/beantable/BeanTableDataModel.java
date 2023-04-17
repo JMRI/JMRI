@@ -10,8 +10,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.List;
@@ -486,6 +488,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         table.setDefaultRenderer(JComboBox.class, new BtValueRenderer());
         table.setDefaultEditor(JComboBox.class, new BtComboboxEditor());
         table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
+        table.setDefaultRenderer(Date.class, new DateRenderer());
 
         // allow reordering of the columns
         table.getTableHeader().setReorderingAllowed(true);
@@ -1483,6 +1486,21 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      */
     public Predicate<? super T> getFilter() {
         return filter;
+    }
+
+    static class DateRenderer extends DefaultTableCellRenderer {
+
+        private final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+
+        @Override
+        public Component getTableCellRendererComponent( JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+            JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            if ( value instanceof Date) {
+                c.setText(dateFormat.format(value));
+            }
+            return c;
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);
