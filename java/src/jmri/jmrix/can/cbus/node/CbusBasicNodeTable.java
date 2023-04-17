@@ -207,12 +207,23 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
                 // Try to load a local xml file
                 String title = _mainArray.get(row).getName() + " (CBUS)";
                 DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(title);
+                String userName = _mainArray.get(row).getUserName();
+                String nodeNumber = "CBUS_Node_" + Integer.toString(_mainArray.get(row).getNodeNumber());
+                if (!userName.equals("")) {
+                    nodeNumber = nodeNumber.concat("_" + userName);
+                }
                 if ((decoderFile != null) && (progMan != null)) {
                     log.debug("decoder file: {}", decoderFile.getFileName()); // NOI18N
-                    RosterEntry re = new RosterEntry();
+                    RosterEntry blank = new RosterEntry();
+                    RosterEntry roster = new RosterEntry(blank, nodeNumber);
+                    roster.setDecoderFamily("CBUS");
+                    roster.setMfg(decoderFile.getMfg());
+                    roster.setDecoderModel(decoderFile.getModel());
+                    roster.setRoadNumber(Integer.toString(_mainArray.get(row).getNodeNumber()));
+                    roster.setRoadName(userName);
                     String progTitle = "CBUS NV Programmer";
                     String progFile = "programmers" + File.separator + "Cbus" + ".xml";
-                    JFrame p = new PaneServiceProgFrame(decoderFile, re, progTitle, progFile, progMan.getGlobalProgrammer());
+                    JFrame p = new PaneServiceProgFrame(decoderFile, roster, progTitle, progFile, progMan.getGlobalProgrammer());
                     p.pack();
                     p.setVisible(true);
                 } else {
