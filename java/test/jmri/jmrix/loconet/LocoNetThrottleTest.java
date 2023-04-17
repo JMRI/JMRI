@@ -614,6 +614,22 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(f28, instance.getF28());
     }
 
+    @Test
+    public void testSendFunctionF29() {
+        lnis.outbound.clear();
+        lnis.resetStatistics();
+        int func = 29;
+        LocoNetMessage funcOnMess = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7f, 0x33, 0x02, 0x00, 0x58, 0x01, 0x00, 0x00, 0x00});
+        LocoNetMessage funcOffMess = new LocoNetMessage(new int [] {0xED, 0x0B, 0x7F, 0x33, 0x02, 0x00, 0x58, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertEquals("check send of function exp f" + func, 0, lnis.outbound.size());
+        instance.setFunction(func,true);
+        Assert.assertEquals("check send of function" + func, 1, lnis.outbound.size());
+        Assert.assertTrue("check opcode",funcOnMess.equals(lnis.outbound.get(0)));
+        instance.setFunction(func,false);
+        Assert.assertEquals("check send OFF function" + func, 2, lnis.outbound.size());
+        Assert.assertTrue("check opcode",funcOnMess.equals(lnis.outbound.get(0)));
+    }
+
     /**
      * Test of sendFunctionGroup1 method, of class AbstractThrottle.
      */
