@@ -512,7 +512,6 @@ public class ThrottleWindow extends JmriJFrame {
      */
     @Override
     public void dispose() {
-        log.debug("Disposing {}", getTitle());
         URIDrop.remove(throttleToolBar);
         if ((throttleFrames != null) && (!throttleFrames.isEmpty())) {
             throttleFrames.values().forEach((throttleFrame) -> {

@@ -984,11 +984,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     @Override
     public void notifyAddressChosen(LocoAddress l) {
     }
-    
-    @Override
-    public void notifyConsistAddressChosen(LocoAddress l) {
-        notifyAddressChosen(l);
-    }    
 
     @Override
     public void notifyAddressReleased(LocoAddress la) {
@@ -997,11 +992,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         throttleWindow.updateGUI();
         throttleManager.removeListener(la, allThrottlesTableModel);
         allThrottlesTableModel.fireTableDataChanged();
-    }
-    
-    @Override
-    public void notifyConsistAddressReleased(LocoAddress la) {
-        notifyAddressReleased(la);
     }
 
     @Override
@@ -1020,6 +1010,18 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         throttleWindow.updateGUI();
         throttleManager.attachListener(throttle.getLocoAddress(), allThrottlesTableModel);        
         allThrottlesTableModel.fireTableDataChanged();
+    }
+
+    
+    @Override
+    public void notifyConsistAddressChosen(LocoAddress l) {
+        notifyAddressChosen(l);
+    }
+
+    
+    @Override
+    public void notifyConsistAddressReleased(LocoAddress la) {
+        notifyAddressReleased(la);
     }
 
     @Override

@@ -132,13 +132,7 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
     @Override
     public void notifyAddressChosen(LocoAddress l) {
     }
-    
-    
-    @Override
-    public void notifyConsistAddressChosen(LocoAddress l) {
-        notifyAddressChosen(l);
-    }
-    
+
     @Override
     public void notifyAddressReleased(LocoAddress la) {
         this.setEnabled(false);
@@ -146,11 +140,6 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
             throttle.removePropertyChangeListener(this);
         }
         throttle = null;
-    }
-    
-    @Override
-    public void notifyConsistAddressReleased(LocoAddress la) {
-        notifyAddressReleased(la);
     }
 
     @Override
@@ -175,6 +164,15 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
         }
     }
 
+    @Override
+    public void notifyConsistAddressChosen(LocoAddress l) {
+        notifyAddressChosen(l);
+    }
+
+    @Override
+    public void notifyConsistAddressReleased(LocoAddress l) {
+        notifyAddressReleased(l);
+    }
 
     @Override
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {

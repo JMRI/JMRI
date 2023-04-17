@@ -10,7 +10,6 @@ import jmri.jmrit.roster.*;
 
 /**
  * A TableCellRender to graphicaly display a consists in the consist table
- * (see ThrottlesListPanel)
  * 
  * @author Lionel Jeanson - 2023
  * 

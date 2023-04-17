@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Lionel Jeanson Copyright (c) 2023
  * 
- * A ListCellRenderer for the Consists JComboBox
+ * A ListCellRenderer for the ConsistComboBox
  * 
  */
 public class ConsistListCellRenderer extends JLabel implements ListCellRenderer<Object> {

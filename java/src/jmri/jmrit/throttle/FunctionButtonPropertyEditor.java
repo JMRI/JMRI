@@ -290,6 +290,5 @@ public final class FunctionButtonPropertyEditor extends JDialog {
         if (_imagePressedFilePath != null) {
             _imagePressedFilePath.removeDnd();
         }
-
     }
 }

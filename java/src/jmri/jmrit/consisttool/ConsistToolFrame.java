@@ -8,10 +8,15 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
-
 import javax.swing.*;
 
-import jmri.*;
+import jmri.Consist;
+import jmri.ConsistListListener;
+import jmri.ConsistListener;
+import jmri.ConsistManager;
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+import jmri.InstanceManager;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;

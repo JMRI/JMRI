@@ -16,7 +16,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import jmri.*;
+import jmri.Consist;
+import jmri.ConsistManager;
+import jmri.DccLocoAddress;
+import jmri.DccThrottle;
+import jmri.InstanceManager;
+import jmri.LocoAddress;
+import jmri.Programmer;
+import jmri.ThrottleListener;
+import jmri.ThrottleManager;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.consisttool.ConsistComboBox;
 import jmri.jmrit.roster.Roster;

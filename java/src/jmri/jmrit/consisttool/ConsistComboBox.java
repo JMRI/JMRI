@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Lionel Jeanson Copyright (c) 2023
  *  
- * A JComboBox with JMRI throttles
+ * A JComboBox with JMRI consists
  * Entries can be a String or a DccLocoAddress 
  * 
  */

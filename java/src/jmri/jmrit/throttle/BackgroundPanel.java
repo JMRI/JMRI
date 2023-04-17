@@ -59,9 +59,9 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
     }
 
     @Override
-    public void notifyAddressReleased(LocoAddress l) {
+    public void notifyAddressReleased(LocoAddress la) {
         setImagePath(null);
-        setVisible(false);  
+        setVisible(false);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
     public void notifyConsistAddressThrottleFound(DccThrottle t) {
         notifyAddressThrottleFound(t);
     }
-    
+
     public void destroy() {
         if (addressPanel != null) {
             addressPanel.removeAddressListener(this);
