@@ -14,9 +14,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author lionel
+ * @author Lionel Jeanson Copyright (c) 2023
+ *  
+ * A JComboBox with JMRI throttles
+ * Entries can be a String or a DccLocoAddress 
+ * 
  */
-public class ConsistComboBox extends JComboBox implements ConsistListListener {
+public class ConsistComboBox extends JComboBox<Object> implements ConsistListListener {
     ConsistManager consistManager = InstanceManager.getDefault(ConsistManager.class);    
     private static boolean consistMgrInitFromXmlFile = false;
     private boolean isUpdatingList = false;

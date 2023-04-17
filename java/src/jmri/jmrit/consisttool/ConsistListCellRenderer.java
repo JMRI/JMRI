@@ -14,11 +14,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author lionel
+ * @author Lionel Jeanson Copyright (c) 2023
+ * 
+ * A ListCellRenderer for the Consists JComboBox
+ * 
  */
-public class ConsistListCellRenderer extends JLabel implements ListCellRenderer {
+public class ConsistListCellRenderer extends JLabel implements ListCellRenderer<Object> {
     @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         
         if (value == null) {
             return null;
