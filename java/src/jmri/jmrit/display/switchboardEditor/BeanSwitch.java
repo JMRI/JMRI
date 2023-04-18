@@ -201,6 +201,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             default:
                 _icon = false;
                 beanButton.setText(getSwitchButtonLabel(_switchDisplayName + ": ?")); // initial text to display
+                beanButton.setToolTipText(getSwitchButtonToolTip(switchLabel));
                 beanButton.setForeground(textColor);
                 beanButton.setOpaque(true); // to show color from the start
                 this.setBorder(BorderFactory.createLineBorder(backgroundColor, 2));
@@ -453,6 +454,17 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
     }
 
+    private String getSwitchButtonToolTip(String label) {
+        if ((showUserName == SwitchBoardLabelDisplays.SYSTEM_NAME) || (_uLabel.equals(""))) {
+            return label;
+        } else if (showUserName == SwitchBoardLabelDisplays.USER_NAME) {
+            return label;
+        } else { // BOTH_NAMES case
+            return uLabel+" "+label;
+        }
+    }
+
+
     /**
      * Drive the current state of the display from the state of the
      * connected bean.
@@ -494,6 +506,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         if (isText() && !isIcon()) { // to allow text buttons on web switchboard.
             log.debug("Label = {}, setText", getSwitchButtonLabel(switchLabel));
             beanButton.setText(getSwitchButtonLabel(switchLabel));
+            beanButton.setToolTipText(getSwitchButtonToolTip(switchLabel));
             beanButton.setBackground(switchColor); // only the color is visible on macOS
             // TODO get access to bg color of JButton?
             beanButton.setOpaque(true);
