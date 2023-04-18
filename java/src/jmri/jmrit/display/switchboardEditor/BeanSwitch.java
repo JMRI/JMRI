@@ -460,7 +460,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         } else if (showUserName == SwitchBoardLabelDisplays.USER_NAME) {
             return label;
         } else { // BOTH_NAMES case
-            return uLabel+" "+label;
+            return _uLabel+" "+label;
         }
     }
 
