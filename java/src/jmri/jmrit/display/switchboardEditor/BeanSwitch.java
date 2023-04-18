@@ -1027,7 +1027,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         private int textSize = 12;
         private int subTextSize = 10;
         private float textAlign = 0.0f;
-        private float subTextAlign = 0.0f;
         private float ropOffset = 0f;
         private int r = 10; // radius of circle fitting inside tile rect in px drawing units
         private int _shape = SwitchboardEditor.BUTTON;
@@ -1135,7 +1134,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
 
         protected void positionSubLabel(int x, int y, float align, int fontsize) {
-            subTextAlign = align;
             subTextSize = fontsize;
         }
 
