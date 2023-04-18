@@ -1223,9 +1223,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
             if (showUserName == SwitchBoardLabelDisplays.BOTH_NAMES) {
                 g.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, Math.max(subTextSize, 6)));
-                if (Math.abs(subTextAlign - Component.CENTER_ALIGNMENT) < .0001) {
-                    FontMetrics metrics2 = g.getFontMetrics(); // figure out where the center of the string is
-                }
                 g.drawString(subTag, labelX, labelY); // draw user name at bottom
             } else {
             }
