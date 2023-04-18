@@ -110,7 +110,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             allControlling = editor.allControlling();
             panelEditable = editor.isEditable();
             showToolTip = editor.showToolTip();
-            showUserName = editor.nameDisplay(); // 0,1,2
+            showUserName = editor.nameDisplay();
             radius = editor.getTileSize()/2; // max WxH of canvas inside cell, used as relative unit to draw
             square = editor.getIconScale();
             // get colors
