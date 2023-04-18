@@ -842,13 +842,15 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             addLine(_buildReport, FIVE,
                     Bundle.getMessage("buildCarDepartHomeDivision", car.toString(), car.getTypeName(),
                             car.getLoadType().toLowerCase(),
-                            car.getLoadName(), car.getDivisionName(), car.getLocationName(), car.getTrackName(),
+                            car.getLoadName(), car.getDivisionName(), car.getTrack().getTrackTypeName(),
+                            car.getLocationName(), car.getTrackName(),
                             car.getTrack().getDivisionName()));
         } else {
             addLine(_buildReport, FIVE,
                     Bundle.getMessage("buildCarDepartForeignDivision", car.toString(), car.getTypeName(),
                             car.getLoadType().toLowerCase(),
-                            car.getLoadName(), car.getDivisionName(), car.getLocationName(), car.getTrackName(),
+                            car.getLoadName(), car.getDivisionName(), car.getTrack().getTrackTypeName(),
+                            car.getLocationName(), car.getTrackName(),
                             car.getTrack().getDivisionName()));
         }
         if (car.getKernel() != null) {
