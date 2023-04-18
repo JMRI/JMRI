@@ -414,6 +414,9 @@
          who fixed the XML definition of the block contents icon, and helped fix the Transit
         implementation of comments.</li>
 
+        <li>Ulrich Gerlach</li> <!-- uli-2016 -->
+        who improved multiple decoder definitions.
+
         <li>Brian Gilhuly, who helped debug a programmer problem in JMRI 3.11.1</li>
 
         <li>Simon Ginsburg has helped with advanced consisting, provided some Digitrax definition
