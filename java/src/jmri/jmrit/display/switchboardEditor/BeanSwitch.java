@@ -1024,8 +1024,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         private String subTag = "";
         private int labelX = 16;
         private int labelY = 53;
-        private int subLabelX = 16;
-        private int subLabelY = 53;
         private int textSize = 12;
         private int subTextSize = 10;
         private float textAlign = 0.0f;
@@ -1137,8 +1135,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
 
         protected void positionSubLabel(int x, int y, float align, int fontsize) {
-            subLabelX = x;
-            subLabelY = y;
             subTextAlign = align;
             subTextSize = fontsize;
         }
@@ -1229,7 +1225,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 g.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, Math.max(subTextSize, 6)));
                 if (Math.abs(subTextAlign - Component.CENTER_ALIGNMENT) < .0001) {
                     FontMetrics metrics2 = g.getFontMetrics(); // figure out where the center of the string is
-                    subLabelX = metrics2.stringWidth(subTag)/-2;
                 }
                 g.drawString(subTag, labelX, labelY); // draw user name at bottom
             } else {
