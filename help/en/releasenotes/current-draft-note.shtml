@@ -31,7 +31,8 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>New script in DCC-EX folder, RosterExportToDCC-EX.py, which outputs all JMRI roster entries in 
+                format suitable for copying into myAutomation.h.</li>
             </ul>
 
         <h4>DCC4pc</h4>
