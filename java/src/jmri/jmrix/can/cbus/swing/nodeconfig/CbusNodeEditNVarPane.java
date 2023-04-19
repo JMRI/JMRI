@@ -138,9 +138,9 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
      */
     @Override
     protected void saveOption(){
-        if (nodeOfInterest.getnvWriteInLearnOnly()) {
+        if (nodeOfInterest.getliveUpdate()) {
             nodeOfInterest.send.nodeExitLearnEvMode(nodeOfInterest.getNodeNumber());
-            saveNvButton.setEnabled(false);
+            // saveNvButton.setEnabled(false);
             nodeOfInterest.setliveUpdate(false);
         } else {
             getMainPane().showConfirmThenSave(nodeNVModel.getChangedNode(),nodeOfInterest,
