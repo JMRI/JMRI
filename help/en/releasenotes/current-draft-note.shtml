@@ -382,7 +382,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Added tooltips to the CV Pane that will show a brief summary of where the CV is
+                being used.</li>
         </ul>
 
     <h3>CTC Tool</h3>

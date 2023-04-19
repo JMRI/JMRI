@@ -43,7 +43,7 @@ import jmri.jmrit.symbolicprog.Qualifier;
 import jmri.jmrit.symbolicprog.QualifierAdder;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.jmrit.symbolicprog.ValueEditor;
-import jmri.jmrit.symbolicprog.ValueRenderer;
+import jmri.jmrit.symbolicprog.CvValueRenderer;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.VariableValue;
 import jmri.util.CvUtil;
@@ -2093,8 +2093,10 @@ public class PaneProgPane extends javax.swing.JPanel
 
         cvTable.setRowSorter(sorter);
 
-        cvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
-        cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+        cvTable.setDefaultRenderer(JTextField.class, new CvValueRenderer());
+        cvTable.setDefaultRenderer(JButton.class, new CvValueRenderer());
+        cvTable.setDefaultRenderer(String.class, new CvValueRenderer());
+        cvTable.setDefaultRenderer(Integer.class, new CvValueRenderer());
         cvTable.setDefaultEditor(JTextField.class, new ValueEditor());
         cvTable.setDefaultEditor(JButton.class, new ValueEditor());
         cvTable.setRowHeight(new JButton("X").getPreferredSize().height);
