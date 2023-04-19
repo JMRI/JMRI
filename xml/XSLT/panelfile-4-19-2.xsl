@@ -24,6 +24,7 @@
    [Minor formatting changes at user request                    (2023-03-03)
    [Added TOC and links to top                                  (2023-04-11)
    [Separate Logix/LogixNG by Enabled/Not Enabled               (2023-04-14)
+   [Add new LogixNG Modules, Tables                             (2023-04-17)
 -->
 
 <!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018, 2022, 2023.     -->
@@ -71,6 +72,7 @@
         <h4><!-- XSL 2.0 upgrade required to add: Created  <xsl:value-of select="current-date()"/> --></h4>
         <h4>[Not all detailed attributes are displayed.  Please check the underlying XML file.]<br/>
         [Help maintain this JMRI capability: Please report any unformatted data to the JMRI Development Team.]</h4>
+        <xsl:apply-templates select="jmriversion" mode="version"/>
       <h2>Panel File Sections:</h2>        
  		   <!-- XSL 2.0 upgrade required to add: <xsl:value-of select="base-uri()"/> -->
     </div>
@@ -94,10 +96,11 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <!-- *************************************************************************************** -->
 <!-- Display version number in header -->
-<xsl:template match="layout-config/jmriversion">
+<xsl:template match="layout-config/jmriversion" mode="version">
     <h4>JMRI version <xsl:value-of select="major"/>.<xsl:value-of select="minor"/>.<xsl:value-of select="test"/><xsl:value-of select="modifier"/>
         was used to create the panel xml file displayed.</h4>
 </xsl:template>
+<xsl:template match="layout-config/jmriversion"/>
 
 <!-- ***** Helper Functions ****************************************************************** -->
 <xsl:template name="substring-after-last">
@@ -120,7 +123,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through turnouts types -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/turnouts">
-<p><a href="#top">[Click to go back to TOC]</a></p>
+<p><a href="#toc">[Click to go back to TOC]</a></p>
 <h2 style="page-break-before: always">Turnouts (<xsl:call-template name="substring-after-last">
   <xsl:with-param name="string" select="substring-before(@class,'ManagerXml')" /><xsl:with-param name="delimiter" select="'.'" /></xsl:call-template>)</h2>
   <!-- NOTE: ")</h2>" above must be on same as selection or TOC script fails to generate a link -->
@@ -162,7 +165,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through lights elements -->
 <!-- each one becomes a table      -->
 <xsl:template match="layout-config/lights">
-<p><a href="#top">[Click to go back to TOC]</a></p>
+<p><a href="#toc">[Click to go back to TOC]</a></p>
 <h2 style="page-break-before: always">Lights (<xsl:call-template name="substring-after-last">
   <xsl:with-param name="string" select="substring-before(@class,'ManagerXml')" /><xsl:with-param name="delimiter" select="'.'" /></xsl:call-template>)</h2>
   <!-- NOTE: ")</h2>" above must be on same as selection or TOC script fails to generate a link -->
@@ -181,7 +184,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through signalheads elements -->
 <!-- each one becomes a table           -->
 <xsl:template match="layout-config/signalheads">
-<p><a href="#top">[Click to go back to TOC]</a></p>
+<p><a href="#toc">[Click to go back to TOC]</a></p>
 <h2 style="page-break-before: always">Signal Heads</h2>
     <table style="width:75%" border="1">
     <tr><th>System Name</th><th>User Name</th><th>Type</th><th>Output</th><th>Comment</th></tr>
@@ -194,7 +197,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through signalmasts elements -->
 <!-- each one becomes a table           -->
 <xsl:template match="layout-config/signalmasts">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">Signal Masts (<xsl:call-template name="substring-after-last">
         <xsl:with-param name="string" select="substring-before(@class,'ManagerXml')" /><xsl:with-param name="delimiter" select="'.'" />
         </xsl:call-template>)</h2>
@@ -210,7 +213,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through signalgroups elements -->
 <!-- each one becomes a table            -->
 <xsl:template match="layout-config/signalgroups">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">Signal Groups</h2>
     <table style="width:75%" border="1">
         <tr><th>System Name</th><th>User Name</th><th>Master</th><th>Members</th><th>Comment</th></tr>
@@ -223,7 +226,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through signalmastlogics elements -->
 <!-- each one becomes a separate table       -->
 <xsl:template match="layout-config/signalmastlogics">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">Signal Mast Logics</h2>
     Logic delay: <xsl:value-of select="logicDelay"/> ms<br/>
     <!-- index through individual signalmastlogic elements -->
@@ -265,28 +268,31 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through sensors elements -->
 <!-- each one becomes a table       -->
 <xsl:template match="layout-config/sensors">
-<p><a href="#top">[Click to go back to TOC]</a></p>
+<p><a href="#toc">[Click to go back to TOC]</a></p>
 <h2 style="page-break-before: always">Sensors (<xsl:call-template name="substring-after-last">
   <xsl:with-param name="string" select="substring-before(@class,'ManagerXml')" /><xsl:with-param name="delimiter" select="'.'" /></xsl:call-template>)</h2>
   <!-- NOTE: ")</h2>" above must be on same as selection or TOC script fails to generate a link --> 
-    Default sensor state: <xsl:value-of select="@defaultInitialState"/>
+    Default Sensor State: <xsl:value-of select="defaultInitialState"/>
     <table style="width:50%" border="1">
         <tr><th>System Name</th><th>User Name</th><th>Inv?</th><th>Comment</th></tr>
         <!-- index through individual sensor elements -->
-        <xsl:apply-templates/>
+        <xsl:apply-templates select="sensor"/>
     </table>
+</xsl:template>
+
+<xsl:template match="defaultInitialState">
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <!-- Index through memories elements -->
 <!-- each one becomes a table        -->
 <xsl:template match="layout-config/memories">
-<p><a href="#top">[Click to go back to TOC]</a></p>
+<p><a href="#toc">[Click to go back to TOC]</a></p>
 <h2 style="page-break-before: always">Memory Variables</h2>
     <table style="width:50%" border="1">
         <tr><th>System Name</th><th>User Name</th><th>Comment</th><th>Value</th></tr>
         <!-- index through individual memory elements -->
-        <xsl:apply-templates/>
+        <xsl:apply-templates select="memory"/>
     </table>
 </xsl:template>
 
@@ -294,7 +300,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through reporters elements -->
 <!-- each one becomes a table         -->
 <xsl:template match="layout-config/reporters">
-<p><a href="#top">[Click to go back to TOC]</a></p>
+<p><a href="#toc">[Click to go back to TOC]</a></p>
 <h2 style="page-break-before: always">Reporters</h2>
     <table style="width:50%" border="1">
         <tr><th>System Name</th><th>User Name</th><th>Comment</th></tr>
@@ -307,7 +313,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through routes elements -->
 <!-- each one becomes a table      -->
 <xsl:template match="layout-config/routes">
-<p><a href="#top">[Click to go back to TOC]</a></p>
+<p><a href="#toc">[Click to go back to TOC]</a></p>
 <h2 style="page-break-before: always">Routes</h2>
     <table style="width:100%" border="1">
       <tr><th>System Name</th><th>User Name</th>
@@ -325,7 +331,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through layoutblocks elements -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/layoutblocks">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">Layout Blocks</h2>
     <table style="width:100%" border="1">
         <tr>
@@ -347,7 +353,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through oblocks (occupancy blocks) elements -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/oblocks">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">Occupancy Blocks</h2>
     <table style="width:100%" border="1">
         <tr>
@@ -367,7 +373,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through sections elements -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/sections">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">Sections</h2>
     <table style="width:75%" border="1">
         <tr><th>System Name</th><th>User Name</th><th>Entry (order)</th><th>Exit</th><th>Comment</th></tr>
@@ -383,7 +389,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     </xsl:if>
 
     <xsl:if test="@class = 'jmri.configurexml.BlockManagerXml'" >
-        <p><a href="#top">[Click to go back to TOC]</a></p>
+        <p><a href="#toc">[Click to go back to TOC]</a></p>
         <h2 style="page-break-before: always">Blocks</h2>
         <table style="width:75%" border="1">
           <tr>
@@ -476,7 +482,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- *************************************************************************************** -->
 <!-- Index through ctcdata elements -->
 <xsl:template match="layout-config/ctcdata">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">CTC Data</h2>
     <h3>CTC Properties</h3>
     <table style="width:50%" border="1">
@@ -529,7 +535,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through warrants elements -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/warrants">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">Warrants</h2>
     Settings:
     <!--Haltstart = <xsl:value-of select="nxparams/haltstart"/>-->
@@ -545,7 +551,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through audio elements -->
 <!-- each one becomes a table           -->
 <xsl:template match="layout-config/audio">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">Audio</h2>
     <table style="width:75%" border="1">
         <tr><th>Class</th><th>System Name</th><th>User Name</th><th>Type</th><th>URL</th><th>Comment</th></tr>
@@ -558,10 +564,10 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through logix, sort by ENABLED and NOT ENABLED -->
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/logixs">
-  <p><a href="#top">[Click to go back to TOC]</a></p>
+  <p><a href="#toc">[Click to go back to TOC]</a></p>
   <h2 style="page-break-before: always">Logix ENABLED</h2>
   <xsl:apply-templates mode="logixenabled"/>
-  <p><a href="#top">[Click to go back to TOC]</a></p>
+  <p><a href="#toc">[Click to go back to TOC]</a></p>
   <h2 style="page-break-before: always">Logix NOT ENABLED</h2>
   <xsl:apply-templates mode="logixnotenabled"/>
 </xsl:template>
@@ -571,7 +577,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/logixs/logix" mode="logixenabled">  
     <xsl:if test="( @enabled = 'yes' )">
-      <p><a href="#top">[Click to go back to TOC]</a></p>
+      <p><a href="#toc">[Click to go back to TOC]</a></p>
       <h3 style="page-break-before: always">Logix <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
       <xsl:if test="string-length(@userName)!=0" > (<xsl:value-of select="@userName"/>)</xsl:if> [ENABLED]</h3>
       <!-- NOTE: prior "/h3" cannot have a line break before it or js will not pick up header -->
@@ -586,7 +592,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/logixs/logix" mode="logixnotenabled">
     <xsl:if test="( @enabled = 'no' )">
-      <p><a href="#top">[Click to go back to TOC]</a></p>
+      <p><a href="#toc">[Click to go back to TOC]</a></p>
       <h3 style="page-break-before: always">Logix <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
       <xsl:if test="string-length(@userName)!=0" > (<xsl:value-of select="@userName"/>)</xsl:if> [NOT ENABLED]</h3>
       <!-- NOTE: prior "/h3" cannot have a line break before it or js will not pick up header -->
@@ -947,26 +953,65 @@ value="<xsl:value-of select="@dataString"/>"
 </tr>
 </xsl:template>
 
-
-<!-- *************************************************************************************** -->
-<!-- Index through LogixNG Threads -->
-<!-- each one becomes a separate section -->
-<xsl:template match="layout-config/LogixNGs/Thread">
-<p><a href="#top">[Click to go back to TOC]</a></p>
-<h2 style="page-break-before: always">LogixNG Thread <xsl:value-of select="id"/>
-<xsl:if test="string-length(name)!=0" > (<xsl:value-of select="name"/>)</xsl:if></h2>
-</xsl:template>
-
 <!-- *************************************************************************************** -->  
 <!-- Index through logixNG elements sorted by ENABLED and NOT ENABLED    -->
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/LogixNGs">
-  <p><a href="#top">[Click to go back to TOC]</a></p>
+  <p><a href="#toc">[Click to go back to TOC]</a></p>
+  <h2 style="page-break-before: always">LogixNG Info</h2>
+  <!-- Select for everything NOT an logixNG -->
+  <xsl:apply-templates select="*[not(self::LogixNG)]" mode="logixNGaux"/>  
+  <p><a href="#toc">[Click to go back to TOC]</a></p>
   <h2 style="page-break-before: always">LogixNG ENABLED</h2>
-  <xsl:apply-templates mode="logixNGenabled"/>
-  <p><a href="#top">[Click to go back to TOC]</a></p>
+  <xsl:apply-templates select="LogixNG" mode="logixNGenabled"/>
+  <p><a href="#toc">[Click to go back to TOC]</a></p>
   <h2 style="page-break-before: always">LogixNG NOT ENABLED</h2>
-  <xsl:apply-templates mode="logixNGnotenabled"/>
+  <xsl:apply-templates select="LogixNG" mode="logixNGnotenabled"/>
+</xsl:template>
+
+<!-- *************************************************************************************** -->
+<!-- Index through LogixNG Threads -->
+<!-- each one becomes a separate section -->
+<xsl:template match="layout-config/LogixNGs/Thread" mode="logixNGaux">
+<h3 style="page-break-before: avoid">LogixNG Thread <xsl:value-of select="id"/>
+<xsl:if test="string-length(name)!=0" > (<xsl:value-of select="name"/>)</xsl:if></h3>
+</xsl:template>
+
+<!-- *************************************************************************************** -->
+<xsl:template match="layout-config/LogixNGs/InitializationTable" mode="logixngNGaux">
+    <h3 style="page-break-before: avoid">LogixNG Initialization Table</h3>
+    <xsl:for-each select="./*">
+        <xsl:value-of select="local-name()"/>
+        <xsl:value-of select="."/>
+        <br/>
+    </xsl:for-each>
+
+</xsl:template>
+
+<!-- *************************************************************************************** -->
+<xsl:template match="layout-config/LogixNGs/Clipboard" mode="logixNGaux">
+    <h3 style="page-break-before: avoid">LogixNG Clipboard</h3>
+    <table style="width:75%" border="1">
+        <tr>
+            <th>Socket Name</th>
+            <th>System Name</th>
+            <th>Action Type</th>
+            <th>Expression Type</th>
+         </tr>
+    <!-- index through individual elements -->
+        <xsl:for-each select="Many/Socket">
+        <tr>
+            <td><xsl:value-of select="socketName"/></td>
+            <td><xsl:value-of select="systemName"/></td>
+            <td><xsl:call-template name="oneNGDigitalAction">
+                  <xsl:with-param name="systemname" select="systemName"/>
+            </xsl:call-template></td>
+            <td><xsl:call-template name="oneNGDigitalExpression">
+                  <xsl:with-param name="systemname" select="systemName"/>
+            </xsl:call-template></td>
+        </tr>
+        </xsl:for-each>
+    </table>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -974,7 +1019,7 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/LogixNGs/LogixNG" mode="logixNGenabled">
 <xsl:if test="( @enabled = 'yes' )">
-  <p><a href="#top">[Click to go back to TOC]</a></p>
+  <p><a href="#toc">[Click to go back to TOC]</a></p>
   <h3 style="page-break-before: always">LogixNG <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
     <xsl:if test="string-length(userName)!=0" > (<xsl:value-of select="userName"/>)</xsl:if>
     <xsl:if test="( @enabled = 'yes' )"> [Enabled] </xsl:if>
@@ -994,7 +1039,7 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/LogixNGs/LogixNG" mode="logixNGnotenabled">
 <xsl:if test="( @enabled = 'no' )">
-  <p><a href="#top">[Click to go back to TOC]</a></p>
+  <p><a href="#toc">[Click to go back to TOC]</a></p>
   <h3 style="page-break-before: always">LogixNG <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
     <xsl:if test="string-length(userName)!=0" > (<xsl:value-of select="userName"/>)</xsl:if>
     <xsl:if test="( @enabled = 'yes' )"> [Enabled] </xsl:if>
@@ -1056,18 +1101,6 @@ value="<xsl:value-of select="@dataString"/>"
     </xsl:for-each>
 </xsl:template>
 
-<!-- *************************************************************************************** -->
-<xsl:template match="layout-config/LogixNGs/InitializationTable">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
-    <h2 style="page-break-before: always">LogixNG Initialization Table</h2>
-    <xsl:for-each select="./*">
-        <xsl:value-of select="local-name()"/>
-        <xsl:value-of select="."/>
-        <br/>
-    </xsl:for-each>
-
-</xsl:template>
-
 <!-- ********************************************* -->
 <xsl:template name="oneNGDigitalAction">
         <xsl:param name="systemname"/>
@@ -1094,37 +1127,77 @@ value="<xsl:value-of select="@dataString"/>"
 
 </xsl:template>
 
-<!-- *************************************************************************************** -->
-<xsl:template match="layout-config/LogixNGs/Clipboard">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
-    <h2 style="page-break-before: always">LogixNG Clipboard</h2>
-    <table style="width:75%" border="1">
+<!-- ***NEW Apr 17 2023 ****************************************************************************** -->
+<!-- template to show LogixNG Modules -->
+<xsl:template match="layout-config/LogixNGModules">
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
+    <h2 style="page-break-before: always">LogixNG Modules</h2>
+    <xsl:apply-templates select="Module"/>
+</xsl:template>   
+         
+         
+<!-- ***NEW Apr 17 2023 ****************************************************************************** -->
+<!-- template to show LogixNG Modules -->
+<xsl:template match="Module">
+    <!-- index through individual elements -->
+    <h3>Module: 
+      <xsl:value-of select="systemName"/>
+      <xsl:if test="string-length(userName)!=0" > (<xsl:value-of select="userName"/>)</xsl:if>
+      Root socket: <xsl:value-of select="RootSocket/systemName"/>
+    </h3>
+    <table style="width:50%" border="1">
+      <tr>
+        <th>Parameters</th>
+        <th>Input?</th>
+        <th>Output?</th>
+        <th>Comment</th>
+       </tr>
+    <xsl:for-each select="Parameters/Parameter">
+      <tr><td><xsl:value-of select="name"/></td>
+          <td><xsl:value-of select="isInput"/></td>
+          <td><xsl:value-of select="isOutput"/></td>
+      </tr>
+    </xsl:for-each>
+    </table>
+</xsl:template>
+
+<!-- ***NEW Apr15 2023 ****************************************************************************** -->
+<!-- template to show LogixNG Tables -->
+<xsl:template match="layout-config/LogixNGTables">
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
+    <h2 style="page-break-before: always">LogixNG Tables</h2>
+    <table style="width:100%" border="1">
         <tr>
-            <th>Socket Name</th>
+            <th style="width:10%" >Type</th>
             <th>System Name</th>
-            <th>Action Type</th>
-            <th>Expression Type</th>
+            <th>User Name</th>
+            <th>Other Info</th>
+            <th>Comment</th>
          </tr>
     <!-- index through individual elements -->
-        <xsl:for-each select="Many/Socket">
-        <tr>
-            <td><xsl:value-of select="socketName"/></td>
-            <td><xsl:value-of select="systemName"/></td>
-            <td><xsl:call-template name="oneNGDigitalAction">
-                  <xsl:with-param name="systemname" select="systemName"/>
-            </xsl:call-template></td>
-            <td><xsl:call-template name="oneNGDigitalExpression">
-                  <xsl:with-param name="systemname" select="systemName"/>
-            </xsl:call-template></td>
+     <xsl:for-each select="./*">
+        <xsl:variable name="typeName" select="local-name()"/>
+        <tr><td style="width:10%" ><xsl:value-of select="$typeName"/></td>
+            <td><xsl:value-of select="systemName"/></td> 
+            <td><xsl:value-of select="userName"/></td> 
+            <xsl:choose>
+              <xsl:when test="( $typeName = 'CsvTable' )">
+                 <td>
+                 <xsl:value-of select="./csvType"/>: <xsl:value-of select="./fileName"/></td>
+              </xsl:when>
+              <xsl:if test="string-length(comment)!=0" > 
+                 <td><xsl:value-of select="comment"/></td>
+              </xsl:if>
+            </xsl:choose>
         </tr>
-        </xsl:for-each>
+     </xsl:for-each>
     </table>
 </xsl:template>
 
 <!-- ***MODIFIED/EXPANDED Jan 12 2023 ****************************************************************************** -->
 <!-- template to show ConditionalNG Actions -->
 <xsl:template match="layout-config/LogixNGDigitalExpressions">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">LogixNG Digital Expressions</h2>
     <table border="1">
         <tr>
@@ -1173,7 +1246,7 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- ***MODIFIED/EXPANDED Jan 12 2023 ****************************************************************************** -->
 <!-- template to show ConditionalNG Actions -->
 <xsl:template match="layout-config/LogixNGDigitalActions">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">LogixNG Digital Actions</h2>
     <table border="1">
         <tr>
@@ -1231,7 +1304,7 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- ***NEW   Jan 12 2023 ******************************************************************************** -->
 <!-- template to show LogixNGDigitalBooleanActions -->
 <xsl:template match="layout-config/LogixNGDigitalBooleanActions">
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">LogixNG Digital Boolean Actions</h2>
     <table border="1">
         <tr>
@@ -1263,7 +1336,7 @@ value="<xsl:value-of select="@dataString"/>"
 
 <!-- *************************************************************************************** -->
 <xsl:template match="layout-config/paneleditor">
-<p><a href="#top">[Click to go back to TOC]</a></p>
+<p><a href="#toc">[Click to go back to TOC]</a></p>
 <h2 style="page-break-before: always">Panel: <xsl:value-of select="@name"/></h2>
     <table style="width:75%" border="1">
     <!-- index through individual panel elements -->
@@ -1277,7 +1350,7 @@ value="<xsl:value-of select="@dataString"/>"
 
 <!-- *************************************************************************************** -->
 <xsl:template match="layout-config/LayoutEditor">
-<p><a href="#top">[Click to go back to TOC]</a></p>
+<p><a href="#toc">[Click to go back to TOC]</a></p>
 <xsl:variable name="layoutpanelname" select="@name"/>
 <h2 style="page-break-before: always">Layout Panel: <xsl:value-of select="$layoutpanelname"/></h2>
 
@@ -1295,7 +1368,7 @@ value="<xsl:value-of select="@dataString"/>"
     </table>
     
 <!-- Extra page break and wider line per user request to author 2023-02-28 -->
-<p><a href="#top">[Click to go back to TOC]</a></p>
+<p><a href="#toc">[Click to go back to TOC]</a></p>
 <!-- Need name on following h3 to make it unique for js to create TOC -->
 <h3 style="page-break-before: always">Panel Elements for: <xsl:value-of select="$layoutpanelname"/></h3>
     <table style="width:100%" border="1">
@@ -1321,7 +1394,7 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- SSL element groups -->
 <xsl:template name="signalelements">
     <!-- each one becomes a table -->
-    <p><a href="#top">[Click to go back to TOC]</a></p>
+    <p><a href="#toc">[Click to go back to TOC]</a></p>
     <h2 style="page-break-before: always">Simple Signal Logic</h2>
         <table style="width:100%" border="1">
         <tr><th>Controls Signal</th>
@@ -2030,7 +2103,7 @@ connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select=
     <xsl:for-each select="..">
       <xsl:choose>
         <xsl:when test="(name() != 'operation' )" >
-            <p><a href="#top">[Click to go back to TOC]</a></p>
+            <p><a href="#toc">[Click to go back to TOC]</a></p>
             <h2 style="page-break-before: always">History</h2>
         </xsl:when>
       </xsl:choose>
