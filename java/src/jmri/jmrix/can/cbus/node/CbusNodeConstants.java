@@ -96,6 +96,7 @@ public class CbusNodeConstants {
                     node.getNodeEventManager().resetNodeEventsToZero(); // sets num events to 0 as does not respond to RQEVN
                     break;
                 case 50: // CANMIO-SVO
+                case 19: // CANSERVO8C
                     node.setnvWriteInLearnOnly(true);
                     break;
                 default:
