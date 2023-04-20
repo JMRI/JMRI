@@ -212,11 +212,7 @@ public class CbusNodeNVManager {
         nextNvInLoop = 1; // start from 1 not 0 as 0 is the total num. nv's
         TEACH_OUTSTANDING_NVS = true;
         _node.getNodeTimerManager()._sendNVErrorCount = 0 ;
-
-        if (((CbusNode)_node).getnvWriteInLearnOnly()) {
-            _node.send.nodeEnterLearnEvMode(_node.getNodeNumber());
-        }
-
+        
         // check length of new array
       //  log.info("array size {}",newNvsToTeach.length);
         
@@ -228,9 +224,11 @@ public class CbusNodeNVManager {
      * Loop for NV teaching
      */
     protected void sendNextNvToNode() {
+        
         if ( _node.getNodeTimerManager().hasActiveTimers() ) {
             return;
         }
+        
         for (int i = nextNvInLoop; i < _nvArray.length; i++) {
             if ( newNvsToTeach[i] != _nvArray[i] ) {
                 _node.getNodeTimerManager().setsendEditNvTimeout();
@@ -239,14 +237,7 @@ public class CbusNodeNVManager {
                 return;
             }
         }
-        nvTeachComplete();
-    }
-
-    private void nvTeachComplete() {
-        if (((CbusNode)_node).getnvWriteInLearnOnly()) {
-            _node.send.nodeExitLearnEvMode(_node.getNodeNumber());
-        }
-
+        
         log.info( "TEACH NV COMPLETE {}", Bundle.getMessage("NdCompleteNVar", String.valueOf(_node.getNodeTimerManager()._sendNVErrorCount) , _node ) );
         TEACH_OUTSTANDING_NVS = false;
         _node.notifyPropertyChangeListener("TEACHNVCOMPLETE", null, _node.getNodeTimerManager()._sendNVErrorCount);
