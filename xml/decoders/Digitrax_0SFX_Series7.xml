@@ -738,7 +738,7 @@
         <label xml:lang="it">Selettore Campana</label>
       </variable>
 
-	   <variable CV="10" item="Sound Option 8" default="0"   include="SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+	   <variable CV="10" item="EMF Option 1" default="0"   include="SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
         <decVal/>
 		<label>BEMF tachometer voltage gain adjust</label>
 		<label xml:lang="it">BEMF tachometer voltage gain adjust</label>
