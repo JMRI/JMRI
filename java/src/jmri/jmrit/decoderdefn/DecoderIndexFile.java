@@ -1,5 +1,6 @@
 package jmri.jmrit.decoderdefn;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -11,11 +12,13 @@ import java.util.List;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
+import javax.swing.ProgressMonitor;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+import jmri.util.ThreadingUtil;
 import org.jdom2.Attribute;
 import org.jdom2.Comment;
 import org.jdom2.Document;
@@ -443,11 +446,38 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         // write it out
-        try {
-            index.writeFile(DECODER_INDEX_FILE_NAME, InstanceManager.getDefault(DecoderIndexFile.class), sbox);
-        } catch (java.io.IOException ex) {
-            log.error("Error writing new decoder index file: {}", ex.getMessage());
+        if (sbox.length < 30 || GraphicsEnvironment.isHeadless()) {
+            try {
+                index.writeFile(DECODER_INDEX_FILE_NAME,
+                            InstanceManager.getDefault(DecoderIndexFile.class), sbox, null);
+            } catch (java.io.IOException ex) {
+                log.error("Error writing new decoder index file: {}", ex.getMessage());
+            }
+            return;
         }
+
+        // Reindex in a background thread, with a progress dialog.
+        // This must be in a new thread so the event dispatching thread can
+        // continue to update the UI.
+        ThreadingUtil.newThread(() -> {
+            String message = Bundle.getMessage("DecoderProgressMessage"); // NOI18N
+            // HACK: add long blank space to message to make dialog wider.
+            // ProgressMonitor doesn't support a width()-type setting.
+            ProgressMonitor pm = new ProgressMonitor(null,
+                 message + "                                    \t", // HACK
+                 "", 0, sbox.length);
+            pm.setMillisToDecideToPopup(100);
+            pm.setMillisToPopup(100);
+            try {
+                index.writeFile(DECODER_INDEX_FILE_NAME,
+                            InstanceManager.getDefault(DecoderIndexFile.class), sbox, pm);
+            // catch all exceptions, so progess dialog will close
+            } catch (Exception e) {
+                // TODO: show message in progress monitor?
+                log.error("Error writing new decoder index file: {}", e.getMessage());
+            }
+            pm.close();
+        }, "decoderIndexer").start();
     }
 
     /**
@@ -641,10 +671,24 @@ public class DecoderIndexFile extends XmlFile {
         return bracketedInString.contains(bracketedFindString);
     }
 
-    public void writeFile(String name, DecoderIndexFile oldIndex, String[] files) throws java.io.IOException {
+    /**
+     * Build and write the decoder index file, based on a set of decoder files.
+     *
+     * This creates the full DOM object for the decoder index based on reading the
+     * supplied decoder xml files. It then saves the decoder index out to a new file.
+     *
+     * @param name name of the new index file
+     * @param oldIndex old decoder index file
+     * @param files array of files to read for new index
+     * @param pm optional ProgressMonitor to update while reading files
+     * @throws java.io.IOException for errors writing the decoder index file
+     */
+    public void writeFile(String name, DecoderIndexFile oldIndex,
+                          String[] files, ProgressMonitor pm) throws java.io.IOException {
         if (log.isDebugEnabled()) {
             log.debug("writeFile {}",name);
         }
+
         // This is taken in large part from "Java and XML" page 368
         File file = new File(FileUtil.getUserFilesPath() + name);
 
@@ -704,7 +748,17 @@ public class DecoderIndexFile extends XmlFile {
 
         // add family list by scanning files
         Element familyList = new Element("familyList");
+        int fileNum = 0;
         for (String fileName : files) {
+            // update progress monitor, if passed in
+            if (pm != null) {
+                if (pm.isCanceled()) {
+                    return;
+                }
+                pm.setProgress(fileNum);
+                pm.setNote(fileName);
+            }
+            fileNum++;
             DecoderFile d = new DecoderFile();
             try {
                 // get <family> element and add the file name
@@ -740,6 +794,10 @@ public class DecoderIndexFile extends XmlFile {
         index.addContent(mfgList);
         index.addContent(familyList);
 
+        if (pm != null) {
+            pm.setNote("Writing decoderIndex.xml");
+        }
+        log.info("Writing decoderIndex");
         writeXML(file, doc);
 
         // force a read of the new file next time

@@ -1,5 +1,6 @@
 package jmri.jmrit.roster;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -17,6 +18,7 @@ import java.util.TreeSet;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
+import javax.swing.ProgressMonitor;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.beans.PropertyChangeProvider;
@@ -27,6 +29,7 @@ import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
+import jmri.util.ThreadingUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -208,10 +211,30 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Add a RosterEntry object to the in-memory Roster.
      *
+     * This method notifies the UI of changes so should not be used when
+     * adding or reloading many roster entries at once.
+     *
      * @param e Entry to add
      */
     public void addEntry(RosterEntry e) {
+        // add the entry to the roster list
+        addEntryNoNotify(e);
+        // then notify the UI of the change
+        firePropertyChange(ADD, null, e);
+    }
+
+    /**
+     * Add a RosterEntry object to the in-memory Roster without notifying
+     * the UI of changes.
+     *
+     * This method exists so full roster reloads/reindexing can take place without
+     * completely redrawing the UI table for each entry.
+     *
+     * @param e Entry to add
+     */
+    private void addEntryNoNotify(RosterEntry e) {
         log.debug("Add entry {}", e);
+        // TODO: is sorting really necessary here?
         synchronized (_list) {
             int i = _list.size() - 1; // Last valid index
             while (i >= 0) {
@@ -226,7 +249,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         e.addPropertyChangeListener(this);
         this.addRosterGroups(e.getGroups(this));
         setDirty(true);
-        firePropertyChange(ADD, null, e);
     }
 
     /**
@@ -353,10 +375,19 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      *         group, or the group does not exist.
      */
     public RosterEntry getGroupEntry(String group, int i) {
-        List<RosterEntry> l = matchingList(null, null, null, null, null, null, null);
-        int num = 0;
-        for (RosterEntry r : l) {
-            if (group != null) {
+        boolean doGroup = (group != null && !group.equals(Roster.ALLENTRIES) && !group.isEmpty());
+        if (!doGroup) {
+            // if not trying to get a specific group entry, just get the specified
+            // entry from the main list
+            try {
+                return _list.get(i);
+            } catch (IndexOutOfBoundsException e) {
+                return null;
+            }
+        }
+        synchronized (_list) {
+            int num = 0;
+            for (RosterEntry r : _list) {
                 if ((r.getAttribute(getRosterGroupProperty(group)) != null)
                         && r.getAttribute(getRosterGroupProperty(group)).equals("yes")) { // NOI18N
                     if (num == i) {
@@ -364,21 +395,17 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                     }
                     num++;
                 }
-            } else {
-                if (num == i) {
-                    return r;
-                }
-                num++;
             }
         }
         return null;
     }
 
     public int getGroupIndex(String group, RosterEntry re) {
-        List<RosterEntry> l = matchingList(null, null, null, null, null, null, null);
         int num = 0;
-        for (RosterEntry r : l) {
-            if (group != null) {
+        boolean doGroup = (group != null && !group.equals(Roster.ALLENTRIES) && !group.isEmpty());
+        synchronized (_list) {
+        for (RosterEntry r : _list) {
+            if (doGroup) {
                 if ((r.getAttribute(getRosterGroupProperty(group)) != null)
                         && r.getAttribute(getRosterGroupProperty(group)).equals("yes")) { // NOI18N
                     if (r == re) {
@@ -392,6 +419,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                 }
                 num++;
             }
+        }
         }
         return -1;
     }
@@ -446,7 +474,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     public List<RosterEntry> getEntriesInGroup(String group) {
         if (group == null || group.equals(Roster.ALLENTRIES) || group.isEmpty()) {
-            return this.matchingList(null, null, null, null, null, null, null);
+            // Return a copy of the list
+            return new ArrayList<RosterEntry>(this._list);
         } else {
             return this.getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes"); // NOI18N
         }
@@ -935,6 +964,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         }
 
         // find root
+        log.info("Reading roster file with rootFromName({})", name);
         Element root = rootFromName(name);
         if (root == null) {
             log.error("Roster file exists, but could not be read; roster not available");
@@ -949,8 +979,13 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                 log.debug("readFile sees {} children", l.size());
             }
             l.stream().forEach((e) -> {
-                addEntry(new RosterEntry(e));
+                // do not notify UI on each, notify once when all are done
+                addEntryNoNotify(new RosterEntry(e));
             });
+            // Only fire one notification: the table will redraw all entries
+            if (l.size() > 0) {
+                firePropertyChange(ADD, null, l.get(0));
+            }
 
             //Scan the object to check the Comment and Decoder Comment fields for
             //any <?p?> processor directives and change them to back \n characters
@@ -1043,26 +1078,91 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Rebuild the Roster index and store it.
      */
     public void reindex() {
+
+        String[] filenames = Roster.getAllFileNames();
+        log.info("Indexing {} roster files", filenames.length);
+
+        // rosters with smaller number of locos are pretty quick to
+        // reindex... no need for a background thread and progress dialog
+        if (filenames.length < 100 || GraphicsEnvironment.isHeadless()) {
+            try {
+                reindexInternal(filenames, null);
+            } catch (Exception e) {
+                log.error("Caught exception trying to reindex roster: ", e);
+            }
+            return;
+        }
+
+        // Reindex in a background thread, with a progress dialog.
+        // This must be in a new thread so the event dispatching thread can
+        // continue to update the UI.
+        ThreadingUtil.newThread(() -> {
+            String message = Bundle.getMessage("RosterProgressMessage"); // NOI18N
+            // HACK: add long blank space to message to make dialog wider.
+            // ProgressMonitor doesn't support a width()-type setting.
+            ProgressMonitor pm = new ProgressMonitor(null,
+                 message + "                                    \t", // HACK
+                 "", 0, filenames.length);
+            pm.setMillisToDecideToPopup(100);
+            pm.setMillisToPopup(100);
+            try {
+                reindexInternal(filenames, pm);
+            // catch all exceptions, so progess dialog will close
+            } catch (Exception e) {
+                // TODO: show message in progress monitor?
+                log.error("Error writing new roster index file: {}", e.getMessage());
+            }
+            pm.close();
+        }, "rosterIndexer").start();
+    }
+
+    /**
+     * Re-index roster, optionally updating a progress dialog.
+     *
+     * During reindexing, do not notify the UI of changes until
+     * all indexing is complete (the single notify event is done in
+     * readFile(), called from reloadRosterFile()).
+     *
+     * @param filenames array of filenames to load to new index
+     * @param pm optional ProgressMonitor to display progress
+     */
+    private void reindexInternal(String[] filenames, ProgressMonitor pm) {
         Roster roster = new Roster();
-        for (String fileName : Roster.getAllFileNames()) {
-            // Read file
+        int rosterNum = 0;
+        for (String fileName : filenames) {
+            if (pm != null) {
+                if (pm.isCanceled()) {
+                    return;
+                }
+                pm.setNote(fileName);
+                pm.setProgress(rosterNum++);
+            }
+            // Read individual loco file
             try {
                 Element loco = (new LocoFile()).rootFromName(getRosterFilesLocation() + fileName).getChild("locomotive");
                 if (loco != null) {
                     RosterEntry re = new RosterEntry(loco);
                     re.setFileName(fileName);
-                    roster.addEntry(re);
+                    // do not notify UI of changes
+                    roster.addEntryNoNotify(re);
                 }
             } catch (JDOMException | IOException ex) {
                 log.error("Exception while loading loco XML file: {}", fileName, ex);
             }
         }
 
+        log.info("Making backup roster index file");
         this.makeBackupFile(this.getRosterIndexPath());
         try {
+            log.info("Writing new index file");
             roster.writeFile(this.getRosterIndexPath());
         } catch (IOException ex) {
+            // TODO: error dialog, copy backup back to roster.xml
             log.error("Exception while writing the new roster file, may not be complete", ex);
+        }
+        log.info("Reloading resulting roster index");
+        if (pm != null) {
+            pm.setNote(Bundle.getMessage("RosterProgressReloading"));
         }
         this.reloadRosterFile();
         log.info("Roster rebuilt, stored in {}", this.getRosterIndexPath());
