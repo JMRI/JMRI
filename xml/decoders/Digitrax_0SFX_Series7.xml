@@ -206,7 +206,7 @@
           </enumChoice>
           <enumChoice choice="On:30" value="30">
             <choice>On:30</choice>
-          </enumChoice>  
+          </enumChoice>
           <enumChoice choice="On:60" value="60">
             <choice>On:60</choice>
           </enumChoice>
@@ -672,7 +672,7 @@
     <label>Sound Project Author ID</label>
     <label xml:lang="it">ID autore progetto Suono</label>
     </variable>
-    <variable item="Sound Project Code Version" CV="152" default="70" readOnly="yes" include="SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">>
+    <variable item="Sound Project Code Version" CV="152" default="70" readOnly="yes" include="SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
         <decVal/>
         <label>Sound Project Code Version</label>
         <label xml:lang="it">Version Suono</label>
@@ -737,7 +737,7 @@
         <label>Bell Selector</label>
         <label xml:lang="it">Selettore Campana</label>
       </variable>
-	  
+
 	   <variable CV="10" item="Sound Option 8" default="0"   include="SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
         <decVal/>
 		<label>BEMF tachometer voltage gain adjust</label>
@@ -774,7 +774,7 @@
         <!-- highest used so far: -->
       <!-- "Sound Option 7"     -->
       <!-- "Sound Setting 17"   -->
-	  
+
 	<variable CV="161" item="Sound Setting 18"  default="20"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
      <decVal max="96"/>
      <label>Pump run time</label>
@@ -900,34 +900,34 @@
     <label>Water fill/Coal fill Volume</label>
     <tooltip>18-63</tooltip>
   </variable>
-  
+
   <!-- maximum 40 Sound Settings -->
-  
+
         <!-- highest used so far: -->
       <!-- "Sound Option 16"     -->
       <!-- "Sound Setting 38"   -->
-	  
+
   <variable CV="166" item="Sound Option 10" default="7"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="9"/>
     <label>Cutoff Speed for wheel slip</label>
     <label xml:lang="it">Cutoff Speed for wheel slip</label>
     <tooltip>3-6</tooltip>
   </variable>
- 
+
   <variable CV="190" item="Sound Option 11" default="5"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="14"/>
     <label>Cutoff Minimum Speed Slip</label>
     <label xml:lang="it">Cutoff Minimum Speed SlipSlip</label>
     <tooltip>Min 3-12, Max 14</tooltip>
   </variable>
-    
+
   <variable CV="169" item="Sound Option 12" default="40"    include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="99"/>
     <label>Cutoff Speed HIGH</label>
     <label xml:lang="it">Cutoff Speed HIGH</label>
     <tooltip>28-50</tooltip>
   </variable>
-  
+
   <variable CV="170" item="Sound Option 13" default="13"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="28"/>
     <label>Cutoff Speed LOW</label>
@@ -947,7 +947,7 @@
     <label xml:lang="it">Cutoff Speed for Auto Open Cyl</label>
     <tooltip>Min 12-21, Max 64</tooltip>
   </variable>
-  
+
   <variable CV="184" item="Sound Option 16" default="21"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="32"/>
     <label>Steam cock threshold</label>
@@ -1149,8 +1149,8 @@
     <tooltip>Disable Not Used</tooltip>
     <label>Disable Not Used</label>
   </variable>
-  
-  
+
+
   <!-- Disable Sound Settings -->
 
     </variables>
@@ -1206,7 +1206,7 @@
       <display item="Feature Disable Group 2-7" format="checkbox"/>
       <display item="Feature Disable Group 2-8" format="checkbox"/>
     </column>
- 
+
     <column>
       <display item="Feature Disable Group 3"/>
       <label>
@@ -1239,10 +1239,10 @@
       <display item="Feature Disable Group 4-8" format="checkbox"/>
     </column>
   </row>
-  
-  
+
+
   <name>Digitrax Sound Series 7 Extended</name>
 </pane>
 
- 
+
 </decoder-config>
