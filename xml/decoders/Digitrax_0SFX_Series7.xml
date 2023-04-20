@@ -685,7 +685,7 @@
         <tooltip>Code Project Identifier</tooltip>
 	  </variable>
       <variable CV="154" item="Sound Setting 14" default="22" include="SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
-        <decVal max="100"/>  speed at which brake sounds begin to play
+        <decVal max="100"/>
         <label>Delay brake apply</label>
         <label xml:lang="it">Volume Spegnimento/Sicurezza Vapore</label>
          <tooltip>speed above which braking sounds begin to play</tooltip>
@@ -762,16 +762,10 @@
         <label>Variant ID</label>
       </variable>
       <!-- For customized Extended Sound Projects -->
-          <!-- inline sound levels and disables   -->
-    <!-- Modified Sound Settings -->
-	      <variable CV="148" item="Sound Setting 12" default="30"  exclude="SDXH167ExtS,SDXH167ExtD">
-        <decVal/>
-        <label>Compressor Start Rate</label>
-        <label xml:lang="it">Frequenza compressore Run/Popoff</label>
-        <tooltip>Time ms. between Compressor cycles</tooltip>
-      </variable>
+      <!-- inline sound levels and disables   -->
+      <!-- Modified Sound Settings -->
 
-        <!-- highest used so far: -->
+      <!-- highest used so far: -->
       <!-- "Sound Option 7"     -->
       <!-- "Sound Setting 17"   -->
 
