@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>New script in DCC-EX folder, RosterExportToDCC-EX.py, which outputs all JMRI roster entries in 
+                <li>New script in DCC-EX folder, RosterExportToDCC-EX.py, which outputs all JMRI roster entries in
                 format suitable for copying into myAutomation.h.</li>
             </ul>
 
@@ -371,7 +371,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Updates for the Zimo MS series of decoders.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
