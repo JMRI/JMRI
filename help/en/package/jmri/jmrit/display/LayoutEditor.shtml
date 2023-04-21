@@ -546,7 +546,8 @@
         <li><strong>Show Icon tooltips</strong> - This submenu allows you to select whether icon
         tooltips are displayed when in Edit Mode and when not in Edit Mode. When the mouse is
         hovered over an icon, and tooltips are on, the name of the icon is displayed while the
-        mouse remains over the icon. Drawn track items do not have tooltips.  See
+        mouse remains over the icon. Except for turnouts and slips, drawn track items do not have
+        tooltips.  Turnouts and slips were added as of JMRI 5.3.6.  See
         <a href="Tooltips.shtml">Tooltips</a> for more information.</li>
 
         <li><strong>Show Help Bar in Edit Mode</strong> - If this item is checked, the help bar is

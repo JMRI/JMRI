@@ -50,7 +50,7 @@ for entry in rosterlist.toArray() :
   rc = commentOut + "ROSTER(" + da + ",\"" + entry.getId() + "\",\"" 
   
   # loop thru and append function labels
-  for func in range(0, entry.getMAXFNNUM()+1):   
+  for func in range(0, entry.getMaxFnNumAsInt()+1):   
     label = entry.getFunctionLabel(func)
     if (label is None) : label = ""
     else :

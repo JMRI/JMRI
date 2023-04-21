@@ -243,7 +243,8 @@ public class SRCPClientParserTokenizerTest{
         String cmd = "this should fail";
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
-        Assert.assertThrows(TokenMgrError.class, () -> stm.getNextToken());
+        Assertions.assertNotNull(Assertions.assertThrows(TokenMgrError.class, () ->
+            stm.getNextToken() ));
     }
 
     @BeforeEach
