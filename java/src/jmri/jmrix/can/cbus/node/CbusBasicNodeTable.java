@@ -11,6 +11,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.Roster;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.*;
@@ -214,16 +215,20 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
                 }
                 if ((decoderFile != null) && (progMan != null)) {
                     log.debug("decoder file: {}", decoderFile.getFileName()); // NOI18N
-                    RosterEntry blank = new RosterEntry();
-                    RosterEntry roster = new RosterEntry(blank, nodeNumber);
-                    roster.setDecoderFamily("CBUS");
-                    roster.setMfg(decoderFile.getMfg());
-                    roster.setDecoderModel(decoderFile.getModel());
-                    roster.setRoadNumber(Integer.toString(_mainArray.get(row).getNodeNumber()));
-                    roster.setRoadName(userName);
+                    // Look for an existing roster entry
+                    RosterEntry re = Roster.getDefault().getEntryForId(nodeNumber);
+                    if (re == null) {
+                        // Or create one
+                        re = new RosterEntry(new RosterEntry(), nodeNumber);
+                        re.setDecoderFamily("CBUS");
+                        re.setMfg(decoderFile.getMfg());
+                        re.setDecoderModel(decoderFile.getModel());
+                        re.setRoadNumber(Integer.toString(_mainArray.get(row).getNodeNumber()));
+                        re.setRoadName(userName);
+                    }
                     String progTitle = "CBUS NV Programmer";
                     String progFile = "programmers" + File.separator + "Cbus" + ".xml";
-                    JFrame p = new PaneServiceProgFrame(decoderFile, roster, progTitle, progFile, progMan.getGlobalProgrammer());
+                    JFrame p = new PaneServiceProgFrame(decoderFile, re, progTitle, progFile, progMan.getGlobalProgrammer());
                     p.pack();
                     p.setVisible(true);
                 } else {
