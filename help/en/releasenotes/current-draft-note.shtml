@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>New script in DCC-EX folder, RosterExportToDCC-EX.py, which outputs all JMRI roster entries in 
+                <li>New script in DCC-EX folder, RosterExportToDCC-EX.py, which outputs all JMRI roster entries in
                 format suitable for copying into myAutomation.h.</li>
             </ul>
 
@@ -625,6 +625,12 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Add clickable table of contents to Panel File display/print capability (when you open a panel xml file via the JMRI web server)</li>
+            <li>Add clickable table of contents to Panel File display/print capability
+                (when you open a panel xml file via the JMRI web server)</li>
+            <li>New
+                <a href="https://jmri.org/jython/anyrail/AnyRailBuildBlockSensorList.py">AnyRailBuildBlockSensorList.py</li>
+                script and associated
+                <a href="https://jmri.org/jython/anyrail/README.md">README.md</li>
+                file.</li>
         </ul>
 

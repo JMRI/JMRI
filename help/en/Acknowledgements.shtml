@@ -53,7 +53,8 @@
 
         <li>Ronald Angel, who figured out how to run the demo on GNU/Linux</li>
 
-        <li>Cliff Anderson, who contributed the TurnoutsMasterSlave.py script</li>
+        <li>Cliff Anderson, who contributed the TurnoutsMasterSlave.py script
+        and the AnyRailBuildBlockSensorList.py script.</li>
 
         <li>Ian Anderson, who set up the <a href="https://editthis.info/wiki/Main_Page">
         documentation Wiki</a>, which lets a lot of people easily contribute to building better
