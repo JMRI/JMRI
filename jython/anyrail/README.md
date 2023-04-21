@@ -2,6 +2,8 @@ The AnyRail program can export a track plan to a JMRI PanelPro XML file with a L
 
 This script will create a new occupancy Sensor for each exported Block.
 
+For more details, see the [PDF file](http://jmri.org/community/connections/AnyRail/AnyRailBuildBlockSensorList.pdf) on the JMRI web site.
+
 Each time it becomes necessary to modify the AnyRail track plan and export a new version of the PanelPro file, the user is forced to rebuild the list of Sensors that define the related Occupancy status for each Block. After many such revisions and the resultant efforts on a large club layout, the painful need for a script has led to what you are reading now.
 
 This script automates what would be a tedious and error prone process when done manually. It does however, require careful attention to the AnyRail track plan details.
