@@ -222,6 +222,7 @@
         <h4>Digitrax</h4>
             <ul>
                 <li>Added a decoder definition for the PM74 board.</li>
+                <li>Added decoder definitions for the SFX Sound Decoders - Series 7</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
