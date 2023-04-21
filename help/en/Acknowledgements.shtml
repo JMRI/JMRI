@@ -711,7 +711,8 @@
         <li>Ron McKinnon, who fixed some problems with the lighting options in the SoundTraxx
         Tsunami Steam definitions</li>
 
-        <li>John McMasters, who provided definitions for his Digitrax Sound projects</li>
+        <li>John McMasters, <!-- SPJMaker -->
+        who provided definitions for his Digitrax Sound projects</li>
 
         <li>Dave McMorran, <!-- davemc8992 -->
          who worked on the MQTT JSON coding</li>

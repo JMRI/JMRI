@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>New script in DCC-EX folder, RosterExportToDCC-EX.py, which outputs all JMRI roster entries in 
+                <li>New script in DCC-EX folder, RosterExportToDCC-EX.py, which outputs all JMRI roster entries in
                 format suitable for copying into myAutomation.h.</li>
             </ul>
 
@@ -222,6 +222,7 @@
         <h4>Digitrax</h4>
             <ul>
                 <li>Added a decoder definition for the PM74 board.</li>
+                <li>Added decoder definitions for the SFX Sound Decoders - Series 7</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>

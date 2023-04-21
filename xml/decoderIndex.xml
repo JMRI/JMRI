@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.3.5plus+jake+20230411T1521Z+Rb915641061 on Tue Apr 11 11:21:40 EDT 2023-->
-  <decoderIndex version="75">
+  <!--Written by JMRI version 5.3.5plus+jake+20230420T1502Z+R153e38c1ea on Thu Apr 20 11:03:04 EDT 2023-->
+  <decoderIndex version="77">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -532,6 +532,12 @@
         <model model="Extended Series 6" numOuts="6" numFns="28" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExt" comment="SDXH166D Extended Sound projects v1 v2 by John McMasters" />
         <model model="Extended Series 6 Steam" numOuts="6" numFns="28" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExtS" comment="SDXH166D Extended Steam Sound projects v3.5 by John McMasters" />
         <model model="Extended Series 6 Diesel" numOuts="6" numFns="28" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExtD" comment="SDXH166D Extended Diesel Sound projects v3.5 by John McMasters" />
+      </family>
+      <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="203" file="Digitrax_0SFX_Series7.xml">
+        <model model="SDXH167" numOuts="6" numFns="28" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH167" comment="H0-Scale Sound Decoder, wired" />
+        <model model="Extended Series 7" numOuts="6" numFns="28" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH167Ext" comment="SDXH167 Extended Sound projects v7 by John McMasters" />
+        <model model="Extended Series 7 Steam" numOuts="6" numFns="28" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH167ExtS" comment="SDXH167ExtS Extended Steam Sound projects v7 by John McMasters" />
+        <model model="Extended Series 7 Diesel" numOuts="6" numFns="28" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH167ExtD" comment="SDXH167ExtD Extended Diesel Sound projects v7 by John McMasters" />
       </family>
       <family name="Digitrax/Con-cor Sound" mfg="Digitrax" file="Digitrax_1SFX.xml">
         <model model="Con-cor Aero-Train - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6004" comment="SDH164D Con-Cor #0001-006004" />
