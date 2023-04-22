@@ -17,8 +17,9 @@ import java.util.TreeSet;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.ProgressMonitor;
+import javax.swing.JProgressBar;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.beans.PropertyChangeProvider;
@@ -1086,34 +1087,40 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         // reindex... no need for a background thread and progress dialog
         if (filenames.length < 100 || GraphicsEnvironment.isHeadless()) {
             try {
-                reindexInternal(filenames, null);
+                reindexInternal(filenames, null, null);
             } catch (Exception e) {
                 log.error("Caught exception trying to reindex roster: ", e);
             }
             return;
         }
 
-        // Reindex in a background thread, with a progress dialog.
-        // This must be in a new thread so the event dispatching thread can
-        // continue to update the UI.
+        // Create a dialog with a progress bar and a cancel button
+        String message = Bundle.getMessage("RosterProgressMessage"); // NOI18N
+        String cancel = Bundle.getMessage("RosterProgressCancel"); // NOI18N
+        // HACK: add long blank space to message to make dialog wider.
+        JOptionPane pane = new JOptionPane(message + "                       \t",
+                JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION,
+                null, new String[]{cancel});
+        JProgressBar pb = new JProgressBar(0, filenames.length);
+        pb.setValue(0);
+        pane.add(pb, 1);
+        JDialog dialog = pane.createDialog(null, message);
+
         ThreadingUtil.newThread(() -> {
-            String message = Bundle.getMessage("RosterProgressMessage"); // NOI18N
-            // HACK: add long blank space to message to make dialog wider.
-            // ProgressMonitor doesn't support a width()-type setting.
-            ProgressMonitor pm = new ProgressMonitor(null,
-                 message + "                                    \t", // HACK
-                 "", 0, filenames.length);
-            pm.setMillisToDecideToPopup(100);
-            pm.setMillisToPopup(100);
             try {
-                reindexInternal(filenames, pm);
+                reindexInternal(filenames, pb, pane);
             // catch all exceptions, so progess dialog will close
             } catch (Exception e) {
-                // TODO: show message in progress monitor?
+                // TODO: show message in progress dialog?
                 log.error("Error writing new roster index file: {}", e.getMessage());
             }
-            pm.close();
+            dialog.setVisible(false);
+            dialog.dispose();
         }, "rosterIndexer").start();
+
+        // this will block until the thread completes, either by
+        // finishing or by being cancelled
+        dialog.setVisible(true);
     }
 
     /**
@@ -1126,16 +1133,16 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param filenames array of filenames to load to new index
      * @param pm optional ProgressMonitor to display progress
      */
-    private void reindexInternal(String[] filenames, ProgressMonitor pm) {
+    private void reindexInternal(String[] filenames, JProgressBar pb, JOptionPane pane) {
         Roster roster = new Roster();
         int rosterNum = 0;
         for (String fileName : filenames) {
-            if (pm != null) {
-                if (pm.isCanceled()) {
-                    return;
-                }
-                pm.setNote(fileName);
-                pm.setProgress(rosterNum++);
+            if (pb != null) {
+                pb.setValue(rosterNum++);
+            }
+            if (pane != null && pane.getValue() != JOptionPane.UNINITIALIZED_VALUE) {
+                log.info("Roster index recreation cancelled");
+                return;
             }
             // Read individual loco file
             try {
@@ -1151,19 +1158,16 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             }
         }
 
-        log.info("Making backup roster index file");
+        log.debug("Making backup roster index file");
         this.makeBackupFile(this.getRosterIndexPath());
         try {
-            log.info("Writing new index file");
+            log.debug("Writing new index file");
             roster.writeFile(this.getRosterIndexPath());
         } catch (IOException ex) {
             // TODO: error dialog, copy backup back to roster.xml
             log.error("Exception while writing the new roster file, may not be complete", ex);
         }
-        log.info("Reloading resulting roster index");
-        if (pm != null) {
-            pm.setNote(Bundle.getMessage("RosterProgressReloading"));
-        }
+        log.debug("Reloading resulting roster index");
         this.reloadRosterFile();
         log.info("Roster rebuilt, stored in {}", this.getRosterIndexPath());
     }

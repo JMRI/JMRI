@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
-import javax.swing.ProgressMonitor;
+import javax.swing.JDialog;
+import javax.swing.JProgressBar;
+import javax.swing.JOptionPane;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
@@ -365,7 +367,6 @@ public class DecoderIndexFile extends XmlFile {
         forceCreationOfNewIndex();
         // and force it to be used
         return true;
-
     }
 
     /**
@@ -445,39 +446,47 @@ public class DecoderIndexFile extends XmlFile {
             index.fileVersion = InstanceManager.getDefault(DecoderIndexFile.class).fileVersion;
         }
 
-        // write it out
+        // If not many entries, or headless, just recreate index without updating the UI
         if (sbox.length < 30 || GraphicsEnvironment.isHeadless()) {
             try {
                 index.writeFile(DECODER_INDEX_FILE_NAME,
-                            InstanceManager.getDefault(DecoderIndexFile.class), sbox, null);
+                            InstanceManager.getDefault(DecoderIndexFile.class), sbox, null, null);
             } catch (java.io.IOException ex) {
                 log.error("Error writing new decoder index file: {}", ex.getMessage());
             }
             return;
         }
 
-        // Reindex in a background thread, with a progress dialog.
-        // This must be in a new thread so the event dispatching thread can
-        // continue to update the UI.
+        // Create a dialog with a progress bar and a cancel button
+        String message = Bundle.getMessage("DecoderProgressMessage"); // NOI18N
+        String cancel = Bundle.getMessage("DecoderProgressCancel"); // NOI18N
+        // HACK: add long blank space to message to make dialog wider.
+        JOptionPane pane = new JOptionPane(message + "                            \t",
+                JOptionPane.PLAIN_MESSAGE,
+                JOptionPane.OK_CANCEL_OPTION,
+                null,
+                new String[]{cancel});
+        JProgressBar pb = new JProgressBar(0, sbox.length);
+        pb.setValue(0);
+        pane.add(pb, 1);
+        JDialog dialog = pane.createDialog(null, message);
+
         ThreadingUtil.newThread(() -> {
-            String message = Bundle.getMessage("DecoderProgressMessage"); // NOI18N
-            // HACK: add long blank space to message to make dialog wider.
-            // ProgressMonitor doesn't support a width()-type setting.
-            ProgressMonitor pm = new ProgressMonitor(null,
-                 message + "                                    \t", // HACK
-                 "", 0, sbox.length);
-            pm.setMillisToDecideToPopup(100);
-            pm.setMillisToPopup(100);
             try {
                 index.writeFile(DECODER_INDEX_FILE_NAME,
-                            InstanceManager.getDefault(DecoderIndexFile.class), sbox, pm);
+                            InstanceManager.getDefault(DecoderIndexFile.class), sbox, pane, pb);
             // catch all exceptions, so progess dialog will close
             } catch (Exception e) {
-                // TODO: show message in progress monitor?
+                // TODO: show message in progress dialog?
                 log.error("Error writing new decoder index file: {}", e.getMessage());
             }
-            pm.close();
+            dialog.setVisible(false);
+            dialog.dispose();
         }, "decoderIndexer").start();
+
+        // this will block until the thread completes, either by
+        // finishing or by being cancelled
+        dialog.setVisible(true);
     }
 
     /**
@@ -684,7 +693,7 @@ public class DecoderIndexFile extends XmlFile {
      * @throws java.io.IOException for errors writing the decoder index file
      */
     public void writeFile(String name, DecoderIndexFile oldIndex,
-                          String[] files, ProgressMonitor pm) throws java.io.IOException {
+                          String[] files, JOptionPane pane, JProgressBar pb) throws java.io.IOException {
         if (log.isDebugEnabled()) {
             log.debug("writeFile {}",name);
         }
@@ -751,14 +760,13 @@ public class DecoderIndexFile extends XmlFile {
         int fileNum = 0;
         for (String fileName : files) {
             // update progress monitor, if passed in
-            if (pm != null) {
-                if (pm.isCanceled()) {
-                    return;
-                }
-                pm.setProgress(fileNum);
-                pm.setNote(fileName);
+            if (pb != null) {
+                pb.setValue(fileNum++);
             }
-            fileNum++;
+            if (pane != null && pane.getValue() != JOptionPane.UNINITIALIZED_VALUE) {
+                log.info("Decoder index recreation cancelled");
+                return;
+            }
             DecoderFile d = new DecoderFile();
             try {
                 // get <family> element and add the file name
@@ -794,10 +802,7 @@ public class DecoderIndexFile extends XmlFile {
         index.addContent(mfgList);
         index.addContent(familyList);
 
-        if (pm != null) {
-            pm.setNote("Writing decoderIndex.xml");
-        }
-        log.info("Writing decoderIndex");
+        log.debug("Writing decoderIndex");
         writeXML(file, doc);
 
         // force a read of the new file next time
