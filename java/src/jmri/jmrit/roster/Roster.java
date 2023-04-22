@@ -1131,7 +1131,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * readFile(), called from reloadRosterFile()).
      *
      * @param filenames array of filenames to load to new index
-     * @param pm optional ProgressMonitor to display progress
+     * @param pb optional JProgressBar to update during operations
+     * @param pane optional JOptionPane to check for cancellation
      */
     private void reindexInternal(String[] filenames, JProgressBar pb, JOptionPane pane) {
         Roster roster = new Roster();

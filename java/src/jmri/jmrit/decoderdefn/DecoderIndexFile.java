@@ -689,7 +689,8 @@ public class DecoderIndexFile extends XmlFile {
      * @param name name of the new index file
      * @param oldIndex old decoder index file
      * @param files array of files to read for new index
-     * @param pm optional ProgressMonitor to update while reading files
+     * @param pane optional JOptionPane to check for cancellation
+     * @param pb optional JProgressBar to update during operations
      * @throws java.io.IOException for errors writing the decoder index file
      */
     public void writeFile(String name, DecoderIndexFile oldIndex,
