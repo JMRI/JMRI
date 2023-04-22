@@ -242,6 +242,9 @@ public class CbusSend {
 
     /**
      * Sends NVSET OPC , Node set individual NV.
+     * If (contrary to CBUS spec), the node is required to be in Event Learn Mode
+     * before setting a NV, this will be done within this function,
+     * assuming that the node is visible to the memo CbusNodeTableDataModel .
      * @param nodeinsetup Node Number
      * @param nv Node variable number
      * @param newval Node variable number value
@@ -276,8 +279,8 @@ public class CbusSend {
         CbusNodeTableDataModel model = getNodeModel();
         if ( model !=null ) {
             jmri.jmrix.can.cbus.node.CbusNode nd = model.getNodeByNodeNum(nodeinsetup);
-            if ( nd !=null && nd.getnvWriteInLearnOnly() ) {
-                return true;
+            if ( nd !=null ) {
+                return nd.getnvWriteInLearnOnly();
             }
         }
         return false;
