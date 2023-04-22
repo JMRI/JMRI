@@ -74,21 +74,22 @@ public class CbusNodeConstants {
         // defaults
         node.setsendsWRACKonNVSET(true);
         
-        if ( node.getNodeParamManager().getParameter(1) == MANU_MERG ) { // MERG MODULE
-            switch (node.getNodeParamManager().getParameter(3)) { // Module Type ID Number
+        if ( node.getNodeParamManager().getParameter(MANU_ID_IDX) == MANU_MERG ) { // MERG MODULE
+            switch (node.getNodeParamManager().getParameter(MODULE_ID_IDX)) { // Module Type ID Number
                 case 29: // CANPAN
+                case 1: // CANACC4
                     node.setsendsWRACKonNVSET(false);
                     break;
                 case 10 : // CANCMD
                 case 55 : // or CANCSB 
                 case 12 : // or CANBC
-                    if ( node.getNodeParamManager().getParameter(7) == 4 ) { // v4 Firmware
+                    if ( node.getNodeParamManager().getParameter(MAJOR_VER_IDX) == 4 ) { // v4 Firmware
                         node.getNodeEventManager().resetNodeEventsToZero(); // sets num events to 0 as does not respond to RQEVN
                         node.setStatResponseFlagsAccurate(false);
                     }
                     break;
                 case 46: // CANPiWi
-                    if ( node.getNodeParamManager().getParameter(7) == 1 ) { // v1 Firmware
+                    if ( node.getNodeParamManager().getParameter(MAJOR_VER_IDX) == 1 ) { // v1 Firmware
                         node.getNodeEventManager().resetNodeEventsToZero(); // sets num events to 0 as does not respond to RQEVN
                     }
                     break;
@@ -102,8 +103,8 @@ public class CbusNodeConstants {
                 default:
                     break;
             }
-        } else if ( node.getNodeParamManager().getParameter(1) == SPROG_DCC ) {    // SPROG DCC module
-            switch (node.getNodeParamManager().getParameter(3)) {           // Module Type ID Number
+        } else if ( node.getNodeParamManager().getParameter(MANU_ID_IDX) == SPROG_DCC ) {    // SPROG DCC module
+            switch (node.getNodeParamManager().getParameter(MODULE_ID_IDX)) {           // Module Type ID Number
                 case MTYP_CANSERVOIO:
                     node.setnvWriteInLearnOnly(true);
                     break;
@@ -137,7 +138,7 @@ public class CbusNodeConstants {
      */
     private static final Map<Integer, String> manMap = createManMap();
 
-    /*
+    /**
      * Populate hashmap with format strings
      *
      */
@@ -170,7 +171,7 @@ public class CbusNodeConstants {
      */
     private static final Map<Integer, String> busMap = createBusMap();
 
-    /*
+    /**
      * Populate hashmap with format strings
      *
      */
@@ -227,7 +228,7 @@ public class CbusNodeConstants {
     private static final Map<Integer, String> type80Map = createType80Map();
     private static final Map<Integer, String> type44Map = createType44Map();
     
-    /*
+    /**
      * Populate hashmap with format strings for manufacturer MERG
      */
     private static Map<Integer, String> createType165Map() {
