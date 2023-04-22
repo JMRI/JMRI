@@ -76,8 +76,11 @@ public class CbusNodeConstants {
         
         if ( node.getNodeParamManager().getParameter(MANU_ID_IDX) == MANU_MERG ) { // MERG MODULE
             switch (node.getNodeParamManager().getParameter(MODULE_ID_IDX)) { // Module Type ID Number
-                case 29: // CANPAN
                 case 1: // CANACC4
+                case 8: // CANACC4_2
+                case 29: // CANPAN
+                case 34: // CANSOL
+                case 37: // CANACC4CDU
                     node.setsendsWRACKonNVSET(false);
                     break;
                 case 10 : // CANCMD
