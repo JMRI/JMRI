@@ -16,14 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Node Variable edit frame for a basic 8 channel servo module
+ * Node Variable edit frame for a basic 8 channel servo module.
  * 
- * SBUS Servo modules behave differently in that they need to be in learn mode to
- * write NVs. NVs are written in "real time" as the user interacts withthe GUI.
- * This allows the servo positions to be observed during setup. The NVs will be
- * stored by the module when it is taken out of learn mode. The entry/exit to/from
- * learn mode is handled in CbusNodeNVEditGuiPane when changing the displayed
- * node.
+ * NVs can be written in "real time" as the user interacts with the GUI.
+ * This allows the servo positions to be observed during setup.
+ * CBUS Servo modules behave differently in that they need to be in learn mode
+ * to write NVs.
+ * The NVs will be stored by the module when it is taken out of learn mode.
+ * The entry/exit to/from learn mode is handled by the call to CbusSend.nVSET
  *
  * @author Andrew Crosland Copyright (C) 2021
  */
