@@ -447,7 +447,8 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         // If not many entries, or headless, just recreate index without updating the UI
-        if (sbox.length < 30 || GraphicsEnvironment.isHeadless()) {
+        // Also block if not on the GUI (event dispatch) thread
+        if (sbox.length < 30 || GraphicsEnvironment.isHeadless() || !ThreadingUtil.isGUIThread()) {
             try {
                 index.writeFile(DECODER_INDEX_FILE_NAME,
                             InstanceManager.getDefault(DecoderIndexFile.class), sbox, null, null);
@@ -459,7 +460,7 @@ public class DecoderIndexFile extends XmlFile {
 
         // Create a dialog with a progress bar and a cancel button
         String message = Bundle.getMessage("DecoderProgressMessage"); // NOI18N
-        String cancel = Bundle.getMessage("DecoderProgressCancel"); // NOI18N
+        String cancel = Bundle.getMessage("ButtonCancel"); // NOI18N
         // HACK: add long blank space to message to make dialog wider.
         JOptionPane pane = new JOptionPane(message + "                            \t",
                 JOptionPane.PLAIN_MESSAGE,
