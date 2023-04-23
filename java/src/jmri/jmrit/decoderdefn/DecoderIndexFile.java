@@ -314,7 +314,7 @@ public class DecoderIndexFile extends XmlFile {
      * @throws org.jdom2.JDOMException if unable to parse decoder index
      * @throws java.io.IOException     if unable to read decoder index
      */
-    static boolean updateIndexIfNeeded() throws org.jdom2.JDOMException, java.io.IOException {
+    public static boolean updateIndexIfNeeded() throws org.jdom2.JDOMException, java.io.IOException {
         switch (FileUtil.findFiles(defaultDecoderIndexFilename(), ".").size()) {
             case 0:
                 log.debug("creating decoder index");
