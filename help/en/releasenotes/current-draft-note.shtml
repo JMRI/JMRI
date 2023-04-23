@@ -385,6 +385,9 @@
         <ul>
             <li>Added tooltips to the CV Pane that will show a brief summary of where the CV is
                 being used.</li>
+            <li>Significant roster table UI speed improvements.</li>
+            <li>Added progress dialog for roster index recreation.</li>
+            <li>Added progress dialog for decoder index recreation.</li>
         </ul>
 
     <h3>CTC Tool</h3>
