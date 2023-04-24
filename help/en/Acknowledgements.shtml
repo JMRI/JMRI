@@ -53,7 +53,9 @@
 
         <li>Ronald Angel, who figured out how to run the demo on GNU/Linux</li>
 
-        <li>Cliff Anderson, who contributed the TurnoutsMasterSlave.py script</li>
+        <li>Cliff Anderson, <!-- Cliff-Anderson -->
+        who contributed the TurnoutsMasterSlave.py script
+        and the AnyRailBuildBlockSensorList.py script.</li>
 
         <li>Ian Anderson, who set up the <a href="https://editthis.info/wiki/Main_Page">
         documentation Wiki</a>, which lets a lot of people easily contribute to building better
@@ -414,6 +416,9 @@
          who fixed the XML definition of the block contents icon, and helped fix the Transit
         implementation of comments.</li>
 
+        <li>Ulrich Gerlach</li> <!-- uli-2016 -->
+        who improved multiple decoder definitions.
+
         <li>Brian Gilhuly, who helped debug a programmer problem in JMRI 3.11.1</li>
 
         <li>Simon Ginsburg has helped with advanced consisting, provided some Digitrax definition
@@ -708,7 +713,8 @@
         <li>Ron McKinnon, who fixed some problems with the lighting options in the SoundTraxx
         Tsunami Steam definitions</li>
 
-        <li>John McMasters, who provided definitions for his Digitrax Sound projects</li>
+        <li>John McMasters, <!-- SPJMaker -->
+        who provided definitions for his Digitrax Sound projects</li>
 
         <li>Dave McMorran, <!-- davemc8992 -->
          who worked on the MQTT JSON coding</li>

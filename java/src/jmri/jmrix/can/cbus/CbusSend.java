@@ -1,15 +1,14 @@
 package jmri.jmrix.can.cbus;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.swing.TextAreaFIFO;
 import jmri.util.ThreadingUtil;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  * Class to send CAN Frames.
@@ -21,24 +20,27 @@ import jmri.util.ThreadingUtil;
 public class CbusSend {
     
     private TrafficController tc;
+    private final CanSystemConnectionMemo memo;
     private final TextAreaFIFO ta;
     private final String newLine = System.getProperty("line.separator");
     
     /**
      * Constructor
-     * @param memo System Connection
+     * @param systemMemo System Connection
      * @param txta a Text Area for any feedback messages
      */
-    public CbusSend( @Nonnull CanSystemConnectionMemo memo, TextAreaFIFO txta){
+    public CbusSend( @Nonnull CanSystemConnectionMemo systemMemo, TextAreaFIFO txta){
+        memo = systemMemo;
         tc = memo.getTrafficController();
         ta = txta;
     }
 
     /**
      * Constructor
-     * @param memo System Connection
+     * @param systemMemo System Connection
      */
-    public CbusSend(CanSystemConnectionMemo memo){
+    public CbusSend(CanSystemConnectionMemo systemMemo){
+        memo = systemMemo;
         if (memo!=null) {
             tc = memo.getTrafficController();
         }
@@ -240,11 +242,19 @@ public class CbusSend {
 
     /**
      * Sends NVSET OPC , Node set individual NV.
+     * If (contrary to CBUS spec), the node is required to be in Event Learn Mode
+     * before setting a NV, this will be done within this function,
+     * assuming that the node is visible to the memo CbusNodeTableDataModel .
      * @param nodeinsetup Node Number
      * @param nv Node variable number
      * @param newval Node variable number value
      */
     public void nVSET(int nodeinsetup,int nv,int newval ) {
+
+        if ( getNvWriteLearnMode(nodeinsetup) ) {
+            nodeEnterLearnEvMode(nodeinsetup);
+        }
+
         CanMessage m = new CanMessage(tc.getCanid());
         m.setNumDataElements(5);
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
@@ -253,7 +263,35 @@ public class CbusSend {
         m.setElement(2, nodeinsetup & 0xff);
         m.setElement(3, nv);
         m.setElement(4, newval);
-        tc.sendCanMessage(m, null);           
+        tc.sendCanMessage(m, null);
+
+        if ( getNvWriteLearnMode(nodeinsetup) ) {
+            nodeExitLearnEvMode(nodeinsetup);
+        }
+    }
+
+    /**
+     * Test if Node needs to be in learn mode for teaching NVs.
+     * @param nodeinsetup node number
+     * @return if required, else false.
+     */
+    private boolean getNvWriteLearnMode(int nodeinsetup) {
+        CbusNodeTableDataModel model = getNodeModel();
+        if ( model !=null ) {
+            jmri.jmrix.can.cbus.node.CbusNode nd = model.getNodeByNodeNum(nodeinsetup);
+            if ( nd !=null ) {
+                return nd.getnvWriteInLearnOnly();
+            }
+        }
+        return false;
+    }
+
+    @CheckForNull
+    private CbusNodeTableDataModel getNodeModel(){
+        if ( memo != null ) {
+            return memo.getFromMap(CbusNodeTableDataModel.class);
+        }
+        return null;
     }
 
     /**
@@ -359,5 +397,5 @@ public class CbusSend {
         tc.sendCanMessage(m, null);  
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(CbusSend.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusSend.class);
 }

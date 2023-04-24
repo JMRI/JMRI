@@ -80,21 +80,7 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
             _provider.getEditNVFrameInstance().tableChanged(e);
         }
     }
-    
-    /**
-     * May need to take node out of learn mode
-     */
-    @Override
-    public void dispose() {
-        if (_node != null) {
-            if (_node.getnvWriteInLearnOnly()) {
-                // Take node out of learn mode
-                _node.send.nodeExitLearnEvMode(_node.getNodeNumber());
-            }
-        }
-        super.dispose();
-    }
-    
+
 //    private final static Logger log = LoggerFactory.getLogger(CbusNodeNVEditGuiPane.class);
 
 }

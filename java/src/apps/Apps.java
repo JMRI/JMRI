@@ -293,24 +293,25 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.getDefault(jmri.LogixManager.class);
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
 
-        // Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
-        new Thread(() -> {
-            try {
-                InstanceManager.getDefault(DecoderIndexFile.class);
-            } catch (RuntimeException ex) {
-                log.error("Error in trying to initialize decoder index file {}", ex.getMessage());
-            }
-        }, "initialize decoder index").start();
-
+        // preload script engines if requested
         if (Boolean.getBoolean("org.jmri.python.preload")) {
             new Thread(() -> {
                 try {
                     JmriScriptEngineManager.getDefault().initializeAllEngines();
                 } catch (RuntimeException ex) {
-                    log.error("Error in trying to initialize python interpreter {}", ex.getMessage());
+                    log.error("Error in trying to initialize script interpreters {}", ex.getMessage());
                 }
             }, "initialize python interpreter").start();
         }
+
+        // kick off update of decoder index if needed
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            try {
+                jmri.jmrit.decoderdefn.DecoderIndexFile.updateIndexIfNeeded();
+            } catch (org.jdom2.JDOMException| java.io.IOException e) {
+                log.error("Exception trying to pre-load decoderIndex", e);
+            }
+        });
 
         // if the configuration didn't complete OK, pop the prefs frame and help
         log.debug("Config OK? {}, deferred config OK? {}", configOK, configDeferredLoadOK);

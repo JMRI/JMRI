@@ -2127,9 +2127,19 @@
           href="#Schedules">schedules</a> are optional unless your cars are using custom loads.
       </p>
 
-      <p>When setting up railroad divisions, it is best if there's at least one division yard
-        for empty cars to migrate to, and at least one industry (spur) to service cars loaded
-        outside of the division. Staging can be used as a substitute for industries.</p>
+      <p>
+        When setting up railroad divisions, it is best if there's at least one division yard for
+        empty cars to migrate to, and at least one industry (spur) to service cars loaded outside of
+        the division. Staging can be used as a substitute for industries. Cars that have been
+        assigned a division are routed and this allows them to perform local moves, for example
+        empty cars from a yard to a spur at the same location. Spur to spur moves are also allowed
+        if the car's load is accepted by the receiving spur. The switcher <a
+          href="#AllowLocalCarMovements">control for local moves</a> does not apply to cars with a
+        division. However the <a href="#TrainLocalMoveOption">train build option</a> to allow local
+        moves for cars with a custom load or final destination (FD) does apply. It is recommended
+        that you leave this option for a train enabled when dealing with cars that have been
+        assigned a division.
+      </p>
 
       <p>Adding divisions to locations and home divisions to cars creates prototypical movement,
         but it can also reduce car movement since the rules for car movement have to be enforced by

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!-- Copyright (C) JMRI 2022,2023 All rights reserved                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,26 +15,28 @@
 	<version author="Alain Le Marchand" version="1" lastUpdated="20170107"/>
 	<!-- Version 1 (Alain Le Marchand) Initial version
 	     Version 2 (Ulrich Gerlach) Adapted version 
-		 TT Double point motor for Tillig double slip turnout	   			-->
+		 TT Double point motor for Tillig double slip turnout -->
+	<version author="Ulrich Gerlach" version="2.1" lastUpdated="20230417"/>
+	<!-- Version 2.1 (Ulrich Gerlach) Address label added and typos corrected -->
 	<decoder>
 		<family name="Point Motor Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="2" highVersionID="15" comment="NMRA DCC &amp; RailCom">
 			<model model="Tillig DKW 08335" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="TT" connector="other" productID="08335" comment="TT Double point motor for Tillig double slip turnout">
 				<size length="68.4" width="24.5" height="5.3" units="mm"/>
 			</model>
 		</family>
-		<programming direct="yes" paged="no" register="no" ops="yes"/>
+		<programming direct="yes" paged="no" register="no" ops="no"/>
 		<variables>
-			<variable CV="1" item="Short Address" default="1">
-				<splitVal highCV="9" upperMask="XXXXXVVV"/>
-				<label>Address</label>
-				<label xml:lang="de">Adresse</label>
+			<variable CV="41" item="Short Address" default="2">
+				<splitVal highCV="49" upperMask="XXXXXVVV"/>
+				<label>Address 2</label>
+				<label xml:lang="de">Adresse 2</label>
 				<tooltip>&lt;html&gt;DCC format: 1-2047&lt;/html&gt;</tooltip>
 				<tooltip xml:lang="de">&lt;html&gt;DCC format: 1-2047&lt;/html&gt;</tooltip>
 			</variable>
-			<variable CV="41" item="Long Address" default="2">
-				<splitVal highCV="49" upperMask="XXXXXVVV"/>
-				<label>Address</label>
-				<label xml:lang="de">Adresse</label>
+			<variable CV="1" item="Long Address" default="1">
+				<splitVal highCV="9" upperMask="XXXXXVVV"/>
+				<label>Address 1</label>
+				<label xml:lang="de">Adresse 1</label>
 				<tooltip>&lt;html&gt;DCC format: 1-2047&lt;/html&gt;</tooltip>
 				<tooltip xml:lang="de">&lt;html&gt;DCC format: 1-2047&lt;/html&gt;</tooltip>
 			</variable>
@@ -183,31 +185,31 @@
 				<tooltip>Protocol</tooltip>
 				<tooltip xml:lang="de">Protokoll</tooltip>
 			</variable>
-			<!-- Motor Control -->
-			
-			<!--       <variable item="EMF Static Config" CV="51" default="75">
+		<!-- Motor Control -->
+		<!-- auskommnentiert weil default gleich Null -->
+		<!-- <variable item="EMF Static Config" CV="51" default="0">
           <decVal max="255"/>
           <label>Motor regulation P Constant</label>
           <label xml:lang="de">Motorregelung P-Konstante</label>
         </variable>
-            <variable item="EMF Dynamic Config" CV="52" default="40">
+        <variable item="EMF Dynamic Config" CV="52" default="0">
           <decVal max="255"/>
           <label>Motor regulation I Constant</label>
           <label xml:lang="de">Motorregelung I-Konstante</label>
         </variable>
-        <variable item="EMF Droop Config" CV="53" default="10">
+        <variable item="EMF Droop Config" CV="53" default="0">
           <decVal max="255"/>
           <label>Motor regulation D Constant</label>
           <label xml:lang="de">Motorregelung D-Konstante</label>
         </variable>
-            <variable item="EMF Option 1" CV="54" default="8">
+        <variable item="EMF Option 1" CV="54" default="0">
           <decVal max="255"/>
           <label>EMF measurements</label>
           <label xml:lang="de">EMK Messungen</label>
           <tooltip>&lt;html&gt;Number of EMF measurements per cycle.&lt;br&gt; The first two measurements will be automatically ignored.&lt;/html&gt;</tooltip>
           <tooltip xml:lang="de">&lt;html&gt;Anzahl von EMK Messungen, je Zyklus.&lt;br&gt; Die ersten 2 Messungen werden automatisch ignoriert.&lt;/html&gt;</tooltip>
-        </variable>-->
-			<!--        <variable item="EMF Option 2" CV="55" default="8">
+        </variable>
+		<variable item="EMF Option 2" CV="55" default="0">
           <decVal max="255"/>
           <label>Motor control period</label>
           <label xml:lang="de">Motorregelung Periode</label>
@@ -279,14 +281,14 @@
 				<label xml:lang="de">Setzt alle Werte auf Auslieferungszustand zurück</label>
 			</factReset>
 			<factReset label="Reset All CVs except address" CV="8" default="9">
-				<label xml:lang="de">Setzt alle Werte außer Lokadresse auf Auslieferungszustand zurück</label>
+				<label xml:lang="de">Setzt alle Werte außer Adresse auf Auslieferungszustand zurück</label>
 			</factReset>
-			<!--      <factReset label="Motor calibration (CV 62)" CV="62" default="206">
-         <label xml:lang="de">Motorkalibrierung (CV 62)</label>
-      </factReset>
-      <factReset label="Point calibration (CV 63)" CV="63" default="0">
-         <label xml:lang="de">Weichenkalibrierung (CV 63)</label>
-      </factReset>-->
+<!--        <factReset label="Motor calibration (CV 62)" CV="62" default="206">
+                <label xml:lang="de">Motorkalibrierung (CV 62)</label>
+            </factReset>
+            <factReset label="Point calibration (CV 63)" CV="63" default="0">
+                <label xml:lang="de">Weichenkalibrierung (CV 63)</label>
+            </factReset>-->
 		</resets>
 	</decoder>
 </decoder-config>

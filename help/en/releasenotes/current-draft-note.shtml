@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Improved Node Manager configuratiuon of MERG CANSERVO8C / CANMIO-SVO / CANACC4</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -31,7 +31,8 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>New script in DCC-EX folder, RosterExportToDCC-EX.py, which outputs all JMRI roster entries in
+                format suitable for copying into myAutomation.h.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -84,6 +85,7 @@
             <ul>
                 <li>Fixed a problem introduced in JMRI 5.3.3 that caused
                     certain ops-mode programming operations to fail.</li>
+                <li>LocoNet connections now support decoder functions up to F68</li>
             </ul>
 
         <h4>Maple</h4>
@@ -220,6 +222,7 @@
         <h4>Digitrax</h4>
             <ul>
                 <li>Added a decoder definition for the PM74 board.</li>
+                <li>Added decoder definitions for the SFX Sound Decoders - Series 7</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -359,7 +362,7 @@
 
         <h4>Viessmann</h4>
             <ul>
-                <li></li>
+                <li>Decoderdefinition Tillig double slip turnout: Address label added and typos corrected</li>
             </ul>
 
         <h4>Wangrow</h4>
@@ -369,7 +372,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Updates for the Zimo MS series of decoders.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -380,7 +383,11 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Added tooltips to the CV Pane that will show a brief summary of where the CV is
+                being used.</li>
+            <li>Significant roster table UI speed improvements.</li>
+            <li>Added progress dialog for roster index recreation.</li>
+            <li>Added progress dialog for decoder index recreation.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -549,7 +556,8 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li></li>
+            <li>Change the way user names are displayed in the cell contents. This
+                allows word breaks onto additional lines in the display.</li>
         </ul>
 
     <h3>Throttle</h3>
@@ -579,7 +587,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>ID Tag Tables - Speed improvements when working with large numbers of Tags.</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -621,6 +629,12 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Add clickable table of contents to Panel File display/print capability (when you open a panel xml file via the JMRI web server)</li>
+            <li>Add clickable table of contents to Panel File display/print capability
+                (when you open a panel xml file via the JMRI web server)</li>
+            <li>New
+                <a href="https://jmri.org/jython/anyrail/AnyRailBuildBlockSensorList.py">AnyRailBuildBlockSensorList.py</li>
+                script and associated
+                <a href="https://jmri.org/jython/anyrail/README.md">README.md</li>
+                file.</li>
         </ul>
 

@@ -14,7 +14,7 @@
   <version author="Bob Jacobsen" version="1" lastUpdated="20020808"/>
   <!-- Programmer for wierd types that have all their info -->
   <!-- in the decoder files as panes -->
-  <programmer decoderFilePanes="yes" showRosterPane="no" showEmptyPanes="no" showFnLanelPane="no" showRosterMediaPane="no">
+  <programmer decoderFilePanes="yes" showRosterPane="yes" showEmptyPanes="no" showFnLanelPane="no" showRosterMediaPane="no">
     <!-- everything comes from the Roster and built in panes -->
   </programmer>
 </programmer-config>
