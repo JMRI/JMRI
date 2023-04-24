@@ -36,7 +36,8 @@
       <p>This section lists new Java capabilities, and which Java version they first appeared in.
       The "JDK" column shows the first Java Development Kit that could compile the feature; the
       "JRE" column lists the first runtime environment that could run the feature, including the
-      needed JVM and library support.</p>
+      needed JVM and library support. Not all updates are included, of course, just the
+      ones that JMRI developers have expressed interest in using or that will cause known problems.</p>
 
       <table style="width: 100%; padding: 10px 15px 10px 15px;" border="1">
         <tr>
@@ -266,6 +267,17 @@
         <tr>
           <td>
             Strong encapsulation by default.
+          </td>
+          <td>16</td>
+          <td>16</td>
+        </tr>
+
+        <tr>
+          <td>
+            The module system prevents LibUSB (ch.ntb.usb) from accessing the
+            hardware.  This is used in a few scripts.  Not clear if its
+            developers will be issuing an update or not; possibly JMRI will
+            have to switch to a different library.
           </td>
           <td>16</td>
           <td>16</td>
