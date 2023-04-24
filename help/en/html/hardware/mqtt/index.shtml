@@ -368,8 +368,9 @@
       JMRI System Console</a> and will set the turnout Known state to "UNKNOWN."
 
       <h4>Lights</h4>
-      The expected message content for lights is "ON"
-      and "OFF". Receiving any other messages will result in a Warning in the <a href=
+      The expected message content for lights is "OFF", "ON"
+      and "INTENSITY dddd" where ddd is a number between 0.00 and 1.00.
+      Receiving any other messages will result in a Warning in the <a href=
       "../../../package/apps/SystemConsole.shtml">JMRI System Console.</a> and cause the Light
       state to be set to "UNKNOWN."
 
