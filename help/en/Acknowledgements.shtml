@@ -478,6 +478,9 @@
 
         <li>Sonny Hansen, who did a lot of work on the Danish translation</li>
 
+        <li>Hardy, <!-- energiebrand -->
+        who improved the Kuehn ZTC217 decoder definition
+
         <li>David Harris, who fixed some bugs in the Lenz decoder definitions</li>
 
         <li>Matthew Harris, who provided instructions for installing JMRI on EeePCs, updated the

@@ -31,7 +31,7 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable CV="2" item="Vstart" comment="Range 0-255">
         <decVal/>
         <label>Start Volts</label>
@@ -165,6 +165,9 @@
       <constant item="F2 controls output 4" minOut="4" default="1"/>
       <constant item="F3 controls output 5" minOut="5" default="1"/>
       <constant item="F4 controls output 6" minOut="6" default="1"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+
     </variables>
   </decoder>
   <pane>
