@@ -74,9 +74,29 @@ public class OlcbAddress {
      * @param s hex coded string of address
      */
     public OlcbAddress(String s) {
-        aString = s;
-        // now parse
         // This is done manually, rather than via regular expressions, for performance reasons.
+
+        // check for leading T, if so convert to numeric form
+        if (s.startsWith("T")) {
+            int from;
+            try {
+                from = Integer.parseInt(s.substring(1));
+            } catch (NumberFormatException e) {
+                from = 0;
+            }
+
+            int DD = (from-1) & 0x3;
+            int aaaaaa = (( (from-1) >> 2)+1 ) & 0x3F;
+            int AAA = ( (from) >> 8) & 0x7;
+            long event = 0x0101020000FF0000L | (AAA << 9) | (aaaaaa << 3) | (DD << 1);
+
+            s = String.format("%016X;%016X", event, event+1);
+            log.debug(" converted to {}", s);
+        }
+
+        aString = s;
+
+        // numeric address string format
         if (aString.contains(";")) {
             // multi-part address; leave match false and aFrame null
         } else if (aString.contains(".")) {

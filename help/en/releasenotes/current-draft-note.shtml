@@ -132,6 +132,9 @@
                         <li>Limited retry of CDI reads in case of errors.</li>
                     </ul>
                 <li>Fix an NPE from incorrect input when making a Sensor or Turnout.</li>
+                <li>Allow an alternate user name format for accessing DCC turnouts connected
+                    thrown a bridge:  MTT123 (note 2nd T) will generate the appropriate
+                    events to throw and close DCC turnout 123.
             </ul>
 
         <h4>Powerline</h4>
