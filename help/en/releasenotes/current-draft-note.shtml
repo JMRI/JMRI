@@ -434,7 +434,8 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li></li>
+          <li>Recognize Logix user name changes for Conditional Logix Actions.  This is an action
+          that can be used to enable or disable a different Logix.</li>
         </ul>
 
     <h3>LogixNG</h3>
