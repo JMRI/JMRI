@@ -278,6 +278,9 @@
         <li>Jeff Collell, <!-- auctionsjeff -->
          who added Light support for OpenLCB.</li>
 
+         <li>John Connelly, <!-- connelly38 -->
+         who greatly sped up the decoder and roster indexing steps for large rosters.
+
         <li>Joe Comuzzi <!-- jcomuzzi -->
          added new icon tests and added a definition for CNJ 1974 signals</li>
 
