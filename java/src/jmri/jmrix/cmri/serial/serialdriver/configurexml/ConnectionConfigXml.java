@@ -2,6 +2,7 @@ package jmri.jmrix.cmri.serial.serialdriver.configurexml;
 
 import java.util.List;
 import java.util.StringTokenizer;
+
 import jmri.jmrix.AbstractSerialConnectionConfig;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;

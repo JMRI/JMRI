@@ -1,6 +1,8 @@
 package jmri.jmrix.cmri.serial.networkdriver.configurexml;
 
 import java.util.List;
+import java.util.StringTokenizer;
+
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
@@ -48,9 +50,28 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
      */
     @Override
     protected void extendElement(Element e) {
+         // Create a polling list from the configured nodes
+        StringBuilder polllist = new StringBuilder("");
+        SerialTrafficController tcPL = ((CMRISystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController();
+        SerialNode plNode = (SerialNode) tcPL.getNode(0);
+        int index = 1;
+        while (plNode != null) {
+            if (index != 1) {
+                polllist.append(",");
+            }
+            polllist.append(Integer.toString(plNode.getNodeAddress()));
+            plNode = (SerialNode) tcPL.getNode(index);
+            index++;
+        }
+
+        Element l = new Element("polllist");
+        l.setAttribute("pollseq", polllist.toString());
+        e.addContent(l);
+
         SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
         SerialNode node = (SerialNode) tc.getNode(0);
-        int index = 1;
+        index = 1;
+
         while (node != null) {
             // add node as an element
             Element n = new Element("node");
@@ -110,6 +131,25 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     @Override
     protected void unpackElement(Element shared, Element perNode) {
+        // --------------------------------------
+        // Load the poll list sequence if present
+        // --------------------------------------
+        List<Element> pl = shared.getChildren("polllist");
+        if (!pl.isEmpty()) {
+            Element ps = pl.get(0);
+            if (ps != null) {
+                String pseq = ps.getAttributeValue("pollseq");
+                if (pseq != null) {
+                    StringTokenizer nodes = new StringTokenizer(pseq, " ,");
+                    SerialTrafficController tcPL = ((CMRISystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController();
+                    while (nodes.hasMoreTokens()) {
+                        tcPL.cmriNetPollList.add(Integer.parseInt(nodes.nextToken()));
+                    }
+                    log.debug("Poll List = {}", tcPL.cmriNetPollList);
+                }
+            }
+        }
+
         // Load the node specific parameters
         int pollListSize = ((CMRISystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController().cmriNetPollList.size();
         int nextPollPos = pollListSize + 1;
@@ -137,6 +177,20 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             node.setTransmissionDelay(delay);
             node.setNum2LSearchLights(num2l);
             node.setPulseWidth(pulseWidth);
+
+            // From the loaded poll list, assign the poll list position to the node
+            boolean assigned = false;
+            if (pollListSize > 0) {
+                for (int pls = 0; pls < pollListSize; pls++) {
+                    if (((CMRISystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController().cmriNetPollList.get(pls) == node.getNodeAddress()) {
+                        node.setPollListPosition(pls + 1);
+                        assigned = true;
+                    }
+                }
+                if (!assigned) {
+                    node.setPollListPosition(nextPollPos++);
+                }
+            }
 
             // CMRInet Options
             //----------------
