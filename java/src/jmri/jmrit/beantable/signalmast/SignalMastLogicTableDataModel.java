@@ -487,5 +487,5 @@ public class SignalMastLogicTableDataModel extends BeanTableDataModel<SignalMast
         return tip;
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalMastLogicTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalMastLogicTableDataModel.class);
 }
