@@ -107,6 +107,8 @@
 
                 <li><a href="#PrintOptions">Manifest Print Options</a>
                   <ul>
+                    <li><a href="#PrintOrientation">Orientation and Paper Size</a></li>
+                  
                     <li><a href="#ManifestComments">Manifests and Switch List Options</a></li>
 
                     <li><a href="#AddLogo">Add Logo</a></li>
@@ -1773,12 +1775,13 @@
           Manifests</a> to see examples of Manifests and switch lists using the described options.
       </p>
 
-      <h3>Orientation</h3>
-      There are four options, Portrait, Landscape, 4.25 x 11 and 3.25 x 11. Paper size is determined
-      by the locale in use. To access the JMRI locale, from the main menu bar under "Edit" select
-      "Preferences..." then "Display" and then select the "Locale" tab. Some printers require the
-      English (United States) locale in order to print out a Manifest or switch list with the
-      correct number of lines.
+      <h3 id="PrintOrientation">Orientation and Paper Size</h3>
+      There are four options, Portrait, Landscape, 4.25 x 11 and 3.25 x 11. Paper size ("Letter" or
+      "A4")is determined by the JMRI locale in use. To access the JMRI locale, from the main menu
+      bar under "Edit" select "Preferences..." then "Display" and then select the "Locale" tab. Some
+      printers require the English (United States) locale in order to print out a Manifest or switch
+      list with the correct number of lines for paper size "Letter".
+      
       <h3>Set Out Text Color</h3>
       You can select the text color of your Manifest when the operation is to set out a car or
       locomotive. Select the desired color from the drop down box.
@@ -5817,14 +5820,18 @@
       Manifests for several trains, select the trains you want in the build column and then press
       the "Print" or "Preview" button found at the bottom of the trains window. The program will
       then print or preview Manifests for all of the selected trains. You can modify the look of
-      your Manifests from the <a href="#PrintOptions">Manifest Print Options</a> window.
+      your Manifests from the
+      <a href="#PrintOptions">Manifest Print Options</a> window. Some printers need the JMRI locale
+      set to English (United Stated) to use paper size "Letter". See
+      <a href="#PrintOrientation">Orientation and Paper Size</a> for more details.
       <p>
         You can also access a train's Manifest and <a href="#BuildReports">Build Report</a> from the
         "Tools" menu in the edit train window. The "Tools" menu option allows you to recover the
         Manifest and build report for a train that has been terminated. Useful if you've
-        accidentally terminated a train before printing out the train's Manifest.</p>
+        accidentally terminated a train before printing out the train's Manifest.
+      </p>
 
-   <p>Below is a train Manifest using the "Standard" format, with blue text for car pick ups,
+      <p>Below is a train Manifest using the "Standard" format, with blue text for car pick ups,
     and red text for car set outs.</p>
 
    <p>
