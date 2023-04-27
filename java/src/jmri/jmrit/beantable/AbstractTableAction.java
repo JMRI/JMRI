@@ -247,6 +247,10 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
 
     protected abstract String getClassName();
 
+    /**
+     * Test if to include an Add New Button.
+     * @return true to include, else false.
+     */
     public boolean includeAddButton() {
         return includeAddButton;
     }
