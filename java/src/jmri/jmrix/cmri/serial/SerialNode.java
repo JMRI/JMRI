@@ -167,6 +167,7 @@ public class SerialNode extends AbstractNode {
         }
         // initialize other operational instance variables
         setMustSend();
+        setOptNet_AUTOPOLL(1);  // always start with polling enabled
         hasActiveSensors = false;
         // register this node
         tc.registerNode(this);
