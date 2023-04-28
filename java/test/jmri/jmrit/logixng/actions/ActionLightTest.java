@@ -180,7 +180,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
 
         actionLight.getSelectNamedBean().setNamedBean("A non existent light");
         Assert.assertNull("light handle is null", actionLight.getSelectNamedBean().getNamedBean());
-        JUnitAppender.assertWarnMessage("Light \"A non existent light\" is not found");
+        JUnitAppender.assertErrorMessage("Light \"A non existent light\" is not found");
 
         actionLight.getSelectNamedBean().setNamedBean(light13.getSystemName());
         Assert.assertTrue("light is correct", light13 == actionLight.getSelectNamedBean().getNamedBean().getBean());
