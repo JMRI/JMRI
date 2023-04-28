@@ -1777,7 +1777,7 @@
 
       <h3 id="PrintOrientation">Orientation and Paper Size</h3>
       There are four options, Portrait, Landscape, 4.25 x 11 and 3.25 x 11. Paper size ("Letter" or
-      "A4")is determined by the JMRI locale in use. To access the JMRI locale, from the main menu
+      "A4") is determined by the JMRI locale in use. To access the JMRI locale, from the main menu
       bar under "Edit" select "Preferences..." then "Display" and then select the "Locale" tab. Some
       printers require the English (United States) locale in order to print out a Manifest or switch
       list with the correct number of lines for paper size "Letter".
