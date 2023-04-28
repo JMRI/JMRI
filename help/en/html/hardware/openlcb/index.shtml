@@ -119,7 +119,7 @@
       checkboxes on Sensors.
 
       <p>As a special case, DCC turnouts connected via a bridge to an OpenLCB network
-      can be addressed as e.g. MTT123 (note 2nd T for "Turnout addressing". JMRI will
+      can be addressed as e.g. MTT123. Note the 2nd T for "Turnout addressing". JMRI will
       then automatically generate the correct events to throw/close the corresponding
       DCC turnout.
 
