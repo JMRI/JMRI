@@ -32,8 +32,8 @@ public class MqttLight extends AbstractVariableLight implements MqttEventListene
     }
 
     MqttContentParser<Light> parser = new MqttContentParser<Light>() {
-        private final String onText = "ON";
-        private final String offText = "OFF";
+        private static final String onText = "ON";
+        private static final String offText = "OFF";
         private final String intensityText = MqttLight.intensityText;
 
         int stateFromString(String payload) {
