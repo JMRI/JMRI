@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
+ *
  * Frames for a table view to manage CMRInet node configuration management. c2
  * Created a table view for node configuration operations. Add, Edit, Delete and
  * Update are executed from the NodeTableManager. This class was derived from
@@ -822,7 +822,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodeTypeBox.addItem("USIC_SUSIC");
         nodeTypeBox.addItem("CPNODE");
         nodeTypeBox.addItem("CPMEGA");
-     
+
         /*
          * Here add code for other types of nodes
          */
@@ -1678,7 +1678,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         changedNode = false;
 
         setVisible(false);
-        dispose();        
+        dispose();
     }
 
     /**
@@ -1762,9 +1762,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 if (numSet != num2LSearchLights) {
                     log.error("Inconsistent numbers of 2-lead searchlights. numSet = {}, num2LSearchLights = {}", Integer.toString(numSet), Integer.toString(num2LSearchLights));
                 }
-
-                // Force created node to be polled as the default
-                curNode.setOptNet_AUTOPOLL(1);
                 break;
 
             // USIC/SUSIC
