@@ -3,8 +3,6 @@ package jmri.jmrix.loconet;
 import jmri.implementation.DefaultCabSignal;
 import jmri.LocoAddress;
 import jmri.SignalMast;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Ln implementation of a Cab Signal Object, describing the state of the 
@@ -57,44 +55,47 @@ public class LnCabSignal extends DefaultCabSignal {
         int signalD3=0; // default case, off.
 
         if(mast!=null){
-           String speed = (String) mast.getSignalSystem().getProperty(mast.getAspect(), "speed");
-           // set aspect based on signal "speed" first.
-           switch(speed) {
-              case "Normal":
-              case "Clear":
+            String aspect = mast.getAspect();
+            String speed = (String) mast.getSignalSystem().getProperty(aspect, "speed");
+            // set aspect based on signal "speed" first.
+            switch(speed) {
+                case "Normal":
+                case "Clear":
                     signalD3 = 0x18; // show vertical;
                     break;
-              case "Limited":
+                case "Limited":
                     signalD3 = 0x19; // show vertical blinking;
                     break;
-              case "Medium":
+                case "Medium":
                     signalD3 = 0x14; // show diagonal;
                     break;
-              case "Stop":
+                case "Stop":
                     signalD3 = 0x12; // show horizontal (stop);
                     break;
-              case "Restricting":
-              case "RestrictedSlow":
-              case "Restricted":
-              case "Slow":
+                case "Restricting":
+                case "RestrictedSlow":
+                case "Restricted":
+                case "Slow":
                     signalD3 = 0x13; // blink horizontal
                     break;
-              default: {
-                   // if no matching speed in the list above, check for
-                   // the constant values in the SignalAppearanceMap.
-                   if(mast.getAspect().equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))){
-                      signalD3 = 0x18; // show vertical;
-                   } else if(mast.getAspect().equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER))){
-                      signalD3 = 0x12; // show horizontal (stop);
-                   } else if(mast.getAspect().equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD))){
-                      signalD3 = 0x12; // show horizontal (stop);
-                   } else if(mast.getAspect().equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK))){
-                      signalD3 = 0x00; // show nothing;
-                   } else {
-                      signalD3 = 0x14; // show diagonal;*/
-                   }
-               }
-           }
+                default: {
+                    // if no matching speed in the list above, check for
+                    // the constant values in the SignalAppearanceMap.
+                    if (aspect == null) {
+                        signalD3 = 0x00; // show nothing;
+                    } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))){
+                        signalD3 = 0x18; // show vertical;
+                    } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER))){
+                        signalD3 = 0x12; // show horizontal (stop);
+                    } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD))){
+                        signalD3 = 0x12; // show horizontal (stop);
+                    } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK))){
+                        signalD3 = 0x00; // show nothing;
+                    } else {
+                        signalD3 = 0x14; // show diagonal;*/
+                    }
+                }
+            }
         }
         // this is a litteral translation from the script.  it should be
         // created from a method in LocoNetMessage.
@@ -151,7 +152,7 @@ public class LnCabSignal extends DefaultCabSignal {
         _memo.getLnTrafficController().sendLocoNetMessage(peerXFerMessage);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnCabSignal.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnCabSignal.class);
 
 
 }
