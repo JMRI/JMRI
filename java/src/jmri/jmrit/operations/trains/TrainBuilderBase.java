@@ -2999,7 +2999,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     protected void showEnginesByLocation() {
         // show how many engines were found
-        addLine(_buildReport, FIVE, BLANK_LINE);
+        addLine(_buildReport, SEVEN, BLANK_LINE);
         addLine(_buildReport, ONE,
                 Bundle.getMessage("buildFoundLocos", Integer.toString(_engineList.size()), _train.getName()));
 
@@ -3025,7 +3025,7 @@ public class TrainBuilderBase extends TrainCommon {
                                     engine.getMoves()));
                 }
             }
-            addLine(_buildReport, FIVE, BLANK_LINE);
+            addLine(_buildReport, SEVEN, BLANK_LINE);
         }
     }
 
