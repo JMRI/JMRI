@@ -507,6 +507,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             // If car been given a home division follow division rules for car
             // movement.
             if (!findDestinationsForCarsWithHomeDivision(car)) {
+                addLine(_buildReport, FIVE,
+                        Bundle.getMessage("buildNoDestForCar", car.toString()));
+                addLine(_buildReport, FIVE, BLANK_LINE);
                 continue; // hold car at current location
             }
             // does car have a custom load without a destination?
@@ -938,10 +941,10 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 }
             }
         }
-        addLine(_buildReport, SEVEN,
+        addLine(_buildReport, FIVE,
                 Bundle.getMessage("buildCouldNotFindTrack", trackType.toLowerCase(), car.toString(),
                         car.getLoadType().toLowerCase(), car.getLoadName()));
-        addLine(_buildReport, FIVE, BLANK_LINE);
+        addLine(_buildReport, SEVEN, BLANK_LINE);
         return false;
     }
 
