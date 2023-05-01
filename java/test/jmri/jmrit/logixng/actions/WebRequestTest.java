@@ -15,8 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionLight;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.LineEnding;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.FileUtil;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
 
 import org.junit.After;
 import org.junit.Assume;
@@ -168,21 +167,48 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
-        InstanceManager.getDefault(TurnoutManager.class).getByUserName("MiamiWest").setState(Turnout.THROWN);
+        InstanceManager.getDefault(TurnoutManager.class).provide("MiamiWest").setState(Turnout.THROWN);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Turnout MiamiWest is thrown", _replyVariable.getValue());
 
-        _responseCodeVariable.setValue(null);
-        _replyVariable.setValue(null);
-        InstanceManager.getDefault(TurnoutManager.class).getByUserName("Chicago32").setState(Turnout.THROWN);
-        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
-        Assert.assertEquals("Turnout Chicago32 is thrown", _replyVariable.getValue());
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Name: turnout, Value: MiamiWest");
+        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: IT3");
+        JUnitAppender.assertWarnMessageStartsWith("Global variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Turnout MiamiWest is thrown");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: cookies, value: null");
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables done");
 
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
-        InstanceManager.getDefault(TurnoutManager.class).getByUserName("TorontoFirst").setState(Turnout.THROWN);
+        InstanceManager.getDefault(TurnoutManager.class).provide("Chicago32").setState(Turnout.THROWN);
+        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
+        Assert.assertEquals("Turnout Chicago32 is thrown", _replyVariable.getValue());
+
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Name: turnout, Value: Chicago32");
+        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: IT3");
+        JUnitAppender.assertWarnMessageStartsWith("Global variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Turnout Chicago32 is thrown");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: cookies, value: null");
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables done");
+
+        _responseCodeVariable.setValue(null);
+        _replyVariable.setValue(null);
+        InstanceManager.getDefault(TurnoutManager.class).provide("TorontoFirst").setState(Turnout.THROWN);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Turnout TorontoFirst is thrown", _replyVariable.getValue());
+        
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Name: turnout, Value: TorontoFirst");
+        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: IT3");
+        JUnitAppender.assertWarnMessageStartsWith("Global variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Turnout TorontoFirst is thrown");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: cookies, value: null");
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables done");
     }
 
     private void setupThrowTurnoutsConditionalNG() throws SocketAlreadyConnectedException, ParserException {
@@ -251,8 +277,8 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(many);
         webRequest.getChild(0).connect(maleSocket);
 
-        LogLocalVariables log = new LogLocalVariables("IQDA107", null);
-        maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(log);
+        LogLocalVariables logLocal = new LogLocalVariables("IQDA107", null);
+        maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(logLocal);
         many.getChild(0).connect(maleSocket);
     }
 
@@ -263,7 +289,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
         _cookiesVariable.setValue(null);
-        InstanceManager.getDefault(SensorManager.class).getByUserName("Green").setState(Sensor.ACTIVE);
+        InstanceManager.getDefault(SensorManager.class).provide("Green").setState(Sensor.ACTIVE);
 //        InstanceManager.getDefault(TurnoutManager.class).getByUserName("Chicago32").setState(Turnout.THROWN);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Cookie Green is set. Cookies from client: ", _replyVariable.getValue());
@@ -271,23 +297,51 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
         Assert.assertEquals("{Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
 
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Name: sensor, Value: Green");
+        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: ISCLOCKRUNNING");
+        JUnitAppender.assertWarnMessageStartsWith("Global variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Cookie Green is set. Cookies from client:");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: cookies, value: {Green=Green=GreenGreen%21; expires=");
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables done");
+
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
-        InstanceManager.getDefault(SensorManager.class).getByUserName("Yellow").setState(Sensor.ACTIVE);
+        InstanceManager.getDefault(SensorManager.class).provide("Yellow").setState(Sensor.ACTIVE);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Cookie Yellow is set. Cookies from client: Green=GreenGreen!", _replyVariable.getValue());
         cookies = _cookiesVariable.getValue().toString();
         cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
         Assert.assertEquals("{Yellow=Yellow=YellowYellow%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
 
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Name: sensor, Value: Yellow");
+        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: ISCLOCKRUNNING");
+        JUnitAppender.assertWarnMessageStartsWith("Global variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Cookie Yellow is set. Cookies from client:");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: cookies, value: {Yellow=Yellow=YellowYellow%21; expires=");
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables done");
+
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
-        InstanceManager.getDefault(SensorManager.class).getByUserName("Blue").setState(Sensor.ACTIVE);
+        InstanceManager.getDefault(SensorManager.class).provide("Blue").setState(Sensor.ACTIVE);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Cookie Blue is set. Cookies from client: Yellow=YellowYellow!, Green=GreenGreen!", _replyVariable.getValue());
         cookies = _cookiesVariable.getValue().toString();
         cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
         Assert.assertEquals("{Yellow=Yellow=YellowYellow%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Blue=Blue=BlueBlue%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
+
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Name: sensor, Value: Blue");
+        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: ISCLOCKRUNNING");
+        JUnitAppender.assertWarnMessageStartsWith("Global variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Cookie Blue is set. Cookies from client:");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: cookies, value: {Yellow=Yellow=YellowYellow%21; expires=");
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables done");
+
     }
 
     private void setupCookiesConditionalNG() throws SocketAlreadyConnectedException, ParserException {
@@ -344,8 +398,8 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(many);
         webRequest.getChild(0).connect(maleSocket);
 
-        LogLocalVariables log = new LogLocalVariables("IQDA205", null);
-        maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(log);
+        LogLocalVariables logLocal = new LogLocalVariables("IQDA205", null);
+        maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(logLocal);
         many.getChild(0).connect(maleSocket);
     }
 
@@ -354,9 +408,17 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         Assume.assumeTrue("We can access " + JMRI_ORG_URL, CAN_ACCESS_JMRI_ORG);
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
-        InstanceManager.getDefault(LightManager.class).getByUserName("TestPostRequestLight").setState(Light.ON);
+        InstanceManager.getDefault(LightManager.class).provide("TestPostRequestLight").setState(Light.ON);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Logged in. First name: Green, last name: Tomato", _replyVariable.getValue());
+
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Global variables:");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Logged in. First name: Green, last name: Tomato");
+        JUnitAppender.assertWarnMessageStartsWith("Global Name: cookies, value: null");
+        JUnitAppender.assertWarnMessageStartsWith("Log local variables done");
+                
     }
 
     private void setupPostRequestConditionalNG() throws SocketAlreadyConnectedException, ParserException {
@@ -405,8 +467,8 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(many);
         webRequest.getChild(0).connect(maleSocket);
 
-        LogLocalVariables log = new LogLocalVariables(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(log);
+        LogLocalVariables logLocal = new LogLocalVariables(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
+        maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(logLocal);
         many.getChild(0).connect(maleSocket);
     }
 
