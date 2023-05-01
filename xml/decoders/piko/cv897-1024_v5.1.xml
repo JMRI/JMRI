@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<copyright xmlns="http://docbook.org/ns/docbook">
-		<year>20234</year>
+		<year>2023</year>
 		<holder>JMRI</holder>
 	</copyright>
 	<authorgroup xmlns="http://docbook.org/ns/docbook">
