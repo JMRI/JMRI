@@ -38,9 +38,6 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
     Hashtable<SignalMast, DestinationMast> destList = new Hashtable<>();
     LayoutEditor editor;
 
-    boolean useAutoGenBlock = true;
-    boolean useAutoGenTurnouts = true;
-
     LayoutBlock facingBlock = null;
     LayoutBlock remoteProtectingBlock = null;
 
@@ -1989,12 +1986,13 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             Enumeration<SignalMast> mastKeys = autoMasts.keys();
             while (mastKeys.hasMoreElements()) {
                 SignalMast key = mastKeys.nextElement();
-                log.debug("key {} {} {}", key.getDisplayName(), key.getAspect(), autoMasts.get(key));
-                if ((key.getAspect() != null) && (!key.getAspect().equals(autoMasts.get(key)))) {
+                String aspect = key.getAspect();
+                log.debug("key {} {} {}", key.getDisplayName(), aspect, autoMasts.get(key));
+                if ((aspect != null) && (!aspect.equals(autoMasts.get(key)))) {
                     if (isSignalMastIncluded(key)) {
                         //Basically if we have a blank aspect, we don't care about the state of the signalmast
                         if (!getSignalMastState(key).isEmpty()) {
-                            if (!key.getAspect().equals(getSignalMastState(key))) {
+                            if (!aspect.equals(getSignalMastState(key))) {
                                 state = false;
                             }
                         }
@@ -2005,7 +2003,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             }
             for (NamedBeanSetting nbh : userSetMasts) {
                 SignalMast key = (SignalMast) nbh.getBean();
-                if ((key.getAspect() == null) || (!key.getAspect().equals(nbh.getStringSetting()))) {
+                String aspect = key.getAspect();
+                if ((aspect == null) || (!aspect.equals(nbh.getStringSetting()))) {
                     state = false;
                 }
             }
@@ -2156,9 +2155,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 SignalMast key = mastKeys.nextElement();
                 log.debug("{} auto mast add list {}", destination.getDisplayName(), key.getDisplayName());
                 key.addPropertyChangeListener(propertySignalMastListener);
-                if (!key.getAspect().equals(autoMasts.get(key))) {
+                String aspect = key.getAspect();
+                if ( aspect != null && !aspect.equals(autoMasts.get(key))) {
                     if (isSignalMastIncluded(key)) {
-                        if (key.getAspect().equals(getSignalMastState(key))) {
+                        if (aspect.equals(getSignalMastState(key))) {
                             routeclear = false;
                         }
                     } else {
@@ -2170,8 +2170,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             for (NamedBeanSetting nbh : userSetMasts) {
                 SignalMast key = (SignalMast) nbh.getBean();
                 key.addPropertyChangeListener(propertySignalMastListener);
-                log.debug("mast '{}' key aspect '{}'", destination.getDisplayName(), key.getAspect());
-                if ((key.getAspect() == null) || (!key.getAspect().equals(nbh.getStringSetting()))) {
+                String aspect = key.getAspect();
+                log.debug("mast '{}' key aspect '{}'", destination.getDisplayName(), aspect);
+                if ((aspect == null) || (!aspect.equals(nbh.getStringSetting()))) {
                     routeclear = false;
                 }
             }

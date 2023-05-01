@@ -468,10 +468,11 @@ public class ConditionalVariable {
                         result = f.getHeld();
                         break;
                     case SIGNAL_MAST_ASPECT_EQUALS:
-                        if (f.getAspect() == null) {
+                        String aspect = f.getAspect();
+                        if ( aspect == null) {
                             result = false;
                         } else {
-                            result = f.getAspect().equals(_dataString);
+                            result = aspect.equals(_dataString);
                         }
                         break;
                     default:

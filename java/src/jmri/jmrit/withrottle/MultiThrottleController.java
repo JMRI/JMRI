@@ -105,7 +105,12 @@ public class MultiThrottleController extends ThrottleController {
     }
 
     /**
-     * {@inheritDoc}
+     * This replaces the previous method of sending a string of function labels.
+     * 
+     * Checks for labels across all possible functions of this roster entry.
+     * 
+     * Example:
+     * {@code MTLL1234<;>]\[Light]\[Bell]\[Horn]\[]\[]\[]\[]\[]\[Mute]\[]\[]\[]\[} etc.
      */
     @Override
     public void sendFunctionLabels(RosterEntry re) {
@@ -114,7 +119,7 @@ public class MultiThrottleController extends ThrottleController {
             StringBuilder functionString = new StringBuilder(buildPacketWithChar('L'));
 
             int i;
-            for (i = 0; i < 29; i++) {
+            for (i = 0; i < (re.getMaxFnNumAsInt()+1); i++) {
                 functionString.append("]\\[");
                 if ((re.getFunctionLabel(i) != null)) {
                     functionString.append(re.getFunctionLabel(i));
@@ -135,7 +140,7 @@ public class MultiThrottleController extends ThrottleController {
     @Override
     public void sendAllFunctionStates(DccThrottle t) {
         log.debug("Sending state of all functions");
-        for (int cnt = 0; cnt < 29; cnt++) {
+        for (int cnt = 0; cnt < t.getFunctions().length; cnt++) {
             StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
             message.append( t.getFunction(cnt) ? "F1" : "F0" );
             message.append(cnt);
@@ -191,7 +196,7 @@ public class MultiThrottleController extends ThrottleController {
     @Override
     protected void sendAllMomentaryStates(DccThrottle t) {
         log.debug("Sending momentary state of all functions");
-        for (int cnt = 0; cnt < 29; cnt++) {
+        for (int cnt = 0; cnt < t.getFunctionsMomentary().length; cnt++) {
             StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
             message.append( t.getFunctionMomentary(cnt) ? "m1" : "m0" );
             message.append(cnt);
