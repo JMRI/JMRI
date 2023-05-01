@@ -145,7 +145,7 @@ public class Portal {
         if (newName.equals(oldName)) {
             return null;
         }
-        Portal p = jmri.InstanceManager.getDefault(PortalManager.class).getPortal(newName);
+        Portal p = InstanceManager.getDefault(PortalManager.class).getPortal(newName);
         if (p != null) {
             return Bundle.getMessage("DuplicatePortalName", newName, p.getDescription());
         }
@@ -561,7 +561,7 @@ public class Portal {
      */
     private static @Nonnull String getPermissibleSignalSpeed(@Nonnull SignalHead signal, boolean entrance) {
         int appearance = signal.getAppearance();
-        String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(signal.getAppearanceName(appearance));
+        String speed = InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(signal.getAppearanceName(appearance));
         // on head, speed is the same for entry and exit
         if (speed == null) {
             log.error("SignalHead \"{}\" has no {} speed specified for appearance \"{}\"! - Restricting Movement!",
@@ -581,13 +581,13 @@ public class Portal {
      * @return permissible speed, Restricted if no speed set on signal
      */
     private static @Nonnull String getPermissibleSignalSpeed(@Nonnull SignalMast signal, boolean entrance) {
-        String signalAspect = signal.getAspect(); 
-        String aspect = ( signalAspect == null ? "" : signalAspect );
+        String aspect = signal.getAspect(); 
+        String signalAspect = ( aspect == null ? "" : aspect );
         String speed;
         if (entrance) {
-            speed = InstanceManager.getDefault(SignalSpeedMap.class).getAspectSpeed(aspect, signal.getSignalSystem());
+            speed = InstanceManager.getDefault(SignalSpeedMap.class).getAspectSpeed(signalAspect, signal.getSignalSystem());
         } else {
-            speed = InstanceManager.getDefault(SignalSpeedMap.class).getAspectExitSpeed(aspect, signal.getSignalSystem());
+            speed = InstanceManager.getDefault(SignalSpeedMap.class).getAspectExitSpeed(signalAspect, signal.getSignalSystem());
         }
         if (speed == null) {
             log.error("SignalMast \"{}\" has no {} speed specified for aspect \"{}\"! - Restricting Movement!",
