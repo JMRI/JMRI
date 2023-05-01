@@ -581,12 +581,13 @@ public class Portal {
      * @return permissible speed, Restricted if no speed set on signal
      */
     private static @Nonnull String getPermissibleSignalSpeed(@Nonnull SignalMast signal, boolean entrance) {
-        String aspect = signal.getAspect();
+        String signalAspect = signal.getAspect(); 
+        String aspect = ( signalAspect == null ? "" : signalAspect );
         String speed;
         if (entrance) {
-            speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAspectSpeed(aspect, signal.getSignalSystem());
+            speed = InstanceManager.getDefault(SignalSpeedMap.class).getAspectSpeed(aspect, signal.getSignalSystem());
         } else {
-            speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAspectExitSpeed(aspect, signal.getSignalSystem());
+            speed = InstanceManager.getDefault(SignalSpeedMap.class).getAspectExitSpeed(aspect, signal.getSignalSystem());
         }
         if (speed == null) {
             log.error("SignalMast \"{}\" has no {} speed specified for aspect \"{}\"! - Restricting Movement!",
@@ -598,11 +599,11 @@ public class Portal {
         return speed;
     }
 
-    /*
-     * block is a potential _toBlock and paths are the current _toPaths
-     * or
-     * block is a potential _fromBlock and paths are the current _fromPaths
+    /**
      * Verify that each path has this potential block as its owning block.
+     * Block is a potential _toBlock and Paths are the current _toPaths 
+     * or
+     * Block is a potential _fromBlock and Paths are the current _fromPaths
      */
     private static boolean verify(List<OPath> paths, OBlock block) {
         if (block == null) {
