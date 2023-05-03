@@ -18,7 +18,7 @@
 	<decoder>
 		<family name="PIKO SUSI Lichtdekoder (XP5.1)" mfg="PIKO" lowVersionID="0" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
 			<!-- to be checked by hardware owner -->
-			<model model="PIKO BR 83 SUSI Decoder" numOuts="6" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="Platine" productID="PIKO_BR83_SUSI_Decoder" lowVersionID="0" comment="Piko BR 83 SUSI Lichtdekoder (XP5.1)">
+			<model model="PIKO BR 83 SUSI Decoder" numOuts="6" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_BR83_SUSI_Decoder" lowVersionID="0" comment="Piko BR 83 SUSI Lichtdekoder (XP5.1)">
 				<output name="1" label="A1" connection="plug" maxcurrent="50 mA"/>
 				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
 				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>
@@ -27,7 +27,7 @@
 				<output name="6" label="A6" connection="plug" maxcurrent="50 mA"/>
 				<size length="1" width="1" height="1" units=""/>
 			</model>
-			<model model="PIKO BR 93 SUSI Decoder" numOuts="6" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="Platine" productID="PIKO_BR93_SUSI_Decoder" lowVersionID="0" comment="Piko BR 93 SUSI Lichtdekoder (XP5.1)">
+			<model model="PIKO BR 93 SUSI Decoder" numOuts="6" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_BR93_SUSI_Decoder" lowVersionID="0" comment="Piko BR 93 SUSI Lichtdekoder (XP5.1)">
 				<output name="1" label="A1" connection="plug" maxcurrent="50 mA"/>
 				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
 				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>
