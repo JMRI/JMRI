@@ -67,6 +67,7 @@ public class LocoNetConsistManager extends AbstractConsistManager {
         LocoNetConsist consist;
         consist = new LocoNetConsist((DccLocoAddress) address, memo);
         consistTable.put(address, consist);
+        notifyConsistListChanged();
         return consist;
     }
 
