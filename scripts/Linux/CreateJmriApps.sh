@@ -14,6 +14,14 @@ done
 
 PROGDIR=$(cd "$( dirname "${0}" )" && pwd)
 
+# Verify that the script is running in the JMRI program location
+if [ -f ${PROGDIR}/DecoderPro ] && [ -f ${PROGDIR}/PanelPro ]; then
+    echo "Create Linux application definitions for DecoderPro and PanelPro"
+else
+    echo "This script must be run from the JMRI program location"
+    exit 1
+fi
+
 function createDP() {
 cat << DP-App > $1
 [Desktop Entry]
