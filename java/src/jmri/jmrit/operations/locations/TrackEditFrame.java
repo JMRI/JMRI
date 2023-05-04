@@ -1086,9 +1086,14 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         // log.debug("Update all checkboxes");
         checkBoxes.clear();
         panelCheckBoxes.removeAll();
+        numberOfCheckBoxes = getNumberOfCheckboxesPerLine();
         x = 0;
         y = 0; // vertical position in panel
         loadTypes(InstanceManager.getDefault(CarTypes.class).getNames());
+        
+        // add space between car and loco types
+        checkNewLine();
+ 
         loadTypes(InstanceManager.getDefault(EngineTypes.class).getNames());
         enableCheckboxes(_track != null);
 
@@ -1108,22 +1113,27 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
     int y = 0; // vertical position in panel
 
     private void loadTypes(String[] types) {
-        int numberOfCheckboxes = getNumberOfCheckboxesPerLine();
         for (String type : types) {
             if (_location.acceptsTypeName(type)) {
                 JCheckBox checkBox = new JCheckBox();
                 checkBoxes.add(checkBox);
                 checkBox.setText(type);
                 addCheckBoxAction(checkBox);
-                addItemLeft(panelCheckBoxes, checkBox, x++, y);
+                addItemLeft(panelCheckBoxes, checkBox, x, y);
                 if (_track != null && _track.isTypeNameAccepted(type)) {
                     checkBox.setSelected(true);
                 }
+                checkNewLine();
             }
-            if (x > numberOfCheckboxes) {
-                y++;
-                x = 0;
-            }
+        }
+    }
+    
+    int numberOfCheckBoxes;
+    
+    private void checkNewLine() {
+        if (++x > numberOfCheckBoxes) {
+            y++;
+            x = 0;
         }
     }
 
