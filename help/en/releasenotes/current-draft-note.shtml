@@ -642,7 +642,7 @@
                 <a href="https://jmri.org/jython/anyrail/README.md">README.md</a>
                 file.</li>
             <li>Add the <strong>CreateJmriApps.sh</strong> script to the Linux install.  The script
-                creates the JMRI applications used by the Linux application launchers.  It also has
-                an option (--desktop or -d) to create desktop icons.</li>
+                creates the JMRI application definitions used by the Linux application launchers.
+                It also has an option (--desktop or -d) to create desktop icons.</li>
         </ul>
 
