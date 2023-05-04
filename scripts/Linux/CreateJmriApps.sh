@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Create the DecoderPro and PanelPro Linux application definitions.
-# Caommand format:  CreateJmriApps.sh [--desktop | -d]
+# Command format:  CreateJmriApps.sh [--desktop | -d]
 # If the --desktop or the -d option is included, the desktop icons will also be created.
 
 DESKTOP=0
