@@ -637,9 +637,12 @@
             <li>Add clickable table of contents to Panel File display/print capability
                 (when you open a panel xml file via the JMRI web server)</li>
             <li>New
-                <a href="https://jmri.org/jython/anyrail/AnyRailBuildBlockSensorList.py">AnyRailBuildBlockSensorList.py</li>
+                <a href="https://jmri.org/jython/anyrail/AnyRailBuildBlockSensorList.py">AnyRailBuildBlockSensorList.py</a>
                 script and associated
-                <a href="https://jmri.org/jython/anyrail/README.md">README.md</li>
+                <a href="https://jmri.org/jython/anyrail/README.md">README.md</a>
                 file.</li>
+            <li>Add the <strong>CreateJmriApps.sh</strong> script to the Linux install.  The script
+                creates the JMRI application definitions used by the Linux application launchers.
+                It also has an option (--desktop or -d) to create desktop icons.</li>
         </ul>
 
