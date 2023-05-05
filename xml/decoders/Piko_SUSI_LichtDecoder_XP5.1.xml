@@ -25,7 +25,6 @@
 				<output name="4" label="A4" connection="plug" maxcurrent="50 mA"/>
 				<output name="5" label="A5" connection="plug" maxcurrent="50 mA"/>
 				<output name="6" label="A6" connection="plug" maxcurrent="50 mA"/>
-				<size length="1" width="1" height="1" units=""/>
 			</model>
 			<model model="PIKO BR 93 SUSI Decoder" numOuts="6" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_BR93_SUSI_Decoder" lowVersionID="0" comment="Piko BR 93 SUSI Lichtdekoder (XP5.1)">
 				<output name="1" label="A1" connection="plug" maxcurrent="50 mA"/>
@@ -34,7 +33,6 @@
 				<output name="4" label="A4" connection="plug" maxcurrent="50 mA"/>
 				<output name="5" label="A5" connection="plug" maxcurrent="50 mA"/>
 				<output name="6" label="A6" connection="plug" maxcurrent="50 mA"/>
-				<size length="1" width="1" height="1" units=""/>
 			</model>
 		</family>
 		<programming direct="yes" paged="yes" register="yes" ops="yes">
@@ -67,13 +65,6 @@
 				<label xml:lang="de">Decoder Version: </label>
 				<label xml:lang="nl">Versie van decoder: </label>
 				<label xml:lang="cs">Verze dekodéru: </label>
-			</variable>
-			<variable item="Bank 0 Slave No" CV="897" readOnly="yes" default="3">
-				<decVal/>
-				<label>Slave No: </label>
-				<label xml:lang="de">Slave Nummer (3): </label>
-				<label xml:lang="nl">Slave Nummer (3): </label>
-				<label xml:lang="cs">Slave Nummer (3): </label>
 			</variable>
 			<!-- Interner Lichtdecoder CV807 - 1024 -->
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv897-1024_v5.1.xml"/>
