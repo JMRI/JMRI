@@ -137,8 +137,12 @@
         <li><a href="#Locations">Locations</a>
           <ul>
             <li><a href="#AddLocation">Add or Edit Location</a></li>
+            
+            <li><a href="#LocationServiceDirection">Train Direction Serviced</a></li>
 
             <li><a href="#LocationDivision">Railroad Divisions</a></li>
+            
+            <li><a href="#LocationRollingStock">Rolling Stock Serviced</a></li>
 
             <li><a href="#Yardmaster">Yardmaster</a></li>
 
@@ -168,6 +172,12 @@
 
             <li><a href="#Yards">Yards</a>
               <ul>
+                <li><a href="#TrackServiceDirection">Train Direction Serviced</a></li>
+                
+                <li><a href="#RollingStockServiced">Rolling Stock Serviced</a></li>
+                
+                <li><a href="#RoadAndLoadOptions">Road and Load Options</a></li>
+                
                 <li><a href="#PickUpCarOrder">Pick Up Car Order</a></li>
               </ul></li>
 
@@ -2099,13 +2109,16 @@
         Therefore a positive value means that track space is going to be consumed by set outs, and a
         negative number means that track space is going to be freed up by pick ups.</p>
 
-      <h4 id="LocationServiceDirection">Location Service Direction</h4>
+      <h4 id="LocationServiceDirection">Train Direction Serviced</h4>
 
-      <p>You can decide which train direction the location can service. For example, if only
-        east bound trains can access the location select "East" and deselect the other directions.
-        This can be useful if you want to only support trailing point switching for a given
-        location. If a location can support multiple directions then select the ones that are
-        appropriate.</p>
+      <p>
+        You can decide which train directions the location can service. For example, if only east
+        bound trains can access the location select "East" and deselect the other directions. This
+        can be useful if you want to only support trailing point switching for a given location. If
+        a location can support multiple directions then select the ones that are appropriate. You
+        can also control the <a href="#TrackServiceDirection">train service direction</a> for each track
+        at a location.
+      </p>
 
       <h4 id="LocationDivision">Railroad Division</h4>
 
@@ -2150,7 +2163,7 @@
         limited number of cars and then determine if the restricted car movements meet your
         expectations. Prototypical car movement doesn't necessarily mean better for model railroads.</p>
 
-      <h4 id="LocationRollingStock">Location Rolling Stock</h4>
+      <h4 id="LocationRollingStock">Rolling Stock Serviced</h4>
 
       <p>
         You can control the rolling stock a location can service. Press the "Clear All" button to
@@ -2309,9 +2322,9 @@
         large yards where track space for switching cars is needed. Press the "Add Yard Track"
         button at the bottom of the window and the disabled fields should now appear.</p>
 
-      <h4 id="TrackServiceDirection">Track Service Direction</h4>
+      <h4 id="TrackServiceDirection">Train Direction Serviced</h4>
 
-      <p>You can decide which train direction the track can service. For example, if only east
+      <p>You can decide which train directions the track can service. For example, if only east
         bound trains can access the track select "East" and deselect the other directions. This can
         be useful if you want to only support trailing point switching for a specific track. If a
         track can support multiple directions then select the ones that are appropriate.</p>
@@ -4955,7 +4968,8 @@
 
       <p>To change which day of the week is active, select the appropriate radio button and then
         press the "Activate" button. The day selected is then used by your schedules (Delivery and
-        Pickup) when building trains. You can also add or change the days of the week by using the
+        Pickup) when building trains. For each day of the week, you can add a comment. Enter the
+        comment, then press the "Save" button. You can also add or change the days of the week by using the
         "Edit Train Schedule" window found under "Tools". You can change the order by dragging the
         column with your mouse pointer. Press the "Save" button to complete your changes.</p>
 
