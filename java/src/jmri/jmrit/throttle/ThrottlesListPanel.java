@@ -11,6 +11,7 @@ import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 
+import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.swing.JmriMouseEvent;
@@ -33,6 +34,10 @@ public class ThrottlesListPanel extends JPanel {
     public ThrottlesListPanel() {
         super();
         throttleFramesLM = new ThrottlesTableModel();
+        ConsistManager consistManager = InstanceManager.getNullableDefault(jmri.ConsistManager.class);
+        if (consistManager != null && consistManager.isEnabled()) {
+            consistManager.addConsistListListener(throttleFramesLM);
+        }
         initGUI();
     }
 

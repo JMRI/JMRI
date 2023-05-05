@@ -32,6 +32,7 @@ public class NmraConsistManager extends AbstractConsistManager {
         NmraConsist consist;
         consist = new NmraConsist((DccLocoAddress) address, commandStation);
         consistTable.put(address, consist);
+        notifyConsistListChanged();
         return (consist);
     }
 

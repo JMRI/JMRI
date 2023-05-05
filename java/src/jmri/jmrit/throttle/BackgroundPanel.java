@@ -69,15 +69,25 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
     }
 
     @Override
-    public void notifyConsistAddressChosen(int newAddress, boolean isLong) {
+    public void notifyConsistAddressChosen(LocoAddress l) {
+        notifyAddressChosen(l);
     }
 
     @Override
-    public void notifyConsistAddressReleased(int address, boolean isLong) {
+    public void notifyConsistAddressReleased(LocoAddress l) {
+         notifyAddressReleased(l);
     }
 
     @Override
-    public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
+    public void notifyConsistAddressThrottleFound(DccThrottle t) {
+        notifyAddressThrottleFound(t);
+    }
+
+    public void destroy() {
+        if (addressPanel != null) {
+            addressPanel.removeAddressListener(this);
+            addressPanel = null;
+        }
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BackgroundPanel.class);    
