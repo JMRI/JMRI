@@ -299,6 +299,11 @@
                 <li></li>
             </ul>
 
+       <h4>Piko decoders</h4>
+            <ul>
+                <li>Add Decoder file for Piko SUSI Decoder (Light decoder)</li>
+            </ul>
+
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
