@@ -575,6 +575,15 @@
                 definition.
                 For most decoders, this will be 28,
                 but there are a few definitions that are larger or smaller.</li>
+            <li>Added a consist selector in the address panel</li>
+            <li>Behavior with consists enhanced</li>
+        </ul>
+        
+    <h3>Consist Tool</h3>
+        <a id="consist" name="consist"></a>
+        <ul>
+            <li>Consist tool now leverages locomotives icons when available</li>
+            <li>A consist selection combo box was introduced</li>
         </ul>
 
     <h3>Timetable</h3>
