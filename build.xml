@@ -2633,6 +2633,8 @@
                      excludes="help/en/manual/**,web/app/**" />
             <fileset dir="${scriptdir}"
                      includes="default.lcf,COPYING"/>
+            <fileset dir="${scriptdir}/Linux"
+                     includes="CreateJmriApps.sh"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
         </copy>

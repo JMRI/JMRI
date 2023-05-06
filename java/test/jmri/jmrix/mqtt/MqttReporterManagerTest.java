@@ -1,14 +1,7 @@
 package jmri.jmrix.mqtt;
 
-import java.util.List;
-
-import jmri.*;
-import jmri.Manager.NameValidity;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -30,28 +23,31 @@ public class MqttReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         return "MR" + i;
     }
 
+    @Override
     public void testRegisterDuplicateSystemName() {}
+    @Override
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    @Override
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    private MqttSystemConnectionMemo memo = null;
+    private MqttAdapterScaffold adapter = null;
 
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        memo = new MqttSystemConnectionMemo();
-        memo.setMqttAdapter(new MqttAdapter());
-        l = new MqttReporterManager(memo);
+        adapter = new MqttAdapterScaffold(true);
+
+        Assertions.assertNotNull(adapter.getSystemConnectionMemo());
+        l = new MqttReporterManager(adapter.getSystemConnectionMemo());
     }
 
     @AfterEach
     public void tearDown() {
         l = null;
-        Assertions.assertNotNull(memo);
-        memo.dispose();
-        memo = null;
+        Assertions.assertNotNull(adapter);
+        adapter.dispose();
         JUnitUtil.tearDown();
     }
 
