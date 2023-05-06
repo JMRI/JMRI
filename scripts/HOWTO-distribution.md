@@ -255,13 +255,13 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i .bak s/5.3.4-SNAPSHOT/5.3.6-SNAPSHOT/g pom.xml
+        sed -i .bak s/5.3.5-SNAPSHOT/5.3.6-SNAPSHOT/g pom.xml
         git commit -m"5.3.6 until next release" pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i .bak s/release.build=4/release.build=5/g release.properties
+        sed -i .bak s/release.build=5/release.build=6/g release.properties
         git commit -m"5.3.6 until next release" release.properties
         git push github
 ```
@@ -486,9 +486,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.3.6+Rff6cfe01dc.dmg](https://github.com/JMRI/JMRI/releases/download/v5.3.6/JMRI.5.3.6+Rff6cfe01dc.dmg) | c75447d94dd21efa48320985649fb6a834773806da9cb6fba4642039aa7f7027
-[JMRI.5.3.6+Rff6cfe01dc.exe](https://github.com/JMRI/JMRI/releases/download/v5.3.6/JMRI.5.3.6+Rff6cfe01dc.exe) | e441b3a1db1b732ed881c7f043f63dd8aee47b6b4b2a6ad0a218a4b1339cecc1
-[JMRI.5.3.6+Rff6cfe01dc.tgz](https://github.com/JMRI/JMRI/releases/download/v5.3.6/JMRI.5.3.6+Rff6cfe01dc.tgz) | cce5ce4bd5747a0666d5ca00570ca129515f957a9a3b6da7098310f594c7bd64
+[JMRI.5.3.6+R7bfd8a5c79.dmg](https://github.com/JMRI/JMRI/releases/download/v5.3.6/JMRI.5.3.6+R7bfd8a5c79.dmg) | 39d57dd1a76e5273cc5d256004a9029d8ea25a66a7b348e47231066f7a3df655
+[JMRI.5.3.6+R7bfd8a5c79.exe](https://github.com/JMRI/JMRI/releases/download/v5.3.6/JMRI.5.3.6+R7bfd8a5c79.exe) | 02db0a0ed29e025dae8ad1f586b6ded50c4d18fe12535e05808d1237356a814e
+[JMRI.5.3.6+R7bfd8a5c79.tgz](https://github.com/JMRI/JMRI/releases/download/v5.3.6/JMRI.5.3.6+R7bfd8a5c79.tgz) | ade44742980b90abb7767f0746a0047fcd182717afc126f8d4c02fc91146e585
 
 
 ```
