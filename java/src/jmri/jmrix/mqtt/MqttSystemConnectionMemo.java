@@ -18,7 +18,7 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
 
     public MqttSystemConnectionMemo() {
         super("M", "MQTT");
-        InstanceManager.store(this, MqttSystemConnectionMemo.class);
+        InstanceManager.store(MqttSystemConnectionMemo.this, MqttSystemConnectionMemo.class);
     }
 
     @Override
@@ -26,10 +26,10 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
 //        setPowerManager(new jmri.jmrix.jmriclient.JMRIClientPowerManager(this));
 //        jmri.InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
-        jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
-        jmri.InstanceManager.setSensorManager(getSensorManager());
-        jmri.InstanceManager.setLightManager(getLightManager());
-        jmri.InstanceManager.setReporterManager(getReporterManager());
+        InstanceManager.setTurnoutManager(getTurnoutManager());
+        InstanceManager.setSensorManager(getSensorManager());
+        InstanceManager.setLightManager(getLightManager());
+        InstanceManager.setReporterManager(getReporterManager());
 
 //        jmri.InstanceManager.setReporterManager(getReporterManager());
 
