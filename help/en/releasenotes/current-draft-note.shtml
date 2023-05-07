@@ -21,19 +21,17 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Improved Node Manager configuratiuon of MERG CANSERVO8C / CANMIO-SVO / CANACC4</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
             <ul>
-                <li>Improve handling of poll options for network connections.</li>
-                <li>Remove extraneous ERROR message when network connections.</li>
+                <li></li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>New script in DCC-EX folder, RosterExportToDCC-EX.py, which outputs all JMRI roster entries in
-                format suitable for copying into myAutomation.h.</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -78,15 +76,12 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li>Clarify some internal implementation terminology.</li>
-                <li>Add support for up to Fn68 when the Lenz hardware is version 4.0 or later.</li>
+                <li></li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Fixed a problem introduced in JMRI 5.3.3 that caused
-                    certain ops-mode programming operations to fail.</li>
-                <li>LocoNet connections now support decoder functions up to F68</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -106,7 +101,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Added support for variable Lights.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -126,16 +121,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Update <a href="https://github.com/openlcb/OpenLCB_Java">OpenLCB_Java library</a> through
-                    <a href="https://github.com/openlcb/OpenLCB_Java/pulls?q=is%3Apr">PR #228</a> which includes
-                    <ul>
-                        <li>Add a factory reset option to the configuration More... menu,</li>
-                        <li>Limited retry of CDI reads in case of errors.</li>
-                    </ul>
-                <li>Fix an NPE from incorrect input when making a Sensor or Turnout.</li>
-                <li>Allow an alternate user name format for accessing DCC turnouts connected
-                    thrown a bridge:  MTT123 (note 2nd T) will generate the appropriate
-                    events to throw and close DCC turnout 123.
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -225,8 +211,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Added a decoder definition for the PM74 board.</li>
-                <li>Added decoder definitions for the SFX Sound Decoders - Series 7</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -246,7 +231,7 @@
 
         <h4>Kuehn</h4>
             <ul>
-                <li>Improve the ZTC217 decoder definition.</li>
+                <li></li>
             </ul>
 
         <h4>LaisDCC</h4>
@@ -366,7 +351,7 @@
 
         <h4>Viessmann</h4>
             <ul>
-                <li>Decoderdefinition Tillig double slip turnout: Address label added and typos corrected</li>
+                <li></li>
             </ul>
 
         <h4>Wangrow</h4>
@@ -376,7 +361,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Updates for the Zimo MS series of decoders.</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -387,11 +372,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Added tooltips to the CV Pane that will show a brief summary of where the CV is
-                being used.</li>
-            <li>Significant roster table UI speed improvements.</li>
-            <li>Added progress dialog for roster index recreation.</li>
-            <li>Added progress dialog for decoder index recreation.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -421,13 +402,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-          <li>Tooltips have been enabled for turnouts and slips on Layout Editor panels. The tooltip
-          displays the name of the assigned turnout. The format is <strong>system</strong> or
-          <strong>user (system)</strong>. For slips, both turnout names are displayed.  If a turnout
-          has not been assigned to a turnout or slip, the internal TOnn or SLnn id will be displayed.
-          The tooltips are shown based on the <strong>Options &rArr; Show Icon tooltips </strong>
-          settings used by the regular icon tooltips.  Custom tooltips are not available.</li>
-	        <li>Add a scale item to popup menu.</li>
+	        <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -438,8 +413,7 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li>Recognize Logix user name changes for Conditional Logix Actions.  This is an action
-          that can be used to enable or disable a different Logix.</li>
+          <li></li>
         </ul>
 
     <h3>LogixNG</h3>
@@ -481,12 +455,6 @@
             <ul>
                 <li></li>
             </ul>
-
-    <h3>PanelPro</h3>
-        <a id="PanelPro" name="PanelPro"></a>
-        <ul>
-            <li>Add clickable table of contents to Panel File display/print capability (when you open a panel xml file via the JMRI web server)</li>
-        </ul>
 
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
@@ -561,20 +529,13 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li>Change the way user names are displayed in the cell contents. This
-                allows word breaks onto additional lines in the display.</li>
+            <li></li>
         </ul>
 
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Some minor internal cleanup.</li>
-            <li>If you select a roster entry, the throttle displays functions up to the
-                least of the number of functions available
-                from the layout connection, or the maximum function in the decoder
-                definition.
-                For most decoders, this will be 28,
-                but there are a few definitions that are larger or smaller.</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -592,7 +553,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>ID Tag Tables - Speed improvements when working with large numbers of Tags.</li>
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
@@ -634,12 +595,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Add clickable table of contents to Panel File display/print capability
-                (when you open a panel xml file via the JMRI web server)</li>
-            <li>New
-                <a href="https://jmri.org/jython/anyrail/AnyRailBuildBlockSensorList.py">AnyRailBuildBlockSensorList.py</li>
-                script and associated
-                <a href="https://jmri.org/jython/anyrail/README.md">README.md</li>
-                file.</li>
+            <li></li>
         </ul>
 

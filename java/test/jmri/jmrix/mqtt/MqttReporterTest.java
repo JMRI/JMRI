@@ -3,7 +3,6 @@ package jmri.jmrix.mqtt;
 import jmri.*;
 import jmri.util.*;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,34 +17,24 @@ public class MqttReporterTest extends jmri.implementation.AbstractReporterTestBa
         return InstanceManager.getDefault(IdTagManager.class).provideIdTag("123");
     }
 
-    MqttAdapter a;
-    String saveTopic;
-    byte[] savePayload;
+    MqttAdapterScaffold a = null;
 
     @Override
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         // prepare an interface
-        saveTopic = null;
-        savePayload = null;
-        a = new MqttAdapter(){
-                @Override
-                public void publish(String topic, byte[] payload) {
-                    saveTopic = topic;
-                    savePayload = payload;
-                }
-            };
+        a = new MqttAdapterScaffold(true);
         r = new MqttReporter(a, "MR1", "track/reporter/1");
-        JUnitAppender.assertWarnMessage("Trying to subscribe before connect/configure is done");
     }
 
     @Override
     @AfterEach
     public void tearDown() {
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
+        InstanceManager.getDefault(IdTagManager.class).dispose();
         r.dispose();
+        a.dispose();
         JUnitUtil.tearDown();
     }
 

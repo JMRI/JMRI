@@ -47,6 +47,11 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
         return mName;
     }
 
+    @Override
+    public String toString() {
+        return "ShutDownTask: " + getName();
+    }
+
     /**
      * {@inheritDoc}
      *

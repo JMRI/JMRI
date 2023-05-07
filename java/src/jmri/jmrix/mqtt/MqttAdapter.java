@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Communications adapter for Mqtt communications links.
  *
  * @author Lionel Jeanson
- * @author Bob Jacobsen   Copyright (c) 2091, 2029
+ * @author Bob Jacobsen   Copyright (c) 2019, 2023
  */
 @API(status=API.Status.MAINTAINED)
 public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implements MqttCallback {
@@ -154,9 +154,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             String tempdirName = jmri.util.FileUtil.getExternalFilename(jmri.util.FileUtil.PROFILE);
             log.debug("will use {} as temporary directory", tempdirName);
 
-            mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(),
-                                        clientID,
-                                        new MqttDefaultFilePersistence(tempdirName));
+            mqttClient = getNewMqttClient(clientID, tempdirName);
 
             if ((getOptionState(MQTT_USERNAME_OPTION) != null
                     && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty())
@@ -170,6 +168,11 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         } catch (MqttException ex) {
             throw new IOException("Can't create MQTT client", ex);
         }
+    }
+
+    MqttClient getNewMqttClient(String clientID, String tempdirName) throws MqttException {
+        return new MqttClient(PROTOCOL + getCurrentPortName(),
+            clientID, new MqttDefaultFilePersistence(tempdirName));
     }
 
     @Override
@@ -307,7 +310,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
         boolean found = false;
         Map<String,ArrayList<MqttEventListener>> tempMap
-            = new HashMap<String,ArrayList<MqttEventListener>> (mqttEventListeners); // Avoid ConcurrentModificationException
+            = new HashMap<> (mqttEventListeners); // Avoid ConcurrentModificationException
         for (Map.Entry<String,ArrayList<MqttEventListener>> e : tempMap.entrySet()) {
             // does key match received topic, including wildcards?
             if (MqttTopic.isMatched(e.getKey(), topic) ) {
