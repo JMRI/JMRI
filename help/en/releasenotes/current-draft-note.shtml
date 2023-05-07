@@ -503,7 +503,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>CheckForNull annotation added to the getAspect method.</li>
             </ul>
 
     	<h4>Signal Groups</h4>
