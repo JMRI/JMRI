@@ -207,7 +207,7 @@ public class SRCPClientParserTokenizerTest{
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for VERSION", SRCPClientParserConstants.KEY == t.kind);
+        Assert.assertTrue("Wrong token kind for VERSION", SRCPClientParserConstants.ENDVALUE == t.kind);
     }
 
     @Test 

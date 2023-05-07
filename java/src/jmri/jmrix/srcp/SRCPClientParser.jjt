@@ -48,6 +48,18 @@ TOKEN :
   < EOL :(["\n","\r"]){2}|"\n" >:DEFAULT
 }
 
+<IN_VALUE>
+MORE :
+{
+  < VALUE: ~[";","\n","\r"]>
+}
+
+<IN_VALUE>
+TOKEN :
+{
+  < ENDVALUE :(["\n","\r"]){2}|"\n"|";" >:DEFAULT
+}
+
 <DEFAULT>
 SKIP:
 {
@@ -96,7 +108,7 @@ TOKEN :
 | <REG: <R><E><G>>
 
 // Constants and commands used for handshake mode only.
-| < KEY: (~[" ",";","\n","\r"])+>
+| < KEY: (~[" ",";","\n","\r"])+>:IN_VALUE
 | < SEMICOLON: ";">
 
 | <#A:["a","A"]>
@@ -153,7 +165,7 @@ SimpleNode timestamp():{ Token t;}
 
 SimpleNode serviceversion():{Token t; Token s;}
 {
-  ( t=<KEY> (s=<KEY>) (<EOL>|<SEMICOLON>) )
+  ( t=<KEY> (s=<ENDVALUE>) )
   {
     log.debug("Service Version Production");
     jjtThis.jjtSetValue(t.image +" " + s.image);
