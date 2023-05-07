@@ -167,7 +167,9 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
-        InstanceManager.getDefault(TurnoutManager.class).provide("MiamiWest").setState(Turnout.THROWN);
+        Turnout miamiWest = InstanceManager.getDefault(TurnoutManager.class).getByUserName("MiamiWest");
+        Assert.assertNotNull(miamiWest);
+        miamiWest.setState(Turnout.THROWN);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Turnout MiamiWest is thrown", _replyVariable.getValue());
 
@@ -182,7 +184,9 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
-        InstanceManager.getDefault(TurnoutManager.class).provide("Chicago32").setState(Turnout.THROWN);
+        Turnout chicago32 = InstanceManager.getDefault(TurnoutManager.class).getByUserName("Chicago32");
+        Assert.assertNotNull(chicago32);
+        chicago32.setState(Turnout.THROWN);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Turnout Chicago32 is thrown", _replyVariable.getValue());
 
@@ -197,7 +201,10 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
-        InstanceManager.getDefault(TurnoutManager.class).provide("TorontoFirst").setState(Turnout.THROWN);
+        
+        Turnout torontoFirst = InstanceManager.getDefault(TurnoutManager.class).getByUserName("TorontoFirst");
+        Assert.assertNotNull(torontoFirst);
+        torontoFirst.setState(Turnout.THROWN);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Turnout TorontoFirst is thrown", _replyVariable.getValue());
         
@@ -289,8 +296,9 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
         _cookiesVariable.setValue(null);
-        InstanceManager.getDefault(SensorManager.class).provide("Green").setState(Sensor.ACTIVE);
-//        InstanceManager.getDefault(TurnoutManager.class).getByUserName("Chicago32").setState(Turnout.THROWN);
+        Sensor green = InstanceManager.getDefault(SensorManager.class).getByUserName("Green");
+        Assert.assertNotNull(green);
+        green.setState(Sensor.ACTIVE);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Cookie Green is set. Cookies from client: ", _replyVariable.getValue());
         String cookies = _cookiesVariable.getValue().toString();
@@ -308,7 +316,9 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
-        InstanceManager.getDefault(SensorManager.class).provide("Yellow").setState(Sensor.ACTIVE);
+        Sensor yellow = InstanceManager.getDefault(SensorManager.class).getByUserName("Yellow");
+        Assert.assertNotNull(yellow);
+        yellow.setState(Sensor.ACTIVE);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Cookie Yellow is set. Cookies from client: Green=GreenGreen!", _replyVariable.getValue());
         cookies = _cookiesVariable.getValue().toString();
@@ -326,7 +336,9 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
-        InstanceManager.getDefault(SensorManager.class).provide("Blue").setState(Sensor.ACTIVE);
+        Sensor blue = InstanceManager.getDefault(SensorManager.class).getByUserName("Blue");
+        Assert.assertNotNull(blue);
+        blue.setState(Sensor.ACTIVE);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Cookie Blue is set. Cookies from client: Yellow=YellowYellow!, Green=GreenGreen!", _replyVariable.getValue());
         cookies = _cookiesVariable.getValue().toString();
@@ -408,7 +420,10 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         Assume.assumeTrue("We can access " + JMRI_ORG_URL, CAN_ACCESS_JMRI_ORG);
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
-        InstanceManager.getDefault(LightManager.class).provide("TestPostRequestLight").setState(Light.ON);
+
+        Light l = InstanceManager.getDefault(LightManager.class).getByUserName("TestPostRequestLight");
+        Assert.assertNotNull(l);
+        l.setState(Light.ON);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Logged in. First name: Green, last name: Tomato", _replyVariable.getValue());
 
