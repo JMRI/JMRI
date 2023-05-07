@@ -24,7 +24,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
  *
  * Test for the ConnectionConfigXml class
  *
- * @author   Paul Bender  Copyright (C) 2016*/
+ * @author   Paul Bender  Copyright (C) 2016
+ */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
 
