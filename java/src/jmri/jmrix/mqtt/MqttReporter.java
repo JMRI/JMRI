@@ -1,7 +1,5 @@
 package jmri.jmrix.mqtt;
 
-import java.util.HashSet;
-
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.IdTag;
@@ -26,7 +24,7 @@ class MqttReporter extends AbstractIdTagReporter implements MqttEventListener {
         super(systemName);
         this.rcvTopic = rcvTopic;
         mqttAdapter = ma;
-        mqttAdapter.subscribe(rcvTopic, this);
+        mqttAdapter.subscribe(rcvTopic, MqttReporter.this);
     }
 
     private final MqttAdapter mqttAdapter;
