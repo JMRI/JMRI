@@ -109,7 +109,6 @@ TOKEN :
 
 // Constants and commands used for handshake mode only.
 | < KEY: (~[" ",";","\n","\r"])+>:IN_VALUE
-| < SEMICOLON: ";">
 
 | <#A:["a","A"]>
 | <#B:["b","B"]>

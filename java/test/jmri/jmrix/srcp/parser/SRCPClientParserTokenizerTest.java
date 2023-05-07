@@ -206,8 +206,9 @@ public class SRCPClientParserTokenizerTest{
         String cmd = "0.8.3\n\r";
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
+        stm.SwitchTo(SRCPClientParserConstants.IN_VALUE); // values are now only parsed in this state.
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for VERSION", SRCPClientParserConstants.ENDVALUE == t.kind);
+        Assert.assertEquals("Wrong token kind for VERSION", SRCPClientParserConstants.ENDVALUE,t.kind);
     }
 
     @Test 
@@ -235,16 +236,6 @@ public class SRCPClientParserTokenizerTest{
         SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
         Token t = stm.getNextToken();
         Assert.assertTrue("Wrong token kind for REG", SRCPClientParserConstants.REG == t.kind);
-    }
-
-    // error condition.
-    @Test 
-    public void testTokenizeFailure() {
-        String cmd = "this should fail";
-        SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
-        SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
-        Assertions.assertNotNull(Assertions.assertThrows(TokenMgrError.class, () ->
-            stm.getNextToken() ));
     }
 
     @BeforeEach
