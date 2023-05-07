@@ -39,20 +39,19 @@ PARSER_END(SRCPClientParser)
 <IN_REASON>
 MORE :
 {
-  <REASON: ~[]>
+  <REASON: ~["\n","\r"]>
 }
 
 <DEFAULT,IN_REASON>
 TOKEN :
 {
-  < EOL :(["\n","\r"]){2} >:DEFAULT
+  < EOL :(["\n","\r"]){2}|"\n" >:DEFAULT
 }
 
 <DEFAULT>
 SKIP:
 {
      <RETURN: "\r">
-   | <NEWLINE: "\n">
    | <SPACE: " ">
 }
 
@@ -84,10 +83,6 @@ TOKEN :
 | < DESCRIPTION: <D><E><S><C><R><I><P><T><I><O><N> >
 | < SERVER: <S><E><R><V><E><R>>:IN_REASON
 
-// Constants and commands used for handshake mode only.
-| < SRCP: <S><R><C><P>>
-| < VERSION: (["0"-"9"])+"."(["0"-"9"])+"."(["0"-"9"])+>
-
 // Client return codes
 | < INFO: <I><N><F><O>>
 | < OK: <O><K>>:IN_REASON
@@ -99,6 +94,11 @@ TOKEN :
 | <CVBIT: <C><V><B><I><T>>
 | <CV: <C><V>>
 | <REG: <R><E><G>>
+
+// Constants and commands used for handshake mode only.
+| < KEY: (~[" ",";","\n","\r"])+>
+| < VERSION: ((<V>)?["0"-"9"])+"."(["0"-"9"])+"."(["0"-"9"])+>
+| < SEMICOLON: ";">
 
 | <#A:["a","A"]>
 | <#B:["b","B"]>
@@ -130,11 +130,11 @@ TOKEN :
 
 // Lexical specifications begin here
 
-SimpleNode handshakeresponse():{SimpleNode t; SimpleNode s;}
+SimpleNode handshakeresponse():{ SimpleNode s;}
 {
   // this should match any valid response to the client in handshake
   // mode.
-  t=timestamp() ( s=serviceversion() | s=inforesponse() )
+  ((s=serviceversion())+ | timestamp() ( (s=serviceversion())+ | s=inforesponse() ))
   {
     jjtThis.jjtSetValue(s.jjtGetValue());
     log.debug("Handshake Response Production: "+jjtThis.jjtGetValue());
@@ -154,7 +154,7 @@ SimpleNode timestamp():{ Token t;}
 
 SimpleNode serviceversion():{Token t; Token s;}
 {
-  ( t=<SRCP> (s=<VERSION>) <EOL> )
+  ( t=<KEY> (s=<KEY>) (<EOL>|<SEMICOLON>) )
   {
     log.debug("Service Version Production");
     jjtThis.jjtSetValue(t.image +" " + s.image);
