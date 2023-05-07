@@ -14,12 +14,12 @@ import org.junit.jupiter.api.*;
 public class SerialConfigExceptionTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testCtor(){
       Assert.assertNotNull("SerialConfigException constructor",new SerialConfigException());
    }
 
    @Test
-   public void StringConstructorTest(){
+   public void testStringConstructor(){
       Assert.assertNotNull("SerialConfigException string constructor",new SerialConfigException("test exception"));
    }
 

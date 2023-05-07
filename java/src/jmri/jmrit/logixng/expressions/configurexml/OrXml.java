@@ -24,7 +24,7 @@ public class OrXml extends jmri.managers.configurexml.AbstractNamedBeanManagerCo
 
     public OrXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a ActionMany
      *
@@ -40,6 +40,8 @@ public class OrXml extends jmri.managers.configurexml.AbstractNamedBeanManagerCo
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
+
+        element.setAttribute("type", p.getType().name());
 
         Element e = new Element("Expressions");
         for (int i=0; i < p.getChildCount(); i++) {
@@ -61,11 +63,11 @@ public class OrXml extends jmri.managers.configurexml.AbstractNamedBeanManagerCo
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
         List<Map.Entry<String, String>> expressionSystemNames = new ArrayList<>();
-        
+
         Element actionElement = shared.getChild("Expressions");
         for (Element socketElement : actionElement.getChildren()) {
             String socketName = socketElement.getChild("socketName").getTextTrim();
@@ -76,17 +78,22 @@ public class OrXml extends jmri.managers.configurexml.AbstractNamedBeanManagerCo
             }
             expressionSystemNames.add(new AbstractMap.SimpleEntry<>(socketName, systemName));
         }
-        
+
         // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        DigitalExpressionBean h = new Or(sys, uname, expressionSystemNames);
+        Or h = new Or(sys, uname, expressionSystemNames);
 
         loadCommon(h, shared);
+
+        if (shared.getAttribute("type") != null) {
+            String typeStr = shared.getAttribute("type").getValue();
+            h.setType(Or.Type.valueOf(typeStr));
+        }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrXml.class);
 }

@@ -53,13 +53,9 @@ public class RosterTest {
         r.addEntry(new RosterEntry());
         r.addEntry(new RosterEntry());
 
-        boolean pass = false;
-        try {
-            r.addEntry(null);
-        } catch (NullPointerException e) {
-            pass = true;
-        }
-        Assert.assertTrue("Adding null entry should have caused NPE", pass);
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
+            r.addEntry(null); } );
+        Assertions.assertNotNull(ex,"Adding null entry should have caused NPE");
     }
 
     @Test
@@ -67,13 +63,9 @@ public class RosterTest {
         // test as documentation...
         Roster r = new Roster();
 
-        boolean pass = false;
-        try {
-            r.addEntry(null);
-        } catch (NullPointerException e) {
-            pass = true;
-        }
-        Assert.assertTrue("Adding null entry should have caused NPE", pass);
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
+            r.addEntry(null); } );
+        Assertions.assertNotNull(ex,"Adding null entry should have caused NPE");
     }
 
     @Test

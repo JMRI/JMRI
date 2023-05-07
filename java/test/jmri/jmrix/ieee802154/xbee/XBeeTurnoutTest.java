@@ -4,6 +4,8 @@ import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -14,8 +16,8 @@ import org.junit.jupiter.api.*;
  */
 public class XBeeTurnoutTest {
 
-    XBeeTrafficController tc;
-    XBeeConnectionMemo memo;
+    private XBeeTrafficController tc = null;
+    private XBeeConnectionMemo memo;
 
     @Test
     public void testCtor() {
@@ -73,7 +75,7 @@ public class XBeeTurnoutTest {
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("A");
@@ -93,9 +95,10 @@ public class XBeeTurnoutTest {
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(tc);
         tc.terminate();
-        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
 
     }
 

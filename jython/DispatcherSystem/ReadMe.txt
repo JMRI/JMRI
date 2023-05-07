@@ -20,4 +20,6 @@
 # 1) Run DispatcherSystem.py (versions in the dispatcher folder or in the main jython area).
 # 2) Read the help accessed from the menu to get detailed instructions on how to run the system
 
-# Author:  Bill Fitch copyright (c) 2020
+# Author:  Bill Fitch copyright (c) 2021
+
+# V1.0  Provision for Modular Systems with multiple panels

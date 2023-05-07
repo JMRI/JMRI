@@ -3,10 +3,13 @@ package jmri.managers;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
-import java.lang.reflect.Field;
 import java.util.concurrent.Callable;
+import java.util.concurrent.*;
+import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -23,7 +26,11 @@ import jmri.util.JUnitUtil;
  * @author Paul Bender Copyright 2017
  * @author Randall Wood Copyright 2020
  */
+@Timeout(10)
 public class DefaultShutDownManagerTest {
+
+    private ConcurrentMap<String, String> concurrentRuns = new ConcurrentHashMap<>();
+    private ConcurrentMap<String, String> concurrentEarlyRuns = new ConcurrentHashMap<>();
 
     private int runs;
     private DefaultShutDownManager dsdm;
@@ -50,7 +57,12 @@ public class DefaultShutDownManagerTest {
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getRunnables().size());
         Assert.assertEquals(1, dsdm.getCallables().size());
-        assertThatCode(() -> dsdm.register((ShutDownTask) null)).isInstanceOf(NullPointerException.class);
+        assertThatCode(() -> registerNullShutDownTask(dsdm)).isInstanceOf(NullPointerException.class);
+    }
+
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION", justification = "passing null to non-null to check exception")
+    private void registerNullShutDownTask(DefaultShutDownManager d) {
+        d.register((ShutDownTask) null);
     }
 
     @Test
@@ -83,7 +95,12 @@ public class DefaultShutDownManagerTest {
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getCallables().size());
         Assert.assertEquals(0, dsdm.getRunnables().size());
-        assertThatCode(() -> dsdm.register((Callable<Boolean>) null)).isInstanceOf(NullPointerException.class);
+        assertThatCode(() -> registerNullCallable(dsdm) ).isInstanceOf(NullPointerException.class);
+    }
+
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION", justification = "passing null to non-null to check exception")
+    private void registerNullCallable(DefaultShutDownManager d) {
+        d.register((Callable<Boolean>) null);
     }
 
     @Test
@@ -102,6 +119,7 @@ public class DefaultShutDownManagerTest {
     }
 
     @Test
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION", justification = "passing null to non-null to check exception")
     public void testRegister_Runnable() {
         Assert.assertEquals(0, dsdm.getRunnables().size());
         Assert.assertEquals(0, dsdm.getCallables().size());
@@ -112,7 +130,12 @@ public class DefaultShutDownManagerTest {
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getRunnables().size());
         Assert.assertEquals(0, dsdm.getCallables().size());
-        assertThatCode(() -> dsdm.register((Runnable) null)).isInstanceOf(NullPointerException.class);
+        assertThatCode(() -> registerNullRunnable(dsdm) ).isInstanceOf(NullPointerException.class);
+    }
+
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION", justification = "passing null to non-null to check exception")
+    private void registerNullRunnable(DefaultShutDownManager d) {
+        d.register((Runnable) null);
     }
 
     @Test
@@ -164,17 +187,7 @@ public class DefaultShutDownManagerTest {
 
     @Test
     public void testShutDownisNotInterruptedByShutDownTask() {
-        dsdm.register(new AbstractShutDownTask("test") {
-
-            @Override
-            public Boolean call() {
-                return true;
-            }
-
-            @Override
-            public void run() {
-                runs++;
-            }});
+        dsdm.register(new CallTrueShutDownTask("testShutDownisNotInterruptedByShutDownTask"));
         dsdm.shutdown(0, false);
         assertThat(dsdm.isShuttingDown()).isTrue();
         assertThat(runs).isEqualTo(1);
@@ -215,26 +228,201 @@ public class DefaultShutDownManagerTest {
         assertThat(InstanceManager.getNullableDefault(ShutDownManager.class)).isNotNull();
     }
 
+    @Test
+    public void testShutDownTaskTakesTooLong() {
+        dsdm.register(new TakesOneSecondShutDownTask("testShutDownTaskTakesTooLong"));
+        dsdm.shutdown(0, false);
+        JUnitAppender.assertErrorMessageStartsWith("Could not complete Shutdown Task in time:");
+        Assertions.assertTrue(dsdm.isShuttingDown());
+        JUnitUtil.waitFor(() -> { return runs == 2; } , "Second runs++ call eventually triggered");
+    }
+
+    @Test
+    public void testEarlyShutDownTaskTakesTooLong() {
+        dsdm.register(new TakesOneSecondEarlyShutDownTask("testEarlyShutDownTaskTakesTooLong"));
+        dsdm.shutdown(0, false);
+        JUnitAppender.assertErrorMessageStartsWith("Could not complete Shutdown Task in time:");
+        Assertions.assertTrue(dsdm.isShuttingDown());
+        JUnitUtil.waitFor(() -> { return runs == 2; } , "Second runs++ call eventually triggered");
+    }
+
+    @Test
+    public void testShutDownTaskThrowsException() {
+        dsdm.register(new ThrowsExceptionShutDownTask("testShutDownTaskThrowsException"));
+        dsdm.shutdown(0, false);
+        JUnitAppender.assertErrorMessageStartsWith("Issue Completing ShutdownTask :");
+        Assertions.assertTrue(dsdm.isShuttingDown());
+        Assertions.assertEquals( 1, runs, "run triggered");
+    }
+
+    @Test
+    public void testMoreThanEightTasks() {
+        concurrentRuns = new ConcurrentHashMap<>(41);
+        for ( int i=0; i<30; i++ ){
+            dsdm.register(new CallTrueShutDownTask("testMoreThanEightTasks"+i));
+        }
+        Assertions.assertEquals(30, dsdm.getRunnables().size());
+        dsdm.shutdown(0, false);
+        Assertions.assertTrue(dsdm.isShuttingDown());
+        // Assertions.assertEquals(30, runs); // fails often with a few missing
+        // JUnitUtil.waitFor times out every now and then, so we use concurrentRuns
+        Assertions.assertEquals(30, concurrentRuns.size(),"all runs triggered");
+    }
+
+    @Test
+    public void testManagerDoesNotUseFullTimeOutWhenComplete() {
+        Date start = new Date();
+        dsdm.register(new CallTrueShutDownTask("testManagerDoesNotUseFullTimeOutWhenComplete"));
+        dsdm.shutdown(0, false);
+        Assertions.assertTrue(dsdm.isShuttingDown());
+        JUnitUtil.waitFor(() -> runs == 1 , "run triggered");
+        long testTime = new Date().getTime() - start.getTime();
+        Assertions.assertTrue(testTime < dsdm.tasksTimeOutMilliSec*2,
+            "Completed before earlytimeout and mainTimeout");
+    }
+
+    @Test
+    public void testEarlyTasks() {
+        concurrentEarlyRuns = new ConcurrentHashMap<>(3);
+        concurrentRuns = new ConcurrentHashMap<>(3);
+        dsdm.tasksTimeOutMilliSec = 250;
+        dsdm.register(new EarlyShutDownTask("testEarlyTasks"));
+
+        Thread t1 = new Thread(() -> {
+            dsdm.shutdown(0, false);
+        });
+        t1.setName("testEarlyTasksShutdown");
+        t1.start();
+
+        JUnitUtil.waitFor(() -> concurrentEarlyRuns.size() == 1 , "early run triggered");
+        Assertions.assertEquals(0, concurrentRuns.size(),"early run triggered before main run");
+        JUnitUtil.waitFor(() -> concurrentRuns.size() == 1 , "run triggered");
+        JUnitUtil.waitFor(()->{return !(t1.isAlive());}, "shutdown thread completed");
+    }
+
+    private class CallTrueShutDownTask extends AbstractShutDownTask {
+
+        CallTrueShutDownTask(String id){
+            super("Call True Task " + id );
+        }
+
+        @Override
+        public Boolean call() {
+            return true;
+        }
+
+        @Override
+        public void run() {
+            runs++;
+            concurrentRuns.putIfAbsent(this.getName(), this.getName());
+        }
+
+    }
+
+    private class ThrowsExceptionShutDownTask extends AbstractShutDownTask {
+
+        ThrowsExceptionShutDownTask(String id){
+            super("Throws NPE Task " + id );
+        }
+
+        @Override
+        public Boolean call() {
+            return true;
+        }
+
+        @Override
+        public void run() {
+            runs++;
+            throw new NullPointerException("ThrowsExceptionShutDownTask " + getName());
+        }
+
+    }
+
+    private class TakesOneSecondShutDownTask extends AbstractShutDownTask {
+
+        TakesOneSecondShutDownTask(String id){
+            super("Takes Too Long " + id );
+        }
+
+        @Override
+        public Boolean call() {
+            return true;
+        }
+
+        @Override
+        public void run() {
+            runs++;
+            JUnitUtil.waitFor(1000);
+            runs++;
+        }
+
+    }
+
+    private class TakesOneSecondEarlyShutDownTask extends AbstractShutDownTask {
+
+        TakesOneSecondEarlyShutDownTask(String id){
+            super("Early SDT Takes Too Long " + id );
+        }
+
+        @Override
+        public Boolean call() {
+            return true;
+        }
+
+        @Override
+        public void runEarly() {
+            runs++;
+            JUnitUtil.waitFor(1000);
+            runs++;
+        }
+
+        @Override
+        public void run() {
+            // does nothing
+        }
+
+    }
+
+    private class EarlyShutDownTask extends AbstractShutDownTask {
+
+        EarlyShutDownTask(String id){
+            super("EarlyShutDownTask " + id );
+        }
+
+        @Override
+        public Boolean call() {
+            return true;
+        }
+
+        @Override
+        public void runEarly() {
+            concurrentEarlyRuns.putIfAbsent(this.getName(), this.getName());
+            JUnitUtil.waitFor(100);
+        }
+
+        @Override
+        public void run() {
+            concurrentRuns.putIfAbsent(this.getName(), this.getName());
+        }
+
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         dsdm = new DefaultShutDownManager();
+        dsdm.setBlockingShutdown(true);
+        dsdm.tasksTimeOutMilliSec = 100; // normal default 30000 msecs but this is a test
         runs = 0;
+        InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);
     }
 
     @AfterEach
     public void tearDown() {
-        try {
-            Class<?> c = jmri.managers.DefaultShutDownManager.class;
-            Field f = c.getDeclaredField("shuttingDown");
-            f.setAccessible(true);
-            f.set(dsdm, false);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            log.error("Failed to reset DefaultShutDownManager shuttingDown field", x);
-        }
+        DefaultShutDownManager.setStaticShuttingDown(false);
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultShutDownManagerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultShutDownManagerTest.class);
 
 }

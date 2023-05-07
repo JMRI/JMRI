@@ -36,15 +36,51 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertTrue("Build Messages", tmanager.isBuildMessagesEnabled());
         Assert.assertFalse("Build Reports", tmanager.isBuildReportEnabled());
         Assert.assertFalse("Print Preview", tmanager.isPrintPreviewEnabled());
+        
+        Assert.assertFalse("Run File", tmanager.isRunFileEnabled());
+        Assert.assertFalse("Open File", tmanager.isOpenFileEnabled());
+        Assert.assertFalse("Hyphen Name", tmanager.isShowLocationHyphenNameEnabled());
 
         // Swap them
         tmanager.setBuildMessagesEnabled(false);
         tmanager.setBuildReportEnabled(true);
         tmanager.setPrintPreviewEnabled(true);
+        
+        tmanager.setRunFileEnabled(true);
+        tmanager.setOpenFileEnabled(true);
+        tmanager.setShowLocationHyphenNameEnabled(true);
 
         Assert.assertFalse("Build Messages", tmanager.isBuildMessagesEnabled());
         Assert.assertTrue("Build Reports", tmanager.isBuildReportEnabled());
         Assert.assertTrue("Print Preview", tmanager.isPrintPreviewEnabled());
+        
+        Assert.assertTrue("Run File", tmanager.isRunFileEnabled());
+        Assert.assertTrue("Open File", tmanager.isOpenFileEnabled());
+        Assert.assertTrue("Hyphen Name", tmanager.isShowLocationHyphenNameEnabled());
+    }
+    
+    @Test
+    public void testShutDownScripts() {
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        
+        tmanager.addShutDownScript("path to shutdown script");
+        Assert.assertEquals("Confirm size", 1, tmanager.getShutDownScripts().size());
+        Assert.assertEquals("Confirm script", "path to shutdown script", tmanager.getShutDownScripts().get(0));
+        
+        tmanager.deleteShutDownScript("path to shutdown script");
+        Assert.assertEquals("Confirm size", 0, tmanager.getShutDownScripts().size());
+    }
+    
+    @Test
+    public void testStartUpScripts() {
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        
+        tmanager.addStartUpScript("path to startup script");
+        Assert.assertEquals("Confirm size", 1, tmanager.getStartUpScripts().size());
+        Assert.assertEquals("Confirm script", "path to startup script", tmanager.getStartUpScripts().get(0));
+        
+        tmanager.deleteStartUpScript("path to startup script");
+        Assert.assertEquals("Confirm size", 0, tmanager.getStartUpScripts().size());
     }
 
     /**
@@ -55,7 +91,6 @@ public class TrainManagerTest extends OperationsTestCase {
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         JUnitOperationsUtil.initOperationsData();
         Assert.assertNotNull("Retrieve Train", tmanager.getTrainByName("STF"));
-
     }
 
     /**
@@ -66,7 +101,6 @@ public class TrainManagerTest extends OperationsTestCase {
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         JUnitOperationsUtil.initOperationsData();
         Assert.assertNotNull("Retrieve Train", tmanager.getTrainById("1"));
-
     }
 
     @Test
@@ -78,7 +112,6 @@ public class TrainManagerTest extends OperationsTestCase {
 
         Assert.assertEquals("Copied train", copiedTrain.getName());
         Assert.assertEquals(train.getRoute(), copiedTrain.getRoute());
-
     }
 
     @Test
@@ -153,7 +186,6 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertTrue("One built train", tmanager.isAnyTrainBuilt());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
     
     @Test
@@ -186,7 +218,6 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertEquals(train1, trains.get(1));
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
     
     @Test
@@ -197,8 +228,6 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertEquals("list size", 2 , trains.size());
         Assert.assertEquals("STF", trains.get(0).getName());
         Assert.assertEquals("SFF", trains.get(1).getName());
-        
-
     }
     
     @Test
@@ -214,8 +243,6 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertEquals("list size", 2 , trains.size());
         Assert.assertEquals("SFF", trains.get(0).getName());
         Assert.assertEquals("STF", trains.get(1).getName());
-        
-
     }
     
     @Test
@@ -226,8 +253,6 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertEquals("list size", 2 , trains.size());
         Assert.assertEquals("STF", trains.get(0).getName());
         Assert.assertEquals("SFF", trains.get(1).getName());
-        
-
     }
     
     @Test
@@ -247,8 +272,6 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertEquals("list size", 2 , trains.size());
         Assert.assertEquals("SFF", trains.get(0).getName());
         Assert.assertEquals("STF", trains.get(1).getName());     
-        
-
     }
     
     @Test

@@ -18,9 +18,10 @@ public class TrainTest {
     @Test
     public void testCreate() {
         try {
-            new Train(0);
+            Train t = new Train(0);
+            Assertions.fail("train t created: " + t.toString());
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals(ex.getMessage(), "TrainAddFail");  // NOI18N
+            Assert.assertEquals("TrainAddFail", ex.getMessage());  // NOI18N
         }
     }
 
@@ -45,12 +46,12 @@ public class TrainTest {
         try {
             train.setDefaultSpeed(-5);
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals(ex.getMessage(), "DefaultSpeedLt0");  // NOI18N
+            Assert.assertEquals("DefaultSpeedLt0", ex.getMessage());  // NOI18N
         }
         try {
             train.setDefaultSpeed(1);
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals(ex.getMessage(), "TimeOutOfRange");  // NOI18N
+            Assert.assertEquals("TimeOutOfRange", ex.getMessage());  // NOI18N
         }
         train.setDefaultSpeed(45);
         Assert.assertEquals(45, train.getDefaultSpeed());
@@ -65,7 +66,7 @@ public class TrainTest {
         try {
             train.setThrottle(2);
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals(ex.getMessage(), "ThrottleRange");  // NOI18N
+            Assert.assertEquals("ThrottleRange", ex.getMessage());  // NOI18N
         }
         train.setRouteDuration(120); // two hours
         Assert.assertEquals(120, train.getRouteDuration());
@@ -76,22 +77,15 @@ public class TrainTest {
 
     @BeforeEach
     public void setUp(@TempDir File folder) throws IOException {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
     }
 
     @AfterEach
     public void tearDown() {
-       // use reflection to reset the static file location.
-       try {
-            Class<?> c = jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
-        }
-        jmri.util.JUnitUtil.tearDown();
+        // reset the static file location.
+        jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.resetFileLocation();
+        JUnitUtil.tearDown();
     }
 }

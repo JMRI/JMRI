@@ -24,7 +24,7 @@
       <p>JMRI uses the Jakarta <a href="https://logging.apache.org/log4j/1.2/index.html">Log4J</a>
       package to handle logging from individual classes. Specifically, as of Summer 2015, we use
       version 1.2.15; note that's not the most recent one! We use that via <a href=
-      "http://www.slf4j.org">SLF4J</a> framework. (For libraries that use the java.util.logging
+      "https://www.slf4j.org/">SLF4J</a> framework. (For libraries that use the java.util.logging
       framework, e.g. jmDNS, we also use the jul-to-slf4j adapter)</p>
 
       <h3 id="levels">Logging Levels</h3>
@@ -77,15 +77,15 @@
       </table>
 
       <h3 id="config">Configuration</h3>
-      By convention, JMRI applications will attempt to initialize Log4J using a "<a href=
+      <p>By convention, JMRI applications will attempt to initialize Log4J using a "<a href=
       "https://github.com/JMRI/JMRI/blob/master/default.lcf">default.lcf</a>" logging control file.
       JMRI contains a version of the default.lcf file with extensive comments. (When running
       <a href="JUnit.shtml">JUnit tests</a>, a similar "<a href=
       "https://github.com/JMRI/JMRI/blob/master/tests.lcf">tests.lcf</a>" file is used.) Although
-      JMRI distributes the default.lcf file in the "Program Directory", it's better if you put your
-      own version in the "Preferences Directory, which can be found by selecting the "Locations"
-      item in the main help menu) The rest of this section describes the contents of a logging
-      control file using the contents of default.lcf as an example. As
+      JMRI distributes the default.lcf file in the "Program Location", it's better if you put your
+      own version in the "Settings Location", which can be found by selecting the "File Locations"
+      item in the main Help menu). The rest of this section describes the contents of a logging
+      control file using the contents of <code>default.lcf</code> as an example.</p>
       <p>The line:</p>
 
       <pre style="font-family: monospace;">

@@ -104,7 +104,7 @@ public class JsonTurnoutSocketServiceTest {
     }
 
     @Test
-    public void testOnList() throws IOException, JmriException, JsonException, PropertyVetoException {
+    public void testOnList() throws IOException, JmriException, JsonException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode message;
         JsonTurnoutSocketService service = new JsonTurnoutSocketService(connection);
@@ -122,25 +122,31 @@ public class JsonTurnoutSocketServiceTest {
         manager.register(turnout1);
         JUnitUtil.waitFor(() -> {
             return manager.getBySystemName("IT1") != null;
-        });
+        },"IT1 not null");
         message = connection.getMessage();
         assertNotNull("Message is not null", message);
         assertEquals("Manager and message have same size", manager.getNamedBeanSet().size(), message.size());
         manager.register(turnout2);
         JUnitUtil.waitFor(() -> {
             return manager.getBySystemName("IT2") != null;
-        });
+        },"match for IT2");
         message = connection.getMessage();
         assertNotNull("Message is not null", message);
         assertEquals("Manager and message have same size", manager.getNamedBeanSet().size(), message.size());
         assertNotNull("Turnout 2 exists", turnout2);
-        manager.deleteBean(turnout2, "");
+        try {
+            manager.deleteBean(turnout2, "DoDelete");
+        } catch ( PropertyVetoException ex ){
+            Assertions.fail("Exception deleting bean ", ex);
+        }
         JUnitUtil.waitFor(() -> {
             return manager.getBySystemName("IT2") == null;
-        });
+        },"no match for IT2");
         message = connection.getMessage();
         assertNotNull("Message is not null", message);
         assertEquals("Manager and message have same size", manager.getNamedBeanSet().size(), message.size());
+
+        connection.close();
     }
 
     @Test

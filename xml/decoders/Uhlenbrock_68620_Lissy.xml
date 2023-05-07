@@ -1,0 +1,2866 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2022 All rights reserved   -->
+<!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
+1. Article Number (aka type/class ID) = decoder model productID (integer)
+2. Module Address (optional, see below)
+3. CV number
+For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
+Uhlenbrock and Digikeijs/Digirails publish the Article number for each (new) device.
+The Uhlenbrock Lissy Receiver #68620 has Article number 6862, which was registered with Uhlenbrock.
+See the nearly identical Uhlenbrock_68600_Lissy.xml and
+the single receiver Uhlenbrock_68610_Lissy.xml which contains a subset of LNCVs.
+Neither could not be combined in 1 file due to the way the art, nr. is encoded in the LNCV.
+
+See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20220821"/>
+    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 and decoder.4.15.2.xsd -->
+    <decoder>
+        <family name="Lissy Receiver" mfg="Uhlenbrock Elektronik" type="stationary">
+            <model model="Lissy Receiver 68620" productID="6862" formFactor="Stationary" comment="Single Sensor Lissy Receiver">
+              <versionCV />
+            </model>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+          <mode>LOCONETLNCVMODE</mode>
+        </programming>
+        <!--custom LNCV2 Function enum choices, only 1 or 3 or Delete/Reset >90-->
+        <variables>
+            <variable CV="6862.0" item="Long Address" mask="VVVVVVVVVVVVVVVV" default="1" comment="Board address" >
+              <decVal min="1" max="4095"/>
+              <label xml:lang="it">Indirizzo Primario: </label>
+              <label xml:lang="fr">Adresse décodeur: </label>
+              <label xml:lang="de">Moduladresse: </label>
+              <label xml:lang="nl">Decoderadres: </label>
+              <label>Module Address: </label>
+              <tooltip>Also used as 1st Sensor Address. Enter as decimal value (0-4095)</tooltip>
+            </variable>
+
+            <!--LNCV1 not used in 68620 -->
+
+            <variable CV="6862.2" item="Function" default="3">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumFunction.xml"/>
+              <!-- enums are limited to 1, 3 and 90+ for 68620 using excludes -->
+              <label>Function Mode:</label>
+              <label xml:lang="de">Funktion:</label>
+              <label xml:lang="nl">Functie:</label>
+              <tooltip>Start by selecting an operation mode for this receiver</tooltip>
+              <tooltip xml:lang="de">Zuerst, wählen Sie ein Modus für diesen Empfänger</tooltip>
+              <tooltip xml:lang="nl">Stel eerst een functiemodus in voor deze module</tooltip>
+            </variable>
+
+            <!-- LNCVs 3-10 not used in 68620 -->
+
+            <variable CV="6862.11" item="Automation Activation Address" mask="VVVVVVVVVVVV" default="0">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Adresse Automatikbetrieb Ein/Aus:</label>
+              <label xml:lang="nl">Adres Automatisering Aan/Uit:</label>
+              <label>Automation On/Off Address:</label>
+              <tooltip>Solenoid address to turn Automatic Operation functions On (Red) or Off (Green). 0 = None</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse mit der ein LISSY-Empfänger deaktiviert (rot) oder aktiviert (grün) werden kann. 0 = Deaktiviert</tooltip>
+            </variable>
+
+          <!-- LNCVs 12-14 not used in 68620 -->
+
+            <variable CV="6862.15" item="Presets Protocol" mask="XXXXXXVV" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumProtocol.xml"/>
+              <label xml:lang="de">Übergabeformat (ÜF):</label>
+              <label xml:lang="nl">Berichtprotocol:</label>
+              <label>Protocol:</label>
+              <tooltip>Transmission Protocol for receiver module.</tooltip>
+              <tooltip xml:lang="de">Übergabeformat des Empfängermoduls.</tooltip>
+              <tooltip xml:lang="nl">Berichtenprotocol van de ontvangermodule.</tooltip>
+            </variable>
+
+            <!-- 68620 has no LokBoss support nor Save Status-->
+
+            <!-- 68610 version 205+ has extra options 4 + 5 to LNCV15 (bits 4 + 5):-->
+
+            <variable CV="6862.16" item="Version" mask="VVVVVVVVVVVVVVVV" readOnly="yes">
+              <decVal/>
+              <label xml:lang="de">Version:</label>
+              <label xml:lang="nl">Versie:</label>
+              <label>Firmware Version:</label>
+            </variable>
+
+            <!-- CVs 20-109 LISSY-Einzelempfängers 68620 -->
+            <!--LNCVs für das Schalten von Loksonderfunktionen-->
+            <!--20-29   Fahrzeugadressen für Funktionsbefehle. default 20=20000 -->
+            <!--30-39   Werte für die Funktionen. default 30=1-->
+            <!--40-49   Optionen für die Funktionen. default 40=16-->
+            <!-- all others: default = 0-->
+
+            <!--LNCVs für die Änderung von Lokgeschwindigkeiten-->
+            <!--50-59   Fahrzeugadressen für die Geschwindigkeitsänderung-->
+            <!--60-69   Werte für die Geschwindigkeit-->
+            <!--70-79   Optionen für die Geschwindigkeitsänderung-->
+
+            <!--LNCVs für das Schalten von Magnetartikeln und Fahrstraßen-->
+            <!--80-89   Fahrzeugadressen, die die Befehle auslösen-->
+            <!--90-99   Werte zum Schalten von Magnetartikeln oder Aussenden von Rückmeldungen-->
+            <!--100-109 Optionen für die Magnetartikel- oder Rückmeldefunktionen-->
+
+            <!-- No NX Managers var. 20-119 -->
+
+            <!-- Function Commands, LNCV 20-49, not for NX Managers -->
+<!-- Switch Function 1-->
+            <variable CV="6862.20" item="Switch Function 1 Address" mask="VVVVVVVVVVVVVVVV" default="20000">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 1 - Lok:</label>
+              <label xml:lang="nl">Instructie 1 - Loc:</label>
+              <label>Command 1 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+
+            <variable CV="6862.30" item="Switch Function 1 F0" mask="XXXXXXXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schalte F0:</label>
+              <label xml:lang="nl">Schakel F0:</label>
+              <label>Switch F0:</label>
+              <tooltip>Select Functions to be switched</tooltip>
+              <tooltip xml:lang="de">Die zu schaltene Funktionen auswählen</tooltip>
+            </variable>
+            <variable CV="6862.30" item="Switch Function 1 F1" mask="XXXXXXXXXXXVX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F1:</label>
+            </variable>
+            <variable CV="6862.30" item="Switch Function 1 F2" mask="XXXXXXXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F2:</label>
+            </variable>
+            <variable CV="6862.30" item="Switch Function 1 F3" mask="XXXXXXXXXVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F3:</label>
+            </variable>
+            <variable CV="6862.30" item="Switch Function 1 F4" mask="XXXXXXXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F4:</label>
+            </variable>
+            <variable CV="6862.30" item="Switch Function 1 F5" mask="XXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F5:</label>
+            </variable>
+            <variable CV="6862.30" item="Switch Function 1 F6" mask="XXXXXXXVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F6:</label>
+            </variable>
+            <variable CV="6862.30" item="Switch Function 1 F7" mask="XXXXXXVXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F7:</label>
+            </variable>
+            <variable CV="6862.30" item="Switch Function 1 F8" mask="XXXXVXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F8:</label>
+            </variable>
+            <variable CV="6862.30" item="Switch Function 1 F9" mask="XXXVXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F9:</label>
+            </variable>
+            <variable CV="6862.30" item="Switch Function 1 F10" mask="XXVXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F10:</label>
+            </variable>
+            <variable CV="6862.30" item="Switch Function 1 F11" mask="XVXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F11:</label>
+            </variable>
+            <variable CV="6862.30" item="Switch Function 1 F12" mask="VXXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F12:</label>
+            </variable>
+
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.40" item="Switch Function 1 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>2</value>
+              </qualifier>
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>3</value>
+              </qualifier>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.40" item="Switch Function 1 Option 3" mask="XXXXXXXXXXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions3.xml"/>
+              <label xml:lang="de"> Schalten nach:</label>
+              <label xml:lang="nl"> Schakel:</label>
+              <label> Switch to:</label>
+            </variable>
+            <variable CV="6862.40" item="Switch Function 1 Option 4" mask="XXXXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Zeitgesteuert:</label>
+              <label xml:lang="nl">Tijdgestuurd:</label>
+              <label>Time based:</label>
+            </variable>
+            <variable CV="6862.40" item="Switch Function 1 Option 5" mask="XXXXXVVVVVXXXXXX" default="0">
+              <decVal min="0" max="31"/>
+              <label xml:lang="de">Schaltdauer:</label>
+              <label xml:lang="nl">Schakelduur:</label>
+              <label>Switch Duration:</label>
+              <tooltip>Enter in seconds (0-31)</tooltip>
+              <tooltip xml:lang="de">Eingabe in Sekunden (0-31)</tooltip>
+            </variable>
+            <!-- Option 6 only available on 68610 -->
+<!-- Switch Function 2-->
+            <variable CV="6862.21" item="Switch Function 2 Address" mask="VVVVVVVVVVVVVVVV" default="20000">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 2 - Lok:</label>
+              <label xml:lang="nl">Instructie 2 - Loc:</label>
+              <label>Command 2 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+
+            <variable CV="6862.31" item="Switch Function 2 F0" mask="XXXXXXXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schalte F0:</label>
+              <label xml:lang="nl">Schakel F0:</label>
+              <label>Switch F0:</label>
+              <tooltip>Select Functions to be switched</tooltip>
+              <tooltip xml:lang="de">Die zu schaltene Funktionen auswählen</tooltip>
+            </variable>
+            <variable CV="6862.31" item="Switch Function 2 F1" mask="XXXXXXXXXXXVX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F1:</label>
+            </variable>
+            <variable CV="6862.31" item="Switch Function 2 F2" mask="XXXXXXXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F2:</label>
+            </variable>
+            <variable CV="6862.31" item="Switch Function 2 F3" mask="XXXXXXXXXVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F3:</label>
+            </variable>
+            <variable CV="6862.31" item="Switch Function 2 F4" mask="XXXXXXXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F4:</label>
+            </variable>
+            <variable CV="6862.31" item="Switch Function 2 F5" mask="XXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F5:</label>
+            </variable>
+            <variable CV="6862.31" item="Switch Function 2 F6" mask="XXXXXXXVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F6:</label>
+            </variable>
+            <variable CV="6862.31" item="Switch Function 2 F7" mask="XXXXXXVXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F7:</label>
+            </variable>
+            <variable CV="6862.31" item="Switch Function 2 F8" mask="XXXXVXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F8:</label>
+            </variable>
+            <variable CV="6862.31" item="Switch Function 2 F9" mask="XXXVXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F9:</label>
+            </variable>
+            <variable CV="6862.31" item="Switch Function 2 F10" mask="XXVXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F10:</label>
+            </variable>
+            <variable CV="6862.31" item="Switch Function 2 F11" mask="XVXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F11:</label>
+            </variable>
+            <variable CV="6862.31" item="Switch Function 2 F12" mask="VXXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F12:</label>
+            </variable>
+
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.41" item="Switch Function 2 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>2</value>
+              </qualifier>
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>3</value>
+              </qualifier>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.41" item="Switch Function 2 Option 3" mask="XXXXXXXXXXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions3.xml"/>
+              <label xml:lang="de"> Schalten nach:</label>
+              <label xml:lang="nl"> Schakel:</label>
+              <label> Switch to:</label>
+            </variable>
+            <variable CV="6862.41" item="Switch Function 2 Option 4" mask="XXXXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Zeitgesteuert:</label>
+              <label xml:lang="nl">Tijdgestuurd:</label>
+              <label>Time based:</label>
+            </variable>
+            <variable CV="6862.41" item="Switch Function 2 Option 5" mask="XXXXXVVVVVXXXXXX" default="0">
+              <decVal min="0" max="31"/>
+              <label xml:lang="de">Schaltdauer:</label>
+              <label xml:lang="nl">Schakelduur:</label>
+              <label>Switch Duration:</label>
+              <tooltip>Enter in seconds (0-31)</tooltip>
+              <tooltip xml:lang="de">Eingabe in Sekunden (0-31)</tooltip>
+            </variable>
+            <!-- Option 6 only available on 68610 -->
+  <!-- Switch Function 3-->
+            <variable CV="6862.22" item="Switch Function 3 Address" mask="VVVVVVVVVVVVVVVV" default="20000">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 3 - Lok:</label>
+              <label xml:lang="nl">Instructie 3 - Loc:</label>
+              <label>Command 3 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+
+            <variable CV="6862.32" item="Switch Function 3 F0" mask="XXXXXXXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schalte F0:</label>
+              <label xml:lang="nl">Schakel F0:</label>
+              <label>Switch F0:</label>
+              <tooltip>Select Functions to be switched</tooltip>
+              <tooltip xml:lang="de">Die zu schaltene Funktionen auswählen</tooltip>
+            </variable>
+            <variable CV="6862.32" item="Switch Function 3 F1" mask="XXXXXXXXXXXVX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F1:</label>
+            </variable>
+            <variable CV="6862.32" item="Switch Function 3 F2" mask="XXXXXXXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F2:</label>
+            </variable>
+            <variable CV="6862.32" item="Switch Function 3 F3" mask="XXXXXXXXXVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F3:</label>
+            </variable>
+            <variable CV="6862.32" item="Switch Function 3 F4" mask="XXXXXXXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F4:</label>
+            </variable>
+            <variable CV="6862.32" item="Switch Function 3 F5" mask="XXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F5:</label>
+            </variable>
+            <variable CV="6862.32" item="Switch Function 3 F6" mask="XXXXXXXVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F6:</label>
+            </variable>
+            <variable CV="6862.32" item="Switch Function 3 F7" mask="XXXXXXVXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F7:</label>
+            </variable>
+            <variable CV="6862.32" item="Switch Function 3 F8" mask="XXXXVXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F8:</label>
+            </variable>
+            <variable CV="6862.32" item="Switch Function 3 F9" mask="XXXVXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F9:</label>
+            </variable>
+            <variable CV="6862.32" item="Switch Function 3 F10" mask="XXVXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F10:</label>
+            </variable>
+            <variable CV="6862.32" item="Switch Function 3 F11" mask="XVXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F11:</label>
+            </variable>
+            <variable CV="6862.32" item="Switch Function 3 F12" mask="VXXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F12:</label>
+            </variable>
+
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.42" item="Switch Function 3 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>2</value>
+              </qualifier>
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>3</value>
+              </qualifier>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.42" item="Switch Function 3 Option 3" mask="XXXXXXXXXXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions3.xml"/>
+              <label xml:lang="de"> Schalten nach:</label>
+              <label xml:lang="nl"> Schakel:</label>
+              <label> Switch to:</label>
+            </variable>
+            <variable CV="6862.42" item="Switch Function 3 Option 4" mask="XXXXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Zeitgesteuert:</label>
+              <label xml:lang="nl">Tijdgestuurd:</label>
+              <label>Time based:</label>
+            </variable>
+            <variable CV="6862.42" item="Switch Function 3 Option 5" mask="XXXXXVVVVVXXXXXX" default="0">
+              <decVal min="0" max="31"/>
+              <label xml:lang="de">Schaltdauer:</label>
+              <label xml:lang="nl">Schakelduur:</label>
+              <label>Switch Duration:</label>
+              <tooltip>Enter in seconds (0-31)</tooltip>
+              <tooltip xml:lang="de">Eingabe in Sekunden (0-31)</tooltip>
+            </variable>
+            <!-- Option 6 only available on 68610 -->
+  <!-- Switch Function 4-->
+            <variable CV="6862.23" item="Switch Function 4 Address" mask="VVVVVVVVVVVVVVVV" default="20000">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 4 - Lok:</label>
+              <label xml:lang="nl">Instructie 4 - Loc:</label>
+              <label>Command 4 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+
+            <variable CV="6862.33" item="Switch Function 4 F0" mask="XXXXXXXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schalte F0:</label>
+              <label xml:lang="nl">Schakel F0:</label>
+              <label>Switch F0:</label>
+              <tooltip>Select Functions to be switched</tooltip>
+              <tooltip xml:lang="de">Die zu schaltene Funktionen auswählen</tooltip>
+            </variable>
+            <variable CV="6862.33" item="Switch Function 4 F1" mask="XXXXXXXXXXXVX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F1:</label>
+            </variable>
+            <variable CV="6862.33" item="Switch Function 4 F2" mask="XXXXXXXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F2:</label>
+            </variable>
+            <variable CV="6862.33" item="Switch Function 4 F3" mask="XXXXXXXXXVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F3:</label>
+            </variable>
+            <variable CV="6862.33" item="Switch Function 4 F4" mask="XXXXXXXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F4:</label>
+            </variable>
+            <variable CV="6862.33" item="Switch Function 4 F5" mask="XXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F5:</label>
+            </variable>
+            <variable CV="6862.33" item="Switch Function 4 F6" mask="XXXXXXXVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F6:</label>
+            </variable>
+            <variable CV="6862.33" item="Switch Function 4 F7" mask="XXXXXXVXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F7:</label>
+            </variable>
+            <variable CV="6862.33" item="Switch Function 4 F8" mask="XXXXVXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F8:</label>
+            </variable>
+            <variable CV="6862.33" item="Switch Function 4 F9" mask="XXXVXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F9:</label>
+            </variable>
+            <variable CV="6862.33" item="Switch Function 4 F10" mask="XXVXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F10:</label>
+            </variable>
+            <variable CV="6862.33" item="Switch Function 4 F11" mask="XVXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F11:</label>
+            </variable>
+            <variable CV="6862.33" item="Switch Function 4 F12" mask="VXXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F12:</label>
+            </variable>
+
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.43" item="Switch Function 4 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>2</value>
+              </qualifier>
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>3</value>
+              </qualifier>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.43" item="Switch Function 4 Option 3" mask="XXXXXXXXXXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions3.xml"/>
+              <label xml:lang="de"> Schalten nach:</label>
+              <label xml:lang="nl"> Schakel:</label>
+              <label> Switch to:</label>
+            </variable>
+            <variable CV="6862.43" item="Switch Function 4 Option 4" mask="XXXXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Zeitgesteuert:</label>
+              <label xml:lang="nl">Tijdgestuurd:</label>
+              <label>Time based:</label>
+            </variable>
+            <variable CV="6862.43" item="Switch Function 4 Option 5" mask="XXXXXVVVVVXXXXXX" default="0">
+              <decVal min="0" max="31"/>
+              <label xml:lang="de">Schaltdauer:</label>
+              <label xml:lang="nl">Schakelduur:</label>
+              <label>Switch Duration:</label>
+              <tooltip>Enter in seconds (0-31)</tooltip>
+              <tooltip xml:lang="de">Eingabe in Sekunden (0-31)</tooltip>
+            </variable>
+            <!-- Option 6 only available on 68610 -->
+  <!-- Switch Function 5-->
+            <variable CV="6862.24" item="Switch Function 5 Address" mask="VVVVVVVVVVVVVVVV" default="20000">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 5 - Lok:</label>
+              <label xml:lang="nl">Instructie 5 - Loc:</label>
+              <label>Command 5 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+
+            <variable CV="6862.34" item="Switch Function 5 F0" mask="XXXXXXXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schalte F0:</label>
+              <label xml:lang="nl">Schakel F0:</label>
+              <label>Switch F0:</label>
+              <tooltip>Select Functions to be switched</tooltip>
+              <tooltip xml:lang="de">Die zu schaltene Funktionen auswählen</tooltip>
+            </variable>
+            <variable CV="6862.34" item="Switch Function 5 F1" mask="XXXXXXXXXXXVX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F1:</label>
+            </variable>
+            <variable CV="6862.34" item="Switch Function 5 F2" mask="XXXXXXXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F2:</label>
+            </variable>
+            <variable CV="6862.34" item="Switch Function 5 F3" mask="XXXXXXXXXVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F3:</label>
+            </variable>
+            <variable CV="6862.34" item="Switch Function 5 F4" mask="XXXXXXXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F4:</label>
+            </variable>
+            <variable CV="6862.34" item="Switch Function 5 F5" mask="XXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F5:</label>
+            </variable>
+            <variable CV="6862.34" item="Switch Function 5 F6" mask="XXXXXXXVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F6:</label>
+            </variable>
+            <variable CV="6862.34" item="Switch Function 5 F7" mask="XXXXXXVXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F7:</label>
+            </variable>
+            <variable CV="6862.34" item="Switch Function 5 F8" mask="XXXXVXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F8:</label>
+            </variable>
+            <variable CV="6862.34" item="Switch Function 5 F9" mask="XXXVXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F9:</label>
+            </variable>
+            <variable CV="6862.34" item="Switch Function 5 F10" mask="XXVXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F10:</label>
+            </variable>
+            <variable CV="6862.34" item="Switch Function 5 F11" mask="XVXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F11:</label>
+            </variable>
+            <variable CV="6862.34" item="Switch Function 5 F12" mask="VXXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F12:</label>
+            </variable>
+
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.44" item="Switch Function 5 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>2</value>
+              </qualifier>
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>3</value>
+              </qualifier>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.44" item="Switch Function 5 Option 3" mask="XXXXXXXXXXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions3.xml"/>
+              <label xml:lang="de"> Schalten nach:</label>
+              <label xml:lang="nl"> Schakel:</label>
+              <label> Switch to:</label>
+            </variable>
+            <variable CV="6862.44" item="Switch Function 5 Option 4" mask="XXXXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Zeitgesteuert:</label>
+              <label xml:lang="nl">Tijdgestuurd:</label>
+              <label>Time based:</label>
+            </variable>
+            <variable CV="6862.44" item="Switch Function 5 Option 5" mask="XXXXXVVVVVXXXXXX" default="0">
+              <decVal min="0" max="31"/>
+              <label xml:lang="de">Schaltdauer:</label>
+              <label xml:lang="nl">Schakelduur:</label>
+              <label>Switch Duration:</label>
+              <tooltip>Enter in seconds (0-31)</tooltip>
+              <tooltip xml:lang="de">Eingabe in Sekunden (0-31)</tooltip>
+            </variable>
+            <!-- Option 6 only available on 68610 -->
+  <!-- Switch Function 6-->
+            <variable CV="6862.25" item="Switch Function 6 Address" mask="VVVVVVVVVVVVVVVV" default="20000">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 6 - Lok:</label>
+              <label xml:lang="nl">Instructie 6 - Loc:</label>
+              <label>Command 6 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+
+            <variable CV="6862.35" item="Switch Function 6 F0" mask="XXXXXXXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schalte F0:</label>
+              <label xml:lang="nl">Schakel F0:</label>
+              <label>Switch F0:</label>
+              <tooltip>Select Functions to be switched</tooltip>
+              <tooltip xml:lang="de">Die zu schaltene Funktionen auswählen</tooltip>
+            </variable>
+            <variable CV="6862.35" item="Switch Function 6 F1" mask="XXXXXXXXXXXVX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F1:</label>
+            </variable>
+            <variable CV="6862.35" item="Switch Function 6 F2" mask="XXXXXXXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F2:</label>
+            </variable>
+            <variable CV="6862.35" item="Switch Function 6 F3" mask="XXXXXXXXXVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F3:</label>
+            </variable>
+            <variable CV="6862.35" item="Switch Function 6 F4" mask="XXXXXXXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F4:</label>
+            </variable>
+            <variable CV="6862.35" item="Switch Function 6 F5" mask="XXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F5:</label>
+            </variable>
+            <variable CV="6862.35" item="Switch Function 6 F6" mask="XXXXXXXVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F6:</label>
+            </variable>
+            <variable CV="6862.35" item="Switch Function 6 F7" mask="XXXXXXVXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F7:</label>
+            </variable>
+            <variable CV="6862.35" item="Switch Function 6 F8" mask="XXXXVXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F8:</label>
+            </variable>
+            <variable CV="6862.35" item="Switch Function 6 F9" mask="XXXVXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F9:</label>
+            </variable>
+            <variable CV="6862.35" item="Switch Function 6 F10" mask="XXVXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F10:</label>
+            </variable>
+            <variable CV="6862.35" item="Switch Function 6 F11" mask="XVXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F11:</label>
+            </variable>
+            <variable CV="6862.35" item="Switch Function 6 F12" mask="VXXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F12:</label>
+            </variable>
+
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.45" item="Switch Function 6 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>2</value>
+              </qualifier>
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>3</value>
+              </qualifier>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.45" item="Switch Function 6 Option 3" mask="XXXXXXXXXXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions3.xml"/>
+              <label xml:lang="de"> Schalten nach:</label>
+              <label xml:lang="nl"> Schakel:</label>
+              <label> Switch to:</label>
+            </variable>
+            <variable CV="6862.45" item="Switch Function 6 Option 4" mask="XXXXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Zeitgesteuert:</label>
+              <label xml:lang="nl">Tijdgestuurd:</label>
+              <label>Time based:</label>
+            </variable>
+            <variable CV="6862.45" item="Switch Function 6 Option 5" mask="XXXXXVVVVVXXXXXX" default="0">
+              <decVal min="0" max="31"/>
+              <label xml:lang="de">Schaltdauer:</label>
+              <label xml:lang="nl">Schakelduur:</label>
+              <label>Switch Duration:</label>
+              <tooltip>Enter in seconds (0-31)</tooltip>
+              <tooltip xml:lang="de">Eingabe in Sekunden (0-31)</tooltip>
+            </variable>
+            <!-- Option 6 only available on 68610 -->
+  <!-- Switch Function 7-->
+            <variable CV="6862.26" item="Switch Function 7 Address" mask="VVVVVVVVVVVVVVVV" default="20000">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 7 - Lok:</label>
+              <label xml:lang="nl">Instructie 7 - Loc:</label>
+              <label>Command 7 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+
+            <variable CV="6862.36" item="Switch Function 7 F0" mask="XXXXXXXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schalte F0:</label>
+              <label xml:lang="nl">Schakel F0:</label>
+              <label>Switch F0:</label>
+              <tooltip>Select Functions to be switched</tooltip>
+              <tooltip xml:lang="de">Die zu schaltene Funktionen auswählen</tooltip>
+            </variable>
+            <variable CV="6862.36" item="Switch Function 7 F1" mask="XXXXXXXXXXXVX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F1:</label>
+            </variable>
+            <variable CV="6862.36" item="Switch Function 7 F2" mask="XXXXXXXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F2:</label>
+            </variable>
+            <variable CV="6862.36" item="Switch Function 7 F3" mask="XXXXXXXXXVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F3:</label>
+            </variable>
+            <variable CV="6862.36" item="Switch Function 7 F4" mask="XXXXXXXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F4:</label>
+            </variable>
+            <variable CV="6862.36" item="Switch Function 7 F5" mask="XXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F5:</label>
+            </variable>
+            <variable CV="6862.36" item="Switch Function 7 F6" mask="XXXXXXXVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F6:</label>
+            </variable>
+            <variable CV="6862.36" item="Switch Function 7 F7" mask="XXXXXXVXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F7:</label>
+            </variable>
+            <variable CV="6862.36" item="Switch Function 7 F8" mask="XXXXVXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F8:</label>
+            </variable>
+            <variable CV="6862.36" item="Switch Function 7 F9" mask="XXXVXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F9:</label>
+            </variable>
+            <variable CV="6862.36" item="Switch Function 7 F10" mask="XXVXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F10:</label>
+            </variable>
+            <variable CV="6862.36" item="Switch Function 7 F11" mask="XVXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F11:</label>
+            </variable>
+            <variable CV="6862.36" item="Switch Function 7 F12" mask="VXXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F12:</label>
+            </variable>
+
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.46" item="Switch Function 7 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>2</value>
+              </qualifier>
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>3</value>
+              </qualifier>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.46" item="Switch Function 7 Option 3" mask="XXXXXXXXXXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions3.xml"/>
+              <label xml:lang="de"> Schalten nach:</label>
+              <label xml:lang="nl"> Schakel:</label>
+              <label> Switch to:</label>
+            </variable>
+            <variable CV="6862.46" item="Switch Function 7 Option 4" mask="XXXXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Zeitgesteuert:</label>
+              <label xml:lang="nl">Tijdgestuurd:</label>
+              <label>Time based:</label>
+            </variable>
+            <variable CV="6862.46" item="Switch Function 7 Option 5" mask="XXXXXVVVVVXXXXXX" default="0">
+              <decVal min="0" max="31"/>
+              <label xml:lang="de">Schaltdauer:</label>
+              <label xml:lang="nl">Schakelduur:</label>
+              <label>Switch Duration:</label>
+              <tooltip>Enter in seconds (0-31)</tooltip>
+              <tooltip xml:lang="de">Eingabe in Sekunden (0-31)</tooltip>
+            </variable>
+            <!-- Option 6 only available on 68610 -->
+  <!-- Switch Function 8-->
+            <variable CV="6862.27" item="Switch Function 8 Address" mask="VVVVVVVVVVVVVVVV" default="20000">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 8 - Lok:</label>
+              <label xml:lang="nl">Instructie 8 - Loc:</label>
+              <label>Command 8 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+
+            <variable CV="6862.37" item="Switch Function 8 F0" mask="XXXXXXXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schalte F0:</label>
+              <label xml:lang="nl">Schakel F0:</label>
+              <label>Switch F0:</label>
+              <tooltip>Select Functions to be switched</tooltip>
+              <tooltip xml:lang="de">Die zu schaltene Funktionen auswählen</tooltip>
+            </variable>
+            <variable CV="6862.37" item="Switch Function 8 F1" mask="XXXXXXXXXXXVX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F1:</label>
+            </variable>
+            <variable CV="6862.37" item="Switch Function 8 F2" mask="XXXXXXXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F2:</label>
+            </variable>
+            <variable CV="6862.37" item="Switch Function 8 F3" mask="XXXXXXXXXVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F3:</label>
+            </variable>
+            <variable CV="6862.37" item="Switch Function 8 F4" mask="XXXXXXXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F4:</label>
+            </variable>
+            <variable CV="6862.37" item="Switch Function 8 F5" mask="XXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F5:</label>
+            </variable>
+            <variable CV="6862.37" item="Switch Function 8 F6" mask="XXXXXXXVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F6:</label>
+            </variable>
+            <variable CV="6862.37" item="Switch Function 8 F7" mask="XXXXXXVXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F7:</label>
+            </variable>
+            <variable CV="6862.37" item="Switch Function 8 F8" mask="XXXXVXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F8:</label>
+            </variable>
+            <variable CV="6862.37" item="Switch Function 8 F9" mask="XXXVXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F9:</label>
+            </variable>
+            <variable CV="6862.37" item="Switch Function 8 F10" mask="XXVXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F10:</label>
+            </variable>
+            <variable CV="6862.37" item="Switch Function 8 F11" mask="XVXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F11:</label>
+            </variable>
+            <variable CV="6862.37" item="Switch Function 8 F12" mask="VXXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F12:</label>
+            </variable>
+
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.47" item="Switch Function 8 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>2</value>
+              </qualifier>
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>3</value>
+              </qualifier>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.47" item="Switch Function 8 Option 3" mask="XXXXXXXXXXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions3.xml"/>
+              <label xml:lang="de"> Schalten nach:</label>
+              <label xml:lang="nl"> Schakel:</label>
+              <label> Switch to:</label>
+            </variable>
+            <variable CV="6862.47" item="Switch Function 8 Option 4" mask="XXXXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Zeitgesteuert:</label>
+              <label xml:lang="nl">Tijdgestuurd:</label>
+              <label>Time based:</label>
+            </variable>
+            <variable CV="6862.47" item="Switch Function 8 Option 5" mask="XXXXXVVVVVXXXXXX" default="0">
+              <decVal min="0" max="31"/>
+              <label xml:lang="de">Schaltdauer:</label>
+              <label xml:lang="nl">Schakelduur:</label>
+              <label>Switch Duration:</label>
+              <tooltip>Enter in seconds (0-31)</tooltip>
+              <tooltip xml:lang="de">Eingabe in Sekunden (0-31)</tooltip>
+            </variable>
+            <!-- Option 6 only available on 68610 -->
+  <!-- Switch Function 9-->
+            <variable CV="6862.28" item="Switch Function 9 Address" mask="VVVVVVVVVVVVVVVV" default="20000">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 9 - Lok:</label>
+              <label xml:lang="nl">Instructie 9 - Loc:</label>
+              <label>Command 9 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+
+            <variable CV="6862.38" item="Switch Function 9 F0" mask="XXXXXXXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schalte F0:</label>
+              <label xml:lang="nl">Schakel F0:</label>
+              <label>Switch F0:</label>
+              <tooltip>Select Functions to be switched</tooltip>
+              <tooltip xml:lang="de">Die zu schaltene Funktionen auswählen</tooltip>
+            </variable>
+            <variable CV="6862.38" item="Switch Function 9 F1" mask="XXXXXXXXXXXVX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F1:</label>
+            </variable>
+            <variable CV="6862.38" item="Switch Function 9 F2" mask="XXXXXXXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F2:</label>
+            </variable>
+            <variable CV="6862.38" item="Switch Function 9 F3" mask="XXXXXXXXXVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F3:</label>
+            </variable>
+            <variable CV="6862.38" item="Switch Function 9 F4" mask="XXXXXXXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F4:</label>
+            </variable>
+            <variable CV="6862.38" item="Switch Function 9 F5" mask="XXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F5:</label>
+            </variable>
+            <variable CV="6862.38" item="Switch Function 9 F6" mask="XXXXXXXVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F6:</label>
+            </variable>
+            <variable CV="6862.38" item="Switch Function 9 F7" mask="XXXXXXVXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F7:</label>
+            </variable>
+            <variable CV="6862.38" item="Switch Function 9 F8" mask="XXXXVXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F8:</label>
+            </variable>
+            <variable CV="6862.38" item="Switch Function 9 F9" mask="XXXVXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F9:</label>
+            </variable>
+            <variable CV="6862.38" item="Switch Function 9 F10" mask="XXVXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F10:</label>
+            </variable>
+            <variable CV="6862.38" item="Switch Function 9 F11" mask="XVXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F11:</label>
+            </variable>
+            <variable CV="6862.38" item="Switch Function 9 F12" mask="VXXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F12:</label>
+            </variable>
+
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.48" item="Switch Function 9 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>2</value>
+              </qualifier>
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>3</value>
+              </qualifier>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.48" item="Switch Function 9 Option 3" mask="XXXXXXXXXXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions3.xml"/>
+              <label xml:lang="de"> Schalten nach:</label>
+              <label xml:lang="nl"> Schakel:</label>
+              <label> Switch to:</label>
+            </variable>
+            <variable CV="6862.48" item="Switch Function 9 Option 4" mask="XXXXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Zeitgesteuert:</label>
+              <label xml:lang="nl">Tijdgestuurd:</label>
+              <label>Time based:</label>
+            </variable>
+            <variable CV="6862.48" item="Switch Function 9 Option 5" mask="XXXXXVVVVVXXXXXX" default="0">
+              <decVal min="0" max="31"/>
+              <label xml:lang="de">Schaltdauer:</label>
+              <label xml:lang="nl">Schakelduur:</label>
+              <label>Switch Duration:</label>
+              <tooltip>Enter in seconds (0-31)</tooltip>
+              <tooltip xml:lang="de">Eingabe in Sekunden (0-31)</tooltip>
+            </variable>
+            <!-- Option 6 only available on 68610 -->
+  <!-- Switch Function 10-->
+            <variable CV="6862.29" item="Switch Function 10 Address" mask="VVVVVVVVVVVVVVVV" default="20000">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 10 - Lok:</label>
+              <label xml:lang="nl">Instructie 10 - Loc:</label>
+              <label>Command 10 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+
+            <variable CV="6862.39" item="Switch Function 10 F0" mask="XXXXXXXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schalte F0:</label>
+              <label xml:lang="nl">Schakel F0:</label>
+              <label>Switch F0:</label>
+              <tooltip>Select Functions to be switched</tooltip>
+              <tooltip xml:lang="de">Die zu schaltene Funktionen auswählen</tooltip>
+            </variable>
+            <variable CV="6862.39" item="Switch Function 10 F1" mask="XXXXXXXXXXXVX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F1:</label>
+            </variable>
+            <variable CV="6862.39" item="Switch Function 10 F2" mask="XXXXXXXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F2:</label>
+            </variable>
+            <variable CV="6862.39" item="Switch Function 10 F3" mask="XXXXXXXXXVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F3:</label>
+            </variable>
+            <variable CV="6862.39" item="Switch Function 10 F4" mask="XXXXXXXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F4:</label>
+            </variable>
+            <variable CV="6862.39" item="Switch Function 10 F5" mask="XXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F5:</label>
+            </variable>
+            <variable CV="6862.39" item="Switch Function 10 F6" mask="XXXXXXXVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F6:</label>
+            </variable>
+            <variable CV="6862.39" item="Switch Function 10 F7" mask="XXXXXXVXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F7:</label>
+            </variable>
+            <variable CV="6862.39" item="Switch Function 10 F8" mask="XXXXVXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F8:</label>
+            </variable>
+            <variable CV="6862.39" item="Switch Function 10 F9" mask="XXXVXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F9:</label>
+            </variable>
+            <variable CV="6862.39" item="Switch Function 10 F10" mask="XXVXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F10:</label>
+            </variable>
+            <variable CV="6862.39" item="Switch Function 10 F11" mask="XVXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F11:</label>
+            </variable>
+            <variable CV="6862.39" item="Switch Function 10 F12" mask="VXXXXXXXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>F12:</label>
+            </variable>
+
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.49" item="Switch Function 10 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>2</value>
+              </qualifier>
+              <qualifier>
+                <variableref>Function</variableref>
+                <relation>ne</relation>
+                <value>3</value>
+              </qualifier>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.49" item="Switch Function 10 Option 3" mask="XXXXXXXXXXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions3.xml"/>
+              <label xml:lang="de"> Schalten nach:</label>
+              <label xml:lang="nl"> Schakel:</label>
+              <label> Switch to:</label>
+            </variable>
+            <variable CV="6862.49" item="Switch Function 10 Option 4" mask="XXXXXXXXXXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Zeitgesteuert:</label>
+              <label xml:lang="nl">Tijdgestuurd:</label>
+              <label>Time based:</label>
+            </variable>
+            <variable CV="6862.49" item="Switch Function 10 Option 5" mask="XXXXXVVVVVXXXXXX" default="0">
+              <decVal min="0" max="31"/>
+              <label xml:lang="de">Schaltdauer:</label>
+              <label xml:lang="nl">Schakelduur:</label>
+              <label>Switch Duration:</label>
+              <tooltip>Enter in seconds (0-31)</tooltip>
+              <tooltip xml:lang="de">Eingabe in Sekunden (0-31)</tooltip>
+            </variable>
+            <!-- Option 6 only available on 68610 -->
+            <!-- Switch Function Commands LNCV 22-29, 32-39 and 42-49 up to here -->
+
+            <!-- Speed Commands, LNCV 50-79, not for NX Managers -->
+<!-- Switch Speed 1 -->
+            <variable CV="6862.50" item="Switch Speed 1 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 1 - Lok:</label>
+              <label xml:lang="nl">Instructie 1 - Loc:</label>
+              <label>Command 1 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+            <variable CV="6862.60" item="Switch Speed 1 Speed" default="0">
+              <decVal/>
+              <label xml:lang="de"> Setze Geschwindigkeit:</label>
+              <label xml:lang="nl"> Snelheid wordt:</label>
+              <label> Set Speed to:</label>
+              <tooltip>Enter value according to unit selected in next field</tooltip>
+              <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
+            </variable>
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.70" item="Switch Speed 1 Option 2" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.70" item="Switch Speed 1 Option 3" mask="XXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
+              <label xml:lang="de"> Einheit:</label>
+              <label xml:lang="nl"> Eenheid:</label>
+              <label> Unit:</label>
+            </variable>
+<!-- Switch Speed 2 -->
+            <variable CV="6862.51" item="Switch Speed 2 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 2 - Lok:</label>
+              <label xml:lang="nl">Instructie 2 - Loc:</label>
+              <label>Command 2 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+            <variable CV="6862.61" item="Switch Speed 2 Speed" default="0">
+              <decVal/>
+              <label xml:lang="de"> Setze Geschwindigkeit:</label>
+              <label xml:lang="nl"> Snelheid wordt:</label>
+              <label> Set Speed to:</label>
+              <tooltip>Enter value according to unit selected in next field</tooltip>
+              <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
+            </variable>
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.71" item="Switch Speed 2 Option 2" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.71" item="Switch Speed 2 Option 3" mask="XXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
+              <label xml:lang="de"> Einheit:</label>
+              <label xml:lang="nl"> Eenheid:</label>
+              <label> Unit:</label>
+            </variable>
+  <!-- Switch Speed 3 -->
+            <variable CV="6862.52" item="Switch Speed 3 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 3 - Lok:</label>
+              <label xml:lang="nl">Instructie 3 - Loc:</label>
+              <label>Command 3 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+            <variable CV="6862.62" item="Switch Speed 3 Speed" default="0">
+              <decVal/>
+              <label xml:lang="de"> Setze Geschwindigkeit:</label>
+              <label xml:lang="nl"> Snelheid wordt:</label>
+              <label> Set Speed to:</label>
+              <tooltip>Enter value according to unit selected in next field</tooltip>
+              <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
+            </variable>
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.72" item="Switch Speed 3 Option 2" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.72" item="Switch Speed 3 Option 3" mask="XXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
+              <label xml:lang="de"> Einheit:</label>
+              <label xml:lang="nl"> Eenheid:</label>
+              <label> Unit:</label>
+            </variable>
+  <!-- Switch Speed 4 -->
+            <variable CV="6862.53" item="Switch Speed 4 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 4 - Lok:</label>
+              <label xml:lang="nl">Instructie 4 - Loc:</label>
+              <label>Command 4 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+            <variable CV="6862.63" item="Switch Speed 4 Speed" default="0">
+              <decVal/>
+              <label xml:lang="de"> Setze Geschwindigkeit:</label>
+              <label xml:lang="nl"> Snelheid wordt:</label>
+              <label> Set Speed to:</label>
+              <tooltip>Enter value according to unit selected in next field</tooltip>
+              <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
+            </variable>
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.73" item="Switch Speed 4 Option 2" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.73" item="Switch Speed 4 Option 3" mask="XXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
+              <label xml:lang="de"> Einheit:</label>
+              <label xml:lang="nl"> Eenheid:</label>
+              <label> Unit:</label>
+            </variable>
+  <!-- Switch Speed 5 -->
+            <variable CV="6862.54" item="Switch Speed 5 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 5 - Lok:</label>
+              <label xml:lang="nl">Instructie 5 - Loc:</label>
+              <label>Command 5 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+            <variable CV="6862.64" item="Switch Speed 5 Speed" default="0">
+              <decVal/>
+              <label xml:lang="de"> Setze Geschwindigkeit:</label>
+              <label xml:lang="nl"> Snelheid wordt:</label>
+              <label> Set Speed to:</label>
+              <tooltip>Enter value according to unit selected in next field</tooltip>
+              <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
+            </variable>
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.74" item="Switch Speed 5 Option 2" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.74" item="Switch Speed 5 Option 3" mask="XXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
+              <label xml:lang="de"> Einheit:</label>
+              <label xml:lang="nl"> Eenheid:</label>
+              <label> Unit:</label>
+            </variable>
+  <!-- Switch Speed 6 -->
+            <variable CV="6862.55" item="Switch Speed 6 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 6 - Lok:</label>
+              <label xml:lang="nl">Instructie 6 - Loc:</label>
+              <label>Command 6 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+            <variable CV="6862.65" item="Switch Speed 6 Speed" default="0">
+              <decVal/>
+              <label xml:lang="de"> Setze Geschwindigkeit:</label>
+              <label xml:lang="nl"> Snelheid wordt:</label>
+              <label> Set Speed to:</label>
+              <tooltip>Enter value according to unit selected in next field</tooltip>
+              <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
+            </variable>
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.75" item="Switch Speed 6 Option 2" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.75" item="Switch Speed 6 Option 3" mask="XXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
+              <label xml:lang="de"> Einheit:</label>
+              <label xml:lang="nl"> Eenheid:</label>
+              <label> Unit:</label>
+            </variable>
+  <!-- Switch Speed 7 -->
+            <variable CV="6862.56" item="Switch Speed 7 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 7 - Lok:</label>
+              <label xml:lang="nl">Instructie 7 - Loc:</label>
+              <label>Command 7 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+            <variable CV="6862.66" item="Switch Speed 7 Speed" default="0">
+              <decVal/>
+              <label xml:lang="de"> Setze Geschwindigkeit:</label>
+              <label xml:lang="nl"> Snelheid wordt:</label>
+              <label> Set Speed to:</label>
+              <tooltip>Enter value according to unit selected in next field</tooltip>
+              <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
+            </variable>
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.76" item="Switch Speed 7 Option 2" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.76" item="Switch Speed 7 Option 3" mask="XXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
+              <label xml:lang="de"> Einheit:</label>
+              <label xml:lang="nl"> Eenheid:</label>
+              <label> Unit:</label>
+            </variable>
+  <!-- Switch Speed 8 -->
+            <variable CV="6862.57" item="Switch Speed 8 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 8 - Lok:</label>
+              <label xml:lang="nl">Instructie 8 - Loc:</label>
+              <label>Command 8 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+            <variable CV="6862.67" item="Switch Speed 8 Speed" default="0">
+              <decVal/>
+              <label xml:lang="de"> Setze Geschwindigkeit:</label>
+              <label xml:lang="nl"> Snelheid wordt:</label>
+              <label> Set Speed to:</label>
+              <tooltip>Enter value according to unit selected in next field</tooltip>
+              <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
+            </variable>
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.77" item="Switch Speed 8 Option 2" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.77" item="Switch Speed 8 Option 3" mask="XXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
+              <label xml:lang="de"> Einheit:</label>
+              <label xml:lang="nl"> Eenheid:</label>
+              <label> Unit:</label>
+            </variable>
+  <!-- Switch Speed 9 -->
+            <variable CV="6862.58" item="Switch Speed 9 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 9 - Lok:</label>
+              <label xml:lang="nl">Instructie 9 - Loc:</label>
+              <label>Command 9 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+            <variable CV="6862.68" item="Switch Speed 9 Speed" default="0">
+              <decVal/>
+              <label xml:lang="de"> Setze Geschwindigkeit:</label>
+              <label xml:lang="nl"> Snelheid wordt:</label>
+              <label> Set Speed to:</label>
+              <tooltip>Enter value according to unit selected in next field</tooltip>
+              <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
+            </variable>
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.78" item="Switch Speed 9 Option 2" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.78" item="Switch Speed 9 Option 3" mask="XXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
+              <label xml:lang="de"> Einheit:</label>
+              <label xml:lang="nl"> Eenheid:</label>
+              <label> Unit:</label>
+            </variable>
+  <!-- Switch Speed 10 -->
+            <variable CV="6862.59" item="Switch Speed 10 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 10 - Lok:</label>
+              <label xml:lang="nl">Instructie 10 - Loc:</label>
+              <label>Command 10 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+            <variable CV="6862.69" item="Switch Speed 10 Speed" default="0">
+              <decVal/>
+              <label xml:lang="de"> Setze Geschwindigkeit:</label>
+              <label xml:lang="nl"> Snelheid wordt:</label>
+              <label> Set Speed to:</label>
+              <tooltip>Enter value according to unit selected in next field</tooltip>
+              <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
+            </variable>
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.79" item="Switch Speed 10 Option 2" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> Aktivieren:</label>
+              <label xml:lang="nl"> Activeer:</label>
+              <label> when:</label>
+            </variable>
+            <variable CV="6862.79" item="Switch Speed 10 Option 3" mask="XXXVVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
+              <label xml:lang="de"> Einheit:</label>
+              <label xml:lang="nl"> Eenheid:</label>
+              <label> Unit:</label>
+            </variable>
+            <!-- Speed Switching LNCV 52-59, 62-69 and 72-79 up to here -->
+
+            <!-- Solenoid Commands, LNCV 80-109, not for NX Managers -->
+<!-- Switch Solenoid 1 -->
+            <variable CV="6862.80" item="Switch Solenoid 1 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 1 - Lok:</label>
+              <label xml:lang="nl">Instructie 1 - Loc:</label>
+              <label>Command 1 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+            <variable CV="6862.90" item="Switch Solenoid 1 State" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateToChoice.xml"/>
+              <label xml:lang="de"> nach Zustand:</label>
+              <label xml:lang="nl"> naar Stand:</label>
+              <label> to State:</label>
+            </variable>
+            <variable CV="6862.90" item="Switch Solenoid 1 Target" mask="10" default="1">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de"> schalte Magnetartikel:</label>
+              <label xml:lang="nl"> schakel adres:</label>
+              <label> set Solenoid:</label>
+              <tooltip>&lt;html&gt;0 = no address instruction is sent&lt;br\&gt;
+                1 - 2000 = set a solenoid address&lt;br\&gt;
+                2001 - 2024 = set an Intellibox route&lt;/html&gt;</tooltip>
+              <tooltip xml:lang="de">&lt;html&gt;0 = Es wird kein Adressbefehl gesendet&lt;br\&gt;
+                1 - 2000 = Magnetartikel schalten&lt;br\&gt;
+                2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
+            </variable>
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.100" item="Switch Solenoid 1 Option 2" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> wenn:</label>
+              <label xml:lang="nl"> als:</label>
+              <label> when:</label>
+            </variable>
+<!-- Switch Solenoid 2 -->
+            <variable CV="6862.81" item="Switch Solenoid 2 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de">Befehl 2 - Lok:</label>
+              <label xml:lang="nl">Instructie 2 - Loc:</label>
+              <label>Command 2 - Loco:</label>
+              <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+              <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+            </variable>
+            <variable CV="6862.91" item="Switch Solenoid 2 State" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateToChoice.xml"/>
+              <label xml:lang="de"> nach Zustand:</label>
+              <label xml:lang="nl"> naar Stand:</label>
+              <label> to State:</label>
+            </variable>
+            <variable CV="6862.91" item="Switch Solenoid 2 Target" mask="10" default="1">
+              <decVal min="0" max="20004"/>
+              <label xml:lang="de"> schalte Magnetartikel:</label>
+              <label xml:lang="nl"> schakel adres:</label>
+              <label> set Solenoid:</label>
+              <tooltip>&lt;html&gt;0 = no address instruction is sent&lt;br\&gt;
+                1 - 2000 = set a solenoid address&lt;br\&gt;
+                2001 - 2024 = set an Intellibox route&lt;/html&gt;</tooltip>
+              <tooltip xml:lang="de">&lt;html&gt;0 = Es wird kein Adressbefehl gesendet&lt;br\&gt;
+                1 - 2000 = Magnetartikel schalten&lt;br\&gt;
+                2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
+            </variable>
+            <!--no Direction option 1 in 68620-->
+            <variable CV="6862.101" item="Switch Solenoid 2 Option 2" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+              <label xml:lang="de"> wenn:</label>
+              <label xml:lang="nl"> als:</label>
+              <label> when:</label>
+            </variable>
+<!-- Switch Solenoid 3 -->
+          <variable CV="6862.82" item="Switch Solenoid 3 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de">Befehl 3 - Lok:</label>
+            <label xml:lang="nl">Instructie 3 - Loc:</label>
+            <label>Command 3 - Loco:</label>
+            <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+            <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+          </variable>
+          <variable CV="6862.92" item="Switch Solenoid 3 State" mask="1" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateToChoice.xml"/>
+            <label xml:lang="de"> nach Zustand:</label>
+            <label xml:lang="nl"> naar Stand:</label>
+            <label> to State:</label>
+          </variable>
+          <variable CV="6862.92" item="Switch Solenoid 3 Target" mask="10" default="1">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de"> schalte Magnetartikel:</label>
+            <label xml:lang="nl"> schakel adres:</label>
+            <label> set Solenoid:</label>
+            <tooltip>&lt;html&gt;0 = no address instruction is sent&lt;br\&gt;
+              1 - 2000 = set a solenoid address&lt;br\&gt;
+              2001 - 2024 = set an Intellibox route&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;0 = Es wird kein Adressbefehl gesendet&lt;br\&gt;
+              1 - 2000 = Magnetartikel schalten&lt;br\&gt;
+              2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
+          </variable>
+          <!--no Direction option 1 in 68620-->
+          <variable CV="6862.102" item="Switch Solenoid 3 Option 2" mask="XXXXXVXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+            <label xml:lang="de"> wenn:</label>
+            <label xml:lang="nl"> als:</label>
+            <label> when:</label>
+          </variable>
+<!-- Switch Solenoid 4 -->
+          <variable CV="6862.83" item="Switch Solenoid 4 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de">Befehl 4 - Lok:</label>
+            <label xml:lang="nl">Instructie 4 - Loc:</label>
+            <label>Command 4 - Loco:</label>
+            <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+            <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+          </variable>
+          <variable CV="6862.93" item="Switch Solenoid 4 State" mask="1" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateToChoice.xml"/>
+            <label xml:lang="de"> nach Zustand:</label>
+            <label xml:lang="nl"> naar Stand:</label>
+            <label> to State:</label>
+          </variable>
+          <variable CV="6862.93" item="Switch Solenoid 4 Target" mask="10" default="1">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de"> schalte Magnetartikel:</label>
+            <label xml:lang="nl"> schakel adres:</label>
+            <label> set Solenoid:</label>
+            <tooltip>&lt;html&gt;0 = no address instruction is sent&lt;br\&gt;
+              1 - 2000 = set a solenoid address&lt;br\&gt;
+              2001 - 2024 = set an Intellibox route&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;0 = Es wird kein Adressbefehl gesendet&lt;br\&gt;
+              1 - 2000 = Magnetartikel schalten&lt;br\&gt;
+              2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
+          </variable>
+          <!--no Direction option 1 in 68620-->
+          <variable CV="6862.103" item="Switch Solenoid 4 Option 2" mask="XXXXXVXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+            <label xml:lang="de"> wenn:</label>
+            <label xml:lang="nl"> als:</label>
+            <label> when:</label>
+          </variable>
+<!-- Switch Solenoid 5 -->
+          <variable CV="6862.84" item="Switch Solenoid 5 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de">Befehl 5 - Lok:</label>
+            <label xml:lang="nl">Instructie 5 - Loc:</label>
+            <label>Command 5 - Loco:</label>
+            <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+            <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+          </variable>
+          <variable CV="6862.94" item="Switch Solenoid 5 State" mask="1" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateToChoice.xml"/>
+            <label xml:lang="de"> nach Zustand:</label>
+            <label xml:lang="nl"> naar Stand:</label>
+            <label> to State:</label>
+          </variable>
+          <variable CV="6862.94" item="Switch Solenoid 5 Target" mask="10" default="1">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de"> schalte Magnetartikel:</label>
+            <label xml:lang="nl"> schakel adres:</label>
+            <label> set Solenoid:</label>
+            <tooltip>&lt;html&gt;0 = no address instruction is sent&lt;br\&gt;
+              1 - 2000 = set a solenoid address&lt;br\&gt;
+              2001 - 2024 = set an Intellibox route&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;0 = Es wird kein Adressbefehl gesendet&lt;br\&gt;
+              1 - 2000 = Magnetartikel schalten&lt;br\&gt;
+              2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
+          </variable>
+          <!--no Direction option 1 in 68620-->
+          <variable CV="6862.104" item="Switch Solenoid 5 Option 2" mask="XXXXXVXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+            <label xml:lang="de"> wenn:</label>
+            <label xml:lang="nl"> als:</label>
+            <label> when:</label>
+          </variable>
+<!-- Switch Solenoid 6 -->
+          <variable CV="6862.85" item="Switch Solenoid 6 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de">Befehl 6 - Lok:</label>
+            <label xml:lang="nl">Instructie 6 - Loc:</label>
+            <label>Command 6 - Loco:</label>
+            <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+            <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+          </variable>
+          <variable CV="6862.95" item="Switch Solenoid 6 State" mask="1" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateToChoice.xml"/>
+            <label xml:lang="de"> nach Zustand:</label>
+            <label xml:lang="nl"> naar Stand:</label>
+            <label> to State:</label>
+          </variable>
+          <variable CV="6862.95" item="Switch Solenoid 6 Target" mask="10" default="1">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de"> schalte Magnetartikel:</label>
+            <label xml:lang="nl"> schakel adres:</label>
+            <label> set Solenoid:</label>
+            <tooltip>&lt;html&gt;0 = no address instruction is sent&lt;br\&gt;
+              1 - 2000 = set a solenoid address&lt;br\&gt;
+              2001 - 2024 = set an Intellibox route&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;0 = Es wird kein Adressbefehl gesendet&lt;br\&gt;
+              1 - 2000 = Magnetartikel schalten&lt;br\&gt;
+              2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
+          </variable>
+          <!--no Direction option 1 in 68620-->
+          <variable CV="6862.105" item="Switch Solenoid 6 Option 2" mask="XXXXXVXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+            <label xml:lang="de"> wenn:</label>
+            <label xml:lang="nl"> als:</label>
+            <label> when:</label>
+          </variable>
+<!-- Switch Solenoid 7 -->
+          <variable CV="6862.86" item="Switch Solenoid 7 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de">Befehl 7 - Lok:</label>
+            <label xml:lang="nl">Instructie 7 - Loc:</label>
+            <label>Command 7 - Loco:</label>
+            <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+            <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+          </variable>
+          <variable CV="6862.96" item="Switch Solenoid 7 State" mask="1" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateToChoice.xml"/>
+            <label xml:lang="de"> nach Zustand:</label>
+            <label xml:lang="nl"> naar Stand:</label>
+            <label> to State:</label>
+          </variable>
+          <variable CV="6862.96" item="Switch Solenoid 7 Target" mask="10" default="1">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de"> schalte Magnetartikel:</label>
+            <label xml:lang="nl"> schakel adres:</label>
+            <label> set Solenoid:</label>
+            <tooltip>&lt;html&gt;0 = no address instruction is sent&lt;br\&gt;
+              1 - 2000 = set a solenoid address&lt;br\&gt;
+              2001 - 2024 = set an Intellibox route&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;0 = Es wird kein Adressbefehl gesendet&lt;br\&gt;
+              1 - 2000 = Magnetartikel schalten&lt;br\&gt;
+              2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
+          </variable>
+          <!--no Direction option 1 in 68620-->
+          <variable CV="6862.106" item="Switch Solenoid 7 Option 2" mask="XXXXXVXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+            <label xml:lang="de"> wenn:</label>
+            <label xml:lang="nl"> als:</label>
+            <label> when:</label>
+          </variable>
+<!-- Switch Solenoid 8 -->
+          <variable CV="6862.87" item="Switch Solenoid 8 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de">Befehl 8 - Lok:</label>
+            <label xml:lang="nl">Instructie 8 - Loc:</label>
+            <label>Command 8 - Loco:</label>
+            <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+            <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+          </variable>
+          <variable CV="6862.97" item="Switch Solenoid 8 State" mask="1" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateToChoice.xml"/>
+            <label xml:lang="de"> nach Zustand:</label>
+            <label xml:lang="nl"> naar Stand:</label>
+            <label> to State:</label>
+          </variable>
+          <variable CV="6862.97" item="Switch Solenoid 8 Target" mask="10" default="1">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de"> schalte Magnetartikel:</label>
+            <label xml:lang="nl"> schakel adres:</label>
+            <label> set Solenoid:</label>
+            <tooltip>&lt;html&gt;0 = no address instruction is sent&lt;br\&gt;
+              1 - 2000 = set a solenoid address&lt;br\&gt;
+              2001 - 2024 = set an Intellibox route&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;0 = Es wird kein Adressbefehl gesendet&lt;br\&gt;
+              1 - 2000 = Magnetartikel schalten&lt;br\&gt;
+              2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
+          </variable>
+          <!--no Direction option 1 in 68620-->
+          <variable CV="6862.107" item="Switch Solenoid 8 Option 2" mask="XXXXXVXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+            <label xml:lang="de"> wenn:</label>
+            <label xml:lang="nl"> als:</label>
+            <label> when:</label>
+          </variable>
+<!-- Switch Solenoid 9 -->
+          <variable CV="6862.88" item="Switch Solenoid 9 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de">Befehl 9 - Lok:</label>
+            <label xml:lang="nl">Instructie 9 - Loc:</label>
+            <label>Command 9 - Loco:</label>
+            <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+            <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+          </variable>
+          <variable CV="6862.98" item="Switch Solenoid 9 State" mask="1" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateToChoice.xml"/>
+            <label xml:lang="de"> nach Zustand:</label>
+            <label xml:lang="nl"> naar Stand:</label>
+            <label> to State:</label>
+          </variable>
+          <variable CV="6862.98" item="Switch Solenoid 9 Target" mask="10" default="1">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de"> schalte Magnetartikel:</label>
+            <label xml:lang="nl"> schakel adres:</label>
+            <label> set Solenoid:</label>
+            <tooltip>&lt;html&gt;0 = no address instruction is sent&lt;br\&gt;
+              1 - 2000 = set a solenoid address&lt;br\&gt;
+              2001 - 2024 = set an Intellibox route&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;0 = Es wird kein Adressbefehl gesendet&lt;br\&gt;
+              1 - 2000 = Magnetartikel schalten&lt;br\&gt;
+              2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
+          </variable>
+          <!--no Direction option 1 in 68620-->
+          <variable CV="6862.108" item="Switch Solenoid 9 Option 2" mask="XXXXXVXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+            <label xml:lang="de"> wenn:</label>
+            <label xml:lang="nl"> als:</label>
+            <label> when:</label>
+          </variable>
+<!-- Switch Solenoid 10 -->
+          <variable CV="6862.89" item="Switch Solenoid 10 Address" mask="VVVVVVVVVVVVVVVV" default="0">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de">Befehl 10 - Lok:</label>
+            <label xml:lang="nl">Instructie 10 - Loc:</label>
+            <label>Command 10 - Loco:</label>
+            <tooltip>Enter loco address or 20000 = General command, 20001-4 = Category 1-4</tooltip>
+            <tooltip xml:lang="de">Lokadresse eingeben, oder 20000 = Genereller Befehl, 20001-4 = Zugkategorie 1-4</tooltip>
+          </variable>
+          <variable CV="6862.99" item="Switch Solenoid 10 State" mask="1" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateToChoice.xml"/>
+            <label xml:lang="de"> nach Zustand:</label>
+            <label xml:lang="nl"> naar Stand:</label>
+            <label> to State:</label>
+          </variable>
+          <variable CV="6862.99" item="Switch Solenoid 10 Target" mask="10" default="1">
+            <decVal min="0" max="20004"/>
+            <label xml:lang="de"> schalte Magnetartikel:</label>
+            <label xml:lang="nl"> schakel adres:</label>
+            <label> set Solenoid:</label>
+            <tooltip>&lt;html&gt;0 = no address instruction is sent&lt;br\&gt;
+              1 - 2000 = set a solenoid address&lt;br\&gt;
+              2001 - 2024 = set an Intellibox route&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;0 = Es wird kein Adressbefehl gesendet&lt;br\&gt;
+              1 - 2000 = Magnetartikel schalten&lt;br\&gt;
+              2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
+          </variable>
+          <!--no Direction option 1 in 68620-->
+          <variable CV="6862.109" item="Switch Solenoid 10 Option 2" mask="XXXXXVXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
+            <label xml:lang="de"> wenn:</label>
+            <label xml:lang="nl"> als:</label>
+            <label> when:</label>
+          </variable>
+          <!-- Solenoid Switching LNCV 82-89, 92-99 and 102-109 up to here -->
+
+          <!-- No Entry/Exit Manager CVs on 68620 -->
+
+          <!--Locomotive specific hold time is in 68610 only -->
+
+        </variables>
+    </decoder>
+
+    <!-- Programming tabbed panes layout -->
+    <pane>
+      <name>LNCV Module</name>
+      <name xml:lang="de">LNCV Modul</name>
+      <name xml:lang="nl">LNCV Module</name>
+
+      <column>
+
+          <label>
+            <text>&lt;html&gt;&lt;h1&gt;Lissy Receiver Settings&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Lissy Ontvanger Instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Lissy Empfänger Eingaben&lt;/h1&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>Before writing, open a Programming session using the LocoNet LNCV Tool.</text>
+            <text xml:lang="nl">Voordat je waarden schrijft eerst een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+            <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV Werkzeugs einen LNCV Programmieraufgang starten.</text>
+            <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez une session de programmation avec l'Util LNCV.</text>
+            <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
+          </label>
+
+          <separator/>
+
+        <row>
+          <column>
+            <display item="Version"/>
+            <display item="Presets Save Status" format="checkbox"/>
+            <display item="Presets LokBoss" format="checkbox"/>
+            <label>
+              <text>  </text>
+            </label>
+            <label>
+              <text>Sensor S1 Address = Module Address</text>
+            </label>
+            <display item="Sensor 2 Address"/>
+            <display item="Automation Activation Address"/>
+            <!--some items removed for 68620, no Message 1/2 -->
+          </column>
+
+          <separator/>
+          
+          <column>
+            <display item="Function"/>
+            <display item="Presets Protocol"/>
+            <!--some items removed for 68620 , no Direction -->
+          </column>
+        </row>
+      </column>
+
+    </pane>
+
+    <!-- Switching functions Tab -->
+    <pane>
+      <name>Switching</name>
+      <name xml:lang="de">Schalten</name>
+      <name xml:lang="nl">Schakelen</name>
+
+      <column>
+        <qualifier>
+          <variableref>Function</variableref>
+          <relation>gt</relation>
+          <value>1</value>
+        </qualifier>
+        <qualifier>
+          <variableref>Function</variableref>
+          <relation>lt</relation>
+          <value>4</value>
+        </qualifier>
+
+        <label>
+          <text>Function Commands</text>
+          <text xml:lang="de">Funktionsbefehle</text>
+          <text xml:lang="nl">Functie-instructies</text>
+        </label>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 1 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 1 Address" label="S1 Cmd 1 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Function 1 F0" format="checkbox"/>
+          <display item="Switch Function 1 F1" format="checkbox"/>
+          <display item="Switch Function 1 F2" format="checkbox"/>
+          <display item="Switch Function 1 F3" format="checkbox"/>
+          <display item="Switch Function 1 F4" format="checkbox"/>
+          <display item="Switch Function 1 F5" format="checkbox"/>
+          <display item="Switch Function 1 F6" format="checkbox"/>
+          <display item="Switch Function 1 F7" format="checkbox"/>
+          <display item="Switch Function 1 F8" format="checkbox"/>
+          <display item="Switch Function 1 F9" format="checkbox"/>
+          <display item="Switch Function 1 F10" format="checkbox"/>
+          <display item="Switch Function 1 F11" format="checkbox"/>
+          <display item="Switch Function 1 F12" format="checkbox"/>
+        </row>
+        <row>
+          <display item="Switch Function 1 Option 2"/>
+          <display item="Switch Function 1 Option 3"/>
+          <display item="Switch Function 1 Option 4" format="checkbox"/>
+          <display item="Switch Function 1 Option 5"/>
+          <display item="Switch Function 1 Option 6"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 2 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 2 Address" label="S1 Cmd 2 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Function 2 F0" format="checkbox"/>
+          <display item="Switch Function 2 F1" format="checkbox"/>
+          <display item="Switch Function 2 F2" format="checkbox"/>
+          <display item="Switch Function 2 F3" format="checkbox"/>
+          <display item="Switch Function 2 F4" format="checkbox"/>
+          <display item="Switch Function 2 F5" format="checkbox"/>
+          <display item="Switch Function 2 F6" format="checkbox"/>
+          <display item="Switch Function 2 F7" format="checkbox"/>
+          <display item="Switch Function 2 F8" format="checkbox"/>
+          <display item="Switch Function 2 F9" format="checkbox"/>
+          <display item="Switch Function 2 F10" format="checkbox"/>
+          <display item="Switch Function 2 F11" format="checkbox"/>
+          <display item="Switch Function 2 F12" format="checkbox"/>
+        </row>
+        <row>
+          <display item="Switch Function 2 Option 2"/>
+          <display item="Switch Function 2 Option 3"/>
+          <display item="Switch Function 2 Option 4" format="checkbox"/>
+          <display item="Switch Function 2 Option 5"/>
+          <display item="Switch Function 2 Option 6"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 3 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 3 Address" label="S1 Cmd 3 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Function 3 F0" format="checkbox"/>
+          <display item="Switch Function 3 F1" format="checkbox"/>
+          <display item="Switch Function 3 F2" format="checkbox"/>
+          <display item="Switch Function 3 F3" format="checkbox"/>
+          <display item="Switch Function 3 F4" format="checkbox"/>
+          <display item="Switch Function 3 F5" format="checkbox"/>
+          <display item="Switch Function 3 F6" format="checkbox"/>
+          <display item="Switch Function 3 F7" format="checkbox"/>
+          <display item="Switch Function 3 F8" format="checkbox"/>
+          <display item="Switch Function 3 F9" format="checkbox"/>
+          <display item="Switch Function 3 F10" format="checkbox"/>
+          <display item="Switch Function 3 F11" format="checkbox"/>
+          <display item="Switch Function 3 F12" format="checkbox"/>
+        </row>
+        <row>
+          <display item="Switch Function 3 Option 2"/>
+          <display item="Switch Function 3 Option 3"/>
+          <display item="Switch Function 3 Option 4" format="checkbox"/>
+          <display item="Switch Function 3 Option 5"/>
+          <display item="Switch Function 3 Option 6"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 4 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 4 Address" label="S1 Cmd 4 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Function 4 F0" format="checkbox"/>
+          <display item="Switch Function 4 F1" format="checkbox"/>
+          <display item="Switch Function 4 F2" format="checkbox"/>
+          <display item="Switch Function 4 F3" format="checkbox"/>
+          <display item="Switch Function 4 F4" format="checkbox"/>
+          <display item="Switch Function 4 F5" format="checkbox"/>
+          <display item="Switch Function 4 F6" format="checkbox"/>
+          <display item="Switch Function 4 F7" format="checkbox"/>
+          <display item="Switch Function 4 F8" format="checkbox"/>
+          <display item="Switch Function 4 F9" format="checkbox"/>
+          <display item="Switch Function 4 F10" format="checkbox"/>
+          <display item="Switch Function 4 F11" format="checkbox"/>
+          <display item="Switch Function 4 F12" format="checkbox"/>
+        </row>
+        <row>
+          <display item="Switch Function 4 Option 2"/>
+          <display item="Switch Function 4 Option 3"/>
+          <display item="Switch Function 4 Option 4" format="checkbox"/>
+          <display item="Switch Function 4 Option 5"/>
+          <display item="Switch Function 4 Option 6"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 5 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 5 Address" label="S1 Cmd 5 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Function 5 F0" format="checkbox"/>
+          <display item="Switch Function 5 F1" format="checkbox"/>
+          <display item="Switch Function 5 F2" format="checkbox"/>
+          <display item="Switch Function 5 F3" format="checkbox"/>
+          <display item="Switch Function 5 F4" format="checkbox"/>
+          <display item="Switch Function 5 F5" format="checkbox"/>
+          <display item="Switch Function 5 F6" format="checkbox"/>
+          <display item="Switch Function 5 F7" format="checkbox"/>
+          <display item="Switch Function 5 F8" format="checkbox"/>
+          <display item="Switch Function 5 F9" format="checkbox"/>
+          <display item="Switch Function 5 F10" format="checkbox"/>
+          <display item="Switch Function 5 F11" format="checkbox"/>
+          <display item="Switch Function 5 F12" format="checkbox"/>
+        </row>
+        <row>
+          <display item="Switch Function 5 Option 2"/>
+          <display item="Switch Function 5 Option 3"/>
+          <display item="Switch Function 5 Option 4" format="checkbox"/>
+          <display item="Switch Function 5 Option 5"/>
+          <display item="Switch Function 5 Option 6"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 6 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 6 Address" label="S2 Cmd 1 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Function 6 F0" format="checkbox"/>
+          <display item="Switch Function 6 F1" format="checkbox"/>
+          <display item="Switch Function 6 F2" format="checkbox"/>
+          <display item="Switch Function 6 F3" format="checkbox"/>
+          <display item="Switch Function 6 F4" format="checkbox"/>
+          <display item="Switch Function 6 F5" format="checkbox"/>
+          <display item="Switch Function 6 F6" format="checkbox"/>
+          <display item="Switch Function 6 F7" format="checkbox"/>
+          <display item="Switch Function 6 F8" format="checkbox"/>
+          <display item="Switch Function 6 F9" format="checkbox"/>
+          <display item="Switch Function 6 F10" format="checkbox"/>
+          <display item="Switch Function 6 F11" format="checkbox"/>
+          <display item="Switch Function 6 F12" format="checkbox"/>
+        </row>
+        <row>
+          <display item="Switch Function 6 Option 2"/>
+          <display item="Switch Function 6 Option 3"/>
+          <display item="Switch Function 6 Option 4" format="checkbox"/>
+          <display item="Switch Function 6 Option 5"/>
+          <display item="Switch Function 6 Option 6"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 7 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 7 Address" label="S2 Cmd 2 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Function 7 F0" format="checkbox"/>
+          <display item="Switch Function 7 F1" format="checkbox"/>
+          <display item="Switch Function 7 F2" format="checkbox"/>
+          <display item="Switch Function 7 F3" format="checkbox"/>
+          <display item="Switch Function 7 F4" format="checkbox"/>
+          <display item="Switch Function 7 F5" format="checkbox"/>
+          <display item="Switch Function 7 F6" format="checkbox"/>
+          <display item="Switch Function 7 F7" format="checkbox"/>
+          <display item="Switch Function 7 F8" format="checkbox"/>
+          <display item="Switch Function 7 F9" format="checkbox"/>
+          <display item="Switch Function 7 F10" format="checkbox"/>
+          <display item="Switch Function 7 F11" format="checkbox"/>
+          <display item="Switch Function 7 F12" format="checkbox"/>
+        </row>
+        <row>
+          <display item="Switch Function 7 Option 2"/>
+          <display item="Switch Function 7 Option 3"/>
+          <display item="Switch Function 7 Option 4" format="checkbox"/>
+          <display item="Switch Function 7 Option 5"/>
+          <display item="Switch Function 7 Option 6"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 8 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 8 Address" label="S2 Cmd 3 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Function 8 F0" format="checkbox"/>
+          <display item="Switch Function 8 F1" format="checkbox"/>
+          <display item="Switch Function 8 F2" format="checkbox"/>
+          <display item="Switch Function 8 F3" format="checkbox"/>
+          <display item="Switch Function 8 F4" format="checkbox"/>
+          <display item="Switch Function 8 F5" format="checkbox"/>
+          <display item="Switch Function 8 F6" format="checkbox"/>
+          <display item="Switch Function 8 F7" format="checkbox"/>
+          <display item="Switch Function 8 F8" format="checkbox"/>
+          <display item="Switch Function 8 F9" format="checkbox"/>
+          <display item="Switch Function 8 F10" format="checkbox"/>
+          <display item="Switch Function 8 F11" format="checkbox"/>
+          <display item="Switch Function 8 F12" format="checkbox"/>
+        </row>
+        <row>
+          <display item="Switch Function 8 Option 2"/>
+          <display item="Switch Function 8 Option 3"/>
+          <display item="Switch Function 8 Option 4" format="checkbox"/>
+          <display item="Switch Function 8 Option 5"/>
+          <display item="Switch Function 8 Option 6"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 9 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 9 Address" label="S2 Cmd 4 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Function 9 F0" format="checkbox"/>
+          <display item="Switch Function 9 F1" format="checkbox"/>
+          <display item="Switch Function 9 F2" format="checkbox"/>
+          <display item="Switch Function 9 F3" format="checkbox"/>
+          <display item="Switch Function 9 F4" format="checkbox"/>
+          <display item="Switch Function 9 F5" format="checkbox"/>
+          <display item="Switch Function 9 F6" format="checkbox"/>
+          <display item="Switch Function 9 F7" format="checkbox"/>
+          <display item="Switch Function 9 F8" format="checkbox"/>
+          <display item="Switch Function 9 F9" format="checkbox"/>
+          <display item="Switch Function 9 F10" format="checkbox"/>
+          <display item="Switch Function 9 F11" format="checkbox"/>
+          <display item="Switch Function 9 F12" format="checkbox"/>
+        </row>
+        <row>
+          <display item="Switch Function 9 Option 2"/>
+          <display item="Switch Function 9 Option 3"/>
+          <display item="Switch Function 9 Option 4" format="checkbox"/>
+          <display item="Switch Function 9 Option 5"/>
+          <display item="Switch Function 9 Option 6"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 10 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Function 10 Address" label="S2 Cmd 5 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Function 10 F0" format="checkbox"/>
+          <display item="Switch Function 10 F1" format="checkbox"/>
+          <display item="Switch Function 10 F2" format="checkbox"/>
+          <display item="Switch Function 10 F3" format="checkbox"/>
+          <display item="Switch Function 10 F4" format="checkbox"/>
+          <display item="Switch Function 10 F5" format="checkbox"/>
+          <display item="Switch Function 10 F6" format="checkbox"/>
+          <display item="Switch Function 10 F7" format="checkbox"/>
+          <display item="Switch Function 10 F8" format="checkbox"/>
+          <display item="Switch Function 10 F9" format="checkbox"/>
+          <display item="Switch Function 10 F10" format="checkbox"/>
+          <display item="Switch Function 10 F11" format="checkbox"/>
+          <display item="Switch Function 10 F12" format="checkbox"/>
+        </row>
+        <row>
+          <display item="Switch Function 10 Option 2"/>
+          <display item="Switch Function 10 Option 3"/>
+          <display item="Switch Function 10 Option 4" format="checkbox"/>
+          <display item="Switch Function 10 Option 5"/>
+          <display item="Switch Function 10 Option 6"/>
+        </row>
+        <separator/>
+        <label>
+          <text>  </text>
+        </label>
+
+        <label>
+          <text>Speed Commands</text>
+          <text xml:lang="de">Geschwindigkeitsbefehle</text>
+          <text xml:lang="nl">Snelheidsinstructies</text>
+        </label>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 1 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 1 Address" label="S1 Cmd 1 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Speed 1 Option 2"/>
+          <display item="Switch Speed 1 Speed"/>
+          <display item="Switch Speed 1 Option 3"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 2 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 2 Address" label="S1 Cmd 2 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Speed 2 Option 2"/>
+          <display item="Switch Speed 2 Speed"/>
+          <display item="Switch Speed 2 Option 3"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 3 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 3 Address" label="S1 Cmd 3 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Speed 3 Option 2"/>
+          <display item="Switch Speed 3 Speed"/>
+          <display item="Switch Speed 3 Option 3"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 4 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 4 Address" label="S1 Cmd 4 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Speed 4 Option 2"/>
+          <display item="Switch Speed 4 Speed"/>
+          <display item="Switch Speed 4 Option 3"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 5 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 5 Address" label="S1 Cmd 5 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Speed 5 Option 2"/>
+          <display item="Switch Speed 5 Speed"/>
+          <display item="Switch Speed 5 Option 3"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 6 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 6 Address" label="S2 Cmd 1 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Speed 6 Option 2"/>
+          <display item="Switch Speed 6 Speed"/>
+          <display item="Switch Speed 6 Option 3"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 7 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 7 Address" label="S2 Cmd 2 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Speed 7 Option 2"/>
+          <display item="Switch Speed 7 Speed"/>
+          <display item="Switch Speed 7 Option 3"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 8 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 8 Address" label="S2 Cmd 3 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Speed 8 Option 2"/>
+          <display item="Switch Speed 8 Speed"/>
+          <display item="Switch Speed 8 Option 3"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 9 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 9 Address" label="S3 Cmd 4 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Speed 9 Option 2"/>
+          <display item="Switch Speed 9 Speed"/>
+          <display item="Switch Speed 9 Option 3"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 10 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Speed 10 Address" label="S2 Cmd 5 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Speed 10 Option 2"/>
+          <display item="Switch Speed 10 Speed"/>
+          <display item="Switch Speed 10 Option 3"/>
+        </row>
+        <separator/>
+        <label>
+          <text>  </text>
+        </label>
+
+        <label>
+          <text>Solenoid Commands</text>
+          <text xml:lang="de">Magnetartikelbefehle</text>
+          <text xml:lang="nl">Magneetartikelinstructies</text>
+        </label>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 1 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 1 Address" label="S1 Cmd 1 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Solenoid 1 Option 2"/>
+          <display item="Switch Solenoid 1 Target"/>
+          <display item="Switch Solenoid 1 State"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 2 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 2 Address" label="S1 Cmd 2 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Solenoid 2 Option 2"/>
+          <display item="Switch Solenoid 2 Target"/>
+          <display item="Switch Solenoid 2 State"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 3 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 3 Address" label="S1 Cmd 3 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Solenoid 3 Option 2"/>
+          <display item="Switch Solenoid 3 Target"/>
+          <display item="Switch Solenoid 3 State"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 4 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 4 Address" label="S1 Cmd 4 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Solenoid 4 Option 2"/>
+          <display item="Switch Solenoid 4 Target"/>
+          <display item="Switch Solenoid 4 State"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 5 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 5 Address" label="S1 Cmd 5 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Solenoid 5 Option 2"/>
+          <display item="Switch Solenoid 5 Target"/>
+          <display item="Switch Solenoid 5 State"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 6 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 6 Address" label="S2 Cmd 1 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Solenoid 6 Option 2"/>
+          <display item="Switch Solenoid 6 Target"/>
+          <display item="Switch Solenoid 6 State"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 7 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 7 Address" label="S2 Cmd 2 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Solenoid 7 Option 2"/>
+          <display item="Switch Solenoid 7 Target"/>
+          <display item="Switch Solenoid 7 State"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 8 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 8 Address" label="S2 Cmd 3 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Solenoid 8 Option 2"/>
+          <display item="Switch Solenoid 8 Target"/>
+          <display item="Switch Solenoid 8 State"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 9 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 9 Address" label="S2 Cmd 4 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Solenoid 9 Option 2"/>
+          <display item="Switch Solenoid 9 Target"/>
+          <display item="Switch Solenoid 9 State"/>
+        </row>
+        <separator/>
+        <row>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>ne</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 10 Address"/>
+            </row>
+          </group>
+          <group>
+            <qualifier>
+              <variableref>Function</variableref>
+              <relation>eq</relation>
+              <value>3</value>
+            </qualifier>
+            <row>
+              <display item="Switch Solenoid 10 Address" label="S2 Cmd 5 - Addr.:"/>
+            </row>
+          </group>
+          <display item="Switch Solenoid 10 Option 2"/>
+          <display item="Switch Solenoid 10 Target"/>
+          <display item="Switch Solenoid 10 State"/>
+        </row>
+        <separator/>
+      </column>
+  </pane>
+
+  <!-- No NX Managers Tab -->
+
+</decoder-config>

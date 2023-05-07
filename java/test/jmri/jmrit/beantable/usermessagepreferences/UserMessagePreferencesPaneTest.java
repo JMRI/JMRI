@@ -29,7 +29,6 @@ public class UserMessagePreferencesPaneTest extends PreferencesPanelTestBase<Use
     public void tearDown() {
         prefsPanel = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

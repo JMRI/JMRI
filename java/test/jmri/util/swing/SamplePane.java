@@ -1,7 +1,7 @@
 package jmri.util.swing;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JMenu;
@@ -21,22 +21,22 @@ public class SamplePane extends jmri.util.swing.JmriPanel {
     public void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        num = ++index;
+        thisInstanceNumber = SamplePane.staticIndexCount;
+        SamplePane.incrementStaticInstanceNumber();
 
-        JButton b;
-        b = new JButton(new JmriNamedPaneAction("Next" + num,
+        JButton b = new JButton(new JmriNamedPaneAction("Next" + thisInstanceNumber,
                 getWindowInterface(),
                 jmri.util.swing.SamplePane.class.getName()));
         add(b);
 
-        JmriNamedPaneAction act = new JmriNamedPaneAction("Extend" + num,
+        JmriNamedPaneAction act = new JmriNamedPaneAction("Extend" + thisInstanceNumber,
                 getWindowInterface(),
                 jmri.util.swing.SamplePane.class.getName());
         act.setHint(WindowInterface.Hint.EXTEND);
         b = new JButton(act);
         add(b);
 
-        b = new JButton("Close" + num);
+        b = new JButton("Close" + thisInstanceNumber);
         add(b);
     }
 
@@ -47,12 +47,12 @@ public class SamplePane extends jmri.util.swing.JmriPanel {
 
     @Override
     public String getTitle() {
-        return "SamplePane " + num;
+        return "SamplePane " + thisInstanceNumber;
     }
 
     @Override
     public List<JMenu> getMenus() {
-        java.util.ArrayList<JMenu> list = new java.util.ArrayList<JMenu>();
+        ArrayList<JMenu> list = new ArrayList<>();
         JMenu m = new JMenu("test 1");
         m.add(new JButton("sub 1"));
         m.add(new JButton("sub 2"));
@@ -66,13 +66,26 @@ public class SamplePane extends jmri.util.swing.JmriPanel {
 
     @Override
     public void dispose() {
-        disposed.add(num);
+        disposed.add(thisInstanceNumber);
         super.dispose();
     }
 
-    int num;
+    static public void resetCounts() {
+        disposed = new ArrayList<>();
+        staticIndexCount = 1;
+    }
 
-    static public ArrayList<Integer> disposed;
-    static public int index = 0;
+    static private void incrementStaticInstanceNumber() {
+        staticIndexCount++;
+    }
+
+    static public List<Integer> getDisposedList() {
+        return Collections.unmodifiableList(disposed);
+    }
+
+    private int thisInstanceNumber;
+
+    static private ArrayList<Integer> disposed;
+    static private int staticIndexCount = 1;
 
 }

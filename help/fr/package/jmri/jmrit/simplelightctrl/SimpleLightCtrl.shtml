@@ -1,30 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+<html lang="fr">
 <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
-<html LANG="fr">
 <head>
-<TITLE>JMRI: Light Control</TITLE>
-<META CONTENT="Ken Cameron" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Light Control">
-
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <title>JMRI: Light Control</title>
+  <meta name="author" content="Ken Cameron">
+  <meta name="keywords" content="JMRI help Light Control">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-<h1>Commande Lumi&#232;re </h1>
+      <h1>Commande Lumi&#232;re </h1>
 
-Entrez le nom du syst&#232;me de lumi&#232;re 
+<p>Entrez le nom du syst&#232;me de lumi&#232;re
 que vous souhaitez commander dans la bo&#238;te &#224; droite de "lumi&#232;re".
 Par exemple, entrer 678 et en appuyant sur le bouton ON ou OFF
 , vous devriez &#234;tre en mesure de changer l'&#233;tat de la lumi&#232;re num&#233;ro 678
@@ -36,97 +28,99 @@ qui est une lumi&#232;re interne num&#233;ro 123 . Appuyer sur le bouton On ou O
 changerera seulement l'&#233;tat de la lumi&#232;re interne et ne changera pas une
 lumi&#232;re sur le r&#233;seau. Voir "
 <a href="../../../../html/doc/Technical/Names.shtml"> Noms </a>
-"Voire l'aide g&#233;n&#233;rale pour plus d'informations.
+"Voire l'aide g&#233;n&#233;rale pour plus d'informations.</p>
 
 <h2>Boutons de Commande Lumi&#232;re et &#201;tats </h2>
 
 <dl>
-<dt> &#201;tat actuel: </dt>
-<dd> Montre l'&#233;tat actuel connu de la lumi&#232;re. </dd>
-<dt> &lt;Inconnu&gt;</dt>
-<dd> Soit aucun nom de lumi&#232;re s&#233;lectionn&#233; ou nom de Lumi&#232;re non valide. </dd>
-<dt> Off </dt>
-<dd>La Lumi&#232;re est au minimum d'intensit&#233; si l'intensit&#233; variable est prise en charge, ou Off. </dd>
-<dt>On </dt>
-<dd>La Lumi&#232;re est au maximum d'intensit&#233; si l'intensit&#233; variable est prise en charge, ou On. </dd>
-<dt> Interm&#233;diaire</dt>
-<dd>
-L'intensit&#233; lumineuse se situe entre 0 et 100% et l'intensit&#233; du courant est &#233;gale &#224;
-l'intensit&#233; cible.
-</dd>
-<dt> Transition sup&#233;rieur </dt>
-<dd>
-L'intensit&#233; de la cible est plus &#233;lev&#233;e que l'intensit&#233; du courant et la lumi&#232;re ajust&#233;e &#224; chaque minute rapide selon la valeur du Temps de Transition.
-</dd>
-<dt> Transition Basse </dt>
-<dd>
-L'intensit&#233; de la cible est plus faible que l'intensit&#233; du courant et la lumi&#232;re est ajust&#233;e &#224; chaque
- minute rapide selon la valeur du Temps de Transition.
-</dd>
- <dt>La transition Vers Le Maximum On </dt>
-<dd>
-L'intensit&#233; de la cible est plus &#233;lev&#233;e que l'intensit&#233; du courant,
-et sup&#233;rieure ou &#233;gale &#224; l'intensit&#233; maximale et la lumi&#232;re est ajust&#233;e
-&#224; chaque minute rapide selon la valeur du Temps de Transition.</dd>
-<dt>La transition vers le Minimum Off </dt>
-<dd>
-L'intensit&#233; de la cible est plus faible que l'intensit&#233; du courant,
-et inf&#233;rieure ou &#233;gale &#224; l'intensit&#233; minimale et la lumi&#232;re est ajust&#233;e &#224;
-chaque minute rapide selon la valeur Temps de Transition.
-</dd>
+  <dt> &#201;tat actuel: </dt>
+  <dd> Montre l'&#233;tat actuel connu de la lumi&#232;re. </dd>
+  <dt> &lt;Inconnu&gt;</dt>
+  <dd> Soit aucun nom de lumi&#232;re s&#233;lectionn&#233; ou nom de Lumi&#232;re non valide. </dd>
+  <dt> Off </dt>
+  <dd>La Lumi&#232;re est au minimum d'intensit&#233; si l'intensit&#233; variable est prise en charge, ou Off. </dd>
+  <dt>On </dt>
+  <dd>La Lumi&#232;re est au maximum d'intensit&#233; si l'intensit&#233; variable est prise en charge, ou On. </dd>
+  <dt> Interm&#233;diaire</dt>
+  <dd>
+  L'intensit&#233; lumineuse se situe entre 0 et 100% et l'intensit&#233; du courant est &#233;gale &#224;
+  l'intensit&#233; cible.
+  </dd>
+  <dt> Transition sup&#233;rieur </dt>
+  <dd>
+  L'intensit&#233; de la cible est plus &#233;lev&#233;e que l'intensit&#233; du courant et la lumi&#232;re ajust&#233;e &#224; chaque minute rapide selon la valeur du Temps de Transition.
+  </dd>
+  <dt> Transition Basse </dt>
+  <dd>
+  L'intensit&#233; de la cible est plus faible que l'intensit&#233; du courant et la lumi&#232;re est ajust&#233;e &#224; chaque
+   minute rapide selon la valeur du Temps de Transition.
+  </dd>
+   <dt>La transition Vers Le Maximum On </dt>
+  <dd>
+  L'intensit&#233; de la cible est plus &#233;lev&#233;e que l'intensit&#233; du courant,
+  et sup&#233;rieure ou &#233;gale &#224; l'intensit&#233; maximale et la lumi&#232;re est ajust&#233;e
+  &#224; chaque minute rapide selon la valeur du Temps de Transition.</dd>
+  <dt>La transition vers le Minimum Off </dt>
+  <dd>
+  L'intensit&#233; de la cible est plus faible que l'intensit&#233; du courant,
+  et inf&#233;rieure ou &#233;gale &#224; l'intensit&#233; minimale et la lumi&#232;re est ajust&#233;e &#224;
+  chaque minute rapide selon la valeur Temps de Transition.
+  </dd>
 </dl>
 
 <p>Configuration des Options des Lumi&#232;res:</p>
 
 <dl>
-<dt> Activ&#233;e: </dt>
-<dd> La lumi&#232;re va r&#233;pondre &#224; son type de commande automatique. </dd>
-<dt>Variable: </dt>
-<dd>La Lumi&#232;re peut &#234;tre command&#233;e &#224; des valeurs comprises entre 0% et 100%. </dd>
-<dt>Transition: </dt>
-<dd>Les changements d'intensit&#233; vont utiliser le temps de transition ppour &#233;voluer
-entre l'intensit&#233; du courant et la cible.
-</dd>
+  <dt> Activ&#233;e: </dt>
+  <dd> La lumi&#232;re va r&#233;pondre &#224; son type de commande automatique. </dd>
+  <dt>Variable: </dt>
+  <dd>La Lumi&#232;re peut &#234;tre command&#233;e &#224; des valeurs comprises entre 0% et 100%. </dd>
+  <dt>Transition: </dt>
+  <dd>Les changements d'intensit&#233; vont utiliser le temps de transition ppour &#233;voluer
+  entre l'intensit&#233; du courant et la cible.
+  </dd>
 
-<dt>On</dt>
-<dd> Appuyez sur ce bouton pour allumer la lumi&#232;re. </dd>
+  <dt>On</dt>
+  <dd> Appuyez sur ce bouton pour allumer la lumi&#232;re. </dd>
 
-<dt> Off </dt>
-<dd> Appuyez sur ce bouton pour &#233;teindre la lumi&#232;re. </dd>
+  <dt> Off </dt>
+  <dd> Appuyez sur ce bouton pour &#233;teindre la lumi&#232;re. </dd>
 
-<dt>Changer d'Intensit&#233; </dt>
-<dd> Entrez une nouvelle valeur pour la lumi&#232;re (0% &#224; 100%) et en appuyant sur
-ce bouton r&#233;gler l'intensit&#233; &#224; la nouvelle cible.
-Si le transitoire est pris en charge si vous utilisez le temps de transition
- pour le calcul de la vitesse pour passer de l'intensit&#233; du courant
-&#224; l'intensit&#233; de la nouvelle cible
-	</dd>
-	
-<dt> Intensit&#233; minimale: </dt>
-<dd> Une valeur 0 &#224; 100 (pour cent) qui d&#233;finit la plus faible quantit&#233; de lumi&#232;re qui
-sera de sortie par une commande DIM.
-Une commande non explicite ignorera cette valeur.
-</dd>
+  <dt>Changer d'Intensit&#233; </dt>
+  <dd> Entrez une nouvelle valeur pour la lumi&#232;re (0% &#224; 100%) et en appuyant sur
+  ce bouton r&#233;gler l'intensit&#233; &#224; la nouvelle cible.
+  Si le transitoire est pris en charge si vous utilisez le temps de transition
+   pour le calcul de la vitesse pour passer de l'intensit&#233; du courant
+  &#224; l'intensit&#233; de la nouvelle cible
+    </dd>
 
-<dt>Intensit&#233; maximale: </dt>
-<dd> Une valeur 0 &#224; 100 (pour cent) qui d&#233;finit le montant maximal de la lumi&#232;re qui
-sera en sortie par une commande DIM.
-Une commande non explicite ignorera cette valeur.
-</dd>
+  <dt> Intensit&#233; minimale: </dt>
+  <dd> Une valeur 0 &#224; 100 (pour cent) qui d&#233;finit la plus faible quantit&#233; de lumi&#232;re qui
+  sera de sortie par une commande DIM.
+  Une commande non explicite ignorera cette valeur.
+  </dd>
 
-<dt>Temps de transition: </dt>
-<dd>
-Nombre de minutes pour passer de 0% &#224; 100% d'intensit&#233;.
-Une valeur de z&#233;ro r&#232;glera l'appareil pour changer l'intensit&#233; d'un r&#233;glage
-&#224; l'intensit&#233; du nouveaux r&#233;glage aussi vite que l'appareil est en mesure de le faire.
-	</dd>
+  <dt>Intensit&#233; maximale: </dt>
+  <dd> Une valeur 0 &#224; 100 (pour cent) qui d&#233;finit le montant maximal de la lumi&#232;re qui
+  sera en sortie par une commande DIM.
+  Une commande non explicite ignorera cette valeur.
+  </dd>
+
+  <dt>Temps de transition: </dt>
+  <dd>
+  Nombre de minutes pour passer de 0% &#224; 100% d'intensit&#233;.
+  Une valeur de z&#233;ro r&#232;glera l'appareil pour changer l'intensit&#233; d'un r&#233;glage
+  &#224; l'intensit&#233; du nouveaux r&#233;glage aussi vite que l'appareil est en mesure de le faire.
+    </dd>
 </dl>
 
-Ceci est la page d'aide help/fr/package/jmri/jmrit/simpleligghtctrl/SimpleLightCtrl.shtml
+    <p>Ceci est la page d'aide help/fr/package/jmri/jmrit/
+      simpleligghtctrl/SimpleLightCtrl.shtml</p>
 
-<!--#include virtual="/Footer.shtml" -->
+<!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>
 

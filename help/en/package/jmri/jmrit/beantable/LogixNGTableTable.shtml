@@ -75,8 +75,7 @@
 
       <div style="margin-left: 2em">
         <a href="../logixng/images/SelectActionsNoCopy.png"><img src=
-        "../logixng/images/SelectActionsNoCopy.png" alt="Select Actions No Copy"
-         width="147" height="80"></a>
+        "../logixng/images/SelectActionsNoCopy.png" alt="Select Actions No Copy"></a>
       </div>
 
       <dl>
@@ -103,8 +102,7 @@
           confirmation dialog will be displayed.
           <div style="margin-left: 2em">
             <a href="../logixng/images/DeleteTable.png"><img src=
-            "../logixng/images/DeleteTable.png" alt="Delete LogixNG Table Confirmation" width="367"
-            height="126"></a>
+            "../logixng/images/DeleteTable.png" alt="Delete LogixNG Table Confirmation"></a>
           </div>
         </dd>
       </dl>
@@ -128,7 +126,7 @@
 
       <div style="margin-left: 2em">
         <a href="../logixng/images/AddTable.png"><img src="../logixng/images/AddTable.png" alt=
-        "Add LogixNG Table" width="608" height="256"></a>
+        "Add LogixNG Table"></a>
       </div>
 
       <p>The system name is required. The system name for a LogixNG Table always begins with the
@@ -144,9 +142,17 @@
       Tables Table. The user name is usually used to provide a more descriptive name, for example,
       "Signal 5 Table".</p>
 
-      <p>Use the file selector button to find and and load a CSV file. The CSV file is created by
-      using the export CSV file option in a spreadsheet program. The default location will be the
-      user files location.</p>
+      <p>Select the delimiter used for the CSV, either <strong>Tabbed</strong> (the default)
+      or <strong>Comma</strong>.</p>
+
+      <p>Use the file selector button to find and load a CSV file. A CSV type file (comma separated) may be
+      created by saving a spreadsheet using the "Save As" function. You may also create a comma
+      separated file by using a standard text editor and separating each column entry with a comma.
+      A Tab separated file may be created by using a spreadsheet and using the "Export" function and
+      selecting "Tab" as the separater. You may create a Tab separated file with a text editor, but
+      some text editors might automatically change tabs to spaces (and that will not load correctly).
+      In that case, change the preferences of the editor, or use a different editor.
+      The default location will be the user files location.</p>
 
       <p>The ability to create an internal table is not implemented yet.</p>
 

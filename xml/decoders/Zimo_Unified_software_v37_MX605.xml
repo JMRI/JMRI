@@ -16,11 +16,11 @@
   <!-- This decoder configuration file is based on the Zimo_Unified_software_v37_MX659.xml   -->
   <!-- V 1 file, dated 20210306.                                                             -->
   <!--                                                                                       -->
-  <!--                                                                                       -->
   <!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
   <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
-  <!-- V 1 new file,  Pierre Billon, 06 Mar 2021 -->
+  <!-- V 1 new file,  Pierre Billon, 06 Mar 2021                                             -->
+  <!-- v1.1,  include CV's 190-191, Ulrich Gerlach 25 March 2023                             --> 
   <!-- MX605 is special Zimo sound decoder for Kato N-scale ICE 4 (in theory usable in other Kato vehicules with the Kato in-house connector for EM13 decoder). Due to the combination with MX605FL & MX605SL installed in same engine, Front/rear lights and FO 1 for interior lighting listed as functons of this decoder -->
   <!-- Known installed firmware version from factory: 38.5 -->
   <decoder>
@@ -46,6 +46,7 @@
       <!-- CV158 has both sound and Railcom information -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/zimo/CV190-CV191.xml"/>
      <!-- CV7 set to default 37 to allow Swiss Mapping Groups 11 to 17 if creating a brand new decoder from scratch -->
       <variable item="Decoder Version" CV="7" readOnly="yes" default="37">
         <decVal/>
@@ -53,31 +54,31 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
-        <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="cs">Verze dekodéru </label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="189" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>
         <label xml:lang="it">ID 2 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 2:</label>
+        <label xml:lang="cs">Dekodér ID 2</label>
       </variable>
       <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
         <label xml:lang="it">ID 3 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 3:</label>
+        <label xml:lang="cs">Dekodér ID 3</label>
       </variable>
       <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
         <label xml:lang="it">ID 4 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 4:</label>
+        <label xml:lang="cs">Dekodér ID 4</label>
       </variable>
       <!-- Begin sound-only variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound_version30.xml"/>

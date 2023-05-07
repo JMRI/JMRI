@@ -33,6 +33,8 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
         storeCommonAttributes(p, element);
         storeTextInfo(p, element);
 
+        storeLogixNG_Data(p, element);
+
         element.setAttribute("class", "jmri.jmrit.display.configurexml.MemorySpinnerIconXml");
         return element;
     }
@@ -59,6 +61,9 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
         } catch (Positionable.DuplicateIdException e) {
             throw new JmriConfigureXmlException("Positionable id is not unique", e);
         }
+
+        loadLogixNG_Data(l, element);
+
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }

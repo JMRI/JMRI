@@ -12,6 +12,9 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.LogixNG_SelectTable;
+import jmri.util.CompareUtil;
+import jmri.util.CompareUtil.CompareType;
+import jmri.util.CompareUtil.CompareOperation;
 import jmri.util.TypeConversionUtil;
 
 /**
@@ -24,6 +27,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
 
     private String _localVariable;
     private VariableOperation _variableOperation = VariableOperation.Equal;
+    private CompareType _compareType = CompareType.NumberOrString;
     private CompareTo _compareTo = CompareTo.Value;
     private boolean _caseInsensitive = false;
     private String _constantValue = "";
@@ -53,6 +57,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         copy.setComment(getComment());
         copy.setLocalVariable(_localVariable);
         copy.setVariableOperation(_variableOperation);
+        copy.setCompareType(_compareType);
         copy.setCompareTo(_compareTo);
         copy.setCaseInsensitive(_caseInsensitive);
         copy.setConstantValue(_constantValue);
@@ -121,6 +126,14 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         return _variableOperation;
     }
 
+    public void setCompareType(CompareType compareType) {
+        _compareType = compareType;
+    }
+
+    public CompareType getCompareType() {
+        return _compareType;
+    }
+
     public void setCompareTo(CompareTo compareTo) {
         _compareTo = compareTo;
     }
@@ -148,109 +161,6 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             return o.toString();
         }
         return null;
-    }
-
-    /**
-     * Compare two values using the comparator set using the comparison
-     * instructions in {@link #_variableOperation}.
-     *
-     * <strong>Note:</strong> {@link #_variableOperation} must be one of
-     * {@link #ExpressionLocalVariable.MemoryOperation.LESS_THAN},
-     * {@link #ExpressionLocalVariable.MemoryOperation.LESS_THAN_OR_EQUAL},
-     * {@link #ExpressionLocalVariable.MemoryOperation.EQUAL},
-     * {@link #ExpressionLocalVariable.MemoryOperation.GREATER_THAN_OR_EQUAL},
-     * or {@link #ExpressionLocalVariable.MemoryOperation.GREATER_THAN}.
-     *
-     * @param value1          left side of the comparison
-     * @param value2          right side of the comparison
-     * @param caseInsensitive true if comparison should be case insensitive;
-     *                        false otherwise
-     * @return true if values compare per _memoryOperation; false otherwise
-     */
-    private boolean compare(String value1, String value2, boolean caseInsensitive) {
-        if (value1 == null) {
-            return value2 == null;
-        } else {
-            if (value2 == null) {
-                return false;
-            }
-            value1 = value1.trim();
-            value2 = value2.trim();
-        }
-        try {
-            int n1 = Integer.parseInt(value1);
-            try {
-                int n2 = Integer.parseInt(value2);
-                log.debug("Compare numbers: n1= {} to n2= {}", n1, n2);
-                switch (_variableOperation) // both are numbers
-                {
-                    case LessThan:
-                        return (n1 < n2);
-                    case LessThanOrEqual:
-                        return (n1 <= n2);
-                    case Equal:
-                        return (n1 == n2);
-                    case NotEqual:
-                        return (n1 != n2);
-                    case GreaterThanOrEqual:
-                        return (n1 >= n2);
-                    case GreaterThan:
-                        return (n1 > n2);
-                    default:
-                        throw new IllegalArgumentException("_memoryOperation has unknown value: "+_variableOperation.name());
-                }
-            } catch (NumberFormatException nfe) {
-                return _variableOperation == VariableOperation.NotEqual;   // n1 is a number, n2 is not
-            }
-        } catch (NumberFormatException nfe) {
-            try {
-                Integer.parseInt(value2);
-                return _variableOperation == VariableOperation.NotEqual;     // n1 is not a number, n2 is
-            } catch (NumberFormatException ex) { // OK neither a number
-            }
-        }
-        log.debug("Compare Strings: value1= {} to value2= {}", value1, value2);
-        int compare;
-        if (caseInsensitive) {
-            compare = value1.compareToIgnoreCase(value2);
-        } else {
-            compare = value1.compareTo(value2);
-        }
-        switch (_variableOperation) {
-            case LessThan:
-                if (compare < 0) {
-                    return true;
-                }
-                break;
-            case LessThanOrEqual:
-                if (compare <= 0) {
-                    return true;
-                }
-                break;
-            case Equal:
-                if (compare == 0) {
-                    return true;
-                }
-                break;
-            case NotEqual:
-                if (compare != 0) {
-                    return true;
-                }
-                break;
-            case GreaterThanOrEqual:
-                if (compare >= 0) {
-                    return true;
-                }
-                break;
-            case GreaterThan:
-                if (compare > 0) {
-                    return true;
-                }
-                break;
-            default:
-                throw new IllegalArgumentException("_memoryOperation has unknown value: "+_variableOperation.name());
-        }
-        return false;
     }
 
     private boolean matchRegex(String memoryValue, String regex) {
@@ -302,7 +212,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             case GreaterThanOrEqual:
                 // fall through
             case GreaterThan:
-                result = compare(variableValue, otherValue, _caseInsensitive);
+                result = CompareUtil.compare(_compareType, _variableOperation._oper, variableValue, otherValue, _caseInsensitive);
                 break;
 
             case IsNull:
@@ -457,24 +367,25 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     }
 
 
-
     public enum VariableOperation {
-        LessThan(Bundle.getMessage("LocalVariableOperation_LessThan"), true),
-        LessThanOrEqual(Bundle.getMessage("LocalVariableOperation_LessThanOrEqual"), true),
-        Equal(Bundle.getMessage("LocalVariableOperation_Equal"), true),
-        GreaterThanOrEqual(Bundle.getMessage("LocalVariableOperation_GreaterThanOrEqual"), true),
-        GreaterThan(Bundle.getMessage("LocalVariableOperation_GreaterThan"), true),
-        NotEqual(Bundle.getMessage("LocalVariableOperation_NotEqual"), true),
-        IsNull(Bundle.getMessage("LocalVariableOperation_IsNull"), false),
-        IsNotNull(Bundle.getMessage("LocalVariableOperation_IsNotNull"), false),
-        MatchRegex(Bundle.getMessage("LocalVariableOperation_MatchRegEx"), true),
-        NotMatchRegex(Bundle.getMessage("LocalVariableOperation_NotMatchRegEx"), true);
+        LessThan(CompareOperation.LessThan, null, true),
+        LessThanOrEqual(CompareOperation.LessThanOrEqual, null, true),
+        Equal(CompareOperation.Equal, null, true),
+        GreaterThanOrEqual(CompareOperation.GreaterThanOrEqual, null, true),
+        GreaterThan(CompareOperation.GreaterThan, null, true),
+        NotEqual(CompareOperation.NotEqual, null, true),
+        IsNull(null, Bundle.getMessage("LocalVariableOperation_IsNull"), false),
+        IsNotNull(null, Bundle.getMessage("LocalVariableOperation_IsNotNull"), false),
+        MatchRegex(null, Bundle.getMessage("LocalVariableOperation_MatchRegEx"), true),
+        NotMatchRegex(null, Bundle.getMessage("LocalVariableOperation_NotMatchRegEx"), true);
 
+        private final CompareOperation _oper;
         private final String _text;
         private final boolean _extraValue;
 
-        private VariableOperation(String text, boolean extraValue) {
-            this._text = text;
+        private VariableOperation(CompareOperation oper, String text, boolean extraValue) {
+            this._oper = oper;
+            this._text = oper != null ? oper.toString() : text;
             this._extraValue = extraValue;
         }
 

@@ -107,14 +107,10 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Test
-    public void testNullEvent() {
-        try {
-            CbusSensor fail = new CbusSensor("MS",null,tcis);
-            Assert.fail("Should have thrown an exception" + fail);
-        } catch (NullPointerException e) {
-        }
+    public void testNullEvent() throws Exception {
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> { t = new CbusSensor("M",null,tcis); });
+        Assertions.assertNotNull(ex);
     }
-
 
     @Test
     public void testCTorShortEventSingle() {
@@ -475,7 +471,8 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
         JUnitUtil.setUp();
         // load dummy TrafficController
         tcis = new TrafficControllerScaffold();
-        t = new CbusSensor("MS", "+1;-1", tcis);
+        t = new CbusSensor("M", "+1;-1", tcis);
+        Assertions.assertEquals("MS+1;-1", t.getSystemName());
     }
 
     @Override

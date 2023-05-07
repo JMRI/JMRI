@@ -83,6 +83,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     private boolean isEditMode = true;
     private boolean willSwitch = false;
+    private boolean isLoadingDefault = false;
 
     private static final String DEFAULT_THROTTLE_FILENAME = "JMRI_ThrottlePreference.xml";
 
@@ -102,13 +103,9 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         super();
         throttleWindow = tw;
         throttleManager = tm;
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         initGUI();
         applyPreferences();
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().addThrottleFrame(this);
+        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().addThrottleFrame(tw,this);
     }
 
     public ThrottleWindow getThrottleWindow() {
@@ -221,12 +218,17 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     }
 
     private void loadDefaultThrottle() {
+        if (isLoadingDefault) { // avoid looping on this method
+            return; 
+        }
+        isLoadingDefault = true;
         String dtf = InstanceManager.getDefault(ThrottlesPreferences.class).getDefaultThrottleFilePath();
         if (dtf == null || dtf.isEmpty()) {
             return;
         }
         log.debug("Loading default throttle file : {}", dtf);
         loadThrottle(dtf);
+        isLoadingDefault = false;
     }
 
     public void loadThrottle() {

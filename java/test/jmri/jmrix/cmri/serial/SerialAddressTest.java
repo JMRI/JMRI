@@ -35,6 +35,8 @@ public class SerialAddressTest {
 
         n10 = new SerialNode(10, SerialNode.SMINI, stcs);
         n18 = new SerialNode(18, SerialNode.SMINI, stcs);
+        Assertions.assertNotNull(n10);
+        Assertions.assertNotNull(n18);
 
         // create and register the manager objects
         jmri.TurnoutManager l = new SerialTurnoutManager(memo);

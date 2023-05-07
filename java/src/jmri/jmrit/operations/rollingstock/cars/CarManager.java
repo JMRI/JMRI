@@ -1,17 +1,13 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -236,43 +232,44 @@ public class CarManager extends RollingStockManager<Car>
 
     /**
      * Provides a very sorted list of cars assigned to the train. Note that this
-     * isn't the final sort as the cars must be sorted by each location the train
-     * visits.
+     * isn't the final sort as the cars must be sorted by each location the
+     * train visits.
      * <p>
      * The sort priority is as follows:
      * <ol>
-     * <li>Caboose or car with FRED to the end of the list
-     * <li>Passenger cars to the end of the list, but before cabooses or car with
-     * FRED. Passenger cars have blocking numbers which places them relative to each
-     * other.
-     * <li>Car's destination (alphabetical by location and track name or by track
-     * blocking order)
+     * <li>Caboose or car with FRED to the end of the list, unless passenger.
+     * <li>Passenger cars have blocking numbers which places them relative to
+     * each other. Passenger cars with positive blocking numbers to the end of
+     * the list, but before cabooses or car with FRED. Passenger cars with
+     * negative blocking numbers are placed at the front of the train.
+     * <li>Car's destination (alphabetical by location and track name or by
+     * track blocking order)
+     * <li>Car is hazardous (hazardous placed after a non-hazardous car)
      * <li>Car's current location (alphabetical by location and track name)
      * <li>Car's final destination (alphabetical by location and track name)
-     * <li>Car is hazardous (hazardous placed after a non-hazardous car)
      * </ol>
      * <p>
-     * Cars in a kernel are placed together by their kernel blocking numbers. The
-     * kernel's position in the list is based on the lead car in the kernel.
+     * Cars in a kernel are placed together by their kernel blocking numbers,
+     * except if they are type passenger. The kernel's position in the list is
+     * based on the lead car in the kernel.
      * <p>
-     * If the train is to be blocked by track blocking order, all of the tracks at
-     * that location need a blocking number greater than 0.
+     * If the train is to be blocked by track blocking order, all of the tracks
+     * at that location need a blocking number greater than 0.
      *
      * @param train The selected Train.
-     *
      * @return Ordered list of cars assigned to the train
      */
     public List<Car> getByTrainDestinationList(Train train) {
-        List<Car> byHazard = getByList(getList(train), BY_HAZARD);
-        List<Car> byFinal = getByList(byHazard, BY_FINAL_DEST);
+        List<Car> byFinal = getByList(getList(train), BY_FINAL_DEST);
         List<Car> byLocation = getByList(byFinal, BY_LOCATION);
-        List<Car> byDestination = getByList(byLocation, BY_DESTINATION);
+        List<Car> byHazard = getByList(byLocation, BY_HAZARD);
+        List<Car> byDestination = getByList(byHazard, BY_DESTINATION);
         // now place cabooses, cars with FRED, and passenger cars at the rear of the
         // train
         List<Car> out = new ArrayList<>();
         int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
         for (Car car : byDestination) {
-            if (car.getKernel() != null && !car.isLead()) {
+            if (car.getKernel() != null && !car.isLead() && !car.isPassenger()) {
                 continue; // not the lead car, skip for now.
             }
             if (!car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
@@ -305,31 +302,45 @@ public class CarManager extends RollingStockManager<Car>
                 if (!out.contains(car)) {
                     out.add(out.size() - lastCarsIndex, car);
                 }
+            } else if (car.isPassenger()) {
+                if (car.getBlocking() < 0) {
+                    // block passenger cars with negative blocking numbers at
+                    // front of train
+                    int index;
+                    for (index = 0; index < out.size(); index++) {
+                        Car carTest = out.get(index);
+                        if (!carTest.isPassenger() || carTest.getBlocking() > car.getBlocking()) {
+                            break;
+                        }
+                    }
+                    out.add(index, car);
+                } else {
+                    // block passenger cars at end of list, but before cabooses
+                    // or car with FRED
+                    int index;
+                    for (index = 0; index < lastCarsIndex; index++) {
+                        Car carTest = out.get(out.size() - 1 - index);
+                        log.debug("Car ({}) has blocking number: {}", carTest.toString(), carTest.getBlocking());
+                        if (carTest.isPassenger() &&
+                                !carTest.isCaboose() &&
+                                !carTest.hasFred() &&
+                                carTest.getBlocking() < car.getBlocking()) {
+                            break;
+                        }
+                    }
+                    out.add(out.size() - index, car);
+                    lastCarsIndex++;
+                }
             } else if (car.isCaboose() || car.hasFred()) {
                 out.add(car); // place at end of list
                 lastCarsIndex++;
-            } else if (car.isPassenger()) {
-                // block passenger cars at end of list, but before cabooses or car with FRED
-                int index;
-                for (index = 0; index < lastCarsIndex; index++) {
-                    Car carTest = out.get(out.size() - 1 - index);
-                    log.debug("Car ({}) has blocking number: {}", carTest.toString(), carTest.getBlocking());
-                    if (carTest.isPassenger() &&
-                            !carTest.isCaboose() &&
-                            !carTest.hasFred() &&
-                            carTest.getBlocking() < car.getBlocking()) {
-                        break;
-                    }
-                }
-                out.add(out.size() - index, car);
-                lastCarsIndex++;
             }
-            // group the cars in the kernel together
+            // group the cars in the kernel together, except passenger
             if (car.isLead()) {
                 int index = out.indexOf(car);
                 int numberOfCars = 1; // already added the lead car to the list
                 for (Car kcar : car.getKernel().getCars()) {
-                    if (car != kcar) {
+                    if (car != kcar && !kcar.isPassenger()) {
                         // Block cars in kernel
                         for (int j = 0; j < numberOfCars; j++) {
                             if (kcar.getBlocking() < out.get(index + j).getBlocking()) {
@@ -341,7 +352,7 @@ public class CarManager extends RollingStockManager<Car>
                             out.add(index + numberOfCars, kcar);
                         }
                         numberOfCars++;
-                        if (car.hasFred() || car.isCaboose() || car.isPassenger()) {
+                        if (car.hasFred() || car.isCaboose() || car.isPassenger() && car.getBlocking() > 0) {
                             lastCarsIndex++; // place entire kernel at the end of list
                         }
                     }
@@ -446,6 +457,20 @@ public class CarManager extends RollingStockManager<Car>
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMaximumFractionDigits(1);
         return nf.format(doubleCarWeight); // car weight in ounces.
+    }
+    
+    /**
+     * Used to determine if any car has been assigned a division
+     * 
+     * @return true if any car has been assigned a division, otherwise false
+     */
+    public boolean isThereDivisions() {
+        for (Car car : getList()) {
+            if (car.getDivision() != null) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void load(Element root) {

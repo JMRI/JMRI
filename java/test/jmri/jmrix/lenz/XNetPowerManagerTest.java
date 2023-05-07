@@ -104,7 +104,8 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     }
 
     @Test
-    public void testSetPowerON() {
+    @Override
+    public void testSetPowerOn() {
         try {
             pm.setPower(PowerManager.ON);
         } catch (JmriException je) {
@@ -121,7 +122,8 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     }
 
     @Test
-    public void testSetPowerOFF() {
+    @Override
+    public void testSetPowerOff() {
         try {
             pm.setPower(PowerManager.OFF);
         } catch (JmriException je) {

@@ -4,8 +4,8 @@
 
 		<dt><a href="/help/en/html/hardware/">Supported Hardware</a></dt>
 		<dd>Devices, command stations, networks, and protocols:
-		    <ul>
-                <li><a href="/help/en/html/hardware/anyma/index.shtml">Anyma DMX</a>
+		  <ul>
+        <li><a href="/help/en/html/hardware/anyma/index.shtml">Anyma DMX</a>
 				<li><a href="/help/en/html/hardware/arduino/index.shtml">Arduinos</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Atlas Commander</a>
 				<li><a href="/help/en/html/hardware/bachrus/index.shtml">Bachrus</a>
@@ -20,6 +20,7 @@
 				<li><a href="/help/en/html/hardware/XBee/index.shtml">Digi XBee</a>
 				<li><a href="/help/en/html/hardware/digirails/index.shtml">Digikeijs (Digirails)</a>
 				<li><a href="/help/en/html/hardware/loconet/Digitrax.shtml">Digitrax</a>
+                <li><a href="/help/en/html/hardware/powerline/Compatibility.shtml">DMX 512 (Powerline)</a>
 				<li><a href="/help/en/html/hardware/ecos/index.shtml">ESU ECoS</a>
 				<li><a href="/help/en/html/hardware/loconet/Fleischmann.shtml">Fleischmann</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Hornby</a>
@@ -59,6 +60,6 @@
                 <li><a href="/help/en/html/hardware/XPressNet/index.shtml">XPressNet</a>
 				<li><a href="/help/en/html/hardware/zimo/Zimo.shtml">Zimo MX-1</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">ZTC Controls</a>
-		    </ul>
+		  </ul>
 		</dd>
 <!-- /SidebarSupportedHardware.shtml -->

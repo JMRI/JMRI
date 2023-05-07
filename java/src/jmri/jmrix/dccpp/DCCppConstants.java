@@ -24,7 +24,7 @@ public final class DCCppConstants {
     }
 
     public static final int MAX_MESSAGE_SIZE = 30;
-    public static final int MAX_REPLY_SIZE = 256;
+    public static final int MAX_REPLY_SIZE = 2048; //max size of DCC++EX wifi send buffer
     public static final int MAX_MAIN_REGISTERS = 12;
     public static final int MAX_FUNCTION_NUMBER = 68; //
     public static final int REGISTER_UNALLOCATED = -1;

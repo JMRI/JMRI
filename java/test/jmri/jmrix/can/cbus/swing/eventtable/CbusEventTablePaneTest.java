@@ -1,28 +1,20 @@
 package jmri.jmrix.can.cbus.swing.eventtable;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.nio.file.Path;
+import java.io.File;
 import java.util.List;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import jmri.InstanceManager;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.can.cbus.CbusConfigurationManager;
-import jmri.jmrix.can.cbus.CbusLightManager;
-import jmri.jmrix.can.cbus.CbusPreferences;
-import jmri.jmrix.can.cbus.CbusSensorManager;
-import jmri.jmrix.can.cbus.CbusTurnoutManager;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.*;
@@ -34,15 +26,15 @@ import org.netbeans.jemmy.operators.*;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testInitComp() {
          
         ((CbusEventTablePane)panel).initComponents(memo);
         
-        assertThat(panel).isNotNull();
+        assertNotNull(panel);
         assertEquals("CAN " + Bundle.getMessage("EventTableTitle"),panel.getTitle());
         
         
@@ -54,31 +46,30 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
 
         // new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         
-        assertThat(getNewEventButtonEnabled(jfo)).isTrue();
+        assertTrue(getNewEventButtonEnabled(jfo));
         
         new JButtonOperator(jfo, Bundle.getMessage("NewEvent")).doClick();  // NOI18N
         
-        assertThat(getNewEventButtonEnabled(jfo)).isFalse();
+        assertFalse(getNewEventButtonEnabled(jfo));
         
         new JTextFieldOperator(jfo,1).typeText("1");
-        assertThat(getNewEventButtonEnabled(jfo)).isTrue();
+        assertTrue(getNewEventButtonEnabled(jfo));
 
         // new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         
-        assertThat(getClearFilterButtonEnabled(jfo)).isFalse();
+        assertFalse(getClearFilterButtonEnabled(jfo));
         new JTextFieldOperator(jfo,0).typeText("1");
         // new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-        assertThat(getClearFilterButtonEnabled(jfo)).isTrue();
+        assertTrue(getClearFilterButtonEnabled(jfo));
         
         new JButtonOperator(jfo, Bundle.getMessage("ClearFilter")).doClick();  // NOI18N
         // new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-        assertThat(getClearFilterButtonEnabled(jfo)).isFalse();
+        assertFalse(getClearFilterButtonEnabled(jfo));
         
         jfo.requestClose();
     }
     
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testMenuViewPanes(){
         
         ((CbusEventTablePane) panel).initComponents(memo);
@@ -103,7 +94,7 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         mainbar.pushMenu(Bundle.getMessage("Display")); // stops at top level
         jmo = new JMenuOperator(mainbar, Bundle.getMessage("Display"));
         new JMenuItemOperator(new JPopupMenuOperator(jmo.getPopupMenu()),Bundle.getMessage("NewTsl")).push();
-        assertThat(getEditBeanButtonEnabled(jfo)).isFalse();
+        assertFalse(getEditBeanButtonEnabled(jfo));
         mainbar.pushMenu(Bundle.getMessage("Display")); // stops at top level
         jmo = new JMenuOperator(mainbar, Bundle.getMessage("Display"));
         new JMenuItemOperator(new JPopupMenuOperator(jmo.getPopupMenu()),Bundle.getMessage("NewTsl")).push();
@@ -112,7 +103,7 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         mainbar.pushMenu(Bundle.getMessage("Display")); // stops at top level
         jmo = new JMenuOperator(mainbar, Bundle.getMessage("Display"));
         new JMenuItemOperator(new JPopupMenuOperator(jmo.getPopupMenu()),Bundle.getMessage("ButtonSendEvent")).push();
-        assertThat(getSendEventButtonEnabled(jfo)).isTrue();
+        assertTrue(getSendEventButtonEnabled(jfo));
 
         
         // new JButtonOperator(jfo, "Not a Button").doClick();  // NOI18N
@@ -122,7 +113,6 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     }
     
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCellValues(){
         
         ((CbusEventTablePane) panel).initComponents(memo);
@@ -147,16 +137,11 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     }
     
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCellTsLValues(){
         
-        CbusLightManager lm = new CbusLightManager(memo);
-        CbusSensorManager sm = new CbusSensorManager(memo);
-        CbusTurnoutManager tm = new CbusTurnoutManager(memo);
-        
-        InstanceManager.setDefault(jmri.TurnoutManager.class,tm);
-        InstanceManager.setDefault(jmri.SensorManager.class,sm);
-        InstanceManager.setDefault(jmri.LightManager.class,lm);
+        jmri.LightManager lm = memo.get(jmri.LightManager.class);
+        jmri.SensorManager sm = memo.get(jmri.SensorManager.class);
+        jmri.TurnoutManager tm = memo.get(jmri.TurnoutManager.class);
         
         ((CbusEventTablePane) panel).initComponents(memo);
         initFrame();
@@ -188,7 +173,7 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         tm.provide("MT+12;-N34E56").setUserName("MyTb");
         
         JTableOperator jTableOperator = new JTableOperator(jfo);
-        assertThat( jTableOperator.getRowCount()).isEqualTo(3);
+        assertEquals(3, jTableOperator.getRowCount());
         
         jTableOperator.waitCell("Turnout Thrown: MyT", 2, 2);
         jTableOperator.waitCell("Turnout Closed: MyT", 2, 3);
@@ -216,7 +201,6 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     }
     
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testPersistedViewPanes(){
         
         ((CbusEventTablePane) panel).initComponents(memo);
@@ -243,8 +227,8 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         ((CbusEventTablePane) panel).initComponents(memo);
         initFrame();
         
-        assertThat(getEditBeanButtonEnabled(jfo)).isFalse();
-        assertThat(getSendEventButtonEnabled(jfo)).isTrue();
+        assertFalse(getEditBeanButtonEnabled(jfo));
+        assertTrue(getSendEventButtonEnabled(jfo));
         
         panel.dispose();
         
@@ -291,54 +275,45 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     }
     
     @TempDir 
-    protected Path tempDir;
+    protected File tempDir;
 
-    private CanSystemConnectionMemo memo; 
-    private TrafficControllerScaffold tcis; 
-    private CbusConfigurationManager configM;
+    private CanSystemConnectionMemo memo = null; 
+    private TrafficControllerScaffold tcis = null; 
     
     @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
-        JUnitUtil.resetInstanceManager();
+        assertNotNull(tempDir);
+        try {
+            JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
+        } catch ( java.io.IOException e) {
+            fail("Exception creating temp. user folder");
+        }
+        JUnitUtil.initDefaultUserMessagePreferences();
         title = Bundle.getMessage("EventTableTitle");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        
-        assertThat(tempDir).isNotNull();
-        
         memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
         memo.configureManagers();
-        
-        try {
-            JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
-        } catch ( java.io.IOException e) {
-            fail("Exception creating temp. user folder");
-        }
-        
-        configM = new CbusConfigurationManager(memo);
-        
-        InstanceManager.setDefault(CbusPreferences.class,new CbusPreferences() );
-        
+
         panel = new CbusEventTablePane();
     }
-    
-    
+
     @AfterEach
     @Override
     public void tearDown() {
         // event model instance should have been created following init
-        CbusEventTableDataModel dm = InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
+        CbusEventTableDataModel dm = memo.get(CbusEventTableDataModel.class);
         if ( dm !=null ){
             dm.skipSaveOnDispose();
             dm.dispose();
         }
-        
-        configM.dispose();
+        Assertions.assertNotNull(tcis);
         tcis.terminateThreads();
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         tcis = null;

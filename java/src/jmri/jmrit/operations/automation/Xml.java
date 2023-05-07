@@ -24,6 +24,9 @@ public class Xml {
 
     static final String AUTOMATIONS = "automations"; // NOI18N
     
+    static final String AUTOMATION_OPTIONS = "automationOptions"; // NOI18N
+    static final String AUTOMATION_STARTUP_ID = "automationStartupId"; // NOI18N
+    
     // Automation.java
     static final String CURRENT_ITEM = "currentItem"; // NOI18N
     

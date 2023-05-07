@@ -140,20 +140,19 @@ public class DefaultVariableLightManagerTest {
 
 
 
-    private class MyLight extends jmri.implementation.AbstractLight {
+    private static class MyLight extends jmri.implementation.AbstractLight {
 
-        public MyLight(String systemName) {
+        private MyLight(String systemName) {
             super(systemName);
         }
 
     }
 
-
-    private class MyVariableLight extends AbstractVariableLight {
+    private static class MyVariableLight extends AbstractVariableLight {
 
         double _value = 0.0;
 
-        public MyVariableLight(String sys, String userName) {
+        private MyVariableLight(String sys, String userName) {
             super(sys, userName);
         }
 

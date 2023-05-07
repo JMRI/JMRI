@@ -9,8 +9,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the NceTrafficController class
@@ -49,9 +47,9 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         m.setElement(2, '2');
         c.sendNceMessage(m, new NceListenerScaffold());
         Assert.assertEquals("total length ", 4, tostream.available());
-        Assert.assertEquals("Char 0", '0', tostream.readByte());
-        Assert.assertEquals("Char 1", '1', tostream.readByte());
-        Assert.assertEquals("Char 2", '2', tostream.readByte());
+        Assert.assertEquals("Char 0", (byte)'0', tostream.readByte());
+        Assert.assertEquals("Char 1", (byte)'1', tostream.readByte());
+        Assert.assertEquals("Char 2", (byte)'2', tostream.readByte());
         Assert.assertEquals("EOM", 0x0d, tostream.readByte());
         Assert.assertEquals("remaining ", 0, tostream.available());
     }
@@ -115,7 +113,6 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         c.connectPort(p);
 
         // start monitor
-        rcvdMsg = null;
         NceListenerScaffold s = new NceListenerScaffold();
         c.addNceListener(s);
 
@@ -128,9 +125,9 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
 
         // check it arrived at monitor
         Assert.assertEquals("total length ", 4, tostream.available());
-        Assert.assertEquals("Char 0", '0', tostream.readByte());
-        Assert.assertEquals("Char 1", '1', tostream.readByte());
-        Assert.assertEquals("Char 2", '2', tostream.readByte());
+        Assert.assertEquals("Char 0", (byte)'0', tostream.readByte());
+        Assert.assertEquals("Char 1", (byte)'1', tostream.readByte());
+        Assert.assertEquals("Char 2", (byte)'2', tostream.readByte());
         Assert.assertEquals("EOM", 0x0d, tostream.readByte());
         Assert.assertEquals("remaining ", 0, tostream.available());
     }
@@ -158,7 +155,7 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         c.connectPort(p);
 
         // object to receive reply
-        NceListener l = new NceListenerScaffold();
+        NceListenerScaffold l = new NceListenerScaffold();
         c.addNceListener(l);
 
         // send a message
@@ -168,6 +165,8 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         m.setElement(2, '2');
         c.sendNceMessage(m, l);
         // that's already tested, so don't do here.
+
+        Assert.assertTrue( m == l.rcvdMsg);
 
         // now send reply
         tistream.write('R');
@@ -184,49 +183,23 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
 
         // drive the mechanism
         c.handleOneIncomingReply();
-        Assert.assertTrue("reply received ", waitForReply());
-        Assert.assertEquals("first char of reply ", 'R', rcvdReply.getOpCode());
+        JUnitUtil.waitFor( () -> { return l.rcvdReply != null; }, "Reply received");
+        Assert.assertEquals("first char of reply ", 'R', l.rcvdReply.getOpCode());
     }
-
-    private boolean waitForReply() {
-        // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (rcvdReply == null && i++ < 100) {
-            try {
-                Thread.sleep(10);
-            }
-            catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i={} reply={}", i, rcvdReply);
-        }
-        return i < 100;
-    }
-
-    // internal class to simulate a NceListener
-    class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
-
-        public NceListenerScaffold() {
-            rcvdReply = null;
-            rcvdMsg = null;
-        }
-
-        @Override
-        public void message(NceMessage m) {
-            rcvdMsg = m;
-        }
-
-        @Override
-        public void reply(NceReply r) {
-            rcvdReply = r;
-        }
-    }
-    NceReply rcvdReply;
-    NceMessage rcvdMsg;
 
     // internal class to simulate a NcePortController
-    class NcePortControllerScaffold extends NcePortController {
+    private class NcePortControllerScaffold extends NcePortController {
+
+        protected NcePortControllerScaffold() throws Exception {
+            super(null);
+            PipedInputStream tempPipe;
+            tempPipe = new PipedInputStream();
+            tostream = new DataInputStream(tempPipe);
+            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+            tempPipe = new PipedInputStream();
+            istream = new DataInputStream(tempPipe);
+            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+        }
 
         @Override
         public java.util.Vector<String> getPortNames() {
@@ -253,17 +226,6 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
             return new int[]{};
         }
 
-        protected NcePortControllerScaffold() throws Exception {
-            super(null);
-            PipedInputStream tempPipe;
-            tempPipe = new PipedInputStream();
-            tostream = new DataInputStream(tempPipe);
-            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
-            tempPipe = new PipedInputStream();
-            istream = new DataInputStream(tempPipe);
-            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
-        }
-
         // returns the InputStream from the port
         @Override
         public DataInputStream getInputStream() {
@@ -282,16 +244,17 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
             return true;
         }
     }
-    static DataOutputStream ostream;  // Traffic controller writes to this
-    static DataInputStream tostream; // so we can read it from this
 
-    static DataOutputStream tistream; // tests write to this
-    static DataInputStream istream;  // so the traffic controller can read from this
+    private DataOutputStream ostream;  // Traffic controller writes to this
+    private DataInputStream tostream; // so we can read it from this
+
+    private DataOutputStream tistream; // tests write to this
+    private DataInputStream istream;  // so the traffic controller can read from this
 
     @Override
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         tc = new NceTrafficController();
     }
 
@@ -303,6 +266,6 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceTrafficControllerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceTrafficControllerTest.class);
 
 }

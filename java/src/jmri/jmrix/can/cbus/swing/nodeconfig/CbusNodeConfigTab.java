@@ -120,7 +120,7 @@ abstract public class CbusNodeConfigTab extends jmri.jmrix.can.swing.CanPanel im
      */
     protected int getNodeRow(){
         return getMainPane().nodeTable.convertRowIndexToView(getMainPane().
-            nodeModel.getNodeRowFromNodeNum(nodeOfInterest.getNodeNumber()));
+            getNodeModel().getNodeRowFromNodeNum(nodeOfInterest.getNodeNumber()));
     }
     
     /**

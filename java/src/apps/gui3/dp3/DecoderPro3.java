@@ -90,7 +90,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
     }
 
     // Main entry point
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         preInit(args);
         DecoderPro3 app = new DecoderPro3(args);
         app.start();
@@ -116,20 +116,16 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
             }
         }
 
-        Runnable r = new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    InstanceManager.getDefault(DecoderIndexFile.class);
-                } catch (Exception ex) {
-                    log.error("Error in trying to initialize decoder index file {}", ex.toString());
-                }
+        // kick off update of decoder index if needed
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            try {
+                jmri.jmrit.decoderdefn.DecoderIndexFile.updateIndexIfNeeded();
+            } catch (org.jdom2.JDOMException| java.io.IOException e) {
+                log.error("Exception trying to pre-load decoderIndex", e);
             }
-        };
-        Thread thr = new Thread(r, "initialize decoder index");
-        thr.start();
+        });
     }
 
     private final static Logger log = LoggerFactory.getLogger(DecoderPro3.class);
+
 }

@@ -2,7 +2,6 @@ package jmri.jmrit.beantable;
 
 import jmri.util.gui.GuiLafPreferencesManager;
 
-import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
@@ -258,7 +257,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         jf.waitClosed();
 
         // Open Speed pane to test Speed menu, which displays a JOptionPane
-        
+
         // Use GUI menu to open Speeds pane:
         //This is a modal JOptionPane, so create a thread to dismiss it.
         Thread t = new Thread(() -> {
@@ -312,11 +311,11 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         JLabelOperator jlo = new JLabelOperator(jf, Bundle.getMessage("LabelSystemName"));
         ((JTextField) jlo.getLabelFor()).setText("1");
         Assertions.assertEquals(0, InstanceManager.getDefault(BlockManager.class).getObjectCount(),"no blocks in manager");
-        
+
         //and press create
         JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
-        JUnitUtil.waitFor(() -> { return InstanceManager.getDefault(BlockManager.class).getObjectCount()>0;  });
-        
+        JUnitUtil.waitFor(() -> InstanceManager.getDefault(BlockManager.class).getObjectCount()>0 ,"Block created");
+
         JemmyUtil.pressButton( jf, Bundle.getMessage("ButtonCancel"));
         jf.waitClosed();
 
@@ -324,14 +323,14 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         // find the "Edit" button and press it.  This is in the table body.
         int column = tbl.findColumn(Bundle.getMessage("ButtonEdit"));
         tbl.clickOnCell(0, column);
-        
+
         JFrameOperator f2 = new JFrameOperator(getEditFrameName());
         JemmyUtil.pressButton( f2, Bundle.getMessage("ButtonCancel"));
         f2.waitClosed();
 
         jf.requestClose();
         jf.waitClosed();
-        
+
         jfo.requestClose();
         jfo.waitClosed();
     }
@@ -365,7 +364,6 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
             a = null;
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

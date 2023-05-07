@@ -143,7 +143,9 @@ public class ActionMemory extends AbstractDigitalAction
     @Override
     public void execute() throws JmriException {
 
-        Memory memory = _selectNamedBean.evaluateNamedBean(getConditionalNG());
+        final ConditionalNG conditionalNG = getConditionalNG();
+
+        Memory memory = _selectNamedBean.evaluateNamedBean(conditionalNG);
 
         if (memory == null) {
 //            log.warn("memory is null");
@@ -151,8 +153,6 @@ public class ActionMemory extends AbstractDigitalAction
         }
 
         AtomicReference<JmriException> ref = new AtomicReference<>();
-
-        final ConditionalNG conditionalNG = getConditionalNG();
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
 
@@ -166,7 +166,7 @@ public class ActionMemory extends AbstractDigitalAction
                     break;
 
                 case CopyTableCellToMemory:
-                    Object value = _selectTable.evaluateTableData(getConditionalNG());
+                    Object value = _selectTable.evaluateTableData(conditionalNG);
                     memory.setValue(value);
                     break;
 
@@ -177,7 +177,7 @@ public class ActionMemory extends AbstractDigitalAction
                     break;
 
                 case CopyMemoryToMemory:
-                    Memory otherMemory = _selectOtherMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    Memory otherMemory = _selectOtherMemoryNamedBean.evaluateNamedBean(conditionalNG);
                     if (otherMemory != null) {
                         memory.setValue(otherMemory.getValue());
                     } else {

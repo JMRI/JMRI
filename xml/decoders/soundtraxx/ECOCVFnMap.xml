@@ -12,13 +12,33 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!--                                                                        -->
-<!-- version 1 - Created from ECOCV.XML version 2.4 (Alain Le Marchand)     -->
-<!--             Contains CVs for Extended Function Map                     -->
-<!--             Add labels to Extended Function Map CVs                    -->
-<!--             as they have been removed from pane definition             -->
-<!--                                                                        -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2016</year>
+      <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname>
+            <firstname>Alain</firstname>
+            <surname>Le Marchand</surname>
+        </personname>
+    </author>
+    <author>
+        <personname>
+            <firstname>James</firstname>
+            <surname>Exler</surname>
+        </personname>
+    </author>
+  </authorgroup>
+<revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2016-05-26</date>
+        <authorinitials>ALM</authorinitials>
+        <revremark>New file Created from ECOCV.XML version 2.4 Contains CVs for Extended Function Map.         Add labels to Extended Function Map CVs as they have been removed from pane definition</revremark>
+    </revision>
+</revhistory>        
     <!-- Extended function map - functions common to all ECO and TSU2 versions -->
     <variable CV="16.1.257" item="Extended Function Map Headlight" default="0">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>

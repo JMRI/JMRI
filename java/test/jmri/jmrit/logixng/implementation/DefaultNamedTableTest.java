@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  * Test DefaultLogixNG
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class DefaultNamedTableTest {
@@ -21,21 +21,22 @@ public class DefaultNamedTableTest {
     public void testCtor() {
         Assert.assertNotNull("exists", new DefaultInternalNamedTable("IQT10", "A table", 10, 15));
     }
-    
+
     @Test
     public void testCSVFile() throws IOException {
         NamedTable table = AbstractNamedTable.loadTableFromCSV_File(
                 "IQT1", null,
                 new File("java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv"),
-                true);
-        
+                true,
+                DefaultCsvNamedTable.CsvType.TABBED);
+
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File file = new File(FileUtil.getUserFilesPath() + "temp/" + "turnout_and_signals.csv");
 //        System.out.format("Temporary file: %s%n", file.getAbsoluteFile());
         table.storeTableAsCSV(file);
         Assert.assertNotNull("exists", table);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -51,7 +52,8 @@ public class DefaultNamedTableTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

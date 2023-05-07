@@ -3,6 +3,8 @@ package jmri.progdebugger;
 import jmri.ProgListener;
 import jmri.Programmer;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
@@ -70,8 +72,8 @@ public class DebugProgrammerTest {
     }
 
     // from here down is testing infrastructure
-    synchronized void waitReply() throws InterruptedException {
-        jmri.util.JUnitUtil.waitFor(() -> {
+    private void waitReply() {
+        JUnitUtil.waitFor(() -> {
             return replied;
         }, "reply received");
         replied = false;
@@ -79,12 +81,12 @@ public class DebugProgrammerTest {
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
     }
 
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DebugProgrammerTest.class);

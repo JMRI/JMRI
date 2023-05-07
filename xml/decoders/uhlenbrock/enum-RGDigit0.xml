@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
+<enumVal max="10" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <enumChoice choice="Red" value="0">
+    <choice>Red</choice>
+    <choice xml:lang="de">Rot</choice>
+    <choice xml:lang="nl">Rood</choice>
+  </enumChoice>
+  <enumChoice choice="Green" value="1">
+    <choice>Green</choice>
+    <choice xml:lang="de">Grün</choice>
+    <choice xml:lang="nl">Groen</choice>
+  </enumChoice>
+</enumVal>

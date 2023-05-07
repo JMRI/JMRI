@@ -134,12 +134,12 @@ public class EngineManagerTest extends OperationsTestCase {
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
         // setup the engines
-        e1.setOwner("LAST");
-        e2.setOwner("FOOL");
-        e3.setOwner("AAA");
-        e4.setOwner("DAD");
-        e5.setOwner("DAB");
-        e6.setOwner("BOB");
+        e1.setOwnerName("LAST");
+        e2.setOwnerName("FOOL");
+        e3.setOwnerName("AAA");
+        e4.setOwnerName("DAD");
+        e5.setOwnerName("DAB");
+        e6.setOwnerName("BOB");
 
         // now get engines by owner
         List<Engine> engineList = manager.getByOwnerList();

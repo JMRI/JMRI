@@ -126,7 +126,7 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         t1.setCommandedState(Turnout.CLOSED);
         assertThat(t1.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
         assertThat(t2.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
-        JUnitUtil.waitFor(() -> t1.getKnownState() == Turnout.CLOSED);
+        JUnitUtil.waitFor(() -> t1.getKnownState() == Turnout.CLOSED,"Turnout did not go closed");
         assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
         assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
 
@@ -153,7 +153,7 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         t1.setCommandedState(Turnout.THROWN);
         assertThat(t1.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
         assertThat(t2.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
-        JUnitUtil.waitFor(() -> t1.getKnownState() == Turnout.CLOSED);
+        JUnitUtil.waitFor(() -> t1.getKnownState() == Turnout.THROWN, "Turnout did not go thrown");
         assertThat(t1.getKnownState()).isEqualTo(Turnout.THROWN);
         assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
     }

@@ -5,27 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
  * @author Randall Wood (C) 2016
  */
 public class WebServerConfigurationTest {
-
-    public WebServerConfigurationTest() {
-    }
-
-    @BeforeAll
-    public static void setUpClass() {
-    }
-
-    @AfterAll
-    public static void tearDownClass() {
-    }
 
     @BeforeEach
     public void setUp() {
@@ -69,7 +56,7 @@ public class WebServerConfigurationTest {
         Assert.assertTrue("Empty List", instance.getForbiddenPaths().isEmpty());
     }
 
-    public class WebServerConfigurationImpl implements WebServerConfiguration {
+    private static class WebServerConfigurationImpl implements WebServerConfiguration {
 
         @Override
         public Map<String, String> getFilePaths() {

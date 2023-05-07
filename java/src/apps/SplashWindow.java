@@ -24,12 +24,12 @@ public class SplashWindow extends JFrame {
 
     public SplashWindow() {
         super("JMRI");
-        splashWindowDisplay(null);
+        SplashWindow.this.splashWindowDisplay(null);
     }
 
     public SplashWindow(JPanel splashMsg) {
         super("JMRI");
-        splashWindowDisplay(splashMsg);
+        SplashWindow.this.splashWindowDisplay(splashMsg);
     }
 
     public void splashWindowDisplay(JPanel splashMsg) {
@@ -74,6 +74,10 @@ public class SplashWindow extends JFrame {
         setLocation((screenDim.width - winDim.width) / 2,
                 (screenDim.height - winDim.height) / 2);
         setSize(winDim.width, winDim.height);
+
+        // set Icon for Win Taskbar / profile selection dialog
+        setIconImage(Toolkit.getDefaultToolkit().getImage(
+            FileUtil.findURL("resources/jmri48x48.gif", FileUtil.Location.INSTALLED)));
 
         // and show
         setVisible(true);

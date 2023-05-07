@@ -44,7 +44,7 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     void setReadOnlyValue(VariableValue var, String val) {
-        ((CompositeVariableValue) var).setValue(Integer.valueOf(val));
+        ((CompositeVariableValue) var).setValue(Integer.parseInt(val));
     }
 
     @Override
@@ -63,27 +63,27 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueCreate() {
-    }// mask is ignored 
+    }// mask is ignored
 
     @Override
     @Test
     public void testVariableValueCreateLargeValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     @Test
     public void testVariableValueCreateLargeMaskValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     @Test
     public void testVariableValueCreateLargeMaskValue256() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     @Test
     public void testVariableValueCreateLargeMaskValue2up16() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     @Test
@@ -229,7 +229,7 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("CV 18 value ", 123, cv18.getValue());
         Assert.assertEquals("CV 19 value ", 123, cv19.getValue());
         Assert.assertEquals("var value after read", 2, ((JComboBox<?>) testVar.getCommonRep()).getSelectedIndex());
-        Assert.assertEquals("Var state", AbstractValue.READ, testVar.getState());
+        Assert.assertEquals("Var state", AbstractValue.ValueState.READ, testVar.getState());
         log.debug("end testRead");
     }
 
@@ -269,7 +269,7 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("only one Busy -> false transition ", 1, nBusyFalse);
 
         Assert.assertEquals("value after write", 1, ((JComboBox<?>) testVar.getCommonRep()).getSelectedIndex());
-        Assert.assertEquals("Var state", AbstractValue.STORED, testVar.getState());
+        Assert.assertEquals("Var state", AbstractValue.ValueState.STORED, testVar.getState());
 
         Assert.assertEquals("CV 17 value ", 21, cv17.getValue());
         Assert.assertEquals("CV 18 value ", 22, cv18.getValue());

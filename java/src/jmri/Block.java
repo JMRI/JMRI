@@ -1049,7 +1049,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                                 pList[i].getBlock().getDisplayName(), Path.decodeDirection(pDir[i]),
                                 getDisplayName(), Path.decodeDirection(pFromDir[i]));
                         if ((pDir[i] & pFromDir[i]) > 0) { //use bitwise comparison to support combination directions such as "North, West"
-                            if (next != null && ! next.getBlock().getValue().equals(pList[i].getBlock().getValue())) {
+                            if (next != null && next.getBlock() != null && next.getBlock().getValue() != null &&
+                                    ! next.getBlock().getValue().equals(pList[i].getBlock().getValue())) {
                                 allNeighborsAgree = false;
                             }
                             count++;
@@ -1063,7 +1064,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 if (next == null) {
                     for (int i = 0; i < currPathCnt; i++) {
                         if (isSet[i] && isActive[i]) {
-                            if (next != null && ! next.getBlock().getValue().equals(pList[i].getBlock().getValue())) {
+                            if (next != null && next.getBlock() != null && next.getBlock().getValue() != null &&
+                                    ! next.getBlock().getValue().equals(pList[i].getBlock().getValue())) {
                                 allNeighborsAgree = false;
                             }
                             count++;

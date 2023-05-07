@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.can.CanMessage;
+import jmri.util.junit.annotations.ToDo;
 import jmri.util.JUnitUtil;
 import jmri.util.NamedBeanComparator;
 import jmri.util.PropertyChangeListenerScaffold;
@@ -21,9 +24,10 @@ import jmri.util.ThreadingUtil;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensor class.
- *
+ * These tests are run separately because they leave a lot of threads behind.
  * @author Bob Jacobsen Copyright 2008, 2010
  */
+@DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
 public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
@@ -44,14 +48,14 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(ti.tc.rcvMessage));
     }
 
-    @org.junit.jupiter.api.Disabled("Test requires further setup")
-    @jmri.util.junit.annotations.ToDo("Check checkActiveMsgSent() producing correct result")
+    @Disabled("Test requires further setup")
+    @ToDo("Check checkActiveMsgSent() producing correct result")
     @Test
     @Override
     public void testCommandSentActive() {}
 
-    @org.junit.jupiter.api.Disabled("Test requires further setup")
-    @jmri.util.junit.annotations.ToDo("Check checkInactiveMsgSent() producing correct result")
+    @Disabled("Test requires further setup")
+    @ToDo("Check checkInactiveMsgSent() producing correct result")
     @Test
     @Override
     public void testCommandSentInactive() {}
@@ -138,7 +142,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         ti.sendMessage(mActive);
         Assert.assertEquals(Sensor.ACTIVE,s.getKnownState());
 
-        JUnitUtil.waitFor( ()-> (s.getKnownState() != Sensor.ACTIVE));
+        JUnitUtil.waitFor( ()-> (s.getKnownState() != Sensor.ACTIVE),"wait sensor not active");
 
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
 
@@ -146,13 +150,13 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         s.setKnownState(Sensor.ACTIVE);
         Assert.assertEquals(Sensor.ACTIVE,s.getKnownState());
 
-        JUnitUtil.waitFor( ()-> (s.getKnownState() != Sensor.ACTIVE));
+        JUnitUtil.waitFor( ()-> (s.getKnownState() != Sensor.ACTIVE),"wait sensor not active local flip");
 
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
     }
 
     @Test
-    public void testLocalChange() throws jmri.JmriException {
+    public void testLocalChange() throws JmriException {
         ti.tc.rcvMessage = null;
         t.setKnownState(Sensor.ACTIVE);
         Assert.assertEquals(Sensor.ACTIVE, t.getKnownState());
@@ -175,7 +179,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Test
-    public void testAuthoritative() throws jmri.JmriException {
+    public void testAuthoritative() throws JmriException {
         t.setState(Sensor.ACTIVE);
         ti.flush();
 
@@ -236,7 +240,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
         // Resets the turnout to unknown state
         s.setState(Sensor.UNKNOWN);
-        JUnitUtil.waitFor( () -> l.getPropertyChanged());
+        JUnitUtil.waitFor( () -> l.getPropertyChanged(),"listener property changed");
         Assert.assertEquals("called once",1,l.getCallCount());
         l.resetPropertyChanged();
         ti.assertNoSentMessages();
@@ -246,7 +250,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
                 ":X19547C4CN0102030405060708;");
         // getting a state notify will change state
         ti.sendMessage(":X19544123N0102030405060709;");
-        JUnitUtil.waitFor( () -> l.getPropertyChanged());
+        JUnitUtil.waitFor( () -> l.getPropertyChanged(),"listener property changed");
         Assert.assertEquals("called once",1,l.getCallCount());
         l.resetPropertyChanged();
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
@@ -263,7 +267,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Test
-    public void testQueryState() throws Exception {
+    public void testQueryState() throws JmriException {
         OlcbSensor s = (OlcbSensor) t;
         ti.tc.rcvMessage = null;
         Assert.assertEquals(Sensor.UNKNOWN, s.getState());
@@ -292,7 +296,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Test
-    public void testQueryStateNotAlwaysListen() throws Exception {
+    public void testQueryStateNotAlwaysListen() throws JmriException {
         OlcbSensor s = (OlcbSensor) t;
         s.setListeningToStateMessages(false);
         ti.flush();
@@ -404,8 +408,6 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-       // this test is run separately because it leaves a lot of threads behind
         l = new PropertyChangeListenerScaffold();
         // load dummy TrafficController
         ti = new OlcbTestInterface();
@@ -417,14 +419,14 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @AfterEach
     @Override
     public void tearDown() {
-        if (Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning") == false) {
-            t.dispose();
-            t = null;
-            l.resetPropertyChanged();
-            l = null;
-            ti.dispose();
-            ti = null;
-        }
+
+        t.dispose();
+        t = null;
+        l.resetPropertyChanged();
+        l = null;
+        ti.dispose();
+        ti = null;
+
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 

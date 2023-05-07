@@ -72,7 +72,7 @@ public class MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
     
     @Test
-    public void testRtRstandard() {
+    public void testRtRstandardMessage() {
     
         CanMessage msg = new CanMessage(0x123);
         msg.setExtended(false);
@@ -84,7 +84,7 @@ public class MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
     
     @Test
-    public void testRtRextended() {
+    public void testRtRextendedMessage() {
     
         CanMessage msg = new CanMessage(0xF00D);
         msg.setExtended(true);

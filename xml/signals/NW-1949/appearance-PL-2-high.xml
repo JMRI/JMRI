@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook" >
+    <author>
+        <personname><firstname>David</firstname><surname>Baker</surname></personname>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-01</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2011-06-24</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Added mapping information</revremark>
+     </revision>
+     <revision>
+        <revnumber>2.0</revnumber>
+        <date>2015-04-26</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Fixing general items after I got a 1949 rule book</revremark>
+     </revision>
+  </revhistory>
+
+  <aspecttable>NW-1949</aspecttable>
+  <name>Double position light high absolute signal</name>
+  <reference>As described in the Norfolk and Western Railway Company March 1949, Rules and Regulations for the Government of the Operating Department: Diagrams of Signal Aspects </reference>
+  <description>Appearances for a two high position light signal</description>
+
+  <appearances>
+
+	<appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 101</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-281.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 102</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-282.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Page 103</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-282A.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 104</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-283.gif</imagelink>
+    </appearance>
+
+	<appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>dark</show>
+      <reference>Page 105</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-285.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>lunar</show>
+      <reference>Page 107</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-290.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Page 55</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-286.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop and Stay</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Page 55</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-292.gif</imagelink>
+    </appearance>
+  </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Stop and Stay</aspect>
+    </danger>
+    <held>
+      <aspect>Stop and Stay</aspect>
+    </held>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+    </aspectMapping>
+
+
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Stay</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+</appearancetable>

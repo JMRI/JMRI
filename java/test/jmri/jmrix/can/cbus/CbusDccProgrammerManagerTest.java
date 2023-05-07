@@ -1,7 +1,7 @@
 package jmri.jmrix.can.cbus;
 
 import java.io.IOException;
-import java.nio.file.Path;
+import java.io.File;
 
 import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame;
@@ -69,20 +69,17 @@ public class CbusDccProgrammerManagerTest {
     private CanSystemConnectionMemo memo;
     private CbusPreferences prefs;
 
-    @TempDir
-    protected Path tempDir;
-    
     @BeforeEach
-    public void setUp() throws IOException {
+    public void setUp( @TempDir File tempDir ) throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
-        
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
+
         tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
-        prefs = new CbusPreferences();
-        jmri.InstanceManager.store(prefs,CbusPreferences.class );
+        memo.setProtocol(ConfigurationManager.SPROGCBUS);
+        prefs = memo.get(CbusPreferences.class);
     }
 
     @AfterEach

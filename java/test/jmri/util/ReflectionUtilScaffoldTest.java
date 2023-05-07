@@ -1,6 +1,5 @@
 package jmri.util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -10,16 +9,32 @@ import org.junit.jupiter.api.*;
  */
 public class ReflectionUtilScaffoldTest {
 
-    public class MyClass {
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SIC_INNER_SHOULD_BE_STATIC",
+        justification = "testing non-static class ")
+    private class MyClass {
         private String myField = "Hello World";
     }
 
+    private static class MyStaticClass {
+        private String myField = "Hello World in Static Class";
+    }
+
     @Test
+    @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
     public void testReflection() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         MyClass mc = new MyClass();
-        Assert.assertEquals("Test", "Hello World", mc.myField);
-        jmri.util.ReflectionUtilScaffold.setField(mc, "myField", "A new value");
-        Assert.assertEquals("Test", "A new value", mc.myField);
+        Assertions.assertEquals( "Hello World", mc.myField, "Test");
+        ReflectionUtilScaffold.setField(mc, "myField", "A new value");
+        Assertions.assertEquals("A new value", mc.myField, "Test");
+    }
+
+    @Test
+    @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
+    public void testReflectionStatic() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        MyStaticClass mc = new MyStaticClass();
+        Assertions.assertEquals( "Hello World in Static Class", mc.myField, "Private field read");
+        ReflectionUtilScaffold.setField(mc, "myField", "A new static class value");
+        Assertions.assertEquals( "A new static class value", mc.myField,"Private field written to");
     }
 
     // The minimal setup for log4J

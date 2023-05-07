@@ -878,7 +878,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         if (getModifiedFlag()) {
             this.setVisible(true);
             int result = javax.swing.JOptionPane.showOptionDialog(this, Bundle.getMessage("WarnChangedMsg"),
-                    Bundle.getMessage("WarnChangedTitle"), javax.swing.JOptionPane.YES_NO_OPTION,
+                    Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.YES_NO_OPTION,
                     javax.swing.JOptionPane.WARNING_MESSAGE, null, // icon
                     new String[]{Bundle.getMessage("WarnYesSave"), Bundle.getMessage("WarnNoClose")}, Bundle
                     .getMessage("WarnYesSave"));

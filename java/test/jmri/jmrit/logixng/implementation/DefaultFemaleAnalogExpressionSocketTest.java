@@ -90,6 +90,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         List<Class<? extends Base>> classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionAnalogIO.class);
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionConstant.class);
+        classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionLocalVariable.class);
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionMemory.class);
         classes.add(jmri.jmrit.logixng.expressions.TimeSinceMidnight.class);
         map.put(Category.ITEM, classes);
@@ -144,6 +145,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
     public void tearDown() {
 //        JUnitAppender.clearBacklog();   // REMOVE THIS!!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

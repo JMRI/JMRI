@@ -3,8 +3,8 @@ package jmri.jmrix.loconet.alm.almi;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.AfterEach;
 class AlmirTest {
 
     @Test
-    void testAlmRouteCapabilitiesQuery() {
+    public void testAlmRouteCapabilitiesQuery() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x01, 0x00, 0, 0x00, 0, 0x00, 0, 0x00, 0, 0x00, 0, 0x00, 0, 15});
         Assert.assertEquals("Routes capabilities (command station, DS7x, etc.) query.\n", Almir.interpretAlmRoutes(l));
@@ -24,7 +24,7 @@ class AlmirTest {
     }
 
     @Test
-    void testAlmRouteDataQuery1() {
+    public void testAlmRouteDataQuery1() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x01, 0x02, 0x00, 0, 0x0, 0x00,0,0,0,0,0,0,0x7f,0});
         Assert.assertEquals("Query command station Route 1 entries 1-4 if 8 entries per route.  Or if 16 entries per route, query command station Route 1 entries 1-4.\n",
@@ -68,7 +68,7 @@ class AlmirTest {
     }
 
     @Test
-    void testAlmRouteDataReport1() {
+    public void testAlmRouteDataReport1() {
         LocoNetMessage l;
 //E6 10 01 02 ALM-style command station Route Data Report
 
@@ -88,8 +88,9 @@ class AlmirTest {
         Assert.assertEquals("Report command station Route 2 entries 1-4 if 8 entries per route.  Or if 16 entries per route, report command station Route 1 entries 9-12 with 13c, 128t, 129c, Unused.\n",
                 Almir.interpretAlmRoutes(l));
     }
+
     @Test
-    void testAlmRouteCSDataWrite1() {
+    public void testAlmRouteCSDataWrite1() {
         LocoNetMessage l;
 
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x01, 0x03, 0x7F, 0x01, 0x0F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x74});
@@ -97,8 +98,9 @@ class AlmirTest {
                 Almir.interpretAlmRoutes(l));
 
     }
+
     @Test
-    void testAlmRouteCSDataReport1() {
+    public void testAlmRouteCSDataReport1() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xE6 ,0x10 ,0x01 ,0x02 ,0x02 ,0x00 ,0x0F ,0x0C ,0x20 ,0x7F ,0x10 ,0x00 ,0x31 ,0x00 ,0x34 ,0x48});
         Assert.assertEquals("Report command station Route 2 entries 1-4 if 8 entries per route.  Or if 16 entries per route, report command station Route 1 entries 9-12 with 13c, 128t, 129c, 513c.\n",
@@ -123,7 +125,7 @@ class AlmirTest {
     }
 
     @Test
-    void testAlmRouteDeviceDeselect1() {
+    public void testAlmRouteDeviceDeselect1() {
         LocoNetMessage l;
          //EE 10 02 00 ALM-style DS7x-series device de-selection for routes accesses
 
@@ -135,7 +137,7 @@ class AlmirTest {
     }
 
     @Test
-    void testAlmRouteLengthTest1() {
+    public void testAlmRouteLengthTest1() {
         LocoNetMessage l;
 
          l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03,0});
@@ -151,7 +153,7 @@ class AlmirTest {
     }
 
     @Test
-    void testAlmRouteDevSel1() {
+    public void testAlmRouteDevSel1() {
         LocoNetMessage l;
         //EE 10 02 0e ALM-style DS7x-series device selection for routes accesses
 
@@ -163,7 +165,7 @@ class AlmirTest {
     }
 
     @Test
-    void testAlmRouteCSCapabilitiesReport1() {
+    public void testAlmRouteCSCapabilitiesReport1() {
         //E6 10 01 00 ALM-style command station Routes Capability Report
         LocoNetMessage l;
 
@@ -174,7 +176,7 @@ class AlmirTest {
     }
 
     @Test
-    void testAlmRouteDeviceCapabilitiesReport1() {
+    public void testAlmRouteDeviceCapabilitiesReport1() {
         //E6 10 02 00 ALM-style DS7x-series Route capabilities Report
         LocoNetMessage l;
 
@@ -191,7 +193,7 @@ class AlmirTest {
     }
 
     @Test
-    void testAlmRouteSomeUndefineds1() {
+    public void testAlmRouteSomeUndefineds1() {
         LocoNetMessage l;
 
          l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x01, 0x00, 0, 0x00, 0, 0x00, 0, 0x00, 0, 0x00, 0, 0x00, 0, 0});
@@ -212,7 +214,7 @@ class AlmirTest {
     }
 
     @Test
-    void testRoutesALMGeneral() {
+    public void testRoutesALMGeneral() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03});
         Assert.assertEquals(" ALM task 2 test 1",
@@ -306,7 +308,7 @@ class AlmirTest {
      }
 
     @Test
-    void testAlmRouteDevDataReport() {
+    public void testAlmRouteDevDataReport() {
         //E6 10 02 02 ALM-style DS7x-series Route Data Report
         LocoNetMessage l = new LocoNetMessage(new int[] {
         0xE6, 0x10, 0x02, 0x02, 0x00, 0x00, 0x00, 0x1F, 0x10, 0x44, 0x37, 0x39, 0x12, 0x75, 0x1B, 0x30});
@@ -381,7 +383,7 @@ class AlmirTest {
     }
 
     @Test
-    void testAlmRouteCsDataWr() {
+    public void testAlmRouteCsDataWr() {
         //EE 10 01 03 ALM-style Command station Route Data Write
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x01, 0x03, 0x7F, 0x01, 0x0F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x74});
@@ -395,7 +397,7 @@ class AlmirTest {
     }
 
     @Test
-    void testAlmRouteDevRouteDataWrite() {
+    public void testAlmRouteDevRouteDataWrite() {
         //EE 10 02 03 ALM-style DS7x-series Route Data Write
         LocoNetMessage l = new LocoNetMessage(new int[] {
             0xEE, 0x10, 0x02, 0x03, 0x02, 0x00, 0x00, 0x7F, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x30});
@@ -486,7 +488,7 @@ class AlmirTest {
     }
 
     @Test
-    void testAlmRouteDevRouteDataQuery() {
+    public void testAlmRouteDevRouteDataQuery() {
         //EE 10 02 02 ALM-style DS7x-series Route Data Query
         LocoNetMessage l = new LocoNetMessage(new int[] {
             0xEE, 0x10, 0x02, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x74, 0x00, 0x00, 0x00, 0x00, 0x30});
@@ -515,7 +517,7 @@ class AlmirTest {
     }
 
     @Test
-    void testAlmRouteDevChgAddr() {
+    public void testAlmRouteDevChgAddr() {
         //EE 10 02 0f ALM-style DS7x-series device change base address
         //Device {0}, s/n 0x{1}, using addresses {2} thru {3} has been selected for Routes configuration.\n
         LocoNetMessage l = new LocoNetMessage(new int[] {
@@ -572,7 +574,7 @@ class AlmirTest {
     }
     
     @Test
-    void testAlmRouteDevSelectReply() {
+    public void testAlmRouteDevSelectReply() {
         //E6 10 02 0E ALM-style Device selection Reply
         //Device {0}, s/n 0x{1}, using addresses {2} thru {3} has been selected for Routes configuration.\n
         LocoNetMessage l = new LocoNetMessage(new int[] {
@@ -677,8 +679,15 @@ class AlmirTest {
                 Almir.interpretAlmRoutes(l));
         
     }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

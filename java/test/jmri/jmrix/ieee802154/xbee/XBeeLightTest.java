@@ -1,5 +1,7 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -12,7 +14,7 @@ import org.junit.jupiter.api.*;
  */
 public class XBeeLightTest {
 
-    XBeeTrafficController tc;
+    XBeeTrafficController tc = null;
     XBeeConnectionMemo memo;
 
     @Test
@@ -35,7 +37,7 @@ public class XBeeLightTest {
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
@@ -45,9 +47,10 @@ public class XBeeLightTest {
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(tc);
         tc.terminate();
-        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
 
     }
 

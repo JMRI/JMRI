@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet.swing.lncvprog;
 
 import jmri.InstanceManager;
-import jmri.LocoAddress;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -9,7 +8,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrix.ProgrammingTool;
-import jmri.jmrix.loconet.LnProgrammerManager;
 import jmri.jmrix.loconet.LncvDevicesManager;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
@@ -211,6 +209,9 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                 }
             } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonProgram")) == 0) {
                 openProgrammer(r);
+            } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonNoMatchInRoster")) == 0){
+                // need to rebuild decoderIndex, tooltip?
+                warnRecreate();
             }
         } else {
             // no change, so do not fire a property change event
@@ -298,9 +299,10 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
             String s = null;
             while (s == null) {
                 s = JOptionPane.showInputDialog(parent,
-                        Bundle.getMessage("DialogEnterEntryName"), "");
+                        Bundle.getMessage("DialogEnterEntryName"),
+                        Bundle.getMessage("EnterEntryNameTitle"),JOptionPane.QUESTION_MESSAGE);
                 if (s == null) {
-                    // cancel button hit
+                    // Cancel button hit
                     return;
                 }
             }
@@ -312,6 +314,21 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
             re.setId(s);
             _roster.addEntry(re);
             dev.setRosterEntry(re);
+        }
+    }
+
+    private void warnRecreate() {
+        // show dialog to inform and allow rebuilding index
+        Object[] dialogBoxButtonOptions = {
+                Bundle.getMessage("ButtonRecreateIndex"),
+                Bundle.getMessage("ButtonCancel")};
+        int userReply = JOptionPane.showOptionDialog(parent,
+                Bundle.getMessage("DialogWarnRecreate"),
+                Bundle.getMessage("TitleOpenRosterEntry"),
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                null, dialogBoxButtonOptions, dialogBoxButtonOptions[0]);
+        if (userReply == 0) {
+            DecoderIndexFile.forceCreationOfNewIndex(false); // faster
         }
     }
 

@@ -17,12 +17,12 @@ import jmri.implementation.DefaultTransit;
 public class TransitTest {
 
    @Test
-   public void SysNameConstructorTest(){
+   public void testSysNameConstructor(){
       Assert.assertNotNull("Constructor", new DefaultTransit("TT1"));
    }
 
    @Test
-   public void TwoNameStringConstructorTest(){
+   public void testTwoNameStringConstructor(){
       Assert.assertNotNull("Constructor", new DefaultTransit("TT1", "user name"));
    }
 

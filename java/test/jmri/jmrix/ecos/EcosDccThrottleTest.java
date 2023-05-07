@@ -26,6 +26,7 @@ import org.picocontainer.behaviors.Stored;
 public class EcosDccThrottleTest extends AbstractThrottleTest {
         
     private EcosSystemConnectionMemo memo = null;
+    private static final int MAX_FUNCTIONS = 32;
 
     @Test
     public void testCTor() {
@@ -440,30 +441,10 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         Assert.assertFalse(instance.getFunction(31));
     }
     
-    @Test
-    @Override
-    public void testTotalFunctions() {
-        Assert.assertEquals("Total Functions", 32, instance.getFunctions().length);
-    }
-    
-    @Test
-    @Override
-    public void testTotalFunctionsMomentary() {
-        Assert.assertEquals("Total Momentary Functions", 32, instance.getFunctionsMomentary().length);
-    }
-
-    @Test
-    @Override
-    public void testOutOfRangeUpdateFunction(){
-        
-        instance.updateFunction(-1, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
-        
-        instance.updateFunction(32, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 32");
-        
-    }
-    
+    /*
+     * Ecos setFunction() calls updateFunction() so we need to keep this override to
+     * assert the unhandled update rather than unhandled set message
+    */
     @Test
     @Override
     public void testOutOfRangeSetFunction(){
@@ -474,52 +455,6 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance.setFunction(32, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 32");
         
-    }
-    
-    @Test
-    @Override
-    public void testOutOfRangeGetFunction(){
-        
-        instance.getFunction(-1);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: -1");
-        
-        instance.getFunction(32);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: 32");
-        
-    }
-    
-    @Test
-    @Override
-    public void testOutOfRangeUpdateFunctionMomentary(){
-        
-        instance.updateFunctionMomentary(-1, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: -1");
-        
-        instance.updateFunctionMomentary(32, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: 32");
-        
-    }
-    
-    @Test
-    @Override
-    public void testOutOfRangeSetFunctionMomentary(){
-        
-        instance.setFunctionMomentary(-1, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: -1");
-        
-        instance.setFunctionMomentary(32, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: 32");
-        
-    }
-    
-    @Test
-    @Override
-    public void testOutOfRangeGetFunctionMomentary(){
-        instance.getFunctionMomentary(-1);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: -1");
-        
-        instance.getFunctionMomentary(32);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: 32");
     }
     
     
@@ -650,6 +585,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         }
         InstanceManager.setDefault(ThrottleManager.class, new EcosDccThrottleManager(new EcosSystemConnectionMemo(tc)));
         instance = new EcosDccThrottle(new DccLocoAddress(100, true), memo, true);
+        setMaxFns(MAX_FUNCTIONS);
     }
 
     @AfterEach

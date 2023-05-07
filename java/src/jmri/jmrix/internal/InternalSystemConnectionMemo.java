@@ -239,7 +239,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(Class<?> type) {
+    public <T> T get(Class<T> type) {
         if (getDisabled()) {
             return null;
         }

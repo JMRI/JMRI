@@ -9,12 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.jmrit.operations.locations.*;
+import jmri.util.*;
 
 /**
  *
@@ -30,7 +26,10 @@ public class TrackDestinationEditActionTest extends OperationsTestCase {
         Location location = lManager.getLocationById("20");
         Track track = location.getTrackById("20s1");
         
-        TrackDestinationEditAction a = new TrackDestinationEditAction(track);
+        YardEditFrame yef = new YardEditFrame();
+        yef.initComponents(track);
+        
+        TrackDestinationEditAction a = new TrackDestinationEditAction(yef);
         Assert.assertNotNull("exists", a);
         
         a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));

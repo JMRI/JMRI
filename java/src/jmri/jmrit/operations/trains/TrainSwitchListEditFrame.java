@@ -365,29 +365,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
         int y = 1; // vertical position in panel
 
-        Location mainLocation = null; // user can have multiple locations with the "same" name.
-
-        for (Location location : locations) {
+        // note that getUniqueLocationsByNameList() method updates the status of
+        // locations with "similar" names.
+        for (Location location : locationManager.getUniqueLocationsByNameList()) {
             String name = TrainCommon.splitString(location.getName());
-            if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
-                location.setSwitchListEnabled(mainLocation.isSwitchListEnabled());
-                if (mainLocation.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
-                    mainLocation.setStatus(Location.MODIFIED); // we need to update the primary location
-                    location.setStatus(Location.UPDATED); // and clear the secondaries
-                }
-                continue;
-            }
-            mainLocation = location;
-        }
-
-        mainLocation = null;
-
-        for (Location location : locations) {
-            String name = TrainCommon.splitString(location.getName());
-            if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
-                continue;
-            }
-            mainLocation = location;
             JCheckBox checkBox = new JCheckBox();
             locationCheckBoxes.add(checkBox);
             checkBox.setSelected(location.isSwitchListEnabled());
@@ -490,7 +471,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     private File selectFile() {
         if (fc == null) {
-            fc = new JFileChooser(
+            fc = new jmri.util.swing.JmriJFileChooser(
                     InstanceManager.getDefault(TrainManagerXml.class).getDefaultCsvSwitchListDirectoryName());
             fc.setFileFilter(new FileNameExtensionFilter("Comma Separated Values", "csv")); // NOI18N
             fc.setDialogTitle(Bundle.getMessage("TitleSwitchLists"));

@@ -47,6 +47,8 @@ public class XNetSimulatorPortControllerTest extends jmri.jmrix.AbstractSerialPo
             public void setOutputBufferEmpty(boolean s){
             }
             
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+                justification = "always ok to send in test class")
             @Override
             public boolean okToSend(){
                   return true;

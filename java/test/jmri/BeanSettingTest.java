@@ -14,14 +14,10 @@ public class BeanSettingTest {
 
     @Test
     public void testCtorNullBean() {
-        // JUnit 5 assertThrows would be good here
-        boolean thrown = false;
-        try {
-            new BeanSetting(null, 0);
-        } catch (NullPointerException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
+            Assertions.assertNotNull(new BeanSetting(null, 0));
+        });
+        Assertions.assertNotNull(ex, "Expected exception thrown");
     }
 
     @Test

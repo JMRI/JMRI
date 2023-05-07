@@ -21,9 +21,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.*;
 import jmri.jmrit.operations.trains.excel.SetupExcelProgramFrameAction;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
-import jmri.jmrit.operations.trains.schedules.TrainSchedule;
-import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import jmri.jmrit.operations.trains.schedules.TrainsScheduleAction;
+import jmri.jmrit.operations.trains.schedules.*;
 import jmri.jmrit.operations.trains.tools.*;
 import jmri.swing.JTablePersistenceManager;
 
@@ -66,7 +64,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     JRadioButton conductorRB = new JRadioButton(CONDUCTOR);
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    JButton addButton = new JButton(Bundle.getMessage("AddTrain"));
     JButton buildButton = new JButton(Bundle.getMessage("Build"));
     JButton printButton = new JButton(Bundle.getMessage("Print"));
     JButton openFileButton = new JButton(Bundle.getMessage("OpenFile"));
@@ -133,7 +131,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         cp1.add(action);
 
         // tool tips, see setPrintButtonText() for more tool tips
-        addButton.setToolTipText(Bundle.getMessage("AddTrain"));
+        addButton.setToolTipText(Bundle.getMessage("AddTrainTip"));
         buildButton.setToolTipText(Bundle.getMessage("BuildSelectedTip"));
         switchListsButton.setToolTipText(Bundle.getMessage("PreviewPrintSwitchListsTip"));
 
@@ -249,7 +247,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new PrintOptionAction());
         toolMenu.add(new BuildReportOptionAction());
         toolMenu.add(new TrainsByCarTypeAction());
-        toolMenu.add(new TrainByCarTypeAction(null));
         toolMenu.add(new ChangeDepartureTimesAction());
         toolMenu.add(new TrainsTableSetColorAction());
         toolMenu.add(new TrainsScheduleAction());
@@ -262,6 +259,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new ExportTrainRosterAction());
         toolMenu.add(new ExportTimetableAction());
         toolMenu.add(new ExportTrainLineupsAction());
+        toolMenu.addSeparator();
+        toolMenu.add(new TrainByCarTypeAction(null));
         toolMenu.addSeparator();
         toolMenu.add(new PrintTrainsAction(false, this));
         toolMenu.add(new PrintTrainsAction(true, this));

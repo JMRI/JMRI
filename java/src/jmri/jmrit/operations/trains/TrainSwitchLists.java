@@ -34,7 +34,6 @@ public class TrainSwitchLists extends TrainCommon {
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
     private static final char FORM_FEED = '\f';
     private static final boolean IS_PRINT_HEADER = true;
-    private static final String HYPHEN = TrainCommon.HYPHEN;
 
     String messageFormatText = ""; // the text being formated in case there's an exception
 
@@ -130,8 +129,8 @@ public class TrainSwitchLists extends TrainCommon {
                 }
                 checkFormFeed = false; // done with FF for this train
                 // some cars booleans and the number of times this location get's serviced
-                pickupCars = false; // when true there was a car pick up
-                dropCars = false; // when true there was a car set out
+                _pickupCars = false; // when true there was a car pick up
+                _dropCars = false; // when true there was a car set out
                 int stops = 1;
                 boolean trainDone = false;
                 // get engine and car lists
@@ -306,19 +305,19 @@ public class TrainSwitchLists extends TrainCommon {
                         }
                     }
                 }
-                if (trainDone && !pickupCars && !dropCars) {
+                if (trainDone && !_pickupCars && !_dropCars) {
                     // Default message: Train ({0}) has serviced this location
                     newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringTrainDone(),
                             new Object[] { train.getName(), train.getDescription(), splitString(location.getName()) }));
                 } else {
-                    if (stops > 1 && !pickupCars) {
+                    if (stops > 1 && !_pickupCars) {
                         // Default message: No car pick ups for train ({0}) at this location
                         newLine(fileOut,
                                 MessageFormat.format(messageFormatText = TrainSwitchListText.getStringNoCarPickUps(),
                                         new Object[] { train.getName(), train.getDescription(),
                                                 splitString(location.getName()) }));
                     }
-                    if (stops > 1 && !dropCars) {
+                    if (stops > 1 && !_dropCars) {
                         // Default message: No car set outs for train ({0}) at this location
                         newLine(fileOut,
                                 MessageFormat.format(messageFormatText = TrainSwitchListText.getStringNoCarDrops(),
@@ -405,7 +404,7 @@ public class TrainSwitchLists extends TrainCommon {
                                                         padAndTruncateIfNeeded(
                                                                 TrainCommon.splitString(car.getNumber()),
                                                                 Control.max_len_string_print_road_number),
-                                                        padAndTruncateIfNeeded(car.getTypeName().split(HYPHEN)[0],
+                                                        padAndTruncateIfNeeded(car.getTypeName().split(TrainCommon.HYPHEN)[0],
                                                                 InstanceManager.getDefault(CarTypes.class)
                                                                         .getMaxNameLength()),
                                                         padAndTruncateIfNeeded(

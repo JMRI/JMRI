@@ -14,14 +14,11 @@ import org.junit.Assert;
 public class NamedBeanHandleManagerTest {
 
     @Test
-    public void testCreate() {
-    }
-
-    @Test
     public void testNameBeanManager() throws JmriException {
-        SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
-        TurnoutManager tm = jmri.InstanceManager.turnoutManagerInstance();
-        MemoryManager mm = jmri.InstanceManager.memoryManagerInstance();
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+        TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
+        MemoryManager mm = InstanceManager.getDefault(MemoryManager.class);
+        Assertions.assertNotNull(nbhm);
 
         String name = "MyUserName";
         Sensor s1 = sm.provideSensor("IS1");
@@ -86,14 +83,14 @@ public class NamedBeanHandleManagerTest {
         jmri.util.JUnitAppender.assertWarnMessage("updateBeanFromUserToSystem requires non-blank user name: \"ISno_user_name\" not renamed");
     }
 
-    jmri.NamedBeanHandleManager nbhm;
+    private NamedBeanHandleManager nbhm = null;
 
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
-        nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+        InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
+        nbhm = InstanceManager.getDefault(NamedBeanHandleManager.class);
     }
 
     @AfterEach

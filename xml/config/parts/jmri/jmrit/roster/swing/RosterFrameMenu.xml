@@ -318,7 +318,7 @@
         <name xml:lang="fr">Cacher/Afficher Onglet Aperçu</name>
         <name xml:lang="it">Nascondi/Vedi Pannello</name>
         <name xml:lang="de">Zeige/Verbirge Übersicht</name>
-		<name xml:lang="ca">Oculta/Mostra Panell de Sumari</name>
+		    <name xml:lang="ca">Oculta/Mostra Panell de Sumari</name>
         <name xml:lang="cs">Skrýt/zobrazit stránku souhrnu</name>
         <name xml:lang="nl">Toon/Verberg Samenvattingsscherm</name>
         <current>summarypane</current>
@@ -328,7 +328,7 @@
         <name xml:lang="fr">Réinitialiser Dimensions Fenêtre</name>
         <name xml:lang="it">Reset Dimensioni Finestra</name>
         <name xml:lang="de">Setze Fensterabmessungen zurück</name>
-		<name xml:lang="ca">Reinicia les mides de les finestres</name>
+		    <name xml:lang="ca">Reinicia les mides de les finestres</name>
         <name xml:lang="cs">Reset rozměry okna</name>
         <name xml:lang="nl">Stel vensterafmetingen opnieuw in</name>
     </node>
@@ -337,7 +337,7 @@
         <name xml:lang="it">Reset Larghezza Colonna</name>
         <name xml:lang="da">Nulstil Kolonne Brede</name>
         <name xml:lang="de">Setze Spaltenbreite zurück</name>
-		<name xml:lang="ca">Reinicia l'amplada de les columnes</name>
+		    <name xml:lang="ca">Reinicia l'amplada de les columnes</name>
         <name xml:lang="cs">Resetovat šířku sloupců</name>
         <name xml:lang="nl">Stel kolombreedtes opnieuw in</name>
         <mnemonic>w</mnemonic>
@@ -348,7 +348,7 @@
         <name xml:lang="it">Nascondi/Vedi Immagine Roster</name>
         <name xml:lang="da">Gem/Vis Roster Billede</name>
         <name xml:lang="de">Zeige/Verbirge Lokparkbild</name>
-		<name xml:lang="ca">Oculta/Mostra Imatge de la flota</name>
+		    <name xml:lang="ca">Oculta/Mostra Imatge de la flota</name>
         <name xml:lang="cs">Skrýt/zobrazit obrázek evidence</name>
         <name xml:lang="nl">Toon/Verberg Locafbeelding</name>
         <mnemonic>i</mnemonic>
@@ -359,39 +359,39 @@
         <name xml:lang="it">Nascondi/Vedi Gruppi Roster</name>
         <name xml:lang="da">Gem/Vis Roster Grupper</name>
         <name xml:lang="de">Zeige/Verbirge Lokparkgruppen</name>
-		<name xml:lang="ca">Oculta/Mostra Grups de la flota</name>
+		    <name xml:lang="ca">Oculta/Mostra Grups de la flota</name>
         <name xml:lang="cs">Skrýt/zobrazit skupinu evidence</name>
         <name xml:lang="nl">Toon/Verberg Locgroepen</name>
         <current>groupspane</current>
         <type>checkbox</type>
     </node>
     <node>separator</node><!-- separator -->
-    <node name="Programming">
-        <name xml:lang="fr">Programmation</name>
-        <name xml:lang="it">Programmazione</name>
-        <name xml:lang="da">Programmering</name>
-        <name xml:lang="de">Programmieren</name>
-		<name xml:lang="ca">Programació</name>
-        <name xml:lang="cs">Programování</name>
-        <name xml:lang="nl">Programmeren</name>
+    <node name="Programming Type"><!-- use same term as the roster entry context menu -->
+        <name xml:lang="fr">Type de Programmation</name>
+        <name xml:lang="it">Tipe de Programmazione</name>
+        <name xml:lang="da">Programmerings Type</name>
+        <name xml:lang="de">Programmiertyp</name>
+		    <name xml:lang="ca">Tipus de Progrmador</name>
+        <name xml:lang="cs">Typ programátoru</name>
+        <name xml:lang="nl">Programmeertype</name>
         <mnemonic>p</mnemonic>
         <group>yes</group>
         <node name="Programming Track">
-             <name xml:lang="fr">Voie de Programmation</name>
+            <name xml:lang="fr">Sur Voie de Programmation</name>
             <name xml:lang="it">Binario Programmazione</name>
             <name xml:lang="da">Programmerings Spor</name>
             <name xml:lang="de">Programmiergleis</name>
-			<name xml:lang="ca">Via de programació</name>
+			      <name xml:lang="ca">Via de programació</name>
             <name xml:lang="cs">Programovací kolej</name>
             <name xml:lang="nl">Op Programmeerspoor</name>
             <current>setprogservice</current>
         </node>
         <node name="Programming On Main">
-        <name xml:lang="fr">Programmation sur Voie Principale</name>
+            <name xml:lang="fr">Sur Voie Principale</name>
             <name xml:lang="it">Programmazione in Linea</name>
             <name xml:lang="da">Programmering på Anlægget</name>
             <name xml:lang="de">Betriebsgleis</name>
-			<name xml:lang="ca">Programació en la via Prinicpal</name>
+			      <name xml:lang="ca">Programació en la via Prinicpal</name>
             <name xml:lang="cs">Programování na hlavní koleji</name>
             <name xml:lang="nl">Programmeren op de Baan (POM)</name>
             <current>setprogops</current>
@@ -401,7 +401,7 @@
             <name xml:lang="it">Solo Modifica</name>
             <name xml:lang="da">Kun Redigering</name>
             <name xml:lang="de">Nur bearbeiten</name>
-			<name xml:lang="ca">Només edita</name>
+			      <name xml:lang="ca">Només edita</name>
             <name xml:lang="cs">Pouze úpravy</name>
             <name xml:lang="nl">Alleen bewerken</name>
             <current>setprogedit</current>
@@ -413,7 +413,7 @@
         <name xml:lang="it">Crea Gruppo Roster</name>
         <name xml:lang="da">Opret Roster Gruppe</name>
         <name xml:lang="de">Neue Lokparkgruppe</name>
-		<name xml:lang="ca">Crear un grup a la flota</name>
+        <name xml:lang="ca">Crear un grup a la flota</name>
         <name xml:lang="cs">Vytvořit skupinu evidence</name>
         <name xml:lang="nl">Voeg nieuwe Locgroep toe</name>
         <mnemonic>c</mnemonic>
@@ -424,7 +424,7 @@
         <name xml:lang="it">Rinomina Gruppo Roster</name>
         <name xml:lang="da">Omdøb Roster Gruppe</name>
         <name xml:lang="de">Lokparkgruppe umbenennen</name>
-		<name xml:lang="ca">Canviar el nom d'un grup de la flota</name>
+		    <name xml:lang="ca">Canviar el nom d'un grup de la flota</name>
         <name xml:lang="cs">Přejmenovat skupinu evidence</name>
         <name xml:lang="nl">Hernoem Locgroep</name>
         <mnemonic>r</mnemonic>
@@ -435,17 +435,17 @@
         <name xml:lang="it">Duplica Gruppo Roster</name>
         <name xml:lang="da">Dupliker Roster Gruppe</name>
         <name xml:lang="de">Dupliziere Lokparkgruppe</name>
-		<name xml:lang="ca">Duplica grup de la flota</name>
+		    <name xml:lang="ca">Duplica grup de la flota</name>
         <name xml:lang="cs">Duplikovat skupinu evidence</name>
         <name xml:lang="nl">Dupliceer Locgroep</name>
         <adapter>jmri.jmrit.roster.swing.CopyRosterGroupAction</adapter>
-        </node>
+    </node>
     <node name="Delete Roster Group">
         <name xml:lang="fr">Supprimer Groupe d'Inventaire</name>
         <name xml:lang="it">Cancella Gruppo Roster</name>
         <name xml:lang="da">Slet Roster Gruppe</name>
         <name xml:lang="de">Lösche Lokparkgruppe</name>
-		<name xml:lang="ca">Elimina grup de la flota</name>
+		    <name xml:lang="ca">Elimina grup de la flota</name>
         <name xml:lang="cs">Vymazat skupinu evidence</name>
         <name xml:lang="nl">Wis Locgroep</name>
         <mnemonic>d</mnemonic>
@@ -457,7 +457,7 @@
         <name xml:lang="fr">Table d'Association de Groupe d'Inventaire</name>
         <name xml:lang="it">Tabella Associazioni Gruppo Roster</name>
         <name xml:lang="de">Lokparkgruppenübersicht</name>
-		<name xml:lang="ca">Taula d'associació de Grups de Flota</name>
+		    <name xml:lang="ca">Taula d'associació de Grups de Flota</name>
         <name xml:lang="cs">Tabulka spojení skupiny evidence</name>
         <name xml:lang="nl">Locgroeplijst-koppelingen</name>
         <mnemonic>t</mnemonic>
@@ -471,28 +471,28 @@
     <name xml:lang="it">Azioni</name>
     <name xml:lang="da">Værktøjer</name>
     <name xml:lang="de">Handlungen</name>
-	<name xml:lang="ca">Accions</name>
+	  <name xml:lang="ca">Accions</name>
     <name xml:lang="cs">Akce</name>
     <name xml:lang="nl">Acties</name>
     <mnemonic>a</mnemonic>
-    <node name="Program">
-        <name xml:lang="fr">Programmer</name>
-        <name xml:lang="it">Programma</name>
-        <name xml:lang="da">Programmering</name>
-        <name xml:lang="de">Programmieren</name>
-		<name xml:lang="ca">Programa</name>
-        <name xml:lang="cs">Programovat</name>
-        <name xml:lang="nl">Programmeren</name>
+    <node name="Program...">
+        <name xml:lang="fr">Programmer...</name>
+        <name xml:lang="it">Programma...</name>
+        <name xml:lang="da">Programmering...</name>
+        <name xml:lang="de">Programmieren...</name>
+		    <name xml:lang="ca">Programa..</name>
+        <name xml:lang="cs">Programovat...</name>
+        <name xml:lang="nl">Programmeer...</name>
         <current>comprehensiveprogrammer</current>
     </node>
-    <node name="Labels and Media">
-        <name xml:lang="fr">Étiquettes et Médias</name>
-        <name xml:lang="it">Testi ed Immagini</name>
-        <name xml:lang="da">Etiketter og Media</name>
-        <name xml:lang="de">Aufschrifte &#038; Medien</name>
-		<name xml:lang="ca">Etiquetes i imatges</name>
-        <name xml:lang="cs">Štítky a média</name>
-        <name xml:lang="nl">Labels en beelden</name>
+    <node name="Labels &amp; Media...">
+        <name xml:lang="fr">Étiquettes &amp; Médias...</name>
+        <name xml:lang="it">Testi &amp; Immagini...</name>
+        <name xml:lang="da">Etiketter &amp; Media...</name>
+        <name xml:lang="de">Aufschrifte &amp; Medien...</name>
+		    <name xml:lang="ca">Etiquetes &amp; imatges...</name>
+        <name xml:lang="cs">Štítky &amp; média...</name>
+        <name xml:lang="nl">Labels &amp; beelden...</name>
         <current>editrostermedia</current>
     </node>
     <node name="New Throttle">
@@ -500,7 +500,7 @@
         <name xml:lang="it">Nuovo Palmare</name>
         <name xml:lang="da">Ny Kørekontrol</name>
         <name xml:lang="de">Neuer Fahrregler</name>
-		<name xml:lang="ca">Regulador Nou</name>
+		    <name xml:lang="ca">Regulador Nou</name>
         <name xml:lang="cs">Nový ovladač</name>
         <name xml:lang="nl">Nieuwe Rijregelaar</name>
         <adapter>jmri.jmrit.throttle.ThrottleCreationAction</adapter>
@@ -509,7 +509,7 @@
         <name xml:lang="fr">Charger Régulateur avec disposition par défaut</name>
         <name xml:lang="it">Carica formato di default Palmare</name>
         <name xml:lang="de">Lade Standardfahrregler</name>
-		<name xml:lang="ca">Llegeix format de reguladors per defecte</name>
+		    <name xml:lang="ca">Llegeix format de reguladors per defecte</name>
         <name xml:lang="cs">Načíst výchozí rozvržení ovladače</name>
         <name xml:lang="nl">Open Rijregelaar</name>
         <adapter>jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction</adapter>
@@ -520,7 +520,7 @@
         <name xml:lang="it">Strumento Multi-Trazione</name>
         <name xml:lang="da">Forspands Værktøj</name>
         <name xml:lang="de">Mehrfachtraktion</name>
-		<name xml:lang="ca">Eina de multi-traccions</name>
+		    <name xml:lang="ca">Eina de multi-traccions</name>
         <name xml:lang="cs">Nástroj soupravy</name>
         <name xml:lang="nl">Multitractie</name>
         <adapter>jmri.jmrit.consisttool.ConsistToolAction</adapter>
@@ -530,7 +530,7 @@
         <name xml:lang="it">Comando Scambi</name>
         <name xml:lang="da">Sporskifte Kontrol</name>
         <name xml:lang="de">Weichensteuerung</name>
-		<name xml:lang="ca">Comandament d'Agulles</name>
+		    <name xml:lang="ca">Comandament d'Agulles</name>
         <name xml:lang="cs">Ovládání výhybek</name>
         <name xml:lang="nl">Wisselaansturing</name>
         <adapter>jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction</adapter>
@@ -540,7 +540,7 @@
         <name xml:lang="it">Controlla Alimentazione</name>
         <name xml:lang="da">Power Kontrol</name>
         <name xml:lang="de">Hauptschalter</name>
-		<name xml:lang="ca">Control d'Alimentació</name>
+		    <name xml:lang="ca">Control d'Alimentació</name>
         <name xml:lang="cs">Ovládání napájení</name>
         <name xml:lang="nl">Baanspanning</name>
         <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
@@ -549,7 +549,7 @@
         <name xml:lang="fr">Compteur de vitesse</name>
         <name xml:lang="it">Tachimetro</name>
         <name xml:lang="de">Geschwindigkeitsmesser</name>
-		<name xml:lang="ca">Velocímetre</name>
+		    <name xml:lang="ca">Velocímetre</name>
         <name xml:lang="cs">Měřič rychlosti</name>
         <name xml:lang="nl">Snelheidsmeter</name>
         <adapter>jmri.jmrit.speedometer.SpeedometerAction</adapter>
@@ -559,7 +559,7 @@
         <name xml:lang="it">Programma Singola CV</name>
         <name xml:lang="da">Singel CV Programmering</name>
         <name xml:lang="de">Einfacher Programmierer</name>
-		<name xml:lang="ca">Programa una sola CV</name>
+		    <name xml:lang="ca">Programa una sola CV</name>
         <name xml:lang="cs">Programátor jednotlivých CV</name>
         <name xml:lang="nl">Enkele CV Programmeertool</name>
         <adapter>jmri.jmrit.simpleprog.SimpleProgAction</adapter>
@@ -579,14 +579,14 @@
         <name xml:lang="fr">Lancer Serveur WiThrottle</name>
         <name xml:lang="it">Lancia Server Palmare Wifi</name>
         <name xml:lang="de">Starte WiThrottle Server</name>
-		<name xml:lang="ca">Inicia Servidor Reguldors Wi-Fi</name>
+		    <name xml:lang="ca">Inicia Servidor Reguldors Wi-Fi</name>
         <adapter>jmri.jmrit.withrottle.WiThrottleCreationAction</adapter>
     </node>
     <node name="Start Web Server">
         <name xml:lang="fr">Lancer Serveur Web</name>
         <name xml:lang="it">Lancia Server Web</name>
         <name xml:lang="de">Starte Web Server</name>
-		<name xml:lang="ca">Inicia Servidor Web</name>
+		    <name xml:lang="ca">Inicia Servidor Web</name>
         <adapter>jmri.web.server.WebServerAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
@@ -595,17 +595,17 @@
         <name xml:lang="it">Ricostruisci Indice Roster</name>
         <name xml:lang="da">Gendan Roster Index</name>
         <name xml:lang="de">Baue Lokparkindex neu auf</name>
-		<name xml:lang="ca">Reconstrueix l'Índex de la flota</name>
+		    <name xml:lang="ca">Reconstrueix l'Índex de la flota</name>
         <name xml:lang="cs">Obnovit rejstřík evidence</name>
         <name xml:lang="nl">Bouw Loclijst opnieuw op</name>
         <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
     </node>
     <node name="Recreate Decoder Index">
         <name xml:lang="fr">Reconstruire l'Index des Décodeurs</name>
-         <name xml:lang="it">Ricostruisci Indice Decoder</name>
-         <name xml:lang="da">Gendan Dekoder Index</name>
+        <name xml:lang="it">Ricostruisci Indice Decoder</name>
+        <name xml:lang="da">Gendan Dekoder Index</name>
         <name xml:lang="de">Baue Decoderindex neu auf</name>
-		<name xml:lang="ca">Reconstrueix l'Índex dels Descodificadors</name>
+		    <name xml:lang="ca">Reconstrueix l'Índex dels Descodificadors</name>
         <name xml:lang="cs">Obnovit rejstřík dekodérů</name>
         <name xml:lang="nl">Bouw Decoder-index opnieuw op</name>
         <adapter>jmri.jmrit.decoderdefn.DecoderIndexCreateAction</adapter>
@@ -614,7 +614,7 @@
         <name xml:lang="fr">Mise-à-Jour Définitions Décodeurs</name>
         <name xml:lang="da">Opdater Dekoder Difinitioner</name>
         <name xml:lang="de">Aktualisiere Decoderdefinitionen </name>
-		<name xml:lang="ca">Actualitza la definició dels Descodificadors</name>
+		    <name xml:lang="ca">Actualitza la definició dels Descodificadors</name>
         <name xml:lang="cs">Aktualizovat definice dekodérů</name>
         <name xml:lang="nl">Werk Decoderdefinities bij</name>
         <adapter>jmri.jmrit.roster.UpdateDecoderDefinitionAction</adapter>
@@ -622,13 +622,13 @@
     <node>separator</node><!-- separator -->
     <node name="Run Script...">
         <name xml:lang="fr">Lancer Script...</name>
-         <name xml:lang="it">Esegui Script...</name>
-         <name xml:lang="da">Kør Script...</name>
-         <name xml:lang="de">Lade Ablaufdatei...</name>
-		 <name xml:lang="ca">Inicia Script</name>
+        <name xml:lang="it">Esegui Script...</name>
+        <name xml:lang="da">Kør Script...</name>
+        <name xml:lang="de">Lade Ablaufdatei...</name>
+		    <name xml:lang="ca">Inicia Script</name>
         <name xml:lang="cs">Spustit skript...</name>
         <name xml:lang="nl">Start Script...</name>
-         <adapter>jmri.jmrit.jython.RunJythonScript</adapter>
+        <adapter>jmri.jmrit.jython.RunJythonScript</adapter>
     </node>
   </node>
 

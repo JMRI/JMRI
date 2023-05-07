@@ -26,7 +26,7 @@ import org.w3c.dom.Element;
 public class JmriConfigurationProviderTest {
 
     private Path workspace;
-    private Document document;
+    private Document document = null;
 
     @BeforeEach
     public void setUp() throws IOException, ParserConfigurationException {
@@ -80,6 +80,7 @@ public class JmriConfigurationProviderTest {
         AuxiliaryConfiguration config = JmriConfigurationProvider.getConfiguration(project);
         Element e = config.getConfigurationFragment(elementName, namespace, true);
         Assert.assertNull(e);
+        Assert.assertNotNull(document);
         e = document.createElementNS(namespace, elementName);
         config.putConfigurationFragment(e, true);
         FileUtil.delete(project.getPath());

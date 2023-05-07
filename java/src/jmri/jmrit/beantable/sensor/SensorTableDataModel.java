@@ -24,6 +24,7 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.managers.ProxySensorManager;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -265,7 +266,11 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             case INACTIVEDELAY:
                 return !sen.getUseDefaultTimerSettings();
             case PULLUPCOL:
-                return (((SensorManager) getManager()).isPullResistanceConfigurable());
+                if ( getManager() instanceof ProxySensorManager ) {
+                    return ((ProxySensorManager)getManager()).isPullResistanceConfigurable(name);
+                }
+                return (((SensorManager) getManager()).isPullResistanceConfigurable()); // proxymanager always false
+                
             default:
                 return super.isCellEditable(row, col);
         }
@@ -314,7 +319,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * Small class to ensure type-safety of references otherwise lost to type erasure
      */
     static private class PullResistanceComboBox extends JComboBox<Sensor.PullResistance> {
-        public PullResistanceComboBox(Sensor.PullResistance[] values) { super(values); }
+        PullResistanceComboBox(Sensor.PullResistance[] values) { super(values); }
     }
 
     /**

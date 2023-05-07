@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -103,9 +102,12 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.ExpressionReference.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionReporter.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionScript.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionSection.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSensor.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionSensorEdge.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSignalHead.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionSignalMast.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionTransit.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionTurnout.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionWarrant.class);
         map.put(Category.ITEM, classes);
@@ -120,6 +122,10 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.DigitalCallModule.class);
+        map.put(Category.FLOW_CONTROL, classes);
+
+        classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.expressions.ConnectionName.class);
         classes.add(jmri.jmrit.logixng.expressions.False.class);
         classes.add(jmri.jmrit.logixng.expressions.Hold.class);
         classes.add(jmri.jmrit.logixng.expressions.LastResultOfDigitalExpression.class);
@@ -127,6 +133,12 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.TriggerOnce.class);
         classes.add(jmri.jmrit.logixng.expressions.True.class);
         map.put(Category.OTHER, classes);
+
+        if (jmri.util.SystemType.isLinux()) {
+            classes = new ArrayList<>();
+            classes.add(jmri.jmrit.logixng.expressions.ExpressionLinuxLinePower.class);
+            map.put(Category.LINUX, classes);
+        }
 
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));

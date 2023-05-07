@@ -1,0 +1,26 @@
+<!-- SidebarLayoutAutomation.shtml -->
+<!-- This is the common sidebar definition for Layout Automation pages (French) -->
+<!-- *) = link to English TODO translate that page -->
+
+<dt><a href="/help/fr/html/tools/automation/">Automatisation du R&#233;seau</a></dt>
+
+<dd>JMRI peut &#234;tre utilis&#233; pour automatiser des parties
+  de votre r&#233;seau, depuis un simple contr&#244;le d'un croisement
+  &#224; la commande des trains en to&#238;le de fond.
+  <ul>
+    <li><a href="/help/fr/html/tools/signaling/index.shtml">Signalisation</a></li>
+    <li><a href="/help/en/html/tools/WarrantsIntro.shtml">Warrants *)</a>
+    <li><a href="/help/fr/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+    <li><a href="/help/fr/html/tools/Routes.shtml">Itin&#233;raires</a></li>
+    <li><a href="/help/fr/html/tools/LRoutes.shtml">LRoutes</a>
+    <li><a href="/help/fr/html/tools/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></li>
+    <li><a href="/help/fr/html/tools/Logix.shtml">Logix</a>
+    <li><a href="/help/en/html/tools/logixng/LogixNG.shtml">LogixNG *)</a>
+    <li><a href="/help/fr/html/tools/fastclock/index.shtml">Horloges Rapides</a></li>
+    <li><a href="/help/fr/html/tools/scripting/index.shtml">Script</a></li>
+    <li><a href="/help/fr/html/tools/automation/viaJava.shtml">Automatisation R&#233;seau en Java</a>
+    <li><a href="/help/en/html/tools/CTC.shtml">Outil CTC *)</a>
+  </ul>
+</dd>
+
+<!-- /SidebarLayoutAutomation.shtml -->

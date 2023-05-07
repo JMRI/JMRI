@@ -91,7 +91,7 @@ public class SRCPBusConnectionMemo extends DefaultSystemConnectionMemo implement
      * @return programmer manager.
      */
     public SRCPProgrammerManager getProgrammerManager() {
-        return get(GlobalProgrammerManager.class);
+        return (SRCPProgrammerManager)get(GlobalProgrammerManager.class);
     }
 
     public void setProgrammerManager(SRCPProgrammerManager p) {

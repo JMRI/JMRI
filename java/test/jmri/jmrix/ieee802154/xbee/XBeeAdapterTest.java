@@ -2,7 +2,6 @@ package jmri.jmrix.ieee802154.xbee;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,9 +12,9 @@ import org.junit.jupiter.api.*;
 public class XBeeAdapterTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testCtor(){
        XBeeAdapter a = new XBeeAdapter();
-       Assert.assertNotNull(a);
+       Assertions.assertNotNull(a);
    }
 
     @BeforeEach

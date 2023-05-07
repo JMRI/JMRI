@@ -327,6 +327,9 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
                 rosterId = id;
             }
             RosterEntry rosterEntry = _speedUtil.makeRosterEntry(rosterId);
+            if (rosterEntry == null) {
+                return;
+            }
             Roster.getDefault().addEntry(rosterEntry);
             WarrantManager mgr = InstanceManager.getDefault(WarrantManager.class);
             RosterSpeedProfile mergeProfile = _speedUtil.getMergeProfile();
@@ -338,11 +341,6 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
 
         JPanel viewPanel = makeViewPanel(id);
         if (viewPanel == null) {
-            /*
-            if (id.charAt(0) != '$' || id.charAt(id.length()-1) != '$') {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("NoSpeedProfile", id),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            }*/
             return;
         }
         _spTable = new JmriJFrame(false, true);

@@ -8,7 +8,7 @@
   <name xml:lang="cs">Nahrávací kód</name>
   <name xml:lang="de">Ladecode</name>
   <column>
-    <display item="Decoder ID 1" label="Decoder Type"/>
+    <display item="Decoder ID 1"/>
     <display item="Decoder ID 1 Text" label=""/>
     <label>
       <text> </text>

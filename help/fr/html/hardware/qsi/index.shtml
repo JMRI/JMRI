@@ -1,23 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- Updated by Blorec Herv&#233;  2013-09-18-->
-<title>JMRI: Programmateur Quantum</title>
-
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Updated by Blorec Herv&#233;  2013-09-18-->
+  <title>JMRI: Programmateur Quantum</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
@@ -56,14 +49,14 @@ types d'ordinateurs populaires.
 <a id="driverWin"></a>
 <h3> Windows </h3>
 
-Pour que JMRI puisse parler au Programmateur Quantum, un pilote doit &#234;tre install&#233;
+<p>Pour que JMRI puisse parler au Programmateur Quantum, un pilote doit &#234;tre install&#233;
 de sorte que le programmateur Quantum semble &#234;tre un port s&#233;rie (port COM virtuel, ou
-VCP). Ces pilotes sont compatibles avec la version la plus r&#233;cente du logiciel programmateur QSI Quantum
-, ainsi vous pouvez alterner entre
+VCP). Ces pilotes sont compatibles avec la version la plus r&#233;cente du logiciel programmateur QSI Quantum,
+ainsi vous pouvez alterner entre
 l'utilisation de JMRI et le programmateur Quantum (mais pas dans en m&#234;me temps, bien s&#251;r)<p>
 Max Ettinger a fourni
 des <a href="https://jmri.org/install/qsidriver/"> instructions d&#233;taill&#233;es</a>
-pour savoir comment installer ces derniers.
+pour savoir comment installer ces derniers.</p>
 
 <a id="driverMac"></a>
 <h3> Mac OS X </h3>
@@ -127,18 +120,19 @@ Le programme est maintenant configur&#233;. Le red&#233;marrer, et il devrait &#
 
 <h2>Caract&#233;ristiques et limites </h2>
 
-Le mat&#233;riel de programmation Quantum est capable de piloter un (courant faible) de locomotive
+<p>Le mat&#233;riel de programmation Quantum est capable de piloter un (courant faible) de locomotive
 dans le "Mode Exploitation". Ceci permet &#224; l'utilisateur de commander le moteur, de tester les lumi&#232;res, etc
-JMRI n'a pas encore de code pour faire cela, mais si il y a suffisamment d'int&#233;r&#234;t, nous pouvons certainement les
-ajoutez.
+JMRI n'a pas encore de code pour faire cela, mais s'il y a suffisamment d'int&#233;r&#234;t, nous pouvons certainement les
+ajoutez.</p>
 
 <p>
 Nous n'avons actuellement pas assez d'informations pour t&#233;l&#233;charger des sons dans le d&#233;codeur &#224; travers le
 Programmateur Quantum. Si nous obtenons l'information, nous allons certainement &#233;crire ce code.
-    </p>
+</p>
 
-<!--#include virtual="/Footer.shtml" -->
-        </div>
-      </div>
+    <!--#include virtual="/Footer_fr.shtml" -->
+    </div>
+  </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

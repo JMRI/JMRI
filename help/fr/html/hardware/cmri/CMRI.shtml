@@ -1,38 +1,32 @@
-<!doctype html public "-//w3c//dtd html 4.01//en" "http://www.w3.org/tr/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; le 2017-01-20-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; le 2017-01-20-->
 <head>
- <title>JMRI Hardware Support - Chubb C/MRI</title>
- <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
- <meta name="keywords" content="Bruce Chubb C/MRI Computer interface java model railroad JMRI install windows">
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI Hardware Support - Chubb C/MRI</title>
+  <meta name="author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="keywords" content="Bruce Chubb C/MRI Computer interface java model railroad JMRI install windows">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
 <h1>Prise en Charge Mat&#233;riel: Chubb C/MRI</h1>
 <a name="contents"></a>
 
-La documentation ci-dessous explique comment JMRI peut &#234;tre utilis&#233; avec C/MRI, et
+<p>La documentation ci-dessous explique comment JMRI peut &#234;tre utilis&#233; avec C/MRI, et
 comment d&#233;marrer avec la connexion d'un syst&#232;me C/MRI &#224; JMRI. Il suppose une base de
 connaissance de JMRI (tel que document&#233; sur ce site web JMRI), et une certaine familiarit&#233;
 avec C/MRI. Il est fortement recommand&#233; que les utilisateurs aient acc&#232;s au <b>  Manuel de l'utilisateur C/MRI, la version 3.0</b> de Bruce
 Chubb car il contient une documentation d&#233;taill&#233;e sur le mat&#233;riel, qui n'est pas  disponible ailleurs. Puisque vous n'avez pas
 besoin de programmer votre ordinateur si vous utilisez JMRI avec votre syst&#232;me C/MRI,
-vous pouvez sauter sur les d&#233;tails de la programmation informatique lors de la consultation du Manuel de l'utilisateur C/MRI
-. La documentation ci-dessous est divis&#233;e en sections; cliquer  sur un &#233;l&#233;ment pour
-un acc&#232;s facile &#224; une section ci-dessous:
+vous pouvez sauter sur les d&#233;tails de la programmation informatique lors de la consultation du Manuel de
+l'utilisateur C/MRI. La documentation ci-dessous est divis&#233;e en sections; cliquer  sur un &#233;l&#233;ment pour
+un acc&#232;s facile &#224; une section ci-dessous:</p>
 <ul><!-- TOC -->
 <li><a href="#hardware">Mat&#233;riel</a></li>
 <li><a href="#limitations">Limitations</a></li>
@@ -748,16 +742,17 @@ Cliquez "Edit Node" pour actualiser, puis fermez le volet.
     </ul>
 
 <h3>Autres Infos</h3>
-<p>Pour une info compl&#233;mentaire  sur C/MRI ( incluant le Manuel Utilisateur c/MRI), 
-voir:</p>
+    <p>Pour une info compl&#233;mentaire  sur C/MRI ( incluant le Manuel Utilisateur c/MRI),
+    voir:</p>
     <ul>
-    <li>Le site web <a href="http://www.jlcenterprises.net/">JLC Enterprises</a></li>
-    <li>Le site de discussion <a href="https://groups.yahoo.com/neo/groups/CMRI_Users/info">C/MRI users Yahoo group</a></li>
-    <li>Le site web <a href="http://www.easeeinterfaces.com">Easee Interfaces</a>.</li>
+      <li>Le site web <a href="http://www.jlcenterprises.net/">JLC Enterprises</a></li>
+      <li>Le site de discussion <a href="https://groups.yahoo.com/neo/groups/CMRI_Users/info">C/MRI users Yahoo group</a></li>
+      <li>Le site web <a href="http://www.easeeinterfaces.com">Easee Interfaces</a>.</li>
     </ul>
 
-<!--#include virtual="/Footer.shtml" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
+    <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * This is a class (instead of a {@link jmri.jmrit.roster.Roster} member
  * function) to simplify use of ProgListener callbacks. It is abstract as we
  * expect that local classes will define the message and done members.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2015
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
@@ -81,7 +80,6 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
             statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READMFGVER"));
             readCV("8");
             return false;
-
         }
 
         // value is CV18, calculate address

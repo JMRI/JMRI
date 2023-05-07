@@ -1,33 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: L'&Eacute;diteur Panneau de Commande</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Panel Editor">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-          "text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-
-   <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>L'&Eacute;diteur Panneau de Commande</h1>
+
       L'<b>&Eacute;diteur Panneau de Commande</b> est
       tout simplement une vue alternative et un contr&ocirc;leur
       avec exactement le m&ecirc;me contenu de donn&eacute;es que
@@ -39,23 +25,27 @@
       le panneau sera l'&eacute;diteur utilis&eacute; au prochain
       chargement.
 
-      <h2>Modification de la Vue entre les &eacute;diteurs</h2>Dans
+      <h2>Modification de la Vue entre les &eacute;diteurs</h2>
+
+      <p>Dans
       l'un ou l'autre des &eacute;diteur en mode &eacute;dition le
       dernier &eacute;l&eacute;ment dans le menu <b>Fichier</b> est
       <b>Modifier la vue pour "..."</b>. ("..." &eacute;tant
       l'autre &eacute;diteur). S&eacute;lectionner cette option de
       commutation de la vue d'un mode &eacute;diteur pour un autre
-      mode &eacute;diteur.
+      mode &eacute;diteur.</p>
 
       <h2>Diff&eacute;rences dans la Vue entre les
-      &eacute;diteurs</h2>L'&eacute;diteur de Panneau a une
+      &eacute;diteurs</h2>
+
+      <p>L'&eacute;diteur de Panneau a une
       fen&ecirc;tre s&eacute;par&eacute;e pour ses fonctions
       d'&eacute;dition. Pas l'&eacute;diteur Panneau de Commande .
       Dans l'&eacute;diteur de Panneau le menu: <b>Modifier</b>
       ouvre une fenre d'&eacute;dition. dans l'&eacute;diteur de
       Panneau de Commande, le menu <b>Modifier</b> ajoute trois
       menus additionnels au menus du panneau : <b>Fichier</b>,
-      <b>Options</b>, <b>Zoom</b>, <b>Add Items</b>...
+      <b>Options</b>, <b>Zoom</b>, <b>Add Items</b>...</p>
 
       <h2>Menus &eacute;diteur de Panneau de Commande</h2>
 
@@ -291,7 +281,8 @@
       ouvre une bo&icirc;te de dialogue pour d&eacute;finir l'un
       des attributs de texte de l'&eacute;l&eacute;ment.
 
-      <h3>Modification S&eacute;lection Multiple</h3>Lorsqu'un
+      <h3>Modification S&eacute;lection Multiple</h3>
+      <p>Lorsqu'un
       &eacute;l&eacute;ment de menu contextuel est invoqu&eacute;
       &agrave; partir d'un &eacute;l&eacute;ment qui est un membre
       d'un groupe s&eacute;lectionn&eacute; , toutes les valeurs
@@ -305,9 +296,11 @@
       &eacute;l&eacute;ments du groupe. Si par exemple, une horloge
       rapide a &eacute;t&eacute; incluse dans ce groupe, alors
       aucune modification ne serait apport&eacute;e &agrave;
-      l'horloge.
-      <!--#include virtual="/Footer.shtml" -->
+      l'horloge.</p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

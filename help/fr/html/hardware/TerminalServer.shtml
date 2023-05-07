@@ -1,26 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233;  2017-01-01-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233;  2017-01-01-->
 <head>
- <title>JMRI Hardware Setup Support - Terminal Server Connection</title>
-    <meta name="author" content="David D Zuhn">
-    <meta name="author" content="John Plocher">
-    <meta name="keywords" content="EasyDCC Lantronix terminal server java model railroad JMRI install">
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI Hardware Setup Support - Terminal Server Connection</title>
+  <meta name="author" content="David D Zuhn">
+  <meta name="author" content="John Plocher">
+  <meta name="keywords" content="EasyDCC Lantronix terminal server java model railroad JMRI install">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
+
 <h1>Guide Installation JMRI: Connexion Serveur Terminal</h1>
 
 Un <strong>Serveur Terminal</strong> est une bo&#238;te qui connecte un ou plusieurs ports s&#233;rie
@@ -73,8 +68,9 @@ vous devez configurer &#224; la fois JMRI et le Serveur Terminal, et de faire
 <p>D&#233;marrez JMRI. Si tout est OK, l'application va d&#233;marrer et vous montrer
 	qu'il est correctement connect&#233;</p>
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+    <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

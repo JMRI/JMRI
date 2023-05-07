@@ -1,18 +1,21 @@
 package jmri.jmrix.tams.swing.locodatabase;
 
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+
 import jmri.jmrix.tams.TamsListener;
 import jmri.jmrix.tams.TamsMessage;
 import jmri.jmrix.tams.TamsReply;
+import jmri.util.swing.JmriMouseEvent;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -213,7 +216,7 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
         tcm.getColumn(column).setCellRenderer(buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new JButton()) {
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(JmriMouseEvent e) {
                 stopCellEditing();
             }
         };

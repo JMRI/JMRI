@@ -51,7 +51,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
     <!-- version 1 - based on Digirails_DR80010-15.xml -->
     
     <decoder>
-        <family name="Stationary" mfg="Digikeijs" comment="also sold under the Digirails label">
+        <family name="Switch (Outputs)" mfg="Digikeijs" comment="also sold under the Digirails label">
             <model model="DR4018" numOuts="16" numFns="0" maxInputVolts="6.5-18V" maxTotalCurrent="2.5A" productID="4018" formFactor="Stationary" comment="Multiprotocol switching decoder">
                 <versionCV lowVersionID="134" highVersionID="255"/>
                 <output name="1" label="Out1" connection="other" maxcurrent="500 mA" />
@@ -97,7 +97,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="fr">Version décodeur: </label>
                 <label xml:lang="de">Decoderversion: </label>
                 <label xml:lang="nl">Versie van de decoder: </label>
-                <label xml:lang="cs">Verze dekodéru: </label>
+                <label xml:lang="cs">Verze dekodéru </label>
             </variable>
             <variable CV="8" readOnly="yes" item="Manufacturer" default="42">
                 <decVal/>
@@ -106,7 +106,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="fr">ID constructeur: </label>
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
-                <label xml:lang="cs">ID výrobce: </label>
+                <label xml:lang="cs">ID výrobce </label>
                 <tooltip>Read-Only, 42 = Digikeijs/Digirails</tooltip>
                 <tooltip xml:lang="cs">Pouze pro čtení, 42 = Digikeijs/Digirails</tooltip>
             </variable>

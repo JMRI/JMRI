@@ -1,17 +1,16 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 
 import javax.swing.*;
 
-import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -19,19 +18,18 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        new LayoutTurntableEditor(null);
+        LayoutTurntableEditor t = new LayoutTurntableEditor(layoutEditor);
+        Assertions.assertNotNull(t);
     }
 
-
-     @Test
+    @Test
     public void testEditTurntableDone() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         createTurnouts();
@@ -136,7 +134,6 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
     @Test
     public void testEditTurntableCancel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
@@ -150,7 +147,6 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
     @Test
     public void testEditTurntableClose() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
@@ -165,7 +161,6 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
     @Test
     public void testEditTurntableErrors() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
@@ -214,50 +209,33 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
     }
 
-    private LayoutEditor layoutEditor = null;
     private LayoutTurntableView layoutTurntableView = null;
     private LayoutTurntable layoutTurntable = null;
 
     @BeforeEach
+    @Override
     public void setUp() {
         super.setUp();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initLayoutBlockManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalSensorManager();
-        if (!GraphicsEnvironment.isHeadless()) {
 
-            layoutEditor = new LayoutEditor();
-            layoutEditor.setVisible(true);
+        Point2D point = new Point2D.Double(150.0, 100.0);
+        Point2D delta = new Point2D.Double(50.0, 10.0);
 
-            Point2D point = new Point2D.Double(150.0, 100.0);
-            Point2D delta = new Point2D.Double(50.0, 10.0);
+        // Turntable
+        point = MathUtil.add(point, delta);
+        layoutTurntable = new LayoutTurntable("Turntable", layoutEditor);
+        layoutTurntableView = new LayoutTurntableView(layoutTurntable, point, layoutEditor);
+        layoutEditor.addLayoutTrack(layoutTurntable, layoutTurntableView);
 
-            // Turntable
-            point = MathUtil.add(point, delta);
-            layoutTurntable = new LayoutTurntable("Turntable", layoutEditor);
-            layoutTurntableView = new LayoutTurntableView(layoutTurntable, point, layoutEditor);
-            layoutEditor.addLayoutTrack(layoutTurntable, layoutTurntableView);
-        }
     }
 
     @AfterEach
+    @Override
     public void tearDown() {
         if (layoutTurntable != null) {
             layoutTurntable.remove();
         }
-
-        if (layoutEditor != null) {
-            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
-            efo.closeFrameWithConfirmations();
-        }
-
         layoutTurntable = null;
-        layoutEditor = null;
 
-        JUnitUtil.resetWindows(false, false);
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

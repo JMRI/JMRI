@@ -689,14 +689,14 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                             case 34: {  // Gear Shift Up
                                 if ((throttle != null) && isDown) {
                                     // shuntFn
-                                    throttle.setF3(false);
+                                    throttle.setFunction(3, false);
                                 }
                                 break;
                             }
                             case 35: {  // Gear Shift Down
                                 if ((throttle != null) && isDown) {
                                     // shuntFn
-                                    throttle.setF3(true);
+                                    throttle.setFunction(3, true);
                                 }
                                 break;
                             }

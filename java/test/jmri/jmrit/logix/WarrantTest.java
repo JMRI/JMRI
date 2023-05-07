@@ -2,6 +2,8 @@ package jmri.jmrit.logix;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +14,14 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests for Warrant creation.
@@ -192,38 +196,41 @@ public class WarrantTest {
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - " + msg, msg);
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             String m = warrant.getRunningMessage();
             return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
         }, "Train starts to move after 2nd command");
-        JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sWest.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Unexpected Exception: " + e);
-            }
-        });
-        JUnitUtil.waitFor(100); // What should we specifically waitFor?
+        try {
+            sWest.setState(Sensor.ACTIVE);
+        } catch ( JmriException e) {
+            Assert.fail("Unexpected Exception: " + e);
+        }
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sSouth.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Unexpected Exception: " + e);
-            }
-        });
-        JUnitUtil.waitFor(100);
+        JUnitUtil.waitFor(() -> {
+            return bWest.isOccupied() == true;
+
+        }, "South not occupied");
+
+        try {
+            sSouth.setState(Sensor.ACTIVE);
+        } catch ( JmriException e) {
+            Assert.fail("Unexpected Exception: " + e);
+        }
+
+        JUnitUtil.waitFor(() -> {
+            return bSouth.isOccupied() == true;
+
+        }, "South not occupied");
 
         // wait for done
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return warrant.getRunningMessage().equals("Idle");
+        JUnitUtil.waitFor(() -> {
+            return Bundle.getMessage("Idle").equals(warrant.getRunningMessage());
         }, "warrant not done");
 
     }
 
-    static class WarrantListener implements PropertyChangeListener {
+    protected static class WarrantListener implements PropertyChangeListener {
 
         Warrant warrant;
 
@@ -242,10 +249,10 @@ public class WarrantTest {
     }
 
     @BeforeEach
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+    public void setUp(@TempDir File tempDir) throws IOException  {
+        JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initRosterConfigManager();
 
@@ -296,6 +303,7 @@ public class WarrantTest {
         path = new OPath("SouthToWest", south, null, south.getPortalByName("SouthWest"), settings);
         south.addPath(path);
 
+        Assertions.assertNotNull(bSouth);
         bSouth.setLength(100);
 
         settings = new ArrayList<>();
@@ -313,8 +321,11 @@ public class WarrantTest {
         sEast = _sensorMgr.newSensor("IS2", "EastSensor");
         sNorth = _sensorMgr.newSensor("IS3", "NorthSensor");
         sSouth = _sensorMgr.newSensor("IS4", "SouthSensor");
+        Assertions.assertNotNull(bWest);
         bWest.setSensor("WestSensor");
+        Assertions.assertNotNull(bEast);
         bEast.setSensor("IS2");
+        Assertions.assertNotNull(bNorth);
         bNorth.setSensor("NorthSensor");
         bSouth.setSensor("IS4");
         warrant = new Warrant("IW0", "AllTestWarrant");

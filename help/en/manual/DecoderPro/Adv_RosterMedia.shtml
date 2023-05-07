@@ -165,8 +165,8 @@
         the images for reference</p>
       </blockquote>
 
-      <p><input type="submit" name="button" id="button" value="Save to Roster"> After adding images
-      to the image boxes for main image and icon, click on this button to store images in your
+      <p>After adding images to the image boxes for main image and icon, click on the
+      <span class="textbutton">Save to Roster</span> button to store images in your
       Roster.</p>
 
       <p><strong>Links for icons in GIF and images of most Locomotives</strong> <strong>are listed

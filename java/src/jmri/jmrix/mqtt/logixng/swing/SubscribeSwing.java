@@ -26,6 +26,7 @@ public class SubscribeSwing extends AbstractDigitalActionSwing {
 
     JTextField _subscribeToTopicTextField;
     JTextField _lastTopicLocalVariableTextField;
+    JCheckBox _removeChannelFromLastTopicCheckBox;
     JTextField _lastMessageLocalVariableTextField;
 
 
@@ -42,6 +43,8 @@ public class SubscribeSwing extends AbstractDigitalActionSwing {
         if (action == null) {
             // Create a temporary action
             action = new Subscribe("IQDA1", null, null);
+            // Make "remove channel" the default for new actions
+            action.setRemoveChannelFromLastTopic(true);
         }
 
         panel = new JPanel();
@@ -52,10 +55,12 @@ public class SubscribeSwing extends AbstractDigitalActionSwing {
 
         _subscribeToTopicTextField = new JTextField(40);
         _lastTopicLocalVariableTextField = new JTextField(40);
+        _removeChannelFromLastTopicCheckBox = new JCheckBox(Bundle.getMessage("Subscribe_removeChannelFromLastTopic"));
         _lastMessageLocalVariableTextField = new JTextField(40);
 
         _subscribeToTopicTextField.setText(action.getSubscribeToTopic());
         _lastTopicLocalVariableTextField.setText(action.getLastTopicLocalVariable());
+        _removeChannelFromLastTopicCheckBox.setSelected(action.getRemoveChannelFromLastTopic());
         _lastMessageLocalVariableTextField.setText(action.getLastMessageLocalVariable());
 
         JPanel mqttPanel = new JPanel();
@@ -99,10 +104,12 @@ public class SubscribeSwing extends AbstractDigitalActionSwing {
         c.gridy = 2;
         panel.add(_lastMessageLocalVariableTextField, c);
 //        _lastMessageLocalVariableTextField.setToolTipText(Bundle.getMessage("SysNameToolTip", "Y"));
+        c.gridy = 3;
+        panel.add(_removeChannelFromLastTopicCheckBox, c);
         c.gridwidth = 2;
         c.gridheight = 1;
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 4;
         c.anchor = GridBagConstraints.CENTER;
         panel.add(mqttPanel, c);
     }
@@ -140,6 +147,7 @@ public class SubscribeSwing extends AbstractDigitalActionSwing {
 
         action.setSubscribeToTopic(_subscribeToTopicTextField.getText());
         action.setLastTopicLocalVariable(_lastTopicLocalVariableTextField.getText());
+        action.setRemoveChannelFromLastTopic(_removeChannelFromLastTopicCheckBox.isSelected());
         action.setLastMessageLocalVariable(_lastMessageLocalVariableTextField.getText());
 
         action.setMemo(_mqttConnection.getItemAt(_mqttConnection.getSelectedIndex())._memo);

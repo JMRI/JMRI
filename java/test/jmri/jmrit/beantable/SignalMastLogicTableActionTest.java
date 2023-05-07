@@ -5,15 +5,16 @@ import jmri.SignalMastLogic;
 import jmri.implementation.VirtualSignalMast;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
+
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 import javax.swing.*;
-import java.awt.*;
+
 import java.util.ResourceBundle;
 
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,9 +65,8 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
 
     @Test
     @Override
-
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testEditButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         VirtualSignalMast sm1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "mast 1");
         VirtualSignalMast sm2 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($2)", "mast 2");
@@ -102,8 +102,8 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testSmlTableMenuRoutingCancel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleSignalMastLogicTable"), true, true);
@@ -143,8 +143,8 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testSmlTableMenuYes() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleSignalMastLogicTable"), true, true);
@@ -220,8 +220,8 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testSmlTableMenuAutoSections() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleSignalMastLogicTable"), true, true);
@@ -264,7 +264,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         helpTarget = "package.jmri.jmrit.beantable.SignalMastLogicTable";
         a = new SignalMastLogicTableAction();
     }
@@ -274,7 +274,6 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

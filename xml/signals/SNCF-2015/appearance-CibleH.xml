@@ -44,7 +44,7 @@
       <show>red</show>
         <comment>real color is purple</comment>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHCv_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHCv_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHCv_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHCv_face.gif</imagelink>
     </appearance>
 
@@ -80,7 +80,7 @@
       <aspectname>Slow</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHFb_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHFb_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHFb_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHFb_face.gif</imagelink>
     </appearance>
 
@@ -89,7 +89,7 @@
       <show>lunar</show>
       <comment>flashlunar</comment>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHFbc_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHFbc_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHFbc_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHFbc_face.gif</imagelink>
     </appearance>
 
@@ -98,7 +98,7 @@
       <show>yellow</show>
       <reference>Avertissement</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHA_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHA_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHA_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHA_face.gif</imagelink>
     </appearance>
 
@@ -108,7 +108,7 @@
       <reference>Jaune clignotant</reference>
       <comment>flashyellow</comment>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAa_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAa_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHAa_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAa_face.gif</imagelink>
     </appearance>
 
@@ -118,7 +118,7 @@
       <reference>Rouge clignotant</reference>
       <comment>flashred</comment>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHSa_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHSa_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHSa_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHSa_face.gif</imagelink>
     </appearance>
 
@@ -126,7 +126,7 @@
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHDark_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHDark_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHDark_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHDark_face.gif</imagelink>
     </appearance>
 
@@ -135,7 +135,7 @@
       <show>yellow</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAaR30_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAaR30_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHAaR30_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAaR30_face.gif</imagelink>
     </appearance>
 
@@ -144,7 +144,7 @@
       <show>yellow</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAR30_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAR30_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHAR30_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAR30_face.gif</imagelink>
     </appearance>
 
@@ -153,7 +153,7 @@
       <show>yellow</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAaR60_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAaR60_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHAaR60_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAaR60_face.gif</imagelink>
     </appearance>
 
@@ -163,7 +163,7 @@
       <reference>.</reference>
       <comment>flashyellow</comment>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAR60_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAR60_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHAR60_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAR60_face.gif</imagelink>
     </appearance>
 
@@ -171,7 +171,7 @@
       <aspectname>Restrict30</aspectname>
       <show>yellow</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHR30_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHR30_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHR30_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHR30_face.gif</imagelink>
     </appearance>
 
@@ -180,7 +180,7 @@
       <show>yellow</show>
       <comment>flashyellow</comment>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHR60_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHR60_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHR60_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHR60_face.gif</imagelink>
     </appearance>
 
@@ -189,7 +189,7 @@
       <show>yellow</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAaRR30_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAaRR30_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHAaRR30_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAaRR30_face.gif</imagelink>
     </appearance>
 
@@ -198,7 +198,7 @@
       <show>yellow</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHARR30_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHARR30_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHARR30_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHARR30_face.gif</imagelink>
     </appearance>
 
@@ -207,7 +207,7 @@
       <show>yellow</show>
       <reference>.</reference>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHAaRR60_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHAaRR60_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHAaRR60_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHAaRR60_face.gif</imagelink>
     </appearance>
 
@@ -217,7 +217,7 @@
       <reference>.</reference>
       <comment>flashyellow</comment>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHARR60_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHARR60_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHARR60_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHARR60_face.gif</imagelink>
     </appearance>
 
@@ -225,7 +225,7 @@
       <aspectname>RRestrict30</aspectname>
       <show>yellow</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHRR30_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHRR30_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHRR30_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHRR30_face.gif</imagelink>
     </appearance>
 
@@ -234,7 +234,7 @@
       <show>yellow</show>
       <comment>flashyellow</comment>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/CibleH/CibleHRR60_face.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/CibleH/CibleHRR60_face.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/CibleH/CibleHRR60_face.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/CibleH/CibleHRR60_face.gif</imagelink>
     </appearance>
 

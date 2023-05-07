@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
 public class SimulatorAdapterTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testCtor(){
       Assert.assertNotNull("SimulatorAdapter constructor", new SimulatorAdapter());
    }
 

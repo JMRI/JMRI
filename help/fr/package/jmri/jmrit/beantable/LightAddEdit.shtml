@@ -1,23 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec 2013-10-11-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec 2013-10-11-->
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding/Editing Lights</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Light Add Edit"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Light Add Edit">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>Ajouter/éditer Lumières</h1>
       <a name="addLight" id="addLight"></a>
       <h2>Ajout d'une Nouvelle Lumière</h2>
@@ -255,8 +251,10 @@
       directement. Tenter de définir l'<strong>Intensité Cible</strong> en dehors de l'intervalle
       <strong>Intensité Minimum à l'Intensité Maximum</strong> se traduira par l'<strong>Intensité
       Cible</strong> fixée à la limite pertinente.</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

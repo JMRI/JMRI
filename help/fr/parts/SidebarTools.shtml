@@ -1,0 +1,54 @@
+<!-- SidebarTools.shtml -->
+<!-- This is the common sidebar definition for French Tools pages -->
+
+  <dt><a href="/help/fr/html/tools/">Outils</a></dt>
+  <dd>JMRI fournit des outils puissants pour travailler avec r&#233;seau:
+        <ul> <!-- Try to organize within category by frequency of use or alphabetical -->
+            <li><i style="padding-left: 1em;">Outils g&eacute;n&eacute;raux:</i>
+              <ul>
+                <li><a href="/help/fr/html/tools/throttle/ThrottleMain.shtml">R&#233;gulateurs</a></li>
+                <li><a href="/help/fr/html/tools/Turnouts.shtml">Aiguillages</a></li>
+                <li><a href="/help/fr/html/tools/Lights.shtml">Lumi&#232;res</a></li>
+                <li><a href="/help/fr/html/tools/Sensors.shtml">Capteurs</a></li>
+                <li><a href="/help/en/html/tools/signaling/index.shtml">Signalisation</a></li>
+                <li><a href="/help/fr/html/tools/consisttool/ConsistTool.shtml">Couplage</a></li>
+                <li><a href="/help/fr/html/tools/Reporters.shtml">Rapports</a></li>
+                <li><a href="/help/fr/html/tools/Memories.shtml">Variables de M&#233;moire</a></li>
+              </ul>
+            </li>
+
+            <li><i style="padding-left: 1em;">Cantons:</i>
+              <ul>
+                <!-- <li><a href="/help/en/html/tools/blocktracking/index.shtml">Block tracking</a> -->
+                <li><a href="/help/fr/html/tools/Blocks.shtml">Cantons</a></li>
+                <li><a href="/help/fr/html/tools/Sections.shtml">Sections</a></li>
+                <li><a href="/help/en/html/tools/Transits.shtml">Transits</a></li>
+              </ul>
+            </li>
+
+            <li><i style="padding-left: 1em;">Itin&#233;raires et Contr&ocirc;le:</i>
+              <ul>
+                <li><a href="/help/fr/html/tools/Routes.shtml">Itin&#233;raires</a></li>
+                <li><a href="/help/fr/html/tools/LRoutes.shtml">LItin&#233;raires</a></li>
+                <li><a href="/help/fr/html/tools/EntryExit.shtml">Entry Exit (NX)</a></li>
+                <li><a href="/help/fr/html/tools/Logix.shtml">Logix</a></li>
+                <li><a href="/help/en/html/tools/logixng/LogixNG.shtml">LogixNG *)</a></li>
+              </ul>
+            </li>
+
+           <li><i style="padding-left: 1em;">Autres:</i>
+           <ul>
+              <li><a href="/help/fr/html/tools/Audio.shtml">Audio</a></li>
+              <li><a href="/help/en/html/tools/CTC.shtml">CTC Tools *)</a></li>
+              <li><a href="/help/fr/html/tools/fastclock/index.shtml">Horloges Rapides</a></li>
+              <li><a href="/help/fr/html/tools/IdTags.shtml">&#201;tiquettes ID</a></li>
+              <li><a href="/help/fr/html/tools/speedometer/index.shtml">Mesureur de Vitesse</a></li>
+              <li><a href="/help/en/html/tools/TimeTable.shtml">Timetable *)</a></li>
+              <li><a href="/help/en/html/tools/vsd/index.shtml">Virtual Sound Decoder *)</a></li>
+              <li><a href="/help/en/package/jmri/jmrit/whereused/WhereUsed.shtml">Where Used *)</a></li>
+           </ul>
+           </li>
+           <li><i><a href="/help/fr/html/tools/index.shtml#systemSpecificTools">Syst&#232;me sp&#233;cifique...</a></i>
+    </ul>
+  </dd>
+<!-- /SidebarTools.shtml -->

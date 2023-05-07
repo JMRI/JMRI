@@ -187,7 +187,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
             try {
                 initComponents((NceSystemConnectionMemo) context);
             } catch (Exception e) {
-                log.error("NceClockMon initContext failed");
+                log.error("NceClockMon initContext failed"); // NOI18N
             }
         }
     }
@@ -470,7 +470,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         // Create a timebase listener for the Minute change events
         internalClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
         if (internalClock == null) {
-            log.error("No Timebase Instance; clock will not run");
+            log.error("No Timebase Instance; clock will not run"); // NOI18N
             return;
         }
         minuteChangeListener = (PropertyChangeEvent e) -> {
@@ -486,7 +486,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
     @Override
     public void message(NceMessage m) {
         log.error("clockmon message received: {}", m);
-    }
+    } // NOI18N
 
     @Override
     public void reply(NceReply r) {
@@ -592,9 +592,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         }
         if (clockMode == SYNCMODE_NCE_MASTER) {
             if (priorClockReadPacket != null && priorNceRatio != nceLastRatio) {
-                if (log.isDebugEnabled()) {
-                    log.debug("NCE Change Rate from cab: prior vs last: {} vs {}", priorNceRatio, nceLastRatio);
-                }
+                log.debug("NCE Change Rate from cab: prior vs last: {} vs {}", priorNceRatio, nceLastRatio);
                 rateNce.setText("" + nceLastRatio);
                 nceSyncInitStateCounter = 1;
                 nceSyncInitStates();
@@ -603,9 +601,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         nceLastRunning = r.getElement(CS_CLOCK_STATUS) != 1;
         if (clockMode == SYNCMODE_NCE_MASTER) {
             if (priorClockReadPacket != null && priorNceRunning != nceLastRunning) {
-                if (log.isDebugEnabled()) {
-                    log.debug("NCE Stop/Start: prior vs last: {} vs {}", priorNceRunning, nceLastRunning);
-                }
+                log.debug("NCE Stop/Start: prior vs last: {} vs {}", priorNceRunning, nceLastRunning);
                 if (nceLastRunning) {
                     nceSyncInitStateCounter = 1;
                 } else {

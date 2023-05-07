@@ -1,23 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Simple Signal Logic</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20171115">
-  <meta name="keywords" content="JMRI help Simple Signal Logic"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Simple Signal Logic">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>JMRI : La logique du signal simple</h1>
       <a name="contents" id="contents"></a>
       <h2>Contenu</h2>
@@ -246,10 +242,10 @@
           <p>Traduction 2021-03-27</p>
         </li>
       </ul>
-      <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

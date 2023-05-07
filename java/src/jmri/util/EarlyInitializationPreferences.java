@@ -86,10 +86,13 @@ public class EarlyInitializationPreferences {
         try (OutputStream output = new FileOutputStream(FILENAME)) {
             preferences.store(output, null);
             return true;
+        } catch (FileNotFoundException e){
+            System.err.println("Could not store to " + FILENAME
+                    + ", Normal if JMRI has not been started before.");
         } catch (IOException ex) {
             ex.printStackTrace(System.err);
-            return false;
         }
+        return false;
     }
 
     private void load() {

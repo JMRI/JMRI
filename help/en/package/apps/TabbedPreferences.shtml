@@ -38,6 +38,10 @@
         </li>
 
         <li>
+          <a href="#Shutdown">Shutdown</a>
+        </li>
+
+        <li>
           <a href="#Display">Display</a>
         </li>
 
@@ -262,6 +266,42 @@
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+
+      <h2 id="Shutdown">Shutdown<span class="since">since 5.1.1</span></h2>
+
+      <div>
+        <p>When JMRI is stopped using Quit, a process is run that determines if any tables or panels
+        have been changed since the last PanelPro store occurred.  This provides an opportunity to
+        do a final store before shutdown.</p>
+
+        <p>The check process uses two shutdown preferences.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/PrefsShutdown.png"><img src="images/PrefsShutdown.png" alt="shutdown preferences"></a>
+        </div>
+
+        <p><strong><em>Check for changes that have not been stored</em></strong> is the master
+        switch for the process.  If this is unchecked, no checking will occur.  Checked is the
+        default setting.  Starting PanelPro creates some default <strong>Fast Clock</strong>
+        table entries. If these are the only table entries, a store request will not occur.</p>
+
+        <p>If the check process has been enabled and there are changes that should be stored, a
+        dialog will be displayed.  The changes normally occur due to table and panel changes.
+        They can also occur when a connection, such as Digitrax, automatically adds sensors and
+        turnouts.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/StoreRequest.png"><img src="images/StoreRequest.png" alt="store reqquest"></a>
+        </div>
+
+        <p>The default is to show the store request dialog and if <strong>Yes</strong> is selected,
+        the actual store dialog will be displayed.  The <strong>Skip</strong> option can be selected
+        to go directly to the store dialog.</p>
+
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h2 id="Display">Display</h2>
 
       <div>
@@ -293,6 +333,10 @@
             In addition, this tab lets you set:
             <ul>
               <li>Font size &mdash; The font size of the GUI.</li>
+
+              <li>File Chooser Dialog file view &mdash; Select the file view when using the file
+              dialogs.  The options are the <strong>Default</strong> view, the file name <strong>List
+              </strong> view and the file <strong>Detail</strong> view.</li>
 
               <li>Use non-standard release event for mouse click? &mdash; Provide alternate mouse
               behavior for specific hardware.</li>

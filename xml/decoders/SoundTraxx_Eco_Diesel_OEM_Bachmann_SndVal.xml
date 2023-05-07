@@ -23,6 +23,12 @@
                 <surname>Fournier</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>James</firstname>
+                <surname>Exler</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -30,6 +36,12 @@
             <date>2021-11-03</date>
             <authorinitials>MF</authorinitials>
             <revremark>New file, based on ECO Diesel file</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2022-08-16</date>
+            <authorinitials>JE</authorinitials>
+            <revremark>rev names for FX3-FX4, rename cv63 dimmer level, chg includes TSU2PaneLighting, TSU2PaneASCdiesel</revremark>
         </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
@@ -232,31 +244,31 @@
 				<xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>Backup Light F0(r) Light Type</label>
             </variable>
-            <variable item="FX5 Effect Selection" CV="51" mask="XXXVVVVV" default="15" minOut="3" tooltip="Determines the effect generated from the FX3 light output">
+            <variable item="FX3 Effect Selection" CV="51" mask="XXXVVVVV" default="15" minOut="3" tooltip="Determines the effect generated from the FX3 light output">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
                 <label>FX3 Effect Selection</label>
             </variable>
-            <variable item="FX5 Grade Crossing Logic" CV="51" mask="XVXXXXXX" default="0" minOut="3" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+            <variable item="FX3 Grade Crossing Logic" CV="51" mask="XVXXXXXX" default="0" minOut="3" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX3 Grade Crossing Logic</label>
             </variable>
-            <variable item="FX5 Light Type" CV="51" mask="VXXXXXXX" default="0" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+            <variable item="FX3 Light Type" CV="51" mask="VXXXXXXX" default="0" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX3 Light Type</label>
             </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="15" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
+            <variable item="FX4 Effect Selection" CV="52" mask="XXXVVVVV" default="15" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
                 <label>FX4 Effect Selection</label>
             </variable>
-            <variable item="FX6 Phase Selection" CV="52" mask="XXVXXXXX" default="0" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+            <variable item="FX4 Phase Selection" CV="52" mask="XXVXXXXX" default="0" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
                 <label>FX4 Phase Selection</label>
             </variable>
-            <variable item="FX6 Grade Crossing Logic" CV="52" mask="XVXXXXXX" default="0" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+            <variable item="FX4 Grade Crossing Logic" CV="52" mask="XVXXXXXX" default="0" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Grade Crossing Logic</label>
             </variable>
-            <variable item="FX6 Light Type" CV="52" mask="VXXXXXXX" default="0" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+            <variable item="FX4 Light Type" CV="52" mask="VXXXXXXX" default="0" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX4 Light Type</label>
             </variable>
@@ -268,11 +280,11 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>Backup Light F0(r) Forward Directional Control</label>
             </variable>
-            <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXVXX" default="1" minOut="3" tooltip="Check to enable FX3 function output in Forward direction">
+            <variable item="FX3 Forward Directional Control" CV="57" mask="XXXXXVXX" default="1" minOut="3" tooltip="Check to enable FX3 function output in Forward direction">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX3 Forward Directional Control</label>
             </variable>
-            <variable item="FX6 Forward Directional Control" CV="57" mask="XXXXVXXX" default="1" minOut="4" tooltip="Check to enable FX4 function output in Forward direction">
+            <variable item="FX4 Forward Directional Control" CV="57" mask="XXXXVXXX" default="1" minOut="4" tooltip="Check to enable FX4 function output in Forward direction">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Forward Directional Control</label>
             </variable>
@@ -284,11 +296,11 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>Backup Light F0(r) Reverse Directional Control</label>
             </variable>
-            <variable item="FX5 Reverse Directional Control" CV="58" mask="XXXXXVXX" default="1" minOut="3" tooltip="Check to enable FX3 function output in Reverse direction">
+            <variable item="FX3 Reverse Directional Control" CV="58" mask="XXXXXVXX" default="1" minOut="3" tooltip="Check to enable FX3 function output in Reverse direction">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX3 Reverse Directional Control</label>
             </variable>
-            <variable item="FX6 Reverse Directional Control" CV="58" mask="XXXXVXXX" default="1" minOut="4" tooltip="Check to enable FX4 function output in Reverse direction">
+            <variable item="FX4 Reverse Directional Control" CV="58" mask="XXXXVXXX" default="1" minOut="4" tooltip="Check to enable FX4 function output in Reverse direction">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Reverse Directional Control</label>
             </variable>
@@ -308,7 +320,7 @@
                 <decVal/>
                 <label>Brightness 2 Level (0-255)</label>
             </variable>
-            <variable CV="63" item="Dimmer" default="153" tooltip="Adjust the brightness level of the on/off dimmable headlight effect">
+            <variable CV="63" item="Dimmer Level" default="153" tooltip="Adjust the brightness level of the on/off dimmable headlight effect">
                 <decVal/>
                 <label>Dimmer Level (0-255)</label>
             </variable>
@@ -339,7 +351,7 @@
                 </enumVal>
                 <label>Airhorn Select</label>
             </variable>
-			
+
 			<variable CV="121" mask="XXVVVVVV" item="Sound Option 7" default="0" exclude="GP40" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
                 <enumVal>
                     <enumChoice>
@@ -349,7 +361,7 @@
                 </enumVal>
                 <label>Auxiliary Airhorn Select</label>
             </variable>
-			
+
 			<variable CV="121" mask="XXVVVVVV" item="Sound Option 7" default="0" include="GP40" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
                 <enumVal>
                     <enumChoice>
@@ -359,7 +371,7 @@
                 </enumVal>
                 <label>Auxiliary Airhorn Select</label>
             </variable>
-			
+
             <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="0" exclude="GP40" tooltip="Bell sound effect and ring-rate">
                 <defaultItem default="2" include="1028"/>
 				<defaultItem default="6" include="GED"/>
@@ -371,7 +383,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumDieselBellBachmann1.xml"/>
                 <label>Bell Select</label>
             </variable>
-			
+
 			<variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="0">
                 <defaultItem default="0" include="1028"/>
 				<defaultItem default="1" include="GP40"/>
@@ -380,7 +392,7 @@
                 <label>Prime Mover Select</label>
                 <tooltip>Select one of prime mover sound effects</tooltip>
             </variable>
-            
+
 			<variable CV="124" mask="XXXXXXVV" item="Sound Option 10" default="0" tooltip="Select one of air compressor sound effects">
                 <defaultItem default="0" include="1028"/>
 				<enumVal>
@@ -429,7 +441,7 @@
                 <decVal/>
                 <label>Poppet Valve Volume</label>
             </variable>
-            
+
             <variable item="Analog Mode Function Status - F21" CV="242" mask="XXXXXXXV" default="0" minFn="21">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label xml:lang="it">Stato Funzioni in analogico - F21</label>
@@ -754,9 +766,9 @@
         </resets>
     </decoder>
     <!-- References to external Pane format definitions below -->
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneLighting.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCsteam.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneASCdiesel.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneID.xml"/>

@@ -444,6 +444,17 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
             ts.updateStatesFromCombo();
         }
 
+        // Verify that there are no turnouts or two turnouts.  A single turnout is an error.
+        var turnoutNameA = layoutSlip.getTurnoutName();
+        var turnoutNameB = layoutSlip.getTurnoutBName();
+        if ((turnoutNameA.isEmpty() && !turnoutNameB.isEmpty()) ||
+                (turnoutNameB.isEmpty() && !turnoutNameA.isEmpty())) {
+            JOptionPane.showMessageDialog(editLayoutSlipFrame,
+                    Bundle.getMessage("Error20"),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         // set hidden
         boolean oldHidden = layoutSlipView.isHidden();
         layoutSlipView.setHidden(editLayoutSlipHiddenBox.isSelected());

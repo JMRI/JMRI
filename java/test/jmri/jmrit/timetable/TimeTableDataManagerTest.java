@@ -3,6 +3,8 @@ package jmri.jmrit.timetable;
 import java.io.File;
 import java.io.IOException;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
@@ -17,7 +19,6 @@ public class TimeTableDataManagerTest {
     public void testCreate() {
         TimeTableDataManager dx = new TimeTableDataManager(false);
         jmri.InstanceManager.deregister(dx, TimeTableDataManager.class);
-        dx = null;
     }
 
     @Test
@@ -81,27 +82,20 @@ public class TimeTableDataManagerTest {
 
         // Release data manager
         jmri.InstanceManager.deregister(dm, TimeTableDataManager.class);
-        dm = null;
+
     }
 
     @BeforeEach
     public void setUp(@TempDir File folder) throws IOException {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
     }
 
     @AfterEach
     public void tearDown() {
-       // use reflection to reset the static file location.
-       try {
-            Class<?> c = jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
-        }
-        jmri.util.JUnitUtil.tearDown();
+        // reset the static file location.
+        jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.resetFileLocation();
+        JUnitUtil.tearDown();
     }
 
 //     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableDataManagerTest.class);

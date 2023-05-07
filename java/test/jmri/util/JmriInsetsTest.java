@@ -1,6 +1,5 @@
 package jmri.util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -9,10 +8,11 @@ import org.junit.jupiter.api.*;
  */
 public class JmriInsetsTest {
 
+    // no testCtor as class only supplies static method
+
     @Test
-    public void testCTor() {
-        JmriInsets t = new JmriInsets();
-        Assert.assertNotNull("exists",t);
+    public void testGetInsets() {
+        Assertions.assertNotNull(JmriInsets.getInsets(),"exists");
     }
 
     @BeforeEach

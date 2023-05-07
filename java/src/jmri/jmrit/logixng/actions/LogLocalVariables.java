@@ -30,6 +30,8 @@ public class LogLocalVariables extends AbstractDigitalAction {
         if (sysName == null) sysName = manager.getAutoSystemName();
         LogLocalVariables copy = new LogLocalVariables(sysName, userName);
         copy.setComment(getComment());
+        copy._includeGlobalVariables = _includeGlobalVariables;
+        copy._expandArraysAndMaps = _expandArraysAndMaps;
         return manager.registerAction(copy);
     }
 

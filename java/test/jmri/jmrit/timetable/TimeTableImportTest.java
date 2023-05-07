@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import jmri.util.FileUtil;
+import jmri.util.JUnitUtil;
 
 import java.util.List;
 
@@ -19,7 +20,8 @@ public class TimeTableImportTest {
 
     @Test
     public void testCreate() {
-        new TimeTableImport();
+        TimeTableImport t = new TimeTableImport();
+        Assertions.assertNotNull(t);
     }
 
     @Test
@@ -30,7 +32,7 @@ public class TimeTableImportTest {
             File file = FileUtil.getFile("program:xml/demoTimetable/TestSample.sgn");  // NOI18N
             imp.importSgn(dm, file);
         } catch (IOException ex) {
-            log.error("Unable to test the import process");  // NOI18N
+            Assertions.fail("Unable to test the import process: " + ex ); // NOI18N
             return;
         }
 
@@ -57,22 +59,16 @@ public class TimeTableImportTest {
 
     @BeforeEach
     public void setUp(@TempDir File folder) throws IOException {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
     }
 
     @AfterEach
     public void tearDown() {
-       // use reflection to reset the static file location.
-       try {
-            Class<?> c = jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
-        }
-        jmri.util.JUnitUtil.tearDown();
+        // reset the static file location.
+        jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.resetFileLocation();
+        JUnitUtil.tearDown();
     }
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableImportTest.class);
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableImportTest.class);
 }

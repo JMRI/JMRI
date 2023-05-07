@@ -119,6 +119,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
     private LightIntensityPane lightIntensityPanel;
     private LightControlPane lightControlPanel;
 
+    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
+
     /**
      * {@inheritDoc}
      */
@@ -526,7 +528,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         }
 
         // remind to save, if Light was created or edited
-        if (lightCreatedOrUpdated) {
+        if (lightCreatedOrUpdated && !checkEnabled) {
             InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString",
                             Bundle.getMessage("MenuItemLightTable")),

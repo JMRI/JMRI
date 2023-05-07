@@ -10,7 +10,7 @@ import jmri.jmrit.logixng.DigitalBooleanActionBean;
 
 /**
  * The base class for LogixNG Boolean Actions
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public abstract class AbstractDigitalBooleanAction extends AbstractBase
@@ -18,19 +18,19 @@ public abstract class AbstractDigitalBooleanAction extends AbstractBase
 
     private Base _parent = null;
     private int _state = DigitalBooleanActionBean.UNKNOWN;
-    
-    
+
+
     public AbstractDigitalBooleanAction(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-        
+
         // Do this test here to ensure all the tests are using correct system names
         Manager.NameValidity isNameValid = InstanceManager.getDefault(DigitalBooleanActionManager.class).validSystemNameFormat(mSystemName);
         if (isNameValid != Manager.NameValidity.VALID) {
             throw new IllegalArgumentException("system name is not valid: "+mSystemName);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Base getParent() {
@@ -46,16 +46,16 @@ public abstract class AbstractDigitalBooleanAction extends AbstractBase
     public String getNewSocketName() {
         int x = 1;
         while (x < 10000) {     // Protect from infinite loop
+            String name = "A" + Integer.toString(x);
             boolean validName = true;
             for (int i=0; i < getChildCount(); i++) {
-                String name = "A" + Integer.toString(x);
                 if (name.equals(getChild(i).getName())) {
                     validName = false;
                     break;
                 }
             }
             if (validName) {
-                return "A" + Integer.toString(x);
+                return name;
             }
             x++;
         }
@@ -78,7 +78,7 @@ public abstract class AbstractDigitalBooleanAction extends AbstractBase
         log.warn("Unexpected call to getState in AbstractDigitalBooleanAction.");  // NOI18N
         return _state;
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractDigitalBooleanAction.class);
 }

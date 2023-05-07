@@ -25,7 +25,7 @@ public class FnMapPanelTest {
                 new String[]{"Name", "Value"},
                 new CvTableModel(new JLabel(""), p)
         );
-        List<Integer> varsUsed = null;
+        List<Integer> varsUsed = new java.util.ArrayList<>();
         Element model = new Element("model");
 
         FnMapPanel t = new FnMapPanel(tableModel, varsUsed, model);
@@ -40,7 +40,7 @@ public class FnMapPanelTest {
                 new String[]{"Name", "Value"},
                 new CvTableModel(new JLabel(""), p)
         );
-        List<Integer> varsUsed = null;
+        List<Integer> varsUsed = new java.util.ArrayList<>();
         Element model = new Element("model");
         model.setAttribute("numFns", "28");
 
@@ -51,7 +51,7 @@ public class FnMapPanelTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDebugProgrammerManager();
+        JUnitUtil.initDebugProgrammerManager();
     }
 
     @AfterEach

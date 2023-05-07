@@ -562,7 +562,6 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
         positionable3 = null;
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

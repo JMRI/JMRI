@@ -152,6 +152,10 @@ public abstract class AbstractThrottleManagerTestBase {
         tm.requestThrottle(addr, throtListen, true);
         JUnitUtil.waitFor(()-> (tm.getThrottleInfo(addr, Throttle.ISFORWARD) != null), "reply didn't arrive");
 
+        Assert.assertTrue(throttleFoundResult);
+        Assert.assertFalse( throttleNotFoundResult );
+        Assert.assertFalse( throttleStealResult );
+
         Assert.assertNotNull("is forward", tm.getThrottleInfo(addr, Throttle.ISFORWARD));
         Assert.assertNotNull("speed setting", tm.getThrottleInfo(addr, Throttle.SPEEDSETTING));
         Assert.assertNotNull("speed increment", tm.getThrottleInfo(addr, Throttle.SPEEDINCREMENT));

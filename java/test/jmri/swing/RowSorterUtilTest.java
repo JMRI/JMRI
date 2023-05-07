@@ -1,8 +1,11 @@
 package jmri.swing;
 
+import javax.swing.*;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +14,16 @@ import org.junit.jupiter.api.*;
  */
 public class RowSorterUtilTest {
 
+    // no testCtor as tested class only supplies static methods
+
     @Test
-    public void testCTor() {
-        RowSorterUtil t = new RowSorterUtil();
-        Assert.assertNotNull("exists",t);
+    public void testUnsortedByDefault() {
+        JTable table = new JTable();
+        table.setName("Test Sorter Table");
+        RowSorter<? extends TableModel> sorter = new TableRowSorter<>(table.getModel());
+        SortOrder so = RowSorterUtil.getSortOrder(sorter, 0);
+        Assertions.assertNotNull(so);
+        Assertions.assertEquals(SortOrder.UNSORTED, so);
     }
 
     @BeforeEach

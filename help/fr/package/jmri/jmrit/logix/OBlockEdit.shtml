@@ -1,36 +1,23 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02 -->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02 -->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Canton Add/Edit Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help OCanton Table">
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Cr&eacute;ation et modification OCantons, Portails et
-      OChemins</h1>Commencez par entrer chaque Canton d'occupation
+      OChemins</h1>
+      <p>Commencez par entrer chaque Canton d'occupation
       de votre r&eacute;seau dans le <b>Tableau Canton
-      d'occupations</b>.
+      d'occupations</b>.</p>
 
       <div style="margin-left: 2em">
         <p><b>1.</b> Entrez un nom syst&egrave;me pour le OCanton.
@@ -143,7 +130,7 @@
             Tenir le second clic vers le bas , vous pouvez faire
             glisser le texte &agrave; partir de cette ligne,
             colonne champs .
-          </div><b>9</b>Se d&eacute;placer dans le Tableau Canton
+          </div><b>9.</b> Se d&eacute;placer dans le Tableau Canton
           d'occupation ligne par ligne par rang&eacute;e. :
 
           <div style="margin-left: 2em">
@@ -219,7 +206,9 @@
         cr&eacute;ation et l'&eacute;dition de Mandat.</p>
       </div>
 
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

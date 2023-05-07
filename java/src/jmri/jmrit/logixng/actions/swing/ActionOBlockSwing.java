@@ -9,12 +9,18 @@ import javax.swing.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.InstanceManager;
+import jmri.Memory;
+import jmri.MemoryManager;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionOBlock;
 import jmri.jmrit.logixng.actions.ActionOBlock.DirectOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 
 /**
@@ -38,6 +44,9 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
     private JTextField _oblockDataReferenceTextField;
     private JTextField _oblockDataLocalVariableTextField;
     private JTextField _oblockDataFormulaTextField;
+    private BeanSelectPanel<Memory> _panelMemoryBean;
+    private JPanel _memoryPanel;
+    private JPanel _valuePanel;
 
 
     public ActionOBlockSwing() {
@@ -57,6 +66,8 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
         _selectOperationSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
 
         panel = new JPanel();
+        _memoryPanel = new JPanel();
+        _valuePanel = new JPanel();
 
         JPanel _tabbedPaneNamedBean;
         JPanel _tabbedPaneOperation;
@@ -71,6 +82,7 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
 
         _tabbedPaneData = new JTabbedPane();
         _panelDataDirect = new javax.swing.JPanel();
+        _panelDataDirect.setLayout(new BoxLayout(_panelDataDirect, BoxLayout.Y_AXIS));
         _panelDataReference = new javax.swing.JPanel();
         _panelDataLocalVariable = new javax.swing.JPanel();
         _panelDataFormula = new javax.swing.JPanel();
@@ -82,7 +94,12 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
 
         _oblockDataDirectTextField = new JTextField();
         _oblockDataDirectTextField.setColumns(30);
-        _panelDataDirect.add(_oblockDataDirectTextField);
+        _valuePanel.add(_oblockDataDirectTextField);
+        _panelDataDirect.add(_valuePanel);
+
+        _panelMemoryBean = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _memoryPanel.add(_panelMemoryBean);
+        _panelDataDirect.add(_panelMemoryBean);
 
         _oblockDataReferenceTextField = new JTextField();
         _oblockDataReferenceTextField.setColumns(30);
@@ -96,7 +113,9 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
         _oblockDataFormulaTextField.setColumns(30);
         _panelDataFormula.add(_oblockDataFormulaTextField);
 
-        setDataPanelState();
+//        setDataPanelState();
+        _valuePanel.setVisible(false);
+        _memoryPanel.setVisible(false);
 
         if (action != null) {
             switch (action.getDataAddressing()) {
@@ -108,11 +127,33 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
             }
             _oblockDataReferenceTextField.setText(action.getDataReference());
             _oblockDataLocalVariableTextField.setText(action.getDataLocalVariable());
+
             _oblockDataFormulaTextField.setText(action.getDataFormula());
 
             _oblockDataDirectTextField.setText(action.getOBlockValue());
-            setDataPanelState();
+            if (action.getSelectMemoryNamedBean().getNamedBean() != null) {
+                _panelMemoryBean.setDefaultNamedBean(action.getSelectMemoryNamedBean().getNamedBean().getBean());
+            }
+
+            LogixNG_SelectEnum<DirectOperation> selectEnum = action.getSelectEnum();
+            if (selectEnum.getEnum() != null) {
+                switch (selectEnum.getEnum()) {
+                    case GetBlockWarrant:
+                    case GetBlockValue:
+                        _panelMemoryBean.setVisible(true);
+                        break;
+                    case SetValue:
+                        _valuePanel.setVisible(true);
+                        break;
+                    default:
+                }
+            }
         }
+
+        setDataPanelState();
+
+        _selectOperationSwing.addAddressingListener((evt) -> { setDataPanelState(); });
+        _selectOperationSwing.addEnumListener((evt) -> { setDataPanelState(); });
 
         JComponent[] components = new JComponent[]{
             _tabbedPaneNamedBean,
@@ -127,10 +168,22 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
     }
 
     private void setDataPanelState() {
-        boolean newState = _selectOperationSwing
-                .isEnumSelectedOrIndirectAddressing(DirectOperation.SetValue);
+        _valuePanel.setVisible(false);
+        _panelMemoryBean.setVisible(false);
+
+        boolean newState = false;
+
+        if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetValue)) {
+            _valuePanel.setVisible(true);
+            newState = true;
+        } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockWarrant) ||
+                _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockValue)) {
+            _panelMemoryBean.setVisible(true);
+            newState = true;
+        }
+
         _tabbedPaneData.setEnabled(newState);
-        _oblockDataDirectTextField.setEnabled(newState);
+//        _oblockDataDirectTextField.setEnabled(newState);
         _oblockDataReferenceTextField.setEnabled(newState);
         _oblockDataLocalVariableTextField.setEnabled(newState);
         _oblockDataFormulaTextField.setEnabled(newState);
@@ -178,9 +231,14 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
         }
 
         if (_tabbedPaneData.getSelectedComponent() == _panelDataDirect) {
-            if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetValue)) {
+            if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockWarrant)
+                    || _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockValue)) {
+                if (_panelMemoryBean.isEmpty() || _panelMemoryBean.getNamedBean() == null) {
+                    errorMessages.add(Bundle.getMessage("ActionWarrant_ErrorMemory"));
+                }
+            } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetValue)) {
                 if (_oblockDataDirectTextField.getText().isEmpty()) {
-                    errorMessages.add(Bundle.getMessage("ActionOBlock_ErrorValue"));
+                    errorMessages.add(Bundle.getMessage("ActionWarrant_ErrorValue"));
                 }
             }
         }
@@ -213,6 +271,17 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
                 // Handle optional data field
                 if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetValue)) {
                     action.setOBlockValue(_oblockDataDirectTextField.getText());
+                } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockWarrant)
+                        || _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockValue)) {
+                    Memory memory = _panelMemoryBean.getNamedBean();
+                    if (memory != null) {
+                        NamedBeanHandle<Memory> handle
+                                = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                        .getNamedBeanHandle(memory.getDisplayName(), memory);
+                        action.getSelectMemoryNamedBean().setNamedBean(handle);
+                    } else {
+                        action.getSelectMemoryNamedBean().removeNamedBean();
+                    }
                 }
             } else if (_tabbedPaneData.getSelectedComponent() == _panelDataReference) {
                 action.setDataAddressing(NamedBeanAddressing.Reference);

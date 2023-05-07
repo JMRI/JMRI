@@ -1,67 +1,50 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated  by Blorec Herv&#233; le 2011-10-28-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated  by Blorec Herv&#233; le 2011-10-28-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Edit NCE Macro</title>
   <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content="JMRI Help NCE Show Cabs">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Montrer Cabines NCE</h1>
 
       <p>Cet outil fournit une liste des Cabs* NCE
-      connect&Atilde;&copy;es &Atilde;  votre centrale de commande
-      NCE. Jusqu'&Atilde;  63 commandes Cabs peuvent
-      &Atilde;&ordf;tre connect&Atilde;&copy;es, les types de Cabs
+      connectées à votre centrale de commande
+      NCE. Jusqu'à 63 commandes Cabs peuvent
+      être connectées, les types de Cabs
       sont ProCab, Cab04, USB, et l'AIU. L'outil fournit
-      &Atilde;&copy;galement l'adresse de chaque Cab de locomotive
-      active, la vitesse, Num&Atilde;&copy;ro de couplage, et
+      également l'adresse de chaque Cab de locomotive
+      active, la vitesse, Numéro de couplage, et
       quelles fonctions de la locomotive sont actives.</p>
 
       <p>Le moniteur va lire les informations de la Cab actuelle
-      lorsque l'outil est d'abord
-      s&Atilde;&copy;lectionn&Atilde;&copy;. la liste sera mise
-      &Atilde;  jour lorsque le bouton "Rafraichir" est
-      press&Atilde;&copy; ou si une adresse de Cab est
-      purg&Atilde;&copy;e.</p>
+      lorsque l'outil est d'abord sélectionné. la liste sera mise
+      à jour lorsque le bouton "Rafraichir" est
+      pressé ou si une adresse de Cab est purgée.</p>
 
-      <p>Pour aider &Atilde;  g&Atilde;&copy;rer les Cabs sur les
-      r&Atilde;&copy;seaux tr&Atilde;&uml;s grand,
-      l'&Atilde;&copy;cran affiche la derni&Atilde;&uml;re fois
-      qu'une Cab a &Atilde;&copy;t&Atilde;&copy;
-      consid&Atilde;&copy;r&Atilde;&copy;e comme active et que des
-      param&Atilde;&uml;tres ont chang&Atilde;&copy;s.
+      <p>Pour aider à gérer les Cabs sur les
+      réseaux très grand, l'écran affiche la dernière fois
+      qu'une Cab a été considérée comme active et que des
+      paramètres ont changés.
       L'utilisation de ceci vous permet d'entrer l'ID de la Cab et
       utiliser le bouton "Purger" pour marquer l'adresse de Cab
-      en-activit&Atilde;&copy;. Cela devrait am&Atilde;&copy;liorer
-      le temps de r&Atilde;&copy;ponse de la frappe sur les
+      en-activité. Cela devrait améliorer
+      le temps de réponse de la frappe sur les
       commande Cabs restantes que les centrales de commande
-      n'auront pas &Atilde;  temporiser en attendant une
-      r&Atilde;&copy;ponse de l'adresse de la Cab
-      purg&Atilde;&copy;e. *commande manuelle</p>
+      n'auront pas à temporiser en attendant une
+      réponse de l'adresse de la Cab purgée. *commande manuelle</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

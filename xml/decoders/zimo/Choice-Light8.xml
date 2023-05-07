@@ -17,8 +17,8 @@
         <choice xml:lang="de">Leuchtstoffröhren-Effekt</choice>
         <choice xml:lang="cs">Efekt zářivky</choice>
       </enumChoice>
-      <enumChoice choice="sparks with hevy braking">
-        <choice>Sparks with hevy braking</choice>
+      <enumChoice choice="sparks with heavy braking">
+        <choice>Sparks with heavy braking</choice>
         <choice xml:lang="de">Bremsfunken bei starkem Bremsen</choice>
         <choice xml:lang="cs">Jiskry při prudkém brždění</choice>
       </enumChoice>

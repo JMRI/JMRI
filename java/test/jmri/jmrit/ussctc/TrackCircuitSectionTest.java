@@ -15,15 +15,12 @@ import org.junit.jupiter.api.*;
 public class TrackCircuitSectionTest {
 
     @Test
-    public void testConstruction() {
-        new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
-    }
-
-    @Test
     public void testLayoutMonitoring() throws JmriException {
+        Assertions.assertNotNull(sensor);
         sensor.setKnownState(Sensor.INACTIVE);
 
-        new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
+        TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
+        Assertions.assertNotNull(t);
 
         sensor.setKnownState(Sensor.ACTIVE);
 
@@ -38,6 +35,7 @@ public class TrackCircuitSectionTest {
         TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
 
         // check multiple patterns for state -> return value
+        Assertions.assertNotNull(sensor);
         sensor.setState(Sensor.INACTIVE);
         Assert.assertEquals(CodeGroupOneBit.Single0, t.indicationStart());
 
@@ -62,6 +60,7 @@ public class TrackCircuitSectionTest {
 
         TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
 
+        Assertions.assertNotNull(indicator);
         indicator.setCommandedState(Turnout.INCONSISTENT);
 
         t.indicationComplete(CodeGroupOneBit.Single0);
@@ -74,6 +73,7 @@ public class TrackCircuitSectionTest {
 
         TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
 
+        Assertions.assertNotNull(indicator);
         indicator.setCommandedState(Turnout.INCONSISTENT);
 
         t.indicationComplete(CodeGroupOneBit.Single1);
@@ -85,8 +85,8 @@ public class TrackCircuitSectionTest {
     Station station;
     boolean requestIndicationStart;
 
-    Turnout indicator;
-    Sensor sensor;
+    private Turnout indicator = null;
+    private Sensor sensor = null;
 
     @BeforeEach
     public void setUp() {

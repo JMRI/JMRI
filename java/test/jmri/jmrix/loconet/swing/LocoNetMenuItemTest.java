@@ -1,10 +1,11 @@
 package jmri.jmrix.loconet.swing;
 
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.locomon.LocoMonPane;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for LocoNetMenuItem.
@@ -17,45 +18,44 @@ public class LocoNetMenuItemTest {
     public void testIsInterfaceOnly() {
         LocoNetMenuItem instance = new LocoNetMenuItem("a.b.c.d",
                 LocoMonPane.class, false, true);
-        boolean expResult = false;
-        boolean result = instance.isInterfaceOnly();
-        assertEquals("isInterfaceOnly expect false", expResult, result);
+        assertFalse( instance.isInterfaceOnly(), "isInterfaceOnly expect false");
         instance = new LocoNetMenuItem("a.b.c.d",
                 LocoMonPane.class, true, false);
-        expResult = true;
-        result = instance.isInterfaceOnly();
-        assertEquals("isInterfaceOnly expect true", expResult, result);
+        assertTrue( instance.isInterfaceOnly(), "isInterfaceOnly expect true");
     }
 
     @Test
     public void testGetName() {
         LocoNetMenuItem instance = new LocoNetMenuItem("a.b.c.d",
                 LocoMonPane.class, false, true);
-        String expResult = "a.b.c.d";
-        String result = instance.getName();
-        assertEquals("getName expect 'a.b.c.d'", expResult, result);
+        assertEquals("a.b.c.d", instance.getName(), "getName expect 'a.b.c.d'");
     }
 
     @Test
     public void testGetClassToLoad() {
         LocoNetMenuItem instance = new LocoNetMenuItem("a.b.c.d",
                 LocoMonPane.class, false, true);
-        Class expResult = LocoMonPane.class;
-        Class result = instance.getClassToLoad();
-        assertEquals("getClassToLoad test", expResult, result);
+        assertEquals( LocoMonPane.class, instance.getClassToLoad(), "getClassToLoad test");
     }
 
     @Test
     public void testHasGui() {
         LocoNetMenuItem instance = new LocoNetMenuItem("a.b.c.d",
                 LocoMonPane.class, false, true);
-        boolean expResult = true;
-        boolean result = instance.hasGui();
-        assertEquals("hasGui expect true", expResult, result);
+        assertTrue( instance.hasGui(), "hasGui expect true");
         instance = new LocoNetMenuItem("a.b.c.d",
                 LocoMonPane.class, true, false);
-        expResult = false;
-        result = instance.hasGui();
-        assertEquals("hasGui expect false", expResult, result);    }
+        assertFalse( instance.hasGui(), "hasGui expect false");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 }

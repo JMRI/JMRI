@@ -30,7 +30,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     @BeforeEach
     abstract public void setUp();
 
-    static protected boolean listenerResult = false;
+    protected boolean listenerResult = false;
 
     protected class Listen implements PropertyChangeListener {
 
@@ -55,7 +55,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
 
     @Test
     public void testProvideFailure() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
         JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
@@ -74,7 +74,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
         // create
         Turnout t = l.provide("" + getNumToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
@@ -95,30 +95,33 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     @Test
     public void testProvideFailWithPrefix() throws IllegalArgumentException {
 
-        Assert.assertThrows(IllegalArgumentException.class, () -> l.provide(l.getSystemPrefix()+"T"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> l.provide(l.getSystemPrefix()+"T"));
         JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Turnout: ");
 
     }
 
     @Test
     public void testDefaultSystemName() {
+        listenerResult = false;
+        l.addPropertyChangeListener(new Listen());
         // create
         Turnout t = l.provideTurnout("" + getNumToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertTrue(listenerResult);
     }
 
     @Test
     public void testSingleObject() {
         // test that you always get the same representation
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t1 real object returned ", t1 != null);
+        Assert.assertNotNull("t1 real object returned ", t1 );
         Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
         Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
 
         Turnout t2 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t2 real object returned ", t2 != null);
+        Assert.assertNotNull("t2 real object returned ", t2 );
         // check
         Assert.assertTrue("same new ", t1 == t2);
     }

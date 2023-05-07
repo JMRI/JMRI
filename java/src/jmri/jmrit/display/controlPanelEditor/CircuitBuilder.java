@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -43,6 +42,7 @@ import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.HelpUtil;
+import jmri.util.swing.JmriMouseEvent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1433,7 +1433,7 @@ public class CircuitBuilder {
      * @param selection the selection
      * @return true
      */
-    protected boolean doMousePressed(MouseEvent event, Positionable selection) {
+    protected boolean doMousePressed(JmriMouseEvent event, Positionable selection) {
         _selection = selection;
         return true;
     }
@@ -1444,7 +1444,7 @@ public class CircuitBuilder {
      * @param event     the triggering event
      * @return true if the selection group is restored; false otherwise
      */
-    protected boolean doMousePressed(MouseEvent event) {
+    protected boolean doMousePressed(JmriMouseEvent event) {
         if (_editFrame != null) {
             _editFrame.toFront();
             _editor.setSelectionGroup(_saveSelectionGroup);
@@ -1488,7 +1488,7 @@ public class CircuitBuilder {
     }
 
     // Return true if CircuitBuilder is editing
-    protected boolean doMouseClicked(List<Positionable> selections, MouseEvent event) {
+    protected boolean doMouseClicked(List<Positionable> selections, JmriMouseEvent event) {
         if (_editFrame != null) {
             if (selections != null && selections.size() > 0) {
                 ArrayList<Positionable> tracks = new ArrayList<>();
@@ -1578,7 +1578,7 @@ public class CircuitBuilder {
      * @param event     the triggering event
      * @return true to prevent dragging; false otherwise
      */
-    public boolean doMouseDragged(Positionable selection, MouseEvent event) {
+    public boolean doMouseDragged(Positionable selection, JmriMouseEvent event) {
         if (_editFrame != null) {
             if (selection instanceof PortalIcon) {
                 if (_editFrame instanceof EditPortalFrame) {
@@ -1611,7 +1611,7 @@ public class CircuitBuilder {
      * If not there, add.
      * If there, delete.
      */
-    private void handleSelection(Positionable selection, MouseEvent event) {
+    private void handleSelection(Positionable selection, JmriMouseEvent event) {
         if (_editFrame == null) {
             return;
         }

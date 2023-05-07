@@ -1,7 +1,5 @@
 package jmri.util.swing.multipane;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -10,7 +8,8 @@ import jmri.util.swing.SamplePane;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -22,8 +21,9 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public class MultiJfcUnitTest {
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testShow() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // show the window
         JFrame f1 = new MultiPaneWindow("test",
                 "java/test/jmri/util/swing/xml/Gui3LeftTree.xml",
@@ -54,7 +54,7 @@ public class MultiJfcUnitTest {
         new JButtonOperator(next1button).doClick();
 
         // nobody disposed yet
-        Assert.assertEquals("no panes disposed", 0, SamplePane.disposed.size());
+        Assert.assertEquals("no panes disposed", 0, SamplePane.getDisposedList().size());
 
         // Find the Next2 button on new panel
         JButton next2button = JButtonOperator.findJButton(f1, "Next2", true, true);
@@ -80,13 +80,13 @@ public class MultiJfcUnitTest {
         Assert.assertNotNull("Close3 button found", button);
 
         // nobody disposed yet
-        Assert.assertEquals("no panes disposed", 0, SamplePane.disposed.size());
+        Assert.assertEquals("no panes disposed", 0, SamplePane.getDisposedList().size());
 
         // Close entire frame directly
         new JFrameOperator(f1).dispose();
 
         // Now they're disposed
-        Assert.assertEquals("panes disposed", 3, SamplePane.disposed.size());
+        Assert.assertEquals("panes disposed", 3, SamplePane.getDisposedList().size());
 
     }
 
@@ -94,8 +94,7 @@ public class MultiJfcUnitTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        jmri.util.swing.SamplePane.disposed = new java.util.ArrayList<>();
-        jmri.util.swing.SamplePane.index = 0;
+        SamplePane.resetCounts();
     }
 
     @AfterEach

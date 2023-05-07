@@ -2,9 +2,7 @@ package jmri.beans;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.util.JUnitUtil;
 
@@ -13,7 +11,7 @@ import jmri.util.JUnitUtil;
  */
 public class MutableIdentifiableTest {
 
-    private MutableIdentifiable bean;
+    private MutableIdentifiable bean = null;
 
     @BeforeEach
     public void setUp() {
@@ -40,6 +38,7 @@ public class MutableIdentifiableTest {
 
     @Test
     public void testSetId() {
+        Assertions.assertNotNull(bean);
         assertThat(bean.getId()).isEqualTo("bean");
         bean.setId("changed");
         assertThat(bean.getId()).isEqualTo("changed");

@@ -28,7 +28,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     public Dcc4PcSensorManager(Dcc4PcTrafficController tc, Dcc4PcSystemConnectionMemo memo) {
         super(memo);
         this.tc = tc;
-        this.reportManager = memo.get(jmri.ReporterManager.class);
+        this.reportManager = (Dcc4PcReporterManager) memo.get(jmri.ReporterManager.class);
         jmri.InstanceManager.store(this, Dcc4PcSensorManager.class);
         this.boardManager = new Dcc4PcBoardManager(tc, this);
         // Finally, create and register a shutdown task to ensure clean exit

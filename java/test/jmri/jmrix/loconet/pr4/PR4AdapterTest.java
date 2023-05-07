@@ -29,7 +29,7 @@ public class PR4AdapterTest {
                 foundPR4StandaloneProgrammer = true;
             }
             if (cmdStns[i].compareTo(
-                    LnCommandStationType.COMMAND_STATION_STANDALONE.getName().toString() +
+                    LnCommandStationType.COMMAND_STATION_STANDALONE.getName() +
                     " (using external LocoNet Data Termination!)") == 0) {
                 foundPR4StandaloneLocoNet = true;
             }

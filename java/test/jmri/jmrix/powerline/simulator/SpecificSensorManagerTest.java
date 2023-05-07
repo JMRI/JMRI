@@ -16,7 +16,7 @@ public class SpecificSensorManagerTest {
    private SpecificSystemConnectionMemo memo = null;
 
    @Test
-   public void ConstructorTest(){
+   public void testConstructor(){
       Assert.assertNotNull("SpecificSensorManager constructor",new SpecificSensorManager(new SpecificTrafficController(memo)));
    }
 
@@ -32,7 +32,7 @@ public class SpecificSensorManagerTest {
    public void tearDown(){
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
-
+        memo.dispose();
         memo = null;
    }
 

@@ -12,14 +12,14 @@ import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns configuration objects for a SPROG DCC SPROG 3 Plus
+ * Returns configuration objects for a SPROG DCC [Pi-]SPROG 3 [v2|Plus]
  *
  * @author Andrew Crosland Copyright (C) 2021
  */
 @ServiceProvider(service = CbusConfigPaneProvider.class)
 public class Sprog3PlusPaneProvider extends CbusConfigPaneProvider {
     
-    String type = "Pi-SPROG 3";
+    String type = "CANSPROG3P";
     
     public static final int CMD_STATION_NUMBER = 1;
     public static final int USER_FLAGS = 2;
@@ -43,7 +43,14 @@ public class Sprog3PlusPaneProvider extends CbusConfigPaneProvider {
     public static final int NN_LO = 20;
     public static final int DCC_PREAMBLE = 21;
     public static final int CAN_DISABLE = 22;
+    public static final int USER_FLAGS_2 = 23;
     
+    // These may be overridden in scripts for unusual use cases
+    public static int MIN_CANID = 100;
+    public static int MAX_CANID = 127;
+    public static int MIN_NN = 65520;
+    public static int MAX_NN = 65535;
+
     public Sprog3PlusPaneProvider() {
         super();
     }
@@ -89,6 +96,7 @@ public class Sprog3PlusPaneProvider extends CbusConfigPaneProvider {
         result.put(NN_LO, Bundle.getMessage("NodeNumberLo"));
         result.put(DCC_PREAMBLE, Bundle.getMessage("DccPreambleBits"));
         result.put(CAN_DISABLE, Bundle.getMessage("CanDisable"));
+        result.put(USER_FLAGS_2, Bundle.getMessage("UserFlags2"));
         return Collections.unmodifiableMap(result);
     }
     

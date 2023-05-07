@@ -134,9 +134,9 @@ public class AbstractIdentifyTest {
     }
 
     // internal class for testing
-    class AITest extends AbstractIdentify {
+    private class AITest extends AbstractIdentify {
 
-        public AITest(Programmer p) {
+        AITest(Programmer p) {
             super(p);
         }
 
@@ -212,9 +212,9 @@ public class AbstractIdentifyTest {
 
     }
 
-    public static int invoked = -1;
-    public static int ivalue = -1;
-    public static boolean retval = false;
+    protected int invoked = -1;
+    protected int ivalue = -1;
+    protected boolean retval = false;
 
     @BeforeEach
     public void setUp() {

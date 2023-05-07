@@ -476,7 +476,9 @@
 
         <dd>When something tells the Turnout to change, it immediately starts the operation and
         goes to the INCONSISTENT state to reflect that the points are moving. After a few seconds
-        delay, the operation completes and the final state is reported.</dd>
+        delay, the operation completes and the final state is reported.  The default delay
+        duration is 4 seconds.  The delay duration for the current JMRI session can be changed using
+        the <code>SetDefaultDelayedTurnoutDelay.py</code> script.</dd>
 
         <dt>MONITORING</dt>
 

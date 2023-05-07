@@ -38,10 +38,10 @@
         <xs:element name="memoryname" type="xs:string" minOccurs="0" maxOccurs="1"/>
         <xs:element name="dispatcherintegration" type="xs:string" minOccurs="0" maxOccurs="1"/>
         <xs:element name="colourwhilesetting" type="xs:string" minOccurs="0" maxOccurs="1"/>
-
-        <!-- next elements not appearing in EntryExitPairsXml#store or #load code JMRI 4.7.1 -->
         <xs:element name="settingTimer" type="xs:string" minOccurs="0" maxOccurs="1"/>
-        <!-- next elements not appearing in EntryExitPairsXml#store or #load code JMRI 4.7.1 -->
+        <xs:element name="abssignalmode" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+        <!-- next element not appearing in EntryExitPairsXml#store or #load code JMRI 4.7.1 -->
         <xs:element name="logicDelay" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
         <!-- code in EntryExitPairsXml that writes the following is distinct from usual panel code -->

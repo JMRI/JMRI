@@ -93,7 +93,6 @@ public class PointDetailsTest {
         JUnitUtil.clearTurnoutThreads();
         JUnitUtil.removeMatchingThreads("Routing stabilising timer");
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -1,27 +1,23 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-31-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-31-->
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Les éditeurs d'Icônes</title>
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI help Panel Editor"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Panel Editor">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>Les éditeurs d'Icônes</h1>
 
       <h2>Contenu des éditeurs d'Icône</h2>
-      <img src="AddPanel.png" align="right" alt="">
+      <img src="images/AddPanel.png" align="right" alt="">
       <p>Cinq des éditeurs d'Icône: (Aiguillage Droit, Aiguillage Gauche, Capteur, Signal,
       Multicapteurs) affichent un groupe d'icônes au-dessus d'une table. Le tableau répertorie
       l'ensemble des entités JMRI pour le type donné qui a été défini. Il y a une icône pour chaque
@@ -61,14 +57,14 @@
       les icônes de la nouvelle entité dans le Panneau.</p>
 
       <h2>Appui sur le Bouton Changer d'Icône</h2>
-      <img src="AddPanel2.png" align="right" alt="">
+      <img src="images/AddPanel2.png" align="right" alt="">
       <p>L'appui sur ce bouton ajoute un volet étiqueté <strong>Catalogue</strong> à la fenêtre. Il
       montrera un ou plusieurs "arbres" dans un panneau de défilement. L'expansion de l'arbre
       affiche des "nœuds" ou branches de l'arbre qui, à son tour peut être étendu. Les nœuds
       correspondent à des choses qui sont des répertoires fichiers systèmes ou sont semblables à
       des répertoires de fichiers systèmes. Chaque fois que les fichiers image (icône) sont
       rencontrés dans un nœud, les images sont affichées dans un panneau ci-dessous l'arborescence
-      du catalogue (s).</p>
+      du catalogue(s).</p>
 
       <p>Ce volet est un panneau de "Prévisualisation" du contenu du nœud et a une étiquette qui
       indique combien de fichiers images ont été trouvés. Le panneau affiche toutes les images
@@ -215,8 +211,10 @@
           </ul>
         </li>
       </ul>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

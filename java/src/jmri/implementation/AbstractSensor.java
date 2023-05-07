@@ -136,7 +136,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
             }
         };
 
-        thr = jmri.util.ThreadingUtil.newThread(r);
+        thr = jmri.util.ThreadingUtil.newThread(r , "Debounce thread " + getDisplayName() );
         thr.start();
     }
 
@@ -338,6 +338,14 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     @Override
     public PullResistance getPullResistance(){
        return PullResistance.PULL_OFF;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (thr != null) { // try to stop the debounce thread 
+            thr.interrupt();
+        }
     }
 
 }

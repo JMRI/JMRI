@@ -101,7 +101,7 @@ public class ExportEngines extends XmlFile {
                         engine.getRoadName(),
                         engine.getModel(),
                         engine.getLength(),
-                        engine.getOwner(),
+                        engine.getOwnerName(),
                         engine.getBuilt(),
                         engine.getLocationName(),
                         LOCATION_TRACK_SEPARATOR,

@@ -41,7 +41,7 @@ public class AbstractPanelServletTest {
         JUnitUtil.tearDown();
     }
 
-    private class NullPanelServlet extends AbstractPanelServlet {
+    private static class NullPanelServlet extends AbstractPanelServlet {
 
         @Override
         protected String getPanelType() {

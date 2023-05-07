@@ -12,12 +12,7 @@ import org.junit.jupiter.api.*;
  */
 public class CbusNodeConstantsTest {
 
-    @Test
-    public void testCTor() {
-        CbusNodeConstants t = new CbusNodeConstants();
-        Assert.assertNotNull("exists",t);
-        t = null;
-    }
+    // no testCtor as class only supplies static methods
     
     @Test
     public void testGetBusType() {
@@ -33,7 +28,7 @@ public class CbusNodeConstantsTest {
     }
 
     @Test
-    public void testgetModuleType() {
+    public void testgetModuleTypeFromConstants() {
         Assert.assertEquals("getModuleType 165 29","CANPAN",CbusNodeConstants.getModuleType(165,29));
         Assert.assertEquals("getModuleType 70 4","CANGC4",CbusNodeConstants.getModuleType(70,4));
         Assert.assertEquals("getModuleType 80 2","DUALCAB",CbusNodeConstants.getModuleType(80,2));

@@ -23,7 +23,7 @@
 
       <ul>
         <li>
-          <a href="#linux">Linux</a>
+          <a href="#Linux">Linux</a>
         </li>
 
         <li>
@@ -271,7 +271,7 @@
       <h3>Script Details</h3>
 
       <p>Each bundle has a startup bash shell script in the Contents/MacOSX directory that performs
-      the actual startup. This is the same script as used for Linux, see <a href="#linux">that
+      the actual startup. This is the same script as used for Linux, see <a href="#Linux">that
       section</a> for details.</p>
 
       <h3>Uniform Type Identifiers</h3>

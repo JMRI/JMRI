@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Manual: Index</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Manual: Index</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
+
 <body>
   <!--#include virtual="/Header.shtml" -->
 
@@ -26,7 +28,7 @@
             <td><span style="font-weight: bold;">JMRI&reg; current</span>
             </td>
             <td style="font-weight: bold;">
-              <a href="../html/apps/DecoderPro/index.shtml">DecoderPro v4.x</a>
+              <a href="../html/apps/DecoderPro/index.shtml">DecoderPro v4.x/5.x</a>
             </td>
             <td>
             </td>
@@ -36,7 +38,7 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="../html/apps/PanelPro/index.shtml">PanelPro&trade; v4.x</a>
+              <a href="../html/apps/PanelPro/index.shtml">PanelPro&trade; v4.x/v5.x</a>
             </td>
             <td>
             </td>
@@ -46,7 +48,7 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.x</a>
+              <a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.x/v5.x</a>
             </td>
             <td>
             </td>
@@ -56,7 +58,7 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro&trade; v4.x</a>
+              <a href="../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro&trade; v4.x/v5.x</a>
             </td>
             <td>
             </td>
@@ -66,7 +68,7 @@
             <td>
             </td>
             <td style="font-weight: bold;">
-              <a href="../html/setup/index.shtml">General Set Up v4.x</a><br>
+              <a href="../html/setup/index.shtml">General Set Up v4.x/v5.x</a><br>
             </td>
             <td>
             </td>
@@ -189,10 +191,8 @@
       Gradually build on you foundation concepts of the program and pick up elements of interest by
       following some of the links at the bottom of the left sidebar on the JMRI web Help.</p>
 
-      <p>If this is your first visit to our manual, we suggest that you take the DecoderPro&reg; tour
-      at <a href=
-      "https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
-
+      <p>If this is your first visit to our manual, we suggest that you take the
+      <a href="https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">DecoderPro&reg; tour</a><br>
       to get an overview of what we're about to cover.</p>
 
       <h2>System Requirements</h2>
@@ -205,12 +205,11 @@
       <p>Version 2.12 can run on any computer system that will run Java 1.5 or later.<br>
       Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag & drop)<br>
       Version 3.10.1 requires Java 1.7 or later.<br>
-      Version 4.2 and up requires Java 1.8.</p>
+      Version 4.2 - 4.27 requires Java 1.8.<br>
+      Version 4.99 and up requires Java 11.</p>
 
-      <p>More on <a href="https://www.java.com/en/download/help/sysreq.xml">Java versions and
-      hardware requirements</a>.<br>
-      Get the latest Java as a free download at: <a href="https://www.java.com/download/" target=
-      "_blank">java.com/download</a>.</p>
+      <p>More on our <a href="/java/index.shtml">Java installer page</a>.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

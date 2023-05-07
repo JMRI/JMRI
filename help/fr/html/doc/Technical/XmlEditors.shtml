@@ -1,24 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec  2016-08-19-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec  2016-08-19-->
 <head>
-    <title>
- 	JMRI: XML Editors
-   </title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code xml editors">
-
-<!-- /Style -->
+  <title>JMRI: XML Editors</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code xml editors">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
-<h1>JMRI: Editeurs XML</h1>
+    <h1>JMRI: Editeurs XML</h1>
 
       <p>JMRI utilise XML pour un certain
       nombre d'objectifs: de tenir d&eacute;codeur
@@ -46,105 +43,106 @@
 <h2>&#233;diteurs Libres</h2>
 
 <dl>
-<dt> Crimson Editor
-<dd> <a href="http://www.crimsoneditor.com/"> http://www.crimsoneditor.com/</a>
+  <dt> Crimson Editor
+  <dd> <a href="http://www.crimsoneditor.com/"> http://www.crimsoneditor.com/</a>
 
-<dt>CotEditor
-<dd><a href="http://coteditor.com">http://coteditor.com</a> (OS X)
+  <dt>CotEditor
+  <dd><a href="http://coteditor.com">http://coteditor.com</a> (OS X)
 
-<dt> Editra
-<dd> <a href="http://editra.org/"> http://editra.org/</a>
+  <dt> Editra
+  <dd> <a href="http://editra.org/"> http://editra.org/</a>
 
-      <dl>
-        <dt>Crimson Editor</dt>
+        <dl>
+          <dt>Crimson Editor</dt>
 
-        <dd><a href=
-        "http://www.crimsoneditor.com/">http://www.crimsoneditor.com/</a></dd>
+          <dd><a href=
+          "http://www.crimsoneditor.com/">http://www.crimsoneditor.com/</a></dd>
 
-        <dt>Editra</dt>
+          <dt>Editra</dt>
 
-        <dd><a href=
-        "http://editra.org/">http://editra.org/</a></dd>
+          <dd><a href=
+          "http://editra.org/">http://editra.org/</a></dd>
 
-        <dt>Edxor</dt>
+          <dt>Edxor</dt>
 
-<dt> XML Marker
-<dd> <a href="http://symbolclick.com/"> http://symbolclick.com/</a>
+  <dt> XML Marker
+  <dd> <a href="http://symbolclick.com/"> http://symbolclick.com/</a>
 
-        <dd><a href=
-        "http://www.jedit.org/">http://www.jedit.org/</a> Komodo
-        Edit</dd>
+          <dd><a href=
+          "http://www.jedit.org/">http://www.jedit.org/</a> Komodo
+          Edit</dd>
 
-        <dd><a href=
-        "http://www.openkomodo.com/">http://www.openkomodo.com/</a></dd>
+          <dd><a href=
+          "http://www.openkomodo.com/">http://www.openkomodo.com/</a></dd>
 
-        <dt>LopeEdit</dt>
+          <dt>LopeEdit</dt>
 
-        <dd><a href=
-        "http://www.lopesoft.com/en/index.html">http://www.lopesoft.com/en/index.html</a></dd>
+          <dd><a href=
+          "http://www.lopesoft.com/en/index.html">http://www.lopesoft.com/en/index.html</a></dd>
 
-        <dt>Notepad + +</dt>
+          <dt>Notepad + +</dt>
 
-        <dd><a href=
-        "http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&amp;displaylang=en">
-        http://notepad-plus-plus.org/</a></dd>
-
-        <dt>Marker XML</dt>
-
-        <dd><a href=
-        "http://symbolclick.com/">http://symbolclick.com/</a></dd>
-
-        <dt>PSPad</dt>
-
-        <dd><a href=
-        "http://www.pspad.com/">http://www.pspad.com/</a></dd>
-      </dl>
-
-      <h2>Editeurs Commerciaux</h2>
-
-      <dl>
-        <dt>SynText</dt>
-
-        <dd><a href=
-        "http://www.syntext.com/">http://www.syntext.com/</a></dd>
-
-        <dt>UltraEdit</dt>
-
-        <dd><a href=
-        "http://www.ultraedit.com/">http://www.ultraedit.com/</a></dd>
-
-        <dt>EditPlus</dt>
-
-        <dd><a href=
-        "http://www.editplus.com/">http://www.editplus.com/</a></dd>
-      </dl>
-
-      <h2>Non Recommand&eacute;</h2>Les outils suivants ont
-      &eacute;t&eacute; rapport&eacute;s pour ne pas bien
-      fonctionner avec JMRI.
-
-      <dl>
-        <dt>XML Notepad 2007</dt>
-
-        <dd>
-          <a href=
+          <dd><a href=
           "http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&amp;displaylang=en">
-          http://www.microsoft.com/download/ details.aspx? familyid
-          = 72d6aa49-787d-4118-ba5f-4f30fe913628 &amp; displaylang
-          = fr</a>
+          http://notepad-plus-plus.org/</a></dd>
 
-          <p>Plusieurs utilisateurs ont signal&eacute; des
-          probl&egrave;mes avec XML Notepad 2007 l'&eacute;criture
-          de fichiers qui ne peuvent plus &ecirc;tre lus par JMRI.
-          Cela semble &ecirc;tre un probl&egrave;me avec son format
-          de sortie UDF.</p>
-        </dd>
-      </dl>
-</dd>
+          <dt>Marker XML</dt>
+
+          <dd><a href=
+          "http://symbolclick.com/">http://symbolclick.com/</a></dd>
+
+          <dt>PSPad</dt>
+
+          <dd><a href=
+          "http://www.pspad.com/">http://www.pspad.com/</a></dd>
+        </dl>
+
+        <h2>Editeurs Commerciaux</h2>
+
+        <dl>
+          <dt>SynText</dt>
+
+          <dd><a href=
+          "http://www.syntext.com/">http://www.syntext.com/</a></dd>
+
+          <dt>UltraEdit</dt>
+
+          <dd><a href=
+          "http://www.ultraedit.com/">http://www.ultraedit.com/</a></dd>
+
+          <dt>EditPlus</dt>
+
+          <dd><a href=
+          "http://www.editplus.com/">http://www.editplus.com/</a></dd>
+        </dl>
+
+        <h2>Non Recommand&eacute;</h2>Les outils suivants ont
+        &eacute;t&eacute; rapport&eacute;s pour ne pas bien
+        fonctionner avec JMRI.
+
+        <dl>
+          <dt>XML Notepad 2007</dt>
+
+          <dd>
+            <a href=
+            "http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&amp;displaylang=en">
+            http://www.microsoft.com/download/ details.aspx? familyid
+            = 72d6aa49-787d-4118-ba5f-4f30fe913628 &amp; displaylang
+            = fr</a>
+
+            <p>Plusieurs utilisateurs ont signal&eacute; des
+            probl&egrave;mes avec XML Notepad 2007 l'&eacute;criture
+            de fichiers qui ne peuvent plus &ecirc;tre lus par JMRI.
+            Cela semble &ecirc;tre un probl&egrave;me avec son format
+            de sortie UDF.</p>
+          </dd>
+        </dl>
+  </dd>
 </dl>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

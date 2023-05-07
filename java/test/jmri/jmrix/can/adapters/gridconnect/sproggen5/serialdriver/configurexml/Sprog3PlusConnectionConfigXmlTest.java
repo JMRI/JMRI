@@ -3,7 +3,6 @@ package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.configurexml;
 import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.Sprog3PlusConnectionConfig;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,9 +15,9 @@ import org.junit.jupiter.api.*;
 public class Sprog3PlusConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
     @Test
-    public void testCTor() {
-        Sprog3PlusConnectionConfigXml c = new Sprog3PlusConnectionConfigXml();
-        Assert.assertNotNull("exists",c);
+    public void testBothConstructors() {
+        Assertions.assertNotNull(xmlAdapter, "xmlAdapter exists");
+        Assertions.assertNotNull(cc, "cc exists");
     }
     
     @BeforeEach

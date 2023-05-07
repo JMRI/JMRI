@@ -241,19 +241,17 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
             vc.vetoableChange(evt);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
 //    @OverridingMethodsMustInvokeSuper
     public final void deleteBean(@Nonnull ConditionalNG conditionalNG, @Nonnull String property) throws PropertyVetoException {
-        for (int i=0; i < conditionalNG.getChildCount(); i++) {
-            FemaleSocket child = conditionalNG.getChild(i);
-            if (child.isConnected()) {
-                MaleSocket maleSocket = child.getConnectedSocket();
-                maleSocket.getManager().deleteBean(maleSocket, property);
-            }
+        FemaleSocket child = conditionalNG.getFemaleSocket();
+        if (child.isConnected()) {
+            MaleSocket maleSocket = child.getConnectedSocket();
+            maleSocket.getManager().deleteBean(maleSocket, property);
         }
-        
+
         // throws PropertyVetoException if vetoed
         fireVetoableChange(property, conditionalNG);
         if (property.equals("DoDelete")) { // NOI18N
@@ -263,7 +261,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
             conditionalNG.dispose();
         }
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNGManager.class);
 }

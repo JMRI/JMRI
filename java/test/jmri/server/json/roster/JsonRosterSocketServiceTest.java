@@ -115,7 +115,11 @@ public class JsonRosterSocketServiceTest {
 
         // rename a roster group and verify message sent by listener
         this.connection.sendMessage(null, 0);
-        Roster.getDefault().getRosterGroups().get("NewRosterGroup").setName("AgedRosterGroup");
+
+        var newRosterGroup = Roster.getDefault().getRosterGroups().get("NewRosterGroup");
+        Assertions.assertNotNull(newRosterGroup);
+
+        newRosterGroup.setName("AgedRosterGroup");
         Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
         message = this.connection.getMessage();
         Assert.assertNotNull("Message was sent", message);

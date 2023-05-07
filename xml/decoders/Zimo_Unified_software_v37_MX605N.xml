@@ -20,6 +20,7 @@
   <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!--                                                                                       -->
+  <!-- v1.1,  include CV's 190-191, Ulrich Gerlach 25 March 2023                             --> 
   <!-- MX605N is special Zimo non-sound decoder for Kato N-scale ICE 4 (in theory usable in other Kato vehicules with the Kato in-house connector for EM13 decoder). -->
   <!-- Due to the combination with MX605SL (Front Lights) & MX605FL (Interior Lighting) installed in same train set, Front/rear lights and FO 1 for interior lighting are listed as functions of this decoder -->
   <!-- Known installed firmware version from factory: 37 -->
@@ -50,6 +51,7 @@
       <!-- CV158 has both sound and Railcom information -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/zimo/CV190-CV191.xml"/>
      <!-- CV7 set to default 37 to allow Swiss Mapping Groups 11 to 17 if creating a brand new decoder from scratch -->
       <variable item="Decoder Version" CV="7" readOnly="yes" default="37">
         <decVal/>
@@ -57,13 +59,13 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
-        <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="cs">Verze dekodéru </label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="186" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="186" readOnly="yes">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -72,19 +74,19 @@
         <decVal/>
         <label>Decoder ID 2</label>
         <label xml:lang="it">ID 2 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 2:</label>
+        <label xml:lang="cs">Dekodér ID 2</label>
       </variable>
       <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
         <label xml:lang="it">ID 3 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 3:</label>
+        <label xml:lang="cs">Dekodér ID 3</label>
       </variable>
       <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
         <label xml:lang="it">ID 4 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 4:</label>
+        <label xml:lang="cs">Dekodér ID 4</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v36.xml"/>

@@ -50,6 +50,10 @@ public class ActionListenOnBeansTableXml extends jmri.managers.configurexml.Abst
 
         element.addContent(new Element("namedBeanType").addContent(p.getNamedBeanType().name()));
 
+        element.addContent(new Element("localVariableNamedBean").addContent(p.getLocalVariableNamedBean()));
+        element.addContent(new Element("localVariableEvent").addContent(p.getLocalVariableEvent()));
+        element.addContent(new Element("localVariableNewValue").addContent(p.getLocalVariableNewValue()));
+
         element.setAttribute("listenOnAllProperties",
                 p.getListenOnAllProperties()? "yes" : "no");  // NOI18N
 
@@ -90,6 +94,21 @@ public class ActionListenOnBeansTableXml extends jmri.managers.configurexml.Abst
         NamedBeanType namedBeanType =
                 NamedBeanType.valueOf(namedBeanTypeElement.getTextTrim());
         h.setNamedBeanType(namedBeanType);
+
+        Element variableName = shared.getChild("localVariableNamedBean");
+        if (variableName != null) {
+            h.setLocalVariableNamedBean(variableName.getTextTrim());
+        }
+
+        variableName = shared.getChild("localVariableEvent");
+        if (variableName != null) {
+            h.setLocalVariableEvent(variableName.getTextTrim());
+        }
+
+        variableName = shared.getChild("localVariableNewValue");
+        if (variableName != null) {
+            h.setLocalVariableNewValue(variableName.getTextTrim());
+        }
 
         String listenOnAllProperties = "no";
         attribute = shared.getAttribute("listenOnAllProperties");

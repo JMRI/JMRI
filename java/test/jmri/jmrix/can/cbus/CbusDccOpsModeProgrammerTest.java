@@ -11,8 +11,8 @@ import org.junit.jupiter.api.*;
  */
 public class CbusDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
-    private TrafficControllerScaffold tcis;
-    
+    private TrafficControllerScaffold tcis = null;
+
     @BeforeEach
     @Override
     public void setUp() {
@@ -21,11 +21,15 @@ public class CbusDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProg
         CbusDccOpsModeProgrammer t = new CbusDccOpsModeProgrammer(100,true,tcis);
         programmer = t;
     }
-    
+
     @AfterEach
     @Override
     public void tearDown() {
-        programmer = null;
+        if ( programmer != null ) {
+            programmer.dispose();
+            programmer = null;
+        }
+        Assertions.assertNotNull(tcis);
         tcis.terminateThreads();
         tcis = null;
         JUnitUtil.tearDown();

@@ -59,7 +59,7 @@
           can't be changed individually by the user like Turnout icons.<br>
           Image on the right: Rule 281 Signal Icons from the AAR-2 Signal System.
           <!-- icons from AAR-2 xml appearance definition xml March 2014 -->
-           <a href="https://jmri.org/xml/signals/AAR-1946/aspects.xml"><img src=
+           <a href="../../../../../xml/signals/AAR-1946/aspects.xml"><img src=
           "images/AAR-2Clear.png" width="187" height="187" class="floatRight" alt=
           "AAR rule 281"></a><br>
         </li>
@@ -126,7 +126,7 @@
       and many more.
       The complete list is at
       <a href=
-      "../../../../../xml/signals/">https://jmri.org/xml/signals/</a>.</p>
+      "../../../../../xml/signals/">https://www.jmri.org/xml/signals/</a>.</p>
 
       <p>To create your own Signaling System Definition follow these <a href=
       "DefineNewAspects.shtml">Instructions</a>. If you do create a new definition for another

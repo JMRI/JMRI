@@ -1,24 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+<html lang="fr">
 <!-- Updated by Blorec Herv&#233;  2013-09-17-->
-<html LANG="fr">
 <head>
-<title>JMRI Hardware Guide: NCE</title>
-<META name="author" CONTENT="Bob Jacobsen">
-<META NAME="keywords" CONTENT="JMRI help NCE">
-
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <title>JMRI Hardware Guide: NCE</title>
+  <META name="author" CONTENT="Bob Jacobsen">
+  <META NAME="keywords" CONTENT="JMRI help NCE">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
@@ -395,8 +388,9 @@ Vous devriez &#234;tre capable de communiquer avec d'autres utilisateurs JMRI qu
 <p>Syst&#232;mes <a href="http://www.ncedcc.com/"> NCE et
 Catalogue Cabs</a></p>
 
-<!--#include virtual="/Footer.shtml" -->
-</div>
-</div>
-</body>
+      <!--#include virtual="/Footer_fr.shtml" -->
+      </div>
+    </div>
+    <script src="/js/main.js"></script>
+  </body>
 </html>

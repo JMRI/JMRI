@@ -1,33 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-23-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-23-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Edit Turnout Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Layout Editor Turnout">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Modifier Le dessin de la Travers&eacute;e</h1>Une
+      <h1>Modifier Le dessin de la Travers&eacute;e</h1>
+
+      <p>Une
       Travers&eacute;e Jonction est une pi&egrave;ce
       sp&eacute;ciale de la voie qui repr&eacute;sente deux voies
       de passage a niveau, avec la possibilit&eacute; de basculer
@@ -45,7 +33,7 @@
       d&eacute;pla&ccedil;ant le cercle avec la touche de
       m&eacute;ta enfonc&eacute;es (voir la barre d'aide quelle
       cl&eacute; est la cl&eacute; de m&eacute;ta pour votre
-      syst&egrave;me d'exploitation)(Clic droit pour Linux).
+      syst&egrave;me d'exploitation)(Clic droit pour Linux).</p>
 
       <p>Bien que la Travers&eacute;e Jonction soit
       constitu&eacute;e de deux pistes, elle est trait&eacute;
@@ -62,8 +50,10 @@
       vous permet de configurer les &eacute;tats de sortie pour les
       deux aiguillages qui forment la travers&eacute;e et de tester
       ceux-ci avant de confirmer la configuration.</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

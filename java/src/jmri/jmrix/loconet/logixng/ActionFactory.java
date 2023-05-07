@@ -21,18 +21,19 @@ public class ActionFactory implements DigitalActionFactory {
     public void init() {
         CategoryLocoNet.registerCategory();
     }
-    
+
     @Override
     public Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> getActionClasses() {
         Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> actionClasses = new HashSet<>();
-        
+
         // We don't want to add these classes if we don't have a LocoNet connection
         if (CategoryLocoNet.hasLocoNet()) {
             actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryLocoNet.LOCONET, ActionClearSlots.class));
             actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryLocoNet.LOCONET, ActionUpdateSlots.class));
+            actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryLocoNet.LOCONET, SetSpeedZero.class));
         }
-        
+
         return actionClasses;
     }
-    
+
 }

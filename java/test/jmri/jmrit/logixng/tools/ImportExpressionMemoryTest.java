@@ -39,8 +39,8 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
         MemoryCompareGreaterThanInsensitive(Conditional.Type.MEMORY_COMPARE_INSENSITIVE, ConditionalVariable.GREATER_THAN),
         MemoryCompareGreaterEqualInsensitive(Conditional.Type.MEMORY_COMPARE_INSENSITIVE, ConditionalVariable.GREATER_THAN_OR_EQUAL);
         
-        private Conditional.Type type;
-        private int num1;
+        private final Conditional.Type type;
+        private final int num1;
         
         private MemoryEnum(Conditional.Type type, int num1) {
             this.type = type;
@@ -49,12 +49,12 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
     }
     
     @Override
-    public Enum[] getEnums() {
+    public Enum<?>[] getEnums() {
         return MemoryEnum.values();
     }
     
     @Override
-    public void setNamedBeanState(Enum e, Setup setup) throws JmriException {
+    public void setNamedBeanState(Enum<?> e, Setup setup) throws JmriException {
         MemoryEnum me = MemoryEnum.valueOf(e.name());
         
         if ((me.type == Conditional.Type.MEMORY_EQUALS) || (me.type == Conditional.Type.MEMORY_EQUALS_INSENSITIVE)) {

@@ -5,7 +5,8 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: Scripting Examples</title>
-  <meta name="author" content="Bob Jacobsen"><!--#include virtual="/Style.shtml" -->
+  <meta name="author" content="Bob Jacobsen">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -30,7 +31,7 @@
       button.</p>
 
       <p>To browse the most current set of scripts, please see the <a href=
-      "https://jmri.org/jython">jython directory</a> on the JMRI website.</p>
+      "https://www.jmri.org/jython/">jython directory</a> on the JMRI website.</p>
 
       <p><a href="../../../../../jython/AD4OnOff.py">AD4OnOff.py</a>
       </p>
@@ -129,6 +130,12 @@
       <p>Sample script to navigate through the GUI and disable the Ops Mode button on the main
       DecoderPro window.</p>
 
+      <p><a href="../../../../../jython/GrandReset.py">GrandReset.py</a>
+      </p>
+
+      <p>A script to remove <strong>All</strong> Transits, Sections, SignalMastLogics and
+      remove all saved paths from the Block Table. Requires confirmation when you run it.</p>
+
       <p><a href="../../../../../jython/InitTurnouts.py">InitTurnouts.py</a>
       </p>
 
@@ -180,7 +187,7 @@
       <p><a href="../../../../../jython/LnBushbyForwarder.py">LnBushbyForwarder.py</a>
       </p>
 
-      <p><span class="since">Since <a href="https://jmri.org/releasenotes/jmri4.25.2.shtml" target=
+      <p><span class="since">Since <a href="https://www.jmri.org/releasenotes/jmri4.25.2.shtml" target=
       "_blank">JMRI 4.25.2</a></span>Provides a mechanism to forward "normal" LocoNet switch
       (Turnout) control messages to the DCC track signal when a Digitrax command station's Bushby
       feature is enabled. (Note that this script can be <em>cause</em> congestion on LocoNet when
@@ -369,10 +376,19 @@
       <p><a href="../../../../../jython/TurnoutReset.py">TurnoutReset.py</a>
       </p>
 
-      <p>Reset a Turnout to Closed every time it's clicked Thrown This might be used so that a
+      <p>Reset a Turnout to Closed every time it's clicked Thrown. This might be used so that a
       Turnout icon on a panel sits in one position, ready to be clicked and fire a Route. The top
       of the file defines the needed code. There are some lines near the bottom you should edit to
       adapt it to your particular layout.</p>
+
+      <p><a href="../../../../../jython/TurnoutStatePersistence.py">TurnoutStatePersistence.py</a>
+      </p>
+
+      <p>Persist the state of turnouts between sessions. Before closing JMRI, this script stores to a .csv file the
+        state of (each) turnout on the layout, and reads back in the last known status after a restart.<br>
+        Add it to your preferences to load at startup.
+        You may want to edit the script so that only actual turnouts are stored, skipping e.g. turnouts used on
+        signals.</p>
 
       <p><a href="../../../../../jython/TwoOutputTurnouts.py">TwoOutputTurnouts.py</a>
       </p>
@@ -392,7 +408,7 @@
       <p><a>Use a USB device as a throttle</a>
       </p>
 
-      <p><a href="../../../../../jython/javaone">javaone</a>
+      <p><a href="../../../../../jython/javaone/">javaone</a>
       </p>
 
       <p>The jython/javaone directory contains scripts that were first created for the JavaOne test

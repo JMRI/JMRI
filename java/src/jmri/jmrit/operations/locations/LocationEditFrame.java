@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.locations;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.text.MessageFormat;
@@ -14,15 +12,9 @@ import javax.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.Reporter;
-import jmri.ReporterManager;
-import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.OperationsPanel;
-import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.divisions.Division;
-import jmri.jmrit.operations.locations.divisions.DivisionEditFrame;
-import jmri.jmrit.operations.locations.divisions.DivisionManager;
+import jmri.*;
+import jmri.jmrit.operations.*;
+import jmri.jmrit.operations.locations.divisions.*;
 import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -40,7 +32,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     YardTableModel yardModel = new YardTableModel();
     JTable yardTable = new JTable(yardModel);
-    JScrollPane yardPane;
+    JScrollPane yardPane = new JScrollPane(yardTable);
+    
     SpurTableModel spurModel = new SpurTableModel();
     JTable spurTable = new JTable(spurModel) {
         // create tool tip for Hold column
@@ -54,7 +47,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             return null;
         }
     };
-    JScrollPane spurPane;
+    JScrollPane spurPane = new JScrollPane(spurTable);
+    
     InterchangeTableModel interchangeModel = new InterchangeTableModel();
     JTable interchangeTable = new JTable(interchangeModel) {
         // create tool tip for Routed column
@@ -68,17 +62,30 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             return null;
         }
     };
-    JScrollPane interchangePane;
+    JScrollPane interchangePane = new JScrollPane(interchangeTable);
+    
     StagingTableModel stagingModel = new StagingTableModel();
-    JTable stagingTable = new JTable(stagingModel);
-    JScrollPane stagingPane;
+    JTable stagingTable = new JTable(stagingModel) {
+        // create tool tip for Routed column
+        @Override
+        public String getToolTipText(MouseEvent e) {
+            int colIndex = columnAtPoint(e.getPoint());
+            int realColumnIndex = convertColumnIndexToModel(colIndex);
+            if (realColumnIndex == TrackTableModel.ROUTED_COLUMN) {
+                return Bundle.getMessage("TipOnlyCarsWithFD");
+            }
+            return null;
+        }
+    };
+    JScrollPane stagingPane = new JScrollPane(stagingTable);
 
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
-
     public Location _location = null;
+    
     ArrayList<JCheckBox> checkBoxes = new ArrayList<>();
     JPanel panelCheckBoxes = new JPanel();
-    JScrollPane typePane;
+    JScrollPane typePane = new JScrollPane(panelCheckBoxes);
+    
     JPanel directionPanel = new JPanel();
 
     // major buttons
@@ -137,19 +144,15 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         typePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         typePane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TypesLocation")));
 
-        yardPane = new JScrollPane(yardTable);
         yardPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         yardPane.setBorder(BorderFactory.createTitledBorder(""));
 
-        spurPane = new JScrollPane(spurTable);
         spurPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         spurPane.setBorder(BorderFactory.createTitledBorder(""));
 
-        interchangePane = new JScrollPane(interchangeTable);
         interchangePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         interchangePane.setBorder(BorderFactory.createTitledBorder(""));
 
-        stagingPane = new JScrollPane(stagingTable);
         stagingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         stagingPane.setBorder(BorderFactory.createTitledBorder(""));
 
@@ -177,8 +180,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                     yardRadioButton.setSelected(true);
                 } else if (interchangeModel.getRowCount() > 0) {
                     interchangeRadioButton.setSelected(true);
-                } else if (stagingModel.getRowCount() > 0) {
-                    stagingRadioButton.setSelected(true);
                 } else {
                     spurRadioButton.setSelected(true);
                 }
@@ -191,7 +192,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             spurRadioButton.setSelected(true);
         }
 
-        setVisibleTracks();
+        setVisibleTrackType();
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -329,6 +330,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(EngineTypes.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(DivisionManager.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(Setup.class).addPropertyChangeListener(this);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -351,12 +353,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (_location != null && !_location.isStaging()) {
             toolMenu.add(new LocationTrackBlockingOrderAction(_location));
         }
-        toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.add(new EditCarTypeAction());
         toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(_location));
         }
+        toolMenu.addSeparator();
+        toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false, _location));
         toolMenu.add(new PrintLocationsAction(true, _location));
@@ -550,6 +553,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
                 return false;
             }
+            locationName = check[0];
         }
         if (TrainCommon.splitString(locationName).length() > MAX_NAME_LENGTH) {
             // log.error("Location name must be less than "+
@@ -610,11 +614,11 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
-        setVisibleTracks();
+        setVisibleTrackType();
     }
 
-    private void setVisibleTracks() {
-        setEnabledTracks();
+    private void setVisibleTrackType() {
+        enableTrackTypeRadioButtons();
         interchangePane.setVisible(interchangeRadioButton.isSelected());
         addInterchangeButton.setVisible(interchangeRadioButton.isSelected());
         stagingPane.setVisible(stagingRadioButton.isSelected());
@@ -625,7 +629,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         addSpurButton.setVisible(spurRadioButton.isSelected());
     }
 
-    private void setEnabledTracks() {
+    private void enableTrackTypeRadioButtons() {
         if (spurModel.getRowCount() > 0 || yardModel.getRowCount() > 0 || interchangeModel.getRowCount() > 0) {
             if (stagingRadioButton.isSelected()) {
                 spurRadioButton.setSelected(true);
@@ -645,19 +649,23 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     private void enableCheckboxes(boolean enable) {
-        for (int i = 0; i < checkBoxes.size(); i++) {
-            checkBoxes.get(i).setEnabled(enable);
+        for (JCheckBox checkBox : new ArrayList<>(checkBoxes)) {
+            checkBox.setEnabled(enable);
         }
     }
 
+    /*
+     * Protected against concurrent changes by making a copy
+     * of the checkBoxes list.
+     */
     private void selectCheckboxes(boolean select) {
-        for (int i = 0; i < checkBoxes.size(); i++) {
-            checkBoxes.get(i).setSelected(select);
+        for (JCheckBox checkBox : new ArrayList<>(checkBoxes)) {
+            checkBox.setSelected(select);
             if (_location != null) {
                 if (select) {
-                    _location.addTypeName(checkBoxes.get(i).getText());
+                    _location.addTypeName(checkBox.getText());
                 } else {
-                    _location.deleteTypeName(checkBoxes.get(i).getText());
+                    _location.deleteTypeName(checkBox.getText());
                 }
             }
         }
@@ -668,7 +676,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         y = 0;
         checkBoxes.clear();
         panelCheckBoxes.removeAll();
+        numberOfCheckBoxes = getNumberOfCheckboxesPerLine();
         loadTypes(InstanceManager.getDefault(CarTypes.class).getNames());
+        
+        // add space between car and loco types
+        checkNewLine();
+        
         loadTypes(InstanceManager.getDefault(EngineTypes.class).getNames());
         JPanel p = new JPanel();
         p.add(clearButton);
@@ -693,13 +706,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     int y = 0; // vertical position in panel
 
     private void loadTypes(String[] types) {
-        int numberOfCheckBoxes = getNumberOfCheckboxesPerLine();
         for (String type : types) {
             JCheckBox checkBox = new JCheckBox();
             checkBoxes.add(checkBox);
             checkBox.setText(type);
             addCheckBoxAction(checkBox);
-            addItemLeft(panelCheckBoxes, checkBox, x++, y);
+            addItemLeft(panelCheckBoxes, checkBox, x, y);
             if (_location != null) {
                 if (_location.acceptsTypeName(type)) {
                     checkBox.setSelected(true);
@@ -707,32 +719,38 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             } else {
                 checkBox.setEnabled(false);
             }
-            // default is seven types per row
-            if (x > numberOfCheckBoxes) {
-                y++;
-                x = 0;
-            }
+            checkNewLine();
+        }
+    }
+    
+    int numberOfCheckBoxes;
+    
+    private void checkNewLine() {
+        if (++x > numberOfCheckBoxes) {
+            y++;
+            x = 0;
         }
     }
 
     /**
      * Adjust the location's car service types to only reflect the car types
-     * serviced by the location's tracks.
+     * serviced by the location's tracks. Protected against concurrent changes by
+     * creating a new list of checkboxes.
      */
     private void autoSelectCheckboxes() {
-        for (int i = 0; i < checkBoxes.size(); i++) {
-            checkBoxes.get(i).setSelected(false);
+        for (JCheckBox checkBox : new ArrayList<>(checkBoxes)) {
+            checkBox.setSelected(false);
             // check each track to determine which car types are serviced by
             // this location
             List<Track> tracks = _location.getTracksList();
             for (Track track : tracks) {
-                if (track.isTypeNameAccepted(checkBoxes.get(i).getText())) {
-                    checkBoxes.get(i).setSelected(true);
+                if (track.isTypeNameAccepted(checkBox.getText())) {
+                    checkBox.setSelected(true);
                 }
             }
             // this type of car isn't serviced by any of the tracks, so delete
-            if (!checkBoxes.get(i).isSelected()) {
-                _location.deleteTypeName(checkBoxes.get(i).getText());
+            if (!checkBox.isSelected()) {
+                _location.deleteTypeName(checkBox.getText());
             }
         }
     }
@@ -833,6 +851,18 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (lctf != null) {
             lctf.dispose();
         }
+        if (yef != null) {
+            yef.dispose();
+        }
+        if (sef != null) {
+            sef.dispose();
+        }
+        if (ief != null) {
+            ief.dispose();
+        }
+        if (stef != null) {
+            stef.dispose();
+        }
         super.dispose();
     }
 
@@ -849,6 +879,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         if (e.getPropertyName().equals(DivisionManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateDivisionComboBox();
+        }
+        if (e.getPropertyName().equals(Setup.TRAIN_DIRECTION_PROPERTY_CHANGE)) {
+            setTrainDirectionBoxes();
         }
     }
 

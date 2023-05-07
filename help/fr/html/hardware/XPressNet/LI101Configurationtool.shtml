@@ -1,28 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- Updated by Blorec Herv&#233; 2013-09-20 -->
-<title>JMRI Hardware Support - XPressNet LI101F Configuration Tool</title>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <!-- Updated by Blorec Herv&#233; 2013-09-20 -->
+  <title>JMRI Hardware Support - Outil de Configuration XPressNet LI101F</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
      <!-- Page Body -->
 
-    <h1> Outil de Configuration XPressNet LI101F </h1>
+    <h1>Outil de Configuration XPressNet LI101F</h1>
 
 <img src="images/LI101ConfigurationUtility.jpg" alt="LI101 Configuration Tool Image">>
 <p>
@@ -60,8 +51,9 @@ d'information &#224; LI101F.
 Paul Bender<br>
 paul.bender@acm.org
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+    <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

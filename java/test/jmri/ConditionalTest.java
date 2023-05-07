@@ -141,7 +141,7 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.ACTION_CONTROL_TRAIN, 35);
         Assert.assertEquals(Conditional.ACTION_SET_TRAIN_ID, 36);
         Assert.assertEquals(Conditional.ACTION_SET_SIGNALMAST_ASPECT, 37);
-        Assert.assertEquals(Conditional.ACTION_THROTTLE_FACTOR, 38);
+        Assert.assertEquals(Conditional.ACTION_GET_TRAIN_LOCATION, 38);
         Assert.assertEquals(Conditional.ACTION_SET_SIGNALMAST_HELD, 39);
         Assert.assertEquals(Conditional.ACTION_CLEAR_SIGNALMAST_HELD, 40);
         Assert.assertEquals(Conditional.ACTION_SET_SIGNALMAST_DARK, 41);
@@ -154,6 +154,8 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.ACTION_MANUAL_RUN_WARRANT, 48);
         Assert.assertEquals(Conditional.ACTION_SET_TRAIN_NAME, 49);
         Assert.assertEquals(Conditional.ACTION_SET_BLOCK_VALUE, 50);
+        Assert.assertEquals(Conditional.ACTION_GET_BLOCK_TRAIN_NAME, 55);
+        Assert.assertEquals(Conditional.ACTION_GET_BLOCK_WARRANT, 54);
         // EntryExit Actions
         Assert.assertEquals(Conditional.ACTION_SET_NXPAIR_ENABLED, 51);
         Assert.assertEquals(Conditional.ACTION_SET_NXPAIR_DISABLED, 52);
@@ -278,7 +280,7 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.CONTROL_TRAIN.getItemType());
         Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.SET_TRAIN_ID.getItemType());
         Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.SET_SIGNALMAST_ASPECT.getItemType());
-        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.THROTTLE_FACTOR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.GET_TRAIN_LOCATION.getItemType());
         Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.SET_SIGNALMAST_HELD.getItemType());
         Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.CLEAR_SIGNALMAST_HELD.getItemType());
         Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.SET_SIGNALMAST_DARK.getItemType());
@@ -288,6 +290,8 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.DEALLOCATE_BLOCK.getItemType());
         Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.SET_BLOCK_OUT_OF_SERVICE.getItemType());
         Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.SET_BLOCK_IN_SERVICE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.GET_BLOCK_TRAIN_NAME.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.GET_BLOCK_WARRANT.getItemType());
         Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.MANUAL_RUN_WARRANT.getItemType());
         Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.SET_TRAIN_NAME.getItemType());
         Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.SET_BLOCK_VALUE.getItemType());
@@ -423,7 +427,7 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.Action.CONTROL_TRAIN, Conditional.Action.getWarrantItems().get(5));
         Assert.assertEquals(Conditional.Action.SET_TRAIN_ID, Conditional.Action.getWarrantItems().get(6));
         Assert.assertEquals(Conditional.Action.SET_TRAIN_NAME, Conditional.Action.getWarrantItems().get(7));
-        Assert.assertEquals(Conditional.Action.THROTTLE_FACTOR, Conditional.Action.getWarrantItems().get(8));
+        Assert.assertEquals(Conditional.Action.GET_TRAIN_LOCATION, Conditional.Action.getWarrantItems().get(8));
 
         // Map Warrant Type comboBox items to Warrant action types
 //        Assert.assertEquals(Conditional.ACTION_ALLOCATE_WARRANT_ROUTE, Conditional.ITEM_TO_WARRANT_ACTION[0]);
@@ -442,6 +446,8 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.Action.CLEAR_BLOCK_ERROR, Conditional.Action.getOBlockItems().get(3));
         Assert.assertEquals(Conditional.Action.SET_BLOCK_OUT_OF_SERVICE, Conditional.Action.getOBlockItems().get(4));
         Assert.assertEquals(Conditional.Action.SET_BLOCK_IN_SERVICE, Conditional.Action.getOBlockItems().get(5));
+        Assert.assertEquals(Conditional.Action.GET_BLOCK_TRAIN_NAME, Conditional.Action.getOBlockItems().get(6));
+        Assert.assertEquals(Conditional.Action.GET_BLOCK_WARRANT, Conditional.Action.getOBlockItems().get(7));
 
 //        Assert.assertEquals(Conditional.ACTION_DEALLOCATE_BLOCK, Conditional.ITEM_TO_OBLOCK_ACTION[0]);
 //        Assert.assertEquals(Conditional.ACTION_SET_BLOCK_VALUE, Conditional.ITEM_TO_OBLOCK_ACTION[1]);

@@ -37,6 +37,7 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
     }
 
     @AfterEach
+    @Override
     public void tearDown() {
         if (Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning") == false) {
             tif.dispose();
@@ -70,17 +71,19 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
         //t.finishLoad();
 
         t.addPropertyChangeListener(l);
+        l.resetPropertyChanged();
 
         t.setState(Turnout.THROWN);
         tif.flush();
-        JUnitUtil.waitFor( () -> l.getPropertyChanged());
+        JUnitUtil.waitFor( () -> l.getPropertyChanged()," > thrown");
 
         Assert.assertEquals(Turnout.THROWN, t.getCommandedState());
         Assert.assertEquals(Turnout.THROWN, t.getKnownState());
 
+        l.resetPropertyChanged();
         t.setState(Turnout.CLOSED);
         tif.flush();
-        JUnitUtil.waitFor( () -> l.getPropertyChanged());
+        JUnitUtil.waitFor( () -> l.getPropertyChanged(),"thrown > closed");
 
         Assert.assertEquals(Turnout.CLOSED, t.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, t.getKnownState());

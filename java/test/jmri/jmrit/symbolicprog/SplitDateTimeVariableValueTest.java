@@ -236,6 +236,11 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
         CvValue cv25 = v.get("25");
         CvValue cv26 = v.get("26");
 
+        Assert.assertNotNull(cv23);
+        Assert.assertNotNull(cv24);
+        Assert.assertNotNull(cv25);
+        Assert.assertNotNull(cv26);
+
         // change the CVs, expect to see a change in the variable value
         cv23.setValue(83);
         cv24.setValue(252);
@@ -281,6 +286,11 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
         CvValue cv25 = v.get("25");
         CvValue cv26 = v.get("26");
 
+        Assert.assertNotNull(cv23);
+        Assert.assertNotNull(cv24);
+        Assert.assertNotNull(cv25);
+        Assert.assertNotNull(cv26);
+
         // change the CVs, expect to see a change in the variable value
         cv23.setValue(83);
         cv24.setValue(252);
@@ -325,6 +335,11 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
         CvValue cv24 = v.get("24");
         CvValue cv25 = v.get("25");
         CvValue cv26 = v.get("26");
+
+        Assert.assertNotNull(cv23);
+        Assert.assertNotNull(cv24);
+        Assert.assertNotNull(cv25);
+        Assert.assertNotNull(cv26);
 
         // change the CVs, expect to see a change in the variable value
         cv23.setValue(83);

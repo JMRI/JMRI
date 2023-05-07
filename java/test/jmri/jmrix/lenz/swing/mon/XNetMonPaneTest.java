@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.swing.mon;
 
+import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.*;
  */
 public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
-    private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
+    private XNetSystemConnectionMemo memo;
 
     @Test
     public void testDefault() {
@@ -27,7 +28,7 @@ public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
-        jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
+        memo = new XNetSystemConnectionMemo(t);
         jmri.InstanceManager.store(memo, jmri.jmrix.lenz.XNetSystemConnectionMemo.class);
         // pane for AbstractMonPaneTestBase; panel for JmriPanelTest 
         panel = pane = new XNetMonPane();
@@ -39,7 +40,7 @@ public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @Override
     public void tearDown() {
         panel = pane = null;
-        jmri.InstanceManager.deregister(memo, jmri.jmrix.lenz.XNetSystemConnectionMemo.class);
+        memo.dispose(); // deregisters from instance manager
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

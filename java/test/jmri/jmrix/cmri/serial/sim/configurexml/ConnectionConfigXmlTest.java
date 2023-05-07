@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial.sim.configurexml;
 
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.sim.ConnectionConfig;
 import jmri.util.JUnitUtil;
 
@@ -26,6 +27,10 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
     @AfterEach
     @Override
     public void tearDown() {
+        if (cc.getAdapter() != null) {
+            ((CMRISystemConnectionMemo)cc.getAdapter().getSystemConnectionMemo()).getTrafficController().terminateThreads();
+        }
+        cc.dispose();
         xmlAdapter = null;
         cc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

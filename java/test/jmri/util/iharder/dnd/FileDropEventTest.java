@@ -19,13 +19,13 @@ public class FileDropEventTest {
     public void testCTor(@TempDir File folder) throws java.io.IOException  {
         URI fl[] = new URI[3];
         File file = new File(folder, "1");
-        file.createNewFile();
+        Assertions.assertTrue(file.createNewFile());
         fl[0]=file.toURI();
         file = new File(folder, "2");
-        file.createNewFile();
+        Assertions.assertTrue(file.createNewFile());
         fl[1]=file.toURI();
         file = new File(folder, "3");
-        file.createNewFile();
+        Assertions.assertTrue(file.createNewFile());
         fl[2]=file.toURI();
         URIDropEvent t = new URIDropEvent(fl,this);
         Assert.assertNotNull("exists",t);

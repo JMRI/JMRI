@@ -29,7 +29,7 @@
 
       <dl>
         <dt>
-          <a href="https://github.com/JMRI/JMRI/blob/master/help">help/</a>
+          <a href="https://github.com/JMRI/JMRI/tree/master/help">help/</a>
         </dt>
 
         <dd>
@@ -37,37 +37,37 @@
         </dd>
 
         <dt>
-          <a href="https://github.com/JMRI/JMRI/blob/master/jython">jython/</a>
+          <a href="https://github.com/JMRI/JMRI/tree/master/jython/">jython/</a>
         </dt>
 
         <dd>
-          Various <a href="https://jmri.org/jython">sample</a> and <a href=
-          "https://jmri.org/jython/test">test</a> scripts.
+          Various <a href="https://www.jmri.org/jython/">sample</a> and <a href=
+          "https://www.jmri.org/jython/test/">test</a> scripts.
         </dd>
 
         <dt>
-          <a href="https://github.com/JMRI/JMRI/blob/master/lib">lib/</a>
+          <a href="https://github.com/JMRI/JMRI/tree/master/lib">lib/</a>
         </dt>
 
         <dd>Jar files and linkable libraries that JMRI relies on.</dd>
 
         <dt>
-          <a href="https://github.com/JMRI/JMRI/blob/master/resources">resources/</a>
+          <a href="https://github.com/JMRI/JMRI/tree/master/resources">resources/</a>
         </dt>
 
         <dd>
           Image and sound resources used by the library, and available for user selection. These
-          can be <a href="https://jmri.org/resources">directly browsed</a>.
+          can be <a href="https://www.jmri.org/resources/">directly browsed</a>.
         </dd>
 
         <dt>
-          <a href="https://github.com/JMRI/JMRI/blob/master/web">web/</a>
+          <a href="https://github.com/JMRI/JMRI/tree/master/web">web/</a>
         </dt>
 
         <dd>Files for JMRI's built-in web servers</dd>
 
         <dt>
-          <a href="https://github.com/JMRI/JMRI/blob/master/xml">xml/</a>
+          <a href="https://github.com/JMRI/JMRI/tree/master/xml">xml/</a>
         </dt>
 
         <dd>
@@ -214,7 +214,7 @@
       More information on how things (e.g. objects representing items on the layout) are named
       <a href="Names.shtml">is available on a separate page</a>.</p>
 
-      <p>The <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">"InstanceManager"</a>
+      <p>The <a href="https://www.jmri.org/JavaDoc/doc/jmri/InstanceManager.html">"InstanceManager"</a>
       is a key central point for this navigation.</p>
 
       <ul>
@@ -225,22 +225,22 @@
           <ul>
             <li>
               <a href=
-              "https://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoDefault.html">InstanceManagerAutoDefault</a>
+              "https://www.jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoDefault.html">InstanceManagerAutoDefault</a>
             </li>
 
             <li>
               <a href=
-              "https://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a>
+              "https://www.jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a>
             </li>
           </ul>
           and, when needed, provides for their <a href=
-          "https://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoInitialize.html">post-creation
+          "https://www.jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoInitialize.html">post-creation
           initialization</a>.
         </li>
 
         <li>It <a href=
-        "https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html#dispose-jmri.Disposable-">disposes</a>
-        of <a href="https://jmri.org/JavaDoc/doc/jmri/Disposable.html">suitable objects</a> at the
+        "https://www.jmri.org/JavaDoc/doc/jmri/InstanceManager.html#dispose-jmri.Disposable-">disposes</a>
+        of <a href="https://www.jmri.org/JavaDoc/doc/jmri/Disposable.html">suitable objects</a> at the
         end of their lifespan when the InstanceManager (or a particular collection in it) is
         cleared.
         </li>
@@ -253,11 +253,12 @@
       <p>To get a specific Turnout instance that represents something on the layout, you make a
       request of a TurnoutManager. This is also an interface, with a similar implementation
       pattern. In turn, you got that TurnoutManager from the InstanceManager.</p>
-
+      <div class="wide">
       <pre style="font-family: monospace;">
-      TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
-      Turnout turnout = manager.getTurnout("IT12");
-      </pre>
+ TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
+ Turnout turnout = manager.getTurnout("IT12");
+</pre>
+      </div>
       <p>The generic <a href="https://www.jmri.org/JavaDoc/doc/jmri/Manager.html">Manager&lt;T&gt;</a> class provides the basic interface.
       which is then extended for specifics i.e.
       <a href="https://www.jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a>.

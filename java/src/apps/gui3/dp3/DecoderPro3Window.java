@@ -37,7 +37,7 @@ public class DecoderPro3Window extends RosterFrame {
 
     @Override
     protected void additionsToToolBar() {
-        //This value may return null if the DP3 window has been called from a the traditional JMRI menu frame
+        // This value may return null if the DP3 window has been called from the traditional JMRI menu frame
         if (Apps3.buttonSpace() != null) {
             getToolBar().add(Apps3.buttonSpace());
         }

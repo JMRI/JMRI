@@ -1,0 +1,62 @@
+<!-- SidebarSupportedHardware.shtml -->
+<!-- This is the common sidebar definition for supported hardware pages in French -->
+<!-- ALPHABETIC ORDER -->
+<!-- *) = links to English TODO translate those pages -->
+
+		<dt><a href="/help/fr/html/hardware/index.shtml">Mat&#233;riel Support&#233;</a></dt>
+		<dd>
+		    <ul>
+          <li><a href="/help/en/html/hardware/anyma/index.shtml">Anyma DMX</a> *)</li>
+          <li><a href="/help/en/html/hardware/arduino/index.shtml">Arduinos</a> *)</li>
+          <li><a href="/help/fr/html/hardware/XPressNet/index.shtml">Atlas Commander</a></li>
+          <li><a href="/help/fr/html/hardware/bachrus/index.shtml">Bachrus</a></li>
+          <li><a href="/help/fr/html/hardware/can/index.shtml">CAN Bus Networks</a></li>
+          <li><a href="/help/fr/html/hardware/can/cbus/index.shtml">CBUS&reg;</a></li>
+          <li><a href="/help/fr/html/hardware/cmri/CMRI.shtml">C/MRI</a></li>
+          <li><a href="/help/fr/html/hardware/acela/index.shtml">CTI Electronics (Acela)</a></li>
+          <li><a href="/help/fr/html/hardware/easydcc/EasyDCC.shtml">CVP EasyDCC</a></li>
+          <li><a href="/help/en/html/hardware/dcc4pc/index.shtml">Dcc4Pc</a> *)</li>
+          <li><a href="/help/fr/html/hardware/dccpp/index.shtml">DCC++</a></li>
+          <li><a href="/help/fr/html/hardware/misc/DccSpecialties.shtml">DCC Specialities</a></li>
+          <li><a href="/help/fr/html/hardware/XBee/index.shtml">Digi XBee</a></li>
+          <li><a href="/help/en/html/hardware/digirails/index.shtml">Digikeijs (Digirails)</a> *)</li>
+          <li><a href="/help/fr/html/hardware/loconet/Digitrax.shtml">Digitrax</a></li>
+          <li><a href="/help/fr/html/hardware/ecos/index.shtml">ESU ECoS</a></li>
+          <li><a href="/help/fr/html/hardware/loconet/Fleischmann.shtml">Fleischmann</a></li>
+          <li><a href="/help/fr/html/hardware/XPressNet/index.shtml">Hornby</a></li>
+          <li><a href="/help/fr/html/hardware/powerline/Compatibility.shtml">Insteon (Powerline)</a>
+          <li><a href="/help/fr/html/hardware/XPressNet/index.shtml">Lenz</a></li>
+          <li><a href="/help/fr/html/hardware/tmcc/index.shtml">Lionel TMCC</a></li>
+          <li><a href="/help/fr/html/hardware/loconet/Digitrax.shtml">LocoNet</a></li>
+          <li><a href="/help/fr/html/hardware/maple/index.shtml">Maple Systems</a></li>
+          <li><a href="/help/fr/html/hardware/marklin/index.shtml">M&auml;rklin CS2</a></li>
+          <li><a href="/help/fr/html/hardware/can/cbus/index.shtml">CBUS&reg;</a></li>
+          <li><a href="/help/fr/html/hardware/modbus/index.shtml">Modbus</a></li>
+          <li><a href="/help/fr/html/hardware/mqtt/index.shtml">MQTT</a></li>
+          <li><a href="/help/fr/html/hardware/mrc/index.shtml">MRC</a></li>
+          <li><a href="/help/fr/html/hardware/rps/index.shtml">NAC Services RPS</a></li>
+          <li><a href="/help/fr/html/hardware/nce/NCE.shtml">NCE</a></li>
+          <li><a href="/help/fr/html/hardware/oaktree/OakTree.shtml">Oak Tree Systems</a></li>
+          <li><a href="/help/fr/html/hardware/openlcb/index.shtml">OpenLCB</a></li>
+          <li><a href="/help/fr/html/hardware/grapevine/index.shtml">Protrak Grapevine</a></li>
+          <li><a href="/help/fr/html/hardware/qsi/index.shtml">QSI Quantum Programmer</a></li>
+          <li><a href="/help/fr/html/hardware/raildriver/index.shtml">Pi Engineering RailDriver</a></li>
+          <li><a href="/help/fr/html/hardware/pi/index.shtml">Raspberry Pi</a></li>
+          <li><a href="/help/fr/html/hardware/rfid/index.shtml">RFID Readers</a></li>
+          <li><a href="/help/fr/html/hardware/XPressNet/index.shtml">Roco</a></li>
+          <li><a href="/help/fr/html/hardware/sprog/SPROG.shtml">SPROG</a></li>
+          <li><a href="/help/en/html/hardware/sproggen5/index.shtml">SPROG DCC Generation 5</a> *)</li>
+          <li><a href="/help/fr/html/hardware/SRCP/index.shtml">SRCP server</a></li>
+          <li><a href="/help/fr/html/hardware/tams/index.shtml">TAMS Master Control</a></li>
+          <li><a href="/help/fr/html/hardware/secsi/index.shtml">TracTronics SECSI</a></li>
+          <li><a href="/help/fr/html/hardware/loconet/Digitrax.shtml">Uhlenbrock Intellibox</a></li>
+          <li><a href="/help/fr/html/hardware/XPressNet/index.shtml">Viessmann Commander</a></li>
+          <li><a href="/help/fr/html/hardware/nce/Wangrow.shtml">Wangrow System One</a></li>
+          <li><a href="/help/fr/html/hardware/powerline/index.shtml">X10</a></li>
+          <li><a href="/help/fr/html/hardware/powerline/Compatibility.shtml">X10 (Powerline)</a></li>
+          <li><a href="/help/fr/html/hardware/XPressNet/index.shtml">XPressNet</a></li>
+          <li><a href="/help/fr/html/hardware/zimo/Zimo.shtml">Zimo MX-1</a></li>
+          <li><a href="/help/fr/html/hardware/XPressNet/index.shtml">ZTC</a></li>
+		    </ul>
+		</dd>
+<!-- /SidebarSupportedHardware.shtml -->

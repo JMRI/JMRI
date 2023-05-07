@@ -203,6 +203,7 @@ public class DefaultLogix extends AbstractNamedBean
         if (_conditionalSystemNames.size() <= 0) {
             return (null);
         }
+
         // check other Logix(es) for use of this conditional (systemName) for use as a
         // variable in one of their conditionals
         ArrayList<String> checkReferences = conditionalManager.getWhereUsed(systemName);
@@ -215,17 +216,19 @@ public class DefaultLogix extends AbstractNamedBean
                 cRef.getSystemName(), x.getUserName(), x.getSystemName()};
         }
 
-        // Remove Conditional from this logix
-        if (!_conditionalSystemNames.remove(systemName)) {
-            log.error("attempt to delete Conditional not in Logix: {}", systemName);  // NOI18N
-            return null;
-        }
-        // delete the Conditional object
+        // Confirm the presence of the Conditional object
         Conditional c = conditionalManager.getBySystemName(systemName);
         if (c == null) {
             log.error("attempt to delete non-existing Conditional - {}", systemName);  // NOI18N
             return null;
         }
+
+        // Remove Conditional from this logix
+        if (!_conditionalSystemNames.remove(systemName)) {
+            log.error("attempt to delete Conditional not in Logix: {}", systemName);  // NOI18N
+            return null;
+        }
+
         _conditionalMap.remove(systemName);
         return null;
     }

@@ -15,6 +15,7 @@ import javax.swing.border.*;
 public class CmdStaFlags extends JPanel {
         
     protected int _index;
+    protected int _nv;
     protected String _title;
     protected int flags;
     protected JRadioButton [] buttons;
@@ -23,15 +24,17 @@ public class CmdStaFlags extends JPanel {
     /**
      * 
      * @param index of the flags, not the NV array index which may be offset
+     * @param nv index of the associated NV
      * @param title of the flags object
      * @param flagStrings array of strings to name each flag bit
      * @param flagTtStrings array of tooltip strings for each flag bit
      * @param update the callback function to update the table data model
      */
-    public CmdStaFlags(int index, String title, String [] flagStrings, String [] flagTtStrings, UpdateNV update) {
+    public CmdStaFlags(int index, int nv, String title, String [] flagStrings, String [] flagTtStrings, UpdateNV update) {
         super();
 
         _index = index;
+        _nv = nv;
         _title = title;
         _flagUpdateFn = update;
 
@@ -104,6 +107,15 @@ public class CmdStaFlags extends JPanel {
         return flags;
     }
 
+    /**
+     * Get the NV index associated with this object
+     * 
+     * @return the NV index
+     */
+    public int getNv() {
+        return _nv;
+    }
+    
     /**
      * Set the buttons to the state of the flags
      */

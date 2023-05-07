@@ -29,6 +29,8 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
 
     protected boolean mTranspondingAvailable = false;
 
+    protected boolean mLoconetProtocolAutoDetect = false;
+
     protected LnCommandStationType[] commandStationTypes = {
         LnCommandStationType.COMMAND_STATION_DCS100,
         LnCommandStationType.COMMAND_STATION_DCS240,
@@ -41,7 +43,9 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
         LnCommandStationType.COMMAND_STATION_IBX_TYPE_1,
         LnCommandStationType.COMMAND_STATION_IBX_TYPE_2,
         LnCommandStationType.COMMAND_STATION_LBPS,
-        LnCommandStationType.COMMAND_STATION_MM};
+        LnCommandStationType.COMMAND_STATION_MM,
+        LnCommandStationType.COMMAND_STATION_DCS210PLUS,
+        LnCommandStationType.COMMAND_STATION_DCS240PLUS};
 
     protected String[] commandStationNames;
 
@@ -112,6 +116,16 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
         log.debug("transponding available: {}", mTranspondingAvailable); // NOI18N
     }
 
+    /**
+     * Set whether to use XP slots if available or not.
+     *
+     * @param value either Bundle.getMessage("LoconetProtocolAutoDetect") or no
+     */
+    public void setLoconetProtocolAutoDetect(String value) {
+        // default (most common state) is off, so just check for Yes
+        mLoconetProtocolAutoDetect = (value.equals("Yes") || value.equals(Bundle.getMessage("LoconetProtocolAutoDetect")));
+        log.debug("Loconet XPSlots: {}", mLoconetProtocolAutoDetect); // NOI18N
+     }
     /**
      * Set whether to interrogate at startup
      *

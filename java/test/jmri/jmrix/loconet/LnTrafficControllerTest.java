@@ -28,7 +28,10 @@ public class LnTrafficControllerTest {
 
     @AfterEach
     public void tearDown() {
-        memo.dispose();
+        if ( memo !=null ) {
+            memo.dispose();
+            memo = null;
+        }
         JUnitUtil.tearDown();
     }
 

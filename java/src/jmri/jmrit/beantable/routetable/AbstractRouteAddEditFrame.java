@@ -119,6 +119,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     private boolean showAll = true;   // false indicates show only included Turnouts
     private JFileChooser soundChooser = null;
     private ScriptFileChooser scriptChooser = null;
+    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     public AbstractRouteAddEditFrame(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
@@ -576,6 +577,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     }
 
     protected void showReminderMessage() {
+        if (checkEnabled) return;
         InstanceManager.getDefault(UserPreferencesManager.class).
                 showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
                         Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),  // NOI18N
@@ -702,7 +704,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
      */
     private void setSoundPressed() {
         if (soundChooser == null) {
-            soundChooser = new JFileChooser(FileUtil.getUserFilesPath());
+            soundChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
             soundChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
         }
         soundChooser.rescanCurrentDirectory();

@@ -95,9 +95,10 @@ public class ExportTrains extends XmlFile {
                 fileOut.printRecord(train.getName(), train.getDescription(), train.getDepartureTime(), routeName,
                         train.getTrainDepartsName(), train.getTrainTerminatesName(), train.getStatus(),
                         train.getComment(), TrainCommon.formatStringToCommaSeparated(train.getLocoTypeNames()),
-                        TrainCommon.formatStringToCommaSeparated(train.getCarTypeNames()), getRoadOption(train),
-                        getRoads(train), getLoadOption(train), getLoads(train), getOwnerOption(train), getOwners(train),
-                        getBuilt(train), train.isBuildTrainNormalEnabled() ? Bundle.getMessage("ButtonYes") : "",
+                        TrainCommon.formatStringToCommaSeparated(train.getCarTypeNames()), getCarRoadOption(train),
+                        getCarRoads(train), getLocoRoadOption(train), getLocoRoads(train), getLoadOption(train),
+                        getLoads(train), getOwnerOption(train), getOwners(train), getBuilt(train),
+                        train.isBuildTrainNormalEnabled() ? Bundle.getMessage("ButtonYes") : "",
                         train.isAllowReturnToStagingEnabled() ? Bundle.getMessage("ButtonYes") : "",
                         train.isAllowThroughCarsEnabled() ? Bundle.getMessage("ButtonYes") : "",
                         train.isSendCarsWithCustomLoadsToStagingEnabled() ? Bundle.getMessage("ButtonYes") : "",
@@ -194,24 +195,45 @@ public class ExportTrains extends XmlFile {
         }
     }
 
-    private String getRoadOption(Train train) {
+    private String getCarRoadOption(Train train) {
         String roadOption = Bundle.getMessage("AcceptAll");
 
-        if (train.getRoadOption().equals(Train.INCLUDE_ROADS)) {
+        if (train.getCarRoadOption().equals(Train.INCLUDE_ROADS)) {
             roadOption = Bundle.getMessage(
-                    "AcceptOnly") + " " + train.getRoadNames().length + " " + Bundle.getMessage("Roads");
-        } else if (train.getRoadOption().equals(Train.EXCLUDE_ROADS)) {
+                    "AcceptOnly") + " " + train.getCarRoadNames().length + " " + Bundle.getMessage("Roads");
+        } else if (train.getCarRoadOption().equals(Train.EXCLUDE_ROADS)) {
             roadOption = Bundle.getMessage(
-                    "Exclude") + " " + train.getRoadNames().length + " " + Bundle.getMessage("Roads");
+                    "Exclude") + " " + train.getCarRoadNames().length + " " + Bundle.getMessage("Roads");
         }
         return roadOption;
     }
 
-    private String getRoads(Train train) {
-        if (train.getRoadOption().equals(Train.ALL_ROADS)) {
+    private String getCarRoads(Train train) {
+        if (train.getCarRoadOption().equals(Train.ALL_ROADS)) {
             return "";
         } else {
-            return TrainCommon.formatStringToCommaSeparated(train.getRoadNames());
+            return TrainCommon.formatStringToCommaSeparated(train.getCarRoadNames());
+        }
+    }
+    
+    private String getLocoRoadOption(Train train) {
+        String roadOption = Bundle.getMessage("AcceptAll");
+
+        if (train.getLocoRoadOption().equals(Train.INCLUDE_ROADS)) {
+            roadOption = Bundle.getMessage(
+                    "AcceptOnly") + " " + train.getCarRoadNames().length + " " + Bundle.getMessage("Roads");
+        } else if (train.getLocoRoadOption().equals(Train.EXCLUDE_ROADS)) {
+            roadOption = Bundle.getMessage(
+                    "Exclude") + " " + train.getCarRoadNames().length + " " + Bundle.getMessage("Roads");
+        }
+        return roadOption;
+    }
+
+    private String getLocoRoads(Train train) {
+        if (train.getLocoRoadOption().equals(Train.ALL_ROADS)) {
+            return "";
+        } else {
+            return TrainCommon.formatStringToCommaSeparated(train.getLocoRoadNames());
         }
     }
 

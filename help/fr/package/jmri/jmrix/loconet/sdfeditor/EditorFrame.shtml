@@ -1,39 +1,24 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Translated  by Blorec Herv&#233; le 2011-10-30-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated  by Blorec Herv&#233; le 2011-10-30-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: SDF Sound File Editor</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help Digitrax SDF Sound File Editor">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help Digitrax SDF Sound File Editor">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>SDF &eacute;diteur de fichiers audio</h1>
 
       <p>Les d&eacute;codeurs sonores Digitrax sont
       charg&eacute;s avec des "projets sons",
       stock&eacute;s dans des fichiers "Sound Project" (.
-      spj) . Ceux-ci contiennent un certain nombre de "fragments
+      spj). Ceux-ci contiennent un certain nombre de "fragments
       sonores" au format. wav, plus un petit programme qui raconte
       au d&eacute;codeur quand jouer les sons
       diff&eacute;rents, et contr&ocirc;le
@@ -58,9 +43,9 @@
       programme SoundLoader Digitrax</p>
 
       <p>Digitrax fournit des exemples de fichiers projet sons
-      &aacute;  leur site web de Depot sonore <a href=
-      "http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>
-      . Vous pouvez &eacute;galement trouver des liens vers
+      &aacute; leur site web de Depot sonore <a href=
+      "http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>.
+      Vous pouvez &eacute;galement trouver des liens vers
       la documentation et des outils suppl&eacute;mentaires
       l&aacute; -bas.</p>
 
@@ -88,7 +73,7 @@
       un &eacute;diteur pour les type particulier de
       l'&eacute;l&eacute;ment a
       &eacute;t&eacute; d&eacute;fini, la section
-      du en bas aura des cases &aacute;  cocher et les
+      du en bas aura des cases &aacute; cocher et les
       bo&icirc;tes de s&eacute;lection pour modifier
       les contenu de l'&eacute;l&eacute;ment.</p>
 
@@ -101,7 +86,7 @@
       gauche de la fen&egrave;tre de l'&eacute;diteur,
       vous pouvez explorer la structure d'une
       d&eacute;finition sonore. N'h&eacute;sitez pas
-      &aacute;  explorer! Jusqu'&aacute;  ce que vous enregistriez
+      &aacute; explorer! Jusqu'&aacute; ce que vous enregistriez
       le fichier, vous ne d&eacute;rangez pas
       r&eacute;ellement rien.</p>
 
@@ -110,7 +95,7 @@
       il y a les "sch&eacute;mas", qui sont comme des
       programmes pour le d&eacute;codeur. Un
       d&eacute;codeur ne peut utiliser qu'un
-      sch&eacute;ma &aacute;  un moment, mais il peut
+      sch&eacute;ma &aacute; un moment, mais il peut
       &egrave;tre pr&eacute;sent dans la
       m&eacute;moire de plusieurs &aacute; la fois. Les
       sch&eacute;mas sont
@@ -148,7 +133,7 @@
 
       <p>Bien que tous les canaux puissent jouer des sons
       simultan&eacute;ment, chaque canal ne peut jouer qu'un
-      son (un fragment de .wav) &aacute;  un moment
+      son (un fragment de .wav) &aacute; un moment
       donn&eacute;. Le but de la commandes au sein du canal
       est de d&eacute;finir quels sons il doit jouer, et
       quand ils doivent commencer et finir.</p>
@@ -163,19 +148,19 @@
       <p>Dans chaque canal, il peut y avoir une ou plusieurs
       s&eacute;quences. Chacune a une condition en vertu de
       laquelle elle commence, puis une s&eacute;rie d'
-      op&eacute;rations &aacute;  prendre alors il a
+      op&eacute;rations &aacute; prendre alors il a
       commenc&eacute;.</p>
 
       <p>Les op&eacute;rations peuvent &egrave;tre des
-      choses comme de commencer &aacute;  jouer un son particulier,
+      choses comme de commencer &aacute; jouer un son particulier,
       ou en modifiant la fa&ccedil;on dont un son est
       jou&eacute;, ou de changer des informations diverses
       internes au d&eacute;codeur. Lorsque la
       s&eacute;quence est lanc&eacute;e, elle passe
-      jusqu&aacute;  la fin, laissant derri&egrave;re les
+      jusqu&aacute; la fin, laissant derri&egrave;re les
       choses que le d&eacute;codeur pourra refaire &aacute; 
       l'avenir. Par exemple, il peut d&eacute;finir les
-      fragments de sons &aacute;  jouer la prochaine quand l'actuel
+      fragments de sons &aacute; jouer la prochaine quand l'actuel
       est termin&eacute;, ou arr&egrave;ter le son qui
       est actuellement en cours de lecture par le canal et
       commencer un nouveau.</p>
@@ -200,7 +185,7 @@
 
             <li>lorsque la direction du moteur change</li>
 
-            <li>lorsque le moteur commence &aacute;  se
+            <li>lorsque le moteur commence &aacute; se
             d&eacute;placer</li>
           </ul>
         </li>
@@ -292,8 +277,9 @@
       fen&egrave;tre afin que les gens sachent ce que font
       les options.</p>
       
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

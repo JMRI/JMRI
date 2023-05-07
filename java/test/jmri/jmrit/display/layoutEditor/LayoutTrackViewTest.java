@@ -4,10 +4,6 @@ import jmri.util.JUnitUtil;
 
 import java.awt.GraphicsEnvironment;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.*;
-
 /**
  * Test simple functioning of LayoutTrackView
  *
@@ -40,7 +36,6 @@ public class LayoutTrackViewTest {
         layoutEditor = null;
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

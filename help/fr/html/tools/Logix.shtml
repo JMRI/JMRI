@@ -1,30 +1,23 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233;  2017-01-03-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233;  2017-01-03-->
 <head>
  <title>JMRI: Logix Documentation</title>
  <meta name="author" content="David Duchamp">
  <meta name="keywords" content="java model railroad JMRI Logix">
-
-	<!-- Style -->
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-	<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-	<link rel="home" title="Home" href="/">
-	<!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>JMRI: Documentation Logix</h1>
+      <h1>JMRI: Documentation Logix</h1>
 
-	<p> Les Logix&trade; fournissent une capacit&#233; puissante &#224; JMRI pour surveiller une
+	<p>Les Logix&trade; fournissent une capacit&#233; puissante &#224; JMRI pour surveiller une
 	ou plusieurs conditions sur un r&#233;seau, et prendre des mesures lorsque ces 	conditions changent d'une
 	mani&#232;re sp&#233;cifi&#233;e par l'utilisateur. Logix peut &#234;tre utilis&#233; pour
 	commander les signaux, portails de croisement et d'autres types d'automatisme sur le r&#233;seau.
@@ -861,8 +854,9 @@ Un groupe de Conditions a &#233;t&#233; choisi pour plusieurs raisons, notamment
 	programme.</p></li>
 </ul>
 
-<!--#include virtual="/Footer.shtml" -->
-	</div>
+      <!--#include virtual="/Footer_fr.shtml" -->
+	  </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -14,14 +14,14 @@ import org.junit.jupiter.api.*;
 public class MqttConnectionTypeListTest {
 
     @Test
-    public void ConstructorTest() {
+    public void testConstructor() {
         Assert.assertNotNull("constructor", new MqttConnectionTypeList());
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @AfterEach

@@ -14,14 +14,14 @@ import org.junit.jupiter.api.*;
 public class MqttTurnoutManagerXmlTest {
 
     @Test
-    public void ConstructorTest() {
+    public void testConstructor() {
         Assert.assertNotNull("ConnectionConfig constructor", new MqttTurnoutManagerXml());
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @AfterEach

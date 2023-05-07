@@ -19,20 +19,24 @@
     <choice>High level</choice>
     <choice xml:lang="de">Hochpegel</choice>
     <choice xml:lang="fr">Niveau Haut</choice>
+    <choice xml:lang="cs">Vysoká úroveň</choice>
   </enumChoice>
   <enumChoice value="1">
     <choice>Low level</choice>
     <choice xml:lang="de">Niedriger Pegel</choice>
     <choice xml:lang="fr">Niveau Bas</choice>
+    <choice xml:lang="cs">Nízká úroveň</choice>
   </enumChoice>
   <enumChoice value="2">
     <choice>Rising Edge</choice>
     <choice xml:lang="de">Steigende Flanke</choice>
     <choice xml:lang="fr">Front Montant</choice>
+    <choice xml:lang="cs">Stoupající hrana</choice>
   </enumChoice>
   <enumChoice value="3">
     <choice>Falling Edge</choice>
     <choice xml:lang="de">Fallende Flanke</choice>
     <choice xml:lang="fr">Front Descendant</choice>
+    <choice xml:lang="cs">Klesající hrana</choice>
   </enumChoice>  
 </enumVal>

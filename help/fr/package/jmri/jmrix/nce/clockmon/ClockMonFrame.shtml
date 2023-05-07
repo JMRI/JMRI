@@ -1,100 +1,89 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated  by Blorec Herv&#233; le 2011-10-28-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated  by Blorec Herv&#233; le 2011-10-28-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: NCE Clock Monitor</title>
+<title>JMRI: NCE Clock Monitor</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Route Add Edit">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>NCE Clock Monitor</h1>
 
-      <p>Lors de l'ex&Atilde;&copy;cution avec NCE comme mode
-      ma&Atilde;&reg;tre d'horloge, la fr&Atilde;&copy;quence
-      d'horloge interne est ajust&Atilde;&copy;e pour correspondre
-      &Atilde;  l'heure de l'horloge de la centrale commande NCE.
+      <p>Lors de l'exécution avec NCE comme mode
+      maître d'horloge, la fréquence
+      d'horloge interne est ajustée pour correspondre
+      à l'heure de l'horloge de la centrale commande NCE.
       L'objectif est que les minute doivent tourner en
-      m&Atilde;&ordf;me temps que l'horloge interne et l'affiche
-      ProCab* devrait changer en m&Atilde;&ordf;me temps que celle
-      les horloges sur PanelPro etc ...</p>
+      mème temps que l'horloge interne et l'affiche
+      ProCab* devrait changer en mème temps que celle
+      les horloges sur PanelPro etc.</p>
 
-      <p>Lors de l'ex&Atilde;&copy;cution avec l'horloge interne en
-      tant que ma&Atilde;&reg;tre, l'horloge NCE est
-      ajust&Atilde;&copy;e, en avant ou en arri&Atilde;&uml;re,
+      <p>Lors de l'exécution avec l'horloge interne en
+      tant que maître, l'horloge NCE est
+      ajustée, en avant ou en arrière,
       d'un certain nombre de secondes juste avant que la minute
       change. Alors l'heure des NCE fait avancer
-      l&Atilde;&copy;gerement comme le temps est
-      r&Atilde;&copy;gl&Atilde;&copy;, mais l'objectif est de
-      cocher les minutes dans le m&Atilde;&ordf;me temps que
+      légerement comme le temps est
+      réglé, mais l'objectif est de
+      cocher les minutes dans le mème temps que
       l'horloge interne. &lt;/ p&gt;</p>
 
-      <p>Ce service d&Atilde;&copy;pend de la capacit&Atilde;&copy;
-      &Atilde;  faire lire et &Atilde;&copy;crire la
-      m&Atilde;&copy;moire les commandes dans la centrale de
+      <p>Ce service dépend de la capacité
+      à faire lire et écrire la
+      mémoire les commandes dans la centrale de
       commande. Ceci est actuellement pris en charge par la
-      connexion en s&Atilde;&copy;rie sur les centrales de commande
+      connexion en série sur les centrales de commande
       uniquement. Ces dispositifs qui s'appuient sur l'adaptateur
       USB-NCE, comme le PowerCab et SB3, ne sont pas actuellement
-      soutenus en raison du manque d'acc&Atilde;&uml;s de la
-      m&Atilde;&copy;moire de la centrale de commande .</p>
+      soutenus en raison du manque d'accès de la
+      mémoire de la centrale de commande .</p>
 
       <h2>Lignes d'&Atilde;&permil;tat Horloge</h2>
 
       <p>Ces lignes affichent le statut actuel de chaque horloge et
-      leurs r&Atilde;&copy;glages. Lors de l'ex&Atilde;&copy;cution
+      leurs réglages. Lors de l'exécution
       de mode de synchronisation, la ligne qui est le
-      ma&Atilde;&reg;tre sera donc marqu&Atilde;&copy;e. Aussi
+      maître sera donc marquée. Aussi
       l'erreur courante entre le NCE et l'horloge interne sera
-      affich&Atilde;&copy;e.</p>
+      affichée.</p>
 
-      <h2>R&Atilde;&copy;glages de l'Horloge</h2>
+      <h2>Réglages de l'Horloge</h2>
 
       <p>Ce sont ceux qui apportent des modifications du
-      r&Atilde;&copy;gulateur ProCab. Si le mode de synchronisation
-      est &Acirc;&laquo;Maitre Interne&Acirc;&laquo; ils sont
-      d&Atilde;&copy;sactiv&Atilde;&copy;e et vous avez &Atilde; 
+      régulateur ProCab. Si le mode de synchronisation
+      est "Maitre Interne" ils sont
+      désactivée et vous avez à
       faire vos modifications via le panneau de
-      contr&Atilde;&acute;le de l'horloge interne.</p>
+      contrôle de l'horloge interne.</p>
 
-      <p>La modification des param&Atilde;&uml;tres de l'horloge en
+      <p>La modification des paramètres de l'horloge en
       mode synchro va provoquer le mode de synchronisation pour
-      r&Atilde;&copy;initialiser et effectuer l'initialisation pour
-      ce mode de synchronisation. &lt;/ p&gt;</p>
+      réinitialiser et effectuer l'initialisation pour
+      ce mode de synchronisation.</p>
 
       <h2>Vitesse de Scrutation</h2>
 
-      <p>Ceci d&Atilde;&copy;finit combien de fois une horloge est
-      lue juste dans le but de mettre &Atilde;  jour l'Heure
-      affich&Atilde;&copy;e sur le moniteur La
-      d&Atilde;&copy;finition de celle-ci vers une petite valeur va
-      augmenter le trafic s&Atilde;&copy;rie de la centrale de
+      <p>Ceci définit combien de fois une horloge est
+      lue juste dans le but de mettre à jour l'Heure
+      affichée sur le moniteur La
+      définition de celle-ci vers une petite valeur va
+      augmenter le trafic série de la centrale de
       commande La fixation de celle-ci vers une grande valeur
-      entra&Atilde;&reg;nera aussi l'affichage d'&Atilde;&copy;tat
-      d'horloge avec un retard consid&Atilde;&copy;rable et
-      l'indication &Acirc;&laquo;erreur&Acirc;&raquo; aura tendance
-      &Atilde;  regarder le pire, mais c'est purement
-      esth&Atilde;&copy;tique.</p>
+      entraînera aussi l'affichage d'état
+      d'horloge avec un retard considérable et
+      l'indication "erreur" aura tendance
+      à regarder le pire, mais c'est purement
+      esthétique.</p>
 
+      <p>En cour de traduction</p>
+      
       <h2>PID Constants</h2>
 
       <p>These values should generally be left alone. They adjust
@@ -120,8 +109,9 @@
       current error and the prior error is used in adjusting the
       clock.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

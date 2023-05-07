@@ -1,27 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
- <!-- Updated by Blorec Herv&#233;  2017-01-12-->
-<title>JMRI Hardware Support - XPressNet - Lenz Feedback Bus Addressing</title>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <!-- Updated by Blorec Herv&#233;  2017-01-12-->
+  <title>JMRI Hardware Support - XPressNet - Lenz Feedback Bus Addressing</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-  <!--#include virtual="Sidebar" -->
-  <div id="mainContent">
-    <!-- Page Body -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+      <!-- Page Body -->
 
-      <h1>Bus Adressant les R&eacute;tro-Signalisation Lenz</h1>Sur
+      <h1>Bus Adressant les R&eacute;tro-Signalisation Lenz</h1>
+      <p>Sur
       les syst&egrave;mes de Lenz, la r&eacute;tro-signalisation
       des p&eacute;riph&eacute;riques d'entr&eacute;e est
       assur&eacute;e par le bus de r&eacute;tro-signalisation.
@@ -30,7 +23,7 @@
       le Codeurs de R&eacute;tro-Signalisation LR101 ou
       d&eacute;codeurs d'accessoires Lenz qui fournissent une
       capacit&eacute; de r&eacute;tro-signalisation (le LS100 par
-      exemple)
+      exemple).</p>
 
       <h2>Adressagedes D&eacute;codeurs d'Accessoires avec
       XPressNet dans JMRI</h2>
@@ -211,8 +204,9 @@ programmes affectera automatiquement un pr&#233;fixe XS pour vous</p>
 Paul Bender<br>
 paul.bender@acm.org
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

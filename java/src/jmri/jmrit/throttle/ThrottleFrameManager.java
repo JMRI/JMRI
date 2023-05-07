@@ -33,9 +33,6 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      */
     public ThrottleFrameManager() {
         throttleWindows = new ArrayList<>(0);
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         buildThrottleListFrame();
     }
 
@@ -192,7 +189,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         if (throttlesListFrame == null) {
             buildThrottleListFrame();
         }
-        throttlesListFrame.setVisible(!throttlesListFrame.isVisible());
+        throttlesListFrame.setVisible(true);
     }
 
     /*

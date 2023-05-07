@@ -147,7 +147,7 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
 
         Assert.assertEquals("model", "NewModelABCD", e.getModel());
         Assert.assertEquals("road", "SPABCDEFGHIJ", e.getRoadName());
-        Assert.assertEquals("owner", "OwnerNameABC", e.getOwner());
+        Assert.assertEquals("owner", "OwnerNameABC", e.getOwnerName());
     }
 
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")

@@ -193,7 +193,7 @@ public class DccLocoAddressSelector extends JPanel {
         if (!varFontSize) {
             return;
         }
-        double fieldWidth = text.getSize().width;
+        int fieldWidth = text.getSize().width;
         int stringWidth = text.getFontMetrics(text.getFont()).stringWidth(LONGEST_STRING) + 8;
         int fontSize = text.getFont().getSize();
         if (stringWidth > fieldWidth) { // component has shrunk horizontally
@@ -212,7 +212,7 @@ public class DccLocoAddressSelector extends JPanel {
             }
         }
         // also fit vertically
-        double fieldHeight = text.getSize().height;
+        int fieldHeight = text.getSize().height;
         int stringHeight = text.getFontMetrics(text.getFont()).getHeight();
         while ((stringHeight > fieldHeight) && (fontSize >= FONT_SIZE_MIN + FONT_INCREMENT)) {  // component has shrunk vertically
             fontSize -= FONT_INCREMENT;

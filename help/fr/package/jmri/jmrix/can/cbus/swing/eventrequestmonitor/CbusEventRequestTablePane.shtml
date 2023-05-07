@@ -1,17 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <meta name="keywords" content=
   "JMRI CBUS help support event request feedback monitor monitoring tool">
-  <title>JMRI: CBUS® Event Request Table</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: CBUS® Event Request Table</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>JMRI : Tableau de contrôle des Demandes d'Événements CBUS</h1>
 
       <ul class="snav">
@@ -45,8 +45,6 @@
       <p>Le tableau commencera toujours sans aucune entrée, les données ne sont pas maintenues
       entre les sessions.</p>
 
-      <p>.</p>
-
       <p>Vous pouvez ouvrir la table automatiquement en l'ajoutant à votre liste d'actions de
       démarrage JMRI.<br>
       PanelPro &gt; Modifier les préférences &gt; Démarrage &gt; Ajouter &gt; Effectuer une action
@@ -57,8 +55,7 @@
 
       <p>Toutes les valeurs numériques sont décimales.</p>
 
-      <h2><a name="stats" id="stats">Colonnes</a>
-      </h2>
+      <h2><a name="stats" id="stats">Colonnes</a></h2>
 
       <p>Les colonnes peuvent être sélectionnées pour être affichées via la barre de menu
       supérieure, elles sont divisées en 2 catégories.</p>
@@ -279,13 +276,13 @@
       <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page principale d'aide JMRI
       CBUS</a>.</p>
 
-      <p>CBUS® ; est une marque déposée du Dr Michael Bolton</p>
-      .
+      <p>CBUS® ; est une marque déposée du Dr Michael Bolton.</p>
+
       <p>Traduction2021-03-19</p>
-      <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

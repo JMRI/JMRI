@@ -88,7 +88,6 @@ public class DecoderPro3Test {
     public void tearDown() {
         // eventually want to test ShutDownTasks?
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.resetApplication();
         JUnitUtil.tearDown();
     }

@@ -12,18 +12,18 @@ import org.junit.jupiter.api.*;
 public class IpocsLightManagerXmlTest {
 
     @Test
-    public void ConstructorTest() {
+    public void testConstructor() {
         Assert.assertNotNull("IpocsLightManagerXml constructor", new IpocsLightManagerXml());
     }
   
     @Test
-    public void loadTest() {
+    public void testLoad() {
         Element element = mock(Element.class);
         new IpocsLightManagerXml().load(element, null);
     }
 
     @Test
-    public void setStoreelementClassTest() {
+    public void testSetStoreElementClass() {
         Element element = mock(Element.class);
         new IpocsLightManagerXml().setStoreElementClass(element);
     }

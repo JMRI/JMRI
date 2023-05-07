@@ -20,7 +20,7 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
        super(memo);
     }
 
-    public void setTestReplies(boolean state) {
+    public synchronized void setTestReplies(boolean state) {
         useTestReplies = state;
     }
     
@@ -33,7 +33,7 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
     /**
      * record messages sent, provide access for making sure they are OK
      */
-    public Vector<SprogMessage> outbound = new Vector<SprogMessage>();  // public OK here, so long as this is a test class
+    public Vector<SprogMessage> outbound = new Vector<>();  // public OK here, so long as this is a test class
 
     @Override
     public void sendSprogMessage(SprogMessage m) {
@@ -70,11 +70,8 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
      */
     protected void sendTestMessage(SprogMessage m, SprogListener l) {
         // forward a test message to NceListeners
-        if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [{}]", m);
-        }
+        log.debug("sendTestMessage    [{}]", m);
         notifyMessage(m, l);
-        return;
     }
 
     /**
@@ -82,16 +79,14 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
      */
     protected void sendTestReply(SprogReply m) {
         // forward a test message to NceListeners
-        if (log.isDebugEnabled()) {
-            log.debug("sendTestReply [{}]", m);
-        }
+        log.debug("sendTestReply [{}]", m);
         notifyReply(m);
         try {
             Thread.sleep(50);
         } catch (InterruptedException e) {
             log.debug("Thread interrupted while sleeping");
         }
-        return;
+
     }
 
     /*

@@ -1,51 +1,42 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--Updated by Herv&#233; Blorec le 2016/08/17-->
+<!DOCTYPE html>
 <html lang="fr">
+<!--Updated by Herv&#233; Blorec le 2016/08/17-->
 <head>
-    <title>JMRI: Turnout Feedback</title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI Turnout feedback">
-
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=.iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <title>JMRI: Turnout Feedback</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI Turnout feedback">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
 <h1>JMRI: R&#233;troSignalisation Aiguillage</h1>
 
-Les Mod&#232;listes ferroviaires veulent des choses diff&#233;rentes quand il s'agit de conna&#238;tre 
+<p>Les Mod&#232;listes ferroviaires veulent des choses diff&#233;rentes quand il s'agit de conna&#238;tre
 l'&#233;tat des aiguillages sur leur r&#233;seau. Certains sont tr&#232;s heureux de pouvoir 
 dire "je lui ai dit de se d&#233;placer, c'est assez bon pour moi".
 Ces personnes ne s'inqui&#232;tent pas de savoir si un aiguillage 
 de leur r&#233;seau s'est d&#233;plac&#233; quand ils le lui ont dit. Ces gens 
 peuvent simplement ignorer cette page, et laisser les param&#232;tres de JMRI 
-par d&#233;faut.
+par d&#233;faut.</p>
 <p>
 Mais certains mod&#233;listes veulent avoir une meilleure information sur 
 l'&#233;tat des aiguillages sur leur r&#233;seau, et ainsi utiliser
 une certaine forme de "r&#233;tro-signalisation" pour indiquer la position des aiguillages. Cela pourrait &#234;tre
 aussi compliqu&#233; que deux micro contacts, ajust&#233;s afin de ne se fermer que lorsque l'aiguillage
- est correctement install&#233; dans n'importe laquelle des position. Ou ce pourrait &#234;tre quelque chose de
-plus simple.
+est correctement install&#233; dans n'importe laquelle des position. Ou ce pourrait &#234;tre quelque chose de
+plus simple.</p>
 
 <p>
 Dans le code, les objets Aiguillages font conna&#238;tre deux &#233;tats diff&#233;rents 
 l'&#233;tat "command&#233;" et l'&#233;tat "connu". L'&#233;tat command&#233; est "Ceci est
 ce qui &#233;tait demand&#233; au final ". L'&#233;tat connu est" C'est ce qui est
-fait correctement sur le r&#233;seau autant que je le sache". 
+fait correctement sur le r&#233;seau autant que je le sache".</p>
 
 <p>
 Configur&#233; pour les deux options, LocoNet et XPressNet ont des capacit&#233;s limit&#233;es pour contr&#244;ler ce
@@ -53,74 +44,83 @@ qui se passe sur leurs r&#233;seaux et s'adapter aux messages de changements d'&
 le dernier &#233;tat connu d'un aiguaillage qui a chang&#233; par une macro ou un pupitre.Tous les autres protocoles 
 utilisent habituellement un "vous lui dites de changer, ainsi il le fait" . En d'autres termes,  quand quelque chose dans le code
 (l'outil aiguillage ou un script) commande un changement d'&#233;tat droit &#224; d&#233;vi&#233;, par d&#233;faut 
-c'est &#224; la fois pour l'&#233;tat command&#233; et l'&#233;tat connu pour changer en "d&#233;vi&#233;".
+c'est &#224; la fois pour l'&#233;tat command&#233; et l'&#233;tat connu pour changer en "d&#233;vi&#233;".</p>
 
 <p>
 Mais il est &#233;galement possible de contr&#244;ler cela plus en d&#233;tail si vous avez
-c&#226;bl&#233; votre r&#233;seau pour le permettre.
+c&#226;bl&#233; votre r&#233;seau pour le permettre.</p>
 
 <p>
 Toute la question de la r&#233;tro-signalisation de l'aiguillage: "Comment pouvons nous configurer
 le programme pour comprendre l'&#233;tat connu, donn&#233;e par mon
-mat&#233;riel du r&#233;seau? "
-
+mat&#233;riel du r&#233;seau? "</p>
 
 <p>
 Si vous allez &#224; l'outil <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Tableau Aiguillage</a>, vous verrez qu'il a quatre colonnes
-associ&#233;es &#224; des r&#233;tro-signalisations:
+associ&#233;es &#224; des r&#233;tro-signalisations:</p>
+
 <dl>
-<dt> "R&#233;tro Signalisation"</dt><dd> C'est "l'&#233;tat connu". Vous ne pouvez pas le changer, mais cette
-colonne vous montre ce que le programme pense qu'il est.</dd>
+  <dt>"R&#233;tro Signalisation"</dt>
+  <dd> C'est "l'&#233;tat connu". Vous ne pouvez pas le changer, mais cette
+  colonne vous montre ce que le programme pense qu'il est.</dd>
 
-<dt> "Mode"</dt><dd> C'est la m&#233;thode de r&#233;tro signalisation utilis&#233;e par cet aiguillage. (Vous pouvez
-le changer pour chaque aiguillage individuellement, mais il faut noter que le changement ne
-prendra effet qu'apr&#232;s que vous ayez cliqu&#233; ailleurs, et vous pourriez avoir besoin d'ajouter
-certains noms de capteur dans la(es) colonne(s) suivante (s))</dd>
+  <dt>"Mode"</dt>
+  <dd> C'est la m&#233;thode de r&#233;tro signalisation utilis&#233;e par cet aiguillage. (Vous pouvez
+  le changer pour chaque aiguillage individuellement, mais il faut noter que le changement ne
+  prendra effet qu'apr&#232;s que vous ayez cliqu&#233; ailleurs, et vous pourriez avoir besoin d'ajouter
+  certains noms de capteur dans la(es) colonne(s) suivante (s))</dd>
 
-<dt> "Capteur 1", "Capteur 2"</dt><dd> Ceux-ci d&#233;finissent les capteurs n&#233;cessaires &#224; certains
-types de r&#233;tros. Vous pouvez taper un num&#233;ro de capteur, le nom syst&#232;me ou le nom utilisateur
-ici, le programme va le changer pour le nom syst&#232;me dont il a
-besoins.</dd>
+  <dt>"Capteur 1", "Capteur 2"</dt>
+  <dd> Ceux-ci d&#233;finissent les capteurs n&#233;cessaires &#224; certains
+  types de r&#233;tros. Vous pouvez taper un num&#233;ro de capteur, le nom syst&#232;me ou le nom utilisateur
+  ici, le programme va le changer pour le nom syst&#232;me dont il a
+  besoins.</dd>
 </dl>
 
 <p>
 Les modes de r&#233;tro signalisation disponibles sont:
 <dl>
-<dt> DIRECT</dt><dd> La valeur par d&#233;faut dans de nombreux cas, et aussi le comportement d'origine
-du programme. Quand quelque chose
-demande &#224; l'aiguillage de changer, c'est qu'il a imm&#233;diatement assum&#233;
-qu'il l'a vraiment fait.</dd>
+  <dt> DIRECT</dt>
+      <dd> La valeur par d&#233;faut dans de nombreux cas, et aussi le comportement d'origine
+  du programme. Quand quelque chose
+  demande &#224; l'aiguillage de changer, c'est qu'il a imm&#233;diatement assum&#233;
+  qu'il l'a vraiment fait.</dd>
 
-<dt>ONESENSOR</dt><dd> L'aiguillage montre le capteur d&#233;fini par la colonne "Capteur 1"
-, qui est probablement reli&#233; &#224; un micro contact sur l'aiguillage ou 
-similaire. Lorsque le capteur est Actif, l'aiguillage est connu pour &#234;tre dans
-la position "d&#233;vi&#233;e"  . Quand il est Inactif, l'aiguillage est connu pour
-&#234;tre dans la position "directe".</dd>
+  <dt>ONESENSOR</dt>
+      <dd> L'aiguillage montre le capteur d&#233;fini par la colonne "Capteur 1"
+  , qui est probablement reli&#233; &#224; un micro contact sur l'aiguillage ou
+  similaire. Lorsque le capteur est Actif, l'aiguillage est connu pour &#234;tre dans
+  la position "d&#233;vi&#233;e"  . Quand il est Inactif, l'aiguillage est connu pour
+  &#234;tre dans la position "directe".</dd>
 
-<dt>TWOSENSOR</dt><dd> L'aiguillage montre deux capteurs d&#233;finis par les colonnes "Capteur 1"
-et "Capteur 2", qui sont probablement reli&#233;s &#224; des micro contacts &#224; 
-chaque extr&#233;mit&#233; de la barre de commande de l'aiguillage. Lorsque le capteur 1 est actif, 
-l'aiguillage est connu pour &#234;tre "d&#233;vi&#233;". Lorsque le capteur 2 est actif, l'aiguillage 
-est connu pour &#234;tre "directe" (normal)
-</dd>
+  <dt>TWOSENSOR</dt>
+      <dd> L'aiguillage montre deux capteurs d&#233;finis par les colonnes "Capteur 1"
+  et "Capteur 2", qui sont probablement reli&#233;s &#224; des micro contacts &#224;
+  chaque extr&#233;mit&#233; de la barre de commande de l'aiguillage. Lorsque le capteur 1 est actif,
+  l'aiguillage est connu pour &#234;tre "d&#233;vi&#233;". Lorsque le capteur 2 est actif, l'aiguillage
+  est connu pour &#234;tre "directe" (normal)
+  </dd>
 
-<dt>MONITORING</dt><dd> Par d&#233;faut pour les aiguillages LocoNet et XPressNet, et disponible pour NCE,
-cela signifie que le r&#233;seau est surveill&#233; par des messages au sujet de l'
-&#233;tat de l'aiguillage. Ce mode est disponible uniquement pour certains
-protocoles, &#224; savoir certains protocoles ne peuvent pas faire le suivi correctement,
-et n'ont pas ce choix</dd>
+  <dt>MONITORING</dt>
+      <dd> Par d&#233;faut pour les aiguillages LocoNet et XPressNet, et disponible pour NCE,
+  cela signifie que le r&#233;seau est surveill&#233; par des messages au sujet de l'
+  &#233;tat de l'aiguillage. Ce mode est disponible uniquement pour certains
+  protocoles, &#224; savoir certains protocoles ne peuvent pas faire le suivi correctement,
+  et n'ont pas ce choix</dd>
 
-<dt>INDIRECT</dt><dd>Actuellement disponible uniquement pour les aiguillages LocoNet,
-il informe le programme que l'aiguillage est 
-entra&#238;n&#233; par un DS54 Digitrax avec un micro contact fix&#233;
-sur la tige de commande. Pour plus d'informations, consultez la
-<a href="../../hardware/loconet/DS54.shtml"> page DS54</a>.</dd>
+  <dt>INDIRECT</dt>
+      <dd>Actuellement disponible uniquement pour les aiguillages LocoNet,
+  il informe le programme que l'aiguillage est
+  entra&#238;n&#233; par un DS54 Digitrax avec un micro contact fix&#233;
+  sur la tige de commande. Pour plus d'informations, consultez la
+  <a href="../../hardware/loconet/DS54.shtml"> page DS54</a>.</dd>
 
-<dt>EXACT</dt><dd>Actuellement uniquement disponible pour les aiguillages LocoNet et XPressNet.
-Pour les aiguillages LocoNet, ceci informe le programme que l'aiguillage est 
-pilot&#233; par un Digitrax DS54 avec deux micro contacts attach&#233;s 
-&#224; l'interrupteur et aux commandes. Pour plus d'informations, consultez la:
-<a href="../../hardware/loconet/DS54.shtml"> page DS54</a>. Pour les aiguillages XPressNet ceci informe le programme que l'aiguillage est pilot&#233; par un LS100 et que les entr&#233;es r&#233;tro signalisations ont &#233;t&#233; connect&#233;es comme d&#233;crit dans le <a href="http://www.lenz.com/manuals/accessorydecoders/ls100110.pdf">manuel LS100  (lien externe, PDF)</a>.</dd>
+  <dt>EXACT</dt>
+      <dd>Actuellement uniquement disponible pour les aiguillages LocoNet et XPressNet.
+  Pour les aiguillages LocoNet, ceci informe le programme que l'aiguillage est
+  pilot&#233; par un Digitrax DS54 avec deux micro contacts attach&#233;s
+  &#224; l'interrupteur et aux commandes. Pour plus d'informations, consultez la:
+  <a href="../../hardware/loconet/DS54.shtml"> page DS54</a>. Pour les aiguillages XPressNet ceci informe le programme que l'aiguillage est pilot&#233; par un LS100 et que les entr&#233;es r&#233;tro signalisations ont &#233;t&#233; connect&#233;es comme d&#233;crit dans le <a href="http://www.lenz.com/manuals/accessorydecoders/ls100110.pdf">manuel LS100  (lien externe, PDF)</a>.</dd>
 
 </dl>
 
@@ -226,10 +226,11 @@ pour la confirmation de l'&#233;tat correct des aiguillages: le message envoy&#2
 confirmation que l'aiguillage a chang&#233;. 
 <p>
 Avec le r&#233;glage MONITORING, quand quelque chose en dehord de JMRI ( un autre programme , un r&#233;gulateur manuel)
-change l'&#233;tat de l'aiguillage, JMRI l'accepte et change ses &#233;tats internes pour l'aiguillage.
+change l'&#233;tat de l'aiguillage, JMRI l'accepte et change ses &#233;tats internes pour l'aiguillage.</p>
 
-<!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

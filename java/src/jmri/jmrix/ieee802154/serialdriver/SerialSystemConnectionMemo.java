@@ -37,7 +37,7 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154
      * Provide manager by class
      */
     @Override
-    public <T> T get(Class<?> T) {
+    public <T> T get(Class<T> T) {
         if (getDisabled()) {
             return null;
         }

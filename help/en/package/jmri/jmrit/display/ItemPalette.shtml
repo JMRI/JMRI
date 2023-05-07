@@ -93,10 +93,15 @@
         <li><strong>SignalMast</strong> A signal mast must be selected from the table to drag icons
         for it to the panel and to display the icons it uses for its aspects.</li>
 
-        <li><strong>Memory</strong> Select a memory location from the table. The four memory types
+        <li><strong>Memory</strong> Select a memory variable from the table. The four icon types
         each have a "Drag to Panel" area. Drag the item within the bordered "Drag to Panel" to the
         panel. Note that <strong>Input</strong> and <strong>Spinner</strong> types can only be
         dragged from the edges of their text boxes.</li>
+
+        <li><strong>Global Variable</strong> Select a LogixNG Global Variable from the table. The
+        four icon types each have a "Drag to Panel" area. Drag the item within the bordered "Drag to
+        Panel" to the panel. Note that <strong>Input</strong> and <strong>Spinner</strong> types can
+        only be dragged from the edges of their text boxes.<span class="since">since 5.3.1</span></li>
 
         <li><strong>Reporter</strong> Select a reporter from the table and drag the item within the
         bordered "Drag to Panel" to the panel.</li>

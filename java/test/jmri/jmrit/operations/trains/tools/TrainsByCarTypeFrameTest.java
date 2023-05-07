@@ -9,6 +9,8 @@ import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 import org.junit.Assume;
 
 /**
@@ -48,6 +50,85 @@ public class TrainsByCarTypeFrameTest extends OperationsTestCase{
         JemmyUtil.enterClickAndLeave(f.saveButton);
 
         Assert.assertTrue("accepts Boxcar 3", t.isTypeNameAccepted("Boxcar"));
+
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCopyCarType() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // confirm that train default accepts Boxcars
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train = tmanager.newTrain("Test Train Name 3");
+        Assert.assertTrue("accepts Boxcar", train.isTypeNameAccepted("Boxcar"));
+        Assert.assertTrue("accepts Flatcar", train.isTypeNameAccepted("Flatcar"));
+
+        TrainsByCarTypeFrame f = new TrainsByCarTypeFrame();
+        f.initComponents("Boxcar");
+
+        // remove Boxcar from trains
+        JemmyUtil.enterClickAndLeave(f.clearButton);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        
+        Assert.assertFalse("does not accept Boxcar", train.isTypeNameAccepted("Boxcar"));
+        Assert.assertTrue("accepts Flatcar", train.isTypeNameAccepted("Flatcar"));
+        
+        f.copyComboBox.setSelectedItem("Flatcar");
+        JemmyUtil.enterClickAndLeave(f.copyCheckBox);
+        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton); 
+        // the save should have opened a dialog window
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CopyCarTypeTitle"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
+        
+        Assert.assertTrue("accepts Boxcar", train.isTypeNameAccepted("Boxcar"));
+        Assert.assertTrue("accepts Flatcar", train.isTypeNameAccepted("Flatcar"));
+
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testSelectTrain() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // confirm that train default accepts Boxcars
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        // create two trains
+        Train train1 = tmanager.newTrain("Test Train 1");
+        Assert.assertTrue("accepts Boxcar", train1.isTypeNameAccepted("Boxcar"));
+        Assert.assertTrue("accepts Flatcar", train1.isTypeNameAccepted("Flatcar"));
+        
+        Train train2 = tmanager.newTrain("Test Train 2");
+        Assert.assertTrue("accepts Boxcar", train2.isTypeNameAccepted("Boxcar"));
+        Assert.assertTrue("accepts Flatcar", train2.isTypeNameAccepted("Flatcar"));
+
+        TrainsByCarTypeFrame f = new TrainsByCarTypeFrame();
+        f.initComponents("Boxcar");
+
+        // remove Boxcar from train1
+        JFrameOperator jfo = new JFrameOperator(f);
+        JCheckBoxOperator jbo = new JCheckBoxOperator(jfo, "Test Train 1");
+        jbo.doClick();           
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        
+        Assert.assertFalse("does not accept Boxcar", train1.isTypeNameAccepted("Boxcar"));
+        Assert.assertTrue("accepts Boxcar", train2.isTypeNameAccepted("Boxcar"));
+        Assert.assertTrue("accepts Flatcar", train1.isTypeNameAccepted("Flatcar"));
+        
+        jbo = new JCheckBoxOperator(jfo, "Test Train 2");
+        jbo.doClick();           
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        
+        Assert.assertFalse("does not accept Boxcar", train1.isTypeNameAccepted("Boxcar"));
+        Assert.assertFalse("does not accepts Boxcar", train2.isTypeNameAccepted("Boxcar"));
+        Assert.assertTrue("accepts Flatcar", train1.isTypeNameAccepted("Flatcar"));
+        
+        jbo = new JCheckBoxOperator(jfo, "Test Train 1");
+        jbo.doClick();           
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        
+        Assert.assertTrue("accepts Boxcar", train1.isTypeNameAccepted("Boxcar"));
+        Assert.assertFalse("does not accepts Boxcar", train2.isTypeNameAccepted("Boxcar"));
+        Assert.assertTrue("accepts Flatcar", train1.isTypeNameAccepted("Flatcar"));
 
         JUnitUtil.dispose(f);
     }

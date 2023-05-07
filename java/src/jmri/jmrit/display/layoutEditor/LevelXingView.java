@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
@@ -17,12 +16,13 @@ import jmri.*;
 import jmri.jmrit.display.layoutEditor.LevelXing.Geometry;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.MathUtil;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * MVC View component for the LevelXing class
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ *
  */
 public class LevelXingView extends LayoutTrackView {
 
@@ -37,7 +37,7 @@ public class LevelXingView extends LayoutTrackView {
         this.xing = xing;
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor(layoutEditor);
     }
-        
+
     /**
      * constructor method
      * @param xing the level crossing.
@@ -62,7 +62,7 @@ public class LevelXingView extends LayoutTrackView {
     // temporary?
     @Nonnull
     public LevelXing getLevelXing() { return xing; }
-    
+
     // this should only be used for debugging
     @Override
     public String toString() {
@@ -368,7 +368,7 @@ public class LevelXingView extends LayoutTrackView {
 //             } else {
 //                 namedLayoutBlockAC = null;
 //             }
-// 
+//
 //             // decrement use if block was previously counted
 //             if ((blockAC != null) && (blockAC == blockBD)) {
 //                 blockAC.decrementUse();
@@ -396,9 +396,9 @@ public class LevelXingView extends LayoutTrackView {
 //                 blockBD.decrementUse();
 //             }
 //         }
-// 
+//
 //     }
-// 
+//
 //     public void updateBlockInfo() {
 //         LayoutBlock blockAC = getLayoutBlockAC();
 //         LayoutBlock blockBD = getLayoutBlockBD();
@@ -436,7 +436,7 @@ public class LevelXingView extends LayoutTrackView {
 //         }
 //         reCheckBlockBoundary();
 //     }
-// 
+//
 //     void removeSML(SignalMast signalMast) {
 //         if (signalMast == null) {
 //             return;
@@ -599,7 +599,7 @@ public class LevelXingView extends LayoutTrackView {
 //     public String connectBName = "";
 //     public String connectCName = "";
 //     public String connectDName = "";
-// 
+//
 //     public String tLayoutBlockNameAC = "";
 //     public String tLayoutBlockNameBD = "";
 
@@ -674,7 +674,7 @@ public class LevelXingView extends LayoutTrackView {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@Nonnull JmriMouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -785,7 +785,8 @@ public class LevelXingView extends LayoutTrackView {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (canRemove() && layoutEditor.removeLevelXing(xing)) {
+                    if (canRemove() && removeInlineLogixNG()
+                            && layoutEditor.removeLevelXing(xing)) {
                         // Returned true if user did not cancel
                         xing.remove();
                         dispose();
@@ -884,9 +885,11 @@ public class LevelXingView extends LayoutTrackView {
             }
 
             layoutEditor.setShowAlignmentMenu(popup);
+            addCommonPopupItems(mouseEvent, popup);
             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         } else if (!viewAdditionalMenu.isEmpty()) {
             setAdditionalViewPopUpMenu(popup);
+            addCommonPopupItems(mouseEvent, popup);
             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         }
         return popup;
@@ -894,13 +897,13 @@ public class LevelXingView extends LayoutTrackView {
 
 //     public String[] getBlockBoundaries() {
 //         final String[] boundaryBetween = new String[4];
-// 
+//
 //         String blockNameAC = getBlockNameAC();
 //         String blockNameBD = getBlockNameBD();
-// 
+//
 //         LayoutBlock blockAC = getLayoutBlockAC();
 //         LayoutBlock blockBD = getLayoutBlockAC();
-// 
+//
 //         if (!blockNameAC.isEmpty() && (blockAC != null)) {
 //             if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != blockAC)) {
 //                 try {
@@ -958,9 +961,9 @@ public class LevelXingView extends LayoutTrackView {
 //         // remove from persistance by flagging inactive
 //         active = false;
 //     }
-// 
+//
 //     boolean active = true;
-// 
+//
 //     *
 //      * "active" means that the object is still displayed, and should be stored.
 //      */
@@ -969,7 +972,7 @@ public class LevelXingView extends LayoutTrackView {
 //     }
 
 //     ArrayList<SignalMast> sml = new ArrayList<>();
-// 
+//
 //     public void addSignalMastLogic(SignalMast sm) {
 //         if (sml.contains(sm)) {
 //             return;
@@ -988,7 +991,7 @@ public class LevelXingView extends LayoutTrackView {
 //         }
 //         sml.add(sm);
 //     }
-// 
+//
 //     public void removeSignalMastLogic(SignalMast sm) {
 //         if (!sml.contains(sm)) {
 //             return;
@@ -1042,7 +1045,7 @@ public class LevelXingView extends LayoutTrackView {
 
     /**
      * Draw track decorations.
-     * 
+     *
      * This type of track has none, so this method is empty.
      */
     @Override
@@ -1241,22 +1244,22 @@ public class LevelXingView extends LayoutTrackView {
      public List<HitPointType> checkForFreeConnections() {
         throw new IllegalArgumentException("should have called Object instead of view temporary");
 //         List<HitPointType> result = new ArrayList<>();
-// 
+//
 //         //check the A connection point
 //         if (getConnectA() == null) {
 //             result.add(HitPointType.LEVEL_XING_A);
 //         }
-// 
+//
 //         //check the B connection point
 //         if (getConnectB() == null) {
 //             result.add(HitPointType.LEVEL_XING_B);
 //         }
-// 
+//
 //         //check the C connection point
 //         if (getConnectC() == null) {
 //             result.add(HitPointType.LEVEL_XING_C);
 //         }
-// 
+//
 //         //check the D connection point
 //         if (getConnectD() == null) {
 //             result.add(HitPointType.LEVEL_XING_D);
@@ -1309,13 +1312,13 @@ public class LevelXingView extends LayoutTrackView {
 //         if ((getLayoutBlockBD() != null) && (connectD != null)) {
 //             blocksAndTracksMap.put(connectD, getLayoutBlockBD().getDisplayName());
 //         }
-// 
+//
 //         List<Set<String>> TrackNameSets = null;
 //         Set<String> TrackNameSet = null;
 //         for (Map.Entry<LayoutTrack, String> entry : blocksAndTracksMap.entrySet()) {
 //             LayoutTrack theConnect = entry.getKey();
 //             String theBlockName = entry.getValue();
-// 
+//
 //             TrackNameSet = null;    // assume not found (pessimist!)
 //             TrackNameSets = blockNamesToTrackNameSetsMap.get(theBlockName);
 //             if (TrackNameSets != null) { // (#1)

@@ -8,16 +8,16 @@
 3. CV number
 For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
 Uhlenbrock publishes the Article number for each (new) device.
-The Uhlenbrock Track-Control Signal Indicator has an Article number 6923, which was registered with Uhlenbrock.
-Older LNCV devices may not have their own address, or even no article. They can be programmed using
-Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
-programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+The Uhlenbrock Track-Control Signal Indicator #69230 has Article number 6923, which was registered with Uhlenbrock.
+See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-    <version author="Egbert Broerse" version="1.0" lastUpdated="20210205"/>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="2.0" lastUpdated="20220803"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
   <!-- all Track-Control items, and all LNCV definitions, require their own files as the article number is part of the CV name -->
-  <!-- compare to the similar 6922 Turnout Control. -->    <decoder>
+  <!-- compare to the similar 6922 Turnout Control. -->
+  <!-- version 2 - fixed CV39, added Route 1 configuration, requires JMRI 5.1.3 -->
+  <decoder>
         <family name="Track-Control" mfg="Uhlenbrock Elektronik" type="stationary">
             <model model="Signal Module" productID="6923" formFactor="Stationary" comment="Control Panel Signal Indicator">
               <versionCV />
@@ -30,8 +30,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
         </programming>
 
         <variables>
-            <variable CV="6923.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Module address" >
-              <decVal min="0" max="4095"/>
+            <variable CV="6923.0" item="Long Address" mask="VVVVVVVVVVVV" default="1" comment="Module address" >
+              <decVal min="1" max="4095"/>
               <label xml:lang="it">Indirizzo Modulo: </label>
               <label xml:lang="fr">Adresse Module: </label>
               <label xml:lang="de">Moduladresse: </label>
@@ -113,7 +113,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Wartezeit auf Programmiertaste in 0,5 Sek. Schritten</tooltip>
               <tooltip xml:lang="nl">Pauze na het indrukken van de Programmeerknop in stappen van 0,5 s</tooltip>
             </variable>
-            <variable CV="6923.7" item="Go Stop Key" default="0">
+            <variable CV="6923.7" item="Go Stop Key" mask="VVVVVVVVVVVVVV" default="0">
               <decVal max="1997"/>
               <label xml:lang="de">Fahrt/Halt-Taste: </label>
               <label xml:lang="nl">Rijden/Stop Toets: </label>
@@ -122,7 +122,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Magnetartikeladresse Fahrt/Halt-Taste (grün=FaGT, rot=HaGT)</tooltip>
               <tooltip xml:lang="nl">Wisseladres Rijden/Stop-toets (groen=FaGT, rood=HaGT)</tooltip>
             </variable>
-            <variable CV="6923.8" item="Shunting Key" default="0">
+            <variable CV="6923.8" item="Shunting Key" mask="VVVVVVVVVVVVVV" default="0">
               <decVal max="1997"/>
               <label xml:lang="de">Fahrt/Halt-Taste: </label>
               <label xml:lang="nl">Rijden/Stop Toets: </label>
@@ -131,8 +131,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Magnetartikeladresse Rangierfahrt/Fahrstraßen (grün=SGT, rot=FHT)</tooltip>
               <tooltip xml:lang="nl">Wisseladres Rangeren/Wisselstraten (groen=SGT, rood=FHT)</tooltip>
             </variable>
-            <!-- CV 21-28 Path Indication -->
-            <variable CV="6923.21" item="Turnout Address Indic EL" default="0">
+            <!-- CV 21-28 Path Indication TODO add 12 bit mask to all CV's below to accept longer dec values -->
+            <variable CV="6923.21" item="Turnout Address Indic EL" mask="VVVVVVVVVVVVVV" default="0">
               <decVal max="1997"/>
               <label xml:lang="de">Adresse Fahrwegausl. ext. li.: </label>
               <label xml:lang="nl">Wisseladres Aanduiding ext. li.: </label>
@@ -233,15 +233,22 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             </variable>
 
             <!-- CV 39-40 Target-/Group Button Settings -->
-            <variable CV="6923.39" item="Group Button" default="0">
-              <decVal max="4095"/>
+            <variable CV="6923.39" item="Group Button Address" mask="10" default="0">
+              <decVal max="10000"/>
               <label xml:lang="de">Adresse Ziel-/Gruppentaste: </label>
               <label xml:lang="nl">Adres Doel-/Groepsknop: </label>
               <label>Group Button Address: </label>
-              <tooltip>Pushbutton sends address xxxx, enter xxxx0 for Green, xxxx1 for Red</tooltip>
-              <tooltip xml:lang="de">Taster sendet Adresse xxxx, xxxx0 für Grün, xxxx1 für Rot</tooltip>
-              <tooltip xml:lang="nl">Drukknop verstuurt adres xxxx plus 0 voor Groen, xxxx1 voor rood</tooltip>
+              <tooltip>Pushbutton sends address to set Route (1-2048)</tooltip>
+              <tooltip xml:lang="de">Taster sendet Adresse (1-2048)</tooltip>
+              <tooltip xml:lang="nl">Drukknop verstuurt adres (1-2048)</tooltip>
             </variable>
+            <variable CV="6923.39" item="Group Button Color" mask="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+              <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+              <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+              <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+            </variable>
+
             <variable CV="6923.40" item="Lock Key Address" default="0">
               <decVal max="4095"/>
               <label xml:lang="de">Adresse Tastensperre: </label>
@@ -252,7 +259,70 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="nl">Wissel rood: Toetsen vergrendeld</tooltip>
             </variable>
 
-            <!-- CV 41-80 TODO Route Configuration (present items on 2nd tab) -->
+            <!-- CV 41-44 Route 1 Settings -->
+            <variable CV="6923.41" item="Route 1 Assign Address" mask="10" default="0">
+              <decVal max="10000"/>
+              <label xml:lang="de">Ziel:</label>
+              <label xml:lang="nl">Doel:</label>
+              <label>Target Address:</label>
+              <tooltip>Start Key waits for address (1-1997)</tooltip>
+              <tooltip xml:lang="de">Starttaste erwartet Adresse (1-1997)</tooltip>
+              <tooltip xml:lang="nl">Drukknop wacht op adres (1-1997)</tooltip>
+            </variable>
+            <variable CV="6923.41" item="Route 1 Assign Type" mask="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
+              <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
+              <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
+              <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
+            </variable>
+            <variable CV="6923.42" item="Route 1 Assigned Address" mask="10" default="0">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Festgelegt:</label>
+              <label xml:lang="nl"> Vastgelegd:</label>
+              <label> Assigned:</label>
+              <tooltip>After receiving Start Key sends LN message (Assign Rt.1)</tooltip>
+              <tooltip xml:lang="de">nach Empf. von Zielta. sende LNmes (Fahrst.1 festlegen)</tooltip>
+              <tooltip xml:lang="nl">Als starttoets is gedrukt stuur Ln bericht (wisselstraat toewijzen)</tooltip>
+            </variable>
+            <variable CV="6923.42" item="Route 1 Assigned Type" mask="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGUnOccDigit0.xml"/>
+              <tooltip>type of message to send</tooltip>
+              <tooltip xml:lang="de">Art des Berichts</tooltip>
+              <tooltip xml:lang="nl">Soort LocoNet bericht</tooltip>
+            </variable>
+            <variable CV="6923.43" item="Route 1 Release Address" mask="10" default="0">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Zurücknahme:</label>
+              <label xml:lang="nl"> Vrijgeven:</label>
+              <label> Release:</label>
+              <tooltip>Feedback address to release Route 1</tooltip>
+              <tooltip xml:lang="de">Rückm. (frei/bes.) für Zurücknahme der Fahrstraße 1</tooltip>
+              <tooltip xml:lang="nl">Terugmelding (straat 1 vrijgeven)</tooltip>
+            </variable>
+            <variable CV="6923.43" item="Route 1 Release Type" mask="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-UnOccDigit0.xml"/>
+              <tooltip>type of message to send</tooltip>
+              <tooltip xml:lang="de">Art des Berichts</tooltip>
+              <tooltip xml:lang="nl">Soort LocoNet bericht</tooltip>
+            </variable>
+            <variable CV="6923.44" item="Route 1 Released Address" mask="10" default="0">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Frei:</label>
+              <label xml:lang="nl"> Vrij:</label>
+              <label> Released:</label>
+              <tooltip>After Release send LN message (Rt.1 Released)</tooltip>
+              <tooltip xml:lang="de">nach Empf. Rückm. sende LNmes (Fahrst.1 auflösen)</tooltip>
+              <tooltip xml:lang="nl">Na vrijgave straat 1 LN bericht sturen</tooltip>
+            </variable>
+            <variable CV="6923.44" item="Route 1 Released Type" mask="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGUnOccDigit0.xml"/>
+              <tooltip>type of message to send</tooltip>
+              <tooltip xml:lang="de">Art des Berichts</tooltip>
+              <tooltip xml:lang="nl">Soort LocoNet bericht</tooltip>
+            </variable>
+
+            <!-- CV 45-80 TODO Route 2-10 Configuration (present items on 2nd tab) -->
+            <!-- hint 2022: use a radix mask=1 and max=10 (in include) to set digit 0 -->
 
             <variable CV="6923.119" item="Reset" default="0">
               <decVal/>
@@ -275,17 +345,23 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
         <name>LNCV Configuration</name>
         <name xml:lang="de">LNCV Konfiguration</name>
         <name xml:lang="nl">LNCV instellingen</name>
+        <name xml:lang="fr">Configuration LNCV</name>
+        <name xml:lang="cs">Konfigurace LNCV</name>
         <row>
             <column>
                 <label>
                   <text>Before writing, open a Programming</text>
                   <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
                   <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+                  <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
+                  <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
                 </label>
                 <label>
                   <text>session using the LocoNet LNCV Tool.</text>
                   <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
                   <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+                  <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+                  <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
                 </label>
                 <label>
                   <text> </text>
@@ -329,7 +405,10 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <display item="Go Stop Key"/>
               <display item="Shunting Key"/>
               <display item="Lock Key Address"/>
-              <display item="Group Button"/>
+              <row>
+                <display item="Group Button Address"/>
+                <display item="Group Button Color" label=""/>
+              </row>
 
               <separator/>
               <label>
@@ -379,16 +458,41 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
     </pane>
 
   <pane>
+    <!-- Routes CV41-80 are on this separate sheet -->
     <name>Routes</name>
     <name xml:lang="de">Fahrstraßen</name>
     <name xml:lang="nl">Rijpaden</name>
     <row>
       <column>
+        <row>
+          <column>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Route 1&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Fahrstraße 1&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Wisselstraat 1 1&lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+          </column>
+          <column>
+          <row>
+            <display item="Route 1 Assign Address"/>
+            <display item="Route 1 Assign Type" label=""/>
+            <display item="Route 1 Assigned Address"/>
+            <display item="Route 1 Assigned Type" label=""/>
+          </row>
+          <row>
+            <display item="Route 1 Release Address"/>
+            <display item="Route 1 Release Type" label=""/>
+            <display item="Route 1 Released Address"/>
+            <display item="Route 1 Released Type" label=""/>
+          </row>
+          </column>
+        </row>
+
         <label>
-          <text>Routes 1-10: Not yet available. Request this option in JMRI-Users</text>
+          <text>Routes 2-10: Not yet available. Request this option in JMRI-Users</text>
           <text xml:lang="de">Fahrstraßen 1-10: Leider noch nicht fertig. Fragen Sie nach im JMRI-Users Group</text>
         </label>
-      <!-- Routes CV41-80 go on this separate sheet -->
+        <!-- TODO Route 2-10 items-->
       </column>
     </row>
   </pane>

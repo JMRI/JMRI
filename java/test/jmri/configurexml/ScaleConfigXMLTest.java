@@ -11,11 +11,7 @@ import org.junit.jupiter.api.*;
  */
 public class ScaleConfigXMLTest {
 
-    @Test
-    public void ctorTest() {
-        ScaleConfigXML sxml = new ScaleConfigXML();
-        Assert.assertNotNull(sxml);
-    }
+    // no testCtor as tested class only supplies static methods
 
     @Test
     public void testLoad() {

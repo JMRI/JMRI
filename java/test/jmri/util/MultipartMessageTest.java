@@ -29,26 +29,29 @@ public class MultipartMessageTest {
     public void setUp() {
         // we need a web server to test this, so start the JMRI webserver here
         // and clean it up in teardown.
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDebugPowerManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDebugPowerManager();
         server = new WebServer(); // a webserver using default preferences.
         server.start();
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return server.isStarted();
         }, "Server Failed to Start in time");
         jmri.util.JUnitOperationsUtil.setupOperationsTests();
     }
 
     @AfterEach
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "DCN_NULLPOINTER_EXCEPTION",
+        justification = "custom NPE handling ")
     public void tearDown() {
+        Assertions.assertNotNull(server);
         try {
             try {
                 server.stop();
-                jmri.util.JUnitUtil.waitFor(() -> {
+                JUnitUtil.waitFor(() -> {
                     return server.isStopped();
                 }, "Server failed to Stop in time");
-            } catch (java.lang.NullPointerException npe) {
+            } catch (NullPointerException npe) {
                 log.debug("NPE shutting down web server", npe);
             } catch (Exception ex) {
                 // Exception is thrown by the stop call above.
@@ -56,12 +59,12 @@ public class MultipartMessageTest {
                 log.error("Excecption shutting down web server", ex);
                 Assert.fail("Exception occured during web server shutdown:" + ex);
             }
-        } catch (java.lang.NullPointerException npe2) {
+        } catch (NullPointerException npe2) {
             log.debug("NPE shutting down web server", npe2);
             //Assert.fail("Null Pointer Exception occured during teardown:" + npe2);
         }
         JUnitUtil.resetZeroConfServiceManager();
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(MultipartMessageTest.class.getName());

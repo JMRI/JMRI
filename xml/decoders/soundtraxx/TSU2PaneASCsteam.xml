@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2016</year>
+      <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+          <personname>
+              <firstname>James</firstname>
+              <surname>Exler</surname>
+          </personname>
+      </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+          <revnumber>1</revnumber>
+          <date>2022-07-25</date>
+          <authorinitials>JE</authorinitials>
+          <revremark>New file for tsu2 steam, based on TSU</revremark>
+      </revision>
+  </revhistory>
+  <!-- pane starts here   -->
+  <column>
+    <row>
+      <label>
+        <text>AUTOMATIC SOUND CONTROL</text>
+        <text xml:lang="it">CONTROLLO AUTOMATICO SUONO</text>
+      </label>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <display item="Automatic Bell Enable" format="checkbox"/>
+        <display item="Automatic Brake Squeal Enable" format="checkbox"/>
+        <display item="Automatic Cylinder Cocks Enable" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>          </text>
+        </label>
+      </column>
+      <column>
+        <display item="Automatic Bell Enable (Analog Mode)" format="checkbox"/>
+        <display item="Automatic Brake Squeal Enable (Analog Mode)" format="checkbox"/>
+        <display item="Automatic Cylinder Cocks Enable (Analog Mode)" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <row>
+          <column>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text>These CVs allow the user to set the parameters</text>
+              <text xml:lang="it">Queste CV permettono di impostare i parametri</text>
+            </label>
+            <label>
+              <text>for the Automatic Sound Control features.</text>
+              <text xml:lang="it">per il controllo automatico dei suoni</text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+        <row>
+          <display item="Auto-Bell On Set Point" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Auto-Bell On Set Point" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Auto-Bell On Time" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Auto-Bell On Time" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Cylinder Cocks On Time" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Cylinder Cocks On Time" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Brake Squeal Sensitivity" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Brake Squeal Sensitivity" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>          </text>
+        </label>
+      </column>
+      <separator/>
+      <column>
+        <label>
+          <text>          </text>
+        </label>
+      </column>
+      <column>
+        <row>
+          <column>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text>Set the probability that the various sound effects will occur the next time the locomotive is stopped.</text>
+              <text xml:lang="it">Imposta la probabilità che i vari effetti vengano eseguiti la prossima volta che la loco si ferma</text>
+            </label>
+            <label>
+              <text>A setting of zero effectively turns off an effect.   A setting of 255 enables the effect at every stop.</text>
+              <text xml:lang="it">Impostare valore=0 per non generare mai l'effetto. Valore=255 per generarlo ad ogni fermata</text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+        <row>
+          <column>
+            <row>
+              <display item="Firing Event Probability" layout="above" label="">
+                <label/>
+              </display>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Firing Event Probability" layout="above" format="hslider"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Water Stop Event Probability" layout="above" label="">
+                <label/>
+              </display>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Water Stop Event Probability" layout="above" format="hslider"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Wrenches and Frame-check Event Probability" layout="above" label="">
+                <label/>
+              </display>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Wrenches and Frame-check Event Probability" layout="above" format="hslider"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Oil Can and Grease Gun Event Probability" layout="above" label="">
+                <label/>
+              </display>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Oil Can and Grease Gun Event Probability" layout="above" format="hslider"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+          <column>
+            <label>
+              <text>          </text>
+            </label>
+          </column>
+          <column>
+            <row>
+              <display item="Cab Chatter Event Probability" layout="above" label="">
+                <label/>
+              </display>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Cab Chatter Event Probability" layout="above" format="hslider"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Injector Event Probability" layout="above" label="">
+                <label/>
+              </display>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Injector Event Probability" layout="above" format="hslider"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Blower Draft Event Probability" layout="above" label="">
+                <label/>
+              </display>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Blower Draft Event Probability" layout="above" format="hslider"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Safety Valve Event Probability" layout="above" label="">
+                <label/>
+              </display>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Safety Valve Event Probability" layout="above" format="hslider"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+      </column>
+    </row>
+  </column>
+  <name>ASC</name>
+  <name xml:lang="it">Suoni casuali</name>
+</pane>

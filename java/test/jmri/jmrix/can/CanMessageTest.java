@@ -44,6 +44,8 @@ public class CanMessageTest extends CanMRCommonTestBase {
         
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "EC_UNRELATED_TYPES",
+        justification = "CanReply and CanMessage are CanFrame with custom equals")
     @Test
     @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsReply() {
@@ -102,6 +104,8 @@ public class CanMessageTest extends CanMRCommonTestBase {
         
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "EC_UNRELATED_TYPES",
+        justification = "CanReply and CanMessage are CanFrame with custom equals")
     @Test
     @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testMessageFromReply() {
@@ -111,102 +115,102 @@ public class CanMessageTest extends CanMRCommonTestBase {
         r.setElement(0, 0x01);
         r.setElement(1, 0x82);
         
-        CanMessage m = new CanMessage(r);
-        Assert.assertTrue("Header 0x55", m.getHeader() == 0x55);
-        Assert.assertTrue("2 Elements", m.getNumDataElements() == 2);
-        Assert.assertTrue("equals same", m.equals(r));
-        Assert.assertTrue("equal hashcode", m.hashCode() == r.hashCode());
+        CanMessage m1 = new CanMessage(r);
+        Assert.assertTrue("Header 0x55", m1.getHeader() == 0x55);
+        Assert.assertTrue("2 Elements", m1.getNumDataElements() == 2);
+        Assert.assertTrue("equals same", m1.equals(r));
+        Assert.assertTrue("equal hashcode", m1.hashCode() == r.hashCode());
     }
 
     @Test
     public void testHeaderAccessors() {
-        CanMessage m = new CanMessage(0x55);
-        Assert.assertTrue("Header 0x55", m.getHeader() == 0x55);
+        CanMessage m1 = new CanMessage(0x55);
+        Assert.assertTrue("Header 0x55", m1.getHeader() == 0x55);
     }
 
     @Test
     public void testRtrBit() {
-        CanMessage m = new CanMessage(0x12);
-        Assert.assertTrue("not rtr at start", !m.isRtr());
-        m.setRtr(true);
-        Assert.assertTrue("rtr set", m.isRtr());
-        m.setRtr(false);
-        Assert.assertTrue("rtr unset", !m.isRtr());
+        CanMessage m1 = new CanMessage(0x12);
+        Assert.assertTrue("not rtr at start", !m1.isRtr());
+        m1.setRtr(true);
+        Assert.assertTrue("rtr set", m1.isRtr());
+        m1.setRtr(false);
+        Assert.assertTrue("rtr unset", !m1.isRtr());
     }
 
     @Test
     public void testStdExt() {
-        CanMessage m = new CanMessage(0x12);
-        Assert.assertTrue("std at start", !m.isExtended());
-        m.setExtended(true);
-        Assert.assertTrue("extended", m.isExtended());
-        m.setExtended(false);
-        Assert.assertTrue("std at end", !m.isExtended());
+        CanMessage m1 = new CanMessage(0x12);
+        Assert.assertTrue("std at start", !m1.isExtended());
+        m1.setExtended(true);
+        Assert.assertTrue("extended", m1.isExtended());
+        m1.setExtended(false);
+        Assert.assertTrue("std at end", !m1.isExtended());
     }
 
     @Test
     public void testDataElements() {
-        CanMessage m = new CanMessage(0x12);
+        CanMessage m1 = new CanMessage(0x12);
 
-        m.setNumDataElements(0);
-        Assert.assertTrue("0 Elements", m.getNumDataElements() == 0);
+        m1.setNumDataElements(0);
+        Assert.assertTrue("0 Elements", m1.getNumDataElements() == 0);
 
-        m.setNumDataElements(1);
-        Assert.assertTrue("1 Elements", m.getNumDataElements() == 1);
+        m1.setNumDataElements(1);
+        Assert.assertTrue("1 Elements", m1.getNumDataElements() == 1);
 
-        m.setNumDataElements(8);
-        Assert.assertTrue("8 Elements", m.getNumDataElements() == 8);
+        m1.setNumDataElements(8);
+        Assert.assertTrue("8 Elements", m1.getNumDataElements() == 8);
 
-        m.setNumDataElements(3);
-        m.setElement(0, 0x81);
-        m.setElement(1, 0x02);
-        m.setElement(2, 0x83);
-        Assert.assertTrue("3 Elements", m.getNumDataElements() == 3);
-        Assert.assertTrue("3 Element 0", m.getElement(0) == 0x81);
-        Assert.assertTrue("3 Element 1", m.getElement(1) == 0x02);
-        Assert.assertTrue("3 Element 2", m.getElement(2) == 0x83);
+        m1.setNumDataElements(3);
+        m1.setElement(0, 0x81);
+        m1.setElement(1, 0x02);
+        m1.setElement(2, 0x83);
+        Assert.assertTrue("3 Elements", m1.getNumDataElements() == 3);
+        Assert.assertTrue("3 Element 0", m1.getElement(0) == 0x81);
+        Assert.assertTrue("3 Element 1", m1.getElement(1) == 0x02);
+        Assert.assertTrue("3 Element 2", m1.getElement(2) == 0x83);
     }
 
     @Test
     @Override
     public void testToString() {
-        CanMessage m = new CanMessage(0x12);
-        m.setNumDataElements(3);
-        m.setElement(0, 0x81);
-        m.setElement(1, 0x02);
-        m.setElement(2, 0x83);
-        Assert.assertEquals("string representation", "[12] 81 02 83",m.toString());
+        CanMessage m1 = new CanMessage(0x12);
+        m1.setNumDataElements(3);
+        m1.setElement(0, 0x81);
+        m1.setElement(1, 0x02);
+        m1.setElement(2, 0x83);
+        Assert.assertEquals("string representation", "[12] 81 02 83",m1.toString());
     }
 
     @Test
     @Override
     public void testToMonitorString() {
-        CanMessage m = new CanMessage(0x12);
-        m.setNumDataElements(3);
-        m.setElement(0, 0x81);
-        m.setElement(1, 0x02);
-        m.setElement(2, 0x83);
-        Assert.assertEquals("string representation", "(12) 81 02 83",m.toMonitorString());
+        CanMessage m1 = new CanMessage(0x12);
+        m1.setNumDataElements(3);
+        m1.setElement(0, 0x81);
+        m1.setElement(1, 0x02);
+        m1.setElement(2, 0x83);
+        Assert.assertEquals("string representation", "(12) 81 02 83",m1.toMonitorString());
     }
     
     @Test
     public void testReplyExpected() {
-        CanMessage m = new CanMessage(0x12);
-        Assert.assertFalse("No Reply expected",m.replyExpected());
+        CanMessage m1 = new CanMessage(0x12);
+        Assert.assertFalse("No Reply expected",m1.replyExpected());
     }
     
     @Test
     public void testSetData() {
-        CanMessage m = new CanMessage(0x12);
-        m.setData( new int[]{1,2,3,4,5,6,7,8,9});
-        Assert.assertEquals("data over frame length set ok", "(12) 01 02 03 04 05 06 07 08",m.toMonitorString());
-        m.setData( new int[]{10,11,12});
-        Assert.assertEquals("data under frame length set ok", "(12) 0A 0B 0C 04 05 06 07 08",m.toMonitorString());
+        CanMessage m1 = new CanMessage(0x12);
+        m1.setData( new int[]{1,2,3,4,5,6,7,8,9});
+        Assert.assertEquals("data over frame length set ok", "(12) 01 02 03 04 05 06 07 08",m1.toMonitorString());
+        m1.setData( new int[]{10,11,12});
+        Assert.assertEquals("data under frame length set ok", "(12) 0A 0B 0C 04 05 06 07 08",m1.toMonitorString());
     }
     
     @Test
     public void testCreateFromLongArrays() {
-        CanMessage m = new CanMessage(new int[]{1,2,3,4,5,6,7,8,9},0x12);
+        m = new CanMessage(new int[]{1,2,3,4,5,6,7,8,9},0x12);
         Assert.assertEquals("int data over frame length set ok", "(12) 01 02 03 04 05 06 07 08",m.toMonitorString());
         m = new CanMessage(new int[]{1,2,3},0x12);
         Assert.assertEquals("int data under frame length set ok", "(12) 01 02 03",m.toMonitorString());
@@ -219,10 +223,10 @@ public class CanMessageTest extends CanMRCommonTestBase {
     
     @Test
     public void testSetGetTranslated(){
-        CanMessage m = new CanMessage(0x12);
-        Assert.assertFalse("Not translated by default",m.isTranslated());
-        m.setTranslated(true);
-        Assert.assertTrue("translated flag set",m.isTranslated());
+        CanMessage m1 = new CanMessage(0x12);
+        Assert.assertFalse("Not translated by default",m1.isTranslated());
+        m1.setTranslated(true);
+        Assert.assertTrue("translated flag set",m1.isTranslated());
     }
 
     @BeforeEach

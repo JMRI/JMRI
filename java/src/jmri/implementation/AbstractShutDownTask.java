@@ -4,8 +4,6 @@ import java.beans.PropertyChangeEvent;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ShutDownTask;
 
-import jmri.util.LoggingUtil;
-
 /**
  * Abstract ShutDownTask implementation.
  * <p>
@@ -47,6 +45,11 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     @Override
     public String getName() {
         return mName;
+    }
+
+    @Override
+    public String toString() {
+        return "ShutDownTask: " + getName();
     }
 
     /**

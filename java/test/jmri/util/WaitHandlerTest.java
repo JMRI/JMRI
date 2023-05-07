@@ -1,11 +1,11 @@
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Calendar;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.WaitHandler class.
@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
  */
 public class WaitHandlerTest {
 
-    static transient boolean flag1;
-    static transient boolean flag2;
+    private transient boolean flag1;
+    private transient boolean flag2;
 
     static final int THREAD_DELAY = 200;   // time to delay thread under test
     static final int TEST_DELAY = THREAD_DELAY + 250;  // time to wait for thread to complete
@@ -29,13 +29,13 @@ public class WaitHandlerTest {
 
     @Test
     public void testInlineWait() {
-        long startTime = Calendar.getInstance().getTimeInMillis();
+        startTime = Calendar.getInstance().getTimeInMillis();
 
         // delay the test thread itself
         new WaitHandler(this, 50);
 
         // check how long it took
-        long endTime = Calendar.getInstance().getTimeInMillis();
+        endTime = Calendar.getInstance().getTimeInMillis();
         Assert.assertTrue("wait time long enough", 50 <= endTime - startTime);
     }
 
@@ -101,6 +101,7 @@ public class WaitHandlerTest {
     }
 
     @Test
+    @SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method.")
     public void testSpuriousWake() {
         flag1 = false;
         flag2 = false;
@@ -142,6 +143,7 @@ public class WaitHandlerTest {
     }
 
     @Test
+    @SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method.")
     @Disabled("disabled in JUnit 3 testing paradigm")
     public void testCheckMethod() {
         flag1 = false;
@@ -178,7 +180,7 @@ public class WaitHandlerTest {
         Assert.assertTrue("ended", flag2);
 
         if (THREAD_DELAY <= endTime - startTime) {
-            log.error("run time not shortened: {}", endTime - startTime);
+            Assert.fail("run time: " + THREAD_DELAY + "  not shortened: " + ( endTime - startTime));
         }
         Assert.assertTrue("run time shortened", THREAD_DELAY > endTime - startTime);
     }
@@ -193,6 +195,6 @@ public class WaitHandlerTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WaitHandlerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WaitHandlerTest.class);
 
 }

@@ -481,7 +481,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Engine type", "Diesel", e6.getTypeName());
         Assert.assertEquals("Engine length", "44", e6.getLength()); //default for SW8 is 44
         Assert.assertEquals("Engine built", "1999", e6.getBuilt());
-        Assert.assertEquals("Engine owner", "AT", e6.getOwner());
+        Assert.assertEquals("Engine owner", "AT", e6.getOwnerName());
         Assert.assertEquals("Engine comment", "test Engine comment field", e6.getComment());
         Assert.assertFalse(e6.isBunit());
         Assert.assertEquals("Blocking order", Engine.DEFAULT_BLOCKING_ORDER, e6.getBlocking());
@@ -820,7 +820,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
 
         Engine e1 = engineManager.getByRoadAndNumber("PC", "5524");
-        e1.setOwner("TEST_OWNER");
+        e1.setOwnerName("TEST_OWNER");
 
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();
@@ -895,6 +895,35 @@ public class EngineEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.saveButton);
         Assert.assertEquals("consist name", "TEST_CONSIST", e1.getConsistName());
 
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testConsist() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData(); // load engines
+        EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
+
+        Engine e1 = engineManager.getByRoadAndNumber("PC", "5524");
+        Assert.assertEquals("consist name", "C14", e1.getConsistName());
+        
+        Engine e2 = engineManager.getByRoadAndNumber("PC", "5559");
+        Assert.assertEquals("consist name", "C14", e2.getConsistName());
+        
+        Location location = InstanceManager.getDefault(LocationManager.class).getLocationByName("North End Staging");
+        Track track = location.getTrackByName("North End 1", null);
+        Assert.assertEquals("place engine", Track.OKAY, e1.setLocation(location, track));
+
+        EngineEditFrame f = new EngineEditFrame();
+        f.initComponents();
+        f.load(e1);
+
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(Bundle.getMessage("enginePartConsist"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.waitFor(f);
+
+        Assert.assertEquals("Confirm location change", location, e2.getLocation());
+        Assert.assertEquals("Confirm track change", track, e2.getTrack());
         JUnitUtil.dispose(f);
     }
 }

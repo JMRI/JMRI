@@ -1,25 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Kevin Dickerson 2011 -->
   <!-- Translated by Blorec Herv&#233; 2013-09-27 -->
 
-  <title>JMRI: Enclenchement</title><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <title>JMRI: Enclenchement</title>
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="../Sidebar.shtml" -->
 
     <div id="mainContent">
+
       <h1>Entrée Sortie Enclenchement</h1>
 
       <p>Ce bref tutoriel est destiné à expliquer comment les Entrée Sortie et Enclenchement sont
@@ -41,14 +38,14 @@
       "http://www.jmri.org/community/clinics/UK2011/">exemple</a> la Logique Mât Signal devrait
       être suivie avant d'essayer celui-ci car il fournit la base sur la façon de construire votre
       panneau prêt à l'emploi avec la Logique du Mât de signalisation et aussi de
-      l'Enclenchement..</p>
+      l'Enclenchement.</p>
 
       <p>Le plan de voie pour cela est le même que dans la logique de mât signal et pourrait être
       considéré comme un scénario typique où les signaux Approche Bas, Platform Haut et Bay
       seraient sous le contrôle de l'aiguilleur, tandis que la Platforme haut extérieur et vers le
       bas serait automatiquement contrôlée..</p>
 
-      <p><img src="images/interlocklayoutoverview.png" width="830" height="278" alt="">
+      <p><img src="images/interlocklayoutoverview.png" width="830" height="278" alt="interlock overview">
       </p>
 
       <p>Le fichier panneau pour ce tutoriel peut être trouvé <a href=
@@ -86,7 +83,7 @@
       contextuel (clic droit) sur la limite de canton et sélectionnez "Set Capteurs", à partir de
       la fenêtre suivante:</p>
 
-      <p><img src="images/assignsensors.png" width="331" height="539" alt="">
+      <p><img src="images/assignsensors.png" width="331" height="539" alt="assign sensors">
       </p>
 
       <p>Rappelez-vous que le canton dont le capteur est affecté déterminera le sens de la marche,
@@ -98,7 +95,7 @@
       <h2>Création des Règles NX.</h2>
       Ouvrez la fenêtre d'Entrée Sortie, qui peut être trouvée dans l'option outils de l'éditeur de
       réseau. Cela fera apparaître une fenêtre comme celle-ci.
-      <p><img src="images/emptyentryexitwindow.png" width="790" height="244" alt="">
+      <p><img src="images/emptyentryexitwindow.png" width="790" height="244" alt="NX window empty">
       </p>
 
       <p>cette fenêtre vous permet de voir quelles paires NX ont été créées et l'état de chaque
@@ -110,7 +107,7 @@
         NX</li>
 
         <li>Si vous allez créer la paire manuellement puis sélectionnez les points d'Entrée et de
-        Sortie depuis les listes respectives, ou les laisser tels quels..</li>
+        Sortie depuis les listes respectives, ou les laisser tels quels.</li>
 
         <li>Sélectionnez le type d'enclenchement que vous allez utilisert.</li>
 
@@ -132,7 +129,7 @@
       Si pour commencer vous sélectionnez "Définir Aiguillage Seulement" et appuyez sur "Générer
       automatiquement les Paires Entrée Sortie ", il finira par générer une liste de quatre paires
       comme suit:
-      <p><img src="images/populatedentryexitwindow.png" width="790" height="315" alt="">
+      <p><img src="images/populatedentryexitwindow.png" width="790" height="315" alt="NX window">
       </p>
 
       <p>Les quatre chemins générés sont tous des paires valides baséessur la direction des
@@ -147,14 +144,14 @@
       <p>Si vous définnissez un itinéraire du "Mât Bay" vers le "up appr", Les aiguillages seront
       encore définis automatiquement.</p>
 
-      <p><img src="images/interlockturnout.png" width="498" height="229" alt="">
+      <p><img src="images/interlockturnout.png" width="498" height="229" alt="interlock turnout">
       </p>
 
       <p>Avec le type enclenchement Aiguillage Seulement, comme aucune autre logique ou
       verrouillage ne se fait, il est possible d'autoriser le verrouillage à mettre en place, peu
       importe lequel inverse les boutons NX sélectionnés . Cela peut être fait en sélectionnant le
       drapeau "Both Way" dans le tableau contre une entrée. Vous pouvez ensuite définir le chemin
-      en sens inverse, par exemple "NX Up Outer" à "NX Mât Bay ".</p>
+      en sens inverse, par exemple "NX Up Outer" à "NX Mât Bay".</p>
 
       <p>En complément de ceci avec un "Aiguillage Seulement" défini, vous pouvez également créer
       des paires NX qui vont dans le sens normal de déplacement, par exemple de " Mât Bay" à "Down
@@ -168,7 +165,7 @@
       aiguillages et si les SignalMasts sont placés au même endroit, il configure également la
       logique du mât signal à la source.</p>
 
-      <p><img src="images/interlocksigmast.png" width="498" height="229" alt="">
+      <p><img src="images/interlocksigmast.png" width="498" height="229" alt="interlock mast">
       </p>
 
       <p>La logique SignalMast, apparaîtra dans le tableau logique mât signal, cette logique n'est
@@ -217,13 +214,13 @@
 
         <li>Sortie sera juste le message sur l'écran et ne rien faire d'autre.</li>
 
-        <li>"Clear Down" va simuler manuellement un train circulant sur â€‹â€‹les cantons et
+        <li>"Clear Down" va simuler manuellement un train circulant sur les cantons et
         déplacer les valeurs attribuées au canton jusqu'au canton de fin.</li>
 
         <li style="list-style: none">.</li>
       </ul>
 
-      <h3>Sans Mâts Signal.</h3>
+      <h3>Sans Mâts Signal</h3>
       Si aucun Signalmast n'est configuré entre les deux points le verrouillage fonctionne à peu
       près de la même manière comme il le ferait avec Signalmast, c'est juste qu'il ne définit pas
       et n'affiche pas de signaux.
@@ -236,7 +233,7 @@
       a une valeur de 200. Ces valeurs peuvent être modifiées par l'utilisateur, par la
       modification du caqnton réseau. Si l'itinéraire avec le coût le plus bas, soit a un autre
       point d'entrée/sortie dans le même sens, ou un canton qui est déjà signalé occupé ou réservé,
-      alors il va essayer de trouver un itinéraire alternatif s'il est disponible. .</p>
+      alors il va essayer de trouver un itinéraire alternatif s'il est disponible.</p>
 
       <p><img src="images/editblock.png" width="368" height="579" alt="">
       </p>
@@ -247,15 +244,15 @@
       configurer pour les deux sens, ou seulement pour envoyer ou recevoir.</p>
 
       <p>Pour voir comment un cantonparticulier se connecte à d'autres cantons, avec des coûts et
-      des chemins valides, cliquez droit sur â€‹â€‹un segment de voie ou cocarde d'aiguillage et
+      des chemins valides, cliquez droit sur un segment de voie ou cocarde d'aiguillage et
       sélectionnez "Afficher le Routage Canton"</p>
 
       <p><img src="images/blockrouting.png" width="542" height="460" alt="">
       </p>
-      <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

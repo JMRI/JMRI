@@ -1,31 +1,33 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+<!DOCTYPE html>
+<html lang="fr">
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- Updated by Blorec Herv&#233; le 2016-08-04-->
-<html lang="fr">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Java Version-Specific Features</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI technical code road map"><!-- Style -->
+  <meta name="keywords" content="JMRI technical code road map">
+  <!--#include virtual="/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI: Caractéristiques Java spécifique à la version</h1>
-      Cette page contient des informations sur la compatibilité et les fonctionnalités des
+
+      <p class="important">D'information le plus actuelle se trouve <a
+      href="/help/en/html/doc/Technical/JVMCapabilities.shtml">ici</a> (en Anglais).</p>
+
+      <p>Cette page contient des informations sur la compatibilité et les fonctionnalités des
       différentes Versions de Java. Nous utilisons cette information pour décider de notre <a href=
-      "TechRoadMap.shtml">feuille de route</a> pour les versions futures de JMRI.
+      "TechRoadMap.shtml">feuille de route</a> pour les versions futures de JMRI.</p>
+
       <h2>Capacités</h2>
 
       <p>Cette section répertorie les nouvelles fonctions de Java, et quelles Version de Java
@@ -536,10 +538,13 @@ cela peut se produire? Si la case est modifiable, et que quelqu'un entre un autr
       <pre><code>
 -Xdoclint:all,-missing,-accessibility,-html,-syntax
 </code></pre>pour laisser tomber les tests pour les balises JavaDoc manquantes et certaines erreurs
-HTML bénignes. ( Pour l'instant ). <!--#include virtual="/Footer.shtml" -->
+HTML bénignes. ( Pour l'instant ).
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

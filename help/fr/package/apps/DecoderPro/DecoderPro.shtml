@@ -1,38 +1,24 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!--Updated by Herv&#233; Blorec 2013-10-08-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!--Updated by Herv&#233; Blorec 2013-10-08-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Fen&ecirc;tre Principale DecoderPro</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help preferences">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>JMRI: Fen&ecirc;tre Principale DecoderPro</h1>La
-      fen&ecirc;tre principale DecoderPro vous donne acc&egrave;s
+      <h1>JMRI: Fen&ecirc;tre Principale DecoderPro</h1>
+      <p>La fen&ecirc;tre principale DecoderPro vous donne acc&egrave;s
       &agrave; toutes les capacit&eacute;s de JMRI. Pour plus
       d'informations sur DecoderPro lui-m&ecirc;me, s'il vous
       pla&icirc;t voir <a href="../../../manual/index.shtml">le
-      manuel en ligne DecoderPro</a>.
+      manuel en ligne DecoderPro</a>.</p>
 
       <p>Aide sur les menus sp&eacute;cifiques:</p>
 
@@ -102,8 +88,9 @@
       programme JMRI.</p>
 
       <p>Ceci est la page d'aide
-      apps.DecoderPro.DecoderPro.shtml</p><!--#include virtual="/Footer.shtml" -->
+      apps.DecoderPro.DecoderPro.shtml</p><!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -772,5 +772,13 @@ public class TrackSegment extends LayoutTrack {
         setLayoutBlock(layoutBlock);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTypeName() {
+        return Bundle.getMessage("TypeName_TrackSegment");
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegment.class);
 }

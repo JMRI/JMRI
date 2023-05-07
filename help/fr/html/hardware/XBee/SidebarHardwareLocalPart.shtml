@@ -1,0 +1,10 @@
+<!-- SidebarHardwareLocalPart.shtml for XBee -->
+
+<dt><a href="index.shtml">Digi XBee</a></dt>
+		<dd>
+		   <ul>
+			   <li><a href="XBeeNodeConfigurationTool.shtml">Outil de Configuration de N&#339;ud</a></li>
+		   </ul>
+		</dd>
+
+    <!-- /SidebarHardwareLocalPart.shtml -->

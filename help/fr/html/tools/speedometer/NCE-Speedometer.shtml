@@ -1,31 +1,25 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Blorec Herv&#233; 2013-10-01-->
 
-  <title>JMRI: Using The JMRI Speedometer with NCE</title><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <title>JMRI: Using The JMRI Speedometer with NCE</title>
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
-
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>Utilisation du Compteur JMRI avec NCE</h1>
 
       <h2>Installation</h2>
-      La fonction compteur de vitesse au sein de DecoderPro est utilisée pour mesurer la vitesse
+      <p>La fonction compteur de vitesse au sein de DecoderPro est utilisée pour mesurer la vitesse
       d'un train à l'échelle. Une fois que tout est configuré, la vitesse est automatiquement
       calculée en fonction des mouvements de la machine à travers des cantons distincts.
       <p>Chaque canton doit avoir un moyen de détection d'occupation. La BD20 fabriqués par NCE est
@@ -102,7 +96,8 @@
           </td>
         </tr>
       </table>
-      insi<br>
+
+      Ainsi<br>
       Ouvrez DecoderPro. Sous le menu Outils ouvrez Tachymètre. Voir Figure 2.
       <ol>
         <li>Entrez le numéro d'identification du capteur dans les boîtes de capteur # 1, # 2 et #
@@ -185,6 +180,7 @@
 
         <li>Décider quand il faut passer à un canton plus long est du domaine de l'expérience de
         l'utilisateur.
+
           <h2>Usages du compteur de vitesse</h2>
 
           <p>évidemment l'utilisation principale de l' Indicateur de vitesse est de créer des
@@ -234,10 +230,12 @@
           <p>Dans ce cas, la valeur sur l' Indicateur de vitesse pour la fenêtre du capteur n ° 1
           et n ° 2 du capteur serait le même numéro. Le capteur # 1 serait mis à "Enter" et le
           capteur n° 2 serait fixé à "Exit".</p>
-          <!--#include virtual="/Footer.shtml" -->
         </li>
       </ol>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

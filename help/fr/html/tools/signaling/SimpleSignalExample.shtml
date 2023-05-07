@@ -1,29 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec 2016/09/17 -->
+<!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright Bob Jacobsen 2008 -->
+<!-- Updated by Herv&#233; Blorec 2016/09/17 -->
 
+<head>
+  <!-- Copyright Bob Jacobsen 2008 -->
   <title>JMRI: Simple Signal Logic Example</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>JMRI: Exemple Logique de Signal Simple</h1>
+      <h1>JMRI: Exemple Logique de Signal Simple</h1>
 
 <p class="important">N'utilisez pas l'outil Logique Signal Simple (SSL) quand vous avez d&#233;j&#224; construit les M&#226;ts de Signalisation et la Logique M&#226;t de Signalisation la plus avanc&#233;e dans le m&#234;me fichier de Panneau/Configuration.</p> 
 <p>    
@@ -301,11 +293,14 @@ Vous pouvez cr&#233;er un petit Panneau de Commande pour le faire graphiquement.
 infos sur comment faire, consultez la
 <a href="../../apps/PanelPro/Panels.shtml">page d'aide Panneaux </a>.
 
-<p>Retour &#224; la <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">page d'aide Logique Signal Simple</a>.
+<p>Retour &#224; la <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">page d'aide Logique
+      Signal Simple</a>.
+
 <p>Situ&#233; &#224; fr\html\tools\signaling\</p>
 
-<!--#include virtual="/Footer.shtml" -->
-</div>
-</div>
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div>
+  </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

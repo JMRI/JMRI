@@ -1,9 +1,8 @@
 package jmri.jmrix.ipocs;
 
-import org.junit.jupiter.api.*;
-
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for IpocsConnectionTypeList class.
@@ -15,18 +14,18 @@ import org.junit.Assert;
 public class IpocsConnectionTypeListTest {
 
     @Test
-    public void ConstructorTest() {
-        Assert.assertNotNull("constructor", new IpocsConnectionTypeList());
+    public void testCtor() {
+        Assertions.assertNotNull( new IpocsConnectionTypeList(),"constructor");
     }
 
     @Test
-    public void GetManufacturersTest() {
-        new IpocsConnectionTypeList().getManufacturers();
+    public void testGetManufacturers() {
+        Assertions.assertNotNull(new IpocsConnectionTypeList().getManufacturers());
     }
 
     @Test
-    public void GetAvailableProtocolClassesTest() {
-        new IpocsConnectionTypeList().getAvailableProtocolClasses();
+    public void testGetAvailableProtocolClasses() {
+        Assertions.assertNotNull(new IpocsConnectionTypeList().getAvailableProtocolClasses());
     }
 
     @BeforeEach

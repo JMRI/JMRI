@@ -17,48 +17,25 @@ import org.junit.jupiter.api.*;
  */
 public class MqttTurnoutTest extends AbstractTurnoutTestBase {
 
-    MqttAdapter a;
-    String saveTopic;
-    byte[] savePayload;
-    
-    @BeforeEach
-    @Override
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        JUnitUtil.initDefaultUserMessagePreferences();
-        // prepare an interface
-        saveTopic = null;
-        savePayload = null;
-        a = new MqttAdapter(){
-                @Override
-                public void publish(String topic, byte[] payload) {
-                    saveTopic = topic;
-                    savePayload = payload;
-                }
-            };
-
-        t = new MqttTurnout(a, "MT2", "track/turnout/2", "track/turnout/2/foo");
-        JUnitAppender.assertWarnMessage("Trying to subscribe before connect/configure is done");
-    }
+    MqttAdapterScaffold a = null;
 
     @Override
     public int numListeners() {
-        // return tcis.numListeners();
         return 0;
     }
 
     @Test
     public void testParserUpdate() {
         MqttContentParser<Turnout> parser = new MqttContentParser<Turnout>() {
-            private final String closedText = "BAR";
-            private final String thrownText = "FOO";
+            private final static String CLOSED_TEXT = "BAR";
+            private final static String THROWN_TEXT = "FOO";
             @Override
             public void beanFromPayload(@Nonnull Turnout bean, @Nonnull String payload, @Nonnull String topic) {
                 switch (payload) {
-                    case closedText:                
+                    case CLOSED_TEXT:                
                         ((MqttTurnout)t).newKnownState(Turnout.CLOSED);
                         break;
-                    case thrownText:
+                    case THROWN_TEXT:
                         ((MqttTurnout)t).newKnownState(Turnout.THROWN);
                         break;
                     default:
@@ -76,11 +53,11 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
                         throw new IllegalArgumentException("Cannot command both CLOSED and THROWN: "+newState);
                     } else {
                         // send a CLOSED command
-                        return closedText;
+                        return CLOSED_TEXT;
                     }
                 } else {
                     // send a THROWN command
-                    return thrownText;
+                    return THROWN_TEXT;
                 }
             }
         };
@@ -88,14 +65,14 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
         ((MqttTurnout)t).setParser(parser);
         
         t.setCommandedState(Turnout.THROWN);
-        
-        Assert.assertEquals("topic", "track/turnout/2", saveTopic);
-        Assert.assertEquals("topic", "FOO", new String(savePayload));
-        
+        Assertions.assertEquals(1, a.getPublishCount(),"1 message sent");
+        Assertions.assertEquals("track/turnout/2", a.getLastTopic(),"topic");
+        Assertions.assertEquals("FOO", new String(a.getLastPayload()),"payload");
+
         t.setCommandedState(Turnout.CLOSED);
-        
-        Assert.assertEquals("topic", "track/turnout/2", saveTopic);
-        Assert.assertEquals("topic", "BAR", new String(savePayload));
+        Assertions.assertEquals(2, a.getPublishCount(),"2 messages sent");
+        Assertions.assertEquals("track/turnout/2", a.getLastTopic(),"topic");
+        Assertions.assertEquals("BAR", new String(a.getLastPayload()),"payload");
     }
 
     @Test
@@ -131,14 +108,32 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
 
     @Override
     public void checkThrownMsgSent() {
-        Assert.assertEquals("topic", "track/turnout/2", saveTopic);
-        Assert.assertEquals("topic", "THROWN", new String(savePayload));
+        Assertions.assertEquals("track/turnout/2", a.getLastTopic(),"topic");
+        Assertions.assertEquals("THROWN", new String(a.getLastPayload()),"payload");
     }
 
     @Override
     public void checkClosedMsgSent() {
-        Assert.assertEquals("topic", "track/turnout/2", saveTopic);
-        Assert.assertEquals("topic", "CLOSED", new String(savePayload));
+        Assertions.assertEquals("track/turnout/2", a.getLastTopic(),"topic");
+        Assertions.assertEquals("CLOSED", new String(a.getLastPayload()),"payload");
+    }
+
+    @BeforeEach
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        // prepare an interface
+        a = new MqttAdapterScaffold(true);
+        t = new MqttTurnout(a, "MT2", "track/turnout/2", "track/turnout/2/foo");
+    }
+
+    @AfterEach
+    @Override
+    public void tearDown() {
+        t.dispose();
+        a.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

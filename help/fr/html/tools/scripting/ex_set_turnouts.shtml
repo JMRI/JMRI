@@ -1,33 +1,23 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Blorec Herv&#233;  2013-09-26-->
 
   <title>JMRI: Scripting Example - Setting Turnouts</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
       <h2>JMRI: Scripts pour Aller ...<br>
       R&eacute;glage de l'&eacute;tat par D&eacute;faut des
-      Aiguillages</h2>de la
+      Aiguillages</h2>
 
       <div class="section">
         <p>(Exemple contribu&eacute; par Jerry Britton)</p>
@@ -88,19 +78,19 @@
 
       <div class="section">
         <h2>Le script</h2>
-        <pre>
+<pre>
 class setStartup(jmri.jmrit.automat.AbstractAutomaton):
-   def init(self):
-     return
-    def handle(self):
-     self.waitMsec (10000) # temps est en millisecondes
-     turnouts.provideTurnout ("1"). setState (DIRECT)
-     self.waitMsec (1000)
-     turnouts.provideTurnout ("17"). setState (DIRECT) 
-     self.waitMsec (1000)
-     turnouts.provideTurnout ("9"). setState (DIRECT) &agrave; l'utiliser
-     self.waitMsec (1000)
-     Fausse d&eacute;claration # tout est fait, ne pas r&eacute;p&eacute;ter
+  def init(self):
+   return
+  def handle(self):
+   self.waitMsec (10000) # temps est en millisecondes
+   turnouts.provideTurnout ("1"). setState (DIRECT)
+   self.waitMsec (1000)
+   turnouts.provideTurnout ("17"). setState (DIRECT)
+   self.waitMsec (1000)
+   turnouts.provideTurnout ("9"). setState (DIRECT) &agrave; l'utiliser
+   self.waitMsec (1000)
+   Fausse d&eacute;claration # tout est fait, ne pas r&eacute;p&eacute;ter
 setStartup (). start () # cr&eacute;ation d'une d'elles, et de lancer son ex&eacute;cution 
 </pre>
       </div>
@@ -120,22 +110,20 @@ setStartup (). start () # cr&eacute;ation d'une d'elles, et de lancer son ex&eac
         acc&eacute;der. J'ai sauver le mien dans le m&ecirc;me
         r&eacute;pertoire que mes fichiers PanelPro.</p>
 
-        <p>Il est TR&egrave;S IMPORTANT que vous conserviez le
+        <p>Il est TR&Egrave;S IMPORTANT que vous conserviez le
         formatage du script de la mani&egrave;re dont il est fait -
         avec des onglets principaux. Le langage Python utilise des
-        onglets dans le cadre de sa structure de commande.de la</p>
+        onglets dans le cadre de sa structure de commande.</p>
 
         <p>Cette premi&egrave;re partie du script que vous devriez
         inclure "telle quelle". Aucune modification n'est
         n&eacute;cessaire:</p>
         <pre>
-
-  Class setStartup(jmri.jmrit.automat.AbstractAutomaton):
-  def init (self): 
-     return
-   def handle(self):
-     self.waitMsec (10000) # temps est en millisecondes
-  
+Class setStartup(jmri.jmrit.automat.AbstractAutomaton):
+def init (self):
+   return
+def handle(self):
+   self.waitMsec (10000) # temps est en millisecondes
 </pre>
 
         <p>La partie suivante du script est ce que vous devez
@@ -165,30 +153,27 @@ setStartup (). start () # cr&eacute;ation d'une d'elles, et de lancer son ex&eac
         pouvez &eacute;galement ajouter des lignes de commentaires
         (commen&ccedil;ant par un "#") afin de documenter des
         sections de votre mise en page.</p>
-        <pre>
-      turnouts.provideTurnout ("1"). setState (DIRECT)
-     self.waitMsec (1000)
-     turnouts.provideTurnout ("17"). setState (DIRECT)
-     self.waitMsec (1000)turnouts.provideTurnout ("1"). setState (DIRECT)
-     self.waitMsec (1000)
-     turnouts.provideTurnout ("17"). setState (DIRECT)
-     self.waitMsec (1000)
+<div class="wide">
+<pre>
+  turnouts.provideTurnout ("1"). setState (DIRECT)
+  self.waitMsec (1000)
+  turnouts.provideTurnout ("17"). setState (DIRECT)
+  self.waitMsec (1000)turnouts.provideTurnout ("1"). setState (DIRECT)
+  self.waitMsec (1000)
+  turnouts.provideTurnout ("17"). setState (DIRECT)
+  self.waitMsec (1000)
 </pre>
-
+</div>
         <p>La partie la fermeture du script devrait aussi
         &ecirc;tre laiss&eacute; "en l'&eacute;tat":</p>
         <pre>
-      return False        # tout est fait, ne pas r&eacute;p&eacute;ter
+return False        # tout est fait, ne pas r&eacute;p&eacute;ter
 setStartup (). start ()    # cr&eacute;ation de l'une d'elles, et  lancer son ex&eacute;cution 
-</pre>
-        <pre>
-
-
 </pre>
       </div>
 
       <div class="section">
-        <h2>mise enoeuvre du script</h2>
+        <h2>mise en &oelig;uvre du script</h2>
 
         <p>Avec une alimentation sur la voie, vous pouvez
         ex&eacute;cuter le script en s&eacute;lectionnant
@@ -224,8 +209,9 @@ setStartup (). start ()    # cr&eacute;ation de l'une d'elles, et  lancer son ex
         2006.</p>
       </div>
 
-        <!--#include virtual="/Footer.shtml" -->
+        <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

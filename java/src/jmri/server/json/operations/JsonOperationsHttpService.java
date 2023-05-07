@@ -505,7 +505,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     public ObjectNode postCar(@Nonnull Car car, JsonNode data, Locale locale, int id) throws JsonException {
         ObjectNode result = postRollingStock(car, data, locale, id);
         car.setCaboose(data.path(CABOOSE).asBoolean(car.isCaboose()));
-        car.setHazardous(data.path(HAZARDOUS).asBoolean(car.isHazardous()));
+        car.setCarHazardous(data.path(HAZARDOUS).asBoolean(car.isHazardous()));
         car.setPassenger(data.path(PASSENGER).asBoolean(car.isPassenger()));
         car.setFred(data.path(FRED).asBoolean(car.hasFred()));
         car.setUtility(data.path(UTILITY).asBoolean(car.isUtility()));
@@ -616,7 +616,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         rs.setNumber(data.path(NUMBER).asText(rs.getNumber()));
         rs.setColor(data.path(COLOR).asText(rs.getColor()));
         rs.setComment(data.path(COMMENT).asText(rs.getComment()));
-        rs.setOwner(data.path(OWNER).asText(rs.getOwner()));
+        rs.setOwnerName(data.path(OWNER).asText(rs.getOwnerName()));
         rs.setBuilt(data.path(BUILT).asText(rs.getBuilt()));
         if (data.path(WEIGHT).isValueNode()) {
             rs.setWeight(Double.toString(data.path(WEIGHT).asDouble()));

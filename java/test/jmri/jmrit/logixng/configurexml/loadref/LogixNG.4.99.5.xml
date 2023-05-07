@@ -2,9 +2,9 @@
 <?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
-    <major>4</major>
-    <minor>99</minor>
-    <test>8</test>
+    <major>5</major>
+    <minor>1</minor>
+    <test>2</test>
     <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -155,12 +155,12 @@
       <id>54</id>
       <name>My other logixng thread</name>
     </Thread>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0001</systemName>
       <userName>An empty logixNG</userName>
       <ConditionalNGs />
     </LogixNG>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0002</systemName>
       <userName>A logixNG with an empty conditionlNG</userName>
       <ConditionalNGs>
@@ -170,21 +170,21 @@
         <systemName>IQC:AUTO:0004</systemName>
       </ConditionalNGs>
     </LogixNG>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0003</systemName>
       <userName>A logixNG in the initialization table</userName>
       <ConditionalNGs>
         <systemName>IQC:AUTO:0005</systemName>
       </ConditionalNGs>
     </LogixNG>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0004</systemName>
       <userName>Another logixNG in the initialization table</userName>
       <ConditionalNGs>
         <systemName>IQC:AUTO:0006</systemName>
       </ConditionalNGs>
     </LogixNG>
-    <LogixNG enabled="no">
+    <LogixNG enabled="no" inline="no">
       <systemName>IQ:AUTO:0005</systemName>
       <userName>A logixNG</userName>
       <ConditionalNGs>
@@ -293,10 +293,11 @@
     <CsvTable class="jmri.jmrit.logixng.implementation.configurexml.DefaultCsvNamedTableXml">
       <systemName>IQT1</systemName>
       <fileName>program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv</fileName>
+      <csvType>TABBED</csvType>
     </CsvTable>
   </LogixNGTables>
   <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0001</systemName>
       <comment>Start expression</comment>
       <Expressions>
@@ -361,7 +362,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0002</systemName>
       <comment>Stop expression</comment>
       <Expressions>
@@ -426,7 +427,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0003</systemName>
       <comment>Start expression</comment>
       <Expressions>
@@ -491,7 +492,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0004</systemName>
       <comment>Stop expression</comment>
       <Expressions>
@@ -556,7 +557,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0005</systemName>
       <comment>Reset expression</comment>
       <Expressions>
@@ -621,7 +622,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0006</systemName>
       <comment>Expression socket 1</comment>
       <Expressions>
@@ -686,7 +687,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0007</systemName>
       <comment>Expression socket 2</comment>
       <Expressions>
@@ -751,7 +752,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <Or class="jmri.jmrit.logixng.expressions.configurexml.OrXml">
+    <Or class="jmri.jmrit.logixng.expressions.configurexml.OrXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0008</systemName>
       <Expressions>
         <Socket>
@@ -828,6 +829,7 @@
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>Equal</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -912,6 +914,7 @@
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>Equal</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -983,7 +986,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </ExpressionMemory>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0011</systemName>
       <Expressions>
         <Socket>
@@ -1051,7 +1054,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0012</systemName>
       <comment>A comment</comment>
       <Expressions>
@@ -2006,56 +2009,56 @@
       <Parameters>
         <Parameter>
           <name>Abc</name>
-          <initalValueType>FloatingNumber</initalValueType>
+          <initialValueType>FloatingNumber</initialValueType>
           <initialValueData>12.32</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Def</name>
-          <initalValueType>Formula</initalValueType>
+          <initialValueType>Formula</initialValueType>
           <initialValueData>12 + 32</initialValueData>
           <returnValueType>Memory</returnValueType>
           <returnValueData>M1</returnValueData>
         </Parameter>
         <Parameter>
           <name>Ghi</name>
-          <initalValueType>Integer</initalValueType>
+          <initialValueType>Integer</initialValueType>
           <initialValueData>21</initialValueData>
           <returnValueType>None</returnValueType>
           <returnValueData />
         </Parameter>
         <Parameter>
           <name>Jkl</name>
-          <initalValueType>LocalVariable</initalValueType>
+          <initialValueType>LocalVariable</initialValueType>
           <initialValueData>MyVar</initialValueData>
           <returnValueType>Memory</returnValueType>
           <returnValueData>M34</returnValueData>
         </Parameter>
         <Parameter>
           <name>Mno</name>
-          <initalValueType>Memory</initalValueType>
+          <initialValueType>Memory</initialValueType>
           <initialValueData>M2</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Pqr</name>
-          <initalValueType>None</initalValueType>
+          <initialValueType>None</initialValueType>
           <initialValueData />
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Stu</name>
-          <initalValueType>Reference</initalValueType>
+          <initialValueType>Reference</initialValueType>
           <initialValueData>{MyVar}</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Vxy</name>
-          <initalValueType>String</initalValueType>
+          <initialValueType>String</initialValueType>
           <initialValueData>Some string</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
@@ -3875,6 +3878,7 @@
       </memoryNamedBean>
       <compareTo>Value</compareTo>
       <variableOperation>Equal</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -3956,6 +3960,7 @@
       </memoryNamedBean>
       <compareTo>Value</compareTo>
       <variableOperation>GreaterThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>yes</caseInsensitive>
       <constant>10</constant>
       <regEx />
@@ -4039,6 +4044,7 @@
       </memoryNamedBean>
       <compareTo>Memory</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4134,6 +4140,7 @@
       </memoryNamedBean>
       <compareTo>LocalVariable</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4229,6 +4236,7 @@
       </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4324,6 +4332,7 @@
       </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4419,6 +4428,7 @@
       </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4514,6 +4524,7 @@
       </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4609,6 +4620,7 @@
       </memoryNamedBean>
       <compareTo>RegEx</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx>/^Test$/</regEx>
@@ -4705,6 +4717,7 @@
       <variable />
       <compareTo>Memory</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4791,6 +4804,7 @@
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>LessThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant>10</constant>
       <regEx />
@@ -4878,6 +4892,7 @@
       <variable />
       <compareTo>Memory</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4977,6 +4992,7 @@
       <variable />
       <compareTo>Table</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5076,6 +5092,7 @@
       <variable>MyVar</variable>
       <compareTo>LocalVariable</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5175,6 +5192,7 @@
       <variable />
       <compareTo>RegEx</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx>/^Hello$/</regEx>
@@ -5627,6 +5645,7 @@
       <systemName>IQDE:AUTO:0065</systemName>
       <is_isNot>Is</is_isNot>
       <powerState>On</powerState>
+      <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -5689,6 +5708,7 @@
       <comment>A comment</comment>
       <is_isNot>IsNot</is_isNot>
       <powerState>Off</powerState>
+      <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -5751,6 +5771,7 @@
       <comment>A comment</comment>
       <is_isNot>IsNot</is_isNot>
       <powerState>On</powerState>
+      <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -5811,8 +5832,9 @@
     <ExpressionPower class="jmri.jmrit.logixng.expressions.configurexml.ExpressionPowerXml">
       <systemName>IQDE:AUTO:0068</systemName>
       <comment>A comment</comment>
-      <is_isNot>IsNot</is_isNot>
-      <powerState>Other</powerState>
+      <is_isNot>Is</is_isNot>
+      <powerState>OnOrOff</powerState>
+      <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -9047,7 +9069,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </Not>
-    <Or class="jmri.jmrit.logixng.expressions.configurexml.OrXml">
+    <Or class="jmri.jmrit.logixng.expressions.configurexml.OrXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0113</systemName>
       <Expressions>
         <Socket>
@@ -9111,7 +9133,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </Or>
-    <Or class="jmri.jmrit.logixng.expressions.configurexml.OrXml">
+    <Or class="jmri.jmrit.logixng.expressions.configurexml.OrXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0114</systemName>
       <comment>A comment</comment>
       <Expressions>
@@ -13446,6 +13468,9 @@
       <rowOrColumnName />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13514,6 +13539,9 @@
       <rowOrColumnName />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13582,6 +13610,9 @@
       <rowOrColumnName>Signal before</rowOrColumnName>
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13650,6 +13681,9 @@
       <rowOrColumnName>2</rowOrColumnName>
       <tableRowOrColumn>Column</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13718,6 +13752,9 @@
       <rowOrColumnName />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13786,6 +13823,9 @@
       <rowOrColumnName />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13863,6 +13903,7 @@
       <variableOperation>SetToString</variableOperation>
       <constant />
       <otherVariable />
+      <reference />
       <formula />
       <table>
         <tableName>
@@ -13955,6 +13996,7 @@
       <variableOperation>CalculateFormula</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -14049,6 +14091,7 @@
       <variableOperation>CopyMemoryToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -14143,6 +14186,7 @@
       <variableOperation>CopyBlockToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -14237,6 +14281,7 @@
       <variableOperation>CopyReporterToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -14329,6 +14374,7 @@
       <variableOperation>CopyVariableToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -14435,6 +14481,7 @@
       <variableOperation>CopyTableCellToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -14539,6 +14586,7 @@
       <variableOperation>SetToNull</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -14643,6 +14691,7 @@
       <variableOperation>SetToString</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -15388,6 +15437,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>Deallocate</enum>
@@ -15461,6 +15514,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>Deallocate</enum>
@@ -15534,6 +15591,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>Deallocate</enum>
@@ -15609,6 +15670,10 @@
         <name>OB99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>SetValue</enum>
@@ -15684,6 +15749,10 @@
         <name>OB99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>ClearError</enum>
@@ -15759,6 +15828,10 @@
         <name>OB99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>LocalVariable</addressing>
         <enum>Deallocate</enum>
@@ -15835,6 +15908,10 @@
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Formula</addressing>
         <enum>Deallocate</enum>
@@ -15911,6 +15988,10 @@
         <listenToMemory>no</listenToMemory>
         <formula>"IT"+index</formula>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Reference</addressing>
         <enum>Deallocate</enum>
@@ -15987,6 +16068,10 @@
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>SetOutOfService</enum>
@@ -18398,6 +18483,7 @@
       </Actions>
       <startImmediately>no</startImmediately>
       <runContinuously>no</runContinuously>
+      <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18473,6 +18559,7 @@
       </Actions>
       <startImmediately>no</startImmediately>
       <runContinuously>yes</runContinuously>
+      <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18556,6 +18643,7 @@
       </Actions>
       <startImmediately>yes</startImmediately>
       <runContinuously>no</runContinuously>
+      <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -19816,6 +19904,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -19890,6 +19982,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -19964,6 +20060,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -20040,6 +20140,10 @@
         <name>Test Warrant</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>SetTrainName</enum>
@@ -20116,6 +20220,10 @@
         <name>Test Warrant</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>ControlAutoTrain</enum>
@@ -20192,6 +20300,10 @@
         <name>Test Warrant</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -20268,6 +20380,10 @@
         <name>Test Warrant</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>LocalVariable</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -20345,6 +20461,10 @@
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Formula</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -20422,6 +20542,10 @@
         <listenToMemory>no</listenToMemory>
         <formula>"IT"+index</formula>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Reference</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -20499,6 +20623,10 @@
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>DeallocateWarrant</enum>
@@ -20642,56 +20770,56 @@
       <Parameters>
         <Parameter>
           <name>Abc</name>
-          <initalValueType>FloatingNumber</initalValueType>
+          <initialValueType>FloatingNumber</initialValueType>
           <initialValueData>12.32</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Def</name>
-          <initalValueType>Formula</initalValueType>
+          <initialValueType>Formula</initialValueType>
           <initialValueData>12 + 32</initialValueData>
           <returnValueType>Memory</returnValueType>
           <returnValueData>M1</returnValueData>
         </Parameter>
         <Parameter>
           <name>Ghi</name>
-          <initalValueType>Integer</initalValueType>
+          <initialValueType>Integer</initialValueType>
           <initialValueData>21</initialValueData>
           <returnValueType>None</returnValueType>
           <returnValueData />
         </Parameter>
         <Parameter>
           <name>Jkl</name>
-          <initalValueType>LocalVariable</initalValueType>
+          <initialValueType>LocalVariable</initialValueType>
           <initialValueData>MyVar</initialValueData>
           <returnValueType>Memory</returnValueType>
           <returnValueData>M34</returnValueData>
         </Parameter>
         <Parameter>
           <name>Mno</name>
-          <initalValueType>Memory</initalValueType>
+          <initialValueType>Memory</initialValueType>
           <initialValueData>M2</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Pqr</name>
-          <initalValueType>None</initalValueType>
+          <initialValueType>None</initialValueType>
           <initialValueData />
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Stu</name>
-          <initalValueType>Reference</initalValueType>
+          <initialValueType>Reference</initialValueType>
           <initialValueData>{MyVar}</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Vxy</name>
-          <initalValueType>String</initalValueType>
+          <initialValueType>String</initialValueType>
           <initialValueData>Some string</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
@@ -22380,17 +22508,21 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </For>
-    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="ExecuteOnChange" evaluateType="EvaluateAll">
       <systemName>IQDA:AUTO:0163</systemName>
-      <IfSocket>
-        <socketName>f2cwy2z413</socketName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>vbo38qftkw</socketName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>k1eib6f91c</socketName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>f2cwy2z413</socketName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>vbo38qftkw</socketName>
+        </Socket>
+        <Socket>
+          <socketName>k1eib6f91c</socketName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22448,18 +22580,22 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </IfThenElse>
-    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="ExecuteOnChange" evaluateType="EvaluateAll">
       <systemName>IQDA:AUTO:0164</systemName>
       <comment>A comment</comment>
-      <IfSocket>
-        <socketName>yc6e2habox</socketName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>u5ryhxupqt</socketName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>vjp4tew4db</socketName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>yc6e2habox</socketName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>u5ryhxupqt</socketName>
+        </Socket>
+        <Socket>
+          <socketName>vjp4tew4db</socketName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22517,18 +22653,22 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </IfThenElse>
-    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="AlwaysExecute">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="AlwaysExecute" evaluateType="EvaluateAll">
       <systemName>IQDA:AUTO:0165</systemName>
       <comment>A comment</comment>
-      <IfSocket>
-        <socketName>gm282fpv6v</socketName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>tmdblw9wdh</socketName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>vzermykkwe</socketName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>gm282fpv6v</socketName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>tmdblw9wdh</socketName>
+        </Socket>
+        <Socket>
+          <socketName>vzermykkwe</socketName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -25385,19 +25525,23 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </TriggerRoute>
-    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="ExecuteOnChange" evaluateType="EvaluateAll">
       <systemName>IQDA:AUTO:0205</systemName>
       <comment>A comment</comment>
-      <IfSocket>
-        <socketName>yeczby1jpx</socketName>
-        <systemName>IQDE:AUTO:0011</systemName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>vsq9dbhlzq</socketName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>nzbr18h1c8</socketName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>yeczby1jpx</socketName>
+          <systemName>IQDE:AUTO:0011</systemName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>vsq9dbhlzq</socketName>
+        </Socket>
+        <Socket>
+          <socketName>nzbr18h1c8</socketName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -28251,14 +28395,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sat May 14 15:55:16 CEST 2022</date>
+      <date>Sun Aug 07 01:54:00 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.4.99.5.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat May 14 15:55:16 CEST 2022</date>
+      <date>Sun Aug 07 01:54:00 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.8plus+daniel+2022-05-14T13:54:26Z+Rf741a24 on Sat May 14 15:55:16 CEST 2022-->
+  <!--Written by JMRI version 5.1.2plus+daniel+2022-08-06T23:53:23Z+R7533a8a on Sun Aug 07 01:54:00 CEST 2022-->
 </layout-config>

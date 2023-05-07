@@ -1,31 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Updated by Herv&#233; Blorec 2013-10-12-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec 2013-10-12-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Adding/Editing Signal Heads</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Signal Heads Add Edit">
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Ajout/Edition des T&ecirc;tes de signal</h1><a href=
+      <h1>Ajout/Edition des T&ecirc;tes de signal</h1>
+      <a href=
       "../../../../images/SigAdd.gif"><img src=
       "../../../../images/SigAdd.gif" align="right" width="181"
       height="218" hspace="0" vspace="0" alt=
@@ -350,7 +339,9 @@
           peuvent &ecirc;tre trouv&eacute;es &agrave; <a href=
           "http://www.merg.org.uk/">MERG</a></p>
         </dd>
-      </dl>La fen&ecirc;tre de Dialogue "Modifier t&ecirc;te de
+      </dl>
+
+      <p>La fen&ecirc;tre de Dialogue "Modifier t&ecirc;te de
       signal" fournit pour la visualisation et la modification
       optionnelle d'information pour les T&ecirc;tes de signal
       existant. Utilisez le bouton"&eacute;diter" du Tableau
@@ -364,9 +355,11 @@
       modifications. La Fermeture de la fen&ecirc;tre Modifier la
       t&ecirc;te de signal est &eacute;quivalent &agrave; cliquer
       "Annuler". Une seule t&ecirc;te de signal peut &ecirc;tre
-      &eacute;dit&eacute;e &agrave; la fois
-      <!--#include virtual="/Footer.shtml" -->
+      &eacute;dit&eacute;e &agrave; la fois.</p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,34 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-10-31-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-10-31-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: L'&eacute;l&eacute;ment Palette</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Item Palette">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>L'&eacute;l&eacute;ment
-      Palette</h1><b>L'&eacute;l&eacute;ment Palette</b> est
+      Palette</h1>
+
+      <p><b>L'&eacute;l&eacute;ment Palette</b> est
       utilis&eacute; pour placer des ic&ocirc;nes et du texte sur
       l'<b>&eacute;diteur de TCO</b>. La palette est une
       fen&ecirc;tre &agrave; onglets avec des onglets pour chaque
@@ -44,7 +32,7 @@
       vous devez s&eacute;lectionner une ligne d'une table &agrave;
       associer &agrave; ce dispositif particulier avec
       l'ic&ocirc;ne - et ensuite faites glisser l'ic&ocirc;ne sur
-      le TCO.
+      le TCO.</p>
 
       <h2>Articles Iconiques</h2>Pour ces articles utilisant des
       ic&ocirc;nes, de multiples ensembles d'ic&ocirc;nes sont
@@ -359,8 +347,10 @@
       peut &ecirc;tre retir&eacute; par le bouton <b>Supprimer
       Statut</b> - ou restaur&eacute; par le bouton <b>Ajouter
       &eacute;tat Manquant</b>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

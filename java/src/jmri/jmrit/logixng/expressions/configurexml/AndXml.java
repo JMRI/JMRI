@@ -24,7 +24,7 @@ public class AndXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
 
     public AndXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a ActionMany
      *
@@ -38,9 +38,11 @@ public class AndXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
         Element element = new Element("And");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
-        
+
+        element.setAttribute("type", p.getType().name());
+
         Element e = new Element("Expressions");
         for (int i=0; i < p.getChildCount(); i++) {
             Element e2 = new Element("Socket");
@@ -61,11 +63,11 @@ public class AndXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
         List<Map.Entry<String, String>> expressionSystemNames = new ArrayList<>();
-        
+
         Element actionElement = shared.getChild("Expressions");
         for (Element socketElement : actionElement.getChildren()) {
             String socketName = socketElement.getChild("socketName").getTextTrim();
@@ -76,17 +78,22 @@ public class AndXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
             }
             expressionSystemNames.add(new AbstractMap.SimpleEntry<>(socketName, systemName));
         }
-        
+
         // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        DigitalExpressionBean h = new And(sys, uname, expressionSystemNames);
+        And h = new And(sys, uname, expressionSystemNames);
 
         loadCommon(h, shared);
+
+        if (shared.getAttribute("type") != null) {
+            String typeStr = shared.getAttribute("type").getValue();
+            h.setType(And.Type.valueOf(typeStr));
+        }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AndXml.class);
 }

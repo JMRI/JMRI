@@ -1,7 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import java.util.ArrayList;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -65,7 +63,7 @@ public class Z21CanReporterTest extends jmri.implementation.AbstractRailComRepor
         zr.reply(reply);
         // Check that the collection has one element.
         Assert.assertEquals("Collection Size 1 after message", 1, zr.getCollection().size());
-        Assert.assertEquals("Current Report = last entry", zr.getCurrentReport(), ((ArrayList) zr.getCollection()).get(0));
+        Assert.assertEquals("Current Report = last entry", zr.getCurrentReport(), zr.getCollection().toArray()[0]);
 
         byte msg2[] = {(byte) 0x0E, (byte) 0x00, (byte) 0xC4, (byte) 0x00, (byte) 0xcd, (byte) 0xab, (byte) 0x01, (byte) 0x00, (byte) 0x01, (byte) 0x11, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};
         reply = new Z21Reply(msg2, 14);
@@ -89,7 +87,7 @@ public class Z21CanReporterTest extends jmri.implementation.AbstractRailComRepor
         // Check that the collection has two element.
         Assert.assertEquals("Collection Size 2 after message", 2, zr.getCollection().size());
         Assert.assertNotNull("Current Report NotNull", zr.getCurrentReport());
-        Assert.assertEquals("Current Report = last entry", zr.getCurrentReport(), ((ArrayList) zr.getCollection()).get(1));
+        Assert.assertEquals("Current Report = last entry", zr.getCurrentReport(), zr.getCollection().toArray()[1]);
         Assert.assertEquals("Current State", jmri.IdTag.SEEN, zr.getState());
         // Check that both CurrentReport and LastReport were seen by the listener
         Assert.assertTrue("CurrentReport seen", currentReportSeen);
@@ -125,7 +123,7 @@ public class Z21CanReporterTest extends jmri.implementation.AbstractRailComRepor
         // Check that the collection has two element.
         JUnitUtil.waitFor(() -> {
             return (zr.getCollection().size() > 2);
-        });
+        },"collection size > 2");
         Assert.assertEquals("Collection Size 3 after message", 3, zr.getCollection().size());
 
         byte msg3[] = {(byte) 0x0E, (byte) 0x00, (byte) 0xC4, (byte) 0x00, (byte) 0xcd, (byte) 0xab, (byte) 0x01, (byte) 0x00, (byte) 0x01, (byte) 0x11, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};

@@ -1,9 +1,6 @@
 package jmri.jmrix.can.cbus.swing.console;
 
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JUnitUtil;
@@ -52,7 +49,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
         m.setNumDataElements(1);
         m.setElement(0, CbusConstants.CBUS_RTON);
         cbPanel.decodePane.message(m);
-        JUnitUtil.waitFor(() ->{ return !getCbusPaneText(jfo).isEmpty(); });
+        JUnitUtil.waitFor(() ->{ return !getCbusPaneText(jfo).isEmpty(); },"pane text still empty");
 
         Assertions.assertTrue( getCbusPaneText(jfo).contains("RTON"), 
             "RTON logged in console");
@@ -87,7 +84,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
         CanReply r = new CanReply();
         r.setRtr(true);
         cbPanel.decodePane.reply(r);
-        JUnitUtil.waitFor(() ->{ return !getCbusPaneText(jfo).isEmpty(); });
+        JUnitUtil.waitFor(() ->{ return !getCbusPaneText(jfo).isEmpty(); },"pane text still empty");
         Assertions.assertTrue( getCbusPaneText(jfo).contains("RTR:R"), 
             "RTR CanReply logged in console");
         
@@ -96,7 +93,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
         
         cbPanel.decodePane.reply(r);
         
-        JUnitUtil.waitFor(() ->{ return !getCbusPaneText(jfo).isEmpty(); });
+        JUnitUtil.waitFor(() ->{ return !getCbusPaneText(jfo).isEmpty(); },"pane text still empty");
         Assertions.assertTrue( getCbusPaneText(jfo).contains("RTR:N"), 
             "Non-RTR CanReply logged in console");
         
@@ -105,7 +102,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
         clearCbusPaneText(jfo);
         
         cbPanel.decodePane.reply(r);
-        JUnitUtil.waitFor(() ->{ return !getCbusPaneText(jfo).isEmpty(); });
+        JUnitUtil.waitFor(() ->{ return !getCbusPaneText(jfo).isEmpty(); },"pane text still empty");
         Assertions.assertTrue( getCbusPaneText(jfo).contains("RTR:R"), 
             "RTR CanReply 0 length logged in console");
         
@@ -117,7 +114,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
         clearCbusPaneText(jfo);
         
         cbPanel.decodePane.message(m);
-        JUnitUtil.waitFor(() ->{ return !getCbusPaneText(jfo).isEmpty(); });
+        JUnitUtil.waitFor(() ->{ return !getCbusPaneText(jfo).isEmpty(); },"pane text still empty");
         Assertions.assertTrue( getCbusPaneText(jfo).contains("RTR:R"), 
             "RTR CanMessage 0 length logged in console");
         
@@ -139,7 +136,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
 
     private void clearCbusPaneText(JFrameOperator jfoo){
         new JTextAreaOperator(jfoo,1).setText("");
-        JUnitUtil.waitFor(() ->{ return getCbusPaneText(jfoo).isEmpty(); });
+        JUnitUtil.waitFor(() ->{ return getCbusPaneText(jfoo).isEmpty(); },"pane text still empty");
     }
 
     private String getCbusPaneText(JFrameOperator jfoo){
@@ -157,6 +154,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
         memo = new CanSystemConnectionMemo();
         tc = new TrafficControllerScaffold();
         memo.setTrafficController(tc);
+        memo.setProtocol(ConfigurationManager.MERGCBUS);
         panel = cbPanel = new CbusConsolePane();
         helpTarget="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame";
         title="CBUS Console";
@@ -166,7 +164,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     public void tearDown() {
         
-        CbusEventTableDataModel evMod = jmri.InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
+        CbusEventTableDataModel evMod = memo.get(CbusEventTableDataModel.class);
         if ( evMod != null){
             evMod.skipSaveOnDispose();
             evMod.dispose();

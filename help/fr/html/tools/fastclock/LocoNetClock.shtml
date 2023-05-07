@@ -1,41 +1,30 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Herv&#233; Blorec le 2012/01/19-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated by Herv&#233; Blorec le 2012/01/19-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: LocoNet Fast Clock Capability</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Setup LocoNet Fast Clock">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
-<h2>Possibilit&eacute;s de l'Horloge Rapide LocoNet
-      JMRI</h2>
-      Un LocoNet Digitrax peut contenir une base de temps
+<h2>Possibilit&eacute;s de l'Horloge Rapide LocoNet JMRI</h2>
+
+      <p>Un LocoNet Digitrax peut contenir une base de temps
       propre pour son horloge rapide. Ceci peut &ecirc;tre
       assur&eacute;e soit par une centrale de commande
       DCS100/DCS200, ou par un module
       s&eacute;par&eacute; d'horloge rapide telles que
       ceux faits par les technologies ferroviaires Logic. Cette
       page explique comment JMRI peut soit utiliser ou
-      contr&ocirc;ler les horloges rapides LocoNet.
+      contr&ocirc;ler les horloges rapides LocoNet.</p>
 
       <h3>Contr&ocirc;le de l'horloge LocoNet</h3>
       L'outil
@@ -51,22 +40,23 @@
         pouvez pas explicitement mettre en pause une horloge
         LocoNet, mais vous pouvez l'arr&egrave;ter en fixant
         le taux de vitesse &aacute;  z&eacute;ro.</li>
-      </ul>Si vous utilisez une centrale de commande DCS100 ou
+      </ul>
+      <p>Si vous utilisez une centrale de commande DCS100 ou
       DCS200 pour cr&eacute;er votre horloge rapide LocoNet,
       vous avez sans doute remarqu&eacute; qu'elle n'indique
       pas particuli&egrave;rement le bon temps. Si vous
       s&eacute;lectionnez le "Corriger le Maitre Horloge
       Rapide LocoNet", JMRI va ajuster le rythme de l'horloge
-      LocoNet afin qu'il conserve au mieux le temps.
+      LocoNet afin qu'il conserve au mieux le temps.</p>
 
       <h3>Utilisation l'Horloge LocoNet</h3>
-      Vous pouvez
+      <p>Vous pouvez
       &eacute;galement avoir JMRI qui utilise l'horloge
       LocoNet pour sa propre base de temps interne. Cela permet de
       maintenir les horloges que JMRI affiche sur
       l'&eacute;cran synchronis&eacute;es avec l'
       Horloge LocoNet, d'o&oacute; l'affichage sur les
-      r&eacute;gulateurs DT400, etc
+      r&eacute;gulateurs DT400, etc</p>
 
       <p>Pour ce faire, s&eacute;lectionnez l'option
       "Horloge Rapide LocoNet pilote l'Horloge Interne" dans la
@@ -76,8 +66,10 @@
       ouvrez les fen&ecirc;tres horloge elles se connectent
       &aacute; la base de temps correct.
       Chronom&eacute;trage heureux!</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

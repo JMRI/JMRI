@@ -96,19 +96,19 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
     }
 
     public MrcPowerManager getPowerManager() {
-        return get(PowerManager.class);
+        return (MrcPowerManager)get(PowerManager.class);
     }
 
     public MrcTurnoutManager getTurnoutManager() {
-        return get(TurnoutManager.class);
+        return (MrcTurnoutManager)get(TurnoutManager.class);
     }
 
     public MrcThrottleManager getThrottleManager() {
-        return get(ThrottleManager.class);
+        return (MrcThrottleManager)get(ThrottleManager.class);
     }
 
     public MrcClockControl getClockControl() {
-        return get(ClockControl.class);
+        return (MrcClockControl)get(ClockControl.class);
     }
 
     @Override

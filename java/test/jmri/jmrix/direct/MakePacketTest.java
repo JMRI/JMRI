@@ -1,6 +1,8 @@
 package jmri.jmrix.direct;
 
 import jmri.NmraPacket;
+import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -12,12 +14,7 @@ import org.junit.jupiter.api.*;
 public class MakePacketTest {
 
     @Test
-    public void testCreate() {
-    }
-
-    @Test
     public void testSimplePacket() {
-        int[] result = new int[100];
 
         byte buffer[] = new byte[3];
         boolean test_retval;
@@ -26,7 +23,7 @@ public class MakePacketTest {
         buffer[0] = 0;
         buffer[1] = 1;
         buffer[2] = 0 ^ 1;
-        result = MakePacket.createStream(buffer);
+        int[] result = MakePacket.createStream(buffer);
         /**
          * resulting stream should be in hex 55 55 55 c6 c6 c6 c6 c6 c6 c6 c6 96
          * c6 c6 c6 5c
@@ -53,7 +50,6 @@ public class MakePacketTest {
 
     @Test
     public void testPreamble() {
-        int[] result = new int[100];
         byte buffer[] = new byte[3];
         boolean test_retval;
         test_retval = MakePacket.setPreambleLength(20);
@@ -66,7 +62,7 @@ public class MakePacketTest {
         buffer[0] = 0;
         buffer[1] = 1;
         buffer[2] = 0 ^ 1;
-        result = MakePacket.createStream(buffer);
+        int[] result = MakePacket.createStream(buffer);
         Assert.assertEquals("preamble", 85, result[3]);
 
         test_retval = MakePacket.setPreambleLength(16);
@@ -75,6 +71,7 @@ public class MakePacketTest {
          */
         Assert.assertEquals("preamble not mutply of 5", false, test_retval);
         test_retval = MakePacket.setPreambleLength(15);
+        Assertions.assertTrue(test_retval);
 
     }
 
@@ -90,7 +87,6 @@ public class MakePacketTest {
     @Test
     @Disabled("Disabled in JUnit 3")
     public void testAll3BytePacket() {
-        int[] result = new int[100];
         byte i, j;
         byte buffer[] = new byte[3];
         boolean test_retval;
@@ -102,7 +98,7 @@ public class MakePacketTest {
                 buffer[0] = i;
                 buffer[1] = j;
                 buffer[2] = (byte) (buffer[0] ^ buffer[1]);
-                result = MakePacket.createStream(buffer);
+                int[] result = MakePacket.createStream(buffer);
                 if (result[0] == 0) {
                     Assert.assertEquals("test all -  invalid lenght", 10, result[0]);
                 }
@@ -123,9 +119,9 @@ public class MakePacketTest {
     @Test
     @Disabled("Disabled in JUnit 3")
     public void testAllSpeed128Packets() {
-        int[] result = new int[100];
+        int[] result;
         int addressRange, speedRange;
-        byte buffer[] = new byte[6];
+        byte buffer[];
         boolean test_retval, Direction;
         Direction = true; /*Set direction to forwards */
 
@@ -175,9 +171,7 @@ public class MakePacketTest {
     @Test
     @Disabled("Disabled in JUnit 3")
     public void testAllOpsCvWrite() {
-        int[] result = new int[100];
         int addressRange, cvNum, data;
-        byte buffer[] = new byte[6];
         boolean test_retval;
 
         test_retval = MakePacket.setPreambleLength(15);
@@ -186,9 +180,9 @@ public class MakePacketTest {
         for (addressRange = 0; addressRange < 10239; addressRange++) {
             for (cvNum = 2; cvNum < 512; cvNum++) {
                 for (data = 0; data < 127; data++) {
-                    buffer = NmraPacket.opsCvWriteByte(addressRange, true, cvNum, data);
+                    byte[] buffer = NmraPacket.opsCvWriteByte(addressRange, true, cvNum, data);
 
-                    result = MakePacket.createStream(buffer);
+                    int[] result = MakePacket.createStream(buffer);
                     if (result[0] == 0) {
                         Assert.assertEquals("test ops CV write (long addresses) -  invalid lenght", 10, result[0]);
                     }
@@ -205,6 +199,16 @@ public class MakePacketTest {
                 }
             }
         }
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

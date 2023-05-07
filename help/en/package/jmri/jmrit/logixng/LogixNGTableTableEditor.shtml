@@ -44,7 +44,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/TablesEditor.png"><img src="images/TablesEditor.png" alt=
-        "LogixNG TablesEditor" width="728" height="575"></a>
+        "LogixNG TablesEditor" width="395" height="796"></a>
       </div>
 
       <dl>
@@ -61,11 +61,14 @@
 
         <dd>The table type cannot be changed. Only CSV is currently implemented.</dd>
 
+        <dt>CSV Type</dt>
+
+        <dd>The delimiter for the file.</dd>
+
         <dt>File name</dt>
 
-        <dd>The current file name. This can be changed by either entering a new name or using the
-        file selector on the right side. Note: Once a CSV table has been loaded, it stays active
-        until PanelPro is stopped. If the file name has been changed and the configuration has been
+        <dd>The file name. Once a CSV table has been loaded, it stays active
+        until PanelPro is stopped. If the file data has been changed and the configuration has been
         stored, it will take effect when PanelPro has been started and the xml data file has been
         loaded.</dd>
       </dl>
@@ -91,12 +94,12 @@
       <h2 id="buttonCancel">Cancel</h2>
 
       <p>When the <strong>Cancel</strong> button is pressed, the Edit LogixNG table window will
-      close. Pending changes to the user name or the CSV file name are discarded.</p>
+      close. Pending changes to the user name are discarded.</p>
 
       <h2 id="buttonOk">OK</h2>
 
       <p>When the <strong>OK</strong> button is pressed, the Edit LogixNG table window will close
-      after saving the changes to the user name or CSV file name.</p>
+      after saving the changes to the user name.</p>
 
       <h2 id="buttonDelete">Delete</h2>
 

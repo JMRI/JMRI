@@ -5,6 +5,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.util.*;
+import jmri.util.JUnitAppender;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -19,15 +20,16 @@ public class SignalHeadSectionTest {
 
     @Test
     public void testConstruction() {
-        new SignalHeadSection(new ArrayList<String>(), new ArrayList<String>(),   // empty
-                        "Sec 1 Sign 1 L", "Sec 1 Sign 1 C", "Sec 1 Sign 1 R",
-                         "Sec 1 Sign 1 L", "Sec 1 Sign 1 R",
-                        station);
+        SignalHeadSection signalHeadSection = new SignalHeadSection(new ArrayList<>(), new ArrayList<>(),   // empty
+                "Sec 1 Sign 1 L", "Sec 1 Sign 1 C", "Sec 1 Sign 1 R",
+                "Sec 1 Sign 1 L", "Sec 1 Sign 1 R",
+                station);
+        Assertions.assertNotNull(signalHeadSection);
     }
 
     @Test
     public void testEmptyToString() {
-        SignalHeadSection s = new SignalHeadSection(new ArrayList<String>(), new ArrayList<String>(),   // empty
+        SignalHeadSection s = new SignalHeadSection(new ArrayList<>(), new ArrayList<>(),   // empty
                         "Sec 1 Sign 1 L", "Sec 1 Sign 1 C", "Sec 1 Sign 1 R",
                          "Sec 1 Sign 1 L", "Sec 1 Sign 1 R",
                         station);
@@ -47,7 +49,7 @@ public class SignalHeadSectionTest {
 
     @Test
     public void testListener() {
-        final SignalHeadSection s = new SignalHeadSection(new ArrayList<String>(), new ArrayList<String>(),   // empty
+        final SignalHeadSection s = new SignalHeadSection(new ArrayList<>(), new ArrayList<>(),   // empty
                         "Sec 1 Sign 1 L", "Sec 1 Sign 1 C", "Sec 1 Sign 1 R",
                          "Sec 1 Sign 1 L", "Sec 1 Sign 1 R",
                         station);
@@ -55,15 +57,12 @@ public class SignalHeadSectionTest {
         s.setLastIndication(CodeGroupThreeBits.Triple001);
 
         listened = false;
-        PropertyChangeListener p = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                listened = true;
-                Assert.assertEquals("LastIndication", e.getPropertyName());
-                Assert.assertEquals(CodeGroupThreeBits.Triple001, e.getOldValue());
-                Assert.assertEquals(CodeGroupThreeBits.Triple100, e.getNewValue());
-                Assert.assertEquals(s, e.getSource());
-            }
+        PropertyChangeListener p = (PropertyChangeEvent e) -> {
+            listened = true;
+            Assert.assertEquals("LastIndication", e.getPropertyName());
+            Assert.assertEquals(CodeGroupThreeBits.Triple001, e.getOldValue());
+            Assert.assertEquals(CodeGroupThreeBits.Triple100, e.getNewValue());
+            Assert.assertEquals(s, e.getSource());
         };
         s.addPropertyChangeListener(p);
         Assert.assertTrue(! listened);
@@ -83,14 +82,15 @@ public class SignalHeadSectionTest {
     }
 
     /**
-     * Set up and do a single check of the logic for calculating a current indication in the field
+     * Set up and do a single check of the logic for calculating a current indication in the field.
      * Takes a set of right and left
      * signal appearances to show, plus the last command that was send,
      * then changes the signals (as needed) and checks for
-     * the result. The test condition appears as the calling method name in the traceback,
+     * the result.
+     * The test condition appears as the calling method name in the traceback,
      * not as a separate string.
      */
-    public void checkOneCI(int l1before, int l2before, int r1before, int r2before, CodeGroupThreeBits lastIndication,
+    private void checkOneCI(int l1before, int l2before, int r1before, int r2before, CodeGroupThreeBits lastIndication,
                            int l1after,  int l2after,  int r1after,  int r2after,
                            CodeGroupThreeBits checkIndication) {
 
@@ -102,6 +102,11 @@ public class SignalHeadSectionTest {
                 @Override
                 void layoutSignalHeadChanged(java.beans.PropertyChangeEvent e) {}
         };
+
+        Assertions.assertNotNull(ih1);
+        Assertions.assertNotNull(ih2);
+        Assertions.assertNotNull(ih3);
+        Assertions.assertNotNull(ih4);
 
         // set up
         ih1.setHeld(false);
@@ -125,7 +130,8 @@ public class SignalHeadSectionTest {
 
     }
 
-    @Test public void testCI_StopAndAllRed() {
+    @Test
+    public void testCI_StopAndAllRed() {
         checkOneCI(SignalHead.RED,SignalHead.RED,  SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple010,
                    SignalHead.RED,SignalHead.RED,  SignalHead.RED,SignalHead.RED,
 
@@ -135,25 +141,32 @@ public class SignalHeadSectionTest {
     // we do each test in left and right to make sure we've got the code correct
 
     // normal case of signal going from clear to stop in field
-    @Test public void testCI_LeftGreenGoesToAllRed() {
+    @Test
+    public void testCI_LeftGreenGoesToAllRed() {
         checkOneCI(SignalHead.RED,SignalHead.GREEN, SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple100,
                    SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.RED,
 
                         CodeGroupThreeBits.Triple010);
     }
-    @Test public void testCI_RightGreenGoesToAllRed() {
+
+    @Test
+    public void testCI_RightGreenGoesToAllRed() {
         checkOneCI(SignalHead.RED,SignalHead.RED, SignalHead.RED,SignalHead.YELLOW,   CodeGroupThreeBits.Triple001,
                    SignalHead.RED,SignalHead.RED, SignalHead.RED,SignalHead.RED,
 
                         CodeGroupThreeBits.Triple010);
     }
-    @Test public void testCI_LeftYellowGoesToAllRed() {
+
+    @Test
+    public void testCI_LeftYellowGoesToAllRed() {
         checkOneCI(SignalHead.RED,SignalHead.GREEN, SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple100,
                    SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.RED,
 
                         CodeGroupThreeBits.Triple010);
     }
-    @Test public void testCI_RightYellowGoesToAllRed() {
+
+    @Test
+    public void testCI_RightYellowGoesToAllRed() {
         checkOneCI(SignalHead.RED,SignalHead.RED, SignalHead.RED,SignalHead.YELLOW,   CodeGroupThreeBits.Triple001,
                    SignalHead.RED,SignalHead.RED, SignalHead.RED,SignalHead.RED,
 
@@ -161,13 +174,16 @@ public class SignalHeadSectionTest {
     }
 
     // normal case of signals in the field clearing after a time
-    @Test public void testCI_LeftClears() {
+    @Test
+    public void testCI_LeftClears() {
         checkOneCI(SignalHead.RED,SignalHead.RED,     SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple100,
                    SignalHead.RED,SignalHead.GREEN,   SignalHead.RED,SignalHead.RED,
 
                         CodeGroupThreeBits.Triple100);
     }
-    @Test public void testCI_RightClears() {
+
+    @Test
+    public void testCI_RightClears() {
         checkOneCI(SignalHead.RED,SignalHead.RED, SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple001,
                    SignalHead.RED,SignalHead.RED, SignalHead.RED,SignalHead.GREEN,
 
@@ -175,13 +191,16 @@ public class SignalHeadSectionTest {
     }
 
     // normal case of signals in the field changing, while staying clear
-    @Test public void testCI_LeftChanges() {
+    @Test
+    public void testCI_LeftChanges() {
         checkOneCI(SignalHead.RED,SignalHead.GREEN,    SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple100,
                    SignalHead.RED,SignalHead.YELLOW,   SignalHead.RED,SignalHead.RED,
 
                         CodeGroupThreeBits.Triple100);
     }
-    @Test public void testCI_RightChanges() {
+
+    @Test
+    public void testCI_RightChanges() {
         checkOneCI(SignalHead.RED,SignalHead.RED, SignalHead.RED,SignalHead.GREEN,   CodeGroupThreeBits.Triple001,
                    SignalHead.RED,SignalHead.RED, SignalHead.RED,SignalHead.YELLOW,
 
@@ -189,13 +208,16 @@ public class SignalHeadSectionTest {
     }
 
     // signal has been set to stop, but it taking some time - not typical?
-    @Test public void testCI_LeftHasntDroppedYet() {
+    @Test
+    public void testCI_LeftHasntDroppedYet() {
         checkOneCI(SignalHead.RED,SignalHead.GREEN,    SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple010,
                    SignalHead.RED,SignalHead.GREEN,   SignalHead.RED,SignalHead.RED,
 
                         CodeGroupThreeBits.Triple000);
     }
-    @Test public void testCI_RightHasntDroppedYet() {
+
+    @Test
+    public void testCI_RightHasntDroppedYet() {
         checkOneCI(SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.GREEN,   CodeGroupThreeBits.Triple010,
                    SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.GREEN,
 
@@ -203,13 +225,16 @@ public class SignalHeadSectionTest {
     }
 
     // signal was at stop, but cleared in field - not typical!
-    @Test public void testCI_StopClearsLeft() {
+    @Test
+    public void testCI_StopClearsLeft() {
         checkOneCI(SignalHead.RED,SignalHead.RED,    SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple010,
                    SignalHead.RED,SignalHead.YELLOW, SignalHead.RED,SignalHead.RED,
 
                         CodeGroupThreeBits.Triple000);
     }
-    @Test public void testCI_StopClearsRight() {
+
+    @Test
+    public void testCI_StopClearsRight() {
         checkOneCI(SignalHead.RED,SignalHead.RED,    SignalHead.RED,SignalHead.GREEN,   CodeGroupThreeBits.Triple010,
                    SignalHead.RED,SignalHead.RED, SignalHead.RED,SignalHead.GREEN,
 
@@ -218,19 +243,24 @@ public class SignalHeadSectionTest {
 
     // tests of restricting cases
 
-    @Test public void testCI_BothRestrictingAtStop() {
+    @Test
+    public void testCI_BothRestrictingAtStop() {
         checkOneCI(SignalHead.RED,SignalHead.RED,      SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple010,
                    SignalHead.RED,SignalHead.FLASHRED, SignalHead.RED,SignalHead.FLASHRED,
 
                         CodeGroupThreeBits.Triple000);
     }
-    @Test public void testCI_BothRestrictingWhenLeft() {
+
+    @Test
+    public void testCI_BothRestrictingWhenLeft() {
         checkOneCI(SignalHead.RED,SignalHead.RED,      SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple100,
                    SignalHead.RED,SignalHead.FLASHRED, SignalHead.RED,SignalHead.FLASHRED,
 
                         CodeGroupThreeBits.Triple000);
     }
-    @Test public void testCI_BothRestrictingWhenRight() {
+
+    @Test
+    public void testCI_BothRestrictingWhenRight() {
         checkOneCI(SignalHead.RED,SignalHead.RED,      SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple001,
                    SignalHead.RED,SignalHead.FLASHRED, SignalHead.RED,SignalHead.FLASHRED,
 
@@ -240,86 +270,119 @@ public class SignalHeadSectionTest {
 
     // tests of some odd states and conditions
 
-    @Test public void testCI_BothLeftAndRightFoundClearInsteadOfStop() {
+    @Test
+    public void testCI_BothLeftAndRightFoundClearInsteadOfStop() {
         checkOneCI(SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple010,
                    SignalHead.RED,SignalHead.GREEN, SignalHead.RED,SignalHead.GREEN,
 
                         CodeGroupThreeBits.Triple000);
-        jmri.util.JUnitAppender.assertErrorMessageStartsWith("Found both left and right clear: ");
+        JUnitAppender.assertErrorMessageStartsWith("Found both left and right clear: ");
 
     }
-    @Test public void testCI_BothLeftAndRightFoundClearInsteadOfLeftOnly() {
+
+    @Test
+    public void testCI_BothLeftAndRightFoundClearInsteadOfLeftOnly() {
         checkOneCI(SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple100,
                    SignalHead.RED,SignalHead.GREEN, SignalHead.RED,SignalHead.GREEN,
 
                         CodeGroupThreeBits.Triple000);
-        jmri.util.JUnitAppender.assertErrorMessageStartsWith("Found both left and right clear: ");
+        JUnitAppender.assertErrorMessageStartsWith("Found both left and right clear: ");
     }
-    @Test public void testCI_BothLeftAndRightFoundClearInsteadOfRightOnly() {
+
+    @Test
+    public void testCI_BothLeftAndRightFoundClearInsteadOfRightOnly() {
         checkOneCI(SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple001,
                    SignalHead.RED,SignalHead.GREEN, SignalHead.RED,SignalHead.GREEN,
 
                         CodeGroupThreeBits.Triple000);
-        jmri.util.JUnitAppender.assertErrorMessageStartsWith("Found both left and right clear: ");
+        JUnitAppender.assertErrorMessageStartsWith("Found both left and right clear: ");
     }
 
-
+    @Test
     public void testCI_BothLeftRestrictingAndRightClearInsteadOfStop() {
         checkOneCI(SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple010,
                    SignalHead.RED,SignalHead.FLASHRED, SignalHead.RED,SignalHead.GREEN,
 
                         CodeGroupThreeBits.Triple000);
-        jmri.util.JUnitAppender.assertErrorMessageStartsWith("Found left at restricting and right clear: ");
+        JUnitAppender.assertWarnMessageStartsWith("Found left at restricting and right clear: ");
     }
-    @Test public void testCI_BothLeftRestrictingAndRightClearInsteadOfLeftOnly() {
+
+    @Test
+    public void testCI_BothLeftRestrictingAndRightClearInsteadOfLeftOnly() {
         checkOneCI(SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple100,
                    SignalHead.RED,SignalHead.FLASHRED, SignalHead.RED,SignalHead.GREEN,
 
                         CodeGroupThreeBits.Triple000);
-        jmri.util.JUnitAppender.assertWarnMessageStartsWith("Found left at restricting and right clear: ");
+        JUnitAppender.assertWarnMessageStartsWith("Found left at restricting and right clear: ");
     }
+
+    @Test
     public void testCI_BothLeftRestrictingAndRightClearInsteadOfRightOnly() {
         checkOneCI(SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple001,
                    SignalHead.RED,SignalHead.FLASHRED, SignalHead.RED,SignalHead.GREEN,
 
                         CodeGroupThreeBits.Triple000);
-        jmri.util.JUnitAppender.assertErrorMessageStartsWith("Found left at restricting and right clear: ");
+        JUnitAppender.assertWarnMessageStartsWith("Found left at restricting and right clear: ");
     }
 
-    @Test public void testCI_BothLeftClearAndRightRestrictingInsteadOfStop() {
+    @Test
+    public void testCI_BothLeftClearAndRightRestrictingInsteadOfStop() {
         checkOneCI(SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple010,
                    SignalHead.RED,SignalHead.GREEN, SignalHead.RED,SignalHead.FLASHRED,
 
                         CodeGroupThreeBits.Triple000);
-        jmri.util.JUnitAppender.assertWarnMessageStartsWith("Found left clear and right at restricting: ");
+        JUnitAppender.assertWarnMessageStartsWith("Found left clear and right at restricting: ");
     }
-    @Test public void testCI_BothLeftClearAndRightRestrictingInsteadOfLeftOnly() {
+
+    @Test
+    public void testCI_BothLeftClearAndRightRestrictingInsteadOfLeftOnly() {
         checkOneCI(SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple100,
                    SignalHead.RED,SignalHead.GREEN, SignalHead.RED,SignalHead.FLASHRED,
 
                         CodeGroupThreeBits.Triple000);
-        jmri.util.JUnitAppender.assertWarnMessageStartsWith("Found left clear and right at restricting: ");
+        JUnitAppender.assertWarnMessageStartsWith("Found left clear and right at restricting: ");
     }
-    @Test public void testCI_BothLeftClearAndRightRestrictingInsteadOfRightOnly() {
+
+    @Test
+    public void testCI_BothLeftClearAndRightRestrictingInsteadOfRightOnly() {
         checkOneCI(SignalHead.RED,SignalHead.RED,   SignalHead.RED,SignalHead.RED,   CodeGroupThreeBits.Triple001,
                    SignalHead.RED,SignalHead.GREEN, SignalHead.RED,SignalHead.FLASHRED,
 
                         CodeGroupThreeBits.Triple000);
-        jmri.util.JUnitAppender.assertWarnMessageStartsWith("Found left clear and right at restricting: ");
+        JUnitAppender.assertWarnMessageStartsWith("Found left clear and right at restricting: ");
     }
 
-
+    @Test
+    public void testImplListener(){
+        Assertions.assertFalse(requestIndicationStart);
+        Assertions.assertNotNull(station);
+        station.requestIndicationStart();
+        Assertions.assertTrue(requestIndicationStart);
+    }
 
     // common infrastructure
 
     CodeLine codeline;
-    Station station;
+    Station station = null;
     boolean requestIndicationStart;
 
-    SignalHead ih1;
-    SignalHead ih2;
-    SignalHead ih3;
-    SignalHead ih4;
+    private SignalHead ih1 = null;
+    private SignalHead ih2 = null;
+    private SignalHead ih3 = null;
+    private SignalHead ih4 = null;
+
+    private class StationImpl extends Station {
+
+        StationImpl(String name, CodeLine codeline, CodeButton button) {
+            super(name, codeline, button);
+            requestIndicationStart = false;
+        }
+
+        @Override
+        public void requestIndicationStart() {
+            requestIndicationStart = true;
+        }
+    }
 
     @BeforeEach
     public void setUp() {
@@ -343,12 +406,8 @@ public class SignalHeadSectionTest {
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(ih4);
 
         requestIndicationStart = false;
-        station = new Station("test", codeline, new CodeButton("IS221", "IS222")) {
-            @Override
-            public void requestIndicationStart() {
-                requestIndicationStart = true;
-            }
-        };
+        station = new StationImpl("test", codeline, new CodeButton("IS221", "IS222"));
+
     }
 
     @AfterEach

@@ -2,11 +2,8 @@ package jmri.jmrix.cmri.serial.cmrinetmetrics;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
-
-import java.awt.GraphicsEnvironment;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of CMRInetMetricsData
@@ -16,10 +13,10 @@ import java.awt.GraphicsEnvironment;
 public class CMRInetMetricsDataTest {
 
     @Test
-    public void testMemoCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    public void testCMRInetMetricsDataMemoCtor() {
         CMRInetMetricsData action = new CMRInetMetricsData(); 
-        Assert.assertNotNull("exists", action);
+        Assertions.assertNotNull(action, "exists" );
     }
 
     @BeforeEach

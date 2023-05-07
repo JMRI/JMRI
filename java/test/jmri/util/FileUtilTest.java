@@ -250,6 +250,8 @@ public class FileUtilTest {
     public void testCopyDirectoryToExistingDirectory() throws FileNotFoundException, IOException {
         File src = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:web/fonts"));
         File dest = Files.createTempDirectory("FileUtilTest").toFile();
+        Assertions.assertNotNull(src);
+        Assertions.assertNotNull(dest);
         FileUtil.copy(src, dest);
         String[] destFiles = dest.list();
         String[] srcFiles = src.list();
@@ -461,14 +463,15 @@ public class FileUtilTest {
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
 
         this.programTestFile = new File(UUID.randomUUID().toString());
-        this.programTestFile.createNewFile();
+        Assertions.assertTrue(this.programTestFile.createNewFile());
+        // programTestFile created in JMRI root directory
         JUnitUtil.waitFor(() -> {
             return this.programTestFile.exists();
         }, "Create program test file");
         File profile = new File(FileUtil.getProfilePath());
-        profile.mkdir();
+        Assertions.assertFalse(profile.mkdir(),"temp directory should already exist");
         this.preferencesTestFile = new File(profile, UUID.randomUUID().toString());
-        this.preferencesTestFile.createNewFile();
+        Assertions.assertTrue(this.preferencesTestFile.createNewFile());
         JUnitUtil.waitFor(() -> {
             return this.preferencesTestFile.exists();
         }, "Create program test file");
@@ -476,14 +479,11 @@ public class FileUtilTest {
 
     @AfterEach
     public void tearDown() {
-        this.programTestFile.delete();
+        Assertions.assertTrue(this.programTestFile.delete());
         JUnitUtil.waitFor(() -> {
             return !this.programTestFile.exists();
         }, "Remove program test file");
-        this.preferencesTestFile.delete();
-        JUnitUtil.waitFor(() -> {
-            return !this.preferencesTestFile.exists();
-        }, "Remove program test file");
+        // no need to delete preferencesTestFile as created in temp directory
         JUnitUtil.tearDown();
     }
 }

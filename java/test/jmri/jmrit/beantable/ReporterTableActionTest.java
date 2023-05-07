@@ -1,7 +1,5 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.annotation.Nonnull;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -13,8 +11,8 @@ import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
@@ -51,11 +49,12 @@ public class ReporterTableActionTest extends AbstractTableActionBase<Reporter> {
         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
 
+    
     @Test
     @Override
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
+        Assert.assertTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
@@ -63,7 +62,7 @@ public class ReporterTableActionTest extends AbstractTableActionBase<Reporter> {
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
+        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
@@ -78,15 +77,15 @@ public class ReporterTableActionTest extends AbstractTableActionBase<Reporter> {
     @Disabled("No Edit button on Reporter table")
     public void testEditButton() {
     }
-    
+
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddFailureCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        InstanceManager.setDefault(ReporterManager.class, new CreateNewReporterAlwaysException());
+        InstanceManager.setDefault(ReporterManager.class, new AlwaysExceptionCreateNewReporter());
         
         a = new ReporterTableAction();
-        Assume.assumeTrue(a.includeAddButton());
+        Assert.assertTrue(a.includeAddButton());
         
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
@@ -109,10 +108,10 @@ public class ReporterTableActionTest extends AbstractTableActionBase<Reporter> {
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
-    
-    private class CreateNewReporterAlwaysException extends InternalReporterManager {
 
-        public CreateNewReporterAlwaysException() {
+    private static class AlwaysExceptionCreateNewReporter extends InternalReporterManager {
+
+        AlwaysExceptionCreateNewReporter() {
             super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 
@@ -129,7 +128,7 @@ public class ReporterTableActionTest extends AbstractTableActionBase<Reporter> {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         helpTarget = "package.jmri.jmrit.beantable.ReporterTable";
         a = new ReporterTableAction();
     }

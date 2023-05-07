@@ -181,6 +181,12 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
         _sequenceId = sequence;
     }
 
+    /**
+     * How many times a car type needs to use the schedule item before going to
+     * the next item in the schedule. Used in sequential mode. Default is one.
+     * 
+     * @return the number of times a car type needs to use the schedule item
+     */
     public int getCount() {
         return _count;
     }

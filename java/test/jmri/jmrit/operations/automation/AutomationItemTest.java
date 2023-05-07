@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.automation;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -37,8 +37,8 @@ public class AutomationItemTest extends OperationsTestCase {
         
         // static tests
         Assert.assertEquals("Do Nothing", AutomationItem.getActionByCode(0x0000).getName()); // there isn't a code 0x0000 action
-        Assert.assertEquals("Number of actions", 31, AutomationItem.getActionComboBox().getItemCount());
-        Assert.assertEquals("Number of actions", 31, AutomationItem.getActionList().size());
+        Assert.assertEquals("Number of actions", 34, AutomationItem.getActionComboBox().getItemCount());
+        Assert.assertEquals("Number of actions", 34, AutomationItem.getActionList().size());
     }
 
     @Test

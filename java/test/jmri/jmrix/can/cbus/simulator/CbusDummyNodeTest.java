@@ -37,11 +37,15 @@ public class CbusDummyNodeTest {
         CbusDummyNode t = new CbusDummyNode(memo, 1 );
         
         Assert.assertTrue("1 listener",tcis.numListeners()==1);
-        
-        Assert.assertTrue("start getDelay", ((CbusSimCanListener) t.getCanListener()).getDelay()>0);
-        ((CbusSimCanListener) t.getCanListener()).setDelay(7);
-        Assert.assertEquals("getSetDelay", 7,((CbusSimCanListener) t.getCanListener()).getDelay());
-        
+
+        var listen = t.getCanListener();
+        Assertions.assertTrue(listen instanceof CbusSimCanListener );
+        CbusSimCanListener nodeListener = (CbusSimCanListener) listen;
+
+        Assert.assertTrue("start getDelay", nodeListener.getDelay()>0);
+        nodeListener.setDelay(7);
+        Assert.assertEquals("getSetDelay", 7,nodeListener.getDelay());
+
         t.dispose();
         Assert.assertTrue("0 listeners after dispose",tcis.numListeners()==0);
     }
@@ -50,12 +54,15 @@ public class CbusDummyNodeTest {
     public void testNodeRequestNumber() {
         
         CbusDummyNode t = new MergCanpan().getNewDummyNode( memo, 1);
-        ((CbusSimCanListener) t.getCanListener()).setDelay(0);
+        var listen = t.getCanListener();
+        Assertions.assertTrue(listen instanceof CbusSimCanListener );
+        CbusSimCanListener nodeListener = (CbusSimCanListener) listen;
+        nodeListener.setDelay(0);
         
-        Assert.assertFalse("start getProcessIn", ((CbusSimCanListener) t.getCanListener()).getProcessIn() );
-        Assert.assertTrue("start getProcessOut", ((CbusSimCanListener) t.getCanListener()).getProcessOut() );
-        Assert.assertTrue("start getSendIn", ((CbusSimCanListener) t.getCanListener()).getSendIn() );
-        Assert.assertFalse("start getSendOut", ((CbusSimCanListener) t.getCanListener()).getSendOut() );
+        Assert.assertFalse("start getProcessIn", nodeListener.getProcessIn() );
+        Assert.assertTrue("start getProcessOut", nodeListener.getProcessOut() );
+        Assert.assertTrue("start getSendIn", nodeListener.getSendIn() );
+        Assert.assertFalse("start getSendOut", nodeListener.getSendOut() );
         Assert.assertFalse("start getsendsWRACKonNVSET", t.getnvWriteInLearnOnly());
         
         Assert.assertFalse("is a CANPAN getsendsWRACKonNVSET",t.getsendsWRACKonNVSET());
@@ -73,16 +80,16 @@ public class CbusDummyNodeTest {
             tcis.inbound.elementAt(tcis.inbound.size() - 1).toString());
         // node in setup mode awaiting node allocation frame or further setup info request
         
-        ((CbusSimCanListener) t.getCanListener()).setSendOut(true);
-        ((CbusSimCanListener) t.getCanListener()).setSendIn(false);
-        Assert.assertTrue(" getSendOut", ((CbusSimCanListener) t.getCanListener()).getSendOut() );
-        Assert.assertFalse(" getSendIn", ((CbusSimCanListener) t.getCanListener()).getSendIn() );
+        nodeListener.setSendOut(true);
+        nodeListener.setSendIn(false);
+        Assert.assertTrue(" getSendOut", nodeListener.getSendOut() );
+        Assert.assertFalse(" getSendIn", nodeListener.getSendIn() );
         
-        ((CbusSimCanListener) t.getCanListener()).setProcessIn(true);
-        ((CbusSimCanListener) t.getCanListener()).setProcessOut(false);
+        nodeListener.setProcessIn(true);
+        nodeListener.setProcessOut(false);
         
-        Assert.assertTrue("start getProcessIn", ((CbusSimCanListener) t.getCanListener()).getProcessIn() );
-        Assert.assertFalse("start getProcessOut", ((CbusSimCanListener) t.getCanListener()).getProcessOut() );
+        Assert.assertTrue("start getProcessIn", nodeListener.getProcessIn() );
+        Assert.assertFalse("start getProcessOut", nodeListener.getProcessOut() );
         
         CanReply r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -103,13 +110,13 @@ public class CbusDummyNodeTest {
         Assert.assertEquals("node responds with parameters setup", "[5f8] EF A5 59 1D 80 0D 01 01",
             tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
         
-        ((CbusSimCanListener) t.getCanListener()).setProcessIn(false);
-        ((CbusSimCanListener) t.getCanListener()).setProcessOut(true);
+        nodeListener.setProcessIn(false);
+        nodeListener.setProcessOut(true);
         
-        ((CbusSimCanListener) t.getCanListener()).setSendOut(false);
-        ((CbusSimCanListener) t.getCanListener()).setSendIn(true);
-        Assert.assertFalse(" getSendOut f", ((CbusSimCanListener) t.getCanListener()).getSendOut() );
-        Assert.assertTrue(" getSendIn t", ((CbusSimCanListener) t.getCanListener()).getSendIn() );
+        nodeListener.setSendOut(false);
+        nodeListener.setSendIn(true);
+        Assert.assertFalse(" getSendOut f", nodeListener.getSendOut() );
+        Assert.assertTrue(" getSendIn t", nodeListener.getSendIn() );
         
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -163,7 +170,9 @@ public class CbusDummyNodeTest {
         
         // dummy CANPAN
         CbusDummyNode t = new MergCanpan().getNewDummyNode(memo, 1234);
-        ((CbusSimCanListener) t.getCanListener()).setDelay(0);
+        var listen = t.getCanListener();
+        Assertions.assertTrue(listen instanceof CbusSimCanListener );
+        ((CbusSimCanListener) listen).setDelay(0);
         t.setNodeInFLiMMode(true);
         
         // get event variables with knowledge of index
@@ -197,7 +206,9 @@ public class CbusDummyNodeTest {
         
         // dummy CANPAN
         CbusDummyNode t = new MergCanpan().getNewDummyNode(memo, 1234);
-        ((CbusSimCanListener) t.getCanListener()).setDelay(0);
+        var listen = t.getCanListener();
+        Assertions.assertTrue(listen instanceof CbusSimCanListener );
+        ((CbusSimCanListener) listen).setDelay(0);
         t.setNodeInFLiMMode(true);
         
         // get node variable
@@ -281,7 +292,9 @@ public class CbusDummyNodeTest {
     public void testNodeLearnEvent() {
         
         CbusDummyNode t = new MergCanpan().getNewDummyNode(memo, 1234);
-        ((CbusSimCanListener) t.getCanListener()).setDelay(0);
+        var listen = t.getCanListener();
+        Assertions.assertTrue(listen instanceof CbusSimCanListener );
+        ((CbusSimCanListener) listen).setDelay(0);
         t.setNodeInFLiMMode(true);
         
         Assert.assertEquals(" 0 outbound not increased", 0,(tcis.outbound.size() ) );
@@ -482,7 +495,9 @@ public class CbusDummyNodeTest {
     public void testNodeLearnTwoEventsThenDelete() {
     
         CbusDummyNode t = new MergCanpan().getNewDummyNode(memo, 1234);
-        ((CbusSimCanListener) t.getCanListener()).setDelay(0);
+        var listen = t.getCanListener();
+        Assertions.assertTrue(listen instanceof CbusSimCanListener );
+        ((CbusSimCanListener) listen).setDelay(0);
         t.setNodeInFLiMMode(true);
         
         // frame to set node into learn
@@ -583,7 +598,9 @@ public class CbusDummyNodeTest {
     public void testResponseToNameRequest() {
     
         CbusDummyNode t = new MergCanpan().getNewDummyNode(memo, 1234);
-        ((CbusSimCanListener) t.getCanListener()).setDelay(0);
+        var listen = t.getCanListener();
+        Assertions.assertTrue(listen instanceof CbusSimCanListener );
+        ((CbusSimCanListener) listen).setDelay(0);
         t.setNodeInFLiMMode(true);
         t.setNodeInSetupMode(true);
         

@@ -1,9 +1,8 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.jmrix.can.CanSystemConnectionMemo;
+import javax.annotation.Nonnull;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 public class CbusEvent extends CbusEventDataElements {
     
@@ -68,7 +67,7 @@ public class CbusEvent extends CbusEventDataElements {
     public void setState( EvState newval ) {
         _state = newval;
     }    
-    
+
     /**
      * Get event event number
      *
@@ -87,7 +86,7 @@ public class CbusEvent extends CbusEventDataElements {
     public int getNn(){
         return _nn;
     }
-    
+
     /**
      * Set event event number.
      *
@@ -105,25 +104,37 @@ public class CbusEvent extends CbusEventDataElements {
     public void setNn ( int nn ) {
         _nn = nn;
     }
-    
+
     /**
      * Set event name.
      *
-     * @param name Event Name
+     * @param name new Event Name
      */
     public void setName( String name ) {
         _name = name;
     }
-    
+
+    /**
+     * Set event name only if there is no existing name.
+     *
+     * @param name Event Name
+     */
+    public void setNameIfNoName (@Nonnull String name){
+        if (_name.isEmpty()) {
+            _name = name;
+        }
+    }
+
     /**
      * Get event name.
      *
      * @return the Event Name
      */
+    @Nonnull
     public String getName() {
         return _name;
     }
-    
+
     /**
      * Get Node name.
      * <p>
@@ -134,7 +145,7 @@ public class CbusEvent extends CbusEventDataElements {
     public String getNodeName() {
         return new CbusNameService(_memo).getNodeName( getNn() );
     }
-    
+
     /**
      * Test if a node and event number combination matches this event.
      * 
@@ -146,7 +157,7 @@ public class CbusEvent extends CbusEventDataElements {
     public boolean matches(int nn, int en) {
         return (nn == _nn) && (en == _en);
     }
-    
+
     /** 
      * {@inheritDoc} 
      * <p>
@@ -156,13 +167,13 @@ public class CbusEvent extends CbusEventDataElements {
     public boolean equals(Object o) {
         return ((o instanceof CbusEvent) && matches(((CbusEvent) o).getNn(),((CbusEvent) o).getEn()));
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return java.util.Objects.hash(getEn(), getNn());
     }
-    
+
     /**
      * Send ON event CAN frame.
      * <p>
@@ -171,7 +182,7 @@ public class CbusEvent extends CbusEventDataElements {
     public void sendOn(){
         sendEvent(EvState.ON);
     }
-    
+
     /**
      * Send OFF event CAN frame.
      * <p>
@@ -180,7 +191,7 @@ public class CbusEvent extends CbusEventDataElements {
     public void sendOff(){
         sendEvent(EvState.OFF);
     }
-    
+
     /**
      * Send event status request CAN frame.
      * <p>
@@ -222,7 +233,7 @@ public class CbusEvent extends CbusEventDataElements {
             memo.getTrafficController().sendCanMessage(getCanMessage(memo.getTrafficController().getCanid(),_nn,_en,_state), null);
         } );
     }
-    
+
     /**
      * Get a String with event overview.
      * 
@@ -246,6 +257,6 @@ public class CbusEvent extends CbusEventDataElements {
         return addevbuf.toString();
     }
 
-    // private static final Logger log = LoggerFactory.getLogger(CbusEvent.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusEvent.class);
 
 }

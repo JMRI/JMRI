@@ -174,7 +174,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     void sendSpeedCmd() {
         Mx1Message m;
         int value = 0;
-        int cData1 = (isForward ? 0x20 : 0x00);
+        int cData1 = (isForward ? 0x00 : 0x20);
         cData1 = cData1 + (getFunction(0) ? 0x10 : 0x00);
         synchronized(this) {
             if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {

@@ -118,7 +118,7 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
 
 # Define task to load turnout state at script start
 #
-# This is implemented as a seperate class so that it can run on a
+# This is implemented as a separate class so that it can run on a
 # different thread in the background rather than holding up the main
 # thread while executing
 class LoadTurnoutState(jmri.jmrit.automat.AbstractAutomaton):

@@ -27,7 +27,7 @@ import org.junit.jupiter.api.*;
  * @author Randall Wood Copyright 2018
  * @param <I> The class of JsonHttpService being tested
  */
-public class JsonHttpServiceTestBase<I extends JsonHttpService> {
+public abstract class JsonHttpServiceTestBase<I extends JsonHttpService> {
 
     protected ObjectMapper mapper = null;
     protected Locale locale = Locale.ENGLISH;
@@ -92,6 +92,7 @@ public class JsonHttpServiceTestBase<I extends JsonHttpService> {
         // test an invalid schema
         try {
             schema = service.doSchema("non-existant-type", false, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+            Assertions.fail("schema should not be valid: " + schema.toPrettyString());
         } catch (JsonException ex) {
             assertThat(ex.getCode()).isEqualTo(500);
             assertThat(ex.getMessage()).isEqualTo("Unknown object type non-existant-type was requested.");

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright ($Author: jacobsen $) 2009 -->
+
+  <title>N&amp;W 1949 Signaling Definition</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
+      <h2>N&amp;W 1949 Signal Definitions</h2>
+      This directory contains signaling definitions corresponding to the Norfolk and Western 1949
+      rule book and applies to position light signals. These definitions cover the N&amp;W.
+      <h3>Position Light Signals</h3>
+      The 2 arm version of the NW PLs are illustrated using two faces. In the
+      field, the actual signal may not have included a complete face depending on the indications
+      needed for a given location. In general, a two arm signal would be used at an interlocking or
+      as the advance signal for an interlocking. Signal installations at the end of a siding may
+      only have a single head. 
+
+      <p>The single arm absolute signals include a single marker for the stop and stay indication.</p>
+
+      <p>See the <a href="aspects.xml">aspect page</a>.</p>
+
+      <p>Signal Mast definitions:</p>
+
+      <ul>
+        <li>
+          <a href="appearance-PL-1-high-abs.xml">Single Arm Absolute Position Light Mast
+          Signals</a>
+        </li>
+
+        <li>
+          <a href="appearance-PL-1-high-pbs.xml">Single Arm Permissive Light Position
+          Mast Signals</a>
+        </li>
+
+        <li>
+          <a href="appearance-PL-1-low.xml">1 Arm Dwarf
+          Signals</a>
+        </li>
+
+        <li>
+          <a href="appearance-PL-2-high.xml">2 Arm Absolute Position Light Mast
+          Signals</a>
+        </li>
+
+        <li>
+          <a href="appearance-PL-2-pbs.xml">2 Arm Permissive Position Light Mast
+          Signals</a>
+        </li>
+      </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -3,12 +3,14 @@ package jmri.jmrit.display.layoutEditor;
 import java.io.*;
 import java.util.stream.Stream;
 
+import jmri.InstanceManager;
 import jmri.util.*;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.logixng.LogixNG_Manager;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -43,7 +45,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         super(SaveType.User, true);
     }
 
-    static boolean done;
+    private boolean done;
 
     /**
      * Wait for the layout editor block processing to take place. This is quite
@@ -55,39 +57,41 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         done = false;
         ThreadingUtil.runOnGUIDelayed(() -> done = true, 2500);
         JUnitUtil.waitFor(() -> {
-            return jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised || done;
-        });
+            return InstanceManager.getDefault(LayoutBlockManager.class).stabilised || done;
+        },"LayoutBlockManager stabilised || done");
 
         // need to do two separate ones because of waitFor limit
         done = false;
         ThreadingUtil.runOnGUIDelayed(() -> done = true, 2500);
         JUnitUtil.waitFor(() -> {
-            return jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised || done;
-        });
-        if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
+            return InstanceManager.getDefault(LayoutBlockManager.class).stabilised || done;
+        },"LayoutBlockManager stabilised || done");
+        if ( ! InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
             log.debug("not stabilized after check");
         }
 
         // and wait yet another 2 sec before writing out
         done = false;
-        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{
+        ThreadingUtil.runOnGUIDelayed(()->{
                 done = true;
             }, 2000);
-        jmri.util.JUnitUtil.waitFor(()->{return done;});
+        JUnitUtil.waitFor(()->{return done;},"GUI wait did not complete");
 
         if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
             log.debug(" still not stabilized");
         }
 
         done = false;
-        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{
+        ThreadingUtil.runOnGUIDelayed(()->{
                 done = true;
             }, 2000);
-        jmri.util.JUnitUtil.waitFor(()->{return done;});
+        JUnitUtil.waitFor(()->{return done;},"next GUI wait did not complete");
 
         if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
             log.debug(" nor now");
         }
+
+        InstanceManager.getDefault(LogixNG_Manager.class).setupAllLogixNGs();
     }
 
     /**
@@ -104,7 +108,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
         done = false;
         ThreadingUtil.runOnGUIDelayed(() -> done = true, 1000);
-        JUnitUtil.waitFor(() -> done);
+        JUnitUtil.waitFor(() -> done,"1 sec gui delay incomplete");
 
         storeAndCompareImage(file);
     }
@@ -121,7 +125,6 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
                 String name = inFile.getName();
                 FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
                 File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name + "." + index + ".png");
-                System.out.println(outFile);
 
                 java.awt.Dimension size = new java.awt.Dimension(Math.min(le.getTargetPanel().getSize().width, 2000),
                         Math.min(le.getTargetPanel().getSize().height, 1000));
@@ -152,8 +155,11 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     }
 
     protected void findAndComparePngFiles(String name, File inFile, File outFile, int index, String subdir) throws IOException {
-        File compFile = new File(inFile.getCanonicalFile().getParentFile().
-                getParent() + "/loadref/" + subdir + "/" + name + "." + index + ".png");
+        File parent = inFile.getCanonicalFile().getParentFile();
+        Assertions.assertNotNull(parent);
+        String filepath = parent.getParent();
+        Assertions.assertNotNull(filepath);
+        File compFile = new File(filepath + "/loadref/" + subdir + "/" + name + "." + index + ".png");
 
         int checkVal = compareImageFiles(compFile, outFile);
         if (checkVal != 0) {
@@ -211,8 +217,8 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     @BeforeEach
     @Override
-    public void setUp() {
-        super.setUp();
+    public void setUp(@TempDir java.io.File tempDir) throws IOException  {
+        super.setUp(tempDir);
         JUnitUtil.initLayoutBlockManager();
     }
 

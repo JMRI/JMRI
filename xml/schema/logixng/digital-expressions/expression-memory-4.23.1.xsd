@@ -80,6 +80,8 @@
                 </xs:simpleType>
               </xs:element>
 
+              <xs:element name="compareType" type="LogixNG_CompareUtil_CompareType" minOccurs="0" maxOccurs="1" />
+
               <xs:element name="caseInsensitive" type="yesNoType" />
 
               <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="1"/>

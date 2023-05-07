@@ -1,37 +1,27 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; 2016-08-09-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; 2016-08-09-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Web Site</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code web site">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
 <h1>JMRI: Site Web</h1>
 
-Cette page pr&#233;sente les aspects techniques du site web JMRI.
-<p>
+<p>Cette page pr&#233;sente les aspects techniques du site web JMRI.<br>
+
 Si vous voulez juste savoir comment faire un petit changement dans le site Web ou
 la page d'aide, s'il vous pla&#238;t voir la page s&#233;par&#233;e
-<a  href="webupdate/UpdatingDocs.shtml"> des instructions</a>.
+<a  href="webupdate/UpdatingDocs.shtml"> des instructions</a>.</p>
 
  <h2>Structure de l'Information</h2>
 
@@ -71,7 +61,6 @@ sur l'utilisation des &#233;tiquettes. Voir nos
 <a href="Help.shtml"> pages web JavaHelp</a> pour plus de d&#233;tails.
 <p>
 Nous utilisons
-
 <a href="http://httpd.apache.org/docs/1.3/howto/ssi.html"> le server-Side inclut</a>
 pour fournir une information coh&#233;rente pour les en-t&#234;tes, les encadr&#233;s et les pieds de page.
 Cela nous permet de partager le contenu HTML
@@ -125,9 +114,9 @@ l'information <a href="http://jmri.org/xml/XSLT">human-readable </a> au sujet de
 compilation du projet sur les serveurs Jenkins. Les r&#233;pertoires list&#233;s ci-dessus constituent la majeure partie du site,
 et ce contenu est mis &#224; jour depuis le r&#233;pertoire JMRI sans aucun travail suppl&#233;mentaire.</p>
 <ul>
-    <li><a href="https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">Contenu statique depuis le r&#233;pertoire JMRI/JMRI, ex:e.g. help, xml, etc dans les distributions JMRI</a></li>
-    <li><a href="https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">Contenu statique depuis le r&#233;pertoire JMRI/website, ex:. information website-only</a></li>
-<li><a href="https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">Contenu statique depuis le r&#233;pertoire JMRI/website-legal , ex: contenu autour de l'affaire juridique JMRI-Katzer</a></li>
+  <li><a href="https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">Contenu statique depuis le r&#233;pertoire JMRI/JMRI, ex:e.g. help, xml, etc dans les distributions JMRI</a></li>
+  <li><a href="https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">Contenu statique depuis le r&#233;pertoire JMRI/website, ex:. information website-only</a></li>
+  <li><a href="https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">Contenu statique depuis le r&#233;pertoire JMRI/website-legal , ex: contenu autour de l'affaire juridique JMRI-Katzer</a></li>
 </ul>
 
 <p>La r&#233;g&#233;n&#233;ration de la JavaDoc et le contenu XML implique 
@@ -300,8 +289,9 @@ L'installation d'un catalogue local XML, et ensuite dir &#224; vos outils pour l
 	dans le r&#233;pertoire "xml" sur votre serveur web local.</li>
 </ul>
 
-        <!--#include virtual="/Footer.shtml" -->
+        <!--#include virtual="/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

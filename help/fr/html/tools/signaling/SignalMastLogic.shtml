@@ -1,25 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Kevin Dickerson 2011 -->
   <!-- Updated by Blorec Herv&#233; 2016-09-13-->
 
   <title>JMRI: Signal Mast Logic introduction</title>
   <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20140614"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="Date.Modified" content="20140614">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <!-- Page Body -->
@@ -179,7 +175,7 @@
         <h3>Générer la Logique Mât de Signalisation</h3>
         Logique Mât de Signalisation peut être générer automatiquement de trois façons différentes:
         <ul>
-          <li>La première méthode est de le construire sur un Mât de Signalisation � partire d'un
+          <li>La première méthode est de le construire sur un Mât de Signalisation à partire d'un
           Mât de Signalisation basique. Ceci peut être fait en sélectionnant "Logique Mât de
           Signalisation" depuis le menu contextuel pour l'icône Mât de Signalisation sur le
           panneau. Après un clic sur le bouton "Découvrir", le système démarre et trouve tous les
@@ -225,11 +221,12 @@
         "../../../package/jmri/jmrit/beantable/AddEditSignalingLogic.shtml">"Ajouter Modifier
         Logique Mât de Signalisation</a>.
         <p>Retour à la <a href="index.shtml#tools">page principale d'aide Signalisation</a></p>
+
       </div>
-      <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

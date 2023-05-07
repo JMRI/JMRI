@@ -19,7 +19,6 @@ public class CbusPreferencesTest {
     public void testCTor() {
         CbusPreferences t = new CbusPreferences();
         Assert.assertNotNull("exists",t);
-        t = null;
     }
 
     @BeforeEach

@@ -63,7 +63,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     public JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     public JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-    public JButton addButton = new JButton(Bundle.getMessage("ButtonAdd")); // TODO have button state item to add
+    public JButton addButton = new JButton(); // add car or locomotive
 
     // check boxes
     public JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
@@ -376,14 +376,14 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         builtTextField.setText(rs.getBuilt());
 
         // Engines and cars share the owner database
-        if (!InstanceManager.getDefault(CarOwners.class).containsName(rs.getOwner())) {
+        if (!InstanceManager.getDefault(CarOwners.class).containsName(rs.getOwnerName())) {
             if (JOptionPane.showConfirmDialog(this,
-                    MessageFormat.format(Bundle.getMessage("ownerNameNotExist"), new Object[] { rs.getOwner() }),
+                    MessageFormat.format(Bundle.getMessage("ownerNameNotExist"), new Object[] { rs.getOwnerName() }),
                     Bundle.getMessage("addOwner"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                InstanceManager.getDefault(CarOwners.class).addName(rs.getOwner());
+                InstanceManager.getDefault(CarOwners.class).addName(rs.getOwnerName());
             }
         }
-        ownerComboBox.setSelectedItem(rs.getOwner());
+        ownerComboBox.setSelectedItem(rs.getOwnerName());
 
         commentTextField.setText(rs.getComment());
         valueTextArea.setText(rs.getValue());
@@ -562,7 +562,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         _rs.setWeightTons(weightTonsTextField.getText());
         _rs.setBuilt(builtTextField.getText());
         if (ownerComboBox.getSelectedItem() != null) {
-            _rs.setOwner((String) ownerComboBox.getSelectedItem());
+            _rs.setOwnerName((String) ownerComboBox.getSelectedItem());
         }
         _rs.setComment(commentTextField.getText());
         _rs.setValue(valueTextArea.getText());
@@ -572,16 +572,18 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             textRfidSystemName.setText(_rs.getRfid());
         }
         autoTrackCheckBox.setEnabled(true);
-
+    }
+    
+    protected void checkAndSetLocationAndTrack(RollingStock rs) {
         if (locationBox.getSelectedItem() != null && trackLocationBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, getRb().getString("rsFullySelect"), getRb().getString("rsCanNotLoc"),
                     JOptionPane.ERROR_MESSAGE);
             // update location only if it has changed
-        } else if (_rs.getLocation() == null ||
-                !_rs.getLocation().equals(locationBox.getSelectedItem()) ||
-                _rs.getTrack() == null ||
-                !_rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
-            setLocationAndTrack(_rs);
+        } else if (rs.getLocation() == null ||
+                !rs.getLocation().equals(locationBox.getSelectedItem()) ||
+                rs.getTrack() == null ||
+                !rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
+            setLocationAndTrack(rs);
         }
     }
 
@@ -663,7 +665,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)) {
             InstanceManager.getDefault(CarOwners.class).updateComboBox(ownerComboBox);
             if (_rs != null) {
-                ownerComboBox.setSelectedItem(_rs.getOwner());
+                ownerComboBox.setSelectedItem(_rs.getOwnerName());
             }
         }
         if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||

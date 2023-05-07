@@ -1,15 +1,14 @@
 package jmri.beans;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.jupiter.api.Test;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -36,15 +35,12 @@ public class UnboundArbitraryBeanTest {
         UnboundArbitraryBean instance = new UnboundBeanImpl();
         assertEquals(null, instance.getIndexedProperty(NOT_A_PROPERTY, 0));
         assertEquals(OLD_VALUE, instance.getIndexedProperty(INDEXED_PROPERTY, 0));
-        // Really wish we were using JUnit 4 with its ability to assert that an
-        // expected Exception was thrown
-        boolean outOfBounds = false;
-        try {
+
+        Exception ex = assertThrows(IndexOutOfBoundsException.class,() -> {
             instance.getIndexedProperty(INDEXED_PROPERTY, 1);
-        } catch (IndexOutOfBoundsException ex) {
-            outOfBounds = true;
-        }
-        assertTrue(outOfBounds);
+        });
+        assertNotNull(ex);
+
         assertEquals(OLD_VALUE, instance.getIndexedProperty(MAPPED_INDEXED, 0));
         assertEquals(null, instance.getIndexedProperty(MAPPED_INDEXED, 1));
     }
@@ -138,12 +134,34 @@ public class UnboundArbitraryBeanTest {
         assertEquals(NEW_VALUE, instance.getProperty(NEW_PROPERTY));
     }
 
-    public class UnboundBeanImpl extends UnboundArbitraryBean {
+    @Test
+    public void testUnboundBeanImpl () {
+        UnboundBeanImpl t = new UnboundBeanImpl();
+        assertEquals(OLD_VALUE, t.getStringProperty());
+        t.setStringProperty(STRING_PROPERTY);
+        assertEquals(STRING_PROPERTY, t.getStringProperty());
+
+        t.setIndexedProperty(1, NEW_PROPERTY);
+        assertEquals(OLD_VALUE,t.getIndexedProperty(0));
+        assertEquals(NEW_PROPERTY,t.getIndexedProperty(1));
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
+    private static class UnboundBeanImpl extends UnboundArbitraryBean {
 
         private String stringProperty = OLD_VALUE;
         private final ArrayList<String> indexedProperty = new ArrayList<>();
 
-        public UnboundBeanImpl() {
+        private UnboundBeanImpl() {
             this.indexedProperty.add(0, OLD_VALUE);
             this.setProperty(MAPPED_STRING, OLD_VALUE);
             this.setIndexedProperty(MAPPED_INDEXED, 0, OLD_VALUE);

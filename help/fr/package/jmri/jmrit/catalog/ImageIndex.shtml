@@ -1,23 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Updated by Herv&#233; Blorec le 203-10-15-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec le 203-10-15-->
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Panel Editor Help</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI help Index Editor"><!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Index Editor">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>L'éditeur Index des Images</h1>
       Cette fenêtre est utilisée pour créer un Index d'Image. L'index peut être organisé selon
       toute classification que vous souhaitez. Son utilisation vous permet d'accéder à tout fichier
@@ -127,8 +123,10 @@
           quitté le nœud et pour retourner ensuite au nœud.</em></p>
         </li>
       </ul>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

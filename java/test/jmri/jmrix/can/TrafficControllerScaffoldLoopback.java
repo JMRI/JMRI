@@ -19,13 +19,17 @@ public class TrafficControllerScaffoldLoopback extends TrafficControllerScaffold
     // forwards to any listeners
     @Override
     public void forwardMessage(AbstractMRListener l, AbstractMRMessage r) {
-        ((CanListener) l).message((CanMessage) r);
+        if ( l instanceof CanListener && r instanceof CanMessage ) {
+            ((CanListener) l).message((CanMessage) r);
+        }
     }
 
     // forwards to any listeners
     @Override
     public void forwardReply(AbstractMRListener l, AbstractMRReply r) {
-        ((CanListener) l).reply((CanReply) r);
+        if ( l instanceof CanListener && r instanceof CanReply ) {
+            ((CanListener) l).reply((CanReply) r);
+        }
     }
 
     @Override

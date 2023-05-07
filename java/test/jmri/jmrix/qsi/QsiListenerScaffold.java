@@ -6,7 +6,7 @@ package jmri.jmrix.qsi;
  *
  * @author Bob Jacobsen
  */
-class QsiListenerScaffold implements QsiListener {
+public class QsiListenerScaffold implements QsiListener {
 
     public QsiListenerScaffold() {
         rcvdReply = null;

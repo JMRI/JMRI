@@ -207,10 +207,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setRate(double factor) throws TimebaseRateException {
-        if (factor < MINIMUM_RATE || factor > MAXIMUM_RATE) {
-            log.error("rate of {} is out of reasonable range", factor);
-            throw new TimebaseRateException();
-        }
+        checkRateValid(factor);
         if (internalMaster && (!notInitialized)) {
             log.error("Probable Error - questionable attempt to change fast clock rate");
         }
@@ -244,10 +241,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     public void userSetRate(double factor) throws TimebaseRateException {
         // this call is used when user changes fast clock rate either in Setup Fast Clock or via a ClockControl
         // implementation
-        if (factor < MINIMUM_RATE || factor > MAXIMUM_RATE) {
-            log.error("rate of {} is out of reasonable range", factor);
-            throw new TimebaseRateException();
-        }
+        checkRateValid(factor);
         double oldFactor = hardwareFactor;
         Date now = getTime();
         // actually make the change
@@ -268,6 +262,13 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         // notify listeners
         firePropertyChange("rate", oldFactor, factor); // old, then new
         handleAlarm(null);
+    }
+
+    private void checkRateValid(double factor) throws TimebaseRateException {
+        if (factor < MINIMUM_RATE || factor > MAXIMUM_RATE) {
+            log.error("rate of {} is out of reasonable range {} - {}", factor, MINIMUM_RATE, MAXIMUM_RATE);
+            throw new TimebaseRateException(Bundle.getMessage("IncorrectRate", factor, MINIMUM_RATE, MAXIMUM_RATE));
+        }
     }
 
     /**
@@ -719,12 +720,14 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 
     void updateMemory(Date date) {
         if (timeStorageFormat == null) {
+            String pattern = java.util.ResourceBundle.getBundle("jmri.jmrit.simpleclock.SimpleClockBundle")
+                .getString("TimeStorageFormat");
             try {
-                timeStorageFormat = new java.text.SimpleDateFormat(
-               java.util.ResourceBundle.getBundle("jmri.jmrit.simpleclock.SimpleClockBundle")
-                    .getString("TimeStorageFormat"));
+                timeStorageFormat = new java.text.SimpleDateFormat(pattern);
             } catch (IllegalArgumentException e) {
-                log.info("Dropping back to default time format due to exception", e);
+                log.info("Unable to parse date / time format: {}",pattern);
+                log.info("For supported formats see https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/text/SimpleDateFormat.html");
+                log.info("Dropping back to default time format (h:mm a) 4:56 PM, due to exception", e);
                 timeStorageFormat = new java.text.SimpleDateFormat("h:mm a");
             }
         }

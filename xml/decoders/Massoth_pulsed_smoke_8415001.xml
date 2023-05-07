@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bruno De Graeve brucel1050@gmail.com" version="1.0" lastUpdated="20220604"/>
+  <!--
+      This decoder definition is based on the Massoth document "Gepulster Rundkesselverdampfer/Pulsed Smoker for round boilers /
+      8415001" 2018.03.
+
+      Version History:
+
+        1.0 - Initial release June 4th, 2022 (based on "Pulsed Smoke Unit" made by Jeff Schmaltz 493rdafa@gmail.com)
+
+   -->
+  <decoder>
+    <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH">
+      <model model="Pulsed Smoker for round boilers" maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="1000 mA" numOuts="0" numFns="3" formFactor="G" connector="other" productID="8415001">
+		<size length="54.0" width="426" height="30" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
+        <decVal/>
+        <label>Software Version Number</label>
+         <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" default="123" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable item="Programming lock - unlock" CV="15" default="162" tooltip="unlock programming lock (Key). Only if CV15 and CV16 are equal, programming of the decoder is possible.">
+        <decVal/>
+        <label>Programming lock - unlock</label>
+      </variable>
+      <variable item="Programming lock - lock" CV="16" default="162" tooltip="Preset fixed standard value for smoke generators (see manual). It's not recommended to change the value of CV16.">
+        <decVal/>
+        <label>Programming lock - lock</label>
+      </variable>
+	  <variable item="Load-dependent Operation" CV="49" mask="XXXXXXVX" default="1" tooltip="When load-dependency is activated (factory default) the vapor emission will depend on the acceleration (more emission) and deceleration (less emission)">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+        <label>Load-dependent Operation</label>
+		</variable>
+      <variable item="Clock Output" CV="49" mask="XXVXXXXX" default="" tooltip="Clock Output (see manual)">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+        <label>Clock Output</label>
+		</variable>
+      <variable item="Clock Input" CV="49" mask="XVXXXXXX" default="" tooltip="Clock Input (see manual)">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+        <label>Clock Input</label>
+		</variable>
+	  <variable item="Operation Mode" CV="50" default="2" tooltip="0 (Diesel), 2 (Steam Operation with 2/4 chuffs = DEFAULT), 3 (Steam Operation with 4/4 chuffs)">
+		<enumVal>
+          <enumChoice choice="Diesel mode" value="0"/>
+          <enumChoice choice="Steam Operation with 2/4 chuffs" value="2"/>
+          <enumChoice choice="Steam Operation with 4/4 chuffs" value="3"/>
+		  </enumVal>
+		<label>Operation Mode (Steam or Diesel)</label>
+      </variable>
+      <variable item="Fan speed stop/standing" CV="61" default="20" tooltip="Range 0-100">
+        <decVal min="0" max="100"/>
+        <label>Fan speed stop/standing</label>
+      </variable>
+      <variable item="Fan speed start up" CV="62" default="100" tooltip="Range 0-100">
+        <decVal min="0" max="100"/>
+        <label>Fan speed at start up</label>
+      </variable>
+      <variable item="Fan speed driving" CV="63" default="100" tooltip="Range 0-100">
+        <decVal min="0" max="100"/>
+        <label>Fan speed while driving</label>
+      </variable>
+      <variable item="Fan speed roll out" CV="64" default="30" tooltip="Range 0-100">
+        <decVal min="0" max="100"/>
+        <label>Fan speed while rolling out</label>
+      </variable>
+	  <variable item="Heating profile" CV="65" default="5" tooltip="Heating: 1 = low ... 5  = high">
+        <decVal min="1" max="5"/>
+        <label>Heating profile</label>
+      </variable>
+	  
+      <variable item="Programming address POM" CV="107" default="10239" tooltip="Sets the Extended (Long) address for programming on the Main (Range 128-10239)">
+        <longAddressVal/>
+        <label>Long Address</label>
+      </variable>
+	  
+      <variable item="Preheating function key" CV="110" default="30" tooltip="Function key which switches preheating on for the heating element (options: F0-F28, permanently ON or OFF). This feature is usually deactivated.">
+        <enumVal>
+		  <enumChoice choice="Permanent-OFF (no function assigned)" value="30"/>
+          <enumChoice choice="Permanent-ON (except service mode)" value="31"/>
+          <enumChoice choice="Light Key" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+          <enumChoice choice="F17" value="17"/>
+          <enumChoice choice="F18" value="18"/>
+          <enumChoice choice="F19" value="19"/>
+          <enumChoice choice="F20" value="20"/>
+          <enumChoice choice="F21" value="21"/>
+          <enumChoice choice="F22" value="22"/>
+          <enumChoice choice="F23" value="23"/>
+          <enumChoice choice="F24" value="24"/>
+          <enumChoice choice="F25" value="25"/>
+          <enumChoice choice="F26" value="26"/>
+		  <enumChoice choice="F27" value="27"/>
+		  <enumChoice choice="F28" value="28"/>
+        </enumVal>
+        <label>Preheating function key</label>
+      </variable>
+	  <variable item="Delay Preheating" CV="116" default="0" tooltip="Range 0-15: works only in Diesel mode (since v3.5). The set time depends on the time of the fan control and is substracted from there. Example: CV126=20sec, CV116=5sec; that means that the preheating will switch on after 15 seconds.">
+        <decVal min="0" max="15"/>
+        <label>Delay Preheating (Diesel mode only)</label>
+      </variable>
+      <variable item="Fan (Ejection) function key" CV="120" default="7" tooltip="Function key which activates the Pulsed Smoker (ventilator) (options: F0-F28, permanently ON or OFF). When the smoke unit is activated, the heating is activated automatically.">
+        <enumVal>
+ 		  <enumChoice choice="Permanent-OFF (no function assigned)" value="30"/>
+          <enumChoice choice="Permanent-ON (except service mode)" value="31"/>
+          <enumChoice choice="Light Key" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+          <enumChoice choice="F17" value="17"/>
+          <enumChoice choice="F18" value="18"/>
+          <enumChoice choice="F19" value="19"/>
+          <enumChoice choice="F20" value="20"/>
+          <enumChoice choice="F21" value="21"/>
+          <enumChoice choice="F22" value="22"/>
+          <enumChoice choice="F23" value="23"/>
+          <enumChoice choice="F24" value="24"/>
+          <enumChoice choice="F25" value="25"/>
+          <enumChoice choice="F26" value="26"/>
+		  <enumChoice choice="F27" value="27"/>
+		  <enumChoice choice="F28" value="28"/>    </enumVal>
+        <label>Activating the Pulsed Smoker. Fan (Ejection) function key</label>
+      </variable>
+
+	  <variable item="Blow-out function on start-up (steam) / Fan switch-on delay (diesel)" CV="126" default="1" tooltip="0 = deactivated (since v3.5); 1 sec. per value">
+        <decVal min="0" max="127"/>
+        <label>Blow-out function on start-up (steam) / Fan switch-on delay (diesel) [in seconds]</label>
+      </variable>
+	  <variable item="Blow-out function" CV="130" default="30" tooltip="Set a function key to trigger an additional blow out with 100% exhaust. The smoke ejection remains active until the function is deactivated. (options: F0-F28, permanently ON or OFF)">
+        <enumVal>
+		  <enumChoice choice="Permanent-OFF (no function assigned)" value="30"/>
+          <enumChoice choice="Permanent-ON (except service mode)" value="31"/>
+          <enumChoice choice="Light Key" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+          <enumChoice choice="F13" value="13"/>
+          <enumChoice choice="F14" value="14"/>
+          <enumChoice choice="F15" value="15"/>
+          <enumChoice choice="F16" value="16"/>
+          <enumChoice choice="F17" value="17"/>
+          <enumChoice choice="F18" value="18"/>
+          <enumChoice choice="F19" value="19"/>
+          <enumChoice choice="F20" value="20"/>
+          <enumChoice choice="F21" value="21"/>
+          <enumChoice choice="F22" value="22"/>
+          <enumChoice choice="F23" value="23"/>
+          <enumChoice choice="F24" value="24"/>
+          <enumChoice choice="F25" value="25"/>
+          <enumChoice choice="F26" value="26"/>
+		  <enumChoice choice="F27" value="27"/>
+		  <enumChoice choice="F28" value="28"/>   </enumVal>
+        <label>Manual smoke ejection function</label>
+      </variable>
+      <variable item="Decoder Type" CV="255" readOnly="yes" default="162"  tooltip="Decoder Type (read only)">
+        <decVal/>
+        <label>Decoder Type</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset basic settings" CV="7" default="55"/>
+      <factReset label="Reset lights and functions" CV="7" default="77"/>
+    </resets>
+  </decoder>
+  <pane>
+    <column>
+      <dccaddress/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Short Address"/>
+      <display item="Extended Address"/>
+      <display item="Address Format"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Programming address POM"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Manufacturer"/>
+      <display item="Decoder Version"/>
+      <display item="Decoder Type"/>
+    </column>
+    <name>Basic</name>
+  </pane>
+  <pane>
+    <name>Pulsed Smoke Unit 8415001</name>
+    <column>
+	  <display item="Operation Mode"/>
+	  <label>
+        <text> </text>
+      </label>
+	  <display item="Load-dependent Operation"/>
+	  <display item="Clock Output"/>
+	  <display item="Clock Input"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Programming lock - unlock"/>
+      <display item="Programming lock - lock"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Preheating function key"/>
+	  <display item="Delay Preheating"/>
+	  <display item="Heating profile"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Fan speed stop/standing"/>
+      <display item="Fan speed start up"/>
+      <display item="Fan speed driving"/>
+      <display item="Fan speed roll out"/>
+      <display item="Fan (Ejection) function key"/>
+      <label>
+        <text> </text>
+      </label>
+	 <display item="Blow-out function on start-up (steam) / Fan switch-on delay (diesel)"/>
+	 <display item="Blow-out function"/>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+  </pane>
+  <pane>
+    <column>
+      <cvtable/>
+    </column>
+    <name>CVs</name>
+  </pane>
+   <pane>
+      <name>Information</name>
+    <column>
+      <label><text>The Massoth pulsed smoke generator for round boilers (model id 8415001) may be retrofitted in most G scale steam locomotives.</text></label>
+      <label><text>It combines pulsed steam and cylinder steam functionality in a single unit.</text></label>
+	  <label><text>With an outer diameter of only 30mm,</text></label>
+	  <label><text>the unit can be easily installed in smaller G scale locomotives such as the LGB Stainz and Franzburg.</text></label>
+	  <label><text>The Massoth Pulsed Smoke Generator for Round Boilers connects directly to track power and operates with DCC speed steps,</text></label>
+	  <label><text>hall-effect sensor, or clock signal from a decoder.</text></label>
+	  <label><text>With a newly designed fan and optimized airflow this smoke unit makes more smoke than ever.</text></label>
+	  <label><text>Overheating and dry-run protection are integrated.</text></label>
+	  <label><text>The pulsed smoke generator is equipped with a fully integrated decoder that features a standard loco address and a separate programming address.</text></label>
+	  <label><text>POM programming of the smoke generator is thus possible.</text></label>
+	  <label><text>the smoke generator's heating element and fan may be independently activated and controlled for optimum smoke effects</text></label>
+	  <label><text>several CVs are available for setting temperature of the heating element,</text></label>
+	  <label><text>preheating of the element, and various fan speed.</text></label>
+	  <label><text>Load-dependent smoke generation is possible when the generator is connected to the SUSI interface terminal of a Massoth eMOTION decoder.</text></label>
+	  <label><text></text></label>
+	</column>
+	  <column>
+	  <label><text>Technical specifications:</text></label>
+	  <label><text></text></label>
+	  <label><text>Operating voltage : 18 -24V DCC</text></label>
+	  <label><text>Operating current: 1000mA</text></label>
+	  <label><text>Ambient operating temperature: -4°F to 122°F / -20°C to +50°C</text></label>
+	  <label><text>Capacity: 5cc (optimum); 10cc (Maximum untill spill over)</text></label>
+	  <label><text>Dimensions: 54x42x30mm</text></label>
+	  <label><text></text></label>
+    </column>
+  </pane>
+</decoder-config>

@@ -16,8 +16,8 @@
       <p><img src="images/PanelEditor.png" class="floatRight" alt="Panel editor"><br>
       A Panel is a set of Icons representing various components of a layout. Some of the Icons
       available in JMRI include Turnouts, Signals Masts and Sensors. You can include a background
-      icon to display your layout on your Panel and add the contents of Memory and/or Reporter
-      Variables.</p>
+      icon to display your layout on your Panel and add the contents of Memory, LogixNG Global
+      Variables and/or Reporter Variables.</p>
 
       <p>The controls on the Panel itself are described on a <a href="PanelTarget.shtml">separate
       Panel Help page</a>.</p>
@@ -80,16 +80,18 @@
 
             <li>Fast Clock</li>
 
+            <li>Global Variable (LogixNG)</li>
+
             <li>Icon (unassociated to any JMRI device)</li>
           </ul>
 
           <p>In most cases, selecting one of these items will open a window from which icons or
           values can be chosen. For the items referring to a JMRI device (e.g. turnout, sensor,
           etc.) a pick list of the available devices is displayed. From there you select the device
-          and the icon to represent it in the panel. Exceptions to this are the Memory and Reporter
-          items where the selection puts the value of item into the panel. The Background item
-          provides images for the background of the panel. Further details on using these windows
-          are described on the <a href="IconAdder.shtml">Icon Editors page</a>.</p>
+          and the icon to represent it in the panel. Exceptions to this are the Memory, LogixNG
+          Global Variable and Reporter items where the selection puts the value of item into the panel.
+          The Background item provides images for the background of the panel. Further details on
+          using these windows are described on the <a href="IconAdder.shtml">Icon Editors page</a>.</p>
 
           <p>The two choices for icons that do not open windows are RPS Reporter and Fast Clock.
           These items install their icons directly into the panel.</p>

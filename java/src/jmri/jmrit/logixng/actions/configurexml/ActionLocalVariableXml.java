@@ -64,6 +64,7 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
 
         element.addContent(new Element("constant").addContent(p.getConstantValue()));   // NOI18N
         element.addContent(new Element("otherVariable").addContent(p.getOtherLocalVariable())); // NOI18N
+        element.addContent(new Element("reference").addContent(p.getReference())); // NOI18N
         element.addContent(new Element("formula").addContent(p.getFormula()));  // NOI18N
 
         element.addContent(selectTableXml.store(p.getSelectTable(), "table"));
@@ -201,6 +202,11 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
         Element otherVariable = shared.getChild("otherVariable");   // NOI18N
         if (otherVariable != null) {
             h.setOtherLocalVariable(otherVariable.getTextTrim());
+        }
+
+        Element reference = shared.getChild("reference");   // NOI18N
+        if (reference != null) {
+            h.setReference(reference.getTextTrim());
         }
 
         Element formula = shared.getChild("formula");   // NOI18N

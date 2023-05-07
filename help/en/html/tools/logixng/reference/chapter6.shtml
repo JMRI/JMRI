@@ -19,6 +19,10 @@
 
       <p>The expression descriptions are grouped by the socket type and category.</p>
 
+      <p class="noted"><span class="since">since 5.1.3</span>The <strong>Call Module</strong>
+      expression has been moved from the <strong><em>Other</em></strong> category to the <strong><em>
+      Flow Control</em></strong> category.</p>
+
       <ul>
         <li>Digital expression
           <ul>
@@ -31,7 +35,15 @@
             </li>
 
             <li>
+              <a href="#digital_expression_flow_control">Flow Control <span class="since">since 5.1.3</span></a>
+            </li>
+
+            <li>
               <a href="#digital_expression_loconet">LocoNet</a>
+            </li>
+
+            <li>
+              <a href="#digital_expression_linux">Linux <span class="since">since 5.3.4</span></a>
             </li>
 
             <li>
@@ -82,8 +94,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/typical_expression.png"><img src=
-        "images/chapter6/typical_expression.png" alt="Chapter 6 typical expression" width="991"
-        height="303"></a>
+        "images/chapter6/typical_expression.png" alt="Chapter 6 typical expression"></a>
       </div>
 
       <p>The <strong>Edit</strong> screen is the same except for the title, the Create button and
@@ -154,7 +165,7 @@
       <h3 id="digital_expression_item">Digital expression :: Item</h3>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter6/digital_expression_item.png"><img src=
+        <a href="images/chapter6/digital_expression_item.png"><img class="image-border" src=
         "images/chapter6/digital_expression_item.png" alt="Chapter 6 expression item list"></a>
       </div>
 
@@ -311,6 +322,17 @@
         </li>
       </ul>
 
+      <p>The <strong><em>Type</em></strong> indicates the how the comparison process works.</p>
+
+      <ul>
+        <li><strong>Number or string</strong> &mdash; The comparison is based on the characteristics
+        of the objects.</li>
+        <li><strong>String</strong> &mdash; The comparison is based on the string values of the
+        objects.</li>
+        <li><strong>Number</strong> &mdash; The comparison is based on the numeric values of the
+        objects.  This can result in an exception if any of the values is not a number.</li>
+      </ul>
+
       <p>For information about regular expressions, see:
       https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</p>
 
@@ -355,6 +377,17 @@
         </li>
       </ul>
 
+      <p>The <strong><em>Type</em></strong> indicates the how the comparison process works.</p>
+
+      <ul>
+        <li><strong>Number or string</strong> &mdash; The comparison is based on the characteristics
+        of the objects.</li>
+        <li><strong>String</strong> &mdash; The comparison is based on the string values of the
+        objects.</li>
+        <li><strong>Number</strong> &mdash; The comparison is based on the numeric values of the
+        objects.  This can result in an exception if any of the values is not a number.</li>
+      </ul>
+
       <p>For information about regular expressions, see:
       https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</p>
 
@@ -391,9 +424,18 @@
 
         <li><strong>Off:</strong> Evaluate to true if the power state is off.</li>
 
-        <li><strong>Other:</strong> Evaluate to true if the power state is unknown or
-        inconsistent.</li>
+        <li><strong>Idle:</strong> Evaluate to true if the power state is idle.<span class="since">
+        since 5.1.6</span></li>
+
+        <li><strong>Unknown:</strong> Evaluate to true if the power state is unknown.</li>
+
+        <li><strong>On or Off:</strong> Evaluate to true if the power state is on or
+        off.  Previously this was the <strong>Other</strong> state.<span class="since">since 5.1.6</span></li>
       </ul>
+
+      <p>The <strong>Ignore unknown state</strong> option is used to bypass the the unknown state.
+      This can occur when transitioning between the <strong>on</strong> and <strong>off</strong>
+      states.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -411,8 +453,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/reference_dialog.png"><img src=
-        "images/chapter6/reference_dialog.png" alt="Chapter 6 reference dialog" width="718" height=
-        "252"></a>
+        "images/chapter6/reference_dialog.png" alt="Chapter 6 reference dialog"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -441,13 +482,13 @@
 
       <h5 id="script">Script</h5>
 
-      <p>A script expression calls a Jython script. The Jython context contains a
+      <p>A script expression calls a Jython or ECMAScript script. The script context contains a
       <strong>result</strong> boolean object. When the script is done, it does a
       <code>result.setValue(x)</code> where x is, or evaluates to, True or False.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter6/script_expression.png"><img src=
-        "images/chapter6/script_expression.png" alt="Chapter 6 script expression"></a>
+        <a href="images/chapter6/digital_expression_script.png">
+        <img src="images/chapter6/digital_expression_script.png" alt="Chapter 6 digital expression script"></a>
       </div>
 
       <p>The Register listener and Unregister listener options are used if the script is to run
@@ -455,6 +496,25 @@
       cause the script to be run every fast minute.</p>
 
       <code>memories.getMemory('IMCURRENTTIME').addPropertyChangeListener('value', self)</code>
+
+      <p>Select the type of script. The supported script types are <strong>Jython Files</strong>
+      and <strong>ECMAScript Files</strong>.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5>Section<span class="since">since 5.3.5</span></h5>
+
+      <ul>
+        <li><strong>Free:</strong> Evaluate to true if the state of the selected section is
+        not being used by a transit.</li>
+
+        <li><strong>Forward:</strong> Evaluate to true if the selected section is being used by
+        a transit and is set for the forward direction.</li>
+
+        <li><strong>Reverse:</strong> Evaluate to true if the selected section is being used by
+        a transit and is set for the reverse direction.</li>
+      </ul>
+
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Sensor</h5>
@@ -469,6 +529,22 @@
         <li><strong>Other:</strong> Evaluate to true if the state of the specified sensor is
         unknown or inconsistent.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5>Sensor Edge<span class="since">since 5.1.7</span></h5>
+
+      <p>Returns True if the state of the sensor goes from one predefined state to another, for
+      example from "Active" to "Inactive".</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/expression_sensor_edge.png">
+        <img src="images/chapter6/expression_sensor_edge.png" alt="Chapter 6 expression sensor edge"></a>
+      </div>
+
+      <p>If the option <strong>Only true on the first occurrence</strong> is selected, the
+      expression will only return True once and there after return False. This is useful if you want
+      the expression to return True only the first time it is evaluated.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -526,6 +602,18 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h5>Transit<span class="since">since 5.3.5</span></h5>
+
+      <ul>
+        <li><strong>Idle:</strong> Evaluate to true if the state of the selected transit is
+        idle.  This indicates that the transit is not been assigned to an active train.</li>
+
+        <li><strong>Assigned:</strong> Evaluate to true if the selected transit is assigned to an
+        active train by the Dispatcher tool.</li>
+      </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Turnout</h5>
 
       <ul>
@@ -564,9 +652,8 @@
       <h3 id="digital_expression_common">Digital expression :: Common</h3>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter6/digital_expression_common.png"><img src=
-        "images/chapter6/digital_expression_common.png" alt="Chapter 6 expression common list"
-        width="136" height="98"></a>
+        <a href="images/chapter6/digital_expression_common.png"><img class="image-border" src=
+        "images/chapter6/digital_expression_common.png" alt="Chapter 6 expression common list"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -618,12 +705,29 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h3 id="digital_expression_flow_control">Digital expression :: Flow Control
+      <span class="since">since 5.1.3</span></h3>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/digital_expression_flow_control.png"><img class="image-border" src=
+        "images/chapter6/digital_expression_flow_control.png"
+        alt="Chapter 6 expression flow control list"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5>Call module</h5>
+
+      <p>Call a module and and return its true/false response. See <a href=
+      "chapter10.shtml#DigitalExpressionModule">Chapter 10 - Modules</a></p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3 id="digital_expression_loconet">Digital expression :: LocoNet</h3>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter6/digital_expression_loconet.png"><img src=
-        "images/chapter6/digital_expression_loconet.png" alt="Chapter 6 expression loconet list"
-        width="136" height="26"></a>
+        <a href="images/chapter6/digital_expression_loconet.png"><img class="image-border" src=
+        "images/chapter6/digital_expression_loconet.png" alt="Chapter 6 expression loconet list"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -634,8 +738,35 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter6/loconet_slot_usage.png"><img src=
-        "images/chapter6/loconet_slot_usage.png" alt="Chapter 6 loconet slot usage" width="962"
-        height="505"></a>
+        "images/chapter6/loconet_slot_usage.png" alt="Chapter 6 loconet slot usage"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h3 id="digital_expression_linux">Digital expression :: Linux</h3>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter6/digital_expression_linux.png"><img src=
+        "images/chapter6/digital_expression_linux.png" alt="Chapter 6 digital expression linux"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5>Linux Line Power<span class="since">since 5.3.4</span></h5>
+
+      <p>The Linux <strong>upower</strong> command line tool is used to determine if external power
+      is active. For example, if the external power is removed, then this tool can be used to do a
+      graceful shutdown before the battery dies.</p>
+
+      <p>The expression runs the <strong>upower</strong> command line tool every five seconds.  If
+      it detects a change, it triggers the execution of the ConditionalNG.</p>
+
+      <p>When the expression is added, the <strong>upower</strong> command is checked to make sure
+      it is present and working.  A warning message will be displayed if there is an issue.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter6/linux_line_power.png"><img src=
+        "images/chapter6/linux_line_power.png" alt="Chapter 6 linux line power"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -643,9 +774,8 @@
       <h3 id="digital_expression_other">Digital expression :: Other</h3>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter6/digital_expression_other.png"><img src=
-        "images/chapter6/digital_expression_other.png" alt="Chapter 6 expression other list" width=
-        "232" height="134"></a>
+        <a href="images/chapter6/digital_expression_other.png"><img class="image-border" src=
+        "images/chapter6/digital_expression_other.png" alt="Chapter 6 expression other list"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -663,10 +793,25 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Call module</h5>
+      <h5 id="connectname">Connection name<span class="since">since 5.1.3</span></h5>
 
-      <p>Call a module and and return its true/false response. See <a href=
-      "chapter10.shtml#DigitalExpressionModule">Chapter 10 - Modules</a></p>
+      <p>The <strong>Connection name</strong> expression returns <strong>true</strong> if the
+      selected manufacturer and connection type match a connection in <strong>Preferences &rArr;
+      Connections</strong>.</p>
+
+      <p>This can be used to determine whether JMRI is using a real layout connection or a simulated
+      connection.  For example, a startup LogixNG can set an internal sensor that indicates the
+      simulation state.  Other LogixNG defintions can then check the state to determine what actions
+      are appropriate.  A good example is whether the <a href="chapter5.shtml#simfeedback">Simulate
+      turnout feedback</a> action should be used.</p>
+
+      <p>The connection name is selected by choosing the manufacturer and then a connection name
+      from the connection list.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/connection_expression.png"><img src=
+        "images/chapter6/connection_expression.png" alt="Chapter 6 connection expression"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -687,8 +832,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter6/expression_last_result.png"><img src=
-        "images/chapter6/expression_last_result.png" alt="Chapter 6 expression last result" width=
-        "485" height="247"></a>
+        "images/chapter6/expression_last_result.png" alt="Chapter 6 expression last result"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -703,8 +847,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter6/log_data_return.png"><img src=
-        "images/chapter6/log_data_return.png" alt="Chapter 6 log data return options" width="231"
-        height="91"></a>
+        "images/chapter6/log_data_return.png" alt="Chapter 6 log data return options"></a>
       </div>
 
       <p><strong>True</strong> is recommended for <strong>And</strong> expressions and
@@ -725,9 +868,8 @@
       <h3 id="analog_expression_item">Analog expression :: Item</h3>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter6/analog_expression_item.png"><img src=
-        "images/chapter6/analog_expression_item.png" alt="Chapter 6 analog expression item list"
-        width="201" height="80"></a>
+        <a href="images/chapter6/analog_expression_item.png"><img class="image-border" src=
+        "images/chapter6/analog_expression_item.png" alt="Chapter 6 analog expression item list"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -754,6 +896,12 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h5>Local variable as analog value</h5>
+
+      <p>Return value of a local variable as an analog value.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h5>Memory as analog value</h5>
 
       <p>Return value of a memory variable as an analog value.</p>
@@ -770,9 +918,9 @@
       <h3 id="analog_expression_common">Analog expression :: Common</h3>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter6/analog_expression_common.png"><img src=
+        <a href="images/chapter6/analog_expression_common.png"><img class="image-border" src=
         "images/chapter6/analog_expression_common.png" alt=
-        "Chapter 6 analog expression common list" width="201" height="26"></a>
+        "Chapter 6 analog expression common list"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -786,9 +934,8 @@
       <h3 id="string_expression_item">String expression :: Item</h3>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter6/string_expression_item.png"><img src=
-        "images/chapter6/string_expression_item.png" alt="Chapter 6 string expression item list"
-        width="196" height="44"></a>
+        <a href="images/chapter6/string_expression_item.png"><img class="image-border" src=
+        "images/chapter6/string_expression_item.png" alt="Chapter 6 string expression item list"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -808,9 +955,9 @@
       <h3 id="string_expression_common">String expression :: Common</h3>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter6/string_expression_common.png"><img src=
+        <a href="images/chapter6/string_expression_common.png"><img class="image-border" src=
         "images/chapter6/string_expression_common.png" alt=
-        "Chapter 6 string expression common list" width="196" height="26"></a>
+        "Chapter 6 string expression common list"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -828,21 +975,20 @@
       <p>The combined <strong>Item</strong> list:</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter6/generic_expression_item.png"><img src=
-        "images/chapter6/generic_expression_item.png" alt="Chapter 6 generic expression item list"
-        width="196" height="26"></a>
+        <a href="images/chapter6/generic_expression_item.png"><img class="image-border" src=
+        "images/chapter6/generic_expression_item.png" alt="Chapter 6 generic expression item list"></a>
       </div>
 
       <p>The combined <strong>Common</strong> list:</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter6/generic_expression_common.png"><img src=
+        <a href="images/chapter6/generic_expression_common.png"><img class="image-border" src=
         "images/chapter6/generic_expression_common.png" alt=
         "Chapter 6 generic expression common list" width="196" height="26"></a>
       </div>
 
-      <p>The <strong>LocoNet</strong> and <strong>Other</strong> lists are the same as Digital
-      expression.</p>
+      <p>The <strong>Flow Control</strong>, <strong>LocoNet</strong> and <strong>Other</strong> lists
+      are the same as Digital expression.</p>
 
       <hr>
 

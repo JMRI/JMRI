@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Robert</firstname><surname>Raggi</surname></personname>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-01</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2022-10-17</date>
+        <authorinitials>RR</authorinitials>
+        <revremark>Updated For Reading Rules</revremark>
+    </revision>
+  </revhistory>
+
+  <aspecttable>Reading-1954</aspecttable>
+  <name>Triple searchlight high signal B</name>
+  <reference>As described in the publication "Reading Company Rules for the Government of the Operating Department Effective January 1, 1954."</reference>
+  <description>Appearances for a three-searchlight signal head without other badging</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <show>red</show>
+      <reference>Page 76</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-281.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Limited</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <show>green</show>
+      <reference>Page 77</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-281B.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Limited Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <show>green</show>
+      <reference>Page 78</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-281C.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <show>red</show>
+      <reference>Page 79</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-282.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 80</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-282A.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <show>red</show>
+      <reference>Page 81</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-283.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium Approach Slow</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 82</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-283B.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Slow</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 83</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-284.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <show>red</show>
+      <reference>Page 84</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-285.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 86</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-286.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Slow Clear</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 87</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-287.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Page 90</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-290.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>red</show>
+      <reference>Page 93</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Reading-1954/SL-3-high/rule-292.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  <specificappearances>
+  	<danger>
+  		<aspect>Stop</aspect>
+  	</danger>
+
+  </specificappearances>
+
+  <aspectMappings>
+
+
+
+
+     <aspectMapping>
+
+       <advancedAspect>Clear</advancedAspect>
+
+       <ourAspect>Limited Clear</ourAspect>
+       <ourAspect>Approach Medium</ourAspect>
+
+       <ourAspect>Medium Clear</ourAspect>
+
+       <ourAspect>Slow Clear</ourAspect>
+
+       <ourAspect>Restricting</ourAspect>
+
+       <ourAspect>Clear</ourAspect>
+
+     </aspectMapping>
+
+
+
+      <aspectMapping>
+
+       <advancedAspect>Limited Clear</advancedAspect>
+
+       <ourAspect>Approach Limited</ourAspect>
+
+       <ourAspect>Medium Approach Slow</ourAspect>
+
+      </aspectMapping>
+
+
+    <aspectMapping>
+
+        <advancedAspect>Approach Limited</advancedAspect>
+
+        <ourAspect>Limited Clear</ourAspect>
+
+        <ourAspect>Clear</ourAspect>
+
+        <ourAspect>Approach Medium</ourAspect>
+      </aspectMapping>
+
+
+
+    <aspectMapping>
+
+        <advancedAspect>Approach Medium</advancedAspect>
+
+        <ourAspect>Limited Clear</ourAspect>
+
+        <ourAspect>Medium Clear</ourAspect>
+
+      </aspectMapping>
+
+
+
+    <aspectMapping>
+
+        <advancedAspect>Advance Approach</advancedAspect>
+
+        <ourAspect>Restricting</ourAspect>
+
+      </aspectMapping>
+
+
+
+    <aspectMapping>
+
+        <advancedAspect>Medium Clear</advancedAspect>
+
+        <ourAspect>Approach Limited</ourAspect>
+        <ourAspect>Approach Medium</ourAspect>
+        <ourAspect>Medium Approach Slow</ourAspect>
+
+        <ourAspect>Restricting</ourAspect>
+      </aspectMapping>
+
+
+
+      <aspectMapping>
+
+        <advancedAspect>Medium Approach Slow</advancedAspect>
+
+        <ourAspect>Approach Medium</ourAspect>
+
+        <ourAspect>Restricting</ourAspect>
+
+      </aspectMapping>
+
+
+
+    <aspectMapping>
+
+        <advancedAspect>Approach Slow</advancedAspect>
+
+        <ourAspect>Restricting</ourAspect>
+
+      </aspectMapping>
+
+
+      <aspectMapping>
+
+        <advancedAspect>Approach</advancedAspect>
+
+
+        <ourAspect>Approach Medium</ourAspect>
+
+        <ourAspect>Medium Clear</ourAspect>
+        <ourAspect>Limited Clear</ourAspect>
+
+      </aspectMapping>
+
+
+      <aspectMapping>
+
+        <advancedAspect>Medium Approach</advancedAspect>
+
+        <ourAspect>Approach Medium</ourAspect>
+
+        <ourAspect>Medium Clear</ourAspect>
+
+        <ourAspect>Medium Approach Slow</ourAspect>
+
+        <ourAspect>Approach</ourAspect>
+        <ourAspect>Restricting</ourAspect>
+
+
+      </aspectMapping>
+
+
+
+      <aspectMapping>
+
+        <advancedAspect>Slow Clear</advancedAspect>
+
+        <ourAspect>Restricting</ourAspect>
+
+        <ourAspect>Clear</ourAspect>
+
+      </aspectMapping>
+
+
+
+    <aspectMapping>
+
+        <advancedAspect>Slow Approach</advancedAspect>
+
+        <ourAspect>Restricting</ourAspect>
+
+        <ourAspect>Clear</ourAspect>
+
+      </aspectMapping>
+
+      <aspectMapping>
+
+        <advancedAspect>Permissive</advancedAspect>
+
+        <ourAspect>Medium Approach</ourAspect>
+      </aspectMapping>
+
+
+
+
+    <aspectMapping>
+
+        <advancedAspect>Restricting</advancedAspect>
+
+        <ourAspect>Medium Approach</ourAspect>
+        <ourAspect>Approach</ourAspect>
+
+
+        <ourAspect>Approach Medium</ourAspect>
+
+        <ourAspect>Restricting</ourAspect>
+
+      </aspectMapping>
+
+
+      <aspectMapping>
+
+        <advancedAspect>Stop and Proceed</advancedAspect>
+
+        <ourAspect>Approach</ourAspect>
+
+        <ourAspect>Medium Approach</ourAspect>
+
+      </aspectMapping>
+
+
+
+      <aspectMapping>
+
+        <advancedAspect>Stop</advancedAspect>
+
+        <ourAspect>Approach</ourAspect>
+
+        <ourAspect>Medium Approach</ourAspect>
+        <ourAspect>Restricting</ourAspect>
+
+      </aspectMapping>
+
+
+
+
+  </aspectMappings>
+
+
+   </appearancetable>
+

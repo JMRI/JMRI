@@ -1,52 +1,41 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated  by Blorec Herv&#233; le 2011-10-28-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated  by Blorec Herv&#233; le 2011-10-28-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Configure Powerline Device Nodes</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help configure grapevine node">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Configurer les p&Atilde;&copy;riph&Atilde;&copy;riques
-      Powerline</h1>Ceci est la page d'aide
-      help/jmri/jmrix/powerline/nodeconfig/NodeConfigFrame
+      <h1>Configurer les périphériques
+      Powerline</h1>
+      <p>Ceci est la page d'aide
+      help/jmri/jmrix/powerline/nodeconfig/NodeConfigFrame</p>
 
-      <p>Les Appareils Powerline ont besoin d'&Atilde;&ordf;tre
-      configur&Atilde;&copy;s avant les travaux de saisie.</p>
+      <p>Les Appareils Powerline ont besoin d'être
+      configurés avant les travaux de saisie.</p>
 
-      <p>Le logiciel de N&Aring;"uds vient dans ...
-      vari&Atilde;&copy;t&Atilde;&copy;s distinctes:</p>
+      <p>Le logiciel de Nœuds vient dans ...
+      variétés distinctes:</p>
 
       <dl>
         <dt>(nom du type)</dt>
 
-        <dd>(commentaire expliquant plus en d&Atilde;&copy;tail ce
+        <dd>(commentaire expliquant plus en détail ce
         qu'est le type)</dd>
       </dl>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

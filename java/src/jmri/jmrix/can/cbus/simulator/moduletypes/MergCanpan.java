@@ -2,7 +2,7 @@ package jmri.jmrix.can.cbus.simulator.moduletypes;
 
 import static jmri.jmrix.can.cbus.CbusConstants.MANU_MERG;
 
-import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
+import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.simulator.CbusSimulatedModuleProvider;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -25,7 +25,7 @@ public class MergCanpan extends CbusSimulatedModuleProvider {
     }
 
     @Override
-    public void configureDummyNode(CbusDummyNode node) {
+    public void configureDummyNode(CbusNode node) {
         int[] _params = new int[]{
             20, /* 0 num parameters   */
             MANU_MERG, /* 1 manufacturer ID   */

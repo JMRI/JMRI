@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>NW-1949</name>
+  <date>1949</date>
+
+  <reference>Norfolk and Western Railway Company March 1949: Rules and Regulations of the Government of the Operating Department</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook" >
+    <author>
+        <personname><firstname>David</firstname><surname>Baker</surname></personname>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-01</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2011-06-24</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Added mapping information</revremark>
+     </revision>
+     <revision>
+        <revnumber>2.0</revnumber>
+        <date>2015-04-26</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Fixing general items after I got a 1949 rule book</revremark>
+     </revision>
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 281</rule>
+      <indication>Proceed at prescribed speed</indication>
+      <reference>Page 101</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule 282</rule>
+      <indication>Proceed preparing to move through turnout beyond next signal at prescribed speed</indication>
+      <reference>Page 102</reference>
+      <speed>Limited</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach</name>
+      <rule>Rule 282A</rule>
+      <indication>Proceed preparing to stop at second signal</indication>
+      <reference>Page 103</reference>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Medium-Clear</name>
+      <rule>Rule 283</rule>
+      <indication>Proceed through turnout at prescribed speed</indication>
+      <reference>Page 104</reference>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 285</rule>
+      <indication>Proceed preparing to stop at next signal. Train exceeding medium speed must at once reduce to that speed</indication>
+      <reference>Page 105</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Medium-Approach</name>
+      <rule>Rule 286</rule>
+      <indication>Proceed through turnout at prescribed speed preparing to stop at next signal</indication>
+      <reference>Page 106</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 290</rule>
+      <indication>Proceed at low (restricted) speed</indication>
+      <reference>Page 107</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule 291</rule>
+      <indication>Stop; then proceed at low (restricted) speed.</indication>
+      <reference>Page 108</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Flag</name>
+      <rule>Rule 291A</rule>
+      <indication>Stop; then proceed at low (restricted) speed, protecting against trains approaching with the current of traffic</indication>
+      <reference>Page 109</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Stay</name>
+      <rule>Rule 292</rule>
+      <indication>Stop and Stay</indication>
+      <reference>Page 110</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+  </aspects>
+
+  <appearancefiles>
+    <appearancefile href="appearance-PL-1-high-abs.xml"/>
+    <appearancefile href="appearance-PL-1-high-pbs.xml"/>
+    <appearancefile href="appearance-PL-2-high.xml"/>
+    <appearancefile href="appearance-PL-1-low.xml"/>
+  </appearancefiles>
+
+</aspecttable>
+

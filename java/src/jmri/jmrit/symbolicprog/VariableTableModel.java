@@ -11,6 +11,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -41,13 +42,13 @@ import org.slf4j.LoggerFactory;
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
-    private String[] headers = null;
+    private String[] headers;
 
     private Vector<VariableValue> rowVector = new Vector<>();  // vector of Variable items
-    private CvTableModel _cvModel = null;          // reference to external table model
+    private CvTableModel _cvModel;          // reference to external table model
     private Vector<JButton> _writeButtons = new Vector<>();
     private Vector<JButton> _readButtons = new Vector<>();
-    private JLabel _status = null;
+    private JLabel _status;
     protected transient volatile DecoderFile _df = null;
 
     /**
@@ -63,7 +64,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * @param h       values headers array.
      * @param cvModel cv table model to use.
      */
-    public VariableTableModel(JLabel status, String h[], CvTableModel cvModel) {
+    public VariableTableModel(JLabel status, String[] h, CvTableModel cvModel) {
         super();
         _status = status;
         _cvModel = cvModel;
@@ -94,7 +95,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             case "Value":
                 return JTextField.class;
             case "Read":
-                return JButton.class;
             case "Write":
                 return JButton.class;
             default:
@@ -109,12 +109,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             return true;
         } else if (headers[col].equals("Read")) {
             return true;
-        } else if (headers[col].equals("Write")
-                && !((rowVector.elementAt(row))).getReadOnly()) {
-            return true;
-        } else {
-            return false;
-        }
+        } else
+            return headers[col].equals("Write") && !((rowVector.elementAt(row))).getReadOnly();
     }
 
     public VariableValue getVariable(int row) {
@@ -141,12 +137,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         (rowVector.elementAt(row)).setIntValue(val);
     }
 
-    public void setState(int row, int val) {
+    public void setState(int row, AbstractValue.ValueState val) {
         log.debug("setState row: {} val: {}", row, val);
         (rowVector.elementAt(row)).setState(val);
     }
 
-    public int getState(int row) {
+    public AbstractValue.ValueState getState(int row) {
         return (rowVector.elementAt(row)).getState();
     }
 
@@ -194,17 +190,17 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 return v.getMask();
             case "State":
                 // NOI18N
-                int state = v.getState();
+                AbstractValue.ValueState state = v.getState();
                 switch (state) {
-                    case CvValue.UNKNOWN:
+                    case UNKNOWN:
                         return "Unknown";
-                    case CvValue.READ:
+                    case READ:
                         return "Read";
-                    case CvValue.EDITED:
+                    case EDITED:
                         return "Edited";
-                    case CvValue.STORED:
+                    case STORED:
                         return "Stored";
-                    case CvValue.FROMFILE:
+                    case FROMFILE:
                         return "From file";
                     default:
                         return "inconsistent";
@@ -279,17 +275,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if (e.getAttribute("mask") != null) {
             mask = e.getAttribute("mask").getValue();
         } else {
-            mask = "VVVVVVVV";
+            mask = "VVVVVVVV"; // default mask is 8 bits
+            // for some VariableValue types this is replaced in #processDecVal() by larger mask if maxVal>256
         }
 
-        boolean readOnly = e.getAttribute("readOnly") != null
-                ? e.getAttribute("readOnly").getValue().equals("yes") : false;
-        boolean infoOnly = e.getAttribute("infoOnly") != null
-                ? e.getAttribute("infoOnly").getValue().equals("yes") : false;
-        boolean writeOnly = e.getAttribute("writeOnly") != null
-                ? e.getAttribute("writeOnly").getValue().equals("yes") : false;
-        boolean opsOnly = e.getAttribute("opsOnly") != null
-                ? e.getAttribute("opsOnly").getValue().equals("yes") : false;
+        boolean readOnly = e.getAttribute("readOnly") != null && e.getAttribute("readOnly").getValue().equals("yes");
+        boolean infoOnly = e.getAttribute("infoOnly") != null && e.getAttribute("infoOnly").getValue().equals("yes");
+        boolean writeOnly = e.getAttribute("writeOnly") != null && e.getAttribute("writeOnly").getValue().equals("yes");
+        boolean opsOnly = e.getAttribute("opsOnly") != null && e.getAttribute("opsOnly").getValue().equals("yes");
 
         // Handle special case of opsOnly mode & specific programmer type
         if (_cvModel.getProgrammer() != null) {
@@ -339,7 +332,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             v = processCompositeVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
 
         } else if ((child = e.getChild("speedTableVal")) != null) {
-
             v = processSpeedTableVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
 
         } else if ((child = e.getChild("longAddressVal")) != null) {
@@ -374,7 +366,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
         // record new variable, update state, hook up listeners
         rowVector.addElement(v);
-        v.setState(VariableValue.FROMFILE);
+        v.setState(AbstractValue.ValueState.FROMFILE);
         v.addPropertyChangeListener(this);
 
         // set to default value if specified (CV load may later override this)
@@ -385,8 +377,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 cvList.add(CV);  // it's an ordinary CV so add it as such
             }
             for (String theCV : cvList) {
-                log.debug("Setting CV={} of '{}'to {}", theCV, CV, VariableValue.stateNameFromValue(VariableValue.FROMFILE));
-                _cvModel.getCvByNumber(theCV).setState(VariableValue.FROMFILE); // correct for transition to "edited"
+                log.debug("Setting CV={} of '{}'to {}", theCV, CV, AbstractValue.ValueState.FROMFILE.getName());
+                _cvModel.getCvByNumber(theCV).setState(AbstractValue.ValueState.FROMFILE); // correct for transition to "edited"
             }
         }
     }
@@ -475,8 +467,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     protected void handleCompositeValChildren(Element e, CompositeVariableValue var) {
         List<Element> local = e.getChildren();
-        for (int k = 0; k < local.size(); k++) {
-            Element el = local.get(k);
+        for (Element el : local) {
             log.debug("processing element='{}' name='{}' choice='{}' value='{}'", el.getName(), LocaleSelector.getAttribute(el, "name"), LocaleSelector.getAttribute(el, "choice"), el.getAttribute("value"));
             if (_df != null && !DecoderFile.isIncluded(el, _df.getProductID(), _df.getModel(), _df.getFamily(), "", "")) {
                 log.debug("element excluded by productID={} model={} family={}", _df.getProductID(), _df.getModel(), _df.getFamily());
@@ -488,8 +479,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 var.addChoice(choice);
                 // for each choice, capture the settings
                 List<Element> lSetting = el.getChildren("compositeSetting");
-                for (int n = 0; n < lSetting.size(); n++) {
-                    Element settingElement = lSetting.get(n);
+                for (Element settingElement : lSetting) {
                     String varName = LocaleSelector.getAttribute(settingElement, "label");
                     String value = settingElement.getAttribute("value").getValue();
                     var.addSetting(choice, varName, findVar(varName), value);
@@ -502,7 +492,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
     }
 
-    protected VariableValue processDecVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
+    protected VariableValue processDecVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly,
+                                          boolean writeOnly, boolean opsOnly, String CV, String mask, String item)
+            throws NumberFormatException {
         VariableValue v;
         Attribute a;
         int minVal = 0;
@@ -513,11 +505,28 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("max")) != null) {
             maxVal = Integer.parseInt(a.getValue());
         }
-        v = new DecVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item);
+        int factor = 1;
+        if ((a = child.getAttribute("factor")) != null) {
+            factor = Integer.parseInt(a.getValue());
+        }
+        int offset = 0;
+        if ((a = child.getAttribute("offset")) != null) {
+            offset = Integer.parseInt(a.getValue());
+        }
+        if (maxVal > 255 && Objects.equals(mask, "VVVVVVVV")) {
+            mask = VariableValue.getMaxMask(maxVal); // replaces the default 8 bit mask when no mask is provided in xml
+            log.debug("Created mask {} for DecVar CV {}", mask, name);
+        }
+        v = new DecVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
+                CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, offset, factor);
+        _cvModel.registerCvToVariableMapping(CV, name);
         return v;
     }
 
-    protected VariableValue processEnumVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
+    protected VariableValue processEnumVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly,
+                                           boolean writeOnly, boolean opsOnly, String CV, String mask, String item)
+            throws NumberFormatException {
+        VariableValue v;
         int count = 0;
         IteratorIterable<Content> iterator = child.getDescendants();
         while (iterator.hasNext()) {
@@ -528,24 +537,32 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 }
             }
         }
-
-        VariableValue v;
-        EnumVariableValue v1 = new EnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, count, _cvModel.allCvMap(), _status, item);
-        v = v1; // v1 is of EnunVariableValue type, so doesn't need casts
+        Attribute a;
+        int maxVal = 255;
+        if ((a = child.getAttribute("max")) != null) {
+            // requires explicit max attribute for Radix mask if not all options are filled by enum
+            maxVal = Integer.parseInt(a.getValue());
+        } else {
+            maxVal = count;
+        }
+        EnumVariableValue v1 = new EnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
+                CV, mask, 0, maxVal, _cvModel.allCvMap(), _status, item);
+        v = v1; // v1 is of EnumVariableValue type, so doesn't need casts
+        _cvModel.registerCvToVariableMapping(CV, name);
 
         v1.nItems(count);
         handleEnumValChildren(child, v1);
         v1.lastItem();
         return v;
     }
-    
+
     protected VariableValue processSplitEnumVal(Element child, String CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) throws NumberFormatException {
         VariableValue v;
         Attribute a;
         int minVal = 0;
         int maxVal = 255;
         String highCV = null;
-        
+
         int count = 0;
         IteratorIterable<Content> iterator = child.getDescendants();
         while (iterator.hasNext()) {
@@ -560,6 +577,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("highCV")) != null) {
             highCV = a.getValue();
             _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+            _cvModel.registerCvToVariableMapping(highCV, name);
         }
         int factor = 1;
         if ((a = child.getAttribute("factor")) != null) {
@@ -581,17 +599,19 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("max")) != null) {
             extra4 = a.getValue();
         }
-        
+
         SplitEnumVariableValue v1 = new SplitEnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, null, null, extra3, extra4);
         v = v1; // v1 is of EnunVariableValue type, so doesn't need casts
+        _cvModel.registerCvToVariableMapping(CV, name);
 
         v1.nItems(count);
-        
+
         handleSplitEnumValChildren(child, v1);
         v1.lastItem();
         return v;
     }
-        /**
+
+    /**
      * Recursively walk the child enumChoice elements, working through the
      * enumChoiceGroup elements as needed.
      *
@@ -600,9 +620,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     protected void handleSplitEnumValChildren(Element e, SplitEnumVariableValue var) {
         List<Element> local = e.getChildren();
-        
-        for (int k = 0; k < local.size(); k++) {
-            Element el = local.get(k);
+
+        for (Element el : local) {
             log.debug("processing element='{}' name='{}' choice='{}' value='{}'", el.getName(), LocaleSelector.getAttribute(el, "name"), LocaleSelector.getAttribute(el, "choice"), el.getAttribute("value"));
             if (_df != null && !DecoderFile.isIncluded(el, _df.getProductID(), _df.getModel(), _df.getFamily(), "", "")) {
                 log.debug("element excluded by productID={} model={} family={}", _df.getProductID(), _df.getModel(), _df.getFamily());
@@ -624,6 +643,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.debug("element processed");
         }
     }
+
     /**
      * Recursively walk the child enumChoice elements, working through the
      * enumChoiceGroup elements as needed.
@@ -633,8 +653,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     protected void handleEnumValChildren(Element e, EnumVariableValue var) {
         List<Element> local = e.getChildren();
-        for (int k = 0; k < local.size(); k++) {
-            Element el = local.get(k);
+        for (Element el : local) {
             log.debug("processing element='{}' name='{}' choice='{}' value='{}'", el.getName(), LocaleSelector.getAttribute(el, "name"), LocaleSelector.getAttribute(el, "choice"), el.getAttribute("value"));
             if (_df != null && !DecoderFile.isIncluded(el, _df.getProductID(), _df.getModel(), _df.getFamily(), "", "")) {
                 log.debug("element excluded by productID={} model={} family={}", _df.getProductID(), _df.getModel(), _df.getFamily());
@@ -668,7 +687,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("max")) != null) {
             maxVal = Integer.valueOf(a.getValue(), 16);
         }
+        if (maxVal > 255 && Objects.equals(mask, "VVVVVVVV")) {
+            mask = VariableValue.getMaxMask(maxVal); // replaces the default 8 bit mask when no mask is provided in xml
+            log.debug("Created mask {} for Hex CV {}", mask, name);
+        }
         v = new HexVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item);
+        _cvModel.registerCvToVariableMapping(CV, name);
         return v;
     }
 
@@ -678,6 +702,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         int maxVal = 255;
         _cvModel.addCV("18", readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
         v = new LongAddrVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, _cvModel.allCvMap().get("18"));
+        _cvModel.registerCvToVariableMapping(CV, name);
+        _cvModel.registerCvToVariableMapping("18", name); // see fixed value two lines up
         return v;
     }
 
@@ -687,9 +713,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v = v1;
         // get specifics if any
         List<Element> l = child.getChildren("shortAddressChanges");
-        for (int k = 0; k < l.size(); k++) {
-            v1.setModifiedCV(l.get(k).getAttribute("cv").getValue());
+        for (Element element : l) {
+            v1.setModifiedCV(element.getAttribute("cv").getValue());
         }
+        _cvModel.registerCvToVariableMapping(CV, name);
         return v;
     }
 
@@ -710,7 +737,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             if (entriesAttr != null) {
                 entries = entriesAttr.getIntValue();
             }
-        } catch (org.jdom2.DataConversionException e1) {
+        } catch (org.jdom2.DataConversionException ignored) {
         }
         Attribute ESUAttr = child.getAttribute("mfx");
         boolean mfxFlag = false;
@@ -718,15 +745,21 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             if (ESUAttr != null) {
                 mfxFlag = ESUAttr.getBooleanValue();
             }
-        } catch (org.jdom2.DataConversionException e1) {
+        } catch (org.jdom2.DataConversionException ignored) {
         }
         // ensure all CVs exist
         for (int i = 0; i < entries; i++) {
             _cvModel.addCV(Integer.toString(Integer.parseInt(CV) + i), readOnly, infoOnly, writeOnly);
+            _cvModel.registerCvToVariableMapping(Integer.toString(Integer.parseInt(CV) + i), name);
+
         }
         if (mfxFlag) {
             _cvModel.addCV("2", readOnly, infoOnly, writeOnly);
+            _cvModel.registerCvToVariableMapping("2", name);
+
             _cvModel.addCV("5", readOnly, infoOnly, writeOnly);
+            _cvModel.registerCvToVariableMapping("5", name);
+
         }
         v = new SpeedTableVarValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, entries, mfxFlag);
         return v;
@@ -742,6 +775,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("highCV")) != null) {
             highCV = a.getValue();
             _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+            _cvModel.registerCvToVariableMapping("" + (highCV), name);
+
         }
         int factor = 1;
         if ((a = child.getAttribute("factor")) != null) {
@@ -764,6 +799,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             extra4 = a.getValue();
         }
         v = new SplitVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, null, null, extra3, extra4);
+        _cvModel.registerCvToVariableMapping(CV, name);
         return v;
     }
 
@@ -777,6 +813,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("highCV")) != null) {
             highCV = a.getValue();
             _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+            _cvModel.registerCvToVariableMapping("" + (highCV), name);
         }
         int factor = 1;
         if ((a = child.getAttribute("factor")) != null) {
@@ -803,6 +840,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             extra4 = a.getValue();
         }
         v = new SplitHexVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, extra1, null, extra3, extra4);
+        _cvModel.registerCvToVariableMapping(CV, name);
         return v;
     }
 
@@ -824,6 +862,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("highCV")) != null) {
             highCV = a.getValue();
             _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+            _cvModel.registerCvToVariableMapping("" + (highCV), name);
         }
         int factor = 1;
         if ((a = child.getAttribute("factor")) != null) {
@@ -867,6 +906,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.error(Bundle.getMessage("UnsupportedCharset", charSet, name));
         }
         v = new SplitTextVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, match, termByte, padByte, charSet);
+        _cvModel.registerCvToVariableMapping(CV, name);
         return v;
     }
 
@@ -887,6 +927,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("highCV")) != null) {
             highCV = a.getValue();
             _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+            _cvModel.registerCvToVariableMapping("" + (highCV), name);
         }
         int factor = 1;
         int offset = 0;
@@ -913,6 +954,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             extra4 = a.getValue();
         }
         v = new SplitDateTimeVariableValue(name, comment, "", varRreadOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, extra1, extra2, extra3, extra4);
+        _cvModel.registerCvToVariableMapping(CV, name);
         return v;
     }
 
@@ -1017,7 +1059,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
         // record new variable, update state, hook up listeners
         rowVector.addElement(v);
-        v.setState(VariableValue.FROMFILE);
+        v.setState(AbstractValue.ValueState.FROMFILE);
         v.addPropertyChangeListener(this);
 
         // set to default value if specified (CV load will later override this)
@@ -1076,9 +1118,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         setFileDirty(true);
         char b = e.getActionCommand().charAt(0);
         int row = Integer.parseInt(e.getActionCommand().substring(1));
-        if (log.isDebugEnabled()) {
-            log.debug("event on {} row {}", b, row);
-        }
+        log.debug("event on {} row {}", b, row);
         if (b == 'R') {
             // read command
             read(row);
@@ -1111,16 +1151,16 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("prop changed {} new value: {}{} Source {}", e.getPropertyName(), e.getNewValue(), e.getPropertyName().equals("State") ? (" (" + VariableValue.stateNameFromValue(((Integer) e.getNewValue())) + ") ") : " ", e.getSource());
+            log.debug("prop changed {} new value: {}{} Source {}", e.getPropertyName(), e.getNewValue(), e.getPropertyName().equals("State") ? (" (" + ((AbstractValue.ValueState) e.getNewValue()).getName() + ") ") : " ", e.getSource());
         }
         if (e.getNewValue() == null) {
             log.error("new value of {} should not be null!", e.getPropertyName(), new Exception());
         }
         // set dirty only if edited or read
         if (e.getPropertyName().equals("State")
-                && ((Integer) e.getNewValue()) == CvValue.READ
+                && ((AbstractValue.ValueState) e.getNewValue()) == AbstractValue.ValueState.READ
                 || e.getPropertyName().equals("State")
-                && ((Integer) e.getNewValue()) == CvValue.EDITED) {
+                && ((AbstractValue.ValueState) e.getNewValue()) == AbstractValue.ValueState.EDITED) {
             setFileDirty(true);
 
         }
@@ -1155,7 +1195,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public boolean decoderDirty() {
         int len = rowVector.size();
         for (int i = 0; i < len; i++) {
-            if (((rowVector.elementAt(i))).getState() == CvValue.EDITED) {
+            if (((rowVector.elementAt(i))).getState() == AbstractValue.ValueState.EDITED) {
                 return true;
             }
         }
@@ -1191,7 +1231,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Returns the index of the first variable that matches a given name string.
      * <p>
-     * Checks the search string against every variable's "item", the true name, 
+     * Checks the search string against every variable's "item", the true name,
      * then against their "label" (default language only) and finally the
      * CV name before moving on to the next variable if none of those match.
      *
@@ -1201,11 +1241,11 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public int findVarIndex(String name) {
         return findVarIndex(name, false);
     }
-    
+
     /**
      * Returns the index of a variable that matches a given name string.
      * <p>
-     * Checks the search string against every variable's "item", the true name, 
+     * Checks the search string against every variable's "item", the true name,
      * then against their "label" (default language only) and finally the
      * CV name before moving on to the next variable if none of those match.
      *

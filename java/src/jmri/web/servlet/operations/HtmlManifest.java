@@ -230,13 +230,17 @@ public class HtmlManifest extends HtmlTrainCommon {
         log.debug("Cars is {}", cars);
         for (JsonNode car : cars.path(JSON.ADD)) {
             if (!this.isLocalMove(car)) {
-                // TODO utility format not quite ready, so display each car in manifest for now.
+                // TODO utility format not quite ready, so display each car in
+                // manifest for now.
                 // if (this.isUtilityCar(car)) {
-                // builder.append(pickupUtilityCars(cars, car, location, isManifest));
-                // } // use truncated format if there's a switch list
+                // builder.append(pickupUtilityCars(cars, car, location,
+                // isManifest));
+                // }
                 // else
-                if (isManifest && Setup.isPrintTruncateManifestEnabled()
-                        && location.getLocation().isSwitchListEnabled()) {
+                // use truncated format if there's a switch list
+                if (isManifest &&
+                        Setup.isPrintTruncateManifestEnabled() &&
+                        location.getLocation().isSwitchListEnabled()) {
                     builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
                 } else {
                     builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));
@@ -245,11 +249,16 @@ public class HtmlManifest extends HtmlTrainCommon {
         }
         for (JsonNode car : cars.path(JSON.REMOVE)) {
             boolean local = isLocalMove(car);
-            // TODO utility format not quite ready, so display each car in manifest for now.
+            // TODO utility format not quite ready, so display each car in
+            // manifest for now.
             // if (this.isUtilityCar(car)) {
-            // builder.append(setoutUtilityCars(cars, car, location, isManifest));
+            // builder.append(setoutUtilityCars(cars, car, location,
+            // isManifest));
             // } else
-            if (isManifest && Setup.isPrintTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled() && !train.isLocalSwitcher()) {
+            if (isManifest &&
+                    Setup.isPrintTruncateManifestEnabled() &&
+                    location.getLocation().isSwitchListEnabled() &&
+                    !train.isLocalSwitcher()) {
                 // use truncated format if there's a switch list
                 builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), local));
             } else {
@@ -306,6 +315,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             return ""; // print nothing for local move, see dropCar()
         }
         StringBuilder builder = new StringBuilder();
+        builder.append(Setup.getPickupCarPrefix()).append(" ");
         for (String attribute : format) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
@@ -336,6 +346,11 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String dropCar(JsonNode car, String[] format, boolean isLocal) {
         StringBuilder builder = new StringBuilder();
+        if (!isLocal) {
+            builder.append(Setup.getDropCarPrefix()).append(" ");
+        } else {
+            builder.append(Setup.getLocalPrefix()).append(" ");
+        }
         log.debug("dropCar {}", car);
         for (String attribute : format) {
             if (!attribute.trim().isEmpty()) {
@@ -379,6 +394,7 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String dropEngine(JsonNode engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append(Setup.getDropEnginePrefix()).append(" ");
         for (String attribute : Setup.getDropEngineMessageFormat()) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
@@ -408,6 +424,7 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String pickupEngine(JsonNode engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append(Setup.getPickupEnginePrefix()).append(" ");
         log.debug("PickupEngineMessageFormat: {}", (Object) Setup.getPickupEngineMessageFormat());
         for (String attribute : Setup.getPickupEngineMessageFormat()) {
             if (!attribute.trim().isEmpty()) {
@@ -517,11 +534,7 @@ public class HtmlManifest extends HtmlTrainCommon {
     }
 
     protected boolean isLocalMove(JsonNode car) {
-        if (car.path(JsonOperations.LOCATION).path(JSON.ROUTE).isMissingNode()
-                || car.path(JsonOperations.DESTINATION).path(JSON.ROUTE).isMissingNode()) {
-            return false;
-        }
-        return car.path(JsonOperations.LOCATION).path(JSON.ROUTE).equals(car.path(JsonOperations.DESTINATION).path(JSON.ROUTE));
+        return car.path(JSON.IS_LOCAL).booleanValue();        
     }
 
     protected boolean isUtilityCar(JsonNode car) {

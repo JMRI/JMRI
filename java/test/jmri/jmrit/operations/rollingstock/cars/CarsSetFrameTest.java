@@ -45,7 +45,7 @@ public class CarsSetFrameTest extends OperationsTestCase {
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
         Car c888 = cManager.getByRoadAndNumber("CP", "888");
         Assert.assertNotNull("car exists", c888);
-        f.loadCar(c888);
+        f.load(c888);
 
         JUnitUtil.dispose(ctf);
         JUnitUtil.dispose(f);
@@ -74,7 +74,136 @@ public class CarsSetFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(ctf);
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    @Test
+    public void testCarsSetFrameIgnoreAllButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
 
+        // create cars table
+        CarsSetFrame f = new CarsSetFrame();
+        CarsTableFrame ctf = new CarsTableFrame(true, null, null);
+        JTable ctm = ctf.carsTable;
+        f.initComponents(ctm);
+        
+        Assert.assertTrue("Ignore selected", f.ignoreStatusCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreLocationCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreDivisionCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreRWECheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreRWLCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreLoadCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreKernelCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreDestinationCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreFinalDestinationCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreTrainCheckBox.isSelected());
+
+        JemmyUtil.enterClickAndLeave(f.ignoreAllButton);
+        
+        Assert.assertFalse("Ignore deselected", f.ignoreStatusCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreLocationCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreDivisionCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreRWECheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreRWLCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreLoadCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreKernelCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreDestinationCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreFinalDestinationCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreTrainCheckBox.isSelected());
+        
+        JemmyUtil.enterClickAndLeave(f.ignoreAllButton);
+           
+        Assert.assertTrue("Ignore selected", f.ignoreStatusCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreLocationCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreDivisionCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreRWECheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreRWLCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreLoadCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreKernelCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreDestinationCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreFinalDestinationCheckBox.isSelected());
+        Assert.assertTrue("Ignore selected", f.ignoreTrainCheckBox.isSelected());
+
+        
+        JUnitUtil.dispose(ctf);
+        JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    @Test
+    public void testCarsSetFrameIgnoreCheckBoxes() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
+
+        // create cars table
+        CarsSetFrame f = new CarsSetFrame();
+        CarsTableFrame ctf = new CarsTableFrame(true, null, null);
+        JTable ctm = ctf.carsTable;
+        f.initComponents(ctm);
+        
+        JemmyUtil.enterClickAndLeave(f.ignoreAllButton);
+        
+        Assert.assertFalse("Ignore deselected", f.ignoreStatusCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreLocationCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreDivisionCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreRWECheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreRWLCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreLoadCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreKernelCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreDestinationCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreFinalDestinationCheckBox.isSelected());
+        Assert.assertFalse("Ignore deselected", f.ignoreTrainCheckBox.isSelected());
+
+        Assert.assertTrue(f.locationUnknownCheckBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.ignoreStatusCheckBox);
+        Assert.assertFalse(f.locationUnknownCheckBox.isEnabled());
+        
+        Assert.assertTrue(f.locationBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.ignoreLocationCheckBox);
+        Assert.assertFalse(f.locationBox.isEnabled());
+                
+        // check ignore
+        JemmyUtil.enterClickAndLeave(f.ignoreDestinationCheckBox);
+        Assert.assertFalse(f.destinationBox.isEnabled());
+        
+        // uncheck ignore
+        JemmyUtil.enterClickAndLeave(f.ignoreDestinationCheckBox);
+        Assert.assertTrue(f.destinationBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.ignoreDestinationCheckBox);
+        Assert.assertFalse(f.destinationBox.isEnabled());
+        
+        Assert.assertTrue(f.finalDestinationBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.ignoreFinalDestinationCheckBox);
+        Assert.assertFalse(f.finalDestinationBox.isEnabled());
+     
+        Assert.assertTrue(f.trainBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.ignoreTrainCheckBox);
+        Assert.assertFalse(f.trainBox.isEnabled());
+        
+        // now restore
+        Assert.assertFalse(f.locationUnknownCheckBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.ignoreStatusCheckBox);
+        Assert.assertTrue(f.locationUnknownCheckBox.isEnabled());
+        
+        Assert.assertFalse(f.locationBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.ignoreLocationCheckBox);
+        Assert.assertTrue(f.locationBox.isEnabled());
+        
+        Assert.assertFalse(f.destinationBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.ignoreDestinationCheckBox);
+        Assert.assertTrue(f.destinationBox.isEnabled());
+        
+        Assert.assertFalse(f.finalDestinationBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.ignoreFinalDestinationCheckBox);
+        Assert.assertTrue(f.finalDestinationBox.isEnabled());
+     
+        Assert.assertFalse(f.trainBox.isEnabled());
+        JemmyUtil.enterClickAndLeave(f.ignoreTrainCheckBox);
+        Assert.assertTrue(f.trainBox.isEnabled()); 
+     
+        JUnitUtil.dispose(ctf);
+        JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
     @Test
@@ -106,6 +235,7 @@ public class CarsSetFrameTest extends OperationsTestCase {
         Assert.assertFalse("Out of service", c888.isOutOfService());
 
         // change the 3 car's status
+        JemmyUtil.enterClickAndLeave(f.ignoreStatusCheckBox);
         JemmyUtil.enterClickAndLeave(f.outOfServiceCheckBox);
         // Save button is labeled "Apply"
         JemmyUtil.enterClickAndLeave(f.saveButton);
@@ -118,7 +248,6 @@ public class CarsSetFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(ctf);
         JUnitUtil.dispose(f);
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
     
     @Test

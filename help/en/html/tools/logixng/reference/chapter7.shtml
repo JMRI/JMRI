@@ -174,6 +174,11 @@
       of the bean, the event type and the new value.  For example, a sensor has a <strong>KnownState
       </strong> event with the new value being 2 (Active) or 4 (Inactive).</p>
 
+      <p class="noted">If the optional local variables are used and the <strong>Listen On Beans</strong>
+      action is part of a copy/cut/paste, the local variable names will be included in the paste
+      action. If the same names have not been defined in the target ConditionalNG, a LogixNG
+      exception will occur.  Make sure the paste destination has those local variables defined.</p>
+
       <p>Example:</p>
 
       <p>A ConditionalNG is using turnouts IT1, IT2, IT3, IT4 and IT5 in it's expressions and wants

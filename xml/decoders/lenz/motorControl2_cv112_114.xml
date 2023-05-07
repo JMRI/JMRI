@@ -66,9 +66,9 @@
 	<label xml:lang="de">Motor Timeout bei nicht vorhandenem DCC</label>
 	<comment xml:lang="de">Wertebereich 0-255</comment>
 	<tooltip xml:lang="de">Motor Timeout t = Wert * 16 ms</tooltip>
-	<label xml:lang="cs">Timeout motoru při ztrátě DCC</label>
+	<label xml:lang="cs">Časový limit motoru při ztrátě DCC</label>
 	<comment xml:lang="cs">Meze 0-255</comment>
-	<tooltip xml:lang="cs">Timeout motoru t = hodnota * 16 ms</tooltip>
+	<tooltip xml:lang="cs">Časový limit motoru t = hodnota * 16 ms</tooltip>
 	<label xml:lang="ca">Timeout del Motor per manca de DCC</label>
 	<comment xml:lang="ca">Rang 0-255</comment>
 	<tooltip xml:lang="ca">Timeout del motor t = Valor * 16 ms</tooltip>

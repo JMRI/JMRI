@@ -15,7 +15,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     private Z21Reply message = null;
 
     @Test
-    public void prefixSkip() {
+    public void testPrefixSkip() {
         message = new Z21Reply();
         Assert.assertEquals("prefix skip", 0, message.skipPrefix(5));
     }
@@ -42,7 +42,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void getBCDElement() {
+    public void testGetBCDElement() {
         byte msg[] = {(byte) 0x0D, (byte) 0x00, (byte) 0x04, (byte) 0x00, (byte) 0x12, (byte) 0x34, (byte) 0xAB, (byte) 0x03, (byte) 0x19, (byte) 0x06, (byte) 0x0B, (byte) 0xB1};
         message = new Z21Reply(msg, 12);
         Assert.assertEquals("4th byte BCD", Integer.valueOf(12), message.getElementBCD(4));
@@ -51,7 +51,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // Test XpressNet Tunnel related methods.
     @Test
-    public void tunnelXPressNet() {
+    public void testTunnelXPressNet() {
         byte msg[] = {(byte) 0x07, (byte) 0x00, (byte) 0x40, (byte) 0x00, (byte) 0x61, (byte) 0x82, (byte) 0xE3};
         message = new Z21Reply(msg, 7);
         Assert.assertTrue("XpressNet Tunnel Message", message.isXPressNetTunnelMessage());
@@ -61,7 +61,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void getXPressNetReply() {
+    public void testGetXPressNetReply() {
         byte msg[] = {(byte) 0x07, (byte) 0x00, (byte) 0x40, (byte) 0x00, (byte) 0x61, (byte) 0x82, (byte) 0xE3};
         message = new Z21Reply(msg, 7);
         jmri.jmrix.lenz.XNetReply x = message.getXNetReply();
@@ -71,21 +71,21 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void getNullXPressNetReply() {
+    public void testGetNullXPressNetReply() {
         byte msg[] = {(byte) 0x11, (byte) 0x00, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08};
         message = new Z21Reply(msg, 17);
         Assert.assertNull("non-XNetTunnel XpressNet Reply", message.getXNetReply());
     }
 
     @Test
-    public void MonitorStringXPressNetReply() {
+    public void testMonitorStringXPressNetReply() {
         byte msg[] = {(byte) 0x07, (byte) 0x00, (byte) 0x40, (byte) 0x00, (byte) 0x61, (byte) 0x82, (byte) 0xE3};
         message = new Z21Reply(msg, 7);
         Assert.assertEquals("Monitor String", "XpressNet Tunnel Reply: 61 82 E3", message.toMonitorString());
     }
 
     @Test
-    public void getXPressNetThrottleReply() {
+    public void testGetXPressNetThrottleReply() {
         // this test comes from a user log, where the last byte in the 
         // Z21 message incorrectly became the first byte of the XpressNet Reply.
         byte msg[] = {(byte) 0x0E, (byte) 0x00, (byte) 0x40, (byte) 0x00, (byte) 0xEF, (byte) 0x00, (byte) 0x03, (byte) 0x04, (byte) 0x80, (byte) 0x10, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x78};
@@ -104,7 +104,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void xPressNetThrottleReplyToMonitorString() {
+    public void testXPressNetThrottleReplyToMonitorString() {
         byte msg[] = {(byte) 0x0E, (byte) 0x00, (byte) 0x40, (byte) 0x00, (byte) 0xEF, (byte) 0x00, (byte) 0x03, (byte) 0x04, (byte) 0x80, (byte) 0x10, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x78};
         message = new Z21Reply(msg, 14);
         Assert.assertEquals("Monitor String", "XpressNet Tunnel Reply: Z21 Mobile decoder info reply for address 3: Forward,in 128 Speed Step Mode,Speed Step: 0. Address is Free for Operation. F0 On; F1 Off; F2 Off; F3 Off; F4 Off; F5 Off; F6 Off; F7 Off; F8 Off; F9 Off; F10 Off; F11 Off; F12 Off;  F13 Off; F14 Off; F15 Off; F16 Off; F17 Off; F18 Off; F19 Off; F20 Off; F21 Off; F22 Off; F23 Off; F24 Off; F25 Off; F26 Off; F27 Off; F28 Off; ", message.toMonitorString());
@@ -112,7 +112,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     //Test RailCom related methods.
     @Test
-    public void railComReply() {
+    public void testRailComReply() {
         byte msg[] = {(byte) 0x11, (byte) 0x00, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08};
         message = new Z21Reply(msg, 17);
         Assert.assertTrue("RailCom Reply", message.isRailComDataChangedMessage());
@@ -122,7 +122,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void railComEntries() {
+    public void testRailComEntries() {
         byte msg[] = {(byte) 0x11, (byte) 0x00, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08};
         message = new Z21Reply(msg, 17);
         Assert.assertEquals("RailCom Entries", 1, message.getNumRailComDataEntries());
@@ -132,14 +132,14 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void railCom2Entries() {
+    public void testRailCom2Entries() {
         byte msg[] = {(byte) 0x1E, (byte) 0x00, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08, (byte) 0x20, (byte) 0x21, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08};
         message = new Z21Reply(msg, 30);
         Assert.assertEquals("RailCom Entries", 2, message.getNumRailComDataEntries());
     }
 
     @Test
-    public void railComAddress() {
+    public void testRailComAddress() {
         byte msg[] = {(byte) 0x1E, (byte) 0x00, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08, (byte) 0x20, (byte) 0x21, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08};
         message = new Z21Reply(msg, 30);
         Assert.assertTrue("RailCom Address", (new jmri.DccLocoAddress(256, true)).equals(message.getRailComLocoAddress(0)));
@@ -147,35 +147,35 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void railComRcvCount() {
+    public void testRailComRcvCount() {
         byte msg[] = {(byte) 0x11, (byte) 0x00, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08};
         message = new Z21Reply(msg, 17);
         Assert.assertEquals("RailCom Rcv Count", 1, message.getRailComRcvCount(0));
     }
 
     @Test
-    public void railComErrCount() {
+    public void testRailComErrCount() {
         byte msg[] = {(byte) 0x11, (byte) 0x00, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x06, (byte) 0x07, (byte) 0x08};
         message = new Z21Reply(msg, 17);
         Assert.assertEquals("RailCom Err Count", 5, message.getRailComErrCount(0));
     }
 
     @Test
-    public void railComSpeed() {
+    public void testRailComSpeed() {
         byte msg[] = {(byte) 0x11, (byte) 0x00, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08};
         message = new Z21Reply(msg, 17);
         Assert.assertEquals("RailCom Speed", 6, message.getRailComSpeed(0));
     }
 
     @Test
-    public void railComOptions() {
+    public void testRailComOptions() {
         byte msg[] = {(byte) 0x11, (byte) 0x00, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08};
         message = new Z21Reply(msg, 17);
         Assert.assertEquals("RailCom Options", 5, message.getRailComOptions(0));
     }
 
     @Test
-    public void railComQos() {
+    public void testRailComQos() {
         byte msg[] = {(byte) 0x11, (byte) 0x00, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08};
         message = new Z21Reply(msg, 17);
         Assert.assertEquals("RailCom Qos", 7, message.getRailComQos(0));
@@ -183,7 +183,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     //Test System Data related methods.
     @Test
-    public void systemDataChangedReply() {
+    public void testSystemDataChangedReply() {
         byte msg[] = {(byte) 0x14, (byte) 0x00, (byte) 0x84, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x00};
         message = new Z21Reply(msg, 20);
         Assert.assertTrue("System Data Changed Reply", message.isSystemDataChangedReply());
@@ -193,7 +193,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void mainCurrentFromSystemDataChangedReply() {
+    public void testMainCurrentFromSystemDataChangedReply() {
         byte msg[] = {(byte) 0x14, (byte) 0x00, (byte) 0x84, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x00};
         message = new Z21Reply(msg, 20);
         Assert.assertTrue("System Data Changed Reply", message.isSystemDataChangedReply());
@@ -201,7 +201,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void progCurrentFromSystemDataChangedReply() {
+    public void testProgCurrentFromSystemDataChangedReply() {
         byte msg[] = {(byte) 0x14, (byte) 0x00, (byte) 0x84, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x00};
         message = new Z21Reply(msg, 20);
         Assert.assertTrue("System Data Changed Reply", message.isSystemDataChangedReply());
@@ -209,7 +209,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void filteredMainCurrentFromSystemDataChangedReply() {
+    public void testFilteredMainCurrentFromSystemDataChangedReply() {
         byte msg[] = {(byte) 0x14, (byte) 0x00, (byte) 0x84, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x00};
         message = new Z21Reply(msg, 20);
         Assert.assertTrue("System Data Changed Reply", message.isSystemDataChangedReply());
@@ -217,7 +217,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void temperatureFromSystemDataChangedReply() {
+    public void testTemperatureFromSystemDataChangedReply() {
         byte msg[] = {(byte) 0x14, (byte) 0x00, (byte) 0x84, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x00};
         message = new Z21Reply(msg, 20);
         Assert.assertTrue("System Data Changed Reply", message.isSystemDataChangedReply());
@@ -225,7 +225,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void supplyVoltageFromSystemDataChangedReply() {
+    public void testSupplyVoltageFromSystemDataChangedReply() {
         byte msg[] = {(byte) 0x14, (byte) 0x00, (byte) 0x84, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x00};
         message = new Z21Reply(msg, 20);
         Assert.assertTrue("System Data Changed Reply", message.isSystemDataChangedReply());
@@ -233,7 +233,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void vccVoltageFromSystemDataChangedReply() {
+    public void testVccVoltageFromSystemDataChangedReply() {
         byte msg[] = {(byte) 0x14, (byte) 0x00, (byte) 0x84, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x00};
         message = new Z21Reply(msg, 20);
         Assert.assertTrue("System Data Changed Reply", message.isSystemDataChangedReply());
@@ -241,7 +241,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void getLocoNetReply() {
+    public void testGetLocoNetReply() {
         byte msg[] = {(byte) 0x11, (byte) 0x00, (byte) 0xA2, (byte) 0x00,
             (byte) 0xEF, (byte) 0x0E, (byte) 0x03, (byte) 0x00, (byte) 0x03,
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
@@ -255,14 +255,14 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void getNullLocoNetReply() {
+    public void testGetNullLocoNetReply() {
         byte msg[] = {(byte) 0x11, (byte) 0x00, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08};
         message = new Z21Reply(msg, 17);
         Assert.assertNull("non-LocoNetTunnel LocoNet Reply", message.getLocoNetMessage());
     }
 
     @Test
-    public void MonitorStringLocoNetReply() {
+    public void testMonitorStringLocoNetReply() {
         byte msg[] = {(byte) 0x11, (byte) 0x00, (byte) 0xA2, (byte) 0x00,
             (byte) 0xEF, (byte) 0x0E, (byte) 0x03, (byte) 0x00, (byte) 0x03,
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
@@ -275,7 +275,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void MonitorStringSerialNumberReply() {
+    public void testMonitorStringSerialNumberReply() {
         byte msg[] = {(byte) 0x08, (byte) 0x00, (byte) 0x10, (byte) 0x00,
             (byte) 0xAE, (byte) 0xA7, (byte) 0x01, (byte) 0x00};
         message = new Z21Reply(msg, 8);
@@ -283,7 +283,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void MonitorStringVersionReply() {
+    public void testMonitorStringVersionReply() {
         byte msg[] = {(byte) 0x0C, (byte) 0x00, (byte) 0x1A, (byte) 0x00,
             (byte) 0x00, (byte) 0x02, (byte) 0x00, (byte) 0x00, (byte) 0x32,
             (byte) 0x01, (byte) 0x00, (byte) 0x00};
@@ -292,7 +292,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void MonitorStringSystemStateReply() {
+    public void testMonitorStringSystemStateReply() {
         byte msg[] = {(byte) 0x14, (byte) 0x00, (byte) 0x84, (byte) 0x00,
             (byte) 0x56, (byte) 0x00, (byte) 0x03, (byte) 0x00, (byte) 0x5D,
             (byte) 0x00, (byte) 0x23, (byte) 0x00, (byte) 0x10, (byte) 0x47,
@@ -303,7 +303,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void MonitorStringRMFeedbackChangedReply() {
+    public void testMonitorStringRMFeedbackChangedReply() {
         byte msg[] = {(byte) 0x0F, (byte) 0x00, (byte) 0x80, (byte) 0x00,
             (byte) 0x00, (byte) 0x00, (byte) 0xFF, (byte) 0x00, (byte) 0x00,
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
@@ -340,7 +340,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void checkIsRMFeedbackChangedReply() {
+    public void testIsRMFeedbackChangedReply() {
         byte msg[] = {(byte) 0x0F, (byte) 0x00, (byte) 0x80, (byte) 0x00,
             (byte) 0x00, (byte) 0x00, (byte) 0xFF, (byte) 0x00, (byte) 0x00,
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
@@ -427,6 +427,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @AfterEach
+    @Override
     public void tearDown() {
         m = message = null;
         JUnitUtil.tearDown();

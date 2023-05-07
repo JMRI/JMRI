@@ -1,6 +1,5 @@
 package jmri.jmrit.timetable.swing;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 
@@ -8,8 +7,8 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -18,9 +17,9 @@ import org.junit.jupiter.api.io.TempDir;
  */
 public class TimeTablePrintGraphTest {
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testGraph() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         TimeTablePrintGraph g = new TimeTablePrintGraph(1, 1, true, false);
         Assert.assertNotNull(g);
@@ -30,7 +29,7 @@ public class TimeTablePrintGraphTest {
     }
     @BeforeEach
     public void setUp(@TempDir File folder) throws IOException {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
@@ -38,15 +37,8 @@ public class TimeTablePrintGraphTest {
 
     @AfterEach
     public void tearDown() {
-       // use reflection to reset the static file location.
-       try {
-            Class<?> c = jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
-        }
+        // reset the static file location.
+        jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.resetFileLocation();
         JUnitUtil.tearDown();
     }
 }

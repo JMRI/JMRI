@@ -43,9 +43,12 @@ public class ActionOBlockXml extends jmri.managers.configurexml.AbstractNamedBea
         storeCommon(p, element);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<OBlock>();
-        var selectEnumXml = new LogixNG_SelectEnumXml<ActionOBlock.DirectOperation>();
-
         element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+
+        var selectMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        element.addContent(selectMemoryNamedBeanXml.store(p.getSelectMemoryNamedBean(), "memoryNamedBean"));
+
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionOBlock.DirectOperation>();
         element.addContent(selectEnumXml.store(p.getSelectEnum(), "operation"));
 
         element.addContent(new Element("dataAddressing").addContent(p.getDataAddressing().name()));
@@ -69,8 +72,11 @@ public class ActionOBlockXml extends jmri.managers.configurexml.AbstractNamedBea
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<OBlock>();
         var selectEnumXml = new LogixNG_SelectEnumXml<ActionOBlock.DirectOperation>();
 
+        var selectMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "oblock");
+        selectMemoryNamedBeanXml.load(shared.getChild("memoryNamedBean"), h.getSelectMemoryNamedBean());
 
         selectEnumXml.load(shared.getChild("operation"), h.getSelectEnum());
         selectEnumXml.loadLegacy(

@@ -1,30 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Blorec Herv&#233;  2013-09-26-->
 
-  <title>JMRI: Scripting FAQ</title>
-    <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <title>JMRI: FAQ Scripts</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
-<h1>JMRI: FAQ Scripts</h1>
+      <!-- Page Body -->
+
+      <h1>JMRI: FAQ Scripts</h1>
 
       <p class="subtitle">Foire aux questions sur les scripts JMRI
       avec Jython</p>
@@ -56,7 +47,8 @@
         <p>Quelques informations suppl&eacute;mentaires sur les
         diff&eacute;rences sont <a href=
         "http://jython.sourceforge.net/docs/differences.html">disponibles
-        ici</a> . &lt;/ div&gt;</p>
+        ici</a>.</p>
+      </div>
 
         <h2>O&ugrave; puis-je trouver des exemples de scripts
         JMRI?</h2>
@@ -64,7 +56,8 @@
         <div class="para">
           Voir la <a href="Examples.shtml">page exemples</a> . En
           outre, la page <a href="Start.shtml">introduction</a>
-          montre quelques-unes des commandes de base. &lt;/ div&gt;
+          montre quelques-unes des commandes de base.
+        </div>
 
           <h2>Qu'est-ce que des mots comme " <code>import</code> ",
           " <code>"classe</code> ", etc, dans les fichiers
@@ -292,6 +285,7 @@
             Javadocs</a> pour la classe. (Faites d&eacute;filer
             jusqu'&agrave; la section intitul&eacute;e
             "R&eacute;sum&eacute; de la m&eacute;thode")</p>
+          </div>
 
             <h2>Comment puis-je limiter la priorit&eacute; d'un
             script?</h2>
@@ -344,41 +338,44 @@ execfile("filename.py");
             partir d'un script?</h2>
 
             <div class="para">
-              <pre>
-<code> jmri.InstanceManager.getDefault(jmri.ConfigureManager).load(java.io.File("filename.xml "))</code>
+              <div class="wide">
+            <pre>
+<code>jmri.InstanceManager.getDefault(jmri.ConfigureManager).load(java.io.File("filename.xml "))</code>
 </pre>
-            </div>Cela ressemble &agrave; "filename.xml" dans le
+            </div>
+            <p>Cela ressemble &agrave; "filename.xml" dans le
             r&eacute;pertoire du programme JMRI, qui n'est pas un
             bon endroit pour conserver vos fichiers. (Ils ont
             tendance &agrave; &ecirc;tre perdus ou
             endommag&eacute;s quand JMRI est mis &agrave; jour).
             Voir la question suivante pour une solution &agrave;
-            cela.
+            cela.</p>
 
             <h2>Comment puis-je trouver un fichier dans le
-            r&eacute;pertoire des
-            pr&eacute;f&eacute;rences?</h2>Vous pouvez toujours
+            r&eacute;pertoire des pr&eacute;f&eacute;rences?</h2>
+
+            <p>Vous pouvez toujours
             sp&eacute;cifier le chemin complet vers un fichier, par
             exemple <code>C:\Documents and Files\
             mine\JMRI\filename.xml</code> ou <code>/Users
             /mine/.jmri/filename.xml</code> . Ce n'est pas
             tr&egrave;s portable, d'ordinateur &agrave; ordinateur,
             cependant, et peut devenir un handicap pour continuer
-            plus loin.
+            plus loin.</p>
 
             <p>JMRI fournit des routines pour convertir les noms
             "portables" en des noms que votre ordinateur
             reconna&icirc;tra:</p>
 
-            <div class="para">
               <pre>
 <code> fullname jmri.util.FileUtil.getExternalFilename = ("pr&eacute;f&eacute;rence: filename.xml") </code>
 </pre>
-            </div>Le " <code>:pr&eacute;f&eacute;rence</code> "
+            Le "<code>:pr&eacute;f&eacute;rence</code>"
             signifie regarder quel fichier d&eacute;marre dans le
             r&eacute;pertoire pr&eacute;f&eacute;rences sur
             l'ordinateur actuel. D'autres choix sont "le
             programme:" et "home".
+          </div>
 
             <h2>Puis je communiquer entre les scripts?</h2>
 
@@ -391,22 +388,21 @@ execfile("filename.py");
               l'utiliser ailleurs. Par exemple, si un fichier
               "definitions.py" contient:
               <pre>
- def printStatus ():
-   print "x est", x
-   print "y est", y
-   print "z est", z
-   retour
+def printStatus ():
+  print "x est", x
+  print "y est", y
+  print "z est", z
+  retour
 
 a
 x = 0
 y = 0
 z = 0 
-</pre>Une fois que le fichier a &eacute;t&eacute;
-ex&eacute;cut&eacute;,plus tard des script pourront invoquer la
-routine <code>printStatus ()</code> en cas de besoin.
-            </div>
+</pre>
+              <p>Une fois que le fichier a &eacute;t&eacute;
+              ex&eacute;cut&eacute;,plus tard des script pourront invoquer la
+              routine <code>printStatus ()</code> en cas de besoin.</p>
 
-            <div class="para">
               Vous pouvez &eacute;galement partager des variables,
               ce qui permet &agrave; deux routines de partager
               l'information. Dans l'exemple ci-dessus, les
@@ -436,23 +432,26 @@ routine <code>printStatus ()</code> en cas de besoin.
               v&eacute;rifier si elles sont devenues des
               &eacute;tats particuliers. Il est &eacute;crit que:
               <pre>
- self.waitChange ([self.sensorA, self.sensorB, self.sensorC]) 
-</pre>o&ugrave; vous avez pr&eacute;c&eacute;demment d&eacute;fini
+self.waitChange ([self.sensorA, self.sensorB, self.sensorC])
+</pre>
+              o&ugrave; vous avez pr&eacute;c&eacute;demment d&eacute;fini
 chacun de ces "self.sensorA" et les choses via une ligne comme:
               <pre>
- self.sensorA = sensors.provideSensor ("21") 
-</pre>Vous pouvez ensuite v&eacute;rifier pour diverses
+self.sensorA = sensors.provideSensor ("21")
+</pre>
+              Vous pouvez ensuite v&eacute;rifier pour diverses
 combinaisons comme:
               <pre>
- si self.sensorA.knownState == ACTIF:
-         print "L'avion! L'avion!"
-    elif self.sensorB.knownState == INACTIF:
-         print "Croiriez-vous &agrave; un oiseau tr&egrave;s rapide?"
-    d'autre
-         print "Rien &agrave; voir ici, se d&eacute;placer le long ..."
-</pre>(Je n'ai pas vraiment saisi ce script et ni ex&eacute;cuter,
-alors il pourrait y avoir des fautes de frappe,
-d&eacute;sol&eacute;)
+si self.sensorA.knownState == ACTIF:
+  print "L'avion! L'avion!"
+elif self.sensorB.knownState == INACTIF:
+  print "Croiriez-vous &agrave; un oiseau tr&egrave;s rapide?"
+d'autre
+  print "Rien &agrave; voir ici, se d&eacute;placer le long ..."
+</pre>
+              (Je n'ai pas vraiment saisi ce script et ni ex&eacute;cuter,
+              alors il pourrait y avoir des fautes de frappe,
+              d&eacute;sol&eacute;)
             </div>
 
             <h2>Un script peut il entendre plus d'un
@@ -477,7 +476,7 @@ d&eacute;sol&eacute;)
               votre objet &eacute;couteur, vous pouvez le joindre
               &agrave; plusieurs objets:</p>
               <pre>
- m = MyListener ()
+m = MyListener ()
 turnouts.provideTurnout ("12"). addPropertyChangeListener (m)
 turnouts.provideTurnout ("13"). addPropertyChangeListener (m)
 turnouts.provideTurnout ("14"). addPropertyChangeListener (m) 
@@ -508,12 +507,15 @@ turnouts.provideTurnout ("14"). addPropertyChangeListener (m)
               vous pouvez r&eacute;cup&eacute;rer les SystemName,
               nom d'utilisateur (ou m&ecirc;me d'autres types de
               statut).</p>
+            </div>
 
               <h2>Comment puis-je obtenir un script pour jouer un
-              son?</h2>Le fichier Jython/SampleSound.py montre
+              son?</h2>
+          <div class="para">
+              <p>Le fichier Jython/SampleSound.py montre
               comment jouer un son dans un script. En bref, vous
               charger un son dans une variable ("snd" dans ce cas),
-              puis appelez "play ()" pour y jouer une fois, etc
+                puis appelez "play ()" pour y jouer une fois, etc</p>
 
               <p>Notez que si plus d'un son est jou&eacute;
               &agrave; un moment, le programme les combine entre
@@ -525,7 +527,8 @@ turnouts.provideTurnout ("14"). addPropertyChangeListener (m)
               Ron McKinnon a fourni un exemple pour faire cela. Il
               joue une cloche passage &agrave; niveau lorsque le
               capteur devient actif.</p>
-              <pre>
+<div class="wide">
+    <pre>
 # Il &eacute;coute les modifications apport&eacute;es &agrave; un capteur,
 # Puis joue un fichier son quand le capteur est actif
 
@@ -537,44 +540,38 @@ snd = jmri.jmrit.Sound ("ressources/sons/Crossing.wav")
 
 Classe SensndExample (jmri.jmrit.automat.Siglet):
 
-         # Modifier ceci pour d&eacute;finir tous vos aiguillages, les capteurs et
-         # t&ecirc;tes de Signal.
-         def defineIO (auto):
-                
-                 # Obtenir le capteur de
-                 self.Sen1Sensor = sensors.provideSensor ("473")
-                                
-                  # Enregistrer les entr&eacute;es de sorte que setOutput sera appel&eacute; en cas de besoin.
-                  self.setInputs (jarray.array ([self.Sen1Sensor], jmri.NamedBean))
+  # Modifier ceci pour d&eacute;finir tous vos aiguillages, les capteurs et
+  # t&ecirc;tes de Signal.
+  def defineIO (auto):
 
-                 Retour
+    # Obtenir le capteur de
+    self.Sen1Sensor = sensors.provideSensor ("473")
 
+    # Enregistrer les entr&eacute;es de sorte que setOutput sera appel&eacute; en cas de besoin.
+    self.setInputs (jarray.array ([self.Sen1Sensor], jmri.NamedBean))
 
+    Retour
 
-         # setOutput est appel&eacute;e lorsque d'un changements des entr&eacute;es, et est
-         # responsable de l'&eacute;tablissement la sortie correcte
-         #
-         # Modifier cela pour faire votre calcul.
-         def setOutput (auto):
-                                
-                 Si self.Sen1Sensor.knownState == ACTIVE:
-                         snd.play ()
+  # setOutput est appel&eacute;e lorsque d'un changements des entr&eacute;es, et est
+  # responsable de l'&eacute;tablissement la sortie correcte
+  #
+  # Modifier cela pour faire votre calcul.
+  def setOutput (auto):
 
-                 Retour
+    Si self.Sen1Sensor.knownState == ACTIVE:
+           snd.play ()
+
+    Retour
         
 # Fin de d&eacute;finition de la classe
 
 # Lancer une de ceux ci-dessus
 SensndExample (). Start ()
 </pre>
-
-
-            </div>
+</div>
           </div>
-        </div>
-      </div>
 
-        <!--#include virtual="/Footer.shtml" -->
+        <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

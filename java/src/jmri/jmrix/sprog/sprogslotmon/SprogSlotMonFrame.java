@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JMenuBar;
@@ -19,6 +17,8 @@ import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,28 +92,28 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
             }
         });
 
-        estopAllButton.addMouseListener(new MouseListener() {
+        estopAllButton.addMouseListener(JmriMouseListener.adapt(new JmriMouseListener() {
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(JmriMouseEvent e) {
                 _memo.getCommandStation().estopAll();
             }
 
             @Override
-            public void mouseExited(MouseEvent e) {
+            public void mouseExited(JmriMouseEvent e) {
             }
 
             @Override
-            public void mouseEntered(MouseEvent e) {
+            public void mouseEntered(JmriMouseEvent e) {
             }
 
             @Override
-            public void mouseReleased(MouseEvent e) {
+            public void mouseReleased(JmriMouseEvent e) {
             }
 
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(JmriMouseEvent e) {
             }
-        });
+        }));
 
         // adjust model to default settings
         slotModel.showAllSlots(showAllCheckBox.isSelected());

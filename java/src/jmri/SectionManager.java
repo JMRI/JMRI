@@ -81,30 +81,23 @@ public interface SectionManager extends Manager<Section> {
     /**
      * Validate all Sections.
      *
-     * @param frame   ignored
-     * @param lePanel the panel containing sections to validate
-     * @return number or validation errors; -2 is returned if there are no
-     *         sections
+     * @return number or validation errors; -2 is returned if there are no sections
      */
-    public int validateAllSections(jmri.util.JmriJFrame frame, LayoutEditor lePanel);
+    public int validateAllSections();
 
     /**
      * Check direction sensors in SSL for signals.
      *
-     * @param lePanel the panel containing direction sensors
-     * @return the number or errors; 0 if no errors; -1 if the panel is null; -2
-     *         if there are no sections
+     * @return the number or errors; 0 if no errors; -1 if the panel is null; -2 if there are no sections
      */
-    public int setupDirectionSensors(LayoutEditor lePanel);
+    public int setupDirectionSensors();
 
     /**
      * Remove direction sensors from SSL for all signals.
      *
-     * @param lePanel the panel containing direction sensors
-     * @return the number or errors; 0 if no errors; -1 if the panel is null; -2
-     *         if there are no sections
+     * @return the number or errors; 0 if no errors; -1 if the panel is null; -2 if there are no sections
      */
-    public int removeDirectionSensorsFromSSL(LayoutEditor lePanel);
+    public int removeDirectionSensorsFromSSL();
 
     /**
      * Initialize all blocking sensors that exist - set them to 'ACTIVE'.

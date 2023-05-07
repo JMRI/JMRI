@@ -31,7 +31,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     // Longest boot message is 256bytes each preceded by DLE + 2xSTX + ETX
     public static final int MAXSIZE = 515;
 
-    private static int msgId = 0;
+    private static volatile int msgId = 0;
     protected int _id = -1;
 
     /**
@@ -43,7 +43,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
      *
      * @return the message id
      */
-    protected synchronized int newMsgId() {
+    protected static synchronized int newMsgId() {
         msgId = (msgId+1)%65536;
         return msgId;
     }

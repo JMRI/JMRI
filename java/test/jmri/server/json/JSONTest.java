@@ -41,7 +41,9 @@ public class JSONTest {
             // we pass an InvocationTargetException that is caused by an
             // UnsupportedOperationException and fail everything else by
             // re-throwing the unexpected exception to get a stack trace
-            if (!ex.getCause().getClass().equals(UnsupportedOperationException.class)) {
+            var cause = ex.getCause();
+            Assertions.assertNotNull(cause);
+            if (!cause.getClass().equals(UnsupportedOperationException.class)) {
                 throw ex;
             }
         }

@@ -37,7 +37,7 @@ public class RoutesTableFrame extends OperationsFrame {
     JRadioButton sortById = new JRadioButton(Bundle.getMessage("Id"));
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    JButton addButton = new JButton(Bundle.getMessage("AddRoute"));
 
     public RoutesTableFrame() {
         super(Bundle.getMessage("TitleRoutesTable"));
@@ -69,7 +69,7 @@ public class RoutesTableFrame extends OperationsFrame {
 
         // setup buttons
         addButtonAction(addButton);
-        addButton.setToolTipText(Bundle.getMessage("AddRoute"));
+        addButton.setToolTipText(Bundle.getMessage("AddRouteTip"));
 
         addRadioButtonAction(sortByName);
         addRadioButtonAction(sortById);

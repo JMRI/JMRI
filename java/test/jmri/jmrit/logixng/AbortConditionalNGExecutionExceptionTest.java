@@ -9,17 +9,17 @@ import org.junit.Test;
 
 /**
  * Test AbortConditionalNGExecutionException
- * 
+ *
  * @author Daniel Bergqvist 2021
  */
 public class AbortConditionalNGExecutionExceptionTest {
 
     @Test
     public void testCtor() {
-        AbortConditionalNGExecutionException t = new AbortConditionalNGExecutionException();
+        AbortConditionalNGExecutionException t = new AbortConditionalNGExecutionException(null, null);
         Assert.assertNotNull("not null", t);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -30,5 +30,5 @@ public class AbortConditionalNGExecutionExceptionTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    
+
 }

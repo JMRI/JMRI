@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus.node;
 
+import static jmri.jmrix.can.cbus.node.CbusNodeConstants.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -246,6 +248,47 @@ public class CbusNodeParameterManager {
         _node.send.rQNPN( _node.getNodeNumber(), param );
     }
 
+    /**
+     * Check if current node firmware is equal to or newer than provided version
+     * 
+     * Note that CBUS firmware start with beta builds, followed by a release
+     * with the beta build set to 0, e.g.:
+     * major.minor Beta 1
+     * major.minor Beta 2
+     * ...
+     * major.minor Beta x
+     * major.minor Beta 0
+     * 
+     * @param major New FW major version
+     * @param minor New FW minor version
+     * @param beta  New FW beta build number
+     * @return      true if current node firmware is equal to or newer than provided version
+     */
+    public boolean isFwEqualOrNewer(int major, int minor, int beta) {
+        if (major > getParameter(MAJOR_VER_IDX)) {
+            return false;
+        } else if (major < getParameter(MAJOR_VER_IDX)) {
+            return true;
+        } else {
+            // Major ver is equal, test minor
+            if (minor > getParameter(MINOR_VER_IDX)) {
+                return false;
+            } else if (minor < getParameter(MINOR_VER_IDX)) {
+                return true;
+            } else {
+                // Major and minor are equal, test beta
+                if (beta == 0) {
+                    // Release is always newer than any beta
+                    return true;
+                } else if (beta > getParameter(BETA_REV_IDX)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    }
+    
     private boolean sentParamRequest(int paramToCheck){
         if ( getParameter(paramToCheck) < 0 ) {
             requestParam(paramToCheck);

@@ -1,7 +1,7 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
 import static jmri.jmrix.can.cbus.CbusConstants.MANU_MERG;
-import static jmri.jmrix.can.cbus.swing.bootloader.CbusParameters.MANU_ID_IDX;
+import static jmri.jmrix.can.cbus.node.CbusNodeConstants.*;
 
 /**
  * Extend hex file class for a CBUS PIC with parameter block
@@ -98,12 +98,12 @@ public class CbusPicHexFile extends HexFile{
                 // First record after parameter block so check if parameters are
                 checkValid = false;
                 // Copy new parameter count to parameter
-                newParams.setParam(CbusParameters.NUM_PARAM_IDX, newParams.getParam(CbusParameters.PARAM_COUNT_IDX));
+                newParams.setParam(NUM_PARAM_IDX, newParams.getParam(PARAM_COUNT_IDX));
                 if (checksum == 0) {
                     newParams.setValid(true);
                 } else if (oldParams.getParam(MANU_ID_IDX) == (byte)MANU_MERG) {
                     // Assume old style parameter block @ 0x810 and assume only MERG made these
-                    oldParams.setParam(CbusParameters.NUM_PARAM_IDX, PARAM_OLD_LEN);
+                    oldParams.setParam(NUM_PARAM_IDX, PARAM_OLD_LEN);
                     oldParams.setValid(true);
                 }
             }

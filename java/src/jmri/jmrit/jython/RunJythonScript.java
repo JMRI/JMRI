@@ -65,6 +65,10 @@ public class RunJythonScript extends JmriAbstractAction {
      */
     static JFileChooser fci = null;
 
+    private static synchronized void setFileChooser(JFileChooser chooser) {
+        fci = chooser;
+    }
+
     /**
      * Invoking this action via an event triggers display of a file dialog. If a
      * file is selected, it's then invoked as a script.
@@ -89,8 +93,8 @@ public class RunJythonScript extends JmriAbstractAction {
 
     File selectFile() {
         if (fci == null) {
-            fci = new ScriptFileChooser(FileUtil.getScriptsPath());
-            fci.setDialogTitle(Bundle.getMessage("FindDesiredScriptFile"));
+            setFileChooser( new ScriptFileChooser(FileUtil.getScriptsPath()) );
+            RunJythonScript.fci.setDialogTitle(Bundle.getMessage("FindDesiredScriptFile"));
         } else {
             // when reusing the chooser, make sure new files are included
             fci.rescanCurrentDirectory();

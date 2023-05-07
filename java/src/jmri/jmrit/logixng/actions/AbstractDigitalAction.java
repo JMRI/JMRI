@@ -66,16 +66,16 @@ public abstract class AbstractDigitalAction extends AbstractBase
 
         int x = 1;
         while (x < 10000) {     // Protect from infinite loop
+            String name = prefix + Integer.toString(x);
             boolean validName = true;
             for (int i=0; i < names.length; i++) {
-                String name = prefix + Integer.toString(x);
                 if (name.equals(names[i])) {
                     validName = false;
                     break;
                 }
             }
             if (validName) {
-                return prefix + Integer.toString(x);
+                return name;
             }
             x++;
         }

@@ -20,11 +20,7 @@ import org.junit.jupiter.api.*;
  */
 public class CbusOpCodesTest {
 
-    @Test
-    public void testCTor() {
-        CbusOpCodes t = new CbusOpCodes();
-        Assert.assertNotNull("exists",t);
-    }
+    // no testCtor as class only supplies static methods
 
     @Test
     public void testDecode() {

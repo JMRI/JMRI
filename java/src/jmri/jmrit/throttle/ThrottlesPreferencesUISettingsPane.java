@@ -12,8 +12,8 @@ import jmri.InstanceManager;
 
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * A preferences panel to display and edit JMRI throttle preferences
@@ -290,7 +290,6 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
     private JPanel defaultThrottleLocationPanel() {        
         final JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
         fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-        fileChooser.setCurrentDirectory(new File(ThrottleFrame.getDefaultThrottleFolder()));
         fileChooser.setDialogTitle(Bundle.getMessage("MessageSelectDefaultThrottleFile"));
         
         JButton bScript = new JButton(Bundle.getMessage("ButtonSetDots"));
@@ -311,6 +310,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
 
         JFileChooser chooser;
         JTextField field;
+        private boolean firstOpen = true;
 
         OpenAction(JFileChooser chooser, JTextField field) {
             this.chooser = chooser;
@@ -318,7 +318,11 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         }
 
         @Override
-        public void actionPerformed(ActionEvent e) {            
+        public void actionPerformed(ActionEvent e) {
+            if ( firstOpen ) {
+                chooser.setCurrentDirectory(new File(ThrottleFrame.getDefaultThrottleFolder()));
+                firstOpen = false;
+            }
             // get the file
             int retVal = chooser.showOpenDialog(field);
             if ( (retVal != JFileChooser.APPROVE_OPTION) || (chooser.getSelectedFile() == null) ) {

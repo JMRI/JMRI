@@ -3,16 +3,15 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 
 /**
  *
@@ -27,9 +26,18 @@ public class ShowTrainsServingLocationFrameTest extends OperationsTestCase {
         ShowTrainsServingLocationFrame t = new ShowTrainsServingLocationFrame();
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
-
     }
 
+    @Test
+    public void testFrameNoLocationOrTrack() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
+        ShowTrainsServingLocationFrame stslf = new ShowTrainsServingLocationFrame();
+        stslf.initComponents(null, null);
+        Assert.assertNotNull("exists", stslf);
+        JUnitUtil.dispose(stslf);
+    }
+    
     @Test
     public void testFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -40,9 +48,25 @@ public class ShowTrainsServingLocationFrameTest extends OperationsTestCase {
         stslf.initComponents(ni, track);
         Assert.assertNotNull("exists", stslf);
         JUnitUtil.dispose(stslf);
-
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(ShowTrainsServingLocationFrameTest.class);
-
+    
+    @Test
+    public void testComboBoxes() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
+        ShowTrainsServingLocationFrame stslf = new ShowTrainsServingLocationFrame();
+        stslf.initComponents(null, null);
+        Assert.assertNotNull("exists", stslf);
+        
+        stslf.locationComboBox.setSelectedIndex(1);
+        stslf.trackComboBox.setSelectedIndex(1);
+        stslf.trackComboBox.setSelectedIndex(0); // for property change
+        stslf.typeComboBox.setSelectedIndex(1);
+        
+        // TODO confirm ComboBox changes
+        
+        JemmyUtil.enterClickAndLeave(stslf.showAllTrainsCheckBox);
+        
+        JUnitUtil.dispose(stslf);
+    }
 }

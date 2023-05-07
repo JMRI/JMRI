@@ -23,7 +23,7 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
 
     public ActionTimerXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -37,7 +37,7 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
         Element element = new Element("ActionTimer");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
         Element e2 = new Element("StartSocket");
@@ -85,17 +85,19 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
         }
         element.addContent(e);
 
-        element.addContent(new Element("startImmediately").addContent(p.getStartImmediately() ? "yes" : "no"));
-        element.addContent(new Element("runContinuously").addContent(p.getRunContinuously() ? "yes" : "no"));
+        element.addContent(new Element("startImmediately").addContent(p.isStartImmediately() ? "yes" : "no"));
+        element.addContent(new Element("runContinuously").addContent(p.isRunContinuously() ? "yes" : "no"));
+        element.addContent(new Element("startAndStopByStartExpression")
+                .addContent(p.isStartAndStopByStartExpression()? "yes" : "no"));
         element.addContent(new Element("unit").addContent(p.getUnit().name()));
-        
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
         List<Map.Entry<String, String>> expressionSystemNames = new ArrayList<>();
-        
+
         Element socketNameElement = shared.getChild("StartSocket").getChild("socketName");
         String startSocketName = socketNameElement.getTextTrim();
         Element socketSystemNameElement = shared.getChild("StartSocket").getChild("systemName");
@@ -103,7 +105,7 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
         if (socketSystemNameElement != null) {
             startSocketSystemName = socketSystemNameElement.getTextTrim();
         }
-        
+
         socketNameElement = shared.getChild("StopSocket").getChild("socketName");
         String stopSocketName = socketNameElement.getTextTrim();
         socketSystemNameElement = shared.getChild("StopSocket").getChild("systemName");
@@ -111,9 +113,9 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
         if (socketSystemNameElement != null) {
             stopSocketSystemName = socketSystemNameElement.getTextTrim();
         }
-        
+
         List<ActionTimer.ActionData> actionDataList = new ArrayList<>();
-        
+
         Element actionElement = shared.getChild("Actions");
         for (Element socketElement : actionElement.getChildren()) {
             String socketName = socketElement.getChild("socketName").getTextTrim();
@@ -129,41 +131,48 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
             }
             actionDataList.add(new ActionTimer.ActionData(delay, socketName, systemName));
         }
-        
+
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         ActionTimer h = new ActionTimer(sys, uname, expressionSystemNames, actionDataList);
-        
+
         loadCommon(h, shared);
-        
+
         h.getChild(0).setName(startSocketName);
         h.setStartExpressionSocketSystemName(startSocketSystemName);
-        
+
         h.getChild(1).setName(stopSocketName);
         h.setStopExpressionSocketSystemName(stopSocketSystemName);
-        
+
         Element startImmediately = shared.getChild("startImmediately");
         if (startImmediately != null) {
             h.setStartImmediately("yes".equals(startImmediately.getTextTrim()));
         } else {
             h.setStartImmediately(false);
         }
-        
+
         Element runContinuously = shared.getChild("runContinuously");
         if (runContinuously != null) {
             h.setRunContinuously("yes".equals(runContinuously.getTextTrim()));
         } else {
             h.setRunContinuously(false);
         }
-        
+
+        Element startAndStopByStartExpression = shared.getChild("startAndStopByStartExpression");
+        if (startAndStopByStartExpression != null) {
+            h.setStartAndStopByStartExpression("yes".equals(startAndStopByStartExpression.getTextTrim()));
+        } else {
+            h.setStartAndStopByStartExpression(false);
+        }
+
         Element unit = shared.getChild("unit");
         if (unit != null) {
             h.setUnit(TimerUnit.valueOf(unit.getTextTrim()));
         }
-        
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTimerXml.class);
 }

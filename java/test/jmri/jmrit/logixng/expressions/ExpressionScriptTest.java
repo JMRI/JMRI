@@ -22,8 +22,8 @@ import org.junit.Test;
  */
 public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
 
-    private final String _scriptText = "result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )";
-    private final String _ecmaScript = "var Sensor = Java.type(\"jmri.Sensor\"); result.setValue( sensors.provideSensor(\"IS1\").getState() == Sensor.ACTIVE )";
+    private static final String SCRIPT_TEXT = "result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )";
+    private static final String ECMA_SCRIPT = "var Sensor = Java.type(\"jmri.Sensor\"); result.setValue( sensors.provideSensor(\"IS1\").getState() == Sensor.ACTIVE )";
 
 
     private LogixNG logixNG;
@@ -87,13 +87,13 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         ExpressionScript expression2;
 
         expression2 = new ExpressionScript("IQDE321", null);
-        expression2.setScript(_scriptText);
+        expression2.setScript(SCRIPT_TEXT);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
         Assert.assertEquals("String matches", "Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )", expression2.getLongDescription());
 
         expression2 = new ExpressionScript("IQDE321", "My expression");
-        expression2.setScript(_scriptText);
+        expression2.setScript(SCRIPT_TEXT);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
         Assert.assertEquals("String matches", "Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )", expression2.getLongDescription());
@@ -101,7 +101,8 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         boolean thrown = false;
         try {
             // Illegal system name
-            new ExpressionScript("IQA55:12:XY11", null);
+            ExpressionScript escipt = new ExpressionScript("IQA55:12:XY11", null);
+            Assert.fail("escript created: " + escipt.toString() );
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -110,7 +111,8 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         thrown = false;
         try {
             // Illegal system name
-            new ExpressionScript("IQA55:12:XY11", "A name");
+            ExpressionScript escipt = new ExpressionScript("IQA55:12:XY11", "A name");
+            Assert.fail("escript created: " + escipt.toString() );
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -136,7 +138,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Exception is thrown", hasThrown);
 
         // Test with script
-        expressionScript.setScript(_scriptText);
+        expressionScript.setScript(SCRIPT_TEXT);
         Assert.assertTrue("getChildCount() returns 0", 0 == expressionScript.getChildCount());
     }
 
@@ -209,7 +211,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testExpression_SingleEcmaCommand() throws Exception {
         expressionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
-        expressionScript.setScript(_ecmaScript);
+        expressionScript.setScript(ECMA_SCRIPT);
 
         // Test expression
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
@@ -296,8 +298,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
 
         // Test setScript() when listeners are registered
-        Assert.assertNotNull("Script is not null", _scriptText);
-        expressionScript.setScript(_scriptText);
+        expressionScript.setScript(SCRIPT_TEXT);
         Assert.assertNotNull("Script is not null", expressionScript.getScript());
 
         // Test bad script
@@ -327,7 +328,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(true);
 
         ifThenElse = new IfThenElse("IQDA321", null);
-        ifThenElse.setType(IfThenElse.Type.AlwaysExecute);
+        ifThenElse.setExecuteType(IfThenElse.ExecuteType.AlwaysExecute);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
@@ -335,7 +336,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
 
         expressionScript = new ExpressionScript(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        expressionScript.setScript(_scriptText);
+        expressionScript.setScript(SCRIPT_TEXT);
         expressionScript.setRegisterListenerScript("sensors.provideSensor(\"IS1\").addPropertyChangeListener(self)");
         expressionScript.setUnregisterListenerScript("sensors.provideSensor(\"IS1\").removePropertyChangeListener(self)");
         MaleSocket socketExpressionScript = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionScript);

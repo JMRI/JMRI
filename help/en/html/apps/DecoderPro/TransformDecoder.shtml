@@ -53,7 +53,7 @@
       </ul>
 
       <p>For JMRI itself or the speed of DecoderPro operation, these two approaches are the same:
-      the file template is internally transformed (expanded) to the decode definition XML and
+      the file template is internally transformed (expanded) to the decoder definition XML and
       processed as if it was written entirely by hand. For <strong>maintenance</strong>, it is a
       way easier to maintain ~600 lines of XML than 20600.</p>
 
@@ -95,7 +95,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       <h2>Apply stylesheet to the decoder file.</h2>
 
       <p>An <strong>instruction to process the file as a template</strong> must be present in the
-      file, in order to act like a template. Otherwise JMRI would pick it as just "ordinary"
+      file, in order to act like a template. Otherwise, JMRI would pick it as just "ordinary"
       decoder definition - all the display items (see below) "misused" to hold data for template
       processing would appear in the UI !</p>
 
@@ -229,7 +229,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       <p>A constant can be used, e.g. as a maximum count of items, specific CV number, ... I
       recommend to use <strong>display</strong> element to define a constant. That element has two
       free-form attributes: <strong>label</strong> and <strong>tooltip</strong>. So we can define
-      actually two constants in a single element ! This can be useful, if there are values closely
+      actually two constants in a single element! This can be useful, if there are values closely
       tied together, for example. Constants, that define maximum number of aspects handled by the
       UI and starting CV can be written as:</p>
 
@@ -250,12 +250,12 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
         value.</li>
 
         <li><strong>@tooltip</strong> means that the selector will read the
-        <strong>tooltip</strong> attribute. You may use @label to access the othe one.</li>
+        <strong>tooltip</strong> attribute. You may use @label to access the other one.</li>
       </ul>
 
       <h4>Enumerations, sequences, lists</h4>
 
-      <p>Sometimes a CV (variable, display item) should be generated for e.g. each output idenfied
+      <p>Sometimes a CV (variable, display item) should be generated for e.g. each output identified
       by a name, or number. The list can be coded as a series of <strong>&lt;label&gt;</strong>
       sub-elements of a <strong>&lt;display&gt;</strong> element:</p>
 
@@ -326,7 +326,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       <h3>Cycles and loops</h3>
 
       <p>XSLT language is a declarative one, and variables, once assigned, cannot be changed - so
-      it does not have a <strong>loop construct</strong> as most programmig languages do.
+      it does not have a <strong>loop construct</strong> as most programming languages do.
       Sometimes, a cycle can be more illustratively replaced by iteration over the content.
       Sometimes it is not possible: truly some fixed number of iterations need to be done, such as
       <strong>generating sequential CVs</strong> with the same structure - just the sequence number
@@ -465,7 +465,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       <p>Individual variables are generates using <em>xsl:template</em>, but the value part, mostly
       a <em>choice</em> is included from a separate file. Note that the <em>xi:include</em> will be
       generated into the resulting XML, so it is the DecoderPro panel reader, who does the content
-      inclusion, not the generator. The template subsitutes the variable parts of the
+      inclusion, not the generator. The template substitutes the variable parts of the
       definition:</p>
 
       <pre>
@@ -474,7 +474,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
 &lt;/variable&gt;
       </pre>
       <p>There are two important things. When using <em>xi:</em> prefix, that <strong>prefix must
-      be declared</strong> at the top of the document (may be in any parent element, but
+      be declared</strong> at the top of the document (maybe in any parent element, but
       conventionally prefixes are collected at the start). Use exactly the same URL (attribute
       value), otherwise the instruction won't be recognized.</p>
 

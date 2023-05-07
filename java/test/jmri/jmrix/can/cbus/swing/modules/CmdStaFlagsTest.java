@@ -21,7 +21,7 @@ public class CmdStaFlagsTest {
     @Test
     public void testCtor() {
 
-        CmdStaFlags t = new CmdStaFlags(3, "Title", flags, tooltips, _update);
+        CmdStaFlags t = new CmdStaFlags(3, 3, "Title", flags, tooltips, _update);
         Assert.assertNotNull("exists",t);
     }
     

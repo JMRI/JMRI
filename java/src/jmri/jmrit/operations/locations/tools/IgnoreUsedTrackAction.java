@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.TrackEditFrame;
 
 /**
  * Action to allow a user to define how much used track space is to be ignored
@@ -15,12 +15,12 @@ import jmri.jmrit.operations.locations.Track;
  */
 public class IgnoreUsedTrackAction extends AbstractAction {
 
-    private Track _track;
+    private TrackEditFrame _tef = null;
     private IgnoreUsedTrackFrame _iutf;
 
-    public IgnoreUsedTrackAction(Track track) {
+    public IgnoreUsedTrackAction(TrackEditFrame tef) {
         super(Bundle.getMessage("MenuItemPlannedPickups"));
-        _track = track;
+        _tef = tef;
     }
 
     @Override
@@ -28,6 +28,6 @@ public class IgnoreUsedTrackAction extends AbstractAction {
         if (_iutf != null) {
             _iutf.dispose();
         }
-        _iutf = new IgnoreUsedTrackFrame(_track);
+        _iutf = new IgnoreUsedTrackFrame(_tef);
     }
 }

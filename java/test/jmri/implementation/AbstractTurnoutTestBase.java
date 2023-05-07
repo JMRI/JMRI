@@ -8,7 +8,6 @@ import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**
@@ -48,11 +47,11 @@ public abstract class AbstractTurnoutTestBase {
 
     protected Turnout t = null; // holds object under test; set by setUp()
 
-    static protected boolean listenerResult = false;
-    static protected int listenStatus = Turnout.UNKNOWN;
-    static protected java.util.List<String> propChangeNames;
+    protected boolean listenerResult = false;
+    protected int listenStatus = Turnout.UNKNOWN;
+    protected java.util.List<String> propChangeNames;
 
-    public static class Listen implements PropertyChangeListener {
+    public class Listen implements PropertyChangeListener {
 
         public Listen(){
             propChangeNames = new java.util.ArrayList<>();
@@ -139,10 +138,10 @@ public abstract class AbstractTurnoutTestBase {
         Assert.assertEquals("commanded state 3", "Thrown", t.describeState(t.getState()));
     }
 
-    static class TestSensor extends AbstractSensor {
+    private static class TestSensor extends AbstractSensor {
             public boolean request = false;
 
-            public TestSensor(String sysName, String userName){
+            private TestSensor(String sysName, String userName){
                 super(sysName, userName);
             }
 
@@ -350,7 +349,7 @@ public abstract class AbstractTurnoutTestBase {
         s1.setKnownState(Sensor.ACTIVE);
         s2.setKnownState(Sensor.INACTIVE);
 
-        JUnitUtil.waitFor( () -> t.getKnownState() != Turnout.UNKNOWN);
+        JUnitUtil.waitFor( () -> t.getKnownState() != Turnout.UNKNOWN,"Turnout did not go Thrown");
 
         Assert.assertEquals("state changed by TWOSENSOR feedback (Active, Inactive)", Turnout.THROWN, t.getKnownState());
         Assert.assertEquals("listener notified of change for TWOSENSOR feedback", Turnout.THROWN,listenStatus);

@@ -41,6 +41,9 @@
   <version author="Ronald Kuhn   ronald@wirkuhns.de" version="2.0" lastUpdated="2021/11/29"/>
   <!-- v2.0,  added version 40 firmware capabilities,  Ronald Kuhn, 29 Nov 2021 -->
   <!-- v2.1,  add czech translation with FW v40                                               -->
+  <version author="Nigel Cliffe" version="2.2" lastUpdated="2022/11/23"/>
+  <!-- v2.2,  added MX660 decoder, 23 Nov 2022 -->
+  
 
   <decoder>
     <family name="Zimo Unified software (version 40+)" mfg="Zimo">
@@ -630,6 +633,33 @@
         </output>
         <size length="20" width="9.5" height="3.5" units="mm"/>
       </model>
+      <model model="MX660 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="DropIn" numOuts="6" numFns="14" productID="160">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3 (+5v)">
+          <label xml:lang="de">FA3 (+5v)</label>
+          <label xml:lang="cs">FV 3 (+5V)</label>
+        </output>
+        <output name="6" label="FO 4 (+5v)">
+          <label xml:lang="de">FA4 (+5v)</label>
+          <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <size length="20" width="9.5" height="3.5" units="mm"/>
+      </model>
       <model model="MX605 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="DropIn" numOuts="3" numFns="14" productID="189">
         <output name="1" label="Front Light (MX605SL)">
           <label xml:lang="de">Lvor (MX605SL)</label>
@@ -661,73 +691,73 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
-        <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="cs">Verze dekodéru </label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="189" readOnly="yes" include="189">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="190" readOnly="yes" include="190">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="221" readOnly="yes" include="221">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="222" readOnly="yes" include="222">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="225" readOnly="yes" include="225">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="246" readOnly="yes" include="246">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="249" readOnly="yes" include="249">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="253" readOnly="yes" include="253">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>
         <label xml:lang="it">ID 2 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 2:</label>
+        <label xml:lang="cs">Dekodér ID 2</label>
       </variable>
       <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
         <label xml:lang="it">ID 3 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 3:</label>
+        <label xml:lang="cs">Dekodér ID 3</label>
       </variable>
       <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
         <label xml:lang="it">ID 4 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 4:</label>
+        <label xml:lang="cs">Dekodér ID 4</label>
       </variable>
       <!-- Begin sound-only variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound_v40.xml"/>

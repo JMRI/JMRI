@@ -38,137 +38,132 @@
           update, unless something in JMRI breaks on Java 9 on Windows (Currently support using
           very large fonts as a workaround, but it quickly breaks as text overlaps widget
           boundaries)</td>
-          <td>1.8?</td>
-          <td>1.9</td>
+          <td>8</td>
+          <td>9</td>
         </tr>
 
         <tr>
-          <td>It seems that MacOS X (macOS) users will lose the use of the OS X App menu for About,
-          Preferences, and (critically) Quit handling on that platform</td>
-          <td>1.9</td>
-          <td>1.9</td>
-        </tr>
-
-        <tr>
-          <td>It seems that MacOS X (macOS) users will lose Applescript scripting</td>
-          <td>1.9</td>
-          <td>1.9</td>
+          <td>Applescript support on MacOS X (macOS) removed from the JVM (Note that Java 7 and 8
+          included Applescript support but disabled it unless an additional JAR file enabling it
+          was added by the user).</td>
+          <td>&gt; 9</td>
+          <td>&gt; 9</td>
         </tr>
 
         <tr>
           <td>Generics for Swing classes</td>
-          <td>1.7</td>
-          <td>1.7</td>
+          <td>7</td>
+          <td>7</td>
         </tr>
 
         <tr>
           <td>NIO improves .zip file access</td>
-          <td>1.7</td>
-          <td>1.7</td>
+          <td>7</td>
+          <td>7</td>
         </tr>
 
         <tr>
           <td>I18N I/O improvements</td>
-          <td>1.7</td>
-          <td>1.7</td>
+          <td>7</td>
+          <td>7</td>
         </tr>
 
         <tr>
           <td>Memory use and<br>
           GC improvements<br>
           (better performance)</td>
-          <td>1.7</td>
-          <td>1.7</td>
+          <td>7</td>
+          <td>7</td>
         </tr>
 
         <tr>
           <td>Jetty Version 9</td>
-          <td>1.7</td>
-          <td>1.7</td>
+          <td>7</td>
+          <td>7</td>
         </tr>
 
         <tr>
           <td>JUnit 4 and the<br>
           <code>assert</code> keyword</td>
-          <td>1.7</td>
-          <td>1.7</td>
+          <td>7</td>
+          <td>7</td>
         </tr>
 
         <tr>
           <td>Desktop class</td>
-          <td>1.6</td>
-          <td>1.6</td>
+          <td>6</td>
+          <td>6</td>
         </tr>
 
         <tr>
           <td>JDOM2 (generics)</td>
-          <td>1.6</td>
-          <td>1.6</td>
+          <td>6</td>
+          <td>6</td>
         </tr>
 
         <tr>
           <td>Toolbars</td>
-          <td>1.6</td>
-          <td>1.6</td>
+          <td>6</td>
+          <td>6</td>
         </tr>
 
         <tr>
           <td>JTable Sorting</td>
-          <td>1.6</td>
-          <td>1.6</td>
+          <td>6</td>
+          <td>6</td>
         </tr>
 
         <tr>
           <td>Webstart compatibility</td>
-          <td>1.6</td>
-          <td>1.6</td>
+          <td>6</td>
+          <td>6</td>
         </tr>
 
         <tr>
           <td>SwingWorker</td>
-          <td>1.5</td>
-          <td>1.5 (*1.4)</td>
+          <td>5</td>
+          <td>5 (*1.4)</td>
         </tr>
 
         <tr>
           <td>JSpinner</td>
-          <td>1.5</td>
-          <td>1.5</td>
+          <td>5</td>
+          <td>5</td>
         </tr>
 
         <tr>
           <td>Enums</td>
-          <td>1.5</td>
-          <td>1.5</td>
+          <td>5</td>
+          <td>5</td>
         </tr>
 
         <tr>
           <td>printf, Formatter</td>
-          <td>1.5</td>
-          <td>1.5</td>
+          <td>5</td>
+          <td>5</td>
         </tr>
 
         <tr>
           <td>generics</td>
-          <td>1.5</td>
-          <td>1.5</td>
+          <td>5</td>
+          <td>5</td>
         </tr>
 
         <tr>
           <td>Annotations</td>
-          <td>1.5</td>
+          <td>5</td>
           <td>1.3</td>
         </tr>
 
         <tr>
           <td>JavaMail</td>
-          <td>1.5</td>
+          <td>5</td>
           <td>1.3</td>
         </tr>
 
         <tr>
           <td>JUnit 4.0</td>
-          <td>1.5</td>
+          <td>5</td>
           <td>1.3</td>
         </tr>
 
@@ -199,15 +194,15 @@
         <tr>
           <td>Drag and Drop</td>
           <td>1.4 (additional<br>
-          improvements in 1.6)</td>
-          <td>1.4, 1.6</td>
+          improvements in 6)</td>
+          <td>1.4, 6</td>
         </tr>
 
         <tr>
           <td>Logging API</td>
           <td>1.4 (additional<br>
-          improvements in 1.6)</td>
-          <td>1.4, 1.6</td>
+          improvements in 6)</td>
+          <td>1.4, 6</td>
         </tr>
 
         <tr>
@@ -559,7 +554,7 @@ the box is editable, and somebody enters some other type).<br>
 -Xdoclint:all,-missing,-accessibility,-html,-syntax
 </pre>to drop tests for missing Javadoc tags and certain benign HTML errors. (For now)
       <h2 id="extension">JVM and JDK Extensions</h2>
-      It's possible to extend the JVM and/or JDK installed on your machine via <a href=
+      <p>It's possible to extend the JVM and/or JDK installed on your machine via <a href=
       "http://docs.oracle.com/javase/8/docs/technotes/guides/standards/index.html">the
       endorsed-standards override mechanism</a> and the <a href=
       "http://docs.oracle.com/javase/8/docs/technotes/guides/extensions/index.html">extension
@@ -571,7 +566,9 @@ the box is editable, and somebody enters some other type).<br>
       the following from the command line: <code>java -XX:+CheckEndorsedAndExtDirs</code> If you
       get a message about a specific directory, look there for conflicting Jar files. You should
       probably consult the JMRIusers or jmri-developers mailing list for help before changing that
-      directory! <!--#include virtual="/Footer.shtml" -->
+      directory!</p>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

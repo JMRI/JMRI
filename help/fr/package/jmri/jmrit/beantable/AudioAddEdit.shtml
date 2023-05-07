@@ -1,21 +1,22 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- UpDated by Herv&#233; Blorec  2013-10-10 -->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- UpDated by Herv&#233; Blorec  2013-10-10 -->
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding/Editing Audio objects</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta content="Matt Harris" name="Author">
-  <meta name="keywords" content="JMRI help Audio Add Edit"><!--#include virtual="/Style" -->
+  <meta name="author" content="Matt Harris" >
+  <meta name="keywords" content="JMRI help Audio Add Edit">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
+
 <body>
   <!--#include virtual="/Header" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h1>Ajout/Modification des Objets Audio</h1>
-      Pour créer un objet audio, cliquez sur le bouton "Ajouter ..." <a href=
+
+      <p>Pour créer un objet audio, cliquez sur le bouton "Ajouter ..." <a href=
       "AudioTable.shtml">Tableau Audio</a>. Cela ouvrira une petite fenêtre avec un espace pour
       entrer un nom système et nom utilisateur pour la nouvelle mémoire, plus un bouton "Ajouter".
       <p>Vous devez entrer un nom système unique. Le système des noms pour les objets audio ont un
@@ -37,10 +38,10 @@
       "../../../../html/tools/Audio.shtml">page d'aide audio</a>.</p>
 
       <p>Traduction 2021-03-26</p>
+
       <!--#include virtual="/Footer" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

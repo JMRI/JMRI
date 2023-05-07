@@ -137,22 +137,28 @@ public class MockZeroConfServiceManager extends ZeroConfServiceManager {
         log.debug("Stopping ZeroConfService {}", service.getKey());
         if (services.containsKey(service.getKey())) {
             getDNSes().values().stream().forEach((netService) -> {
-                try {
-                    try {
-                        log.debug("Unregistering {} from {}", service.getKey(), netService.getInetAddress());
-                        netService.unregisterService(service.getServiceInfo(netService.getInetAddress()));
-                        service.removeServiceInfo(netService.getInetAddress());
-                        service.getListeners().stream().forEach((listener) -> {
-                            listener.serviceUnpublished(new ZeroConfServiceEvent(service, netService));
-                        });
-                    } catch (NullPointerException ex) {
-                        log.debug("{} already unregistered from {}", service.getKey(), netService.getInetAddress());
-                    }
-                } catch (IOException ex) {
-                    log.error("Unable to stop ZeroConfService {}. {}", service.getKey(), ex.getLocalizedMessage());
-                }
+                unregister(service, netService);
             });
             services.remove(service.getKey());
+        }
+    }
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "DCN_NULLPOINTER_EXCEPTION",
+        justification = "some objects may already be unregistered")
+    private void unregister(ZeroConfService service, javax.jmdns.JmDNS netService) {
+        try {
+            try {
+                log.debug("Unregistering {} from {}", service.getKey(), netService.getInetAddress());
+                netService.unregisterService(service.getServiceInfo(netService.getInetAddress()));
+                service.removeServiceInfo(netService.getInetAddress());
+                service.getListeners().stream().forEach((listener) -> {
+                    listener.serviceUnpublished(new ZeroConfServiceEvent(service, netService));
+                });
+            } catch (NullPointerException ex) {
+                log.debug("{} already unregistered from {}", service.getKey(), netService.getInetAddress());
+            }
+        } catch (IOException ex) {
+            log.error("Unable to stop ZeroConfService {}. {}", service.getKey(), ex.getLocalizedMessage());
         }
     }
 

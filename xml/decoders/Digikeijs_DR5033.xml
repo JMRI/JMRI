@@ -31,7 +31,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 
         <variables>
             <variable CV="5033.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Board address" >
-              <decVal min="0" max="9999"/>
+              <decVal min="1" max="9999"/>
               <label xml:lang="it">Indirizzo Primario: </label>
               <label xml:lang="fr">Adresse décodeur: </label>
               <label xml:lang="de">Decoderadresse: </label>
@@ -268,7 +268,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
     <pane>
         <name>LNCV Configuration</name>
         <name xml:lang="de">LNCV Konfiguration</name>
-        <name xml:lang="nl">LNCV Configuratie</name>
+        <name xml:lang="nl">LNCV instellingen</name>
+        <name xml:lang="fr">Configuration LNCV</name>
         <name xml:lang="cs">Konfigurace LNCV</name>
         <row>
             <column>
@@ -293,12 +294,14 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                   <text>Before writing, open a Programming</text>
                   <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
                   <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+                  <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
                   <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
                 </label>
                 <label>
                   <text>session using the LocoNet LNCV Tool.</text>
                   <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
                   <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+                  <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
                   <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
                 </label>
                 <label>

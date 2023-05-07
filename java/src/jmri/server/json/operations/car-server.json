@@ -103,6 +103,10 @@
             "type": "boolean",
             "description": "True if the car is shown as a utility car on manifests; false otherwise"
         },
+        "isLocal": {
+            "type": "boolean",
+            "description": "True if the car is performing a local move; false otherwise"
+        },
         "destination": {
             "type": [
                 "object",
@@ -169,6 +173,7 @@
         "destination",
         "finalDestination",
         "outOfService",
-        "returnWhenEmpty"
+        "returnWhenEmpty",
+        "isLocal"
     ]
 }

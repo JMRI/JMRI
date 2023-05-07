@@ -3,13 +3,10 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 import java.awt.geom.Point2D;
 
 import jmri.Turnout;
-import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.*;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This module handles configuration for display.LayoutTurnout objects for a
@@ -19,11 +16,11 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2019
  * @author Bob Jacobsen Copyright (c) 2020
  */
-public class LayoutTurnoutViewXml extends AbstractXmlAdapter {
+public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
 
     static final EnumIO<LayoutTurnout.LinkType> linkEnumMap = new EnumIoNamesNumbers<>(LayoutTurnout.LinkType.class);
     static final EnumIO<LayoutTurnout.TurnoutType> tTypeEnumMap = new EnumIoNamesNumbers<>(LayoutTurnout.TurnoutType.class);
-    
+
     public LayoutTurnoutViewXml() {
     }
 
@@ -53,30 +50,34 @@ public class LayoutTurnoutViewXml extends AbstractXmlAdapter {
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
         element.setAttribute("disableWhenOccupied", "" + (p.isDisabledWhenOccupied() ? "yes" : "no"));
 
+        if (p.showToolTip()) {
+            element.setAttribute("showtooltip", "yes");
+        }
+
         element.setAttribute("continuing", "" + p.getContinuingSense());
 
         Point2D coords = pv.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
         element.setAttribute("ycen", "" + coords.getY());
-        
+
         coords = pv.getCoordsA();
         element.setAttribute("xa", "" + coords.getX());
         element.setAttribute("ya", "" + coords.getY());
-        
+
         coords = pv.getCoordsB();
         element.setAttribute("xb", "" + coords.getX());
         element.setAttribute("yb", "" + coords.getY());
-        
+
         coords = pv.getCoordsC();
         element.setAttribute("xc", "" + coords.getX());
         element.setAttribute("yc", "" + coords.getY());
-        
+
         coords = pv.getCoordsD();
         element.setAttribute("xd", "" + coords.getX());
         element.setAttribute("yd", "" + coords.getY());
-        
+
         element.setAttribute("ver", "" + p.getVersion());
-        
+
         addClass(element);
 
         if (!p.getTurnoutName().isEmpty()) {
@@ -176,6 +177,7 @@ public class LayoutTurnoutViewXml extends AbstractXmlAdapter {
         if (!p.getSensorDName().isEmpty()) {
             element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
         }
+        storeLogixNG_Data(pv, element);
         return element;
     }
 
@@ -219,13 +221,13 @@ public class LayoutTurnoutViewXml extends AbstractXmlAdapter {
         }
 
         // create the new LayoutTurnout of the correct type
-        LayoutTurnoutView lv; 
+        LayoutTurnoutView lv;
         LayoutTurnout l;
-        
+
         switch(type) {
 
             case RH_TURNOUT :
-                LayoutRHTurnout lrht = new LayoutRHTurnout(name, p, version); 
+                LayoutRHTurnout lrht = new LayoutRHTurnout(name, p, version);
                 l = lrht;
                 lv = new LayoutRHTurnoutView(lrht, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p);
                 break;
@@ -395,6 +397,14 @@ public class LayoutTurnoutViewXml extends AbstractXmlAdapter {
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
+        l.setShowToolTip(false);
+        a = element.getAttribute("showtooltip");
+        if (a != null) {
+            if ("yes".equals(a.getValue())) {
+                l.setShowToolTip(true);
+            }
+        }
+
         if (version == 2) {
             try {
                 x = element.getAttribute("xa").getFloatValue();
@@ -441,6 +451,8 @@ public class LayoutTurnoutViewXml extends AbstractXmlAdapter {
         l.setSensorB(getElement(element, "sensorB"));
         l.setSensorC(getElement(element, "sensorC"));
         l.setSensorD(getElement(element, "sensorD"));
+
+        loadLogixNG_Data(lv, element);
     }
 
     String getElement(Element el, String child) {

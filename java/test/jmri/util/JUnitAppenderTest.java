@@ -120,11 +120,11 @@ public class JUnitAppenderTest {
         cacheError = JUnitAppender.unexpectedErrorSeen;
         cacheWarn  = JUnitAppender.unexpectedWarnSeen; 
         cacheInfo  = JUnitAppender.unexpectedInfoSeen; 
-        
-        JUnitAppender.unexpectedFatalSeen = false;
-        JUnitAppender.unexpectedErrorSeen = false;
-        JUnitAppender.unexpectedWarnSeen  = false; 
-        JUnitAppender.unexpectedInfoSeen  = false; 
+
+        JUnitAppender.setUnexpectedFatalSeen(false);
+        JUnitAppender.setUnexpectedErrorSeen(false);
+        JUnitAppender.setUnexpectedWarnSeen(false);
+        JUnitAppender.setUnexpectedInfoSeen(false);
 
         Assert.assertFalse("initial FATAL", JUnitAppender.unexpectedMessageSeen(Level.FATAL));
         Assert.assertFalse("initial ERROR", JUnitAppender.unexpectedMessageSeen(Level.ERROR));
@@ -298,12 +298,12 @@ public class JUnitAppenderTest {
 
             Assert.assertTrue("post INFO",  JUnitAppender.unexpectedMessageSeen(Level.INFO));
             Assert.assertEquals("This INFO message was emitted to test the entire logging chain, please don't remove", JUnitAppender.unexpectedMessageContent(Level.INFO));
-            
-            JUnitAppender.unexpectedFatalSeen = cacheFatal;
-            JUnitAppender.unexpectedErrorSeen = cacheError;
-            JUnitAppender.unexpectedWarnSeen  = cacheWarn; 
-            JUnitAppender.unexpectedInfoSeen  = cacheInfo; 
-            
+
+            JUnitAppender.setUnexpectedFatalSeen(cacheFatal);
+            JUnitAppender.setUnexpectedErrorSeen(cacheError);
+            JUnitAppender.setUnexpectedWarnSeen(cacheWarn);
+            JUnitAppender.setUnexpectedInfoSeen(cacheInfo);
+
             testingUnexpected = false;
         }
     }

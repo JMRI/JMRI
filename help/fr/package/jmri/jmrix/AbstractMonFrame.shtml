@@ -1,128 +1,117 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Monitor Window</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help monitor">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Fen&Atilde;&ordf;tre Moniteur de Communication</h1>JMRI
-      offre une fen&Atilde;&ordf;tre de communication pour
+      <h1>Fen&ecirc;tre Moniteur de Communication</h1>
+
+      <p>JMRI
+      offre une fen&ecirc;tre de communication pour
       surveiller pour que vous puissiez voir ce qui se passe sur le
       lien de communication entre le programme et le
-      mat&Atilde;&copy;riel du r&Atilde;&copy;seau.
+      mat&eacute;riel du r&eacute;seau.</p>
 
-      <p>Une fois que vous ouvrez une fen&Atilde;&ordf;tre du
-      moniteur, il affichera automatiquement &Atilde;  l'
-      &Atilde;&copy;cran tout le trafic sur le lien aussi logtemps
-      que " Filtres Octets" est vide</p>
+      <p>Une fois que vous ouvrez une fen&ecirc;tre du
+      moniteur, il affichera automatiquement &agrave; l&apos;
+      &eacute;cran tout le trafic sur le lien aussi logtemps
+      que "Filtres Octets" est vide</p>
 
       <h2>Commandes</h2>
 
       <dl>
-        <dt>Effacer &Atilde;&permil;cran</dt>
+        <dt>Effacer &Egrave;cran</dt>
 
         <dd>Efface la zone de connexion au haut de
-        l'&Atilde;&copy;cran</dd>
+        l&apos;&eacute;cran</dd>
 
-        <dt>Gel de l'&Atilde;&permil;cran</dt>
+        <dt>Gel de l'&Egrave;cran</dt>
 
-        <dd>Arr&Atilde;&ordf;te l'acquisition de nouvelles
-        informations, de sorte que l'information saisie cesse de
-        d&Atilde;&copy;filer</dd>
+        <dd>Arr&ecirc;te l&apos;acquisition de nouvelles
+        informations, de sorte que l&apos;information saisie cesse de
+        d&eacute;filer</dd>
 
-        <dt>Montrer donn&Atilde;&copy;es brutes</dt>
+        <dt>Montrer donn&eacute;es brutes</dt>
 
         <dd>Normalement, le moniteur affiche
-        l'interpr&Atilde;&copy;tation de ce qu'il voit du
+        l'interpr&eacute;tation de ce qu'il voit du
         programme. Si vous voulez voir les octets bruts, cochez
         cette case.</dd>
 
         <dt>Montrer horodatage</dt>
 
         <dd>Habituellement, le programme affiche simplement les
-        donn&Atilde;&copy;es du lien de communication. Si vous
-        souhaitez que chaque message soit &Atilde;&ordf;tre
-        pr&Atilde;&copy;c&Atilde;&copy;d&Atilde;&copy; par l'heure
-        &Atilde;  laquelle qu'il a &Atilde;&copy;t&Atilde;&copy;
-        envoy&Atilde;&copy; ou a &Atilde;&copy;t&Atilde;&copy;
-        re&Atilde;&sect;u, cochez cette case.</dd>
+        donn&eacute;es du lien de communication. Si vous
+        souhaitez que chaque message soit &ecirc;tre
+        pr&eacute;c&eacute;d&eacute; par l&apos;heure
+        &agrave; laquelle qu&apos;il a &eacute;t&eacute;
+        envoy&eacute; ou a &eacute;t&eacute;
+        re&ccedil;u, cochez cette case.</dd>
 
         <dt>Ajoutez message</dt>
 
-        <dd>Si vous voulez ins&Atilde;&copy;rer un message dans les
-        informations captur&Atilde;&copy;es, par exemple de faire
-        une note sur ce que vous vous appr&Atilde;&ordf;tez
-        &Atilde;  faire, vous pouvez le taper dans le champ de
-        texte &Atilde;  c&Atilde;&acute;t&Atilde;&copy; du bouton
-        "Ajouter message " et puis cliquez sur ce bouton. Ceci est
-        particuli&Atilde;&uml;rement utile lorsque vous vous
-        connectez &Atilde;  un fichier (voir ci-dessous) et que
+        <dd>Si vous voulez ins&eacute;rer un message dans les
+        informations captur&eacute;es, par exemple de faire
+        une note sur ce que vous vous appr&ecirc;tez
+        &agrave; faire, vous pouvez le taper dans le champ de
+        texte &agrave; c&ocirc;t&eacute; du bouton
+        &quot;Ajouter message &quot; et puis cliquez sur ce bouton. Ceci est
+        particuli&egrave;rement utile lorsque vous vous
+        connectez &agrave; un fichier (voir ci-dessous) et que
         vous voulez faire une note pour plus tard sur ce qui se
         passe.</dd>
       </dl>
 
-      <h2>Journalisation dans un fichier</h2>Parfois, il est utile
+      <h2>Journalisation dans un fichier</h2>
+      <p>Parfois, il est utile
       de capturer ce qui se passe. Par exemple, vous pouvez
       rencontrer un bug (!!), et que vous voulez envoyer une copie
       de ce qui se arrive aux gens qui tentent d'y
-      rem&Atilde;&copy;dier.
+      rem&eacute;dier.</p>
 
-      <p>De petites quantit&Atilde;&copy;s de donn&Atilde;&copy;es
-      peuvent &Atilde;&ordf;tre copi&Atilde;&copy;es &Atilde; 
-      partir de la fen&Atilde;&ordf;tre journal avec vos
-      ordinateurs par la commande "Copier" (par exemple Ctrl-C ou
-      cmd-C), puis coll&Atilde;&copy; dans un email.</p>
+      <p>De petites quantit&eacute;s de donn&eacute;es
+      peuvent &ecirc;tre copi&eacute;es &agrave;
+      partir de la fen&ecirc;tre journal avec vos
+      ordinateurs par la commande &quot;Copier&quot; (par exemple Ctrl-C ou
+      cmd-C), puis coll&eacute; dans un email.</p>
 
       <p>Si vous voulez capturer davantage, vous pouvez avoir la
-      fen&Atilde;&ordf;tre pour r&Atilde;&copy;diger dans un
+      fen&ecirc;tre pour r&eacute;diger dans un
       fichier journal sur le disque de votre ordinateur. Pour ce
       faire:</p>
 
       <ol>
-        <li>Cliquez sur "Choisir le fichier journal". Une
-        fen&Atilde;&ordf;tre de s&Atilde;&copy;lection de fichier
-        va s'ouvrir. Naviguez &Atilde;  l'endroit o&Atilde;&sup1;
+        <li>Cliquez sur &quot;Choisir le fichier journal&quot;. Une
+        fen&ecirc;tre de s&eacute;lection de fichier
+        va s&apos;ouvrir. Naviguez &agrave; l&apos;endroit o&ograve;
         vous souhaitez stocker le fichier, entrez un nom pour le
-        nouveau fichier journal, puis cliquez sur "Enregistrer".
+        nouveau fichier journal, puis cliquez sur &quot;Enregistrer&quot;.
         Notez que si vous choisissez un fichier qui existe
-        d&Atilde;&copy;j&Atilde; , il sera
-        &Atilde;&copy;cras&Atilde;&copy;.</li>
+        d&eacute;j&agrave; , il sera &eacute;cras&eacute;.</li>
 
-        <li>Lorsque vous &Atilde;&ordf;tes pr&Atilde;&ordf;t
-        &Atilde;  capturer les donn&Atilde;&copy;es que vous
-        souhaitez, cliquez sur &Acirc;&laquo;D&Atilde;&copy;marrer
-        l'enregistrement" sur la fen&Atilde;&ordf;tre du
+        <li>Lorsque vous &ecirc;tes pr&ecirc;t
+        &agrave; capturer les donn&eacute;es que vous
+        souhaitez, cliquez sur &quot;D&eacute;marrer
+        l&apos;enregistrement&quot; sur la fen&ecirc;tre du
         moniteur.</li>
 
-        <li>Lorsque vous avez termin&Atilde;&copy;, cliquez sur
-        "Arr&Atilde;&ordf;ter l'enregistrement" pour stocker les
-        donn&Atilde;&copy;es et fermez le fichier.</li>
+        <li>Lorsque vous avez termin&eacute;, cliquez sur
+        &quot;Arr&ecirc;ter l&apos;enregistrement&quot; pour stocker les
+        donn&eacute;es et fermez le fichier.</li>
       </ol>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

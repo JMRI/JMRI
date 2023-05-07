@@ -1,27 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--Updated by Blorec Herv&#233; le 2016-09-28-->
+<!DOCTYPE html>
 <html lang="fr">
+<!--Updated by Blorec Herv&#233; le 2016-09-28-->
 <head>
-<title>Basic Throttle window usage</title>
+  <title>Basic Throttle window usage</title>
 
-<meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
-<meta name="Description" content="Throttle documentation for JMRI project">
-<meta name="Author" content="Lionel Jeanson">
-<meta name="Robots" content="Index, Follow">
-<meta name="Revisit-After" content="7 Days">
-  <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
+  <meta name="description" content="Throttle documentation for JMRI project">
+  <meta name="author" content="Lionel Jeanson">
+  <meta name="Robots" content="Index, Follow">
+  <meta name="Revisit-After" content="7 Days">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
@@ -233,11 +227,11 @@ Mais ce n'est qu'un &#233;chantillon, ayez un &#339;il sur le code et personnali
 <br>
 <span style="font-style: italic;"> Notez que la barre d'outils Fen&#234;tre R&#233;gulateur est aussi
 Jynstrumentable, donc ici nous d&#233;posons le Jynstruments sur </span> <span style="font-style: italic;"> le contenu fen&#234;tre </span> <span style="font-style: italic;">
-lui-m&#234;me, non pas sur la barre d'outils.
-</span>
+lui-m&#234;me, non pas sur la barre d'outils.</span>
 
-		<!--#include virtual="/Footer.shtml" -->
+		    <!--#include virtual="/Footer_fr.shtml" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

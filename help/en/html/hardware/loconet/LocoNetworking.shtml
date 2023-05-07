@@ -22,7 +22,7 @@
       communicate using standard TCP/IP protocols, but there are differences in the details.</p>
 
       <p>One method allows multiple JMRI nodes to connect as Clients to a single <a href=
-      "http://loconetovertcp.sourceforge.net/Interface/index.html">LocoNetOverTCP LbServer</a>,
+      "https://loconetovertcp.sourceforge.net/Interface/index.html">LocoNetOverTCP LbServer</a>,
       which is external to JMRI.<br>
       The other method uses the inbuilt <a href="LocoNetServer.shtml">LocoNet Client/Server
       capability</a> of JMRI.</p>
@@ -61,7 +61,7 @@
         adapters, and doesn't permit you to put a computer remote from the layout.</li>
       </ul>
 
-      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com">Digitrax,
       Inc.</a></p>
 
       <hr class="hide">

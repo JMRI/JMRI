@@ -81,7 +81,7 @@
       many commits that are to be merged, from which branch and to which branch. Ensure you have
       chosen the correct branches!</p>
 
-      <p>Click on the button "Merge upstream/master into master" to do the merge. When it's finish,
+      <p>Click on the button "Merge upstream/master into master" to do the merge. When it's finished,
       you will see this:<br>
       <a href="images/GHD_Image_6_MergeIntoDone.png"><img src=
       "images/GHD_Image_6_MergeIntoDone.png" height="50%" width="50%" alt="screenshot"></a><br>
@@ -223,23 +223,19 @@
       to handle that, but in some cases conflicts appears that needs to be handled manually.
       <p>In our example, we have the method <code>hello()</code>:</p>
 
-      <pre>
-        <code>
-    public void hello() {
-        System.out.print("Hello");
-        System.out.println("World");
-    }
-        </code>
-      </pre>
-    <p>Lets add a row:</p>
-    <pre>
-        <code>
-    public void hello() {
-        System.out.print("Hello");
-        System.out.print(" my ");
-        System.out.println("World");
-    }
-        </code>
+<pre style="font-family: monospace;">
+  public void hello() {
+      System.out.print("Hello");
+      System.out.println("World");
+  }
+</pre>
+  <p>Lets add a row:</p>
+  <pre>
+  public void hello() {
+      System.out.print("Hello");
+      System.out.print(" my ");
+      System.out.println("World");
+  }
 </pre>
       <br>
       <a href="images/GHD_Image_17_Conflict.png"><img src="images/GHD_Image_17_Conflict.png"
@@ -295,13 +291,16 @@
 
       <pre style="font-family: monospace;">
         System.out.print(" our ");
-</pre><br>
+</pre>
+      <p>
       <a href="images/GHD_Image_21_ConflictSolving.png"><img src=
       "images/GHD_Image_21_ConflictSolving.png" height="50%" width="50%" alt="screenshot"></a><br>
       Then we go back to GitHub Desktop, we see that the conflict is solved, so we can now merge
       the commit.<br>
       <a href="images/GHD_Image_22_ConflictSolving.png"><img src=
-      "images/GHD_Image_22_ConflictSolving.png" height="50%" width="50%" alt="screenshot"></a><br>
+      "images/GHD_Image_22_ConflictSolving.png" height="50%" width="50%" alt="screenshot"></a>
+      </p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

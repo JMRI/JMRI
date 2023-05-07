@@ -18,11 +18,6 @@ import org.junit.jupiter.api.*;
  */
 public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
-    public void testCreate() {
-        AcelaTrafficController m = new AcelaTrafficController();
-        Assert.assertNotNull("exists", m);
-    }
-
     public void testSendThenRcvReply() throws Exception {
         AcelaTrafficController c = (AcelaTrafficController)tc;
         // connect to iostream via port controller
@@ -45,9 +40,9 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
         
         // test the result of sending
         Assert.assertEquals("total length ", 4, tostream.available());
-        Assert.assertEquals("Char 0", '0', tostream.readByte());
-        Assert.assertEquals("Char 1", '1', tostream.readByte());
-        Assert.assertEquals("Char 2", '2', tostream.readByte());
+        Assert.assertEquals("Char 0", (byte)'0', tostream.readByte());
+        Assert.assertEquals("Char 1", (byte)'1', tostream.readByte());
+        Assert.assertEquals("Char 2", (byte)'2', tostream.readByte());
         Assert.assertEquals("EOM", 0x0d, tostream.readByte());
 
 
@@ -64,10 +59,22 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
         Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
     }
 
-    // internal class to simulate an AcelaListener
-    class AcelaListenerScaffold implements AcelaListener {
+    @Test
+    public void testListenerRcvdMsg() {
+        AcelaMessage m = new AcelaMessage(3);
+        m.setOpCode('0');
+        m.setElement(1, '1');
+        m.setElement(2, '2');
 
-        public AcelaListenerScaffold() {
+        AcelaListener l = new AcelaListenerScaffold();
+        l.message(m);
+        Assertions.assertEquals(m, rcvdMsg);
+    }
+
+    // internal class to simulate an AcelaListener
+    private class AcelaListenerScaffold implements AcelaListener {
+
+        AcelaListenerScaffold() {
             rcvdReply = null;
             rcvdMsg = null;
         }
@@ -86,7 +93,18 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
     AcelaMessage rcvdMsg;
 
     // internal class to simulate an AcelaPortController
-    class AcelaPortControllerScaffold extends AcelaPortController {
+    private class AcelaPortControllerScaffold extends AcelaPortController {
+
+        AcelaPortControllerScaffold() throws Exception {
+            super(new AcelaSystemConnectionMemo());
+            PipedInputStream tempPipe;
+            tempPipe = new PipedInputStream();
+            tostream = new DataInputStream(tempPipe);
+            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+            tempPipe = new PipedInputStream();
+            istream = new DataInputStream(tempPipe);
+            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+        }
 
         @Override
         public Vector<String> getPortNames() {
@@ -111,17 +129,6 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
         @Override
         public int[] validBaudNumbers() {
             return new int[] {};
-        }
-
-        protected AcelaPortControllerScaffold() throws Exception {
-            super(new AcelaSystemConnectionMemo());
-            PipedInputStream tempPipe;
-            tempPipe = new PipedInputStream();
-            tostream = new DataInputStream(tempPipe);
-            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
-            tempPipe = new PipedInputStream();
-            istream = new DataInputStream(tempPipe);
-            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
         }
 
         // returns the InputStream from the port

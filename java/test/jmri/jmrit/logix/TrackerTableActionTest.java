@@ -219,7 +219,6 @@ public class TrackerTableActionTest {
         _OBlockMgr.dispose();
         _OBlockMgr = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

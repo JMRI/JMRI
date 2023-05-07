@@ -32,14 +32,14 @@ public class DefaultAnalogActionManagerXmlTest {
     @Test
     public void testLoad() {
         DefaultAnalogActionManagerXml b = new DefaultAnalogActionManagerXml();
-        
+
         Element e = new Element("logixngAnalogExpressions");
         Element e2 = new Element("missing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.this.class.does.not.exist.TestClassXml");
         e.addContent(e2);
         b.loadActions(e);
         JUnitAppender.assertErrorMessage("cannot load class jmri.jmrit.logixng.this.class.does.not.exist.TestClassXml");
-/*        
+/*
         // Test loading the same class twice, in order to check field "xmlClasses"
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
@@ -48,7 +48,7 @@ public class DefaultAnalogActionManagerXmlTest {
         e2.addContent(new Element("systemName").addContent("IQAA1"));
         e2.addContent(new Element("maleSocket"));
         b.loadActions(e);
-        
+
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml");
@@ -56,7 +56,7 @@ public class DefaultAnalogActionManagerXmlTest {
         e2.addContent(new Element("systemName").addContent("IQAA2"));
         e2.addContent(new Element("maleSocket"));
         b.loadActions(e);
-        
+
         // Test trying to load a class with private constructor
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
@@ -65,7 +65,7 @@ public class DefaultAnalogActionManagerXmlTest {
         e.addContent(e2);
         b.loadActions(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");
-        
+
         // Test trying to load a class which throws an exception
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
@@ -74,7 +74,7 @@ public class DefaultAnalogActionManagerXmlTest {
         e.addContent(e2);
         b.loadActions(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");
-*/        
+*/
 //        System.out.format("Class name: %s%n", PrivateConstructorXml.class.getName());
     }
 
@@ -82,10 +82,10 @@ public class DefaultAnalogActionManagerXmlTest {
     @Test
     public void testStore() {
         DefaultAnalogActionManagerXml b = new DefaultAnalogActionManagerXml();
-        
+
         // If parameter is null, nothing should happen
         b.store(null);
-        
+
         // Test store a named bean that has no configurexml class
         AnalogActionManager manager = InstanceManager.getDefault(AnalogActionManager.class);
         manager.registerAction(new MyAnalogAction());
@@ -93,10 +93,10 @@ public class DefaultAnalogActionManagerXmlTest {
         JUnitAppender.assertErrorMessage("Cannot load configuration adapter for jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogActionManagerXmlTest$MyAnalogAction");
         JUnitAppender.assertErrorMessage("Cannot store configuration for jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogActionManagerXmlTest$MyAnalogAction");
     }
-    
+
     @Test
     public void testReplaceActionManagerWithoutConfigManager() {
-        
+
         // if old manager exists, remove it from configuration process
         if (InstanceManager.getNullableDefault(jmri.jmrit.logixng.AnalogActionManager.class) != null) {
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -114,26 +114,26 @@ public class DefaultAnalogActionManagerXmlTest {
         if (cmOD != null) {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_ANALOG_ACTIONS);
         }
-        
+
         Assert.assertTrue("manager is a MyManager",
                 InstanceManager.getDefault(AnalogActionManager.class)
                         instanceof MyManager);
-        
+
         // Test replacing the manager
         DefaultAnalogActionManagerXml b = new DefaultAnalogActionManagerXml();
         b.replaceActionManager();
-        
+
         Assert.assertFalse("manager is not a MyManager",
                 InstanceManager.getDefault(AnalogActionManager.class)
                         instanceof MyManager);
     }
-    
+
 //    @Ignore("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
     @Test
     public void testReplaceActionManagerWithConfigManager() {
-        
+
         JUnitUtil.initConfigureManager();
-        
+
         // if old manager exists, remove it from configuration process
         if (InstanceManager.getNullableDefault(jmri.jmrit.logixng.AnalogActionManager.class) != null) {
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -151,15 +151,15 @@ public class DefaultAnalogActionManagerXmlTest {
         if (cmOD != null) {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_ANALOG_ACTIONS);
         }
-        
+
         Assert.assertTrue("manager is a MyManager",
                 InstanceManager.getDefault(AnalogActionManager.class)
                         instanceof MyManager);
-        
+
         // Test replacing the manager
         DefaultAnalogActionManagerXml b = new DefaultAnalogActionManagerXml();
         b.replaceActionManager();
-        
+
         Assert.assertFalse("manager is not a MyManager",
                 InstanceManager.getDefault(AnalogActionManager.class)
                         instanceof MyManager);
@@ -178,27 +178,28 @@ public class DefaultAnalogActionManagerXmlTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
-    
-    
+
+
+
     private class MyAnalogAction extends AnalogActionMemory {
-        
+
         MyAnalogAction() {
             super("IQAA9999", null);
         }
-        
+
     }
-    
-    
+
+
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
     class PrivateConstructorXml extends AnalogActionMemoryXml {
         private PrivateConstructorXml() {
         }
     }
-    
+
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
     class ThrowExceptionXml extends AnalogActionMemoryXml {
@@ -207,15 +208,17 @@ public class DefaultAnalogActionManagerXmlTest {
             throw new JmriConfigureXmlException();
         }
     }
-    
-    
+
+
     class MyManager extends DefaultAnalogActionManager {
-        
+
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "We don't want to save config for this class")
         @Override
         protected void registerSelf() {
             // We don't want to save config for this class
         }
-        
+
     }
-    
+
 }

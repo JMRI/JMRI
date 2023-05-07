@@ -25,10 +25,10 @@ public class EasyDccTurnout extends AbstractTurnout {
     /**
      * Create a turnout.
      * <p>
-     * EasyDCC turnouts use the NMRA number (0-511) as their numerical identification.
+     * EasyDCC turnouts use the NMRA number (0-2044) as their numerical identification.
      *
      * @param prefix system connection prefix
-     * @param number the NMRA turnout number from 0 to 511
+     * @param number the NMRA turnout number from 0 to 2044
      * @param memo system connection
      */
     public EasyDccTurnout(String prefix, int number, EasyDccSystemConnectionMemo memo) {

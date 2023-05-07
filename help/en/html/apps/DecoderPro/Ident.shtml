@@ -23,13 +23,13 @@
       what values are valid, etc.</p>
 
       <p>DecoderPro allows a user to pick which decoder model they have installed, in which case it
-      can automatically find the right definition. But it also provide an "Ident" function which
+      can automatically find the right definition. But it also provides an "Ident" function which
       attempts to locate the right definition based on information it reads from the decoder.</p>
 
       <p>Ident starts by reading the manufacturer code from CV8. The NMRA has defined a set of
       unique values for this CV. Since (almost) all decoders properly provide this information,
       DecoderPro can use it to narrow-down the list of possible definitions to just those from a
-      particular manufacter.</p>
+      particular manufacturer.</p>
 
       <p>Next, DecoderPro reads the value from CV7. The NMRA has defined this as the "version"
       number. Unfortunately, not all manufacturers use this number in a way that provides necessary
@@ -88,7 +88,7 @@
         need for specific bug to be fixed.
           <p>It's important to note, however, that we don't need to be able to identify the
           specific version of firmware per se; we only want to identify the CV programming needed.
-          Internal changes need not effect the identification information.</p>
+          Internal changes need not affect the identification information.</p>
         </li>
       </ul>
 
@@ -125,7 +125,7 @@
 
         <li>When new features are added to a decoder, consider calling it a new model. Having many
         different versions of the XYZ123 decoder, some with BEMF, some without, some with special
-        lighting options, some without, etc, confuses both the customer and the people trying to
+        lighting options, some without etc., confuses both the customer and the people trying to
         support customers with software like DecoderPro. And why not get credit for the new
         features from people who'll ask for the new model?</li>
       </ul>

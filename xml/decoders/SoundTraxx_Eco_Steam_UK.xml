@@ -29,6 +29,12 @@
                 <surname>Heap</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>James</firstname>
+                <surname>Exler</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -48,6 +54,12 @@
             <date>2021-06-28</date>
             <authorinitials>DH</authorinitials>
             <revremark>Correct Handling of PI (CV31) and SI (CV32)</revremark>
+        </revision>
+        <revision>
+            <revnumber>3</revnumber>
+            <date>2022-08-16</date>
+            <authorinitials>JE</authorinitials>
+            <revremark>chg includes TSU2PaneLighting, TSU2PaneASCdiesel</revremark>
         </revision>
     </revhistory>
     <version author="Alain Le Marchand" version="1" lastUpdated="20180105"/>
@@ -1370,10 +1382,10 @@
         </resets>
     </decoder>
     <!-- References to external Pane format definitions below -->
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneLighting.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCdiesel.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneASCsteam.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
     <!-- <xi:include  href="http://jmri.org/xml/decoders/soundtraxx/ECOSoundPane.xml"/> --> <!-- Warning on version not needed for UK decoders -->

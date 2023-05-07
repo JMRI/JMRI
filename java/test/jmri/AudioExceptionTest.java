@@ -14,12 +14,12 @@ import org.junit.Assert;
 public class AudioExceptionTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testConstructor(){
       Assert.assertNotNull("AudioException constructor",new AudioException());
    }
 
    @Test
-   public void StringConstructorTest(){
+   public void testStringConstructor(){
       Assert.assertNotNull("AudioException string constructor",new AudioException("test exception"));
    }
 

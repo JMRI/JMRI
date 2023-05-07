@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012, 2014
  */
-public abstract class XmlFile {
+public class XmlFile {
 
     /**
      * Define root part of URL for XSLT style page processing instructions.
@@ -92,6 +92,27 @@ public abstract class XmlFile {
          * valid
          */
         CheckDtdThenSchema
+    }
+
+    private String processingInstructionHRef;
+    private String processingInstructionType;
+
+    /**
+     * Get the value of the attribute 'href' of the process instruction of
+     * the last loaded document.
+     * @return the value of the attribute 'href' or null
+     */
+    public String getProcessingInstructionHRef() {
+        return processingInstructionHRef;
+    }
+
+    /**
+     * Get the value of the attribute 'type' of the process instruction of
+     * the last loaded document.
+     * @return the value of the attribute 'type' or null
+     */
+    public String getProcessingInstructionType() {
+        return processingInstructionType;
     }
 
     /**
@@ -190,6 +211,9 @@ public abstract class XmlFile {
     protected Element getRoot(InputStream stream) throws JDOMException, IOException {
         log.trace("getRoot from stream");
 
+        processingInstructionHRef = null;
+        processingInstructionType = null;
+
         SAXBuilder builder = getBuilder(getValidate());
         Document doc = builder.build(new BufferedInputStream(stream));
         doc = processInstructions(doc);  // handle any process instructions
@@ -279,7 +303,7 @@ public abstract class XmlFile {
      */
     static public void dumpElement(@Nonnull Element name) {
         name.getChildren().forEach((element) -> {
-            System.out.println(" Element: " + element.getName() + " ns: " + element.getNamespace());
+            log.info(" Element: {} ns: {}", element.getName(), element.getNamespace());
         });
     }
 
@@ -447,6 +471,15 @@ public abstract class XmlFile {
         // this iterates over top level
         for (Content c : doc.cloneContent()) {
             if (c instanceof ProcessingInstruction) {
+                ProcessingInstruction pi = (ProcessingInstruction) c;
+                for (String attrName : pi.getPseudoAttributeNames()) {
+                    if ("href".equals(attrName)) {
+                        processingInstructionHRef = pi.getPseudoAttributeValue(attrName);
+                    }
+                    if ("type".equals(attrName)) {
+                        processingInstructionType = pi.getPseudoAttributeValue(attrName);
+                    }
+                }
                 try {
                     doc = processOneInstruction((ProcessingInstruction) c, doc);
                 } catch (org.jdom2.transform.XSLTransformException ex) {
@@ -625,7 +658,7 @@ public abstract class XmlFile {
      * @return a file chooser
      */
     public static JFileChooser userFileChooser(String filter, String... suffix) {
-        JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser fc = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         fc.setFileFilter(new NoArchiveFileFilter(filter, suffix));
         return fc;
     }
@@ -638,7 +671,7 @@ public abstract class XmlFile {
      * @return a file chooser
      */
     public static JFileChooser userFileChooser() {
-        JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser fc = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         fc.setFileFilter(new NoArchiveFileFilter());
         return fc;
     }

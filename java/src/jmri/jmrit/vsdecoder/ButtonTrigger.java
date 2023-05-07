@@ -20,15 +20,15 @@ package jmri.jmrit.vsdecoder;
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import javax.swing.AbstractButton;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ButtonTrigger extends Trigger implements ActionListener, MouseListener {
+public class ButtonTrigger extends Trigger implements ActionListener, JmriMouseListener {
 
     enum ButtonAction {
     }
@@ -92,27 +92,27 @@ public class ButtonTrigger extends Trigger implements ActionListener, MouseListe
 
     // MouseListener functions
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(JmriMouseEvent e) {
         log.debug("MouseListener.mousePressed() {}", this.getName());
         this.mouseDown();
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(JmriMouseEvent e) {
         log.debug("MouseListener.mouseReleased() {}", this.getName());
         this.mouseUp();
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(JmriMouseEvent e) {
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(JmriMouseEvent e) {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(JmriMouseEvent e) {
     }
 
     @Override

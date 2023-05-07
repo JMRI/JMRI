@@ -64,9 +64,9 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     protected SubProtocol _subProtocol = SubProtocol.CBUS;
     protected ProgModeSwitch _progModeSwitch = ProgModeSwitch.NONE;
     protected boolean _supportsCVHints = false; // Support for CV read hint values
-    private boolean _multipleThrottles = true;  // Support for multiple throttles 
+    private boolean _multipleThrottles = true;  // Support for multiple throttles
     private boolean _powerOnArst = true;        // Turn power on if ARST opcode received
-    
+
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     protected TrafficController tm;
@@ -78,7 +78,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     public void setTrafficController(TrafficController tm) {
         this.tm = tm;
     }
-    
+
     /**
      * Get Connection Traffic Controller.
      * @return System Connection Traffic Controller
@@ -113,7 +113,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
             if (mgr == null) return false;
             return mgr.isAddressedModePossible();
         }
-        
+
         boolean result = manager.provides(type);
         if(result) {
            return true;
@@ -128,7 +128,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(Class<?> T) {
+    public <T> T get(Class<T> T) {
         if (manager != null && !getDisabled()) {
             T existing = manager.get(T);
             if ( existing !=null ) {
@@ -208,65 +208,65 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     /**
      * Get the state of the programming mode switch which indicates what combination
      * of service and/or ops mode programming is supported by the connection.
-     * 
+     *
      * @return the supported modes
      */
     public ProgModeSwitch getProgModeSwitch() {
         return _progModeSwitch;
     }
-    
+
     public void setProgModeSwitch(ProgModeSwitch pms) {
         if (null != pms) {
             _progModeSwitch = pms;
         }
     }
-    
+
     /**
      * Some connections support only a single throttle, e.g., a service mode programmer
      * that allows for test running of a single loco.
-     * 
+     *
      * @return true if mutltiple throttles are available
      */
     public boolean hasMultipleThrottles() {
         return _multipleThrottles;
     }
-    
+
     public void setMultipleThrottles(boolean b) {
         _multipleThrottles = b;
     }
-    
+
     /**
      * Get the CV hint support flag
-     * 
+     *
      * @return true if CV hints are supported
      */
     public boolean supportsCVHints() {
         return _supportsCVHints;
     }
-    
+
     public void setSupportsCVHints(boolean b) {
         _supportsCVHints = b;
     }
-    
+
     /**
      * Get the behaviour on ARST opcode
-     * 
+     *
      * @return true if track power is on after ARST
      */
     public boolean powerOnArst() {
         return _powerOnArst;
     }
-    
+
     public void setPowerOnArst(boolean b) {
         _powerOnArst = b;
     }
-    
+
     /**
      * Configure the common managers for Can connections.
      * {@inheritDoc }
      * Calls ConfigurationManager.configureManagers
      * Stores Can Memo to Instance to indicate available.
-     * 
+     *
      */
     @Override
     public void configureManagers() {
@@ -354,7 +354,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     public boolean isRestartRequired() {
         return super.isRestartRequired() || protocolOptionsChanged;
     }
-    
+
     /**
      * Custom interval of 100ms.
      * {@inheritDoc}

@@ -3,7 +3,7 @@ package jmri.jmrix.nce.swing;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 /**
- * JPanel interface to handle providing system connection information to a
+ * NcePanel interface to handle providing system connection information to a
  * panel.
  *
  * @author Bob Jacobsen Copyright 2010

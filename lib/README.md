@@ -30,7 +30,7 @@ After you have committed your changes, please run
 ```
 ./scripts/check_lib_dates
 ```
-which checks the dates of the control files to make sure they've benen updated when lib/ is updated
+which checks the dates of the control files to make sure they've been updated when lib/ is updated
 
 ### Specific components:
 
@@ -83,10 +83,22 @@ which checks the dates of the control files to make sure they've benen updated w
 ##### assertJ: assertj-core-3.12.0.jar, assertj-swing-3.9.2.jar, assertj-swing-junit-3.9.2.jar
 - testing only
 
-##### commons-lang3-3.2.1.jar
-- version 3.2.1
+##### commons-compress-1.18.jar
+- version 1.18
+- webdrivermanager dependency
+
+##### commons-lang3-3.7.jar
+- version 3.7
 - provides org.apache.commons.lang3
 - from https://commons.apache.org/proper/commons-lang/
+
+##### commons-logging-1.2.jar
+- version 1.2
+
+##### commons-net-3.9.0.jar
+- version 3.9.0
+- not used in direct compilation, not clear where it is used
+- from https://commons.apache.org/proper/commons-net/download_net.cgi
 
 ##### commons-text-1.2.jar
 - version 1.2
@@ -98,19 +110,25 @@ which checks the dates of the control files to make sure they've benen updated w
 - provides Apache Commons CSV file parsing
 - from https://commons.apache.org/proper/commons-csv/
 
+##### commons-io-2.11.0.jar
+- version 2.11.0
+- JMRI uses this for file selectors
+
+
 ##### jhall.jar
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>
 
 ##### log4j.jar
-- version 1.2.15
+- version 1.2.17
 
 ##### slf4j-api-1.7.25.jar, slf4j-log4j12-1.7.25.jar, jul-to-slf4j-1.7.25.jar
 - slf4j logging interface to log4j
 - from http://www.slf4j.org
 
 ##### openlcb.jar
-- 0.7.30 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.30/openlcb-0.7.30.jar or the maven central repository.
+ - 0.7.32 from https://github.com/openlcb/OpenLCB_Java
+ - Through PR#228 included
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -128,10 +146,9 @@ which checks the dates of the control files to make sure they've benen updated w
 - version 2.0.6
 - from <jdom.org>
 
-##### jackson-annotations-2.12.6.jar, jackson-core-2.12.6.jar, jackson-databind-2.12.6.1.jar
+##### jackson-annotations-2.13.4.jar, jackson-core-2.13.4.jar, jackson-databind-2.13.4.2.jar
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.12.6.1
 
 ##### json-schema-validator-1.0.28.jar
 - JSON Schema validation library
@@ -276,7 +293,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From http://patrick.lidstone.net/html/dev_tools.html
 - See license http://patrick.lidstone.net/html/xap.html
 
-##### xbee-java-library-1.2.1.jar
+##### xbee-java-library-1.3.1.jar
 - Official XBee support library from Digi
 - from https://github.com/digidotcom/XBeeJavaLibrary
 
@@ -298,15 +315,111 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
   and https://github.com/usb4java/usb4java-javax/releases/tag/usb4java-javax-1.3.0
 - lib/libusb4java-1.3.0-darwin-aarch64.jar made from a .dylib found at https://github.com/developersu/ns-usbloader/issues/91
 
+##### beansbinding-1.2.1.jar
+- version 1.2.1
+- used in web server preference panels
+
+##### cglib-nodep-2.2.2.jar
+- version 2.2.2
+
+##### checkstyle-8.29-all.jar
+- version 8.29
+
+##### datatable-1.1.12.jar and datatable-dependencies-1.1.12.jar
+- version 1.1.12
+- cucumber 4.3.1 dependency
+
+##### gherkin-5.1.0.jar
+- cucumber 4.3.1 dependency
+
+##### gherkin-jvm-deps-1.0.4.jar
+- version 1.0.4
+
+##### hid4java-0.5.0.jar
+- version 0.5.0
+- cross-platform HID USB, eg RailDriverMenuItem
+
+##### jarchivelib-1.0.0.jar
+- version 1.0.0
+- dependency for webdrivermanager
+
+##### javacc.jar
+- version 7.0.3
+
+##### javassist-3.20.0-GA.jar
+- initially used to mock an XBee Connection for testing.
+
+##### javax.servlet-api-3.1.0.jar
+- version 3.1.0
+- Related to Jetty Web Server
+
+##### jhidrawplugin.jar
+- see jinput.jar
+
+##### jsoup-1.15.3.jar
+- version 1.15.3
+- used to rebuild Help metadata
+
+##### objenesis-2.2.jar
+- version 2.2
+- initially used to mock an XBee Connection for testing.
+
+##### opentest4j-1.2.0.jar
+- version 1.2.0
+
+##### tag-expressions-1.1.1.jar
+- version 1.1.1
+- cucumber related
+
+##### typetools-0.5.0.jar
+- version 0.5.0
+- cucumber dependency
+
+##### webdrivermanager-4.2.2.jar
+- version 4.2.2
+
+##### xmlgraphics-commons-2.6.jar
+- version 2.6
+- batik related
+
 ## For unit tests & development work only:
 
-##### ArchUnit: archunit-0.11.0.jar archunit-junit4-0.11.0.jar
+##### ArchUnit: archunit-*.jar, archunit-junit5-api-*.jar, archunit-junit5-engine-*.jar, archunit-junit5-engine-api*.jar
 - See https://www.archunit.org
 - Jars from https://search.maven.org/search?q=g:com.tngtech.archunit
+- version 1.0.0-rc1
+
+##### byte-buddy-1.10.14
+- version 1.10.14
 
 ##### checker-framework directory and contents
 - The Checker Framework 2.0.1 (1-Jun-2016)
 - From http://types.cs.washington.edu/checker-framework/
+
+##### cucumber-core-4.3.1.jar
+- version 4.3.1
+- Used for testing only, not at runtime
+
+##### cucumber-expressions-6.2.2.jar
+- version 6.2.2
+
+##### cucumber-html-0.2.7.jar
+- version 0.2.7
+
+##### cucumber-java-4.3.1.jar
+- version 4.3.1
+
+##### cucumber-java8-4.3.1.jar
+- version 4.3.1
+
+##### cucumber-junit-4.3.1.jar
+- version 4.3.1
+
+##### cucumber-jvm-deps-1.0.6.jar
+- version 1.0.6
+
+##### cucumber-picocontainer-4.3.1.jar
+- version 4.3.1
 
 ##### ecj.jar
 - Eclipse compiler 4.19 from
@@ -317,31 +430,26 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Sept 13, 2021
 - From https://mvnrepository.com/artifact/org.netbeans.external/jemmy-2.3.1.1/RELEASE125
 
-##### junit-4.12.jar
-- version 4.12
-- from http://search.maven.org/#artifactdetails%7Cjunit%7Cjunit%7C4.12%7Cjar
+##### junit-jupiter-*
+- version 5.9.1
 
-##### hamcrest-core-1.3.jar
-- version 1.3
-- Used for testing only, not at runtime
-- from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
+##### junit-platform-*
+- version 1.9.1
 
-##### i18nchecker.jar
-- Internationalization checker: used in source code development, for checking proper implementation of text internationalization.
-- From https://github.com/JMRI/i18nchecker
-- Note: We use a custom version of the original in https://github.com/phamernik/i18nchecker
-- See license https://github.com/phamernik/i18nchecker/blob/master/i18nchecker/LICENSE-2.0.txt
-- Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
-- Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
+##### junit-vintage-engine-5.9.1.jar
+
+##### mockito-core mockito-inline mockito-junit-jupiter
+- version 3.5.11
 
 ##### OpenIDE Utilities
-- org-openide-util-RELEASE126.jar
-- org-openide-util-lookup-RELEASE126.jar
-- Downloaded from Maven Central 2021-12-21
+- org-openide-util-lookup-RELEASE150.jar
+- Downloaded from Maven Central 2022-10-07
+- https://mvnrepository.com/artifact/org.netbeans.api/org-openide-util-lookup/RELEASE150
 
 ##### PlantUML
 - plantuml.jar
-    was from plantuml.org, now from https://github.com/plantuml/plantuml.git
+    from plantuml.org
+    1.2023.1
 - umldoclet.jar
     downloaded as umldoclet-2.0.10-javadoc.jar
     from https://github.com/talsma-ict/umldoclet/releases
@@ -350,6 +458,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### rscbundlecheck.jar
 - check for duplicated properties
 
+##### selenium-server-standalone-3.141.59
+
 ##### system-rules-1.16.0.jar
 - Handle rules for testing calls to java.System methods
 
@@ -357,8 +467,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 5.1.14
 - from https://search.maven.org/search?q=g:org.springframework%20v:5.1.14.RELEASE
 - Mocks Java Servlet requests and responses
-
-#### SpotBugs static analysis
 
 ##### jcip-annotations-1.0.jar
 - From Java Concurrency In Practice (http://jcip.net)
@@ -369,17 +477,31 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
-##### spotbugs-annotations-3.1.7.jar
-- From SpotBugs 3.1.7
+##### spotbugs-annotations-4.7.3.jar
+- From SpotBugs 4.7.3
 - Only needed at compile/build time, not runtime
-- http://repo1.maven.org/maven2/com/github/spotbugs/spotbugs-annotations/3.1.7/
+- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.7.3
 
+##### picocontainer-2.15.jar
+- version 2.15
+- Required by Cucumber 4.3.1 Tests.
+- Used for testing only, not at runtime
+
+
+##### org.jacoco.ant-0.8.5-nodeps.jar
+- version 0.8.5
 
 ## Older, no longer present:
+
+##### junit-4.12.jar
+- version 4.12
+- from http://search.maven.org/#artifactdetails%7Cjunit%7Cjunit%7C4.12%7Cjar
+- JUnit4 classes currently accessed via junit-platform-console-standalone
 
 ##### UmlGraph-5.7
 - from http://www.umlgraph.org/download.html
 - only used for ant javadoc-uml with earlier Java
+- removed in JMRI 5.1.3
 
 ##### javacsv.jar
 - version 2.0
@@ -427,3 +549,15 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
 - libusbJava.so for Linux was built on Ubuntu 7.10 w libusb 2:0.1.12-7
 - No longer used as of JMRI 4.9.1
+
+##### hamcrest-core-1.3.jar
+- version 1.3
+- Used for testing only, not at runtime
+- from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
+- No longer used as of JMRI 5.1.3
+
+##### org-openide-util-RELEASE126.jar
+- No longer used as of JMRI 5.1.5
+
+#### SpotBugs static analysis
+- used in pom.xml

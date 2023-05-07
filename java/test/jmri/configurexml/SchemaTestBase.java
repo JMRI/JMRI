@@ -135,7 +135,6 @@ public class SchemaTestBase {
     public void tearDown() throws Exception {
         XmlFile.setDefaultValidate(this.validate);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

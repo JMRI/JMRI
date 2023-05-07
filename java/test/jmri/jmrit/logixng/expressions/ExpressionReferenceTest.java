@@ -106,7 +106,8 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         boolean thrown = false;
         try {
             // Illegal system name
-            new ExpressionReference("IQE55:12:XY11", null);
+            ExpressionReference eRef = new ExpressionReference("IQE55:12:XY11", null);
+            Assert.fail("eref created: " + eRef.toString() );
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -115,7 +116,8 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         thrown = false;
         try {
             // Illegal system name
-            new ExpressionReference("IQE55:12:XY11", "A name");
+            ExpressionReference eRef = new ExpressionReference("IQE55:12:XY11", "A name");
+            Assert.fail("eref created: " + eRef.toString() );
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -294,13 +296,12 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
     public void testSetReferenceException() {
         String reference = "{IM1}";
         // Test setScript() when listeners are registered
-        Assert.assertNotNull("Reference is not null", reference);
         expressionReference.setReference(reference);
         Assert.assertNotNull("Reference is not null", expressionReference.getReference());
         expressionReference.registerListeners();
         boolean thrown = false;
         try {
-            expressionReference.setReference((String)null);
+            expressionReference.setReference(null);
         } catch (RuntimeException ex) {
             thrown = true;
         }

@@ -16,9 +16,9 @@ import org.junit.jupiter.api.Test;
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
     @Test
-    public void testCTor() {
-        UsbUhlenbrock63120Adapter t = new UsbUhlenbrock63120Adapter();
-        Assertions.assertNotNull(t, "exists");
+    public void testBothConstructors() {
+        Assertions.assertNotNull(xmlAdapter, "xmlAdapter exists");
+        Assertions.assertNotNull(cc, "cc exists");
     }
 
     @BeforeEach

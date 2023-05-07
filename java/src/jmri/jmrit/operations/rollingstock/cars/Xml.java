@@ -36,10 +36,7 @@ public class Xml {
     static final String PICKUP_SCHEDULE_ID = "pickupId"; // NOI18N
     static final String ORDER = "order"; // NOI18N
     static final String SCHEDULE_ID = "scheduleId"; // NOI18N
-
     static final String NEXT_LOAD = "nextLoad"; // NOI18N
-    static final String NEXT_WAIT = "nextWait"; // NOI18N
-    static final String NEXT_PICKUP_SCHEDULE_ID = "nextPickupId"; // NOI18N
     static final String NEXT_DEST_ID = "nextDestId"; // NOI18N
     static final String NEXT_DEST_TRACK_ID = "nextDestTrackId"; // NOI18N
     static final String PREVIOUS_NEXT_DEST_ID = "previousNextDestId"; // NOI18N

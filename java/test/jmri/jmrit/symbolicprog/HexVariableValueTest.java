@@ -26,25 +26,25 @@ public class HexVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     void setValue(VariableValue var, String val) {
-        String hexval = Integer.toHexString(Integer.valueOf(val).intValue());
+        String hexval = Integer.toHexString(Integer.parseInt(val));
         ((JTextField) var.getCommonRep()).setText(hexval);
         ((JTextField) var.getCommonRep()).postActionEvent();
     }
 
     @Override
     void setReadOnlyValue(VariableValue var, String val) {
-        ((HexVariableValue) var).setValue(Integer.valueOf(val).intValue());
+        ((HexVariableValue) var).setValue(Integer.parseInt(val));
     }
 
     @Override
     void checkValue(VariableValue var, String comment, String val) {
-        String hexval = Integer.toHexString(Integer.valueOf(val).intValue());
+        String hexval = Integer.toHexString(Integer.parseInt(val));
         Assert.assertEquals(comment, hexval, ((JTextField) var.getCommonRep()).getText());
     }
 
     @Override
     void checkReadOnlyValue(VariableValue var, String comment, String val) {
-        String hexval = Integer.toHexString(Integer.valueOf(val).intValue());
+        String hexval = Integer.toHexString(Integer.parseInt(val));
         Assert.assertEquals(comment, hexval, ((JLabel) var.getCommonRep()).getText());
     }
 

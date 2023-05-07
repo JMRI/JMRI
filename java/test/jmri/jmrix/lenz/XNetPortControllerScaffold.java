@@ -106,6 +106,8 @@ public class XNetPortControllerScaffold extends XNetSimulatorPortController {
         return true;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+        justification = "always ok to send in test class")
     @Override
     public boolean okToSend() {
         return true;

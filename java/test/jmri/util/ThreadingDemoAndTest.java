@@ -11,9 +11,9 @@ import org.junit.jupiter.api.*;
  * <p>
  * It's in the java/test package tree because it's not 
  * something we intend to ship to users.
- * <p?
+ * <p>
  * For information on threading in JMRI, see the
- * <href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">Threading doc page</a>.
+ * <a href="https://jmri.org/help/en/html/doc/Technical/Threads.shtml">Threading doc page</a>.
  * See also the {@link ThreadingUtil} and {@lnk WaitHandler} classes along with the 
  * examples in their associated JUnit test classes:
  * {@link ThreadingUtilTest} and {@lnk WaitHandlerTest}.
@@ -37,11 +37,15 @@ public class ThreadingDemoAndTest {
      * </ul>
      * Plus the synchronization needed around the wait and wake-up calls
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NN_NAKED_NOTIFY"},
+        justification = "no actual condition being waited on before notify")
     @Test
     public void testThreadingLifeCycle() {
         final Object lock = new Object();  // this object is the lock for the wait and notify
         final Thread t = new Thread() {
             @Override
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"WA_NOT_IN_LOOP","UW_UNCOND_WAIT"},
+                justification = "wait / notify on local final object")
             public void run()  {
                 try {
                     synchronized(lock) {
@@ -69,10 +73,14 @@ public class ThreadingDemoAndTest {
     /**
      * How one thread t2 can "join" on the ending of another thread t1
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NN_NAKED_NOTIFY"},
+        justification = "no actual condition being waited on before notify")
     @Test
     public void testThreadingJoinCycle() {
         final Object lock = new Object();
         final Thread t1 = new Thread() {
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"WA_NOT_IN_LOOP","UW_UNCOND_WAIT"},
+                justification = "wait / notify on local final object")
             @Override
             public void run()  {
                 try {
@@ -128,6 +136,8 @@ public class ThreadingDemoAndTest {
 
         final Object lock = new Object();
         final Thread t1 = new Thread() {
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"WA_NOT_IN_LOOP","UW_UNCOND_WAIT"},
+                justification = "wait / notify on local final object")
             @Override
             public void run()  {
                 try {
@@ -181,6 +191,8 @@ public class ThreadingDemoAndTest {
 
         final Object lock = new Object();
         final Thread t1 = new Thread() {
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"WA_NOT_IN_LOOP","UW_UNCOND_WAIT"},
+                justification = "wait / notify on local final object")
             @Override
             public void run()  {
                 try {
@@ -245,14 +257,14 @@ public class ThreadingDemoAndTest {
         flagInterrupted2 = false;  // set true when we leave the second wait
         flagInterrupted3 = false;  // set true when we leave the third wait
 
-        BlockingQueue<Integer> q = new ArrayBlockingQueue<Integer>(2);
+        BlockingQueue<Integer> q = new ArrayBlockingQueue<>(2);
         
         final Thread t = new Thread() {
             @Override
             public void run()  {
                 try {
-                    q.put(Integer.valueOf(1));
-                    q.put(Integer.valueOf(2));
+                    q.put(1);
+                    q.put(2);
                 } catch (InterruptedException e) {
                     Assert.fail("did not expect interrupt");
                 }
@@ -260,21 +272,21 @@ public class ThreadingDemoAndTest {
 
                 // third should block until read
                 try {
-                    q.put(Integer.valueOf(3));
+                    q.put(3);
                 } catch (InterruptedException e) {
                     // just eat and continue
                     flagInterrupted2 = true;
                 }
 
                 try {
-                    q.put(Integer.valueOf(4));
+                    q.put(4);
                 } catch (InterruptedException e) {
                     // just eat and continue
                     flagInterrupted3 = true;
                 }
 
                 try {
-                    q.put(Integer.valueOf(5));
+                    q.put(5);
                 } catch (InterruptedException e) {
                     // just eat and continue
                     flagInterrupted3 = true;
@@ -323,7 +335,7 @@ public class ThreadingDemoAndTest {
         flagInterrupted2 = false;  // set true when we leave the second wait
         flagInterrupted3 = false;  // set true when we leave the third wait
 
-        BlockingQueue<Integer> q = new ArrayBlockingQueue<Integer>(2);
+        BlockingQueue<Integer> q = new ArrayBlockingQueue<>(2);
         
         final Thread t = new Thread() {
             @Override

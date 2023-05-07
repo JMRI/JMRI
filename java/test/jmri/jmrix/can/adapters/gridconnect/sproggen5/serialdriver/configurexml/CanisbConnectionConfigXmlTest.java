@@ -16,11 +16,11 @@ import org.junit.jupiter.api.*;
 public class CanisbConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
     @Test
-    public void testCTor() {
-        CanisbConnectionConfigXml c = new CanisbConnectionConfigXml();
-        Assert.assertNotNull("exists",c);
+    public void testBothConstructors() {
+        Assertions.assertNotNull(xmlAdapter,"xmlAdapter exists");
+        Assertions.assertNotNull(cc,"cc exists");
     }
-    
+
     @BeforeEach
     @Override
     public void setUp() {

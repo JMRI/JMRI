@@ -74,6 +74,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public JCheckBox graphicStateDisplay;
     public JCheckBox tabbedOblockEditor;
     public JCheckBox editorUseOldLocSizeDisplay;
+    public ButtonGroup fileChooserGroup= new ButtonGroup();
     public JCheckBox force100percentScaling;
 
     public GuiLafConfigPane() {
@@ -82,6 +83,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         doLAF(p = new JPanel());
         add(p);
         doFontSize(p = new JPanel());
+        add(p);
+        doFileChooserLayoutType(p = new JPanel());
         add(p);
         doClickSelection(p = new JPanel());
         add(p);
@@ -137,6 +140,50 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setEditorUseOldLocSize(editorUseOldLocSizeDisplay.isSelected());
         });
         panel.add(editorUseOldLocSizeDisplay);
+    }
+
+    void doFileChooserLayoutType(JPanel panel) {
+        panel.setLayout(new FlowLayout());
+        JLabel fileChooserLabel = new JLabel(ConfigBundle.getMessage("GUIJChooserUseOption"));
+        panel.add(fileChooserLabel);
+                // make the radio buttons
+        JRadioButton jButDefault = new JRadioButton(ConfigBundle.getMessage("GUIJChooserUseDefault"));
+        panel.add(jButDefault);
+        fileChooserGroup.add(jButDefault);
+        jButDefault.addActionListener((ActionEvent e) -> {
+            if (((JRadioButton)e.getSource()).isSelected() ) {
+                InstanceManager.getDefault(GuiLafPreferencesManager.class).setJFileChooserFormat(0);
+            }
+        });
+        JRadioButton jButList = new JRadioButton(ConfigBundle.getMessage("GUIJChooserUseList"));
+        panel.add(jButList);
+        fileChooserGroup.add(jButList);
+        jButList.addActionListener((ActionEvent e) -> {
+            if (((JRadioButton)e.getSource()).isSelected() ) {
+                InstanceManager.getDefault(GuiLafPreferencesManager.class).setJFileChooserFormat(1);
+            }
+        });
+        JRadioButton jButDetail = new JRadioButton(ConfigBundle.getMessage("GUIJChooserUseDetail"));
+        panel.add(jButDetail);
+        fileChooserGroup.add(jButDetail);
+        jButDetail.addActionListener((ActionEvent e) -> {
+            if (((JRadioButton)e.getSource()).isSelected() ) {
+                InstanceManager.getDefault(GuiLafPreferencesManager.class).setJFileChooserFormat(2);
+            }
+        });
+        switch (InstanceManager.getDefault(GuiLafPreferencesManager.class).getJFileChooserFormat()) {
+            case 0:
+                jButDefault.setSelected(true);
+                break;
+            case 1:
+                jButList.setSelected(true);
+                break;
+            case 2:
+                jButDetail.setSelected(true);
+                break;
+            default:
+                jButDefault.setSelected(true);
+        }
     }
 
     void doForce100percentScaling(JPanel panel) {

@@ -49,21 +49,14 @@ public class ImportEntryExitTest {
         }
     }
 
-    private boolean isEnabled(DestinationPoints dp) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-//        Method retrieveItems = dp.getClass().getDeclaredMethod("isEnabled", String.class);
-        Method isEnabled = dp.getClass().getDeclaredMethod("isEnabled");
-        isEnabled.setAccessible(true);
-        return (boolean)isEnabled.invoke(dp);
-    }
-
     private void runTestActionEntryExit(DestinationPoints dp, Sensor sensor) throws JmriException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        Assert.assertFalse(isEnabled(dp));
+        Assert.assertFalse(dp.isEnabled());
         sensor.setState(Sensor.INACTIVE);
-        JUnitUtil.waitFor(() -> (isEnabled(dp)));
-        Assert.assertTrue(isEnabled(dp));
+        JUnitUtil.waitFor(() -> (dp.isEnabled()),"destination point enabled");
+        Assert.assertTrue(dp.isEnabled());
         sensor.setState(Sensor.ACTIVE);
-        JUnitUtil.waitFor(() -> (!isEnabled(dp)));
-        Assert.assertFalse(isEnabled(dp));
+        JUnitUtil.waitFor(() -> (!dp.isEnabled()),"destination point disabled");
+        Assert.assertFalse(dp.isEnabled());
     }
 
     @Test
@@ -90,7 +83,7 @@ public class ImportEntryExitTest {
         sensor201.setState(Sensor.ACTIVE);
         Assert.assertEquals(Sensor.ACTIVE, sensor201.getState());
 
-        DestinationPoints dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean("NX-Left-TO-A (Left-TO-A) to NX-Right-TO-B (Right-TO-B)");
+        DestinationPoints dp = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean("NX-Left-TO-A (Left-TO-A) to NX-Right-TO-B (Right-TO-B)");
         Assert.assertNotNull(dp);
 
         // Test entry/exit
@@ -118,10 +111,10 @@ public class ImportEntryExitTest {
     private void runTestExpressionEntryExit(DestinationPoints dp, Sensor sensor) throws JmriException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Assert.assertEquals(Sensor.INACTIVE, sensor.getState());
         setActiveEntryExit(dp, true);
-        JUnitUtil.waitFor(() -> (Sensor.ACTIVE == sensor.getState()));
+        JUnitUtil.waitFor(() -> (Sensor.ACTIVE == sensor.getState()),"Sensor goes active");
         Assert.assertEquals(Sensor.ACTIVE, sensor.getState());
         setActiveEntryExit(dp, false);
-        JUnitUtil.waitFor(() -> (Sensor.INACTIVE == sensor.getState()));
+        JUnitUtil.waitFor(() -> (Sensor.INACTIVE == sensor.getState()),"Sensor goes inactive");
         Assert.assertEquals(Sensor.INACTIVE, sensor.getState());
     }
 
@@ -236,7 +229,6 @@ public class ImportEntryExitTest {
         JUnitUtil.clearTurnoutThreads();
         JUnitUtil.clearRouteThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

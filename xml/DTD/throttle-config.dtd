@@ -33,9 +33,9 @@
 <!ATTLIST FunctionButton text CDATA #REQUIRED>
 <!ATTLIST FunctionButton isLockable CDATA #REQUIRED>
 <!ATTLIST FunctionButton isVisible CDATA #REQUIRED>
-<!ATTLIST FunctionButton fontSize CDATA #REQUIRED>
-<!ATTLIST FunctionButton iconPath CDATA #REQUIRED>
-<!ATTLIST FunctionButton selectedIconPath CDATA #REQUIRED>
+<!ATTLIST FunctionButton fontSize CDATA #IMPLIED>
+<!ATTLIST FunctionButton iconPath CDATA #IMPLIED>
+<!ATTLIST FunctionButton selectedIconPath CDATA #IMPLIED>
 <!ATTLIST FunctionButton buttonImageSize CDATA #IMPLIED>
 
 <!ELEMENT AddressPanel (window, address*, locoaddress*) >

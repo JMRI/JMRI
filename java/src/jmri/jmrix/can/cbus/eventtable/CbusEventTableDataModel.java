@@ -2,7 +2,12 @@ package jmri.jmrix.can.cbus.eventtable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import javax.annotation.Nonnull;
+
+import jmri.Disposable;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -21,37 +26,33 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young (c) 2018 2019
  * 
  */
-public class CbusEventTableDataModel extends CbusBasicEventTableModel implements CanListener {
+public class CbusEventTableDataModel extends CbusBasicEventTableModel implements CanListener, Disposable {
 
     
-    private final CbusPreferences preferences;
-    private final ShutDownTask shutDownTask;
+    private CbusPreferences preferences;
+    private ShutDownTask shutDownTask;
     
     public CbusEventTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
-        super(memo);
-        log.info("Starting MERG CBUS Event Table");
-        
-        addTc(_memo);
-        
-        
-        preferences = jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
-        
-        checkRestoreEvents();
-        
-        shutDownTask = new CbusEventTableShutdownTask("CbusEventTableShutdownTask",this);
-        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
-        ta.updatejmricols();
-        
+        this(memo, row);
     }
+
+    /**
+     * Create a new CbusEventTableDataModel.
+     * @param memo System Connection.
+     * @param initialRowSize initial array size.
+     */
+    public CbusEventTableDataModel(@Nonnull CanSystemConnectionMemo memo, int initialRowSize) {
+        super(memo, initialRowSize);
+
+        log.info("Starting {} Event Table",memo.getProtocol());
+        preferences = memo.get(jmri.jmrix.can.cbus.CbusPreferences.class);
+        shutDownTask = new CbusEventTableShutdownTask("CbusEventTableShutdownTask "+memo.getSystemPrefix(),this);
+        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
+
+        addTc(_memo);
+        checkRestoreEvents();
+        ta.updatejmricols();
     
-    public final static void checkCreateNewEventModel(CanSystemConnectionMemo memo){
-        CbusEventTableDataModel model = InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
-        if (model == null) {        
-            ThreadingUtil.runOnLayout(() -> {
-                CbusEventTableDataModel eventModel = new CbusEventTableDataModel(memo, 5, CbusEventTableDataModel.MAX_COLUMN);
-                InstanceManager.store(eventModel, CbusEventTableDataModel.class);
-            });
-        }    
     }
     
     private void checkRestoreEvents(){
@@ -64,7 +65,7 @@ public class CbusEventTableDataModel extends CbusBasicEventTableModel implements
      * De-register the shut down task which saves table details.
      */
     public void skipSaveOnDispose(){
-        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(shutDownTask);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
     
     /**
@@ -174,7 +175,7 @@ public class CbusEventTableDataModel extends CbusBasicEventTableModel implements
     }
     
     /**
-     * Remove all events from table
+     * Remove all events from table.
      */
     protected void clearAllEvents() {
         _mainArray = new ArrayList<>();
@@ -188,6 +189,7 @@ public class CbusEventTableDataModel extends CbusBasicEventTableModel implements
      * Disconnect from the CBUS.
      * Check and trigger if need to save table to xml.
      */
+    @Override
     public void dispose() {
         ta.dispose();
         

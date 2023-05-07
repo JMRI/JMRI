@@ -550,7 +550,7 @@ public class Engine implements ReadingListener {
                 // use throttle; first, get throttle
                 if (t.checkInit()) {
                     // now send F2
-                    t.getThrottle().setF2(true);
+                    t.getThrottle().setFunction(2, true);
                 } else {
                     return;  // bail if not ready
                 }
@@ -574,7 +574,7 @@ public class Engine implements ReadingListener {
                 // use throttle; first, get throttle
                 if (t.checkInit()) {
                     // now send F2
-                    t.getThrottle().setF2(false);
+                    t.getThrottle().setFunction(2, false);
                 } else {
                     return;  // bail if not ready
                 }

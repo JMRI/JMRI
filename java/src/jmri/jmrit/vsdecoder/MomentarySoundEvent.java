@@ -20,6 +20,9 @@ package jmri.jmrit.vsdecoder;
  */
 import javax.swing.JButton;
 import javax.swing.JComponent;
+
+import jmri.util.swing.JmriMouseListener;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +82,7 @@ public class MomentarySoundEvent extends SoundEvent {
         bt = new ButtonTrigger(te.getAttributeValue("name"));
         button_trigger_list.put(bt.getName(), bt);
         log.debug("new ButtonTrigger: {}, type: {}", bt.getName(), buttontype.toString());
-        button.addMouseListener(bt);
+        button.addMouseListener(JmriMouseListener.adapt(bt));
         return bt;  // cast OK since we just instantiated it up above.
     }
 
@@ -124,7 +127,7 @@ public class MomentarySoundEvent extends SoundEvent {
          else
          log.debug("  Target Action: null");
 
-         } 
+         }
          */
 
         /*

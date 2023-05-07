@@ -64,7 +64,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // create
         Turnout t = l.provide("MT+123");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertTrue("system name correct ", t == l.getBySystemName("MT+123"));
     }
 
@@ -251,7 +251,9 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
 
     @Test
-    public void testgetEntryToolTip() {
+    @Override
+    public void testGetEntryToolTip() {
+        super.testGetEntryToolTip();
         String x = l.getEntryToolTip();
         Assert.assertTrue(x.contains("<html>"));
 
@@ -291,11 +293,11 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public void testSimpleNext() throws JmriException {
         Turnout t =  l.provideTurnout("MT+17");
         String next = l.getNextValidSystemName(t);
-        Assert.assertEquals(next, "MT+18");
+        Assert.assertEquals("MT+18", next);
 
         t =  l.provideTurnout("MT+N45E22");
         next = l.getNextValidSystemName(t);
-        Assert.assertEquals(next, "MT+N45E23");
+        Assert.assertEquals("MT+N45E23", next);
 
     }
 
@@ -303,7 +305,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public void testDoubleNext() throws JmriException {
         Turnout t =  l.provideTurnout("MT+18;-21");
         String next = l.getNextValidSystemName(t);
-        Assert.assertEquals(next, "MT+19;-22");
+        Assert.assertEquals( "MT+19;-22", next);
     }
 
     @Test
@@ -329,6 +331,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Test
     @Override
     public void testAutoSystemNames() {
+        Assertions.assertNotNull(tcis);
         Assert.assertEquals("No auto system names",0,tcis.numListeners());
     }
 
@@ -344,9 +347,8 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertEquals("new outputInterval from manager", 50, l.getMemo().getOutputInterval()); // get from memo
     }
 
-
-    private TrafficControllerScaffold tcis;
-    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis = null;
+    private CanSystemConnectionMemo memo = null;
 
     @BeforeEach
     @Override
@@ -360,9 +362,14 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(tcis);
+        Assertions.assertNotNull(memo);
+        if ( l!= null ) {
+            l.dispose();
+            l = null;
+        }
         tcis.terminateThreads();
         tcis = null;
-        l.dispose();
         memo.dispose();
         JUnitUtil.tearDown();
 

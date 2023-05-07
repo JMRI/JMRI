@@ -140,7 +140,7 @@
       <p>Loaded JMRI panels can be used in a modern web browser on computers, smart phones, and
       tablets. A list of the loaded panels is at <a href=
       "http://localhost:12080/panel">http://localhost:12080/panel</a>. <a href=
-      "/help/en/html/web/PanelServlet.shtml">(More details)</a></p>
+      "PanelServlet.shtml">(More details)</a></p>
 
       <h3 id="roster">Roster</h3>
       <!-- rosterServlet intro -->
@@ -149,7 +149,7 @@
       "http://localhost:12080/roster">http://localhost:12080/roster</a> provides a list of roster
       entries. Clicking on an entry will open the web throttle for that entry. The Roster page also
       includes an "Upload Roster Files" button. <a href=
-      "/help/en/html/web/RosterServlet.shtml">(More details)</a></p>
+      "RosterServlet.shtml">(More details)</a></p>
 
       <h3 id="throttle">Throttles</h3>
       <!-- webThrottle intro -->
@@ -166,7 +166,7 @@
 
       <p>Operations services at <a href=
       "http://localhost:12080/operations">http://localhost:12080/operations</a> include Trains,
-      Conductor and Manifest functions. <a href="/help/en/html/web/Operations.shtml">(More
+      Conductor and Manifest functions. <a href="Operations.shtml">(More
       details)</a></p>
 
       <h3 id="tables">Tables</h3>

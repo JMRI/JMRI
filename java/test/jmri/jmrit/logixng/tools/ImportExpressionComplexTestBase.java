@@ -11,10 +11,8 @@ import jmri.util.JUnitUtil;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -29,7 +27,7 @@ import org.junit.Test;
  */
 public abstract class ImportExpressionComplexTestBase {
 
-    public enum Setup {
+    protected enum Setup {
         Init,
         Fail1,
         Fail2,
@@ -66,7 +64,7 @@ public abstract class ImportExpressionComplexTestBase {
      * @param setup the setup
      * @throws jmri.JmriException in case of an exception
      */
-    abstract public void setNamedBeanState(Enum e, Setup setup) throws JmriException;
+    abstract public void setNamedBeanState(Enum<?> e, Setup setup) throws JmriException;
 
     /**
      * Create a new conditional variable of the desired type
@@ -83,23 +81,27 @@ public abstract class ImportExpressionComplexTestBase {
         }
     }
 
-    abstract public Enum[] getEnums();
+    abstract protected Enum<?>[] getEnums();
 
-    public Enum getOtherEnum(Enum e) {
-        Enum[] enums = getEnums();
+    public Enum<?> getOtherEnum(Enum<?> e) {
+        Enum<?>[] enums = getEnums();
         int value = e.ordinal() + 1;
-        if (value >= enums.length) value -= enums.length;
+        if (value >= enums.length) {
+            value -= enums.length;
+        }
         return enums[value];
     }
 
-    public Enum getThirdEnum(Enum e) {
-        Enum[] enums = getEnums();
+    public Enum<?> getThirdEnum(Enum<?> e) {
+        Enum<?>[] enums = getEnums();
         int value = e.ordinal() + 2;
-        if (value >= enums.length) value -= enums.length;
+        if (value >= enums.length) {
+            value -= enums.length;
+        }
         return enums[value];
     }
 
-    public void testEnum(Enum e) throws JmriException {
+    public void testEnum(Enum<?> e) throws JmriException {
 //        Enum otherE = getOtherEnum(e);
 //        Enum thirdE = getThirdEnum(e);
 
@@ -126,27 +128,35 @@ public abstract class ImportExpressionComplexTestBase {
             t1.setState(Turnout.CLOSED);
             // This should throw the turnout if Logix/LogixNG is activated
             setNamedBeanState(e, Setup.Succeed1);
-            if (expectSuccess) JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
+            if (expectSuccess) {
+                JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN,"Turnout did not go Thrown: " + t1.getDisplayName());
+            }
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
             setNamedBeanState(e, Setup.Fail1);
             t1.setState(Turnout.CLOSED);
             // This should throw the turnout if Logix/LogixNG is activated
             setNamedBeanState(e, Setup.Succeed2);
-            if (expectSuccess) JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
+            if (expectSuccess) {
+                JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN,"Turnout did not go Thrown: " + t1.getDisplayName());
+            }
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
 
             setNamedBeanState(e, Setup.Fail1);
             t1.setState(Turnout.CLOSED);
             // This should throw the turnout if Logix/LogixNG is activated
             setNamedBeanState(e, Setup.Succeed3);
-            if (expectSuccess) JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
+            if (expectSuccess) {
+                JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN,"Turnout did not go Thrown: " + t1.getDisplayName());
+            }
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
 
             setNamedBeanState(e, Setup.Fail1);
             t1.setState(Turnout.CLOSED);
             // This should throw the turnout if Logix/LogixNG is activated
             setNamedBeanState(e, Setup.Succeed4);
-            if (expectSuccess) JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
+            if (expectSuccess) {
+                JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN,"Turnout did not go Thrown: " + t1.getDisplayName());
+            }
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
         };
 
@@ -190,7 +200,7 @@ public abstract class ImportExpressionComplexTestBase {
 
     @Test
     public void testAll() throws JmriException {
-        for (Enum e : getEnums()) {
+        for (Enum<?> e : getEnums()) {
 //            if (e.name().startsWith("Memory")) continue;
 //            if (e.name().equals("MemoryEquals")) continue;
 //            if (e.name().equals("ConstantEquals")) continue;

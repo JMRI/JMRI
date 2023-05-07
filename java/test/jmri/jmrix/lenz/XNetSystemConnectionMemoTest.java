@@ -56,7 +56,7 @@ public class XNetSystemConnectionMemoTest extends SystemConnectionMemoTestBase<X
         commandStation.setCommandStationType(0x10); // MultiMaus
         scm.setCommandStation(trafficController.getCommandStation());
         assertThat(scm.provides(ConsistManager.class)).isTrue();
-        assertThat((ConsistManager)scm.get(ConsistManager.class)).isNotInstanceOf(XNetConsistManager.class);
+        assertThat(scm.get(ConsistManager.class)).isNotInstanceOf(XNetConsistManager.class);
     }
 
     @Test

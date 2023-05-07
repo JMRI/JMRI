@@ -219,14 +219,16 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     /**
      * {@inheritDoc}
+     * Invalid indexes are ignored.
      */
     @Override
     public void configureBaudRateFromIndex(int index) {
-        if (validBaudRates().length > index) {
+        if (validBaudRates().length > index && index > -1 ) {
             mBaudRate = validBaudRates()[index];
             log.debug("mBaudRate set by index to: {}", mBaudRate);
         } else {
-            log.debug("no baud rates in array"); // expected for simulators extending serialPortAdapter, mBaudRate already null
+            // expected for simulators extending serialPortAdapter, mBaudRate already null
+            log.debug("no baud rate index {} in array size {}", index, validBaudRates().length);
         }
     }
 

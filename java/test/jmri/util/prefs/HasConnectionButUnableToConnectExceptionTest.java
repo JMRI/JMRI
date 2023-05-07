@@ -14,14 +14,14 @@ import org.junit.jupiter.api.*;
 public class HasConnectionButUnableToConnectExceptionTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testCtor(){
       Assert.assertNotNull("HasConnectionButUnableToConnectException constructor",new HasConnectionButUnableToConnectException("test exception",null));
    }
 
    @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
    }
 
    @AfterEach

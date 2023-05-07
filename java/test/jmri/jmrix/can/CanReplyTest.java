@@ -32,6 +32,8 @@ public class CanReplyTest extends CanMRCommonTestBase {
     }
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "EC_UNRELATED_TYPES",
+        justification = "CanReply and CanMessage are CanFrame with custom equals")
     @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsOp() {
         CanReply m1 = new CanReply();
@@ -54,12 +56,14 @@ public class CanReplyTest extends CanMRCommonTestBase {
         Assert.assertTrue("equals copy", m1.equals(new CanReply(m1)));
         Assert.assertTrue("equals same", m1.equals(m2));
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
-        Assert.assertTrue("not equals null", !m1.equals(null));
+        Assert.assertNotNull("not equals null", m1);
         Assert.assertTrue("not equals string value", !m1.equals("[12] 81 12"));
         Assert.assertTrue("not equals diff ele length", !m1.equals(m4));
     }
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "EC_UNRELATED_TYPES",
+        justification = "CanReply and CanMessage are CanFrame with custom equals")
     @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsMessage() {
         CanReply m1 = new CanReply();
@@ -103,18 +107,21 @@ public class CanReplyTest extends CanMRCommonTestBase {
     }
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "EC_UNRELATED_TYPES",
+        justification = "CanReply and CanMessage are CanFrame with custom equals")
     @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testReplyFromMessage() {
-        CanMessage m = new CanMessage(0x555);
-        m.setNumDataElements(2);
-        m.setElement(0, 0x01);
-        m.setElement(1, 0x82);
-        Assert.assertEquals("2 Elements", 2,m.getNumDataElements());
+        CanMessage canMsg = new CanMessage(0x555);
+        canMsg.setNumDataElements(2);
+        canMsg.setElement(0, 0x01);
+        canMsg.setElement(1, 0x82);
+        Assert.assertEquals("2 Elements", 2,canMsg.getNumDataElements());
         
-        CanReply r = new CanReply(m);
+        CanReply r = new CanReply(canMsg);
         Assert.assertTrue("Header 0x555", r.getHeader() == 0x555);
         Assert.assertTrue("2 Elements", r.getNumDataElements() == 2);
-        Assert.assertTrue("equals same", r.equals(m));
+        Assert.assertTrue("equals same r", r.equals(canMsg));
+        Assert.assertTrue("equals same canMsg", canMsg.equals(r));
     }
 
     @Test

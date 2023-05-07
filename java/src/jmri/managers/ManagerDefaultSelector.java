@@ -214,6 +214,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
      *         occur
      */
     @CheckForNull
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public InitializationException configure(Profile profile) {
         InitializationException error = null;
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
@@ -233,7 +234,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                     try {
                         if (memo.provides(c)) {
                             log.debug("   setting default for \"{}\" to \"{}\" in configure", c, memo.get(c));
-                            InstanceManager.setDefault(c, memo.get(c));
+                            InstanceManager.setDefault((Class)c, (Object)memo.get(c));  // Java generics doesn't work in this case to type cast to (Class) and (Object)
                         }
                     } catch (NullPointerException ex) {
                         String englishMsg = Bundle.getMessage(Locale.ENGLISH, "ErrorNullDefault", memo.getUserName(), c); // NOI18N

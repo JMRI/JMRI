@@ -22,7 +22,7 @@ public class CbusNodeFromFcuTableDataModelTest {
         
         Assert.assertNotNull("exists",t);
         
-        t.dispose();
+        Assertions.assertEquals(0, tcis.outbound.size(),"no can frames sent by fcu model");
         
     }
     
@@ -62,7 +62,7 @@ public class CbusNodeFromFcuTableDataModelTest {
         Assert.assertTrue("default getNodeRowFromNodeNum 1234",t.getNodeRowFromNodeNum(1234) == 1 );
         Assert.assertTrue("default getRowCount 0",t.getRowCount() == 2 );
         
-        t.dispose();
+        Assertions.assertEquals(0, tcis.outbound.size(),"no can frames sent by fcu model");
 
     }
 
@@ -98,11 +98,11 @@ public class CbusNodeFromFcuTableDataModelTest {
         t.setValueAt(7,0,CbusNodeFromFcuTableDataModel.NODE_NV_TOTAL_COLUMN);
         Assert.assertTrue("setValueAt does nothing",(Integer)t.getValueAt(0,CbusNodeFromFcuTableDataModel.NODE_NV_TOTAL_COLUMN)== 3 );
         
-        t.dispose();
+        Assertions.assertEquals(0, tcis.outbound.size(),"no can frames sent by fcu model");
         
     }
-    
-    private CanSystemConnectionMemo memo;
+
+    private CanSystemConnectionMemo memo = null;
     private TrafficControllerScaffold tcis;
 
     @BeforeEach
@@ -111,6 +111,7 @@ public class CbusNodeFromFcuTableDataModelTest {
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
     }
 
     @AfterEach
@@ -118,7 +119,7 @@ public class CbusNodeFromFcuTableDataModelTest {
         
         tcis.terminateThreads();
         tcis = null;
-        
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         JUnitUtil.tearDown();

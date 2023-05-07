@@ -10,7 +10,7 @@ import org.junit.jupiter.api.*;
  */
 public class AlphanumComparatorTest {
 
-    protected static AlphanumComparator ac;
+    protected AlphanumComparator ac;
 
     // tests are final to make sure they're not overloaded (hence ignored) in subclass
     

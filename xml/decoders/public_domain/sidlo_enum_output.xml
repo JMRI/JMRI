@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License   -->
+<!-- for more details.                                                       -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumChoice choice="Output A" value="0" >
+        <choice>A</choice>
+        <choice xml:lang="cs">A</choice>
+    </enumChoice>
+    <enumChoice choice="Output B" value="1" >
+        <choice>B</choice>
+        <choice xml:lang="cs">B</choice>
+    </enumChoice>
+    <enumChoice choice="Output C" value="2" >
+        <choice>C</choice>
+        <choice xml:lang="cs">C</choice>
+    </enumChoice>
+    <enumChoice choice="Output D" value="3" >
+        <choice>D</choice>
+        <choice xml:lang="cs">D</choice>
+    </enumChoice>
+    <enumChoice choice="Output E" value="4" >
+        <choice>E</choice>
+        <choice xml:lang="cs">E</choice>
+    </enumChoice>
+    <enumChoice choice="Output F" value="5" >
+        <choice>F</choice>
+        <choice xml:lang="cs">F</choice>
+    </enumChoice>
+    <enumChoice choice="Output G" value="6" >
+        <choice>G</choice>
+        <choice xml:lang="cs">G</choice>
+    </enumChoice>
+    <enumChoice choice="Output H" value="7" >
+        <choice>H</choice>
+        <choice xml:lang="cs">H</choice>
+    </enumChoice>
+    <enumChoice choice="Output I" value="8" >
+        <choice>I</choice>
+        <choice xml:lang="cs">I</choice>
+    </enumChoice>
+    <enumChoice choice="Output J" value="9" >
+        <choice>J</choice>
+        <choice xml:lang="cs">J</choice>
+    </enumChoice>
+    <enumChoice choice="Output K" value="10" >
+        <choice>K</choice>
+        <choice xml:lang="cs">K</choice>
+    </enumChoice>
+    <enumChoice choice="Output L" value="11" >
+        <choice>L</choice>
+        <choice xml:lang="cs">L</choice>
+    </enumChoice>
+    <enumChoice choice="Output M" value="12" >
+        <choice>M</choice>
+        <choice xml:lang="cs">M</choice>
+    </enumChoice>
+    <enumChoice choice="Output N" value="13" >
+        <choice>N</choice>
+        <choice xml:lang="cs">N</choice>
+    </enumChoice>
+    <enumChoice choice="Output O" value="14" >
+        <choice>O</choice>
+        <choice xml:lang="cs">O</choice>
+    </enumChoice>
+    <enumChoice choice="Output P" value="15" >
+        <choice>P</choice>
+        <choice xml:lang="cs">P</choice>
+    </enumChoice>
+    <enumChoice choice="Not addressed" value="16" >
+        <choice>×  </choice>
+        <choice xml:lang="cs">×  </choice>
+    </enumChoice>
+</enumVal>

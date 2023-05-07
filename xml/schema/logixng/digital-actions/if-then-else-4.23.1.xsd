@@ -39,7 +39,9 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="IfSocket" minOccurs="1" maxOccurs="1">
+
+              <!-- These are for backwards compability up until JMRI 5.1.3 -->
+              <xs:element name="IfSocket" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -47,7 +49,7 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="ThenSocket" minOccurs="1" maxOccurs="1">
+              <xs:element name="ThenSocket" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -55,11 +57,42 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="ElseSocket" minOccurs="1" maxOccurs="1">
+              <xs:element name="ElseSocket" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
                     <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <!-- These are for backwards compability up until JMRI 5.1.3 -->
+
+              <xs:element name="Expressions" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Socket" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="Actions" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Socket" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
@@ -67,28 +100,36 @@
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-            <xs:attribute name="type" use="required">
+
+            <xs:attribute name="executeType">
               <xs:simpleType>
                 <xs:restriction base="xs:token">
                   <xs:enumeration value="ExecuteOnChange"/>
                   <xs:enumeration value="AlwaysExecute"/>
-
-                  <!--
-                  To not cause problems during testing, these are accepted
-                  for now. But they should be removed before the production
-                  version. These where changed to CamelCase after people
-                  had started testing LogixNG.
-                  Remove TRIGGER_ACTION and CONTINOUS_ACTION in IfThenElseXml.java
-                  as well.
-                  -->
-                  <xs:enumeration value="TriggerAction"/>
-                  <xs:enumeration value="ContinuousAction"/>
-                  <xs:enumeration value="TRIGGER_ACTION"/>
-                  <xs:enumeration value="CONTINOUS_ACTION"/>
-
                 </xs:restriction>
               </xs:simpleType>
             </xs:attribute>
+
+            <xs:attribute name="evaluateType">
+              <xs:simpleType>
+                <xs:restriction base="xs:token">
+                  <xs:enumeration value="EvaluateAll"/>
+                  <xs:enumeration value="EvaluateNeeded"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+
+            <!-- This is for backwards compability up until JMRI 5.1.4 -->
+            <xs:attribute name="type">
+              <xs:simpleType>
+                <xs:restriction base="xs:token">
+                  <xs:enumeration value="ExecuteOnChange"/>
+                  <xs:enumeration value="AlwaysExecute"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <!-- This is for backwards compability up until JMRI 5.1.4 -->
+
             <xs:attribute name="enabled" type="yesNoType" />
             <xs:attribute name="class" type="classType" use="required"/>
         

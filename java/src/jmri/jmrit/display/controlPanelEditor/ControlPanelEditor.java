@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
@@ -41,7 +42,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTrack;
 import jmri.jmrit.display.LinkingObject;
 import jmri.jmrit.display.LocoIcon;
-import jmri.jmrit.display.MemoryIcon;
+import jmri.jmrit.display.MemoryOrGVIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableIcon;
 import jmri.jmrit.display.PositionableJComponent;
@@ -59,6 +60,8 @@ import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
 import jmri.util.SystemType;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -673,8 +676,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                                 if (bean != null) {
                                     ((PositionableIcon) pos).displayState(bean.getState());
                                 }
-                            } else if (pos instanceof MemoryIcon) {
-                                ((MemoryIcon) pos).displayState();
+                            } else if (pos instanceof MemoryOrGVIcon) {
+                                ((MemoryOrGVIcon) pos).displayState();
                             } else if (pos instanceof PositionableJComponent) {
                                 ((PositionableJComponent) pos).displayState();
                             }
@@ -983,7 +986,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         super.deselectSelectionGroup();
     }
 
-    protected Positionable getCurrentSelection(MouseEvent event) {
+    protected Positionable getCurrentSelection(JmriMouseEvent event) {
         if (_pastePending && !event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown()) {
             return getCopySelection(event);
         }
@@ -1081,7 +1084,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         return selection;
     }
 
-    private Positionable getCopySelection(MouseEvent event) {
+    private Positionable getCopySelection(JmriMouseEvent event) {
         if (_selectionGroup == null) {
             return null;
         }
@@ -1160,7 +1163,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private long _mouseDownTime = 0;
 
     @Override
-    public void mousePressed(MouseEvent event) {
+    public void mousePressed(JmriMouseEvent event) {
         _mouseDownTime = System.currentTimeMillis();
         setToolTip(null); // ends tooltip if displayed
         log.debug("mousePressed at ({},{}) _dragging={}", event.getX(), event.getY(), _dragging);
@@ -1202,7 +1205,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     @Override
-    public void mouseReleased(MouseEvent event) {
+    public void mouseReleased(JmriMouseEvent event) {
         _mouseDownTime = 0;
         setToolTip(null); // ends tooltip if displayed
         if (log.isDebugEnabled()) { // avoid string concatination if not debug
@@ -1271,7 +1274,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private long _clickTime;
 
     @Override
-    public void mouseClicked(MouseEvent event) {
+    public void mouseClicked(JmriMouseEvent event) {
         if (InstanceManager.getDefault(GuiLafPreferencesManager.class).isNonStandardMouseEvent()) {
             long time = System.currentTimeMillis();
             if (time - _clickTime < 20) {
@@ -1312,7 +1315,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     @Override
-    public void mouseDragged(MouseEvent event) {
+    public void mouseDragged(JmriMouseEvent event) {
         //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")");
         setToolTip(null); // ends tooltip if displayed
 
@@ -1377,7 +1380,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     @Override
-    public void mouseMoved(MouseEvent event) {
+    public void mouseMoved(JmriMouseEvent event) {
         //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")");
         if (_dragging || event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) {
             return;
@@ -1395,12 +1398,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     @Override
-    public void mouseEntered(MouseEvent event) {
+    public void mouseEntered(JmriMouseEvent event) {
         _targetPanel.repaint();
     }
 
     @Override
-    public void mouseExited(MouseEvent event) {
+    public void mouseExited(JmriMouseEvent event) {
         setToolTip(null);
         _targetPanel.repaint();  // needed for ToolTip
     }
@@ -1571,7 +1574,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      * only to specific Positionable types.
      */
     @Override
-    protected void showPopUp(Positionable p, MouseEvent event) {
+    protected void showPopUp(Positionable p, JmriMouseEvent event) {
         if (!((JComponent) p).isVisible()) {
             return;     // component must be showing on the screen to determine its location
         }
@@ -1590,6 +1593,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 setDisplayLevelMenu(p, popup);
                 setHiddenMenu(p, popup);
                 setEditIdMenu(p, popup);
+                popup.addSeparator();
+                setLogixNGPositionableMenu(p, popup);
                 popup.addSeparator();
                 setCopyMenu(p, popup);
             }

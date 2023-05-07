@@ -26,7 +26,7 @@ public class JsonSocketServiceTest {
     }
 
     @Test
-    public void testLocale() {
+    public void testLocale() throws java.io.IOException {
         JsonConnection connection = new JsonConnection((DataOutputStream) null);
         JsonSocketService<?> instance = new JsonTestSocketService(connection);
         Assert.assertEquals("Default locale", Locale.getDefault(), instance.getLocale());
@@ -34,6 +34,8 @@ public class JsonSocketServiceTest {
         Assert.assertEquals("Italian locale", Locale.ITALY, instance.getLocale());
         connection.setLocale(Locale.ENGLISH);
         Assert.assertEquals("English locale", Locale.ENGLISH, instance.getLocale());
+
+        connection.close();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(JsonSocketServiceTest.class);

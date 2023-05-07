@@ -202,6 +202,8 @@
       </xs:sequence>
       <xs:attribute name="showEmptyPanes" type="yesNoType"/>
       <xs:attribute name="allowResetDefaults" type="yesNoType"/>
+      <xs:attribute name="suppressFunctionLabels" type="yesNoType" default="no"/>
+      <xs:attribute name="suppressRosterMedia" type="yesNoType" default="no"/>
     </xs:complexType>
   </xs:element>
 
@@ -293,6 +295,15 @@
     <xs:annotation>
       <xs:documentation>
         Provides a base element that can be used in "enumVal" fragment files, those
+        little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="splitEnumVal" type="SplitEnumValType">
+    <xs:annotation>
+      <xs:documentation>
+        Provides a base element that can be used in "splitEnumVal" fragment files, those
         little files that are XIncluded into primary decoder files.
       </xs:documentation>
     </xs:annotation>
@@ -752,6 +763,8 @@
                   <xs:complexType>
                     <xs:attribute name="min" type="xs:int" default="0"/>
                     <xs:attribute name="max" type="xs:int" default="255"/>
+                    <xs:attribute name="factor" type="xs:int" default="1"/>
+                    <xs:attribute name="offset" type="xs:int" default="0"/>
                     <xs:attribute name="comment" type="xs:string"/>
                   </xs:complexType>
                 </xs:element>
@@ -827,13 +840,13 @@
                   </xs:documentation></xs:annotation>
                   <xs:complexType>
                       <xs:attribute name="highCV" type="cvNameType" />
-                    <xs:attribute name="min" type="xs:int" default="0"/>
-                    <xs:attribute name="max" type="xs:int" default="255"/>
-                    <xs:attribute name="default" type="xs:int"/>
-                    <xs:attribute name="factor" type="xs:int" default="1"/>
-                    <xs:attribute name="offset" type="xs:int" default="0"/>
-                    <xs:attribute name="comment" type="xs:string"/>
-                    <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
+                      <xs:attribute name="min" type="xs:int" default="0"/>
+                      <xs:attribute name="max" type="xs:int" default="255"/>
+                      <xs:attribute name="default" type="xs:int"/>
+                      <xs:attribute name="factor" type="xs:int" default="1"/>
+                      <xs:attribute name="offset" type="xs:int" default="0"/>
+                      <xs:attribute name="comment" type="xs:string"/>
+                      <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
                   </xs:complexType>
                 </xs:element>
                 <xs:element name="splitHexVal" >
@@ -955,7 +968,6 @@
             <xs:field xpath="@xml:lang"/>
           </xs:unique>
         </xs:element>
-
         <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
     </xs:sequence>
@@ -1127,6 +1139,7 @@
       <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute ref="xml:base" />
+    <xs:attribute name="max" type="xs:int" default="255"/>
     <xs:attribute name="comment" type="xs:string"/>
   </xs:complexType>
 
@@ -1311,7 +1324,7 @@
     <xs:restriction base="xs:normalizedString">
       <xs:pattern value="(V|X)*"/>
       <xs:minLength value="8"/>
-      <xs:maxLength value="8"/>
+      <xs:maxLength value="16"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -1340,6 +1353,7 @@
       <xs:enumeration value="LOCONETSV2MODE"/>
       <xs:enumeration value="LOCONETLNCVMODE"/>
       <xs:enumeration value="LOCONETBDOPSWMODE"/>
+      <xs:enumeration value="LOCONETBD7OPSWMODE"/>
       <xs:enumeration value="LOCONETCSOPSWMODE"/>
     </xs:restriction>
   </xs:simpleType>

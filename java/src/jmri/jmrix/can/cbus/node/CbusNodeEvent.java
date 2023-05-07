@@ -30,7 +30,7 @@ public class CbusNodeEvent extends CbusBasicNodeEvent implements Comparable<Cbus
      */
     public CbusNodeEvent( jmri.jmrix.can.CanSystemConnectionMemo memo, int nn, int en, int thisnode, int index, int maxEvVar){
         super(memo,nn,en,thisnode,index);
-        _evVarArr = new int[maxEvVar];
+        _evVarArr = new int[Math.max(maxEvVar, 0)];
         java.util.Arrays.fill(_evVarArr,-1);
     }
     

@@ -16,12 +16,12 @@ public abstract class AbstractDigitalExpression extends AbstractBase
 
     private Base _parent = null;
     private int _state = DigitalExpressionBean.UNKNOWN;
-    
-    
+
+
     public AbstractDigitalExpression(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-        
+
         // Do this test here to ensure all the tests are using correct system names
         NameValidity isNameValid = InstanceManager.getDefault(DigitalExpressionManager.class).validSystemNameFormat(mSystemName);
         if (isNameValid != NameValidity.VALID) {
@@ -66,7 +66,7 @@ public abstract class AbstractDigitalExpression extends AbstractBase
         log.warn("Unexpected call to getState in AbstractDigitalExpression.");  // NOI18N
         return _state;
     }
-    
+
     public String getNewSocketName() {
         String[] names = new String[getChildCount()];
         for (int i=0; i < getChildCount(); i++) {
@@ -74,26 +74,26 @@ public abstract class AbstractDigitalExpression extends AbstractBase
         }
         return getNewSocketName(names);
     }
-    
+
     public static String getNewSocketName(String[] names) {
         int x = 1;
         while (x < 10000) {     // Protect from infinite loop
+            String name = "E" + Integer.toString(x);
             boolean validName = true;
             for (int i=0; i < names.length; i++) {
-                String name = "E" + Integer.toString(x);
                 if (name.equals(names[i])) {
                     validName = false;
                     break;
                 }
             }
             if (validName) {
-                return "E" + Integer.toString(x);
+                return name;
             }
             x++;
         }
         throw new RuntimeException("Unable to find a new socket name");
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractDigitalExpression.class);
 }

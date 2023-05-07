@@ -14,20 +14,24 @@ public class XNetNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPor
     @Override
     @BeforeEach
     public void setUp(){
-       JUnitUtil.setUp();
-       apc = new XNetNetworkPortController(){
-           @Override
-           public boolean status(){
-              return true;
-           }
-           @Override
-           public boolean okToSend(){
-              return true;
-           }
-           @Override
-           public void configure(){
-           }
-       };
+        JUnitUtil.setUp();
+        apc = new XNetNetworkPortController(){
+            @Override
+            public boolean status(){
+                return true;
+            }
+            
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+                justification = "always ok to send in test class")
+            @Override
+            public boolean okToSend(){
+                return true;
+            }
+
+            @Override
+            public void configure(){
+            }
+        };
     }
 
     @Override

@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JFrame;
 
 import jmri.BlockManager;
@@ -12,7 +10,7 @@ import jmri.util.JmriJFrame;
 import org.apache.log4j.Level;
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.QueueTool;
 
 /**
@@ -20,19 +18,18 @@ import org.netbeans.jemmy.QueueTool;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class BlockContentsIconTest {
 
     private BlockContentsIcon to = null;
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", to);
     }
 
     @Test
     public void testShowRosterEntry() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect Roster Entry");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -43,7 +40,7 @@ public class BlockContentsIconTest {
 
         jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
 
-        jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(re);
+        jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1").setValue(re);
         new QueueTool().waitEmpty(100);
 
         jf.pack();
@@ -57,7 +54,6 @@ public class BlockContentsIconTest {
 
     @Test
     public void testShowIdTag() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect Roster Entry");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -68,7 +64,7 @@ public class BlockContentsIconTest {
 
         jmri.IdTag tag = new jmri.implementation.DefaultIdTag("1234");
 
-        jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(tag);
+        jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1").setValue(tag);
         new QueueTool().waitEmpty(100);
 
         jf.pack();
@@ -83,23 +79,23 @@ public class BlockContentsIconTest {
 
     // from here down is testing infrastructure
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
-            to = new BlockContentsIcon("test", new LayoutEditor());
-            to.setBlock(new jmri.NamedBeanHandle<>("IB1", block));
-        }
+        JUnitUtil.resetProfileManager();
+
+        jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        to = new BlockContentsIcon("test", new LayoutEditor());
+        to.setBlock(new jmri.NamedBeanHandle<>("IB1", block));
+
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         if(to!=null) {
             JUnitUtil.dispose(to.getEditor());
-     }
-     to = null;
-     JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
-     JUnitUtil.tearDown();
+        }
+        to = null;
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.tearDown();
     }
 }

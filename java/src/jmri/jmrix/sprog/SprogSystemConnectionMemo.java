@@ -177,7 +177,7 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
      * @return the command station
      */
     public SprogCommandStation getCommandStation() {
-        return get(CommandStation.class);
+        return (SprogCommandStation)get(CommandStation.class);
     }
 
     @Override
@@ -254,7 +254,7 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
     }
 
     public SprogPowerManager getPowerManager() {
-        return get(PowerManager.class);
+        return (SprogPowerManager)get(PowerManager.class);
     }
 
     public ThrottleManager getThrottleManager() {

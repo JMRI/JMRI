@@ -46,6 +46,7 @@
         <label>Chuff interval at speed step 1</label>
         <label xml:lang="de">Abstand der Dampfstöße bei Fahrstufe 1</label>
         <label xml:lang="fr">Intervalle jets de vapeur au cran de vitesse 1</label>
+        <label xml:lang="cs">Interval výfuků na rychlostním stupni 1</label>
         <tooltip>&lt;html&gt;
             0 = with cam sensor (Pulse gives chuff interval)&lt;br&gt;
             >0 without cam sensor (Chuff interval at speed step 1)&lt;br&gt;
@@ -61,12 +62,18 @@
             >0 avec capteur de roue (intervalle de jet de vapeur au cran vitesse 1)&lt;br&gt;
             Diesel / Electrique : Modulation de vitesse: CV toujours = 1&lt;br&gt;
             &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;
+            0 = se snímačem vačky (Tep udává interval výfuků)&lt;br&gt;
+            >0 vez snímače vačky (Interval výfuků na rychlostním kroku 1)&lt;br&gt;
+            Motorová / Elektrická : Modulace rychlosti: CV vždy = 1&lt;br&gt;
+            &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="58" item="Sound Group 1 Option 3" default="95">
         <decVal/>
         <label>Chuff interval at speed step >1</label>
         <label xml:lang="de">Abstand der Dampfstöße bei Fahrstufe >1</label>
         <label xml:lang="fr">Intervalle jets de vapeur crans de vitesse >1</label>
+        <label xml:lang="cs">Interval výfuků na rychlostním stupni >1</label>
         <tooltip>&lt;html&gt;
             0 = with cam sensor (Pulse gives chuff interval)&lt;br&gt;
             >0 without cam sensor (Chuff interval at speed step >1)&lt;br&gt;
@@ -82,12 +89,18 @@
             >0 avec capteur de roue (intervalle de jet de vapeur crans vitesse >1)&lt;br&gt;
             Diesel / Electrique : Modulation de vitesse: CV toujours = 0&lt;br&gt;
             &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;
+            0 = se snímačem vačky (Tep udává interval výfuků)&lt;br&gt;
+            >0 vez snímače vačky (Interval výfuků na rychlostním kroku >1)&lt;br&gt;
+            Motorová / Elektrická : Modulace rychlosti: CV vždy = 0&lt;br&gt;
+            &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="60" item="Sound Option 1" mask="XXXXVVVV" default="0">
         <decVal max="15"/>
         <label>Number of Stations</label>
         <label xml:lang="de">Anzahl der Bahnhöfe</label>
         <label xml:lang="fr">Nombre de gares</label>
+        <label xml:lang="cs">Počet stanic</label>
         <tooltip>&lt;html&gt;
             Multi-station Announcements&lt;br&gt;
             0 = no Station Announcement&lt;br&gt;
@@ -100,12 +113,17 @@
             Annonces multi-gares&lt;br&gt;
             0 = pas d'annonce en gare&lt;br&gt;
             &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;
+            Více staničních hlášení&lt;br&gt;
+            0 = žádné staniční hlášení&lt;br&gt;
+            &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="60" item="Sound Option 2" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turn</label>
         <label xml:lang="de">Kehre</label>
         <label xml:lang="fr">Retour</label>
+        <label xml:lang="cs">Otočit</label>
         <tooltip>&lt;html&gt;
             End announcement reverses the order of announcements of the stations&lt;br&gt;
             e.g. Stat1 > Stat2 > Stat3 End. > Stat2 > Stat1 ...
@@ -118,12 +136,17 @@
             La fin des annonces inverse l'ordre des annonces en gare&lt;br&gt;
             par ex. Gare1 > Gare2 > Gare3 Fin. > Gare2 > Gare1 ...
             &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;
+            Poslední hlášení otočí pořadí hlášení stanic&lt;br&gt;
+            např. Stan1 > Stan2 > Stan3 konečná > Stan2 > Stan1... &lt;br&gt;
+            &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="60" item="Sound Option 3" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Direction</label>
         <label xml:lang="de">Lokrichtung</label>
         <label xml:lang="fr">Direction</label>
+        <label xml:lang="cs">Směr</label>
         <tooltip>&lt;html&gt;
             Loco change of direction reverses the order of announcements of the stations&lt;br&gt;
             e.g. Stat1 > Stat2 > Stat3 Direction > Stat2 > Stat1 ...&lt;br&gt;
@@ -136,6 +159,10 @@
             Le changement de direction de la locomotive inverse l'ordre des annonces en gare&lt;br&gt;
             par ex. Gare1 > Gare2 > Gare3 Direction. > Gare2 > Gare1 ...&lt;br&gt;
             &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;
+            Změna směru jízdy lokomotivy otočí pořadí hlášení stanic&lt;br&gt;
+            např. Stan1 > Stan2 > Stan3 změna směru > Stan2 > Stan1... &lt;br&gt;
+            &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="60" item="Sound Option 4" mask="XVXXXXXX" default="0">
         <enumVal>
@@ -143,16 +170,19 @@
             <choice>Normal</choice>
             <choice xml:lang="de">Normal</choice>
             <choice xml:lang="fr">Normal</choice>
+            <choice xml:lang="cs">Normální</choice>
           </enumChoice>
           <enumChoice>
             <choice>Inversed</choice>
             <choice xml:lang="de">Invertiert</choice>
             <choice xml:lang="fr">Inversée</choice>
+            <choice xml:lang="cs">Obrácený</choice>
           </enumChoice>
         </enumVal>
         <label>Sequence</label>
         <label xml:lang="de">Reihenfolge</label>
         <label xml:lang="fr">Séquence</label>
+        <label xml:lang="cs">Pořadí</label>
         <tooltip>&lt;html&gt;
             Default for sequence of announcements of the stations&lt;br&gt;
             Normal (0) = Stat 1 > Stat n ...&lt;br&gt;
@@ -168,21 +198,29 @@
             Normal (0) = Gare 1 > Gare n  ...&lt;br&gt;
             Inversée (1) = ... Gare n > Gare 1&lt;br&gt;
             &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;
+            Výchozí pořadí staničních hlášení&lt;br&gt;
+            Normální (0) = Stan 1 > Stan n... &lt;br&gt;
+            Obrácený (1) = ... Stan n > Stan 1&lt;br&gt;
+            &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="63" item="Sound Setting 1" default="255">
         <decVal/>
         <label>Total Volume</label>
         <label xml:lang="de">Lautstärke gesamt</label>
         <label xml:lang="fr">Volume sonore général</label>
+        <label xml:lang="cs">Celková hlasitost</label>
         <tooltip>&lt;html&gt;Total volume for all sounds.&lt;br&gt; 0 = no sound&lt;/html&gt;</tooltip>
         <tooltip xml:lang="de">&lt;html&gt;Gesamtlautstärke für alle Sounds.&lt;br&gt; 0 = keine Sounds&lt;/html&gt;</tooltip>
         <tooltip xml:lang="fr">&lt;html&gt;Volume général pour tous les sons.&lt;br&gt; 0 = pas de sons&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Celková hlasitost pro všechny zvuky.&lt;br&gt; 0 = bez zvuku&lt;/html&gt;</tooltip>
     </variable>
     <variable CV="64" item="Sound Group 1 Option 1" default="105" include="60940,60945,60965"> <!-- Steam -->
         <decVal/>
         <label>Threshold for brake squealing</label>
         <label xml:lang="de">Bremsenquietschen Schwelle</label>
         <label xml:lang="fr">Seuil de grincement des freins</label>
+        <label xml:lang="cs">Práh skřípění brzd</label>
         <tooltip>&lt;html&gt;
             The higher the value the sooner the squealing begins,&lt;br&gt;
             the lower the value the later the squealing begins.&lt;br&gt;
@@ -197,6 +235,11 @@
             Plus la valeur est élévée, plus tôt commence le grincement,&lt;br&gt;
             plus elle est petite, plus le grincement commence tard.&lt;br&gt;
             Si la valeur est trop faible, il n'y a pas de grincement.&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;
+            Čím vyšší hodnota, tím dříve skřípění začne,&lt;br&gt;
+            čím nižší hodnota, tím později skřípění začne.&lt;br&gt;
+            Pokud je hodnota příliš malá, nezačne žádné skřípění.&lt;br&gt;
             &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="64" item="Sound Group 1 Option 1" default="55" exclude="60940,60945,60965,Märklin mSD/3">  <!-- Diesel and Electric -->
@@ -204,6 +247,7 @@
         <label>Threshold for brake squealing</label>
         <label xml:lang="de">Bremsenquietschen Schwelle</label>
         <label xml:lang="fr">Seuil de grincement des freins</label>
+        <label xml:lang="cs">Práh skřípění brzd</label>
         <tooltip>&lt;html&gt;
             The higher the value the sooner the squealing begins,&lt;br&gt;
             the lower the value the later the squealing begins.&lt;br&gt;
@@ -218,6 +262,11 @@
             Plus la valeur est élévée, plus tôt commence le grincement,&lt;br&gt;
             plus elle est petite, plus le grincement commence tard.&lt;br&gt;
             Si la valeur est trop faible, il n'y a pas de grincement.&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;
+            Čím vyšší hodnota, tím dříve skřípění začne,&lt;br&gt;
+            čím nižší hodnota, tím později skřípění začne.&lt;br&gt;
+            Pokud je hodnota příliš malá, nezačne žádné skřípění.&lt;br&gt;
             &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="64" item="Sound Group 1 Option 1" default="35" include="Märklin mSD/3">  <!-- mSD/3 -->
@@ -225,6 +274,7 @@
         <label>Threshold for brake squealing</label>
         <label xml:lang="de">Bremsenquietschen Schwelle</label>
         <label xml:lang="fr">Seuil de grincement des freins</label>
+        <label xml:lang="cs">Práh skřípění brzd</label>
         <tooltip>&lt;html&gt;
             The higher the value the sooner the squealing begins,&lt;br&gt;
             the lower the value the later the squealing begins.&lt;br&gt;
@@ -239,6 +289,11 @@
             Plus la valeur est élévée, plus tôt commence le grincement,&lt;br&gt;
             plus elle est petite, plus le grincement commence tard.&lt;br&gt;
             Si la valeur est trop faible, il n'y a pas de grincement.&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;
+            Čím vyšší hodnota, tím dříve skřípění začne,&lt;br&gt;
+            čím nižší hodnota, tím později skřípění začne.&lt;br&gt;
+            Pokud je hodnota příliš malá, nezačne žádné skřípění.&lt;br&gt;
             &lt;/html&gt;</tooltip>
     </variable>
 </variables>

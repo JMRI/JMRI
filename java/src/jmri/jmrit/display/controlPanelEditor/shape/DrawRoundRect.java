@@ -2,14 +2,16 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.awt.geom.RoundRectangle2D;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import jmri.jmrit.display.Editor;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseMotionListener;
 
 /**
  * @author Pete Cressman Copyright (c) 2012
@@ -37,18 +39,19 @@ public class DrawRoundRect extends DrawRectangle {
             shape.setCornerRadius(getInteger(_radiusText, shape.getCornerRadius()));
             updateShape();
         });
-        _radiusText.addMouseMotionListener(new MouseMotionListener() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                updateShape();
-            }
+        _radiusText.addMouseMotionListener(JmriMouseMotionListener.adapt(
+                new JmriMouseMotionListener() {
+                    @Override
+                    public void mouseDragged(JmriMouseEvent e) {
+                        updateShape();
+                    }
 
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                shape.setCornerRadius(getInteger(_radiusText, shape.getCornerRadius()));
-                updateShape();
-            }
-        });
+                    @Override
+                    public void mouseMoved(JmriMouseEvent e) {
+                        shape.setCornerRadius(getInteger(_radiusText, shape.getCornerRadius()));
+                        updateShape();
+                    }
+                }));
         pp.add(new JLabel(Bundle.getMessage("cornerRadius")));
         p.add(pp);
         panel.add(p);

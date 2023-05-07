@@ -1,7 +1,7 @@
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -51,11 +51,26 @@ public class MergMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("extended format 4 byte", ":X91A85678R12345678;", g.toString());
     }
 
+    @Test
+    public void testByteOutOfRange() {
+            g.setByte(-99, 0);
+            JUnitAppender.assertErrorMessageStartsWith("Byte value -99 out of range 0-255 for MergMessage data payload");
+            
+            g.setByte(321, 0);
+            JUnitAppender.assertErrorMessageStartsWith("Byte value 321 out of range 0-255 for MergMessage data payload");
+            
+            g.setByte(0xAA, 22);
+            JUnitAppender.assertErrorMessageStartsWith("Byte Index 22 out of range 0-7 for MergMessage data payload");
+            
+            g.setByte(0xAA, -1);
+            JUnitAppender.assertErrorMessageStartsWith("Byte Index -1 out of range 0-7 for MergMessage data payload");
+    }
+
     @Override
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        new TrafficControllerScaffold();
+        JUnitUtil.setUp();
+
         CanMessage msg = new CanMessage(0x123);
         msg.setExtended(false);
         msg.setRtr(false);
@@ -68,6 +83,7 @@ public class MergMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = g = new MergMessage(msg);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = g = null;

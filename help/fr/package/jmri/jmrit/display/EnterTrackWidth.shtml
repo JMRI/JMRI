@@ -1,33 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-1023-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-1023-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Set Track Width Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Layout Editor Track">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div  id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>R&eacute;glage Largeur Voie</h1>La bo&icirc;te de
+      <h1>R&eacute;glage Largeur Voie</h1>
+
+      <p>La bo&icirc;te de
       dialogue R&eacute;glage Largeur de Voie permet de changer les
       largeurs des deux types de voies utilis&eacute;s dans les
       sch&eacute;mas de voies dans le TCO. La voie peut &ecirc;tre
@@ -40,14 +28,17 @@
       d'&eacute;vitement</i> par d&eacute;faut. La
       sp&eacute;cification du type <i>voie principale</i> pour des
       segments sp&eacute;cifiques de la voie est une option que
-      vous pouvez ou non choisir d'en profiter.
+      vous pouvez ou non choisir d'en profiter.</p>
 
       <p>Chaque type de voie peut &ecirc;tre dessin&eacute; en
       utilisant une largeur de voie diff&eacute;rente. La
       modification de la largeur d'un type de voie modifie les
       largeurs de toutes les voies de ce type dans le sch&eacute;ma
-      de voie.</p><!--#include virtual="/Footer.shtml" -->
+      de voie.</p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

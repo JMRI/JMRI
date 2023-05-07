@@ -68,7 +68,9 @@
       <p>Text</p>
 
       <h2 id="tools">JMRI __this system__ Tools</h2>
-      <img src="__System__Menu.png" width="100" height="100" class="floatRight" alt="Menu">
+      <!--
+        <img src="__System__Menu.png" width="100" height="100" class="floatRight" alt="Menu">
+      -->
       <h4>Tool 1</h4>
 
       <p>Steps etc.</p>

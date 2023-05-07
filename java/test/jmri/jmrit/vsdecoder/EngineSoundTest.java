@@ -28,7 +28,6 @@ public class EngineSoundTest {
         jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
         JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

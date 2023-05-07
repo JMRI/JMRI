@@ -1,21 +1,16 @@
 package jmri.jmrix.loconet.alm.almi;
 
 import jmri.jmrix.loconet.LocoNetMessage;
-import org.junit.*;
+import jmri.util.JUnitUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
  * @author B. Milhaupt  Copyright (C) 2022
  */
 public class AlmiTest {
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
 
     @Test
     public void testInterpretAlm() {
@@ -42,6 +37,16 @@ public class AlmiTest {
         Assert.assertEquals("Set Alias pair 5: 6292 is an alias for 13; 6163 is an alias for 124.\n",
                 Almi.interpretAlm(l));
 
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

@@ -19,13 +19,13 @@
       <p>JMRI uses XML for a number of purposes: to hold decoder definitions, for its <a href=
       "XmlPersistance.shtml">persistance system</a> for configuration and panel information, and to
       create parts of the website from other files. This page describes how we specify the content
-      of those files using <a href="http://www.w3schools.com/xml/xml_schema.asp">XML
+      of those files using <a href="https://www.w3schools.com/xml/xml_schema.asp">XML
       schema</a>.</p>
 
       <p>For examples (not a tutorial!) on the structure of our schema, see the <a href=
       "XmlSchemaExamples.shtml">examples page</a>.</p>
 
-      <p>The current schema can be seen online in the <a href="http://jmri.org/xml/schema">schema
+      <p>The current schema can be seen online in the <a href="https://www.jmri.org/xml/schema/">schema
       directory</a>. The most commonly used one is the <a href=
       "http://jmri.org/xml/schema/layout.xsd">layout.xsd schema for panel files</a>. See below on
       how it's organized.</p>
@@ -35,7 +35,7 @@
       <p>Those XML Schema may need to be available to the program when it reads the files, as they
       define the default values of missing attributes and other needed information.</p>
 
-      <p>In the JMRI distributions, these are stored in the <a href="/xml/schema">xml/schema</a>
+      <p>In the JMRI distributions, these are stored in the /xml/schema/
       directory. Note that they are not stored in each directory alongside the XML files. There are
       just too many locations to keep such a set of schema definition files up to date. JMRI
       itself, via the jmri.jmrit.XmlFile class, provides support for locating those files when the
@@ -89,10 +89,10 @@
       </ol>
 
       <h3 id="versioning">Schema Versioning</h3>
-      "Versioning" schema allows us to have different schema for older and newer files. This lets
+      <p>"Versioning" schema allows us to have different schema for older and newer files. This lets
       newer versions of JMRI continue to check and read files that were written by older versions
       of JMRI. This backward compatibility is an important JMRI feature which we don't want to
-      lose.
+      lose.</p>
       <p>In practical terms, versioning consists of having multiple-but-related versions of the
       schema definition files which are labeled by the first JMRI version that can read them.</p>
 
@@ -121,18 +121,28 @@
 
             <li>Then, change the Java code that writes the schema reference to the top of output
             files to use the new filename. For example, layout (panel) files are written by
-            <code>src/jmri/configurexml/ConfigXmlManager.java</code>. Look for the<br>
-            <code>static final public String schemaVersion = "-3-7-3"</code><br>
+            <div class="wide">
+              <code>src/jmri/configurexml/ConfigXmlManager.java</code>
+            </div>
+            Look for the
+            <div class="wide">
+              <code>static final public String schemaVersion = "-3-7-3"</code>
+            </div>
             line and change it to your new version number suffix.</li>
 
             <li>Run "ant headlesstest" and when tests fail, fix them. If a LoadAndStoreTest flags a
             compare inLine/outLine error, update the schema version in the header of the reference
             file. For example in
-            <code>java/test/jmri/configurexml/loadref/BlockAndSignalMastTest.xml</code> point to
-            the most recent layout.xsd version in line 3:<br>
-            <code class="block">&lt;layout-config
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-7-2.xsd"&gt;</code></li>
+            <div class="wide">
+              <code>java/test/jmri/configurexml/loadref/BlockAndSignalMastTest.xml</code>
+            </div>
+            point to the most recent layout.xsd version in line 3:
+            <div class="wide">
+              <code class="block">&lt;layout-config
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-7-2.xsd"&gt;</code>
+            </div>
+            </li>
 
             <li>If there's an associated XML stylesheet(s), its name has to be changed in a
             coordinated way. (You should also update the stylesheet to show your new XML content,
@@ -146,36 +156,38 @@
       layout.xsd is <em>older</em> than layout-2-9-6.xsd, and therefore not to be used for new
       files anymore. Don't assume that layout.xsd is the default for new files!</p>
 
-      <h2>Checking JMRI Schema</h2>
-      It's important that the JMRI schema definitions be kept semantically correct. If we let too
+      <h2 id="junitschematest">Checking JMRI Schema</h2>
+      <p>It's important that the JMRI schema definitions be kept semantically correct. If we let too
       many problems build up, we'll eventually have a lot of back-fitting to do. The W3C online
       <a href="https://www.w3schools.com/xml/xml_validator.asp">schema validation tool</a> is a
       good tool for checking that changes to the JMRI schema are still technically correct. You
-      should check your changes with it before commiting them to the repository. Unfortunately, it
+      should check your changes with it before committing them to the repository. Unfortunately, it
       doesn't seem to check compliance with nested schema elements, e.g. from DocBook (see below)
-      or JMRI schema, but it's still a very useful check.
+      or JMRI schema, but it's still a very useful check.</p>
       <p>Using the JMRI "Validate XML File" tool in the "Debug" menu to validate a .xml file
       ("instance file") that uses your new or updated schema is an important check of both. Use it
       often during development. You can also use it from the command line via e.g.:</p>
-
+      <div class="wide">
       <pre>
 <code>
 ./runtest.csh apps/jmrit/XmlFileValidateRunner xml/decoders/0NMRA.xml
 </code>
-</pre>
+      </pre>
+      </div>
       <p>There is also a PowerShell script available, see the <a href="JUnit.shtml">JUnit</a> page
       for more information.</p>
 
       <p>For a quick file check, Linux and Mac OS X users can validate from the command line with
       e.g.</p>
-
+      <div class="wide">
       <pre>
 <code>
  cd xml
  xmllint -schema schema/aspecttable.xsd -noout signals/sample-aspects.xml
 </code>
-</pre><code>xmllint</code> can't check schema files themselves, unfortunately, because their schema
-isn't something it can handle.
+      </pre></div>
+      <code>xmllint</code> can't check schema files themselves, unfortunately, because their schema
+      isn't something it can handle.
       <p>Your schema docs should point to our standard stylesheet in their head matter:</p>
 
       <pre>
@@ -184,7 +196,7 @@ isn't something it can handle.
 </code>
 </pre>Stylesheets turn XML code, like this schema, into a human-readable form when the XML is
 parsed and displayed by a browser. For an example of that, click on this link to the <a href=
-"http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a> schema file. Our standard
+"https://www.jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a> schema file. Our standard
 stylesheet is pretty basic. It just shows basic structure. If anybody knows of a better stylesheet,
 we can certainly switch to it.
       <h3 id="test">JUnit testing</h3>
@@ -236,7 +248,7 @@ we can certainly switch to it.
           comparison fails, but the output file is still OK when you manually inspect it, copy that
           output file to the "loadref" directory (create it if needed) within your test package.
           See <a href=
-          "http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/loadref"
+          "https://github.com/JMRI/JMRI/tree/master/java/test/jmri/configurexml/loadref"
           target="_blank">test/jmri/configurexml/loadref</a> for an example. LoadAndStoreTest will
           compare to files it finds here, instead of to the original file in the "load"
           subdirectory.</p>
@@ -267,7 +279,7 @@ we can certainly switch to it.
       code: A particular *Xml class is the unit of reuse.</p>
 
       <p>Lots of classes descend from jmri.configurexml.XmAdapter: (<a href=
-      "https://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see Javadoc</a>)</p>
+      "https://www.jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see Javadoc</a>)</p>
 
       <p>By convention, provide &lt;xsd:annotation&gt;&lt;xsd:appinfo&gt; element containing the
       class name that reads/writes the element:</p>
@@ -291,9 +303,8 @@ we can certainly switch to it.
       They are defined in the <a href=
       "http://jmri.org/xml/schema/types/general.xsd">types/general.xsd</a> file.</p>
 
-      <p>More information on XML schema design patterns is available at <a href=
-      "http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B">DeveloperWorks</a>
-      and the <a href="http://www.oracle.com/technetwork/java/design-patterns-142138.html">Oracle
+      <p>More information on XML schema design patterns is available at the <a
+      href="https://www.oracle.com/technical-resources/articles/java/design-patterns.html">Oracle
       Java site</a>.</p>
 
       <h3>On Elements vs Attributes</h3>
@@ -357,65 +368,75 @@ we can certainly switch to it.
       For others, browse the <a href="http://jmri.org/xml/schema/types/general.xsd">general types
       schema</a>.
       <h2>External Standards and Future Work</h2>
-      The <a href="http://www.oasis-open.org/">OASIS collaboration</a> defines a number of schema
+      The <a href="https://www.oasis-open.org/">OASIS collaboration</a> defines a number of schema
       and schema elements that have become well-known standards. Were possible, we should use those
-      <a href="http://www.oasis-open.org/specs/index.php">standard elements</a> to improve
+      <a href="https://www.oasis-open.org/specs/index.php">standard elements</a> to improve
       inter-operability. The first ones of interest are:
       <ul>
         <li>
-          <a href="http://docbook.org/">DockBook</a> defines elements for several concepts we use:
-          <ul>
-            <li>author (http://www.docbook.org/tdg/en/html/author.html)</li>
+          <a href="https://docbook.org/">DocBook</a> defines elements for several concepts we use:
+          <div class="wide">
+            <ul>
+              <li>author (http://www.docbook.org/tdg/en/html/author.html)</li>
 
-            <li>address (http://www.docbook.org/tdg/en/html/address.html)</li>
+              <li>address (http://www.docbook.org/tdg/en/html/address.html)</li>
 
-            <li>revision history (http://www.docbook.org/tdg/en/html/revhistory.html)</li>
-          </ul>
+              <li>revision history (http://www.docbook.org/tdg/en/html/revhistory.html)</li>
+            </ul>
+          </div>
+
           See
-          <ul>
-            <li>
-              <a href=
-              "http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html">http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html</a>
-            </li>
+          <div class="wide">
+            <ul>
+              <li>
+                <a href=
+                "https://docbook.org/specs/docbook-5.0-spec-cs-01.html">https://docbook.org/specs/docbook-5.0-spec-cs-01.html</a>
+              </li>
 
-            <li>
-              <a href="http://www.docbook.org/xml/5.0/xsd/">http://www.docbook.org/xml/5.0/xsd/</a>
-            </li>
+              <li>
+                <a href="https://docbook.org/xml/5.0/xsd/">https://docbook.org/xml/5.0/xsd/</a>
+              </li>
 
-            <li>
-              <a href=
-              "http://www.docbook.org/xml/5.0/xsd/docbook.xsd">http://www.docbook.org/xml/5.0/xsd/docbook.xsd</a>
-            </li>
-          </ul>
+              <li>
+                <a href=
+                "https://docbook.org/xml/5.0/xsd/docbook.xsd">https://docbook.org/xml/5.0/xsd/docbook.xsd</a>
+              </li>
+            </ul>
+          </div>
 
-          <p>We have our own DocBook subset that we use, because the full DocBook 5.0 schema takes
+          We have our own DocBook subset that we use, because the full DocBook 5.0 schema takes
           a very long time to parse, and isn't fully consistent with versions of other software
           that we use. We use the normal DocBook 5.0 namespace, so we can later easily convert to a
-          more complete schema transparently. Our smaller schema is located at <a href=
+          more complete schema transparently. Our smaller schema is located at
+          <div class="wide">
+            <a href=
           "http://jmri.org/xml/schema/docbook/docbook.xsd">http://jmri.org/xml/schema/docbook/docbook.xsd</a>
+          </div>
           (our usual schema location). It is <em>only</em> referenced from JMRI schema files, not
-          instance files, so that we can later convert with finite work.</p>
+          instance files, so that we can later convert with finite work.
         </li>
 
         <li>
-          <a href="http://www.oasis-open.org/committees/ubl/faq.php">UBL</a>, though aimed at
+          <a href="http://ubl.xml.org/wiki/ubl-faq">UBL</a>, though aimed at
           business transactions, defines elements to represent parties (companies, people),
           devices, model numbers, etc.
         </li>
 
         <li>
           <a href=
-          "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=office">OpenDocument</a>
+          "https://en.wikipedia.org/wiki/OpenDocument">OpenDocument</a>
           (OODF) defines a set of elements and structures for computations as part of its
           spreadsheet module. (But they provide Relax-NG schema, not W3C XML Schema, so that
           doesn't help so much)
         </li>
       </ul>
-      Learning to use these will require some work, as we can't assume that computers using JMRI
-      have internet access, so can't just reference the entire schema as remote entities.
+
+      <p>Learning to use these will require some work, as we can't assume that computers using JMRI
+      have internet access, so can't just reference the entire schema as remote entities.</p>
+
       <h2>Copyright, Author and Revision Information</h2>
-      For various reasons, we need to move to DocBook format for Copyright, Author and Revision
-      information in our XML files (instance files).
+      <p>For various reasons, we need to move to DocBook format for Copyright, Author and Revision
+      information in our XML files (instance files).</p>
       <p>Sample XML:</p>
       <code class="block">&lt;db:copyright&gt; &lt;db:year&gt;2009&lt;/db:year&gt;
       &lt;db:year&gt;2010&lt;/db:year&gt;&lt;
@@ -438,11 +459,11 @@ we can certainly switch to it.
       &lt;xs:element ref="docbook:revhistory" minOccurs="1" maxOccurs="unbounded" &gt;
       &lt;xs:annotation&gt;&lt;xs:documentation&gt; DocBook element(s) describing the revision
       history in standard form &lt;/xs:documentation&gt;&lt;/xs:annotation&gt;
-      &lt;/xs:element&gt;</code> <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+      &lt;/xs:element&gt;</code>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

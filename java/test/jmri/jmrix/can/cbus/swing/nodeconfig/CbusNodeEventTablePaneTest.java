@@ -1,7 +1,5 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
@@ -11,7 +9,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 
@@ -21,18 +19,17 @@ import org.netbeans.jemmy.operators.JTableOperator;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class CbusNodeEventTablePaneTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         t = new CbusNodeEventTablePane(null);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testCtorWithModelAndInit() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         nodeModel = new CbusNodeEventTableDataModel(null, memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         
@@ -49,7 +46,6 @@ public class CbusNodeEventTablePaneTest {
     
     @Test
     public void testSetNode() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         nodeModel = new CbusNodeEventTableDataModel(null, memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         
@@ -95,7 +91,7 @@ public class CbusNodeEventTablePaneTest {
     }
     
     private CbusNodeEventTablePane t;
-    private CanSystemConnectionMemo memo;
+    private CanSystemConnectionMemo memo = null;
     private CbusNodeEventTableDataModel nodeModel;
 
     @BeforeEach
@@ -108,6 +104,7 @@ public class CbusNodeEventTablePaneTest {
     public void tearDown() {
         t = null;
         nodeModel = null;
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         JUnitUtil.tearDown();

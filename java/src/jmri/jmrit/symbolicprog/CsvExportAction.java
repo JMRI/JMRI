@@ -39,7 +39,7 @@ public class CsvExportAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 
         if (fileChooser == null) {
-            fileChooser = new JFileChooser();
+            fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
 
         int retVal = fileChooser.showSaveDialog(mParent);
@@ -51,7 +51,7 @@ public class CsvExportAction extends AbstractAction {
             }
 
             try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
-                str.printRecord("CV, value");
+                str.printRecord("CV", "value");
                 for (int i = 0; i < mModel.getRowCount(); i++) {
                     CvValue cv = mModel.getCvByRow(i);
                     if (isWritable(cv)) {

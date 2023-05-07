@@ -564,7 +564,7 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
 
         expressionReporter.getSelectNamedBean().setNamedBean("A non existent reporter");
         Assert.assertNull("reporter handle is null", expressionReporter.getSelectNamedBean().getNamedBean());
-        JUnitAppender.assertWarnMessage("Reporter \"A non existent reporter\" is not found");
+        JUnitAppender.assertErrorMessage("Reporter \"A non existent reporter\" is not found");
 
         expressionReporter.getSelectNamedBean().setNamedBean(reporter13.getSystemName());
         Assert.assertTrue("reporter is correct", reporter13 == expressionReporter.getSelectNamedBean().getNamedBean().getBean());
@@ -668,7 +668,7 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         logixNG.addConditionalNG(conditionalNG);
 
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null);
-        ifThenElse.setType(IfThenElse.Type.AlwaysExecute);
+        ifThenElse.setExecuteType(IfThenElse.ExecuteType.AlwaysExecute);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
@@ -700,6 +700,7 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -24,8 +24,8 @@ public class CbusEventTableXmlAction {
     // if a CBUS Event xml file is found
     // import table data into it
     protected static void restoreEventsFromXmlTablestart(CbusEventTableDataModel model) {
-
-        CbusEventTableXmlFile x = new CbusEventTableXmlFile();
+        log.debug("restore events from conn {}",model._memo);
+        CbusEventTableXmlFile x = new CbusEventTableXmlFile(model._memo);
         File file = x.getFile(false);
         if (file == null) {
             return;
@@ -99,7 +99,7 @@ public class CbusEventTableXmlAction {
     private static void layoutEventsToXml(CbusEventTableDataModel model) {
 
         log.info("Saving {} CBUS Event xml file.", model._memo.getUserName() ); // NOI18N
-        CbusEventTableXmlFile x = new CbusEventTableXmlFile();
+        CbusEventTableXmlFile x = new CbusEventTableXmlFile(model._memo);
 
         Element root = new Element("CbusEventDetails"); // NOI18N
         root.setAttribute("noNamespaceSchemaLocation",  // NOI18N

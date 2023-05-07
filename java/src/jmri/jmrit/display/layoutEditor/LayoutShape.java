@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
@@ -15,6 +14,7 @@ import javax.annotation.*;
 import javax.swing.*;
 import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * A LayoutShape is a set of LayoutShapePoint used to draw a shape. Each point
@@ -417,7 +417,7 @@ public class LayoutShape {
     private JPopupMenu popup = null;
 
     @Nonnull
-    protected JPopupMenu showShapePopUp(@CheckForNull MouseEvent mouseEvent, HitPointType hitPointType) {
+    protected JPopupMenu showShapePopUp(@CheckForNull JmriMouseEvent mouseEvent, HitPointType hitPointType) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -818,7 +818,7 @@ public class LayoutShape {
      * enum LayoutShapeType
      */
     public enum LayoutShapeType {
-        Open, 
+        Open,
         Closed,
         Filled;
     }

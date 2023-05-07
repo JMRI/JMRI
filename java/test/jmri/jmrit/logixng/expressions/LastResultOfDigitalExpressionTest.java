@@ -66,7 +66,7 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
                 "      ! A%n" +
                 "         If Then Else. Execute on change ::: Use default%n" +
                 "            ? If%n" +
-                "               Or ::: Use default%n" +
+                "               Or. Evaluate All ::: Use default%n" +
                 "                  ? E1%n" +
                 "                     Light IL1 is On ::: User Name: My other expression ::: Use default%n" +
                 "                  ? E2%n" +
@@ -321,6 +321,7 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

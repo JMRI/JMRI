@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
+import java.text.*;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -14,9 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import jmri.jmrit.operations.rollingstock.RollingStockEditFrame;
+import jmri.jmrit.operations.rollingstock.*;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
 import jmri.jmrit.operations.setup.Setup;
@@ -164,7 +160,7 @@ public class CarEditFrame extends RollingStockEditFrame {
         cabooseCheckBox.setSelected(car.isCaboose());
         utilityCheckBox.setSelected(car.isUtility());
         fredCheckBox.setSelected(car.hasFred());
-        hazardousCheckBox.setSelected(car.isHazardous());
+        hazardousCheckBox.setSelected(car.isCarHazardous());
 
         pBlocking.setVisible(car.isPassenger() || car.getKernel() != null);
 
@@ -235,7 +231,6 @@ public class CarEditFrame extends RollingStockEditFrame {
                 carLoadEditFrame.dispose();
             }
             carLoadEditFrame = new CarLoadEditFrame();
-            carLoadEditFrame.setLocationRelativeTo(this);
             carLoadEditFrame.initComponents((String) typeComboBox.getSelectedItem(),
                     (String) loadComboBox.getSelectedItem());
         }
@@ -377,7 +372,7 @@ public class CarEditFrame extends RollingStockEditFrame {
         }
         car.setUtility(utilityCheckBox.isSelected());
         // ask if all cars of this type should be hazardous
-        if (isSave && car.isHazardous() ^ hazardousCheckBox.isSelected()) {
+        if (isSave && car.isCarHazardous() ^ hazardousCheckBox.isSelected()) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(hazardousCheckBox.isSelected() ? Bundle
                     .getMessage("carModifyTypeHazardous") : Bundle.getMessage("carRemoveTypeHazardous"),
                     new Object[]{car.getTypeName()}),
@@ -387,12 +382,12 @@ public class CarEditFrame extends RollingStockEditFrame {
                 // go through the entire list and change the hazardous setting for all cars of this type
                 for (Car c : carManager.getList()) {
                     if (c.getTypeName().equals(car.getTypeName())) {
-                        c.setHazardous(hazardousCheckBox.isSelected());
+                        c.setCarHazardous(hazardousCheckBox.isSelected());
                     }
                 }
             }
         }
-        car.setHazardous(hazardousCheckBox.isSelected());
+        car.setCarHazardous(hazardousCheckBox.isSelected());
         car.setFred(fredCheckBox.isSelected());
         if (groupComboBox.getSelectedItem() != null) {
             if (groupComboBox.getSelectedItem().equals(CarManager.NONE)) {
@@ -408,6 +403,8 @@ public class CarEditFrame extends RollingStockEditFrame {
         }
         if (loadComboBox.getSelectedItem() != null && !car.getLoadName().equals(loadComboBox.getSelectedItem())) {
             car.setLoadName((String) loadComboBox.getSelectedItem());
+            car.setWait(0); // car could be at spur with schedule
+            car.setScheduleItemId(Car.NONE);
             // check to see if car is part of kernel, and ask if all the other cars in the kernel should be changed
             if (car.getKernel() != null) {
                 List<Car> cars = car.getKernel().getCars();
@@ -422,12 +419,17 @@ public class CarEditFrame extends RollingStockEditFrame {
                             if (InstanceManager.getDefault(CarLoads.class).containsName(c.getTypeName(),
                                     car.getLoadName())) {
                                 c.setLoadName(car.getLoadName());
+                                c.setWait(0); // car could be at spur with schedule
+                                c.setScheduleItemId(Car.NONE);
                             }
                         }
                     }
                 }
             }
         }
+        
+        // place car on track after setting load name
+        checkAndSetLocationAndTrack(car);
 
         // update blocking
         pBlocking.setVisible(passengerCheckBox.isSelected() || car.getKernel() != null);
@@ -436,28 +438,25 @@ public class CarEditFrame extends RollingStockEditFrame {
         // is this car part of a kernel? Ask if all cars should have the same location and track
         if (car.getKernel() != null) {
             List<Car> cars = car.getKernel().getCars();
-            if (cars.size() > 1) {
-                for (Car kcar : cars) {
-                    if (kcar != car) {
-                        if (kcar.getLocation() != car.getLocation() || kcar.getTrack() != car.getTrack()) {
-                            int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                                    .getMessage("carInKernelLocation"),
-                                    new Object[]{car.toString(), car.getLocationName(), car.getTrackName()}),
-                                    MessageFormat
-                                            .format(Bundle.getMessage("carPartKernel"),
-                                                    new Object[]{car.getKernelName()}),
-                                    JOptionPane.YES_NO_OPTION);
-                            if (results == JOptionPane.NO_OPTION) {
-                                break; // done
-                            }
+            for (Car kcar : cars) {
+                if (kcar != car) {
+                    if (kcar.getLocation() != car.getLocation() || kcar.getTrack() != car.getTrack()) {
+                        int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+                                .getMessage("carInKernelLocation"),
+                                new Object[]{car.toString(), car.getLocationName(), car.getTrackName()}),
+                                MessageFormat
+                                        .format(Bundle.getMessage("carPartKernel"),
+                                                new Object[]{car.getKernelName()}),
+                                JOptionPane.YES_NO_OPTION);
+                        if (results == JOptionPane.YES_OPTION) {
                             // change the location for all cars in kernel
                             for (Car kcar2 : cars) {
                                 if (kcar2 != car) {
                                     setLocationAndTrack(kcar2);
                                 }
                             }
-                            break; // done
                         }
+                        break; // done
                     }
                 }
             }
@@ -482,7 +481,6 @@ public class CarEditFrame extends RollingStockEditFrame {
             carAttributeEditFrame.dispose();
         }
         carAttributeEditFrame = new CarAttributeEditFrame();
-        carAttributeEditFrame.setLocationRelativeTo(this);
         carAttributeEditFrame.addPropertyChangeListener(this);
 
         if (ae.getSource() == editRoadButton) {
@@ -526,6 +524,17 @@ public class CarEditFrame extends RollingStockEditFrame {
             _rs.removePropertyChangeListener(this);
         }
         super.removePropertyChangeListeners();
+    }
+    
+    @Override
+    public void dispose() {
+        if (carLoadEditFrame != null) {
+            carLoadEditFrame.dispose();
+        }
+        if (carAttributeEditFrame != null) {
+            carAttributeEditFrame.dispose();
+        }
+        super.dispose();
     }
 
     @Override

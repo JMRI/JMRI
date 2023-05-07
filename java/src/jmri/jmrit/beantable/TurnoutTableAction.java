@@ -593,22 +593,24 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 // only mention first and last of rangeBox added
             }
 
-            // bump system name
-            try {
-                sName = InstanceManager.getDefault(TurnoutManager.class).getNextValidSystemName(t);
-            } catch (jmri.JmriException ex) {
-                displayHwError(curAddress, ex);
-                // directly add to statusBarLabel (but never called?)
-                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
-                statusBarLabel.setForeground(Color.red);
-                return;
-            }
+            // except on last pass
+            if (x < numberOfTurnouts-1) {
+                // bump system name
+                try {
+                    sName = InstanceManager.getDefault(TurnoutManager.class).getNextValidSystemName(t);
+                } catch (jmri.JmriException ex) {
+                    displayHwError(curAddress, ex);
+                    // directly add to statusBarLabel (but never called?)
+                    statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
+                    statusBarLabel.setForeground(Color.red);
+                    return;
+                }
 
-            // bump user name
-            if ((uName != null) && !uName.isEmpty()) {
-                uName = nextName(uName);
+                // bump user name
+                if ((uName != null) && !uName.isEmpty()) {
+                    uName = nextName(uName);
+                }
             }
-
             // end of for loop creating rangeBox of Turnouts
         }
 

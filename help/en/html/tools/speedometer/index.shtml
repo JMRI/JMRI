@@ -13,10 +13,135 @@
     <div id="mainContent">
       <h1>Speedometer</h1>
 
-      <p>The JMRI libraries contain a Speedometer tool that you can use directly from the screen,
-      or build into your own applications</p>
+      <p>JMRI contain a Speedometer tool that you can use directly from the screen
+      or build into your own applications (see <a href="../../../../../jython/SpeedometerInitExample.py">
+      example</a>).</p>
+      
+      <a href="images/Speedometer_v5.1.png"><img src="images/Speedometer_v5.1.png" alt="Speedometer"></a>
 
-      <p>Before the tool will report the speed, you need to configure it.</p>
+      <p>The tool will report the speed of a train passing certain blocks or sensors. By checking the status of 
+      block occupany sensors or location sensors installed on your layout, and using distances between them that
+      you have entered, the Speedometer will calculate train speed by timing between sets of sensors: Timer 1 
+      measures between the first and second sensors (generally used for slow speeds)and Timer 2 measures between
+      the first and third sensors (for higher speeds).</p>
+
+      <p>There are several approaches to specifying what type of sensors will control the Speedometer's operation:</p>
+      
+      <ul>
+      
+      <li><a href="#block">Block occupancy sensors</a></li>
+      <li><a href="#location">Location sensors</a></li>
+      <li><a href="#single">Single sensor (less common)</a></li>
+      
+      </ul>
+      
+      <p>In all cases, you enter the system names of the sensors in the appropriate fields on the screen shown above,
+      the "triggering event" (either <em>entry</em> or <em>exit</em>, when the sensor becomes <em>Active</em> or 
+      <em>Inactive</em>), and the distance between them as described in each section below. The <strong>To Metric
+      units</strong> button will change distance to scale centimeters and speed to scale kilometers/hour.</p>
+
+      <p>The <strong>Start</strong> button starts the speed timing. Once you click the Start button, you can't 
+      change the configuration.  If you do need to change any of the configuration, you can close the current 
+      Speedometer window and open a new one. You can also have multiple Speedometer windows open at
+      the same time.</p>
+      
+      <p>When a train starts to move into the field of the specified sensors, the three dots along 
+      the right side of the Speedometer window will change color to indicate sensor status:</p>
+
+      <ul>
+        <li>Red for "Unknown", no message seen yet</li>
+        <li>White for "Unoccupied"</li>
+        <li>Green or Yellow for "Occupied"</li>
+      </ul>
+
+      <p>The <strong>Timer 1 Speed</strong> and <strong>Timer 2 Speed</strong> and <strong>Time (seconds)</strong>
+      will be displayed after the sensors are triggered by a train</p>
+      
+      <p>An additional button, <strong>Save as default</strong>, allows you to save configuration values (except 
+      for metric/English unit conversion) that will appear in any additional or subsequent speedometers that you open.
+      Note that if the sensors specified are not defined on your layout, the tool will automatically create them in the
+      Sensor Table.</p>
+
+      <!-- ************************* ****************************** **************************** ************* -->
+      
+      <h2 id="block">Using block occupancy sensors</h2>
+      
+      <p>The most common usage is to enter the names of sensors that report occupancy (Active or Inactive indicating 
+      occupied or unocciped) for each of three blocks.  Timing will start or stop depending on whether you select
+      <strong>"entry"</strong> or <strong>"exit"</strong> for each block.</p>
+      
+      <p>Enter the system names for the sensors that report occupancy of each of the three blocks.</p>
+      
+      <p>The distances you enter in fields <strong>Distance 1</strong> and <strong>Distance 2</strong> should be
+      measured according to whether you select <strong>"entry"</strong> or <strong>"exit"</strong> for any
+      paticular occupancy sensor.  Remember that distances should be entered in <em>scale</em> feet or centimeters
+      according to your selection of units.  A "scale" measure is simply the actual measure multiplied by the 
+      scale of the trains you are using, e.g. 87.1 for HO. For example, a measured two foot distance between sensors
+      on an HO layout would be 2*87.1 = 174 scale feet.</p>
+      
+      <p>Measure distance as follows:</p>
+      <ul>
+      <li>If you select "entry" for all sensors, so that timing starts and stops when a train enters a block, 
+      then enter the distance from the start of block 1 to the start of block 2 (<strong>Distance 1</strong>), 
+      and the distance from the start of block 1 to the start of block 3 (<strong>Distance 2</strong>)).</li>
+      <li>If you select "exit" for all sensors, so that timing will start or stop when a train exits a block, 
+      then enter the distance from the end of block 1 to the end of block 2 (<strong>Distance 1</strong>), and
+      the distance from the end of block 1 to the end of block 3 (<strong>Distance 2</strong>) as the two distances.</li>
+      <li>If you select "entry" for any sensor and "exit" for another, then enter the distance from the start of
+      any block where you selected "entry" to the end of any block where you selected "exit" as your distances.</li>
+      </ul>
+
+
+
+      <!-- ************************* ****************************** **************************** ************* -->
+      
+      <h2 id="location">Using location sensors</h2>
+      
+      <p>If your railroad has two or more "spot" or location sensors, e.g. IR or photoresistors that record a train 
+      passing by the sensor rather than occupying a block of track, you can similarly use these sensors to trigger 
+      speedometer measurement.</p>
+      
+      <p>Enter the system names for the sensors you wish to use for speed measurement.  </p>
+      
+      <p>The distances you enter in fields <strong>Distance 1</strong> and <strong>Distance 2</strong> should be
+      measured according to whether you select <strong>"entry"</strong> or <strong>"exit"</strong> for any
+      paticular location sensor:</p>
+      
+      <ul>
+      <li>You should select either "entry" or "exit" for all sensors, so that timing starts and stops when a train
+      first enters the field of view of a sensor, or when it leaves the field of view.</li>  
+      <li>Enter the distance from sensor 1 to sensor 2 (<strong>Distance 1</strong>), and the distance from sensor
+      1 to sensor 3 (<strong>Distance 2</strong>) as the two distances.</li>
+      <li>Do NOT select "entry" for some sensors and "exit" for others as this will result in erroneous speed
+      calculations.</li>
+      </ul>
+
+      
+      <!-- ************************* ****************************** **************************** ************* -->
+      
+      <h2 id="single">Using a single block occupancy sensor</h2>
+
+      <p>You can also set up the Speedometer to measure speed across a single block or around a loop using only a single
+      block occupancy sensor.  In both cases, the same block occupancy sensor name should be entered for both the first 
+      sensor and the second sensor.</p> 
+      
+      <ul>
+      <li><em>Measuring across a single block: </em> The first sensor should be set to <strong>"entry"</strong> and the 
+      second sensor should be set to <strong>"exit"</strong>. <strong>"Distance 1"</strong> should be set to the length
+      of the block plus the length of the train.  The Speedometer is measuring time from when the train first occupies
+      the block until it completely exits it.  Note that if your sensor has different delays for going active and inactive,
+      this approach may give incorrect results.</li>
+      <li><em>Measuring around a loop with part of it being a monitored block: </em> Both sensors are set to 
+      <strong>"entry"</strong> as the Speedometer is measuring from entry to entry on that single block sensor, 
+      start of lap to end of lap. Think of the start of the block as a start/finish line. By using "entry" for both start
+      and end, you don't have to worry about whether the block detector has equal on and off delays. <strong>"Distance 1"
+      </strong> should be set to the full length of the loop.  </li>
+      </ul>
+
+
+      <!-- ************************* ****************************** **************************** ************* -->
+      
+     <h2>Setting up the Speedometer using LocoNet  (content of this section last updated in 2008)</h2>
 
       <p>To do this, enter Sensor numbers in the three fields. This is a number (like "23") for the
       DCC address of the BDL16, DS54, etc. channel that will report when the occupancy changes. The
@@ -38,22 +163,6 @@
 
       <p>You also enter the distance in <em>scale</em> feet between the various points. If you're
       using "on entrance", measure using the entrance end of the block.</p>
-
-      <p>Finally, click the "Start" button. The three little red dots along the right side of the
-      Speedometer window will start changing color to indicate the status of the selected
-      Sensors:</p>
-
-      <ul>
-        <li>Red for "Unknown", no message seen yet</li>
-
-        <li>White for "Unoccupied"</li>
-
-        <li>Green or Yellow for "Occupied"</li>
-      </ul>
-
-      <p>Once you click the Start button, you can't change the configuration. Just close that
-      window and open another one. You can have multiple Speedometer tool windows open if you'd
-      like.</p>
 
       <p>Also check out the JMRI Help pages on:</p>
 

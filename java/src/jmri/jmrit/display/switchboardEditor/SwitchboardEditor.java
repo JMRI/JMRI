@@ -4,12 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
+
 import javax.annotation.Nonnull;
 //import javax.annotation.concurrent.GuardedBy;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 //import com.alexandriasoftware.swing.Validation;
+
 import jmri.*;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
@@ -21,6 +23,11 @@ import jmri.swing.ManagerComboBox;
 import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseListener;
+import jmri.util.swing.JmriMouseMotionListener;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,7 +127,7 @@ public class SwitchboardEditor extends Editor {
     private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile?
     private int _tileSize = 100;
     private int _iconSquare = 75;
-    private int _showUserName = 1;
+    private SwitchBoardLabelDisplays _showUserName = SwitchBoardLabelDisplays.BOTH_NAMES;
     // tmp @GuardedBy("this")
     private final JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
     private final JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
@@ -229,7 +236,7 @@ public class SwitchboardEditor extends Editor {
         switchboardLayeredPane.setBorder(border);
         // create contrast with background, should also specify border style
         // specify title for turnout, sensor, light, mixed? (wait for the Editor to be created)
-        switchboardLayeredPane.addMouseMotionListener(this);
+        switchboardLayeredPane.addMouseMotionListener(JmriMouseMotionListener.adapt(this));
 
         // add control pane and layered pane to this JPanel
         JPanel beanSetupPane = new JPanel();
@@ -343,7 +350,7 @@ public class SwitchboardEditor extends Editor {
 
         // provide a JLayeredPane to place the switches on
         super.setTargetPanel(switchboardLayeredPane, makeFrame(name));
-        super.getTargetFrame().setSize(550, 330); // width x height
+        super.getTargetFrame().setSize(550, 430); // width x height //+ was 550, 330
         //super.getTargetFrame().setSize(width + 6, height + 25); // width x height
 
         // set scrollbar initial state
@@ -584,7 +591,7 @@ public class SwitchboardEditor extends Editor {
             switch (beanType) {
                 case 0:
                     try {
-                        name = ((TurnoutManager)memo.get(TurnoutManager.class)).createSystemName(i + "", prefix);
+                        name = memo.get(TurnoutManager.class).createSystemName(i + "", prefix);
                     } catch (JmriException ex) {
                         log.error("Error creating range at turnout {}", i);
                         return;
@@ -593,7 +600,7 @@ public class SwitchboardEditor extends Editor {
                     break;
                 case 1:
                     try { // was: InstanceManager.getDefault(SensorManager.class)
-                        name = ((SensorManager)memo.get(SensorManager.class)).createSystemName(i + "", prefix);
+                        name = memo.get(SensorManager.class).createSystemName(i + "", prefix);
                     } catch (JmriException | NullPointerException ex) {
                         log.trace("Error creating range at sensor {}. Connection {}", i, memo.getUserName(), ex);
                         return;
@@ -602,7 +609,7 @@ public class SwitchboardEditor extends Editor {
                     break;
                 case 2:
                     try {
-                        name = ((LightManager)memo.get(LightManager.class)).createSystemName(i + "", prefix);
+                        name = memo.get(LightManager.class).createSystemName(i + "", prefix);
                     } catch (JmriException ex) {
                         log.error("Error creating range at light {}", i);
                         return;
@@ -646,9 +653,9 @@ public class SwitchboardEditor extends Editor {
         navBarPanel.setLayout(new BoxLayout(navBarPanel, BoxLayout.X_AXIS));
 
         navBarPanel.add(prev);
-        prev.addMouseListener(new MouseAdapter() {
+        prev.addMouseListener(JmriMouseListener.adapt(new JmriMouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(JmriMouseEvent e) {
                 int oldMin = getMinSpinner();
                 int oldMax = getMaxSpinner();
                 int range = Math.max(oldMax - oldMin + 1, 1); // make sure range > 0
@@ -661,7 +668,7 @@ public class SwitchboardEditor extends Editor {
                 setDirty();
                 log.debug("new prev range = {}, newMin ={}, newMax ={}", range, getMinSpinner(), getMaxSpinner());
             }
-        });
+        }));
         prev.setToolTipText(Bundle.getMessage("PreviousToolTip", Bundle.getMessage("CheckBoxAutoItemRange")));
         navBarPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("From"))));
         JComponent minEditor = minSpinner.getEditor();
@@ -697,9 +704,9 @@ public class SwitchboardEditor extends Editor {
         navBarPanel.add(maxSpinner);
 
         navBarPanel.add(next);
-        next.addMouseListener(new MouseAdapter() {
+        next.addMouseListener(JmriMouseListener.adapt(new JmriMouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(JmriMouseEvent e) {
                 int oldMin = getMinSpinner();
                 int oldMax = getMaxSpinner();
                 int range = Math.max(oldMax - oldMin + 1, 1); // make sure range > 0
@@ -712,7 +719,7 @@ public class SwitchboardEditor extends Editor {
                 setDirty();
                 log.debug("new next range = {}, newMin ={}, newMax ={}", range, getMinSpinner(), getMaxSpinner());
             }
-        });
+        }));
         next.setToolTipText(Bundle.getMessage("NextToolTip", Bundle.getMessage("CheckBoxAutoItemRange")));
         navBarPanel.add(Box.createHorizontalGlue());
 
@@ -843,15 +850,15 @@ public class SwitchboardEditor extends Editor {
         // only system name
         labelNamesMenu.add(systemNameBox);
         systemNameBox.setSelected(false); // default off
-        systemNameBox.addActionListener((ActionEvent e) -> setLabel(0));
+        systemNameBox.addActionListener((ActionEvent e) -> setLabel(SwitchBoardLabelDisplays.SYSTEM_NAME));
         // both names (when set)
         labelNamesMenu.add(bothNamesBox);
         bothNamesBox.setSelected(true); // default on
-        bothNamesBox.addActionListener((ActionEvent e) -> setLabel(1));
+        bothNamesBox.addActionListener((ActionEvent e) -> setLabel(SwitchBoardLabelDisplays.BOTH_NAMES));
         // only user name (when set), aka display name
         labelNamesMenu.add(displayNameBox);
         displayNameBox.setSelected(false); // default off
-        displayNameBox.addActionListener((ActionEvent e) -> setLabel(2));
+        displayNameBox.addActionListener((ActionEvent e) -> setLabel(SwitchBoardLabelDisplays.USER_NAME));
 
         // Show/Hide Scroll Bars
         JMenu scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable"));
@@ -1076,20 +1083,20 @@ public class SwitchboardEditor extends Editor {
         return defaultBackgroundColor;
     }
 
-    public void setLabel(int label) {
+    public void setLabel(SwitchBoardLabelDisplays label) {
         _showUserName = label;
         switch (label) {
-            case 0 :
+            case SYSTEM_NAME :
                 //deselect box 2 and 3
                 bothNamesBox.setSelected(false);
                 displayNameBox.setSelected(false);
                 break;
-            case 2 :
+            case USER_NAME :
                 //deselect box 1 and 2
                 systemNameBox.setSelected(false);
                 bothNamesBox.setSelected(false);
                 break;
-            case 1 :
+            case BOTH_NAMES :
             default:
                 //deselect box 1 and 3
                 systemNameBox.setSelected(false);
@@ -1515,11 +1522,11 @@ public class SwitchboardEditor extends Editor {
     // used for xml persistent storage and web display
     public String showUserName() {
         switch (_showUserName) {
-            case 0 :
+            case SYSTEM_NAME :
                 return "no";
-            case 2 :
+            case USER_NAME :
                 return "displayname";
-            case 1 :
+            case BOTH_NAMES :
             default :
                 return "yes";
         }
@@ -1528,9 +1535,9 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * Get the label type.
-     * @return system + user name = 1, only system name = 0 or only username (if set) = 2
+     * @return current setting of display type (e.g. system name, both, user name)
      */
-    public int nameDisplay() {
+    public SwitchBoardLabelDisplays nameDisplay() {
         return _showUserName;
     }
 
@@ -1540,23 +1547,23 @@ public class SwitchboardEditor extends Editor {
      */
     @Deprecated
     public void setShowUserName(Boolean on) {
-        setShowUserName(on ? 1 : 0);
+        setShowUserName(on ? SwitchBoardLabelDisplays.BOTH_NAMES : SwitchBoardLabelDisplays.SYSTEM_NAME);
     }
 
-    public void setShowUserName(int label) {
+    public void setShowUserName(SwitchBoardLabelDisplays label) {
         _showUserName = label;
         switch (label) {
-            case 1:
+            case BOTH_NAMES:
                 systemNameBox.setSelected(false);
                 bothNamesBox.setSelected(true);
                 displayNameBox.setSelected(false);
                 break;
-            case 2:
+            case USER_NAME:
                 systemNameBox.setSelected(false);
                 bothNamesBox.setSelected(false);
                 displayNameBox.setSelected(true);
                 break;
-            case 0:
+            case SYSTEM_NAME:
             default:
                 systemNameBox.setSelected(true);
                 bothNamesBox.setSelected(false);
@@ -1633,32 +1640,32 @@ public class SwitchboardEditor extends Editor {
     }
 
     @Override
-    public void mousePressed(MouseEvent event) {
+    public void mousePressed(JmriMouseEvent event) {
     }
 
     @Override
-    public void mouseReleased(MouseEvent event) {
+    public void mouseReleased(JmriMouseEvent event) {
     }
 
     @Override
-    public void mouseClicked(MouseEvent event) {
+    public void mouseClicked(JmriMouseEvent event) {
     }
 
     @Override
-    public void mouseDragged(MouseEvent event) {
+    public void mouseDragged(JmriMouseEvent event) {
     }
 
     @Override
-    public void mouseMoved(MouseEvent event) {
+    public void mouseMoved(JmriMouseEvent event) {
     }
 
     @Override
-    public void mouseEntered(MouseEvent event) {
+    public void mouseEntered(JmriMouseEvent event) {
         _targetPanel.repaint();
     }
 
     @Override
-    public void mouseExited(MouseEvent event) {
+    public void mouseExited(JmriMouseEvent event) {
         setToolTip(null);
         _targetPanel.repaint(); // needed for ToolTip on targetPane
     }
@@ -1802,10 +1809,10 @@ public class SwitchboardEditor extends Editor {
      * Not used on switchboards but has to override Editor.
      *
      * @param p     the item on the Panel
-     * @param event MouseEvent heard
+     * @param event JmriMouseEvent heard
      */
     @Override
-    protected void showPopUp(Positionable p, MouseEvent event) {
+    protected void showPopUp(Positionable p, JmriMouseEvent event) {
     }
 
     protected ArrayList<Positionable> getSelectionGroup() {

@@ -7,8 +7,6 @@ import java.beans.PropertyVetoException;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the SerialTurnoutManager class.
@@ -48,21 +46,12 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("GT1105", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value {}", o);
-        }
-        Assert.assertTrue(null != (SerialTurnout) o);
+        Assertions.assertNotNull( o);
+        Assertions.assertTrue(o instanceof SerialTurnout);
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: {}", l.getBySystemName("GT1105"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   {}", l.getByUserName("my name"));
-        }
-
-        Assert.assertTrue(null != l.getBySystemName("GT1105"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assertions.assertNotNull( l.getBySystemName("GT1105"));
+        Assertions.assertNotNull( l.getByUserName("my name"));
 
     }
 
@@ -85,6 +74,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     /**
      * Number of turnout to test. Use 9th output on node 1.
+     * {@inheritDoc}
      */ 
     @Override
     protected int getNumToTest1() {
@@ -103,6 +93,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
 
 }

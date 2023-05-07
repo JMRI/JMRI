@@ -1,21 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 		<!-- Translated by Herv&#233; BLOREC<bzh56420@yahoo.fr> on 2016-08-25 -->
-    <title>
- 	JMRI: Developing with JMRI Code 
-    </title>
+    <title>JMRI: Developing with JMRI Code</title>
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code Git download">
     <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
 <h1>JMRI: Developpement avec le Code JMRI</h1>
 
@@ -172,10 +170,10 @@ a automatiquement toutes les infos.
 	 Vous pouvez vous inscrire pour une notification lorsque cela se produit.
 </ul>
 
- <!--#include virtual="/Footer.shtml" -->
-
-  </div><!-- closes #mainContent-->
+    <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
 

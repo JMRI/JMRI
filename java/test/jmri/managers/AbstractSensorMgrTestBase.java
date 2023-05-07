@@ -7,10 +7,8 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 
-import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.util.JUnitAppender;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
@@ -32,7 +30,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
 
     abstract public String getSystemName(int i);
 
-    static protected boolean listenerResult = false;
+    protected boolean listenerResult = false;
 
     protected class Listen implements PropertyChangeListener {
         @Override
@@ -55,12 +53,15 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
 
     @Test
     public void testSensorPutGet() {
+        listenerResult = false;
+        l.addPropertyChangeListener(new Listen());
         // create
         Sensor t = l.newSensor(getSystemName(getNumToTest1()), "mine");
         // check
         Assert.assertNotNull("real object returned ", t);
         Assert.assertEquals("user name correct ", t, l.getByUserName("mine"));
         Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertTrue(listenerResult);
     }
 
     // Quite a few tests overload this to create their own name process
@@ -190,7 +191,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     }
 
     @Test
-    public void TestGetEntryToolTip(){
+    public void testGetEntryToolTip(){
         Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
         Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
     }

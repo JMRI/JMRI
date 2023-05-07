@@ -1,15 +1,11 @@
 package jmri.jmrit.operations;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
+import java.util.*;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,13 +18,8 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
-import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineSetFrame;
+import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -293,7 +284,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         }
         csf = new CarSetFrame();
         csf.initComponents();
-        csf.loadCar(car);
+        csf.load(car);
     }
 
     EngineSetFrame esf = null;
@@ -308,7 +299,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         }
         esf = new EngineSetFrame();
         esf.initComponents();
-        esf.loadEngine(eng);
+        esf.load(eng);
     }
 
     // confirm that all work is done
@@ -561,20 +552,20 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         for (Track track : tracks) {
             for (RouteLocation rld : routeList) {
                 for (Car car : carList) {
+                    // note that a car in train doesn't have a track assignment
+                    if (car.getTrack() == null) {
+                        continue;
+                    }
+                    if (car.isLocalMove() && rl == rld) {
+                        continue;
+                    }
                     // determine if car is a pick up from the right track
                     // caboose or FRED is placed at end of the train
-                    // passenger trains are already blocked in the car list and
-                    // are added to the end of the train.
-                    if (car.getTrack() != null &&
-                            car.getRouteLocation() == rl &&
-                            car.getRouteDestination() != rl &&
-                            (!Setup.isSortByTrackNameEnabled() || car.getTrackName().equals(track.getName())) &&
-                            ((car.getRouteDestination() == rld &&
-                                    !car.isCaboose() &&
-                                    !car.hasFred() &&
-                                    !car.isPassenger()) ||
-                                    (rld == routeList.get(routeList.size() - 1) &&
-                                            (car.isCaboose() || car.hasFred() || car.isPassenger())))) {
+                    // passenger cars are already blocked in the car list
+                    // passenger cars with negative block numbers are placed at
+                    // the front of the train, positive numbers at the end of
+                    // the train.
+                    if (TrainCommon.isNextCar(car, rl, rld)) {
                         // yes we have a pick up
                         pWorkPanes.setVisible(true);
                         pickupPane.setVisible(true);
@@ -585,19 +576,22 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                         // did we already process this car?
                         if (checkBoxes.containsKey("p" + car.getId())) {
                             if (isSetMode && !checkBoxes.get("p" + car.getId()).isSelected()) {
-                                // change to set button so user can remove car from train
+                                // change to set button so user can remove car
+                                // from train
                                 pPickups.add(addSet(car));
                             } else {
                                 pPickups.add(checkBoxes.get("p" + car.getId()));
                             }
-                            // figure out the checkbox text, either single car or utility
+                            // figure out the checkbox text, either single car
+                            // or utility
                         } else {
                             String text;
                             if (car.isUtility()) {
                                 text = trainCommon.pickupUtilityCars(carList, car, isManifest,
                                         !TrainCommon.IS_TWO_COLUMN_TRACK);
                                 if (text == null) {
-                                    continue; // this car type has already been processed
+                                    continue; // this car type has already been
+                                              // processed
                                 }
                             } else {
                                 text = trainCommon.pickupCar(car, isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK);

@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.commons.lang3.StringUtils;
+import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.python.jline.internal.Log;
 
@@ -72,14 +73,46 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     static private JUnitAppender instance = null;
 
     // package-level access for testing
-    static boolean unexpectedFatalSeen = false;
-    static String  unexpectedFatalContent = null;
-    static boolean unexpectedErrorSeen = false;
-    static String  unexpectedErrorContent = null;
-    static boolean unexpectedWarnSeen = false;
-    static String  unexpectedWarnContent = null;
-    static boolean unexpectedInfoSeen = false;
-    static String  unexpectedInfoContent = null;
+    static volatile boolean unexpectedFatalSeen = false;
+    static volatile String  unexpectedFatalContent = null;
+    static volatile boolean unexpectedErrorSeen = false;
+    static volatile String  unexpectedErrorContent = null;
+    static volatile boolean unexpectedWarnSeen = false;
+    static volatile String  unexpectedWarnContent = null;
+    static volatile boolean unexpectedInfoSeen = false;
+    static volatile String  unexpectedInfoContent = null;
+
+    static synchronized void setUnexpectedFatalSeen(boolean seen) {
+        unexpectedFatalSeen = seen;
+    }
+
+    static synchronized void setUnexpectedErrorSeen(boolean seen) {
+        unexpectedErrorSeen = seen;
+    }
+
+    static synchronized void setUnexpectedWarnSeen(boolean seen) {
+        unexpectedWarnSeen = seen;
+    }
+
+    static synchronized void setUnexpectedInfoSeen(boolean seen) {
+        unexpectedInfoSeen = seen;
+    }
+
+    static synchronized void setUnexpectedFatalContent(String content) {
+        unexpectedFatalContent = content;
+    }
+
+    static synchronized void setUnexpectedErrorContent(String content) {
+        unexpectedErrorContent = content;
+    }
+
+    static synchronized void setUnexpectedWarnContent(String content) {
+        unexpectedWarnContent = content;
+    }
+
+    static synchronized void setUnexpectedInfoContent(String content) {
+        unexpectedInfoContent = content;
+    }
 
     public static boolean unexpectedMessageSeen(Level l) {
         if (l == Level.FATAL) {
@@ -119,23 +152,25 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         throw new java.lang.IllegalArgumentException("Did not expect " + l);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SF_SWITCH_FALLTHROUGH",
+        justification = "cases statements are organized to flow")
+    @SuppressWarnings("fallthrough")
     public static void resetUnexpectedMessageFlags(Level severity) {
-        // cases statements are organized to flow
         switch (severity.toInt()) {
             case Level.INFO_INT:
-                unexpectedInfoSeen = false;
+                setUnexpectedInfoSeen(false);
                 unexpectedInfoContent = null;
                 //$FALL-THROUGH$
             case Level.WARN_INT:
-                unexpectedWarnSeen = false;
+                setUnexpectedWarnSeen(false);
                 unexpectedWarnContent = null;
                 //$FALL-THROUGH$
             case Level.ERROR_INT:
-                unexpectedErrorSeen = false;
+                setUnexpectedErrorSeen(false);
                 unexpectedErrorContent = null;
                 //$FALL-THROUGH$
             case Level.FATAL_INT:
-                unexpectedFatalSeen = false;
+                setUnexpectedFatalSeen(false);
                 unexpectedFatalContent = null;
                 break;
             default:
@@ -174,24 +209,24 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      */
     void superappend(LoggingEvent l) {
         if (l.getLevel() == Level.FATAL) {
-            unexpectedFatalSeen = true;
-            unexpectedFatalContent = l.getMessage().toString();
+            setUnexpectedFatalSeen(true);
+            setUnexpectedFatalContent(l.getMessage().toString());
         }
         if (l.getLevel() == Level.ERROR) {
             if (compare(l, "Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler")) {
                 // still an error, just suppressed
             } else {
-                unexpectedErrorSeen = true;
-                unexpectedErrorContent = l.getMessage().toString();
+                setUnexpectedErrorSeen(true);
+                setUnexpectedErrorContent(l.getMessage().toString());
             }
         }
         if (l.getLevel() == Level.WARN) {
-            unexpectedWarnSeen = true;
-            unexpectedWarnContent = l.getMessage().toString();
+            setUnexpectedWarnSeen(true);
+            setUnexpectedWarnContent(l.getMessage().toString());
         }
         if (l.getLevel() == Level.INFO) {
-            unexpectedInfoSeen = true;
-            unexpectedInfoContent = l.getMessage().toString();
+            setUnexpectedInfoSeen(true);
+            setUnexpectedInfoContent(l.getMessage().toString());
         }
 
         super.append(l);
@@ -581,14 +616,28 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * @param msg the message to assert exists
      */
     public static void assertWarnMessage(String msg) {
-        if (list.isEmpty()) {
-            Assert.fail("No message present: " + msg);
+        assertMessage(msg, Level.WARN);
+    }
+
+    /**
+     * Check that the next queued message has a specific message
+     * and matches the expected severity level.
+     * White space is ignored.<p>
+     * Invokes a JUnit Assertion Fail if the message doesn't match,
+     * or if the Logging Level is different.
+     *
+     * @param msg the message to assert exists
+     * @param level the Logging Level which should match
+     */
+    public static void assertMessage(String msg, Level level) {
+        LoggingEvent evt = checkForMessage(msg);
+        if (evt == null) {
+            Assertions.fail("Looking for message \"" + msg + "\" and didn't find it");
             return;
         }
-        LoggingEvent evt = checkForMessage(msg);
-
-        if (evt == null) {
-            Assert.fail("Looking for message \"" + msg + "\" and didn't find it");
+        if (level != evt.getLevel() ){
+            Assertions.fail("Incorrect logging level for \"" + msg
+                + "\" expecting " + level + " was " + evt.getLevel());
         }
     }
 

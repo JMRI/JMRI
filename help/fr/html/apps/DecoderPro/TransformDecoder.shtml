@@ -1,26 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
-
-  <title>JiMRI: DecoderPro User Guide - Use XSLT Transformation for complex decoders File</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <title>JMRI: DecoderPro User Guide - Use XSLT Transformation for complex decoders File</title>
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>JiMRI : Guide d'Utilisation de DecoderPro</h1>
+      <h1>JMRI : Guide d'Utilisation de DecoderPro</h1>
 
       <h2>Utiliser la transformation XSLT pour les décodeurs complexes</h2>
 
@@ -33,9 +28,9 @@
       <p>Bien que le fichier du décodeur doive définir des dizaines, voire des centaines, de CV et
       leur apparence sur les volets au total, seule une fraction des CV ou des affichages sont
       réellement uniques : le reste peut être <strong>généré à partir d'un modèle</strong>. Bien
-      que la création d'un modèle, et la recette de transformation soit <strong>beaucoup plus
+      que la création d'un modèle et la recette de transformation soit <strong>beaucoup plus
       complexe</strong> que de copier-coller des définitions de CV, l'avantage est <strong>une
-      maintenance beaucoup plus facile</strong>. une fois que le plus dur est fait : chaque
+      maintenance beaucoup plus facile</strong>. Une fois que le plus dur est fait : chaque
       changement se propage de manière cohérente à toutes les parties générées.</p>
 
       <p>Pour donner un exemple de simplification possible - prenons le fichier du décodeur.
@@ -60,13 +55,13 @@
         <li>Modèle de fichier décodeur : <strong>18 kByte</strong>, 390 lignes.</li>
       </ul>
 
-      <p>Pour JiMRI lui-même ou la vitesse de fonctionnement du DecoderPro, ces deux approches sont
+      <p>Pour JMRI lui-même ou la vitesse de fonctionnement du DecoderPro, ces deux approches sont
       les mêmes : le modèle de fichier est transformé (expansé) en interne en définition de
       décodage en XML et traité comme s'il était écrit entièrement à la main. Pour la
       <strong>maintenance</strong>, il est bien plus facile de maintenir ~600 lignes de XML que
       20600.</p>
 
-      <p>JiMRI fournit une option pour appliquer une <strong>feuille de style XSLT</strong> à un
+      <p>JMRI fournit une option pour appliquer une <strong>feuille de style XSLT</strong> à un
       fichier décodeur, <strong>avant</strong> que le fichier soit chargé dans DecoderPro et avant
       qu'il soit interprété comme variables et panneaux de CV. Cela permet d'écrire à la main des
       définitions de CV uniques et leurs panneaux, et <strong>d'ajouter du contenu généré</strong>
@@ -85,19 +80,19 @@
       </ul>
 
       <p>Le modèle de décodeur doit être placé dans le dossier <strong>xml/decoders</strong> de
-      l'installation de JiMRI. Il est <strong>basé sur le modèle de Petr Sidlo. dccdoma.cz -
+      l'installation de JMRI. Il est <strong>basé sur le modèle de Petr Sidlo. dccdoma.cz -
       ARD-SCOM-MX decoder</strong> - génère les mêmes panneaux de décodeur que l'original (à partir
       de 12/2019). La feuille de style (<strong>scom.xsl</strong>) doit être placée également dans
-      le dossier <strong><code>xml/decoder</code></strong> de l'installation JiMRI.</p>
+      le dossier <strong><code>xml/decoder</code></strong> de l'installation JMRI.</p>
 
       <p>Le modèle peut être traité à partir de la ligne de commande pour générer le XML du
       décodeur, afin que vous puissiez inspecter les effets de la modification de la feuille de
       style et/ou des données intégrées dans le modèle de décodeur. La ligne de commande pour Linux
       :</p>
 
-      <pre>
+      <code>
 xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
-      </pre>
+      </code>
       <p>N'oubliez pas de remplacer les fichiers par leurs noms ou emplacements réels ; pour
       expérimenter à partir de la ligne de commande, le mieux est de placer le modèle de fichier du
       décodeur ET sa feuille de style dans un certain répertoire et d'y travailler. Plus tard,
@@ -106,27 +101,27 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       <h2>Appliquer la feuille de style au fichier décodeur.</h2>
 
       <p>Une <strong>instruction pour traiter le fichier comme un modèle</strong> doit être
-      présente dans le fichier, afin d'agir comme un modèle. Sinon, JiMRI le prendrait comme une
+      présente dans le fichier, afin d'agir comme un modèle. Sinon, JMRI le prendrait comme une
       définition de décodeur "ordinaire" - tous les éléments d'affichage (voir ci-dessous)
       "détournés" pour contenir les données pour le traitement du modèle. apparaîtraient dans
       l'interface utilisateur !</p>
 
       <p>L'instruction de traitement doit apparaître au début de la définition du décodeur :</p>
 
-      <pre>
+      <code>
 &lt;?transform-xslt href="http://jmri.org/xml/decoders/scom.xsl"?&gt;
-      </pre>
+      </code>
       <p>Ainsi, l'en-tête du modèle de décodeur ressemblerait à ceci :</p>
 
-      <pre>
+      <div class="wide"><pre>
 &lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;?transform-xslt href="http://jmri.org/xml/decoders/scom.xsl"?&gt;
 &lt;decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" &gt;
-
     &lt;decoder&gt;
 ...
-      </pre>
+      </pre></div>
+
       <h2>Fournir des métadonnées à la feuille de style</h2>
 
       <p>L'un des points critiques est de savoir comment générer les numéros de CV ou d'autres
@@ -135,7 +130,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       générés sont est composé d'une liste de chaînes de caractères (c'est-à-dire que les noms des
       aspects du signal sont répétés pour chaque mât de signal). chaque mât de signal), et nous
       devons fournir une telle entrée à la feuille de style. Le fichier décodeur est <strong>la
-      seule entrée</strong> fournie pour la feuille de style par le cadre JiMRI.</p>
+      seule entrée</strong> fournie pour la feuille de style par le cadre JMRI.</p>
 
       <p>Le fichier de modèle de décodeur est <strong>encore interprété comme une définition de
       décodeur</strong> et doit adhérer strictement au schéma XML <code>decoder.xsd</code>. Pour
@@ -145,7 +140,6 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
 
       <ul>
         <li>des points d'ancrage, où le contenu généré sera inséré</li>
-
         <li>des données d'entrée pour la feuille de style</li>
       </ul>
 
@@ -163,7 +157,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       décrite ci-dessous pour générer des variables fonctionne. L'élément pourrait ressembler à cet
       exemple :</p>
 
-      <pre>
+      <div class="wide"><pre>
         &lt;variables&gt;
           &lt;variable CV="1" item="Short Address" default="100" &gt;
             &lt;splitVal highCV="9" upperMask="XXXXXVVV" factor="1" offset="0" /&gt;
@@ -171,7 +165,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
             &lt;tooltip&gt;Accessory decoder address. CV1 - LSB. CV9 - MSB.&lt;/tooltip&gt;
           &lt;/variable&gt;
         &lt;/variable&gt;
-      </pre>
+      </pre></div>
       <p>Le contenu supplémentaire généré sera <strong>appliqué</strong> à l'intérieur de cet
       élément.</p>
 
@@ -198,36 +192,37 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       <p>Chaque fois, qu'une valeur doit être lue par la feuille de style, elle doit être
       <strong>sélectionnée</strong> par une expression XPath. Par exemple :</p>
 
-      <pre>
+      <div class="wide"><pre>
 &lt;xsl:template name="generate-masts"&gt;
-      &lt;xsl:variable name="cvStart" select="string(//pane[name/text() ='__Aspects']/display[@item='mastcount']/@tooltip)"/&gt;
-      &lt;xsl:variable name="outputs" select="string(//pane[name/text() ='__Aspects']/display[@item='outputs']/@label)"/&gt;
-      &lt;xsl:for-each select="//pane[name/text() ='__Aspects']/display[@item='masts']/label"&gt;
-          ...
-      &lt;/xsl:for-each&gt;
+    &lt;xsl:variable name="cvStart" select="string(//pane[name/text() ='__Aspects']/display[@item='mastcount']/@tooltip)"/&gt;
+    &lt;xsl:variable name="outputs" select="string(//pane[name/text() ='__Aspects']/display[@item='outputs']/@label)"/&gt;
+    &lt;xsl:for-each select="//pane[name/text() ='__Aspects']/display[@item='masts']/label"&gt;
+        ...
+    &lt;/xsl:for-each&gt;
 &lt;/xsl:template&gt;
-      </pre>
+      </pre></div>
+
       <p>Le sélecteur contient toujours la partie préfixe commun, qui trouve le volet "détenteur de
       données" dans le fichier modèle du décodeur. Nous pouvons économiser la frappe en passant cet
       élément comme <strong>paramètre</strong> :</p>
 
-      <pre>
+      <div class="wide"><pre>
 &lt;xsl:template name="generate-masts"&gt;
-      &lt;xsl:param name="root"/&gt;
-      &lt;xsl:variable name="cvStart" select="string($root/display[@item='mastcount']/@tooltip)"/&gt;
-      &lt;xsl:variable name="outputs" select="string($root/display[@item='outputs']/@label)"/&gt;
-      &lt;xsl:for-each select="$root/display[@item='masts']/label"&gt;
-          ...
-      &lt;/xsl:for-each&gt;
+    &lt;xsl:param name="root"/&gt;
+    &lt;xsl:variable name="cvStart" select="string($root/display[@item='mastcount']/@tooltip)"/&gt;
+    &lt;xsl:variable name="outputs" select="string($root/display[@item='outputs']/@label)"/&gt;
+    &lt;xsl:for-each select="$root/display[@item='masts']/label"&gt;
+        ...
+    &lt;/xsl:for-each&gt;
 &lt;/xsl:template&gt;
-      </pre>
+      </pre></div>
       <p>L'invocation d'un tel modèle générateur <strong>doit passer le paramètre</strong> :</p>
 
-      <pre>
+      <div class="wide"><pre>
 &lt;xsl:call-template name="generate-masts"&gt;
-      &lt;xsl:with-param name="root" select="//pane[name/text() ='__Aspects']//display[position() = 1]/.."/&gt;
+    &lt;xsl:with-param name="root" select="//pane[name/text() ='__Aspects']//display[position() = 1]/.."/&gt;
 &lt;/xsl:call-template&gt;
-      </pre>
+      </pre></div>
       <p>Notez le suffixe étrange. C'est parce que les éléments d'affichage ne peuvent pas être
       imbriqués directement dans l'élément <strong>pane</strong>, ils doivent être dans une sorte
       de colonne, de ligne, de groupe, etc. Le sélecteur étrange à la fin trouvera le
@@ -237,9 +232,9 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       <p>Une <strong>variable globale</strong> peut être définie de manière similaire - placez
       directement cet élément comme élément de premier niveau dans la feuille de style :</p>
 
-      <pre>
-  &lt;xsl:variable name="root" select="//pane[name/text() = '__Aspects']//display[position() = 1]/.."/&gt;
-        </pre>
+<code>
+&lt;xsl:variable name="root" select="//pane[name/text() = '__Aspects']//display[position() = 1]/.."/&gt;
+</code>
       <p>Les templates peuvent maintenant référencer la racine des données par la seule expression
       <strong>$root</strong>.</p>
 
@@ -253,16 +248,16 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       liées entre elles, par exemple. Les constantes, qui définissent le nombre maximum d'aspects
       gérés par l'interface utilisateur et le CV de départ peuvent être écrits comme :</p>
 
-      <pre>
-  &lt;display item="mastcount" label="15" tooltip="128"/&gt;
-        </pre>
+<code>
+&lt;display item="mastcount" label="15" tooltip="128"/&gt;
+</code>
       <p>Le "<strong>mastcount</strong>" est un nom arbitraire (mais unique). Nommez-le ainsi après
       la signification de la valeur pour votre décodeur. Il sera utilisé dans les
       <em>sélecteurs</em> pour accéder à la valeur comme ceci :</p>
 
-      <pre>
-  &lt;xsl:variable name="cvStart" select="string($root/display[@item='mastcount']/@tooltip)"/&gt;
-        </pre>
+<code>
+&lt;xsl:variable name="cvStart" select="string($root/display[@item='mastcount']/@tooltip)"/&gt;
+</code>
       <ul>
         <li><strong>$root</strong> est le paramètre / variable qui contient la racine des
         données.</li>
@@ -278,15 +273,14 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
 
       <p>Il faut parfois générer une CV (variable, élément d'affichage) pour, par exemple, chaque
       sortie identifiée par un nom, ou un numéro. La liste peut être codée comme une série de
-      <strong>&lt;label&gt;</strong> sous-éléments d'un élément <strong>&lt;display&gt;</strong>
-      :</p>
+      <strong>&lt;label&gt;</strong> sous-éléments d'un élément <strong>&lt;display&gt;</strong> :</p>
 
-      <pre>
-  &lt;display item="masts" tooltip="512"&gt;
-      &lt;label&gt;0&lt;/label&gt;&lt;label&gt;1&lt;/label&gt;&lt;label&gt;2&lt;/label&gt;&lt;label&gt;3&lt;/label&gt;&lt;label&gt;4&lt;/label&gt;&lt;label&gt;5&lt;/label&gt;&lt;label&gt;6&lt;/label&gt;&lt;label&gt;7&lt;/label&gt;.
-      &lt;label&gt;8&lt;/label&gt;&lt;label&gt;9&lt;/label&gt;&lt;label&gt;10&lt;/label&gt;&lt;label&gt;11&lt;/label&gt;&lt;label&gt;12&lt;/label&gt;&lt;label&gt;13&lt;/label&gt;&lt;label&gt;14&lt;/label&gt;&lt;label&gt;15&lt;/label&gt;.
-  &lt;/affichage&gt;
-        </pre>
+<div class="wide"><pre>
+&lt;display item="masts" tooltip="512"&gt;
+    &lt;label&gt;0&lt;/label&gt;&lt;label&gt;1&lt;/label&gt;&lt;label&gt;2&lt;/label&gt;&lt;label&gt;3&lt;/label&gt;&lt;label&gt;4&lt;/label&gt;&lt;label&gt;5&lt;/label&gt;&lt;label&gt;6&lt;/label&gt;&lt;label&gt;7&lt;/label&gt;.
+    &lt;label&gt;8&lt;/label&gt;&lt;label&gt;9&lt;/label&gt;&lt;label&gt;10&lt;/label&gt;&lt;label&gt;11&lt;/label&gt;&lt;label&gt;12&lt;/label&gt;&lt;label&gt;13&lt;/label&gt;&lt;label&gt;14&lt;/label&gt;&lt;label&gt;15&lt;/label&gt;.
+&lt;/affichage&gt;
+</pre></div>
       <p>Nous pouvons ensuite soit itérer ces éléments un par un, soit y accéder par
       indice/position selon les besoins. Les exemples suivants sélectionnent les élément de données
       <strong>mâts</strong> sous la racine des données (voir ci-dessus pour la racine des données).
@@ -294,19 +288,19 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       transmet la valeur de l'élément (encodée dans le contenu de l'élément label) au modèle en
       tant que paramètre <strong>mast</strong> :</p>
 
-      <pre>
-  &lt;xsl:template name="generate-panes"&gt;
-      &lt;xsl:param name="racine"/&gt;
+<div class="wide"><pre>
+&lt;xsl:template name="generate-panes"&gt;
+    &lt;xsl:param name="racine"/&gt;
 
-      &lt;xsl:for-each select="$root/display[@item='masts']/label"&gt;
-          &lt;xsl:variable name="mât" select="string(./text())"/&gt;
-          &lt;xsl:call-template name="mast-pane"&gt;
-              &lt;xsl:with-param name="root" select="$root"/&gt;
-              &lt;xsl:with-param name="mast" select="$mast"/&gt;
-          &lt;/xsl:call-template&gt;
-      &lt;/xsl:for-each&gt;
-  &lt;/xsl:template&gt;
-        </pre>
+    &lt;xsl:for-each select="$root/display[@item='masts']/label"&gt;
+        &lt;xsl:variable name="mât" select="string(./text())"/&gt;
+        &lt;xsl:call-template name="mast-pane"&gt;
+            &lt;xsl:with-param name="root" select="$root"/&gt;
+            &lt;xsl:with-param name="mast" select="$mast"/&gt;
+        &lt;/xsl:call-template&gt;
+    &lt;/xsl:for-each&gt;
+&lt;/xsl:template&gt;
+</pre></div>
       <p>Notez, que l'élément <strong>content</strong> est utilisé comme valeur ici - cela permet
       d'utiliser tous les caractères gênants comme les guillemets, les doubles guillemets, "&gt;"
       et d'autres caractères non autorisés dans les attributs.</p>
@@ -314,7 +308,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       <p>Les éléments individuels peuvent être accédés par leur index (qui est passé en paramètre)
       :</p>
 
-      <pre>
+<div class="wide"><pre>
   &lt;xsl:template name="generate-one-panes"&gt;
       &lt;xsl:param name="root"/&gt;
       &lt;xsl:param name="index"/&gt;
@@ -325,14 +319,14 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
           &lt;xsl:with-param name="mast" select="$mast"/&gt;
       &lt;/xsl:call-template&gt;
   &lt;/xsl:template&gt;
-        </pre>
+</pre></div>
       <p>Vous pouvez facilement utiliser la liste d'étiquettes ci-dessus pour faire une boucle de 1
       à 15, ce qui n'est directement pas possible en XSLT. Au lieu de contrôler la boucle par une
       <em>variable d'indice de contrôle</em>, nous contrôlons la boucle par <em>les données qui
       doivent s'appliquer dans les itérations individuelles du cycle</em> et dériver la variable
       d'index à partir d'elles. Voici l'exemple modifié :</p>
 
-      <pre>
+      <div class="wide"><pre>
 &lt;xsl:template name="generate-panes"&gt;
     &lt;xsl:param name="root"/&gt;
     <strong>&lt;-- The loop count is controlled by the number of <em>label</em> variables --&gt;</strong>
@@ -347,7 +341,8 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
         &lt;/xsl:call-template&gt;
     &lt;/xsl:for-each&gt;
 &lt;/xsl:template&gt;
-      </pre>
+      </pre></div>
+
       <h3>Cycles et boucles</h3>
 
       <p>Le langage XSLT est un langage déclaratif, et les variables, une fois assignées, ne
@@ -362,10 +357,10 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       remplace les boucles en invoquant un modèle à partir de ce modèle lui-même. La seule mise en
       garde est que le nombre d'itérations est <strong>limité</strong> à environ 100 ( ?), avant
       que l'espace de la pile ne soit épuisé. L'exemple se trouve dans <code><a href=
-      "https://github.com/JiMRI/JiMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>,
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>,
       cherchez le modèle <code>AllLEDGroups</code> :</p>
 
-      <pre>
+      <div class="wide"><pre>
 &lt;xsl:template name="AllLEDGroups"&gt;
 <strong>&lt;-- Utilisez l'attribut <em>select=""</em> pour choisir une valeur initiale pour le cycle.
     S'applique si le modèle n'obtient pas de paramètre lors de la (première) invocation --&gt;</strong>.
@@ -395,7 +390,8 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
   &lt;/xsl:call-template&gt;
 &lt;/xsl:if&gt;
 &lt;/xsl:template&gt;
-    </pre>
+      </pre></div>
+
       <h2>Création de la feuille de style</h2>
 
       <h3>Un "boilerplate"</h3>
@@ -419,8 +415,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
   &lt;xsl:preserve-space elements="text"/&gt;
 &lt;/xsl:stylesheet&gt;
     </pre>
-      <p>Ce qui suit va <strong>copier les éléments, et leurs attributs</strong> vers la sortie
-      :</p>
+      <p>Ce qui suit va <strong>copier les éléments, et leurs attributs</strong> vers la sortie :</p>
 
       <pre>
 &lt;xsl:template match="@*|node()"&gt;
@@ -429,6 +424,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
   &lt;/xsl:copy&gt;
 &lt;/xsl:template&gt;
     </pre>
+
       <h3>Générer du contenu aux points d'insertion</h3>
 
       <p>Les définitions de variables sont généralement générées par la feuille de style. Les
@@ -436,7 +432,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       <code>&lt;variables&gt;</code>. La feuille de style peut ensuite <strong>appliquer les
       variables générées</strong> à la fin :</p>
 
-      <pre>
+      <div class="wide"><pre>
 &lt;xsl:template match="variables"&gt;
   &lt;variables&gt;
     &lt;xsl:copy-of select="node()"/&gt;
@@ -450,7 +446,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
     &lt;/xsl:call-template&gt;
   &lt;/variables&gt;
 &lt;/xsl:template&gt;
-    </pre>
+      </pre></div>
       <p>Notez que, dans cet exemple, l'élément <code>pane</code> avec un nom spécial
       (<code>__Aspects</code>) est utilisé comme un support pour les données d'entrée pour la
       génération. Alors que <code>//pane[name/text() == '__Aspects']</code> sélectionne le support
@@ -468,14 +464,14 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       <strong>remplacer</strong> le support de données (un VPanneau de niveau supérieur) avec des
       panneaux générés par la feuille de style :</p>
 
-      <pre>
+      <div class="wide"><pre>
   &lt;xsl:template match="pane[name='__Aspects']" priority="100"&gt;
       &lt;-- instructions d'appel de modèle pour les groupes individuels de panneaux à générer ; l'exemple suit --&gt;.
       &lt;xsl:call-template name="generate-panes"&gt;
               &lt;xsl:with-param name="root" select="//pane[name/text() = '__Aspects']//display[position() = 1]/.."/&gt;
       &lt;/xsl:call-template&gt;
   &lt;/xsl:template&gt;
-            </pre>
+      </pre></div>
       <p>La clause <code>match</code> va réagir sur l'élément <code>__Aspect</code> du volet du
       détenteur de données, mais contrairement aux variables point d'insertion, <strong>aucune
       instruction de copie n'est présente</strong>. L'ancien contenu sera donc jeté (l'élément
@@ -491,7 +487,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       Cela peut être utile pour les <strong>valeurs de choix</strong>, ou même les <strong>panneaux
       d'interface utilisateur</strong> répétés sans contenu variable. Un exemple d'utilisation est
       à nouveau dans <code><a href=
-      "https://github.com/JiMRI/JiMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>.
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>.
       (LedPaneHeader)</p>
 
       <p>Les variables individuelles sont générées à l'aide de <em>xsl:template</em>, mais la
@@ -500,35 +496,36 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       panneau DecoderPro, qui fait l'inclusion du contenu, et non le générateur. Le modèle
       substitue les parties variables de la définition :</p>
 
-      <pre>
+      <div class="wide"><pre>
   &lt;variable item="Aspect{$index} LED1 Out" CV="{$CV2}" mask="XXXVVVVV" default="0"&gt;
       &lt;xi:include href="http://jmri.org/xml/decoders/tvd/LedOutput.xml"/&gt;
   &lt;/variable&gt;
-        </pre>
+      </pre></div>
       <p>Il y a deux choses importantes. Lorsque vous utilisez le préfixe <em>xi:</em>, ce
       <strong>préfixe doit être déclaré</strong> en haut du document (peut être dans n'importe quel
       élément parent, mais par convention, les préfixes sont rassemblés au début). Utilisez
       exactement la même URL (valeur de l'attribut), sinon l'instruction ne sera pas reconnue.</p>
 
-      <pre>
+      <div class="wide"><pre>
   &lt;xsl:stylesheet version="1.0"
       xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
       xmlns:db="http://docbook.org/ns/docbook"
       xmlns:xi="http://www.w3.org/2001/XInclude" <strong>-- c'est la déclaration du préfixe</strong>.
       &gt;
-        </pre>
-      <p>Le deuxième problème est que le <em>xi:include</em> doit utiliser des URLs que JiMRI est
+      </pre></div>
+      <p>Le deuxième problème est que le <em>xi:include</em> doit utiliser des URLs que JMRI est
       capable de <strong>résoudre localement</strong>. Dans le cas contraire, le DecoderPro
       tenterait de télécharger des parties de la définition depuis Internet, ce qui nécessite une
       connexion en ligne - et est lent. Le préfixe <strong>http://jmri.org/xml</strong> est garanti
-      pour résoudre dans le répertoire <strong>xml</strong> de votre installation locale de JiMRI.
-      Pour plus de cartographie, veuillez consulter les autres documents JiMRI.</p>
+      pour résoudre dans le répertoire <strong>xml</strong> de votre installation locale de JMRI.
+      Pour plus de cartographie, veuillez consulter les autres documents JMRI.</p>
 
       <p>Traduction 2021-03-25</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- close #mainContent -->
   </div>
   <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -12,10 +12,11 @@ import org.junit.jupiter.api.*;
  */
 public class AbstractMRReplyTest extends AbstractMessageTestBase {
 
-    AbstractMRReply testMsg;
+    AbstractMRReply testMsg = null;
 
     @Test
     public void testSimpleMatch1() {
+        Assertions.assertNotNull(testMsg);
         Assert.assertEquals("match", 0, testMsg.match("foo"));
     }
 
@@ -92,6 +93,7 @@ public class AbstractMRReplyTest extends AbstractMessageTestBase {
     }
 
     @AfterEach
+    @Override
     public void tearDown() {
         m = testMsg = null;
         JUnitUtil.tearDown();

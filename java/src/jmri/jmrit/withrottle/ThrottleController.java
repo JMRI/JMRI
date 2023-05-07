@@ -272,12 +272,21 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     public void syncThrottleFunctions(DccThrottle t, RosterEntry re) {
         if (re != null) {
-            for (int funcNum = 0; funcNum < 29; funcNum++) {
+            int highestCommon = Math.min(t.getFunctions().length, re.getMaxFnNumAsInt()+1);
+            for (int funcNum = 0; funcNum < highestCommon; funcNum++) {
                 t.setFunctionMomentary(funcNum, !(re.getFunctionLockable(funcNum)));
             }
         }
     }
 
+
+    /**
+     * Send function labels for a roster entry, using old format.
+     * 
+     * This implementation is legacy and should not change from the limit of 29 functions.
+     *
+     * @param re The roster entry to get the labels from.
+     */
     public void sendFunctionLabels(RosterEntry re) {
 
         if (re != null) {
@@ -307,6 +316,8 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     /**
      * send all function states, primarily for initial status Current Format:
      * RPF}|{whichThrottle]\[function}|{state]\[function}|{state...
+     * 
+     * This implementation is legacy and should not change from the limit of 29 functions.
      *
      * @param t throttle to send functions to
      */
@@ -586,7 +597,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             jmri.InstanceManager.throttleManagerInstance().requestThrottle(rosterLoco, this, true);
         } else {
             jmri.InstanceManager.throttleManagerInstance().requestThrottle(new DccLocoAddress(number, isLong), this, true);
-            
+
         }
     }
 
@@ -630,7 +641,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     }
 
     /**
-     * Get the string representation of this Roster ID. Returns empty string 
+     * Get the string representation of this Roster ID. Returns empty string
      * if no address in use.
      * since 4.15.4
      *
@@ -664,7 +675,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
             //  F2 is momentary for horn, unless prefs are set to follow roster entry
             if ((isMomF2) && (receivedFunction==2)) {
-                functionThrottle.setF2(false);
+                functionThrottle.setFunction(2, false);
                 return;
             }
 

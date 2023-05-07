@@ -16,18 +16,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import jmri.InstanceManager;
 import jmri.Reporter;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.consist.JsonConsist;
@@ -91,7 +87,7 @@ public class JsonUtil {
      */
     public ObjectNode getEngine(Engine engine, ObjectNode data, Locale locale) {
         data.put(JSON.MODEL, engine.getModel());
-        data.put(JsonConsist.CONSIST, engine.getConsist() != null ? engine.getConsistName() : null);
+        data.put(JsonConsist.CONSIST, engine.getConsistName());
         return data;
     }
 
@@ -141,8 +137,9 @@ public class JsonUtil {
         data.put(JsonOperations.FRED, car.hasFred());
         data.put(JSON.REMOVE_COMMENT, car.getDropComment());
         data.put(JSON.ADD_COMMENT, car.getPickupComment());
-        data.put(JSON.KERNEL, car.getKernel() != null ? car.getKernelName() : null);
+        data.put(JSON.KERNEL, car.getKernelName());
         data.put(JSON.UTILITY, car.isUtility());
+        data.put(JSON.IS_LOCAL, car.isLocalMove());
         if (car.getFinalDestinationTrack() != null) {
             data.set(JSON.FINAL_DESTINATION, this.getRSLocationAndTrack(car.getFinalDestinationTrack(), null, locale));
         } else if (car.getFinalDestination() != null) {
@@ -181,7 +178,7 @@ public class JsonUtil {
         data.put(JSON.LENGTH, location.getLength());
         data.put(JSON.COMMENT, location.getComment());
         Reporter reporter = location.getReporter();
-        data.put(REPORTER, reporter != null ? reporter.getSystemName() : null);
+        data.put(REPORTER, reporter != null ? reporter.getSystemName() : "");
         // note type defaults to all in-use rolling stock types
         ArrayNode types = data.putArray(JsonOperations.CAR_TYPE);
         for (String type : location.getTypeNames()) {
@@ -204,12 +201,12 @@ public class JsonUtil {
      * @throws JsonException if id does not match a known location
      */
     public ObjectNode getLocation(String name, Locale locale, int id) throws JsonException {
-        try {
-            return getLocation(locationManager().getLocationById(name), locale);
-        } catch (NullPointerException e) {
+        if (locationManager().getLocationById(name) == null) {
             log.error("Unable to get location id [{}].", name);
-            throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JsonOperations.LOCATION, name), id);
+            throw new JsonException(404,
+                    Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JsonOperations.LOCATION, name), id);
         }
+        return getLocation(locationManager().getLocationById(name), locale);
     }
 
     /**
@@ -231,7 +228,7 @@ public class JsonUtil {
         // only includes location ID to avoid recursion
         node.put(JsonOperations.LOCATION, track.getLocation().getId());
         Reporter reporter = track.getReporter();
-        node.put(REPORTER, reporter != null ? reporter.getSystemName() : null);
+        node.put(REPORTER, reporter != null ? reporter.getSystemName() : "");
         node.put(JSON.TYPE, track.getTrackType());
         // note type defaults to all in-use rolling stock types
         ArrayNode types = node.putArray(JsonOperations.CAR_TYPE);
@@ -296,12 +293,12 @@ public class JsonUtil {
         ObjectNode node = mapper.createObjectNode();
         node.put(JSON.NAME, rs.getId());
         node.put(JSON.NUMBER, TrainCommon.splitString(rs.getNumber()));
-        node.put(JSON.ROAD, rs.getRoadName());
+        node.put(JSON.ROAD, rs.getRoadName().split(TrainCommon.HYPHEN)[0]);
         // second half of string can be anything
-        String[] type = rs.getTypeName().split("-", 2);
+        String[] type = rs.getTypeName().split(TrainCommon.HYPHEN, 2);
         node.put(JSON.RFID, rs.getRfid());
         node.put(JsonOperations.CAR_TYPE, type[0]);
-        node.put(JsonOperations.CAR_SUB_TYPE, type.length == 2 ? type[1] : null);
+        node.put(JsonOperations.CAR_SUB_TYPE, type.length == 2 ? type[1] : "");
         node.put(JSON.LENGTH, rs.getLengthInteger());
         try {
             node.put(JsonOperations.WEIGHT, Double.parseDouble(rs.getWeight()));
@@ -314,7 +311,7 @@ public class JsonUtil {
             node.put(JsonOperations.WEIGHT_TONS, 0.0);
         }
         node.put(JSON.COLOR, rs.getColor());
-        node.put(JSON.OWNER, rs.getOwner());
+        node.put(JSON.OWNER, rs.getOwnerName());
         node.put(JsonOperations.BUILT, rs.getBuilt());
         node.put(JSON.COMMENT, rs.getComment());
         node.put(JsonOperations.OUT_OF_SERVICE, rs.isOutOfService());
@@ -389,12 +386,12 @@ public class JsonUtil {
      * @throws JsonException if id does not represent a known train
      */
     public ObjectNode getTrain(String name, Locale locale, int id) throws JsonException {
-        try {
-            return getTrain(trainManager().getTrainById(name), locale);
-        } catch (NullPointerException ex) {
-            log.error("Unable to get train id [{}].", name, ex);
-            throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JsonOperations.TRAIN, name), id);
+        if (trainManager().getTrainById(name) == null) {
+            log.error("Unable to get train id [{}].", name);
+            throw new JsonException(404,
+                    Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JsonOperations.TRAIN, name), id);
         }
+        return getTrain(trainManager().getTrainById(name), locale);
     }
 
     /**

@@ -98,6 +98,8 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml");
 
+        storeLogixNG_Data(p, element);
+
         return element;
     }
 
@@ -187,6 +189,9 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         } catch (Positionable.DuplicateIdException e) {
             throw new JmriConfigureXmlException("Positionable id is not unique", e);
         }
+
+        loadLogixNG_Data(l, element);
+
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }

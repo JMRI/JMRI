@@ -14,12 +14,12 @@ import org.junit.jupiter.api.*;
 public class NetworkConfigExceptionTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testCtor(){
       Assert.assertNotNull("NetworkConfigException constructor",new NetworkConfigException());
    }
 
    @Test
-   public void StringConstructorTest(){
+   public void testStringConstructor(){
       Assert.assertNotNull("NetworkConfigException string constructor",new NetworkConfigException("test exception"));
    }
 

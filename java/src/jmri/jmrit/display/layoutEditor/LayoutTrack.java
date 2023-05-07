@@ -11,7 +11,7 @@ import jmri.Turnout;
  * Abstract base class for all layout track objects (PositionablePoint,
  * TrackSegment, LayoutTurnout, LayoutSlip, LevelXing and LayoutTurntable)
  * <p>
- * This is the connectivity/topology information for the layout; the 
+ * This is the connectivity/topology information for the layout; the
  * display information, including screen geometry, is held in {@link LayoutTrackView} subclasses.
  * <ul>
  *   <li>One or more connections, consisting of a LayoutTrack name and {@link HitPointType}
@@ -49,24 +49,30 @@ abstract public class LayoutTrack {
      * Get the track ID.
      * @return track ident.
      */
-    @Nonnull 
+    @Nonnull
     final public String getId() {
         return ident;
     }
 
-    @Nonnull 
+    @Nonnull
     final public String getName() {
         return ident;
     }
+
+    /**
+     * Get the type of this item.
+     * @return the type
+     */
+    public abstract String getTypeName();
 
     private String ident = "";
 
     final protected void setIdent(@Nonnull String ident) {
         this.ident = ident;
     }
-    
+
     abstract public boolean isMainline();
- 
+
     /*
     * non-accessor methods
      */

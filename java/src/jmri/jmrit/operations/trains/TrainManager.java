@@ -74,7 +74,6 @@ public class TrainManager extends PropertyChangeSupport
     public static final String OPEN_FILE_CHANGED_PROPERTY = "TrainsOpenFile"; // NOI18N
     public static final String RUN_FILE_CHANGED_PROPERTY = "TrainsRunFile"; // NOI18N
     public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction"; // NOI18N
-//    public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
     public static final String ROW_COLOR_NAME_CHANGED_PROPERTY = "TrainsRowColorChange"; // NOI18N
     public static final String TRAINS_BUILT_CHANGED_PROPERTY = "TrainsBuiltChange"; // NOI18N
     public static final String TRAINS_SHOW_FULL_NAME_PROPERTY = "TrainsShowFullName"; // NOI18N
@@ -271,6 +270,12 @@ public class TrainManager extends PropertyChangeSupport
         }
     }
 
+    /**
+     * Used to determine if a train has any restrictions with regard to car
+     * built dates.
+     * 
+     * @return true if there's a restriction
+     */
     public boolean isBuiltRestricted() {
         for (Train train : getList()) {
             if (!train.getBuiltStartYear().equals(Train.NONE) || !train.getBuiltEndYear().equals(Train.NONE)) {
@@ -280,6 +285,12 @@ public class TrainManager extends PropertyChangeSupport
         return false;
     }
 
+    /**
+     * Used to determine if a train has any restrictions with regard to car
+     * loads.
+     * 
+     * @return true if there's a restriction
+     */
     public boolean isLoadRestricted() {
         for (Train train : getList()) {
             if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
@@ -289,15 +300,42 @@ public class TrainManager extends PropertyChangeSupport
         return false;
     }
 
-    public boolean isRoadRestricted() {
+    /**
+     * Used to determine if a train has any restrictions with regard to car
+     * roads.
+     * 
+     * @return true if there's a restriction
+     */
+    public boolean isCarRoadRestricted() {
         for (Train train : getList()) {
-            if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
+            if (!train.getCarRoadOption().equals(Train.ALL_ROADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Used to determine if a train has any restrictions with regard to Locomotive
+     * roads.
+     * 
+     * @return true if there's a restriction
+     */
+    public boolean isLocoRoadRestricted() {
+        for (Train train : getList()) {
+            if (!train.getLocoRoadOption().equals(Train.ALL_ROADS)) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * Used to determine if a train has any restrictions with regard to car
+     * owners.
+     * 
+     * @return true if there's a restriction
+     */
     public boolean isOwnerRestricted() {
         for (Train train : getList()) {
             if (!train.getOwnerOption().equals(Train.ALL_OWNERS)) {
@@ -344,8 +382,8 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     * Finds an existing train or creates a new train if needed requires train's
-     * name creates a unique id for this train
+     * Finds an existing train or creates a new train if needed. Requires train's
+     * name and creates a unique id for a new train
      *
      * @param name The train's name.
      *
@@ -357,10 +395,10 @@ public class TrainManager extends PropertyChangeSupport
         if (train == null) {
             _id++;
             train = new Train(Integer.toString(_id), name);
-            Integer oldSize = Integer.valueOf(_trainHashTable.size());
+            Integer oldSize = Integer.valueOf(getNumEntries());
             _trainHashTable.put(train.getId(), train);
             setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    Integer.valueOf(_trainHashTable.size()));
+                    Integer.valueOf(getNumEntries()));
         }
         return train;
     }
@@ -371,14 +409,14 @@ public class TrainManager extends PropertyChangeSupport
      * @param train The Train to be added.
      */
     public void register(Train train) {
-        Integer oldSize = Integer.valueOf(_trainHashTable.size());
+        Integer oldSize = Integer.valueOf(getNumEntries());
         _trainHashTable.put(train.getId(), train);
         // find last id created
         int id = Integer.parseInt(train.getId());
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_trainHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(getNumEntries()));
         // listen for name and state changes to forward
     }
 
@@ -392,9 +430,9 @@ public class TrainManager extends PropertyChangeSupport
             return;
         }
         train.dispose();
-        Integer oldSize = Integer.valueOf(_trainHashTable.size());
+        Integer oldSize = Integer.valueOf(getNumEntries());
         _trainHashTable.remove(train.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_trainHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(getNumEntries()));
     }
 
     public void replaceLoad(String type, String oldLoadName, String newLoadName) {
@@ -675,13 +713,6 @@ public class TrainManager extends PropertyChangeSupport
         }
     }
 
-    /**
-     * @return Number of trains
-     */
-    public int numEntries() {
-        return _trainHashTable.size();
-    }
-
     public boolean isRowColorManual() {
         return _rowColorManual;
     }
@@ -770,8 +801,10 @@ public class TrainManager extends PropertyChangeSupport
         newTrain._typeList.clear(); // remove all types loaded by create
         newTrain.setTypeNames(train.getTypeNames());
         // set road, load, and owner options
-        newTrain.setRoadOption(train.getRoadOption());
-        newTrain.setRoadNames(train.getRoadNames());
+        newTrain.setCarRoadOption(train.getCarRoadOption());
+        newTrain.setCarRoadNames(train.getCarRoadNames());
+        newTrain.setLocoRoadOption(train.getLocoRoadOption());
+        newTrain.setLocoRoadNames(train.getLocoRoadNames());
         newTrain.setLoadOption(train.getLoadOption());
         newTrain.setLoadNames(train.getLoadNames());
         newTrain.setOwnerOption(train.getOwnerOption());
@@ -1173,17 +1206,12 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     * Check for car type and road name replacements. Also check for engine type
-     * replacement.
+     * Not currently used.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("TrainManager sees property change: {} old: {} new: {}", e.getPropertyName(), e.getOldValue(),
                 e.getNewValue());
-        // TODO use listener to determine if load name has changed
-        // if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)){
-        // replaceLoad((String)e.getOldValue(), (String)e.getNewValue());
-        // }
     }
 
     private void setDirtyAndFirePropertyChange(String p, Object old, Object n) {

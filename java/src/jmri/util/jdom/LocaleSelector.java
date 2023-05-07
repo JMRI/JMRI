@@ -102,4 +102,9 @@ public class LocaleSelector {
         return null;
     }
 
+    // for testing purposes
+    protected static void setSuffixes(String[] newSuffixes){
+        suffixes = java.util.Arrays.copyOf(newSuffixes, newSuffixes.length );
+    }
+
 }

@@ -15,7 +15,7 @@ import org.junit.Test;
 
 /**
  * Test AntecedentSwing
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class AntecedentSwingTest {
@@ -23,30 +23,30 @@ public class AntecedentSwingTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         AntecedentSwing t = new AntecedentSwing();
         Assert.assertNotNull("exists",t);
     }
-    
+
     @Test
     public void testPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         AntecedentSwing t = new AntecedentSwing();
         JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
-    
+
     @Test
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         Assert.assertTrue("panel is not null",
             null != new AntecedentSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
             null != new AntecedentSwing().getConfigPanel(new Antecedent("IQDE1", null), new JPanel()));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -60,7 +60,8 @@ public class AntecedentSwingTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

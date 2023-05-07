@@ -35,7 +35,6 @@ public class MultiSensorIconFrameTest extends jmri.util.JmriJFrameTestBase {
         }
         e = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -15,11 +14,7 @@ import org.junit.jupiter.api.*;
  */
 public class CbusMessageTest {
 
-    @Test
-    public void testCTor() {
-        CbusMessage t = new CbusMessage();
-        Assert.assertNotNull("exists",t);
-    }
+    // no testCtor as class only supplies static methods
     
     @Test
     public void testOpcRangeToSTL() {

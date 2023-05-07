@@ -370,8 +370,7 @@
         <p>There are tabs for viewing the information on the selected node, node variables and node
         events in the centre of the window.</p>
 
-        <p>If the JMRI CBUS Event Table is running, the button to import event names will be
-        enabled.<br>
+        <p>If the JMRI CBUS Event Table is running, Events encountered will be added if not already present.
         An event name will be added to an existing event table entry if it has no event name.</p>
 
         <p>Node names are imported to the main node table, updating the node name if unset.<br>
@@ -406,6 +405,7 @@
 
         <p>On teach completion, the busy icon will dissapear and a teach failure popup will display
         should any issues be detected.</p>
+        <p>Further information on the teach process may also be available in the JMRI Console Log.</p>
       </div>
 
       <h3 id="opc">Sent Operation Codes</h3>

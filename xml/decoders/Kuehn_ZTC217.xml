@@ -31,7 +31,7 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable CV="2" item="Vstart" comment="Range 0-255">
         <decVal/>
         <label>Start Volts</label>
@@ -85,7 +85,7 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
-        <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="cs">Verze dekodéru </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="157">
         <decVal/>
@@ -93,7 +93,7 @@
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
-        <label xml:lang="cs">ID výrobce: </label>
+        <label xml:lang="cs">ID výrobce </label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -165,6 +165,9 @@
       <constant item="F2 controls output 4" minOut="4" default="1"/>
       <constant item="F3 controls output 5" minOut="5" default="1"/>
       <constant item="F4 controls output 6" minOut="6" default="1"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+
     </variables>
   </decoder>
   <pane>

@@ -9,7 +9,10 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
+import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
@@ -146,17 +149,45 @@ public class DefaultConditionalNG extends AbstractBase
             DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG);
 
             try {
+                conditionalNG.setCurrentConditionalNG(conditionalNG);
+
                 conditionalNG.setSymbolTable(newSymbolTable);
+
+                InlineLogixNG inlineLogixNG = conditionalNG.getLogixNG().getInlineLogixNG();
+                if (inlineLogixNG != null) {
+                    List<SymbolTable.VariableData> localVariables = new ArrayList<>();
+                    localVariables.add(new SymbolTable.VariableData(
+                            "__InlineLogixNG__", SymbolTable.InitialValueType.String,
+                            inlineLogixNG.getNameString()));
+//                    localVariables.add(new SymbolTable.VariableData(
+//                            "__PositionableId__", SymbolTable.InitialValueType.String,
+//                            inlineLogixNG.getId()));
+                    localVariables.add(new SymbolTable.VariableData(
+                            "__Editor__", SymbolTable.InitialValueType.String,
+                            inlineLogixNG.getEditorName()));
+                    newSymbolTable.createSymbols(localVariables);
+                }
+
                 if (femaleSocket != null) {
                     femaleSocket.execute();
                 } else {
                     conditionalNG.getFemaleSocket().execute();
                 }
-            } catch (AbortConditionalNGExecutionException e) {
-//                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
-//                        conditionalNG.getSystemName(), e, e);
-                log.warn("ConditionalNG {} was aborted during execute: {}",
+            } catch (ReturnException | ExitException e) {
+                // A Return action in a ConditionalNG causes a ReturnException so this is okay.
+                // An Exit action in a ConditionalNG causes a ExitException so this is okay.
+            } catch (PassThruException e) {
+                // This happens due to a a Break action or a Continue action that isn't handled.
+                log.info("ConditionalNG {} was aborted during execute: {}",
                         conditionalNG.getSystemName(), e.getCause(), e.getCause());
+            } catch (AbortConditionalNGExecutionException e) {
+                if (InstanceManager.getDefault(LogixNGPreferences.class).getShowSystemNameInException()) {
+                    log.warn("ConditionalNG {} was aborted during execute in the item {}: {}",
+                            conditionalNG.getSystemName(), e.getMaleSocket().getSystemName(), e.getCause(), e.getCause());
+                } else {
+                    log.warn("ConditionalNG {} was aborted during execute: {}",
+                            conditionalNG.getSystemName(), e.getCause(), e.getCause());
+                }
             } catch (JmriException | RuntimeException e) {
 //                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
 //                        conditionalNG.getSystemName(), e, e);
@@ -187,6 +218,20 @@ public class DefaultConditionalNG extends AbstractBase
             }
         }
 
+    }
+
+    /**
+     * Set the current ConditionalNG.
+     * @param conditionalNG the current ConditionalNG
+     */
+    @Override
+    public void setCurrentConditionalNG(ConditionalNG conditionalNG) {
+        if (this != conditionalNG) {
+            throw new UnsupportedOperationException("The new conditionalNG must be the same as myself");
+        }
+        for (Module m : InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet()) {
+            m.setCurrentConditionalNG(conditionalNG);
+        }
     }
 
     /** {@inheritDoc} */
@@ -266,6 +311,7 @@ public class DefaultConditionalNG extends AbstractBase
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    @Override
     public void setSocketSystemName(String systemName) {
         if ((systemName == null) || (!systemName.equals(_socketSystemName))) {
             _femaleSocket.disconnect();
@@ -273,6 +319,7 @@ public class DefaultConditionalNG extends AbstractBase
         _socketSystemName = systemName;
     }
 
+    @Override
     public String getSocketSystemName() {
         return _socketSystemName;
     }
@@ -349,6 +396,11 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean existsInTree() {
+        return true;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNG.class);

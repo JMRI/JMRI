@@ -1,21 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <!--    Translated by Herv&#233; BLOREC on 2017-02-15 -->
-
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Block Edit Help</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Block Table Edit">
   <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>Modifier la Fenêtre Canton</h1>
 
       <p>Le volet Modifier Canton vous permet de modifier les onglets suivants:</p>
@@ -199,6 +197,7 @@
         Train peut entrer dans un Canton occupé et quel Aspect doit être affiché sur son Mât de
         Signalisation.</li>
       </ul>
+
       <a name="usage" id="usage"></a>
       <h2>Utilisation</h2>
 
@@ -216,10 +215,12 @@
       </p>
 
       <p>Retour à la page <a href="BlockTable.shtml">Aide Tableau Canton</a>.</p>
-      Localisé à package/jmri/jmrt/beantable/BlockEdit <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+
+      Localisé à package/jmri/jmrt/beantable/BlockEdit
+
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

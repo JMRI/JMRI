@@ -19,7 +19,7 @@ public class NceSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Nc
         // this is checking the "as default ctor built" options, which might not be valid
         Assert.assertTrue("provides global programmerManager", scm.provides(GlobalProgrammerManager.class));
         Assert.assertNotNull("global ProgrammerManager exists", scm.get(GlobalProgrammerManager.class));
-        Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager) scm.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
+        Assert.assertNotNull("global Programmer exists", scm.get(GlobalProgrammerManager.class).getGlobalProgrammer());
     }
 
     @Test
@@ -29,7 +29,7 @@ public class NceSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Nc
 
         Assert.assertTrue("provides global programmerManager", scm.provides(GlobalProgrammerManager.class));
         Assert.assertNotNull("global ProgrammerManager exists", scm.get(GlobalProgrammerManager.class));
-        Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager) scm.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
+        Assert.assertNotNull("global Programmer exists", scm.get(GlobalProgrammerManager.class).getGlobalProgrammer());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class NceSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Nc
 
         Assert.assertTrue("provides global programmerManager", scm.provides(GlobalProgrammerManager.class));
         Assert.assertNotNull("global ProgrammerManager exists", scm.get(GlobalProgrammerManager.class));
-        Assert.assertNull("no global Programmer exists", ((GlobalProgrammerManager) scm.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
+        Assert.assertNull("no global Programmer exists", scm.get(GlobalProgrammerManager.class).getGlobalProgrammer());
     }
 
     // The minimal setup is for log4J

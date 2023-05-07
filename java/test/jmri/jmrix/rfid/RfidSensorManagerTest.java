@@ -21,8 +21,9 @@ public class RfidSensorManagerTest {
     public void testCtor() {
         RfidSensorManager c = new RfidSensorManager(memo){
             @Override
+            @Nonnull
             protected Sensor createNewSensor(@Nonnull String systemName, String userName){
-                return null;
+                throw new IllegalArgumentException("Scaffold Class");
             }
             @Override
             public void message(RfidMessage m){}
@@ -42,6 +43,7 @@ public class RfidSensorManagerTest {
 
     @AfterEach
     public void tearDown() {
+        memo.dispose();
         memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

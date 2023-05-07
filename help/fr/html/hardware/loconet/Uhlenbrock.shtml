@@ -1,25 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Updated by Blorec Herv&#233;  2017-01-29-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233;  2017-01-29-->
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Uhlenbrock Intellibox</title>
   <meta name="author" content="Michael Beck">
   <meta name="author" content="John Plocher">
   <meta name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1>Guide Installation JMRI: Uhlenbrock Intellibox via Port Série</h1>
@@ -197,10 +193,11 @@
       </ul>
       Enregistrez et reémarrez. <a name="tools" id="tools"></a>
       <h2>Outils JMRI Uhlenbrock</h2>
-      N/A <!--#include virtual="/Footer.shtml" -->
+      N/A <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

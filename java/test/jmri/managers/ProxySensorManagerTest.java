@@ -17,9 +17,8 @@ import org.junit.jupiter.api.*;
  *
  * @author Bob Jacobsen 2003, 2006, 2008, 2014
  */
-public class ProxySensorManagerTest implements Manager.ManagerDataListener<Sensor>, PropertyChangeListener {
-
-    protected ProxySensorManager l = null; // holds objects under test
+public class ProxySensorManagerTest extends AbstractProxyManagerTestBase<ProxySensorManager,Sensor>
+    implements Manager.ManagerDataListener<Sensor>, PropertyChangeListener {
 
     @Test
     public void testDispose() {
@@ -31,7 +30,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         // create
         Sensor tj = l.newSensor("JS1", "mine");
         // check
-        Assert.assertTrue("real object returned ", tj != null);
+        Assert.assertNotNull("real object returned ", tj );
         Assert.assertTrue("user name correct ", tj == l.getByUserName("mine"));
         Assert.assertTrue("system name correct ", tj == l.getBySystemName("JS1"));
     }
@@ -43,7 +42,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Sensor t = l.provideSensor("IS:XYZ");
         Assert.assertNotEquals(t, l.provideSensor("IS:xyz"));  // upper case and lower case are different objects
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertEquals("IS:XYZ", t.getSystemName());  // we force upper
         Assert.assertTrue("system name correct ", t == l.getBySystemName("IS:XYZ"));
         Assert.assertEquals(2, l.getObjectCount());
@@ -59,7 +58,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         // create
         Sensor ti = l.newSensor("IS1", "mine");
         // check
-        Assert.assertTrue("real object returned ", ti != null);
+        Assert.assertNotNull("real object returned ", ti );
         Assert.assertTrue("user name correct ", ti == l.getByUserName("mine"));
         Assert.assertTrue("system name correct ", ti == l.getBySystemName("IS1"));
     }
@@ -69,7 +68,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         // create
         Sensor tk = l.newSensor("KS1", "mine");
         // check
-        Assert.assertTrue("real object returned ", tk != null);
+        Assert.assertNotNull("real object returned ", tk );
         Assert.assertTrue("user name correct ", tk == l.getByUserName("mine"));
         Assert.assertTrue("system name correct ", tk == l.getBySystemName("KS1"));
     }
@@ -79,7 +78,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         // create
         Sensor t = l.provideSensor("9");
         // check
-        Assert.assertTrue("real object returned", t != null);
+        Assert.assertNotNull("real object returned", t );
         Assert.assertEquals("system name correct", "JS9", t.getSystemName());
         Assert.assertEquals("can find by name", t, l.getBySystemName("JS9"));
     }
@@ -94,12 +93,12 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     public void testSingleObject() {
         // test that you always get the same representation
         Sensor t1 = l.newSensor("JS1", "mine");
-        Assert.assertTrue("t1 real object returned ", t1 != null);
+        Assert.assertNotNull("t1 real object returned ", t1 );
         Assert.assertEquals("same by user ", t1, l.getByUserName("mine"));
         Assert.assertEquals("same by system ", t1, l.getBySystemName("JS1"));
 
         Sensor t2 = l.newSensor("JS1", "mine");
-        Assert.assertTrue("t2 real object returned ", t2 != null);
+        Assert.assertNotNull("t2 real object returned ", t2 );
         // check
         Assert.assertTrue("same new ", t1 == t2);
     }
@@ -399,8 +398,8 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     }
 
     // Property listen & audit methods
-    static protected int propertyListenerCount = 0;
-    static protected String propertyListenerLast = null;
+    protected int propertyListenerCount = 0;
+    protected String propertyListenerLast = null;
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -450,7 +449,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("I", "India"))); // not in alpha order to make it exciting
         l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("K", "Kilo")));
 
-        jmri.InstanceManager.setSensorManager(l);
+        InstanceManager.setSensorManager(l);
 
         propertyListenerCount = 0;
         propertyListenerLast = null;

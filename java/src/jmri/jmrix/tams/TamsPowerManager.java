@@ -37,8 +37,12 @@ public class TamsPowerManager extends AbstractPowerManager<TamsSystemConnectionM
         log.debug("*** Tams PowerManager ***");
         // connect to the TrafficManager
         tc = ttc;
+        init();
+    }
+   
+    private void init() {
         tc.addTamsListener(this);
-        TamsMessage tm = TamsMessage.getXStatus();
+        tm = TamsMessage.getXStatus();
         tc.sendTamsMessage(tm, this);
         tc.addPollMessage(tm, this);
         log.debug("TamsMessage added to pollqueue = {} {} and replyType = {}", jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, ""), jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, ""), tm.getReplyType());
@@ -55,11 +59,11 @@ public class TamsPowerManager extends AbstractPowerManager<TamsSystemConnectionM
         checkTC();
         if (v == ON) {
             // send message to turn on
-            TamsMessage tm = TamsMessage.setXPwrOn();
+            tm = TamsMessage.setXPwrOn();
             tc.sendTamsMessage(tm, null);//changed this to null in this method
         } else if (v == OFF) {
             // send message to turn off
-            TamsMessage tm = TamsMessage.setXPwrOff();
+            tm = TamsMessage.setXPwrOff();
             tc.sendTamsMessage(tm, null);
         }
         firePowerPropertyChange(old, power);
@@ -70,7 +74,7 @@ public class TamsPowerManager extends AbstractPowerManager<TamsSystemConnectionM
     // to free resources when no longer used
     @Override
     public void dispose() throws JmriException {
-        TamsMessage tm = TamsMessage.getXStatus();
+        tm = TamsMessage.getXStatus();
         tc.removePollMessage(tm, this);
         tc = null;
     }
@@ -85,12 +89,12 @@ public class TamsPowerManager extends AbstractPowerManager<TamsSystemConnectionM
     @Override
     public void reply(TamsReply tr) {
         int old = power;
-        if ((TamsTrafficController.replyType == 'P')){
+        if ((tc.replyType == 'P')){
             log.debug("*** Tams Power Reply ***");
             //log.debug("TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
             log.debug("TamsReply = {}", jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(0) & 0xFF, ""));
             boolean valid = false;
-            if (TamsTrafficController.replyBinary) {//Reply related to Poll Message
+            if (tc.replyBinary) {//Reply related to Poll Message
                 log.debug("Reply to Poll Message");
                 //reply to power status check is either 0 for off or 8 for on
                 //if (tm.getElement(1) == TamsConstants.XSTATUS) {//power status check

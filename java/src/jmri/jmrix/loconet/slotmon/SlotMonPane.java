@@ -2,22 +2,25 @@ package jmri.jmrix.loconet.slotmon;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.RowFilter;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
+
 import jmri.InstanceManager;
 import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.LocoNetSlot;
+import jmri.jmrix.loconet.SlotListener;
+import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 import jmri.swing.JmriJTablePersistenceManager;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
+import jmri.util.table.*;
 
 /**
  * Frame providing a command station slot manager.
@@ -27,7 +30,7 @@ import jmri.util.table.ButtonRenderer;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
+public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements SlotListener  {
 
     /**
      * Controls whether not-in-use slots are shown
@@ -37,6 +40,11 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
      * Controls whether system slots (0, 121-127) are shown
      */
     protected final JCheckBox showSystemCheckBox = new JCheckBox();
+
+    private JLabel dcsCSLabel = new JLabel(Bundle.getMessage("SlotMonCSLabel"));
+    private JTextField dcsType = new JTextField();
+    private JLabel dcsSlotsLabel = new JLabel(Bundle.getMessage("SlotMonTotalSlots"));
+    private JTextField dcsSlots = new JTextField();
 
     private final JButton estopAllButton = new JButton(Bundle.getMessage("ButtonSlotMonEStopAll"));
 
@@ -56,10 +64,14 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     @Override
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
-
-        slotModel = new SlotMonDataModel(128, 16, memo);
+        int columns = 40;
+        if (memo.getSlotManager().getLoconetProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
+            columns=20;
+        }
+        slotModel = new SlotMonDataModel(memo.getSlotManager().getNumSlots(), columns, memo);
         slotTable = new JTable(slotModel);
         slotTable.setName(this.getTitle());
+
         sorter = new TableRowSorter<>(slotModel);
         slotTable.setRowSorter(sorter);
         slotScroll = new JScrollPane(slotTable);
@@ -101,6 +113,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         // install a button renderer & editor in the "ESTOP" column for stopping a loco
         setColumnToHoldEStopButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.ESTOPCOLUMN));
 
+        // Install a numeric format for ConsistAddress
+        setColumnForBlankWhenZero(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.CONSISTADDRESS));
         // add listener object so checkboxes function
 
         refreshAllButton.addActionListener((ActionEvent e) -> {
@@ -134,6 +148,13 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
 
+        pane1.add(dcsCSLabel);
+        dcsType.setEditable(false);
+        pane1.add(dcsType);
+        pane1.add(dcsSlotsLabel);
+        dcsSlots.setEditable(false);
+        pane1.add(dcsSlots);
+        showHideSlot250Data(false);
         pane1.add(refreshAllButton);
         pane1.add(showUnusedCheckBox);
         pane1.add(showSystemCheckBox);
@@ -142,6 +163,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         add(pane1);
         add(slotScroll);
+
+        memo.getSlotManager().addSlotListener(this);
 
         // set scroll size
         //pane1.setMaximumSize(new java.awt.Dimension(100,300));
@@ -161,6 +184,43 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         slotTable.setRowHeight(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().height);
         slotTable.getColumnModel().getColumn(column)
                 .setPreferredWidth(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().width);
+    }
+
+    /*
+     * Helper class to format number and optionally make blank when zero
+     */
+    private static class NumberFormatRenderer extends DefaultTableCellRenderer
+    {
+        public NumberFormatRenderer(String pattern, boolean suppressZero) {
+            super();
+            this.pattern = pattern;
+            this.suppressZero = suppressZero;
+            setHorizontalAlignment(JLabel.RIGHT);
+        }
+        @Override
+        public void setValue(Object value)
+        {
+            try
+            {
+                if (value != null && value instanceof Number) {
+                    if (suppressZero && ((Number) value).doubleValue() == 0.0 ) {
+                        value = "";
+                    }
+                    NumberFormat formatter = new DecimalFormat(pattern);
+                    value = formatter.format(value);
+                }
+            }
+            catch(IllegalArgumentException e) {}
+            super.setValue(value);
+        }
+        private String pattern;
+        private boolean suppressZero;
+    }
+
+    void setColumnForBlankWhenZero(JTable slotTable, int column) {
+        TableColumnModel tcm = slotTable.getColumnModel();
+        TableCellRenderer renderer = new NumberFormatRenderer("####",true);
+        tcm.getColumn(column).setCellRenderer(renderer);
     }
 
     void setColumnToHoldEStopButton(JTable slotTable, int column) {
@@ -199,14 +259,18 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         RowFilter<SlotMonDataModel, Integer> rf = new RowFilter<SlotMonDataModel, Integer>() {
             @Override
             public boolean include(RowFilter.Entry<? extends SlotMonDataModel, ? extends Integer> entry) {
-                int slotNum = entry.getIdentifier();
                 // default filter is IN-USE and regular systems slot
-                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() != LnConstants.LOCO_FREE && (slotNum > 0 && slotNum < 121);
-
-                if (!include && showUnusedCheckBox.isSelected() && (slotNum > 0 && slotNum < 121)) {
+                // the default is whatever the person last closed it with
+                jmri.jmrix.loconet.LocoNetSlot slot =  entry.getModel().getSlot(entry.getIdentifier());
+                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() != LnConstants.LOCO_FREE
+                        && slot.getSlotType() == SlotType.LOCO;
+                if (slot.getSlotType() == SlotType.UNKNOWN) {
+                    return false;        // dont ever show unknown
+                }
+                if (!include && showUnusedCheckBox.isSelected() && !slot.isSystemSlot()) {
                     include = true;
                 }
-                if (!include && showSystemCheckBox.isSelected() && (slotNum == 0 || slotNum > 120)) {
+                if (!include && showSystemCheckBox.isSelected() && slot.isSystemSlot()) {
                     include = true;
                 }
                 return include;
@@ -214,5 +278,44 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         };
         sorter.setRowFilter(rf);
     }
+
+    @Override
+    public List<JMenu> getMenus() {
+        List<JMenu> menuList = new ArrayList<>();
+        menuList.add(getFileMenu());
+        return menuList;
+    }
+
+    private JMenu getFileMenu(){
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile")); // NOI18N
+        fileMenu.add(new JTableToCsvAction((Bundle.getMessage("ExportCsvAll")),
+            null, slotModel, "Slot_Monitor_All.csv", new int[]{
+            SlotMonDataModel.ESTOPCOLUMN})); // NOI18N
+        fileMenu.add(new JTableToCsvAction((Bundle.getMessage("ExportCsvView")),
+            slotTable, slotModel, "Slot_Monitor_View.csv", new int[]{
+            SlotMonDataModel.ESTOPCOLUMN})); // NOI18N
+        return fileMenu;
+    }
+
+    // methods to communicate with SlotManager
+    @Override
+    public synchronized void notifyChangedSlot(LocoNetSlot s) {
+        // update model from this slot
+        if (s.getSlot() == 250) {
+            if (memo.getSlotManager().getSlot250CSSlots() > 0) {
+                showHideSlot250Data(true);
+                dcsSlots.setText(Integer.toString(memo.getSlotManager().getSlot250CSSlots()));
+                dcsType.setText(memo.getSlotManager().getSlot248CommandStationType());
+            }
+        }
+    }
+
+    void showHideSlot250Data(boolean b) {
+        dcsCSLabel.setVisible(b);
+        dcsSlots.setVisible(b);
+        dcsSlotsLabel.setVisible(b);
+        dcsType.setVisible(b);
+    }
+
 
 }

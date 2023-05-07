@@ -1,0 +1,35 @@
+<!-- SidebarAppLocalPart.shtml -->
+<!-- This is the local part sidebar definition for French html/apps/PanelPro pages -->
+
+<dt class="dtheader">PanelPro&reg;</dt>
+<dd>
+	<ul>
+    <li><a href="./Tour.shtml">Aper&#231;u rapide</a></li>
+    <li><a href="./MoreInfo.shtml">D&#233;tails</a></li>
+    <li><a href="./Files.shtml">Fichiers de Configuration</a></li>
+    <li><a href="./Roster.shtml">Travailler avec l'Inventaire</a></li>
+    <li><a href="./FAQ.shtml">FAQ</a></li>
+    <li><a href="./Install.shtml">Configuration JMRI</a></li>
+	</ul>
+</dd>
+
+<dt class="dtheader">Avanc&#233;es</dt>
+<dd>
+	<ul>
+    <li><a href="GettingStarted.shtml">Getting Started</a></li>
+    <li><a href="../../../../en/html/apps/LoadStoreWork.shtml">Loading and Storing</a> *)</li>
+    <li><a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a></li>
+    <li><a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a></li>
+    <li><a href="../../../../en/package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a> *)</li>
+    <li><a href="../../../../en/package/jmri/jmrit/display/SwitchboardEditor.shtml">Switchboard Editor</a> *)</li>
+    <li><a href="../../../../en/package/jmri/jmrit/display/Tooltips.shtml">Panel Tooltips</a> *)</li>
+    <li><a href="FAQ.shtml">FAQ</a></li>
+    <li><a href="/community/examples/Gallery.shtml">User's Examples</a></li>
+    <li><a href="/community/examples/Modules.shtml">Modular Layout Example</a></li>
+    <li><a href="ShowPanel.shtml">Display a Panel File</a></li>
+    <li><a href="AdvIcons.shtml">Advanced Icons</a></li>
+    <li><a href="../../setup/index.shtml">JMRI Setup</a></li>
+	</ul>
+</dd>
+
+<!-- /SidebarAppLocalPart.shtml -->

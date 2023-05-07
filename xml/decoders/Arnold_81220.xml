@@ -73,7 +73,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Motorola Detection</label>
       </variable>
-      <variable CV="50" default="20" item="Pulse Width" tooltip="Deterimines load compensation. Low number=fast compensation">
+      <variable CV="50" default="20" item="Pulse Width" tooltip="Determines load compensation. Low number=fast compensation">
         <decVal max="25"/>
         <label>Width Of Pulse For Motor (0-25)</label>
       </variable>

@@ -35,7 +35,7 @@ import jmri.jmrix.loconet.LnProgrammerManager;
 public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
     // GUI member declarations
-    ButtonGroup modeGroup = new ButtonGroup();
+    ButtonGroup modeGroup;
     HashMap<ProgrammingMode, JRadioButton> buttonMap = new HashMap<>();
     JComboBox<AddressedProgrammerManager> progBox;
     ArrayList<JRadioButton> buttonPool = new ArrayList<>();
@@ -67,7 +67,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     transient volatile AccessoryOpsModeProgrammerFacade facadeProgrammer = null;
 
     /**
-     * Get the selected programmer
+     * Get the selected programmer.
      */
     @Override
     public Programmer getProgrammer() {
@@ -178,10 +178,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         setBorder(javax.swing.BorderFactory.createTitledBorder(Bundle.getMessage("TitleProgramOnMain")));
 
         // create the programmer display combo box
-        java.util.List<AddressedProgrammerManager> v = new java.util.ArrayList<>();
-        for (AddressedProgrammerManager pm : InstanceManager.getList(jmri.AddressedProgrammerManager.class)) {
-            v.add(pm);
-        }
+        List<AddressedProgrammerManager> v = new ArrayList<>(InstanceManager.getList(AddressedProgrammerManager.class));
         add(progBox = new JComboBox<>(v.toArray(new AddressedProgrammerManager[0])));
         // if only one, don't show
         if (progBox.getItemCount() < 2) {
@@ -306,7 +303,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         log.debug("Selected button: {}", e.getActionCommand());
         for (ProgrammingMode mode : buttonMap.keySet()) {
             if (mode.toString().equals(e.getActionCommand())) {
-                log.debug("      setting mode {} on {}", mode.toString(), getProgrammer());
+                log.debug("      setting mode {} on {}", mode, getProgrammer());
                 if (getProgrammer() != null) {
                     log.debug("getProgrammer() != null");
                     if (mode == ProgrammingMode.OPSACCBYTEMODE) {

@@ -3,7 +3,7 @@ package jmri.jmrix.can.cbus.simulator.moduletypes;
 import javax.annotation.Nonnull;
 
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
-import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
+import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.simulator.CbusSimulatedModuleProvider;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -27,7 +27,7 @@ public class CbusMax extends CbusSimulatedModuleProvider {
     }
 
     @Override
-    public void configureDummyNode(@Nonnull CbusDummyNode node) {
+    public void configureDummyNode(@Nonnull CbusNode node) {
         // 255 parameters could have unintended future
         // consequences so staying with the standard 20
         // for now

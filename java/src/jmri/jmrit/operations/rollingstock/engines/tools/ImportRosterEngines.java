@@ -104,7 +104,7 @@ public class ImportRosterEngines extends Thread {
                 if (owner.length() > Control.max_len_string_attibute) {
                     owner = owner.substring(0, Control.max_len_string_attibute);
                 }
-                engine.setOwner(owner);
+                engine.setOwnerName(owner);
                 enginesAdded++;
             } else {
                 log.info("Can not add roster Id: {}, engine road name ({}) road number ({}) already exists", re.getId(),

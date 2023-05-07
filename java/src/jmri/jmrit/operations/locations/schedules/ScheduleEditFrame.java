@@ -331,7 +331,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
             }
             // check for errors, ignore no schedule items error when creating a new schedule
             String status = _track.checkScheduleValid();
-            if (_schedule.getItemsBySequenceList().size() != 0 && !status.equals(Track.SCHEDULE_OKAY)) {
+            if (_schedule.getItemsBySequenceList().size() != 0 && !status.equals(Schedule.SCHEDULE_OKAY)) {
                 JOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
         }

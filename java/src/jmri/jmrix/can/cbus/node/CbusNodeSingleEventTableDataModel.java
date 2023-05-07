@@ -1,10 +1,12 @@
 package jmri.jmrix.can.cbus.node;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.annotation.CheckForNull;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.swing.nodeconfig.CbusNodeEditEventFrame;
 import jmri.util.ThreadingUtil;
@@ -319,7 +321,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
 
     @CheckForNull
     private CbusNode getEventNode(){
-        CbusNodeTableDataModel nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
+        CbusNodeTableDataModel nodeModel = _memo.get(CbusNodeTableDataModel.class);
         return nodeModel.getNodeByNodeNum( _ndEv.getParentNn() );
     }
     

@@ -227,7 +227,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     void browsePressed(ActionEvent e) {
         if (fileChooser == null) {
-            fileChooser = new JFileChooser("resources" + File.separator + "sounds" + File.separator); // NOI18N
+            fileChooser = new jmri.util.swing.JmriJFileChooser("resources" + File.separator + "sounds" + File.separator); // NOI18N
             fileChooser.setFileFilter(new FileNameExtensionFilter("Audio Files (*.wav)", "wav")); // NOI18N
         }
 

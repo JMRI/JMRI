@@ -42,8 +42,8 @@ public class FnMapPanelESUTest {
     }
 
     jmri.Programmer p;
-    CvTableModel cvtm;
-    VariableTableModel tableModel;
+    CvTableModel cvtm = null;
+    VariableTableModel tableModel = null;
     
     @BeforeEach
     public void setUp() {
@@ -62,8 +62,10 @@ public class FnMapPanelESUTest {
     @AfterEach
     public void tearDown() {
         p = null;
+        Assertions.assertNotNull(tableModel);
         tableModel.dispose();
         tableModel = null;
+        Assertions.assertNotNull(cvtm);
         cvtm.dispose();
         cvtm = null; 
 

@@ -37,7 +37,7 @@ public class HelpUtilPreferencesPanel extends JPanel implements PreferencesPanel
     }
 
     /**
-     * set the local prefs to match the GUI Local prefs are independent from the
+     * Set the local prefs to match the GUI Local prefs are independent from the
      * singleton instance prefs.
      *
      * @return true if set, false if values are unacceptable.

@@ -11,6 +11,7 @@ import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -43,22 +44,68 @@ public class WarrantFrameTest {
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testJoinWarrants() throws Exception {
+    public void testJoinWarrantsStop() throws Exception {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+        JUnitUtil.waitFor(100);
 
         Warrant startW = _warrantMgr.getWarrant("WestBoundStart");
         Warrant endW = _warrantMgr.getWarrant("WestBoundFinish");
+
+        Thread t = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));
+        });
+        t.setName("WarrantFrameTest Answer Question stop train");
+        t.start();
+        
+        WarrantFrame warrantFrame= new WarrantFrame(startW, endW);
+        assertThat(warrantFrame).withFailMessage("JoinWFrame exits").isNotNull();
+
+        JUnitUtil.waitFor( () -> (!t.isAlive()), "dialogue stop train in block east main? answered");
+
+        warrantFrame._userNameBox.setText("WestBoundLocal");
+        JFrameOperator editFrame = new JFrameOperator(warrantFrame);
+        JemmyUtil.pressButton(editFrame, Bundle.getMessage("ButtonSave"));
+
+        Warrant w = _warrantMgr.getWarrant("WestBoundLocal");
+        assertThat(w).withFailMessage("Concatenated Warrant exits").isNotNull();
+
+        warrantFrame.close();
+        warrantFrame.dispose();
+    }
+
+    @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    public void testJoinWarrantsNoStop() throws Exception {
+        // load and display
+        File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
+        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+        JUnitUtil.waitFor(100);
+
+        Warrant startW = _warrantMgr.getWarrant("WestBoundStart");
+        Warrant endW = _warrantMgr.getWarrant("WestBoundFinish");
+
+        Thread clickDialog = new Thread(() -> {
+            JemmyUtil.pressDialogButton(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"));
+        });
+        clickDialog.setName("WarrantFrameTest click Question No");
+        clickDialog.start();
+
         WarrantFrame warrantFrame= new WarrantFrame(startW, endW);
         assertThat(warrantFrame).withFailMessage("JoinWFrame exits").isNotNull();
 
         warrantFrame._userNameBox.setText("WestBound");
         JFrameOperator editFrame = new JFrameOperator(warrantFrame);
         JemmyUtil.pressButton(editFrame, Bundle.getMessage("ButtonSave"));
+
+        JUnitUtil.waitFor(() ->  { return !clickDialog.isAlive(); },"QuestionTitle ButtonNo clicked");
 
         Warrant w = _warrantMgr.getWarrant("WestBound");
         assertThat(w).withFailMessage("Concatenated Warrant exits").isNotNull();
@@ -84,7 +131,6 @@ public class WarrantFrameTest {
         _warrantMgr.dispose();
         _warrantMgr = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

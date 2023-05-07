@@ -25,12 +25,13 @@ public class SdfBufferTest {
         String result = b.toString();
 
         // read the golden file
-        String g = "";
-        try {
-            BufferedReader in = new BufferedReader(new FileReader("java/test/jmri/jmrix/loconet/sdf/test2.golden.txt"));
+        StringBuilder g = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new FileReader(
+            "java/test/jmri/jmrix/loconet/sdf/test2.golden.txt"));){
+
             String str;
             while ((str = in.readLine()) != null) {
-                g += (str + "\n");
+                g.append(str).append("\n");
             }
             in.close();
         } catch (IOException e) {
@@ -38,7 +39,7 @@ public class SdfBufferTest {
             System.out.println("exception reading golden file: " + e);
         }
 
-        if (!result.equals(g)) {
+        if (!result.equals(g.toString())) {
             // The next lines prints the answer in case you need
             // to create a new golden file
             System.out.println("--------------------");
@@ -46,7 +47,7 @@ public class SdfBufferTest {
             System.out.println("--------------------");
         }
 
-        Assert.assertEquals("output as string", g, result);
+        Assert.assertEquals("output as string", g.toString(), result);
     }
 
     @Test

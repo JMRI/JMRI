@@ -48,6 +48,7 @@
         <tooltip>Value must be lower than Vhigh, CV 5.</tooltip>
         <tooltip xml:lang="de">Wert muss kleiner sein als Vmax, CV 5.</tooltip>
         <tooltip xml:lang="fr">Doit être plus petit que Vmax, CV 5.</tooltip>
+        <tooltip xml:lang="cs">Hodnota musí být menší než Maximální napětí CV 5.</tooltip>
     </variable>
     <variable CV="3" default="12" item="Accel">
         <decVal/>
@@ -56,9 +57,11 @@
         <label xml:lang="fr">Accelération (AV)</label>
         <label xml:lang="de">Anfahrverzögerung (AV)</label>
         <label xml:lang="ca">Acceleració (AV)</label>
+        <label xml:lang="cs">Zrychlení (AV)</label>
         <tooltip>Value multiplied by 0.25 = Time from Stop to Full Speed.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit vom Stop bis Maximalgeschwindigkeit.</tooltip>
         <tooltip xml:lang="fr">Valeur multipliée par 0,25 = Temps entre l'arrêt et la pleine vitesse.</tooltip>
+        <tooltip xml:lang="cs">Hodnota vynásobená 0,25 = Čas ze stání do plné rychlosti.</tooltip>
     </variable>
     <variable CV="4" default="12" item="Decel">
         <decVal/>
@@ -67,9 +70,11 @@
         <label xml:lang="fr">Décélération (BV)</label>
         <label xml:lang="de">Bremsverzögerung (BV)</label>
         <label xml:lang="ca">Desacceleració (BV)</label>
+        <label xml:lang="cs">Zpomalení (BV)</label>
         <tooltip>Value multiplied by 0.25 = Time from Full Speed to Stop.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit von Maximalgeschwindigkeit bis Stop</tooltip>
         <tooltip xml:lang="fr">Valeur multipliée par 0,25 = Temps entre la pleine vitesse et l'arrêt.</tooltip>
+        <tooltip xml:lang="cs">Hodnota vynásobená 0,25 = Čas z plné rychlosti do zastavení.</tooltip>
     </variable>
     <variable CV="5" default="180" item="Vhigh">
         <decVal min="1"/>
@@ -83,11 +88,12 @@
         <tooltip>Speed at highest speed step. Value must be greater than Vstart, CV 2.</tooltip>
         <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe. Wert muss größer sein als Vmin, CV 2.</tooltip>
         <tooltip xml:lang="fr">Vitesse au plus grand pas de vitesse. Doit être plus grand que V démarr., CV 2.</tooltip>
+        <tooltip xml:lang="cs">Rychlost na nejvyšší rychlostním stupni. Hodnota musí být větší než Rozjezdové napětí CV 2.</tooltip>
     </variable>
     <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Decoder Version</label>
-        <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="cs">Verze dekodéru </label>
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoderversion: </label>
@@ -97,7 +103,7 @@
     <variable CV="8" readOnly="yes" default="131" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
-        <label xml:lang="cs">ID výrobce: </label>
+        <label xml:lang="cs">ID výrobce </label>
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
@@ -118,6 +124,7 @@
         <label xml:lang="de">DC Bremse, Polarität entgegen der Fahrtrichtung</label>
         <label xml:lang="fr">Freinage DC, polarité sens opposé à marche</label>
         <label xml:lang="ca">Para en CC, quan polaritat oposada</label>
+        <label xml:lang="cs">Zastavit na DC, opačná polarita ke směru</label>
     </variable>
     <variable CV="27" mask="XXXVXXXX" item="Advanced Brake Sections Option 1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -125,6 +132,7 @@
         <label xml:lang="de">DC Bremse, Polarität mit der Fahrtrichtung</label>
         <label xml:lang="fr">Freinage DC, polarité sens de marche</label>
         <label xml:lang="ca">Para en CC, mateix sentit de polaritat</label>
+        <label xml:lang="cs">Zastavit na DC, správná polarita ke směru</label>
     </variable>
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -135,9 +143,11 @@
         <label>Motor Control Analog</label>
         <label xml:lang="de">Motorregelung analog</label>
         <label xml:lang="fr">Commande analogique moteur</label>
+        <label xml:lang="cs">Řízení motoru v analogu</label>
         <tooltip>&lt;html&gt;Motor Control in Analog Mode&lt;br&gt;The analog controller uses the parameter settings from the Auto-PI controller.&lt;/html&gt;</tooltip>
         <tooltip xml:lang="de">&lt;html&gt;Motorregelung analog Modus&lt;br&gt;Der Analogregler übernimmt die Parameter-Einstellungen vom Auto-PI Regler.&lt;/html&gt;</tooltip>
         <tooltip xml:lang="fr">&lt;html&gt;Commande moteur en analogique&lt;br&gt;Le régulateur analogique utilise les paramètres du régulateur Auto-PI.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Řízení motoru v analogovém režimu&lt;br&gt;Analogový regulátor použije nastavení parametrů z regulátoru Auto-PI.&lt;/html&gt;</tooltip>
     </variable>
     <variable CV="48" mask="XXXXXXVV" item="Controller Type" default="1" >
         <enumVal>
@@ -145,21 +155,25 @@
             <choice>Classic</choice>
             <choice xml:lang="de">Classic</choice>
             <choice xml:lang="fr">Classique</choice>
+            <choice xml:lang="cs">Klasický</choice>
           </enumChoice>
           <enumChoice>
             <choice>Auto-PI</choice>
             <choice xml:lang="de">Auto-PI</choice>
             <choice xml:lang="fr">Auto-PI</choice>
+            <choice xml:lang="cs">Auto-PI</choice>
           </enumChoice>
           <enumChoice>
             <choice>PID Controller</choice>
             <choice xml:lang="de">PID-Regler</choice>
             <choice xml:lang="fr">Régulateur PID</choice>
+            <choice xml:lang="cs">PID regulátor</choice>
           </enumChoice>
         </enumVal>
         <label>Motor Controller</label>
         <label xml:lang="de">Motorregler</label>
         <label xml:lang="fr">Régulateur Moteur</label>
+        <label xml:lang="cs">Regulace motoru</label>
         <tooltip>&lt;html&gt;
                   &lt;b&gt;Classic Controller: &lt;/b&gt; &lt;br&gt;
                   - Easy to adjust, but less suitable for coreless motors;&lt;br&gt;
@@ -199,6 +213,19 @@
                   Ce régulateur est particulièrement complexe et offre d'innombrables possibilités,&lt;br&gt;
                   mais est assez chronophage.&lt;br&gt;
                   &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;
+                  &lt;b&gt;Klasický regulátor: &lt;/b&gt; &lt;br&gt;
+                  - Snadno nastavitelné, ale málo vhodné pro bezjádrové motory;&lt;br&gt;
+                  Řízení bez vlivu zátěže.&lt;br&gt;
+                  &lt;b&gt;Regulátor Auto-PI: &lt;/b&gt; &lt;br&gt;
+                  - Nový univerzální regulátor. Je kombinací 2-bodového regulátoru &lt;br&gt;
+                  (Rozjezd) a PI regulátor (jízda).&lt;br&gt;
+                  &lt;b&gt;PID regulátor: &lt;/b&gt; &lt;br&gt;
+                  - Dobře známý regulátor z automatizační techniky,&lt;br&gt;
+                  byl upraven a doplněn pro modelovou železnici.&lt;br&gt;
+                  Je velmi propracovaný a nabízí nespočet možností,&lt;br&gt;
+                  ale také se obtížně nastavuje.&lt;br&gt;
+                  &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="50" mask="XXXXXXXV" item="Analog (AC) Mode" default="1" >
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -206,6 +233,7 @@
         <label xml:lang="de">Analog Modus AC</label>
         <label xml:lang="fr">Mode Analogique AC</label>
         <label xml:lang="ca">Mode analògic AC</label>
+        <label xml:lang="cs">Analogový režim AC</label>
     </variable>
     <variable CV="50" mask="XXXXXXVX" item="Analog (DC) Mode" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -213,6 +241,7 @@
         <label xml:lang="de">Analog Modus DC</label>
         <label xml:lang="fr">Mode Analogique DC</label>
         <label xml:lang="ca">Mode analògic CC</label>
+        <label xml:lang="cs">Analogový režim DC</label>
     </variable>
     <variable CV="50" mask="XXXXXVXX" item="Advanced Protocols Option 1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -220,6 +249,7 @@
         <label xml:lang="de">fx (Motorola®) Protokoll</label>
         <label xml:lang="fr">Protocole fx (Motorola®)</label>
         <label xml:lang="ca">Protocol fx (Motorola®)</label>
+        <label xml:lang="cs">Protokol fx (Motorola®)</label>
     </variable>
     <variable CV="50" mask="XXXXVXXX" item="Advanced Protocols Option 2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -227,6 +257,7 @@
         <label xml:lang="de">mfx Protokoll</label>
         <label xml:lang="fr">Protocole mfx</label>
         <label xml:lang="ca">Protocol mfx</label>
+        <label xml:lang="cs">Protokol mfx</label>
     </variable>
     <variable CV="50" mask="XXXVXXXX" item="Advanced Protocols Option 3" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -234,6 +265,7 @@
         <label xml:lang="de">mfx+ Protokoll</label>
         <label xml:lang="fr">Protocole mfx+</label>
         <label xml:lang="ca">Protocol mfx+</label>
+        <label xml:lang="cs">Protokol mfx+</label>
     </variable>
 
     <variable CV="51" mask="XXXXXXXV" item="Motor Option 2">
@@ -241,27 +273,33 @@
         <label>Motor output</label>
         <label xml:lang="de">Motoranschluss</label>
         <label xml:lang="fr">Sortie Moteur</label>
+        <label xml:lang="cs">Výstup motor</label>
         <tooltip>Motor inverted</tooltip>
         <tooltip xml:lang="de">Motor invertiert</tooltip>
         <tooltip xml:lang="fr">Moteur inversé</tooltip>
+        <tooltip xml:lang="cs">Otočený motor</tooltip>
     </variable>
     <variable CV="51" mask="XXXXXXVX" item="Light Option 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Light output</label>
         <label xml:lang="de">Lichtanschluss</label>
         <label xml:lang="fr">Sortie Lumière</label>
+        <label xml:lang="cs">Výstup světlo</label>
         <tooltip>Light inverted</tooltip>
         <tooltip xml:lang="de">Licht invertiert</tooltip>
         <tooltip xml:lang="fr">Lumière inversée</tooltip>
+        <tooltip xml:lang="cs">Otočené světlo</tooltip>
     </variable>
     <variable CV="51" mask="XXXXXVXX" item="Motor Option 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Track output</label>
         <label xml:lang="de">Gleisanschluss</label>
         <label xml:lang="fr">Sortie Voie</label>
+        <label xml:lang="cs">Výstup koleje</label>
         <tooltip>Track inverted</tooltip>
         <tooltip xml:lang="de">Gleis invertiert</tooltip>
         <tooltip xml:lang="fr">Voie inversée</tooltip>
+        <tooltip xml:lang="cs">Otočené koleje</tooltip>
     </variable>
     <variable CV="51" mask="XXXXVXXX" item="Option Aux 3">
         <enumVal>
@@ -269,19 +307,23 @@
             <choice>Amplified</choice>
             <choice xml:lang="de">Verstärkt</choice>
             <choice xml:lang="fr">amplifiée</choice>
+            <choice xml:lang="cs">Silový</choice>
           </enumChoice>
           <enumChoice>
             <choice>Logical</choice>
             <choice xml:lang="de">Logik</choice>
             <choice xml:lang="fr">Logique</choice>
+            <choice xml:lang="cs">Logický</choice>
           </enumChoice>
         </enumVal>
         <label>Aux 3 Type</label>
         <label xml:lang="de">Aux 3 Typ</label>
         <label xml:lang="fr">Type Aux 3    </label>
+        <label xml:lang="cs">Typ Aux 3</label>
         <tooltip>Amplified/Logical</tooltip>
         <tooltip xml:lang="de">Verstärkt/Logik</tooltip>
         <tooltip xml:lang="fr">Amplifié/Logique</tooltip>
+        <tooltip xml:lang="cs">Silový/Logický</tooltip>
     </variable>
     <variable CV="51" mask="XXXVXXXX" item="Option Aux 4">
         <enumVal>
@@ -289,19 +331,23 @@
             <choice>Amplified</choice>
             <choice xml:lang="de">Verstärkt</choice>
             <choice xml:lang="fr">amplifiée</choice>
+            <choice xml:lang="cs">Silový</choice>
           </enumChoice>
           <enumChoice>
             <choice>Logical</choice>
             <choice xml:lang="de">Logik</choice>
             <choice xml:lang="fr">Logique</choice>
+            <choice xml:lang="cs">Logický</choice>
           </enumChoice>
         </enumVal>
         <label>Aux 4 Type</label>
         <label xml:lang="de">Aux 4 Typ</label>
        <label xml:lang="fr">Type Aux 4    </label>
+        <label xml:lang="cs">Typ Aux 4</label>
         <tooltip>Amplified/Logical</tooltip>
         <tooltip xml:lang="de">Verstärkt/Logik</tooltip>
         <tooltip xml:lang="fr">Amplifié/Logique</tooltip>
+        <tooltip xml:lang="cs">Silový/Logický</tooltip>
     </variable>
 
     <variable CV="52" mask="XXXXVVVV" item="Motor Type" default="5">
@@ -310,47 +356,56 @@
             <choice>Aux - function outputs 5 &amp; 6</choice>
             <choice xml:lang="de">Aux - Funktionsausgänge 5 &amp; 6</choice>
             <choice xml:lang="fr">Aux - Sorties Fonctions 5 &amp; 6</choice>
+            <choice xml:lang="cs">Aux – Funkční výstup 5 &amp; 6</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – Softdrive Sine</choice>
             <choice xml:lang="de">Motor - Softdrive Sinus</choice>
             <choice xml:lang="fr">Moteur - Softdrive Sinus</choice>
+            <choice xml:lang="cs">Motor – Softdrive Sinus</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – without feedback control</choice>
             <choice xml:lang="de">Motor - ungeregelt</choice>
             <choice xml:lang="fr">Moteur - non régulé</choice>
+            <choice xml:lang="cs">Motor – regulace bez zpětné vazby</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – High efficiency propulsion C90</choice>
             <choice xml:lang="de">Motor - Hochleistungsantrieb C90</choice>
             <choice xml:lang="fr">Moteur - Propulsion haut rendement C90</choice>
+            <choice xml:lang="cs">Motor – vysoce účinný pohon C90</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – Bell armature</choice>
             <choice xml:lang="de">Motor - Glockenanker</choice>
             <choice xml:lang="fr">Moteur - Induit en cloche</choice>
+            <choice xml:lang="cs">Motor – zvonová armatura</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – direct current DC soft</choice>
             <choice xml:lang="de">Motor - Gleichstrom DC weich</choice>
             <choice xml:lang="fr">Moteur - Courant Continu doux</choice>
+            <choice xml:lang="cs">Motor – DC stejnosměrné napájení měkké</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – direct current DC hard</choice>
             <choice xml:lang="de">Motor - Gleichstrom DC hart</choice>
             <choice xml:lang="fr">Moteur - Courant Continu dur</choice>
+            <choice xml:lang="cs">Motor – DC stejnosměrné napájení tvrdé</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – direct current DC 1 Gauge</choice>
             <choice xml:lang="de">Motor - Gleichstrom DC Spur 1</choice>
             <choice xml:lang="fr">Moteur - Courant Continu échelle 1</choice>
+            <choice xml:lang="cs">Motor – DC stejnosměrné napájení 1 kolejnice</choice>
           </enumChoice>
         </enumVal>
         <label>Motor type</label>
         <label xml:lang="de">Motortyp</label>
         <label xml:lang="fr">Type de Moteur</label>
         <label xml:lang="ca">Tipus de motor</label>
+        <label xml:lang="cs">Typ motoru</label>
     </variable>
 
     <variable CV="53" item="EMF Control Reference" default="40">
@@ -359,6 +414,7 @@
         <label xml:lang="de">Regelungsreferenz Spannung</label>
         <label xml:lang="fr">Tension de Référence FCEM</label>
         <label xml:lang="ca">Voltatge de referència de la BEMF</label>
+        <label xml:lang="cs">Referenční napětí BEMF</label>
     </variable>
     <variable CV="54" item="EMF Static Config" default="80">
         <decVal/>
@@ -366,6 +422,7 @@
         <label xml:lang="de">Lastregelung Param. 'K'</label>
         <label xml:lang="fr">Régul. Paramètre 'K'</label>
         <label xml:lang="ca">Paràmetre K de la BEMF</label>
+        <label xml:lang="cs">BEMF parametr 'K'</label>
     </variable>
     <variable CV="55" item="EMF Dynamic Config" default="60">
         <decVal/>
@@ -373,6 +430,7 @@
         <label xml:lang="de">Lastregelung Param. 'I'</label>
         <label xml:lang="fr">Régul. Paramètre 'I'</label>
         <label xml:lang="ca">Paràmetre I de la BEMF</label>
+        <label xml:lang="cs">BEMF parametr 'I'</label>
     </variable>
     <variable CV="56" item="EMF Feedback Cutout" default="255">
         <decVal/>
@@ -380,9 +438,11 @@
         <label xml:lang="de">Regelungseinfluss</label>
         <label xml:lang="fr">Influence Régulation</label>
         <label xml:lang="ca">Rang de control de la BEMF</label>
+        <label xml:lang="cs">BEMF rozsah řízení</label>
         <tooltip>0 = PWM without feedback control for Sine</tooltip>
         <tooltip xml:lang="de">0 = ungeregelte PWM für Sinus</tooltip>
         <tooltip xml:lang="fr">0 = MLI non régulée pour Sinus</tooltip>
+        <tooltip xml:lang="cs">0 = PWM bez zpětné vazby pro Sinus</tooltip>
     </variable>
 
     <variable CV="66" default="128" item="Forward Trim" comment="Range 0-255">
@@ -391,6 +451,7 @@
         <label xml:lang="de">Vorwärts Trimm</label>
         <label xml:lang="fr">Limitation vitesse avant</label>
         <label xml:lang="ca">Retall enrere</label>
+        <label xml:lang="cs">Omezení rychlosti vpřed</label>
     </variable>
     <variable CV="67" item="Speed Table">
         <speedTableVal min="1" max="255" mfx="true"/>
@@ -399,6 +460,7 @@
         <label xml:lang="de">Geschwindigkeitstabelle</label>
         <label xml:lang="fr">Table des Vitesses</label>
         <label xml:lang="ca">Taula de velocitats</label>
+        <label xml:lang="cs">Rychlostní tabulka</label>
     </variable>
     <variable CV="95" default="128" item="Reverse Trim" comment="Range 0-255">
         <decVal/>
@@ -406,6 +468,7 @@
         <label xml:lang="de">Rückwärts Trimm</label>
         <label xml:lang="fr">Limitation vitesse arrière</label>
         <label xml:lang="ca">Reteall enrere</label>
+        <label xml:lang="cs">Omezení rychlosti vzad</label>
     </variable>
 
     <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
@@ -414,9 +477,11 @@
         <label>Switching Range</label>
         <label xml:lang="de">Rangiergang</label>
         <label xml:lang="fr">Rapport de Manœuvre</label>
+        <label xml:lang="cs">Rozsah Posun</label>
         <tooltip>128 = 50% of speed level, 64 = 25% of speed level</tooltip>
         <tooltip xml:lang="de">128 = 50% Fahrstufe, 64 = 25% Fahrstufe</tooltip>
         <tooltip xml:lang="fr">128 = Niveau vitesse à 50% 64 = Niveau vitesse à 25%</tooltip>
+        <tooltip xml:lang="cs">128 = 50% úroveň rychlosti, 64 = 25% úroveň rychlosti</tooltip>
     </variable>
 
     <variable CV="165" item="EMF Droop Config" default="0">
@@ -425,12 +490,14 @@
         <label xml:lang="de">Lastregelung Param. 'D'</label>
         <label xml:lang="fr">Régul. Paramètre 'D'</label>
         <label xml:lang="ca">Paramètre D de la BEMF</label>
+        <label xml:lang="cs">BEMF parametr 'D'</label>
     </variable>
     <variable CV="166" item="Slow Limit" default="115">
         <decVal/>
         <label>Slow Limit</label>
         <label xml:lang="de">Langsam Grenze</label>
         <label xml:lang="fr">Limite vitesse lente</label>
+        <label xml:lang="cs">Omezení pomalé rychlosti</label>
         <tooltip>&lt;html&gt;
                   0 = no 'slow range'&lt;br&gt;
                   1 - 255 = upper limit 'slow'&lt;br&gt;
@@ -449,6 +516,12 @@
                   Spécifie la limite haute pour le paramètre 'vitesse lente'&lt;br&gt;
                   (sur la base de 4096 niveaux de vitesse).&lt;br&gt;
                   &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;
+                  0 = bez 'omezení pomalé rychlosti',&lt;br&gt;
+                  1 – 255 = horní limit 'pomalé rychlosti'&lt;br&gt;
+                  Určuje horní limit rychlosti pro nastavení 'pomalé rychlosti'&lt;br&gt;
+                  (na základě interních 4096 rychlostních stupňů).&lt;br&gt;
+                  &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="167" item="EMF Static Config Slow" default="0">
         <decVal/>
@@ -456,6 +529,7 @@
         <label xml:lang="de">Lastregelung Param. langsam 'K'</label>
         <label xml:lang="fr">Régul. Paramètre 'K' lent</label>
         <label xml:lang="ca">Paràmetre K lent de la BEMF</label>
+        <label xml:lang="cs">BEMF Pomalu parametr 'K'</label>
     </variable>
     <variable CV="168" item="EMF Dynamic Config Slow" default="0">
         <decVal/>
@@ -463,6 +537,7 @@
         <label xml:lang="de">Lastregelung Param. langsam 'I'</label>
         <label xml:lang="fr">Régul. Paramètre 'I' lent</label>
         <label xml:lang="ca">Paràmetre I lent de la BEMF</label>
+        <label xml:lang="cs">BEMF Pomalu parametr 'I'</label>
     </variable>
     <variable CV="169" item="EMF Feedback Cutout Slow" default="0">
         <decVal/>
@@ -470,21 +545,25 @@
         <label xml:lang="de">Lastregelung Param. langsam 'D'</label>
         <label xml:lang="fr">Régul. Paramètre 'D' lent</label>
         <label xml:lang="ca">Paràmetre D lent de la BEMF</label>
+        <label xml:lang="cs">BEMF Pomalu parametr 'D'</label>
     </variable>
     <variable CV="170" item="PWM Start" default="200">
         <decVal/>
         <label>PWM-Start</label>
         <label xml:lang="de">PWM-Start</label>
         <label xml:lang="fr">Début MLI</label>
+        <label xml:lang="cs">PWM Start</label>
         <tooltip>Affects the behavior of the locomotive at starting</tooltip>
         <tooltip xml:lang="de">Beeinflusst das Anfahrverhalten der Lok.</tooltip>
         <tooltip xml:lang="fr">Affecte le comportement de la locomotive au démarrage.</tooltip>
+        <tooltip xml:lang="cs">Ovlivňuje chování lokomotivy při rozjezdu.</tooltip>
     </variable>
     <variable CV="171" item="EMF Maximum" default="143">
         <decVal/>
         <label>EMF-Maximum</label>
         <label xml:lang="de">EMK-Maximum</label>
         <label xml:lang="fr">Maximum FEM</label>
+        <label xml:lang="cs">EMF Maximum</label>
         <tooltip>&lt;html&gt;
                   Specifies the maximum control at the highest speed step.&lt;br&gt;
                   (based on the internal 4096 speed levels: CV value * 16)&lt;br&gt;
@@ -497,15 +576,21 @@
                   Spécifie la régulation maximum au plus grand cran de vitesse.&lt;br&gt;
                   (sur la base de 4096 niveaux de vitesse: Valeur CV * 16).&lt;br&gt;
                   &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;
+                  Určuje maximum regulace na nejvyšším rychostním stupni.&lt;br&gt;
+                  (na základě interních 4096 rychlostních stupňů: hodnota CV × 16).&lt;br&gt;
+                  &lt;/html&gt;</tooltip>
     </variable>
     <variable CV="172" item="PWM Offset" default="90">
         <decVal/>
         <label>PWM-Offset</label>
         <label xml:lang="de">PWM-Offset</label>
         <label xml:lang="fr">Offset MLI</label>
+        <label xml:lang="cs">PWM Ofset</label>
         <tooltip>Affects the transition between the two controllers.</tooltip>
         <tooltip xml:lang="de">Beeinflusst den Übergang zwischen den beiden Reglern.</tooltip>
         <tooltip xml:lang="fr">Affecte la transition entre les deux régulateurs.</tooltip>
+        <tooltip xml:lang="cs">Ovlivňuje přechod mezi dvěma regulacemi.</tooltip>
     </variable>
 
     <variable CV="173" mask="XXXXXXXV" item="Advanced Save Setting Option 1" default="1">
@@ -513,27 +598,32 @@
         <label>Storing Function States</label>
         <label xml:lang="de">Funktionszustände speichern</label>
         <label xml:lang="fr">Enregistrement état fonctions</label>
+        <label xml:lang="cs">Ukládat stavy funkcí</label>
     </variable>
     <variable CV="173" mask="XXXXXXVX" item="Advanced Save Setting Option 2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Storing Speed</label>
         <label xml:lang="de">Geschwindigkeit speichern</label>
         <label xml:lang="fr">Enregistrement vitesse</label>
+        <label xml:lang="cs">Ukládat rychlost</label>
     </variable>
     <variable CV="173" mask="XXXXXVXX" item="Advanced Save Setting Option 3" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Storing Start up with ABV</label>
         <label xml:lang="de">Mit ABV anfahren speichern</label>
         <label xml:lang="fr">Enregistrement démarrage avec ABV</label>
+        <label xml:lang="cs">Ukládat spuštění s křivkami</label>
         <tooltip>After a reset starting up with/without ABV</tooltip>
         <tooltip xml:lang="de">Nach Reset mit/ohne ABV anfahren</tooltip>
         <tooltip xml:lang="fr">Après Reset, démarrage avec ou sans ABV</tooltip>
+        <tooltip xml:lang="cs">Po resetu spuštění s/bez křivek</tooltip>
     </variable>
     <variable CV="174" mask="XXXXXXXV" item="Advanced Save Setting Option 4" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Storing Direction of Travel</label>
         <label xml:lang="de">Fahrtrichtung speichern</label>
         <label xml:lang="fr">Enregistrement sens de marche</label>
+        <label xml:lang="cs">Ukládat směr jízdy</label>
     </variable>
 
     <variable CV="176" item="Analog Vstart" default="100">
@@ -541,89 +631,108 @@
         <label>Vmin Analog DC</label>
         <label xml:lang="de">Vmin Analog DC</label>
         <label xml:lang="fr">V démarr. analogique DC</label>
+        <label xml:lang="cs">Rozjezdové napětí Analog DC</label>
         <tooltip>Must be smaller than CV 177</tooltip>
         <tooltip xml:lang="de">muss kleiner CV 177 sein</tooltip>
         <tooltip xml:lang="fr">doit être plus petit que CV 177</tooltip>
+        <tooltip xml:lang="cs">Musí být menší než CV 177</tooltip>
     </variable>
     <variable CV="177" item="Analog Vhigh" default="255">
         <decVal/>
         <label>Vmax Analog DC</label>
         <label xml:lang="de">Vmax Analog DC</label>
         <label xml:lang="fr">Vmax analogique DC</label>
+        <label xml:lang="cs">Maximální napětí Analog DC</label>
         <tooltip>Must be larger than CV 176</tooltip>
         <tooltip xml:lang="de">muss größer CV 176 sein</tooltip>
         <tooltip xml:lang="fr">doit être plus grand que CV 176</tooltip>
+        <tooltip xml:lang="cs">Musí být větší než CV 176</tooltip>
     </variable>
     <variable CV="178" item="Analog (AC) Vstart" default="100">
         <decVal/>
         <label>Vmin Analog AC</label>
         <label xml:lang="de">Vmin Analog AC</label>
         <label xml:lang="fr">V démarr. analogique AC</label>
+        <label xml:lang="cs">Rozjezdové napětí Analog AC</label>
         <tooltip>Must be smaller than CV 179</tooltip>
         <tooltip xml:lang="de">muss kleiner CV 179 sein</tooltip>
         <tooltip xml:lang="fr">doit être plus petit que CV 179</tooltip>
+        <tooltip xml:lang="cs">Musí být menší než CV 179</tooltip>
     </variable>
     <variable CV="179" item="Analog (AC) Vhigh" default="255">
         <decVal/>
         <label>Vmax Analog AC</label>
         <label xml:lang="de">Vmax Analog AC</label>
         <label xml:lang="fr">Vmax analogique AC</label>
+        <label xml:lang="cs">Maximální napětí Analog AC</label>
         <tooltip>Must be larger than CV 178</tooltip>
         <tooltip xml:lang="de">muss größer CV 178 sein</tooltip>
         <tooltip xml:lang="fr">doit être plus grand que CV 178</tooltip>
+        <tooltip xml:lang="cs">Musí být větší než CV 178</tooltip>
     </variable>
 
     <variable CV="17.1.261" item="Advanced Timer Option 1" default="1">
         <decVal/>
         <label>Timer 1</label>
+        <label xml:lang="cs">Časovač 1</label>
         <tooltip>By steps of 0.25 s</tooltip>
         <tooltip xml:lang="de">In Schritten von 0,25 s</tooltip>
         <tooltip xml:lang="fr">Par pas de 0,25 s</tooltip>
+        <tooltip xml:lang="cs">Po krocích 0,25 s</tooltip>
     </variable>
     <variable CV="17.1.262" item="Advanced Timer Option 2" default="1">
         <decVal/>
         <label>Timer 2</label>
+        <label xml:lang="cs">Časovač 2</label>
         <tooltip>By steps of 0.25 s</tooltip>
         <tooltip xml:lang="de">In Schritten von 0,25 s</tooltip>
         <tooltip xml:lang="fr">Par pas de 0,25 s</tooltip>
+        <tooltip xml:lang="cs">Po krocích 0,25 s</tooltip>
     </variable>
     <variable CV="17.1.263" item="Advanced Timer Option 3" default="1">
         <decVal/>
         <label>Timer 3</label>
+        <label xml:lang="cs">Časovač 3</label>
         <tooltip>By steps of 0.25 s</tooltip>
         <tooltip xml:lang="de">In Schritten von 0,25 s</tooltip>
         <tooltip xml:lang="fr">Par pas de 0,25 s</tooltip>
+        <tooltip xml:lang="cs">Po krocích 0,25 s</tooltip>
     </variable>
     <variable CV="17.1.264" item="Advanced Timer Option 4" default="1">
         <decVal/>
         <label>Timer 4</label>
+        <label xml:lang="cs">Časovač 3</label>
         <tooltip>By steps of 0.25 s</tooltip>
         <tooltip xml:lang="de">In Schritten von 0,25 s</tooltip>
         <tooltip xml:lang="fr">Par pas de 0,25 s</tooltip>
+        <tooltip xml:lang="cs">Po krocích 0,25 s</tooltip>
     </variable>
     <variable CV="17.1.271" item="Advanced Timer Option 5">
         <decVal/>
         <label>Random Clock     </label>
         <label xml:lang="de">Random Takt            </label>
         <label xml:lang="fr">Horloge Aléatoire  </label>
+        <label xml:lang="cs">Náhodné hodiny     </label>
     </variable>
     <variable CV="17.1.272" item="Advanced Timer Option 6">
         <decVal/>
         <label>Random Mean      </label>
         <label xml:lang="de">Random Mittelwert    </label>
         <label xml:lang="fr">Moyenne Aléatoire</label>
+        <label xml:lang="cs">Náhodný průměr     </label>
     </variable>
     <variable CV="17.1.273" item="Advanced Timer Option 7">
         <decVal/>
         <label>Random Deviation</label>
         <label xml:lang="de">Random Abweichung</label>
         <label xml:lang="fr">Écart Aléatoire      </label>
+        <label xml:lang="cs">Náhodná odchylka     </label>
     </variable>
 
     <variable CV="255.255.260" item="Manufacturer Maerklin" default="131">
         <decVal/>
         <label>Manufacturer</label>
-        <label xml:lang="cs">výrobce</label>
+        <label xml:lang="cs">Výrobce</label>
         <label xml:lang="it">Costruttore</label>
         <label xml:lang="fr">Fabricant</label>
         <label xml:lang="de">Hersteller</label>
@@ -635,53 +744,62 @@
         <label>Decoder Type Byte 1</label>
         <label xml:lang="fr">Type Décodeur Octet 1</label>
         <label xml:lang="de">Decoder-Typ Byte 1</label>
+        <label xml:lang="cs">Typ dekodéru Byte 1</label>
     </variable>
     <variable CV="255.255.262" item="Decoder Type Byte 2">
         <decVal/>
         <label>Decoder Type Byte 2</label>
         <label xml:lang="fr">Type Décodeur Octet 2</label>
         <label xml:lang="de">Decoder-Typ Byte 2</label>
+        <label xml:lang="cs">Typ dekodéru Byte 2</label>
     </variable>
     <variable CV="255.255.263" item="Decoder Type Byte 3">
         <decVal/>
         <label>Decoder Type Byte 3</label>
         <label xml:lang="fr">Type Décodeur Octet 3</label>
         <label xml:lang="de">Decoder-Typ Byte 3</label>
+        <label xml:lang="cs">Typ dekodéru Byte 3</label>
     </variable>
     <variable CV="255.255.264" item="Decoder Type Byte 4">
         <decVal/>
         <label>Decoder Type Byte 4</label>
         <label xml:lang="fr">Type Décodeur Octet 4</label>
         <label xml:lang="de">Decoder-Typ Byte 4</label>
+        <label xml:lang="cs">Typ dekodéru Byte 4</label>
     </variable>
     <variable CV="255.255.270" item="Firmware Type">
         <decVal/>
         <label>Firmware Type</label>
         <label xml:lang="fr">Type Firmware</label>
         <label xml:lang="de">Firmware-Typ</label>
+        <label xml:lang="cs">Typ firmware</label>
     </variable>
     <variable CV="255.255.271" item="Firmware Version Byte 1">
         <decVal/>
         <label>Firmware Version Byte 1</label>
         <label xml:lang="fr">Version Firmware Octet 1</label>
         <label xml:lang="de">Firmware-Version Byte 1</label>
+        <label xml:lang="cs">Verze firmware Byte 1</label>
     </variable>
     <variable CV="255.255.272" item="Firmware Version Byte 2">
         <decVal/>
         <label>Firmware Version Byte 2</label>
         <label xml:lang="fr">Version Firmware Octet 2</label>
         <label xml:lang="de">Firmware-Version Byte 2</label>
+        <label xml:lang="cs">Verze firmware Byte 2</label>
     </variable>
     <variable CV="255.255.273" item="Firmware Version Byte 3">
         <decVal/>
         <label>Firmware Version Byte 3</label>
         <label xml:lang="fr">Version Firmware Octet 3</label>
         <label xml:lang="de">Firmware-Version Byte 3</label>
+        <label xml:lang="cs">Verze firmware Byte 3</label>
     </variable>
     <variable CV="255.255.274" item="Firmware Version Byte 4">
         <decVal/>
         <label>Firmware Version Byte 4</label>
         <label xml:lang="fr">Version Firmware Octet 4</label>
         <label xml:lang="de">Firmware-Version Byte 4</label>
+        <label xml:lang="cs">Verze firmware Byte 4</label>
     </variable>
 </variables>

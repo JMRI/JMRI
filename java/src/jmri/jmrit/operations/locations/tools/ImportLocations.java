@@ -1,22 +1,20 @@
 package jmri.jmrit.operations.locations.tools;
 
+import java.io.*;
+import java.text.MessageFormat;
+import java.util.Locale;
+
+import javax.swing.JOptionPane;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.ImportRollingStock;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.Locale;
 
 
 /**
@@ -195,9 +193,9 @@ public class ImportLocations extends ImportRollingStock {
                 // process rolling stock accepted
                 if (inputLine[FIELD_ROLLING_STOCK].length() > 0) {
                     log.debug("Will be setting this location to accepting the following rolling stock: {}", inputLine[FIELD_ROLLING_STOCK]);
-                    // first we need to remove all rolling stock, then add specific cars back
-                    for (String car : thisTrack.getTypeNames()) {
-                        thisTrack.deleteTypeName(car);
+                    // first we need to remove all rolling stock types
+                    for (String typeName : thisTrack.getTypeNames()) {
+                        thisTrack.deleteTypeName(typeName);
                     }
                     String[] rollingStock = inputLine[FIELD_ROLLING_STOCK].split("; ");
                     for (String typeName : rollingStock) {

@@ -60,6 +60,10 @@
 
               <xs:element name="namedBeanType" type="LogixNG_NamedBeanType" minOccurs="1" maxOccurs="1"/>
 
+              <xs:element name="localVariableNamedBean" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="localVariableEvent" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="localVariableNewValue" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>

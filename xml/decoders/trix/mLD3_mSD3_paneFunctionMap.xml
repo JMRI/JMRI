@@ -43,6 +43,11 @@
               avoir utilisé cet onglet.&lt;br&gt;
               Il n'y aura pas d'actualisation automatique,&lt;br&gt;
               après l'écriture de nouvelles valeurs.&lt;/html&gt;</text>
+				<text xml:lang="cs">&lt;html&gt;&lt;i&gt;Důležité:&lt;/i&gt;&lt;br&gt;
+              Načtěte znovu celý tento panel &lt;i&gt;před A po&lt;/i&gt; &lt;br&gt;
+              použití tohoto panelu.&lt;br&gt;
+              Nedochází k automatické obnově tohoto panelu&lt;br&gt;
+              poté, co zapíšete novou hodnotu.&lt;/html&gt;</text>
 			</label>
 			<label><text>  </text></label>
 			<display item="Read First Line"/>
@@ -55,6 +60,7 @@
 				<text>&lt;html&gt;&lt;i&gt;Note: Please read the manual before using this pane.&lt;/i&gt;&lt;/html&gt;</text>
 				<text xml:lang="de">&lt;html&gt;&lt;i&gt;Hinweis: Bitte lesen Sie das Handbuch vor der Verwendung diese Seite.&lt;/i&gt;&lt;/html&gt;</text>
 				<text xml:lang="fr">&lt;html&gt;&lt;i&gt;Conseil: Merci de lire le manuel avant d'utiliser cet onglet.&lt;/i&gt;&lt;/html&gt;</text>
+				<text xml:lang="cs">&lt;html&gt;&lt;i&gt;Poznámka: Prosím přečtěte si návod před použitím tohoto panelu.&lt;/i&gt;&lt;/html&gt;</text>
 			</label>
 			<label><text>  </text></label>
 			<label>
@@ -83,6 +89,14 @@
               Après avoir été saisies, ces informations sont enregistrées ensemble dans une «ligne».&lt;br&gt;
               Au total 80 lignes (0-79) peuvent être stockées.
         &lt;/html&gt;</text>
+				<text xml:lang="cs">&lt;html&gt;Mapování funkcí je velmi rozsáhlé a složité.&lt;br&gt;
+                Každé jednotlivé nastavení se provádí pomocí tří nastavení. To je dáno:&lt;br&gt;
+               - Jak se funkce spouští.&lt;br&gt;
+               - Možné podmínky týkající se této funkce.&lt;br&gt;
+               - Která funkce se spustí.&lt;br&gt;
+               Tato informace, jakmile je nastavena, je uložena společně v jednom "řádku".&lt;br&gt;
+               Celkem může být uloženo 80 řádků (0–79).
+        &lt;/html&gt;</text>
 			</label>
 			<label><text> </text></label>
 		</column>
@@ -96,6 +110,7 @@
 						<text>      Line</text>
 						<text xml:lang="de">            Zeile</text>
 						<text xml:lang="fr">        Ligne</text>
+                                                <text xml:lang="cs">      Řádek</text>
 					</label>
 					<label><text>    </text></label>
 				</column>
@@ -106,6 +121,7 @@
 						<text>Write </text>
 						<text xml:lang="de">Schreiben </text>
 						<text xml:lang="fr">Ecrire </text>
+						<text xml:lang="cs">Zapsat </text>
 					</label>
 					<display item="Write Line" label=""/>
         </row>
@@ -363,6 +379,7 @@
             <text>Trigger</text>
             <text xml:lang="de">Auslöser</text>
             <text xml:lang="fr">Déclencheur</text>
+            <text xml:lang="cs">Spouštěč</text>
 					</label>
 					<label><text>    </text></label>
 				</column>
@@ -628,6 +645,7 @@
             <text>Condition</text>
             <text xml:lang="de">Bedingung</text>
             <text xml:lang="fr">Condition</text>
+            <text xml:lang="cs">Podmínka</text>
 					</label>
 					<label><text>    </text></label>
 				</column>
@@ -888,6 +906,7 @@
             <text>Direction</text>
             <text xml:lang="de">Richtung</text>
             <text xml:lang="fr">Direction</text>
+            <text xml:lang="cs">Směr</text>
 					</label>
 					<label><text>    </text></label>
 				</column>
@@ -1153,6 +1172,7 @@
             <text>Movement</text>
             <text xml:lang="de">Bewegung</text>
             <text xml:lang="fr">Mouvement</text>
+            <text xml:lang="cs">Pohyb</text>
 					</label>
 					<label><text>    </text></label>
 				</column>
@@ -1418,6 +1438,7 @@
             <text>Function</text>
             <text xml:lang="de">Funktion</text>
             <text xml:lang="fr">Fonction</text>
+            <text xml:lang="cs">Funkce</text>
 					</label>
 					<label><text>    </text></label>
 				</column>

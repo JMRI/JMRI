@@ -45,6 +45,7 @@ public class DebugMenu extends JMenu {
         add(new jmri.jmrit.XmlFileValidateAction(Bundle.getMessage("MenuItemValidateXMLFile"), panel));
         add(new jmri.jmrit.decoderdefn.NameCheckAction(Bundle.getMessage("MenuItemCheckDecoderNames"), panel));
         add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction(Bundle.getMessage("MenuItemCheckProgrammerNames"), panel));
+        add(new jmri.configurexml.StoreAndCompare(Bundle.getMessage("MenuTestStoreCompare")));  // NOI18N
 
         add(new JSeparator());
         add(new apps.jmrit.log.LogAction(Bundle.getMessage("MenuItemLogAction")));

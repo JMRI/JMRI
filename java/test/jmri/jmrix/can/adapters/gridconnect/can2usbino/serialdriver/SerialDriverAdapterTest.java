@@ -10,11 +10,10 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class SerialDriverAdapterTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testCtor(){
       Assert.assertNotNull("SerialDriverAdapter constructor",new SerialDriverAdapter());
    }
 

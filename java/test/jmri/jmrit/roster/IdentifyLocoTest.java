@@ -17,7 +17,7 @@ import org.junit.jupiter.api.*;
  */
 public class IdentifyLocoTest {
 
-    static int cvRead = -1;
+    private int cvRead = -1;
     private ProgDebugger p;
 
     @Test
@@ -111,6 +111,7 @@ public class IdentifyLocoTest {
     public void setUp() {
         JUnitUtil.setUp();
         // initialize the system
+        cvRead = -1;
         p = new ProgDebugger() {
             @Override
             public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {

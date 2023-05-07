@@ -391,7 +391,7 @@ public class RecursiveDescentParserTest {
     }
 
 
-    // Rule2 is ternary. <rule3> | <rule3> ? <rule2> : <rule2>
+    // Rule2 is ternary. <rule3a> | <rule3a> ? <rule2> : <rule2>
     @Test
     public void testRule2() throws JmriException {
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
@@ -427,9 +427,9 @@ public class RecursiveDescentParserTest {
 
 
     // Logical OR
-    // <rule3> ::= <rule4> | <rule4> || <rule4>
+    // <rule3a> ::= <rule3b> | <rule3b> || <rule3b>
     @Test
-    public void testRule3() throws JmriException {
+    public void testRule3a() throws JmriException {
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
         Map<String, Variable> variables = new HashMap<>();
         RecursiveDescentParser t = new RecursiveDescentParser(variables);
@@ -444,6 +444,29 @@ public class RecursiveDescentParserTest {
 
         exprNode = t.parseExpression("(2 < 2) || (1 > 2)");
         Assert.assertEquals("expression matches", "((IntNumber:2)<(IntNumber:2))||((IntNumber:1)>(IntNumber:2))", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+
+    }
+
+
+    // Logical XOR
+    // <rule3b> ::= <rule4> | <rule4> || <rule4>
+    @Test
+    public void testRule3b() throws JmriException {
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
+
+        ExpressionNode exprNode = t.parseExpression("(1 < 2) ^^ (5 > 2)");
+        Assert.assertEquals("expression matches", "((IntNumber:1)<(IntNumber:2))^^((IntNumber:5)>(IntNumber:2))", exprNode.getDefinitionString());
+        Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+
+        exprNode = t.parseExpression("(1 < 2) ^^ (1 > 2)");
+        Assert.assertEquals("expression matches", "((IntNumber:1)<(IntNumber:2))^^((IntNumber:1)>(IntNumber:2))", exprNode.getDefinitionString());
+        Assert.assertTrue("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
+
+        exprNode = t.parseExpression("(2 < 2) ^^ (1 > 2)");
+        Assert.assertEquals("expression matches", "((IntNumber:2)<(IntNumber:2))^^((IntNumber:1)>(IntNumber:2))", exprNode.getDefinitionString());
         Assert.assertFalse("calculate is correct", (Boolean)exprNode.calculate(symbolTable));
 
     }
@@ -1164,6 +1187,7 @@ public class RecursiveDescentParserTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }

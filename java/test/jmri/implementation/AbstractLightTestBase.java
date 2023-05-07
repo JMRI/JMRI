@@ -29,7 +29,7 @@ public abstract class AbstractLightTestBase {
 
     protected Light t = null; // holds objects under test
 
-    static protected boolean listenerResult = false;
+    private boolean listenerResult = false;
 
     protected class Listen implements PropertyChangeListener {
 

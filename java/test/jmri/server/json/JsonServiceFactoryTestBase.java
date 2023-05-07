@@ -36,7 +36,6 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
     protected ObjectMapper mapper = null;
     protected Locale locale = Locale.ENGLISH;
     protected JsonServiceFactory<H, I> factory;
-    protected String[] duplicates;
 
     /**
      * @throws Exception to allow overriding methods to throw any exception

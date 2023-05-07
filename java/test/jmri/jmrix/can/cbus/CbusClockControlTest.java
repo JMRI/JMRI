@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+
 import jmri.ClockControl;
 import jmri.InstanceManager;
 import jmri.jmrix.can.CanMessage;
@@ -13,9 +14,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.Timebase;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * @since 4.19.6
@@ -25,13 +25,6 @@ public class CbusClockControlTest {
 
     @Test
     public void testCTor() {
-        t = new CbusClockControl(null);
-        assertThat(t).isNotNull();
-        t.dispose();
-    }
-    
-    @Test
-    public void testCTorMemo() {
         t = new CbusClockControl(memo);
         assertThat(t).isNotNull();
         t.dispose();
@@ -76,7 +69,7 @@ public class CbusClockControlTest {
         
         tb.setInternalMaster(true, false);
         tb.setSynchronize(true, true);
-        
+        Assertions.assertNotNull(tcis);
         assertThat(tcis.outbound.size()).isEqualTo(1);
         assertThat(tcis.outbound.get(0).toString()).isEqualTo("[5f8] CF 39 11 46 00 18 00");
 
@@ -137,22 +130,25 @@ public class CbusClockControlTest {
     
     @Test
     public void testIncomingDoesNotSetDate() {
-        
+
         tb = jmri.InstanceManager.getDefault(Timebase.class);
         tb.setRun(false);
-        
+
         LocalDateTime specificDate = LocalDateTime.of(2020, 04, 24, 17, 57, 0);
         tb.setTime(Date.from( specificDate.atZone( ZoneId.systemDefault()).toInstant())); // a Friday
-        
+
         t = new CbusClockControl(memo);
+        Assertions.assertNotNull(t);
         InstanceManager.setDefault(ClockControl.class, t);
-        
+
         tb.setInternalMaster(false, false);
         tb.setSynchronize(true, true);
-        tb.setMasterName(t.getHardwareClockName());     
-        
+        String clockName = t.getHardwareClockName();
+        Assertions.assertNotNull(clockName);
+        tb.setMasterName(clockName);
+
         assertThat(tb.getTime().toString()).contains("Apr 24 17:57");
-        
+
         // base message
         CanReply send = new CanReply(memo.getTrafficController().getCanid());
         send.setNumDataElements(7);
@@ -194,22 +190,25 @@ public class CbusClockControlTest {
     
     @Test
     public void testIncomingSetDate() {
-        
+
         tb = jmri.InstanceManager.getDefault(Timebase.class);
         tb.setRun(false);
-        
+
         LocalDateTime specificDate = LocalDateTime.of(2020, 04, 24, 17, 57, 0);
         tb.setTime(Date.from( specificDate.atZone( ZoneId.systemDefault()).toInstant())); // a Friday
-        
+
         t = new CbusClockControl(memo);
+        Assertions.assertNotNull(t);
         InstanceManager.setDefault(ClockControl.class, t);
-        
+
         tb.setInternalMaster(false, false);
         tb.setSynchronize(true, true);
-        tb.setMasterName(t.getHardwareClockName());     
-        
+        String clockName = t.getHardwareClockName();
+        Assertions.assertNotNull(clockName);
+        tb.setMasterName(clockName);
+
         assertThat(tb.getTime().toString()).contains("Apr 24 17:57");
-        
+
         // base message
         CanReply send = new CanReply(memo.getTrafficController().getCanid());
         send.setNumDataElements(7);
@@ -258,14 +257,17 @@ public class CbusClockControlTest {
         tb.setTime(Date.from( specificDate.atZone( ZoneId.systemDefault()).toInstant())); // a Friday
         
         t = new CbusClockControl(memo);
+        Assertions.assertNotNull(t);
         InstanceManager.setDefault(ClockControl.class, t);
-        
+
         tb.setInternalMaster(false, false);
         tb.setSynchronize(true, true);
-        tb.setMasterName(t.getHardwareClockName());     
-        
+        String clockName = t.getHardwareClockName();
+        Assertions.assertNotNull(clockName);
+        tb.setMasterName(clockName);     
+
         assertThat(tb.getTime().toString()).contains("Apr 24 17:57");
-        
+
         // base message
         CanReply send = new CanReply(memo.getTrafficController().getCanid());
         send.setNumDataElements(7);
@@ -366,17 +368,16 @@ public class CbusClockControlTest {
             isEqualTo("Speed: x10 02:44 Saturday 10 July Temp: 35");
         
     }
-    
-    private CbusClockControl t;
+
+    private CbusClockControl t = null;
     private Timebase tb;
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold tcis;
-    
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold tcis = null;
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
-        
+
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
@@ -390,9 +391,11 @@ public class CbusClockControlTest {
             tb.dispose();
         }
         t = null;
+        Assertions.assertNotNull(memo);
         memo.dispose();
-        tcis.terminateThreads();
         memo = null;
+        Assertions.assertNotNull(tcis);
+        tcis.terminateThreads();
         tcis = null;
         JUnitUtil.tearDown();
     }

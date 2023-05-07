@@ -370,6 +370,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
 
     SignalGroup curSignalGroup = null;
     boolean signalGroupDirty = false;  // true to fire reminder to save work
+    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
     boolean inEditMode = false; // to warn and prevent opening more than 1 editing session
 
     /**
@@ -684,7 +685,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 // remind to save, if Signal Group was created or edited
-                if (signalGroupDirty) {
+                if (signalGroupDirty && !checkEnabled) {
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                             showInfoMessage(Bundle.getMessage("ReminderTitle"),
                                     Bundle.getMessage("ReminderSaveString", Bundle.getMessage("SignalGroup")),

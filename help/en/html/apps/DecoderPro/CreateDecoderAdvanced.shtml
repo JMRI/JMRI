@@ -27,19 +27,19 @@
       tags.</p>
 
       <p>This is made a bit tricky because of overlap between "tags as part of XML structure of
-      decoder file" and "HTML tags included in the decoder file". All of the HTML tags need to be
+      decoder file" and "HTML tags included in the decoder file". All HTML tags need to be
       quoted, with their &lt; and &gt; characters replaced by the &amp;lt; and &amp;gt; strings and
       any embedded double quotes being replaced by &amp;quot;.</p>
 
       <p>For example:</p>
 
       <pre style="font-family: monospace;">
-   &lt;label label="&amp;lt;html&amp;gt;&amp;lt;strong&amp;gt;JMRI 3.7.2 or later is required to use this definition.&amp;lt;/strong&amp;gt;&amp;lt;/html&amp;gt;"/&gt;
+  &lt;label label="&amp;lt;html&amp;gt;&amp;lt;strong&amp;gt;JMRI 3.7.2 or later is required to use this definition.&amp;lt;/strong&amp;gt;&amp;lt;/html&amp;gt;"/&gt;
 </pre>After the XML is read, the contents of that label will be displayed from the text in the
 "label" attribute, which is:
 
       <pre style="font-family: monospace;">
-   &lt;html&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;
+  &lt;html&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;
 </pre>and will appear on the screen as
       <p><strong>JMRI 3.7.2 or later is required to use this definition.</strong>
       </p>
@@ -202,8 +202,7 @@
       <p>The name of the xml file with the definition of the decoder should have the following
       structure:</p>
 
-      <pre style=
-      "font-family: monospace;"><strong>Public_Domain</strong>_<strong>family-name</strong>_<strong>model-model</strong>.xml</pre>
+<pre style="font-family: monospace;"><strong>Public_Domain</strong>_<strong>family-name</strong>_<strong>model-model</strong>.xml</pre>
       <p>Where each part of a file name has the following meaning:</p>
 
       <ul>
@@ -268,7 +267,9 @@
 
       <h4>Empty Panes</h4>
       Empty panes are defined as those with no active variable elements to display for the selected
-      decoder. They may still contain text content. <a id="pane_visibility"></a>
+      decoder. They may still contain text content.
+
+      <a id="pane_visibility"></a>
       <h4 id="visibility">Pane Visibility</h4>
       Pane visibility is governed by a complex set of rules:
       <ul>
@@ -286,6 +287,10 @@
             file.</li>
           </ul>
         </li>
+
+        As a special case, the suppressFunctionLabels and suppressRosterMedia
+        attributes on the decoder-config element can be used to suppress the
+        Function Labels and Roster Media panes respectively whether or not they are empty.
 
         <li>Whether a specific empty pane (as defined in Empty Panes above) shows also depends on
         the pane type:
@@ -310,7 +315,7 @@
         </li>
       </ul>
 
-      <h4 id="pane_best_practice">Best Pactice</h4>
+      <h4 id="pane_best_practice">Best Practice</h4>
       Advanced users may choose to hide empty panes, but Show Empty Tabs is enabled by default so
       beginner users need to see why panes are empty or where to find items not on the expected
       panes.
@@ -382,7 +387,7 @@
       The format for an include is:
 
       <pre style="font-family: monospace;">
-     &lt;xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/&gt;
+  &lt;xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/&gt;
 </pre>The program searches for those fragment files first in the preferences directory, then in the
 program directory. The full path must be present, e.g. you need an xml directory that contains a
 decoders directory in your preferences directory for the fragment file to be found.
@@ -394,8 +399,9 @@ decoders directory in your preferences directory for the fragment file to be fou
       be added to the old (not the new) definition to facilitate that:
 
       <pre style="font-family: monospace;">
-    &lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
-      </pre>When the user selects "Update Decoder Definitions" from the Debug menu on PanelPro
+  &lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
+      </pre>
+      When the user selects "Update Decoder Definitions" from the Debug menu on PanelPro
 window or the Action menu in DecoderPro, all their existing roster entries that use a decoder
 definition with replacementModel and/or replacementFamily defined will be updated to the specified
 replacement decoder definition instead. This lets people keep using their old, comfortable decoder
@@ -408,7 +414,7 @@ definition (the old file remains in JMRI) until they decide to move forward to a
       "/releasenotes/jmri4.9.5.shtml" target="_blank">JMRI 4.9.5</a></span></p>
 
       <pre style="font-family: monospace;">
-    &lt;model show="no" model="DP2X" numOuts="2" numFns="2" replacementFamily="query:Jan 2000|June 2007|Jan 2012"&gt;
+  &lt;model show="no" model="DP2X" numOuts="2" numFns="2" replacementFamily="query:Jan 2000|June 2007|Jan 2012"&gt;
       </pre>
       <p>A replacement field begining with the string "query:", optionally (preferably) followed by
       a vertical bar "|" separated list of possible replacements, triggers interactive user
@@ -459,14 +465,14 @@ definition (the old file remains in JMRI) until they decide to move forward to a
       element like:
 
       <pre style="font-family: monospace;">
-    &lt;capability&gt;
-        &lt;name&gt;High Access via Double Index&lt;/name&gt;
-        &lt;parameter name="Max Regular CV address"&gt;256&lt;/parameter&gt;
-        &lt;parameter name="High Address CV"&gt;96&lt;/parameter&gt;
-        &lt;parameter name="Low Address CV"&gt;97&lt;/parameter&gt;
-        &lt;parameter name="Access Register CV"&gt;99&lt;/parameter&gt;
-        &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
-    &lt;/capability&gt;
+  &lt;capability&gt;
+      &lt;name&gt;High Access via Double Index&lt;/name&gt;
+      &lt;parameter name="Max Regular CV address"&gt;256&lt;/parameter&gt;
+      &lt;parameter name="High Address CV"&gt;96&lt;/parameter&gt;
+      &lt;parameter name="Low Address CV"&gt;97&lt;/parameter&gt;
+      &lt;parameter name="Access Register CV"&gt;99&lt;/parameter&gt;
+      &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
+  &lt;/capability&gt;
 </pre>
       <p>The parameters must appear in the order shown. They mean:</p>
 
@@ -513,13 +519,13 @@ definition (the old file remains in JMRI) until they decide to move forward to a
       This capability element will do that:
 
       <pre style="font-family: monospace;">
-        &lt;capability&gt;
-            &lt;name&gt;High Access via Partial Index&lt;/name&gt;
-            &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
-            &lt;parameter name="High Address CV"&gt;7&lt;/parameter&gt;
-            &lt;parameter name="High Address Multiplier"&gt;10&lt;/parameter&gt;
-            &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
-        &lt;/capability&gt;
+  &lt;capability&gt;
+      &lt;name&gt;High Access via Partial Index&lt;/name&gt;
+      &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
+      &lt;parameter name="High Address CV"&gt;7&lt;/parameter&gt;
+      &lt;parameter name="High Address Multiplier"&gt;10&lt;/parameter&gt;
+      &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
+  &lt;/capability&gt;
 </pre>Note that it has a different "name" value. That's what selects the different algorithm needed
 here.
       <p>The parameters must appear in the order shown. They mean:</p>
@@ -554,14 +560,14 @@ here.
       This capability element will do that:
 
       <pre style="font-family: monospace;">
-        &lt;capability&gt;
-            &lt;name&gt;High Access via Partial Index with Reset&lt;/name&gt;
-            &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
-            &lt;parameter name="High Address CV"&gt;7&lt;/parameter&gt;
-            &lt;parameter name="High Address Multiplier"&gt;10&lt;/parameter&gt;
-            &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
-            &lt;parameter name="Indicator"&gt;200&lt;/parameter&gt;
-        &lt;/capability&gt;
+  &lt;capability&gt;
+      &lt;name&gt;High Access via Partial Index with Reset&lt;/name&gt;
+      &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
+      &lt;parameter name="High Address CV"&gt;7&lt;/parameter&gt;
+      &lt;parameter name="High Address Multiplier"&gt;10&lt;/parameter&gt;
+      &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
+      &lt;parameter name="Indicator"&gt;200&lt;/parameter&gt;
+  &lt;/capability&gt;
 </pre>
       <p>The parameters must appear in the order shown. They mean:</p>
 
@@ -589,11 +595,11 @@ here.
       the DCC track signal. The capability to do that is written:
 
       <pre style="font-family: monospace;">
-        &lt;capability&gt;
-            &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
-            &lt;parameter name="Address Type"&gt;decoder&lt;/parameter&gt;
-            &lt;parameter name="Delay"&gt;200&lt;/parameter&gt;
-        &lt;/capability&gt;
+  &lt;capability&gt;
+      &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
+      &lt;parameter name="Address Type"&gt;decoder&lt;/parameter&gt;
+      &lt;parameter name="Delay"&gt;200&lt;/parameter&gt;
+  &lt;/capability&gt;
 </pre>The "Address Type" parameter is optional:
       <ul>
         <li>If it is "decoder" or omitted, the current address is interpreted as a 9-bit accessory
@@ -625,21 +631,21 @@ here.
       Note an element:
 
       <pre style="font-family: monospace;">
-        &lt;variable &hellip; item="Short Address" &hellip;&gt;
-            &hellip;
-        &lt;/variable&gt;</pre>or:
-
-      <pre style="font-family: monospace;">
-        &lt;variable &hellip; item="Long Address" &hellip;&gt;
-            &hellip;
-        &lt;/variable&gt;</pre>is required so the Ops Mode programmer has an address to use. Either
-form functions identically. The "Address Type" parameter is the only way to specify whether the
-address is 9-bit or 11-bit.
+  &lt;variable &hellip; item="Short Address" &hellip;&gt;
+      &hellip;
+  &lt;/variable&gt;</pre>
+      or:
+  <pre style="font-family: monospace;">
+  &lt;variable &hellip; item="Long Address" &hellip;&gt;
+      &hellip;
+  &lt;/variable&gt;</pre>
+      is required so the Ops Mode programmer has an address to use. Either form functions identically.
+      The "Address Type" parameter is the only way to specify whether the address is 9-bit or 11-bit.
       <p>For a working example, see the <a href=
       "https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_SwitchPilot.xml" target=
       "_blank">xml/decoders/ESU_SwitchPilot.xml</a> file. In the case of this example decoder, the
       address is stored in CVs 1 and 9 as per <a href=
-      "http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf"
+      "https://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf"
       target="_blank">NMRA standard 9.2.2</a>.</p>
 
       <h4 id="opsdelayed">Ops Mode Delayed Programming</h4>
@@ -649,11 +655,11 @@ address is 9-bit or 11-bit.
       However these packets take time to process and if subsequent packets are sent too soon they
       can be missed. The capability to do add a delay after programming each CV is written:
 
-      <pre style="font-family: monospace;">
-        &lt;capability&gt;
-            &lt;name&gt;Ops Mode Delayed Programming&lt;/name&gt;
-            &lt;parameter name="Delay"&gt;500&lt;/parameter&gt;
-        &lt;/capability&gt;
+<pre style="font-family: monospace;">
+  &lt;capability&gt;
+      &lt;name&gt;Ops Mode Delayed Programming&lt;/name&gt;
+      &lt;parameter name="Delay"&gt;500&lt;/parameter&gt;
+  &lt;/capability&gt;
 </pre>The "Delay" parameter specifies a minimum delay (in milliseconds) between successive writes.
 Some decoders miss commands if the delay is too short. If this is parameter is omitted, the default
 delay is 500 milliseconds.
@@ -667,14 +673,14 @@ delay is 500 milliseconds.
       <h4 id="indexedcap">Indexed CV Access</h4>
       To access indexed CVs, include this capability element:
 
-      <pre style="font-family: monospace;">
-        &lt;capability&gt;
-            &lt;name&gt;Indexed CV access&lt;/name&gt;
-            &lt;parameter name="PI"&gt;31&lt;/parameter&gt;
-            &lt;parameter name="SI"&gt;32&lt;/parameter&gt;
-            &lt;parameter name="cvFirst"&gt;false&lt;/parameter&gt;
-            &lt;parameter name="skipDupIndexWrite"&gt;true&lt;/parameter&gt;
-        &lt;/capability&gt;
+<pre style="font-family: monospace;">
+  &lt;capability&gt;
+      &lt;name&gt;Indexed CV access&lt;/name&gt;
+      &lt;parameter name="PI"&gt;31&lt;/parameter&gt;
+      &lt;parameter name="SI"&gt;32&lt;/parameter&gt;
+      &lt;parameter name="cvFirst"&gt;false&lt;/parameter&gt;
+      &lt;parameter name="skipDupIndexWrite"&gt;true&lt;/parameter&gt;
+  &lt;/capability&gt;
 </pre>
       <p>If cvFirst is true, the format is CV.PI or CV.PI.SI as used by QSI. If it's false, the
       format is PI.CV or PI.SI.CV as used by ESU.</p>
@@ -700,18 +706,56 @@ delay is 500 milliseconds.
       accommodates them via a special capability element:
 
       <pre style="font-family: monospace;">
-        &lt;capability&gt;
-            &lt;name&gt;TCS 4 CV access&lt;/name&gt;
-        &lt;/capability&gt;
+  &lt;capability&gt;
+      &lt;name&gt;TCS 4 CV access&lt;/name&gt;
+  &lt;/capability&gt;
 </pre>This provides two custom CV formats:
-      <ul>
-        <li>T2CV.11.12 Writes 11 to the first index CV (201), 12 to the 2nd index CV (202), then
-        does write/read/confirm operations on CV 203 and 204</li>
+      <dl>
+        <dt>T2CV.11.12</dt>
+        <dd>Writes 11 to the first index CV (201), 12 to the 2nd index CV (202), then
+        does write/read/confirm operations on CV 203 and 204</dd>
 
-        <li>T3CV.11.12.13 Writes 11 to the first index CV (201), the data to the 2nd index CV
-        (202), then writes 12 to CV203 and 13 to CV204.</li>
-      </ul>
+        <dt>T3CV.11.12.13</dt>
+        <dd>Writes 11 to the first index CV (201), the data to the 2nd index CV
+        (202), then writes 12 to CV203 and 13 to CV204.</dd>
+      </dl>
       For examples of how to use these, see the TCS WOW decoder definition.
+
+      <h3 id="masks">Masks - inserting variables into part of a CV</h3>
+      A mask attribute declared in a variable definition is a pattern to control which part in a CV
+      contains our variable. Masks can be applied to a single CV, i.e. a decVal or enumVal type, or to
+      multiple CV's like <a href="#splitval">splitVal</a>.<br>
+      JMRI supports 2 mask types:
+
+      <p>A string like <code>XXXVVVXX</code> where each "V" is a bit that's included, and "X"
+      is a bit that's not to be included. It's best to have eight characters, as that makes it clearer
+      what's going on. If the variable is a full byte, this attribute can be omitted.<br>
+      Generally, the V characters should be a contiguous block of bits as specified in
+      the manufacturer's documentation for the decoder.<br>
+      In certain rare cases, the layout of the decoder might require a different pattern like
+      <code>XXVVXXVV</code>, but in those cases please check the operation of the resulting decoder
+      definition carefully to make sure it does what you want.</p>
+
+      <span class="since">Since <a href="/releasenotes/jmri4.15.2.shtml">JMRI 4.15.2</a></span><p>A second mask
+      pattern, Radix, is useful in cases where instead of bits, digits, triplets or some other unit
+      make up a pattern such as 1234C where "1234" is a turnout address and "C" is some other variable.
+      To define the address part, you would use:<br>
+      <code>mask="10"</code> as an attribute in the variable element (that is the base where our part starts, at
+      the 'tens') and<br>
+      <code>max="10000"</code> in the value element (to reserve 10^4 values for 4 digits).<br>
+      For example:
+      <pre>
+  &lt;variable CV="11" item="Address" mask="10">
+    &lt;decVal min="0" max="10000"/>
+    &lt;label>Address:&lt;/label>
+  &lt;/variable&gt;</pre>
+      A Radix mask can handle CVs that are coded in bases other than binary: Ones that store their parts
+      as decimal digits (as our example), or even base 3 or 5. That's a bit more technical, it's rarely
+      needed, but if you do need it, refer to the <a
+      href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc</a> for
+      more details. The <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/Uhlenbrock_63410.xml">Uhlenbrock_63410</a> definition
+      provides an example on CV1. The decoder definition using a Radix mask should point to /schema/decoder-4-15-2.xsd.
+
       <h3 id="splitval">Split Variables - spread over multiple CVs</h3>
       <span class="since">Since <a href="/releasenotes/jmri4.15.5.shtml">JMRI 4.15.5</a></span>
       <p>Some decoders use variables that are spread over multiple CVs, contiguous or not.</p>
@@ -788,16 +832,41 @@ delay is 500 milliseconds.
             </li>
           </ul>
         </li>
-      </ul>
-      The CVs to be used are specified in the CV attribute and masks (if required) in the mask
-      attribute. For example:
 
-      <pre style="font-family: monospace;">
-    &lt;variable CV="1,27,13" mask="XXVVVVVV XXXXXVVV XXXXXVVV" item="Sample Item"&gt;
-        &lt;splitVal/&gt;
-    &lt;/variable&gt;
-      </pre>in cases where a number of complex or contiguous CVs are used, there are a number of
-alternative more concise methods of specifying in the "CV" variable parameter:
+
+        <li>A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitEnumVariableValue.html" target=
+        "_blank">splitEnumVal</a> type. This is like <a href=
+        "/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+        but uses the selection of one object from a specified list.
+          <ul>
+            <li>For examples, see this <a href=
+            "https://github.com/JMRI/JMRI/blob/master/xml/decoders/TCS_BachmannFT.xml"
+              target="_blank">decoder file</a>.
+            </li>
+            <li>For details of required/optional attributes and advanced features, see this
+              <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitEnumVariableValue.html" target=
+              "_blank">JavaDoc page</a>.
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+      <p>The CVs to be used are specified in the <code>CV</code> attribute and masks (if required)
+        in the <code>mask</code> attribute.
+        Both CVs and masks are specified lowest-value first order:
+        The least
+        significant bit of the value will be in the first CV and mask specified, and the most
+        significant bit of the value will be in the last CV and mask specified.
+        For example:</p>
+<pre style="font-family: monospace;">
+  &lt;variable CV="1,27,13" mask="XXVVVVVV XXXXXVVV XXXXXVVV" item="Sample Item"&gt;
+      &lt;splitVal/&gt;
+  &lt;/variable&gt;
+</pre>
+      puts the least significant 6 bits of the value in CV1, and the most significant
+      three bits in CV 13.
+      <p>In cases where a number of complex or contiguous CVs are used, there are a number of
+      alternative more concise methods of specifying in the <code>CV</code> variable parameter:</p>
       <ul>
         <li>The available methods (with example strings) are detailed under <a href=
         "https://www.jmri.org/JavaDoc/doc/jmri/util/CvUtil.html#expandCvList(java.lang.String)"
@@ -819,34 +888,34 @@ alternative more concise methods of specifying in the "CV" variable parameter:
         </li>
 
         <li>The following example reads the RailCom&reg; Production Date as per <a href=
-        "http://www.nmra.org/sites/default/files/s-9.3.2_2012_12_10.pdf">NMRA standard 9.3.2</a>
+        "https://www.nmra.org/sites/default/files/s-9.3.2_2012_12_10.pdf">NMRA standard 9.3.2</a>
         from 4 contiguous indexed CVs.
         </li>
       </ul>
 
       <pre style="font-family: monospace;">
-    &lt;variable CV="0.255.269:4" readOnly="yes" item="PDate"&gt;
-        &lt;splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/&gt;
-        &lt;label&gt;Production Date&lt;/label&gt;
-    &lt;/variable&gt;
+  &lt;variable CV="0.255.269:4" readOnly="yes" item="PDate"&gt;
+      &lt;splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/&gt;
+      &lt;label&gt;Production Date&lt;/label&gt;
+  &lt;/variable&gt;
       </pre>Note that if only one mask is specified, it will apply to all CVs. If fewer masks than
-CVs are specified, the last mask will apply to the remaining CVs.
+      CVs are specified, the last mask will apply to the remaining CVs.
       <h4 id="splitvalExample">splitVal example - "long" addresses over 2 CVs</h4>
 
       <p>Some decoders, mostly accessory decoders, are using "long" addresses that are split over 2
       CVs, contiguous or not.</p>
 
       <p>CV1 and CV9 are standardized by NMRA for accessory decoders primary address, see <a href=
-      "http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">
+      "https://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">
       NMRA standard 9.2.2</a>.</p>
 
       <p>Long addresses can be accessed via "splitVal" type, as in the following example:</p>
 
       <pre style="font-family: monospace;">
-    &lt;variable CV="1,9" mask="XXVVVVVV XXXXXVVV" item="Short Address" default="1" minOut="1"&gt;
-        &lt;splitVal/&gt;
-        &lt;label&gt;Accessory Address&lt;/label&gt;
-    &lt;/variable&gt;
+  &lt;variable CV="1,9" mask="XXVVVVVV XXXXXVVV" item="Short Address" default="1" minOut="1"&gt;
+      &lt;splitVal/&gt;
+      &lt;label&gt;Accessory Address&lt;/label&gt;
+  &lt;/variable&gt;
 </pre>
       <ul>
         <li>CV1 is the Least Significant Byte (LSB) of the address and contains the six least
@@ -856,9 +925,9 @@ CVs are specified, the last mask will apply to the remaining CVs.
         significant bits of the accessory decoder's address in bits 0-3.</li>
       </ul>
 
-      <h4>splitVal/splitHexVal - optional "factor" and "offset" attributes</h4>
+      <h4>decVal/splitVal/splitHexVal - optional "factor" and "offset" attributes</h4>
 
-      <p>For special purposes, splitVal and splitHexVal have two optional parameters, a "factor"
+      <p>For special purposes, decVal, splitVal and splitHexVal have two optional parameters, a "factor"
       and an "offset":</p>
 
       <ul>
@@ -868,7 +937,7 @@ CVs are specified, the last mask will apply to the remaining CVs.
       </ul>
 
       <pre style="font-family: monospace;">
-    &lt;splitVal factor="4" offset="-3"/&gt;
+  &lt;splitVal factor="4" offset="-3"/&gt;
 </pre>
       <p>For usage examples, see the <a href=
       "https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_SwitchPilot.xml" target=
@@ -888,10 +957,10 @@ CVs are specified, the last mask will apply to the remaining CVs.
       <p>A variable definition will not be expanded and used:</p>
 
       <ul>
-        <li>If an exclude attribute is present, neither the decoders product ID, model name, nor
+        <li>If an exclude attribute is present, neither the decoder's product ID, model name, nor
         family name is found in the exclude list.</li>
 
-        <li>If an include attribute is present, at least one of the decoders product ID, model
+        <li>If an include attribute is present, at least one of the decoder's product ID, model
         name, or family name is found in the include list.</li>
       </ul>
       Both of these conditions must be true, and it's possible to use both include and exclude on
@@ -899,12 +968,13 @@ CVs are specified, the last mask will apply to the remaining CVs.
       <p>Example:</p>
 
       <pre style="font-family: monospace;">
-      &lt;variable label="My Variable" CV="72" include="ModelA,400"&gt;
-        &lt;decVal/&gt;
-      &lt;/variable&gt;
+  &lt;variable label="My Variable" CV="72" include="ModelA,400"&gt;
+    &lt;decVal/&gt;
+  &lt;/variable&gt;
 </pre>
       <p>The variable above will only appear when expanding the decoder definition for ModelA or
-      product ID 400.</p>
+      product ID 400.<br>
+      Note there should be no spaces around the comma.</p>
 
       <p>You can also put include and exclude attributes on individual choices in an
       enumeration-type variable. This can be used to e.g. only include specific lighting options in
@@ -915,17 +985,21 @@ CVs are specified, the last mask will apply to the remaining CVs.
 
       <p>You can also use the include mechanism to specify the default value of a variable.</p>
 
+      <p>Note: &lt;defaultItem&gt; must be the first element inside the &lt;variable&gt; element body.</p>
+
       <p>Example:</p>
 
       <pre style="font-family: monospace;">
-      &lt;variable label="My Variable" CV="72" default="3"&gt;
-        &lt;defaultItem default="12" include="815"/&gt;
-        &lt;decVal/&gt;
-      &lt;/variable&gt;
+  &lt;variable label="My Variable" CV="72" default="3"&gt;
+    &lt;defaultItem default="12" include="815"/&gt;
+    &lt;decVal/&gt;
+  &lt;/variable&gt;
 </pre>
       <p>This will set the default (initial) value of the CV to 12 if the "815" matches, and
-      otherwise use the default-default of 3. You can have as many defaultItem elements as needed;
+      otherwise use the default-default of 3. You can have as many &lt;defaultItem&gt; elements as needed;
       the first one that matches is used.</p>
+
+      <p>Note: any &lt;defaultItem&gt; elements must come before other elements inside the &lt;variable&gt; element.</p>
 
       <h4 id="pane_include">Include/Exclude During Pane Creation</h4>
       Whether a pane (or part of a pane) is created can be made conditional on the decoder type
@@ -944,9 +1018,9 @@ CVs are specified, the last mask will apply to the remaining CVs.
       <p>Example:</p>
 
       <pre style="font-family: monospace;">
-      &lt;pane label="My Pane" include="ModelA,400"&gt;
-        ...
-      &lt;/pane&gt;
+  &lt;pane label="My Pane" include="ModelA,400"&gt;
+    ...
+  &lt;/pane&gt;
 </pre>
       <p>"My Pane" will be created only when expanding the decoder definition for ModelA or product
       ID 400.</p>
@@ -958,14 +1032,14 @@ CVs are specified, the last mask will apply to the remaining CVs.
       <p>Example:</p>
 
       <pre style="font-family: monospace;">
-      &lt;group include="ModelA,400"&gt;
-        &lt;label&gt;
-          &lt;text&gt;These decoders are very old.&lt;/text&gt;
-        &lt;/label&gt;
-        &lt;label&gt;
-          &lt;text&gt;Some features are unavailable.&lt;/text&gt;
-        &lt;/label&gt;
-      &lt;/group&gt;
+  &lt;group include="ModelA,400"&gt;
+    &lt;label&gt;
+      &lt;text&gt;These decoders are very old.&lt;/text&gt;
+    &lt;/label&gt;
+    &lt;label&gt;
+      &lt;text&gt;Some features are unavailable.&lt;/text&gt;
+    &lt;/label&gt;
+  &lt;/group&gt;
 </pre>
       <p>The text will be created only when expanding the decoder definition for ModelA or product
       ID 400.</p>
@@ -993,6 +1067,7 @@ CVs are specified, the last mask will apply to the remaining CVs.
   &lt;/pane&gt;</pre>Both panes will always be created. If the definitions need to differ between
 product IDs, you will need to create two models, as per <a href="#id">the first example under
 Identification</a>.
+
       <h4 id="qualify">Run-time Qualification of Variables</h4>
 
       <h5>Qualifying Variables</h5>
@@ -1075,28 +1150,28 @@ means that it doesn't.
       value:</p>
 
       <pre style="font-family: monospace;">
-    &lt;label label="Version number too low!"&gt;
-      &lt;qualifier&gt;
-        &lt;variableref&gt;Version Number&lt;/variableref&gt;
-        &lt;relation&gt;lt&lt;/relation&gt;
-        &lt;value&gt;3&lt;/value&gt;
-      &lt;/qualifier&gt;
-    &lt;/label&gt;
+  &lt;label label="Version number too low!"&gt;
+    &lt;qualifier&gt;
+      &lt;variableref&gt;Version Number&lt;/variableref&gt;
+      &lt;relation&gt;lt&lt;/relation&gt;
+      &lt;value&gt;3&lt;/value&gt;
+    &lt;/qualifier&gt;
+  &lt;/label&gt;
 </pre>
       <p>You can use the same qualifier for multiple elements by enclosing the elements in a
       "group" element and adding the qualifier to the "group" element:</p>
 
       <pre style="font-family: monospace;">
-    &lt;group&gt;
-      &lt;qualifier&gt;
-        &lt;variableref&gt;Version Number&lt;/variableref&gt;
-        &lt;relation&gt;lt&lt;/relation&gt;
-        &lt;value&gt;3&lt;/value&gt;
-      &lt;/qualifier&gt;
-      &lt;label label="Version number too low!"/&gt;
-      &lt;label label=" "/&gt;
-      &lt;label label="Please update."/&gt;
-    &lt;/group&gt;
+  &lt;group&gt;
+    &lt;qualifier&gt;
+      &lt;variableref&gt;Version Number&lt;/variableref&gt;
+      &lt;relation&gt;lt&lt;/relation&gt;
+      &lt;value&gt;3&lt;/value&gt;
+    &lt;/qualifier&gt;
+    &lt;label label="Version number too low!"/&gt;
+    &lt;label label=" "/&gt;
+    &lt;label label="Please update."/&gt;
+  &lt;/group&gt;
 </pre>
       <p>Once you've read the Version Number (variable or CV) from the decoder, the label(s) will
       display iff that version number is too low. Note that initially, before the values are read

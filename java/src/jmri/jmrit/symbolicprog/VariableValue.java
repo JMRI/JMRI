@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *   multiple bit masks, separated by spaces.
  *   <li>A small decimal value, i.e. "9"
  *   <br>
- *   In this case, the mask forms the multiplier (N) which combines with the
+ *   In this case, aka Radix mask, it forms the multiplier (N) which combines with the
  *   maximum value (maxVal, defined in a subclass) to break the CV into three
  *   parts:
  *   <ul>
@@ -244,8 +244,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         if (c == null) {
             return false; // if no CV was assigned to a decoder variable
         }
-        int state = c.getState();
-        return (state == CvValue.EDITED || state == CvValue.UNKNOWN);
+        ValueState state = c.getState();
+        return (state == ValueState.EDITED || state == ValueState.UNKNOWN);
     }
 
     // handle incoming parameter notification
@@ -441,7 +441,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      *
      * @return the current state of the Variable
      */
-    public int getState() {
+    public ValueState getState() {
         return _state;
     }
 
@@ -451,38 +451,14 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * @param state the desired state as per definitions in AbstractValue
      * @see AbstractValue
      */
-    public void setState(int state) {
-        switch (state) {
-            case UNKNOWN:
-                setColor(COLOR_UNKNOWN);
-                break;
-            case EDITED:
-                setColor(COLOR_EDITED);
-                break;
-            case READ:
-                setColor(COLOR_READ);
-                break;
-            case STORED:
-                setColor(COLOR_STORED);
-                break;
-            case FROMFILE:
-                setColor(COLOR_FROMFILE);
-                break;
-            case SAME:
-                setColor(COLOR_SAME);
-                break;
-            case DIFF:
-                setColor(COLOR_DIFF);
-                break;
-            default:
-                log.error("Inconsistent state: {}", _state);
-        }
-        if (_state != state || _state == UNKNOWN) {
-            prop.firePropertyChange("State", Integer.valueOf(_state), Integer.valueOf(state));
+    public void setState(ValueState state) {
+        setColor(state.getColor());
+        if (_state != state || _state == ValueState.UNKNOWN) {
+            prop.firePropertyChange("State", _state, state);
         }
         _state = state;
     }
-    private int _state = UNKNOWN;
+    private ValueState _state = ValueState.UNKNOWN;
 
     /**
      * {@inheritDoc}
@@ -590,7 +566,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      *
      * @param state the new state to set
      */
-    public abstract void setCvState(int state);
+    public abstract void setCvState(ValueState state);
 
     /**
      * Check if a variable is busy (during read, write operations).
@@ -628,6 +604,20 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
+     * Create a "VVV" style mask matching the size of max value in bits.
+     * @param maxVal the maximum value to be stored in the cv as decimal
+     * @return a string of V's
+     */
+    protected static String getMaxMask(int maxVal) {
+        int length = Integer.toBinaryString(maxVal).length();
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < length) {
+            sb.append('V');
+        }
+        return sb.toString();
+    }
+
+    /**
      * Convert a String bit mask like XXXVVVXX to an int like 0b00011100.
      *
      * @param maskString the textual (XXXVVVXX style) mask
@@ -650,7 +640,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
-     * Is this a bit mask (such as XVVVXXXX form) vice radix mask (small
+     * Is this a bit mask (such as XVVVXXXX form) vs. radix mask (small
      * integer)?
      *
      * @param mask the bit mask to check
@@ -681,13 +671,14 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
-     * Get the current value from the CV, using the mask as needed.
+     * Extract the current value from the CV, using the mask as needed.
      *
-     * @param Cv         the CV of interest
-     * @param maskString the (XXXVVVXX style) mask for extracting the Variable
+     * @param Cv         the full CV value of interest.
+     * @param maskString the (XXXVVVXX style or small int) mask for extracting the Variable
      *                   value from this CV
-     * @param maxVal     the maximum possible value for this Variable
-     * @return the current value of the Variable
+     * @param maxVal     the maximum possible value for this Variable position in the CV.
+     *                   Note it's 10 (0-9) in a single digit using a radix mask.
+     * @return the current value of the Variable. Optional factor and offset not yet applied.
      */
     protected int getValueInCV(int Cv, String maskString, int maxVal) {
         if (isBitMask(maskString)) {
@@ -700,13 +691,13 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
-     * Set a value into a CV, using the mask as needed.
+     * Insert a value into a CV, using the mask as needed.
      *
      * @param oldCv      Value of the CV before this update is applied
-     * @param newVal     Value for this variable (e.g. not the CV value)
-     * @param maskString The bit mask for this variable in character form
+     * @param newVal     Value for this variable (e.g. not the CV value). Optional factor and offset already applied.
+     * @param maskString The (XXXVVVXX style or small int) mask for this variable in character form
      * @param maxVal     the maximum possible value for this Variable
-     * @return int new value for the CV
+     * @return int new value for the full CV
      */
     protected int setValueInCV(int oldCv, int newVal, String maskString, int maxVal) {
         if (isBitMask(maskString)) {

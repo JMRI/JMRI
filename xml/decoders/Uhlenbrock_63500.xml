@@ -1,0 +1,1578 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2022 All rights reserved   -->
+<!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
+1. Article Number (aka type/class ID) = decoder model productID (integer)
+2. Module Address (optional, see below)
+3. CV number
+For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
+Uhlenbrock publishes the Article number for each (new) device.
+The Ln Servo Module #63500 has an Article number 6350, which was registered with Uhlenbrock.
+See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20220809"/>
+    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
+    <!-- compare names etc. to non-Ln servo decoder Uhlenbrock_67800.xml -->
+
+    <decoder>
+        <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" type="stationary">
+            <model model="Ln Servo Module 63500" productID="6350" formFactor="Stationary" comment="LocoNet 4 servo Decoder">
+              <versionCV />
+            </model>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+          <mode>LOCONETLNCVMODE</mode>
+        </programming>
+
+        <variables>
+            <variable CV="6350.0" item="Long Address" mask="VVVVVVVVVVVVVVVV" default="1" comment="Board address" >
+              <decVal min="1" max="65534"/>
+              <label xml:lang="it">Indirizzo Primario: </label>
+              <label xml:lang="fr">Adresse décodeur: </label>
+              <label xml:lang="de">Decoderadresse: </label>
+              <label xml:lang="nl">Decoderadres: </label>
+              <label>Decoder Address: </label>
+              <tooltip>Enter as decimal value (1-65534)</tooltip>
+            </variable>
+
+            <!-- Servo 1 config-->
+            <variable CV="6350.1" mask="VVVVVVVVVVVV" item="Servo 1 Address 1" default="1">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Servo 1 Adresse 1:</label>
+              <label xml:lang="nl">Servo 1 adres 1:</label>
+              <label>Servo 1 Address 1:</label>
+              <tooltip>Address 1 of Servo 1 (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.2" mask="VVVVVVVVV" item="Servo 1 Position 1" default="120">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 1:</label>
+              <label xml:lang="nl">Stoppositie 1:</label>
+              <label>Stop position 1:</label>
+              <tooltip>For Address 1 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.3" mask="VVVVVVVVV" item="Servo 1 Position 2" default="300">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 2:</label>
+              <label xml:lang="nl">Stoppositie 2:</label>
+              <label>Stop position 2:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.13" mask="VVVVVVVVVVVV" item="Servo 1 Address 2" default="0">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Adresse 2:</label>
+              <label xml:lang="nl">Adres 2:</label>
+              <label>Address 2:</label>
+              <tooltip>Optional Address 2 of Servo 1 (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.14" mask="VVVVVVVVV" item="Servo 1 Position 3" default="200">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 3:</label>
+              <label xml:lang="nl">Stoppositie 3:</label>
+              <label>Stop position 3:</label>
+              <tooltip>For Address 2 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.15" mask="VVVVVVVVV" item="Servo 1 Position 4" default="250">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 4:</label>
+              <label xml:lang="nl">Stoppositie 4:</label>
+              <label>Stop position 4:</label>
+              <tooltip>For Address 2 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.25" mask="VVVVVVVVV" item="Servo 1 Turn Time" default="30">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Geschwindigkeit:</label>
+              <label xml:lang="nl">Snelheid:</label>
+              <label>Movement Speed:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+
+            <!-- Servo 2 config-->
+            <variable CV="6350.4" mask="VVVVVVVVVVVV" item="Servo 2 Address 1" default="1">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Servo 2 Adresse 1:</label>
+              <label xml:lang="nl">Servo 2 adres 1:</label>
+              <label>Servo 2 Address 1:</label>
+              <tooltip>Address 1 of Servo 2 (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.5" mask="VVVVVVVVV" item="Servo 2 Position 1" default="120">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 1:</label>
+              <label xml:lang="nl">Stoppositie 1:</label>
+              <label>Stop position 1:</label>
+              <tooltip>For Address 1 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.6" mask="VVVVVVVVV" item="Servo 2 Position 2" default="300">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 2:</label>
+              <label xml:lang="nl">Stoppositie 2:</label>
+              <label>Stop position 2:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.16" mask="VVVVVVVVVVVV" item="Servo 2 Address 2" default="0">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Adresse 2:</label>
+              <label xml:lang="nl">Adres 2:</label>
+              <label>Address 2:</label>
+              <tooltip>Optional Address 2 of Servo 2 (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.17" mask="VVVVVVVVV" item="Servo 2 Position 3" default="200">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 3:</label>
+              <label xml:lang="nl">Stoppositie 3:</label>
+              <label>Stop position 3:</label>
+              <tooltip>For Address 2 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.18" mask="VVVVVVVVV" item="Servo 2 Position 4" default="250">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 4:</label>
+              <label xml:lang="nl">Stoppositie 4:</label>
+              <label>Stop position 4:</label>
+              <tooltip>For Address 2 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.26" mask="VVVVVVVVV" item="Servo 2 Turn Time" default="30">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Geschwindigkeit:</label>
+              <label xml:lang="nl">Snelheid:</label>
+              <label>Movement Speed:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+
+            <!-- Servo 3 config-->
+            <variable CV="6350.7" mask="VVVVVVVVVVVV" item="Servo 3 Address 1" default="1">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Servo 3 Adresse 1:</label>
+              <label xml:lang="nl">Servo 3 adres 1:</label>
+              <label>Servo 3 Address 1:</label>
+              <tooltip>Address 1 of Servo 3 (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.8" mask="VVVVVVVVV" item="Servo 3 Position 1" default="120">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 1:</label>
+              <label xml:lang="nl">Stoppositie 1:</label>
+              <label>Stop position 1:</label>
+              <tooltip>For Address 1 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.9" mask="VVVVVVVVV" item="Servo 3 Position 2" default="300">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 2:</label>
+              <label xml:lang="nl">Stoppositie 2:</label>
+              <label>Stop position 2:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.19" mask="VVVVVVVVVVVV" item="Servo 3 Address 2" default="0">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Adresse 2:</label>
+              <label xml:lang="nl">Adres 2:</label>
+              <label>Address 2:</label>
+              <tooltip>Optional Address 2 of Servo 3 (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.20" mask="VVVVVVVVV" item="Servo 3 Position 3" default="200">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 3:</label>
+              <label xml:lang="nl">Stoppositie 3:</label>
+              <label>Stop position 3:</label>
+              <tooltip>For Address 2 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.21" mask="VVVVVVVVV" item="Servo 3 Position 4" default="250">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 4:</label>
+              <label xml:lang="nl">Stoppositie 4:</label>
+              <label>Stop position 4:</label>
+              <tooltip>For Address 2 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.27" mask="VVVVVVVVV" item="Servo 3 Turn Time" default="30">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Geschwindigkeit:</label>
+              <label xml:lang="nl">Snelheid:</label>
+              <label>Movement Speed:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+
+            <!-- Servo 4 config-->
+            <variable CV="6350.10" mask="VVVVVVVVVVVV" item="Servo 4 Address 1" default="1">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Servo 4 Adresse 1:</label>
+              <label xml:lang="nl">Servo 4 adres 1:</label>
+              <label>Servo 4 Address 1:</label>
+              <tooltip>Address 1 of Servo 4 (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.11" mask="VVVVVVVVV" item="Servo 4 Position 1" default="120">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 1:</label>
+              <label xml:lang="nl">Stoppositie 1:</label>
+              <label>Stop position 1:</label>
+              <tooltip>For Address 1 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.12" mask="VVVVVVVVV" item="Servo 4 Position 2" default="300">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 2:</label>
+              <label xml:lang="nl">Stoppositie 2:</label>
+              <label>Stop position 2:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.22" mask="VVVVVVVVVVVV" item="Servo 4 Address 2" default="0">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Adresse 2:</label>
+              <label xml:lang="nl">Adres 2:</label>
+              <label>Address 2:</label>
+              <tooltip>Optional Address 2 of Servo 4 (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.23" mask="VVVVVVVVV" item="Servo 4 Position 3" default="200">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 3:</label>
+              <label xml:lang="nl">Stoppositie 3:</label>
+              <label>Stop position 3:</label>
+              <tooltip>For Address 2 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.24" mask="VVVVVVVVV" item="Servo 4 Position 4" default="250">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 4:</label>
+              <label xml:lang="nl">Stoppositie 4:</label>
+              <label>Stop position 4:</label>
+              <tooltip>For Address 2 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.28" mask="VVVVVVVVV" item="Servo 4 Turn Time" default="30">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Geschwindigkeit:</label>
+              <label xml:lang="nl">Snelheid:</label>
+              <label>Movement Speed:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+
+            <!-- CV29 Polarisation etc -->
+            <variable CV="6350.29" item="Output Servo 1" mask="XXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Output 1 schaltet Herzstück für Servo 1</label>
+              <label xml:lang="nl">Uitgang 1 schakelt puntstuk bij servo 1</label>
+              <label>Output 1 polarised Frog for Servo 1</label>
+              <tooltip>Select either this option or Alternating 1+2, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 2" mask="XXXXXXVX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Output 2 schaltet Herzstück für Servo 2</label>
+              <label xml:lang="nl">Uitgang 2 schakelt puntstuk bij servo 2</label>
+              <label>Output 2 polarised Frog for Servo 2</label>
+              <tooltip>Select either this option or Alternating 1+2, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 3" mask="XXXXXVXX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Output 3 schaltet Herzstück für Servo 3</label>
+              <label xml:lang="nl">Uitgang 3 schakelt puntstuk bij servo 3</label>
+              <label>Output 3 polarised Frog for Servo 3</label>
+              <tooltip>Select either this option or Alternating 3+4, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 4" mask="XXXXVXXX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Output 4 schaltet Herzstück für Servo 4</label>
+              <label xml:lang="nl">Uitgang 4 schakelt puntstuk bij servo 4</label>
+              <label>Output 4 polarised Frog for Servo 4</label>
+              <tooltip>Select either this option or Alternating 3+4, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 5" mask="XXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">A1/A2 blinken wenn Servo 1 in Pos. 1</label>
+              <label xml:lang="nl">Uitgangen 1+2 knipperen als Servo 1 in pos. 1</label>
+              <label>Outputs 1+2 altern. flash when Servo 1 in Pos. 1</label>
+              <tooltip>Select either this option or or Output 1/2 polarization, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 6" mask="XXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">A3/A4 blinken wenn Servo 3 in Pos. 1</label>
+              <label xml:lang="nl">Uitgangen 3+4 knipperen als Servo 3 in pos. 1</label>
+              <label>Outputs 3+4 altern. flash when Servo 3 in Pos. 1</label>
+              <tooltip>Select either this option or Output 3/4 polarization, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 7" mask="XVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Moderner Bahnüberg. m/Ampel A1/A2 + Servo 1</label>
+              <label xml:lang="nl">AHOB met W/R licht op uitg. 1+2 bij Servo 1</label>
+              <label>Modern Xing with R/Y lights outputs 1+2 + Servo 3</label>
+              <tooltip>Select either this option or Output 1/2 Polarization, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 8" mask="VXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Moderner Bahnüberg. m/Ampel A3/A4 + Servo 1</label>
+              <label xml:lang="nl">AHOB met W/R licht op uitg. 3+4 bij Servo 1</label>
+              <label>Modern Xing with R/Y lights outputs 3+4 + Servo 1</label>
+              <tooltip>Select either this option or Output 3/4 Polarization, not both!</tooltip>
+            </variable>
+
+            <!--LNCV 30 Inputs 1-4 config-->
+            <variable CV="6350.30" item="Input 1 Action 1" mask="XXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schaltet Servo 1</label>
+              <label xml:lang="nl">Bedient Servo 1</label>
+              <label>Operates Servo 1</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
+            </variable>
+            <variable CV="6350.30" item="Input 1 Action 2" mask="XXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Sendet Rückmeldung</label>
+              <label xml:lang="nl">Verstuurt bezetmelding</label>
+              <label>Sends Occupancy</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
+            </variable>
+<!--            <variable CV="6350.30" item="Input 1 Action" mask="XXXVXXXV" default="1">-->
+<!--              <enumVal>-->
+<!--                <enumChoice value="1">-->
+<!--                  <choice>Operate Servo 1</choice>-->
+<!--                  <choice xml:lang="de">Servo 1 schalten</choice>-->
+<!--                  <choice xml:lang="nl">Bedien Servo 1</choice>-->
+<!--                </enumChoice>-->
+<!--                <enumChoice value="2">-->
+<!--                  <choice>Send Occupancy</choice>-->
+<!--                  <choice xml:lang="de">Sende Rückmeldung</choice>-->
+<!--                  <choice xml:lang="nl">Verstuur bezetmelding</choice>-->
+<!--                </enumChoice>-->
+<!--              </enumVal>-->
+<!--              <label>Input 1 Action:</label>-->
+<!--            </variable>-->
+
+            <variable CV="6350.30" item="Input 2 Action 1" mask="XXXXXXVX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schaltet Servo 2</label>
+              <label xml:lang="nl">Bedient Servo 2</label>
+              <label>Operates Servo 2</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
+            </variable>
+            <variable CV="6350.30" item="Input 2 Action 2" mask="XXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Sendet Rückmeldung</label>
+              <label xml:lang="nl">Verstuurt bezetmelding</label>
+              <label>Sends Occupancy</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
+            </variable>
+<!--            <variable CV="6350.30" item="Input 2 Action" mask="XXVXXXVX" default="1">-->
+<!--              <enumVal>-->
+<!--                <enumChoice value="1">-->
+<!--                  <choice>Operate Servo 2</choice>-->
+<!--                  <choice xml:lang="de">Servo 2 schalten</choice>-->
+<!--                  <choice xml:lang="nl">Bedien Servo 2</choice>-->
+<!--                </enumChoice>-->
+<!--                <enumChoice value="2">-->
+<!--                  <choice>Send Occupancy</choice>-->
+<!--                  <choice xml:lang="de">Sende Rückmeldung</choice>-->
+<!--                  <choice xml:lang="nl">Verstuur bezetmelding</choice>-->
+<!--                </enumChoice>-->
+<!--              </enumVal>-->
+<!--              <label>Input 2 Action:</label>-->
+<!--            </variable>-->
+
+            <variable CV="6350.30" item="Input 3 Action 1" mask="XXXXXVXX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schaltet Servo 3</label>
+              <label xml:lang="nl">Bedient Servo 3</label>
+              <label>Operates Servo 3</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
+            </variable>
+            <variable CV="6350.30" item="Input 3 Action 2" mask="XVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Sendet Rückmeldung</label>
+              <label xml:lang="nl">Verstuurt bezetmelding</label>
+              <label>Sends Occupancy</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
+            </variable>
+<!--            <variable CV="6350.30" item="Input 3 Action" mask="XVXXXVXX" default="1">-->
+<!--              <enumVal>-->
+<!--                <enumChoice value="1">-->
+<!--                  <choice>Operate Servo 3</choice>-->
+<!--                  <choice xml:lang="de">Servo 3 schalten</choice>-->
+<!--                  <choice xml:lang="nl">Bedien Servo 3</choice>-->
+<!--                </enumChoice>-->
+<!--                <enumChoice value="2">-->
+<!--                  <choice>Send Occupancy</choice>-->
+<!--                  <choice xml:lang="de">Sende Rückmeldung</choice>-->
+<!--                  <choice xml:lang="nl">Verstuur bezetmelding</choice>-->
+<!--                </enumChoice>-->
+<!--              </enumVal>-->
+<!--              <label>Input 3 Action:</label>-->
+<!--            </variable>-->
+
+            <variable CV="6350.30" item="Input 4 Action 1" mask="XXXXVXXX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schaltet Servo 4</label>
+              <label xml:lang="nl">Bedient Servo 4</label>
+              <label>Operates Servo 4</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
+            </variable>
+            <variable CV="6350.30" item="Input 4 Action 2" mask="VXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Sendet Rückmeldung</label>
+              <label xml:lang="nl">Verstuurt bezetmelding</label>
+              <label>Sends Occupancy</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
+            </variable>
+<!--            <variable CV="6350.30" item="Input 4 Action" mask="VXXXVXXX" default="1">-->
+<!--              <enumVal>-->
+<!--                <enumChoice value="1">-->
+<!--                  <choice>Operate Servo 4</choice>-->
+<!--                  <choice xml:lang="de">Servo 4 schalten</choice>-->
+<!--                  <choice xml:lang="nl">Bedien Servo 4</choice>-->
+<!--                </enumChoice>-->
+<!--                <enumChoice value="2">-->
+<!--                  <choice>Send Occupancy</choice>-->
+<!--                  <choice xml:lang="de">Sende Rückmeldung</choice>-->
+<!--                  <choice xml:lang="nl">Verstuur bezetmelding</choice>-->
+<!--                </enumChoice>-->
+<!--              </enumVal>-->
+<!--              <label>Input 4 Action:</label>-->
+<!--            </variable>-->
+
+            <variable CV="6350.31" mask="VVVVVVVVVVVV" item="Input 1 Feedback Address" default="5">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Rückmeldeadresse Eingang 1:</label>
+              <label xml:lang="nl">Terugmeldadres ingang 1:</label>
+              <label>Feedback Address:</label>
+              <tooltip>Input 1 Feedback Address (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.32" mask="VVVVVVVVVVVV" item="Input 2 Feedback Address" default="6">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Rückmeldeadresse Eingang 2:</label>
+              <label xml:lang="nl">Terugmeldadres ingang 2:</label>
+              <label>Feedback Address:</label>
+              <tooltip>Input 2 Feedback Address (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.33" mask="VVVVVVVVVVVV" item="Input 3 Feedback Address" default="7">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Rückmeldeadresse Eingang 3:</label>
+              <label xml:lang="nl">Terugmeldadres ingang 3:</label>
+              <label>Feedback Address:</label>
+              <tooltip>Input 3 Feedback Address (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.34" mask="VVVVVVVVVVVV" item="Input 4 Feedback Address" default="8">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Rückmeldeadresse Eingang 4:</label>
+              <label xml:lang="nl">Terugmeldadres ingang 4:</label>
+              <label>Feedback Address:</label>
+              <tooltip>Input 4 Feedback Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6350.35" mask="VVVVVVVVVVVV" item="Output 1 Address" default="1">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse 1:</label>
+              <label xml:lang="nl">Adres 1:</label>
+              <label>Address 1:</label>
+              <tooltip>Turnout Address (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.36" mask="VVVVVVVVVVVV" item="Output 2 Address" default="2">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse 2:</label>
+              <label xml:lang="nl">Adres 2:</label>
+              <label>Address 2:</label>
+              <tooltip>Turnout Address (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.37" mask="VVVVVVVVVVVV" item="Output 3 Address" default="3">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse 3:</label>
+              <label xml:lang="nl">Adres 3:</label>
+              <label>Address 3:</label>
+              <tooltip>Turnout Address (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.38" mask="VVVVVVVVVVVV" item="Output 4 Address" default="4">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse 4:</label>
+              <label xml:lang="nl">Adres 4:</label>
+              <label>Address 4:</label>
+              <tooltip>Turnout Address (1-2048)</tooltip>
+            </variable>
+
+            <!--LNCV 39 Outputs 1-4 config-->
+            <variable CV="6350.39" item="Output Function 1" mask="XXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">schaltet A1</label>
+              <label xml:lang="nl">schakelt uitgang 1</label>
+              <label>controls Output 1</label>
+              <tooltip>Select either this option or Alternating 1+2, not both!</tooltip>
+            </variable>
+            <variable CV="6350.39" item="Output Function 2" mask="XXXXXXVX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">schaltet A2</label>
+              <label xml:lang="nl">schakelt uitgang 2</label>
+              <label>controls Output 2</label>
+              <tooltip>Select either this option or Alternating 1+2, not both!</tooltip>
+            </variable>
+            <variable CV="6350.39" item="Output Function 3" mask="XXXXXVXX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">schaltet A3</label>
+              <label xml:lang="nl">schakelt uitgang 3</label>
+              <label>controls Output 3</label>
+              <tooltip>Select either this option or Alternating 3+4, not both!</tooltip>
+            </variable>
+            <variable CV="6350.39" item="Output Function 4" mask="XXXXVXXX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">schaltet A1</label>
+              <label xml:lang="nl">schakelt uitgang 1</label>
+              <label>controls Output 4</label>
+              <tooltip>Select either this option or Alternating 3+4, not both!</tooltip>
+            </variable>
+            <variable CV="6350.39" item="Output Function 5" mask="XXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">oder schaltet A1/A2 wechselseitig</label>
+              <label xml:lang="nl">of wisselt uitgangen 1+2</label>
+              <label>or alternates outputs 1+2</label>
+              <tooltip>Select either this option or by Output 1/2 Address, not both!</tooltip>
+            </variable>
+            <variable CV="6350.39" item="Output Function 6" mask="XXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">oder schaltet A3/A4 wechselseitig</label>
+              <label xml:lang="nl">of wisselt uitgangen 3+4</label>
+              <label>or alternates outputs 3+4</label>
+              <tooltip>Select either this option or by Output 3/4 Address, not both!</tooltip>
+            </variable>
+
+            <variable CV="6350.40" item="Output 1-2 Duration" default="0">
+              <decVal min="0" max="255"/>
+              <label xml:lang="de">Ausgänge 1&amp;2 Dauer:</label>
+              <label xml:lang="nl">Uitgangen 1&amp;2 Schakelduur:</label>
+              <label>Outputs 1&amp;2 Pulse Duration:</label>
+              <tooltip>In 10 milliseconds steps (1-255), 0=Constant On</tooltip>
+              <tooltip xml:lang="de">In 10 ms Schritten (1-255), 0=Dauerausgang</tooltip>
+              <tooltip xml:lang="de">In stappen van 10 ms (1-255), 0=Continu</tooltip>
+            </variable>
+            <variable CV="6350.41" item="Output 3-4 Duration" default="0">
+              <decVal min="0" max="255"/>
+              <label xml:lang="de">Ausgänge 3&amp;4 Dauer:</label>
+              <label xml:lang="nl">Uitgangen 3&amp;4 Schakelduur:</label>
+              <label>Outputs 3&amp;4 Pulse Duration:</label>
+              <tooltip>In 10 milliseconds steps (1-255), 0=Constant On</tooltip>
+              <tooltip xml:lang="de">In 10 ms Schritten (1-255), 0=Dauerausgang</tooltip>
+              <tooltip xml:lang="de">In stappen van 10 ms (1-255), 0=Continu</tooltip>
+            </variable>
+
+            <!-- Occupied Reporting Delay for inputs 1-4 -->
+            <variable CV="6350.42" item="Input 1 Occupied Delay" default="20">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung:</label>
+              <label xml:lang="fr"> Réaction:</label>
+              <label xml:lang="nl"> Meldvertraging:</label>
+              <label> Feedback Delay:</label>
+              <tooltip>Input 1 detection delay in 10 millisec steps</tooltip>
+              <tooltip xml:lang="de">Eingang 1 Meldungsverzögerung im 10 mS Takt</tooltip>
+              <tooltip xml:lang="fr">Le temps de réaction en étapes de 10 ms.</tooltip>
+              <tooltip xml:lang="nl">Ingang 1 meldvertraging (in stappen van 10 ms)</tooltip>
+            </variable>
+            <variable CV="6350.43" item="Input 2 Occupied Delay" default="20">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung:</label>
+              <label xml:lang="fr"> Réaction:</label>
+              <label xml:lang="nl"> Meldvertraging:</label>
+              <label> Feedback Delay:</label>
+              <tooltip>Input 2 detection delay in 10 millisec steps</tooltip>
+              <tooltip xml:lang="de">Eingang 2 Meldungsverzögerung im 10 mS Takt</tooltip>
+              <tooltip xml:lang="fr">Le temps de réaction en étapes de 10 ms.</tooltip>
+              <tooltip xml:lang="nl">Ingang 2 meldvertraging (in stappen van 10 ms)</tooltip>
+            </variable>
+            <variable CV="6350.44" item="Input 3 Occupied Delay" default="20">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung:</label>
+              <label xml:lang="fr"> Réaction:</label>
+              <label xml:lang="nl"> Meldvertraging:</label>
+              <label> Feedback Delay:</label>
+              <tooltip>Input 3 detection delay in 10 millisec steps</tooltip>
+              <tooltip xml:lang="de">Eingang 3 Meldungsverzögerung im 10 mS Takt</tooltip>
+              <tooltip xml:lang="fr">Le temps de réaction en étapes de 10 ms.</tooltip>
+              <tooltip xml:lang="nl">Ingang 3 meldvertraging (in stappen van 10 ms)</tooltip>
+            </variable>
+            <variable CV="6350.45" item="Input 4 Occupied Delay" default="20">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung:</label>
+              <label xml:lang="fr"> Réaction:</label>
+              <label xml:lang="nl"> Meldvertraging:</label>
+              <label> Feedback Delay:</label>
+              <tooltip>Input 4 detection delay in 10 millisec steps</tooltip>
+              <tooltip xml:lang="de">Eingang 4 Meldungsverzögerung im 10 mS Takt</tooltip>
+              <tooltip xml:lang="fr">Le temps de réaction en étapes de 10 ms.</tooltip>
+              <tooltip xml:lang="nl">Ingang 4 meldvertraging (in stappen van 10 ms)</tooltip>
+            </variable>
+
+            <!--Power-->
+            <variable CV="6350.46" item="Servo 1 Power" mask="XXXXXXXV" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
+              <label>Power Servo on:</label>
+            </variable>
+            <variable CV="6350.46" item="Servo 2 Power" mask="XXXXXXVX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
+              <label>Power Servo on:</label>
+            </variable>
+            <variable CV="6350.46" item="Servo 3 Power" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
+              <label>Power Servo on:</label>
+            </variable>
+            <variable CV="6350.46" item="Servo 4 Power" mask="XXXXVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
+              <label>Power Servo on:</label>
+            </variable>
+
+            <variable CV="6350.47" mask="VVVVVVVVVVVV" item="Servo 1 Table Mode" default="0">
+              <enumVal>
+                <enumChoice value="0">
+                  <choice>Single Table</choice>
+                  <choice xml:lang="de">Eine Tabelle</choice>
+                  <choice xml:lang="nl">Enkele tabel</choice>
+                </enumChoice>
+                <enumChoice value="1">
+                  <choice>Repeat</choice>
+                  <choice xml:lang="de">Wiederholen</choice>
+                  <choice xml:lang="nl">Herhalen</choice>
+                </enumChoice>
+                <enumChoice value="2">
+                  <choice>Red+Green</choice>
+                  <choice xml:lang="de">Rot+Grün</choice>
+                  <choice xml:lang="nl">Rood+Groen</choice>
+                </enumChoice>
+              </enumVal>
+              <label xml:lang="de">Servo Tabellenmodus :</label>
+              <label xml:lang="nl">Servo Tabelmodus:</label>
+              <label>Servo Table Mode:</label>
+              <tooltip>Red+Green=use LNCV 1024-1151 Red and 1152-1279 Green</tooltip>
+              <tooltip xml:lang="de">Wiederholen=ständig wiederholen, Rot+Grün=nutze LNCV 1024-1151 Rot und 1152-1279 Grün</tooltip>
+              <tooltip xml:lang="nl">Rood+Groen=gebruik LNCV 1024-1151 Rood en 1152-1279 Groen</tooltip>
+            </variable>
+            <variable CV="6350.48" mask="VVVVVVVVVVVV" item="Servo 2 Table Mode" default="0">
+              <enumVal>
+                <enumChoice value="0">
+                  <choice>Single Table</choice>
+                  <choice xml:lang="de">Eine Tabelle</choice>
+                  <choice xml:lang="nl">Enkele tabel</choice>
+                </enumChoice>
+                <enumChoice value="1">
+                  <choice>Repeat</choice>
+                  <choice xml:lang="de">Wiederholen</choice>
+                  <choice xml:lang="nl">Herhalen</choice>
+                </enumChoice>
+                <enumChoice value="2">
+                  <choice>Red+Green</choice>
+                  <choice xml:lang="de">Rot+Grün</choice>
+                  <choice xml:lang="nl">Rood+Groen</choice>
+                </enumChoice>
+              </enumVal>
+              <label xml:lang="de">Servo Tabellenmodus :</label>
+              <label xml:lang="nl">Servo Tabelmodus:</label>
+              <label>Servo Table Mode:</label>
+              <tooltip>Red+Green=use LNCV 1280-1407 Red and 1408-1535 Green</tooltip>
+              <tooltip xml:lang="de">Wiederholen=ständig wiederholen, Rot+Grün=nutze LNCV 1280-1407 Rot und 1408-1535 Grün</tooltip>
+              <tooltip xml:lang="nl">Rood+Groen=gebruik LNCV 1280-1407 Rood en 1408-1535 Groen</tooltip>
+            </variable>
+            <variable CV="6350.49" mask="VVVVVVVVVVVV" item="Servo 3 Table Mode" default="0">
+              <enumVal>
+                <enumChoice value="0">
+                  <choice>Single Table</choice>
+                  <choice xml:lang="de">Eine Tabelle</choice>
+                  <choice xml:lang="nl">Enkele tabel</choice>
+                </enumChoice>
+                <enumChoice value="1">
+                  <choice>Repeat</choice>
+                  <choice xml:lang="de">Wiederholen</choice>
+                  <choice xml:lang="nl">Herhalen</choice>
+                </enumChoice>
+                <enumChoice value="2">
+                  <choice>Red+Green</choice>
+                  <choice xml:lang="de">Rot+Grün</choice>
+                  <choice xml:lang="nl">Rood+Groen</choice>
+                </enumChoice>
+              </enumVal>
+              <label xml:lang="de">Servo Tabellenmodus :</label>
+              <label xml:lang="nl">Servo Tabelmodus:</label>
+              <label>Servo Table Mode:</label>
+              <tooltip>Red+Green=use LNCV 1536-1663 Red and 1664-1791 Green</tooltip>
+              <tooltip xml:lang="de">Wiederholen=ständig wiederholen, Rot+Grün=nutze LNCV 1536-1663 Rot und 1664-1791 Grün</tooltip>
+              <tooltip xml:lang="nl">Rood+Groen=gebruik LNCV 1536-1663 Rood en 1664-1791 Groen</tooltip>
+            </variable>
+            <variable CV="6350.50" mask="VVVVVVVVVVVV" item="Servo 4 Table Mode" default="0">
+              <enumVal>
+                <enumChoice value="0">
+                  <choice>Single Table</choice>
+                  <choice xml:lang="de">Eine Tabelle</choice>
+                  <choice xml:lang="nl">Enkele tabel</choice>
+                </enumChoice>
+                <enumChoice value="1">
+                  <choice>Repeat</choice>
+                  <choice xml:lang="de">Wiederholen</choice>
+                  <choice xml:lang="nl">Herhalen</choice>
+                </enumChoice>
+                <enumChoice value="2">
+                  <choice>Red+Green</choice>
+                  <choice xml:lang="de">Rot+Grün</choice>
+                  <choice xml:lang="nl">Rood+Groen</choice>
+                </enumChoice>
+              </enumVal>
+              <label xml:lang="de">Servo Tabellenmodus :</label>
+              <label xml:lang="nl">Servo Tabelmodus:</label>
+              <label>Servo Table Mode:</label>
+              <tooltip>Red+Green=use LNCV 1792-1919 Red and 1920-2047 Green</tooltip>
+              <tooltip xml:lang="de">Wiederholen=ständig wiederholen, Rot+Grün=nutze LNCV 1792-1919 Rot und 1920-2047 Grün</tooltip>
+              <tooltip xml:lang="nl">1=herhalen, 2=gebruik LNCV 1792-1919 Rood en 1920-2047 Groen</tooltip>
+            </variable>
+
+            <!--Servo 1-4 Tab Distance-->
+            <variable CV="6350.51" item="Servo 1 Tab Distance" default="0">
+              <decVal/>
+              <label xml:lang="de"> Tababstand:</label>
+              <label xml:lang="nl"> Afstand tussen stops:</label>
+              <label> Distance between stops:</label>
+              <tooltip>Servo 1: Distance between 2 tab stops (value + 1 * 12 millisec)</tooltip>
+              <tooltip xml:lang="de">Servo 1: Abstand zwischen 2 Tabwerten (Wert + 1 * 12 mS)</tooltip>
+              <tooltip xml:lang="nl">Servo 1: Afstand tussen 2 tabstops (getal + 1 * 12 ms)</tooltip>
+              </variable>
+              <variable CV="6350.52" item="Servo 2 Tab Distance" default="0">
+                <decVal/>
+                <label xml:lang="de"> Tababstand:</label>
+                <label xml:lang="nl"> Afstand tussen stops:</label>
+                <label> Distance between stops:</label>
+                <tooltip>Servo 2: Distance between 2 tab stops (value + 1 * 12 millisec)</tooltip>
+                <tooltip xml:lang="de">Servo 2: Abstand zwischen 2 Tabwerten (Wert + 1 * 12 mS)</tooltip>
+                <tooltip xml:lang="nl">Servo 2: Afstand tussen 2 tabstops (getal + 1 * 12 ms)</tooltip>
+              </variable>
+              <variable CV="6350.53" item="Servo 3 Tab Distance" default="0">
+                <decVal/>
+                <label xml:lang="de"> Tababstand:</label>
+                <label xml:lang="nl"> Afstand tussen stops:</label>
+                <label> Distance between stops:</label>
+                <tooltip>Servo 3: Distance between 2 tab stops (value + 1 * 12 millisec)</tooltip>
+                <tooltip xml:lang="de">Servo 3: Abstand zwischen 2 Tabwerten (Wert + 1 * 12 mS)</tooltip>
+                <tooltip xml:lang="nl">Servo 3: Afstand tussen 2 tabstops (getal + 1 * 12 ms)</tooltip>
+              </variable>
+              <variable CV="6350.54" item="Servo 4 Tab Distance" default="0">
+                <decVal/>
+                <label xml:lang="de"> Tababstand:</label>
+                <label xml:lang="nl"> Afstand tussen stops:</label>
+                <label> Distance between stops:</label>
+                <tooltip>Servo 4: Distance between 2 tab stops (value + 1 * 12 millisec)</tooltip>
+                <tooltip xml:lang="de">Servo 4: Abstand zwischen 2 Tabwerten (Wert + 1 * 12 mS)</tooltip>
+                <tooltip xml:lang="nl">Servo 4: Afstand tussen 2 tabstops (getal + 1 * 12 ms)</tooltip>
+              </variable>
+
+            <!-- CVs 55-58 Servo 1-4 Repeats -->
+            <variable CV="6350.55" item="Servo 1 Repeats" default="0">
+              <decVal/>
+              <label xml:lang="de"> Anzahl der Tabellendurchläufe:</label>
+              <label xml:lang="nl"> Aantal herhalingen:</label>
+              <label> Number of repeats:</label>
+              <tooltip>0 = always</tooltip>
+              <tooltip xml:lang="de">0 = immer</tooltip>
+              <tooltip xml:lang="nl">0 = non-stop</tooltip>
+            </variable>
+            <variable CV="6350.56" item="Servo 2 Repeats" default="0">
+              <decVal/>
+              <label xml:lang="de"> Anzahl der Tabellendurchläufe:</label>
+              <label xml:lang="nl"> Aantal herhalingen:</label>
+              <label> Number of repeats:</label>
+              <tooltip>0 = always</tooltip>
+              <tooltip xml:lang="de">0 = immer</tooltip>
+              <tooltip xml:lang="nl">0 = non-stop</tooltip>
+            </variable>
+            <variable CV="6350.57" item="Servo 3 Repeats" default="0">
+              <decVal/>
+              <label xml:lang="de"> Anzahl der Tabellendurchläufe:</label>
+              <label xml:lang="nl"> Aantal herhalingen:</label>
+              <label> Number of repeats:</label>
+              <tooltip>0 = always</tooltip>
+              <tooltip xml:lang="de">0 = immer</tooltip>
+              <tooltip xml:lang="nl">0 = non-stop</tooltip>
+            </variable>
+            <variable CV="6350.58" item="Servo 4 Repeats" default="0">
+              <decVal/>
+              <label xml:lang="de"> Anzahl der Tabellendurchläufe:</label>
+              <label xml:lang="nl"> Aantal herhalingen:</label>
+              <label> Number of repeats:</label>
+              <tooltip>0 = always</tooltip>
+              <tooltip xml:lang="de">0 = immer</tooltip>
+              <tooltip xml:lang="nl">0 = non-stop</tooltip>
+            </variable>
+
+            <!-- Servo 1-4 Delays-->
+            <variable CV="6350.59" item="Delay 1" default="5">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung Andreaskr. 1/2:</label>
+              <label xml:lang="nl"> Vertraging Andreaskr.: 1/2</label>
+              <label> Xing 1/2 Delay:</label>
+              <tooltip>Input 1+2 delay to Servo 1 (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 1+2 an Servo 1 (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 1+2 naar Servo 1 (in secondes)</tooltip>
+            </variable>
+            <variable CV="6350.60" item="Delay 2" default="5">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung Andreaskr. 3/4:</label>
+              <label xml:lang="nl"> Vertraging Andreaskr. 3/4:</label>
+              <label> Xing 3/4 Delay:</label>
+              <tooltip>Input 3+4 delay to Servo 3 (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 3+4 an Servo 3 (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 3+4 naar Servo 3 (in secondes)</tooltip>
+            </variable>
+            <variable CV="6350.61" item="Delay 3" default="3">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung Ampel Gelb:</label>
+              <label xml:lang="nl"> Vertraging Gele lamp:</label>
+              <label>Yellow Lamp Delay:</label>
+              <tooltip>Input 1 delay to Red Light (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 1 nach Ampel Rot (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 1 naar Rood Licht (in secondes)</tooltip>
+            </variable>
+            <variable CV="6350.62" item="Delay 4" default="3">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung Ampel Rot:</label>
+              <label xml:lang="nl"> Vertraging Rood Licht:</label>
+              <label> Red Lamp Delay:</label>
+              <tooltip>Input 2 delay to Servo 1 (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 2 nach Servo 1 (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 2 naar Servo 1 (in secondes)</tooltip>
+            </variable>
+            <variable CV="6350.63" item="Delay 5" default="3">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung Ampel Gelb:</label>
+              <label xml:lang="nl"> Geel Licht:</label>
+              <label> Yellow Lamp Delay:</label>
+              <tooltip>Input 3 delay to Red Light (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 3 nach Ampel Rot (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 3 naar Rood Licht (in secondes)</tooltip>
+            </variable>
+            <variable CV="6350.64" item="Delay 6" default="3">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung Ampel Rot:</label>
+              <label xml:lang="nl"> Vertraging Rood Licht:</label>
+              <label> Red Lamp Delay:</label>
+              <tooltip>Input 4 delay to Servo 3 (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 4 nach Servo 3 (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 4 naar Servo 3 (in secondes)</tooltip>
+            </variable>
+
+            <!--Operate servo 1-4 -->
+            <variable CV="6350.101" item="Move Servo 1" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPosition.xml"/>
+              <label xml:lang="de">Fahre Servo 1 in Position:</label>
+              <label xml:lang="nl">Beweeg Servo 1 naar positie:</label>
+              <label>Move Servo 1 to position:</label>
+              <tooltip>To operate/test servo now. Click [Write] to execute</tooltip>
+            </variable>
+            <variable CV="6350.102" item="Move Servo 2" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPosition.xml"/>
+              <label xml:lang="de">Fahre Servo 2 in Position:</label>
+              <label xml:lang="nl">Beweeg Servo 2 naar positie:</label>
+              <label>Move Servo 2 to position:</label>
+              <tooltip>To operate/test servo now. Click [Write] to execute</tooltip>
+            </variable>
+            <variable CV="6350.103" item="Move Servo 3" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPosition.xml"/>
+              <label xml:lang="de">Fahre Servo 3 in Position:</label>
+              <label xml:lang="nl">Beweeg Servo 3 naar positie:</label>
+              <label>Move Servo 3 to position:</label>
+              <tooltip>To operate/test servo now. Click [Write] to execute</tooltip>
+            </variable>
+            <variable CV="6350.104" item="Move Servo 4" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPosition.xml"/>
+              <label xml:lang="de">Fahre Servo 4 in Position:</label>
+              <label xml:lang="nl">Beweeg Servo 4 naar positie:</label>
+              <label>Move Servo 4 to position:</label>
+              <tooltip>To operate/test servo now. Click [Write] to execute</tooltip>
+            </variable>
+
+            <variable CV="6350.105" item="Factory Reset" default="0">
+              <enumVal>
+                <enumChoice value="0">
+                  <choice>Select and write...</choice>
+                </enumChoice>
+                <enumChoice value="17">
+                  <choice>Reset</choice>
+                </enumChoice>
+              </enumVal>
+              <label xml:lang="de">Zurückstellen nach Werkseinstellungen</label>
+              <label xml:lang="nl">Zet alles terug naar standaard</label>
+              <label>Reset module to defaults</label>
+            </variable>
+
+            <!-- Servo 1 Curve-->
+            <variable CV="6350.1024" mask="VVVVVVVVV" item="Servo 1 Curve 1">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 1:</label>
+              <label xml:lang="nl">Punt 1:</label>
+              <label>Point 1:</label>
+              <tooltip>Servo 1 Curve Point 1 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1025" mask="VVVVVVVVV" item="Servo 1 Curve 2">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 2:</label>
+              <label xml:lang="nl">Punt 2:</label>
+              <label>Point 2:</label>
+              <tooltip>Servo 1 Curve Point 2 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1026-1151 -->
+
+            <variable CV="6350.1152" mask="VVVVVVVVV" item="Servo 1 Curve 127">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 127:</label>
+              <label xml:lang="nl">Punt 127:</label>
+              <label>Point 127:</label>
+              <tooltip>Servo 1 Curve Point 1 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1153" mask="VVVVVVVVV" item="Servo 1 Curve 128">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 128:</label>
+              <label xml:lang="nl">Punt 128:</label>
+              <label>Point 128:</label>
+              <tooltip>Servo 1 Curve Point 2 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1154-1279 -->
+
+            <!-- Servo 2 Curve-->
+            <variable CV="6350.1280" mask="VVVVVVVVV" item="Servo 2 Curve 1">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 1:</label>
+              <label xml:lang="nl">Punt 1:</label>
+              <label>Point 1:</label>
+              <tooltip>Servo 2 Curve Point 1 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1281" mask="VVVVVVVVV" item="Servo 2 Curve 2">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 2:</label>
+              <label xml:lang="nl">Punt 2:</label>
+              <label>Point 2:</label>
+              <tooltip>Servo 2 Curve Point 2 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1282-1407 -->
+
+            <variable CV="6350.1408" mask="VVVVVVVVV" item="Servo 2 Curve 127">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 127:</label>
+              <label xml:lang="nl">Punt 127:</label>
+              <label>Point 127:</label>
+              <tooltip>Servo 2 Curve Point 127 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1409" mask="VVVVVVVVV" item="Servo 2 Curve 128">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 128:</label>
+              <label xml:lang="nl">Punt 128:</label>
+              <label>Point 128:</label>
+              <tooltip>Servo 2 Curve Point 128 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1410-1535 -->
+
+            <!-- Servo 3 Curve-->
+            <variable CV="6350.1536" mask="VVVVVVVVV" item="Servo 3 Curve 1">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 1:</label>
+              <label xml:lang="nl">Punt 1:</label>
+              <label>Point 1:</label>
+              <tooltip>Servo 3 Curve Point 1 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1537" mask="VVVVVVVVV" item="Servo 3 Curve 2">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 2:</label>
+              <label xml:lang="nl">Punt 2:</label>
+              <label>Point 2:</label>
+              <tooltip>Servo 3 Curve Point 2 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1538-1663 -->
+
+            <variable CV="6350.1664" mask="VVVVVVVVV" item="Servo 3 Curve 127">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 127:</label>
+              <label xml:lang="nl">Punt 127:</label>
+              <label>Point 127:</label>
+              <tooltip>Servo 3 Curve Point 127 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1665" mask="VVVVVVVVV" item="Servo 3 Curve 128">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 128:</label>
+              <label xml:lang="nl">Punt 128:</label>
+              <label>Point 128:</label>
+              <tooltip>Servo 3 Curve Point 128 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1666-1791 -->
+
+            <!-- Servo 4 Curve-->
+            <variable CV="6350.1792" mask="VVVVVVVVV" item="Servo 4 Curve 1">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 1:</label>
+              <label xml:lang="nl">Punt 1:</label>
+              <label>Point 1:</label>
+              <tooltip>Servo 4 Curve Point 1 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1793" mask="VVVVVVVVV" item="Servo 4 Curve 2">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 2:</label>
+              <label xml:lang="nl">Punt 2:</label>
+              <label>Point 2:</label>
+              <tooltip>Servo 4 Curve Point 2 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1794-1919 -->
+
+            <variable CV="6350.1920" mask="VVVVVVVVV" item="Servo 4 Curve 127">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 127:</label>
+              <label xml:lang="nl">Punt 127:</label>
+              <label>Point 127:</label>
+              <tooltip>Servo 4 Curve Point 127 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1921" mask="VVVVVVVVV" item="Servo 4 Curve 128">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 128:</label>
+              <label xml:lang="nl">Punt 128:</label>
+              <label>Point 128:</label>
+              <tooltip>Servo 4 Curve Point 128 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1922-2047 -->
+
+        </variables>
+
+        <resets>
+          <factReset label="HARD RESET Reset all CVs to default values" CV="6350.105" default="17">
+            <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+            <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+            <label xml:lang="de">Alle CVs zurückstellen auf Werkseinstellungen</label>
+            <label xml:lang="nl">Reset alle CV's naar de standaard fabrieksinstellingen</label>
+            <label xml:lang="cs">Reset všech CV na výchozí hodnoty</label>
+          </factReset>
+        </resets>
+
+      </decoder>
+
+      <!-- Programming tabbed panes layout -->
+      <pane>
+        <name>LNCV Module</name>
+        <name xml:lang="de">LNCV Modul</name>
+        <name xml:lang="nl">LNCV Module</name>
+
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;h1&gt;Module Settings&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Module Instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Moduleingaben&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration Modules&lt;/h1&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>Before writing, open a Programming</text>
+            <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+            <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+          </label>
+          <label>
+            <text>session using the LocoNet LNCV Tool.</text>
+            <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+            <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Factory Reset"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Outputs&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgänge&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgangen&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <row>
+            <display item="Output 1 Address"/>
+            <display item="Output Function 1" format="checkbox"/>
+            <display item="Output Function 5" format="checkbox"/>
+          </row>
+          <row>
+            <display item="Output 2 Address"/>
+            <display item="Output Function 2" format="checkbox"/>
+          </row>
+          <display item="Output 1-2 Duration"/>
+          <label>
+            <text> </text>
+          </label>
+          <row>
+            <display item="Output 3 Address"/>
+            <display item="Output Function 3" format="checkbox"/>
+            <display item="Output Function 6" format="checkbox"/>
+          </row>
+          <row>
+            <display item="Output 4 Address"/>
+            <display item="Output Function 4" format="checkbox"/>
+          </row>
+          <display item="Output 3-4 Duration"/>
+
+          <label>
+            <text> </text>
+          </label>
+
+          <display item="Output Servo 1" format="checkbox"/>
+          <display item="Output Servo 2" format="checkbox"/>
+          <display item="Output Servo 3" format="checkbox"/>
+          <display item="Output Servo 4" format="checkbox"/>
+          <display item="Output Servo 5" format="checkbox"/>
+          <display item="Output Servo 6" format="checkbox"/>
+          <display item="Output Servo 7" format="checkbox"/>
+          <display item="Output Servo 8" format="checkbox"/>
+
+        </column>
+
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Input 1&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang1 &lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Entrée 1&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 1&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <display item="Input 1 Action 1" format="checkbox"/>
+          <display item="Input 1 Action 2" format="checkbox"/>
+          <group>
+            <qualifier>
+              <variableref>Input 1 Action 2</variableref>
+              <relation>eq</relation>
+              <value>1</value>
+            </qualifier>
+            <row>
+              <display item="Input 1 Feedback Address"/>
+              <display item="Input 1 Occupied Delay"/>
+            </row>
+          </group>
+          <separator/>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Input 2&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 2&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Entrée 2&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 2&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <display item="Input 2 Action 1" format="checkbox"/>
+          <display item="Input 2 Action 2" format="checkbox"/>
+          <group>
+            <qualifier>
+              <variableref>Input 2 Action 2</variableref>
+              <relation>eq</relation>
+              <value>1</value>
+            </qualifier>
+            <row>
+              <display item="Input 2 Feedback Address"/>
+              <display item="Input 2 Occupied Delay"/>
+            </row>
+          </group>
+          <separator/>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Input 3&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 3&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Entrée 3&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 3&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <display item="Input 3 Action 1" format="checkbox"/>
+          <display item="Input 3 Action 2" format="checkbox"/>
+          <group>
+            <qualifier>
+              <variableref>Input 3 Action 2</variableref>
+              <relation>eq</relation>
+              <value>1</value>
+            </qualifier>
+            <row>
+              <display item="Input 3 Feedback Address"/>
+              <display item="Input 3 Occupied Delay"/>
+            </row>
+          </group>
+          <separator/>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Input 4&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 4&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Entrée 4&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 4&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <display item="Input 4 Action 1" format="checkbox"/>
+          <display item="Input 4 Action 2" format="checkbox"/>
+          <group>
+            <qualifier>
+              <variableref>Input 4 Action 2</variableref>
+              <relation>eq</relation>
+              <value>1</value>
+            </qualifier>
+            <row>
+              <display item="Input 4 Feedback Address"/>
+              <display item="Input 4 Occupied Delay"/>
+            </row>
+          </group>
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Special delays&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Verzögerungen&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Speciale vertragingen&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <display item="Delay 1"/>
+          <display item="Delay 2"/>
+          <display item="Delay 3"/>
+          <display item="Delay 4"/>
+          <display item="Delay 5"/>
+          <display item="Delay 6"/>
+
+
+        </column>
+      </pane>
+
+      <pane>
+        <name>Servo 1</name>
+        <name xml:lang="de">Servo 1</name>
+        <name xml:lang="nl">Servo 1</name>
+
+        <column>
+
+            <label>
+              <text>&lt;html&gt;&lt;h1&gt;Servo 1 Settings&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Servo 1 instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Servo 1 Eingaben&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration du Servo 1&lt;/h1&gt;&lt;/html&gt;</text>
+            </label>
+            <label>
+              <text>Before writing, open a Programming</text>
+              <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+              <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+              <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
+              <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
+            </label>
+            <label>
+              <text>session using the LocoNet LNCV Tool.</text>
+              <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+              <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+              <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+              <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+
+            <!-- servo 1 settings -->
+            <row>
+              <display item="Servo 1 Address 1"/>
+              <display item="Servo 1 Address 2"/>
+            </row>
+            <row>
+              <display item="Servo 1 Position 1" format="hslider"/>
+              <display item="Servo 1 Position 1" label=""/>
+            </row>
+            <row>
+            <display item="Servo 1 Position 2" format="hslider"/>
+              <display item="Servo 1 Position 2" label=""/>
+            </row>
+            <row>
+            <display item="Servo 1 Position 3" format="hslider"/>
+              <display item="Servo 1 Position 3" label=""/>
+            </row>
+            <row>
+            <display item="Servo 1 Position 4" format="hslider"/>
+              <display item="Servo 1 Position 4" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <display item="Servo 1 Turn Time"/>
+            <display item="Servo 1 Power"/>
+            <display item="Servo 1 Tab Distance"/>
+            <display item="Servo 1 Repeats"/>
+            <label>
+              <text> </text>
+            </label>
+            <display item="Move Servo 1"/>
+        </column>
+
+        <column>
+            <label>
+              <text>Movement Curve</text>
+            </label>
+            <display item="Servo 1 Table Mode"/>
+            <row>
+              <display item="Servo 1 Curve 1" format="hslider"/>
+              <display item="Servo 1 Curve 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 1 Curve 2" format="hslider"/>
+              <display item="Servo 1 Curve 2" label=""/>
+            </row>
+          <label>
+            <text> </text>
+          </label>
+          <row>
+            <display item="Servo 1 Curve 127" format="hslider"/>
+            <display item="Servo 1 Curve 127" label=""/>
+          </row>
+          <row>
+            <display item="Servo 1 Curve 128" format="hslider"/>
+            <display item="Servo 1 Curve 128" label=""/>
+          </row>
+
+        </column>
+      </pane>
+
+      <pane>
+        <name>Servo 2</name>
+        <name xml:lang="de">Servo 2</name>
+        <name xml:lang="nl">Servo 2</name>
+
+        <column>
+
+          <label>
+            <text>&lt;html&gt;&lt;h1&gt;Servo 2 Settings&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Servo 2 instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Servo 2 Eingaben&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration du Servo 2&lt;/h1&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+            <text>Before writing, open a Programming</text>
+            <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+            <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+            <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
+            <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
+          </label>
+          <label>
+            <text>session using the LocoNet LNCV Tool.</text>
+            <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+            <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+            <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+            <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+
+          <!-- servo 2 settings -->
+            <row>
+              <display item="Servo 2 Address 1"/>
+              <display item="Servo 2 Address 2"/>
+            </row>
+            <row>
+              <display item="Servo 2 Position 1" format="hslider"/>
+              <display item="Servo 2 Position 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 2 Position 2" format="hslider"/>
+              <display item="Servo 2 Position 2" label=""/>
+            </row>
+            <row>
+              <display item="Servo 2 Position 3" format="hslider"/>
+              <display item="Servo 2 Position 3" label=""/>
+            </row>
+            <row>
+              <display item="Servo 2 Position 4" format="hslider"/>
+              <display item="Servo 2 Position 4" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <display item="Servo 2 Turn Time"/>
+            <display item="Servo 2 Power"/>
+            <display item="Servo 2 Tab Distance"/>
+            <display item="Servo 2 Repeats"/>
+            <label>
+              <text> </text>
+            </label>
+            <display item="Move Servo 2"/>
+          </column>
+
+          <column>
+            <label>
+              <text>Movement Curve</text>
+            </label>
+            <display item="Servo 2 Table Mode"/>
+            <row>
+              <display item="Servo 2 Curve 1" format="hslider"/>
+              <display item="Servo 2 Curve 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 2 Curve 2" format="hslider"/>
+              <display item="Servo 2 Curve 2" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Servo 2 Curve 127" format="hslider"/>
+              <display item="Servo 2 Curve 127" label=""/>
+            </row>
+            <row>
+              <display item="Servo 2 Curve 128" format="hslider"/>
+              <display item="Servo 2 Curve 128" label=""/>
+            </row>
+
+        </column>
+      </pane>
+
+      <pane>
+        <name>Servo 3</name>
+        <name xml:lang="de">Servo 3</name>
+        <name xml:lang="nl">Servo 3</name>
+
+        <column>
+
+          <label>
+            <text>&lt;html&gt;&lt;h1&gt;Servo 3 Settings&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Servo 3 instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Servo 3 Eingaben&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration du Servos 3&lt;/h1&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+            <text>Before writing, open a Programming</text>
+            <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+            <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+            <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
+            <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
+          </label>
+          <label>
+            <text>session using the LocoNet LNCV Tool.</text>
+            <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+            <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+            <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+            <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+
+          <!-- servo 3 settings -->
+            <row>
+              <display item="Servo 3 Address 1"/>
+              <display item="Servo 3 Address 2"/>
+            </row>
+            <row>
+              <display item="Servo 3 Position 1" format="hslider"/>
+              <display item="Servo 3 Position 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 3 Position 2" format="hslider"/>
+              <display item="Servo 3 Position 2" label=""/>
+            </row>
+            <row>
+              <display item="Servo 3 Position 3" format="hslider"/>
+              <display item="Servo 3 Position 3" label=""/>
+            </row>
+            <row>
+              <display item="Servo 3 Position 4" format="hslider"/>
+              <display item="Servo 3 Position 4" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <display item="Servo 3 Turn Time"/>
+            <display item="Servo 3 Power"/>
+            <display item="Servo 3 Tab Distance"/>
+            <display item="Servo 3 Repeats"/>
+            <label>
+              <text> </text>
+            </label>
+            <display item="Move Servo 3"/>
+          </column>
+
+          <column>
+            <label>
+              <text>Movement Curve</text>
+            </label>
+            <display item="Servo 3 Table Mode"/>
+            <row>
+              <display item="Servo 3 Curve 1" format="hslider"/>
+              <display item="Servo 3 Curve 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 3 Curve 2" format="hslider"/>
+              <display item="Servo 3 Curve 2" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Servo 3 Curve 127" format="hslider"/>
+              <display item="Servo 3 Curve 127" label=""/>
+            </row>
+            <row>
+              <display item="Servo 3 Curve 128" format="hslider"/>
+              <display item="Servo 3 Curve 128" label=""/>
+            </row>
+        </column>
+      </pane>
+
+      <pane>
+        <name>Servo 4</name>
+        <name xml:lang="de">Servo 4</name>
+        <name xml:lang="nl">Servo 4</name>
+
+        <column>
+
+            <label>
+              <text>&lt;html&gt;&lt;h1&gt;Servo 4 Settings&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Servo 4 instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Servo 4 Eingaben&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration du Servo 1&lt;/h1&gt;&lt;/html&gt;</text>
+            </label>
+            <label>
+              <text>Before writing, open a Programming</text>
+              <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+              <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+              <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
+              <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
+            </label>
+            <label>
+              <text>session using the LocoNet LNCV Tool.</text>
+              <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+              <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+              <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+              <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+
+            <!-- servo 4 settings -->
+            <row>
+              <display item="Servo 4 Address 1"/>
+              <display item="Servo 4 Address 2"/>
+            </row>
+            <row>
+              <display item="Servo 4 Position 1" format="hslider"/>
+              <display item="Servo 4 Position 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 4 Position 2" format="hslider"/>
+              <display item="Servo 4 Position 2" label=""/>
+            </row>
+            <row>
+              <display item="Servo 4 Position 3" format="hslider"/>
+              <display item="Servo 4 Position 3" label=""/>
+            </row>
+            <row>
+              <display item="Servo 4 Position 4" format="hslider"/>
+              <display item="Servo 4 Position 4" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <display item="Servo 4 Turn Time"/>
+            <display item="Servo 4 Power"/>
+            <display item="Servo 4 Tab Distance"/>
+            <display item="Servo 4 Repeats"/>
+            <label>
+              <text> </text>
+            </label>
+            <display item="Move Servo 4"/>
+          </column>
+
+          <column>
+            <label>
+              <text>Movement Curve</text>
+            </label>
+            <display item="Servo 4 Table Mode"/>
+            <row>
+              <display item="Servo 4 Curve 1" format="hslider"/>
+              <display item="Servo 4 Curve 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 4 Curve 2" format="hslider"/>
+              <display item="Servo 4 Curve 2" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Servo 4 Curve 127" format="hslider"/>
+              <display item="Servo 4 Curve 127" label=""/>
+            </row>
+            <row>
+              <display item="Servo 4 Curve 128" format="hslider"/>
+              <display item="Servo 4 Curve 128" label=""/>
+            </row>
+
+        </column>
+      </pane>
+
+  </decoder-config>

@@ -1,5 +1,7 @@
 package jmri.managers.configurexml;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.NamedBean;
 import jmri.implementation.AbstractNamedBean;
 import jmri.util.JUnitUtil;
@@ -39,7 +41,7 @@ public class AbstractNamedBeanManagerConfigXMLTest {
         };
 
         from.setProperty("foo", "bar");
-        from.setProperty("biff", Boolean.valueOf(true));
+        from.setProperty("biff", true);
 
         // create element for properties
         Element p = new Element("test");
@@ -67,7 +69,7 @@ public class AbstractNamedBeanManagerConfigXMLTest {
 
         // and test
         Assert.assertEquals("bar", to.getProperty("foo"));
-        Assert.assertEquals(Boolean.valueOf(true), to.getProperty("biff"));
+        Assert.assertTrue( (Boolean)to.getProperty("biff"));
 
     }
 
@@ -119,7 +121,7 @@ public class AbstractNamedBeanManagerConfigXMLTest {
 
         // and test
         Assert.assertEquals(null, to.getProperty("foo"));
-        Assert.assertTrue(to.getPropertyKeys()!=null);
+        Assert.assertNotNull(to.getPropertyKeys());
         Assert.assertEquals(0, to.getPropertyKeys().size());
 
     }
@@ -147,7 +149,7 @@ public class AbstractNamedBeanManagerConfigXMLTest {
         };
 
         from.setProperty("foo", null);
-        from.setProperty("biff", Boolean.valueOf(true));
+        from.setProperty("biff", true);
 
         // create element for properties
         Element p = new Element("test");
@@ -175,7 +177,7 @@ public class AbstractNamedBeanManagerConfigXMLTest {
 
         // and test
         Assert.assertEquals(null, to.getProperty("foo"));
-        Assert.assertEquals(Boolean.valueOf(true), to.getProperty("biff"));
+        Assert.assertTrue((Boolean)to.getProperty("biff"));
 
     }
 
@@ -230,8 +232,9 @@ public class AbstractNamedBeanManagerConfigXMLTest {
         Assert.assertEquals("foo", x.getSystemName(e));
 
     }
-    
+
     @Test
+    @SuppressFBWarnings( value = "NP_LOAD_OF_KNOWN_NULL_VALUE", justification = "ok to pass null if type is set")
     public void testCheckedNamedBeanName() {
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
 
@@ -247,6 +250,8 @@ public class AbstractNamedBeanManagerConfigXMLTest {
     }
 
     @Test
+    @SuppressFBWarnings( value = {"NP_LOAD_OF_KNOWN_NULL_VALUE","NP_NONNULL_PARAM_VIOLATION"},
+        justification = "ok to pass null if type is set")
     public void testCheckedNamedBeanReference() {
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
 
@@ -263,6 +268,8 @@ public class AbstractNamedBeanManagerConfigXMLTest {
     }
 
     @Test
+    @SuppressFBWarnings( value = {"NP_LOAD_OF_KNOWN_NULL_VALUE","NP_NONNULL_PARAM_VIOLATION"},
+        justification = "ok to pass null if type is set")
     public void testCheckedNamedBeanHandle() {
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -291,7 +298,7 @@ public class AbstractNamedBeanManagerConfigXMLTest {
         JUnitUtil.tearDown();
     }
 
-    private class NamedBeanManagerConfigXMLTest extends AbstractNamedBeanManagerConfigXML {
+    private static class NamedBeanManagerConfigXMLTest extends AbstractNamedBeanManagerConfigXML {
 
         @Override
         public boolean load(Element shared, Element perNode) {

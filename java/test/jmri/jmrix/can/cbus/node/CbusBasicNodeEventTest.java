@@ -3,9 +3,7 @@ package jmri.jmrix.can.cbus.node;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,9 +18,9 @@ public class CbusBasicNodeEventTest {
     public void testCTor() {
         assertThat(new CbusBasicNodeEvent(memo,1,2,3,4)).isNotNull();
     }
-    
-    private CanSystemConnectionMemo memo;
-    
+
+    private CanSystemConnectionMemo memo = null;
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -33,7 +31,7 @@ public class CbusBasicNodeEventTest {
 
     @AfterEach
     public void tearDown() {
-        
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         

@@ -101,7 +101,8 @@ public class LncvProgPaneTest extends jmri.util.swing.JmriPanelTest {
         lnPanel.writeButtonActionPerformed();
         LocoNetMessage l = new LocoNetMessage(new int[]{0xB4, 0x6D, 0x7F, 0x59}); // OPC_LONG_ACK
         lnPanel.message(l); // check in monitor
-        Assertions.assertEquals("confirmed by module 77\n", lnPanel.getMonitorContents().substring(lnPanel.getMonitorContents().length() - 23), "Write confirmed in Monitor");
+        Assertions.assertEquals("confirmed by module 77\n",
+                lnPanel.getMonitorContents().substring(lnPanel.getMonitorContents().length() - 23), "Write confirmed in Monitor");
 
         lnPanel.modProgButtonActionPerformed(); // to turn programming off
         Assertions.assertEquals("77", lnPanel.getAddressEntry(), "AddressField 77");

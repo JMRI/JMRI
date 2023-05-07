@@ -47,7 +47,7 @@ public class NceNamedPaneAction extends SystemConnectionNamedPaneAction<NceSyste
             ((NcePanelInterface) p).initComponents(memo);
             return p;
         } catch (Exception ex) {
-            log.warn("could not init pane class: {}", paneClass, ex);
+            log.warn("could not init pane class: {}", paneClass, ex); // NOI18N
         }
 
         return p;
@@ -59,4 +59,5 @@ public class NceNamedPaneAction extends SystemConnectionNamedPaneAction<NceSyste
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceNamedPaneAction.class);
+
 }

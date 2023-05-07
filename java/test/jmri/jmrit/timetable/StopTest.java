@@ -18,9 +18,10 @@ public class StopTest {
     @Test
     public void testCreate() {
         try {
-            new Stop(0, 1);
+            Stop t = new Stop(0, 1);
+            Assertions.fail("stop should have not been created " + t.toString() );
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals(ex.getMessage(), "StopAddFail");  // NOI18N
+            Assert.assertEquals("StopAddFail", ex.getMessage());  // NOI18N
         }
     }
 
@@ -47,24 +48,24 @@ public class StopTest {
         try {
             stop.setDuration(-2);
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals(ex.getMessage(), "StopDurationLt0");  // NOI18N
+            Assert.assertEquals("StopDurationLt0", ex.getMessage());  // NOI18N
         }
         try {
             stop.setDuration(240);
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals(ex.getMessage(), "TimeOutOfRange");  // NOI18N
+            Assert.assertEquals("TimeOutOfRange", ex.getMessage());  // NOI18N
         }
         stop.setDuration(15);
         Assert.assertEquals(15, stop.getDuration());
         try {
             stop.setNextSpeed(-2);
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals(ex.getMessage(), "NextSpeedLt0");  // NOI18N
+            Assert.assertEquals("NextSpeedLt0", ex.getMessage());  // NOI18N
         }
         try {
             stop.setNextSpeed(1);
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals(ex.getMessage(), "TimeOutOfRange");  // NOI18N
+            Assert.assertEquals("TimeOutOfRange", ex.getMessage());  // NOI18N
         }
         stop.setNextSpeed(30);
         Assert.assertEquals(30, stop.getNextSpeed());
@@ -75,7 +76,7 @@ public class StopTest {
         try {
             stop.setStagingTrack(2);
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals(ex.getMessage(), "StagingRange");  // NOI18N
+            Assert.assertEquals("StagingRange", ex.getMessage());  // NOI18N
         }
         stop.setStagingTrack(0);
         Assert.assertEquals(0, stop.getStagingTrack());
@@ -86,7 +87,7 @@ public class StopTest {
 
     @BeforeEach
     public void setUp(@TempDir File folder) throws IOException {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
@@ -94,15 +95,8 @@ public class StopTest {
 
     @AfterEach
     public void tearDown() {
-       // use reflection to reset the static file location.
-       try {
-            Class<?> c = jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
-        }
-        jmri.util.JUnitUtil.tearDown();
+        // reset the static file location.
+        jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.resetFileLocation();
+        JUnitUtil.tearDown();
     }
 }

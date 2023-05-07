@@ -17,60 +17,68 @@ import javax.swing.tree.TreePath;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Module;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.tools.debugger.AbstractDebuggerMaleSocket;
 import jmri.jmrit.logixng.tools.debugger.Debugger;
+import jmri.jmrit.logixng.tools.swing.TreePane.FemaleSocketDecorator;
 import jmri.util.JmriJFrame;
 
 /**
  * Editor of ConditionalNG
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
-public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeListener {
+public final class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeListener {
 
     private static final int panelWidth = 700;
     private static final int panelHeight = 500;
-    
+
     private final Debugger _debugger = InstanceManager.getDefault(Debugger.class);
-    private final TreePane _treePane;
+    private final JPanel _currentTreePanePanel;
+    private final TreePane _conditionalNG_TreePane;
+    private TreePane _currentTreePane;
+    private final List<TreePane> _treePanes = new ArrayList<>();
+    private final JMenuItem _execute;
     private final JMenuItem _runItem;
     private final JMenuItem _stepOverItem;
     private final JMenuItem _stepIntoItem;
-    protected final ConditionalNG _conditionalNG;
+    private final FemaleSocketDecorator _decorator;
+    private final ConditionalNG _conditionalNG;
+    private Deque<Module> _lastModuleStack = new LinkedList<>();
+    private Module _currentModule;
     private AbstractDebuggerMaleSocket _currentMaleSocket;
     private State _currentState = State.None;
     private boolean _run = false;
     private MaleSocket _rootSocket;
     private final JLabel _actionExpressionInfoLabel = new JLabel();
-    
+
     private final Object _lock = new Object();
     private boolean _continue = false;
-    
+
     private final DebuggerSymbolTableModel _symbolTableModel;
-    
+
     /**
      * Maintain a list of listeners -- normally only one.
      */
     private final List<ConditionalNGEventListener> listenerList = new ArrayList<>();
-    
+
     /**
      * This contains a list of commands to be processed by the listener
      * recipient.
      */
     final Map<String, String> logixNGData = new HashMap<>();
-    
+
     /**
      * Construct a ConditionalEditor.
      *
      * @param conditionalNG the ConditionalNG to be edited
      */
     public ConditionalNGDebugger(@Nonnull ConditionalNG conditionalNG) {
-        
+
         _conditionalNG = conditionalNG;
-        
-        _treePane = new TreePane(conditionalNG.getFemaleSocket());
-        _treePane.initComponents((FemaleSocket femaleSocket, JPanel panel) -> {
-            
+
+        _decorator = (FemaleSocket femaleSocket, JPanel panel) -> {
             if (femaleSocket.isConnected()) {
                 MaleSocket maleSocket = femaleSocket.getConnectedSocket();
                 AbstractDebuggerMaleSocket debugMaleSocket =
@@ -112,11 +120,20 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                 }
             }
             return panel;
-        });
-        
+        };
+
+        _conditionalNG_TreePane = new TreePane(conditionalNG.getFemaleSocket());
+        _conditionalNG_TreePane.initComponents(_decorator);
+
+        _currentTreePanePanel = new JPanel(new CardLayout());
+
+        _currentTreePane = _conditionalNG_TreePane;
+        _currentTreePanePanel.add(_conditionalNG.getSystemName(), _conditionalNG_TreePane);
+        _treePanes.add(_conditionalNG_TreePane);
+
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        
+
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         JMenuItem closeWindowItem = new JMenuItem(Bundle.getMessage("CloseWindow"));
         closeWindowItem.addActionListener((ActionEvent e) -> {
@@ -124,98 +141,132 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         });
         fileMenu.add(closeWindowItem);
         menuBar.add(fileMenu);
-        
+
         JMenu debugMenu = new JMenu(Bundle.getMessage("Debug_MenuDebug"));
-        
+
+        _execute = new JMenuItem(Bundle.getMessage("Debug_MenuItem_Execute"));
+        _execute.addActionListener((event) -> { _conditionalNG.execute(); });
+//        _execute.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, ActionEvent.CTRL_MASK));
+        debugMenu.add(_execute);
+
+        debugMenu.addSeparator();
+
         _runItem = new JMenuItem(Bundle.getMessage("Debug_MenuItem_Run"));
         _runItem.addActionListener((event) -> { doRun(); });
         _runItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, ActionEvent.CTRL_MASK));
         _runItem.setEnabled(false);
         debugMenu.add(_runItem);
-        
+
         _stepOverItem = new JMenuItem(Bundle.getMessage("Debug_MenuItem_StepOver"));
         _stepOverItem.addActionListener((ActionEvent e) -> { doStepOver(); });
         _stepOverItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, ActionEvent.SHIFT_MASK));
         _stepOverItem.setEnabled(false);
         debugMenu.add(_stepOverItem);
-        
+
         _stepIntoItem = new JMenuItem(Bundle.getMessage("Debug_MenuItem_StepInto"));
         _stepIntoItem.addActionListener((ActionEvent e) -> { doStepInto(); });
         _stepIntoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
         _stepIntoItem.setEnabled(false);
         debugMenu.add(_stepIntoItem);
-        
+
         menuBar.add(debugMenu);
-        
+
         setJMenuBar(menuBar);
 //        addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
-        
-        if (_conditionalNG.getUserName() == null) {
-            setTitle(Bundle.getMessage("TitleEditConditionalNG", _conditionalNG.getSystemName()));
-        } else {
-            setTitle(Bundle.getMessage("TitleEditConditionalNG2", _conditionalNG.getSystemName(), _conditionalNG.getUserName()));
-        }
-        
-        
+
+        setTitle((Module)null);
+
         JPanel actionExpressionInfo = new JPanel();
         actionExpressionInfo.add(_actionExpressionInfoLabel);
         JScrollPane actionExpressionInfoScrollPane = new JScrollPane(actionExpressionInfo);
         actionExpressionInfoScrollPane.setPreferredSize(new Dimension(400, 200));
-        
-        
+
+
         JPanel symbolPanel = new JPanel();
         JScrollPane variableScrollPane = new JScrollPane(symbolPanel);
         JTable table = new JTable();
-        _symbolTableModel = new DebuggerSymbolTableModel(_conditionalNG);
+        _symbolTableModel = new DebuggerSymbolTableModel();
         table.setModel(_symbolTableModel);
         JScrollPane scrollpane = new JScrollPane(table);
         scrollpane.setPreferredSize(new Dimension(400, 200));
         symbolPanel.add(scrollpane, BorderLayout.CENTER);
-        
-        
+
+
         JSplitPane variableSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                            actionExpressionInfoScrollPane, variableScrollPane);
         variableSplitPane.setOneTouchExpandable(true);
         variableSplitPane.setDividerLocation(50);
-        
-        
+
+
         JPanel watchPanel = new JPanel();
         JScrollPane watchScrollPane = new JScrollPane(watchPanel);
-        
+
         JSplitPane watchSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                            variableSplitPane, watchScrollPane);
         watchSplitPane.setOneTouchExpandable(true);
         watchSplitPane.setDividerLocation(150);
-        
+
         // Provide minimum sizes for the two components in the split pane
         Dimension minimumWatchSize = new Dimension(100, 150);
         variableScrollPane.setMinimumSize(minimumWatchSize);
         watchScrollPane.setMinimumSize(minimumWatchSize);
-        
+
         JSplitPane mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                           _treePane, watchSplitPane);
+                           _currentTreePanePanel, watchSplitPane);
         mainSplitPane.setOneTouchExpandable(true);
         mainSplitPane.setDividerLocation(150);
-        
+
         // Provide minimum sizes for the two components in the split pane
         Dimension minimumMainSize = new Dimension(100, 50);
-        _treePane.setMinimumSize(minimumMainSize);
+        _currentTreePanePanel.setMinimumSize(minimumMainSize);
         watchSplitPane.setMinimumSize(minimumMainSize);
-        
+
         // add panels
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         getContentPane().add(mainSplitPane);
-        
+
         initMinimumSize(new Dimension(panelWidth, panelHeight));
-        
+
         _debugger.addPropertyChangeListener(this);
         _debugger.setBreak(true);
         _debugger.activateDebugger(conditionalNG);
-        
+
         PopupMenu popup = new PopupMenu();
         popup.init();
     }
-    
+
+    private void setTitle(Module module) {
+        if (module != null) {
+            if (_conditionalNG.getUserName() == null) {
+                if (module.getUserName() == null) {
+                    setTitle(Bundle.getMessage("TitleDebugConditionalNG_Module",
+                            _conditionalNG.getSystemName(),
+                            module.getSystemName()));
+                } else {
+                    setTitle(Bundle.getMessage("TitleDebugConditionalNG_Module",
+                            _conditionalNG.getSystemName(),
+                            module.getSystemName(), module.getUserName()));
+                }
+            } else {
+                if (module.getUserName() == null) {
+                    setTitle(Bundle.getMessage("TitleDebugConditionalNG2_Module",
+                            _conditionalNG.getSystemName(), _conditionalNG.getUserName(),
+                            module.getSystemName()));
+                } else {
+                    setTitle(Bundle.getMessage("TitleDebugConditionalNG2_Module",
+                            _conditionalNG.getSystemName(), _conditionalNG.getUserName(),
+                            module.getSystemName(), module.getUserName()));
+                }
+            }
+        } else {
+            if (_conditionalNG.getUserName() == null) {
+                setTitle(Bundle.getMessage("TitleDebugConditionalNG", _conditionalNG.getSystemName()));
+            } else {
+                setTitle(Bundle.getMessage("TitleDebugConditionalNG2", _conditionalNG.getSystemName(), _conditionalNG.getUserName()));
+            }
+        }
+    }
+
     private void doStepOver() {
         AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
         if ((_currentState == State.After) && (_rootSocket == _currentMaleSocket)) {
@@ -227,13 +278,13 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         _currentState = State.None;
         _stepOverItem.setEnabled(false);
         _stepIntoItem.setEnabled(false);
-        _treePane.updateTree(maleSocket);
+        _currentTreePane.updateTree(maleSocket);
         synchronized(_lock) {
             _continue = true;
             _lock.notify();
         }
     }
-    
+
     private void doStepInto() {
         AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
         if ((_currentState == State.After) && (_rootSocket == _currentMaleSocket)) {
@@ -245,16 +296,16 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         _currentState = State.None;
         _stepOverItem.setEnabled(false);
         _stepIntoItem.setEnabled(false);
-        _treePane.updateTree(maleSocket);
+        _currentTreePane.updateTree(maleSocket);
         synchronized(_lock) {
             _continue = true;
             _lock.notify();
         }
     }
-    
+
     private void doRun() {
         _run = true;
-        
+
         if (_currentMaleSocket != null) {
             AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
             if ((_currentState == State.After) && (_rootSocket == _currentMaleSocket)) {
@@ -266,20 +317,20 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             _currentState = State.None;
             _stepOverItem.setEnabled(false);
             _stepIntoItem.setEnabled(false);
-            _treePane.updateTree(maleSocket);
+            _currentTreePane.updateTree(maleSocket);
             synchronized(_lock) {
                 _continue = true;
                 _lock.notify();
             }
         }
     }
-    
+
     public void initMinimumSize(Dimension dimension) {
         setMinimumSize(dimension);
         pack();
         setVisible(true);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void windowClosed(WindowEvent e) {
@@ -290,11 +341,11 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         logixNGData.put("Finish", _conditionalNG.getSystemName());  // NOI18N
         fireLogixNGEvent();
     }
-    
+
     public void addLogixNGEventListener(ConditionalNGEventListener listener) {
         listenerList.add(listener);
     }
-    
+
     /**
      * Notify the listeners to check for new data.
      */
@@ -308,16 +359,49 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
     public void propertyChange(PropertyChangeEvent evt) {
         if (Debugger.STEP_BEFORE.equals(evt.getPropertyName())
                 || Debugger.STEP_AFTER.equals(evt.getPropertyName())) {
-            
+
             String infoString = "";
             _currentMaleSocket = (AbstractDebuggerMaleSocket) evt.getNewValue();
             if (_rootSocket == null) _rootSocket = _currentMaleSocket;
-            
+
 //            System.out.format("propertyChange: %s, %s, run: %b, currentState: %s, BP before: %b, BP after: %b%n", evt.getPropertyName(), ((MaleSocket)evt.getNewValue()).getLongDescription(), _run, _currentState.name(), _currentMaleSocket.getBreakpointBefore(), _currentMaleSocket.getBreakpointAfter());
 //            System.out.format("propertyChange: current: %s, root: %s%n", _currentMaleSocket, _rootSocket);
-            
+
             AtomicBoolean enableMenuItems = new AtomicBoolean(true);
-            
+
+
+            Module module = _currentMaleSocket.getModule();
+
+            // Have we either entered or exited a Module?
+            if (module != _currentModule) {
+                setTitle(module);
+                if ( !_lastModuleStack.isEmpty() && module == _lastModuleStack.peek()) {
+                    _currentTreePanePanel.remove(_currentTreePane);
+                    _treePanes.remove(_treePanes.size()-1);
+                    _currentTreePane = _treePanes.get(_treePanes.size()-1);
+                    if (module != null) {
+                        ((CardLayout)_currentTreePanePanel.getLayout())
+                                .show(_currentTreePanePanel, module.getSystemName());
+                    } else {
+                        ((CardLayout)_currentTreePanePanel.getLayout())
+                                .show(_currentTreePanePanel, _conditionalNG.getSystemName());
+                    }
+                    _lastModuleStack.pop();
+                } else {    // Enter a module
+                    if (module == null) throw new NullPointerException("module is null");
+                    _lastModuleStack.push(_currentModule);
+                    _currentTreePane = new TreePane(module.getRootSocket());
+                    _currentTreePane.initComponents(_decorator);
+                    _treePanes.add(_currentTreePane);
+                    _currentTreePanePanel.add(module.getSystemName(), _currentTreePane);
+                    ((CardLayout)_currentTreePanePanel.getLayout())
+                            .show(_currentTreePanePanel, module.getSystemName());
+                }
+                _currentModule = module;
+            }
+
+
+
             switch (evt.getPropertyName()) {
                 case Debugger.STEP_BEFORE:
                     if (!_run || _currentMaleSocket.getBreakpointBefore()) {
@@ -347,10 +431,8 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                 default:
                     _currentState = State.None;
             }
-            
-            Map<String, SymbolTable.Symbol> symbols =
-                    _conditionalNG.getSymbolTable().getSymbols();
-            
+
+            SymbolTable symbolTable = new DefaultSymbolTable(_conditionalNG.getSymbolTable());
             String infStr = infoString;
             jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
                 if (enableMenuItems.get()) {
@@ -359,12 +441,12 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                     _stepIntoItem.setEnabled(true);
                 }
                 _actionExpressionInfoLabel.setText(infStr);
-                _treePane.updateTree(_currentMaleSocket);
-                _symbolTableModel.update(symbols);
+                _currentTreePane.updateTree(_currentMaleSocket);
+                _symbolTableModel.update(symbolTable);
             });
-            
+
 //            System.out.format("propertyChange middle: %s, %s, run: %b, currentState: %s%n", evt.getPropertyName(), ((MaleSocket)evt.getNewValue()).getLongDescription(), _run, _currentState.name());
-            
+
             if (_currentState != State.None) {
                 try {
                     synchronized(_lock) {
@@ -376,44 +458,44 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                     Thread.currentThread().interrupt();
                 }
             }
-            
+
 //            System.out.format("propertyChange done: %s, %s, run: %b, currentState: %s%n", evt.getPropertyName(), ((MaleSocket)evt.getNewValue()).getLongDescription(), _run, _currentState.name());
         }
     }
-    
-    
+
+
     public interface ConditionalNGEventListener extends EventListener {
-        
+
         public void conditionalNGEventOccurred();
     }
-    
-    
+
+
     private static enum State {
         None,
         Before,
         After,
     }
-    
-    
+
+
     protected class PopupMenu extends JPopupMenu implements ActionListener {
-        
+
         private static final String ACTION_COMMAND_BREAKPOINT_BEFORE = "breakpoint_before";
         private static final String ACTION_COMMAND_BREAKPOINT_AFTER = "breakpoint_after";
 //        private static final String ACTION_COMMAND_EXPAND_TREE = "expandTree";
-        
+
         private final JTree _tree;
         private FemaleSocket _currentFemaleSocket;
         private TreePath _currentPath;
-        
+
         private JMenuItem menuItemBreakpointBefore;
         private JMenuItem menuItemBreakpointAfter;
 //        private JMenuItem menuItemExpandTree;
-        
+
         PopupMenu() {
-            if (_treePane._tree == null) throw new IllegalArgumentException("_tree is null");
-            _tree = _treePane._tree;
+            if (_currentTreePane._tree == null) throw new IllegalArgumentException("_tree is null");
+            _tree = _currentTreePane._tree;
         }
-        
+
         private void init() {
             menuItemBreakpointBefore = new JMenuItem(Bundle.getMessage("PopupMenuBreakpointBefore"));
             menuItemBreakpointBefore.addActionListener(this);
@@ -424,34 +506,34 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             menuItemBreakpointAfter.addActionListener(this);
             menuItemBreakpointAfter.setActionCommand(ACTION_COMMAND_BREAKPOINT_AFTER);
             add(menuItemBreakpointAfter);
-/*            
+/*
             addSeparator();
             menuItemExpandTree = new JMenuItem(Bundle.getMessage("PopupMenuExpandTree"));
             menuItemExpandTree.addActionListener(this);
             menuItemExpandTree.setActionCommand(ACTION_COMMAND_EXPAND_TREE);
             add(menuItemExpandTree);
-*/            
+*/
             setOpaque(true);
             setLightWeightPopupEnabled(true);
-            
+
             final PopupMenu popupMenu = this;
-            
+
             _tree.addMouseListener(
                     new MouseAdapter() {
-                        
+
                         // On Windows, the popup is opened on mousePressed,
                         // on some other OS, the popup is opened on mouseReleased
-                        
+
                         @Override
                         public void mousePressed(MouseEvent e) {
                             openPopupMenu(e);
                         }
-                        
+
                         @Override
                         public void mouseReleased(MouseEvent e) {
                             openPopupMenu(e);
                         }
-                        
+
                         private void openPopupMenu(MouseEvent e) {
                             if (e.isPopupTrigger() && !popupMenu.isVisible()) {
                                 // Get the row the user has clicked on
@@ -471,16 +553,16 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                     }
             );
         }
-        
+
         private void showPopup(int x, int y, FemaleSocket femaleSocket, TreePath path) {
             _currentFemaleSocket = femaleSocket;
             _currentPath = path;
-            
+
             boolean isConnected = femaleSocket.isConnected();
-            
+
             menuItemBreakpointBefore.setEnabled(isConnected);
             menuItemBreakpointAfter.setEnabled(isConnected);
-            
+
             show(_tree, x, y);
         }
 
@@ -494,16 +576,16 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                     if (debugMaleSocket1 == null) throw new RuntimeException("AbstractDebuggerMaleSocket is not found");
                     // Invert breakpoint setting
                     debugMaleSocket1.setBreakpointBefore(!debugMaleSocket1.getBreakpointBefore());
-                    for (TreeModelListener l : _treePane.femaleSocketTreeModel.listeners) {
+                    for (TreeModelListener l : _currentTreePane.femaleSocketTreeModel.listeners) {
                         TreeModelEvent tme = new TreeModelEvent(
                                 _currentFemaleSocket,
                                 _currentPath.getPath()
                         );
                         l.treeNodesChanged(tme);
                     }
-                    _treePane._tree.updateUI();
+                    _currentTreePane._tree.updateUI();
                     break;
-                    
+
                 case ACTION_COMMAND_BREAKPOINT_AFTER:
                     MaleSocket maleSocket2 = _currentFemaleSocket.getConnectedSocket();
                     AbstractDebuggerMaleSocket debugMaleSocket2 =
@@ -511,16 +593,16 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                     if (debugMaleSocket2 == null) throw new RuntimeException("AbstractDebuggerMaleSocket is not found");
                     // Invert breakpoint setting
                     debugMaleSocket2.setBreakpointAfter(!debugMaleSocket2.getBreakpointAfter());
-                    for (TreeModelListener l : _treePane.femaleSocketTreeModel.listeners) {
+                    for (TreeModelListener l : _currentTreePane.femaleSocketTreeModel.listeners) {
                         TreeModelEvent tme = new TreeModelEvent(
                                 _currentFemaleSocket,
                                 _currentPath.getPath()
                         );
                         l.treeNodesChanged(tme);
                     }
-                    _treePane._tree.updateUI();
+                    _currentTreePane._tree.updateUI();
                     break;
-/*                    
+/*
                 case ACTION_COMMAND_EXPAND_TREE:
                     // jtree expand sub tree
                     // https://stackoverflow.com/questions/15210979/how-do-i-auto-expand-a-jtree-when-setting-a-new-treemodel
@@ -529,18 +611,18 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                     for (int i = 0; i < tree.getRowCount(); i++) {
                         tree.expandRow(i);
                     }
-                    
+
                     tree.expandPath(_currentPath);
                     tree.updateUI();
                     break;
-*/                    
+*/
                 default:
                     // Do nothing
             }
         }
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalNGDebugger.class);
 
 }

@@ -74,8 +74,8 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
         assertNotNull(s);
 
-        JsonNode result = null;
-        JsonNode message = null;
+        JsonNode result;
+        JsonNode message;
 
         //set signalhead to Green and verify change
         message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, SignalHead.GREEN);
@@ -86,11 +86,10 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
 
         // try to set to FLASHLUNAR, which should not be allowed for this signalHead,
         //  so check for error, and verify state does not change
-        result = null;
-        message = null;
         try {
             message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, SignalHead.FLASHLUNAR);
             result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+            assertNotNull(result);
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(400, ex.getCode());
@@ -101,12 +100,14 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
         // set signalmast to Held, then verify
         message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, SignalHead.HELD);
         result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        assertNotNull(result);
         assertEquals(true, s.getHeld());
 
         assertEquals(true, s.getHeld());
         // set signalmast to something other than Held, then verify Held is released
         message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, SignalHead.RED);
         result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        assertNotNull(result);
         assertEquals(false, s.getHeld());
     }
 

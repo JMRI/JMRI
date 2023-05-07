@@ -10,9 +10,7 @@ import javax.swing.SwingUtilities;
 import jmri.util.JUnitUtil;
 
 import org.assertj.swing.edt.GuiActionRunner;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -37,8 +35,13 @@ public class SwingPropertyChangeListenerTest {
     public void testPropertyChangeOnEDT() {
         s = new SwingPropertyChangeListener(l, true);
         assertThat(notifiedOnEDT).isFalse();
-        GuiActionRunner.execute(() -> s.propertyChange(e));
+        GuiActionRunner.execute(() -> { triggerPropChange(s); } );
         assertThat(notifiedOnEDT).isTrue();
+    }
+
+    private void triggerPropChange(SwingPropertyChangeListener s) {
+        Assertions.assertNotNull(s);
+        s.propertyChange(e);
     }
 
     /**

@@ -131,4 +131,14 @@ public class CarLoadsTest extends OperationsTestCase {
         Assert.assertEquals("default empty", "E", cl.getDefaultEmptyName());
         Assert.assertEquals("default load", "L", cl.getDefaultLoadName());
     }
+    
+    @Test
+    public void testHazardousCarLoads() {
+        CarLoads cl = InstanceManager.getDefault(CarLoads.class);
+        Assert.assertFalse("Default not hazardous", cl.isHazardous("BoXcaR", "New Boxcar Load"));
+        cl.addName("BoXcaR", "New Boxcar Load");
+        cl.setHazardous("BoXcaR", "New Boxcar Load", true);
+        Assert.assertTrue("Now hazardous", cl.isHazardous("BoXcaR", "New Boxcar Load"));
+    }
+
 }

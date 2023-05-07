@@ -47,6 +47,8 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
 public class TestClassMainMethod {
 
     // Main entry point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
+        justification = "method.invoke(null, Object[]) OK as this is a static class")
     static public void main(String[] args) {
         String className = args[args.length-1];  // last argument is class name
 
@@ -66,7 +68,7 @@ public class TestClassMainMethod {
             Class<?> cl = Class.forName(className);
             // first try to find a main in the class
             try {
-                // will directly invoke Maim in the class
+                // will directly invoke main in the class
                 Method method = cl.getMethod("main", String[].class);
                 method.invoke(null, new Object[] {new String[] { /* put args here */ }});
                 // if main returns, we return from here; threads may still be running

@@ -1,23 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-13-->
-
-  <title>JMRI: WiFi Throttle</title><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <title>JMRI: Régulateur WiFi</title>
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>JMRI: Régulateur WiFi</h1>
+
       <a href="http://withrottle.com"><img height="250" width="150" src="images/WiT150x250.png"
       align="right" alt=""></a> Cette fenêtre commande la connexion entre les manettes WiFi, par
       exemple un IPhone, IPod Touch, ou téléphone Android, et JMRI.
@@ -54,19 +51,20 @@
       "../../../../html/doc/Technical/Networking.shtml">page technique sur le réseau local</a>.</p>
 
       <h3>Étiquettes Fonctions</h3>
-      Les Étiquettes Fonctions peuvent être personnalisées pour chaque Liste à travers JMRI . Ces
+      <p>Les Étiquettes Fonctions peuvent être personnalisées pour chaque Liste à travers JMRI . Ces
       Étiquettes peuvent être affichées à la place des des génériques F1, F2...sur l'écran de
       l'équipement mobile. Les Étiquettes peuvent être ajoutées quand une nouvelle entrée Liste est
       créées, ou par l'édition d'une fiche existante sous l'onglet Étiquettes Fonctions. Pour
       entrer des étiquettes de fonction, le format du programmateur doit être soit "Avancé" soit
-      "Personnalisé".
+      "Personnalisé".</p>
+
       <h3>Itinéraires et Aiguillages</h3>
-      L'application peut commander tous les aiguillages (et itinéraires) que JMRI commande. S'ils
+      <p>L'application peut commander tous les aiguillages (et itinéraires) que JMRI commande. S'ils
       sont disponibles dans le tableau Aiguillage (ou Itinéraire) de JMRI, ils sont automatiquement
       disponibles dans les régulateurs WiFi. S'il n'y a pas d'aiguillages (ou itinéraires dans le
       tableau(x) alors l'écran de commande pour eux n'apparaitra pas dans l'application. Par
       défaut,il peut faire tout ceci. Toutefois, si JMRI n'est pas capable de les commander, les
-      régulateurs ne seront pas capables de le faire.
+      régulateurs ne seront pas capables de le faire.</p>
       <p>En supplément, vous pouvez limiter quels aiguillages apparaissent. Dans JMRI avec la
       fenêtre Withrottle active, il y a un menu Withrottle. Il y a un élément appelé "Filtre de
       Commandes" qui vous permet de dire quels aiguillages afficher sur l'écran ou le cacher.</p>
@@ -90,8 +88,10 @@
       fabricant pour la construction et la commande des couplages. Ces couplages devraient mieux
       fontionner lors qu'ils sont construits avec un dispositif WiFi, mais commandés par un
       régulateur du fabricant de votre système DCC.</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

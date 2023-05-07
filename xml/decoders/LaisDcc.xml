@@ -479,7 +479,7 @@
                 <label xml:lang="it">Versione Decoder: </label>
                 <label xml:lang="fr">Version décodeur: </label>
                 <label xml:lang="de">Decoder Version: </label>
-                <label xml:lang="cs">Verze dekodéru: </label>
+                <label xml:lang="cs">Verze dekodéru </label>
                 <tooltip xml:lang="cs">Verze dekodéru. Pouze pro čtení.</tooltip>
             </variable>
             <variable CV="8" readOnly="yes" item="Manufacturer" default="134" tooltip="Decoder Maker, Read Only">
@@ -488,7 +488,7 @@
                 <label xml:lang="it">ID Costruttore: </label>
                 <label xml:lang="fr">ID constructeur: </label>
                 <label xml:lang="de">Hersteller ID: </label>
-                <label xml:lang="cs">ID výrobce: </label>
+                <label xml:lang="cs">ID výrobce </label>
                 <tooltip xml:lang="cs">Výrobce dekodéru. Pouze pro čtení.</tooltip>
             </variable>
             <variable CV="10" default="88" item="EMF Control Reference" tooltip="turn off BEMF above this speed step">

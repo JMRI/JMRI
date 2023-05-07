@@ -1,30 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Blorec Herv&#233; 2013-09-26-->
 
   <title>JMRI: The Python/Jython language</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
-<h2>JMRI: Le langage Python/Jython</h2>
+      <!-- Page Body -->
+
+      <h2>JMRI: Le langage Python/Jython</h2>
       <p><a href=
       "http://www.python.org">Python</a> est un langage de script
       couramment utilis&eacute; qui est disponible sur de nombreux
@@ -84,32 +75,32 @@
       <em>arriviez</em> &agrave; le faire en Python.
 
       <p>Par exemple, cela est une erreur de syntaxe:</p>
-      <pre>
-    A = 15
-        print a
-    b = 21
-   
-</pre>parce que ces d&eacute;clarations, bien que logiquement
-regroup&eacute;s au m&ecirc;me niveau dans le programme, ne sont
-pas indent&eacute;es de la m&ecirc;me mani&egrave;re. Cela sonne
-comme une douleur au d&eacute;but, mais vous vous habituerez
-rapidement &agrave; elle. Ensuite, il rend les choses comme suit
-assez facile &agrave; lire, sans avoir &agrave; s'inqui&eacute;ter
-de savoir o&ugrave; l'{et }aller:
-      <pre>
-         if now == -1):
-                 done = 1
-         else:
-                 done = 0
-         print done
-  
+<pre>
+A = 15
+  print a
+b = 21
 </pre>
-<p>Si vous obtenez un message &agrave; propos de "Syntax error",
-regardez le num&eacute;ro de la ligne indiqu&eacute;e pour voir si
-votre indentation n'est pas align&eacute;e.</p>
+      <p>parce que ces d&eacute;clarations, bien que logiquement
+      regroup&eacute;s au m&ecirc;me niveau dans le programme, ne sont
+      pas indent&eacute;es de la m&ecirc;me mani&egrave;re. Cela sonne
+      comme une douleur au d&eacute;but, mais vous vous habituerez
+      rapidement &agrave; elle. Ensuite, il rend les choses comme suit
+      assez facile &agrave; lire, sans avoir &agrave; s'inqui&eacute;ter
+      de savoir o&ugrave; l'{et }aller:</p>
+      <pre>
+if now == -1):
+  done = 1
+else:
+  done = 0
+print done
+</pre>
+      <p>Si vous obtenez un message &agrave; propos de "Syntax error",
+      regardez le num&eacute;ro de la ligne indiqu&eacute;e pour voir si
+      votre indentation n'est pas align&eacute;e.</p>
 
-<!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

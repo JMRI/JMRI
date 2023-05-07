@@ -14,12 +14,12 @@ import org.junit.Assert;
 public class ProgrammerExceptionTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testConstructor(){
       Assert.assertNotNull("ProgrammerException constructor",new ProgrammerException());
    }
 
    @Test
-   public void StringConstructorTest(){
+   public void testStringConstructor(){
       Assert.assertNotNull("ProgrammerException string constructor",new ProgrammerException("test exception"));
    }
 

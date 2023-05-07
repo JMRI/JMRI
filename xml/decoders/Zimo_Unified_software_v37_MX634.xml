@@ -24,6 +24,7 @@
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!-- V 1 new file - Mark Waters - 7 Feb 2015-->
   <!-- v1.1,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020 -->
+  <!-- v1.2,  include CV's 190-191, Ulrich Gerlach 25 March 2023        --> 
   <decoder>
     <family name="Zimo Unified software (version 37+)" mfg="Zimo">
       <model model="MX634 version 37+" replacementModel="MX634 version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="240">
@@ -53,11 +54,11 @@
         </output>
         <output name="7" label="FO 5 (+5v)">
           <label xml:lang="de">FA5|(+5v)</label>
-          <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+          <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
         </output>
         <output name="8" label="FO 6 (+5v)">
           <label xml:lang="de">FA6|(+5v)</label>
-          <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+          <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
@@ -80,19 +81,19 @@
         </output>
         <output name="5" label="FO 3 (+5v)">
           <label xml:lang="de">FA3 (+5v)</label>
-          <label xml:lang="cs">Funkční výstup 3 (+5v)</label>
+          <label xml:lang="cs">Funkční výstup 3 (+5V)</label>
         </output>
         <output name="6" label="FO 4 (+5v)">
           <label xml:lang="de">FA4 (+5v)</label>
-          <label xml:lang="cs">Funkční výstup 4 (+5v)</label>
+          <label xml:lang="cs">Funkční výstup 4 (+5V)</label>
         </output>
         <output name="7" label="FO 5 (+5v)">
           <label xml:lang="de">FA5</label>
-          <label xml:lang="cs">Funkční výstup 5 (+5v)</label>
+          <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
         </output>
         <output name="8" label="FO 6 (+5v)">
           <label xml:lang="de">FA6</label>
-          <label xml:lang="cs">Funkční výstup 6 (+5v)</label>
+          <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
@@ -123,11 +124,11 @@
         </output>
         <output name="7" label="FO 5 (+5v)">
           <label xml:lang="de">FA5</label>
-          <label xml:lang="cs">Funkční výstup 5</label>
+          <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
         </output>
         <output name="8" label="FO 6 (+5v)">
           <label xml:lang="de">FA6</label>
-          <label xml:lang="cs">Funkční výstup 6</label>
+          <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
@@ -158,11 +159,11 @@
         </output>
         <output name="7" label="FO 5 (+5v)">
           <label xml:lang="de">FA5</label>
-          <label xml:lang="cs">Funkční výstup 5</label>
+          <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
         </output>
         <output name="8" label="FO 6 (+5v)">
           <label xml:lang="de">FA6</label>
-          <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+          <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
@@ -193,11 +194,11 @@
         </output>
         <output name="7" label="FO 5 (+5v)">
           <label xml:lang="de">FA5|(+5v)</label>
-          <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+          <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
         </output>
         <output name="8" label="FO 6 (+5v)">
           <label xml:lang="de">FA6|(+5v)</label>
-          <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+          <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
@@ -210,6 +211,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/zimo/CV190-CV191.xml"/>
      <!-- CV7 set to default 37 -->
       <variable CV="7" item="Decoder Version" readOnly="yes" default="37">
         <decVal/>
@@ -217,31 +219,31 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
-        <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="cs">Verze dekodéru </label>
       </variable> 
       <variable item="Decoder ID 1" CV="250" default="240" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>
         <label xml:lang="it">ID 2 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 2:</label>
+        <label xml:lang="cs">Dekodér ID 2</label>
       </variable>
       <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
         <label xml:lang="it">ID 3 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 3:</label>
+        <label xml:lang="cs">Dekodér ID 3</label>
       </variable>
       <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
         <label xml:lang="it">ID 4 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 4:</label>
+        <label xml:lang="cs">Dekodér ID 4</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV399.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v36.xml"/>

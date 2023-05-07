@@ -3,6 +3,8 @@ package jmri.jmrix.dccpp;
 import java.util.LinkedHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
+
 import org.apache.commons.lang3.StringUtils;
 import java.util.regex.PatternSyntaxException;
 import org.slf4j.Logger;
@@ -71,9 +73,13 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         setBinary(false);
         myRegex = "";
         myReply = new StringBuilder(reply);
-        _nDataChars = toString().length();
+        _nDataChars = reply.length();
     }
 
+    /**
+     * Override default toString.
+     * @return myReply StringBuilder toString.
+     */
     @Override
     public String toString() {
         log.trace("DCCppReply.toString(): msg '{}'", myReply);
@@ -309,12 +315,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * build a propertylist from reply values
+     * build a propertylist from reply values.
      *
      * @return properties hashmap
      **/
     public LinkedHashMap<String, Object> getProperties() {
-        LinkedHashMap<String, Object> properties = new LinkedHashMap<String, Object>();
+        LinkedHashMap<String, Object> properties = new LinkedHashMap<>();
         switch (getOpCodeChar()) {
             case DCCppConstants.TURNOUT_REPLY:
                 if (isTurnoutDefDCCReply()) {
@@ -371,7 +377,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public void parseReply(String s) {
         DCCppReply r = DCCppReply.parseDCCppReply(s);
         log.debug("in parseReply() string: {}", s);
-        if (r != null) {
+        if (!(r.toString().isBlank())) {
             this.myRegex = r.myRegex;
             this.myReply = r.myReply;
             this._nDataChars = r._nDataChars;
@@ -391,6 +397,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * @param s String to be parsed
      * @return DCCppReply or empty string if not a valid formatted string
      */
+    @Nonnull
     public static DCCppReply parseDCCppReply(String s) {
 
         if (log.isTraceEnabled()) {
@@ -827,10 +834,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return (this.getValueInt(2));
         } else if (this.isLocoStateReply()) {
             int speed = this.getValueInt(3) & 0x7f; // drop direction bit
-            if (speed == 1)
+            if (speed == 1) {
                 return -1; // special case for eStop
-            if (speed > 1)
+            }
+            if (speed > 1) {
                 return speed - 1; // bump speeds down 1 due to eStop at 1
+            }
             return 0; // stop is zero
         } else {
             log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
@@ -1126,12 +1135,13 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public String getPowerDistrictStatus() {
         if (this.isNamedPowerReply()) {
-            if (this.getValueString(1).equals(DCCppConstants.POWER_OFF)) {
-                return ("OFF");
-            } else if (this.getValueString(1).equals(DCCppConstants.POWER_ON)) {
-                return ("ON");
-            } else {
-                return ("OVERLOAD");
+            switch (this.getValueString(1)) {
+                case DCCppConstants.POWER_OFF:
+                    return ("OFF");
+                case DCCppConstants.POWER_ON:
+                    return ("ON");
+                default:
+                    return ("OVERLOAD");
             }
         } else {
             log.error("NamedPowerReply Parser called on non-NamedPowerReply message type {} message {}",

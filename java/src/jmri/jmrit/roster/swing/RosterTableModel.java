@@ -1,20 +1,24 @@
 package jmri.jmrit.roster.swing;
 
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Date;
+import java.text.ParseException;
+import java.util.*;
+
 import javax.annotation.CheckForNull;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
+
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
-import jmri.util.swing.XTableColumnModel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,17 +47,18 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     static final int OWNERCOL = 8;
     static final int DATEUPDATECOL = 9;
     public static final int PROTOCOL = 10;
-    private int NUMCOL = PROTOCOL + 1;
+    public static final int NUMCOL = PROTOCOL + 1;
     private String rosterGroup = null;
     boolean editable = false;
-
+    
     public RosterTableModel() {
         this(false);
     }
 
     public RosterTableModel(boolean editable) {
         this.editable = editable;
-        Roster.getDefault().addPropertyChangeListener(this);
+        Roster.getDefault().addPropertyChangeListener(RosterTableModel.this);
+        setRosterGroup(null); // add prop change listeners to roster entries
     }
 
     /**
@@ -72,6 +77,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Roster.ADD)) {
+            setRosterGroup(getRosterGroup()); // add prop change listener to new entry
             fireTableDataChanged();
         } else if (e.getPropertyName().equals(Roster.REMOVE)) {
             fireTableDataChanged();
@@ -99,21 +105,9 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     @Override
-    public void addColumn(Object c) {
-        NUMCOL++;
-        super.addColumn(c);
-    }
-
-    @Override
     public int getColumnCount() {
-        return NUMCOL;
+        return NUMCOL + getModelAttributeKeyColumnNames().length;
     }
-
-    //The table columnModel is added to here to assist with getting the details of user generated roster attributes.
-    public void setColumnModel(XTableColumnModel tcm) {
-        _tcm = tcm;
-    }
-    XTableColumnModel _tcm = null;
 
     @Override
     public String getColumnName(int col) {
@@ -141,13 +135,25 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             case PROTOCOL:
                 return Bundle.getMessage("FieldProtocol");
             default:
-                break;
+                return getColumnNameAttribute(col);
         }
-        if (_tcm != null) {
-            TableColumn tc = _tcm.getColumnByModelIndex(col);
-            if (tc != null) {
-                return (String) tc.getHeaderValue();
+    }
+
+    private String getColumnNameAttribute(int col) {
+        if ( col < getColumnCount() ) {
+            String attributeKey = getAttributeKey(col);
+            try {
+                return Bundle.getMessage(attributeKey);
+            } catch (java.util.MissingResourceException ex){}
+
+            String[] r = attributeKey.split("(?=\\p{Lu})"); // NOI18N
+            StringBuilder sb = new StringBuilder();
+            sb.append(r[0].trim());
+            for (int j = 1; j < r.length; j++) {
+                sb.append(" ");
+                sb.append(r[j].trim());
             }
+            return sb.toString();
         }
         return "<UNKNOWN>"; // NOI18N
     }
@@ -162,8 +168,15 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             case DATEUPDATECOL:
                 return Date.class;
             default:
-                return String.class;
+                return getColumnClassAttribute(col);
         }
+    }
+
+    private Class<?> getColumnClassAttribute(int col){
+        if (RosterEntry.ATTRIBUTE_LAST_OPERATED.equals( getAttributeKey(col))) {
+            return Date.class;
+        }
+        return String.class;
     }
 
     /**
@@ -200,6 +213,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         }
         return editable;
     }
+
     RosterIconFactory iconFactory = null;
 
     ImageIcon getIcon(RosterEntry re) {
@@ -251,11 +265,23 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             default:
                 break;
         }
-        String value = re.getAttribute(getColumnName(col).replaceAll("\\s", "")); // NOI18N
-        if (value != null) {
-            return value;
+        return getValueAtAttribute(re, col);
+    }
+
+    private Object getValueAtAttribute(RosterEntry re, int col){
+        String attributeKey = getAttributeKey(col);
+        String value = re.getAttribute(attributeKey); // NOI18N
+        if (RosterEntry.ATTRIBUTE_LAST_OPERATED.equals( attributeKey)) {
+            if (value == null){
+                return null;
+            }
+            try {
+                return new StdDateFormat().parse(value);
+            } catch (ParseException ex){
+                return null;
+            }
         }
-        return "";
+        return (value == null ? "" : value);
     }
 
     @Override
@@ -270,59 +296,45 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             log.warn("Entry is already open");
             return;
         }
+        if (Objects.equals(value, getValueAt(row, col))) {
+            return;
+        }
         String valueToSet = (String) value;
         switch (col) {
             case IDCOL:
-                if (re.getId().equals(valueToSet)) {
-                    return;
-                }
                 re.setId(valueToSet);
                 break;
             case ROADNAMECOL:
-                if (re.getRoadName().equals(valueToSet)) {
-                    return;
-                }
                 re.setRoadName(valueToSet);
                 break;
             case ROADNUMBERCOL:
-                if (re.getRoadNumber().equals(valueToSet)) {
-                    return;
-                }
                 re.setRoadNumber(valueToSet);
                 break;
             case MFGCOL:
-                if (re.getMfg().equals(valueToSet)) {
-                    return;
-                }
                 re.setMfg(valueToSet);
                 break;
             case MODELCOL:
-                if (re.getModel().equals(valueToSet)) {
-                    return;
-                }
                 re.setModel(valueToSet);
                 break;
             case OWNERCOL:
-                if (re.getOwner().equals(valueToSet)) {
-                    return;
-                }
                 re.setOwner(valueToSet);
                 break;
             default:
-                String attributeName = (getColumnName(col)).replaceAll("\\s", "");
-                if (re.getAttribute(attributeName) != null && re.getAttribute(attributeName).equals(valueToSet)) {
-                    return;
-                }
-                if ((valueToSet == null) || valueToSet.isEmpty()) {
-                    re.deleteAttribute(attributeName);
-                } else {
-                    re.putAttribute(attributeName, valueToSet);
-                }
+                setValueAtAttribute(valueToSet, re, col);
                 break;
         }
         // need to mark as updated
         re.changeDateUpdated();
         re.updateFile();
+    }
+
+    private void setValueAtAttribute(String valueToSet, RosterEntry re, int col) {
+        String attributeKey = getAttributeKey(col);
+        if ((valueToSet == null) || valueToSet.isEmpty()) {
+            re.deleteAttribute(attributeKey);
+        } else {
+            re.putAttribute(attributeKey, valueToSet);
+        }
     }
 
     public int getPreferredWidth(int column) {
@@ -355,8 +367,38 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         return this.rosterGroup;
     }
 
+    // access via method to ensure not null
+    private String[] attributeKeys = null; 
+
+    private String[] getModelAttributeKeyColumnNames() {
+        if ( attributeKeys == null ) {
+            Set<String> result = new TreeSet<>();
+            for (String s : Roster.getDefault().getAllAttributeKeys()) {
+                if ( !s.contains("RosterGroup")
+                    && !s.toLowerCase().startsWith("sys")
+                    && !s.toUpperCase().startsWith("VSD")) { // NOI18N
+                    result.add(s);
+                }
+            }
+            attributeKeys = result.toArray(String[]::new);
+            }
+        return attributeKeys;
+    }
+
+    private String getAttributeKey(int col) {
+        if ( col >= NUMCOL && col < getColumnCount() ) {
+            return getModelAttributeKeyColumnNames()[col - NUMCOL ];
+        }
+        return "";
+    }
+
     // drop listeners
     public void dispose() {
+        Roster.getDefault().removePropertyChangeListener(this);
+        Roster.getDefault().getEntriesInGroup(this.rosterGroup).forEach((re) -> {
+            re.removePropertyChangeListener(this);
+        });
     }
+
     private final static Logger log = LoggerFactory.getLogger(RosterTableModel.class);
 }

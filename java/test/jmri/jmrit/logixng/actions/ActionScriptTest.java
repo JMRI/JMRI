@@ -24,8 +24,8 @@ import org.junit.Test;
  */
 public class ActionScriptTest extends AbstractDigitalActionTestBase {
 
-    private final String _scriptText = "lights.provideLight(\"IL1\").commandedState = ON";
-    private final String _ecmaScript = "var DigitalIO = Java.type(\"jmri.DigitalIO\"); lights.provideLight(\"IL1\").setState(DigitalIO.ON);";
+    private final static String SCRIPT_TEXT = "lights.provideLight(\"IL1\").commandedState = ON";
+    private final static String ECMA_SCRIPT = "var DigitalIO = Java.type(\"jmri.DigitalIO\"); lights.provideLight(\"IL1\").setState(DigitalIO.ON);";
 
 
     private LogixNG logixNG;
@@ -89,13 +89,13 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         ActionScript action2;
 
         action2 = new ActionScript("IQDA321", null);
-        action2.setScript(_scriptText);
+        action2.setScript(SCRIPT_TEXT);
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Execute script: Single line command. Script lights.provideLight(\"IL1\").commandedState = ON", action2.getLongDescription());
 
         action2 = new ActionScript("IQDA321", "My action");
-        action2.setScript(_scriptText);
+        action2.setScript(SCRIPT_TEXT);
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My action", action2.getUserName());
         Assert.assertEquals("String matches", "Execute script: Single line command. Script lights.provideLight(\"IL1\").commandedState = ON", action2.getLongDescription());
@@ -103,7 +103,8 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         boolean thrown = false;
         try {
             // Illegal system name
-            new ActionScript("IQA55:12:XY11", null);
+            ActionScript aScript = new ActionScript("IQA55:12:XY11", null);
+            Assert.fail("action script created: " + aScript.toString() );
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -112,7 +113,8 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         thrown = false;
         try {
             // Illegal system name
-            new ActionScript("IQA55:12:XY11", "A name");
+            ActionScript aScript = new ActionScript("IQA55:12:XY11", "A name");
+            Assert.fail("action script created: " + aScript.toString() );
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -138,7 +140,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("Exception is thrown", hasThrown);
 
         // Test with script
-        actionScript.setScript(_scriptText);
+        actionScript.setScript(SCRIPT_TEXT);
         Assert.assertTrue("getChildCount() returns 0", 0 == actionScript.getChildCount());
     }
 
@@ -218,7 +220,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     @Test
     public void testAction_SingleEcmaCommand() throws Exception {
         actionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
-        actionScript.setScript(_ecmaScript);
+        actionScript.setScript(ECMA_SCRIPT);
 
         // Test action
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
@@ -361,8 +363,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(false);
 
         // Test setScript() when listeners are registered
-        Assert.assertNotNull("Script is not null", _scriptText);
-        actionScript.setScript(_scriptText);
+        actionScript.setScript(SCRIPT_TEXT);
         Assert.assertNotNull("Script is not null", actionScript.getScript());
 
         // Test bad script
@@ -392,7 +393,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
 
         ifThenElse = new IfThenElse("IQDA321", null);
-        ifThenElse.setType(IfThenElse.Type.AlwaysExecute);
+        ifThenElse.setExecuteType(IfThenElse.ExecuteType.AlwaysExecute);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
@@ -406,7 +407,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         ifThenElse.getChild(0).connect(maleSocket2);
 
         actionScript = new ActionScript(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        actionScript.setScript(_scriptText);
+        actionScript.setScript(SCRIPT_TEXT);
         MaleSocket socketActionSimpleScript = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionScript);
         ifThenElse.getChild(1).connect(socketActionSimpleScript);
 

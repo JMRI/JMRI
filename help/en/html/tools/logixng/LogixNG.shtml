@@ -88,6 +88,17 @@
         individual LogixNGs, log errors, and "throw" an exception for further analysis.  See
         <a href="ErrorHandling.shtml">Error Handling</a></p></dd>
 
+        <dt>Threads</dt>
+
+        <dd>LogixNG runs in its own Java thread.  This reduces conflicts between LogixNG processes
+        and the rest of the JMRI.  Two threads are always present.  The first
+        is for normal LogixNG actions and the second is used for the LogixNG debugger.  When the
+        debugger is used in single step mode, the thread is stopped.  By running the ConditionalNG
+        in the debugger thread, other LogixNG processing is not affected.  For additional information
+        on using threads, see
+        <a href="../../../package/jmri/jmrit/logixng/LogixNGTableEditor.shtml#EditThreads">
+        ConditionalNG Threads</a>.</dd>
+
         </dl>
 
 
@@ -166,38 +177,76 @@
 
       <div style="margin-left: 2em">
         <a href="images/Preferences.png"><img src="images/Preferences.png" alt=
-        "LogixNG Preferences" width="298" height="225"></a>
+        "LogixNG Preferences"></a>
       </div>
 
       <dl>
         <dt>Start LogixNGs on load</dt>
 
-        <dd>If checked, the <strong>enabled</strong> LogixNG definitions will be active after the
-        completion of the PanelPro xml data file loading. If not checked, the LogixNGs will be
-        inactive until <strong>Tools &rArr; LogixNG &rArr; Start LogixNG</strong> is selected. The default
-        setting is checked.</dd>
+        <dd>
+          <p>If checked, the <strong>enabled</strong> LogixNG definitions will be active after the
+          completion of the PanelPro xml data file loading. If not checked, the LogixNGs will be
+          inactive until <strong>Tools &rArr; LogixNG &rArr; Start LogixNG</strong> is selected.
+          The default setting is checked.</p>
+        </dd>
 
         <dt>Install Debugger</dt>
 
-        <dd>There is an option in the LogixNG editor list for debugging a CondditionalNG. This has
-        to be enabled during start up to work.</dd>
+        <dd>
+          <p>LogixNG has a built in debugger. This option needs to be enabled during start up for the
+          debugger to work. See <a href="../../../package/jmri/jmrit/logixng/ConditionalNGDebugger.shtml">
+          LogixNG Debugger</a> for information about the debugger.</p>
+        </dd>
 
         <dt>Show system names and user names</dt>
 
-        <dd>The LogixNG expressions and actions have names. These names are used internally by
-        LogixNG. In certain developer situations, making the names visible can be helpful. The
-        default is unchecked.</dd>
+        <dd>
+          <p>The LogixNG expressions and actions have names. These names are used internally by
+          LogixNG. In certain developer situations, making the names visible can be helpful. The
+          default is unchecked.</p>
+        </dd>
 
         <dt>Highlight row in ConditionalNG editor</dt>
 
-        <dd>When this option is enabled, the currently selected row will be highlighted.  This can
-        provide visual feedback, such as when the popup menu is open.</dd>
+        <dd>
+          <p>When this option is enabled, the currently selected row will be highlighted.  This can
+          provide visual feedback, such as when the popup menu is open.</p>
+
+          <p><span class="since">since 5.1.5</span>The arrow keys can be used to move between rows
+          and shortcut keys are available to perform menu items without opening the context menu.</p>
+
+          <ul>
+            <li>Ctrl + N: Create new</li>
+            <li>Ctrl + E: Edit</li>
+            <li>Ctrl + R: Remove</li>
+            <li>Ctrl + X: Cut</li>
+            <li>Ctrl + C: Copy</li>
+            <li>Ctrl + V: Paste</li>
+            <li>Shift + Ctrl + V: Paste copy</li>
+            <li>Shift + Ctrl + R: Remove socket</li>
+            <li>Ctrl + D: Disable</li>
+            <li>Shift + Ctrl + D: Enable</li>
+          </ul>
+
+          <p>For macOS, use Cmd instead of Ctrl.</p>
+        </dd>
+
+        <dt>Show system names in exceptions<span class="since">since 5.1.6</span></dt>
+
+        <dd>
+          <p>When this option is enabled, the system name of the LogixNG item will be included in the
+          exception dialog.  This will help with finding the LogixNG and ConditionalNG that created
+          the error.  A related change to the LogixNG browser is the option to include the system
+          name on the browser report.</p>
+        </dd>
 
         <dt>Error Handling Options</dt>
 
-        <dd>LogixNG has robust error handling. The combo box selection provides the default setting.
-        Individual expressions and actions can override the default setting. For details, see
-        <a href="ErrorHandling.shtml">Error Handling</a></dd>
+        <dd>
+          <p>LogixNG has robust error handling. The combo box selection provides the default setting.
+          Individual expressions and actions can override the default setting. For details, see
+          <a href="ErrorHandling.shtml">Error Handling</a></p>
+        </dd>
 
         <dd>
         </dd>
@@ -209,7 +258,7 @@
 
       <h2 id="tools">LogixNG Tools</h2>
 
-      <p>LogixNG has four system level tools at Tools &rArr; LogixNG.</p>
+      <p>LogixNG has five system level tools at <strong>Tools &rArr; LogixNG</strong>.</p>
 
       <p><strong>Start LogixNG</strong> and <strong>Stop LogixNG</strong> are used to control the
       processing of LogixNG ConditionalNG defintions. When LogixNG is <strong>active</strong> ,
@@ -226,6 +275,10 @@
       <p>Logix definitions can be be imported into LogixNG using <a href=
       "../../../package/jmri/jmrit/logixng/LogixImport.shtml">Import Logix</a>.</p>
 
+      <p>The <strong>Inline LogixNG</strong> tool displays the LogixNG definitions that have been
+      attached to panel items.  For details, see
+      <a href="../../../package/jmri/jmrit/logixng/InlineLogixNG.shtml">Inline LogixNG</a>.</p>
+
       <h2>Documentation</h2>
 
       <p>This document is an introduction and overview of LogixNG. The sidebar contains links to
@@ -236,6 +289,32 @@
       LogixNG components that are similar to Logix. The <strong>Advance Features</strong> section
       covers new features that did not exist in Logix or were incomplete.</p>
 
+      <h2 id="disable">Disabling LogixNG during PanelPro start up</h2>
+
+      <p>In addition to the preference settings and the LogixNG tools, it is possible to disable
+      LogixNG during PanelPro startup.  This can be necessary if there is a bad logic that locks up
+      PanelPro immediately after file loading.</p>
+
+      <p>When the PanelPro startup splash dialog is displayed, press <strong>F8</strong> or
+      <strong>F9</strong>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="../../setup/images/StartDialog.png"><img src="../../setup/images/StartDialog.png" alt=
+        "PanelPro startup dialog"></a>
+      </div>
+
+      <p>If <strong>F8</strong> is selected <strong><em>and</em></strong> a layout data xml file is
+      being loaded using a start up action, the LogixNG table entries will be disabled. The F8 key
+      has no impact when a file is loaded using <strong>File &rArr; Load table content and panels...
+      </strong>.  In this case, use <strong>Tools &rArr; LogixNG &rArr; Stop LogixNG</strong>
+      before loading the file.</p>
+
+      <p>If <strong>F9</strong> is selected, LogixNG will not start after layout data file loading
+      is done, whether as a start up action or manually.  The LogixNG table entries will be
+      enabled/disabled based on their state in the xml file.  When the problem has been resolved then
+      <strong>Tools &rArr; LogixNG &rArr; Start LogixNG</strong> can be used to activate LogixNG
+      processing.</p>
+
       <h2>Sample</h2>
 
       <p>This is a sample layout with LogixNG controlling the turnouts. The turnout sensors toggle
@@ -243,7 +322,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/sample_panel.png"><img src="images/sample_panel.png" alt=
-        "LogixNG sample panel" width="523" height="203"></a>
+        "LogixNG sample panel"></a>
       </div>
 
       <p>The logic uses a table to identify the turnouts, the toggle sensors and the lock
@@ -251,7 +330,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/sample_table.png"><img src="images/sample_table.png" alt=
-        "LogixNG sample table" width="257" height="140"></a>
+        "LogixNG sample table"></a>
       </div>
 
       <p>Each turnout has a ConditionalNG that is triggered when the toggle sensor changes state.
@@ -260,7 +339,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/sample_logixng.png"><img src="images/sample_logixng.png" alt=
-        "LogixNG sample logixng" width="345" height="142"></a>
+        "LogixNG sample logixng"></a>
       </div>
 
       <p>The module checks the lock sensor based on the row number and if ok, toggles the turnout
@@ -268,7 +347,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/sample_module.png"><img src="images/sample_module.png" alt=
-        "LogixNG sample module" width="630" height="198"></a>
+        "LogixNG sample module"></a>
       </div>
 
       <p>An initialization LogixNG is used to set the initial sensor and turnout states. This
@@ -276,7 +355,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/sample_initialization.png"><img src="images/sample_initialization.png" alt=
-        "LogixNG sample initialization" width="853" height="479"></a>
+        "LogixNG sample initialization"></a>
       </div>
       <!--#include virtual="/Footer.shtml" -->
     </div>

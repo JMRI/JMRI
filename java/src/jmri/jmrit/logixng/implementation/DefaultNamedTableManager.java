@@ -56,11 +56,21 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
 //        }
     }
 
+
     /**
      * {@inheritDoc}
      */
     @Override
     public NamedTable newCSVTable(String systemName, String userName, String fileName)
+            throws IllegalArgumentException {
+        return newCSVTable(systemName, userName, fileName, Table.CsvType.TABBED);
+    }
+
+    /**
+    * {@inheritDoc}
+    */
+    @Override
+    public NamedTable newCSVTable(String systemName, String userName, String fileName, Table.CsvType csvType)
             throws IllegalArgumentException {
 
         // Check that NamedTable does not already exist
@@ -80,8 +90,9 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
             throw new IllegalArgumentException("SystemName " + systemName + " is not in the correct format");
         }
         try {
+            log.debug("about to load file {}", fileName );
             // NamedTable does not exist, create a new NamedTable
-            x = AbstractNamedTable.loadTableFromCSV_File(systemName, userName, fileName, true);
+            x = AbstractNamedTable.loadTableFromCSV_File(systemName, userName, fileName, true, csvType);
         } catch (IOException ex) {
 //            Exceptions.printStackTrace(ex);
             log.error("Cannot load table due to I/O error", ex);
@@ -148,8 +159,10 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     @Override
     public NamedTable loadTableFromCSVData(
             @Nonnull String sys, @CheckForNull String user, @Nonnull String text)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
-        return AbstractNamedTable.loadTableFromCSV_Text(sys, user, text, true);
+            throws NamedBean.BadUserNameException,
+            NamedBean.BadSystemNameException,
+            IOException {
+            return AbstractNamedTable.loadTableFromCSV_Text(sys, user, text, true, Table.CsvType.TABBED);
     }
 
     /**
@@ -160,7 +173,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
             @Nonnull String sys, @CheckForNull String user,
             @Nonnull String fileName)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        return AbstractNamedTable.loadTableFromCSV_File(sys, user, fileName, true);
+        return AbstractNamedTable.loadTableFromCSV_File(sys, user, fileName, true, Table.CsvType.TABBED);
     }
 
     /**
@@ -171,7 +184,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
             @Nonnull String sys, @CheckForNull String user,
             @Nonnull File file)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        return AbstractNamedTable.loadTableFromCSV_File(sys, user, file, true);
+        return AbstractNamedTable.loadTableFromCSV_File(sys, user, file, true, Table.CsvType.TABBED);
     }
 
     /**

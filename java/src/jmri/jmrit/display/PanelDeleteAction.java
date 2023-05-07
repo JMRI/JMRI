@@ -53,6 +53,11 @@ public class PanelDeleteAction extends AbstractAction {
             if (panelName != null && !panelName.isEmpty()) {
                 Editor selected = InstanceManager.getDefault(EditorManager.class).get(panelName);
                 if (selected != null) {
+                    if (selected instanceof jmri.jmrit.display.layoutEditor.LayoutEditor) {
+                        if (!((jmri.jmrit.display.layoutEditor.LayoutEditor)selected).canDeletePanel()) {
+                            return;
+                        }
+                    }
                     if (selected instanceof jmri.jmrit.display.panelEditor.PanelEditor ||
                              selected instanceof jmri.jmrit.display.switchboardEditor.SwitchboardEditor) {
                         selected.getTargetFrame().dispose();

@@ -191,15 +191,7 @@
         </li>
       </ol>
 
-      <h2>Alternate Setups For Speedometer</h2>
-
-      <h3>Using Less Than 3 Sensors</h3>
-
-      <p>If you have less than 3 sensors it is still possible to use the Speedometer. For example,
-      for short blocks a single sensor can be used.</p>
-
-      <p>In this case the value on the Speedometer window for Sensor #1 and Sensor #2 would be the
-      same number. Sensor #1 would be set to 'Enter' and Sensor #2 would be set to 'Exit'.</p>
+     
 
       <p>Back to the <a href="index.shtml">Speedometer main Help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->

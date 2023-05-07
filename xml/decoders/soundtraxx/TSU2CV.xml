@@ -12,17 +12,93 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!--                                                                        -->
-<!-- Specific CVs for Tsunami2 decoders                                     -->
-<!--                                                                        -->
-<!-- version 1 - initial file (Michael Mosher 2016-05-26)                   -->
-<!-- version 1.1 - update for electric (Alain Le Marchand 2016-06-04)       -->
-<!-- version 1.2 - update for electric (Alain Le Marchand 2018-02-18)       -->
-<!--                                                                        -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2016</year>
+      <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+          <personname>
+              <firstname>Michael</firstname>
+              <surname>Mosher</surname>
+          </personname>
+      </author>
+      <author>
+          <personname>
+              <firstname>Alain</firstname>
+              <surname>Le Marchand</surname>
+          </personname>
+      </author>
+      <author>
+          <personname>
+              <firstname>James</firstname>
+              <surname>Exler</surname>
+          </personname>
+      </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+          <revnumber>1</revnumber>
+          <date>2016-05-26</date>
+          <authorinitials>MM</authorinitials>
+          <revremark>New file</revremark>
+      </revision>
+      <revision>
+          <revnumber>1.1</revnumber>
+          <date>2016-06-04</date>
+          <authorinitials>ALM</authorinitials>
+          <revremark>update for electric</revremark>
+      </revision>
+      <revision>
+          <revnumber>1.2</revnumber>
+          <date>2018-02-18</date>
+          <authorinitials>ALM</authorinitials>
+          <revremark>update for electric</revremark>
+      </revision>
+      <revision>
+          <revnumber>2</revnumber>
+          <date>2022-07-30</date>
+          <authorinitials>JE</authorinitials>
+          <revremark>edit the CV49-58 FX text to match TSU2 values. chg CV63 name to Dimmer Level.</revremark>
+      </revision>
+    </revhistory>
+    <!-- Specific CVs for Tsunami2 decoders -->
+    <variable item="FX7 Phase Selection" CV="55" mask="XXVXXXXX" default="0" minOut="7" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+    </variable>
+    <variable item="FX7 Grade Crossing Logic" CV="55" mask="XVXXXXXX" default="0" minOut="7" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    </variable>
+    <variable item="FX7 Light Type" CV="55" mask="VXXXXXXX" default="0" minOut="7" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+    </variable>
+    <variable item="FX8 Phase Selection" CV="56" mask="XXVXXXXX" default="0" minOut="8" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+    </variable>
+    <variable item="FX8 Grade Crossing Logic" CV="56" mask="XVXXXXXX" default="0" minOut="8" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    </variable>
+    <variable item="FX8 Light Type" CV="56" mask="VXXXXXXX" default="0" minOut="8" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+    </variable>
+    <variable item="FX7 Forward Directional Control" CV="57" mask="XVXXXXXX" default="1" minOut="7" tooltip="Check to enable FX7 function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    </variable>
+    <variable item="FX8 Forward Directional Control" CV="57" mask="VXXXXXXX" default="1" minOut="8" tooltip="Check to enable FX8 function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    </variable>
+    <variable item="FX7 Reverse Directional Control" CV="58" mask="XVXXXXXX" default="1" minOut="7" tooltip="Check to enable FX7 function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    </variable>
+    <variable item="FX8 Reverse Directional Control" CV="58" mask="VXXXXXXX" default="1" minOut="8" tooltip="Check to enable FX8 function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    </variable>
     <variable CV="64" item="Master Brightness" default="255" tooltip="Adjust the brightness level of all lighting outputs">
         <decVal/>
-        <label>Master Brightness</label>
+        <label>Master Brightness Level (0-255)</label>
     </variable>
+    <!-- End Lighting Configuration -->
     <variable CV="118" mask="XVVVVVVV" item="Advanced Group 1 Option 6">
         <decVal max="127"/>
         <label>Train Brake Rate</label>
@@ -31,6 +107,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
         <label>Train Brake Rate Sign</label>
     </variable>
+    <!-- Start Sound Selection -->
     <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="128" exclude="296,297,298"> <!-- should this be ="Tsunami2 Electric"? -->
         <decVal/>
         <label>Train Brake Apply/Release Volume</label>
@@ -124,6 +201,8 @@
         <decVal/>
         <label>Cab Chatter Reverb Level</label>
     </variable>
+    <!-- Automatic Sound Controls (ASC) follow -->
+     <!--Equalizer -->
     <variable CV="220" mask="VVVVVVVV" item="Advanced Group 1 Option 10" default="0" tooltip="&lt;html&gt;determines the fixed distance over which the locomotive will decelerate to a stop after setting the throttle to zero&lt;br&gt; Entering a value of 0 will disable the constant brake distance feature&lt;/html&gt;">
         <decVal/>
         <label>Constant Brake Distance (0-255)</label>
@@ -132,6 +211,7 @@
         <decVal/>
         <label>High-Pass Filter Cutoff Frequency</label>
     </variable>
+    <!-- Equalizer Controls follow -->
     <variable CV="233" item="Reverb Control" mask="XXXXXVVV" default="1" tooltip="Selects one of the reverb presets or selects a user adjustable profile">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumReverb.xml"/>
         <label>Reverb Control</label>

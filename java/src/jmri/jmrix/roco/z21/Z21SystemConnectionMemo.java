@@ -132,7 +132,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
      * Provide manager by class.
      */
     @Override
-    public <T> T get(Class<?> T) {
+    public <T> T get(Class<T> T) {
         if (getDisabled()) {
             return null;
         }

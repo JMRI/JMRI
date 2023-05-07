@@ -223,6 +223,14 @@ public class DefaultConditionalAction implements ConditionalAction {
                         log.error("invalid NX name= \"{}\" in conditional action", devName);
                     }
                     break;
+                case LOGIX:
+                    try {
+                        bean = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
+                        log.error("invalid Logix name= \"{}\" in conditional action", devName);
+                    }
+                    break;
                 default:
                     if (getType() == Conditional.Action.TRIGGER_ROUTE) {
                         try {
@@ -824,13 +832,25 @@ public class DefaultConditionalAction implements ConditionalAction {
                 }
                 break;
             case CONTROL_TRAIN:
-                if (data == Warrant.HALT) {
-                    return (rbx.getString("WarrantHalt"));
-                } else if (data == Warrant.RESUME) {
-                    return (rbx.getString("WarrantResume"));
-                } else {
-                    return (rbx.getString("WarrantAbort"));
+                switch (data) {
+                    case Warrant.HALT:
+                        return (rbx.getString("WarrantHalt"));
+                    case Warrant.RESUME:
+                        return (rbx.getString("WarrantResume"));
+                    case Warrant.RETRY_FWD:
+                        return (rbx.getString("WarrantMoveToNext"));
+                    case Warrant.SPEED_UP:
+                        return (rbx.getString("WarrantSpeedUp"));
+                    case Warrant.STOP:
+                        return (rbx.getString("WarrantStop"));
+                    case Warrant.ESTOP:
+                        return (rbx.getString("WarrantEStop"));
+                    case Warrant.ABORT:
+                        return (rbx.getString("WarrantAbort"));
+                    default:
+                        log.error("Unhandled Warrant control: {}", data);
                 }
+                break;
             default:
                 // fall through
                 break;
@@ -892,6 +912,12 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + ", \"" + _deviceName + "\" " + rbx.getString("to")
                             + " " + getActionDataString();
                     break;
+                case GET_TRAIN_LOCATION:
+                case GET_BLOCK_WARRANT:
+                case GET_BLOCK_TRAIN_NAME:
+                    str = str + " \"" + _deviceName + "\" " + rbx.getString("intoMemory")
+                              + " " + _actionString;
+                    break;
                 case SET_SIGNALMAST_ASPECT:
                     str = str + ", \"" + _deviceName + "\" " + rbx.getString("to")
                             + " " + _actionString;
@@ -942,7 +968,6 @@ public class DefaultConditionalAction implements ConditionalAction {
                     break;
                 case SET_TRAIN_ID:
                 case SET_TRAIN_NAME:
-                case THROTTLE_FACTOR:
                     str = str + ", \"" + _actionString + "\" " + rbx.getString("onWarrant")
                             + " \"" + _deviceName + "\".";
                     break;

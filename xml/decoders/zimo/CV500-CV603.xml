@@ -546,26 +546,32 @@
     <variable CV="593" item="Panto On Sample">
     <decVal/>
     <label>Panto On (Electric)</label>
+    <label xml:lang="cs">Sběrač zvedání</label>
   </variable>
   <variable CV="594" item="Zimo Sound Setting 43">
     <decVal/>
     <label>Panto On (Electric)</label>
+    <label xml:lang="cs">Sběrač zvedání</label>
   </variable>
     <variable CV="595" item="Panto Away Sample">
     <decVal/>
     <label>Panto Away (Electric)</label>
+    <label xml:lang="cs">Sběrač stahování</label>
   </variable>
   <variable CV="596" item="Zimo Sound Setting 44">
     <decVal/>
     <label>Panto Away (Electric)</label>
+    <label xml:lang="cs">Sběrač stahování</label>
   </variable>  
   <variable CV="597" item="Panto Stop Forked Sample">
     <decVal/>
     <label>Panto Forked (Electric)</label>
+    <label xml:lang="cs">Sběrač zaklesnutí</label>
   </variable>
   <variable CV="598" item="Zimo Sound Setting 45">
     <decVal/>
     <label>Panto Forked (Electric)</label>
+    <label xml:lang="cs">Sběrač zaklesnutí</label>
   </variable>  
   
   <variable CV="599" item="Turbocharger Sample">

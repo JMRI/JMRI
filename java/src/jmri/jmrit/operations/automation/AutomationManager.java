@@ -5,15 +5,19 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages automations.
@@ -24,13 +28,16 @@ import org.slf4j.LoggerFactory;
 public class AutomationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "automationListLength"; // NOI18N
-    private int _id = 0; // retain highest automation Id seen to ensure no Id collisions
+    private int _id = 0; // retain highest automation Id seen to ensure no Id
+                         // collisions
 
     public AutomationManager() {
     }
 
     // stores known Automation instances by id
     protected Hashtable<String, Automation> _automationHashTable = new Hashtable<>();
+
+    protected Automation _startupAutomation;
 
     /**
      * @return Number of automations
@@ -64,8 +71,6 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
      * requires automation's name creates a unique id for this automation
      *
      * @param name The string name of the automation.
-     *
-     *
      * @return new automation or existing automation
      */
     public Automation newAutomation(String name) {
@@ -197,7 +202,7 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
             box.addItem(automation);
         }
     }
-    
+
     /**
      * Restarts all automations that were running when the operations program
      * was last saved.
@@ -222,7 +227,33 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
         newAutomation.copyAutomation(automation);
         return newAutomation;
     }
+
+    public Automation getStartupAutomation() {
+        return _startupAutomation;
+    }
     
+    protected String getStartupAutomationId() {
+        String id = "";
+        if (getStartupAutomation() != null) {
+            id = getStartupAutomation().getId();
+        }
+        return id;
+    }
+    
+    public void setStartupAutomation(Automation automation) {
+        Automation old = _startupAutomation;
+        _startupAutomation = automation;
+        setDirtyAndFirePropertyChange("automationStartupIdChanged", old, automation);
+    }
+
+    public void runStartupAutomation() {
+        Automation startup = getStartupAutomation();
+        if (startup != null) {
+            log.debug("Run automation: {}", startup.getName());
+            startup.run();
+        }
+    }
+
     public void dispose() {
         _automationHashTable.clear();
         _id = 0;
@@ -242,6 +273,14 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
                 register(new Automation(eAutomation));
             }
         }
+        // get startup automation after all of the automations have been loaded
+        Element e = root.getChild(Xml.AUTOMATION_OPTIONS);
+        Attribute a;
+        if (e != null) {
+            if ((a = e.getAttribute(Xml.AUTOMATION_STARTUP_ID)) != null) {
+                _startupAutomation = getAutomationById(a.getValue());
+            }
+        }
     }
 
     /**
@@ -251,6 +290,9 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
      * @param root Contents in a JDOM Element
      */
     public void store(Element root) {
+        Element e = new Element(Xml.AUTOMATION_OPTIONS);
+        e.setAttribute(Xml.AUTOMATION_STARTUP_ID, getStartupAutomationId());
+        root.addContent(e);
         Element values;
         root.addContent(values = new Element(Xml.AUTOMATIONS));
         // add entries

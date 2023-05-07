@@ -1,9 +1,17 @@
 package jmri.jmrix.can.cbus.node;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+
 import jmri.util.FileUtil;
 
 /**
@@ -11,16 +19,27 @@ import jmri.util.FileUtil;
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusNodeBackupFile extends XmlFile {
-    
+
+    final CanSystemConnectionMemo memo;
+
+    public CbusNodeBackupFile( CanSystemConnectionMemo memo ) {
+        this.memo = memo;
+    }
+
+    private CanSystemConnectionMemo getMemo() {
+        return( memo != null ? memo : InstanceManager.getDefault(CanSystemConnectionMemo.class) );
+    }
+
     /**
      * Get Backup FileName for a given Node Number.
+     * Includes full directory path and filename.
      *
      * @param nodeNum Node Number
      * @return the Backup File location within user directory.
      */
     @Nonnull
     public String getDefaultFileName(int nodeNum) {
-        return getFileLocation() + getFileName(nodeNum);
+        return getFileLocation() + File.separator + getFileName(nodeNum);
     }
 
     /**
@@ -32,8 +51,9 @@ public class CbusNodeBackupFile extends XmlFile {
      */
     @CheckForNull
     public File getFile(int nodeNum, boolean store) {
-        // Verify that cbus/node/ directory exists
+        // Verify that cbus/M/node/ directory exists
         FileUtil.createDirectory(getFileLocation());
+        migrateFileLocation();
 
         File file = findFile(getDefaultFileName(nodeNum));
         if (file == null && store) {
@@ -57,9 +77,9 @@ public class CbusNodeBackupFile extends XmlFile {
      *
      * @return path to location
      */
-    public static String getFileLocation() {
+    public String getFileLocation() {
         return FileUtil.getUserFilesPath() 
-        + "cbus" + File.separator + "nodes" + File.separator;  // NOI18N
+        + "cbus" + File.separator + getMemo().getSystemPrefix() + File.separator + "nodes";  // NOI18N
     }
 
     /**
@@ -76,5 +96,20 @@ public class CbusNodeBackupFile extends XmlFile {
         return true;
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeXml.class);
+    protected final String oldFileLocation = FileUtil.getUserFilesPath() + "cbus" + File.separator + "nodes";
+
+    private void migrateFileLocation(){
+        if ( findFile(oldFileLocation ) == null ){
+            return;
+        }
+        try {
+            jmri.jmrix.can.cbus.eventtable.CbusEventTableXmlFile.migrate(Paths.get(oldFileLocation), getFileLocation(), getMemo().getSystemPrefix() );
+            Files.delete(Paths.get(oldFileLocation));
+            log.warn("Migrated existing CBUS Node Data to {}", getMemo().getUserName());
+        } catch(IOException e){
+            log.error("Unable to migrate CBUS Data ",e);
+        }
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeBackupFile.class);
 }

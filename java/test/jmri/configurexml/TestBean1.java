@@ -29,6 +29,9 @@ public class TestBean1 {
 
     @Override
     public boolean equals(Object o1) {
+        if (!(o1 instanceof TestBean1)) {
+            return false;
+        }
         TestBean1 o2 = (TestBean1) o1;
         return a.equals(o2.a) && (b == o2.b);
     }

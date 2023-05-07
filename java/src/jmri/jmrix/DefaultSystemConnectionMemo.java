@@ -193,7 +193,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     @OverridingMethodsMustInvokeSuper
     @SuppressWarnings("unchecked") // dynamic checking done on cast of getConsistManager
     @Override
-    public <T> T get(Class<?> type) {
+    public <T> T get(Class<T> type) {
         if (disabled) {
             return null;
         }
@@ -357,7 +357,11 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
      * @param type Class type, eg. SensorManager.class
      */
     public <T> void store(@Nonnull T item, @Nonnull Class<T> type){
+        Map<Class<?>,Object> classObjectMapCopy = classObjectMap;
         classObjectMap.put(type,item);
+        if ( !classObjectMapCopy.containsValue(item) ) {
+            propertyChangeSupport.firePropertyChange(STORE, null, item);
+        }
     }
 
     /**
@@ -370,7 +374,11 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
      * @param type Class type, eg. SensorManager.class
      */
     public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type){
+        Map<Class<?>,Object> classObjectMapCopy = classObjectMap;
         classObjectMap.remove(type,item);
+        if ( classObjectMapCopy.containsValue(item) ) {
+            propertyChangeSupport.firePropertyChange(DEREGISTER, item, null);
+        }
     }
 
     /**

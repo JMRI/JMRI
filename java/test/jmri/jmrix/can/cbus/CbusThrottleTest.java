@@ -976,6 +976,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
             }
         });
         instance = new CbusThrottle(memo, new DccLocoAddress(100,true),100);
+        setMaxFns(CbusConstants.MAX_FUNCTIONS);
     }
 
     @AfterEach

@@ -48,7 +48,7 @@ public class TrainPrintUtilities {
     public static void printReport(File file, String name, boolean isPreview, String fontName, boolean isBuildReport,
             String logoURL, String printerName, String orientation, int fontSize, boolean printHeader) {
         // obtain a HardcopyWriter to do this
-        HardcopyWriter writer = null;
+
         boolean isLandScape = false;
         double margin = .5;
         Dimension pagesize = null; // HardcopyWritter provides default page
@@ -63,175 +63,181 @@ public class TrainPrintUtilities {
             pagesize = new Dimension(TrainCommon.getPageSize(orientation).width + TrainCommon.PAPER_MARGINS.width,
                     TrainCommon.getPageSize(orientation).height + TrainCommon.PAPER_MARGINS.height);
         }
-        try {
-            writer = new HardcopyWriter(new Frame(), name, fontSize, margin, margin, .5, .5, isPreview, printerName,
-                    isLandScape, printHeader, pagesize);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
-            return;
-        }
-        // set font
-        if (!fontName.isEmpty()) {
-            writer.setFontName(fontName);
-        }
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), name, fontSize, margin,
+                margin, .5, .5, isPreview, printerName, isLandScape, printHeader, pagesize);
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                        new FileInputStream(file), StandardCharsets.UTF_8));) {
 
-        // now get the build file to print
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
-        } catch (FileNotFoundException e) {
-            log.error("Build file doesn't exist");
-            writer.close();
-            return;
-        }
-        String line;
+            // set font
+            if (!fontName.isEmpty()) {
+                writer.setFontName(fontName);
+            }
 
-        if (!isBuildReport && logoURL != null && !logoURL.equals(Setup.NONE)) {
-            ImageIcon icon = new ImageIcon(logoURL);
-            if (icon.getIconWidth() == -1) {
-                log.error("Logo not found: {}", logoURL);
-            } else {
-                writer.write(icon.getImage(), new JLabel(icon));
-            }
-        }
-        Color c = null;
-        boolean printingColor = false;
-        while (true) {
-            try {
-                line = in.readLine();
-            } catch (IOException e) {
-                log.debug("Print read failed");
-                break;
-            }
-            if (line == null) {
-                if (isPreview) {
-                    try {
-                        writer.write(" "); // need to do this in case the input
-                                           // file was empty to create preview
-                    } catch (IOException e) {
-                        log.debug("Print write failed for null line");
-                    }
+            // now get the build file to print
+
+            String line;
+
+            if (!isBuildReport && logoURL != null && !logoURL.equals(Setup.NONE)) {
+                ImageIcon icon = new ImageIcon(logoURL);
+                if (icon.getIconWidth() == -1) {
+                    log.error("Logo not found: {}", logoURL);
+                } else {
+                    writer.write(icon.getImage(), new JLabel(icon));
                 }
-                break;
             }
-            // log.debug("Line: {}", line.toString());
-            // check for build report print level
-            if (isBuildReport) {
-                line = filterBuildReport(line, false); // no indent
-                if (line.isEmpty()) {
-                    continue;
+            Color c = null;
+            boolean printingColor = false;
+            while (true) {
+                try {
+                    line = in.readLine();
+                } catch (IOException e) {
+                    log.debug("Print read failed");
+                    break;
                 }
-                // printing the train manifest
-            } else {
-                // determine if there's a line separator
-                if (line.length() > 0) {
-                    boolean horizontialLineSeparatorFound = true;
-                    for (int i = 0; i < line.length(); i++) {
-                        if (line.charAt(i) != HORIZONTAL_LINE_SEPARATOR) {
-                            horizontialLineSeparatorFound = false;
-                            break;
+                if (line == null) {
+                    if (isPreview) {
+                        try {
+                            writer.write(" "); // need to do this in case the
+                                               // input
+                                               // file was empty to create
+                                               // preview
+                        } catch (IOException e) {
+                            log.debug("Print write failed for null line");
                         }
                     }
-                    if (horizontialLineSeparatorFound) {
-                        writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(),
-                                line.length() + 1);
-                        c = null;
+                    break;
+                }
+                // log.debug("Line: {}", line.toString());
+                // check for build report print level
+                if (isBuildReport) {
+                    line = filterBuildReport(line, false); // no indent
+                    if (line.isEmpty()) {
                         continue;
                     }
-                }
-
-                // determine if line is a pickup or drop
-                if ((!Setup.getPickupEnginePrefix().trim().isEmpty() &&
-                        line.startsWith(Setup.getPickupEnginePrefix() + TrainCommon.SPACE)) ||
-                        (!Setup.getPickupCarPrefix().trim().isEmpty() &&
-                                line.startsWith(Setup.getPickupCarPrefix() + TrainCommon.SPACE)) ||
-                        (!Setup.getSwitchListPickupCarPrefix().trim().isEmpty() &&
-                                line.startsWith(Setup.getSwitchListPickupCarPrefix() + TrainCommon.SPACE))) {
-                    c = Setup.getPickupColor();
-                } else if ((!Setup.getDropEnginePrefix().trim().isEmpty() &&
-                        line.startsWith(Setup.getDropEnginePrefix() + TrainCommon.SPACE)) ||
-                        (!Setup.getDropCarPrefix().trim().isEmpty() &&
-                                line.startsWith(Setup.getDropCarPrefix() + TrainCommon.SPACE)) ||
-                        (!Setup.getSwitchListDropCarPrefix().trim().isEmpty() &&
-                                line.startsWith(Setup.getSwitchListDropCarPrefix() + TrainCommon.SPACE))) {
-                    c = Setup.getDropColor();
-                } else if ((!Setup.getLocalPrefix().trim().isEmpty() &&
-                        line.startsWith(Setup.getLocalPrefix() + TrainCommon.SPACE)) ||
-                        (!Setup.getSwitchListLocalPrefix().trim().isEmpty() &&
-                                line.startsWith(Setup.getSwitchListLocalPrefix() + TrainCommon.SPACE))) {
-                    c = Setup.getLocalColor();
-                } else if (line.contains(TrainCommon.TEXT_COLOR_START)) {
-                    c = TrainCommon.getTextColor(line);
-                    if (!line.endsWith(TrainCommon.TEXT_COLOR_END)) {
-                        printingColor = true;
+                    // printing the train manifest
+                } else {
+                    // determine if there's a line separator
+                    if (line.length() > 0) {
+                        boolean horizontialLineSeparatorFound = true;
+                        for (int i = 0; i < line.length(); i++) {
+                            if (line.charAt(i) != HORIZONTAL_LINE_SEPARATOR) {
+                                horizontialLineSeparatorFound = false;
+                                break;
+                            }
+                        }
+                        if (horizontialLineSeparatorFound) {
+                            writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(),
+                                    line.length() + 1);
+                            c = null;
+                            continue;
+                        }
                     }
-                    // could be a color change when using two column format
-                    if (line.contains(Character.toString(VERTICAL_LINE_SEPARATOR))) {
-                        String s = line.substring(0, line.indexOf(VERTICAL_LINE_SEPARATOR));
-                        s = TrainCommon.getTextColorString(s);
+
+                    // determine if line is a pickup or drop
+                    if ((!Setup.getPickupEnginePrefix().trim().isEmpty() &&
+                            line.startsWith(Setup.getPickupEnginePrefix() + TrainCommon.SPACE)) ||
+                            (!Setup.getPickupCarPrefix().trim().isEmpty() &&
+                                    line.startsWith(Setup.getPickupCarPrefix() + TrainCommon.SPACE)) ||
+                            (!Setup.getSwitchListPickupCarPrefix().trim().isEmpty() &&
+                                    line.startsWith(Setup.getSwitchListPickupCarPrefix() + TrainCommon.SPACE))) {
+                        c = Setup.getPickupColor();
+                    } else if ((!Setup.getDropEnginePrefix().trim().isEmpty() &&
+                            line.startsWith(Setup.getDropEnginePrefix() + TrainCommon.SPACE)) ||
+                            (!Setup.getDropCarPrefix().trim().isEmpty() &&
+                                    line.startsWith(Setup.getDropCarPrefix() + TrainCommon.SPACE)) ||
+                            (!Setup.getSwitchListDropCarPrefix().trim().isEmpty() &&
+                                    line.startsWith(Setup.getSwitchListDropCarPrefix() + TrainCommon.SPACE))) {
+                        c = Setup.getDropColor();
+                    } else if ((!Setup.getLocalPrefix().trim().isEmpty() &&
+                            line.startsWith(Setup.getLocalPrefix() + TrainCommon.SPACE)) ||
+                            (!Setup.getSwitchListLocalPrefix().trim().isEmpty() &&
+                                    line.startsWith(Setup.getSwitchListLocalPrefix() + TrainCommon.SPACE))) {
+                        c = Setup.getLocalColor();
+                    } else if (line.contains(TrainCommon.TEXT_COLOR_START)) {
+                        c = TrainCommon.getTextColor(line);
+                        if (line.contains(TrainCommon.TEXT_COLOR_END)) {
+                            printingColor = false;
+                        } else {
+                            // printing multiple lines in color
+                            printingColor = true;
+                        }
+                        // could be a color change when using two column format
+                        if (line.contains(Character.toString(VERTICAL_LINE_SEPARATOR))) {
+                            String s = line.substring(0, line.indexOf(VERTICAL_LINE_SEPARATOR));
+                            s = TrainCommon.getTextColorString(s);
+                            try {
+                                writer.write(c, s); // 1st half of line printed
+                            } catch (IOException e) {
+                                log.debug("Print write color failed");
+                                break;
+                            }
+                            // get the new color and text
+                            line = line.substring(line.indexOf(VERTICAL_LINE_SEPARATOR));
+                            c = TrainCommon.getTextColor(line);
+                            // pad out string
+                            StringBuffer sb = new StringBuffer();
+                            for (int i = 0; i < s.length(); i++) {
+                                sb.append(SPACE);
+                            }
+                            // 2nd half of line to be printed
+                            line = sb.append(TrainCommon.getTextColorString(line)).toString();
+                        } else {
+                            // simple case only one color
+                            line = TrainCommon.getTextColorString(line);
+                        }
+                    } else if (line.contains(TrainCommon.TEXT_COLOR_END)) {
+                        printingColor = false;
+                        line = TrainCommon.getTextColorString(line);
+                    } else if (!line.startsWith(TrainCommon.TAB) && !printingColor) {
+                        c = null;
+                    }
+                    for (int i = 0; i < line.length(); i++) {
+                        if (line.charAt(i) == VERTICAL_LINE_SEPARATOR) {
+                            // make a frame (two column format)
+                            if (Setup.isTabEnabled()) {
+                                writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber() + 1, 0);
+                                writer.write(writer.getCurrentLineNumber(), line.length() + 1,
+                                        writer.getCurrentLineNumber() + 1, line.length() + 1);
+                            }
+                            writer.write(writer.getCurrentLineNumber(), i + 1, writer.getCurrentLineNumber() + 1,
+                                    i + 1);
+                        }
+                    }
+                    line = line.replace(VERTICAL_LINE_SEPARATOR, SPACE);
+
+                    if (c != null) {
                         try {
-                            writer.write(c, s); // 1st half of line printed
+                            writer.write(c, line + NEW_LINE);
+                            continue;
                         } catch (IOException e) {
                             log.debug("Print write color failed");
                             break;
                         }
-                        // get the new color and text
-                        line = line.substring(line.indexOf(VERTICAL_LINE_SEPARATOR));
-                        c = TrainCommon.getTextColor(line);
-                        // pad out string
-                        StringBuffer sb = new StringBuffer();
-                        for (int i = 0; i < s.length(); i++) {
-                            sb.append(SPACE);
-                        }
-                        // 2nd half of line to be printed
-                        line = sb.append(TrainCommon.getTextColorString(line)).toString();
-                    } else {
-                        // simple case only one color
-                        line = TrainCommon.getTextColorString(line);
-                    }
-                } else if (line.contains(TrainCommon.TEXT_COLOR_END)) {
-                    printingColor = false;
-                    line = TrainCommon.getTextColorString(line);
-                } else if (!line.startsWith(TrainCommon.TAB) && !printingColor) {
-                    c = null;
-                }
-                for (int i = 0; i < line.length(); i++) {
-                    if (line.charAt(i) == VERTICAL_LINE_SEPARATOR) {
-                        // make a frame (two column format)
-                        if (Setup.isTabEnabled()) {
-                            writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber() + 1, 0);
-                            writer.write(writer.getCurrentLineNumber(), line.length() + 1,
-                                    writer.getCurrentLineNumber() + 1, line.length() + 1);
-                        }
-                        writer.write(writer.getCurrentLineNumber(), i + 1, writer.getCurrentLineNumber() + 1, i + 1);
                     }
                 }
-                line = line.replace(VERTICAL_LINE_SEPARATOR, SPACE);
-
-                if (c != null) {
-                    try {
-                        writer.write(c, line + NEW_LINE);
-                        continue;
-                    } catch (IOException e) {
-                        log.debug("Print write color failed");
-                        break;
-                    }
+                try {
+                    writer.write(line + NEW_LINE);
+                } catch (IOException e) {
+                    log.debug("Print write failed");
+                    break;
                 }
             }
             try {
-                writer.write(line + NEW_LINE);
+                in.close();
             } catch (IOException e) {
-                log.debug("Print write failed");
-                break;
+                log.debug("Could not close in stream");
             }
-        }
-        // and force completion of the printing
-        try {
-            in.close();
+
+            // and force completion of the printing
+            // close is no longer needed when using the try / catch declaration
+            // writer.close();
+        } catch (FileNotFoundException e) {
+            log.error("Build file doesn't exist", e);
+        } catch (HardcopyWriter.PrintCanceledException ex) {
+            log.debug("Print cancelled");
         } catch (IOException e) {
-            log.debug("Print close failed");
+            log.warn("Exception printing, ", e);
         }
-        writer.close();
     }
 
     /**
@@ -243,53 +249,45 @@ public class TrainPrintUtilities {
      */
     public static void editReport(File file, String name) {
         // make a new file with the build report levels removed
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
-        } catch (FileNotFoundException e) {
-            log.error("Build file doesn't exist");
-            return;
-        }
-        PrintWriter out;
         File buildReport = InstanceManager.getDefault(TrainManagerXml.class)
                 .createTrainBuildReportFile(Bundle.getMessage("Report") + " " + name);
-        try {
-            out = new PrintWriter(new BufferedWriter(
-                    new OutputStreamWriter(new FileOutputStream(buildReport), StandardCharsets.UTF_8)), true);
-        } catch (IOException e) {
-            log.error("Can not create build report file");
-            try {
-                in.close();
-            } catch (IOException ee) {
-            }
-            return;
-        }
-        String line = " ";
-        while (true) {
-            try {
-                line = in.readLine();
-                if (line == null) {
+
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(
+                new FileInputStream(file), StandardCharsets.UTF_8));
+                PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream(buildReport), StandardCharsets.UTF_8)), true);) {
+
+            String line;
+            while (true) {
+                try {
+                    line = in.readLine();
+                    if (line == null) {
+                        break;
+                    }
+                    line = filterBuildReport(line, Setup.isBuildReportIndentEnabled());
+                    if (line.isEmpty()) {
+                        continue;
+                    }
+                    out.println(line); // indent lines for each level
+                } catch (IOException e) {
+                    log.debug("Print read failed");
                     break;
                 }
-                line = filterBuildReport(line, Setup.isBuildReportIndentEnabled());
-                if (line.isEmpty()) {
-                    continue;
-                }
-                out.println(line); // indent lines for each level
-            } catch (IOException e) {
-                log.debug("Print read failed");
-                break;
             }
-        }
-        // and force completion of the printing
-        try {
-            in.close();
+            // and force completion of the printing
+            try {
+                in.close();
+            } catch (IOException e) {
+                log.debug("Close failed");
+            }
+            out.close();
+            // open the file
+            TrainUtilities.openDesktop(buildReport);
+        } catch (FileNotFoundException e) {
+            log.error("Build file doesn't exist", e);
         } catch (IOException e) {
-            log.debug("Close failed");
+            log.error("Can not create build report file", e);
         }
-        out.close();
-        // open the file
-        TrainUtilities.openDesktop(buildReport);
     }
 
     /*

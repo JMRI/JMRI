@@ -27,7 +27,8 @@ import jmri.server.json.JsonServiceFactoryTestBase;
 public class JsonOperationsServiceFactoryTest extends JsonServiceFactoryTestBase<JsonOperationsHttpService, JsonOperationsSocketService> {
 
     @BeforeEach
-    public void setup() throws Exception {
+    @Override
+    public void setUp() throws Exception {
         super.setUp();
         factory = new JsonOperationsServiceFactory();
     }

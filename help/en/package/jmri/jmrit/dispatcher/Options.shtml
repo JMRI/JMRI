@@ -22,8 +22,7 @@
       saving Dispatcher Options to disk for later use. Both are described below.</p>
 
       <h2>Using Dispatcher Options</h2>
-      <img src="images/OptionsWindow.png" height="685" width="606" alt="Options window" style=
-      "float:right;margin:2em;">
+      <img src="images/OptionsWindow.png" alt="Options window" style="float:right;margin:2em;">
       <p>Selecting <strong>Dispatcher Options...</strong> in the <strong>Options</strong> menu of
       the Dispatcher window brings up the pane shown at right.</p>
 
@@ -35,24 +34,25 @@
 
       <ul>
         <li>
-          <p>Check <strong>Use connectivity from Layout Editor panel:</strong> and select a Layout
-          Editor panel (if there's more than one panel), if you have a Layout Editor panel that
-          fully describes your layout, including blocks and turnouts, and would like Dispatcher to
-          make use of this connectivity. Uncheck this item if no Layout Editor panel with full
-          connectivity is available. If this item is checked, Dispatcher will automatically check
-          if turnouts are set correctly when allocating a Section, and will inform the dispatcher
-          if the turnouts are not set correctly. This item must be checked if Dispatcher is to set
-          turnouts when a Section is allocated (see below), and if trains are to be run
-          automatically.</p>
+          <p>Check <strong>Use connectivity from Layout Editor panels</strong> if you have one or
+          more Layout Editor panels that fully describe your layout, including blocks and turnouts,
+          and would like Dispatcher to make use of this connectivity. Uncheck this item if no
+          Layout Editor panels with connectivity are available. If this item is checked, Dispatcher
+          will automatically check if turnouts are set correctly when allocating a Section, and will
+          inform the dispatcher if the turnouts are not set correctly. This item must be checked if
+          Dispatcher is to set turnouts when a Section is allocated (see below), and if trains are
+          to be run automatically.</p>
 
-          <p>Select the type of Signaling control that is use on the panel from the drop down:</p>
+          <p>Select the type of Signaling control that is used on the panels from the drop down:</p>
 
           <ul>
-            <li><strong>Signal Heads/SSL</strong> - Uses (traditional) Signal Heads and Simple
+            <li><strong>Signal Heads/SSL</strong> - Use (traditional) Signal Heads and Simple
             Signal Logic</li>
 
-            <li><strong>Signal Masts/SML</strong> - Uses (more advanced) Signal Masts and
+            <li><strong>Signal Masts/SML</strong> - Use (more advanced) Signal Masts and
             associated Signal Mast Logic</li>
+
+            <li><strong>No Signals</strong> - Do not use signals for train speed and control.</li>
           </ul>
         </li>
 

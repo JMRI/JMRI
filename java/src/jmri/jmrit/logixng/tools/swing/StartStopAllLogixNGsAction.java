@@ -15,14 +15,10 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 public class StartStopAllLogixNGsAction extends AbstractAction {
 
     private final boolean _start;
-    
+
     public StartStopAllLogixNGsAction(String s, boolean start) {
         super(s);
         _start = start;
-    }
-
-    public StartStopAllLogixNGsAction(boolean start) {
-        this(Bundle.getMessage("MenuTimeDiagram"), start);  // NOI18N
     }
 
     @Override
@@ -33,5 +29,5 @@ public class StartStopAllLogixNGsAction extends AbstractAction {
             InstanceManager.getDefault(LogixNG_Manager.class).deActivateAllLogixNGs();
         }
     }
-    
+
 }

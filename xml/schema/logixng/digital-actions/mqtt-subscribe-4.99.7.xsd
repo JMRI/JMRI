@@ -45,6 +45,7 @@
 
               <xs:element name="subscribeToTopic" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="lastTopicLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="removeChannelFromLastTopic" type="yesNoType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="lastMessageLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>

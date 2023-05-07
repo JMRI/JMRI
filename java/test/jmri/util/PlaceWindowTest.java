@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class PlaceWindowTest {
 
-    private final int tolerance = 5;
+    private final static int TOLERANCE = 5;
 
     @Test
     public void testCTor() {
@@ -29,26 +29,26 @@ public class PlaceWindowTest {
 
     @Test
     public void testNextTo() {
-        JFrame w1 = createFrameWitnDimentionsAtPoint(400, 400, 200, 200);
-        JFrame w2 = createFrameWitnDimentionsAtPoint(200,200,100,100);
+        JFrame w1 = createFrameWithDimentionsAtPoint(400, 400, 200, 200);
+        JFrame w2 = createFrameWithDimentionsAtPoint(200,200,100,100);
 
         PlaceWindow pw = new PlaceWindow();
         Point pt = pw.nextTo(w1,  null,  w2);        // w2 to the right of w1
         // weaken assertion for test environments with different screen environment
         assertThat(pt.x).isGreaterThanOrEqualTo(600);
-        assertThat(pt.y).isBetween(300- tolerance,300+ tolerance);
+        assertThat(pt.y).isBetween(300- TOLERANCE,300+ TOLERANCE);
 
         w1.setLocation(300, 200);
         pt = pw.nextTo(w1,  null,  w2);        // w2 to the left of w1
         // weaken assertion for different screen sizes
         assertThat(pt.x).isLessThanOrEqualTo(100);
-        assertThat(pt.y).isBetween(300- tolerance,300+ tolerance);
+        assertThat(pt.y).isBetween(300- TOLERANCE,300+ TOLERANCE);
 
         w1.dispose();
         w2.dispose();
     }
 
-    private JFrame createFrameWitnDimentionsAtPoint(int width, int height, int x, int y) {
+    private JFrame createFrameWithDimentionsAtPoint(int width, int height, int x, int y) {
         JFrame w1 = new JFrame();
         w1.getContentPane().add(Box.createRigidArea(new Dimension(width, height)));
         w1.setLocation(x, y);
@@ -60,8 +60,8 @@ public class PlaceWindowTest {
     @Test
     public void testNextToBig() {
         java.awt.Rectangle rect = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-        JFrame w1 = createFrameWitnDimentionsAtPoint(rect.width - 20, rect.height - 60, 10, 50);
-        JFrame w2 = createFrameWitnDimentionsAtPoint(200, 200, 100, 100);
+        JFrame w1 = createFrameWithDimentionsAtPoint(rect.width - 20, rect.height - 60, 10, 50);
+        JFrame w2 = createFrameWithDimentionsAtPoint(200, 200, 100, 100);
         PlaceWindow pw = new PlaceWindow();
 
         Point pt = pw.nextTo(w1,  null,  w2);
@@ -69,7 +69,7 @@ public class PlaceWindowTest {
         //System.out.println(Math.abs((rect.width/2-100) - pt.x));
         assertThat(Math.abs(((rect.width/2)-100) - pt.x))
                 .withFailMessage("pt.x at screen center")
-                .isLessThanOrEqualTo(tolerance);
+                .isLessThanOrEqualTo(TOLERANCE);
         assertThat(pt.y).withFailMessage("pt.y at screen top").isEqualTo(0);
     }
 

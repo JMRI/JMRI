@@ -6,6 +6,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
 
+import jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -18,12 +19,14 @@ import org.junit.jupiter.api.*;
  */
 public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
+    @Test
     public void testCreate() {
-        Dcc4PcTrafficController m = new Dcc4PcTrafficController();
-        Assert.assertNotNull("exists", m);
+        Assert.assertNotNull("exists", tc);
     }
 
-    public void testSendThenRcvReply() throws Exception {
+    @Test
+    @Disabled("Requires further setup")
+    public void testSendThenRcvReply() throws java.io.IOException {
         Dcc4PcTrafficController c = (Dcc4PcTrafficController)tc;
 
         // connect to iostream via port controller
@@ -46,9 +49,9 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         
         // test the result of sending
         Assert.assertEquals("total length ", 4, tostream.available());
-        Assert.assertEquals("Char 0", '0', tostream.readByte());
-        Assert.assertEquals("Char 1", '1', tostream.readByte());
-        Assert.assertEquals("Char 2", '2', tostream.readByte());
+        Assert.assertEquals("Char 0", (byte)'0', tostream.readByte());
+        Assert.assertEquals("Char 1", (byte)'1', tostream.readByte());
+        Assert.assertEquals("Char 2", (byte)'2', tostream.readByte());
         Assert.assertEquals("EOM", 0x0d, tostream.readByte());
 
 
@@ -63,12 +66,30 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
         Assert.assertTrue("reply received ", rcvdReply != null);
         Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
+
+        c.terminateThreads();
+        p.getSystemConnectionMemo().dispose();
+
     }
 
-    // internal class to simulate a Dcc4PcListener
-    class Dcc4PcListenerScaffold implements Dcc4PcListener {
+    @Test
+    public void testListenerScaffold() {
+        
+        Dcc4PcListenerScaffold l = new Dcc4PcListenerScaffold();
+        Dcc4PcMessage m = Dcc4PcMessage.getInfo();
+        l.message(m);
+        Assertions.assertTrue( m == rcvdMsg );
+        
+        Dcc4PcReply reply = new Dcc4PcReply(new byte[]{0x01,0x02,0x03});
+        l.reply(reply);
+        Assertions.assertEquals(reply, rcvdReply);
 
-        public Dcc4PcListenerScaffold() {
+    }
+    
+    // internal class to simulate a Dcc4PcListener
+    private class Dcc4PcListenerScaffold implements Dcc4PcListener {
+
+        Dcc4PcListenerScaffold() {
             rcvdReply = null;
             rcvdMsg = null;
         }
@@ -93,7 +114,19 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     Dcc4PcMessage rcvdMsg;
 
     // internal class to simulate a Dcc4PcPortController
-    class Dcc4PcPortControllerScaffold extends Dcc4PcPortController {
+    private class Dcc4PcPortControllerScaffold extends SerialDriverAdapter {
+
+        Dcc4PcPortControllerScaffold() throws java.io.IOException {
+            super();
+            // super(new Dcc4PcSystemConnectionMemo());
+            PipedInputStream tempPipe;
+            tempPipe = new PipedInputStream();
+            tostream = new DataInputStream(tempPipe);
+            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+            tempPipe = new PipedInputStream();
+            istream = new DataInputStream(tempPipe);
+            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+        }
 
         @Override
         public Vector<String> getPortNames() {
@@ -120,17 +153,6 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             return new int[] {};
         }
 
-        protected Dcc4PcPortControllerScaffold() throws Exception {
-            super(new Dcc4PcSystemConnectionMemo());
-            PipedInputStream tempPipe;
-            tempPipe = new PipedInputStream();
-            tostream = new DataInputStream(tempPipe);
-            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
-            tempPipe = new PipedInputStream();
-            istream = new DataInputStream(tempPipe);
-            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
-        }
-
         // returns the InputStream from the port
         @Override
         public DataInputStream getInputStream() {
@@ -149,11 +171,12 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             return true;
         }
     }
-    DataOutputStream ostream;  // Traffic controller writes to this
-    DataInputStream tostream; // so we can read it from this
 
-    DataOutputStream tistream; // tests write to this
-    DataInputStream istream;  // so the traffic controller can read from this
+    private DataOutputStream ostream;  // Traffic controller writes to this
+    private DataInputStream tostream; // so we can read it from this
+
+    private DataOutputStream tistream; // tests write to this
+    private DataInputStream istream;  // so the traffic controller can read from this
 
     @Override
     @BeforeEach
@@ -165,6 +188,10 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     @Override
     @AfterEach
     public void tearDown() {
+        if ( tc != null ) {
+            tc.terminateThreads();
+            tc = null;
+        }
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 

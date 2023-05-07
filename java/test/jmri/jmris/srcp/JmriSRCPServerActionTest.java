@@ -1,14 +1,9 @@
 package jmri.jmris.srcp;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.Assume;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPServerAction class
@@ -17,16 +12,18 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class JmriSRCPServerActionTest {
 
-    @Test public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    public void testCtor() {
         JmriSRCPServerAction a = new JmriSRCPServerAction();
-        assertThat(a).isNotNull();
+        Assertions.assertNotNull(a);
     }
 
-    @Test public void testStringCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    public void testJmriSRCPServerActionStringCtor() {
         JmriSRCPServerAction a = new JmriSRCPServerAction("Hello World");
-        assertThat(a).isNotNull();
+        Assertions.assertNotNull(a);
     }
 
     @BeforeEach public void setUp() {

@@ -113,7 +113,7 @@
       <variable CV="7" readOnly="yes" item="Decoder Version" default="46">
         <decVal/>
         <label>Manufacturer Version No: </label>
-        <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="cs">Verze dekodéru </label>
         <label xml:lang="de">Decoderversion: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="it">Versione Decoder: </label>
@@ -122,7 +122,7 @@
       <variable CV="8" readOnly="yes" item="Manufacturer" default="101">
         <decVal/>
         <label>Manufacturer ID</label>
-        <label xml:lang="cs">ID výrobce: </label>
+        <label xml:lang="cs">ID výrobce </label>
         <label xml:lang="de">Hersteller-ID</label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="it">ID Costruttore: </label>

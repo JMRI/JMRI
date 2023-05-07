@@ -9,10 +9,6 @@ Constructor <apps\.SystemConsole\.<init>\(\)> gets field <java\.lang\.System.out
 Constructor <apps\.SystemConsole\.<init>\(\)> gets field <java\.lang\.System.err>.*
 Method <apps\.CheckerFrameworkCheck\.test\(\)> gets field <java\.lang\.System\.out>.*
 Method <apps\.FindBugsCheck\.test\(\)\> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrit\.XmlFile\.lambda\$dumpElement\$.*\(org\.jdom2\.Element\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrit\.XmlFile\.lambda\$0\(org\.jdom2\.Element\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.jmrit\.XmlFileValidateAction\$2\.showFailResults\(java\.awt\.Component, java\.lang\.String\)> gets field <java\.lang\.System\.out>.*
-Method <jmri\.managers\.DefaultShutDownManager\.runShutDownTasks\(boolean\)> gets field <java\.lang\.System\.err>.*
 Method <jmri\.util\.FileUtilSupport\.getPreferencesPath\(\)> gets field <java\.lang\.System\.err>.*
 Method <jmri\.util\.com\.rbnb\.UDPOutputStream\.write\(\[B, int, int\)> gets field <java\.lang\.System\.err>.*
 
@@ -37,6 +33,7 @@ Method <jmri\.UserPreferencesManager\.setWindowSize\(java\.lang\.String, java\.a
 
 # For checkJmriPackageSwing
 Interface <jmri\.CatalogTree> extends interface <javax\.swing\.tree\.TreeModel>.*
+Method <jmri\.CatalogTreeNode\.children\(\)> has generic return type <java\.util\.Enumeration<javax\.swing\.tree\.TreeNode>\>.*
 Method <jmri\.ConditionalAction\.getTimer\(\)> has return type <javax\.swing\.Timer>.*
 Method <jmri\.ConditionalAction\.setTimer\(javax\.swing\.Timer\)> has parameter of type <javax\.swing\.Timer>.*
 Method <jmri\.JmriPlugin\.start\(javax\.swing\.JFrame, javax\.swing\.JMenuBar\)> has parameter of type <javax\.swing\.JFrame>.*

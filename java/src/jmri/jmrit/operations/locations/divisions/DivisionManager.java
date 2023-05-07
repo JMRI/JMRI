@@ -16,6 +16,7 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 
 /**
  * Manages divisions.
@@ -200,6 +201,22 @@ public class DivisionManager extends PropertyChangeSupport implements InstanceMa
         for (Division division : getDivisionsByNameList()) {
             box.addItem(division);
         }
+    }
+    
+    protected int _maxDivisionNameLength = 0;
+    
+    public int getMaxDivisionNameLength() {
+        String maxName = TrainManifestHeaderText.getStringHeader_Division();
+        for (Division div : getList()) {
+            if (div.getName().length() > maxName.length()) {
+                maxName = div.getName();
+            }
+        }
+        if (maxName.length() != _maxDivisionNameLength) {
+            log.info("Max division name ({}) length {}", maxName, maxName.length());
+            _maxDivisionNameLength = maxName.length();
+        }
+        return _maxDivisionNameLength;
     }
 
     public void load(Element root) {

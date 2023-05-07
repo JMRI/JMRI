@@ -1,26 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2009 -->
   <!-- Copyright Walt Thompson 2010 -->
   <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
   <!-- Translated  by Blorec Herv&#233; le 2011-11-5-->
-
-  <title>JMRI: DecoderPro Service Mode Programmer</title><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <title>JMRI: DecoderPro Service Mode Programmer</title>
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>JMRI: Opérations Programmateur DecoderPro en Mode Service</h1>
+
       <a name="contents" id="contents"></a>
       <h2>Contenus</h2>
 
@@ -41,9 +37,7 @@
         </li>
       </ul>
 
-      <p><a name="Roster" id="Roster"></a>
-      </p>
-
+      <a name="Roster" id="Roster"></a>
       <h3>onglet Liste</h3>
 
       <p>Une liste est une base de données de toutes les locomotives que votre installation de
@@ -77,9 +71,7 @@
       le cas de Digitrax. Tous les décodeurs peuvent ne pas supporter la Réinit d'Usine et comment
       ils fonctionnent dépendent du fabricant et du décodeur.</p>
 
-      <p><a name="Basic" id="Basic"></a>
-      </p>
-
+      <a name="Basic" id="Basic"></a>
       <h3>Onglet Basique</h3>
 
       <p><img src="BasicTab.png" alt="">
@@ -103,11 +95,13 @@
 
       <p>L'ID Fabricant et l'ID de version Fabricant sont définies dans le décodeur par le
       fabricant. JMRI utilise ceux-ci pour identifier le décodeur.</p>
+
       <a name="OtherTabs" id="OtherTabs"></a>
       <h3>Autres Onglets</h3>
 
       <p>Les autres onglets dépendent de ce que le fabricant a installé dans le décodeur, si les
       options n'ont pas été installées les volets sont soit grisés ou pas activés.</p>
+
       <a name="SpeedTable" id="SpeedTable"></a>
       <h3>Onglet Table de Vitesse</h3>
 
@@ -120,8 +114,10 @@
       travaillent cocher une dans le milieu de la table, puis faites glisser le dernier curseur
       vers le bas . Notez que les valeurs ne changent pas dessous celle que vous avez cochée. Ils
       ne changent pas pour les crans au-dessus, si un cran inférieur est modifié.</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

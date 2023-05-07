@@ -81,7 +81,6 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
     public void tearDown() throws Exception {
         l = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

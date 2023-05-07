@@ -21,7 +21,7 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
     SignalMast signalMast;
     ConditionalVariable cv;
     
-    private enum SignalMastEnum {
+    protected enum SignalMastEnum {
         EqualsClear(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS, "Approach Medium", "Medium Clear", "Clear"),
         EqualsApproachMedium(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS, "Clear", "Medium Clear", "Approach Medium"),
         EqualsMediumClear(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS, "Clear", "Approach Medium", "Medium Clear"),
@@ -40,12 +40,12 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
         SIGNAL_MAST_LIT(Conditional.Type.SIGNAL_MAST_LIT, null, null, null),
         SIGNAL_MAST_HELD(Conditional.Type.SIGNAL_MAST_HELD, null, null, null);
         
-        private final Conditional.Type type;
-        private final String initAspect;
-        private final String failAspect;
-        private final String successAspect;
-        
-        private SignalMastEnum(Conditional.Type type, String initAspect, String failAspect, String successAspect) {
+        final Conditional.Type type;
+        final String initAspect;
+        final String failAspect;
+        final String successAspect;
+
+        SignalMastEnum(Conditional.Type type, String initAspect, String failAspect, String successAspect) {
             this.type = type;
             this.initAspect = initAspect;
             this.failAspect = failAspect;
@@ -54,12 +54,12 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
     }
     
     @Override
-    public Enum[] getEnums() {
+    protected Enum<SignalMastEnum>[] getEnums() {
         return SignalMastEnum.values();
     }
     
     @Override
-    public void setNamedBeanState(Enum e, Setup setup) throws JmriException {
+    public void setNamedBeanState(Enum<?> e, Setup setup) throws JmriException {
         SignalMastEnum me = SignalMastEnum.valueOf(e.name());
         
         cv.setType(me.type);
@@ -96,7 +96,7 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
                 
             case SIGNAL_MAST_LIT:
                 switch (setup) {
-                    case Init: signalMast.setLit(false); break;
+                    case Init:
                     case Fail1:
                     case Fail2:
                     case Fail3: signalMast.setLit(false); break;
@@ -110,7 +110,7 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
                 
             case SIGNAL_MAST_HELD:
                 switch (setup) {
-                    case Init: signalMast.setHeld(false); break;
+                    case Init:
                     case Fail1:
                     case Fail2:
                     case Fail3: signalMast.setHeld(false); break;
@@ -145,11 +145,11 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
     
     private static class MySignalHead extends VirtualSignalHead {
         
-        public MySignalHead(String sys, String user) {
+        MySignalHead(String sys, String user) {
             super(sys, user);
         }
 
-        public MySignalHead(String sys) {
+        MySignalHead(String sys) {
             super(sys);
         }
 

@@ -83,15 +83,21 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     @Nonnull
     protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+
         int number = 0;
+        String normName;
         try {
-            number = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        } catch (NumberFormatException e) {
+            // see if this is a valid address
+            String address = systemName.substring(getSystemPrefix().length() + 1);
+            normName = createSystemName(address, getSystemPrefix());
+            // parse converted system name
+            number = Integer.parseInt(normName.substring(getSystemPrefix().length() + 1));
+        } catch (NumberFormatException | JmriException e) {
             throw new IllegalArgumentException("Unable to convert " +  // NOI18N
                     systemName.substring(getSystemPrefix().length() + 1) +
                     " to NCE sensor address"); // NOI18N
         }
-        Sensor s = new NceSensor(systemName);
+        Sensor s = new NceSensor(normName);
         s.setUserName(userName);
 
         // ensure the AIU exists

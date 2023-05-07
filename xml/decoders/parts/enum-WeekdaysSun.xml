@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		                                    -->
+<!-- version 1 - include file for Uhlenbrock Ln Display decoder 63450       -->
+<!-- 																		                                    -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="1" value="1">
+    <choice>Sunday</choice>
+    <choice xml:lang="nl">Zondag</choice>
+    <choice xml:lang="de">Sonntag</choice>
+  </enumChoice>
+  <enumChoice choice="2" value="2">
+    <choice>Monday</choice>
+    <choice xml:lang="nl">Maandag</choice>
+    <choice xml:lang="de">Montag</choice>
+  </enumChoice>
+  <enumChoice choice="3" value="3">
+    <choice>Tuesday</choice>
+    <choice xml:lang="nl">Dinsdag</choice>
+    <choice xml:lang="de">Dienstag</choice>
+  </enumChoice>
+  <enumChoice choice="4" value="4">
+    <choice>Wednesday</choice>
+    <choice xml:lang="nl">Woensdag</choice>
+    <choice xml:lang="de">Mittwoch</choice>
+  </enumChoice>
+  <enumChoice choice="5" value="5">
+    <choice>Thursday</choice>
+    <choice xml:lang="nl">Donderdag</choice>
+    <choice xml:lang="de">Donnerstag</choice>
+  </enumChoice>
+  <enumChoice choice="6" value="6">
+    <choice>Friday</choice>
+    <choice xml:lang="nl">Vrijdag</choice>
+    <choice xml:lang="de">Freitag</choice>
+  </enumChoice>
+  <enumChoice choice="7" value="7">
+    <choice>Saturday</choice>
+    <choice xml:lang="nl">Zaterdag</choice>
+    <choice xml:lang="de">Samstag</choice>
+  </enumChoice>
+</enumVal>

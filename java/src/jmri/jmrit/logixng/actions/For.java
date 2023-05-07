@@ -5,20 +5,11 @@ import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.FemaleDigitalActionSocket;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
 
 /**
  * Executes an action when the expression is True.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public class For extends AbstractDigitalAction
@@ -32,7 +23,7 @@ public class For extends AbstractDigitalAction
     private final FemaleDigitalExpressionSocket _whileExpressionSocket;
     private final FemaleDigitalActionSocket _afterEachActionSocket;
     private final FemaleDigitalActionSocket _doActionSocket;
-    
+
     public For(String sys, String user) {
         super(sys, user);
         _initActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
@@ -44,7 +35,7 @@ public class For extends AbstractDigitalAction
         _doActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, Bundle.getMessage("For_SocketName_Do"));
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -55,11 +46,11 @@ public class For extends AbstractDigitalAction
         copy.setComment(getComment());
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.COMMON;
+        return Category.FLOW_CONTROL;
     }
 
     /** {@inheritDoc} */
@@ -67,7 +58,13 @@ public class For extends AbstractDigitalAction
     public void execute() throws JmriException {
         _initActionSocket.execute();
         while (_whileExpressionSocket.evaluate()) {
-            _doActionSocket.execute();
+            try {
+                _doActionSocket.execute();
+            } catch (BreakException e) {
+                break;
+            } catch (ContinueException e) {
+                // Do nothing, just catch it.
+            }
             _afterEachActionSocket.execute();
         }
     }
@@ -77,16 +74,16 @@ public class For extends AbstractDigitalAction
         switch (index) {
             case 0:
                 return _initActionSocket;
-                
+
             case 1:
                 return _whileExpressionSocket;
-                
+
             case 2:
                 return _afterEachActionSocket;
-                
+
             case 3:
                 return _doActionSocket;
-                
+
             default:
                 throw new IllegalArgumentException(
                         String.format("index has invalid value: %d", index));
@@ -197,7 +194,7 @@ public class For extends AbstractDigitalAction
             if ( !_initActionSocket.isConnected()
                     || !_initActionSocket.getConnectedSocket().getSystemName()
                             .equals(_initActionSocketSystemName)) {
-                
+
                 String socketSystemName = _initActionSocketSystemName;
                 _initActionSocket.disconnect();
                 if (socketSystemName != null) {
@@ -215,11 +212,11 @@ public class For extends AbstractDigitalAction
             } else {
                 _initActionSocket.getConnectedSocket().setup();
             }
-            
+
             if ( !_whileExpressionSocket.isConnected()
                     || !_whileExpressionSocket.getConnectedSocket().getSystemName()
                             .equals(_whileExpressionSocketSystemName)) {
-                
+
                 String socketSystemName = _whileExpressionSocketSystemName;
                 _whileExpressionSocket.disconnect();
                 if (socketSystemName != null) {
@@ -236,11 +233,11 @@ public class For extends AbstractDigitalAction
             } else {
                 _whileExpressionSocket.getConnectedSocket().setup();
             }
-            
+
             if ( !_afterEachActionSocket.isConnected()
                     || !_afterEachActionSocket.getConnectedSocket().getSystemName()
                             .equals(_afterEachActionSocketSystemName)) {
-                
+
                 String socketSystemName = _afterEachActionSocketSystemName;
                 _afterEachActionSocket.disconnect();
                 if (socketSystemName != null) {
@@ -258,11 +255,11 @@ public class For extends AbstractDigitalAction
             } else {
                 _afterEachActionSocket.getConnectedSocket().setup();
             }
-            
+
             if ( !_doActionSocket.isConnected()
                     || !_doActionSocket.getConnectedSocket().getSystemName()
                             .equals(_doActionSocketSystemName)) {
-                
+
                 String socketSystemName = _doActionSocketSystemName;
                 _doActionSocket.disconnect();
                 if (socketSystemName != null) {
@@ -285,17 +282,17 @@ public class For extends AbstractDigitalAction
             throw new RuntimeException("socket is already connected");
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {

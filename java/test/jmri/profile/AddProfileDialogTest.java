@@ -1,6 +1,5 @@
 package jmri.profile;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.lang.reflect.Field;
 
@@ -10,17 +9,17 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@DisabledIfSystemProperty( named = "java.awt.headless" , matches = "true" )
 public class AddProfileDialogTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame();
         AddProfileDialog t = new AddProfileDialog(jf,false,false);
         Assert.assertNotNull("exists",t);
@@ -30,12 +29,12 @@ public class AddProfileDialogTest {
 
     @Test
     public void testTextFields() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame();
         AddProfileDialog t = new AddProfileDialog(jf,false,false);
         Field field = t.getClass().getDeclaredField("profileName");
         field.setAccessible(true);
         JTextField jtfName = (JTextField) field.get(t);
+        Assertions.assertNotNull(jtfName);
         field = t.getClass().getDeclaredField("profileLocation");
         field.setAccessible(true);
         JTextField jtfLocation = (JTextField) field.get(t);
@@ -67,7 +66,7 @@ public class AddProfileDialogTest {
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(jf);
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

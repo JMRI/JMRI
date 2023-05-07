@@ -117,7 +117,8 @@ public class RecursiveDescentParser {
 
     private final Rule rule1 = new Rule1();
     private final Rule rule2 = new Rule2();
-    private final Rule rule3 = new Rule3();
+    private final Rule rule3a = new Rule3a();
+    private final Rule rule3b = new Rule3b();
     private final Rule rule4 = new Rule4();
     private final Rule rule5 = new Rule5();
     private final Rule rule6 = new Rule6();
@@ -189,12 +190,12 @@ public class RecursiveDescentParser {
     }
 
 
-    // Rule2 is ternary. <rule3> | <rule3> ? <rule2> : <rule2>
+    // Rule2 is ternary. <rule3a> | <rule3a> ? <rule2> : <rule2>
     private class Rule2 implements Rule {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
-            ExpressionNodeAndState leftSide = rule3.parse(state);
+            ExpressionNodeAndState leftSide = rule3a.parse(state);
             if (leftSide == null) {
                 return null;
             }
@@ -203,7 +204,7 @@ public class RecursiveDescentParser {
                     && ((newState._token._tokenType == TokenType.TERNARY_QUESTION_MARK))) {
 
                 newState = next(newState);
-                ExpressionNodeAndState middleSide = rule3.parse(newState);
+                ExpressionNodeAndState middleSide = rule3a.parse(newState);
 
                 newState = middleSide._state;
 
@@ -211,7 +212,7 @@ public class RecursiveDescentParser {
                         && ((newState._token._tokenType == TokenType.TERNARY_COLON))) {
 
                     newState = next(newState);
-                    ExpressionNodeAndState rightRightSide = rule3.parse(newState);
+                    ExpressionNodeAndState rightRightSide = rule3a.parse(newState);
 
                     ExpressionNode exprNode = new ExpressionNodeTernaryOperator(
                             leftSide._exprNode, middleSide._exprNode, rightRightSide._exprNode);
@@ -227,8 +228,36 @@ public class RecursiveDescentParser {
 
 
     // Logical OR
-    // <rule3> ::= <rule4> | <rule4> || <rule4>
-    private class Rule3 implements Rule {
+    // <rule3a> ::= <rule3b> | <rule3b> || <rule3b>
+    private class Rule3a implements Rule {
+
+        @Override
+        public ExpressionNodeAndState parse(State state) throws ParserException {
+            ExpressionNodeAndState leftSide = rule3b.parse(state);
+            if (leftSide == null) {
+                return null;
+            }
+            State newState = leftSide._state;
+            while ((newState._token != null)
+                    && ((newState._token._tokenType == TokenType.BOOLEAN_OR))) {
+
+                TokenType operatorTokenType = newState._token._tokenType;
+                newState = next(newState);
+                ExpressionNodeAndState rightSide = rule3b.parse(newState);
+
+                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
+                newState = rightSide._state;
+            }
+            return leftSide;
+        }
+
+    }
+
+
+    // Logical OR
+    // <rule3b> ::= <rule4> | <rule4> || <rule4>
+    private class Rule3b implements Rule {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
@@ -238,7 +267,7 @@ public class RecursiveDescentParser {
             }
             State newState = leftSide._state;
             while ((newState._token != null)
-                    && ((newState._token._tokenType == TokenType.BOOLEAN_OR))) {
+                    && ((newState._token._tokenType == TokenType.BOOLEAN_XOR))) {
 
                 TokenType operatorTokenType = newState._token._tokenType;
                 newState = next(newState);

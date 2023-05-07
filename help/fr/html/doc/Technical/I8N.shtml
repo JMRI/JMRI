@@ -1,26 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <!-- Updated by Blorec Herv&#233; le 2016-07-25-->
 <head>
-    <title>
- 	JMRI: Internationalisation
-    </title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code I8N internationalization">
-
-<!-- Style -->
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Internationalisation</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code I8N internationalization">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
@@ -125,17 +116,21 @@ du fichier. Les exemples sont les fichiers <code>apps/AppsStructureBundle.proper
 <code>jmri/web/server/Services.properties</code> et <code>jmri/web/server/FilePaths.properties</code>.
 
 <h3>Traduction des Fichiers XML</h3>
-<p>Le dossier <code>xml/config/parts/jmri/</code> contient des chaines de texte suppl&#233;mentaires pour traduire pour les programmeurs etc. Juste comme dans <a href="#xml">fichier d&#233;codeur XML</a>, les chaines traduites sont ins&#233;r&#233;es comme des &#233;l&#233;ments <code>&lt;name xml:lang="da"&gt;Votre Traduction&lt;/name&gt;</code> dans chaque n&#339;ud.
-Nous fournissons une <a href="XmlEditors.shtml">liste d'&#233;diteurs</a> pour travailler efficacement sur ces fichiers
+<p>Le dossier <code>xml/config/parts/jmri/</code> contient des chaines de texte suppl&#233;mentaires pour
+traduire pour les programmeurs etc. Juste comme dans <a href="#xml">fichier d&#233;codeur XML</a>,
+les chaines traduites sont ins&#233;r&#233;es comme des &#233;l&#233;ments
+<code>&lt;name xml:lang="da"&gt;Votre Traduction&lt;/name&gt;</code> dans chaque n&#339;ud.
+Nous fournissons une <a href="XmlEditors.shtml">liste d'&#233;diteurs</a> pour travailler efficacement
+sur ces fichiers</p>
 
 <h3> v&#233;rifier votre travail</h3>
 <ol>
-<li> Reconstruire votre copie du programme.
-<li> Lancez le programme et s&#233;lectionnez "Pr&#233;f&#233;rences" dans le menu Edition
-<li> Cliquez sur la case "Montrer Pr&#233;f&#233;rences Avanc&#233;es"
-<li> Choisissez votre langue dans la zone "Locale" de la liste d&#233;roulante,
-<li> Cliquez sur "Enregistrer", quitter et red&#233;marrer
-<li> Vous devez imm&#233;diatement voir les articles que vous avez traduit.
+  <li> Reconstruire votre copie du programme.
+  <li> Lancez le programme et s&#233;lectionnez "Pr&#233;f&#233;rences" dans le menu Edition
+  <li> Cliquez sur la case "Montrer Pr&#233;f&#233;rences Avanc&#233;es"
+  <li> Choisissez votre langue dans la zone "Locale" de la liste d&#233;roulante,
+  <li> Cliquez sur "Enregistrer", quitter et red&#233;marrer
+  <li> Vous devez imm&#233;diatement voir les articles que vous avez traduit.
 </ol>
 <p>
 S'il ya un probl&#232;me &#224; ce stade, v&#233;rifier pour voir quel est le langage
@@ -176,13 +171,16 @@ Les fichiers XML peuvent &#233;galement &#234;tre internationalis&#233;s. Il y a
 . Regardez  les &#233;l&#233;ments avec un attribut xml: lang = "fr"
 attribut. Fondamentalement, vous cr&#233;ez des &#233;l&#233;ments suppl&#233;mentaires &#224; cet attribut pour
 sp&#233;cifier la langue utilis&#233;e:
-<code>
-       &lt;variable label="Vmid" CV="6" default="22" item="Vmid"&gt;
-         &lt;decVal max="64"/&gt;
-         &lt;label&gt; Vmid &lt;/label&gt;
-         &lt;label xml:lang="fr"> Vmoy &lt;/label&gt;
-    &lt;/variables&gt;
-</code>
+<div class="wide">
+  <pre>
+&lt;variable label="Vmid" CV="6" default="22" item="Vmid"&gt;
+  &lt;decVal max="64"/&gt;
+  &lt;label&gt; Vmid &lt;/label&gt;
+  &lt;label xml:lang="fr"> Vmoy &lt;/label&gt;
+&lt;/variables&gt;
+</pre>
+</div>
+
 <p>
 Dans les fichiers XML, les attributs de "l'&#233;l&#233;ment" doivent rester non traduit, comme le
 fait la totalit&#233; du fichier xml/names.xml.
@@ -196,15 +194,15 @@ Si vous voulez cr&#233;er un ensemble complet de fichiers:
     <li> Cr&#233;ez une copie des fichiers existants depuis le r&#233;pertoire help/en
      dans une nouveau r&#233;pertoire d'help/LL, o&#249; LL est la langue
     code de votre langue, par exemple help/fr. (S'il vous pla&#238;t soyez prudent pour faire
-        ceci dans SVN, et demandez &#224; un d&#233;veloppeur de l'aide si n&#233;cessaire)</li>
-        <li> Renommer le fichier help/fr/JmriHelp_en.hs  que vous venez de cr&#233;er pour help/fr/JmriHelp_fr.hs</li>
-        <li> Modifier l'help/fr/format.xsl pour cr&#233;er un<code> &lt;html lang="fr"&gt; </code>.</li>
+    ceci dans SVN, et demandez &#224; un d&#233;veloppeur de l'aide si n&#233;cessaire)</li>
+    <li> Renommer le fichier help/fr/JmriHelp_en.hs  que vous venez de cr&#233;er pour help/fr/JmriHelp_fr.hs</li>
+    <li> Modifier l'help/fr/format.xsl pour cr&#233;er un<code> &lt;html lang="fr"&gt; </code>.</li>
     <li> Traduire les fichiers .shtml ci-dessous dans le r&#233;pertoire help/fr. Ne  traduire aucun
     fichiers .xml, .JHM  ou le web*.shtml dans le r&#233;pertoire racine, car ils
-        sont produit automatiquement.</li>
+    sont produit automatiquement.</li>
 </ul>
 
-<a name="dev"></a>><h2>Internationalisation pour les D&#233;veloppeurs</h2>
+<a name="dev"></a><h2>Internationalisation pour les D&#233;veloppeurs</h2>
 
 Pour que l'internationalisation fonctionne, vous devez faire quelques choses dans le code que
 vous &#233;crivez. Quelques r&#233;f&#233;rences Web sur la fa&#231;on de le faire:
@@ -238,14 +236,16 @@ et celles qui existent sont supprim&#233;es.
 L'acc&#232;s se fait via une classe groupement locale pour chaque paquet. Une caract&#233;ristique est une
 <code><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
 Il propose deux m&#233;thodes cl&#233;s &#225; utiliser pour acc&#233;der (traduit) &#224; la chaine ressource:<br>
-<code>
+<div class="wide">
+  <pre>
 static String <b>getMessage</b>(String&nbsp;key)
-
-static String <b>getMessage</b>(String&nbsp;key, Object ... &nbsp;subs)</code>
+static String <b>getMessage</b>(String&nbsp;key, Object ... &nbsp;subs)
+</pre>
+</div>
 
 <p>
-La premi&#232;re offre un acc&#232;s direct &#224; une cha&#238;ne via <p>
-<code> String msg = Bundle.getMessage ("Titre")</code>.
+La premi&#232;re offre un acc&#232;s direct &#224; une cha&#238;ne via<br>
+<code>String msg = Bundle.getMessage("Titre")</code>
 <p>
 La seconde permet d'ins&#233;rer des informations sp&#233;cifiques dans un message du genre
 <br> <code>Nom Syst&#232;me LT1 est d&#233;j&#224; utilis&#233;</code>
@@ -255,15 +255,16 @@ lorsque le programme est ex&#233;cut&#233;. Diff&#233;rentes langues
 peuvent mettre cette partie du message dans diff&#233;rents endroits, et accepter que
 se soit important.
 Cela a abouti &#224; mettre un espace r&#233;serv&#233; dans la d&#233;finition du message:
-<pre><code>
+<div class="wide">
+  <pre>
 Error123 = Nom syst&#232;me {0} est d&#233;j&#224; en cours d'utilisation
-</code></pre>
-(Vous pouvez avoir plus d'une insertion, appel&#233;e {1}, {2}, etc)
+</pre>
+</div>
+(Vous pouvez avoir plus d'une insertion, appel&#233;e <code>{1}</code>, <code>{2}</code>, etc)
 <p>
-Ensuite, formater le message final en ins&#233;rant le contenu en elle:
-<code>
-   String msg = Bundle.getMessage ("Erreur123", badname);
-</code>
+Ensuite, formater le message final en ins&#233;rant le contenu en elle:<br>
+<code>String msg = Bundle.getMessage("Erreur123", badname);</code>
+
 <p>
 Le premier argument est la cl&#233; du message
 suivie par une ou plusieurs cha&#238;nes de caract&#232;res &#224; ins&#233;rer dans le message.
@@ -280,27 +281,27 @@ que de fournir plusieurs lignes dans le code lui-m&#234;me.
 Certaines parties de JMRI restent en Anglais en raison de notre population de d&#233;veloppeurs.
 En particulier, des commentaires et des noms de variables dans le code doivent rester en
 Anglais, comme les messages envoy&#233;s sur le syst&#232;me de rapport.
-Dans le code Java, ces cha&#238;nes peuvent &#234;tre marqu&#233;s avec un un commentaire "<code>// NOI18N</code>"
- ajout&#233; &#224; la fin de la ligne. Si n&#233;cessaire, mettre ceci apr&#232;s un autre commentaire:
-<code>
-  firePropertyChange("size", oldSize, newSize); // promptly! // NOI18N
-</code>
+Dans le code Java, ces cha&#238;nes peuvent &#234;tre marqu&#233;s avec un commentaire "<code>// NOI18N</code>"
+ajout&#233; &#224; la fin de la ligne. Si n&#233;cessaire, mettre ceci apr&#232;s un autre commentaire:
+<div class="wide">
+<code>firePropertyChange("size", oldSize, newSize); // promptly! // NOI18N</code>
+</div>
 
 <h4> Ajout d'un nouveau Bundle*</h4>
 
-Si votre paquet ne poss&#232;de pas d&#233;j&#224; une classe Bundle*, vous pouvez l'ajouter par:
+<p>Si votre paquet ne poss&#232;de pas d&#233;j&#224; une classe Bundle*, vous pouvez l'ajouter par:</p>
 <ul>
     <li>Copiez la classe Bundle <code>java/src/jmri/jmrit/Bundle.java</code> dans votre paquet comme:
         <code>java/src/jmri/mypackage/Bundle.java</code></li>
-    <li> Modifier ce nouveau fichier dans trois endroits:
+    <li>Modifier ce nouveau fichier dans trois endroits:
         <ol>
-        <li> La d&#233;claration "package" en haut devrait inscrire votre paquet
-        <li> La "class ... extends "devrait se r&#233;f&#233;rer &#224; la classe Bundle directement au-dessus de votre paquet
-        <li> L'affectation de la variable "name" doit &#234;tre le nom de votre bundle locale, par convention &quot;jmri/mypackage.Bundle&quot;.
+          <li>La d&#233;claration "package" en haut devrait inscrire votre paquet
+          <li>La "class ... extends "devrait se r&#233;f&#233;rer &#224; la classe Bundle directement au-dessus de votre paquet
+          <li>L'affectation de la variable "name" doit &#234;tre le nom de votre bundle locale, par convention &quot;jmri/mypackage.Bundle&quot;.
         </ol></li>
-    <li> Cr&#233;er un nouveau fichier <code>Bundle.properties</code> dans votre r&#233;pertoire package
+    <li>Cr&#233;er un nouveau fichier <code>Bundle.properties</code> dans votre r&#233;pertoire package
         pour contenir vos propri&#233;t&#233;s de cha&#238;nes de caract&#232;res.</li>
-    <li> Id&#233;alement, vous allez ajouter une copie de <code>java/test/jmri/jmrit/BundleTest.java</code> &#224; votre
+    <li>Id&#233;alement, vous allez ajouter une copie de <code>java/test/jmri/jmrit/BundleTest.java</code> &#224; votre
         R&#233;pertoire de test JUnit pour v&#233;rifier que vos cha&#238;nes fonctionnent:
         <br> Copiez <code>java/test/jmri/jmrit/BundleTest.java</code> dans <code>java/test/jmri/mypackage/BundleTest.java</code>
         suivie de la modification de la d&#233;claration de votre paquet dans ce fichier pour pointer vers votre
@@ -310,11 +311,13 @@ Si votre paquet ne poss&#232;de pas d&#233;j&#224; une classe Bundle*, vous pouv
 </ul>
 
 <h4>Ancien code</h4>
-L'ancien code r&#233;f&#233;rence directement les Bundles :
 
-<pre> <code>
+L'ancien code r&#233;f&#233;rence directement les Bundles:
+<div class="wide">
+  <pre><code>
    java.util.ResourceBundle.getBundle ("jmri.jmrit.beantable.LogixTableBundle");
-</code> </pre>
+</code></pre>
+</div>
 
 <p>
 L'argument getBundle est le nom du paquet complet (non pas le fichier)
@@ -333,7 +336,6 @@ r&#233;f&#233;rence &#224; l'objet Bundle, cela finit par consommer beaucoup
 de m&#233;moire permanente dans un programme de la taille de JMRI. Allez-y et
 appeler le <code>getBundle ()</code> &#224; chaque fois, c'est rapide, car il fonctionne &#224; travers
 un cache faiblement r&#233;f&#233;renc&#233; et nettoyeur de la m&#233;moire.
-<p>
 
 <a name="xml-dev" id="xml-dev"></a>
 <h3>Acc&#232;s XML</h3>
@@ -342,27 +344,26 @@ Le jmri.util.jdom.LocaleSelector fournit une m&#233;thode getAttribute (...)
 qui remplace l'&#233;l&#233;ment de getAttribute JDOM lorsque le contenu de l'
 attribut aurait pu &#234;tre internationalis&#233;. Vous pouvez l'utiliser comme ceci:
 
-<code>
-String choice = LocaleSelector.getAttribute (choiceElement, "choice")
-</code>
+<code>String choice = LocaleSelector.getAttribute (choiceElement, "choice")</code>
 o&#249; "choiceElement" est un objet Element JDOM contenant un (Traduction possible)
 attribut  "choix". &quot;Null&quot; sera retourn&#233; si rien n'est trouv&#233;.
 
 <a name="numbers" id="numbers"></a>
 <h3>Nombres</h3>
-<p>Les nombres "10*10*10+2+3/10" est &#233;crit dediff&#233;rentes mani&#232;res en des emplacements diff&#233;rents:
+<p>Les nombres "10*10*10+2+3/10" est &#233;crit dediff&#233;rentes mani&#232;res en des emplacements
+diff&#233;rents:
 "1002,3",
 "1,002.3",
-" 1.002,3" et peut-&#234;tre d'autres choses
+"1.002,3" et peut-&#234;tre d'autres choses.
 <p>
-JMRI fournit un utilitaire utile pour manipuler ceux-ci sur l'entr&#233;e:
-
-<code>
-   double d = jmri.util.IntlUtilities.doubleValue("1,002.3");
-   float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
-</code>
-
-Notez que cela peut lancer une <code>java.text.ParseException</code>, si l'entr&#233;e est non analysable.
+JMRI fournit un utilitaire utile pour manipuler ceux-ci sur l'entr&#233;e:</p>
+<div class="wide"><pre>
+double d = jmri.util.IntlUtilities.doubleValue("1,002.3");
+float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
+</pre>
+</div>
+<p>Notez que cela peut lancer une <code>java.text.ParseException</code>, si l'entr&#233;e est non
+analysable.</p>
 
 <a name="testing" id="testing"></a>
 <h3>Test</h3>
@@ -372,29 +373,33 @@ votre code. Nous fournissons un outil pour le faire ce qui cr&#233;e
 et traduit automatiquement la version de vos fichiers properties,
 suivant les id&#233;es de Harry Robinson et Arne Thormodsen.
 (Leur
-<a href="http://www.oocities.org/harry_robinson_testing/klingon.htm">papier sur ceci</a> est une lecture recommand&#233;e!)
+<a href="https://www.mistakeproofing.com/software.html">papier sur ceci</a> est une lecture recommand&#233;e!)
 Pour l'utiliser:
 <ul>
     <li> Assurez-vous que votre code se compile et se construit bien dans votre <a href="index.shtml#buildyourcopy">IDE</a>. Nous modifierons
     la version compil&#233;e.
     <li> Ex&#233;cuter le script "translate.sh" dans votre r&#233;pertoire de construction java/. Cela cr&#233;e de nouveaux fichiers
     properties, temporaires dans l'arbre r&#233;pertoire classes/. Vous devrez refaire ceci
-    chaque fois que l'arbre classes/ est enlev&#233; par exemple par "ant clean" ou une construction<a href="index.shtml#buildyourcopy">IDE</a> .
-    <li>Effacez le fichier Preferences, ou modifiez le pour enlever la ligne de d&#233;finition GUI
+    chaque fois que l'arbre classes/ est enlev&#233; par exemple par "ant clean" ou une construction <a
+    href="index.shtml#buildyourcopy">IDE</a>.
+    <li>Effacez le fichier Preferences, ou modifiez le pour enlever la ligne de d&#233;finition GUI.
     <li> Ex&#233;cutez DecoderPro via "Ant locale", qui d&#233;marre le programme DecoderPro
     en utilisant les nouveaux fichiers de propri&#233;t&#233;s.
 </ul>
-Si tout va bien, tout le texte du message aura &#233;t&#233; traduit en MAJUSCULES.
-Tout ce que vous avez &#233;crit et qui reste en minuscules n'a pas &#233;t&#233; compl&#232;tement internationalis&#233;.
-<br>
-<br>
-*Apps		= Application<br>
-*Bundle 	= Groupement<br>
-*Properties=	= Propri&#233;t&#233;s<br>
-*GUI		= Interface Graphique Utilisateur
 
-<!--#include virtual="/Footer.shtml" -->
+<p>Si tout va bien, tout le texte du message aura &#233;t&#233; traduit en MAJUSCULES.
+Tout ce que vous avez &#233;crit et qui reste en minuscules n'a pas &#233;t&#233; compl&#232;tement internationalis&#233;.
+</p>
+<p>
+*Apps = Application<br>
+*Bundle = Groupement<br>
+*Properties	= Propri&#233;t&#233;s<br>
+*GUI = Interface Graphique Utilisateur
+</p>
+
+    <!--#include virtual="/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

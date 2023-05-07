@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Inline LogixNG</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI logixng logix import"><!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
+
+    <div id="mainContent">
+      <h1>JMRI: Inline LogixNG</h1>
+
+      <p><strong>Inline LogixNG</strong> is an alternate approach to managing LogixNG definitions.
+      The standard  approach is to create the LogixNG and its ConditionalNGs using <strong>Tools
+      &rArr; Tables &rArr; LogixNG</strong>.  The <strong>Inline LogixNG</strong> approach
+      associates a LogixNG with a panel object.</p>
+
+      <p>An example could be setting the aspect for a signal mast to approach instead of stop after
+      starting PanelPro.  This example runs the <strong><em>set signal mast aspect</em></strong>
+      action during LogixNG initialization.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/InlineExample.png"><img class="image-border"
+        src="images/InlineExample.png" alt="Inline LogixNG example"></a>
+      </div>
+
+      <h2>Create/Edit Inline LogixNG</h2>
+
+      <p>When a panel object is eligible to have an Inline LogixNG, the context menu will have an
+      additional entry.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/InlineContextMenu.png"><img class="image-border"
+        src="images/InlineContextMenu.png" alt="Inline LogixNG context menu item"></a>
+      </div>
+
+      <p>Click on Inline to open the LogixNG editor window.  If one does not exist, a new LogixNG
+      will be created.  Creating and editing ConditionalNGs is done the same way as the standard
+      LogixNG approach.</p>
+
+      <p>When the ConditionalNG is executed, it has two special Local Variables.</p>
+
+      <dl>
+        <dt>_ _Editor_ _</dt>
+        <dd>The value will be the panel name that contains the object.</dd>
+
+        <dt>_ _InlineLogixNG_ _</dt>
+        <dd>The value will depend on the object type.  It might the object's display name, it
+        might be the internal Layout Editor id such as TO3 (the third turnout) or maybe the object
+        type.</dd>
+      </dl>
+
+      <p>If a panel object that has an associated LogixNG is being removed, a dialog is displayed.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/InlineDelete.png"><img class="image-border"
+        src="images/InlineDelete.png" alt="Inline LogixNG inline delete"></a>
+      </div>
+
+      <p>If <strong>Yes</strong> is selected, the LogixNG will be deleted and the object remove
+      process will continue.  If <strong>No</strong> is selected, the object remove will not occur.</p>
+
+      <h2>Inline LogixNG Table</h2>
+
+      <p>A list of the Inline LogixNGs is displayed at <strong>Tools &rArr; LogixNG &rArr; Inline
+      LogixNGs</strong>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/InlineTable.png"><img class="image-border"
+        src="images/InlineTable.png" alt="Inline LogixNG inline table"></a>
+      </div>
+
+      <p>The <strong>Edit</strong> column provides direct access to the LogixNG and an option to
+      <strong>Delete</strong> the <strong>Inline LogixNG</strong>.</p>
+
+      <p>The table columns can be sorted.  The <strong>Panel</strong> and <strong>Type</strong>
+      filters can be used to limit the rows in the table display.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

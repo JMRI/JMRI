@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
 public class Sprog3PlusSerialDriverAdapterTest {
 
     @Test
-    public void ConstructorTest() {
+    public void testCtor() {
         Sprog3PlusSerialDriverAdapter a = new Sprog3PlusSerialDriverAdapter();
         Assert.assertNotNull("SerialDriverAdapter constructor",a);
     }

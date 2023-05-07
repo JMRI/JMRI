@@ -2,10 +2,8 @@ package jmri.jmrit.beantable;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.*;
 import java.util.List;
 
@@ -21,6 +19,7 @@ import jmri.NamedBean.BadUserNameException;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
+import jmri.jmrit.logixng.tools.swing.DeleteBean;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
@@ -53,8 +52,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     static final String PRINT_ERROR_HANDLING_OPTION = "jmri.jmrit.logixng.ErrorHandling";
     static final String PRINT_NOT_CONNECTED_OPTION = "jmri.jmrit.logixng.NotConnectedSockets";
     static final String PRINT_LOCAL_VARIABLES_OPTION = "jmri.jmrit.logixng.LocalVariables";
+    static final String PRINT_SYSTEM_NAMES_OPTION = "jmri.jmrit.logixng.SystemNames";
 
     JTextArea _textContent;
+    DeleteBean<E> deleteBean = new DeleteBean<>(getManager());
 
     /**
      * Create a AbstractLogixNGTableAction instance.
@@ -67,7 +68,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         super.setEnabled(false);
     }
 
-    protected abstract AbstractLogixNGEditor<E> getEditor(BeanTableFrame<E> f, BeanTableDataModel<E> m, String sName);
+    protected abstract AbstractLogixNGEditor<E> getEditor(BeanTableDataModel<E> m, String sName);
 
     protected boolean isEditSupported() {
         return true;
@@ -92,6 +93,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     protected boolean browseMonoSpace() { return false; }
 
     protected abstract String getBeanText(E bean);
+
+    protected abstract String getBrowserTitle();
 
     protected abstract String getAddTitleKey();
 
@@ -204,6 +207,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     protected AbstractLogixNGEditor<E> _editor = null;
 
     boolean _showReminder = false;
+    private boolean _checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
     jmri.jmrit.picker.PickFrame _pickTables;
 
     // Current focus variables
@@ -341,6 +345,14 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     protected boolean isCopyBeanSupported() {
         return false;
+    }
+
+    protected boolean isExecuteSupported() {
+        return false;
+    }
+
+    protected void execute(@Nonnull E bean) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     /**
@@ -590,7 +602,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         }
 
         // Create a new bean edit view, add the listener.
-        _editor = getEditor(f, m, sName);
+        _editor = getEditor(m, sName);
 
         if (_editor == null) return;    // Editor not implemented yet for LogixNG Tables
 
@@ -623,7 +635,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      * Display reminder to save.
      */
     void showSaveReminder() {
-        if (_showReminder) {
+        if (_showReminder && !_checkEnabled) {
             if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixNGTable")), // NOI18N
@@ -655,121 +667,25 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         }
 
         final E x = getManager().getBySystemName(sName);
-        final jmri.UserPreferencesManager p;
-        p = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
 
         if (x == null) return;  // This should never happen
 
-        StringBuilder message = new StringBuilder();
-        try {
-            getManager().deleteBean(x, "CanDelete");  // NOI18N
-        } catch (PropertyVetoException e) {
-            if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                log.warn("{} : Do Not Delete", e.getMessage());
-                message.append(Bundle.getMessage("VetoDeleteBean", x.getBeanType(), x.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
-                JOptionPane.showMessageDialog(null, message.toString(),
-                        Bundle.getMessage("QuestionTitle"),
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            message.append(e.getMessage());
-        }
-        List<String> listenerRefs = new ArrayList<>();
-        getListenerRefsIncludingChildren(x, listenerRefs);
-        int listenerRefsCount = listenerRefs.size();
-        log.debug("Delete with {}", listenerRefsCount);
-        if (p != null && p.getMultipleChoiceOption(getClassName(), "delete") == 0x02 && message.toString().isEmpty()) {
-            deleteBean(x);
-        } else {
-            final JDialog dialog = new JDialog();
-            dialog.setTitle(Bundle.getMessage("QuestionTitle"));
-            dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            JPanel container = new JPanel();
-            container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        deleteBean.delete(x, hasChildren(x), (t)->{deleteBean(t);},
+                (t,list)->{getListenerRefsIncludingChildren(t,list);},
+                getClassName());
+    }
 
-            if (listenerRefsCount > 0) { // warn of listeners attached before delete
-                String prompt = hasChildren(x)
-                        ? "DeleteWithChildrenPrompt" : "DeletePrompt";
-                JLabel question = new JLabel(Bundle.getMessage(prompt, x.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)));
-                question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                container.add(question);
+    /**
+     * Respond to the Execute combo selection bean window execute request.
+     *
+     * @param sName system name of bean to be deleted
+     */
+    void executePressed(String sName) {
+        final E x = getManager().getBySystemName(sName);
 
-                ArrayList<String> listeners = new ArrayList<>();
-                for (String listenerRef : listenerRefs) {
-                    if (!listeners.contains(listenerRef)) {
-                        listeners.add(listenerRef);
-                    }
-                }
+        if (x == null) return;  // This should never happen
 
-                message.append("<br>");
-                message.append(Bundle.getMessage("ReminderInUse", listenerRefsCount));
-                message.append("<ul>");
-                for (String listener : listeners) {
-                    message.append("<li>");
-                    message.append(listener);
-                    message.append("</li>");
-                }
-                message.append("</ul>");
-
-                JEditorPane pane = new JEditorPane();
-                pane.setContentType("text/html");
-                pane.setText("<html>" + message.toString() + "</html>");
-                pane.setEditable(false);
-                JScrollPane jScrollPane = new JScrollPane(pane);
-                container.add(jScrollPane);
-            } else {
-                String prompt = hasChildren(x)
-                        ? "DeleteWithChildrenPrompt" : "DeletePrompt";
-                String msg = MessageFormat.format(
-                        Bundle.getMessage(prompt), x.getSystemName());
-                JLabel question = new JLabel(msg);
-                question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                container.add(question);
-            }
-
-            final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
-            remember.setFont(remember.getFont().deriveFont(10f));
-            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
-            JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
-            JPanel button = new JPanel();
-            button.setAlignmentX(Component.CENTER_ALIGNMENT);
-            button.add(yesButton);
-            button.add(noButton);
-            container.add(button);
-
-            noButton.addActionListener((ActionEvent e) -> {
-                //there is no point in remembering this the user will never be
-                //able to delete a bean!
-                dialog.dispose();
-            });
-
-            yesButton.addActionListener((ActionEvent e) -> {
-                if (remember.isSelected() && p != null) {
-                    p.setMultipleChoiceOption(getClassName(), "delete", 0x02);  // NOI18N
-                }
-                deleteBean(x);
-                dialog.dispose();
-            });
-            container.add(remember);
-            container.setAlignmentX(Component.CENTER_ALIGNMENT);
-            container.setAlignmentY(Component.CENTER_ALIGNMENT);
-            dialog.getContentPane().add(container);
-            dialog.pack();
-
-            dialog.getRootPane().setDefaultButton(noButton);
-            noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
-            dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
-                    dialog.setVisible(false);
-                    dialog.dispose(); },
-                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
-
-            dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
-            dialog.setModal(true);
-            dialog.setVisible(true);
-        }
+        execute(x);
     }
 
     @Override
@@ -804,6 +720,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             _printTreeSettings._printErrorHandling = prefMgr.getSimplePreferenceState(PRINT_ERROR_HANDLING_OPTION);
             _printTreeSettings._printNotConnectedSockets = prefMgr.getSimplePreferenceState(PRINT_NOT_CONNECTED_OPTION);
             _printTreeSettings._printLocalVariables = prefMgr.getSimplePreferenceState(PRINT_LOCAL_VARIABLES_OPTION);
+            _printTreeSettings._printSystemNames = prefMgr.getSimplePreferenceState(PRINT_SYSTEM_NAMES_OPTION);
         });
     }
 
@@ -820,7 +737,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      * Create and initialize the conditionalNGs browser window.
      */
     void makeBrowserWindow() {
-        JmriJFrame condBrowserFrame = new JmriJFrame(Bundle.getMessage("LogixNG_Browse_Title"), false, true);   // NOI18N
+        JmriJFrame condBrowserFrame = new JmriJFrame(this.getBrowserTitle(), false, true);
 
         condBrowserFrame.addWindowListener(new WindowAdapter() {
             @Override
@@ -876,7 +793,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         condBrowserFrame.setVisible(true);
     }  // makeBrowserWindow
 
-    JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    JFileChooser userFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
 
     /**
      * Save the bean browser window content to a text file.
@@ -946,7 +863,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 updateBrowserText();
             }
         });
-        checkBoxPanel.add(printLineNumbers);
 
         JCheckBox printErrorHandling = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintErrorHandling"));
         printErrorHandling.setSelected(_printTreeSettings._printErrorHandling);
@@ -959,7 +875,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 updateBrowserText();
             }
         });
-        checkBoxPanel.add(printErrorHandling);
 
         JCheckBox printNotConnectedSockets = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintNotConnectedSocket"));
         printNotConnectedSockets.setSelected(_printTreeSettings._printNotConnectedSockets);
@@ -972,7 +887,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 });
             }
         });
-        checkBoxPanel.add(printNotConnectedSockets);
 
         JCheckBox printLocalVariables = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintLocalVariables"));
         printLocalVariables.setSelected(_printTreeSettings._printLocalVariables);
@@ -985,7 +899,26 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 });
             }
         });
-        checkBoxPanel.add(printLocalVariables);
+
+        JCheckBox printSystemNames = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintSystemNames"));
+        printSystemNames.setSelected(_printTreeSettings._printSystemNames);
+        printSystemNames.addChangeListener((event) -> {
+            if (_printTreeSettings._printSystemNames != printSystemNames.isSelected()) {
+                _printTreeSettings._printSystemNames = printSystemNames.isSelected();
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    prefMgr.setSimplePreferenceState(PRINT_SYSTEM_NAMES_OPTION, printSystemNames.isSelected());
+                });
+                updateBrowserText();
+            }
+        });
+
+        if (this instanceof LogixNGTableAction || this instanceof LogixNGModuleTableAction) {
+            checkBoxPanel.add(printLineNumbers);
+            checkBoxPanel.add(printErrorHandling);
+            checkBoxPanel.add(printNotConnectedSockets);
+            checkBoxPanel.add(printLocalVariables);
+            checkBoxPanel.add(printSystemNames);
+        }
 
         return checkBoxPanel;
     }
@@ -1084,6 +1017,9 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
                 } else if (Bundle.getMessage("ButtonDelete").equals(value)) {  // NOI18N
                     deletePressed(sName);
+
+                } else if (Bundle.getMessage("LogixNG_ButtonExecute").equals(value)) {  // NOI18N
+                    executePressed(sName);
                 }
             } else if (col == ENABLECOL) {
                 // alternate
@@ -1161,6 +1097,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             editCombo.addItem(Bundle.getMessage("BrowserButton"));  // NOI18N
             if (isCopyBeanSupported()) editCombo.addItem(Bundle.getMessage("ButtonCopy"));  // NOI18N
             editCombo.addItem(Bundle.getMessage("ButtonDelete"));  // NOI18N
+            if (isExecuteSupported()) editCombo.addItem(Bundle.getMessage("LogixNG_ButtonExecute"));  // NOI18N
             TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
             col.setCellEditor(new DefaultCellEditor(editCombo));
         }

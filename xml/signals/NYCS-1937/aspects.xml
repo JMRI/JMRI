@@ -16,7 +16,7 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -31,13 +31,13 @@
         <date>2010-01-11</date>
         <authorinitials>DB</authorinitials>
         <revremark>Typo Correction</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>3</revnumber>
         <date>2020-01-03</date>
         <authorinitials>BJ</authorinitials>
         <revremark>Duplicate Stop aspect corrected</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
@@ -103,7 +103,7 @@
       <indication>Proceed preparing to stop at second signal</indication>
       <reference>Page 95</reference>
       <speed>Medium</speed>
-      <speed2>Approach</speed2>
+      <speed2>Medium</speed2>
     </aspect>
 
     <aspect>
@@ -112,7 +112,7 @@
       <indication>Proceed; medium speed within interlocking limits</indication>
       <reference>Page 45</reference>
       <speed>Medium</speed>
-      <speed2>Clear</speed2>
+      <speed2>Normal</speed2>
     </aspect>
 
     <aspect>
@@ -121,7 +121,7 @@
       <indication>Proceed preparing to stop at second signal; medium speed within interlocking limits</indication>
       <reference>Page 96</reference>
       <speed>Medium</speed>
-      <speed2>Approach</speed2>
+      <speed2>Medium</speed2>
     </aspect>
 
     <aspect>
@@ -138,7 +138,7 @@
       <rule>Rule 284</rule>
       <indication>Proceed approaching next signal at slow speed. Train exceeding medium speed must at once reduce to that speed.</indication>
       <reference>Page 97</reference>
-      <speed>Approach</speed>
+      <speed>Medium</speed>
       <speed2>Slow</speed2>
     </aspect>
 
@@ -147,8 +147,8 @@
       <rule>Rule 285</rule>
       <indication>Proceed preparing to stop at next signal. Train exceeding medium speed must at once reduce to that speed.</indication>
       <reference>Page 98</reference>
-      <speed>Approach</speed>
-      <speed2>Approach</speed2>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
     </aspect>
 
     <aspect>
@@ -157,7 +157,7 @@
       <indication>Proceed at medium speed preparing to stop at next signal</indication>
       <reference>Page 99</reference>
       <speed>Medium</speed>
-      <speed2>Approach</speed2>
+      <speed2>Medium</speed2>
     </aspect>
 
     <aspect>
@@ -166,7 +166,7 @@
       <indication>Proceed; slow speed within interlocking limits.</indication>
       <reference>Page 100</reference>
       <speed>Slow</speed>
-      <speed2>Clear</speed2>
+      <speed2>Normal</speed2>
     </aspect>
 
     <aspect>
@@ -175,7 +175,7 @@
       <indication>Proceed preparing to stop at next signal; slow speed within interlocking limits.</indication>
       <reference>Page 100</reference>
       <speed>Slow</speed>
-      <speed2>Approach</speed2>
+      <speed2>Medium</speed2>
     </aspect>
 
     <aspect>
@@ -183,8 +183,8 @@
       <rule>Rule 289</rule>
       <indication>Proceed; Manual Block</indication>
       <reference>Page 101</reference>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
     <aspect>
@@ -197,7 +197,7 @@
     </aspect>
 
     <aspect>
-      <name>Stop; Manual Block</name><!-- to avoid duplicating Stop below -->
+      <name comment="to avoid duplicating Stop below">Stop; Manual Block</name>
       <rule>Rule 289B</rule>
       <indication>Stop; Manual Block</indication>
       <reference>Page 102</reference>
@@ -261,6 +261,6 @@
     <appearancefile href="appearance-SL-2-low.xml"/>
     <appearancefile href="appearance-SL-3-high.xml"/>
   </appearancefiles>
-  
+
 </aspecttable>
-  
+

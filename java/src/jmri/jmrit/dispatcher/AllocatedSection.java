@@ -262,12 +262,6 @@ public class AllocatedSection {
                 mActiveTrain.getAutoActiveTrain().handleSectionOccupancyChange(this);
             }
         }
-
-        //       if (mEntered && !mExited && mActiveTrain.getResetWhenDone() && mActiveTrain.getDelayedRestart() != ActiveTrain.NODELAY) {
-        //           if (getSequence() == mActiveTrain.getEndBlockSectionSequenceNumber()) {
-        //               mActiveTrain.setRestart();
-        //           }
-        //       }
         InstanceManager.getDefault(DispatcherFrame.class).sectionOccupancyChanged();
     }
 
@@ -396,11 +390,13 @@ public class AllocatedSection {
                     if ((_block == mActiveTrain.getEndBlock()) && mActiveTrain.getReverseAtEnd()) {
                         // reverse direction of Allocated Sections
                         mActiveTrain.reverseAllAllocatedSections();
-                        mActiveTrain.setRestart();
+                        mActiveTrain.setRestart(mActiveTrain.getDelayReverseRestart(),mActiveTrain.getReverseRestartDelay(),
+                                mActiveTrain.getReverseRestartSensor(),mActiveTrain.getResetReverseRestartSensor());
                     } else if ((_block == mActiveTrain.getStartBlock()) && mActiveTrain.getResetWhenDone()) {
                         // reset the direction of Allocated Sections
                         mActiveTrain.resetAllAllocatedSections();
-                        mActiveTrain.setRestart();
+                        mActiveTrain.setRestart(mActiveTrain.getDelayedRestart(),mActiveTrain.getRestartDelay(),
+                                mActiveTrain.getRestartSensor(),mActiveTrain.getResetRestartSensor());
                     } else if (_block == mActiveTrain.getEndBlock() || _block == mActiveTrain.getStartBlock() ) {
                         mActiveTrain.setStatus(ActiveTrain.DONE);
                     }

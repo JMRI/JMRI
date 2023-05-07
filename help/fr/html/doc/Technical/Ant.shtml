@@ -1,38 +1,28 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; le 2013-09-03 -->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; le 2013-09-03 -->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Construction de JMRI avec Ant</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code ant">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>Construction de JMRI avec Ant</h1>Pour ceux d'entre vous
+<h1>Construction de JMRI avec Ant</h1>
+      <p>Pour ceux d'entre vous
       qui pr&eacute;f&egrave;rent une approche en ligne de commande
       il conviendrait d'examiner "Ant", un des meilleurs
       utilitaires pour faire les projets Java. Ant est disponible
       en t&eacute;l&eacute;chargement &agrave; <a href=
-      "http://jakarta.apache.org/ant/index.html">http://jakarta.apache.org/ant/index.html/</a>
-      . Installez-le, puis:
+      "http://jakarta.apache.org/ant/index.html">http://jakarta.apache.org/ant/index.html/</a>.
+      Installez-le, puis:</p>
 
       <ul>
         <li>Cr&eacute;er un r&eacute;pertoire pour contenir votre
@@ -77,8 +67,11 @@
 ant alltests
 </code>
 </pre>et s'assurer que les tests soient effectu&eacute;s
-proprement. <!--#include virtual="/Footer.shtml" -->
+proprement.
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

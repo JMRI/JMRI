@@ -1,10 +1,13 @@
 package jmri.server.web.spi;
 
+import javax.annotation.CheckForNull;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  *
@@ -25,47 +28,48 @@ public class AngularRouteTest {
     }
 
     @Test
-    public void testGetConstructor() {
-        try {
-            new AngularRoute(null, "b", "c", "d");
-            fail("NPE should have been thrown");
-        } catch (NullPointerException ex) {
-            // ignore, as expected
-        }
-        try {
-            new AngularRoute("a", "b", "c", "d");
-            fail("IllegalArgumentException should have been thrown");
-        } catch (IllegalArgumentException ex) {
-            // ignore, as expected
-        }
-        try {
-            new AngularRoute("a", null, null, null);
-            fail("IllegalArgumentException should have been thrown");
-        } catch (IllegalArgumentException ex) {
-            // ignore, as expected
-        }
-        try {
-            new AngularRoute("a", null, "c", "d");
-            fail("IllegalArgumentException should have been thrown");
-        } catch (IllegalArgumentException ex) {
-            // ignore, as expected
-        }
-        try {
-            new AngularRoute("a", "b", null, "d");
-            fail("IllegalArgumentException should have been thrown");
-        } catch (IllegalArgumentException ex) {
-            // ignore, as expected
-        }
-        try {
-            new AngularRoute("a", null, null, "d");
-        } catch (IllegalArgumentException ex) {
-            fail("IllegalArgumentException should not have been thrown");
-        }
-        try {
-            new AngularRoute("a", "b", "c", null);
-        } catch (IllegalArgumentException ex) {
-            fail("IllegalArgumentException should not have been thrown");
-        }
+    public void testGetConstructor() throws Exception {
+
+        Exception exc = assertThrows(NullPointerException.class, () -> {
+            checkCtorThrowsException(null,"b","c","d");
+        } );
+        assertNotNull(exc);
+
+        exc = assertThrows(IllegalArgumentException.class, () -> {
+            checkCtorThrowsException("a", "b", "c", "d");
+        } );
+        assertNotNull(exc);
+
+        exc = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            assertNotNull(new AngularRoute("a", null, null, null));
+        } );
+        assertNotNull(exc);
+
+        exc = assertThrows(IllegalArgumentException.class, () -> {
+            assertNotNull(new AngularRoute("a", null, "c", "d"));
+        } );
+        assertNotNull(exc);
+
+        exc = assertThrows(IllegalArgumentException.class, () -> {
+            assertNotNull(new AngularRoute("a", "b", null, "d"));
+        } );
+        assertNotNull(exc);
+
+        Assertions.assertDoesNotThrow(() -> {
+            assertNotNull(new AngularRoute("a", null, null, "d"));
+        } );
+
+        Assertions.assertDoesNotThrow(() -> {
+            assertNotNull(new AngularRoute("a", "b", "c", null));
+        } );
+
+    }
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NP_NULL_PARAM_DEREF_NONVIRTUAL","NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE"},
+        justification = "testing exception when null passed")
+    private void checkCtorThrowsException(@CheckForNull String a, @CheckForNull String b, @CheckForNull String c, @CheckForNull String d) throws Exception {
+        Assertions.assertNotNull(new AngularRoute(a, b, c, d));
+        Assertions.fail("Should have thrown exception");
     }
 
     @Test

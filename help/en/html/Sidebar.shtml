@@ -14,7 +14,7 @@
 	    
             <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
 	    
-	    <!--#include virtual="/help/en/parts/SidebarInstall.shtml" -->
+	          <!--#include virtual="/help/en/parts/SidebarInstall.shtml" -->
 
          </dl>
 

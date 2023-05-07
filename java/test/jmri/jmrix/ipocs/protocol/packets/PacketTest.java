@@ -18,7 +18,7 @@ public class PacketTest {
   @Test
   public void ackTest() {
     byte[] bytes = new byte[1];
-    new Random().nextBytes(bytes);
+    JUnitUtil.getRandom().nextBytes(bytes);
     pkt.setAck(bytes[0]);
     assertEquals(bytes[0], pkt.getAck());
   }

@@ -96,7 +96,7 @@ public class ProgrammerScaffold implements Programmer {
     @Nonnull
     @Override
     public String decodeErrorCode(int i) {
-        return null;
+        return "decodeErrorCode" + i;
     }
 
 }

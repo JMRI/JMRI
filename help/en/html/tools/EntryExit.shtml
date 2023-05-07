@@ -34,10 +34,11 @@
       the smallest cost or number of different Blocks. If one of the Blocks on the path is already
       occupied and there is a valid alternative path, then this will be taken.</p>
 
-      <p>The two sensors are referred to as an <strong>NX Pair</strong>.<br>
-      <em>It is also possible to define an NX pair where the destination sensor is on another
-      panel. This requires that the panels are linked using <strong>Edge
-      Connectors</strong>.</em><span class="since">since 4.11.1</span></p>
+      <p>The two sensors are referred to as a <strong>NX Pair</strong>.</p>
+
+      <p><span class="since">since 4.11.1</span><em>It is also possible to define a NX pair where
+      the destination sensor is on another panel. This requires that the panels are linked using
+      <strong>Edge Connectors</strong>.</em></p>
 
       <h3 id="nxtypes">Entry/Exit Types</h3>
 
@@ -62,7 +63,8 @@
       SignalMasts must also be placed at the same boundary points as the sensors working in the
       same direction. The SignalMast logic will remain for the duration of the operating session,
       however it is not saved and will be re-created the next time the panel is opened. When there
-      is no route set then the SignalMast will be placed in a held state.</p>
+      is no route set then the SignalMast will be placed in a held state if the <strong><em>Use ABS
+      Signal Mode</em></strong> option is not selected.</p>
 
       <p><strong>Full Interlocking</strong> &mdash; This covers the same things as the other two items
       above. In addition, it will also "reserve" or "lock out" each block in the route so that no
@@ -75,9 +77,10 @@
       route will stay active, until either a train has passed through the blocks and they have
       returned to an unoccupied state, the route has been manually cleared down, or has been
       cancelled. The normal mode for related signal mast is to keep the mast in a Held state until
-      a route has been create, at which time the hold is released. When the first block becomes
-      occupied the hold is set. If all of the NX Pairs related to a source mast are disabled, then
-      the hold for the mast is released, effectively setting the mast to ABS mode.</p>
+      a route has been created, at which time the hold is released. When the first block becomes
+      occupied the hold is set. If the <strong><em>Use ABS Signal Mode</em></strong> option is
+      selected, the signal masts will not be held.  If all of the NX Pairs related to a source mast
+      are disabled, then the hold for the mast is released, effectively setting the mast to ABS mode.</p>
 
       <p>For the second and third types, if the signal mast logic has already been created,
       temporary signal mast logic will not be created.</p>
@@ -282,10 +285,11 @@
       <strong>Note:</strong> Only single segment conflicts are detected. A multiple segment route
       request will not provide the stack option.</p>
 
-      <h3>Logix Support</h3>
-      There are two conditional variables and three actions that can be used in Logix Conditionals.
+      <h3>Logix/LogixNG Support</h3>
+      There are two conditional variables (expressions) and three actions that can be used in
+      Logix/LogixNG Conditionals.
       <ul>
-        <li>Variables
+        <li>Variables/Expressions
           <ul>
             <li>NX Pair Active &mdash; Check if a segment for the selected NX Pair is Active.</li>
 

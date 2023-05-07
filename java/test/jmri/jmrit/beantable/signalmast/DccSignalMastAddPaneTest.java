@@ -41,13 +41,14 @@ public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase 
         Assert.assertFalse(vp.canHandleMast(m1));
         
         vp.setMast(null);
-        
-        vp.setAspectNames(s1.getAppearanceMap(), 
-            InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("AAR-1946"));
+        SignalSystem aar1946system = InstanceManager.getDefault(SignalSystemManager.class).getSystem("AAR-1946");
+        Assertions.assertNotNull(aar1946system);
+        vp.setAspectNames(s1.getAppearanceMap(), aar1946system );
         vp.setMast(s1);
-        
-        vp.setAspectNames(m1.getAppearanceMap(),
-            InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
+
+        SignalSystem basic = InstanceManager.getDefault(SignalSystemManager.class).getSystem("basic");
+        Assertions.assertNotNull(basic);
+        vp.setAspectNames(m1.getAppearanceMap(), basic );
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
     }
@@ -63,8 +64,8 @@ public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase 
         CommandStation c = new CommandStation() {
             @Override
             public boolean sendPacket(byte[] packet, int repeats) {
-                lastSentPacket = packet;
-                sentPacketCount++;
+                // lastSentPacket = packet;
+                // sentPacketCount++;
                 return true;
             }
 
@@ -79,11 +80,12 @@ public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase 
             }
         };
         InstanceManager.store(c, CommandStation.class);
-        lastSentPacket = null;
-        sentPacketCount = 0;
+        // lastSentPacket = null;
+        // sentPacketCount = 0;
     }
-    byte[] lastSentPacket;
-    int sentPacketCount;
+
+    // byte[] lastSentPacket;
+    // int sentPacketCount;
 
     @AfterEach
     @Override

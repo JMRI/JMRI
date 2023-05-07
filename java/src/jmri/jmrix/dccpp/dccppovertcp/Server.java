@@ -83,9 +83,9 @@ public class Server {
         String settingsFileName = FileUtil.getUserFilesPath() + SETTINGS_FILE_NAME;
         log.debug("Server: saving settings file {}", settingsFileName);
 
-        try {
-            OutputStream outStream = new FileOutputStream(settingsFileName);
-            PrintStream settingsStream = new PrintStream(outStream);
+        try ( OutputStream outStream = new FileOutputStream(settingsFileName);
+            PrintStream settingsStream = new PrintStream(outStream); ) {
+
             settingsStream.println("# DCCppOverTcp Configuration Settings");
             settingsStream.println(AUTO_START_KEY + " = " + (autoStart ? "1" : "0"));
             settingsStream.println(PORT_NUMBER_KEY + " = " + portNumber);
@@ -93,7 +93,7 @@ public class Server {
             settingsStream.flush();
             settingsStream.close();
             settingsChanged = false;
-        } catch (FileNotFoundException ex) {
+        } catch ( IOException ex) {
             log.warn("Server: saveSettings exception: ", ex);
         }
         updateServerStateListener();

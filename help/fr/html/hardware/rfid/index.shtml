@@ -1,22 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Updated by Herv&#233; Blorec  2017-02-06-->
-
-  <title>JMRI: RFID Reader Support</title><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <title>JMRI: RFID Reader Support</title>
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../Sidebar.shtml" -->
 
     <div id="mainContent">
       <!-- Page Body -->
@@ -129,10 +125,11 @@
 
         <li>Le menu contextuel sur l'icône vous permettra de changer la mise en forme.</li>
       </ul>
-      &lt;<!--#include virtual="/Footer.shtml" -->
+      &lt;<!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

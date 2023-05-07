@@ -1,31 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Herv&#233;. BLOREC <bzh56420@yahoo.fr> on 2016-06-28 -->
-
-  <title>JMRI: DecoderPro - Multi-Decoder Tool</title><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <title>JMRI: DecoderPro - Multi-Decoder Tool</title>
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI: Guide Utilisateur DecoderPro</h1>
 
-      <h2>Outil Multi-DHervécodeur</h2>
-      Digitrax a inventé un <a href="#digitraxproposal">mHervécanisme</a> pour avoir plus d'un
+      <h2>Outil Multi-Décodeur</h2>
+      Digitrax a inventé un <a href="#digitraxproposal">mécanisme</a> pour avoir plus d'un
       décodeur dans la locomotive, et être encore capable de lire et les écrire séparément. Il
       utilise CV 15 et CV 16 d'une façon particulière pour le faire.
       <p>CV 16 est l'ID d'un décodeur particulier; si vous avez plus d'un décodeur dans une
@@ -60,10 +56,10 @@
       Multi-Décodeur" a été écrit pour JMRI (voir image à droite).
       <p>Il a plusieurs parties.</p>
 
-      <p>Au sommet il y a 8 boutons que vous pouvez cliquer pour débloquer un décodeur particulier
+      <p>Au sommet, il y a 8 boutons que vous pouvez cliquer pour débloquer un décodeur particulier
       dans la locomotive. Par exemple, si vous cliquez sur "3", le décodeur configuré avec "3" dans
       CV 16 sera déverrouillé. Si possible, le programme tente de vérifier que le décodeur est
-      présent et le communique; l'état est indiqué dans le milieu de la fenêtre ("OK"dans
+      présent et le communique; l'état est indiqué dans le milieu de la fenêtre ("OK" dans
       l'illustration).</p>
 
       <p>Si vous cliquez sur le bouton "legacy", tous les décodeurs avec la fonction de
@@ -75,11 +71,11 @@
       <ol>
         <li>Cliquez "2" - les deux décodeurs seront maintenant actif.</li>
 
-        <li>Ecrivez les informations pour "2", qui iront dans les deux.</li>
+        <li>Écrivez les informations pour "2", qui iront dans les deux.</li>
 
         <li>Cliquez "Legacy", verrouillant le "2".</li>
 
-        <li>Ecrivez les informations pour le décodeur non verrouillé, écrivant par-dessus ce qui
+        <li>Écrivez les informations pour le décodeur non verrouillé, écrivant par-dessus ce qui
         avait été écrit.</li>
       </ol>
       Oui, c'est laid, mais ça peut servir.
@@ -102,18 +98,19 @@
         Digitrax afin que vous puissiez l'utiliser. (Normalement, vous devriez prendre la
         locomotive en dehors de manière à être en mesure de charger la valeur Digitrax CV 16).</li>
       </ul>
-      Enfin, la partie inférieure de la page vous permet de commanderr la programmation en mode
+      Enfin, la partie inférieure de la page vous permet de commander la programmation en mode
       service.(voie de programmation)
       <p>Bien qu'il soit possible d'utiliser cet outil en mode "Ops" (programmation voie
       principale), dans ce cas on n'est pas en mesure de confirmer les opérations, de sorte qu'on
-      ne peut pas être sûr à 100% que le décodeur a bien été sélectionné. <a name=
-      "digitraxproposal" id="digitraxproposal"></a></p>
+      ne peut pas être sûr à 100% que le décodeur a bien été sélectionné.</p>
 
+      <a name="digitraxproposal" id="digitraxproposal"></a>
       <h2>Proposition Originale Digitrax</h2>
-      Les utilisateurs de DCC ont parfois envie d'installer plus d'un décodeur dans une seule
+      <p>Les utilisateurs de DCC ont parfois envie d'installer plus d'un décodeur dans une seule
       locomotive. Un cas classique est l'aide de décodeurs séparés pour le contrôle moteur et du
       son. Parce que ces décodeurs ont souvent besoin d'avoir leurs CVs configurés séparément, un
-      mécanisme est nécessaire pour communiquer avec un seul à la fois.
+      mécanisme est nécessaire pour communiquer avec un seul à la fois.</p>
+
       <p>Ce mécanisme doit être en mesure de:</p>
 
       <ol>
@@ -193,14 +190,15 @@ et CV 16 sont égaux, tous les CV dans le décodeur peuvent être lu ou écrit. 
       </ol>
       Répétez cette procédure pour ID 1 à 7 pour vérifier celles-ci.
       <p>Parce que les valeurs; d'ID sont faibles, une lecture réussie est assez rapide. Une
-      lecture ratée c'est à dire lorsque le décodeur n'est pas présent, demandera un certain temps
+      lecture ratée c'est-à-dire lorsque le décodeur n'est pas présent, demandera un certain temps
       pour de nombreuses centrales de commande existantes, pour donner une réponse. Ceci peut être
       fait plus rapidement dans l'avenir en ayant des centrales de commande qui essayent de lire
-      simplement la valeur attendue, au lieu de 0 à 255, en l'absence d'un accusé de réception 
-      <!--#include virtual="/Footer.shtml" --></p>
+      simplement la valeur attendue, au lieu de 0 à 255, en l'absence d'un accusé de réception.</p>
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- close #mainContent -->
   </div>
   <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

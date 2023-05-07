@@ -14,11 +14,9 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.util.JmriJFrame;
-
-
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
+import jmri.util.JmriJFrame;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -58,8 +56,14 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     }
 
     @Override
-    protected AbstractLogixNGEditor<LogixNG> getEditor(BeanTableFrame<LogixNG> f, BeanTableDataModel<LogixNG> m, String sName) {
-        return new LogixNGEditor(f, m, sName);
+    protected void createModel() {
+        super.createModel();
+        m.setFilter((LogixNG t) -> !t.isInline());
+    }
+
+    @Override
+    protected AbstractLogixNGEditor<LogixNG> getEditor(BeanTableDataModel<LogixNG> m, String sName) {
+        return new LogixNGEditor(m, sName);
     }
 
     @Override
@@ -159,10 +163,25 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     }
 
     @Override
+    protected boolean isExecuteSupported() {
+        return true;
+    }
+
+    @Override
+    protected void execute(@Nonnull LogixNG logixNG) {
+        logixNG.execute();
+    }
+
+    @Override
     protected String getBeanText(LogixNG e) {
         StringWriter writer = new StringWriter();
         _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
         return writer.toString();
+    }
+
+    @Override
+    protected String getBrowserTitle() {
+        return Bundle.getMessage("LogixNG_Browse_Title");
     }
 
     @Override

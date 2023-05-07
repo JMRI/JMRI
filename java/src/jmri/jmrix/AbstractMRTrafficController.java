@@ -658,6 +658,7 @@ public abstract class AbstractMRTrafficController {
         // forward the message to the registered recipients,
         // which includes the communications monitor, except the sender.
         // Schedule notification via the Swing event queue to ensure order
+        log.trace("about to start XmtNotifier for {} last: {}", m, mLastSender, new Exception("traceback"));
         Runnable r = new XmtNotifier(m, mLastSender, this);
         SwingUtilities.invokeLater(r);
 

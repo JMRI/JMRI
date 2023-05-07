@@ -3,10 +3,10 @@ package jmri.jmrix.ieee802154.xbee;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,12 +17,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class XBeeIOStreamTest {
 
-   private static XBeeInterfaceScaffold tc = null; // set in setUp.
-   private static XBeeNode node = null; // set in setUp.
-   private XBeeIOStream a = null; // set in initTest 
+   private XBeeInterfaceScaffold tc = null; // set in setUp.
+   private XBeeNode node = null; // set in setUp.
+   private XBeeIOStream a = null; // set in setUp 
 
    @Test
-   public void ConstructorTest(){
+   public void testCtor(){
        assertThat(a).isNotNull();
    }
 
@@ -56,12 +56,12 @@ public class XBeeIOStreamTest {
    public void checkSend() throws java.io.IOException {
        a.configure(); // start the send and receive threads.
        a.getOutputStream().writeChars("Hello World");
-       jmri.util.JUnitUtil.waitFor(()->{ return tc.dataSent; });
+       JUnitUtil.waitFor(()->{ return tc.dataSent; },"data sent to tc");
    }
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         tc.setAdapterMemo(new XBeeConnectionMemo());
         byte pan[] = {(byte) 0x00, (byte) 0x42};
@@ -84,8 +84,8 @@ public class XBeeIOStreamTest {
         tc.terminate();
         tc = null;
         node = null;
-        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
 
     }
 

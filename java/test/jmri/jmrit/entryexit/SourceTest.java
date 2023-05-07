@@ -125,7 +125,6 @@ public class SourceTest {
         JUnitUtil.removeMatchingThreads("Routing stabilising timer");
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -10,14 +10,16 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.actions.NamedBeanType;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Table model for ListenOnBeans named beans
- * 
+ *
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ListenOnBeansTableModel extends AbstractTableModel {
@@ -29,10 +31,10 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
     public static final int COLUMN_BEAN_ALL = COLUMN_BEAN_NAME + 1;
     public static final int COLUMN_DELETE = COLUMN_BEAN_ALL + 1;
     public static final int COLUMN_DUMMY = COLUMN_DELETE + 1;
-    
+
     private final List<NamedBeanReference> _namedBeanReference = new ArrayList<>();
-    
-    
+
+
     public ListenOnBeansTableModel(Collection<NamedBeanReference> namedBeanReference) {
         if (namedBeanReference != null) {
             for (NamedBeanReference ref : namedBeanReference) {
@@ -40,7 +42,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
             }
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public int getRowCount() {
@@ -79,7 +81,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
             case COLUMN_BEAN_TYPE:
                 return NamedBeanType.class;
             case COLUMN_BEAN_NAME:
-                return String.class;
+                return NamedBeanReference.class;
             case COLUMN_BEAN_ALL:
                 return Boolean.class;
             case COLUMN_DELETE:
@@ -101,15 +103,19 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         NamedBeanReference ref = _namedBeanReference.get(rowIndex);
-        
+
         switch (columnIndex) {
             case COLUMN_BEAN_TYPE:
                 NamedBeanType oldType = ref.getType();
                 ref.setType((NamedBeanType) value);
-                if (oldType != ref.getType()) ref.setName("");
+                if (oldType != ref.getType()) {
+                    ref.setName("");
+                    // When the type changes, the name is set to null, so the name cell needs to be updated
+                    fireTableCellUpdated(rowIndex, COLUMN_BEAN_NAME);
+                }
                 break;
             case COLUMN_BEAN_NAME:
-                ref.setName((String) value);
+                ref.setName(((NamedBeanReference) value).getHandle());
                 break;
             case COLUMN_BEAN_ALL:
                 ref.setListenOnAllProperties((boolean) value);
@@ -121,19 +127,19 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
                 break;
             default:
                 throw new IllegalArgumentException("Invalid column");
-        }      
+        }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (rowIndex >= _namedBeanReference.size()) throw new IllegalArgumentException("Invalid row");
-        
+
         switch (columnIndex) {
             case COLUMN_BEAN_TYPE:
                 return _namedBeanReference.get(rowIndex).getType();
             case COLUMN_BEAN_NAME:
-                return _namedBeanReference.get(rowIndex).getName();
+                return _namedBeanReference.get(rowIndex);
             case COLUMN_BEAN_ALL:
                 return _namedBeanReference.get(rowIndex).getListenOnAllProperties();
             case COLUMN_DELETE:
@@ -144,39 +150,39 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
                 throw new IllegalArgumentException("Invalid column");
         }
     }
-    
+
     public void setColumnsForComboBoxes(JTable table) {
         JComboBox<NamedBeanType> beanTypeComboBox = new JComboBox<>();
         table.setRowHeight(beanTypeComboBox.getPreferredSize().height);
         table.getColumnModel().getColumn(COLUMN_BEAN_TYPE)
                 .setPreferredWidth((beanTypeComboBox.getPreferredSize().width) + 4);
     }
-    
+
     public void add() {
         int row = _namedBeanReference.size();
         _namedBeanReference.add(new NamedBeanReference("", NamedBeanType.Turnout, false));
         fireTableRowsInserted(row, row);
     }
-    
+
     private void delete(int row) {
         _namedBeanReference.remove(row);
         fireTableRowsDeleted(row, row);
     }
-    
+
     public List<NamedBeanReference> getReferences() {
         return _namedBeanReference;
     }
-    
-    
+
+
     public static class CellRenderer extends DefaultTableCellRenderer {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
-            
+
             if (column == COLUMN_BEAN_TYPE) {
                 if (value == null) value = NamedBeanType.Turnout;
-                
+
                 if (! (value instanceof NamedBeanType)) {
                     throw new IllegalArgumentException("value is not an NamedBeanType: " + value.getClass().getName());
                 }
@@ -187,41 +193,41 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
             return this;
         }
     }
-    
-    
+
+
     public static class NamedBeanTypeCellEditor extends AbstractCellEditor
             implements TableCellEditor, ActionListener {
-        
+
         private NamedBeanType _beanType;
-        
+
         @Override
         public Object getCellEditorValue() {
             return this._beanType;
         }
-        
+
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int row, int column) {
-            
+
             if (value == null) value = NamedBeanType.Turnout;
-            
+
             if (! (value instanceof NamedBeanType)) {
                 throw new IllegalArgumentException("value is not an NamedBeanType: " + value.getClass().getName());
             }
-            
+
             JComboBox<NamedBeanType> returnValueTypeComboBox = new JComboBox<>();
-            
+
             for (NamedBeanType type : NamedBeanType.values()) {
                 returnValueTypeComboBox.addItem(type);
             }
             JComboBoxUtil.setupComboBoxMaxRows(returnValueTypeComboBox);
-            
+
             returnValueTypeComboBox.setSelectedItem(value);
             returnValueTypeComboBox.addActionListener(this);
-            
+
             return returnValueTypeComboBox;
         }
-        
+
         @Override
         @SuppressWarnings("unchecked")  // Not possible to check that event.getSource() is instanceof JComboBox<NamedBeanType>
         public void actionPerformed(ActionEvent event) {
@@ -231,73 +237,61 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
             JComboBox<NamedBeanType> returnValueTypeComboBox =
                     (JComboBox<NamedBeanType>) event.getSource();
             _beanType = returnValueTypeComboBox.getItemAt(returnValueTypeComboBox.getSelectedIndex());
-            
+
         }
-        
+
     }
-    
-    
+
+
     public NamedBeanCellEditor getNamedBeanCellEditor() {
         return new NamedBeanCellEditor();
     }
-    
-    
+
+
     public class NamedBeanCellEditor extends AbstractCellEditor
             implements TableCellEditor, ActionListener {
-        
-        private String _namedBean;
-        
+
+        private NamedBeanReference _namedBeanRef;
+
         @Override
         public Object getCellEditorValue() {
-            return this._namedBean;
+            return this._namedBeanRef;
         }
-        
+
+        @SuppressWarnings({"unchecked", "rawtypes"})    // The actual types are not known by this class.
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int row, int column) {
-            
-            if ((value != null) && (! (value instanceof String))) {
-                throw new IllegalArgumentException("value is not a String: " + value.getClass().getName());
+
+            if ((value != null) && (! (value instanceof NamedBeanReference))) {
+                throw new IllegalArgumentException("value is not a NamedBeanReference: " + value.getClass().getName());
             }
-            
-            JComboBox<String> namedBeanComboBox = new JComboBox<>();
-            SortedSet<? extends NamedBean> set =
-                    _namedBeanReference.get(row).getType().getManager().getNamedBeanSet();
-            
-            String name = _namedBeanReference.get(row).getName();
-            
-            if (!set.isEmpty()) {
-                for (NamedBean bean : set) {
-                    namedBeanComboBox.addItem(bean.getDisplayName());
-                    
-                    if (name != null) {
-                        if (name.equals(bean.getUserName()) || name.equals(bean.getSystemName())) {
-                            namedBeanComboBox.setSelectedItem(bean.getDisplayName());
-                        }
-                    }
-                }
-                JComboBoxUtil.setupComboBoxMaxRows(namedBeanComboBox);
-            } else {
-                namedBeanComboBox.addItem("");
-            }
-            
-//            namedBeanComboBox.setSelectedItem(value);
+
+            _namedBeanRef = _namedBeanReference.get(row);
+            Manager manager = _namedBeanRef.getType().getManager();
+            NamedBean selection = _namedBeanRef.getHandle() != null ? _namedBeanRef.getHandle().getBean() : null;
+            NamedBeanComboBox<NamedBean> namedBeanComboBox =
+                    new NamedBeanComboBox<>(manager, selection, NamedBean.DisplayOptions.DISPLAYNAME);
+            namedBeanComboBox.setAllowNull(true);
+            JComboBoxUtil.setupComboBoxMaxRows(namedBeanComboBox);
+
             namedBeanComboBox.addActionListener(this);
-            
+
             return namedBeanComboBox;
         }
-        
+
         @Override
         @SuppressWarnings("unchecked")  // Not possible to check that event.getSource() is instanceof JComboBox<NamedBeanType>
         public void actionPerformed(ActionEvent event) {
             if (! (event.getSource() instanceof JComboBox)) {
                 throw new IllegalArgumentException("value is not an JComboBox: " + event.getSource().getClass().getName());
             }
-            JComboBox<String> namedBeanComboBox = (JComboBox<String>) event.getSource();
+            NamedBeanComboBox<NamedBean> namedBeanComboBox = (NamedBeanComboBox<NamedBean>) event.getSource();
             int index = namedBeanComboBox.getSelectedIndex();
-            _namedBean = (index != -1) ? namedBeanComboBox.getItemAt(index) : null;
+            NamedBean namedBean = (index != -1) ? namedBeanComboBox.getItemAt(index) : null;
+            _namedBeanRef.setName(namedBean);
         }
-        
+
     }
-    
+
 }

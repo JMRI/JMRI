@@ -27,7 +27,7 @@ public class YardEditFrame extends TrackEditFrame {
         _type = Track.YARD;
         super.initComponents(location, track);
 
-        _toolMenu.insert(new IgnoreUsedTrackAction(_track), TOOL_MENU_OFFSET);
+        _toolMenu.insert(new IgnoreUsedTrackAction(this), TOOL_MENU_OFFSET);
         _toolMenu.insert(new ChangeTrackTypeAction(this), TOOL_MENU_OFFSET + 1);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true); // NOI18N
 

@@ -52,8 +52,10 @@ public class DefaultSymbolTable implements SymbolTable {
         _prevSymbolTable = null;
         _symbols.putAll(prevSymbolTable.getSymbols());
         _stack = new DefaultStack();
-        for (int i=0; i < prevSymbolTable.getStack().getCount(); i++) {
-            _stack.setValueAtIndex(i, prevSymbolTable.getStack().getValueAtIndex(i));
+        for (Symbol symbol : _symbols.values()) {
+            _stack.setValueAtIndex(symbol.getIndex(),
+                    prevSymbolTable.getValue(symbol.getName()));
+
         }
         _firstSymbolIndex = _stack.getCount();
     }
@@ -115,7 +117,7 @@ public class DefaultSymbolTable implements SymbolTable {
             if (globalVariable != null) {
                 globalVariable.setValue(value);
             } else {
-                throw new IllegalArgumentException("The symbol "+name+" does not exist in the symbol table");
+                throw new IllegalArgumentException(Bundle.getMessage("ExceptionSymbolNotInSymbolTable", name));
             }
         }
     }

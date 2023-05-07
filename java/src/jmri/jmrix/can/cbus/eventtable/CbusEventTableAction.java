@@ -5,7 +5,6 @@ import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
-import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanMessage;
@@ -15,9 +14,6 @@ import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.jmrix.can.cbus.CbusEventInterface;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.util.ThreadingUtil;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -68,7 +64,7 @@ public class CbusEventTableAction implements PropertyChangeListener {
         _model._mainArray.forEach((n) -> n.resetBeans() );
         fireAllJmriCellsChanged();
         for (Class<?> classType : classTypes) {
-            jmri.Manager<?> sm = (jmri.Manager<?>) InstanceManager.getDefault(classType); // proxy manager
+            jmri.Manager<?> sm = (jmri.Manager<?>) _model._memo.get(classType);
             sm.getNamedBeanSet().forEach((nb) -> {
                 if (nb instanceof CbusEventInterface) {
                     linkHwaddtoEvent( nb, true, ((CbusEventInterface)nb).getBeanOnMessage());
@@ -91,9 +87,9 @@ public class CbusEventTableAction implements PropertyChangeListener {
     protected final void addRemoveListenersToNbManagers(boolean add){
         for (Class<?> classType : classTypes) {
             if (add) {
-                ((jmri.Manager<?>) InstanceManager.getDefault(classType)).addPropertyChangeListener(this);
+                ((jmri.Manager<?>) _model._memo.get(classType)).addPropertyChangeListener(this);
             } else {
-                ((jmri.Manager<?>) InstanceManager.getDefault(classType)).removePropertyChangeListener(this);
+                ((jmri.Manager<?>) _model._memo.get(classType)).removePropertyChangeListener(this);
             }
         }
     }
@@ -173,5 +169,5 @@ public class CbusEventTableAction implements PropertyChangeListener {
         addRemoveListenersToNbManagers(false);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventTableAction.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusEventTableAction.class);
 }

@@ -4,9 +4,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 final class CarDeleteAttributeAction extends AbstractAction {
 
     public CarDeleteAttributeAction(CarAttributeEditFrame caef) {
@@ -18,9 +15,6 @@ final class CarDeleteAttributeAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        log.debug("Delete unused attributes");
         caef.deleteUnusedAttributes();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(CarDeleteAttributeAction.class);
 }

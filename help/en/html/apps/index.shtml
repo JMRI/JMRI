@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: Applications</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Applications</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->

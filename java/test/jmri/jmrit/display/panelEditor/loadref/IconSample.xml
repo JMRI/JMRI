@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>99</minor>
-    <test>8</test>
+    <test>9</test>
     <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -39,8 +39,8 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue May 24 23:36:18 EDT 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="561" y="325" height="363" width="565" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Jun 01 14:08:11 EDT 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="561" y="325" height="363" width="565" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
     <sensoricon sensor="IS1" x="147" y="18" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="90" scale="1.0">
         <rotation>0</rotation>
@@ -100,29 +100,9 @@
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="206" y="225" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-238.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="146" y="225" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-238.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
     <positionablelabel x="271" y="229" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="BN-1989/SL-2-high/rule-238.gif" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <positionablelabel x="85" y="182" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/RGB-animated-once-Square.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="145" y="182" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/RGB-animated-once-Square2.gif" degrees="0" scale="1.0">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="205" y="182" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/RGB-animated-once-Square2.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
@@ -131,14 +111,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Tue May 24 23:36:18 EDT 2022</date>
+      <date>Wed Jun 01 14:08:11 EDT 2022</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/panelEditor/load/IconSample.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue May 24 23:36:18 EDT 2022</date>
+      <date>Wed Jun 01 14:08:11 EDT 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.8plus+jake+20220525T0328Z+Rcf8d1946e5 on Tue May 24 23:36:18 EDT 2022-->
+  <!--Written by JMRI version 4.99.9plus+jake+20220601T1656Z+Rbe438e7fa8 on Wed Jun 01 14:08:11 EDT 2022-->
 </layout-config>

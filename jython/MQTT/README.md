@@ -1,7 +1,7 @@
 JMRI Jython Example Scripts for Using MQTT
 ======================================================
 
-This folder contains user-constributed [scripts][1] written in Jython, a Java-based
+This folder contains user-contributed [scripts][1] written in Jython, a Java-based
 variant of Python, available in the JMRI application.
 
 Further information on some scripts may also be found here:

@@ -4,7 +4,8 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: DecoderPro - Multi-Decoder Tool</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: DecoderPro - Multi-Decoder Tool</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -54,9 +55,9 @@
       If possible, the program tries to verify that the decoder is present and communicating; the
       status is shown in the middle of the window ("OK" in the illustration).</p>
 
-      <p>If you click the "legacy" button, all decoders with the lock feature will be locked out.
+      <p>If you click the "Legacy" button, all decoders with the lock feature will be locked out.
       This is so you can write to an additional decoder without the lock feature. E.g. if you have
-      one decoder with (say "2"), and one without the lock feature, you can still configure them
+      one decoder with, say "2", and one without the lock feature, you can still configure them
       by:</p>
 
       <ol>

@@ -145,10 +145,15 @@ public class JsonManifest extends TrainCommon {
             jsonLocation.set(JSON.ENGINES, engines);
 
             // block cars by destination
+            // caboose or FRED is placed at end of the train
+            // passenger cars are already blocked in the car list
+            // passenger cars with negative block numbers are placed at
+            // the front of the train, positive numbers at the end of
+            // the train.
             ArrayNode pickups = this.mapper.createArrayNode();
             for (RouteLocation destination : route) {
                 for (Car car : carList) {
-                    if (car.getRouteLocation() == routeLocation && car.getRouteDestination() == destination) {
+                    if (isNextCar(car, routeLocation, destination)) {
                         pickups.add(this.utilities.getCar(car, locale));
                     }
                 }

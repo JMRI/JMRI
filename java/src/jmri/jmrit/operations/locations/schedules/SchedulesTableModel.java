@@ -293,7 +293,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         for (int i = 0; i < box.getItemCount(); i++) {
             LocationTrackPair ltp = (LocationTrackPair) box.getItemAt(i);
             String status = ltp.getTrack().checkScheduleValid();
-            if (!status.equals(Track.SCHEDULE_OKAY)) {
+            if (!status.equals(Schedule.SCHEDULE_OKAY)) {
                 return Bundle.getMessage("ErrorTitle");
             }
         }
@@ -325,7 +325,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
             return "";
         }
         String status = ltp.getTrack().checkScheduleValid();
-        if (!status.equals(Track.SCHEDULE_OKAY)) {
+        if (!status.equals(Schedule.SCHEDULE_OKAY)) {
             return status;
         }
         return Bundle.getMessage("ButtonOK");

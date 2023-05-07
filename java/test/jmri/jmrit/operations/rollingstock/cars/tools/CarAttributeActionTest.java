@@ -24,9 +24,9 @@ public class CarAttributeActionTest extends OperationsTestCase {
         CarAttributeAction a = new CarAttributeAction(cef);
         Assert.assertNotNull("exists", a);
         
-        Assert.assertFalse("toggle state", cef.showQuanity);
+        Assert.assertFalse(cef.quanity.isVisible());
         a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
-        Assert.assertTrue("toggle state", cef.showQuanity);
+        Assert.assertTrue(cef.quanity.isVisible());
         
         JmriJFrame f = JmriJFrame.getFrame("Edit Car Road");
         Assert.assertNotNull("frame exists", f);

@@ -1,0 +1,12 @@
+<!-- SidebarAppLocalPart.shtml -->
+<!-- This is the local part sidebar definition for html/apps/DispatcherPro pages in French -->
+
+            <dt class="dtheader">DispatcherPro&trade;</dt>
+            <dd>
+            <ul>
+               <li><a href="../../tools/signaling/index.shtml">Signalisation</a></li>
+               <li><a href="../../setup/index.shtml">Configuration de JMRI</a></li>
+            </ul>
+            </dd>
+
+<!-- /SidebarAppLocalPart.shtml -->

@@ -84,29 +84,20 @@
       depending upon which program you ran) you should see a connection entry with the specified
       serial port. It will look something like (note the second "connection port" line):</p>
 
-      <p>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</p>
-
-      <p>&lt;?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/panelfile.xsl"?&gt;</p>
-
-      <p>&lt;!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd"&gt;</p>
-
-      <p>&lt; layout-config&gt;</p>
-
-      <p>&lt; connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)"
-      class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" /&gt;</p>
-
-      <p>&lt; gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml"
-      LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" /&gt;</p>
-
-      <p>&lt; programmer defaultFile="Basic" verifyBeforeWrite="no"
-      class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" /&gt;</p>
-
-      <p>&lt; connection port="COM4" speed="9,600 bps" option1="" option2=""
-      class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" /&gt;</p>
-
-      <p>&lt;!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$--&gt;</p>
-
-      <p>&lt;/layout-config&gt;</p>
+      <div class="wide">
+      <pre>
+&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/panelfile.xsl"?>
+&lt;!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd">
+&lt;layout-config&gt;
+  &lt;connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" />
+  &lt; gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" />
+  &lt; programmer defaultFile="Basic" verifyBeforeWrite="no" class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" />
+  &lt; connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" />
+  &lt;!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$--&gt;
+&lt;/layout-config&gt;
+    </pre>
+      </div>
 
       <h3>Let JMRI discover your CTI Acela network configuration</h3>
       Restart JMRI (DecoderPro or PanelPro). If you specified the correct serial port in the
@@ -135,175 +126,93 @@
 
       <p>It will look something like (note the lines after the second "connection port" line):</p>
 
-      <p>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</p>
-
-      <p>&lt;?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/panelfile.xsl"?&gt;</p>
-
-      <p>&lt;!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd"&gt;</p>
-
-      <p>&lt; layout-config&gt;</p>
-
-      <p>&lt; connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)"
-      class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" /&gt;</p>
-
-      <p>&lt; gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml"
-      LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" /&gt;</p>
-
-      <p>&lt; programmer defaultFile="Basic" verifyBeforeWrite="no"
-      class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" /&gt;</p>
-
-      <p>&lt; connection port="COM4" speed="9,600 bps" option1="" option2=""
-      class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" /&gt;</p>
-
-      <p>&lt; node name="0"&gt;</p>
-
-      <p>&lt; parameter name="nodetype"&gt;AC&amp;lt/parameter&gt;</p>
-
-      <p>&lt;/node&gt;</p>
-
-      <p>&lt; node name="1"&gt;</p>
-
-      <p>&lt; parameter name="nodetype"&gt;TB&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensortype0"&gt;CG&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorpolarity0"&gt;INV&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorthreshold0"&gt;4&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensortype1"&gt;CG&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorpolarity1"&gt;INV&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorthreshold1"&gt;4&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensortype2"&gt;CG&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorpolarity2"&gt;INV&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorthreshold2"&gt;4&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensortype3"&gt;CG&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorpolarity3"&gt;INV&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorthreshold3"&gt;4&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputwired0"&gt;NO&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit0"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputwired1"&gt;NO&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit1"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputwired2"&gt;NO&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit2"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputwired3"&gt;NO&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit3"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt;/node&gt;</p>
-
-      <p>&lt; node name="2"&gt;</p>
-
-      <p>&lt; parameter name="nodetype"&gt;WM&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensortype0"&gt;CG&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorpolarity0"&gt;INV&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorthreshold0"&gt;4&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensortype1"&gt;CG&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorpolarity1"&gt;INV&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorthreshold1"&gt;4&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensortype2"&gt;CG&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorpolarity2"&gt;INV&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorthreshold2"&gt;4&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensortype3"&gt;CG&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorpolarity3"&gt;INV&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorthreshold3"&gt;4&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensortype4"&gt;CG&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorpolarity4"&gt;INV&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorthreshold4"&gt;4&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensortype5"&gt;CG&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorpolarity5"&gt;INV&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorthreshold5"&gt;4&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensortype6"&gt;CG&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorpolarity6"&gt;INV&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorthreshold6"&gt;4&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensortype7"&gt;CG&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorpolarity7"&gt;INV&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="sensorthreshold7"&gt;4&lt;/parameter&gt;</p>
-
-      <p>&lt;/node&gt;</p>
-
-      <p>&lt; node name="3"&gt;</p>
-
-      <p>&lt; parameter name="nodetype"&gt;YM&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit0"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit1"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit2"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit3"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit4"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit5"&gt;ACT&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit6"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit7"&gt;ACT&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit8"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit9"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit10"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit11"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit12"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit13"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit14"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt; parameter name="outputinit15"&gt;OFF&lt;/parameter&gt;</p>
-
-      <p>&lt;/node&gt;</p>
-
-      <p>&lt;/connection&gt;</p>
-
-      <p>&lt;!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 --&gt;</p>
-
-      <p>&lt;/layout-config&gt;</p>
+      <div class="wide">
+  <pre>
+&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/panelfile.xsl"?>
+&lt;!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd">
+&lt; layout-config>
+  &lt; connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" />
+  &lt; gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" />
+  &lt; programmer defaultFile="Basic" verifyBeforeWrite="no" class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" />
+  &lt; connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" />
+    &lt; node name="0">
+      &lt; parameter name="nodetype">AC&lt;/parameter>
+    &lt;/node>
+    &lt; node name="1">
+      &lt; parameter name="nodetype">TB&lt;/parameter>
+      &lt; parameter name="sensortype0">CG&lt;/parameter>
+      &lt; parameter name="sensorpolarity0">INV&lt;/parameter>
+      &lt; parameter name="sensorthreshold0">4&lt;/parameter>
+      &lt; parameter name="sensortype1">CG&lt;/parameter>
+      &lt; parameter name="sensorpolarity1">INV&lt;/parameter>
+      &lt; parameter name="sensorthreshold1">4&lt;/parameter>
+      &lt; parameter name="sensortype2">CG&lt;/parameter>
+      &lt; parameter name="sensorpolarity2">INV&lt;/parameter>
+      &lt; parameter name="sensorthreshold2">4&lt;/parameter>
+      &lt; parameter name="sensortype3">CG&lt;/parameter>
+      &lt; parameter name="sensorpolarity3">INV&lt;/parameter>
+      &lt; parameter name="sensorthreshold3">4&lt;/parameter>
+      &lt; parameter name="outputwired0">NO&lt;/parameter>
+      &lt; parameter name="outputinit0">OFF&lt;/parameter>
+      &lt; parameter name="outputwired1">NO&lt;/parameter>
+      &lt; parameter name="outputinit1">OFF&lt;/parameter>
+      &lt; parameter name="outputwired2">NO&lt;/parameter>
+      &lt; parameter name="outputinit2">OFF&lt;/parameter>
+      &lt; parameter name="outputwired3">NO&lt;/parameter>
+      &lt; parameter name="outputinit3">OFF&lt;/parameter>
+    &lt;/node>
+    &lt; node name="2">
+      &lt; parameter name="nodetype">WM&lt;/parameter>
+      &lt; parameter name="sensortype0">CG&lt;/parameter>
+      &lt; parameter name="sensorpolarity0">INV&lt;/parameter>
+      &lt; parameter name="sensorthreshold0">4&lt;/parameter>
+      &lt; parameter name="sensortype1">CG&lt;/parameter>
+      &lt; parameter name="sensorpolarity1">INV&lt;/parameter>
+      &lt; parameter name="sensorthreshold1">4&lt;/parameter>
+      &lt; parameter name="sensortype2">CG&lt;/parameter>
+      &lt; parameter name="sensorpolarity2">INV&lt;/parameter>
+      &lt; parameter name="sensorthreshold2">4&lt;/parameter>
+      &lt; parameter name="sensortype3">CG&lt;/parameter>
+      &lt; parameter name="sensorpolarity3">INV&lt;/parameter>
+      &lt; parameter name="sensorthreshold3">4&lt;/parameter>
+      &lt; parameter name="sensortype4">CG&lt;/parameter>
+      &lt; parameter name="sensorpolarity4">INV&lt;/parameter>
+      &lt; parameter name="sensorthreshold4">4&lt;/parameter>
+      &lt; parameter name="sensortype5">CG&lt;/parameter>
+      &lt; parameter name="sensorpolarity5">INV&lt;/parameter>
+      &lt; parameter name="sensorthreshold5">4&lt;/parameter>
+      &lt; parameter name="sensortype6">CG&lt;/parameter>
+      &lt; parameter name="sensorpolarity6">INV&lt;/parameter>
+      &lt; parameter name="sensorthreshold6">4&lt;/parameter>
+      &lt; parameter name="sensortype7">CG&lt;/parameter>
+      &lt; parameter name="sensorpolarity7">INV&lt;/parameter>
+      &lt; parameter name="sensorthreshold7">4&lt;/parameter>
+    &lt;/node>
+    &lt; node name="3">
+      &lt; parameter name="nodetype">YM&lt;/parameter>
+      &lt; parameter name="outputinit0">OFF&lt;/parameter>
+      &lt; parameter name="outputinit1">OFF&lt;/parameter>
+      &lt; parameter name="outputinit2">OFF&lt;/parameter>
+      &lt; parameter name="outputinit3">OFF&lt;/parameter>
+      &lt; parameter name="outputinit4">OFF&lt;/parameter>
+      &lt; parameter name="outputinit5">ACT&lt;/parameter>
+      &lt; parameter name="outputinit6">OFF&lt;/parameter>
+      &lt; parameter name="outputinit7">ACT&lt;/parameter>
+      &lt; parameter name="outputinit8">OFF&lt;/parameter>
+      &lt; parameter name="outputinit9">OFF&lt;/parameter>
+      &lt; parameter name="outputinit10">OFF&lt;/parameter>
+      &lt; parameter name="outputinit11">OFF&lt;/parameter>
+      &lt; parameter name="outputinit12">OFF&lt;/parameter>
+      &lt; parameter name="outputinit13">OFF&lt;/parameter>
+      &lt; parameter name="outputinit14">OFF&lt;/parameter>
+      &lt; parameter name="outputinit15">OFF&lt;/parameter>
+    &lt;/node>
+  &lt;/connection>
+  &lt;!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$-->
+&lt;/layout-config>
+  </pre>
+      </div>
 
       <p>You can always get back to this state by erasing your configuration file and repeating
       these two steps.</p>

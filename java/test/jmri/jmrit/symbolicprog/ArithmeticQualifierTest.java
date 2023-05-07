@@ -26,7 +26,7 @@ public class ArithmeticQualifierTest {
     }
 
     // start of base tests
-    class TestArithmeticQualifier extends ArithmeticQualifier {
+    private static class TestArithmeticQualifier extends ArithmeticQualifier {
 
         TestArithmeticQualifier(VariableValue watchedVal, int value, String relation) {
             super(watchedVal, value, relation);
@@ -133,7 +133,7 @@ public class ArithmeticQualifierTest {
     }
 
     protected HashMap<String, CvValue> createCvMap() {
-        HashMap<String, CvValue> m = new HashMap<String, CvValue>();
+        HashMap<String, CvValue> m = new HashMap<>();
         return m;
     }
 

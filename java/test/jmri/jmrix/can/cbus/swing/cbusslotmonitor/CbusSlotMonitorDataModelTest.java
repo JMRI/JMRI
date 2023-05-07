@@ -420,7 +420,7 @@ public class CbusSlotMonitorDataModelTest {
         t.reply(r);
     
         Assert.assertEquals("loco 777",777,(int) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_ID_COLUMN) );
-        Assert.assertEquals("Long",true, (boolean) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_ID_LONG_COLUMN) );
+        Assert.assertTrue("Long",(boolean) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_ID_LONG_COLUMN));
         Assert.assertEquals("speed 0","0", t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_COMMANDED_SPEED_COLUMN) );
         Assert.assertEquals("speed step 128","128",t.getValueAt(0,CbusSlotMonitorDataModel.SPEED_STEP_COLUMN) );
         

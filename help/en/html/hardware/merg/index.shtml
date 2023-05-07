@@ -231,22 +231,20 @@
       <div>
         <ul>
           <li>
-            <a href="https://www.merg.org.uk/merg_resources/cbus.php">MERG introduction to
+            <a href="https://www.merg.org.uk/resources/cbus">MERG introduction to
             CBUS</a>.
           </li>
 
           <li>
-            <a href="https://www.merg.org.uk/merg_wiki/doku.php?id=software:start#cbus">CBUS
-            Wiki</a> hosted on the Model Electronic Ralway Group MERG public website, with full
-            protocol specification.
+            <a href="https://cbus-traincontrol.com/">CBUS protocol specification</a>.
           </li>
 
           <li>
-            <a href="https://www.merg.org.uk/merg_resources/cbus-dcc.php">MERG-DCC help page.</a>
+            <a href="https://www.merg.org.uk/resources/dcc">MERG DCC Resources</a>.
           </li>
 
           <li>
-            <a href="https://www.merg.org.uk/kits.php#sect35">MERG kits for CBUS</a>.
+            <a href="https://www.merg.org.uk/content/kits">MERG kits for CBUS</a>.
           </li>
 
           <li>
@@ -279,7 +277,7 @@
             <a href=
             "https://github.com/phillipsnj/mergCbusServer">https://github.com/phillipsnj/mergCbusServer</a>
             mergCbusServer - enables multiple network connections to a MERG CANUSB4 using <a href=
-            "https://nodejs.org">Node.js</a> , MIT License.
+            "https://nodejs.org/en/">Node.js</a> , MIT License.
           </li>
 
           <li>

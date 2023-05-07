@@ -24,6 +24,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
 
     private JCheckBox _startImmediately;
     private JCheckBox _runContinuously;
+    private JCheckBox _startAndStopByStartExpression;
     private JComboBox<TimerUnit> _unitComboBox;
     private JTextField _numTimers;
     private JButton _addTimer;
@@ -58,6 +59,8 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         _startImmediately = new JCheckBox(Bundle.getMessage("ActionTimerSwing_StartImmediately"));
         _runContinuously = new JCheckBox(Bundle.getMessage("ActionTimerSwing_RunContinuously"));
+        _startAndStopByStartExpression = new JCheckBox(Bundle.getMessage(
+                "ActionTimer_StartAndStopByStartExpression"));
 
         _unitComboBox = new JComboBox<>();
         for (TimerUnit u : TimerUnit.values()) _unitComboBox.addItem(u);
@@ -66,6 +69,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
 
         panel.add(_startImmediately);
         panel.add(_runContinuously);
+        panel.add(_startAndStopByStartExpression);
 
         JPanel unitPanel = new JPanel();
         unitPanel.add(_unitComboBox);
@@ -142,8 +146,9 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         timerDelaysPanel.add(timerDelaysSubPanel);
         panel.add(timerDelaysPanel);
 
-        _startImmediately.setSelected(action.getStartImmediately());
-        _runContinuously.setSelected(action.getRunContinuously());
+        _startImmediately.setSelected(action.isStartImmediately());
+        _runContinuously.setSelected(action.isRunContinuously());
+        _startAndStopByStartExpression.setSelected(action.isStartAndStopByStartExpression());
         _numTimers.setText(Integer.toString(action.getNumActions()));
     }
 
@@ -181,6 +186,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
 
         action.setStartImmediately(_startImmediately.isSelected());
         action.setRunContinuously(_runContinuously.isSelected());
+        action.setStartAndStopByStartExpression(_startAndStopByStartExpression.isSelected());
         action.setUnit(_unitComboBox.getItemAt(_unitComboBox.getSelectedIndex()));
         action.setNumActions(numActions);
 

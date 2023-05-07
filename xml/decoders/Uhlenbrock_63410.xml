@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 
-<!-- Copyright (C) JMRI 2020 All rights reserved   -->
+<!-- Copyright (C) JMRI 2021, 2022 All rights reserved   -->
 <!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
 1. Article Number (aka type/class ID) = decoder model productID (integer)
 2. Module Address (optional, see below)
 3. CV number
 For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
-Uhlenbrock and Digikeijs/Digirails publish the Article number for each (new) device.
-The DigiBoost DR5033 has an Article number 5033, which was registered with Uhlenbrock.
-Older LNCV devices may not have their own address, or even no article. They can be programmed using
-Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
-programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+Uhlenbrock and Digikeijs publish the Article number for each (new) device.
+The Uhlenbrock 63410 has an Article number 6341, which was registered with Uhlenbrock.
+See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-    <version author="Egbert Broerse" version="1.0" lastUpdated="20210101"/>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="2" lastUpdated="20220804"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
+    <!-- version 2 - corrected mask using radix mask on LNCV1 etc. Requires JMRI 5.1.3 and schema decoder-4-15-2.xsd -->
 
     <decoder>
         <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary">
@@ -29,14 +28,14 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
         </programming>
 
         <variables>
-            <variable CV="6341.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Board address" >
+            <variable CV="6341.0" item="Long Address" mask="VVVVVVVVVVVVVVVV" default="1" comment="Board address" >
               <decVal min="0" max="65534"/>
               <label xml:lang="it">Indirizzo Primario: </label>
               <label xml:lang="fr">Adresse décodeur: </label>
               <label xml:lang="de">Decoderadresse: </label>
               <label xml:lang="nl">Decoderadres: </label>
               <label>Decoder Address: </label>
-              <tooltip>Enter as decimal value (1-65534)</tooltip>
+              <tooltip>Enter as decimal value (0-65534)</tooltip>
             </variable>
             <variable CV="6341.20" item="Decoder Version" readOnly="yes">
               <decVal/>
@@ -47,41 +46,41 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label>Firmware Version: </label>
             </variable>
 
-          <variable CV="6341.17" item="Restart Wait" readOnly="yes" default="32">
-            <decVal/>
-            <label xml:lang="de">Einschaltzeit nach Kurzschluss: </label>
-            <label xml:lang="fr">Activation d'après court-circuit: </label>
-            <label xml:lang="nl">Wachttijd na kortsluiting: </label>
-            <label>Restart Wait after Short: </label>
-            <tooltip>Turn on automatically following a short circuit in 3 ms steps. The standard value is equivalent to approx. 3/4 of a second (750 ms)</tooltip>
-            <tooltip xml:lang="de">Automatisches Einschalten nach einem Kurzschluss im drei Ms Takt. Der Standardwert entspricht ca. einer 3/4 Sekunde (750 ms)</tooltip>
-            <tooltip xml:lang="fr">Activation automatique si court-circuit en étapes de 3 ms. La valeur standard équivaut à env. 3⁄4 de seconde (750 ms)</tooltip>
-            <tooltip xml:lang="nl">Wachttijd tot de herstart na kortsluiting. De standaardwaarde ca. 3/4 seconde (750 ms). (Het instellen gebeurt in drie milliseconde stappen.)</tooltip>
-          </variable>
-          <variable CV="6341.18" item="Short Threshold" readOnly="yes" default="25">
-            <decVal/>
-            <label xml:lang="de">Kurzschlussverzögerung: </label>
-            <label xml:lang="fr">Retard de réaction court-circuit: </label>
-            <label xml:lang="nl">Kortsluitmelding vertr.: </label>
-            <label>Short Detect Delay: </label>
-            <tooltip>Short detection delay in 0.6 sec steps</tooltip>
-            <tooltip xml:lang="de">Einschaltreaktionszeit im 0,6 s Takt</tooltip>
-            <tooltip xml:lang="fr">Le temps de réaction en étapes de 0,6 s.</tooltip>
-            <tooltip xml:lang="nl">Inschakelvertraging (stappen van 0,6 s)</tooltip>
-          </variable>
-          <variable CV="6341.19" item="Delay" default="1">
-            <decVal min="1" max="255"/>
-            <label xml:lang="de">Schaltverzögerung: </label>
-            <label xml:lang="nl">Inschakelvertraging: </label>
-            <label>Switch On Delay: </label>
-            <tooltip>Switch on delay in 0.5 sec steps</tooltip>
-            <tooltip xml:lang="de">Einschaltreaktionszeit im 0,5 s Takt</tooltip>
-            <tooltip xml:lang="fr">Le temps de réaction en étapes de 0,5 s.</tooltip>
-            <tooltip xml:lang="nl">Inschakelvertraging (in stappen van 0,5 s)</tooltip>
-          </variable>
+            <variable CV="6341.17" item="Restart Wait" readOnly="yes" default="32">
+              <decVal/>
+              <label xml:lang="de">Einschaltzeit nach Kurzschluss: </label>
+              <label xml:lang="fr">Activation d'après court-circuit: </label>
+              <label xml:lang="nl">Wachttijd na kortsluiting: </label>
+              <label>Restart Wait after Short: </label>
+              <tooltip>Turn on automatically following a short circuit in 3 ms steps. The standard value is equivalent to approx. 3/4 of a second (750 ms)</tooltip>
+              <tooltip xml:lang="de">Automatisches Einschalten nach einem Kurzschluss im drei Ms Takt. Der Standardwert entspricht ca. einer 3/4 Sekunde (750 ms)</tooltip>
+              <tooltip xml:lang="fr">Activation automatique si court-circuit en étapes de 3 ms. La valeur standard équivaut à env. 3⁄4 de seconde (750 ms)</tooltip>
+              <tooltip xml:lang="nl">Wachttijd tot de herstart na kortsluiting. De standaardwaarde ca. 3/4 seconde (750 ms). (instellen in stappen van 3 milliseconde)</tooltip>
+            </variable>
+            <variable CV="6341.18" item="Short Threshold" readOnly="yes" default="25">
+              <decVal/>
+              <label xml:lang="de">Kurzschlussverzögerung: </label>
+              <label xml:lang="fr">Retard de réaction court-circuit: </label>
+              <label xml:lang="nl">Kortsluitmelding vertr.: </label>
+              <label>Short Detect Delay: </label>
+              <tooltip>Short detection delay in 0.6 sec steps. Manual advises not to change.</tooltip>
+              <tooltip xml:lang="de">Einschaltreaktionszeit im 0,6 s Takt. Handbuch warnt vor Änderung.</tooltip>
+              <tooltip xml:lang="fr">Le temps de réaction en étapes de 0,6 s.</tooltip>
+              <tooltip xml:lang="nl">Inschakelvertraging (stappen van 0,6 s). Advies om niet te wijzigen</tooltip>
+            </variable>
+            <variable CV="6341.19" item="Delay" default="1">
+              <decVal min="1" max="255"/>
+              <label xml:lang="de">Schaltverzögerung: </label>
+              <label xml:lang="nl">Inschakelvertraging: </label>
+              <label>Switch On Delay: </label>
+              <tooltip>Switch on delay in 0.5 sec steps</tooltip>
+              <tooltip xml:lang="de">Einschaltreaktionszeit im 0,5 s Takt</tooltip>
+              <tooltip xml:lang="fr">Le temps de réaction en étapes de 0,5 s.</tooltip>
+              <tooltip xml:lang="nl">Inschakelvertraging (in stappen van 0,5 s)</tooltip>
+            </variable>
 
-            <variable CV="6341.1" item="ProgramAssist" mask="XXXXXXXXVVVV" default="0">
-              <enumVal>
+            <variable CV="6341.1" item="ProgramAssist" mask="1" default="0">
+              <enumVal max="10">
                 <enumChoice choice="1" value="0">
                   <choice>Choose and write...</choice>
                   <choice xml:lang="nl">Kies optie en schrijf...</choice>
@@ -112,17 +111,25 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label>All outputs choice:</label>
               <label xml:lang="de">Wahl für alle Ausgänge:</label>
               <label xml:lang="nl">Instelling alle uitgangen:</label>
-              <tooltip>Sets all outputs (from start address) or Module Reset</tooltip>
-              <tooltip xml:lang="de">Setz Modul für alle Ausgänge (von Anfangsadresse):</tooltip>
+              <tooltip>Configures all outputs (from start address) or Module Reset</tooltip>
+              <tooltip xml:lang="de">Konfiguriert Modul für alle Ausgänge (von Anfangsadresse):</tooltip>
               <tooltip xml:lang="nl">Kies instelling voor alle uitgangen (vanaf startadres):</tooltip>
             </variable>
 
-            <variable CV="6341.1" mask="VVVVVVVVXXXX" item="Start Address" default="1">
-              <decVal min="1" max="2028"/>
-              <label xml:lang="de">Anfangsadresse:</label>
-              <label xml:lang="nl">Beginadres:</label>
-              <label>Start Address:</label>
-              <tooltip>Start Address for Module Setting (1-2028)</tooltip>
+            <variable CV="6341.1" item="Start Address" mask="10" default="1">
+              <decVal min="0" max="10000"/>
+              <label xml:lang="de"> Anfangsadresse:</label>
+              <label xml:lang="nl"> Beginadres:</label>
+              <label> Start Address:</label>
+              <tooltip>Start Address for Module Setting (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.1" item="Assist" readOnly="yes" >
+              <!-- debug field-->
+              <decVal min="1" max="20489"/>
+              <label xml:lang="de"> macht:</label>
+              <label xml:lang="nl"> maakt:</label>
+              <label> makes:</label>
             </variable>
 
             <variable CV="6341.2" item="Blink Rate 1.1" default="10" >
@@ -336,116 +343,126 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <!--5 = Main signal with 3 states. Märklin style-->
             <!--6 = Main signal with 4 states. Märklin style-->
             <!--7 = Warning signal. Märklin style-->
-            <variable CV="6341.11" mask="XXXXXXXXVVVV" item="Signal Group 1 Type" default="0">
+            <variable CV="6341.11" item="Signal Group 1 Type" mask="1" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchSignalChoice.xml"/>
               <label xml:lang="de">Signalgruppe 1 Modell: </label>
               <label xml:lang="nl">Seingroep 1 Type: </label>
               <label>Signal Group 1 Type: </label>
               <tooltip>Type of signal head connected to this group of outputs</tooltip>
             </variable>
-            <variable CV="6341.11" mask="VVVVVVVVXXXX" item="Signal Group 1 Address" default="0">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.11" item="Signal Group 1 Address" mask="10" default="0">
+              <decVal min="0" max="9999"/>
               <label xml:lang="de">Signaladresse:</label>
               <label xml:lang="nl">Seinadres:</label>
               <label>Address:</label>
               <tooltip>Address of searchlight signal (1-2048)</tooltip>
             </variable>
             <!-- test -->
-            <variable CV="6341.11" mask="VVVVVVVVVVVV" item="Signal Group 1" default="0">
+            <variable CV="6341.11" item="Signal Group 1" readOnly="yes" default="0">
               <decVal min="0" max="20487"/>
-              <label>Signal Group 1</label>
+              <label xml:lang="de"> macht:</label>
+              <label xml:lang="nl"> maakt:</label>
+              <label> makes:</label>
             </variable>
           
-            <variable CV="6341.12" mask="XXXXXXXXVVVV" item="Signal Group 2 Type" default="0">
+            <variable CV="6341.12" item="Signal Group 2 Type" mask="1" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchSignalChoice.xml"/>
               <label xml:lang="de">Signalgruppe 1 Modell: </label>
               <label xml:lang="nl">Seingroep 1 Type: </label>
               <label>Signal Group 2 Type: </label>
               <tooltip>Type of signal head connected to this group of outputs</tooltip>
             </variable>
-            <variable CV="6341.12" mask="VVVVVVVVXXXX" item="Signal Group 2 Address" default="0">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.12" item="Signal Group 2 Address" mask="10" default="0">
+              <decVal min="0" max="10000"/>
               <label xml:lang="de">Signaladresse:</label>
               <label xml:lang="nl">Seinadres:</label>
               <label>Address:</label>
               <tooltip>Address of searchlight signal (1-2048)</tooltip>
             </variable>
             <!-- test -->
-            <variable CV="6341.12" mask="VVVVVVVVVVVV" item="Signal Group 2" default="0">
+            <variable CV="6341.12" item="Signal Group 2" readOnly="yes" default="0">
               <decVal min="0" max="20487"/>
-              <label>Signal Group 2</label>
+              <label xml:lang="de"> macht:</label>
+              <label xml:lang="nl"> maakt:</label>
+              <label> makes:</label>
             </variable>
 
-            <variable CV="6341.13" mask="XXXXXXXXVVVV" item="Signal Group 3 Type" default="0">
+            <variable CV="6341.13" mask="1" item="Signal Group 3 Type" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchSignalChoice.xml"/>
               <label xml:lang="de">Signalgruppe 3 Modell: </label>
               <label xml:lang="nl">Seingroep 3 Type: </label>
               <label>Signal Group 3 Type: </label>
               <tooltip>Type of signal head connected to this group of outputs</tooltip>
             </variable>
-            <variable CV="6341.13" mask="VVVVVVVVXXXX" item="Signal Group 3 Address" default="0">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.13" mask="10" item="Signal Group 3 Address" default="0">
+              <decVal min="0" max="10000"/>
               <label xml:lang="de">Signaladresse:</label>
               <label xml:lang="nl">Seinadres:</label>
               <label>Address:</label>
               <tooltip>Address of searchlight signal (1-2048)</tooltip>
             </variable>
             <!-- test -->
-            <variable CV="6341.13" mask="VVVVVVVVVVVV" item="Signal Group 3" default="0">
+            <variable CV="6341.13" item="Signal Group 3" readOnly="yes" default="0">
               <decVal min="0" max="20487"/>
-              <label>Signal Group 3</label>
+              <label xml:lang="de"> macht:</label>
+              <label xml:lang="nl"> maakt:</label>
+              <label> makes:</label>
             </variable>
 
-            <variable CV="6341.14" mask="XXXXXXXXVVVV" item="Signal Group 4 Type" default="0">
+            <variable CV="6341.14" mask="1" item="Signal Group 4 Type" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchSignalChoice.xml"/>
               <label xml:lang="de">Signalgruppe 4 Modell: </label>
               <label xml:lang="nl">Seingroep 4 Type: </label>
               <label>Signal Group 4 Type: </label>
               <tooltip>Type of signal head connected to this group of outputs</tooltip>
             </variable>
-            <variable CV="6341.14" mask="VVVVVVVVXXXX" item="Signal Group 4 Address" default="0">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.14" mask="10" item="Signal Group 4 Address" default="0">
+              <decVal min="0" max="10000"/>
               <label xml:lang="de">Signaladresse:</label>
               <label xml:lang="nl">Seinadres:</label>
               <label>Address:</label>
               <tooltip>Address of searchlight signal (1-2048)</tooltip>
             </variable>
             <!-- test -->
-            <variable CV="6341.14" mask="VVVVVVVVVVVV" item="Signal Group 4" default="0">
+            <variable CV="6341.14" item="Signal Group 4" readOnly="yes" default="0">
               <decVal min="0" max="20487"/>
-              <label>Signal Group 4</label>
+              <label xml:lang="de"> macht:</label>
+              <label xml:lang="nl"> maakt:</label>
+              <label> makes:</label>
             </variable>
 
-            <variable CV="6341.15" mask="XXXXXXXXVVVV" item="Signal Group 5 Type" default="0">
+            <variable CV="6341.15" mask="1" item="Signal Group 5 Type" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchSignalChoice.xml"/>
               <label xml:lang="de">Signalgruppe 5 Modell: </label>
               <label xml:lang="nl">Seingroep 5 Type: </label>
               <label>Signal Group 5 Type: </label>
               <tooltip>Type of signal head connected to this group of outputs</tooltip>
             </variable>
-            <variable CV="6341.15" mask="VVVVVVVVXXXX" item="Signal Group 5 Address" default="0">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.15" mask="10" item="Signal Group 5 Address" default="0">
+              <decVal min="0" max="10000"/>
               <label xml:lang="de">Signaladresse:</label>
               <label xml:lang="nl">Seinadres:</label>
               <label>Address:</label>
               <tooltip>Address of searchlight signal (1-2048)</tooltip>
             </variable>
             <!-- test -->
-            <variable CV="6341.15" mask="VVVVVVVVVVVV" item="Signal Group 5" default="0">
+            <variable CV="6341.15" item="Signal Group 5" readOnly="yes" default="0">
               <decVal min="0" max="20487"/>
-              <label>Signal Group 5</label>
+              <label xml:lang="de"> macht:</label>
+              <label xml:lang="nl"> maakt:</label>
+              <label> makes:</label>
             </variable>
 
             <!-- CV 21-40: Settings outputs 1-20 On -->
 
-            <variable CV="6341.21" mask="XXXXXXXXVVVV" item="Output 1 On Type" default="1">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.21" mask="1" item="Output 1 On Type" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Ein: </label>
               <label xml:lang="nl">Instructie Aan: </label>
               <label>On Command: </label>
               <tooltip>Command to turn output 1 On</tooltip>
             </variable>
-            <variable CV="6341.21" mask="VVVVVVVVXXXX" item="Output 1 On Address" default="1">
+            <variable CV="6341.21" mask="10" item="Output 1 On Address" default="199">
               <decVal min="1" max="2048"/>
               <label xml:lang="de">Adresse Ein:</label>
               <label xml:lang="nl">Adres Aan:</label>
@@ -453,687 +470,687 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip>Address to switch output 1 On (1-2048)</tooltip>
             </variable>
           <!-- test -->
-            <variable CV="6341.21" mask="VVVVVVVVVVVV" item="Output 1" >
+            <variable CV="6341.21" item="Output 1" >
               <decVal max="20483"/>
               <label>Output 1 On</label>
             </variable>
 
-          <variable CV="6341.22" mask="XXXXXXXXVVVV" item="Output 2 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.22" mask="1" item="Output 2 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 2 On</tooltip>
           </variable>
-          <variable CV="6341.22" mask="VVVVVVVVXXXX" item="Output 2 On Address" default="2">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.22" mask="10" item="Output 2 On Address" default="200">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 2 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.22" mask="VVVVVVVVVVVV" item="Output 2">
+          <variable CV="6341.22" item="Output 2">
             <decVal max="20483"/>
             <label>Output 2 On</label>
           </variable>
 
-          <variable CV="6341.23" mask="XXXXXXXXVVVV" item="Output 3 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.23" mask="1" item="Output 3 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 3 On</tooltip>
           </variable>
-          <variable CV="6341.23" mask="VVVVVVVVXXXX" item="Output 3 On Address" default="3">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.23" mask="10" item="Output 3 On Address" default="201">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 3 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.23" mask="VVVVVVVVVVVV" item="Output 3">
+          <variable CV="6341.23" item="Output 3">
             <decVal max="20483"/>
             <label>Output 3 On</label>
           </variable>
 
-          <variable CV="6341.24" mask="XXXXXXXXVVVV" item="Output 4 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.24" mask="1" item="Output 4 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 4 On</tooltip>
           </variable>
-          <variable CV="6341.24" mask="VVVVVVVVXXXX" item="Output 4 On Address" default="4">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.24" mask="10" item="Output 4 On Address" default="202">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 4 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.24" mask="VVVVVVVVVVVV" item="Output 4">
+          <variable CV="6341.24" item="Output 4">
             <decVal max="20483"/>
             <label>Output 4 On</label>
           </variable>
 
-          <variable CV="6341.25" mask="XXXXXXXXVVVV" item="Output 5 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.25" mask="1" item="Output 5 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 5 On</tooltip>
           </variable>
-          <variable CV="6341.25" mask="VVVVVVVVXXXX" item="Output 5 On Address" default="5">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.25" mask="10" item="Output 5 On Address" default="203">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 5 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.25" mask="VVVVVVVVVVVV" item="Output 5">
+          <variable CV="6341.25" item="Output 5">
             <decVal max="20483"/>
             <label>Output 5 On</label>
           </variable>
 
-          <variable CV="6341.26" mask="XXXXXXXXVVVV" item="Output 6 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.26" mask="1" item="Output 6 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 6 On</tooltip>
           </variable>
-          <variable CV="6341.26" mask="VVVVVVVVXXXX" item="Output 6 On Address" default="6">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.26" mask="10" item="Output 6 On Address" default="204">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 6 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.26" mask="VVVVVVVVVVVV" item="Output 6">
+          <variable CV="6341.26" item="Output 6">
             <decVal max="20483"/>
             <label>Output 6 On</label>
           </variable>
 
-          <variable CV="6341.27" mask="XXXXXXXXVVVV" item="Output 7 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.27" mask="1" item="Output 7 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 7 On</tooltip>
           </variable>
-          <variable CV="6341.27" mask="VVVVVVVVXXXX" item="Output 7 On Address" default="7">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.27" mask="10" item="Output 7 On Address" default="205">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 7 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.27" mask="VVVVVVVVVVVV" item="Output 7">
+          <variable CV="6341.27" item="Output 7">
             <decVal max="20483"/>
             <label>Output 7 On</label>
           </variable>
 
-          <variable CV="6341.28" mask="XXXXXXXXVVVV" item="Output 8 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.28" mask="1" item="Output 8 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 8 On</tooltip>
           </variable>
-          <variable CV="6341.28" mask="VVVVVVVVXXXX" item="Output 8 On Address" default="8">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.28" mask="10" item="Output 8 On Address" default="206">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 8 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.28" mask="VVVVVVVVVVVV" item="Output 8">
+          <variable CV="6341.28" item="Output 8">
             <decVal max="20483"/>
             <label>Output 8 On</label>
           </variable>
 
-          <variable CV="6341.29" mask="XXXXXXXXVVVV" item="Output 9 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.29" mask="1" item="Output 9 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 9 On</tooltip>
           </variable>
-          <variable CV="6341.29" mask="VVVVVVVVXXXX" item="Output 9 On Address" default="9">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.29" mask="10" item="Output 9 On Address" default="207">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 9 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.29" mask="VVVVVVVVVVVV" item="Output 9">
+          <variable CV="6341.29" item="Output 9">
             <decVal max="20483"/>
             <label>Output 9 On</label>
           </variable>
 
-          <variable CV="6341.30" mask="XXXXXXXXVVVV" item="Output 10 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.30" mask="1" item="Output 10 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 10 On</tooltip>
           </variable>
-          <variable CV="6341.30" mask="VVVVVVVVXXXX" item="Output 10 On Address" default="10">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.30" mask="10" item="Output 10 On Address" default="208">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 10 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.30" mask="VVVVVVVVVVVV" item="Output 10">
+          <variable CV="6341.30" item="Output 10">
             <decVal max="20483"/>
             <label>Output 10 On</label>
           </variable>
 
-          <variable CV="6341.31" mask="XXXXXXXXVVVV" item="Output 11 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.31" mask="1" item="Output 11 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 11 On</tooltip>
           </variable>
-          <variable CV="6341.31" mask="VVVVVVVVXXXX" item="Output 11 On Address" default="11">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.31" mask="10" item="Output 11 On Address" default="209">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 11 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.31" mask="VVVVVVVVVVVV" item="Output 11">
+          <variable CV="6341.31" item="Output 11">
             <decVal max="20483"/>
             <label>Output 11 On</label>
           </variable>
 
-          <variable CV="6341.32" mask="XXXXXXXXVVVV" item="Output 12 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.32" mask="1" item="Output 12 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 12 On</tooltip>
           </variable>
-          <variable CV="6341.32" mask="VVVVVVVVXXXX" item="Output 12 On Address" default="12">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.32" mask="10" item="Output 12 On Address" default="210">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 12 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.32" mask="VVVVVVVVVVVV" item="Output 12">
+          <variable CV="6341.32" item="Output 12">
             <decVal max="20483"/>
             <label>Output 12 On</label>
           </variable>
 
-          <variable CV="6341.33" mask="XXXXXXXXVVVV" item="Output 13 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.33" mask="1" item="Output 13 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 13 On</tooltip>
           </variable>
-          <variable CV="6341.33" mask="VVVVVVVVXXXX" item="Output 13 On Address" default="13">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.33" mask="10" item="Output 13 On Address" default="211">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 13 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.33" mask="VVVVVVVVVVVV" item="Output 13">
+          <variable CV="6341.33" item="Output 13">
             <decVal max="20483"/>
             <label>Output 13 On</label>
           </variable>
 
-          <variable CV="6341.34" mask="XXXXXXXXVVVV" item="Output 14 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.34" mask="1" item="Output 14 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 14 On</tooltip>
           </variable>
-          <variable CV="6341.34" mask="VVVVVVVVXXXX" item="Output 14 On Address" default="14">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.34" mask="10" item="Output 14 On Address" default="212">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 14 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.34" mask="VVVVVVVVVVVV" item="Output 14">
+          <variable CV="6341.34" item="Output 14">
             <decVal max="20483"/>
             <label>Output 14 On</label>
           </variable>
 
-          <variable CV="6341.35" mask="XXXXXXXXVVVV" item="Output 15 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.35" mask="1" item="Output 15 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 15 On</tooltip>
           </variable>
-          <variable CV="6341.35" mask="VVVVVVVVXXXX" item="Output 15 On Address" default="15">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.35" mask="10" item="Output 15 On Address" default="213">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 15 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.35" mask="VVVVVVVVVVVV" item="Output 15">
+          <variable CV="6341.35" item="Output 15">
             <decVal max="20483"/>
             <label>Output 15 On</label>
           </variable>
 
-          <variable CV="6341.36" mask="XXXXXXXXVVVV" item="Output 16 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.36" mask="1" item="Output 16 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 16 On</tooltip>
           </variable>
-          <variable CV="6341.36" mask="VVVVVVVVXXXX" item="Output 16 On Address" default="16">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.36" mask="10" item="Output 16 On Address" default="214">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 16 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.36" mask="VVVVVVVVVVVV" item="Output 16">
+          <variable CV="6341.36" item="Output 16">
             <decVal max="20483"/>
             <label>Output 16 On</label>
           </variable>
 
-          <variable CV="6341.37" mask="XXXXXXXXVVVV" item="Output 17 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.37" mask="1" item="Output 17 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 17 On</tooltip>
           </variable>
-          <variable CV="6341.37" mask="VVVVVVVVXXXX" item="Output 17 On Address" default="17">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.37" mask="10" item="Output 17 On Address" default="215">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 17 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.37" mask="VVVVVVVVVVVV" item="Output 17">
+          <variable CV="6341.37" item="Output 17">
             <decVal max="20483"/>
             <label>Output 17 On</label>
           </variable>
 
-          <variable CV="6341.38" mask="XXXXXXXXVVVV" item="Output 18 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.38" mask="1" item="Output 18 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 18 On</tooltip>
           </variable>
-          <variable CV="6341.38" mask="VVVVVVVVXXXX" item="Output 18 On Address" default="18">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.38" mask="10" item="Output 18 On Address" default="216">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 18 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.38" mask="VVVVVVVVVVVV" item="Output 18">
+          <variable CV="6341.38" item="Output 18">
             <decVal max="20483"/>
             <label>Output 18 On</label>
           </variable>
 
-          <variable CV="6341.39" mask="XXXXXXXXVVVV" item="Output 19 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.39" mask="1" item="Output 19 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 19 On</tooltip>
           </variable>
-          <variable CV="6341.39" mask="VVVVVVVVXXXX" item="Output 19 On Address" default="19">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.39" mask="10" item="Output 19 On Address" default="217">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 19 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.39" mask="VVVVVVVVVVVV" item="Output 19">
+          <variable CV="6341.39" item="Output 19">
             <decVal max="20483"/>
             <label>Output 19 On</label>
           </variable>
 
-          <variable CV="6341.40" mask="XXXXXXXXVVVV" item="Output 20 On Type" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+          <variable CV="6341.40" mask="1" item="Output 20 On Type" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
             <label xml:lang="de">Bericht Ein: </label>
             <label xml:lang="nl">Instructie Aan: </label>
             <label>On Command: </label>
             <tooltip>Command to turn output 20 On</tooltip>
           </variable>
-          <variable CV="6341.40" mask="VVVVVVVVXXXX" item="Output 20 On Address" default="20">
-            <decVal min="1" max="2048"/>
+          <variable CV="6341.40" mask="10" item="Output 20 On Address" default="218">
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
             <tooltip>Address to switch output 20 On (1-2048)</tooltip>
           </variable>
           <!-- test -->
-          <variable CV="6341.40" mask="VVVVVVVVVVVV" item="Output 20">
+          <variable CV="6341.40" item="Output 20">
             <decVal max="20483"/>
             <label>Output 20 On</label>
           </variable>
 
             <!-- CV 41-60: Settings outputs 1-20 Off -->
 
-            <variable CV="6341.41" mask="XXXXXXXXVVVV" item="Output 1 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.41" mask="1" item="Output 1 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 1 Off</tooltip>
             </variable>
-            <variable CV="6341.41" mask="VVVVVVVVXXXX" item="Output 1 Off Address" default="1">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.41" mask="10" item="Output 1 Off Address" default="199">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 1 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.42" mask="XXXXXXXXVVVV" item="Output 2 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.42" mask="1" item="Output 2 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 2 Off</tooltip>
             </variable>
-            <variable CV="6341.42" mask="VVVVVVVVXXXX" item="Output 2 Off Address" default="2">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.42" mask="10" item="Output 2 Off Address" default="200">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 2 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.43" mask="XXXXXXXXVVVV" item="Output 3 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.43" mask="1" item="Output 3 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 3 Off</tooltip>
             </variable>
-            <variable CV="6341.43" mask="VVVVVVVVXXXX" item="Output 3 Off Address" default="3">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.43" mask="10" item="Output 3 Off Address" default="201">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 3 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.44" mask="XXXXXXXXVVVV" item="Output 4 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.44" mask="1" item="Output 4 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 4 Off</tooltip>
             </variable>
-            <variable CV="6341.44" mask="VVVVVVVVXXXX" item="Output 4 Off Address" default="4">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.44" mask="10" item="Output 4 Off Address" default="202">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 4 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.45" mask="XXXXXXXXVVVV" item="Output 5 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.45" mask="1" item="Output 5 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 5 Off</tooltip>
             </variable>
-            <variable CV="6341.45" mask="VVVVVVVVXXXX" item="Output 5 Off Address" default="5">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.45" mask="10" item="Output 5 Off Address" default="203">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 5 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.46" mask="XXXXXXXXVVVV" item="Output 6 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.46" mask="1" item="Output 6 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 6 Off</tooltip>
             </variable>
-            <variable CV="6341.46" mask="VVVVVVVVXXXX" item="Output 6 Off Address" default="6">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.46" mask="10" item="Output 6 Off Address" default="204">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 6 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.47" mask="XXXXXXXXVVVV" item="Output 7 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.47" mask="1" item="Output 7 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 7 Off</tooltip>
             </variable>
-            <variable CV="6341.47" mask="VVVVVVVVXXXX" item="Output 7 Off Address" default="7">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.47" mask="10" item="Output 7 Off Address" default="205">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 7 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.48" mask="XXXXXXXXVVVV" item="Output 8 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.48" mask="1" item="Output 8 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 8 Off</tooltip>
             </variable>
-            <variable CV="6341.48" mask="VVVVVVVVXXXX" item="Output 8 Off Address" default="8">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.48" mask="10" item="Output 8 Off Address" default="206">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 8 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.49" mask="XXXXXXXXVVVV" item="Output 9 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.49" mask="1" item="Output 9 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 9 Off</tooltip>
             </variable>
-            <variable CV="6341.49" mask="VVVVVVVVXXXX" item="Output 9 Off Address" default="9">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.49" mask="10" item="Output 9 Off Address" default="207">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 9 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.50" mask="XXXXXXXXVVVV" item="Output 10 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.50" mask="1" item="Output 10 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn Output 10 Off</tooltip>
             </variable>
-            <variable CV="6341.50" mask="VVVVVVVVXXXX" item="Output 10 Off Address" default="10">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.50" mask="10" item="Output 10 Off Address" default="208">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 10 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.51" mask="XXXXXXXXVVVV" item="Output 11 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.51" mask="1" item="Output 11 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 11 Off</tooltip>
             </variable>
-            <variable CV="6341.51" mask="VVVVVVVVXXXX" item="Output 11 Off Address" default="11">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.51" mask="10" item="Output 11 Off Address" default="209">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 11 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.52" mask="XXXXXXXXVVVV" item="Output 12 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.52" mask="1" item="Output 12 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 12 Off</tooltip>
             </variable>
-            <variable CV="6341.52" mask="VVVVVVVVXXXX" item="Output 12 Off Address" default="12">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.52" mask="10" item="Output 12 Off Address" default="210">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 12 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.53" mask="XXXXXXXXVVVV" item="Output 13 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.53" mask="1" item="Output 13 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 13 Off</tooltip>
             </variable>
-            <variable CV="6341.53" mask="VVVVVVVVXXXX" item="Output 13 Off Address" default="13">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.53" mask="10" item="Output 13 Off Address" default="211">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 13 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.54" mask="XXXXXXXXVVVV" item="Output 14 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.54" mask="1" item="Output 14 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 14 Off</tooltip>
             </variable>
-            <variable CV="6341.54" mask="VVVVVVVVXXXX" item="Output 14 Off Address" default="14">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.54" mask="10" item="Output 14 Off Address" default="212">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 14 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.55" mask="XXXXXXXXVVVV" item="Output 15 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.55" mask="1" item="Output 15 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 15 Off</tooltip>
             </variable>
-            <variable CV="6341.55" mask="VVVVVVVVXXXX" item="Output 15 Off Address" default="15">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.55" mask="10" item="Output 15 Off Address" default="213">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 15 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.56" mask="XXXXXXXXVVVV" item="Output 16 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.56" mask="1" item="Output 16 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 16 Off</tooltip>
             </variable>
-            <variable CV="6341.56" mask="VVVVVVVVXXXX" item="Output 16 Off Address" default="16">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.56" mask="10" item="Output 16 Off Address" default="214">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 16 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.57" mask="XXXXXXXXVVVV" item="Output 17 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.57" mask="1" item="Output 17 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 17 Off</tooltip>
             </variable>
-            <variable CV="6341.57" mask="VVVVVVVVXXXX" item="Output 17 Off Address" default="17">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.57" mask="10" item="Output 17 Off Address" default="215">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 17 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.58" mask="XXXXXXXXVVVV" item="Output 18 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.58" mask="1" item="Output 18 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 18 Off</tooltip>
             </variable>
-            <variable CV="6341.58" mask="VVVVVVVVXXXX" item="Output 18 Off Address" default="18">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.58" mask="10" item="Output 18 Off Address" default="216">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 18 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.59" mask="XXXXXXXXVVVV" item="Output 19 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.59" mask="1" item="Output 19 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 19 Off</tooltip>
             </variable>
-            <variable CV="6341.59" mask="VVVVVVVVXXXX" item="Output 19 Off Address" default="19">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.59" mask="10" item="Output 19 Off Address" default="217">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
               <tooltip>Address to switch output 19 Off (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.60" mask="XXXXXXXXVVVV" item="Output 20 Off Type" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
+            <variable CV="6341.60" mask="1" item="Output 20 Off Type" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStateChoice.xml"/>
               <label xml:lang="de">Bericht Aus:</label>
               <label xml:lang="nl">Instructie Uit:</label>
               <label>Off Command:</label>
               <tooltip>Command to turn output 20 Off</tooltip>
             </variable>
-            <variable CV="6341.60" mask="VVVVVVVVXXXX" item="Output 20 Off Address" default="20">
-              <decVal min="0" max="2048"/>
+            <variable CV="6341.60" mask="10" item="Output 20 Off Address" default="218">
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1142,300 +1159,300 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 
             <!-- CV 61-80: Settings outputs 1-20 Switch Mode -->
 
-            <variable CV="6341.61" mask="XXXXXXXXXXVV" item="Output 1 Switch Mode" default="0">
+            <variable CV="6341.61" mask="1" item="Output 1 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 1</tooltip>
             </variable>
-            <variable CV="6341.61" mask="VVVVVVVVXXXX" item="Output 1 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.61" mask="10" item="Output 1 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 1 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.62" mask="XXXXXXXXXXVV" item="Output 2 Switch Mode" default="0">
+            <variable CV="6341.62" mask="1" item="Output 2 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 2</tooltip>
             </variable>
-            <variable CV="6341.62" mask="VVVVVVVVXXXX" item="Output 2 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.62" mask="10" item="Output 2 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 2 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.63" mask="XXXXXXXXXXVV" item="Output 3 Switch Mode" default="0">
+            <variable CV="6341.63" mask="1" item="Output 3 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 3</tooltip>
             </variable>
-            <variable CV="6341.63" mask="VVVVVVVVXXXX" item="Output 3 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.63" mask="10" item="Output 3 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 3 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.64" mask="XXXXXXXXXXVV" item="Output 4 Switch Mode" default="0">
+            <variable CV="6341.64" mask="1" item="Output 4 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 4</tooltip>
             </variable>
-            <variable CV="6341.64" mask="VVVVVVVVXXXX" item="Output 4 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.64" mask="10" item="Output 4 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 4 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.65" mask="XXXXXXXXXXVV" item="Output 5 Switch Mode" default="0">
+            <variable CV="6341.65" mask="1" item="Output 5 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 5</tooltip>
             </variable>
-            <variable CV="6341.65" mask="VVVVVVVVXXXX" item="Output 5 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.65" mask="10" item="Output 5 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 5 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.66" mask="XXXXXXXXXXVV" item="Output 6 Switch Mode" default="0">
+            <variable CV="6341.66" mask="1" item="Output 6 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 6</tooltip>
             </variable>
-            <variable CV="6341.66" mask="VVVVVVVVXXXX" item="Output 6 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.66" mask="10" item="Output 6 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 6 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.67" mask="XXXXXXXXXXVV" item="Output 7 Switch Mode" default="0">
+            <variable CV="6341.67" mask="1" item="Output 7 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 7</tooltip>
             </variable>
-            <variable CV="6341.67" mask="VVVVVVVVXXXX" item="Output 7 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.67" mask="10" item="Output 7 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 7 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.68" mask="XXXXXXXXXXVV" item="Output 8 Switch Mode" default="0">
+            <variable CV="6341.68" mask="1" item="Output 8 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 8</tooltip>
             </variable>
-            <variable CV="6341.68" mask="VVVVVVVVXXXX" item="Output 8 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.68" mask="10" item="Output 8 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 8 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.69" mask="XXXXXXXXXXVV" item="Output 9 Switch Mode" default="0">
+            <variable CV="6341.69" mask="1" item="Output 9 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 9</tooltip>
             </variable>
-            <variable CV="6341.69" mask="VVVVVVVVXXXX" item="Output 9 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.69" mask="10" item="Output 9 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 9 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.70" mask="XXXXXXXXXXVV" item="Output 10 Switch Mode" default="0">
+            <variable CV="6341.70" mask="1" item="Output 10 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 10</tooltip>
             </variable>
-            <variable CV="6341.70" mask="VVVVVVVVXXXX" item="Output 10 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.70" mask="10" item="Output 10 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 10 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.71" mask="XXXXXXXXXXVV" item="Output 11 Switch Mode" default="0">
+            <variable CV="6341.71" mask="1" item="Output 11 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 11</tooltip>
             </variable>
-            <variable CV="6341.71" mask="VVVVVVVVXXXX" item="Output 11 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.71" mask="10" item="Output 11 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 11 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.72" mask="XXXXXXXXXXVV" item="Output 12 Switch Mode" default="0">
+            <variable CV="6341.72" mask="1" item="Output 12 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 12</tooltip>
             </variable>
-            <variable CV="6341.72" mask="VVVVVVVVXXXX" item="Output 12 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.72" mask="10" item="Output 12 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 12 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.73" mask="XXXXXXXXXXVV" item="Output 13 Switch Mode" default="0">
+            <variable CV="6341.73" mask="1" item="Output 13 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 13</tooltip>
             </variable>
-            <variable CV="6341.73" mask="VVVVVVVVXXXX" item="Output 13 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.73" mask="10" item="Output 13 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 13 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.74" mask="XXXXXXXXXXVV" item="Output 14 Switch Mode" default="0">
+            <variable CV="6341.74" mask="1" item="Output 14 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 14</tooltip>
             </variable>
-            <variable CV="6341.74" mask="VVVVVVVVXXXX" item="Output 14 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.74" mask="10" item="Output 14 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 14 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.75" mask="XXXXXXXXXXVV" item="Output 15 Switch Mode" default="0">
+            <variable CV="6341.75" mask="1" item="Output 15 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 15</tooltip>
             </variable>
-            <variable CV="6341.75" mask="VVVVVVVVXXXX" item="Output 15 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.75" mask="10" item="Output 15 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 15 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.76" mask="XXXXXXXXXXVV" item="Output 16 Switch Mode" default="0">
+            <variable CV="6341.76" mask="1" item="Output 16 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 16</tooltip>
             </variable>
-            <variable CV="6341.76" mask="VVVVVVVVXXXX" item="Output 16 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.76" mask="10" item="Output 16 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 16 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.77" mask="XXXXXXXXXXVV" item="Output 17 Switch Mode" default="0">
+            <variable CV="6341.77" mask="1" item="Output 17 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 17</tooltip>
             </variable>
-            <variable CV="6341.77" mask="VVVVVVVVXXXX" item="Output 17 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.77" mask="10" item="Output 17 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 17 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.78" mask="XXXXXXXXXXVV" item="Output 18 Switch Mode" default="0">
+            <variable CV="6341.78" mask="1" item="Output 18 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 18</tooltip>
             </variable>
-            <variable CV="6341.78" mask="VVVVVVVVXXXX" item="Output 18 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.78" mask="10" item="Output 18 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 18 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.79" mask="XXXXXXXXXXVV" item="Output 19 Switch Mode" default="0">
+            <variable CV="6341.79" mask="1" item="Output 19 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 19</tooltip>
             </variable>
-            <variable CV="6341.79" mask="VVVVVVVVXXXX" item="Output 19 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.79" mask="10" item="Output 19 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
               <tooltip>Duration of momentary output 19 in 50 ms steps (1-255, 0=continuous)</tooltip>
             </variable>
 
-            <variable CV="6341.80" mask="XXXXXXXXXXVV" item="Output 20 Switch Mode" default="0">
+            <variable CV="6341.80" mask="1" item="Output 20 Switch Mode" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchBlinkChoice.xml"/>
               <label xml:lang="de">Art:</label>
               <label xml:lang="nl">Modus:</label>
               <label>Mode:</label>
               <tooltip>Switching mode of output 20</tooltip>
             </variable>
-            <variable CV="6341.80" mask="VVVVVVVVXXXX" item="Output 20 Switch Time" default="0">
-              <decVal/>
+            <variable CV="6341.80" mask="10" item="Output 20 Switch Time" default="0">
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1463,11 +1480,15 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <text>Before writing, open a Programming</text>
             <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
             <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+            <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
+            <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
           </label>
           <label>
             <text>session using the LocoNet LNCV Tool.</text>
             <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
             <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+            <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+            <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
           </label>
           <label>
             <text> </text>
@@ -1481,8 +1502,18 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Configuratie-assistent Module&lt;/strong&gt;&lt;/html&gt;</text>
           </label>
           <row>
-            <display item="ProgramAssist" />
-            <display item="Start Address" />
+            <display item="ProgramAssist"/>
+<!--            <group>-->
+<!--              <qualifier>-->
+<!--                <variableref>ProgramAssist</variableref>-->
+<!--                <relation>lt</relation>-->
+<!--                <value>7</value>-->
+<!--              </qualifier>-->
+<!--              <row>-->
+                <display item="Start Address"/>
+<!--              </row>-->
+<!--            </group>-->
+            <display item="Assist"/>
           </row>
 
           <label>
@@ -1498,27 +1529,27 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
           <row>
             <display item="Signal Group 1 Type"/>
             <display item="Signal Group 1 Address"/>
-            <!-- for testing <display item="Signal Group 1"/>-->
+            <display item="Signal Group 1"/>
           </row>
           <row>
             <display item="Signal Group 2 Type"/>
             <display item="Signal Group 2 Address"/>
-            <!-- for testing <display item="Signal Group 2"/>-->
+            <display item="Signal Group 2"/>
           </row>
           <row>
             <display item="Signal Group 3 Type"/>
             <display item="Signal Group 3 Address"/>
-            <!-- for testing <display item="Signal Group 3"/>-->
+            <display item="Signal Group 3"/>
           </row>
           <row>
             <display item="Signal Group 4 Type"/>
             <display item="Signal Group 4 Address"/>
-            <!-- for testing <display item="Signal Group 4"/>-->
+            <display item="Signal Group 4"/>
           </row>
           <row>
             <display item="Signal Group 5 Type"/>
             <display item="Signal Group 5 Address"/>
-            <!-- for testing <display item="Signal Group 5"/>-->
+            <display item="Signal Group 5"/>
           </row>
         </column>
 
@@ -1570,11 +1601,15 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                     <text>Before writing, open a Programming</text>
                     <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
                     <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+                    <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
+                    <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
                   </label>
                   <label>
                     <text>session using the LocoNet LNCV Tool.</text>
                     <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
                     <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+                    <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+                    <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
                   </label>
                   <label>
                     <text> </text>
@@ -2123,8 +2158,10 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                   <!--end of output blocks-->
 
                 <separator/>
-                <display item="Damped 1"/>
-                <display item="Damped 2"/>
+                <row>
+                  <display item="Damped 1"/>
+                  <display item="Damped 2"/>
+                </row>
               </column>
           </row>
       </pane>

@@ -11,12 +11,8 @@ import org.junit.jupiter.api.*;
  */
 public class TimerUtilTest {
 
-    @Test
-    public void testCTor() {
-        TimerUtil t = new TimerUtil();
-        Assert.assertNotNull("exists",t);
-    }
-    
+    // no testCtor as tested class only supplied static methods
+
     @Test
     public void testScheduleDate() {
         TimerUtil.schedule(task, 10);

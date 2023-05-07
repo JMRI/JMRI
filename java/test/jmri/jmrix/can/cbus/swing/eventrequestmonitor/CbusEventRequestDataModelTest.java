@@ -31,15 +31,13 @@ public class CbusEventRequestDataModelTest {
     
     @Test
     public void testCanListenAndRemove() {
-        
-        Assert.assertEquals("no listener to start with",0,tcis.numListeners());
+        int numListenersAtStart = tcis.numListeners();
         CbusEventRequestDataModel t = new CbusEventRequestDataModel(
         memo,5,CbusEventRequestDataModel.MAX_COLUMN);
-        Assert.assertTrue("table listening",1 == tcis.numListeners());
-        
+        Assert.assertEquals("table listening", numListenersAtStart+1, tcis.numListeners());
+
         t.dispose();
-        Assert.assertTrue("no listener to finish with",0 == tcis.numListeners());
-        
+        Assert.assertEquals("no listener to finish with",numListenersAtStart, tcis.numListeners());
     }
     
     @Test
@@ -142,7 +140,7 @@ public class CbusEventRequestDataModelTest {
         
         t.setValueAt("do button Click",0,CbusEventRequestDataModel.STATUS_REQUEST_BUTTON_COLUMN);
         
-        JUnitUtil.waitFor(()->{ return(tcis.outbound.size()>0); }, " outbound 1 didn't arrive");
+        JUnitUtil.waitFor(()->{ return(!tcis.outbound.isEmpty()); }, " outbound 1 didn't arrive");
         Assert.assertEquals(" 1 outbound increased", 1,(tcis.outbound.size() ) );
         Assert.assertEquals("table sends request event for long 7 node 1234 ", "[5f8] 92 04 D2 00 07",
             tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
@@ -199,7 +197,7 @@ public class CbusEventRequestDataModelTest {
     }
     
     private TrafficControllerScaffold tcis;
-    private CanSystemConnectionMemo memo;
+    private CanSystemConnectionMemo memo = null;
 
     @BeforeEach
     public void setUp() {
@@ -208,12 +206,14 @@ public class CbusEventRequestDataModelTest {
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
         memo.configureManagers();
     }
 
     @AfterEach
     public void tearDown() {        
         tcis.terminateThreads();
+        Assertions.assertNotNull(memo);
         memo.dispose();
         tcis = null;
         memo = null;

@@ -275,7 +275,7 @@ public class Import_AndOrMixed_Test {
 
     // Test that the operator MIXED is imported correctly
     @Test
-    public void testMixed() throws JmriException {
+    public void testMixed1() throws JmriException {
         RunTestScaffold check = (message, expectSuccess) -> {
             s1.setState(Sensor.INACTIVE);
             s2.setState(Sensor.INACTIVE);
@@ -350,6 +350,525 @@ public class Import_AndOrMixed_Test {
         cv.setOpern(Conditional.Operator.AND);
         cv.setType(Conditional.Type.SENSOR_ACTIVE);
         cv.setName("IS3");
+        variables.add(cv);
+
+        ConditionalAction ca = new DefaultConditionalAction();
+        ca.setType(Conditional.Action.SET_TURNOUT);
+        ca.setActionData(Turnout.THROWN);
+        ca.setDeviceName("IT1");
+        actions.add(ca);
+
+        logixManager.activateAllLogixs();
+
+        check.runTest("Logix is activated", true);
+
+        logix.deActivateLogix();
+
+        // Import the logix to LogixNG
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+
+        logix.setEnabled(false);
+        logixManager.deleteLogix(logix);
+
+        check.runTest("Logix is removed and LogixNG is not activated", false);
+
+        // We want the conditionalNGs run immediately during this test
+        InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
+
+        importLogix.getLogixNG().setEnabled(true);
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .activateAllLogixNGs(false, false);
+
+        check.runTest("LogixNG is activated", true);
+
+        importLogix.getLogixNG().setEnabled(false);
+        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
+
+        check.runTest("LogixNG is removed", false);
+
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");
+    }
+
+    // Test that the operator MIXED is imported correctly
+    @Test
+    public void testMixed2() throws JmriException {
+        RunTestScaffold check = (message, expectSuccess) -> {
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            s3.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            s3.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s1.setState(Sensor.ACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.ACTIVE);
+            s3.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s3.setState(Sensor.ACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            s3.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout if the logix/logixng is active
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            s3.setState(Sensor.ACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout if the logix/logixng is active
+            s1.setState(Sensor.ACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+
+        };
+
+        check.runTest("Logix is not activated", false);
+
+        conditional.setLogicType(Conditional.AntecedentOperator.MIXED, "R1 AND (R2 OR R3)");
+        ConditionalVariable cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(true);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS1");
+        variables.add(cv);
+
+        cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS2");
+        variables.add(cv);
+
+        cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS3");
+        variables.add(cv);
+
+        ConditionalAction ca = new DefaultConditionalAction();
+        ca.setType(Conditional.Action.SET_TURNOUT);
+        ca.setActionData(Turnout.THROWN);
+        ca.setDeviceName("IT1");
+        actions.add(ca);
+
+        logixManager.activateAllLogixs();
+
+        check.runTest("Logix is activated", true);
+
+        logix.deActivateLogix();
+
+        // Import the logix to LogixNG
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+
+        logix.setEnabled(false);
+        logixManager.deleteLogix(logix);
+
+        check.runTest("Logix is removed and LogixNG is not activated", false);
+
+        // We want the conditionalNGs run immediately during this test
+        InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
+
+        importLogix.getLogixNG().setEnabled(true);
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .activateAllLogixNGs(false, false);
+
+        check.runTest("LogixNG is activated", true);
+
+        importLogix.getLogixNG().setEnabled(false);
+        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
+
+        check.runTest("LogixNG is removed", false);
+
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");
+    }
+
+    // Test that the operator MIXED is imported correctly
+    @Test
+    public void testMixed3() throws JmriException {
+        RunTestScaffold check = (message, expectSuccess) -> {
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            s3.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            s3.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s1.setState(Sensor.ACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.ACTIVE);
+            s3.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s3.setState(Sensor.ACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            s3.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout if the logix/logixng is active
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            s3.setState(Sensor.ACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout if the logix/logixng is active
+            s1.setState(Sensor.ACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+
+        };
+
+        check.runTest("Logix is not activated", false);
+
+        conditional.setLogicType(Conditional.AntecedentOperator.MIXED, "R1 AND (R2 OR R3)");
+        ConditionalVariable cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS1");
+        variables.add(cv);
+
+        cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(true);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS2");
+        variables.add(cv);
+
+        cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS3");
+        variables.add(cv);
+
+        ConditionalAction ca = new DefaultConditionalAction();
+        ca.setType(Conditional.Action.SET_TURNOUT);
+        ca.setActionData(Turnout.THROWN);
+        ca.setDeviceName("IT1");
+        actions.add(ca);
+
+        logixManager.activateAllLogixs();
+
+        check.runTest("Logix is activated", true);
+
+        logix.deActivateLogix();
+
+        // Import the logix to LogixNG
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+
+        logix.setEnabled(false);
+        logixManager.deleteLogix(logix);
+
+        check.runTest("Logix is removed and LogixNG is not activated", false);
+
+        // We want the conditionalNGs run immediately during this test
+        InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
+
+        importLogix.getLogixNG().setEnabled(true);
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .activateAllLogixNGs(false, false);
+
+        check.runTest("LogixNG is activated", true);
+
+        importLogix.getLogixNG().setEnabled(false);
+        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
+
+        check.runTest("LogixNG is removed", false);
+
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");
+    }
+
+    // Test that the operator MIXED is imported correctly
+    @Test
+    public void testMixedWithNot1() throws JmriException {
+        RunTestScaffold check = (message, expectSuccess) -> {
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s1.setState(Sensor.INACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout if the logix/logixng is active
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.ACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout if the logix/logixng is active
+            s1.setState(Sensor.INACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+
+        };
+
+        check.runTest("Logix is not activated", false);
+
+        conditional.setLogicType(Conditional.AntecedentOperator.MIXED, "not R1 AND R2");
+        ConditionalVariable cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS1");
+        variables.add(cv);
+
+        cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS2");
+        variables.add(cv);
+
+        ConditionalAction ca = new DefaultConditionalAction();
+        ca.setType(Conditional.Action.SET_TURNOUT);
+        ca.setActionData(Turnout.THROWN);
+        ca.setDeviceName("IT1");
+        actions.add(ca);
+
+        logixManager.activateAllLogixs();
+
+        check.runTest("Logix is activated", true);
+
+        logix.deActivateLogix();
+
+        // Import the logix to LogixNG
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+
+        logix.setEnabled(false);
+        logixManager.deleteLogix(logix);
+
+        check.runTest("Logix is removed and LogixNG is not activated", false);
+
+        // We want the conditionalNGs run immediately during this test
+        InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
+
+        importLogix.getLogixNG().setEnabled(true);
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .activateAllLogixNGs(false, false);
+
+        check.runTest("LogixNG is activated", true);
+
+        importLogix.getLogixNG().setEnabled(false);
+        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
+
+        check.runTest("LogixNG is removed", false);
+
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");
+    }
+
+    // Test that the operator MIXED is imported correctly
+    @Test
+    public void testMixedWithNot2() throws JmriException {
+        RunTestScaffold check = (message, expectSuccess) -> {
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s1.setState(Sensor.INACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout if the logix/logixng is active
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.ACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout if the logix/logixng is active
+            s1.setState(Sensor.INACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+
+        };
+
+        check.runTest("Logix is not activated", false);
+
+        conditional.setLogicType(Conditional.AntecedentOperator.MIXED, "not R1 AND R2");
+        ConditionalVariable cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(true);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS1");
+        variables.add(cv);
+
+        cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS2");
+        variables.add(cv);
+
+        ConditionalAction ca = new DefaultConditionalAction();
+        ca.setType(Conditional.Action.SET_TURNOUT);
+        ca.setActionData(Turnout.THROWN);
+        ca.setDeviceName("IT1");
+        actions.add(ca);
+
+        logixManager.activateAllLogixs();
+
+        check.runTest("Logix is activated", true);
+
+        logix.deActivateLogix();
+
+        // Import the logix to LogixNG
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+
+        logix.setEnabled(false);
+        logixManager.deleteLogix(logix);
+
+        check.runTest("Logix is removed and LogixNG is not activated", false);
+
+        // We want the conditionalNGs run immediately during this test
+        InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
+
+        importLogix.getLogixNG().setEnabled(true);
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .activateAllLogixNGs(false, false);
+
+        check.runTest("LogixNG is activated", true);
+
+        importLogix.getLogixNG().setEnabled(false);
+        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
+
+        check.runTest("LogixNG is removed", false);
+
+        JUnitAppender.assertWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");
+    }
+
+    // Test that the operator MIXED is imported correctly
+    @Test
+    public void testMixedWithNot3() throws JmriException {
+        RunTestScaffold check = (message, expectSuccess) -> {
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s1.setState(Sensor.INACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout if the logix/logixng is active
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.ACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout if the logix/logixng is active
+            s1.setState(Sensor.INACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+
+        };
+
+        check.runTest("Logix is not activated", false);
+
+        conditional.setLogicType(Conditional.AntecedentOperator.MIXED, "not R1 AND R2");
+        ConditionalVariable cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS1");
+        variables.add(cv);
+
+        cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(true);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS2");
         variables.add(cv);
 
         ConditionalAction ca = new DefaultConditionalAction();

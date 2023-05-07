@@ -125,5 +125,15 @@ public class ProxySensorManager extends AbstractProvidingProxyManager<Sensor>
        return false;
     }
 
+    /**
+     * Do the sensor objects provided by the manager for this system name
+     * support configuring an internal pull up or pull down resistor?
+     * @param systemName to select correct manager
+     * @return true if pull up/pull down configuration is supported
+     */
+    public boolean isPullResistanceConfigurable(String systemName){
+        return ((SensorManager) getManagerOrDefault(systemName)).isPullResistanceConfigurable();
+    }
+
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxySensorManager.class);
 }

@@ -5,14 +5,14 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.EventObject;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 
 /**
  * Make a JButton in a table cell function.
@@ -29,12 +29,12 @@ import javax.swing.table.TableCellEditor;
 public class ButtonEditor extends BasicCellEditor
         implements ActionListener,
         TableCellEditor,
-        MouseListener {
+        JmriMouseListener {
 
     public ButtonEditor(JButton button) {
         super(button);
         button.addActionListener(this);
-        button.addMouseListener(this);
+        button.addMouseListener(JmriMouseListener.adapt(this));
         button.putClientProperty("JComponent.sizeVariant", "small");
         button.putClientProperty("JButton.buttonType", "square");
     }
@@ -62,7 +62,7 @@ public class ButtonEditor extends BasicCellEditor
     @Override
     public void editingStarted(EventObject event) {
         // Edit starting - click the button if necessary
-        if (!(event instanceof MouseEvent)) {
+        if (!(event instanceof java.awt.event.MouseEvent)) {
             // Keyboard event - click the button
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -112,23 +112,23 @@ public class ButtonEditor extends BasicCellEditor
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(JmriMouseEvent e) {
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(JmriMouseEvent e) {
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(JmriMouseEvent e) {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(JmriMouseEvent e) {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(JmriMouseEvent e) {
     }
 
     protected Object value;

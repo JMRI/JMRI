@@ -5,11 +5,7 @@ import jmri.jmrix.loconet.LncvDevicesManager;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,60 +17,60 @@ class LncvProgTableModelTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("LncvProg model exists", lptm);
+        Assertions.assertNotNull(lptm, "LncvProg model exists");
     }
 
     @Test
     void testInitTable() {
         JTable table = new JTable(lptm);
         lptm.initTable(table); // one would expect 8 but is 15
-        Assert.assertEquals("IDColumn width", 15, table.getColumn("#").getMaxWidth());
+        Assertions.assertEquals(15, table.getColumn("#").getMaxWidth(), "IDColumn width");
     }
 
     @Test
     void testGetColumnName() {
         lptm.initTable(new javax.swing.JTable(lptm));
-        Assert.assertEquals("IDColumn name", "#", lptm.getColumnName(0));
+        Assertions.assertEquals("#", lptm.getColumnName(0), "IDColumn name");
     }
 
     @Test
     void testGetColumnClass() {
-        Assert.assertEquals("VALUE_COLUMN class", Integer.class, lptm.getColumnClass(LncvProgTableModel.VALUE_COLUMN));
-        Assert.assertEquals("OPENPRGMRBUTTONCOLUMN class", JButton.class, lptm.getColumnClass(LncvProgTableModel.OPENPRGMRBUTTONCOLUMN));
+        Assertions.assertEquals(Integer.class, lptm.getColumnClass(LncvProgTableModel.VALUE_COLUMN), "VALUE_COLUMN class");
+        Assertions.assertEquals(JButton.class, lptm.getColumnClass(LncvProgTableModel.OPENPRGMRBUTTONCOLUMN), "OPENPRGMRBUTTONCOLUMN class");
     }
 
     @Test
     void tastIsCellEditable() {
-        Assert.assertEquals("OPENPRGMRBUTTONCOLUMN is editable", true, lptm.isCellEditable(0, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN));
-        Assert.assertEquals("VALUE_COLUMN is not editable", false, lptm.isCellEditable(0, LncvProgTableModel.VALUE_COLUMN));
+        Assertions.assertTrue(lptm.isCellEditable(0, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN), "OPENPRGMRBUTTONCOLUMN is editable");
+        Assertions.assertFalse(lptm.isCellEditable(0, LncvProgTableModel.VALUE_COLUMN), "VALUE_COLUMN is not editable");
     }
 
     @Test
     void testGetColumnCount() {
-        Assert.assertEquals("ProgTable column count", 8, lptm.getColumnCount());
+        Assertions.assertEquals(8, lptm.getColumnCount(), "ProgTable column count");
     }
 
     @Test
     void testGetSetValueAt() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         LncvDevicesManager lcdm = new LncvDevicesManager(memo);
         memo.setLncvDevicesManager(lcdm);
         jmri.InstanceManager.setDefault(jmri.jmrit.roster.RosterConfigManager.class, new RosterConfigManager());
-        Assert.assertEquals("LncvDeviceManager List empty", 0, lcdm.getDeviceCount());
+        Assertions.assertEquals(0, lcdm.getDeviceCount(), "LncvDeviceManager List empty");
         lcdm.message(new LocoNetMessage(new int[] {0xE5, 0x0F, 0x05, 0x49, 0x4B, 0x1F, 0x11, 0x29, 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x4D}));
         // should add 1 row to table
-        Assert.assertEquals("getValue in cell 0,COUNT_COLUMN", 1, lptm.getValueAt(0, LncvProgTableModel.COUNT_COLUMN));
-        Assert.assertEquals("getValue in cell 0,VALUE_COLUMN", 136, lptm.getValueAt(0, LncvProgTableModel.VALUE_COLUMN));
-        Assert.assertEquals("getValue in cell 0,ARTICLE_COLUMN", 5033, lptm.getValueAt(0, LncvProgTableModel.ARTICLE_COLUMN));
+        Assertions.assertEquals(1, lptm.getValueAt(0, LncvProgTableModel.COUNT_COLUMN), "getValue in cell 0,COUNT_COLUMN");
+        Assertions.assertEquals(136, lptm.getValueAt(0, LncvProgTableModel.VALUE_COLUMN), "getValue in cell 0,VALUE_COLUMN");
+        Assertions.assertEquals(5033, lptm.getValueAt(0, LncvProgTableModel.ARTICLE_COLUMN), "getValue in cell 0,ARTICLE_COLUMN");
         // Roster should be loaded for match
-        Assert.assertEquals("getValue in cell 0,DEVICENAMECOLUMN", "DR5033", lptm.getValueAt(0, LncvProgTableModel.DEVICENAMECOLUMN));
-        Assert.assertEquals("getValue in cell 0,OPENPRGMRBUTTONCOLUMN", Bundle.getMessage("ButtonCreateEntry"), lptm.getValueAt(0, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN));
+        Assertions.assertEquals("DR5033", lptm.getValueAt(0, LncvProgTableModel.DEVICENAMECOLUMN), "getValue in cell 0,DEVICENAMECOLUMN");
+        Assertions.assertEquals(Bundle.getMessage("ButtonCreateEntry"), lptm.getValueAt(0, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN), "getValue in cell 0,OPENPRGMRBUTTONCOLUMN");
         lptm.setValueAt(5,0, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN); // click should see na action
 
         lcdm.message(new LocoNetMessage(new int[] {0xE5, 0x0F, 0x05, 0x49, 0x4B, 0x1F, 0x11, 0x29, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x4D}));
         // should add row 2 to table, unknown article number 0029, no match
-        Assert.assertEquals("getValue in cell 1,COUNT_COLUMN", 2, lptm.getValueAt(1, LncvProgTableModel.COUNT_COLUMN));
-        Assert.assertEquals("getValue in cell 1,OPENPRGMRBUTTONCOLUMN", Bundle.getMessage("ButtonNoMatchInRoster"), lptm.getValueAt(1, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN));
+        Assertions.assertEquals(2, lptm.getValueAt(1, LncvProgTableModel.COUNT_COLUMN), "getValue in cell 1,COUNT_COLUMN");
+        Assertions.assertEquals(Bundle.getMessage("ButtonNoMatchInRoster"), lptm.getValueAt(1, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN), "getValue in cell 1,OPENPRGMRBUTTONCOLUMN");
     }
 
 //    @Test

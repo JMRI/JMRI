@@ -139,24 +139,21 @@ public class ActionBlock extends AbstractDigitalAction
         return Category.ITEM;
     }
 
-    private Object getNewData() throws JmriException {
+    private Object getNewData(SymbolTable symbolTable) throws JmriException {
 
         switch (_dataAddressing) {
             case Direct:
                 return _blockValue;
 
             case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _dataReference);
+                return ReferenceUtil.getReference(symbolTable, _dataReference);
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 return symbolTable.getValue(_dataLocalVariable);
 
             case Formula:
                 return _dataExpressionNode != null
-                        ? _dataExpressionNode.calculate(
-                                getConditionalNG().getSymbolTable())
+                        ? _dataExpressionNode.calculate(symbolTable)
                         : null;
 
             default:
@@ -172,6 +169,8 @@ public class ActionBlock extends AbstractDigitalAction
         if (block == null) {
             return;
         }
+
+        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
 
         DirectOperation oper = _selectEnum.evaluateEnum(getConditionalNG());
 
@@ -227,7 +226,7 @@ public class ActionBlock extends AbstractDigitalAction
                     block.setValue(null);
                     break;
                 case SetValue:
-                    block.setValue(getNewData());
+                    block.setValue(getNewData(symbolTable));
                     break;
                 default:
                     throw new IllegalArgumentException("invalid oper state: " + theOper.name());

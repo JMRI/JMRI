@@ -48,7 +48,7 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
         f.pack();
         f.setVisible(true);
         
-        
+        Assertions.assertNotNull(tcis);
         CanReply r = new CanReply();
         r.setHeader(tcis.getCanid());
         r.setNumDataElements(3);
@@ -99,9 +99,9 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
         smPanel.dispose();
         
     }
-    
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold tcis;
+
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold tcis = null;
 
     @Override
     @BeforeEach
@@ -119,9 +119,11 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     @AfterEach
     public void tearDown() { 
+        Assertions.assertNotNull(tcis);
+        tcis.terminateThreads();
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo=null;
-        tcis.terminateThreads();
         tcis=null;
         JUnitUtil.tearDown();
     }

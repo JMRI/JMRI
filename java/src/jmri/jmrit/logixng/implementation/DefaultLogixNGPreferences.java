@@ -15,18 +15,19 @@ import jmri.profile.ProfileUtils;
  */
 public final class DefaultLogixNGPreferences extends PreferencesBean implements LogixNGPreferences {
 
-    public static final String START_LOGIXNG_ON_LOAD = "startLogixNGOnStartup";
-    public static final String USE_GENERIC_FEMALE_SOCKETS = "useGenericFemaleSockets";
-    public static final String INSTALL_DEBUGGER = "installDebugger";
-    public static final String SHOW_SYSTEM_USER_NAMES = "showSystemUserNames";
-    public static final String ERROR_HANDLING_TYPE = "errorHandlingType";
-    public static final String TREE_EDITOR_HIGHLIGHT_ROW = "treeEditorHighlightRow";
+    private static final String START_LOGIXNG_ON_LOAD = "startLogixNGOnStartup";
+    private static final String INSTALL_DEBUGGER = "installDebugger";
+    private static final String SHOW_SYSTEM_USER_NAMES = "showSystemUserNames";
+    private static final String ERROR_HANDLING_TYPE = "errorHandlingType";
+    private static final String TREE_EDITOR_HIGHLIGHT_ROW = "treeEditorHighlightRow";
+    private static final String SHOW_SYSTEM_NAME_IN_EXCEPTION = "showSystemNameInExceptions";
 
     private boolean _startLogixNGOnLoad = true;
     private boolean _showSystemUserNames = false;
     private boolean _installDebugger = true;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.ShowDialogBox;
     private boolean _treeEditorHighlightRow = false;
+    private boolean _showSystemNameInException = false;
 
 
     public DefaultLogixNGPreferences() {
@@ -44,35 +45,8 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         _errorHandlingType = ErrorHandlingType.valueOf(
                 sharedPreferences.get(ERROR_HANDLING_TYPE, _errorHandlingType.name()));
         _treeEditorHighlightRow = sharedPreferences.getBoolean(TREE_EDITOR_HIGHLIGHT_ROW, _treeEditorHighlightRow);
+        _showSystemNameInException = sharedPreferences.getBoolean(SHOW_SYSTEM_NAME_IN_EXCEPTION, _showSystemNameInException);
 
-/*
-        this.allowRemoteConfig = sharedPreferences.getBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig);
-        this.clickDelay = sharedPreferences.getInt(CLICK_DELAY, this.clickDelay);
-        this.simple = sharedPreferences.getBoolean(SIMPLE, this.simple);
-        this.railroadName = sharedPreferences.get(RAILROAD_NAME, this.railroadName);
-        this.readonlyPower = sharedPreferences.getBoolean(READONLY_POWER, this.readonlyPower);
-        this.refreshDelay = sharedPreferences.getInt(REFRESH_DELAY, this.refreshDelay);
-        this.useAjax = sharedPreferences.getBoolean(USE_AJAX, this.useAjax);
-        this.disableFrames = sharedPreferences.getBoolean(DISABLE_FRAME_SERVER, this.disableFrames);
-        this.redirectFramesToPanels = sharedPreferences.getBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
-        try {
-            Preferences frames = sharedPreferences.node(DISALLOWED_FRAMES);
-            if (frames.keys().length != 0) {
-                this.disallowedFrames.clear();
-                for (String key : frames.keys()) { // throws BackingStoreException
-                    String frame = frames.get(key, null);
-                    if (frame != null && !frame.trim().isEmpty()) {
-                        this.disallowedFrames.add(frame);
-                    }
-                }
-            }
-        } catch (BackingStoreException ex) {
-            // this is expected if sharedPreferences have not been written previously,
-            // so do nothing.
-        }
-        this.port = sharedPreferences.getInt(PORT, this.port);
-        this.useZeroConf = sharedPreferences.getBoolean(USE_ZERO_CONF, this.useZeroConf);
-*/
         setIsDirty(false);
     }
 
@@ -90,6 +64,9 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         if (getTreeEditorHighlightRow() != prefs.getTreeEditorHighlightRow()) {
             return true;
         }
+        if (getShowSystemNameInException() != prefs.getShowSystemNameInException()) {
+            return true;
+        }
         return (getErrorHandlingType() != prefs.getErrorHandlingType());
     }
 
@@ -100,6 +77,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         setShowSystemUserNames(prefs.getShowSystemUserNames());
         this.setErrorHandlingType(prefs.getErrorHandlingType());
         setTreeEditorHighlightRow(prefs.getTreeEditorHighlightRow());
+        setShowSystemNameInException(prefs.getShowSystemNameInException());
     }
 
     @Override
@@ -110,6 +88,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         sharedPreferences.putBoolean(SHOW_SYSTEM_USER_NAMES, this.getShowSystemUserNames());
         sharedPreferences.put(ERROR_HANDLING_TYPE, this.getErrorHandlingType().name());
         sharedPreferences.putBoolean(TREE_EDITOR_HIGHLIGHT_ROW, this.getTreeEditorHighlightRow());
+        sharedPreferences.putBoolean(SHOW_SYSTEM_NAME_IN_EXCEPTION, this.getShowSystemNameInException());
         setIsDirty(false);
     }
 
@@ -166,6 +145,17 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     @Override
     public boolean getTreeEditorHighlightRow() {
         return _treeEditorHighlightRow;
+    }
+
+    @Override
+    public void setShowSystemNameInException(boolean value) {
+        _showSystemNameInException = value;
+        setIsDirty(true);
+    }
+
+    @Override
+    public boolean getShowSystemNameInException() {
+        return _showSystemNameInException;
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGPreferences.class);

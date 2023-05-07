@@ -1,28 +1,18 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-		"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!--Translated by Herv&#233; Blorec le 2017-10-10 -->
-
   <title>JMRI: DecoderPro Questions Fr&eacute;quemment Pos&eacute;es</title>
-	<!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-	<!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+  <!--#include virtual="Sidebar.shtml" -->
 	<div id="mainContent">
 	<!-- Page Body -->
 
@@ -118,8 +108,9 @@ Red&#233;marrer JMRI et v&#233;rifiez vos param&#232;tres de connection.
 
 </dl>
     
-		<!--#include virtual="/Footer.shtml" -->
+		<!--#include virtual="/Footer_fr.shtml" -->
 		</div>
-	</div>
+  </div>  <!-- close #mBody -->
+<script src="/js/main.js"></script>
 </body>
 </html>

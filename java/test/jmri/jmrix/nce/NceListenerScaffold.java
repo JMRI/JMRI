@@ -6,7 +6,7 @@
 package jmri.jmrix.nce;
 
 
-class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
+public class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
 
     public NceListenerScaffold() {
         rcvdReply = null;

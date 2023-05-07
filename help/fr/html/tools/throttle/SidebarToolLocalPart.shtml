@@ -1,0 +1,97 @@
+<!-- Local part of sidebar for tools/throttle in French -->
+<dt><h3><a href="ThrottleTOC.shtml">R&#233;gulateurs</a></h3>
+</dt>
+<dd>
+  <ul>
+    <li><a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateurs dans JMRI</a></li>
+    <li><a href="BasicThrottleWindow.shtml">Fen&#238;tre R&#233;gulateurs lui-m&ecirc;me</a></li>
+    <li><a href="ThrottleWindowMenus.shtml">R&#233;gulateurs Fen&ecirc;tre menus</a></li>
+    <li><a href="ThrottleToolBar.shtml">R&#233;gulateurs Fen&ecirc;tre Barre d'Outils</a></li>
+    <li><a href="AdvancedThrottleControl.shtml">R&#233;gulateurs Fen&ecirc;tre de contr&#244;les</a></li>
+    <li><a href="ThrottlesListWindow.shtml">R&#233;gulateurs Liste Fen&ecirc;tre</a></li>
+    <li><a href="ThrottlesPreferencesPane.shtml">R&#233;gulateurs volet pr&#233;f&#233;rences</a><br>
+    </li>
+  </ul>
+  <br>
+  <ul>
+    <li><a href="RostersMediaPane.shtml">Panneaux Media et Fonction &#233;tiquette dans DecoderPro</a></li>
+    <li><a href="../scripting/Jynstruments.shtml">Jynstruments</a></li>
+    <li><a href="HowToJMRIOrientedThrottle.shtml">Comment construire un R&#233;gulateur orient&#233; JMRI</a></li>
+  </ul>
+</dd>
+
+<dt>Introduction</dt>
+<dd>
+  <ul>
+    <li><a href="ThrottleMain.shtml">Quel est cet outil?</a></li>
+    <li><a href="ThrottleMain.shtml#HowToUse">Comment utiliser ce guide</a></li>
+  </ul>
+</dd>
+
+<dt>D&#233;marrage</dt>
+<dd>
+  <ul>
+    <li><a href="ThrottleChapter1.shtml" title="Ou se trouve l'outil R&#233;gulateurs?">O&#249; le trouvert</a>
+      <ul>
+        <li><a style="font-size: x-small" href="ThrottleChapter1.shtml#MainMenu">Le Menu Principal</a></li>
+        <li><a style="font-size: x-small" href="ThrottleChapter1.shtml#ThrottlesSub">Les sou-menus R&#233;gulateur</a></li>
+      </ul></li>
+  </ul>
+</dd>
+
+<dt>Ouvrir et Configurer</dt>
+<dd>
+  <ul>
+    <li><a href="ThrottleChapter2.shtml">Ouvrir un Nouveau R&#233;gulateur</a>
+      <ul>
+        <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#StructWin" title="Structure of a Throttle Window">Structure de R&#233;gulateur</a></li>
+      </ul></li>
+    <li><a href="ThrottleChapter2.shtml#WinConfig">Configurer un R&#233;gulateur</a>
+      <ul>
+        <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#AddressPanel">Assigner une Adresse</a></li>
+        <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#ControlPanel">Panneau de Commande</a>
+          <ul>
+            <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#StandardActions">Clavier de Commande</a></li>
+            <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#MouseControl">Commande Souris</a>
+              <ul>
+                <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#SliderBar">Le Curseur</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#Acquiring" title="Acquiring a Dispatched Locomotive">Acqu&#233;rir une Loco</a></li>
+    <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#FunctionPanel" title="The Function Panel">Panneau de Fonctionl</a></li>
+  </ul>
+</dd>
+
+<dt>Configuration Avanc&#233;e</dt>
+<dd>
+  <ul>
+    <li><a href="ThrottleChapter3.shtml" title="Advanced Configuration of the Function Panel">Panneau de Fonction</a></li>
+    <li><a href="ThrottleChapter3.shtml#WinMenuOptions" title="Throttle Window Menu Options">Options Menus</a>
+      <ul>
+        <li><a style="font-size: x-small" href="ThrottleChapter3.shtml#ViewPanels" title="View (Panels)">Voir Panneaux</a></li>
+        <li><a style="font-size: x-small" href="ThrottleChapter3.shtml#EditFrameProperties" title="Edit (Frame Properties)">&#233;diter les Propri&#233;t&#233;s</a></li>
+      </ul></li>
+  </ul>
+</dd>
+
+<dt>Ouvrir/Sauver des configurations</dt>
+<dd>
+  <ul>
+    <li><a href="ThrottleChapter4.shtml" title="Saving a Throttle Layout">Sauver une Configuration</a>
+    <ul>
+      <li><a style="font-size: x-small" href="ThrottleChapter4.shtml#SaveMultiple" title="Saving Multiple Throttle Windows">Sauvegarder De Multiples R&#233;gulateurs</a></li>
+    </ul></li>
+    <li><a href="ThrottleChapter4.shtml#LoadLayout" title="Open/Load a Throttle Layout">OuvrirCharger une
+      Configuration</a>
+      <ul>
+        <li><a style="font-size: x-small" href="ThrottleChapter4.shtml#Merging" title="Merging Throttle Windows">Fusionner des R&#233;gulateurs</a></li>
+      </ul></li>
+    <li><a href="ThrottleChapter4.shtml#CloseThrottle" title="Closing A Throttle Window">Fermer Fen&#238;tre R&#233;gulateur</a></li>
+  </ul>
+</dd>
+
+    <!-- End of SidebarLocaPart.shtml -->

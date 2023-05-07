@@ -1,6 +1,5 @@
 package jmri.jmrit.timetable.swing;
 
-import java.awt.GraphicsEnvironment;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +10,8 @@ import javax.swing.JMenuItem;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.*;
 
@@ -20,6 +19,7 @@ import org.netbeans.jemmy.operators.*;
  * Tests for the TimeTableFrame Class
  * @author Dave Sand Copyright (C) 2018
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class TimeTableFrameTest {
 
     TimeTableFrame _ttf = null;
@@ -30,14 +30,12 @@ public class TimeTableFrameTest {
 
     @Test
     public void testCreatEmpty() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TimeTableFrame f = new TimeTableFrame();
         Assert.assertNotNull(f);
     }
 
     @Test
     public void testDriver() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         _ttf = new TimeTableFrame("");
         Assert.assertNotNull(_ttf);
         _ttf.setVisible(true);
@@ -48,6 +46,7 @@ public class TimeTableFrameTest {
 
         menuTests();
         addTests();
+        duplicateTests();
         deleteTests();
         addTests();
         deleteLayout();
@@ -315,6 +314,11 @@ public class TimeTableFrameTest {
         }
     }
 
+    void duplicateTests() {
+        _jto.clickOnPath(_jto.findPath(new String[]{"Test"}));  // NOI18N
+        new JButtonOperator(_jfo, Bundle.getMessage("DuplicateLayoutButtonText")).doClick();  // NOI18N
+    }
+
     void timeRangeTests() {
         // Change schedule duration
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "123"}));  // NOI18N
@@ -490,7 +494,7 @@ public class TimeTableFrameTest {
 
     @BeforeEach
     public void setUp(@TempDir File folder) throws IOException {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
@@ -498,15 +502,8 @@ public class TimeTableFrameTest {
 
     @AfterEach
     public  void tearDown() {
-       // use reflection to reset the static file location.
-       try {
-            Class<?> c = jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
-        }
+        // reset the static file location.
+        jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.resetFileLocation();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }

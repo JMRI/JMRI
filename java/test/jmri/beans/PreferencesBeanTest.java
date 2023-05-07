@@ -152,9 +152,9 @@ public class PreferencesBeanTest {
         assertThat(bean.isDirty()).isTrue();
     }
 
-    private class PreferencesBeanImpl extends PreferencesBean {
+    private static class PreferencesBeanImpl extends PreferencesBean {
 
-        public PreferencesBeanImpl(Profile prfl) {
+        private PreferencesBeanImpl(Profile prfl) {
             super(prfl);
         }
 

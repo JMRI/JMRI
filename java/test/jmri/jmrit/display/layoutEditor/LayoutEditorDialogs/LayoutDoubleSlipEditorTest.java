@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 
 import javax.swing.*;
@@ -12,6 +11,7 @@ import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -19,18 +19,19 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
 
     @Test
+    @Override
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        new LayoutDoubleSlipEditor(null);
+        Assertions.assertNotNull(new LayoutDoubleSlipEditor(layoutEditor));
+
     }
 
     @Test
     public void testEditDoubleSlipDone() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         createTurnouts();
@@ -92,7 +93,6 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
 
     @Test
     public void testEditSlipCancel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutDoubleSlipEditor editor = new LayoutDoubleSlipEditor(layoutEditor);
 
@@ -115,7 +115,6 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
 
     @Test
     public void testEditSlipClose() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutDoubleSlipEditor editor = new LayoutDoubleSlipEditor(layoutEditor);
 
@@ -127,9 +126,6 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
-
-
-    private LayoutEditor layoutEditor = null;
     private LayoutDoubleSlip doubleLayoutSlip = null;
     private LayoutDoubleSlipView doubleLayoutSlipView = null;
 
@@ -137,25 +133,16 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
     @Override
     public void setUp() {
         super.setUp();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initLayoutBlockManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalSensorManager();
-        if (!GraphicsEnvironment.isHeadless()) {
 
-            layoutEditor = new LayoutEditor();
-            layoutEditor.setVisible(true);
+        Point2D point = new Point2D.Double(150.0, 100.0);
+        Point2D delta = new Point2D.Double(50.0, 10.0);
 
-            Point2D point = new Point2D.Double(150.0, 100.0);
-            Point2D delta = new Point2D.Double(50.0, 10.0);
+        // doubleLayoutSlip
+        point = MathUtil.add(point, delta);
+        doubleLayoutSlip = new LayoutDoubleSlip("Double Slip", layoutEditor); // point, 0.0,
+        doubleLayoutSlipView = new LayoutDoubleSlipView(doubleLayoutSlip, point, 0.0, layoutEditor);
+        layoutEditor.addLayoutTrack(doubleLayoutSlip, doubleLayoutSlipView);
 
-            // doubleLayoutSlip
-            point = MathUtil.add(point, delta);
-            doubleLayoutSlip = new LayoutDoubleSlip("Double Slip", layoutEditor); // point, 0.0,
-            doubleLayoutSlipView = new LayoutDoubleSlipView(doubleLayoutSlip, point, 0.0, layoutEditor);
-            layoutEditor.addLayoutTrack(doubleLayoutSlip, doubleLayoutSlipView);
-
-        }
     }
 
     @AfterEach
@@ -165,17 +152,10 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
             doubleLayoutSlip.remove();
         }
 
-        if (layoutEditor != null) {
-            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
-            efo.closeFrameWithConfirmations();
-        }
-
         doubleLayoutSlip = null;
-        layoutEditor = null;
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

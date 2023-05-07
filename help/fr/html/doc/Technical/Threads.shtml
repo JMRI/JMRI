@@ -1,38 +1,28 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233;  2016-08-017-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233;  2016-08-017-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Liaison</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code threading">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
 <h1>JMRI: Liaison</h1>
 
-La grande majorit&#233; des codeurs JMRI (et programmeurs) n'ont pas &#224; 
+<p>La grande majorit&#233; des codeurs JMRI (et programmeurs) n'ont pas &#224;
 se soucier des liaisons. Leur code se trouve invoqu&#233;, et appelle un autre code, 
 et la laison prend soin d'elle-m&#234;me. Cela est particuli&#232;rement vrai pour le code bas&#233; sur les &#233;v&#233;nements,
 qui r&#233;pond &#224; des &#233;v&#233;nements provenant par exemple de l'interface graphique ou du changement d'un objet sur le r&#233;seau,
-et appelle des m&#233;thodes concernant d'autres objets, qui peuvent &#224; leurs tours cr&#233;er plus d'&#233;v&#233;nements.
+et appelle des m&#233;thodes concernant d'autres objets, qui peuvent &#224; leurs tours cr&#233;er plus
+d'&#233;v&#233;nements.</p>
 
 <p>
 Cette simplicit&#233; vient de l'utilisation d'un seul lien pour le traitement de la plupart de l'activit&#233; de JMRI: Le fil des &#233;v&#233;nements Java Swing.
@@ -78,9 +68,9 @@ les deux versions. SVP essayez de choisir la bonne la plupart du temps l'une lor
 ou javax.swing.SwingUtilities.invokeAndWait( r ); Ceux-ci seront migr&#233;s vers les nouvelles m&#233;thodes sp&#233;cifiques JMRI 
 &#224; l'avenir pour garder notre code juste un petit peu plus propre  et plus souple.)
 
-<!--#include virtual="/Footer.shtml" -->
-
+    <!--#include virtual="/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

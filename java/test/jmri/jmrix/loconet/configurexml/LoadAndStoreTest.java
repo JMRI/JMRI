@@ -3,10 +3,12 @@ package jmri.jmrix.loconet.configurexml;
 import jmri.jmrix.loconet.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -54,15 +56,15 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
      */
     @BeforeEach
     @Override
-    public void setUp() {
-        super.setUp();
+    public void setUp(@TempDir java.io.File tempDir) throws IOException  {
+        super.setUp(tempDir);
 
         // 1st LocoNet connection L
         memo1 = new LocoNetSystemConnectionMemo();
         lnis1 = new LocoNetInterfaceScaffold(memo1);
         memo1.setLnTrafficController(lnis1);
         jmri.InstanceManager.store(lnis1, jmri.jmrix.loconet.LnTrafficController.class);
-        memo1.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
+        memo1.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false,false);
         memo1.configureManagers(); // Does this generate autonomous loconet traffic? Needs a wait?
         jmri.InstanceManager.store(memo1,LocoNetSystemConnectionMemo.class);
 
@@ -71,7 +73,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         lnis2 = new LocoNetInterfaceScaffold(memo1);
         memo2.setLnTrafficController(lnis2);
         jmri.InstanceManager.store(lnis2, jmri.jmrix.loconet.LnTrafficController.class);
-        memo2.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
+        memo2.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false,false);
         memo2.configureManagers(); // Does this generate autonomous loconet traffic? Needs a wait?
         jmri.InstanceManager.store(memo2,LocoNetSystemConnectionMemo.class);
 

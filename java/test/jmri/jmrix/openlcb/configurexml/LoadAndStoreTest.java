@@ -1,13 +1,16 @@
 package jmri.jmrix.openlcb.configurexml;
 
+import jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold;
 import jmri.configurexml.LoadAndStoreTestBase;
 import jmri.jmrix.openlcb.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -41,17 +44,20 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
     public LoadAndStoreTest() {
         super(SaveType.Config, false);
+        messages = new ArrayList<>();
     }
 
     // from here down is testing infrastructure
-    private OlcbSystemConnectionMemo memo;
+    private OlcbSystemConnectionMemoScaffold memo;
     private Connection connection;
     private NodeID nodeID;
     private ArrayList<Message> messages;
 
     @BeforeEach
     @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
-    public void localSetUp() {
+    @Override
+    public void setUp(@TempDir java.io.File tempDir) throws IOException  {
+        super.setUp(tempDir);
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
 
         messages = new ArrayList<>();
@@ -62,7 +68,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
             }
         };
 
-        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo = new OlcbSystemConnectionMemoScaffold(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
             @Override
@@ -75,13 +81,15 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     }
 
     @AfterEach
-    public void localTearDown() {
+    @Override
+    public void tearDown() {
         if (memo != null && memo.getInterface() != null) {
             memo.getInterface().dispose();
         }
         memo = null;
         connection = null;
         nodeID = null;
+        super.tearDown();
     }
 
 }

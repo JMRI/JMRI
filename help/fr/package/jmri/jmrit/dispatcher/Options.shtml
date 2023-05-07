@@ -1,179 +1,177 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- translated by Herv&#233; Blorec le 2011/12/31-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- translated by Herv&#233; Blorec le 2011/12/31-->
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Options de Dispatcher</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content="JMRI help Dispatcher Options"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Dispatcher Options">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>Options de Dispatcher</h1>
 
       <h2>Introduction</h2>
 
-      <p>Les <strong>Options FenÃªtre</strong> permettent d'adapter les options <strong><a href=
-      "Dispatcher.shtml">Dispatcher</a></strong> selon les besoins et prÃ©fÃ©rences des
-      utilisateurs. Le <strong>Menu Options</strong> permet d'accÃ©der aux options Dispatcher et
+      <p>Les <strong>Options Fenêtre</strong> permettent d'adapter les options <strong><a href=
+      "Dispatcher.shtml">Dispatcher</a></strong> selon les besoins et préférences des
+      utilisateurs. Le <strong>Menu Options</strong> permet d'accéder aux options Dispatcher et
       fournit la sauvegarde des options de Dispatcher sur le disque pour une utilisation
-      ultÃ©rieure. Les deux sont dÃ©crites ci-dessous en dÃ©tail. Les options Dispatcher
-      disponibles sont dÃ©crites en dÃ©tail dans la section suivante.</p>
+      ultérieure. Les deux sont décrites ci-dessous en détail. Les options Dispatcher
+      disponibles sont décrites en détail dans la section suivante.</p>
 
-      <h2>Utilisation de la fenÃªtre Options</h2>
+      <h2>Utilisation de la fenêtre Options</h2>
 
-      <p>SÃ©lection de la <strong>FenÃªtre Options...</strong> dans le menu
-      <strong>Options</strong> de Dispatcher, la fenÃªtre fait apparaÃ®tre la fenÃªtre
+      <p>Sélection de la <strong>Fenêtre Options...</strong> dans le menu
+      <strong>Options</strong> de Dispatcher, la fenêtre fait apparaître la fenêtre
       ci-dessous.</p>
-      <img src="OptionsWindow.jpg" height="445" width="519" alt="">
-      <p>Cette fenÃªtre affiche les options actuellement sÃ©lectionnÃ©es pour Dispatcher. Pour
-      changer les Options Dispatcher, changer l'option de la configuration dÃ©sirÃ©e, cliquez sur
-      le bouton <strong>Appliquer</strong>. Toutes les options sont dÃ©finies par la sÃ©lection
-      dans la fenÃªtre Options, et la fenÃªtre Options disparaÃ®t. Pour faire disparaÃ®tre cette
-      fenÃªtre sans modifier les options, cliquez sur le bouton <strong>Annuler</strong>. Chaque
-      option est expliquÃ©e ci-dessous:</p>
+      <img src="images/OptionsWindow.jpg" height="445" width="519" alt="">
+      <p>Cette fenêtre affiche les options actuellement sélectionnées pour Dispatcher. Pour
+      changer les Options Dispatcher, changer l'option de la configuration désirée, cliquez sur
+      le bouton <strong>Appliquer</strong>. Toutes les options sont définies par la sélection
+      dans la fenêtre Options, et la fenêtre Options disparaît. Pour faire disparaître cette
+      fenêtre sans modifier les options, cliquez sur le bouton <strong>Annuler</strong>. Chaque
+      option est expliquée ci-dessous:</p>
 
       <ul>
-        <li>Cochez la case <strong>Utiliser connectivitÃ© Ã partir du panneau TCO:</strong> et
-        sÃ©lectionnez un Panneau TCO (s'il y a plus d'un panneau), si vous avez un TCO qui dÃ©crit
-        parfaitement votre rÃ©seau, y compris les cantons et les aiguillages, et Dispatcher fera
-        usage de cette connectivitÃ©. DÃ©cochez cette option si aucun Panneau TCO avec une
-        connectivitÃ© complÃ¨te n'est disponible. Si cette option est cochÃ©e, Dispatcher vÃ©rifier
-        automatiquement si les aiguillages sont correctement positionnÃ©s lors de l'allocation
-        d'une Section, et en informera le rÃ©partiteur si les aiguillages ne sont pas positionnÃ©s
-        correctement. Cet Ã©lÃ©ment doit Ãªtre cochÃ© si Dispatcher doit positionner les
-        aiguillages quand une Section est allouÃ©s (voir ci-dessous), et si les trains sont Ã
-        exÃ©cuter automatiquement.</li>
+        <li>Cochez la case <strong>Utiliser connectivité à partir du panneau TCO:</strong> et
+        sélectionnez un Panneau TCO (s'il y a plus d'un panneau), si vous avez un TCO qui décrit
+        parfaitement votre réseau, y compris les cantons et les aiguillages, et Dispatcher fera
+        usage de cette connectivité. Décochez cette option si aucun Panneau TCO avec une
+        connectivité complète n'est disponible. Si cette option est cochée, Dispatcher vérifier
+        automatiquement si les aiguillages sont correctement positionnés lors de l'allocation
+        d'une Section, et en informera le répartiteur si les aiguillages ne sont pas positionnés
+        correctement. Cet élément doit être coché si Dispatcher doit positionner les
+        aiguillages quand une Section est alloués (voir ci-dessous), et si les trains sont à
+        exécuter automatiquement.</li>
 
-        <li>SÃ©lectionnez l'une des trois options de Dispatcher pour sÃ©lectionner les trains lors
-        de la crÃ©ation de Trains Actifs. Les trois possibilitÃ©s sont:
+        <li>Sélectionnez l'une des trois options de Dispatcher pour sélectionner les trains lors
+        de la création de Trains Actifs. Les trois possibilités sont:
           <ul>
-            <li><strong>Trains Ã partir de la Liste</strong> - Dispatcher va lister tous les trains
+            <li><strong>Trains à partir de la Liste</strong> - Dispatcher va lister tous les trains
             dans la Liste JMRI et qui ne sont pas actuellement en Trains Actifs.</li>
 
             <li><strong>Trains depuis les Trains</strong> - Dispatcher va lister tous les trains
-            disponibles depuis les OpÃ©rations qui ne sont pas en Trains Actifs.</li>
+            disponibles depuis les Opérations qui ne sont pas en Trains Actifs.</li>
 
-            <li><strong>Trains depuis EntrÃ©e Utilisateur</strong> - Dispatcher va remplacer la
-            boÃ®te de sÃ©lection train dans la fenÃªtre <a href="NewTrain.shtml"><strong>Activer
-            Nouveau Train</strong></a> par deux champs de saisie permettant Ã l'utilisateur
+            <li><strong>Trains depuis Entrée Utilisateur</strong> - Dispatcher va remplacer la
+            boîte de sélection train dans la fenêtre <a href="NewTrain.shtml"><strong>Activer
+            Nouveau Train</strong></a> par deux champs de saisie permettant à l'utilisateur
             d'entrer un nom de train et une adresse dcc.</li>
           </ul>
         </li>
 
-        <li>Cochez <strong>Le RÃ©seau a une dÃ©tection matÃ©rielle pour les Cantons</strong> si la
-        dÃ©tection d'occupation est disponible depuis le RÃ©seau. DÃ©cochez si le rÃ©seau n'a pas
-        de dÃ©tection d'occupation ou si Dispatcher ne doit pas faire usage de la dÃ©tection
-        d'occupation de Canton. La dÃ©tection matÃ©rielle des canton de est nÃ©cessaire pour
+        <li>Cochez <strong>Le Réseau a une détection matérielle pour les Cantons</strong> si la
+        détection d'occupation est disponible depuis le Réseau. Décochez si le réseau n'a pas
+        de détection d'occupation ou si Dispatcher ne doit pas faire usage de la détection
+        d'occupation de Canton. La détection matérielle des canton de est nécessaire pour
         l'exploitation automatique des trains.</li>
 
         <li>Cochez <strong>Allouer automatiquement les Sections pour les Trains Actifs</strong>
-        pour activer l'attribution automatisÃ©e. DÃ©cochez pour dÃ©sactiver l'attribution
-        automatisÃ©e. Ce point est Ã©quivalent Ã l'option de vÃ©rification de la fenÃªtre
+        pour activer l'attribution automatisée. Décochez pour désactiver l'attribution
+        automatisée. Ce point est équivalent à l'option de vérification de la fenêtre
         <strong>Allouer Auto</strong> de Dispatcher au-dessus de la table <strong>Sections
-        AllouÃ©es</strong>. Il est aussi Ã©quivalent Ã <strong>Allouer Auto</strong> dans le menu
-        <strong>Options</strong> de Dispatcher. VÃ©rifiez le ici, puis enregistrez les Options de
-        Dispatcher (voir ci-dessous) sÃ©lectionnez LibÃ©ration Auto et Allouer Auto quand
-        Dispatcher est dÃ©marrÃ©. <strong>Note: La version actuelle de Dispatcher fournit un
-        assistance limitÃ©e pour l'allocation automatique des sections</strong>. Le support sera
-        amÃ©liorÃ© dans les futures versions.</li>
+        Allouées</strong>. Il est aussi équivalent à <strong>Allouer Auto</strong> dans le menu
+        <strong>Options</strong> de Dispatcher. Vérifiez le ici, puis enregistrez les Options de
+        Dispatcher (voir ci-dessous) sélectionnez Libération Auto et Allouer Auto quand
+        Dispatcher est démarré. <strong>Note: La version actuelle de Dispatcher fournit une
+        assistance limitée pour l'allocation automatique des sections</strong>. Le support sera
+        amélioré dans les futures versions.</li>
 
         <li>Cochez <strong>Positionnement automatique des aiguillages quand un Section est
-        affectÃ©e</strong> pour activer le rÃ©glage automatique des aiguillages. DÃ©cochez pour
-        dÃ©sactiver le rÃ©glage automatique des aiguillages. Ce point est Ã©quivalent Ã
-        <strong>Aiguillages RÃ©glages Auto</strong> dans les <strong>Options</strong> Dispatcher.
-        Cette Section exige que <strong>Utilisez la connectivitÃ© depuis le TCO</strong> soit
-        cochÃ© (voir ci-dessus). L'aiguillage ne sera commutÃ© que si la Section Ã affecter est
-        libre et inoccupÃ©e, sauf pour la premiÃ¨re Section d'un Train Actif qui commence dans le
-        Transit. Si les aiguillages ne peuvent pas Ãªtre commutÃ©s, le rÃ©partiteur sera averti.
-        Lors du rÃ©glage des aiguillages, Dispatcher Ã©met seulement les commandes pour rÃ©gler les
-        aiguillages; il n'attend pas que les aiguillages changent rÃ©ellement. Cet Ã©lÃ©ment est
-        nÃ©cessaire pour l'exploitation automatique des trains.</li>
+        affectée</strong> pour activer le réglage automatique des aiguillages. Décochez pour
+        désactiver le réglage automatique des aiguillages. Ce point est équivalent à
+        <strong>Aiguillages Réglages Auto</strong> dans les <strong>Options</strong> Dispatcher.
+        Cette Section exige que <strong>Utilisez la connectivité depuis le TCO</strong> soit
+        coché (voir ci-dessus). L'aiguillage ne sera commuté que si la Section à affecter est
+        libre et inoccupée, sauf pour la première Section d'un Train Actif qui commence dans le
+        Transit. Si les aiguillages ne peuvent pas être commutés, le répartiteur sera averti.
+        Lors du réglage des aiguillages, Dispatcher émet seulement les commandes pour régler les
+        aiguillages; il n'attend pas que les aiguillages changent réellement. Cet élément est
+        nécessaire pour l'exploitation automatique des trains.</li>
 
         <li>Cochez <strong>Utilisez noms courts pour Train Actif</strong> pour utiliser le nom du
-        train comme Nom Train Actif dans les tables et les boÃ®tes de sÃ©lection oÃ¹ les Trains
-        Actifs sont rÃ©fÃ©rencÃ©s. DÃ©cochez utiliser le nom complet pour Train Actif dans ces
+        train comme Nom Train Actif dans les tables et les boîtes de sélection où les Trains
+        Actifs sont référencés. Décochez utiliser le nom complet pour Train Actif dans ces
         endroits.</li>
 
-        <li>Cochez <strong>Placer le nom du train dans le Canton de dÃ©part</strong> pour demander
-        que Dispatcher dÃ©finisse la Â«valeurÂ» du Canton de dÃ©part pour le nom du train lors de
-        la crÃ©ation d'un nouveau Train Actif. DÃ©cochez pour supprimer le placement du nom du
-        train dans le canton de dÃ©part. Cette fonction est conÃ§ue pour faciliter le Suivi Train
+        <li>Cochez <strong>Placer le nom du train dans le Canton de départ</strong> pour demander
+        que Dispatcher définisse <em>la valeur</em> du Canton de départ pour le nom du train lors de
+        la création d'un nouveau Train Actif. Décochez pour supprimer le placement du nom du
+        train dans le canton de départ. Cette fonction est conÃ§ue pour faciliter le Suivi Train
         sur le TCO.</li>
 
-        <li>Cochez <strong>Utiliser la couleur de rechange pour les Cantons allouÃ©s</strong> pour
-        utiliser la couleur alternative inoccupÃ©e du TCO pour les Cantons allouÃ©s dans le TCO.
-        Cette option est conÃ§ue pour rendre plus facile pour le rÃ©partiteur la vision des
+        <li>Cochez <strong>Utiliser la couleur de rechange pour les Cantons alloués</strong> pour
+        utiliser la couleur alternative inoccupée du TCO pour les Cantons alloués dans le TCO.
+        Cette option est conÃ§ue pour rendre plus facile pour le répartiteur la vision des
         attributions des Sections.</li>
 
-        <li>Cochez <strong>Placer le nom du train dans le Canton allouÃ©</strong> pour placer le
-        nom du Train Actif auquel une Section est allouÃ©e dans l'Ã©tiquette MÃ©moire des Cantons
-        de la Section allouÃ©e. Cette caractÃ©ristique, couplÃ©e avec l'option couleur alternative
-        ci-dessus, rend plus facile pour le rÃ©partiteur de voir quelle Section AllouÃ©e est
-        affectÃ©e et Ã quel Train Actif lorsque vous visualisez un TCO.</li>
+        <li>Cochez <strong>Placer le nom du train dans le Canton alloué</strong> pour placer le
+        nom du Train Actif auquel une Section est allouée dans l'étiquette Mémoire des Cantons
+        de la Section allouée. Cette caractéristique, couplée avec l'option couleur alternative
+        ci-dessus, rend plus facile pour le répartiteur de voir quelle Section Allouée est
+        affectée et à quel Train Actif lorsque vous visualisez un TCO.</li>
 
-        <li>SÃ©lectionnez l'Ã©chelle du dessin dans la boÃ®te de sÃ©lection<strong>l'Ã©chelle de
-        dessin</strong> . L'Ã©chelle sÃ©lectionnÃ©e est utilisÃ©e en conjonction avec la longueur
+        <li>Sélectionnez l'échelle du dessin dans la boîte de sélection<strong>l'échelle de
+        dessin</strong> . L'échelle sélectionnée est utilisée en conjonction avec la longueur
         de Canton dans la gestion automatique des trains.</li>
 
-        <li>SÃ©lectionnez les unitÃ©s <strong>prÃ©fÃ©rÃ©es</strong>, soit Ã©chelle en
-        <strong>Pieds</strong> ou Ã©chelle en <strong>MÃ¨tres</strong> pour le rÃ©fÃ©rencement de
+        <li>Sélectionnez les unités <strong>préférées</strong>, soit échelle en
+        <strong>Pieds</strong> ou échelle en <strong>Mètres</strong> pour le référencement de
         la longueur des trains et la longueur de canton dans Dispatcher.</li>
       </ul>
 
       <p><strong>Remarque Importante: N'oubliez pas de sauvegarder vos options</strong> (voir
-      ci-dessous). Si les nouvelles Options de Dispatcher ne sont pas enregistrÃ©es, elles
-      reviennent Ã leurs valeurs prÃ©cÃ©dentes la prochaine fois que Dispatcher est exÃ©cutÃ©.</p>
+      ci-dessous). Si les nouvelles Options de Dispatcher ne sont pas enregistrées, elles
+      reviennent à leurs valeurs précédentes la prochaine fois que Dispatcher est exécuté.</p>
 
       <h2>Utilisation du menu Options</h2>
 
-      <p>Le menu <strong>Options</strong> est utilisÃ© pour accÃ©der, Ã©diter, et sauvegarder les
-      options Dispatcher. Les Ã©lÃ©ments de ce menu et leur utilisation sont expliquÃ©s
+      <p>Le menu <strong>Options</strong> est utilisé pour accéder, éditer, et sauvegarder les
+      options Dispatcher. Les éléments de ce menu et leur utilisation sont expliqués
       ci-dessous:</p>
 
       <ul>
-        <li><strong>Allouer Auto</strong> - Cette case Ã cocher est utilisÃ©e pour activer
-        (cochÃ©e) ou dÃ©sactiver (dÃ©cochÃ©e) la fonctions automatisÃ©e d'allocation. Ce point est
-        Ã©quivalent Ã la case d'option <strong>Allouer Auto</strong> dans la fenÃªtre du Dispatcher
-        au dessus des tables <strong>Sections AllouÃ©es</strong> Il est aussi l'Ã©quivalent d'un
-        Ã©lÃ©ment dans la <strong>FenÃªtre Options</strong> . La rÃ©partition AutomatisÃ©e peut
-        Ãªtre activÃ©e ou dÃ©sactiver Ã tout moment. L'Ã©lÃ©ment est rÃ©pÃ©tÃ© ici pour la
-        commoditÃ© du rÃ©partiteur. <strong>Remarque: l'attribution automatisÃ©e des sections a une
-        assistance limitÃ©e dans la version courante de Dispatcher.</strong></li>
+        <li><strong>Allouer Auto</strong> - Cette case à cocher est utilisée pour activer
+        (cochée) ou désactiver (décochée) la fonctions automatisée d'allocation. Ce point est
+        équivalent à la case d'option <strong>Allouer Auto</strong> dans la fenêtre du Dispatcher
+        au dessus des tables <strong>Sections Allouées</strong> Il est aussi l'équivalent d'un
+        élément dans la <strong>Fenêtre Options</strong> . La répartition Automatisée peut
+        être activée ou désactiver à tout moment. L'élément est répété ici pour la
+        commodité du répartiteur. <strong>Remarque: l'attribution automatisée des sections a une
+        assistance limitée dans la version courante de Dispatcher.</strong></li>
 
-        <li><strong>Aiguillages RÃ©glage Auto</strong> - Cette case est utilisÃ©e pour activer
-        (cochÃ©e) ou dÃ©sactiver (dÃ©cochÃ©e) le rÃ©glage automatique des aiguillages quand les
-        sections sont allouÃ©es. Ce point est Ã©quivalent Ã un Ã©lÃ©ment dans la fenÃªtre Options.
-        Le rÃ©glage automatique des aiguillages peut Ãªtre activÃ© ou dÃ©sactivÃ© Ã tout moment,
-        sauf pour exÃ©cuter automatiquement un Trains Actif. L'Ã©lÃ©ment est rÃ©pÃ©tÃ© ici pour la
-        commoditÃ© du rÃ©partiteur.</li>
+        <li><strong>Aiguillages Réglage Auto</strong> - Cette case est utilisée pour activer
+        (cochée) ou désactiver (décochée) le réglage automatique des aiguillages quand les
+        sections sont allouées. Ce point est équivalent à un élément dans la fenêtre Options.
+        Le réglage automatique des aiguillages peut être activé ou désactivé à tout moment,
+        sauf pour exécuter automatiquement un Trains Actif. L'élément est répété ici pour la
+        commodité du répartiteur.</li>
 
-        <li><strong>FenÃªtre Options...</strong> -la sÃ©lection de cet Ã©lÃ©ment apporte les
-        Options FenÃªtre dÃ©crites ci-dessus.</li>
+        <li><strong>Fenêtre Options...</strong> -la sélection de cet élément apporte les
+        Options Fenêtre décrites ci-dessus.</li>
 
-        <li><strong>Options Enregistrer...</strong> - la sÃ©lection de cet Ã©lÃ©ment permet
-        d'Ã©conomiser des options Dispatcher actuellement en vigueur dans un petit fichier XML (
-        <em>dispatcheroptions.xml</em>) dans le rÃ©pertoire prÃ©fÃ©rence de l'utilisateur. C'est le
-        mÃªme endroit oÃ¹ sont enregistrÃ©s les fichiers prÃ©fÃ©rence JMRI. Lorsque Dispatcher est
-        dÃ©marrÃ©, si un fichier nommÃ© " <em>dispatcheroptions.xml</em>Â» se trouve dans le
-        rÃ©pertoire de prÃ©fÃ©rences de l'utilisateur, ce fichier est lu, et les options du
-        Dispatcher sont fixÃ©es en consÃ©quence. Si le fichier n'est pas prÃ©sent lorsque
-        Dispatcher est commencÃ©, les options par dÃ©faut sont utilisÃ©es. <strong>Remarque : Les
-        Options Dispatcher ne sont pas enregistrÃ©es automatiquement</strong> La Sauvegarde des
-        Options Dispatcher est facultative. La sÃ©lection de cette option de menu est le seul moyen
+        <li><strong>Options Enregistrer...</strong> - la sélection de cet élément permet
+        d'économiser des options Dispatcher actuellement en vigueur dans un petit fichier XML (
+        <em>dispatcheroptions.xml</em>) dans le répertoire préférence de l'utilisateur. C'est le
+        même endroit où sont enregistrés les fichiers préférence JMRI. Lorsque Dispatcher est
+        démarré, si un fichier nommé <em>dispatcheroptions.xml</em> se trouve dans le
+        répertoire de préférences de l'utilisateur, ce fichier est lu, et les options du
+        Dispatcher sont fixées en conséquence. Si le fichier n'est pas présent lorsque
+        Dispatcher est commencé, les options par défaut sont utilisées. <strong>Remarque : Les
+        Options Dispatcher ne sont pas enregistrées automatiquement</strong> La Sauvegarde des
+        Options Dispatcher est facultative. La sélection de cette option de menu est le seul moyen
         de sauver les Options de Dispatcher.</li>
       </ul>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

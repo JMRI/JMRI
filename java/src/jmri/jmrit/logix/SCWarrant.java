@@ -172,12 +172,13 @@ public class SCWarrant extends Warrant {
 
         startupWarrant();
 
-        firePropertyChange("runMode", Integer.valueOf(MODE_NONE), Integer.valueOf(_runMode));
+        firePropertyChange("WarrantStart", Integer.valueOf(MODE_NONE), Integer.valueOf(_runMode));
         runSignalControlledTrain();
     }
 
     /**
-     * Generate status message to show in warrant table
+     * Generate status message to show in warrant table.
+     * {@inheritDoc}
      **/
     @Override
     protected synchronized String getRunningMessage() {
@@ -338,7 +339,7 @@ public class SCWarrant extends Warrant {
     /**
      * Move the train if _nextSignal permits. If there is no next signal, we will move forward with half speed.
      */
-    SignalSpeedMap _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
+    SignalSpeedMap _speedMap = InstanceManager.getDefault(SignalSpeedMap.class);
     public void setSpeedFromNextSignal () {
         String speed = null;
         if (_nextSignal == null) {
@@ -350,7 +351,8 @@ public class SCWarrant extends Warrant {
                 log.debug("{} SignalHead {} shows appearance {} which maps to speed {}",_trainName,((SignalHead) _nextSignal).getDisplayName(),appearance,speed);
             } else {
                 String aspect = ((SignalMast) _nextSignal).getAspect();
-                speed = _speedMap.getAspectSpeed(aspect, ((SignalMast) _nextSignal).getSignalSystem());
+                speed = _speedMap.getAspectSpeed((aspect == null ? "" : aspect), 
+                    ((SignalMast) _nextSignal).getSignalSystem());
                 log.debug("{} SignalMast {} shows aspect {} which maps to speed {}",_trainName,((SignalMast) _nextSignal).getDisplayName(),aspect,speed);
             }
             float speed_f = (float) (_speedMap.getSpeed(speed) / 125.);
@@ -810,7 +812,7 @@ public class SCWarrant extends Warrant {
          * If we think we might have a runaway train - take the power of the entire layout.
          */
         private void emergencyStop() {
-            PowerManager manager = InstanceManager.getNullableDefault(jmri.PowerManager.class);
+            PowerManager manager = InstanceManager.getNullableDefault(PowerManager.class);
             if (manager == null) {
                 log.debug("{} EMERGENCY STOP IMPOSSIBLE: NO POWER MANAGER",_trainName);
                 return;

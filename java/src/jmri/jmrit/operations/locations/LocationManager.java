@@ -1,10 +1,7 @@
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -12,10 +9,7 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
-import jmri.Reporter;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -30,6 +24,8 @@ import jmri.jmrit.operations.trains.TrainCommon;
 public class LocationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength"; // NOI18N
+    
+    protected boolean _showId = false; // when true show location ids 
 
     public LocationManager() {
     }
@@ -104,6 +100,14 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         }
         return false;
     }
+    
+    public void setShowIdEnabled(boolean showId) {
+        _showId = showId;
+    }
+    
+    public boolean isShowIdEnabled() {
+        return _showId;
+    }
 
     /**
      * Request a location associated with a given reporter.
@@ -113,13 +117,10 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
      */
     public Location getLocationByReporter(Reporter r) {
         for (Location location : _locationHashTable.values()) {
-            try {
+            if (location.getReporter() != null) {
                 if (location.getReporter().equals(r)) {
                     return location;
                 }
-            } catch (java.lang.NullPointerException npe) {
-                // it's valid for a reporter to be null (no reporter
-                // at a given location.
             }
         }
         return null;
@@ -133,13 +134,10 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
      */
     public Track getTrackByReporter(Reporter r) {
         for (Track track : getTracks(null)) {
-            try {
+            if (track.getReporter() != null) {
                 if (track.getReporter().equals(r)) {
                     return track;
                 }
-            } catch (java.lang.NullPointerException npe) {
-                // it's valid for a reporter to be null (no reporter
-                // at a given location.
             }
         }
         return null;
@@ -221,7 +219,36 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
             }
         }
         return out;
-
+    }
+    
+    /**
+     * Get unique locations list by location name.
+     *
+     * @return list of locations ordered by name. Locations with "similar" names
+     *         to the primary location are not returned. Also checks and updates
+     *         the primary location for any changes to the other "similar"
+     *         locations.
+     */
+    public List<Location> getUniqueLocationsByNameList() {
+        List<Location> locations = getLocationsByNameList();
+        List<Location> out = new ArrayList<Location>();
+        Location mainLocation = null;
+        
+        // also update the primary location for locations with similar names
+        for (Location location : locations) {
+            String name = TrainCommon.splitString(location.getName());
+            if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
+                location.setSwitchListEnabled(mainLocation.isSwitchListEnabled());
+                if (mainLocation.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
+                    mainLocation.setStatus(Location.MODIFIED); // we need to update the primary location
+                    location.setStatus(Location.UPDATED); // and clear the secondaries
+                }
+                continue;
+            }
+            mainLocation = location;
+            out.add(location);
+        }
+        return out;
     }
 
     /**

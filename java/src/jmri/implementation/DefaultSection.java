@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil; // normally these would be rolloed
 import jmri.jmrit.display.layoutEditor.HitPointType;     // up into jmri.jmrit.display.layoutEditor.*
 import jmri.jmrit.display.layoutEditor.LayoutBlock;      // but during the LE migration it's
@@ -1059,7 +1060,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         }
         if (!containsBlock(aBlock.getBlock()) && !containsBlock(bBlock.getBlock()) && !containsBlock(cBlock.getBlock()) && containsBlock(tBlock.getBlock())) {
             //is the turnout in a section of its own?
-            int dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, aBlock);
+            int dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, aBlock);
             return dir;
         }
 
@@ -1640,19 +1641,20 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * If this method has trouble, an error message is placed in the log
      * describing the trouble.
      *
-     * @param panel the panel to place direction sensors on
-     * @return the number or errors placing sensors; 1 is returned if no
-     *         direction sensor is defined for this section
+     * @return the number or errors placing sensors; 1 is returned if no direction sensor is defined for this section
      */
-    public int placeDirectionSensors(LayoutEditor panel) {
+    public int placeDirectionSensors() {
         int missingSignalsBB = 0;
         int missingSignalsTurnouts = 0;
         int missingSignalsLevelXings = 0;
         int errorCount = 0;
-        if (panel == null) {
-            log.error("Null Layout Editor panel on call to 'placeDirectionSensors'");
+
+        var editorManager = InstanceManager.getDefault(EditorManager.class);
+        if (editorManager.getAll(LayoutEditor.class).isEmpty()) {
+            log.error("No Layout Editor panels on call to 'placeDirectionSensors'");
             return 1;
         }
+
         if (initializationNeeded) {
             initializeBlocks();
         }
@@ -1662,16 +1664,30 @@ public class DefaultSection extends AbstractNamedBean implements Section {
             return 1;
         }
         LayoutBlockManager layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
-        ConnectivityUtil cUtil = panel.getConnectivityUtil();
+        LayoutEditor panel = null;
+        ConnectivityUtil cUtil = null;
         LayoutBlock lBlock = null;
         for (Block cBlock : mBlockEntries) {
             String userName = cBlock.getUserName();
-            if (userName != null) {
-                lBlock = layoutBlockManager.getByUserName(userName);
-                if (lBlock == null) {
-                    continue;
-                }
+            if (userName == null) {
+                log.error("No user name for block '{}' in 'placeDirectionSensors'", cBlock);
+                continue;
             }
+
+            lBlock = layoutBlockManager.getByUserName(userName);
+            if (lBlock == null) {
+                log.error("No layout block for block '{}' in 'placeDirectionSensors'", cBlock.getDisplayName());
+                continue;
+            }
+
+            // get the panel and cutil for this Block
+            panel = lBlock.getMaxConnectedPanel();
+            if (panel == null) {
+                log.error("Unable to get a panel for '{}' in 'placeDirectionSensors'", cBlock.getDisplayName());
+                continue;
+            }
+            cUtil = new ConnectivityUtil(panel);
+
             List<PositionablePoint> anchorList = cUtil.getAnchorBoundariesThisBlock(cBlock);
             for (int j = 0; j < anchorList.size(); j++) {
                 PositionablePoint p = anchorList.get(j);
@@ -2376,33 +2392,31 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * appropriate error message is logged if a problem is found. This method
      * assumes that Block Paths are correctly initialized.
      *
-     * @param lePanel panel containing blocks that will be checked to be
-     *                initialized; if null no blocks are checked
      * @return an error description or empty string if there are no errors
      */
-    public String validate(LayoutEditor lePanel) {
+    public String validate() {
         if (initializationNeeded) {
             initializeBlocks();
         }
+
         // validate Paths and Bean Settings if a Layout Editor panel is available
-        if (lePanel != null) {
-            for (int i = 0; i < (mBlockEntries.size() - 1); i++) {
-                Block test = getBlockBySequenceNumber(i);
-                if (test == null){
-                    log.error("Block {} not found in Block Entries. Paths not checked.",i );
-                    break;
-                }
-                String userName = test.getUserName();
-                if (userName != null) {
-                    LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
-                    if (lBlock == null) {
-                        log.error("Layout Block {} not found. Paths not checked.", userName);
-                    } else {
-                        lBlock.updatePathsUsingPanel(lePanel);
-                    }
+        for (int i = 0; i < (mBlockEntries.size() - 1); i++) {
+            Block test = getBlockBySequenceNumber(i);
+            if (test == null){
+                log.error("Block {} not found in Block Entries. Paths not checked.",i );
+                break;
+            }
+            String userName = test.getUserName();
+            if (userName != null) {
+                LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                if (lBlock == null) {
+                    log.error("Layout Block {} not found. Paths not checked.", userName);
+                } else {
+                    lBlock.updatePaths();
                 }
             }
         }
+
         // check connectivity between internal blocks
         if (mBlockEntries.size() > 1) {
             for (int i = 0; i < (mBlockEntries.size() - 1); i++) {

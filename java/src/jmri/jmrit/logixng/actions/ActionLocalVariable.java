@@ -12,6 +12,7 @@ import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.LogixNG_SelectTable;
+import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -39,6 +40,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
     private VariableOperation _variableOperation = VariableOperation.SetToString;
     private String _constantValue = "";
     private String _otherLocalVariable = "";
+    private String _reference = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
     private boolean _listenToMemory = false;
@@ -73,6 +75,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
         _selectBlockNamedBean.copy(copy._selectBlockNamedBean);
         _selectReporterNamedBean.copy(copy._selectReporterNamedBean);
         copy.setOtherLocalVariable(_otherLocalVariable);
+        copy.setReference(_reference);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
         copy.setListenToMemory(_listenToMemory);
@@ -122,6 +125,15 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
     public String getOtherLocalVariable() {
         return _otherLocalVariable;
+    }
+
+    public void setReference(@Nonnull String reference) {
+        assertListenersAreNotRegistered(log, "setReference");
+        _reference = reference;
+    }
+
+    public String getReference() {
+        return _reference;
     }
 
     public void setConstantValue(String constantValue) {
@@ -187,11 +199,11 @@ public class ActionLocalVariable extends AbstractDigitalAction
     public void execute() throws JmriException {
         if (_localVariable == null) return;
 
-        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+        final ConditionalNG conditionalNG = getConditionalNG();
+
+        SymbolTable symbolTable = conditionalNG.getSymbolTable();
 
         AtomicReference<JmriException> ref = new AtomicReference<>();
-
-        final ConditionalNG conditionalNG = getConditionalNG();
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
 
@@ -212,12 +224,17 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     break;
 
                 case CopyMemoryToVariable:
-                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(conditionalNG);
                     if (memory != null) {
                         symbolTable.setValue(_localVariable, memory.getValue());
                     } else {
                         log.warn("ActionLocalVariable should copy memory to variable but memory is null");
                     }
+                    break;
+
+                case CopyReferenceToVariable:
+                    symbolTable.setValue(_localVariable, ReferenceUtil.getReference(
+                            conditionalNG.getSymbolTable(), _reference));
                     break;
 
                 case CopyTableCellToVariable:
@@ -226,7 +243,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     break;
 
                 case CopyBlockToVariable:
-                    Block block = _selectBlockNamedBean.evaluateNamedBean(getConditionalNG());
+                    Block block = _selectBlockNamedBean.evaluateNamedBean(conditionalNG);
                     if (block != null) {
                         symbolTable.setValue(_localVariable, block.getValue());
                     } else {
@@ -235,7 +252,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     break;
 
                 case CopyReporterToVariable:
-                    Reporter reporter = _selectReporterNamedBean.evaluateNamedBean(getConditionalNG());
+                    Reporter reporter = _selectReporterNamedBean.evaluateNamedBean(conditionalNG);
                     if (reporter != null) {
                         symbolTable.setValue(_localVariable, reporter.getCurrentReport());
                     } else {
@@ -298,11 +315,15 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
             case CopyMemoryToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyMemoryToVariable",
-                        _localVariable, copyToMemoryName);
+                        _localVariable, copyToMemoryName, Base.getListenString(_listenToMemory));
+
+            case CopyReferenceToVariable:
+                return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyReferenceToVariable",
+                        _localVariable, _reference);
 
             case CopyBlockToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyBlockToVariable",
-                        _localVariable, copyToBlockName);
+                        _localVariable, copyToBlockName, Base.getListenString(_listenToBlock));
 
             case CopyTableCellToVariable:
                 String tableName = _selectTable.getTableNameDescription(locale);
@@ -312,7 +333,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
             case CopyReporterToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyReporterToVariable",
-                        _localVariable, copyToReporterName);
+                        _localVariable, copyToReporterName, Base.getListenString(_listenToReporter));
 
             case CalculateFormula:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_Formula", _localVariable, _formula);
@@ -391,6 +412,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
         SetToString(Bundle.getMessage("ActionLocalVariable_VariableOperation_SetToString")),
         CopyVariableToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyVariableToVariable")),
         CopyMemoryToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyMemoryToVariable")),
+        CopyReferenceToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyReferenceToVariable")),
         CopyTableCellToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyTableCellToVariable")),
         CopyBlockToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyBlockToVariable")),
         CopyReporterToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyReporterToVariable")),

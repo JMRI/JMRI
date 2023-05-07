@@ -180,7 +180,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
     @Test
     public void testAddFailureCreate() {
 
-        InstanceManager.setDefault(TurnoutManager.class, new CreateNewTurnoutAlwaysException());
+        InstanceManager.setDefault(TurnoutManager.class, new AlwaysExceptionCreateNewTurnout());
         
         a = new TurnoutTableAction();
         Assert.assertTrue(a.includeAddButton());
@@ -216,9 +216,9 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
 
     }
     
-    private class CreateNewTurnoutAlwaysException extends InternalTurnoutManager {
+    private static class AlwaysExceptionCreateNewTurnout extends InternalTurnoutManager {
 
-        protected CreateNewTurnoutAlwaysException() {
+        protected AlwaysExceptionCreateNewTurnout() {
             super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 

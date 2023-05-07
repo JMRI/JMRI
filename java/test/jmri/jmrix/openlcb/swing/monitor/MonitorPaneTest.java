@@ -7,6 +7,7 @@ import jmri.util.JUnitUtil;
 
 import org.assertj.swing.edt.GuiActionRunner;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.openlcb.can.AliasMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,6 +22,7 @@ public class MonitorPaneTest extends AbstractMonPaneTestBase {
     private TrafficControllerScaffold tcs = null;
     private CanSystemConnectionMemo memo = null;
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     @Override
     public void testConcreteCtor() {
@@ -29,6 +31,7 @@ public class MonitorPaneTest extends AbstractMonPaneTestBase {
     }
 
     @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -43,6 +46,7 @@ public class MonitorPaneTest extends AbstractMonPaneTestBase {
     }
 
     @AfterEach
+    @Override
     public void tearDown() {
         pane.dispose();
         pane = null;

@@ -14,6 +14,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Ronald Kuhn, ronald@wirkuhns.de" version="1.2" lastUpdated="20200319"/>
   <!-- v1.2,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020 -->
+  <!-- v1.3,  include CV's 190-191, Ulrich Gerlach 25 March 2023        --> 
   <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.1" lastUpdated="20190429"/>
   <!-- deleted wrong Servo-options from file-version 1                                       -->
   <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1" lastUpdated="20190407"/>
@@ -22,7 +23,6 @@
   <!-- decoderID 197 (which matches manuals), on 25 April 2019 (RK)                         -->
   <!--                                                                                       -->
   <!-- Based on the "2018 12 15" German version of the ZIMO small decoder manual             -->
-  <!--                                                                                       -->
   <!--                                                                                       -->
   <!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
   <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
@@ -123,6 +123,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
       <!-- CV158 has both sound and Railcom information -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/zimo/CV190-CV191.xml"/>
      <!-- CV7 set to default 37 -->
       <variable CV="7" item="Decoder Version" readOnly="yes" default="37">
         <decVal/>
@@ -130,31 +131,31 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
-        <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="cs">Verze dekodéru </label>
       </variable> 
       <variable item="Decoder ID 1" CV="250" default="197" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>
         <label xml:lang="it">ID 2 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 2:</label>
+        <label xml:lang="cs">Dekodér ID 2</label>
       </variable>
       <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
         <label xml:lang="it">ID 3 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 3:</label>
+        <label xml:lang="cs">Dekodér ID 3</label>
       </variable>
       <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
         <label xml:lang="it">ID 4 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 4:</label>
+        <label xml:lang="cs">Dekodér ID 4</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v36.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV508-CV512.xml"/>

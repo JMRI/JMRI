@@ -20,8 +20,8 @@ import jmri.jmrix.nce.*;
 public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
     // member declarations
-    javax.swing.JLabel jLabel1 = new javax.swing.JLabel(Bundle.getMessage("Macro"));
-    javax.swing.JLabel macroText = new javax.swing.JLabel(Bundle.getMessage("Reply"));
+    javax.swing.JLabel jLabel1 = new javax.swing.JLabel(Bundle.getMessage("MacroLabel"));
+    javax.swing.JLabel macroText = new javax.swing.JLabel(Bundle.getMessage("ReplyLabel"));
     javax.swing.JLabel macroReply = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton(Bundle.getMessage("Send"));
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(4);
@@ -83,8 +83,8 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         macroReply.setText(Bundle.getMessage("unknown"));
 
         // load tool tips
-        sendButton.setToolTipText("Execute NCE macro");
-        packetTextField.setToolTipText("Enter macro 0 to 255");
+        sendButton.setToolTipText(Bundle.getMessage("toolTipExecuteMacro"));
+        packetTextField.setToolTipText(Bundle.getMessage("toolTipEnterMacroSerial"));
 
         packetTextField.setMaximumSize(new Dimension(packetTextField
                 .getMaximumSize().width, packetTextField.getPreferredSize().height));
@@ -107,7 +107,6 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
                 sendButtonActionPerformed(e);
             }
         });
-
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -116,9 +115,11 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         // Send Macro
         NceMessage m = createMacroCmd(input);
         if (m == null) {
-            macroReply.setText("error");
+            macroReply.setText(Bundle.getMessage("error"));
             JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("EnterMacroNumber"), Bundle.getMessage("NceMacro"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("EnterMacroNumber"),
+                    Bundle.getMessage("NceMacro"),
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         macroReply.setText(Bundle.getMessage("waiting"));

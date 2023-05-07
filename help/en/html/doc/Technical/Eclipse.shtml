@@ -15,7 +15,7 @@
     <div id="mainContent">
       <h1>JMRI Code: Building with Eclipse</h1>
 
-      <p>Eclipse (available at <a href="http://www.eclipse.org">www.eclipse.org</a>) can be used
+      <p>Eclipse (available at <a href="https://www.eclipse.org/">www.eclipse.org</a>) can be used
       for working with JMRI. Due to the lack of integration between Ant (the primary JMRI build
       tool) and Eclipse, <a href="NetBeans.shtml">NetBeans</a> is recommended unless you are
       already familiar with Eclipse.</p>
@@ -23,7 +23,7 @@
       <p>Eclipse is a complex environment to work with. If you're already familiar with IDEs like
       Microsoft Visual Studio it won't be too hard to get used to, but it is definitely worth
       buying a textbook (e.g. <a href=
-      "http://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635">The Java
+      "https://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635">The Java
       Developer's Guide to Eclipse</a>).</p>
 
       <p>JMRI developers use Git for source control. Source control using Git is including as part
@@ -37,7 +37,7 @@
       included with Eclipse) to build JMRI with Eclipse.</p>
 
       <p>If using versions of Eclipse older than "Mars", the <a href=
-      "http://www.eclipse.org/m2e/">M2Eclipse</a> plugin must be installed in Eclipse.</p>
+      "https://www.eclipse.org/m2e/">M2Eclipse</a> plugin must be installed in Eclipse.</p>
 
       <p>Also note that since version 4.99 JMRI requires Java version
       11. You must confirm that JRE 11 is the default Java Runtime Environment.</p>
@@ -117,15 +117,12 @@
       <p>To run an application native to Eclipse you might need the communication library. For for
       the application you want to run, select the "Arguments" tab, and under VM argments enter (You
       should probably cut and paste): If you're using a 32 bit windows system add the library
-      path:</p>
-
-      <pre>
-          -Djava.library.path=.;lib;lib/windows/x86
-          </pre>Note if you're using a 64 bit windows system change the library path to:
-
-      <pre>
-          -Djava.library.path=.;lib;lib/windows/x64
-          </pre>
+      path:<br>
+      <code>-Djava.library.path=.;lib;lib/windows/x86</code>
+      </p>
+      <p>Note if you're using a 64 bit windows system change the library path to:<br>
+      <code>-Djava.library.path=.;lib;lib/windows/x64</code>
+      </p>
       <p>If during the launch of DecoderPro or PanelPro the program hangs, or errors are reported
       to the console, there's a good chance that the META-INT files weren't created. To fix, run
       the Ant "build.xml" as described below with only two targets selected, "realclean" followed
@@ -221,7 +218,7 @@
 
         <li>Finally, submit a "Pull Request" to the main JMRI code repository on the GitHub
         website.
-          <p>To do this, start by signing on to the <a href="http://github.com">GitHub web
+          <p>To do this, start by signing on to the <a href="https://github.com">GitHub web
           site</a>, selecting your repository and clicking the <a href=
           "gitdeveloper.shtml#pull">Pull Request button</a>. For more info, see the <a href=
           "gitdeveloper.shtml#pull">developer instructions,</a></p>
@@ -229,20 +226,22 @@
       </ul>
 
       <h2 id="errors">Compiler Errors and Warnings</h2>
-      As of 5/10/2020 roughly 4600 warnings were being reported by the Eclipse. You can ignore
-      these for now.
-      <h2>JUnit Testing and Test Coverage</h2>
-      If you wish to run the test coverage tool, you need to add this VM argument to the run
-      configuration:
+      <p>As of 5/10/2020 roughly 4600 warnings were being reported by the Eclipse. You can ignore
+      these for now.</p>
 
-      <pre>
-   -Djmri.shutdownmanager=jmri.util.MockShutDownManager
-   </pre>
+      <h2>JUnit Testing and Test Coverage</h2>
+      <p>If you wish to run the test coverage tool, you need to add this VM argument to the run
+      configuration:</p>
+
+      <div class="wide">
+      <code>-Djmri.shutdownmanager=jmri.util.MockShutDownManager</code>
+      </div>
+
       <p>If you want to run a test coverage report accessing all of the tests in sub-directories,
       you'll need to create a test class that will invoke all of the tests within a directory and
       sub-directories. Below is an example that will run all of the tests in the directory
       "jmri.jmrit.operations":</p>
-
+<div class="wide">
       <pre>
 package apps.tests;
 
@@ -286,11 +285,7 @@ public class JUnitOperationsTests {
      *
      * @param testClass the class containing tests to run
      */
-    public static void run(Class<?>
-
-
-
- testClass){
+    public static void run(Class<?> testClass){
         run(new TextListener(System.out),testClass);
     }
 
@@ -300,18 +295,17 @@ public class JUnitOperationsTests {
      * @param listener the listener for the tests
      * @param testClass the class containing tests to run
      */
-    public static void run(RunListener listener, Class<?>
-
-
-
- testClass) {
+    public static void run(RunListener listener, Class<?> testClass) {
         JUnitCore runner = new JUnitCore();
         runner.addListener(listener);
         Result result = runner.run(testClass);
         System.exit(result.wasSuccessful() ? 0 : 1);
     }
 }
-</pre><!--#include virtual="/Footer.shtml" -->
+</pre>
+    </div>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

@@ -7,16 +7,11 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
+import org.netbeans.jemmy.operators.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
@@ -263,6 +258,9 @@ public class CarsTableFrameTest extends OperationsTestCase {
         
         JemmyUtil.enterClickAndLeave(ctf.sortByLast);
         //TODO add last moved date
+        
+        JemmyUtil.enterClickAndLeave(ctf.sortByComment);
+        //TODO add comment
 
         // test sort by type
         JemmyUtil.enterClickAndLeave(ctf.sortByType);
@@ -420,7 +418,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         c2.setLength("50");
         c2.setLoadName("E");
         c2.setMoves(50);
-        c2.setOwner("AT");
+        c2.setOwnerName("AT");
         // make sure the ID tags exist before we
         // try to add it to a car.
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 2");
@@ -433,7 +431,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         c3.setLength("30");
         c3.setLoadName("LA");
         c3.setMoves(40);
-        c3.setOwner("AB");
+        c3.setOwnerName("AB");
         // make sure the ID tags exist before we
         // try to add it to a car.
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 5");
@@ -446,7 +444,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         c4.setLength("45");
         c4.setLoadName("EA");
         c4.setMoves(30);
-        c4.setOwner("AAA");
+        c4.setOwnerName("AAA");
         // make sure the ID tags exist before we
         // try to add it to a car.
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 4");
@@ -459,7 +457,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         c5.setLength("25");
         c5.setLoadName("LL");
         c5.setMoves(25);
-        c5.setOwner("DAB");
+        c5.setOwnerName("DAB");
         // make sure the ID tags exist before we
         // try to add it to a car.
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 1");

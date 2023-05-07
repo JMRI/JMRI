@@ -33,7 +33,7 @@ public class CbusThrottle extends AbstractThrottle {
      * @param handle the Session ID for the Throttle
      */
     public CbusThrottle(CanSystemConnectionMemo memo, LocoAddress address, int handle) {
-        super(memo);
+        super(memo, CbusConstants.MAX_FUNCTIONS);
         log.debug("creating new CbusThrottle address {} handle {}",address,handle);
         if (!( address instanceof DccLocoAddress )  ){
             log.error("{} is not a DccLocoAddress",address);
@@ -165,9 +165,17 @@ public class CbusThrottle extends AbstractThrottle {
         sendFunctionGroup(5);
     }
     
+    /**
+     * Send the CBUS message to set the state of functions F29 - F36
+     */
+    @Override
+    protected void sendFunctionGroup6() {
+        sendFunctionGroup(6);
+    }
+    
     protected void sendFunctionGroup(int group) {
         int totVal = 0;
-        for ( int i=0; i<=28; i++ ){
+        for ( int i=0; i<CbusConstants.MAX_FUNCTIONS; i++ ){
             if (FUNCTION_GROUPS[i]==group && getFunction(i)){
                 totVal = totVal + CbusConstants.CBUS_FUNCTION_BITS[i];
             }
@@ -176,7 +184,7 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     protected void updateFunctionGroup(int group, int fns) {
-        for ( int i=0; i<=28; i++ ){
+        for ( int i=0; i<CbusConstants.MAX_FUNCTIONS; i++ ){
             if (FUNCTION_GROUPS[i]==group){
                 updateFunction( i, (fns & CbusConstants.CBUS_FUNCTION_BITS[i]) == CbusConstants.CBUS_FUNCTION_BITS[i] );
             }

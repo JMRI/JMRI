@@ -1,12 +1,7 @@
 package jmri.util;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.LoggerFactory;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test that always fails
@@ -21,7 +16,7 @@ public class FailTest {
 
     @Test
     public void testAlwaysFails() {
-        assertThat(false).isTrue().withFailMessage("This test always fails");
+        Assertions.assertFalse(true, "This test always fails");
     }
 
     @Test

@@ -1,0 +1,15 @@
+<!-- SidebarInstall.shtml -->
+<!-- French Sidebar Part to list installation and setup files -->
+
+<dt><a href="/help/fr/html/setup">Syst&#232;mes d'Exploitation Support&#233;s</a></dt>
+		<dd>
+		    <ul>
+            <li><a href="/install/WindowsNew.shtml">Windows</a>
+            <li><a href="/install/MacOSX.shtml">macOS</a>
+            <li><a href="/install/Linux.shtml">Linux (multiple vers)</a>
+            <li><a href="/install/Raspbian.shtml">Raspberry Pi OS</a>
+            <li><i><a href="/install/Debug.shtml">Débogage d'une installation</a></i>
+		    </ul>
+		</dd>
+
+<!-- /SidebarInstall.shtml -->

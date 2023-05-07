@@ -6,7 +6,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Activate residence time</label>
     <label xml:lang="de">Aktivieren der Aufenthaltszeit</label>
-    <label xml:lang="cs">Aktivovat dobu pobytu</label>
+    <label xml:lang="cs"> Aktivovat dobu pobytu</label>
     <tooltip>PROVISIONAL from SW version 38.00</tooltip>
     <tooltip xml:lang="de">PROVISORISCH ab SW-Version 38.00</tooltip>
     <tooltip xml:lang="cs">PROVIZORNÍ od SW verze 38.00</tooltip>
@@ -33,7 +33,7 @@
     <decVal/>
     <label>reduces acceleration dependency of the turboloader</label>
     <label xml:lang="de">Turbolader: Beschleunigungsabhängigkeit</label>
-    <label xml:lang="cs">snižuje závislot zrychlení na Turboladeru</label>
+    <label xml:lang="cs">Snižuje závislost zrychlení na Turboladeru</label>
   </variable>
   <variable CV="840" item="Analog Mode Function Status - F13" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

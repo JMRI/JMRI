@@ -66,7 +66,7 @@ public class JmriPreferencesProviderTest {
         // this test causes errors to be logged if the settings: portable path does not exist
         // so ensure it does
         File settings = new File(FileUtil.getPreferencesPath());
-        settings.mkdirs();
+        Assertions.assertFalse(settings.mkdirs(),"Directory should now exist");
         Assume.assumeTrue("settings dir exists", settings.exists());
         String id = Long.toString((new Date()).getTime());
         Profile project = new Profile(info.getTestMethod().get().getName(), id, new File(folder, id));
@@ -109,6 +109,7 @@ public class JmriPreferencesProviderTest {
     @SuppressWarnings("deprecated") // Package.getPackage()
     public void testFindCNBForPackage() {
         ClassLoader cl = getClass().getClassLoader();
+        Assertions.assertNotNull(cl);
         assertEquals("jmri-util", JmriPreferencesProvider.findCNBForPackage(cl.getDefinedPackage("jmri.util")));
         assertEquals("jmri-jmrit-logixng", JmriPreferencesProvider.findCNBForPackage(cl.getDefinedPackage("jmri.jmrit.logixng")));
     }

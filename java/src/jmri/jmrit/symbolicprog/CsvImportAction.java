@@ -23,8 +23,11 @@ public class CsvImportAction extends GenericImportAction {
                 // ctor launches operation
                 new CsvImporter(file, mModel);
                 return true;
-            } catch (IOException ex) {
+            } catch (IOException | NumberFormatException ex) {
+                log.error("Error reading file", ex);
                 return false;
         }
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CsvImportAction.class);
 }

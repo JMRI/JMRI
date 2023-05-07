@@ -154,7 +154,7 @@ public class NceConnectionStatus implements NceListener {
                         "JMRI could not establish communication with NCE command station. \n" +
                                 "Check the \"Serial port:\" and \"Baud rate:\" in Edit -> Preferences. \n" +
                                 "Confirm cabling and that the NCE system is powered up.",
-                        "Warning", JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             }
             epromState = WARN1_STATE;
         }
@@ -169,7 +169,7 @@ public class NceConnectionStatus implements NceListener {
                 JOptionPane.showMessageDialog(null,
                         "Wrong revision of Command Station EPROM selected in Preferences \n" +
                                 "Change the Command Station EPROM selection to \"2004 or earlier\"",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             epromState = NORMAL_STATE;
             return null;
@@ -180,7 +180,7 @@ public class NceConnectionStatus implements NceListener {
                 JOptionPane.showMessageDialog(null,
                         "Wrong revision of Command Station EPROM selected in Preferences \n" +
                                 "Change the Command Station EPROM selection to \"2006 or later\"",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             epromState = NORMAL_STATE;
             return null;
@@ -194,7 +194,7 @@ public class NceConnectionStatus implements NceListener {
                 JOptionPane.showMessageDialog(null,
                         "The 2007 March EPROM doesn't provide reliable feedback," +
                                 " contact NCE if you want to use MONITORING feedback ",
-                        "Warning", JOptionPane.INFORMATION_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.INFORMATION_MESSAGE);
             }
             ConnectionStatus.instance().setConnectionState(tc.getUserName(), tc.getPortName(),
                     ConnectionStatus.CONNECTION_UP);
@@ -211,7 +211,7 @@ public class NceConnectionStatus implements NceListener {
                                 "\" or \"" +
                                 jmri.jmrix.nce.networkdriver.ConnectionConfig.NAME +
                                 "\".",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             epromState = NORMAL_STATE;
             return null;
@@ -224,7 +224,7 @@ public class NceConnectionStatus implements NceListener {
                                 "The System Connection \"" +
                                 jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME +
                                 "\" should change the system to \"Power Cab\".",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             epromState = NORMAL_STATE;
             return null;
@@ -237,7 +237,7 @@ public class NceConnectionStatus implements NceListener {
                                 "The System Connection \"" +
                                 jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME +
                                 "\" should change the system to \"Smart Booster SB3\".",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             epromState = NORMAL_STATE;
             return null;
@@ -250,7 +250,7 @@ public class NceConnectionStatus implements NceListener {
                                 "The System Connection \"" +
                                 jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME +
                                 "\" should change the system to \"Power Pro\".",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             epromState = NORMAL_STATE;
             return null;
@@ -263,7 +263,7 @@ public class NceConnectionStatus implements NceListener {
                                 "The System Connection \"" +
                                 jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME +
                                 "\" should change the system to \"SB5\".",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             epromState = NORMAL_STATE;
             return null;

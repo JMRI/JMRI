@@ -68,7 +68,7 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
                 int index = y*4 + x + 1;            // NVs indexed from 1
                 pulse[index] = new TitledSpinner((Bundle.getMessage("OutputX", index)) + " " + Bundle.getMessage("PulseWidthUnits"), index, pulseUpdateFn);
                 pulse[index].setToolTip(Bundle.getMessage("CanSolOutputTt"));
-                pulse[index].init(getSelectValue(index)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
+                pulse[index].init(getSelectValue8(index)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
                 gridPane.add(pulse[index], c);
                 c.gridx++;
             }
@@ -77,17 +77,17 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
 
         c.gridx = 0;
         
-        rechargeSpinner.init(getSelectValue(RECHARGE_TIME)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
+        rechargeSpinner.init(getSelectValue8(RECHARGE_TIME)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
         
         gridPane.add(rechargeSpinner, c);
         c.gridx++;
 
-        fireDelaySpinner.init(getSelectValue(FIRE_DELAY)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
+        fireDelaySpinner.init(getSelectValue8(FIRE_DELAY)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
         
         gridPane.add(fireDelaySpinner, c);
         c.gridx++;
 
-        enableDelaySpinner.init(getSelectValue(ENABLE_DELAY)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
+        enableDelaySpinner.init(getSelectValue8(ENABLE_DELAY)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
         
         gridPane.add(enableDelaySpinner, c);
 
@@ -103,7 +103,7 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         if (e.getType() == TableModelEvent.UPDATE) {
             int row = e.getFirstRow();
             int nv = row + 1;
-            int value = getSelectValue(nv);
+            int value = getSelectValue8(nv);
             if ((nv > 0) && (nv <= 8)) {
                 //log.debug("Update NV {} to {}", nv, value);
                 pulse[nv].setValue(value*TIME_STEP_SIZE);

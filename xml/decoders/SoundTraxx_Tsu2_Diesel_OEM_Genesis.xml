@@ -35,6 +35,12 @@
                 <surname>Heap</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>James</firstname>
+                <surname>Exler</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -115,7 +121,7 @@
             <authorinitials>MM</authorinitials>
             <revremark>Add new models</revremark>
          </revision>
-		<revision>
+        <revision>
             <revnumber>13</revnumber>
             <date>2021-06-28</date>
             <authorinitials>DH</authorinitials>
@@ -133,6 +139,18 @@
             <authorinitials>MM</authorinitials>
             <revremark>Add new models (Dash 9 and SD70ACu from read)</revremark>
          </revision>
+        <revision>
+            <revnumber>16</revnumber>
+            <date>2022-06-30</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Add new models</revremark>
+         </revision>
+        <revision>
+            <revnumber>17</revnumber>
+            <date>2022-07-19</date>
+            <authorinitials>JE</authorinitials>
+            <revremark>Revise CV51-56 FX references, set TSU2PaneLighting.xml</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
@@ -143,13 +161,25 @@
             </model>
             <model model="TSU-GN2200 F3/7 w/DB/gyra2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="806" comment="Model T0102.015B">
             </model>
-            <model model="TSU-GN2208 F7" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="942" comment="Model 8T0102.???">
+            <model model="TSU-GN2208 F7" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="942" comment="Model 8T0102.002">
+            </model>
+            <model model="TSU-GN2208 F7 15" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="944" comment="Model 8T0102.015">
+            </model>
+            <model model="TSU-GN2208 F7 16" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="989" comment="Model 8T0102.016">
+            </model>
+            <model model="TSU-GN2208 F7 17" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="990" comment="Model 8T0102.017">
             </model>
             <model model="TSU-GN2208 FP7" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="954" comment="Model 8T0102.024">
             </model>
             <model model="TSU-GN2200 GP7" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="770" comment="Model T0102.001B">
             </model>
             <model model="TSU-GN2208 GP7" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="916" comment="Model 8T0103.008">
+            </model>
+            <model model="TSU-GN2208 GP7 13" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="957" comment="Model 8T0103.013">
+            </model>
+            <model model="TSU-GN2208 GP7 19" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="975" comment="Model 8T0103.019">
+            </model>
+            <model model="TSU-GN2208 GP7 20" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="981" comment="Model 8T0103.020">
             </model>
             <model model="TSU-GN2200 GP7 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="771" comment="Model T0102.002B">
             </model>
@@ -170,6 +200,8 @@
             <model model="TSU-GN2200 GP7/GP9 w/mars" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="788" comment="Model T0102.016B">
             </model>
             <model model="TSU-GN2208 GP9" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="858" comment="Model 8T0102.004">
+            </model>
+            <model model="TSU-GN2208 GP9/18" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="958" comment="Model 8T0102.010">
             </model>
             <model model="TSU-GN2200 GP9 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="795" comment="Model T0102.010B">
             </model>
@@ -192,6 +224,8 @@
             <model model="TSU-GN2208 GP9B" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="861" comment="Model 8T0102.021">
             </model>
             <model model="TSU-GN2208 GP18" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="978" comment="Model 8T0102.026">
+            </model>
+            <model model="TSU-GN2208 GP18 25" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="974" comment="Model 8T0102.025">
             </model>
             <model model="TSU-GN2200 GP15-1 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="798" comment="Model T0201.001B">
             </model>
@@ -231,6 +265,8 @@
             </model>
             <model model="TSU-GN2200 GP39-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="828" comment="Model T0202.001B">
             </model>
+            <model model="TSU-GN2208 GP39-2 4" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1000" comment="Model 8T0202.004">
+            </model>
             <model model="TSU-GN2200 GP39-2 w/ beacon/strobe1" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="829" comment="Model T0202.002B">
             </model>
             <model model="TSU-GN2200 GP39-2 w/ beacon/strobe2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="830" comment="Model T0205.001B">
@@ -240,6 +276,12 @@
             <model model="TSU-GN2200 GP39-2 w/ strobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="832" comment="Model T0205.003B">
             </model>
             <model model="TSU-GN2208 GP39X/GP49" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="929" comment="Model 8T0205.012">
+            </model>
+            <model model="TSU-GN2208 GP40-2 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="969" comment="Model 8T0204.002">
+            </model>
+            <model model="TSU-GN2208 GP40-2 5" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="970" comment="Model 8T0204.005">
+            </model>
+            <model model="TSU-GN2208 GP40-2 6" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="924" comment="Model 8T0204.006">
             </model>
             <model model="TSU-GN2200 GP40-2 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="849" comment="Model T0204.006B">
             </model>
@@ -279,6 +321,12 @@
             </model>
             <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="912" comment="Model 8T0206.003">
             </model>
+            <model model="TSU-GN2208 DDA40X 1" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1001" comment="Model 8T0208.001">
+            </model>
+            <model model="TSU-GN2208 DDA40X 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1002" comment="Model 8T0208.002">
+            </model>
+            <model model="TSU-GN2208 DDA40X 3" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1003" comment="Model 8T0208.003">
+            </model>
             <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="835" comment="Model 8T0302.005">
             </model>
             <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="884" comment="Model 8T0302.?">
@@ -293,6 +341,14 @@
             </model>
             <model model="TSU-GN2200 SD60M 3 win" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="972" comment="Model T0302.001">
             </model>
+            <model model="TSU-GN2200 SD60M 4" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="936" comment="Model T0302.004">
+            </model>
+            <model model="TSU-GN2200 SD60M 8" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="938" comment="Model T0302.008">
+            </model>
+            <model model="TSU-GN2200 SD60M 9" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="973" comment="Model T0302.009">
+            </model>
+            <model model="TSU-GN2200 SD60M 10" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="937" comment="Model T0302.010">
+            </model>
             <model model="TSU-GN2200 SD70ACe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="791" comment="Model T0303.001B">
             </model>
             <model model="TSU-GN2200 SD70ACe w/LED" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="836" comment="Model T0303.001">
@@ -305,7 +361,9 @@
             </model>
             <model model="TSU-GN2208 SD70ACe w/ditch" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="873" comment="Model 8T0303.002">
             </model>
-            <model model="TSU-GN2208 SD70ACU" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1014" comment="Model 8T030?.00?">
+            <model model="TSU-GN2208 SD70ACU" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1014" comment="Model 8T0301.012">
+            </model>
+            <model model="TSU-GN2208 SD70ACU 13" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1015" comment="Model 8T0301.013">
             </model>
             <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="778" comment="Model T0301.001B">
             </model>
@@ -315,9 +373,27 @@
             </model>
             <model model="TSU-GN2208 SD80MAC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="935" comment="Model 8T0304.002">
             </model>
+            <model model="TSU-GN2208 SD80MAC 1" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="934" comment="Model 8T0304.001">
+            </model>
             <model model="TSU-GN2208 SD90MAC-H" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="908" comment="Model 8T0305.001">
             </model>
-            <model model="TSU-GN2208 Dash 9-44CW" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="965" comment="Model 8T100?.00?">
+            <model model="TSU-GN2208 Dash 9-44CW 1" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1007" comment="Model 8T1002.001">
+            </model>
+            <model model="TSU-GN2208 Dash 9-44CW 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="963" comment="Model 8T1002.002">
+            </model>
+            <model model="TSU-GN2208 Dash 9-44CW 3" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="964" comment="Model 8T1002.003">
+            </model>
+            <model model="TSU-GN2208 Dash 9-44CW" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="965" comment="Model 8T1002.004">
+            </model>
+            <model model="TSU-GN2208 Dash 9-44CW 5" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="966" comment="Model 8T1002.005">
+            </model>
+            <model model="TSU-GN2208 Dash 9-44CW 6" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="967" comment="Model 8T1002.006">
+            </model>
+            <model model="TSU-GN2208 Dash 9-44CW 7" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1022" comment="Model 8T1002.007">
+            </model>
+            <model model="TSU-GN2208 Dash 9-44CW 8" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1023" comment="Model 8T1002.008">
+            </model>
+            <model model="TSU-GN2208 Dash 9-44CW 9" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="769" comment="Model 8T1002.009">
             </model>
             <model model="TSU-GN2200 ES40DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="816" comment="Model T1004.002B">
             </model>
@@ -332,6 +408,8 @@
             <model model="TSU-GN2200 ES44DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="817" comment="Model T1004.003B">
             </model>
             <model model="TSU-GN2208 ES44DC w/ditch" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="922" comment="Model 8T1004.003">
+            </model>
+            <model model="TSU-GN2208 P42" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="988" comment="Model 8T1005.001">
             </model>
             <output name="3" label="  FX3  "/>
             <output name="4" label="  FX4  "/>
@@ -398,7 +476,7 @@
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/OEMAthearnCV.xml"/>
             <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV" default="0" >
-                <defaultItem default="7" include="795,796,824,845,860,919,929,978"/>
+                <defaultItem default="7" include="795,796,824,845,860,919,929,958,978,981"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
                 <label>Locomotive Direction</label>
                 <label xml:lang="cs">Směr lokomotivy</label>
@@ -540,131 +618,133 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Brake</label>
             </variable>
-            <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="0" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="813,814,835,836,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014"/>
+            <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="1" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,815,816,817,820,824,828,829,830,831,832,837,838,840,841,842,843,844,845,847,848,849,852"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>Headlight F0(f) Light Type</label>
             </variable>
-            <variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="0" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="813,814,835,836,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014"/>
+            <variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="1" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,815,816,817,820,824,828,829,830,831,832,837,838,840,841,842,843,844,845,847,848,849,852"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>Backup Light F0(r) Light Type</label>
             </variable>
-            <variable item="FX5 Effect Selection" CV="51" mask="XXXVVVVV" default="0" minOut="3" tooltip="Determines the effect generated from the FX3 light output">
-                <defaultItem default="0" include="791,802,815,828,831,832,836,852,855,856,857,858,859,860,861,867,868,870,871,872,873,898,907,912,914,916,917,918,919,920,921,922,925,926,927,929,954,978,980"/>
+            <variable item="FX3 Effect Selection" CV="51" mask="XXXVVVVV" default="0" minOut="3" tooltip="Determines the effect generated from the FX3 light output">
+                <defaultItem default="0" include="791,802,815,828,831,832,836,852,855,856,857,858,859,860,861,867,868,870,871,872,873,898,907,912,914,916,917,918,919,920,921,922,925,926,927,929,944,954,957,958,974,975,978,980,981,988,989,990,1000"/>
                 <defaultItem default="2" include="787,788"/>
                 <defaultItem default="3" include="783,786,794,806,813"/>
                 <defaultItem default="5" include="805,830"/>
-                <defaultItem default="7" include="777,795,796,798,799,820,824,829,837,838,841,843,848,942,948"/>
+                <defaultItem default="7" include="777,795,796,798,799,820,824,829,837,838,841,843,848,942,948,970"/>
                 <defaultItem default="8" include="814,986"/>
-                <defaultItem default="9" include="779,785,792,797,800,803,804,816,817,845"/>
+                <defaultItem default="9" include="779,785,792,797,800,803,804,816,817,845,924,969"/>
                 <defaultItem default="15" include="770,771,772,776,778,782,784,793,840,842,844,847,849"/>
-                <defaultItem default="19" include="835,884,908,935,965,972,1014"/>
-                <defaultItem default="20" include="853,854,928"/>
+                <defaultItem default="19" include="769,835,884,908,934,935,936,937,938,963,964,965,966,967,972,973,1007,1014,1015,1022,1023"/>
+                <defaultItem default="20" include="853,854,928,1001,1002,1003"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
                 <label>FX3 Effect Selection</label>
             </variable>
-            <variable item="FX5 Grade Crossing Logic" CV="51" mask="XVXXXXXX" minOut="3" default="0" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="1" include="779,785,792,797,800,803,804,805,816,817,845"/>
+            <variable item="FX3 Grade Crossing Logic" CV="51" mask="XVXXXXXX" minOut="3" default="0" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+                <defaultItem default="1" include="779,785,792,797,800,803,804,805,816,817,845,924,969"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX3 Grade Crossing Logic</label>
             </variable>
-            <variable item="FX5 Light Type" CV="51" mask="VXXXXXXX" default="0" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="813,814,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014"/>
+            <variable item="FX3 Light Type" CV="51" mask="VXXXXXXX" default="1" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,815,816,817,820,824,828,829,830,831,832,836,837,838,840,841,842,843,844,845,847,848,849,852"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX3 Light Type</label>
             </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
-                <defaultItem default="0" include="791,802,815,828,831,832,836,852,855,856,857,858,859,860,861,867,868,870,871,872,873,898,907,912,914,916,917,918,919,920,921,922,925,926,927,929,954,980"/>
+            <variable item="FX4 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
+                <defaultItem default="0" include="791,802,815,828,831,832,836,852,855,856,857,858,859,860,861,867,868,870,871,872,873,898,907,912,914,916,917,918,919,920,921,922,925,926,927,929,944,954,957,958,974,975,980,981,988,989,990"/>
                 <defaultItem default="2" include="787,788"/>
                 <defaultItem default="3" include="786,794,978"/>
-                <defaultItem default="5" include="777,795,796,841"/>
+                <defaultItem default="5" include="777,795,796,841,1000"/>
                 <defaultItem default="7" include="986"/>
-                <defaultItem default="8" include="798,799,820,824,829,830,837,838,843,848,948"/>
-                <defaultItem default="9" include="779,785,792,797,800,803,804,816,817,845"/>
+                <defaultItem default="8" include="798,799,820,824,829,830,837,838,843,848,948,970"/>
+                <defaultItem default="9" include="779,785,792,797,800,803,804,816,817,845,924,969"/>
                 <defaultItem default="15" include="770,771,772,776,778,782,784,793,840,842,844,847,849"/>
-                <defaultItem default="19" include="813,814,853,854,928"/>
-                <defaultItem default="20" include="835,884,908,935,965,972,1014"/>
+                <defaultItem default="19" include="813,814,853,854,928,1001,1002,1003"/>
+                <defaultItem default="20" include="769,835,884,908,934,935,936,937,938,963,964,965,966,967,972,973,1007,1014,1015,1022,1023"/>
                 <defaultItem default="21" include="783,806,942"/>
                 <defaultItem default="25" include="805"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
                 <label>FX4 Effect Selection</label>
             </variable>
-            <variable item="FX6 Phase Selection" CV="52" mask="XXVXXXXX" minOut="4" default="0" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
-                <defaultItem default="1" include="779,785,792,797,800,803,804,816,817,845"/>
+            <variable item="FX4 Phase Selection" CV="52" mask="XXVXXXXX" minOut="4" default="0" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+                <defaultItem default="1" include="779,785,792,797,800,803,804,816,817,845,924,969"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
                 <label>FX4 Phase Selection</label>
             </variable>
-            <variable item="FX6 Grade Crossing Logic" CV="52" mask="XVXXXXXX" default="0" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="1" include="779,785,792,797,800,803,804,805,816,817,845"/>
+            <variable item="FX4 Grade Crossing Logic" CV="52" mask="XVXXXXXX" default="0" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+                <defaultItem default="1" include="779,785,792,797,800,803,804,805,816,817,845,924,969"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Grade Crossing Logic</label>
             </variable>
-            <variable item="FX6 Light Type" CV="52" mask="VXXXXXXX" default="0" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="813,814,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014"/>
+            <variable item="FX4 Light Type" CV="52" mask="VXXXXXXX" default="1" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,815,816,817,820,824,828,829,830,831,832,836,837,838,840,841,842,843,844,845,847,848,849,852"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX4 Light Type</label>
             </variable>
-            <variable item="FX5B Effect Selection" CV="53" mask="XXXVVVVV" default="0" minOut="5" tooltip="Determines the second effect associated with the FX5 light output">
-                <defaultItem default="0" include="791,795,796,802,805,806,815,824,828,830,836,837,838,855,856,857,858,860,861,868,870,872,898,907,908,914,917,935,942,954,965,972,980,986,1014"/>
-                <defaultItem default="3" include="843,848,867,916,927"/>
-                <defaultItem default="5" include="798,799,820,829,832,847,852,871,912,920,948"/>
-                <defaultItem default="7" include="787,831,978"/>
-                <defaultItem default="8" include="918,926"/>
-                <defaultItem default="9" include="785,792,797,800,803,804,816,817,835,845,873,884,919,921,922,925,929"/>
+            <variable item="FX5 Effect Selection" CV="53" mask="XXXVVVVV" default="0" minOut="5" tooltip="Determines the second effect associated with the FX5 light output">
+                <defaultItem default="0" include="769,791,795,796,802,805,806,815,824,828,830,836,837,838,855,856,857,858,860,861,868,870,872,898,907,908,914,917,924,934,935,937,942,954,958,963,965,966,967,969,972,974,980,986,988,989,990,1000,1007,1014,1022,1023"/>
+                <defaultItem default="3" include="843,848,867,916,927,944,970"/>
+                <defaultItem default="5" include="798,799,820,829,832,847,852,871,912,920,948,975,981"/>
+                <defaultItem default="7" include="787,831,957,978"/>
+                <defaultItem default="8" include="918,926,936,938,973"/>
+                <defaultItem default="9" include="785,792,797,800,803,804,816,817,835,845,873,884,919,921,922,925,929,964,1015"/>
                 <defaultItem default="15" include="770,771,772,776,777,778,779,782,783,784,793,840,841,842,844,849"/>
-                <defaultItem default="20" include="813,814,853,854,928"/>
+                <defaultItem default="20" include="813,814,853,854,928,1001,1002,1003"/>
                 <defaultItem default="21" include="786,788,794,859"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
                 <label>FX5 Effect Selection</label>
             </variable>
-            <variable item="FX5B Phase Selection" CV="53" mask="XXVXXXXX" default="0" minOut="5" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+            <variable item="FX5 Phase Selection" CV="53" mask="XXVXXXXX" default="0" minOut="5" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
                 <label>FX5 Phase Selection</label>
             </variable>
-            <variable item="FX5B Grade Crossing Logic" CV="53" mask="XVXXXXXX" default="0" minOut="5" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="1" include="785,792,797,800,803,804,816,817,835,845,873,884,919,921,922,925,929"/>
+            <variable item="FX5 Grade Crossing Logic" CV="53" mask="XVXXXXXX" default="0" minOut="5" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+                <defaultItem default="1" include="785,792,797,800,803,804,816,817,835,845,873,884,919,921,922,925,929,964,1015"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX5 Grade Crossing Logic</label>
             </variable>
-            <variable item="FX5B Light Type" CV="53" mask="VXXXXXXX" default="0" minOut="5" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="813,814,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014"/>
+            <variable item="FX5 Light Type" CV="53" mask="VXXXXXXX" default="1" minOut="5" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,815,816,817,820,824,828,829,830,831,832,836,837,838,840,841,842,843,844,845,847,848,849,852"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX5 Light Type</label>
             </variable>
-            <variable item="FX6B Effect Selection" CV="54" mask="XXXVVVVV" default="0" minOut="6" tooltip="Determines the second effect associated with the FX6 light output">
-                <defaultItem default="0" include="791,795,796,798,799,802,805,806,815,820,824,828,829,830,836,837,838,855,856,857,858,860,861,867,868,870,871,872,898,907,908,914,916,917,926,935,942,948,954,965,972,980,986,1014"/>
-                <defaultItem default="3" include="813,814,859,918"/>
+            <variable item="FX6 Effect Selection" CV="54" mask="XXXVVVVV" default="0" minOut="6" tooltip="Determines the second effect associated with the FX6 light output">
+                <defaultItem default="0" include="769,791,795,796,798,799,802,805,806,815,820,824,828,829,830,836,837,838,855,856,857,858,860,861,867,868,870,871,872,898,907,908,914,916,917,924,926,934,935,936,937,942,948,954,957,958,963,965,966,967,969,970,972,974,975,980,986,988,989,990,1000,1001,1002,1003,1007,1014,1022,1023"/>
+                <defaultItem default="3" include="813,814,859,918,981"/>
+                <defaultItem default="5" include="938,973"/>
                 <defaultItem default="8" include="831,978"/>
-                <defaultItem default="9" include="785,792,797,800,803,804,816,817,835,845,873,884,919,921,922,925,927,929"/>
+                <defaultItem default="9" include="785,792,797,800,803,804,816,817,835,845,873,884,919,921,922,925,927,929,964,1015"/>
                 <defaultItem default="15" include="770,771,772,776,777,778,779,782,783,784,786,788,793,794,840,841,842,843,844,848,849"/>
                 <defaultItem default="20" include="853,854,928"/>
-                <defaultItem default="21" include="787"/>
+                <defaultItem default="21" include="787,944"/>
                 <defaultItem default="25" include="832,847,852,912,920"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
                 <label>FX6 Effect Selection</label>
             </variable>
-            <variable item="FX6B Phase Selection" CV="54" mask="XXVXXXXX" default="0" minOut="6" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
-                <defaultItem default="1" include="785,792,797,800,803,804,816,817,835,845,873,884,919,921,922,925,927,929"/>
+            <variable item="FX6 Phase Selection" CV="54" mask="XXVXXXXX" default="0" minOut="6" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+                <defaultItem default="1" include="785,792,797,800,803,804,816,817,835,845,873,884,919,921,922,925,927,929,964,1015"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
                 <label>FX6 Phase Selection</label>
             </variable>
-            <variable item="FX6B Grade Crossing Logic" CV="54" mask="XVXXXXXX" default="0" minOut="6" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="1" include="785,792,797,800,803,804,816,817,835,845,873,884,919,921,922,925,929"/>
+            <variable item="FX6 Grade Crossing Logic" CV="54" mask="XVXXXXXX" default="0" minOut="6" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+                <defaultItem default="1" include="785,792,797,800,803,804,816,817,835,845,873,884,919,921,922,925,929,964,1015"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX6 Grade Crossing Logic</label>
             </variable>
-            <variable item="FX6B Light Type" CV="54" mask="VXXXXXXX" default="0" minOut="6" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
-                <defaultItem default="1" include="813,814,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014"/>
+            <variable item="FX6 Light Type" CV="54" mask="VXXXXXXX" default="1" minOut="6" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,815,816,817,820,824,828,829,830,831,832,836,837,838,840,841,842,843,844,845,847,848,849,852"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX6 Light Type</label>
             </variable>
             <variable item="FX7 Effect Selection" CV="55" mask="XXXVVVVV" default="0" minOut="7" tooltip="Determines the second effect associated with the FX6 light output">
-                <defaultItem default="0" include="855,856,858,861,867,872,898,907,914,917,920,926,942,948,954,965,972,980,986,1014"/>
-                <defaultItem default="3" include="853,859,916,918,927,978"/>
-                <defaultItem default="7" include="857,860,912"/>
+                <defaultItem default="0" include="855,856,858,861,867,872,898,907,914,917,920,924,926,937,938,942,944,948,954,963,965,966,967,972,980,986,1000,1003,1007,1014,1022,1023"/>
+                <defaultItem default="3" include="853,859,916,918,927,957,974,975,978,981"/>
+                <defaultItem default="5" include="936,970,1001,1002"/>
+                <defaultItem default="7" include="857,860,912,958,989,990"/>
                 <defaultItem default="8" include="854,868,870,871,928"/>
-                <defaultItem default="9" include="835,873,884,919,921,922,925,929,935"/>
+                <defaultItem default="9" include="769,835,873,884,919,921,922,925,929,934,935,964,969,973,988,1015"/>
                 <defaultItem default="15" include="908"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
             </variable>
@@ -673,28 +753,28 @@
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
             </variable>
             <variable item="FX7 Grade Crossing Logic" CV="55" mask="XVXXXXXX" default="0" minOut="7" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="1" include="835,873,884,919,921,922,925,929,935"/>
+                <defaultItem default="1" include="769,835,873,884,919,921,922,925,929,934,935,936,964,969,973,988,1015"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="FX7 Light Type" CV="55" mask="VXXXXXXX" default="1" minOut="7" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
             </variable>
             <variable item="FX8 Effect Selection" CV="56" mask="XXXVVVVV" default="0" minOut="8" tooltip="Determines the second effect associated with the FX6 light output">
-                <defaultItem default="0" include="855,856,858,859,861,867,870,872,898,907,914,917,918,920,928,942,948,954,965,972,980,986,1014"/>
-                <defaultItem default="5" include="860,868,926"/>
-                <defaultItem default="7" include="871"/>
-                <defaultItem default="8" include="857,912,916"/>
-                <defaultItem default="9" include="835,873,884,919,921,922,925,927,929,935"/>
+                <defaultItem default="0" include="855,856,858,859,861,867,870,872,898,907,914,917,918,920,924,928,937,938,942,944,948,954,963,965,966,967,972,980,981,986,1000,1007,1014,1022,1023"/>
+                <defaultItem default="5" include="860,868,926,936,958,970,1003"/>
+                <defaultItem default="7" include="871,1001,1002"/>
+                <defaultItem default="8" include="857,912,916,989"/>
+                <defaultItem default="9" include="769,835,873,884,919,921,922,925,927,929,934,935,964,969,973,988,1015"/>
                 <defaultItem default="15" include="908"/>
-                <defaultItem default="21" include="853,854,978"/>
+                <defaultItem default="21" include="853,854,957,974,975,978,990"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
             </variable>
             <variable item="FX8 Phase Selection" CV="56" mask="XXVXXXXX" default="0" minOut="8" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
-                <defaultItem default="1" include="835,873,884,919,921,922,925,927,929,935"/>
+                <defaultItem default="1" include="769,835,873,884,919,921,922,925,927,929,934,935,936,964,969,970,973,988,1015"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
             </variable>
             <variable item="FX8 Grade Crossing Logic" CV="56" mask="XVXXXXXX" default="0" minOut="8" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
-                <defaultItem default="1" include="835,873,884,919,921,922,925,929,935"/>
+                <defaultItem default="1" include="769,835,873,884,919,921,922,925,929,934,935,936,964,969,973,988,1015"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="FX8 Light Type" CV="56" mask="VXXXXXXX" default="1" minOut="8" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
@@ -708,22 +788,23 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>Backup Light F0(r) Forward Directional Control</label>
             </variable>
-            <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXVXX" default="1" minOut="3" tooltip="Check to enable FX3 function output in Forward direction">
+            <variable item="FX3 Forward Directional Control" CV="57" mask="XXXXXVXX" default="1" minOut="3" tooltip="Check to enable FX3 function output in Forward direction">
+                <defaultItem default="0" include="969,988"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX3 Forward Directional Control</label>
             </variable>
-            <variable item="FX6 Forward Directional Control" CV="57" mask="XXXXVXXX" default="1" minOut="4" tooltip="Check to enable FX4 function output in Forward direction">
-                <defaultItem default="0" include="786,787,788,794,832,852,920,927,978"/>
+            <variable item="FX4 Forward Directional Control" CV="57" mask="XXXXVXXX" default="1" minOut="4" tooltip="Check to enable FX4 function output in Forward direction">
+                <defaultItem default="0" include="786,787,788,794,832,852,920,927,969,978"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Forward Directional Control</label>
             </variable>
-            <variable item="FX5B Forward Directional Control" CV="57" mask="XXXVXXXX" default="0" minOut="5"  tooltip="Check to enable FX5 function output in Forward direction">
-                <defaultItem default="1" include="786,787,788,793,794,795,796,798,799,805,806,813,814,820,824,829,830,831,832,837,838,843,847,848,852,853,854,857,859,860,867,868,870,871,898,908,912,914,918,919,920,926,928,942,948,965,978,980"/>
+            <variable item="FX5 Forward Directional Control" CV="57" mask="XXXVXXXX" default="1" minOut="5"  tooltip="Check to enable FX5 function output in Forward direction">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,791,792,797,800,802,803,804,815,816,817,828,835,836,840,841,842,844,845,849,855,856,858,861,872,873,884,907,916,917,921,922,924,925,927,929,934,935,937,954,964,969,972,986,1000,1014,1015"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX5 Forward Directional Control</label>
             </variable>
-            <variable item="FX6B Forward Directional Control" CV="57" mask="XXVXXXXX" default="0" minOut="6"  tooltip="Check to enable FX6 function output in Forward direction">
-                <defaultItem default="1" include="786,787,788,793,794,795,796,798,799,805,806,813,814,820,824,829,830,831,832,837,838,847,848,852,853,854,857,860,871,898,908,912,914,916,919,920,928,935,942,965,978,980"/>
+            <variable item="FX6 Forward Directional Control" CV="57" mask="XXVXXXXX" default="1" minOut="6"  tooltip="Check to enable FX6 function output in Forward direction">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,791,792,797,800,802,803,804,815,816,817,828,835,836,840,841,842,843,844,845,849,855,856,858,859,861,867,868,870,872,873,884,907,917,918,921,922,924,925,926,927,929,937,948,954,964,969,972,981,986,1000,1014,1015"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX6 Forward Directional Control</label>
             </variable>
@@ -745,68 +826,68 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>Backup Light F0(r) Reverse Directional Control</label>
             </variable>
-            <variable item="FX5 Reverse Directional Control" CV="58" mask="XXXXXVXX" default="0" minOut="3" tooltip="Check to enable FX3 function output in Reverse direction">
-                <defaultItem default="1" include="777,795,796,798,799,814,820,824,829,830,835,837,838,841,843,848,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,928,929,935,942,948,954,965,972,978,980,986,1014"/>
+            <variable item="FX3 Reverse Directional Control" CV="58" mask="XXXXXVXX" default="1" minOut="3" tooltip="Check to enable FX3 function output in Reverse direction">
+                <defaultItem default="0" include="770,771,772,776,778,779,782,783,784,785,786,787,788,791,792,793,794,797,800,802,803,804,805,806,813,815,816,817,828,831,832,836,840,842,844,845,847,849,852,924,927"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX3 Reverse Directional Control</label>
             </variable>
-            <variable item="FX6 Reverse Directional Control" CV="58" mask="XXXXVXXX" default="1" minOut="4" tooltip="Check to enable FX4 function output in Reverse direction">
-                <defaultItem default="0" include="770,771,772,776,778,779,782,784,785,791,792,793,797,800,802,803,804,805,815,816,817,828,831,836,840,842,844,845,847,849"/>
+            <variable item="FX4 Reverse Directional Control" CV="58" mask="XXXXVXXX" default="1" minOut="4" tooltip="Check to enable FX4 function output in Reverse direction">
+                <defaultItem default="0" include="770,771,772,776,778,779,782,784,785,791,792,793,797,800,802,803,804,805,815,816,817,828,831,836,840,842,844,845,847,849,924,988"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Reverse Directional Control</label>
             </variable>
-            <variable item="FX5B Reverse Directional Control" CV="58" mask="XXXVXXXX" default="1" minOut="5"  tooltip="Check to enable FX5 function output in Reverse direction">
-                <defaultItem default="0" include="843,848,867,868,870,914,919,942"/>
+            <variable item="FX5 Reverse Directional Control" CV="58" mask="XXXVXXXX" default="1" minOut="5"  tooltip="Check to enable FX5 function output in Reverse direction">
+                <defaultItem default="0" include="843,848,867,868,870,914,919,942,944,970"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX5 Reverse Directional Control</label>
             </variable>
-            <variable item="FX6B Reverse Directional Control" CV="58" mask="XXVXXXXX" default="1" minOut="6"  tooltip="Check to enable FX6 function output in Reverse direction">
-                <defaultItem default="0" include="914,919,935,942"/>
+            <variable item="FX6 Reverse Directional Control" CV="58" mask="XXVXXXXX" default="1" minOut="6"  tooltip="Check to enable FX6 function output in Reverse direction">
+                <defaultItem default="0" include="914,919,934,935,936,942,988"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX6 Reverse Directional Control</label>
             </variable>
             <variable item="FX7 Reverse Directional Control" CV="58" mask="XVXXXXXX" default="0" minOut="7">
-                <defaultItem default="1" include="854,857,860,868,870,871,912,914,919,928,942,954"/>
+                <defaultItem default="1" include="854,857,860,868,870,871,912,914,919,928,942,944,954,958,970,989,990,1001,1002"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="FX8 Reverse Directional Control" CV="58" mask="VXXXXXXX" default="0" minOut="8">
-                <defaultItem default="1" include="853,854,857,859,860,868,871,912,914,916,919,920,926,928,942,954,978"/>
+                <defaultItem default="1" include="853,854,857,859,860,868,871,912,914,916,919,920,926,928,942,944,954,957,958,970,974,975,978,989,990,1001,1002,1003"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
             </variable>
             <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="7" tooltip="Sets the overall flash rate of the Hyperlight effects, 0 is fast, 15 is slow">
-                <defaultItem default="4" include="805"/>
-                <defaultItem default="5" include="795,796,798,799,824,837,838,857,858,859,860,861,870,871,914,916,942,954,978,980"/>
-                <defaultItem default="10" include="835,872,884,898,907,908,935,972,1014"/>
+                <defaultItem default="4" include="805,936"/>
+                <defaultItem default="5" include="795,796,798,799,824,837,838,857,858,859,860,861,870,871,914,916,942,944,954,957,958,974,975,978,980,981,989,990"/>
+                <defaultItem default="10" include="835,872,884,898,907,908,934,935,937,938,972,973,1014,1015"/>
                 <decVal max="15"/>
                 <label>Hyperlight Flash Rate (0-15)</label>
             </variable>
             <variable item="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV" default="4" tooltip="Sets the time (in seconds) an effect will stay on after the horn button is released">
-                <defaultItem default="6" include="835,872,884,898,907,908,935,972,1014"/>
-                <defaultItem default="10" include="805"/>
+                <defaultItem default="6" include="835,872,884,898,907,908,934,935,937,938,972,973,1014,1015"/>
+                <defaultItem default="10" include="805,936"/>
                 <decVal max="15"/>
                 <label>Grade Crossing Hold Time (0-15)</label>
             </variable>
             <variable CV="61" item="Brightness 1" default="153" tooltip="Adjust the brightness level of any output set to the on/off brightness 1 effect">
-                <defaultItem default="50" include="835,859,860,870,872,873,884,898,907,908,914,916,925,928,935,942,954,965,972,978,980,986,1014"/>
+                <defaultItem default="50" include="769,835,859,860,870,872,873,884,898,907,908,914,916,924,925,928,934,935,936,937,938,942,944,954,957,958,963,964,965,966,967,969,970,972,973,974,975,978,980,981,986,988,989,990,1001,1002,1003,1007,1014,1015,1022,1023"/>
                 <defaultItem default="70" include="813,814,853,854,855,856,857,858,861,867,868,871,917,918,919,920,921,922,926"/>
                 <decVal/>
                 <label>Brightness 1 Level (0-255)</label>
             </variable>
             <variable CV="62" item="Brightness 2" default="153" tooltip="Adjust the brightness level of any output set to the on/off brightness 2 effect">
                 <defaultItem default="50" include="813,814,853,854,855,856,857,858,861,867,868,871,917,918,919,920,921,922,926"/>
-                <defaultItem default="70" include="835,859,860,870,872,873,884,898,907,908,914,916,925,928,935,942,954,965,972,978,980,986,1014"/>
+                <defaultItem default="70" include="769,835,859,860,870,872,873,884,898,907,908,914,916,924,925,928,934,935,936,937,938,942,944,954,957,958,963,964,965,966,967,969,970,972,973,974,975,978,980,981,986,988,989,990,1001,1002,1003,1007,1014,1015,1022,1023"/>
                 <decVal/>
                 <label>Brightness 2 Level (0-255)</label>
             </variable>
-            <variable CV="63" item="Dimmer" default="153" tooltip="Adjust the brightness level of the on/off dimmable headlight effect">
-                <defaultItem default="130" include="813,814,836,853,854,855,856,857,858,861,867,868,871,917,918,919,920,921,922,925,926,928"/>
+            <variable CV="63" item="Dimmer Level" default="153" tooltip="Adjust the brightness level of the on/off dimmable headlight effect">
+                <defaultItem default="130" include="813,814,836,853,854,855,856,857,858,861,867,868,871,917,918,919,920,921,922,924,925,926,928,969,970,1001,1002,1003"/>
                 <decVal/>
                 <label>Dimmer Level (0-255)</label>
             </variable>
-            <variable CV="64" item="Master Brightness" default="255" tooltip="Adjust the brightness level of all lighting outputs">
-                <defaultItem default="192" include="813,814,835,836,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,914,916,917,918,919,920,921,922,925,926,928,935,942,954,965,972,978,980,986,1014"/>
+            <variable CV="64" item="Master Brightness" default="192" tooltip="Adjust the brightness level of all lighting outputs">
+                <defaultItem default="255" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,815,816,817,820,824,828,829,830,831,832,837,838,840,841,842,843,844,845,847,848,849,852,912,927,929,948,1000"/>
                 <decVal/>
-                <label>Master Brightness</label>
+                <label>Master Brightness Level (0-255)</label>
             </variable>
             <variable CV="112" mask="XXXXXXXV" item="Sound Option 14" default="1">
                 <enumVal>
@@ -824,8 +905,8 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>Low-pressure alarm bell</label>
             </variable>
-            <variable CV="112" mask="XXXXXVXX" item="Sound Option 17" default="0" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014">
-                <defaultItem default="1" include="835,855,856,872,873,884,898,907,908,921,922,925,927,929,935,965,972,1014"/>
+            <variable CV="112" mask="XXXXXVXX" item="Sound Option 17" default="1" include="769,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,924,925,926,927,928,929,934,935,936,937,938,942,944,948,954,957,958,963,964,965,966,967,969,970,972,973,974,975,978,980,981,986,988,989,990,1000,1001,1002,1003,1007,1014,1015,1022,1023">
+                <defaultItem default="0" include="853,854,857,858,859,860,861,867,868,870,871,912,914,916,917,918,919,920,926,928,942,944,948,954,957,958,974,975,978,980,981,986,989,990,1000"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Steam Generator</choice>
@@ -841,7 +922,7 @@
                         for passenger cars in the train.
                         &lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="112" mask="XXXXVXXX" item="Sound Option 18" default="0" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014">
+            <variable CV="112" mask="XXXXVXXX" item="Sound Option 18" default="0" include="769,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,924,925,926,927,928,929,934,935,936,937,938,942,944,948,954,957,958,963,964,965,966,967,969,970,972,973,974,975,978,980,981,986,988,989,990,1000,1001,1002,1003,1007,1014,1015,1022,1023">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>True-Idle Enable</label>
                 <tooltip>&lt;html&gt;
@@ -868,22 +949,23 @@
             </variable>
             <!-- Sound Selection follows -->
             <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="23" tooltip="Selects which airhorn to use">
-                <defaultItem default="0" include="784,785,802,805,852,870,898,908,972"/>
-                <defaultItem default="1" include="847,867,1014"/>
-                <defaultItem default="2" include="920"/>
+                <defaultItem default="0" include="784,785,802,805,852,870,898,908,936,963,969,972,973"/>
+                <defaultItem default="1" include="847,867,1000,1014"/>
+                <defaultItem default="2" include="920,967"/>
                 <defaultItem default="3" include="815,816,817,855,856,921,922"/>
-                <defaultItem default="4" include="797,935"/>
-                <defaultItem default="6" include="800,804,835,925"/>
+                <defaultItem default="4" include="797,935,964,988,1023"/>
+                <defaultItem default="6" include="800,804,835,925,1015"/>
                 <defaultItem default="8" include="791,792,836,872,873,907"/>
-                <defaultItem default="9" include="926"/>
-                <defaultItem default="10" include="806,954,965"/>
-                <defaultItem default="11" include="776,777,778,779,786,794,824,845,859,868,917,918,919,927,929"/>
-                <defaultItem default="15" include="848"/>
+                <defaultItem default="9" include="926,974"/>
+                <defaultItem default="10" include="806,944,954,965,975,990"/>
+                <defaultItem default="11" include="769,776,777,778,779,786,794,824,845,859,868,917,918,919,927,929,937,1007"/>
+                <defaultItem default="15" include="848,970"/>
+                <defaultItem default="17" include="966"/>
                 <defaultItem default="18" include="861"/>
-                <defaultItem default="21" include="770,771,782,783,787,788,942"/>
-                <defaultItem default="23" include="798,799,803,814,820,828,829,831,832,840,841,849,871,912,928,948,986"/>
-                <defaultItem default="24" include="842,884,916"/>
-                <defaultItem default="28" include="772,793,795,796,837,838,857,858,860,914"/>
+                <defaultItem default="21" include="770,771,782,783,787,788,942,981"/>
+                <defaultItem default="23" include="798,799,803,814,820,828,829,831,832,840,841,849,871,912,924,928,934,938,948,957,986,989,1003,1022"/>
+                <defaultItem default="24" include="842,884,916,1001,1002"/>
+                <defaultItem default="28" include="772,793,795,796,837,838,857,858,860,914,958"/>
                 <defaultItem default="29" include="830,843,844,978"/>
                 <defaultItem default="34" include="980"/>
                 <defaultItem default="37" include="813,853,854"/>
@@ -893,6 +975,8 @@
                 <label>Airhorn Select</label>
             </variable>
             <variable CV="121" mask="XXVVVVVV" item="Sound Option 7" default="0" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+                <defaultItem default="22" include="974"/>
+                <defaultItem default="41" include="1002"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Short Horn</choice>
@@ -902,19 +986,20 @@
                 <label>Auxiliary Airhorn Select</label>
             </variable>
             <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="12" tooltip="Bell sound effect and ring-rate">
-                <defaultItem default="12" include="770,771,772,776,777,778,779,782,783,784,785,786,798,813,814,820,828,829,830,831,832,840,841,842,843,844,845,847,848,849,853,854,858,867,868,912,917,918,919,925,927,928,929,942,948,965,986"/>
+                <defaultItem default="12" include="769,770,771,772,776,777,778,779,782,783,784,785,786,798,813,814,820,828,829,830,831,832,840,841,842,843,844,845,847,848,849,853,854,858,867,868,912,917,918,919,924,925,927,928,929,942,948,963,964,965,966,967,969,970,986,1000,1001,1002,1003,1007,1022,1023"/>
                 <defaultItem default="13" include="817,856,922"/>
-                <defaultItem default="17" include="787,788,793,794,795,796,806,859,860,861,870,871,914,916,980"/>
-                <defaultItem default="20" include="797,800,802,803,804,805,898,920,935,972"/>
+                <defaultItem default="17" include="787,788,793,794,795,796,806,859,860,861,870,871,914,916,944,957,958,974,975,980,981,989,990"/>
+                <defaultItem default="20" include="797,800,802,803,804,805,898,920,934,935,936,937,938,972,973"/>
                 <defaultItem default="21" include="907,908"/>
                 <defaultItem default="24" include="824,837,838,857,954,978"/>
-                <defaultItem default="36" include="791,792,815,816,835,836,852,855,872,873,884,921,1014"/>
+                <defaultItem default="33" include="988"/>
+                <defaultItem default="36" include="791,792,815,816,835,836,852,855,872,873,884,921,1014,1015"/>
                 <defaultItem default="37" include="799,926"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="770,771,772,782,783,788,787,793,794,795,796,806,824,837,838,858,859,860,857,861,914,942,954,978,870,871,916,980" default="2" tooltip="Select one of prime mover sound effects">
-                <defaultItem default="3" include="870,871,916,980"/>
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="770,771,772,782,783,788,787,793,794,795,796,806,824,837,838,858,859,860,857,861,914,942,944,954,958,974,978,870,871,916,957,975,980,981,989,990" default="2" tooltip="Select one of prime mover sound effects">
+                <defaultItem default="3" include="870,871,916,957,975,980,981,989,990"/>
                 <enumVal>
                     <enumChoice>
                         <choice>EMD 567 Non-Transition Switcher</choice>
@@ -944,10 +1029,10 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="5" include="8917,918,919,920,986,828,829,820,867,868,925,926,830,831,832,927,929,813,814,853,854,928" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="5" include="917,918,919,920,986,828,829,1000,820,867,868,924,925,926,969,970,830,831,832,927,929,813,814,853,854,928" tooltip="Select one of prime mover sound effects">
                 <defaultItem default="2" include="917,918,919,920,986"/>
                 <defaultItem default="3" include="828,829"/>
-                <defaultItem default="4" include="820,867,868,925,926"/>
+                <defaultItem default="4" include="820,867,868,924,925,926,969,970"/>
                 <defaultItem default="5" include="830,831,832,927,929"/>
                 <defaultItem default="6" include="813,814,853,854,928"/>
                 <enumVal>
@@ -964,6 +1049,15 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="7" include="1001,1002,1003" tooltip="Select one of prime mover sound effects">
+                <enumVal>
+                    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselEMD645_2Athearn.xml"/>
+                     <enumChoice>
+                         <choice>EMD Dual 645 Turbo</choice>
+                     </enumChoice>
+                </enumVal>
+                <label>Prime Mover Select</label>
+            </variable>
             <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="778,779,791,792,802,803,804,805,836" default="1" tooltip="Select one of prime mover sound effects">
                 <defaultItem default="0" include="778,779"/>
                 <defaultItem default="1" include="802,803,804,805"/>
@@ -973,9 +1067,9 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="898,935,884,972,872,873,907,1014" default="2" tooltip="Select one of prime mover sound effects">
-                <defaultItem default="1" include="898,935,1014"/>
-                <defaultItem default="2" include="884,972"/>
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="898,934,935,1014,1015,884,972,936,937,938,973,872,873,907" default="2" tooltip="Select one of prime mover sound effects">
+                <defaultItem default="1" include="898,934,935,1014,1015"/>
+                <defaultItem default="2" include="884,972,936,937,938,973"/>
                 <defaultItem default="3" include="872,873,907"/>
                 <enumVal>
                     <enumChoice>
@@ -1013,8 +1107,10 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="815,816,817,855,856,921,922,965" default="4" tooltip="Select one of prime mover sound effects">
-                <defaultItem default="2" include="965"/>
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="769,963,964,965,966,967,1007,1022,1023,815,816,817,855,856,921,922,988" default="2" tooltip="Select one of prime mover sound effects">
+                <defaultItem default="2" include="769,963,964,965,966,967,1007,1022,1023"/>
+                <defaultItem default="4" include="815,816,817,855,856,921,922"/>
+                <defaultItem default="5" include="988"/>
                 <enumVal>
                     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselGEAthearn.xml"/>
                 </enumVal>
@@ -1050,14 +1146,14 @@
                 <label>Prime Mover Select</label>
             </variable>
             <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" default="3" tooltip="Select one of air compressor sound effects">
-                <defaultItem default="0" include="770,771,772,782,783,787,788,791,792,793,794,795,796,806,813,814,824,836,837,838,853,854,857,858,859,860,861,870,871,914,916,928,935,942,954,978,980"/>
-                <defaultItem default="1" include="965"/>
+                <defaultItem default="0" include="770,771,772,782,783,787,788,791,792,793,794,795,796,806,813,814,824,836,837,838,853,854,857,858,859,860,861,870,871,914,916,928,934,935,942,944,954,957,958,974,975,978,980,981,989,990,1001,1002,1003"/>
+                <defaultItem default="1" include="769,963,964,965,966,967,988,1007,1022,1023"/>
                 <defaultItem default="2" include="815,816,817,855,856,921,922"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
                 <label>Air Compressor Select</label>
             </variable>
-            <variable CV="125" mask="XXXXXVVV" item="Sound Option 16" default="0" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,972,978,980,986">
-                <defaultItem default="1" include="835,855,856,872,873,884,907,921,922"/>
+            <variable CV="125" mask="XXXXXVVV" item="Sound Option 16" default="0" include="769,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,924,925,926,927,928,929,934,935,936,937,938,942,944,948,954,957,958,963,964,965,966,967,969,970,972,973,974,975,978,980,981,986,988,989,990,1000,1001,1002,1003,1007,1014,1015,1022,1023">
+                <defaultItem default="1" include="835,855,856,872,873,884,907,921,922,1014,1015"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Poppet Valve</choice>
@@ -1078,63 +1174,63 @@
             <!-- End Sound Selection -->
             <!-- Volume Controls follow -->
             <variable CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="225" tooltip="Sets the overall volume of all sound channels">
-                <defaultItem default="100" include="836,872,873,898,907,935,1014"/>
-                <defaultItem default="110" include="853,854,855,856,867,868,917,918,919,920,921,922,925,926,928,929,986"/>
-                <defaultItem default="125" include="835,884,972"/>
-                <defaultItem default="140" include="965"/>
+                <defaultItem default="100" include="836,872,873,898,907,934,935,988,1014,1015"/>
+                <defaultItem default="110" include="853,854,855,856,867,868,917,918,919,920,921,922,924,925,926,928,929,969,970,986,1001,1002,1003"/>
+                <defaultItem default="125" include="835,884,936,937,938,972,973"/>
+                <defaultItem default="140" include="769,963,964,965,966,967,1007,1022,1023"/>
                 <defaultItem default="150" include="840,841,842,843,844,845,908"/>
                 <defaultItem default="160" include="813,814"/>
                 <defaultItem default="175" include="815,816,817"/>
-                <defaultItem default="192" include="828,829,830,831,832,912,927,948"/>
-                <defaultItem default="235" include="824,837,838,857,858,859,860,861,870,871,914,916,942,954,978,980"/>
+                <defaultItem default="192" include="828,829,830,831,832,912,927,948,1000"/>
+                <defaultItem default="235" include="824,837,838,857,858,859,860,861,870,871,914,916,942,944,954,957,958,974,975,978,980,981,989,990"/>
                 <decVal/>
                 <label>Master Volume Control</label>
             </variable>
             <variable CV="129" mask="VVVVVVVV" item="Sound Setting 2" default="125" tooltip="Sets the volume of the airhorn">
                 <defaultItem default="150" include="815,816,817,828,829"/>
-                <defaultItem default="160" include="853,854,855,856,867,868,917,918,919,920,921,922,925,926,928,965,986"/>
+                <defaultItem default="160" include="769,853,854,855,856,867,868,917,918,919,920,921,922,924,925,926,928,963,964,965,966,967,969,970,986,1001,1002,1003,1007,1022,1023"/>
                 <defaultItem default="190" include="813,814"/>
-                <defaultItem default="192" include="830,831,832,912,927,929,948"/>
-                <defaultItem default="200" include="791,792,802,803,804,805,835,836,872,873,884,898,907,908,935,972,1014"/>
+                <defaultItem default="192" include="830,831,832,912,927,929,948,1000"/>
+                <defaultItem default="200" include="791,792,802,803,804,805,835,836,872,873,884,898,907,908,934,935,936,937,938,972,973,988,1014,1015"/>
                 <decVal/>
                 <label>Airhorn Volume</label>
             </variable>
             <variable CV="130" mask="VVVVVVVV" item="Sound Setting 3" default="58" tooltip="Sets the volume of the bell">
                 <defaultItem default="35" include="806"/>
-                <defaultItem default="55" include="828,829,830,831,832,912,927,929,948"/>
-                <defaultItem default="65" include="813,814,853,854,855,856,867,868,917,918,919,920,921,922,925,926,928,965,986"/>
-                <defaultItem default="100" include="824,837,838,857,858,859,860,861,870,871,914,916,942,954,978,980"/>
+                <defaultItem default="55" include="828,829,830,831,832,912,927,929,948,1000"/>
+                <defaultItem default="65" include="769,813,814,853,854,855,856,867,868,917,918,919,920,921,922,924,925,926,928,963,964,965,966,967,969,970,986,1001,1002,1003,1007,1022,1023"/>
+                <defaultItem default="100" include="824,837,838,857,858,859,860,861,870,871,914,916,942,944,954,957,958,974,975,978,980,981,989,990"/>
                 <decVal/>
                 <label>Bell Volume</label>
             </variable>
             <variable CV="131" mask="VVVVVVVV" item="Sound Setting 4" default="255" tooltip="Sets the volume of the prime mover">
                 <defaultItem default="140" include="778,779"/>
                 <defaultItem default="150" include="815,816,817"/>
-                <defaultItem default="155" include="813,814,853,854,855,856,867,868,917,918,919,920,921,922,925,926,928,986"/>
-                <defaultItem default="170" include="965"/>
-                <defaultItem default="200" include="791,792,806,830,831,832,836,872,873,898,907,908,912,927,929,935,948,1014"/>
-                <defaultItem default="225" include="824,828,829,837,838,857,858,859,860,861,870,871,914,916,942,954,978,980"/>
-                <defaultItem default="230" include="802,803,804,805,835,884,972"/>
+                <defaultItem default="155" include="813,814,853,854,855,856,867,868,917,918,919,920,921,922,924,925,926,928,969,970,986,1001,1002,1003"/>
+                <defaultItem default="170" include="769,963,964,965,966,967,1007,1022,1023"/>
+                <defaultItem default="200" include="791,792,806,830,831,832,836,872,873,898,907,908,912,927,929,934,935,948,988,1000,1014,1015"/>
+                <defaultItem default="225" include="824,828,829,837,838,857,858,859,860,861,870,871,914,916,942,944,954,957,958,974,975,978,980,981,989,990"/>
+                <defaultItem default="230" include="802,803,804,805,835,884,936,937,938,972,973"/>
                 <decVal/>
                 <label>Prime Mover Volume</label>
             </variable>
             <variable CV="132" mask="VVVVVVVV" item="Sound Setting 5" default="30" tooltip="Sets the volume of the air compressor">
-                <defaultItem default="50" include="778,779,791,792,802,803,804,805,835,836,872,873,884,898,907,908,935,972,1014"/>
-                <defaultItem default="60" include="965"/>
-                <defaultItem default="115" include="830,831,832,912,927,929,948"/>
+                <defaultItem default="50" include="778,779,791,792,802,803,804,805,835,836,872,873,884,898,907,908,934,935,936,937,938,972,973,988,1014,1015"/>
+                <defaultItem default="60" include="769,963,964,965,966,967,1007,1022,1023"/>
+                <defaultItem default="115" include="830,831,832,912,927,929,948,1000"/>
                 <defaultItem default="128" include="815,816,817,828,829"/>
                 <defaultItem default="225" include="855,856,921,922"/>
                 <decVal/>
                 <label>Air Compressor Volume</label>
             </variable>
             <variable CV="133" mask="VVVVVVVV" item="Sound Setting 6" default="150" tooltip="Sets the volume of the dynamic brakes">
-                <defaultItem default="0" include="770,776,777,784,785,787,788,793,795,797,798,799,800,824,837,844,857,870,871,914,916,917,926,954,986"/>
-                <defaultItem default="128" include="965"/>
+                <defaultItem default="0" include="770,776,777,784,785,787,788,793,795,797,798,799,800,824,837,844,857,870,871,914,916,917,926,954,957,958,969,974,981,986,990"/>
+                <defaultItem default="128" include="769,963,964,965,966,967,1007,1022,1023"/>
                 <decVal/>
                 <label>Dynamic Brake Volume</label>
             </variable>
             <variable CV="134" mask="VVVVVVVV" item="Sound Setting 7" default="75" tooltip="Sets the volume of the radiator fans">
-                <defaultItem default="40" include="791,792,802,803,804,805,806,815,816,817,835,836,872,873,884,898,907,908,935,972,1014"/>
+                <defaultItem default="40" include="791,792,802,803,804,805,806,815,816,817,835,836,872,873,884,898,907,908,934,935,936,937,938,972,973,988,1014,1015"/>
                 <decVal/>
                 <label>Radiator Fans Volume</label>
             </variable>
@@ -1147,12 +1243,12 @@
                 <label>Train Brake Apply/Release Volume</label>
             </variable>
             <variable CV="143" mask="VVVVVVVV" item="Sound Setting 16" default="16" tooltip="Sets the volume of the air reservoir poppet valve releasing">
-                <defaultItem default="40" include="828,829,830,831,832,912,925,926,927,929,948"/>
+                <defaultItem default="40" include="828,829,830,831,832,912,924,925,926,927,929,948,969,970,1000"/>
                 <decVal/>
                 <label>Poppet Valve Volume</label>
             </variable>
             <variable CV="144" mask="VVVVVVVV" item="Sound Setting 17" default="50" tooltip="Sets the volume of the Steam Generator">
-                <defaultItem default="0" include="835,854,855,856,857,859,861,867,868,870,871,872,873,884,898,907,908,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,965,972,978,980,986,1014"/>
+                <defaultItem default="0" include="769,835,854,855,856,857,859,861,867,868,870,871,872,873,884,898,907,908,914,916,917,918,919,920,921,922,924,925,926,927,928,929,934,935,936,937,938,942,944,957,958,963,964,965,966,967,969,970,972,973,975,978,980,981,986,989,1000,1001,1002,1003,1007,1014,1015,1022,1023"/>
                 <decVal/>
                 <label>Steam Generator Volume</label>
             </variable>
@@ -1165,9 +1261,9 @@
                 <label>Relay Clicks Volume</label>
             </variable>
             <variable CV="153" mask="VVVVVVVV" item="Sound Setting 26" default="150">
-                <defaultItem default="0" include="965"/>
-                <defaultItem default="100" include="948,972"/>
-                <defaultItem default="125" include="824,837,838,857,858,859,860,861,870,871,914,916,942,954,978,980"/>
+                <defaultItem default="0" include="769,963,964,965,966,967,1001,1002,1003,1007,1022,1023"/>
+                <defaultItem default="100" include="936,937,938,948,972,973"/>
+                <defaultItem default="125" include="824,837,838,857,858,859,860,861,870,871,914,916,942,944,954,957,958,974,975,978,980,981,989,990"/>
                 <decVal/>
                 <label>Clickety Clack Volume</label>
             </variable>
@@ -1340,14 +1436,18 @@
                 <decVal/>
                 <label>Constant Brake Distance (0-255)</label>
             </variable>
-            <variable CV="223" item="Sound Group 3 Option 5" default="128" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014">
-                <defaultItem default="20" include="935,1014"/>
+            <variable CV="223" item="Sound Group 3 Option 5" default="128" include="769,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,924,925,926,927,928,929,934,935,936,937,938,942,944,948,954,957,958,963,964,965,966,967,969,970,972,973,974,975,978,980,981,986,988,989,990,1000,1001,1002,1003,1007,1014,1015,1022,1023">
+                <defaultItem default="20" include="935"/>
                 <defaultItem default="24" include="986"/>
-                <defaultItem default="88" include="856,857,868,870,920,922,927"/>
-                <defaultItem default="128" include="835,853,854,855,858,859,860,867,871,872,884,898,907,908,914,917,918,921,926,928,929,942,948,972,980"/>
+                <defaultItem default="50" include="934,1001,1007,1022"/>
+                <defaultItem default="58" include="974,1014,1015"/>
+                <defaultItem default="68" include="924,1000"/>
+                <defaultItem default="75" include="769,964,1003"/>
+                <defaultItem default="88" include="856,857,868,870,920,922,927,937,938,957,975,989,990"/>
                 <defaultItem default="155" include="965"/>
-                <defaultItem default="168" include="861,873,912,916,919,954,978"/>
-                <defaultItem default="188" include="925"/>
+                <defaultItem default="168" include="861,873,912,916,919,944,954,978"/>
+                <defaultItem default="188" include="925,958"/>
+                <defaultItem default="200" include="966,967"/>
                 <decVal/>
                 <label>Prime Mover Pitch Shift</label>
                 <tooltip>&lt;html&gt;
@@ -1360,38 +1460,38 @@
             </variable>
             <variable CV="224" mask="VVVVVVVV" item="High-Pass Filter Cutoff Frequency" default="20" tooltip="adjust the cutoff frequency of the decoder’s high-pass output filter 1=20Hz, 255=1kHz, 0=disabled">
                 <defaultItem default="10" include="806"/>
-                <defaultItem default="20" include="770,771,772,776,777,782,783,784,785,786,787,788,793,794,795,796,797,798,799,800,813,814,820,824,828,829,830,831,832,837,838,840,841,842,843,844,845,847,848,849,852,853,854,855,856,857,858,859,860,861,867,868,870,871,912,914,916,917,918,919,920,921,922,925,926,927,928,929,942,948,954,978,980,986"/>
-                <defaultItem default="30" include="778,779,791,792,802,803,804,805,815,816,817,835,836,872,873,884,898,907,908,935,972,1014"/>
-                <defaultItem default="75" include="965"/>
+                <defaultItem default="30" include="778,779,791,792,802,803,804,805,815,816,817,835,836,872,873,884,898,907,908,934,935,936,937,938,972,973,988,1014,1015"/>
+                <defaultItem default="75" include="769,963,964,965,966,967,1007,1022,1023"/>
                 <decVal/>
                 <label>High-Pass Filter Cutoff Frequency</label>
             </variable>
             <variable item="Equalizer Control" CV="225" mask="XXXXXVVV" default="3" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
-                <defaultItem default="7" include="778,779,782,783,791,792,802,803,804,805,806,813,814,815,816,817,828,829,830,831,832,835,836,853,854,855,856,872,873,884,898,907,908,912,921,922,927,928,929,935,948,965,972,1014"/>
+                <defaultItem default="7" include="769,778,779,782,783,791,792,802,803,804,805,806,813,814,815,816,817,828,829,830,831,832,835,836,853,854,855,856,872,873,884,898,907,908,912,921,922,927,928,929,934,935,936,937,938,948,963,964,965,966,967,972,973,988,1000,1001,1002,1003,1007,1014,1015,1022,1023"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEQ.xml"/>
                 <label>Equalizer Control</label>
             </variable>
             <variable item="62 Hz Cut/Boost" CV="226" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="0" include="828,829,830,831,832,855,856,912,921,922,927,929,948,965"/>
+                <defaultItem default="0" include="769,828,829,830,831,832,855,856,912,921,922,927,929,948,963,964,965,966,967,988,1000,1007,1022,1023"/>
                 <defaultItem default="200" include="908"/>
                 <decVal/>
                 <label>62 Hz Cut/Boost</label>
             </variable>
             <variable item="125 Hz Cut/Boost" CV="227" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="0" include="855,856,921,922,965"/>
+                <defaultItem default="0" include="769,855,856,921,922,963,964,965,966,967,988,1007,1022,1023"/>
                 <defaultItem default="160" include="806"/>
-                <defaultItem default="200" include="828,829,830,831,832,908,912,927,929,948"/>
+                <defaultItem default="200" include="828,829,830,831,832,908,912,927,929,948,1000"/>
                 <decVal/>
                 <label>125 Hz Cut/Boost</label>
             </variable>
             <variable item="250 Hz Cut/Boost" CV="228" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="130" include="965"/>
+                <defaultItem default="130" include="769,963,964,965,966,967,1007,1022,1023"/>
                 <defaultItem default="140" include="806"/>
                 <defaultItem default="145" include="855,856,921,922"/>
-                <defaultItem default="160" include="813,814,853,854,928"/>
-                <defaultItem default="165" include="778,779,782,783,791,792,802,803,804,805,815,816,817,835,836,872,873,884,898,907,935,972,1014"/>
+                <defaultItem default="160" include="813,814,853,854,928,1001,1002,1003"/>
+                <defaultItem default="165" include="778,779,782,783,791,792,802,803,804,805,815,816,817,835,836,872,873,884,898,907,934,935,936,937,938,972,973,1014,1015"/>
                 <defaultItem default="175" include="908"/>
-                <defaultItem default="180" include="828,829,830,831,832,912,927,929,948"/>
+                <defaultItem default="180" include="828,829,830,831,832,912,927,929,948,1000"/>
+                <defaultItem default="220" include="988"/>
                 <decVal/>
                 <label>250 Hz Cut/Boost</label>
             </variable>
@@ -1399,39 +1499,41 @@
                 <defaultItem default="85" include="908"/>
                 <defaultItem default="92" include="806"/>
                 <defaultItem default="120" include="855,856,921,922"/>
-                <defaultItem default="140" include="778,779,782,783,791,792,802,803,804,805,813,814,815,816,817,835,836,853,854,872,873,884,898,907,928,935,972,1014"/>
-                <defaultItem default="160" include="830,831,832,912,927,929,948"/>
-                <defaultItem default="215" include="965"/>
+                <defaultItem default="140" include="778,779,782,783,791,792,802,803,804,805,813,814,815,816,817,835,836,853,854,872,873,884,898,907,928,934,935,936,937,938,972,973,1001,1002,1003,1014,1015"/>
+                <defaultItem default="160" include="830,831,832,912,927,929,948,1000"/>
+                <defaultItem default="200" include="988"/>
+                <defaultItem default="215" include="769,963,964,965,966,967,1007,1022,1023"/>
                 <decVal/>
                 <label>500 Hz Cut/Boost</label>
             </variable>
             <variable item="1K Hz Cut/Boost" CV="230" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="55" include="855,856,921,922,965"/>
-                <defaultItem default="100" include="813,814,828,829,830,831,832,853,854,908,912,927,928,929,948"/>
-                <defaultItem default="160" include="778,779,782,783,791,792,802,803,804,805,815,816,817,835,836,872,873,884,898,907,935,972,1014"/>
+                <defaultItem default="50" include="988"/>
+                <defaultItem default="55" include="769,855,856,921,922,963,964,965,966,967,1007,1022,1023"/>
+                <defaultItem default="100" include="813,814,828,829,830,831,832,853,854,908,912,927,928,929,948,1000,1001,1002,1003"/>
+                <defaultItem default="160" include="778,779,782,783,791,792,802,803,804,805,815,816,817,835,836,872,873,884,898,907,934,935,936,937,938,972,973,1014,1015"/>
                 <decVal/>
                 <label>1K Hz Cut/Boost</label>
             </variable>
             <variable item="2K Hz Cut/Boost" CV="231" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="50" include="965"/>
+                <defaultItem default="50" include="769,963,964,965,966,967,1007,1022,1023"/>
                 <defaultItem default="80" include="855,856,921,922"/>
                 <defaultItem default="96" include="806"/>
                 <defaultItem default="100" include="908"/>
-                <defaultItem default="140" include="791,792,802,803,804,805,815,816,817,828,829,835,836,872,873,884,898,907,935,972,1014"/>
+                <defaultItem default="140" include="791,792,802,803,804,805,815,816,817,828,829,835,836,872,873,884,898,907,934,935,936,937,938,972,973,1014,1015"/>
                 <defaultItem default="145" include="778,779,782,783"/>
-                <defaultItem default="160" include="830,831,832,912,927,929,948"/>
+                <defaultItem default="160" include="830,831,832,912,927,929,948,1000"/>
                 <decVal/>
                 <label>2K Hz Cut/Boost</label>
             </variable>
             <variable item="4K Hz Cut/Boost" CV="232" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-                <defaultItem default="45" include="965"/>
-                <defaultItem default="50" include="802,803,804,805,835,884,972"/>
+                <defaultItem default="45" include="769,963,964,965,966,967,1007,1022,1023"/>
+                <defaultItem default="50" include="802,803,804,805,835,884,936,937,938,972,973"/>
                 <defaultItem default="85" include="855,856,921,922"/>
                 <defaultItem default="96" include="806"/>
-                <defaultItem default="100" include="813,814,853,854,928"/>
+                <defaultItem default="100" include="813,814,853,854,928,988,1001,1002,1003"/>
                 <defaultItem default="110" include="908"/>
-                <defaultItem default="160" include="791,792,815,816,817,828,829,836,872,873,898,907,935,1014"/>
-                <defaultItem default="170" include="830,831,832,912,927,929,948"/>
+                <defaultItem default="160" include="791,792,815,816,817,828,829,836,872,873,898,907,934,935,1014,1015"/>
+                <defaultItem default="170" include="830,831,832,912,927,929,948,1000"/>
                 <defaultItem default="200" include="778,779,782,783"/>
                 <decVal/>
                 <label>4K Hz Cut/Boost</label>
@@ -1476,8 +1578,8 @@
                 <label>Analog Mode Function Status - F23</label>
                 <tooltip>Check to enable function F23 when the unit is operating in analog power mode</tooltip>
             </variable>
-            <variable item="Analog Mode Function Status - F24" CV="242" mask="XXXXVXXX" default="0" minFn="24">
-                <defaultItem default="1" include="853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,978,980,986,1014"/>
+            <variable item="Analog Mode Function Status - F24" CV="242" mask="XXXXVXXX" default="1" minFn="24">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,813,814,815,816,817,820,824,828,829,830,831,832,835,836,837,838,840,841,842,843,844,845,847,848,849,852,884,937,972"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label xml:lang="it">Stato Funzioni in analogico - F24</label>
                 <label xml:lang="fr">État de la fonction en analogique - F24</label>
@@ -1485,8 +1587,8 @@
                 <label>Analog Mode Function Status - F24</label>
                 <tooltip>Check to enable function F24 when the unit is operating in analog power mode</tooltip>
             </variable>
-            <variable item="Analog Mode Function Status - F25" CV="242" mask="XXXVXXXX" default="0" minFn="25">
-                <defaultItem default="1" include="853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,978,980,986,1014"/>
+            <variable item="Analog Mode Function Status - F25" CV="242" mask="XXXVXXXX" default="1" minFn="25">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,813,814,815,816,817,820,824,828,829,830,831,832,835,836,837,838,840,841,842,843,844,845,847,848,849,852,884,937,938,972,973"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label xml:lang="it">Stato Funzioni in analogico - F25</label>
                 <label xml:lang="fr">État de la fonction en analogique - F25</label>
@@ -1518,23 +1620,23 @@
                 <label>Analog Mode Function Status - F28</label>
                 <tooltip>Check to enable function F28 when the unit is operating in analog power mode</tooltip>
             </variable>
-            <variable item="Analog Mode Automatic Effects - FWDD" CV="243" mask="XXXXXXXV" default="0">
-                <defaultItem default="1" include="813,814,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,954,965,972,978,980,986,1014"/>
+            <variable item="Analog Mode Automatic Effects - FWDD" CV="243" mask="XXXXXXXV" default="1">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,815,816,817,820,824,828,829,830,831,832,836,837,838,840,841,842,843,844,845,847,848,849,852,912,948,1000"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction in analog power mode</tooltip>
             </variable>
-            <variable item="Analog Mode Automatic Effects - REVD" CV="243" mask="XXXXXXVX" default="0">
-                <defaultItem default="1" include="813,814,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,954,965,972,978,980,986,1014"/>
+            <variable item="Analog Mode Automatic Effects - REVD" CV="243" mask="XXXXXXVX" default="1">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,815,816,817,820,824,828,829,830,831,832,836,837,838,840,841,842,843,844,845,847,848,849,852,912,948,1000"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction in analog power mode</tooltip>
             </variable>
-            <variable item="Analog Mode Automatic Effects - FWDS" CV="243" mask="XXXXXVXX" default="0">
-                <defaultItem default="1" include="813,814,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,954,965,972,978,980,986,1014"/>
+            <variable item="Analog Mode Automatic Effects - FWDS" CV="243" mask="XXXXXVXX" default="1">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,815,816,817,820,824,828,829,830,831,832,836,837,838,840,841,842,843,844,845,847,848,849,852,912,948,1000"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction in analog power mode</tooltip>
             </variable>
-            <variable item="Analog Mode Automatic Effects - REVS" CV="243" mask="XXXXVXXX" default="0">
-                <defaultItem default="1" include="813,814,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,954,965,972,978,980,986,1014"/>
+            <variable item="Analog Mode Automatic Effects - REVS" CV="243" mask="XXXXVXXX" default="1">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,815,816,817,820,824,828,829,830,831,832,836,837,838,840,841,842,843,844,845,847,848,849,852,912,948,1000"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction in analog power mode</tooltip>
             </variable>
@@ -1559,16 +1661,16 @@
                 <label xml:lang="de">Verbundadresse aktiv für F23</label>
                 <label>Consist Address Active For F23</label>
             </variable>
-            <variable CV="246" mask="XXXXVXXX" item="Consist Address Active For F24" default="0" minFn="24">
-                <defaultItem default="1" include="853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,898,907,908,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,954,965,978,980,986,1014"/>
+            <variable CV="246" mask="XXXXVXXX" item="Consist Address Active For F24" default="1" minFn="24">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,813,814,815,816,817,820,824,828,829,830,831,832,835,836,837,838,840,841,842,843,844,845,847,848,849,852,884,912,937,948,972"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
                 <label xml:lang="it">Indirizzo Consist Attivo per F24</label>
                 <label xml:lang="fr">Adresse d'Unité Multiple active pour F24</label>
                 <label xml:lang="de">Verbundadresse aktiv für F24</label>
                 <label>Consist Address Active For F24</label>
             </variable>
-            <variable CV="246" mask="XXXVXXXX" item="Consist Address Active For F25" default="0" minFn="25">
-                <defaultItem default="1" include="853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,898,907,908,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,954,965,978,980,986,1014"/>
+            <variable CV="246" mask="XXXVXXXX" item="Consist Address Active For F25" default="1" minFn="25">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,813,814,815,816,817,820,824,828,829,830,831,832,835,836,837,838,840,841,842,843,844,845,847,848,849,852,884,912,937,938,948,972,973"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
                 <label xml:lang="it">Indirizzo Consist Attivo per F25</label>
                 <label xml:lang="fr">Adresse d'Unité Multiple active pour F25</label>
@@ -1596,8 +1698,8 @@
                 <label xml:lang="de">Verbundadresse aktiv für F28</label>
                 <label>Consist Address Active For F28</label>
             </variable>
-            <variable CV="247" mask="XXXXXXXV" item="Consist Automatic Effects - FWDD" default="0">
-                <defaultItem default="1" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,954,965,972,978,980,986,1014"/>
+            <variable CV="247" mask="XXXXXXXV" item="Consist Automatic Effects - FWDD" default="1">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,813,814,815,816,817,820,824,828,829,830,831,832,835,836,837,838,840,841,842,843,844,845,847,848,849,852,884,912,937,938,948,972,973"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Effect Function Controlled</choice>
@@ -1608,8 +1710,8 @@
                 </enumVal>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="247" mask="XXXXXXVX" item="Consist Automatic Effects - REVD" default="0">
-                <defaultItem default="1" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,954,965,972,978,980,986,1014"/>
+            <variable CV="247" mask="XXXXXXVX" item="Consist Automatic Effects - REVD" default="1">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,813,814,815,816,817,820,824,828,829,830,831,832,836,837,838,840,841,842,843,844,845,847,848,849,852,912,948"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Effect Function Controlled</choice>
@@ -1620,8 +1722,8 @@
                 </enumVal>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="247" mask="XXXXXVXX" item="Consist Automatic Effects - FWDS" default="0">
-                <defaultItem default="1" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,954,965,972,978,980,986,1014"/>
+            <variable CV="247" mask="XXXXXVXX" item="Consist Automatic Effects - FWDS" default="1">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,813,814,815,816,817,820,824,828,829,830,831,832,836,837,838,840,841,842,843,844,845,847,848,849,852,912,948"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Effect Function Controlled</choice>
@@ -1632,8 +1734,8 @@
                 </enumVal>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="247" mask="XXXXVXXX" item="Consist Automatic Effects - REVS" default="0">
-                <defaultItem default="1" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,954,965,972,978,980,986,1014"/>
+            <variable CV="247" mask="XXXXVXXX" item="Consist Automatic Effects - REVS" default="1">
+                <defaultItem default="0" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,813,814,815,816,817,820,824,828,829,830,831,832,836,837,838,840,841,842,843,844,845,847,848,849,852,912,948"/>
                 <enumVal>
                     <enumChoice>
                         <choice>Effect Function Controlled</choice>
@@ -1657,48 +1759,50 @@
             </variable>
             <!-- Extended Function Map -->
             <variable CV="16.1.259" item="Extended Function Map FX3 Effect" default="5" minOut="3">
-                <defaultItem default="6" include="853,854,855,856,921,922,928,986"/>
-                <defaultItem default="24" include="857,858,859,860,861,867,868,870,871,872,873,898,907,912,914,916,917,918,919,920,925,926,929,978,980"/>
-                <defaultItem default="255" include="805,835,884,908,935,965,972,1014"/>
+                <defaultItem default="6" include="853,854,855,856,921,922,928,986,988"/>
+                <defaultItem default="24" include="857,858,859,860,861,867,868,870,871,872,873,898,907,912,914,916,917,918,919,920,925,926,929,944,957,958,974,975,978,980,981,989,990,1000"/>
+                <defaultItem default="255" include="769,805,835,884,908,934,935,936,937,938,963,964,965,966,967,972,973,1001,1002,1003,1007,1014,1015,1022,1023"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX3 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="16.1.260" item="Extended Function Map FX4 Effect" default="5" minOut="4">
-                <defaultItem default="6" include="813,814,835,852,855,856,884,908,921,922,935,965,972,986,1014"/>
-                <defaultItem default="25" include="857,858,859,860,861,867,868,870,871,872,873,898,907,912,914,916,917,918,919,925,926,927,929,980"/>
-                <defaultItem default="255" include="783,805,806,853,854,928,942"/>
+                <defaultItem default="6" include="769,813,814,835,852,855,856,884,908,921,922,934,935,936,937,938,963,964,965,966,967,972,973,986,1007,1014,1015,1022,1023"/>
+                <defaultItem default="24" include="988"/>
+                <defaultItem default="25" include="857,858,859,860,861,867,868,870,871,872,873,898,907,912,914,916,917,918,919,925,926,927,929,944,957,958,974,975,980,981,989,990"/>
+                <defaultItem default="255" include="783,805,806,853,854,928,942,1001,1002,1003"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX4 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="16.1.261" item="Extended Function Map FX5 Effect" default="6" minOut="5">
-                <defaultItem default="5" include="797,798,799,800,802,803,804,815,816,817,820,829,835,836,845,855,856,872,873,884,907,912,914,916,919,921,922,925,926,927,929,942,948,972,978,980,986,1014"/>
-                <defaultItem default="24" include="853,854,908,928,935,965"/>
+                <defaultItem default="5" include="797,798,799,800,802,803,804,815,816,817,820,829,835,836,845,855,856,872,873,884,907,912,914,916,919,921,922,925,926,927,929,937,942,944,948,957,964,972,975,978,980,981,986,1000,1014,1015"/>
+                <defaultItem default="24" include="769,853,854,908,928,934,935,936,938,963,965,966,967,973,989,990,1001,1002,1003,1007,1022,1023"/>
+                <defaultItem default="25" include="988"/>
                 <defaultItem default="255" include="786,788,794,813,814,859"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX5 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="16.1.262" item="Extended Function Map FX6 Effect" default="6" minOut="6">
-                <defaultItem default="5" include="797,800,802,803,804,815,816,817,835,836,845,855,856,859,872,873,884,907,912,914,916,918,919,921,922,925,927,929,942,972,978,980,986,1014"/>
-                <defaultItem default="24" include="935"/>
-                <defaultItem default="25" include="853,854,908,928,965"/>
-                <defaultItem default="255" include="787,813,814"/>
+                <defaultItem default="5" include="797,800,802,803,804,815,816,817,835,836,845,855,856,859,872,873,884,907,912,914,916,918,919,921,922,925,927,929,937,942,964,972,978,980,981,986,1000,1014,1015"/>
+                <defaultItem default="24" include="934,935,938,973"/>
+                <defaultItem default="25" include="769,853,854,908,928,936,963,965,966,967,989,990,1001,1002,1003,1007,1022,1023"/>
+                <defaultItem default="255" include="787,813,814,944"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX6 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="16.1.263" item="Extended Function Map FX7 Effect" default="5" minOut="7">
-                <defaultItem default="6" include="914,926,942,980"/>
+                <defaultItem default="6" include="914,926,942,944,975,980"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX7 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
             <variable CV="16.1.264" item="Extended Function Map FX8 Effect" default="5" minOut="8">
-                <defaultItem default="6" include="859,870,914,916,928,942,980"/>
+                <defaultItem default="6" include="859,870,914,916,928,942,944,980,981,989,1003"/>
                 <defaultItem default="25" include="920"/>
-                <defaultItem default="255" include="853,854,978"/>
+                <defaultItem default="255" include="853,854,957,974,975,978,990"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>FX8 Effect</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
@@ -1766,22 +1870,22 @@
             </variable>
             <!-- Effect Auxiliary Map Registers -->
             <variable CV="16.1.387" mask="XXXXXXXV" item="FX3 Effect Automatic Effects - FWDD" default="0" minOut="3">
-                <defaultItem default="1" include="805,835,884,908,935,965,972,1014"/>
+                <defaultItem default="1" include="769,805,835,884,908,934,935,936,937,938,963,964,965,966,967,972,973,1001,1002,1003,1007,1014,1015,1022,1023"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
             <variable CV="16.1.387" mask="XXXXXXVX" item="FX3 Effect Automatic Effects - REVD" default="0" minOut="3">
-                <defaultItem default="1" include="835,884,908,935,965,972,1014"/>
+                <defaultItem default="1" include="769,835,884,908,934,935,936,937,938,963,964,965,966,967,972,973,1001,1002,1003,1007,1014,1015,1022,1023"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
             <variable CV="16.1.387" mask="XXXXXVXX" item="FX3 Effect Automatic Effects - FWDS" default="0" minOut="3">
-                <defaultItem default="1" include="805,835,884,908,935,965,972,1014"/>
+                <defaultItem default="1" include="769,805,835,884,908,934,935,936,937,938,963,964,965,966,967,972,973,1001,1002,1003,1007,1014,1015,1022,1023"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
             <variable CV="16.1.387" mask="XXXXVXXX" item="FX3 Effect Automatic Effects - REVS" default="0" minOut="3">
-                <defaultItem default="1" include="835,884,908,935,965,972,1014"/>
+                <defaultItem default="1" include="769,835,884,908,934,935,936,937,938,963,964,965,966,967,972,973,1001,1002,1003,1007,1014,1015,1022,1023"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
@@ -1790,22 +1894,22 @@
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
             <variable CV="16.1.388" mask="XXXXXXXV" item="FX4 Effect Automatic Effects - FWDD" default="0" minOut="4">
-                <defaultItem default="1" include="805,853,854,928"/>
+                <defaultItem default="1" include="805,853,854,928,1001,1002,1003"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
             <variable CV="16.1.388" mask="XXXXXXVX" item="FX4 Effect Automatic Effects - REVD" default="0" minOut="4">
-                <defaultItem default="1" include="853,854,928"/>
+                <defaultItem default="1" include="853,854,928,1001,1002,1003"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
             <variable CV="16.1.388" mask="XXXXXVXX" item="FX4 Effect Automatic Effects - FWDS" default="0" minOut="4">
-                <defaultItem default="1" include="805,853,854,928"/>
+                <defaultItem default="1" include="805,853,854,928,1001,1002,1003"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
             <variable CV="16.1.388" mask="XXXXVXXX" item="FX4 Effect Automatic Effects - REVS" default="0" minOut="4">
-                <defaultItem default="1" include="853,854,928"/>
+                <defaultItem default="1" include="853,854,928,1001,1002,1003"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
@@ -1856,7 +1960,7 @@
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
             <variable CV="16.1.390" mask="XXXVXXXX" item="FX6 Effect Automatic Effects - ESTP" default="0" minOut="6">
-                <defaultItem default="1" include="787,813,814"/>
+                <defaultItem default="1" include="787,813,814,944"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
@@ -1897,7 +2001,7 @@
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
             <variable CV="16.1.392" mask="XXXVXXXX" item="FX8 Effect Automatic Effects - ESTP" default="0" minOut="8">
-                <defaultItem default="1" include="853,854,978"/>
+                <defaultItem default="1" include="853,854,957,974,975,978,990"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
@@ -1958,6 +2062,28 @@
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
             <variable CV="16.1.412" mask="XXXVXXXX" item="Alternate Mixer Automatic Effects - ESTP" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+                <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+            </variable>
+            <variable CV="16.1.428" mask="XXXXXXXV" item="Short Airhorn Automatic Effects - FWDD" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+                <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+            </variable>
+            <variable CV="16.1.428" mask="XXXXXXVX" item="Short Airhorn Automatic Effects - REVD" default="0">
+                <defaultItem default="1" include="974"/>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+                <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+            </variable>
+            <variable CV="16.1.428" mask="XXXXXVXX" item="Short Airhorn Automatic Effects - FWDS" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+                <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+            </variable>
+            <variable CV="16.1.428" mask="XXXXVXXX" item="Short Airhorn Automatic Effects - REVS" default="0">
+                <defaultItem default="1" include="974"/>
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+                <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+            </variable>
+            <variable CV="16.1.428" mask="XXXVXXXX" item="Short Airhorn Automatic Effects - ESTP" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
@@ -2121,73 +2247,73 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
-            <variable CV="16.1.442" mask="XXXXXXXV" item="Straight-to-Idle Automatic Effects - FWDD" default="0" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014">
+            <variable CV="16.1.442" mask="XXXXXXXV" item="Straight-to-Idle Automatic Effects - FWDD" default="0" include="769,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,924,925,926,927,928,929,934,935,936,937,938,942,944,948,954,957,958,963,964,965,966,967,969,970,972,973,974,975,978,980,981,986,988,989,990,1000,1001,1002,1003,1007,1014,1015,1022,1023">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
             </variable>
-            <variable CV="16.1.442" mask="XXXXXXVX" item="Straight-to-Idle Automatic Effects - REVD" default="0" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014">
+            <variable CV="16.1.442" mask="XXXXXXVX" item="Straight-to-Idle Automatic Effects - REVD" default="0" include="769,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,924,925,926,927,928,929,934,935,936,937,938,942,944,948,954,957,958,963,964,965,966,967,969,970,972,973,974,975,978,980,981,986,988,989,990,1000,1001,1002,1003,1007,1014,1015,1022,1023">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
             </variable>
-            <variable CV="16.1.442" mask="XXXXXVXX" item="Straight-to-Idle Automatic Effects - FWDS" default="0" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014">
+            <variable CV="16.1.442" mask="XXXXXVXX" item="Straight-to-Idle Automatic Effects - FWDS" default="0" include="769,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,924,925,926,927,928,929,934,935,936,937,938,942,944,948,954,957,958,963,964,965,966,967,969,970,972,973,974,975,978,980,981,986,988,989,990,1000,1001,1002,1003,1007,1014,1015,1022,1023">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
             </variable>
-            <variable CV="16.1.442" mask="XXXXVXXX" item="Straight-to-Idle Automatic Effects - REVS" default="0" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014">
+            <variable CV="16.1.442" mask="XXXXVXXX" item="Straight-to-Idle Automatic Effects - REVS" default="0" include="769,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,924,925,926,927,928,929,934,935,936,937,938,942,944,948,954,957,958,963,964,965,966,967,969,970,972,973,974,975,978,980,981,986,988,989,990,1000,1001,1002,1003,1007,1014,1015,1022,1023">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
             </variable>
-            <variable CV="16.1.442" mask="XXXVXXXX" item="Straight-to-Idle Automatic Effects - ESTP" default="0" include="835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014">
+            <variable CV="16.1.442" mask="XXXVXXXX" item="Straight-to-Idle Automatic Effects - ESTP" default="0" include="769,835,853,854,855,856,857,858,859,860,861,867,868,870,871,872,873,884,898,907,908,912,914,916,917,918,919,920,921,922,924,925,926,927,928,929,934,935,936,937,938,942,944,948,954,957,958,963,964,965,966,967,969,970,972,973,974,975,978,980,981,986,988,989,990,1000,1001,1002,1003,1007,1014,1015,1022,1023">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
             <variable CV="16.2.289" mask="VVVVVVVV" item="Alt Sound Setting 1" default="62" tooltip="Set the alternate volume levels of each sound effect">
-                <defaultItem default="60" include="853,867,868,917,918,919,920,926,965"/>
+                <defaultItem default="60" include="769,853,867,868,917,918,919,920,926,963,964,965,966,967,1001,1002,1003,1007,1022,1023"/>
                 <defaultItem default="75" include="815,816,817,828,829"/>
-                <defaultItem default="80" include="854,855,856,921,922,925,928,986"/>
+                <defaultItem default="80" include="854,855,856,921,922,924,925,928,969,970,986"/>
                 <defaultItem default="95" include="813,814"/>
-                <defaultItem default="96" include="830,831,832,912,927,929,948"/>
-                <defaultItem default="100" include="791,792,802,803,804,805,835,836,872,873,884,898,907,908,935,972,1014"/>
+                <defaultItem default="96" include="830,831,832,912,927,929,948,1000"/>
+                <defaultItem default="100" include="791,792,802,803,804,805,835,836,872,873,884,898,907,908,934,935,936,937,938,972,973,988,1014,1015"/>
                 <decVal/>
                 <label>Airhorn Alt Volume</label>
             </variable>
             <variable CV="16.2.290" mask="VVVVVVVV" item="Alt Sound Setting 2" default="29" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="18" include="806"/>
-                <defaultItem default="27" include="828,829,830,831,832,912,927,929,948"/>
-                <defaultItem default="33" include="813,814,853,854,855,856,867,868,917,918,919,920,921,922,925,926,928,965,986"/>
-                <defaultItem default="50" include="824,837,838,857,858,859,860,861,870,871,914,916,942,954,978,980"/>
+                <defaultItem default="27" include="828,829,830,831,832,912,927,929,948,1000"/>
+                <defaultItem default="33" include="769,813,814,853,854,855,856,867,868,917,918,919,920,921,922,924,925,926,928,963,964,965,966,967,969,970,986,1001,1002,1003,1007,1022,1023"/>
+                <defaultItem default="50" include="824,837,838,857,858,859,860,861,870,871,914,916,942,944,954,957,958,974,975,978,980,981,989,990"/>
                 <decVal/>
                 <label>Bell Alt Volume</label>
             </variable>
             <variable CV="16.2.291" mask="VVVVVVVV" item="Alt Sound Setting 3" default="128" tooltip="Set the alternate volume levels of each sound effect">
                 <defaultItem default="70" include="778,779"/>
                 <defaultItem default="75" include="815,816,817"/>
-                <defaultItem default="78" include="813,814,853,854,855,856,867,868,917,918,919,920,921,922,925,926,928,986"/>
-                <defaultItem default="85" include="965"/>
-                <defaultItem default="100" include="791,792,806,830,831,832,836,872,873,898,907,908,912,927,929,935,948,1014"/>
-                <defaultItem default="112" include="824,828,829,837,838,857,858,859,860,861,870,871,914,916,942,954,978,980"/>
-                <defaultItem default="115" include="802,803,804,805,835,884,972"/>
+                <defaultItem default="78" include="769,813,814,853,854,855,856,867,868,917,918,919,920,921,922,924,925,926,928,963,964,969,970,986,1001,1002,1003,1022,1023"/>
+                <defaultItem default="85" include="965,966,967,1007"/>
+                <defaultItem default="100" include="791,792,806,830,831,832,836,872,873,898,907,908,912,927,929,934,935,948,988,1000,1014,1015"/>
+                <defaultItem default="112" include="824,828,829,837,838,857,858,859,860,861,870,871,914,916,942,944,954,957,958,974,975,978,980,981,989,990"/>
+                <defaultItem default="115" include="802,803,804,805,835,884,936,937,938,972,973"/>
                 <decVal/>
                 <label>Prime Mover Alt Volume</label>
             </variable>
             <variable CV="16.2.292" mask="VVVVVVVV" item="Alt Sound Setting 4" default="15" tooltip="Set the alternate volume levels of each sound effect">
-                <defaultItem default="0" include="916,927,948,954,978"/>
+                <defaultItem default="0" include="769,916,924,927,934,936,937,938,944,948,954,957,958,964,966,967,969,970,973,974,975,978,981,988,989,990,1001,1002,1003,1007,1015,1022,1023"/>
                 <defaultItem default="25" include="778,779,791,792,802,803,804,805,835,836,872,873,884,898,907,908,935,972,1014"/>
-                <defaultItem default="30" include="965"/>
-                <defaultItem default="57" include="830,831,832,912,929"/>
+                <defaultItem default="30" include="963,965"/>
+                <defaultItem default="57" include="830,831,832,912,929,1000"/>
                 <defaultItem default="64" include="815,816,817,828,829"/>
                 <defaultItem default="113" include="855,856,921,922"/>
                 <decVal/>
                 <label>Air Compressor Alt Volume</label>
             </variable>
             <variable CV="16.2.293" mask="VVVVVVVV" item="Alt Sound Setting 5" default="75" tooltip="Set the alternate volume levels of each sound effect">
-                <defaultItem default="0" include="770,776,777,784,785,787,788,793,795,797,798,799,800,824,837,844,857,870,871,914,916,917,926,954,986"/>
-                <defaultItem default="64" include="965"/>
+                <defaultItem default="0" include="770,776,777,784,785,787,788,793,795,797,798,799,800,824,837,844,857,870,871,914,916,917,926,954,957,958,969,974,981,986,990"/>
+                <defaultItem default="64" include="769,963,964,965,966,967,1007,1022,1023"/>
                 <decVal/>
                 <label>Dynamic Brake Alt Volume</label>
             </variable>
             <variable CV="16.2.294" mask="VVVVVVVV" item="Alt Sound Setting 6" default="37" tooltip="Set the alternate volume levels of each sound effect">
-                <defaultItem default="20" include="791,792,802,803,804,805,806,815,816,817,835,836,872,873,884,898,907,908,935,972,1014"/>
+                <defaultItem default="20" include="791,792,802,803,804,805,806,815,816,817,835,836,872,873,884,898,907,908,934,935,936,937,938,972,973,988,1014,1015"/>
                 <decVal/>
                 <label>Radiator Fans Alt Volume</label>
             </variable>
@@ -2208,17 +2334,17 @@
                 <label>Independent Brake Apply Alt Volume</label>
             </variable>
             <variable CV="16.2.300" mask="VVVVVVVV" item="Alt Sound Setting 12" default="35" tooltip="Set the alternate volume levels of each sound effect">
-                <defaultItem default="0" include="916,927,948,954,978"/>
+                <defaultItem default="0" include="769,916,924,927,934,936,937,938,944,948,954,957,958,964,966,967,969,970,973,974,975,978,981,988,989,990,1001,1002,1003,1007,1014,1015,1022,1023"/>
                 <decVal/>
                 <label>Independent Brake Release Alt Volume</label>
             </variable>
             <variable CV="16.2.303" mask="VVVVVVVV" item="Alt Sound Setting 15" default="11" tooltip="Set the alternate volume levels of each sound effect">
-                <defaultItem default="20" include="828,829,830,831,832,912,927,929,948"/>
+                <defaultItem default="20" include="828,829,830,831,832,912,927,929,948,1000"/>
                 <decVal/>
                 <label>Poppet Valve Alt Volume</label>
             </variable>
-            <variable CV="16.2.304" mask="VVVVVVVV" item="Alt Sound Setting 16" default="25" tooltip="Set the alternate volume levels of each sound effect">
-                <defaultItem default="0" include="835,854,855,856,857,859,861,867,868,870,871,872,873,884,898,907,908,914,916,917,918,919,920,921,922,925,926,927,928,929,935,942,948,954,965,972,978,980,986,1014"/>
+            <variable CV="16.2.304" mask="VVVVVVVV" item="Alt Sound Setting 16" default="0" tooltip="Set the alternate volume levels of each sound effect">
+                <defaultItem default="25" include="770,771,772,776,777,778,779,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,802,803,804,805,806,813,814,815,816,817,820,824,828,829,830,831,832,836,837,838,840,841,842,843,844,845,847,848,849,852,853,858,860,912"/>
                 <decVal/>
                 <label>Steam Generator Alt Volume</label>
             </variable>
@@ -2243,8 +2369,8 @@
                 <label>All Aboard!/Coach Doors Alt Volume</label>
             </variable>
             <variable CV="16.2.313" mask="VVVVVVVV" item="Alt Sound Setting 25" default="75" tooltip="Set the alternate volume levels of each sound effect">
-                <defaultItem default="0" include="965"/>
-                <defaultItem default="62" include="824,837,838,857,858,859,860,861,870,871,914,916,942,954,978,980"/>
+                <defaultItem default="0" include="769,963,964,965,966,967,1001,1002,1003,1007,1022,1023"/>
+                <defaultItem default="62" include="824,837,838,857,858,859,860,861,870,871,914,916,942,944,954,957,958,974,975,978,980,981,989,990"/>
                 <decVal/>
                 <label>Clickety-Clack Alt Volume</label>
             </variable>
@@ -2305,12 +2431,12 @@
                 <decVal/>
                 <label>Throttle Sensitivity</label>
             </variable>
-            <variable item="Motor Load Gain" CV="16.2.512" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;to adjust the correlation between the throttle setting and motor load sensinglt;br&gt;      sets how much the load signal is affected by the model accelerating/decelerating&lt;/html&gt;">
+            <variable item="Motor Load Gain" CV="16.2.512" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;to adjust the correlation between the throttle setting and motor load sensing&lt;br&gt;      sets how much the load signal is affected by the model accelerating/decelerating&lt;/html&gt;">
                 <decVal/>
                 <label>Load Sensitivity</label>
             </variable>
             <variable CV="16.3.257" mask="XXXXXXVV" item="Sound Group 1 Option 1" default="1">
-                <defaultItem default="2" include="778,779,791,792,802,803,804,805,813,814,815,816,817,820,835,836,853,854,855,856,872,873,884,898,907,908,912,921,922,928,935,948,965,972,1014"/>
+                <defaultItem default="2" include="769,778,779,791,792,802,803,804,805,813,814,815,816,817,820,835,836,853,854,855,856,872,873,884,898,907,908,912,921,922,928,934,935,936,937,938,948,963,964,965,966,967,972,973,1001,1002,1003,1007,1014,1015,1022,1023"/>
                 <enumVal>
                     <enumChoice value="1">
                         <choice>2 axles per truck</choice>
@@ -2356,11 +2482,11 @@
     </decoder>
     <!-- References to external Pane format definitions below -->
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUaltSoundLevelsPane.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneLighting.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneReverb.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCsteam.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneASCdiesel.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneID.xml"/>

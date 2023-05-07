@@ -6,13 +6,16 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
 import java.util.ArrayList;
+
 import javax.swing.JPopupMenu;
+
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -121,7 +124,7 @@ public class PositionablePolygon extends PositionableShape {
     }
 
     @Override
-    public void doMousePressed(MouseEvent event) {
+    public void doMousePressed(JmriMouseEvent event) {
         _hitIndex = -1;
         if (!_editor.isEditable()) {
             return;
@@ -152,7 +155,7 @@ public class PositionablePolygon extends PositionableShape {
     }
 
     @Override
-    protected boolean doHandleMove(MouseEvent event) {
+    protected boolean doHandleMove(JmriMouseEvent event) {
         if (_hitIndex >= 0 && _editor.isEditable()) {
             if (_editing) {
                 Point pt = new Point(event.getX() - _lastX, event.getY() - _lastY);

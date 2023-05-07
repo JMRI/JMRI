@@ -1,31 +1,29 @@
 package jmri.jmrit.throttle;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of FunctionPanel
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class FunctionPanelTest {
 
-    FunctionPanel frame; // not a panel despite class name
+    FunctionPanel frame = null; // not a panel despite class name
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", frame);
     }
 
     @Test
     public void testGetFunctionButtons() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull(frame);
         FunctionButton fba[] = frame.getFunctionButtons();
         Assert.assertNotNull("Function Button Array exists", fba);        
     }
@@ -34,9 +32,7 @@ public class FunctionPanelTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            frame = new FunctionPanel();
-        }
+        frame = new FunctionPanel();
     }
 
     @AfterEach

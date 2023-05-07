@@ -1,26 +1,18 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen, John Plocher 2005, 2006, 2008 -->
-<!-- Translated by Herv&#233; Blorec le 2016/09/09-->
-<title>JMRI: Layout Automation in Java</title>
+  <!-- Copyright Bob Jacobsen, John Plocher 2005, 2006, 2008 -->
+  <!-- Translated by Herv&#233; Blorec le 2016/09/09-->
+  <title>JMRI: Layout Automation in Java</title>
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
 <!-- Page Body -->
-    <!--#include virtual="/Header.shtml" -->
+    <!--#include virtual="/Header_fr.shtml" -->
     <div id="mBody">
-        <!--#include virtual="Sidebar" -->
+        <!--#include virtual="Sidebar.shtml" -->
         <div id="mainContent">
             <!-- Page Body -->
 
@@ -149,52 +141,52 @@ quelque chose que vous voulez finalement voir contribuer &#224; JMRI lui-m&#234;
     Autrement, vous pouvez cr&#233;er un r&#233;pertoire "Classes", et compiler votre class Java &#224; l'int&#233;rieur.
     Dans ce cas, il devrait se retrouver dans:
 
-    <code>
-    classes/MyCode.class
-    </code>
+<pre>
+  classes/MyCode.class
+</pre>
 
     Si vous n'avez pas sp&#233;cifi&#233; de code dans votre paquet, ou
 
-    <code>
-    classes/MyCode.class
-    </code>
+<pre>
+  classes/MyCode.class
+</pre>
 
     ou
 
-    <code>
-    classes/jmri/jmrit/automat/SampleAutomaton.class
-    </code>
+<pre>
+  classes/jmri/jmrit/automat/SampleAutomaton.class
+</pre>
 
     comme un exemple de la fa&#231;on dont le code est stock&#233; dans un package sp&#233;cifique .
     <p>
     La mani&#232;re la plus simple pour appeler votre code est d'utiliser le support script de JMRI.
-    Ouvrir une fen&#234;tre Sortie Script  ( ainsi vous verrez les erreurs ) depuis le menu Panneaux,
+    Ouvrir une fen&#234;tre Sortie Script ( ainsi vous verrez les erreurs ) depuis le menu Panneaux,
     puis une fen&#234;tre Entr&#233;e Script, entrez:
 
-    <code>
-    MyCode().start()
-    </code>
+<pre>
+  MyCode().start()
+</pre>
 
     ou
 
-    <code>
-    import jmri.jmrit.automat
-    jmri.jmrit.automat.SampleAutomaton().start()
-    </code>
+<pre>
+import jmri.jmrit.automat
+jmri.jmrit.automat.SampleAutomaton().start()
+</pre>
 
     et appuyez sur Executer. La deuxi&#232;me ligne cr&#233;e une instance de votre class et lui dit de d&#233;marrer une ex&#233;cution.
     <p>
     Une fois que vous avez obtenu qu'il travaille, vous pouvez le mettre dans un petit fichier script
-    et l'appeler au d&#233;marrage,  via un Logix ou autre chose.
-
+    et l'appeler au d&#233;marrage, via un Logix ou autre chose.
     </dd>
 
 </dl>
 
 <p>Retour &#224; la <a href="index.shtml">page d'Aide Automatisation</a>.</p>
 
-<!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

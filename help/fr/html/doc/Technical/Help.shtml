@@ -1,26 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updatedted by Blorec Herv&#233;  2016-07-20-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updatedted by Blorec Herv&#233;  2016-07-20-->
 <head>
-    <title>
- 	JMRI: Use of JavaHelp
-    </title>
-    <meta name="Author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code Java Help JavaHelp ">
-
-   <!-- Style -->
-  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <title>JMRI: Use of JavaHelp</title>
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code Java Help JavaHelp ">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
@@ -218,8 +209,9 @@ apr&#232;s un court moment.Il y a une
 <a href="https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">t&#226;che Jenkins</a>
 qui manipule p&#233;riodiquement les actualisations pour les pages statistiques ( depuis le r&#233;pertoire, comme JavaDoc )
 
-<!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

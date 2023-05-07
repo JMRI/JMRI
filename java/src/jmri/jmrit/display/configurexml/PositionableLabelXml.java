@@ -14,6 +14,9 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
+import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.MaleSocket;
 
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -58,6 +61,8 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             element.setAttribute("icon", "yes");
             element.addContent(storeIcon("icon", (NamedIcon) p.getIcon()));
         }
+
+        storeLogixNG_Data(p, element);
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.PositionableLabelXml");
         return element;
@@ -198,6 +203,16 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         return element;
     }
 
+    public void storeLogixNG_Data(Positionable p, Element element) {
+        if (p.getLogixNG() == null) return;
+
+        // Don't save LogixNG data if we don't have any ConditionalNGs
+        if (p.getLogixNG().getNumConditionalNGs() == 0) return;
+        Element logixNG_Element = new Element("LogixNG");
+        logixNG_Element.addContent(new Element("InlineLogixNG_SystemName").addContent(p.getLogixNG().getSystemName()));
+        element.addContent(logixNG_Element);
+    }
+
     @Override
     public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
@@ -292,6 +307,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             // This should never happen
             log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
         }
+
+        loadLogixNG_Data(l, element);
+
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.LABELS, element);
     }
@@ -599,6 +617,19 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             log.debug("getNamedIcon: child element \"{}\" not found in element {}", childName, element.getName());
         }
         return icon;
+    }
+
+    public void loadLogixNG_Data(Positionable p, Element element) {
+        Element logixNG_Element = element.getChild("LogixNG");
+        if (logixNG_Element == null) return;
+        Element inlineLogixNG = logixNG_Element.getChild("InlineLogixNG_SystemName");
+        if (inlineLogixNG != null) {
+            String systemName = inlineLogixNG.getTextTrim();
+            p.setLogixNG_SystemName(systemName);
+            InstanceManager.getDefault(LogixNG_Manager.class).registerSetupTask(() -> {
+                p.setupLogixNG();
+            });
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableLabelXml.class);

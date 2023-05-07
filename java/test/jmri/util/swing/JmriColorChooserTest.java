@@ -1,7 +1,6 @@
 package jmri.util.swing;
 
 import java.awt.Color;
-import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 
 import javax.swing.JColorChooser;
@@ -10,9 +9,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -24,8 +21,7 @@ public class JmriColorChooserTest {
     public void testAddRecentColor() {
         JmriColorChooser.addRecentColor(Color.WHITE);
         ArrayList<Color> colors = JmriColorChooser.getRecentColors();
-        boolean gtzero = colors.size() > 0;
-        Assert.assertTrue("color count", gtzero);  // NOI18N
+        Assert.assertFalse("recent color count > 0", colors.isEmpty());  // NOI18N
     }
 
     @Test
@@ -41,24 +37,16 @@ public class JmriColorChooserTest {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testShowDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        createModalDialogOperatorThread("Test Title", "OK");  // NOI18N
+        Thread t = JemmyUtil.createModalDialogOperatorThread("Test Title", "OK");  // NOI18N
         JmriColorChooser.addRecentColor(Color.WHITE);
         Color newColor = JmriColorChooser.showDialog(null, "Test Title", Color.RED);  // NOI18N
         Assert.assertNotNull("exists", newColor);
-    }
-
-    void createModalDialogOperatorThread(String dialogTitle, String buttonText) {
-        Thread t = new Thread(() -> {
-            // constructor for jdo will wait until the dialog is visible
-            JDialogOperator jdo = new JDialogOperator(dialogTitle);
-            JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            jbo.pushNoBlock();
-        });
-        t.setName(dialogTitle + " Close Dialog Thread");  // NOI18N
-        t.start();
+        Assert.assertEquals(Color.RED, newColor);
+        JUnitUtil.waitFor(() -> ( !t.isAlive() ), "ColorChooser Dialog did not click ok");
+        JUnitUtil.waitFor(5); // jemmy still finishing button push
     }
 
     @BeforeEach

@@ -1,37 +1,23 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
+<html lang="fr">
 <!-- Translated by Blorec Herv&#233; le 2011-09-28-->
-
-<html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>Rosters Media Pane</title>
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
-  <meta name="Description" content="Throttle documentation for JMRI project">
-  <meta name="Keywords" content="JMRI">
-  <meta name="Author" content="Lionel Jeanson">
-  <meta name="Language" content="fr">
+  <meta name="description" content="Throttle documentation for JMRI project">
+  <meta name="aAuthor" content="Lionel Jeanson">
   <meta name="Robots" content="Index, Follow">
-  <meta name="Revisit-After" content="7 Days">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>R&eacute;glage des Listes Images et des
+      <h1>R&eacute;glage des Listes Images et des
       Ic&ocirc;nes</h1><img src="images/DecProRosterMediaPane.png"
       alt=""><br>
       <br>
@@ -41,7 +27,8 @@
       <img src="images/DecProAdvancedMode.png" alt=""><br>
       <br>
 
-      <h2>Entr&eacute;e d'Image</h2>La suppression d'un fichier
+      <h2>Entr&eacute;e d'Image</h2>
+      <p>La suppression d'un fichier
       image dans le cadre int&eacute;rieur mettra &agrave; jour
       cette entr&eacute;e (il doit &ecirc;tre un fichier image,
       donc apr&egrave;s avoir cherch&eacute; sur le web pour une
@@ -63,8 +50,8 @@
       <br>
       l'entr&eacute;e d'Image est utilis&eacute;e comme un fond
       pour <a href="ThrottlesPreferencesPane.shtml">les limites
-      JMRI lorsque cette option est activ&eacute;e</a>.<br>
-      <br>
+      JMRI lorsque cette option est activ&eacute;e</a>.
+      </p>
 
       <h2>Ic&ocirc;ne d'Entr&eacute;e</h2>D&eacute;poser un fichier
       image  dans le cadre int&eacute;rieur mettra &agrave; jour
@@ -106,10 +93,11 @@
       "dans votre moteur de recherche Internet
       pr&eacute;f&eacute;r&eacute;".</span><br>
 
-      <h2>R&eacute;f&eacute;rence Web</h2>Cette entr&eacute;e est
+      <h2>R&eacute;f&eacute;rence Web</h2>
+      <p>Cette entr&eacute;e est
       d&eacute;di&eacute;e &agrave; stocker une URL, ici je joint
-      au Wikip&eacute;dia pour un prototype de liste.<br>
-      <br>
+      au Wikip&eacute;dia pour un prototype de liste.
+      </p>
 
       <h1>fonction &eacute;tiquettes Liste</h1><img src=
       "images/DecProFunctionLabels.png" alt=""><br>
@@ -121,20 +109,19 @@
       Avanc&eacute;). Ces entr&eacute;es seront
       r&eacute;utilis&eacute;es par le Groupe Fonction <a href=
       "BasicThrottleWindow.shtml">dans les fen&ecirc;tres
-      R&eacute;gulateurs</a> .
+      R&eacute;gulateurs</a>.
       <p>
       Il y a une option pour les Limite JMRI qui montrera les
       boutons Fonction R&eacute;gulateur <a href=
       "ThrottlesPreferencesPane.shtml">s uniquement pour une
-      entr&eacute;e qui est d&eacute;finie ici</a> .<br>
-      <br>
-      <br>
+      entr&eacute;e qui est d&eacute;finie ici</a>.<br>
       Vous pouvez &eacute;galement jeter un oeil &agrave;
       Jynstruments pour le bouton de fonction avanc&eacute;e.<br>
       </p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -278,7 +278,7 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo i
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(Class<?> T) {
+    public <T> T get(Class<T> T) {
         T result = null; // nothing by default
         log.debug("* get({})", T.toString());
         if (!getDisabled()) {

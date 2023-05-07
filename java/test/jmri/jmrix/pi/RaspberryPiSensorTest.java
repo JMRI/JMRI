@@ -71,7 +71,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
         Assert.assertEquals("default pull state", jmri.Sensor.PullResistance.PULL_DOWN, t.getPullResistance());
     }
 
-    private GpioProvider myProvider;
+    private GpioProvider myProvider = null;
 
     @Override
     @BeforeEach
@@ -91,6 +91,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
             t.dispose(); // is supposed to unprovisionPin 4
         }
         // shutdown() will forcefully shutdown all GPIO monitoring threads and scheduled tasks, includes unexport.pin
+        Assertions.assertNotNull(myProvider);
         myProvider.shutdown();
 
         JUnitUtil.clearShutDownManager();

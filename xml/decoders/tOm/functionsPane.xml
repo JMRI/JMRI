@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II              -->
+
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>tOm Function Map</name>
+    <name xml:lang="cs">tOm Mapování funkcí</name>
+    <column>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Select which function</text>
+        <text xml:lang="cs">Vyberte která funkce</text>
+      </label>
+      <label>
+        <text>enables Shunting Speed</text>
+        <text xml:lang="cs">povolí posunovací rychlost.</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Shunting Speed Active For F1" format="checkbox" />
+      <display item="Shunting Speed Active For F2" format="checkbox" />
+      <display item="Shunting Speed Active For F3" format="checkbox" />
+      <display item="Shunting Speed Active For F4" format="checkbox" />
+      <display item="Shunting Speed Active For F5" format="checkbox" />
+      <display item="Shunting Speed Active For F6" format="checkbox" />
+      <display item="Shunting Speed Active For F7" format="checkbox" />
+      <display item="Shunting Speed Active For F8" format="checkbox" />
+    </column>
+
+    <column>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Select which function</text>
+        <text xml:lang="cs">Vyberte která funkce</text>
+      </label>
+      <label>
+        <text>switches off Acceleration, Deceleration</text>
+        <text xml:lang="cs">vypne Zrychlování a Zpomalování.</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Switch Off Acceleration Deceleration For F1" format="checkbox" />
+      <display item="Switch Off Acceleration Deceleration For F2" format="checkbox" />
+      <display item="Switch Off Acceleration Deceleration For F3" format="checkbox" />
+      <display item="Switch Off Acceleration Deceleration For F4" format="checkbox" />
+      <display item="Switch Off Acceleration Deceleration For F5" format="checkbox" />
+      <display item="Switch Off Acceleration Deceleration For F6" format="checkbox" />
+      <display item="Switch Off Acceleration Deceleration For F7" format="checkbox" />
+      <display item="Switch Off Acceleration Deceleration For F8" format="checkbox" />
+    </column>
+
+    <column>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Select which function</text>
+        <text xml:lang="cs">Vyberte která funkce</text>
+      </label>
+      <label>
+        <text>disables Constant Braking Distance</text>
+        <text xml:lang="cs">zakáže konstantní brzdnou dráhu CBD.</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Disable Constant Braking Distance For F1" format="checkbox" />
+      <display item="Disable Constant Braking Distance For F2" format="checkbox" />
+      <display item="Disable Constant Braking Distance For F3" format="checkbox" />
+      <display item="Disable Constant Braking Distance For F4" format="checkbox" />
+      <display item="Disable Constant Braking Distance For F5" format="checkbox" />
+      <display item="Disable Constant Braking Distance For F6" format="checkbox" />
+      <display item="Disable Constant Braking Distance For F7" format="checkbox" />
+      <display item="Disable Constant Braking Distance For F8" format="checkbox" />
+    </column>
+
+
+  </pane>

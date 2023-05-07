@@ -2,6 +2,7 @@ package apps.swing;
 
 import java.util.*;
 
+import javax.annotation.Nonnull;
 import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 
@@ -33,6 +34,7 @@ public class HelpMenuProvider implements HelpUtil.MenuProvider {
         // do nothing
     }
 
+    @Nonnull
     @Override
     public List<JMenuItem> getHelpMenuItems() {
         List<JMenuItem> items = new ArrayList<>();
@@ -45,7 +47,7 @@ public class HelpMenuProvider implements HelpUtil.MenuProvider {
         items.add(license);
         license.addActionListener(new LicenseAction());
 
-        JMenuItem directories = new JMenuItem(Bundle.getMessage("MenuItemLocations"));
+        JMenuItem directories = new JMenuItem(Bundle.getMessage("MenuItemFileLocations"));
         items.add(directories);
         directories.addActionListener(new XmlFileLocationAction());
 
@@ -63,12 +65,11 @@ public class HelpMenuProvider implements HelpUtil.MenuProvider {
 
         items.add(new JMenuItem(new IssueReporterAction()));
 
-        // Put about dialog in Apple's prefered area on Mac OS X
+        // Put about dialog in Apple's preferred area on Mac OS X
         if (SystemType.isMacOSX()) {
             try {
-                Application.getApplication().setAboutHandler((EventObject eo) -> {
-                    new AboutDialog(null, true).setVisible(true);
-                });
+                Objects.requireNonNull(Application.getApplication()).setAboutHandler((EventObject eo) ->
+                        new AboutDialog(null, true).setVisible(true));
             } catch (java.lang.RuntimeException re) {
                 log.error("Unable to put About handler in default location", re);
             }

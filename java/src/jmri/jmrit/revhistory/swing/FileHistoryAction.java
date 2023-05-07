@@ -3,7 +3,6 @@ package jmri.jmrit.revhistory.swing;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import jmri.InstanceManager;
@@ -13,7 +12,7 @@ import jmri.util.JmriJFrame;
 /**
  * Swing action to display the file revision history
  *
- * @author Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009, 2022
  */
 public class FileHistoryAction extends AbstractAction {
 
@@ -30,6 +29,8 @@ public class FileHistoryAction extends AbstractAction {
         JFrame frame = new JmriJFrame() {
         };  // JmriJFrame to ensure fits on screen
 
+        frame.setTitle(Bundle.getMessage("TitleFileHistory"));
+
         JTextArea pane = new JTextArea();
         pane.append("\n"); // add a little space at top
         pane.setEditable(false);
@@ -45,12 +46,10 @@ public class FileHistoryAction extends AbstractAction {
         }
 
         pane.append("\n"); // add a little space at bottom
+        // start scrolled to top
+        pane.setCaretPosition(0);
 
         frame.pack();
-
-        // start scrolled to top
-        JScrollBar b = scroll.getVerticalScrollBar();
-        b.setValue(b.getMaximum());
 
         // show
         frame.setVisible(true);

@@ -19,13 +19,8 @@ import org.junit.jupiter.api.Test;
 */
 public class CbusCommonSwingTest  {
 
-    @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testInitComponents() throws Exception{
-        // for now, just makes sure there isn't an exception.
-        assertThat(new CbusCommonSwing()).isNotNull();
-    }
-    
+    // class only provides static methods, no need for constructor test
+
     @Test
     public void testJTextFieldFromCbusEvState(){
     

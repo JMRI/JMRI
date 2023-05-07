@@ -1,25 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2016-06-27 -->
 <title>JMRI: DecoderPro In Depth</title>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 <h1>JMRI: Guide Utilisateur DecoderPro </h1>
@@ -126,8 +117,9 @@ vous imprimez &#224; partir du format "de base", et une liste de tout lorsque vo
 </dd>
 </dl>
     
-<!--#include virtual="/Footer.shtml" -->
+<!--#include virtual="/Footer_fr.shtml" -->
 </div>
-</div>
+</div>  <!-- close #mBody -->
+<script src="/js/main.js"></script>
 </body>
 </html>

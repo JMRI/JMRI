@@ -19,6 +19,12 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
     private CbusAddress addrActive;    // go to active state
     private CbusAddress addrInactive;  // go to inactive state
 
+    /**
+     * Create a new CbusSensor.
+     * @param prefix Hardware connection system prefix, excluding the S for Sensor..
+     * @param address String form of {@link CbusAddress}
+     * @param tc System Traffic Controller.
+     */
     public CbusSensor(String prefix, String address, TrafficController tc) {
         super(prefix + "S" + address);
         this.tc = tc;
@@ -28,9 +34,7 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
     private final TrafficController tc;
 
     /**
-     * Common initialization for both constructors.
-     * <p>
-     *
+     * Common initialization for constructors.
      */
     private void init(String address) {
         // build local addresses

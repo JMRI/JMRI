@@ -38,7 +38,6 @@ public class ManuallySetRouteTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

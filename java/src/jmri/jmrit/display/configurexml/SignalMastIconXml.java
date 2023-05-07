@@ -42,6 +42,9 @@ public class SignalMastIconXml extends PositionableLabelXml {
         element.setAttribute("imageset", p.useIconSet());
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalMastIconXml");
         //storeIconInfo(p, element);
+
+        storeLogixNG_Data(p, element);
+
         return element;
     }
 
@@ -146,6 +149,8 @@ public class SignalMastIconXml extends PositionableLabelXml {
         } catch (Positionable.DuplicateIdException e) {
             throw new JmriConfigureXmlException("Positionable id is not unique", e);
         }
+
+        loadLogixNG_Data(l, element);
 
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.SIGNALS, element);

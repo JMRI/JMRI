@@ -117,7 +117,7 @@ public class ImportConditional {
                 expression.getChild(0).connect(socket);
             }
         } else {
-            buildExpression(expression, conditionalVariables);
+            buildExpression(expression, conditionalVariables, ao != Conditional.AntecedentOperator.MIXED);
         }
 
         DigitalBooleanMany many =
@@ -139,13 +139,16 @@ public class ImportConditional {
     }
 
 
-    private void buildExpression(DigitalExpressionBean expression, List<ConditionalVariable> conditionalVariables)
+    private void buildExpression(
+            DigitalExpressionBean expression,
+            List<ConditionalVariable> conditionalVariables,
+            boolean allowNot)
             throws SocketAlreadyConnectedException, JmriException {
 
         for (int i=0; i < conditionalVariables.size(); i++) {
             jmri.ConditionalVariable cv = conditionalVariables.get(i);
             NamedBean nb = cv.getBean();
-            AtomicBoolean isNegated = new AtomicBoolean(cv.isNegated());
+            AtomicBoolean isNegated = new AtomicBoolean(cv.isNegated() && allowNot);
             DigitalExpressionBean newExpression;
             switch (cv.getType().getItemType()) {
                 case SENSOR:
@@ -1024,7 +1027,27 @@ public class ImportConditional {
 
             case COPY_MEMORY:
                 action.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
-                action.getSelectOtherMemoryNamedBean().setNamedBean(ca.getActionString());
+
+                // Logix COPY_MEMORY stores data reversed
+                String fromMemory = ca.getActionString();
+                if (fromMemory != null && fromMemory.length() > 0 && fromMemory.charAt(0) == '@') {
+                    action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+                    action.getSelectNamedBean().setReference("{"+fromMemory.substring(1)+"}");
+                } else {
+                    action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+                    if (fromMemory != null) {
+                        action.getSelectNamedBean().setNamedBean(fromMemory);
+                    }
+                }
+
+                if (reference != null) {
+                    action.getSelectOtherMemoryNamedBean().setAddressing(NamedBeanAddressing.Reference);
+                    action.getSelectOtherMemoryNamedBean().setReference(reference);
+                } else {
+                    action.getSelectOtherMemoryNamedBean().setAddressing(NamedBeanAddressing.Direct);
+                    action.getSelectOtherMemoryNamedBean().setNamedBean(my);
+                }
+
                 break;
 
             default:
@@ -1295,7 +1318,7 @@ public class ImportConditional {
                     action.setDataReference(ref);
                 } else {
                     action.setDataAddressing(NamedBeanAddressing.Direct);
-                    action.setTrainIdName(idData);
+                    action.setTrainData(idData);
                 }
                 break;
 
@@ -1313,13 +1336,32 @@ public class ImportConditional {
                     action.setDataReference(ref);
                 } else {
                     action.setDataAddressing(NamedBeanAddressing.Direct);
-                    action.setTrainIdName(nameData);
+                    action.setTrainData(nameData);
+                }
+                break;
+
+            case GET_TRAIN_LOCATION:
+                action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.GetTrainLocation);
+                String locData = ca.getActionString();
+                if (locData == null || locData.isEmpty()) {
+                    throw new InvalidConditionalActionException(
+                            Bundle.getMessage("ActionBadWarrantValue", ca.getType().toString()));
+                }
+                if (locData.startsWith("@")) {
+                    // indirect
+                    String ref = "{" + locData.substring(1) + "}";
+                    action.setDataAddressing(NamedBeanAddressing.Reference);
+                    action.setDataReference(ref);
+                } else {
+                    action.setDataAddressing(NamedBeanAddressing.Direct);
+                    action.getSelectMemoryNamedBean().setNamedBean(locData);
+//                    action.setTrainData(locData);
                 }
                 break;
 
             default:
                 throw new InvalidConditionalVariableException(
-                        Bundle.getMessage("ActionBadwarrantType", ca.getType().toString()));
+                        Bundle.getMessage("ActionBadWarrantType", ca.getType().toString()));
         }
 
         return action;

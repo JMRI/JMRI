@@ -13,7 +13,7 @@ public class SerialNodeListTest {
 
     @Test
     public void testCtor() {
-        new SerialNodeList();       
+        Assertions.assertNotNull(new SerialNodeList());       
     }
 
     private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
@@ -28,8 +28,8 @@ public class SerialNodeListTest {
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(stcs);
 
-        new SerialNode(stcs);
-        new SerialNode(1, SerialNode.SMINI,stcs);
+        Assertions.assertNotNull(new SerialNode(stcs));
+        Assertions.assertNotNull(new SerialNode(1, SerialNode.SMINI,stcs));
         n2 = new SerialNode(2, SerialNode.USIC_SUSIC,stcs);
         n2.setNumBitsPerCard(24);
         n2.setCardTypeByAddress(0, SerialNode.INPUT_CARD);

@@ -26,7 +26,7 @@ public class CbusEventInterfaceTest {
         
     }
     
-    private class TestInterface implements CbusEventInterface{
+    private static class TestInterface implements CbusEventInterface{
         
         @Override
         public jmri.jmrix.can.CanMessage getBeanOnMessage(){
@@ -39,7 +39,6 @@ public class CbusEventInterfaceTest {
         }
     
     }
-    
 
     @BeforeEach
     public void setUp() {

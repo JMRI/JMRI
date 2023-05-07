@@ -196,10 +196,11 @@
     <decVal />
     <label>Likeihood of switchgear sparks (accelerating)</label>
     <label xml:lang="de">Lichtblitzen Beschleunigen</label>
-    <label xml:lang="cs">Pravděpodobnost jiskření kontroleru</label>
+    <label xml:lang="cs">Pravděpodobnost jiskření kontroleru (zrychlování)</label>
   </variable>
   <variable item="Likeihood of switchgear sparks (decelerating)" CV="379" default="0" tooltip="CV378">
     <decVal />
+    <label xml:lang="cs">Pravděpodobnost jiskření kontroleru (zpomalování)</label>
   </variable>  
   <variable item="Electric brake function key" CV="380" default="0" tooltip="CV380">
     <enumVal>

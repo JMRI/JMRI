@@ -6,7 +6,7 @@
 	    <div style="text-align: center">JMRI&reg; connects to...</div>
 	    <dl>
 
-        <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
+       <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->
 
        <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
 

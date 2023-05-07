@@ -1,11 +1,24 @@
 package jmri.jmrit;
 
+import java.beans.PropertyChangeEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
+import javax.annotation.CheckForNull;
+
 import jmri.InstanceManager;
 import jmri.jmrit.throttle.ThrottleCreationAction;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.AddressedProgrammerManager;
+import jmri.GlobalProgrammerManager;
+import jmri.jmrix.ConnectionStatus;
+import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ActiveSystemsMenu;
+import jmri.jmrix.ConnectionConfigManager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Create a "Tools" menu containing the Jmri system-independent tools
@@ -18,6 +31,12 @@ import jmri.util.gui.GuiLafPreferencesManager;
  */
 public class ToolsMenu extends JMenu {
 
+    ConnectionConfig serModeProCon = null;
+    ConnectionConfig opsModeProCon = null;
+    
+    AbstractAction serviceAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("MenuItemDecoderProServiceProgrammer"));
+    AbstractAction opsAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("MenuItemDecoderProOpsModeProgrammer"));
+        
     public ToolsMenu(String name) {
         this();
         setText(name);
@@ -28,11 +47,11 @@ public class ToolsMenu extends JMenu {
         super();
 
         setText(Bundle.getMessage("MenuTools"));
-
+        
         JMenu programmerMenu = new JMenu(Bundle.getMessage("MenuProgrammers"));
         programmerMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction());
-        programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("MenuItemDecoderProServiceProgrammer")));
-        programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("MenuItemDecoderProOpsModeProgrammer")));
+        programmerMenu.add(serviceAction);
+        programmerMenu.add(opsAction);
         programmerMenu.add(new jmri.jmrit.dualdecoder.DualDecoderToolAction());
         add(programmerMenu);
 
@@ -172,6 +191,132 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         // LogixNG menu
         add(new jmri.jmrit.logixng.tools.swing.LogixNGMenu());
+
+        // Enable or disable the service mode programmer menu items for the types of programmer available.
+        updateProgrammerStatus(null);
+        ConnectionStatus.instance().addPropertyChangeListener((PropertyChangeEvent e) -> {
+            if ((e.getPropertyName().equals("change")) || (e.getPropertyName().equals("add"))) {
+                log.debug("Received property {} with value {} ", e.getPropertyName(), e.getNewValue());
+                updateProgrammerStatus(e);
+            }
+        });
+        InstanceManager.addPropertyChangeListener(InstanceManager.getListPropertyName(AddressedProgrammerManager.class),
+                evt -> {
+                    AddressedProgrammerManager m = (AddressedProgrammerManager) evt.getNewValue();
+                    if (m != null) {
+                        m.addPropertyChangeListener(this::updateProgrammerStatus);
+                    }
+                    updateProgrammerStatus(evt);
+                });
+        InstanceManager.getList(AddressedProgrammerManager.class).forEach(m -> m.addPropertyChangeListener(this::updateProgrammerStatus));
+        InstanceManager.addPropertyChangeListener(InstanceManager.getListPropertyName(GlobalProgrammerManager.class),
+                evt -> {
+                    GlobalProgrammerManager m = (GlobalProgrammerManager) evt.getNewValue();
+                    if (m != null) {
+                        m.addPropertyChangeListener(this::updateProgrammerStatus);
+                    }
+                    updateProgrammerStatus(evt);
+                });
+        InstanceManager.getList(GlobalProgrammerManager.class).forEach(m -> m.addPropertyChangeListener(this::updateProgrammerStatus));
     }
 
+    /**
+     * Enable or disable the service mode programmer menu items for the types of programmer
+     * available.
+     *
+     * Adapted from similar named function in @link jmri.jmrit.roster.swing.RosterFrame.java
+     * 
+     * @param evt the triggering event; if not null and if a removal of a
+     *            ProgrammerManager, care will be taken not to trigger the
+     *            automatic creation of a new ProgrammerManager
+     */
+    protected void updateProgrammerStatus(@CheckForNull PropertyChangeEvent evt) {
+        log.debug("Updating Programmer Status for property {}", (evt != null) ? evt.getPropertyName() : "null");
+        ConnectionConfig oldServMode = serModeProCon;
+        ConnectionConfig oldOpsMode = opsModeProCon;
+        GlobalProgrammerManager gpm = null;
+        AddressedProgrammerManager apm = null;
+
+        // Find the connection that goes with the global programmer
+        // test that IM has a default GPM, or that event is not the removal of a GPM
+        if (InstanceManager.containsDefault(GlobalProgrammerManager.class)
+                || (evt != null
+                && evt.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(GlobalProgrammerManager.class))
+                && evt.getNewValue() == null)) {
+            gpm = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
+            log.trace("found global programming manager {}", gpm);
+        }
+        if (gpm != null) {
+            String serviceModeProgrammerName = gpm.getUserName();
+            log.debug("GlobalProgrammerManager found of class {} name {} ", gpm.getClass(), serviceModeProgrammerName);
+            InstanceManager.getOptionalDefault(ConnectionConfigManager.class).ifPresent((ccm) -> {
+                for (ConnectionConfig connection : ccm) {
+                    log.debug("Checking connection name {}", connection.getConnectionName());
+                    if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
+                        log.debug("Connection found for GlobalProgrammermanager");
+                        serModeProCon = connection;
+                    }
+                }
+            });
+        }
+
+        // Find the connection that goes with the addressed programmer
+        // test that IM has a default APM, or that event is not the removal of an APM
+        if (InstanceManager.containsDefault(AddressedProgrammerManager.class)
+                || (evt != null
+                && evt.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(AddressedProgrammerManager.class))
+                && evt.getNewValue() == null)) {
+            apm = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
+            log.trace("found addressed programming manager {}", gpm);
+        }
+        if (apm != null) {
+            String opsModeProgrammerName = apm.getUserName();
+            log.debug("AddressedProgrammerManager found of class {} name {} ", apm.getClass(), opsModeProgrammerName);
+            InstanceManager.getOptionalDefault(ConnectionConfigManager.class).ifPresent((ccm) -> {
+                for (ConnectionConfig connection : ccm) {
+                    log.debug("Checking connection name {}", connection.getConnectionName());
+                    if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
+                        log.debug("Connection found for AddressedProgrammermanager");
+                        opsModeProCon = connection;
+                    }
+                }
+            });
+        }
+
+        log.trace("start global check with {}, {}, {}", serModeProCon, gpm, (gpm != null ? gpm.isGlobalProgrammerAvailable() : "<none>"));
+        if (gpm != null && gpm.isGlobalProgrammerAvailable()) {
+            log.debug("service mode available");
+            if (oldServMode == null) {
+                serviceAction.setEnabled(true);
+                firePropertyChange("setprogservice", "setEnabled", true);
+            }
+        } else {
+            // No service programmer available, disable menu
+            log.debug("no service programmer");
+            if (oldServMode != null) {
+                serviceAction.setEnabled(false);
+                firePropertyChange("setprogservice", "setEnabled", false);
+            }
+            serModeProCon = null;
+        }
+
+        if (apm != null && apm.isAddressedModePossible()) {
+            log.debug("ops mode available");
+            if (oldOpsMode == null) {
+                opsAction.setEnabled(true);
+                firePropertyChange("setprogops", "setEnabled", true);
+            }
+        } else {
+            // No ops mode programmer available, disable interface sections not available
+            log.debug("no ops mode programmer");
+            if (oldOpsMode != null) {
+                opsAction.setEnabled(false);
+                firePropertyChange("setprogops", "setEnabled", false);
+            }
+            opsModeProCon = null;
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(jmri.jmrit.ToolsMenu.class);
+    
 }

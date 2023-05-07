@@ -51,6 +51,7 @@ public class SubscribeXml extends jmri.managers.configurexml.AbstractNamedBeanMa
             element.addContent(new Element("lastTopicLocalVariable")
                     .addContent(p.getLastTopicLocalVariable()));
         }
+        element.addContent(new Element("removeChannelFromLastTopic").addContent(p.getRemoveChannelFromLastTopic() ? "yes" : "no"));
 
         if (p.getLastMessageLocalVariable() != null) {
             element.addContent(new Element("lastMessageLocalVariable")
@@ -91,6 +92,9 @@ public class SubscribeXml extends jmri.managers.configurexml.AbstractNamedBeanMa
         if (shared.getChild("lastTopicLocalVariable") != null) {
             h.setLastTopicLocalVariable(shared.getChild("lastTopicLocalVariable").getTextTrim());
         }
+        Element elem = shared.getChild("removeChannelFromLastTopic");  // NOI18N
+        h.setRemoveChannelFromLastTopic((elem != null) ? elem.getTextTrim().equals("yes") : false);  // NOI18N
+
         if (shared.getChild("lastMessageLocalVariable") != null) {
             h.setLastMessageLocalVariable(shared.getChild("lastMessageLocalVariable").getTextTrim());
         }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>LogixNG Reference - Chapter 1 - Orignal Add Process</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG reference getting started">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Reference - Chapter 1 - Original Add Process</h1>
+
+      <p>The process to add actions and expressions was changed at JMRI release 5.1.4 to use a
+      sub-menu process instead of a dialog window.  The dialog window process is described below.</p>
+
+      <h3>Create an Action/Expression</h3>
+
+      <p>To create a new action or expression, right-click with the mouse on an empty socket and
+      then select <strong>Add</strong> in the popup menu.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/original_add/create_conditionalng_4.png"><img src=
+        "images/original_add/create_conditionalng_4.png" alt="Chapter 1-4"></a>
+      </div>
+
+      <p>Then select which action or expression is to be created. The actions and expressions
+      are organized in categories, so first select the <strong>Category</strong>. The default
+      category is Item.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/original_add/create_conditionalng_5.png"><img src=
+        "images/original_add/create_conditionalng_5.png" alt="Chapter 1-5"></a>
+      </div>
+
+      <p>Then select the action/expression <strong>Type</strong>. For example, "Turnout".</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/original_add/create_conditionalng_6.png"><img src=
+        "images/original_add/create_conditionalng_6.png" alt="Chapter 1-6"></a>
+      </div>
+
+      <p>Click the <strong>Create</strong> button to create the action.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/original_add/create_conditionalng_7.png"><img src=
+        "images/original_add/create_conditionalng_7.png" alt="Chapter 1-7"></a>
+      </div>
+
+      <p>Creating the Action and Expression details has not changed.</p>
+
+      <hr>
+
+      <p><a href="index.shtml">Return to the Reference TOC</a>
+      </p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

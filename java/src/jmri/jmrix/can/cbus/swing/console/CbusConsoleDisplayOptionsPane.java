@@ -11,9 +11,6 @@ import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.util.JmriJFrame;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
-
 /**
  * Frame for CBUS Console
  *
@@ -21,35 +18,48 @@ import jmri.util.JmriJFrame;
  * @author Steve Young Copyright (C) 2018
  */
 public class CbusConsoleDisplayOptionsPane extends javax.swing.JPanel {
-    
+
     private final CbusConsolePane _mainPane;
-    
-    private JCheckBox showLogCheckBox;
-    private JCheckBox showStatsCheckBox;
-    private JCheckBox showPacketCheckBox;
-    private JCheckBox showSendEventCheckBox;
+
+    private final JCheckBox showLogCheckBox;
+    private final JCheckBox showStatsCheckBox;
+    private final JCheckBox showPacketCheckBox;
+    private final JCheckBox showSendEventCheckBox;
     public JButton filterButton;
     public JButton highlightButton;
     protected JButton evCaptureButton;
-    
+
     protected CbusFilterFrame filterFrame;
     protected CbusEventHighlightFrame highlightFrame;
     private ConfigToolPane _evCapFrame;
     private JmriJFrame _ecf;
-    
+    private final jmri.UserPreferencesManager p;
+
+    private static final String SHOW_LOG = ".ShowLog";
+    private static final String SHOW_STATS = ".ShowStats";
+    private static final String SHOW_PACKET = ".ShowPacket";
+    private static final String SHOW_SEND_EVENT = ".ShowSendEvent";
+
     public CbusConsoleDisplayOptionsPane(CbusConsolePane mainPane){
         super();
         _mainPane = mainPane;
+        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        showLogCheckBox = new JCheckBox(Bundle.getMessage("Logging"));
+        showStatsCheckBox = new JCheckBox(Bundle.getMessage("StatisticsTitle"));
+        showPacketCheckBox = new JCheckBox(Bundle.getMessage("ButtonShowPackets"));
+        showSendEventCheckBox = new JCheckBox(Bundle.getMessage("ButtonSendEvent"));
+        filterButton = new JButton(Bundle.getMessage("ButtonFilter"));
+        highlightButton = new JButton(Bundle.getMessage("ButtonHighlight"));
+        evCaptureButton = new JButton(Bundle.getMessage("CapConfigTitle"));
         makePane();
     }
-    
+
     private void makePane() {
-    
-        setDefaults();
+
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder(), Bundle.getMessage("Display")));
-        
+
         add(showLogCheckBox);        
         add(showStatsCheckBox);
         add(showPacketCheckBox);
@@ -57,78 +67,50 @@ public class CbusConsoleDisplayOptionsPane extends javax.swing.JPanel {
         add(filterButton);
         add(highlightButton);
         add(evCaptureButton);
-    
+
+        setDefaults();
+        setToolTipText();
+        addListeners();
     }
 
     private void setDefaults() {
-        
-        showLogCheckBox = new JCheckBox();
-        showStatsCheckBox = new JCheckBox();
-        showPacketCheckBox = new JCheckBox();
-        showSendEventCheckBox = new JCheckBox();
-        filterButton = new JButton();
-        highlightButton = new JButton();
-        evCaptureButton = new JButton();
-                
-        showStatsCheckBox.setSelected(false);
-        showLogCheckBox.setSelected(false);
-        showPacketCheckBox.setSelected(false);
-        showSendEventCheckBox.setSelected(false);
-        
-        setText();
-    
+        showLogCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOW_LOG));
+        showStatsCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOW_STATS));
+        showPacketCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOW_PACKET));
+        showSendEventCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOW_SEND_EVENT));
     }
-    
-    private void setText() {
-    
-        showLogCheckBox.setText(Bundle.getMessage("Logging"));
+
+    private void setToolTipText() {
         showLogCheckBox.setToolTipText(Bundle.getMessage("LoggingTip"));
-        
-        showStatsCheckBox.setText(Bundle.getMessage("StatisticsTitle"));
         showStatsCheckBox.setToolTipText(Bundle.getMessage("ButtonShowStats"));
-
-        showPacketCheckBox.setText(Bundle.getMessage("ButtonShowPackets"));
         showPacketCheckBox.setToolTipText(Bundle.getMessage("TooltipShowPackets"));
-
-        showSendEventCheckBox.setText(Bundle.getMessage("ButtonSendEvent"));
         showSendEventCheckBox.setToolTipText(Bundle.getMessage("TooltipShowEvents"));
-        
-        filterButton.setText(Bundle.getMessage("ButtonFilter"));
-        filterButton.setToolTipText(Bundle.getMessage("TooltipFilter"));
-        
-        highlightButton.setText(Bundle.getMessage("ButtonHighlight"));
-        highlightButton.setToolTipText(Bundle.getMessage("TooltipHighlighter"));
 
-        evCaptureButton.setText(Bundle.getMessage("CapConfigTitle"));
-        
-        addListeners();
-    
+        filterButton.setToolTipText(Bundle.getMessage("TooltipFilter"));
+        highlightButton.setToolTipText(Bundle.getMessage("TooltipHighlighter"));
     }
-    
+
     private void addListeners(){
-    
-        showLogCheckBox.addActionListener((ActionEvent e) -> {
-            _mainPane.logPane.setVisible(showLogCheckBox.isSelected());
-        });        
-        
-        showStatsCheckBox.addActionListener((ActionEvent e) -> {
-            _mainPane.statsPane.setVisible(showStatsCheckBox.isSelected());
-        });        
-        
-        showSendEventCheckBox.addActionListener((ActionEvent e) -> {
-            _mainPane.sendPane.setVisible(showSendEventCheckBox.isSelected());
-        });
-        
+        showLogCheckBox.addActionListener(this::matchVisisbleToCheckBoxes);        
+        showStatsCheckBox.addActionListener(this::matchVisisbleToCheckBoxes);        
+        showPacketCheckBox.addActionListener(this::matchVisisbleToCheckBoxes);
+        showSendEventCheckBox.addActionListener(this::matchVisisbleToCheckBoxes);
+
         filterButton.addActionListener(this::filterButtonActionPerformed);
         highlightButton.addActionListener(this::highlightButtonActionPerformed);
         evCaptureButton.addActionListener(this::evCaptureButtonActionPerformed);
-        
-        showPacketCheckBox.addActionListener((ActionEvent e) -> {
-            _mainPane.packetPane.setVisible(showPacketCheckBox.isSelected());
-        });
     }
-    
-    public void filterButtonActionPerformed(java.awt.event.ActionEvent e) {
+
+    // triggered by CbusConsolePane when all panes are available
+    public void matchVisisbleToCheckBoxes(ActionEvent e){
+        _mainPane.logPane.setVisible(showLogCheckBox.isSelected());
+        _mainPane.statsPane.setVisible(showStatsCheckBox.isSelected());
+        _mainPane.packetPane.setVisible(showPacketCheckBox.isSelected());
+        _mainPane.sendPane.setVisible(showSendEventCheckBox.isSelected());
+        _mainPane.validate();
+    }
+
+    public void filterButtonActionPerformed(ActionEvent e) {
         // log.debug("Cbus Console filter button action performed");
         if (filterFrame == null) {
             filterFrame = new CbusFilterFrame(_mainPane,_evCapFrame);
@@ -141,8 +123,8 @@ public class CbusConsoleDisplayOptionsPane extends javax.swing.JPanel {
         }
         filterFrame.setVisible(true);
     }
-    
-    public void highlightButtonActionPerformed(java.awt.event.ActionEvent e) {
+
+    public void highlightButtonActionPerformed(ActionEvent e) {
         // log.debug("Cbus Console filter button action performed");
         if (highlightFrame == null) {
             highlightFrame = new CbusEventHighlightFrame(_mainPane,_evCapFrame);
@@ -156,7 +138,7 @@ public class CbusConsoleDisplayOptionsPane extends javax.swing.JPanel {
         highlightFrame.setVisible(true);
     }
 
-    public void evCaptureButtonActionPerformed(java.awt.event.ActionEvent e) {
+    public void evCaptureButtonActionPerformed(ActionEvent e) {
         // log.debug("Cbus Console filter button action performed");
         if (_evCapFrame == null ) {
             _ecf = new JmriJFrame("Event Capture paired to " + _mainPane.getTitle() + " Filter and Highlighter");
@@ -170,7 +152,7 @@ public class CbusConsoleDisplayOptionsPane extends javax.swing.JPanel {
         }
         _ecf.setVisible(true);
     }
-    
+
     public void dispose() {
     
         if (highlightFrame != null) {
@@ -185,8 +167,11 @@ public class CbusConsoleDisplayOptionsPane extends javax.swing.JPanel {
             _ecf.dispose();
             _ecf=null;
         }
-    
+        p.setSimplePreferenceState(getClass().getName() + SHOW_LOG, showLogCheckBox.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + SHOW_STATS, showStatsCheckBox.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + SHOW_SEND_EVENT, showSendEventCheckBox.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + SHOW_PACKET, showPacketCheckBox.isSelected());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusConsoleDisplayOptionsPane.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsoleDisplayOptionsPane.class);
 }

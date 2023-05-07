@@ -71,7 +71,7 @@ public class SplitVariableValue extends VariableValue
         _textField = new JTextField("0");
         _defaultColor = _textField.getBackground();
 
-        _textField.setBackground(COLOR_UNKNOWN);
+        _textField.setBackground(ValueState.UNKNOWN.getColor());
         _textField.getAccessibleContext().setAccessibleName(label());
 
         mFactor = pFactor;
@@ -139,7 +139,7 @@ public class SplitVariableValue extends VariableValue
         // have to do when list is complete
         for (int i = 0; i < cvCount; i++) {
             cvList.get(i).thisCV.addPropertyChangeListener(this);
-            cvList.get(i).thisCV.setState(CvValue.FROMFILE);
+            cvList.get(i).thisCV.setState(ValueState.FROMFILE);
         }
     }
 
@@ -276,12 +276,12 @@ public class SplitVariableValue extends VariableValue
     int mOffset;
     String _name;
     String _mask; // full string as provided, use _maskArray to access one of multiple masks
-    String[] _maskArray = new String[0];
+    String[] _maskArray;
     String _cvNum;
 
     List<CvItem> cvList;
 
-    int cvCount = 0;
+    int cvCount;
     int currentOffset = 0;
 
     @Override
@@ -327,7 +327,13 @@ public class SplitVariableValue extends VariableValue
         }
 
         // calculate resulting number
-        long newVal = (newEntry - mOffset) / mFactor;
+        long newVal = newEntry - mOffset;
+        // long newVal = Math.max(newEntry - mOffset, 0); // prevent negative values, especially in tests outside UI
+        if (mFactor != 0) {
+            newVal = newVal / mFactor;
+        } else {
+            log.error("Variable param 'factor' = 0 not valid; Decoder definition needs correction");
+        }
         log.debug("Variable={};newEntry={};newVal={} with Offset={} + Factor={} applied", _name, newEntry, newVal, mOffset, mFactor);
 
         int[] retVals = new int[cvCount];
@@ -531,7 +537,7 @@ public class SplitVariableValue extends VariableValue
         }
         log.debug("Variable={}; setValue with new value {} old value {}", _name, value, oldVal);
         _textField.setText(getTextFromValue(value * mFactor + mOffset));
-        if (oldVal != value || getState() == VariableValue.UNKNOWN) {
+        if (oldVal != value || getState() == ValueState.UNKNOWN) {
             actionPerformed(null);
         }
         // TODO PENDING: the code used to fire value * mFactor + mOffset, which is a text representation;
@@ -550,7 +556,7 @@ public class SplitVariableValue extends VariableValue
     void setColor(Color c) {
         if (c != null) {
             _textField.setBackground(c);
-            log.debug("Variable={}; Set Color to {}", _name, c.toString());
+            log.debug("Variable={}; Set Color to {}", _name, c);
         } else {
             log.debug("Variable={}; Set Color to defaultColor {}", _name, _defaultColor.toString());
             _textField.setBackground(_defaultColor);
@@ -595,7 +601,7 @@ public class SplitVariableValue extends VariableValue
      * @param state The new state
      */
     @Override
-    public void setCvState(int state) {
+    public void setCvState(ValueState state) {
         for (int i = 0; i < cvCount; i++) {
             cvList.get(i).thisCV.setState(state);
         }
@@ -659,7 +665,7 @@ public class SplitVariableValue extends VariableValue
         }
         _textField.setText(""); // start with a clean slate
         for (int i = 0; i < cvCount; i++) { // mark all Cvs as unknown otherwise problems occur
-            cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
+            cvList.get(i).thisCV.setState(ValueState.UNKNOWN);
         }
         _progState = READING_FIRST;
         retry = 0;
@@ -682,7 +688,7 @@ public class SplitVariableValue extends VariableValue
         _progState = WRITING_FIRST;
         log.debug("Variable={}; Start CV write", _name);
         log.debug("Writing CV={}", cvList.get(0).cvName);
-        (cvList.get(0).thisCV).write(_status); // kick off the write sequence
+        (cvList.get(0).thisCV).write(_status); // kick off the write-sequence
     }
 
     /**
@@ -692,19 +698,19 @@ public class SplitVariableValue extends VariableValue
      * @return Priority value from state, with UNKNOWN numerically highest
      */
     @SuppressFBWarnings(value = {"SF_SWITCH_NO_DEFAULT", "SF_SWITCH_FALLTHROUGH"}, justification = "Intentional fallthrough to produce correct value")
-    int priorityValue(int state) {
+    int priorityValue(ValueState state) {
         int value = 0;
         switch (state) {
-            case AbstractValue.UNKNOWN:
+            case UNKNOWN:
                 value++;
             //$FALL-THROUGH$
-            case AbstractValue.DIFF:
+            case DIFFERENT:
                 value++;
             //$FALL-THROUGH$
-            case AbstractValue.EDITED:
+            case EDITED:
                 value++;
             //$FALL-THROUGH$
-            case AbstractValue.FROMFILE:
+            case FROMFILE:
                 value++;
             //$FALL-THROUGH$
             default:
@@ -718,7 +724,7 @@ public class SplitVariableValue extends VariableValue
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("Variable={} source={}; property {} changed from {} to {}", _name, e.getSource().toString(), e.getPropertyName(), e.getOldValue(),e.getNewValue());
         // notification from CV; check for Value being changed
-        if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
+        if (e.getPropertyName().equals("Busy") && e.getNewValue().equals(Boolean.FALSE)) {
             // busy transitions drive the state
             if (_progState != IDLE) {
                 log.debug("Variable={} source={}; getState() = {}", _name, e.getSource().toString(), (cvList.get(Math.abs(_progState) - 1).thisCV).getState());
@@ -729,7 +735,7 @@ public class SplitVariableValue extends VariableValue
                 // It is definitely not an error condition, but needs to be ignored by this variable's state machine.
                 log.debug("Variable={}; Busy goes false with _progState IDLE, so ignore by state machine", _name);
             } else if (_progState >= READING_FIRST) {   // reading CVs
-                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == READ) {   // was the last read successful?
+                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == ValueState.READ) {   // was the last read successful?
                     retry = 0;
                     if (Math.abs(_progState) < cvCount) {   // read next CV
                         _progState++;
@@ -750,13 +756,13 @@ public class SplitVariableValue extends VariableValue
                         setBusy(false);
                         if (RETRY_COUNT > 0) {
                             for (int i = 0; i < cvCount; i++) { // mark all CVs as unknown otherwise problems may occur
-                                cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
+                                cvList.get(i).thisCV.setState(ValueState.UNKNOWN);
                             }
                         }
                     }
                 }
             } else {  // writing CVs
-                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == STORED) {   // was the last read successful?
+                if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == ValueState.STORED) {   // was the last read successful?
                     if (Math.abs(_progState) < cvCount) {   // write next CV
                         _progState--;
                         log.debug("Writing CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
@@ -774,19 +780,19 @@ public class SplitVariableValue extends VariableValue
             }
         } else if (e.getPropertyName().equals("State")) {
             log.debug("Possible {} variable state change due to CV state change, so propagate that", _name);
-            int varState = getState(); // AbstractValue.SAME;
-            log.debug("{} variable state was {}", _name, stateNameFromValue(varState));
+            ValueState varState = getState(); // AbstractValue.SAME;
+            log.debug("{} variable state was {}", _name, varState.getName());
             for (int i = 0; i < cvCount; i++) {
-                int state = cvList.get(i).thisCV.getState();
+                var state = cvList.get(i).thisCV.getState();
                 if (i == 0) {
                     varState = state;
                 } else if (priorityValue(state) > priorityValue(varState)) {
-                    varState = AbstractValue.UNKNOWN; // or should it be = state ?
+                    //varState = AbstractValue.UNKNOWN; // or should it be = state ?
                     varState = state; // or should it be = state ?
                 }
             }
             setState(varState);
-            log.debug("{} variable state set to {}", _name, stateNameFromValue(varState));
+            log.debug("{} variable state set to {}", _name, varState.getName());
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             log.debug("update value of Variable {}", _name);
@@ -800,9 +806,9 @@ public class SplitVariableValue extends VariableValue
             updateVariableValue(intVals);
 
             log.debug("state change due to CV value change, so propagate that");
-            int varState = AbstractValue.SAME;
+            ValueState varState = ValueState.SAME;
             for (int i = 0; i < cvCount; i++) {
-                int state = cvList.get(i).thisCV.getState();
+                ValueState state = cvList.get(i).thisCV.getState();
                 if (priorityValue(state) > priorityValue(varState)) {
                     varState = state;
                 }
@@ -812,7 +818,7 @@ public class SplitVariableValue extends VariableValue
     }
 
     // stored reference to the JTextField
-    JTextField _textField = null;
+    JTextField _textField;
 
     /* Internal class extends a JTextField so that its color is consistent with
      * an underlying variable
@@ -828,12 +834,7 @@ public class SplitVariableValue extends VariableValue
             // get the original color right
             setBackground(_var._textField.getBackground());
             // listen for changes to ourself
-            addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    thisActionPerformed(e);
-                }
-            });
+            addActionListener(this::thisActionPerformed);
             addFocusListener(new java.awt.event.FocusListener() {
                 @Override
                 public void focusGained(FocusEvent e) {
@@ -848,12 +849,7 @@ public class SplitVariableValue extends VariableValue
                 }
             });
             // listen for changes to original state
-            _var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-                @Override
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    originalPropertyChanged(e);
-                }
-            });
+            _var.addPropertyChangeListener(this::originalPropertyChanged);
         }
 
         SplitVariableValue _var;

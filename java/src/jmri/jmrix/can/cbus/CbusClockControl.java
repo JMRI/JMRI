@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+import javax.annotation.Nonnull;
+
 import jmri.Disposable;
 import jmri.TimebaseRateException;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -37,7 +39,7 @@ public class CbusClockControl extends jmri.implementation.DefaultClockControl im
     
     private final CanSystemConnectionMemo _memo;
     
-    public CbusClockControl(CanSystemConnectionMemo memo) {
+    public CbusClockControl(@Nonnull CanSystemConnectionMemo memo) {
         super();
         
         minuteFormat = new java.text.SimpleDateFormat("mm");
@@ -233,8 +235,7 @@ public class CbusClockControl extends jmri.implementation.DefaultClockControl im
             }
         }
         if (specificDate!=null) {
-            Date newnewdate = Date.from( specificDate.atZone( ZoneId.systemDefault()).toInstant());
-            clock.setTime(newnewdate);
+            clock.setTime(specificDate.atZone( ZoneId.systemDefault()).toInstant());
         }
     }
     

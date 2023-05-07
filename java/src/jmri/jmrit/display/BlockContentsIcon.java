@@ -3,12 +3,14 @@ package jmri.jmrit.display;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -16,6 +18,8 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -173,7 +177,7 @@ public class BlockContentsIcon extends MemoryIcon {
                     popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            df.terminateActiveTrain(at);
+                            df.terminateActiveTrain(at,true,false);
                         }
                     });
                     popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
@@ -289,7 +293,7 @@ public class BlockContentsIcon extends MemoryIcon {
     }
 
     @Override
-    public void doMouseClicked(java.awt.event.MouseEvent e) {
+    public void doMouseClicked(JmriMouseEvent e) {
         if (e.getClickCount() == 2) { // double click?
             editBlockValue();
         }

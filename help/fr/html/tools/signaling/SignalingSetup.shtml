@@ -1,29 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- Updated by Blorec Herv&#233; le 2016-09-15-->
-<title>JMRI: How to set up Signaling in JMRI</title>
-<meta name="Author" content="Bob Jacobsen">
-<meta name="Author" content="Egbert Broerse">
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Updated by Blorec Herv&#233; le 2016-09-15-->
+  <title>JMRI: How to set up Signaling in JMRI</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="Egbert Broerse">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>JMRI: Signalisation D&#233;marrage Rapide</h1>
+      <h1>JMRI: Signalisation D&#233;marrage Rapide</h1>
 	<p class="subtitle"> Les instructions pas &#224; pas d&#233;crivent en d&#233;tails comment configurer la
 	Signalisation dans JMRI</p>
 	<ul>
@@ -31,7 +24,8 @@
 		<li><a href="#magic">Configuration du Magic SignalMan</a></li>
 	</ul>
 
-<a name="sevensteps" id="sevensteps"></a><h2>Commencer &#224; utiliser la Signalisation JMRI 7 &#233;tapes</h2>
+<a name="sevensteps" id="sevensteps"></a>
+      <h2>Commencer &#224; utiliser la Signalisation JMRI en 7 &#233;tapes</h2>
 
 		<p>Merci &#224; Suzie Tall.</p>
 <!-- Listing from JMRI Group, March 4, 2014 -->
@@ -186,8 +180,9 @@
 </p>
 		<p>Retour &#224; la <a href="index.shtml">page d'aide principale Signalisation</a>.</p>				
 
-<!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

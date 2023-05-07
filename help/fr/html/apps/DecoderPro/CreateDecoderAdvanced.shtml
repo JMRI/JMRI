@@ -1,25 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!--Translated by Herv&#233; Blorec le 2016-06-18 -->
 <title>JMRI: DecoderPro User Guide - Advanced Decoder Definitions</title>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html;  charset=utf-8">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 <h1>JMRI:Guide Utilisateur DecoderPro</h1>  -<h2> D&#233;finitions Avanc&#233;es des D&#233;codeurs </h2>
@@ -755,9 +747,10 @@ variable version-number a une valeur trop faible:</p>
   affichage d&#233;pendra de la valeur par d&#233;faut depuis le fichier qui pourrait induire en erreur l'utilisateur.
 </p>
 
-<!--#include virtual="/Footer.shtml" -->
+<!--#include virtual="/Footer_fr.shtml" -->
  </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+</div>  <!-- close #mBody -->
+<script src="/js/main.js"></script>
 </body>
 </html>
 

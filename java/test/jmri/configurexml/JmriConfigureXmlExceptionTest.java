@@ -14,12 +14,12 @@ import org.junit.Assert;
 public class JmriConfigureXmlExceptionTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testCtor(){
       Assert.assertNotNull("JmriConfigureXmlException constructor",new JmriConfigureXmlException());
    }
 
    @Test
-   public void StringConstructorTest(){
+   public void testStringConstructorXmlException(){
       Assert.assertNotNull("JmriConfigureXmlException string constructor",new JmriConfigureXmlException("test exception"));
    }
 

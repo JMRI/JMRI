@@ -159,7 +159,7 @@ public class MemoryContentsTest {
         MemoryContentsTestWrite_24AddrFile = new File(filename);
         if (MemoryContentsTestWrite_24AddrFile.exists()) {
             try {
-                MemoryContentsTestWrite_24AddrFile.delete();
+                Assertions.assertTrue( MemoryContentsTestWrite_24AddrFile.delete());
             } catch (java.lang.Exception e) {
                 Assert.fail("Exception while trying to delete the existing file "
                         + filename + " before creating a new copy of the file.\n Exception reported: " + e.toString());
@@ -211,7 +211,7 @@ public class MemoryContentsTest {
         if (log.isDebugEnabled()) {
             log.debug("Path to written hex file is: {}", filename);
         } else {
-            MemoryContentsTestWrite_24AddrFile.delete();
+            Assertions.assertTrue(MemoryContentsTestWrite_24AddrFile.delete());
         }
 
         if (n.nextContent(500) != 864) {

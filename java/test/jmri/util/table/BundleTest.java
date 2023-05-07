@@ -31,7 +31,7 @@ public class BundleTest  {
     }
     
     @Test public void testLocaleMessage() {
-        Assert.assertEquals("Attenzione", Bundle.getMessage(Locale.ITALY, "WarnChangedTitle"));
+        Assert.assertEquals("Attenzione", Bundle.getMessage(Locale.ITALY, "WarningTitle"));
     }
 
     @Test public void testLocaleMessageArg() {

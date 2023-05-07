@@ -3,6 +3,8 @@ package jmri.jmrit.operations.setup;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
@@ -27,7 +29,24 @@ public class PrintMoreOptionFrameTest extends OperationsTestCase {
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
 
-        // TODO do more testing
+        Assert.assertTrue(f.isShowing());
+
+        PrintMoreOptionPanel pop = (PrintMoreOptionPanel) f.getContentPane();
+        Assert.assertNotNull("exists", pop);
+        
+        pop.tab1TextField.setText("11");
+        pop.tab2TextField.setText("22");
+        pop.tab3TextField.setText("33");
+        
+        Assert.assertTrue("Should be dirty", pop.isDirty());
+        
+        // test save button
+        JemmyUtil.enterClickAndLeave(pop.saveButton);
+        
+        Assert.assertEquals("tab 1", 11, Setup.getTab1Length());
+        Assert.assertEquals("tab 1", 22, Setup.getTab2Length());
+        Assert.assertEquals("tab 1", 33, Setup.getTab3Length());
+        Assert.assertFalse("not dirty", pop.isDirty());
 
         // done
         JUnitUtil.dispose(f);

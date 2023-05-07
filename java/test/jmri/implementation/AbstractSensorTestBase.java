@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 
 import jmri.JmriException;
 import jmri.Sensor;
+import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
@@ -37,7 +38,7 @@ public abstract class AbstractSensorTestBase {
 
     protected AbstractSensor t = null; // holds object under test; set by setUp()
 
-    static protected boolean listenerResult = false;
+    protected boolean listenerResult = false;
 
     protected class Listen implements PropertyChangeListener {
         @Override
@@ -167,19 +168,30 @@ public abstract class AbstractSensorTestBase {
         Assert.assertEquals("initial state", Sensor.UNKNOWN, t.getState());
         t.setOwnState(Sensor.ACTIVE); // next is considered to run immediately, before debounce
         Assert.assertEquals("post-set state", Sensor.UNKNOWN, t.getState());
-        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
+        JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
         Assert.assertEquals("2nd state", Sensor.ACTIVE, t.getState());
 
         t.setOwnState(Sensor.INACTIVE); // next is considered to run immediately, before debounce
         Assert.assertEquals("post-set state", Sensor.ACTIVE, t.getState());
-        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
+        JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
         Assert.assertEquals("Final state", Sensor.INACTIVE, t.getState());
+
+        disposeAndWaitForDebounceThread(t);
+
+    }
+
+    private void disposeAndWaitForDebounceThread(AbstractSensor t) {
+        Thread debounce = t.thr;
+        t.dispose();
+        if ( debounce !=null ) {
+            JUnitUtil.waitFor( ()-> { return !debounce.isAlive(); }, debounce.getName() + " did not close");
+        }
     }
 
     @Test
     public void testGetPullResistance(){
         // default is off, override this test if this is supported.
-        Assert.assertEquals("Pull Direction", jmri.Sensor.PullResistance.PULL_OFF, t.getPullResistance());
+        Assert.assertEquals("Pull Direction", Sensor.PullResistance.PULL_OFF, t.getPullResistance());
     }
 
     @Test
@@ -199,22 +211,22 @@ public abstract class AbstractSensorTestBase {
     @Test
     public void testSensor() throws JmriException {
         t.setState(Sensor.ON);
-        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == Sensor.ON;}, "state = ON");
+        JUnitUtil.waitFor(()->{return t.getState() == Sensor.ON;}, "state = ON");
         Assert.assertTrue("Sensor is ON", t.getState() == Sensor.ON);
         t.setState(Sensor.OFF);
-        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == Sensor.OFF;}, "state = OFF");
+        JUnitUtil.waitFor(()->{return t.getState() == Sensor.OFF;}, "state = OFF");
         Assert.assertTrue("Sensor is ON", t.getState() == Sensor.OFF);
         t.setCommandedState(Sensor.ON);
-        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == Sensor.ON;}, "state = ON");
+        JUnitUtil.waitFor(()->{return t.getState() == Sensor.ON;}, "state = ON");
         Assert.assertTrue("Sensor is ON", t.getState() == Sensor.ON);
         t.setCommandedState(Sensor.OFF);
-        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == Sensor.OFF;}, "state = OFF");
+        JUnitUtil.waitFor(()->{return t.getState() == Sensor.OFF;}, "state = OFF");
         Assert.assertTrue("Sensor is ON", t.getState() == Sensor.OFF);
         t.setState(Sensor.ON);
-        jmri.util.JUnitUtil.waitFor(()->{return t.getCommandedState() == Sensor.ON;}, "commanded state = ON");
+        JUnitUtil.waitFor(()->{return t.getCommandedState() == Sensor.ON;}, "commanded state = ON");
         Assert.assertTrue("Sensor is ON", t.getCommandedState() == Sensor.ON);
         t.setState(Sensor.OFF);
-        jmri.util.JUnitUtil.waitFor(()->{return t.getCommandedState() == Sensor.OFF;}, "commanded state = OFF");
+        JUnitUtil.waitFor(()->{return t.getCommandedState() == Sensor.OFF;}, "commanded state = OFF");
         Assert.assertTrue("Sensor is ON", t.getCommandedState() == Sensor.OFF);
     }
     

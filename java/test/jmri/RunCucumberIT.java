@@ -44,7 +44,7 @@ public class RunCucumberIT {
 
     @AfterClass
     public static void afterTests() {
-        BrowserFactory.CloseAllDriver();
+        BrowserFactory.closeAllDrivers();
         JUnitUtil.resetZeroConfServiceManager();
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();

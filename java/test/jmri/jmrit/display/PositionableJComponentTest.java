@@ -1,27 +1,28 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.junit.annotations.*;
+
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class PositionableJComponentTest extends PositionableTestBase {
 
     @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testCtor() {
+
         Assert.assertNotNull("exists", p);
     }
 
     @Override
     @Test
     public void testGetAndSetViewCoordinates() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Assert.assertFalse("Defalt View Coordinates", p.getViewCoordinates());
         p.setViewCoordinates(true);
         Assert.assertTrue("View Coordinates after set true", p.getViewCoordinates());
@@ -41,11 +42,11 @@ public class PositionableJComponentTest extends PositionableTestBase {
     @BeforeEach
     public void setUp() {
         super.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            editor = new EditorScaffold();
-            p = new PositionableJComponent(editor);
-            ((PositionableJComponent) p).setName("PositionableJComponent");
-        }
+
+        editor = new EditorScaffold();
+        p = new PositionableJComponent(editor);
+        ((PositionableJComponent) p).setName("PositionableJComponent");
+
     }
 
 }

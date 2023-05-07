@@ -16,9 +16,9 @@ import jmri.SystemConnectionMemo;
 public class AbstractSerialPortControllerScaffold extends AbstractSerialPortController {
 
     DataOutputStream ostream;  // Traffic controller writes to this
-    DataInputStream tostream; // so we can read it from this
+    public DataInputStream tostream; // so we can read it from this
 
-    DataOutputStream tistream; // tests write to this
+    public DataOutputStream tistream; // tests write to this
     DataInputStream istream;  // so the traffic controller can read from this
    
     @Override

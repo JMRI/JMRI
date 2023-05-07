@@ -1,12 +1,10 @@
 package jmri.jmrit.swing.meter;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.stream.Stream;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -54,19 +52,10 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         super(SaveType.User, true);
     }
     
-    @TempDir 
-    protected java.nio.file.Path tempDir;
-
     @BeforeEach
     @Override
-    public void setUp() {
-        super.setUp();
-        try {
-            JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
-        }
-        catch (java.io.IOException e){
-            Assert.fail("Unable to create temp directory");
-        }
+    public void setUp(@TempDir java.io.File tempDir) throws IOException  {
+        super.setUp(tempDir);
         
         // This test requires a registred connection config since ProxyMeterManager
         // auto creates system meter managers using the connection configs.

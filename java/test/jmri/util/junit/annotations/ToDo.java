@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  */
 
 @Retention(RetentionPolicy.CLASS)  // For access by SpotBugs et al 
-@Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
+@Target({ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.TYPE})
 @Documented
 @Inherited
 public @interface ToDo {

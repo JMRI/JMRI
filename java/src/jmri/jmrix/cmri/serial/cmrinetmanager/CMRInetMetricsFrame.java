@@ -45,7 +45,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
     JButton saveMetricsButton = new JButton(Bundle.getMessage("SaveMetricsButtonText"));
     JButton resetAllMetricsButton = new JButton(Bundle.getMessage("ResetAllMetricsButtonText"));
 
-    final JFileChooser metricsSaveChooser = new JFileChooser();
+    final JFileChooser metricsSaveChooser = new jmri.util.swing.JmriJFileChooser();
 
     CMRInetMetricsFrame curFrame;
     private CMRISystemConnectionMemo _memo = null;
@@ -63,7 +63,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         // For the class
         setTitle(Bundle.getMessage("MetricsWindowTitle") + Bundle.getMessage("WindowConnectionMemo") + _memo.getUserName()); // NOI18N
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        setPreferredSize(new Dimension(845, 400)); // 415 375
+        setPreferredSize(new Dimension(860, 410)); // 415 375
         networkMetricsBorderTitled = BorderFactory.createTitledBorder(networkMetricsBorder, "Error Metrics", TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
 
         // Set up the CMRInet ERROR metrics table

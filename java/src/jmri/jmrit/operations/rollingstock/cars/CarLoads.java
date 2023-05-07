@@ -13,6 +13,7 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 
 /**
  * Represents the loads that cars can have.
@@ -33,6 +34,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
     public static final String LOAD_PRIORITY_CHANGED_PROPERTY = "CarLoads_Load_Priority"; // NOI18N
     public static final String LOAD_NAME_CHANGED_PROPERTY = "CarLoads_Name"; // NOI18N
     public static final String LOAD_COMMENT_CHANGED_PROPERTY = "CarLoads_Load_Comment"; // NOI18N
+    public static final String LOAD_HAZARDOUS_CHANGED_PROPERTY = "CarLoads_Load_Hazardous"; // NOI18N
 
     public CarLoads() {
     }
@@ -95,7 +97,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
     }
 
     /**
-     * Gets a combobox with the available priorities
+     * Gets a ComboBox with the available priorities
      *
      * @return JComboBox with car priorities.
      */
@@ -106,9 +108,16 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
         box.addItem(CarLoad.PRIORITY_HIGH);
         return box;
     }
+    
+    public JComboBox<String> getHazardousComboBox() {
+        JComboBox<String> box = new JComboBox<>();
+        box.addItem(Bundle.getMessage("ButtonNo"));
+        box.addItem(Bundle.getMessage("ButtonYes"));
+        return box;
+    }
 
     /**
-     * Gets a combobox with the available load types: empty and load
+     * Gets a ComboBox with the available load types: empty and load
      *
      * @return JComboBox with load types: LOAD_TYPE_EMPTY and LOAD_TYPE_LOAD
      */
@@ -321,7 +330,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
      *
      * @param type     car type.
      * @param name     load name.
-     * @param priority load priority, PRIORITY_LOW or PRIORITY_HIGH.
+     * @param priority load priority, PRIORITY_LOW, PRIORITY_MEDIUM or PRIORITY_HIGH.
      */
     public void setPriority(String type, String name, String priority) {
         List<CarLoad> loads = listCarLoads.get(type);
@@ -341,7 +350,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
      *
      * @param type car type.
      * @param name load name.
-     * @return load priority, PRIORITY_LOW or PRIORITY_HIGH.
+     * @return load priority, PRIORITY_LOW, PRIORITY_MEDIUM or PRIORITY_HIGH.
      */
     public String getPriority(String type, String name) {
         if (!containsName(type, name)) {
@@ -354,6 +363,32 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
             }
         }
         return "error"; // NOI18N
+    }
+    
+    public void setHazardous(String type, String name, boolean isHazardous) {
+        List<CarLoad> loads = listCarLoads.get(type);
+        for (CarLoad cl : loads) {
+            if (cl.getName().equals(name)) {
+                boolean oldIsHazardous = cl.isHazardous();
+                cl.setHazardous(isHazardous);
+                if (oldIsHazardous != isHazardous) {
+                    setDirtyAndFirePropertyChange(LOAD_HAZARDOUS_CHANGED_PROPERTY, oldIsHazardous, isHazardous);
+                }
+            }
+        }
+    }
+    
+    public boolean isHazardous(String type, String name) {
+        if (!containsName(type, name)) {
+            return false;
+        }
+        List<CarLoad> loads = listCarLoads.get(type);
+        for (CarLoad cl : loads) {
+            if (cl.getName().equals(name)) {
+                return cl.isHazardous();
+            }
+        }
+        return false;
     }
 
     /**
@@ -372,6 +407,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 String oldComment = cl.getPickupComment();
                 cl.setPickupComment(comment);
                 if (!oldComment.equals(comment)) {
+                    maxCommentLength = 0;
                     setDirtyAndFirePropertyChange(LOAD_COMMENT_CHANGED_PROPERTY, oldComment, comment);
                 }
             }
@@ -401,6 +437,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 String oldComment = cl.getDropComment();
                 cl.setDropComment(comment);
                 if (!oldComment.equals(comment)) {
+                    maxCommentLength = 0;
                     setDirtyAndFirePropertyChange(LOAD_COMMENT_CHANGED_PROPERTY, oldComment, comment);
                 }
             }
@@ -439,6 +476,40 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
             log.info("Max car load name ({}) length {}", maxName, maxNameLength);
         }
         return maxNameLength;
+    }
+    
+    int maxCommentLength = 0;
+    
+    public int getMaxLoadCommentLength() {
+        if (maxCommentLength == 0) {
+            String maxComment = "";
+            String carLoadName = "";
+            Enumeration<String> en = listCarLoads.keys();
+            while (en.hasMoreElements()) {
+                String key = en.nextElement();
+                List<CarLoad> loads = listCarLoads.get(key);
+                for (CarLoad load : loads) {
+                    if (load.getDropComment().length() > maxCommentLength) {
+                        maxComment = load.getDropComment();
+                        maxCommentLength = load.getDropComment().length();
+                        carLoadName = load.getName();
+                    }
+                    if (load.getPickupComment().length() > maxCommentLength) {
+                        maxComment = load.getPickupComment();
+                        maxCommentLength = load.getPickupComment().length();
+                        carLoadName = load.getName();
+                    }
+                }
+            }
+            if (maxCommentLength < TrainManifestHeaderText.getStringHeader_Drop_Comment().length()) {
+                maxCommentLength = TrainManifestHeaderText.getStringHeader_Drop_Comment().length();
+            }
+            if (maxCommentLength < TrainManifestHeaderText.getStringHeader_Pickup_Comment().length()) {
+                maxCommentLength = TrainManifestHeaderText.getStringHeader_Pickup_Comment().length();
+            }
+            log.info("Max car load comment ({}) length {}, load name ({})", maxComment, maxCommentLength, carLoadName);
+        }
+        return maxCommentLength;
     }
 
     private List<CarLoad> getSortedList(String type) {
@@ -498,9 +569,10 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
             xmlLoad.setAttribute(Xml.TYPE, carType);
             boolean mustStore = false; // only store loads that aren't the defaults
             for (CarLoad load : loads) {
-                // don't store the defaults / low priority / no comment
+                // don't store the defaults / low priority / not hazardous / no comment
                 if ((load.getName().equals(getDefaultEmptyName()) || load.getName().equals(getDefaultLoadName()))
                         && load.getPriority().equals(CarLoad.PRIORITY_LOW)
+                        && !load.isHazardous()
                         && load.getPickupComment().equals(CarLoad.NONE)
                         && load.getDropComment().equals(CarLoad.NONE)) {
                     continue;
@@ -509,6 +581,10 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 xmlCarLoad.setAttribute(Xml.NAME, load.getName());
                 if (!load.getPriority().equals(CarLoad.PRIORITY_LOW)) {
                     xmlCarLoad.setAttribute(Xml.PRIORITY, load.getPriority());
+                    mustStore = true; // must store
+                }
+                if (load.isHazardous()) {
+                    xmlCarLoad.setAttribute(Xml.HAZARDOUS, load.isHazardous() ? Xml.TRUE : Xml.FALSE);
                     mustStore = true; // must store
                 }
                 if (!load.getPickupComment().equals(CarLoad.NONE)) {
@@ -569,6 +645,9 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                         addName(type, name);
                         if ((a = eCarLoad.getAttribute(Xml.PRIORITY)) != null) {
                             setPriority(type, name, a.getValue());
+                        }
+                        if ((a = eCarLoad.getAttribute(Xml.HAZARDOUS)) != null) {
+                            setHazardous(type, name, a.getValue().equals(Xml.TRUE));
                         }
                         if ((a = eCarLoad.getAttribute(Xml.PICKUP_COMMENT)) != null) {
                             setPickupComment(type, name, a.getValue());

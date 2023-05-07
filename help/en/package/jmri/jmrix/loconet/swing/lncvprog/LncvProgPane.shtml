@@ -62,21 +62,36 @@
       see the value in the Value field.<br>
       To write, enter a CV number plus the new value to set in the CV, and click [Write].</p>
 
-      <p>LNCV Responses coming back from the layout will be listed in the table. When your Roster
-      contains (exactly) one entry for a decoder of this article number and address, it will be
-      listed in the table as shown below.<br>
-      When no match was found in your Roster but a matching definition was found in the JMRI
-      Decoder Index, a [Create Entry] button will show. Be sure to complete the Entry creation
-      process by clicking [Save to Roster] on the Roster Entry tab. If your device reponded to a
-      general call but is not yet supported, the button will read [No Match in Roster] (and it
-      won't work). Once you have a Roster Entry, the button will read [Program] and will directly
-      open the entry tabs.</p>
-      <img src="images/LNCVToolEntry.png" alt=
-      "LNCV Programming Tool ask for a name for the new Entry when you click Add Entry"> <img src=
-      "images/LNCVTool3.png" alt=
-      "LNCV Programming Tool found a Decoder Entry and shows Program button"> <img src=
+      <p>LNCV Responses coming back from the layout will be listed in the LNCV Monitor, and the
+      devices sending a reply show up in the Devices table.</p>
+
+      <p>When your Roster contains (exactly) one entry for a decoder of this article number and
+      address, it will be listed in the table as the Roster Entry ID, as shown below.<br>
+      When you have a matching Roster Entry, the button in teh Program column will read
+      [Program] and will directly open the Roster Entry tabs.</p>
+      <img src=
       "../../../../../../html/hardware/loconet/images/LncvProgrammer/LncvProgrammerPane.png" alt=
       "LNCV Programming Tool can't find a matching definition">
+
+      <p>When no match was found in your Roster but a matching definition was found in the JMRI
+      Decoder Index, the button will read [Create Entry]. Click on it and enter an ID (name) for your new roster
+      entry.</p>
+      <img src="images/LNCVToolEntry.png" alt=
+      "LNCV Programming Tool ask for a name for the new Entry when you click Add Entry">
+      <p>After clicking [OK] the button is updated to [Program].</p>
+      <img src="images/LNCVTool3.png" alt="LNCV Programming Tool found a Decoder Entry and
+      shows Program button">
+      <p>Be sure to complete the Entry creation process by clicking [Save to Roster] on the
+      DecoderPro Roster Entry tab.</p>
+
+      <p>If your device responded to a general call but is not yet found in the Decoder Index,
+      the button will read [No Match in Roster].<br>
+      <span class="since">since 5.1.3</span>Click the button to get a dialog to recreate the
+      Decoder Index, as a new decoder file that was copied to the user files /decoder folder
+      might not yet be part of the Index.<br>
+      If that doesn't fix it, report your device on the jmri_users group or create an Issue in
+      GitHub.</p>
+
       <h2>Broadcast LNCV Programming</h2>
 
       <p>Older LNCV devices may not have their own address, or even no article ID. They can be
@@ -90,20 +105,21 @@
       <p>Using the universal address 65535 (or simply leaving the Article field empty) you can, as
       the name suggests, call up all LNCV Adapters that want to respond (not all do).<br>
       As the universal address is not valid for addressing specific modules, it can only be used to
-      call up an individual adapter for which the address is unknown. For this you connect the said
+      call up an individual adapter for which the address is unknown. For this you connect ONLY the said
       adapter to the LocoNet. The adapter can then be called up and its address read from LNCV
       0.<br>
       By only filling in an Article number (and leaving the address field empty) you can send a
       Broadcast call to all devices of that specific type, and many devices will respond by
-      providing their DCC address, which will be added to the table. Once you have the report back
-      from the layout, click [Close Broadcast Session] to exit the general access.<br>
+      providing their DCC address, which will be added to the table.</p>
+      <p>Once you have the report back from the layout, click [Close Broadcast Session] to exit the
+      general access.<br>
       Click on one of the rows to copy the address to the top, and click [Start Module Programming]
       to continue.</p>
 
       <h2>Direct Mode</h2>
 
       <p>Check the 'Direct Mode' checkbox to access 16 state buttons to set LEDs etc. on
-      Track-Control items.</p>
+      Uhlenbrock Track-Control items.</p>
 
       <h2>LNCV Decoder definitions</h2>
       With an LNCV Module Programming session (to a specific device) running, you can use the

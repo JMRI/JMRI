@@ -4,17 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
+
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
 import jmri.NamedBean.DisplayOptions;
+import jmri.util.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,9 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     // the associated Memory object
     private NamedBeanHandle<Memory> namedMemory;
 
+    private final java.awt.event.MouseListener _mouseListener = JmriMouseListener.adapt(this);
+    private final java.awt.event.MouseMotionListener _mouseMotionListener = JmriMouseMotionListener.adapt(this);
+
     public MemoryInputIcon(int nCols, Editor editor) {
         super(editor);
         _nCols = nCols;
@@ -53,8 +58,8 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             }
         });
         _textBox.setColumns(_nCols);
-        _textBox.addMouseMotionListener(this);
-        _textBox.addMouseListener(this);
+        _textBox.addMouseMotionListener(_mouseMotionListener);
+        _textBox.addMouseListener(_mouseListener);
         setPopupUtility(new PositionablePopupUtil(this, _textBox));
     }
 
@@ -75,7 +80,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     @Override
-    public void mouseExited(java.awt.event.MouseEvent e) {
+    public void mouseExited(JmriMouseEvent e) {
         updateMemory();
         super.mouseExited(e);
     }
@@ -158,7 +163,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
+    public void mouseMoved(JmriMouseEvent e) {
         updateMemory();
     }
 
@@ -248,8 +253,8 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             getMemory().removePropertyChangeListener(this);
         }
         if (_textBox != null) {
-            _textBox.removeMouseMotionListener(this);
-            _textBox.removeMouseListener(this);
+            _textBox.removeMouseMotionListener(_mouseMotionListener);
+            _textBox.removeMouseListener(_mouseListener);
         }
         namedMemory = null;
     }

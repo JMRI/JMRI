@@ -32,9 +32,9 @@ public class IdTagTest {
 
     }
 
-    class TestIdTag extends jmri.implementation.AbstractNamedBean implements IdTag,Reportable {
+    private static class TestIdTag extends jmri.implementation.AbstractNamedBean implements IdTag,Reportable {
 
-       public TestIdTag(String systemName){
+       private TestIdTag(String systemName){
            super(systemName);
        }
 

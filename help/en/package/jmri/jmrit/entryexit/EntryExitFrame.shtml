@@ -83,15 +83,15 @@
 
         <li><strong>NX Type</strong> &mdash; The selected NX type for the NX sensor pair.</li>
 
-        <li><strong>Disabled</strong> &mdash; When checked, the NX pair is Inactive. Attempts to create a
-        route will result in a error dialog.</li>
+        <li><strong>Disabled</strong> &mdash; When checked, the NX pair is Inactive. Attempts to
+        create a route will result in a error dialog.</li>
       </ul>
 
       <h2>NX Options</h2>
 
-      <p><img src="images/NxOptionsPane.png" width="392" height="304" alt="NX Options Window"
-      class="floatRight">While the Entry/Exit (NX) Tools is displayed, its Options menu allows you
-      to set shared settings for the tool.<br>
+      <p><img src="images/NxOptionsPane.png" alt="NX Options Window" class="floatRight">While the
+      Entry/Exit (NX) Tools is displayed, its Options menu allows you to set shared settings for the
+      tool.<br>
       The <strong>Entry Exit Options</strong> pane contains the following items:</p>
 
       <p><strong>Route Reselection Result</strong> &mdash; Determines what should occur when the NX route
@@ -140,6 +140,10 @@
 
       <p><strong>Duration of setting Color (ms)</strong> &mdash; How long the initial color will be
       displayed for after the route has initially been selected.</p>
+
+      <p><span class="since">since 5.1.3</span><strong>Use ABS Signal Mode</strong> &mdash; The
+      default setting for Entry/Exit is to set the signals to <strong><em>held</em></strong> when
+      the NX pair is not active.  If the ABS mode is enabled, the signals are not held.</p>
 
       <p><strong>Integrate with Dispatcher</strong> &mdash; Select this option if the NX route is to
       extend the path of an <strong>Active Train</strong> in the <a href=

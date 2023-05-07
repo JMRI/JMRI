@@ -88,30 +88,10 @@
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="206" y="225" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-238.gif" degrees="90" scale="1.0">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="146" y="225" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-238.gif" degrees="0" scale="1.0">
-        <rotation>1</rotation>
-      </icon>
-    </positionablelabel>
     <positionablelabel x="271" y="229" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="BN-1989/SL-2-high/rule-238.gif" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <positionablelabel x="85" y="182" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/RGB-animated-once-Square.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="145" y="182" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/RGB-animated-once-Square2.gif" degrees="90" scale="1.0">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="205" y="182" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/RGB-animated-once-Square2.gif" degrees="0" scale="1.0">
-        <rotation>1</rotation>
       </icon>
     </positionablelabel>
     <positionablelabel x="269" y="182" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="RGB-animated-once-Square" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />

@@ -312,7 +312,7 @@ public class LocoNetMessageTest {
     @Test
     public void testToMonitorString() {
         LocoNetMessage m = new LocoNetMessage(new int[] {0xB2, 0x15, 0x63, 0x72});
-        Assert.assertEquals("no LocoNet Sensor Manager installed yet", "Sensor LS812 () is Low.  (BDL16 # 51, DS12; DS54/DS64 # 102, SwiB/S2).\n", m.toMonitorString());
+        Assert.assertEquals("no LocoNet Sensor Manager installed yet", "Sensor LS812 is Low\n", m.toMonitorString());
 
         m = new LocoNetMessage(new int[] {0xb2, 0x1E, 0x47, 0x00});
 
@@ -330,21 +330,21 @@ public class LocoNetMessageTest {
 
         LnSensor s1 = (LnSensor) lnsm.provideSensor("LS1853");
         LnSensor s2 = (LnSensor) lnsm2.provideSensor("L2S1853");
-        Assert.assertEquals("Sensor LS1853 () is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString());
-        Assert.assertEquals("Sensor LS1853 () is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L"));
-        Assert.assertEquals("Sensor L2S1853 () is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L2"));
+        Assert.assertEquals("Sensor LS1853 is Low\n", m.toMonitorString());
+        Assert.assertEquals("Sensor LS1853 is Low\n", m.toMonitorString("L"));
+        Assert.assertEquals("Sensor L2S1853 is Low\n", m.toMonitorString("L2"));
 
         s1.setUserName("grime");
 
-        Assert.assertEquals("Sensor LS1853 (grime) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString());
-        Assert.assertEquals("Sensor LS1853 (grime) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L"));
-        Assert.assertEquals("Sensor L2S1853 () is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L2"));
+        Assert.assertEquals("Sensor LS1853 (grime) is Low\n", m.toMonitorString());
+        Assert.assertEquals("Sensor LS1853 (grime) is Low\n", m.toMonitorString("L"));
+        Assert.assertEquals("Sensor L2S1853 is Low\n", m.toMonitorString("L2"));
 
         s2.setUserName("brightly");
 
-        Assert.assertEquals("Sensor LS1853 (grime) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString());
-        Assert.assertEquals("Sensor LS1853 (grime) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L"));
-        Assert.assertEquals("Sensor L2S1853 (brightly) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L2"));
+        Assert.assertEquals("Sensor LS1853 (grime) is Low\n", m.toMonitorString());
+        Assert.assertEquals("Sensor LS1853 (grime) is Low\n", m.toMonitorString("L"));
+        Assert.assertEquals("Sensor L2S1853 (brightly) is Low\n", m.toMonitorString("L2"));
 
         lntm.dispose();
         lntm2.dispose();
@@ -473,6 +473,9 @@ public class LocoNetMessageTest {
     }
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "BIT_AND",
+        justification = "Would be good to simplify the Bitwise masks, though "
+        + "tests pass with current logic.")
     public void testsetElement() {
 
         LocoNetMessage m = new LocoNetMessage(20);

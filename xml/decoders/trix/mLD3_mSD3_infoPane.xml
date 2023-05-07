@@ -16,12 +16,14 @@
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Information</name>
   <name xml:lang="it">Informazioni</name>
+  <name xml:lang="cs">Informace</name>
   <column>
     <separator/>
     <label>
       <text>Märklin Decoder Information</text>
       <text xml:lang="fr">Information Décodeur Märklin</text>
       <text xml:lang="it">Informazioni Decoder Märklin</text>
+      <text xml:lang="cs">Informace o dekodéru Märklin</text>
     </label>
     <label>
       <text> </text>
@@ -36,6 +38,7 @@
         <text xml:lang="de">Decoder-Typ </text>
         <text xml:lang="fr">Type Décodeur </text>
         <text xml:lang="it">Tipo di Decoder </text>
+        <text xml:lang="cs">Typ dekodéru</text>
       </label>
       <display item="Decoder Type Byte 1" label=""/>
       <display item="Decoder Type Byte 2" label=""/>
@@ -55,6 +58,7 @@
         <text xml:lang="de">Firmware-Version </text>
         <text xml:lang="fr">Version du Firmware </text>
         <text xml:lang="it">Versione del Firmware </text>
+        <text xml:lang="cs">Verze firmware</text>
       </label>
       <display item="Firmware Version Byte 1" label=""/>
       <label><text>.</text></label>

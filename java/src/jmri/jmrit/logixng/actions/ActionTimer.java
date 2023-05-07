@@ -12,7 +12,7 @@ import jmri.util.TimerUtil;
 
 /**
  * Executes an action after some time.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2019
  */
 public class ActionTimer extends AbstractDigitalAction
@@ -21,7 +21,7 @@ public class ActionTimer extends AbstractDigitalAction
     public static final int EXPRESSION_START = 0;
     public static final int EXPRESSION_STOP = 1;
     public static final int NUM_STATIC_EXPRESSIONS = 2;
-    
+
     private String _startExpressionSocketSystemName;
     private String _stopExpressionSocketSystemName;
     private final FemaleDigitalExpressionSocket _startExpressionSocket;
@@ -32,12 +32,13 @@ public class ActionTimer extends AbstractDigitalAction
     private TimerState _timerState = TimerState.Off;
     private boolean _startImmediately = false;
     private boolean _runContinuously = false;
+    private boolean _startAndStopByStartExpression = false;
     private TimerUnit _unit = TimerUnit.MilliSeconds;
     private long _currentTimerDelay = 0;
     private long _currentTimerStart = 0;
     private boolean _startIsActive = false;
-    
-    
+
+
     public ActionTimer(String sys, String user) {
         super(sys, user);
         _startExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
@@ -48,7 +49,7 @@ public class ActionTimer extends AbstractDigitalAction
                 .add(new ActionEntry(InstanceManager.getDefault(DigitalActionManager.class)
                         .createFemaleSocket(this, this, getNewSocketName())));
     }
-    
+
     public ActionTimer(String sys, String user,
             List<Map.Entry<String, String>> expressionSystemNames,
             List<ActionData> actionDataList)
@@ -60,7 +61,7 @@ public class ActionTimer extends AbstractDigitalAction
                 .createFemaleSocket(this, this, Bundle.getMessage("ActionTimerSocketStop"));
         setActionData(actionDataList);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -75,20 +76,21 @@ public class ActionTimer extends AbstractDigitalAction
         }
         copy.setStartImmediately(_startImmediately);
         copy.setRunContinuously(_runContinuously);
+        copy.setStartAndStopByStartExpression(_startAndStopByStartExpression);
         copy.setUnit(_unit);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
     private void setActionData(List<ActionData> actionDataList) {
         if (!_actionEntries.isEmpty()) {
             throw new RuntimeException("action system names cannot be set more than once");
         }
-        
+
         for (ActionData data : actionDataList) {
             FemaleDigitalActionSocket socket =
                     InstanceManager.getDefault(DigitalActionManager.class)
                             .createFemaleSocket(this, this, data._socketName);
-            
+
             _actionEntries.add(new ActionEntry(data._delay, socket, data._socketSystemName));
         }
     }
@@ -120,7 +122,7 @@ public class ActionTimer extends AbstractDigitalAction
             }
         };
     }
-    
+
     private void scheduleTimer(long delay) {
         synchronized(this) {
             if (_timerTask != null) {
@@ -131,7 +133,7 @@ public class ActionTimer extends AbstractDigitalAction
         _timerTask = getNewTimerTask();
         TimerUtil.schedule(_timerTask, delay);
     }
-    
+
     private void schedule() {
         synchronized(this) {
             ActionEntry ae = _actionEntries.get(_currentTimer);
@@ -141,16 +143,16 @@ public class ActionTimer extends AbstractDigitalAction
             scheduleTimer(ae._delay * _unit.getMultiply());
         }
     }
-    
+
     private boolean start() throws JmriException {
         boolean lastStartIsActive = _startIsActive;
         _startIsActive = _startExpressionSocket.isConnected() && _startExpressionSocket.evaluate();
         return _startIsActive && !lastStartIsActive;
     }
-    
+
     private boolean checkStart() throws JmriException {
         if (start()) _timerState = TimerState.RunNow;
-        
+
         if (_timerState == TimerState.RunNow) {
             synchronized(this) {
                 if (_timerTask != null) {
@@ -173,13 +175,20 @@ public class ActionTimer extends AbstractDigitalAction
             _timerState = TimerState.Off;
             return true;
         }
-        
+
         return false;
     }
-    
+
     private boolean stop() throws JmriException {
-        if (_stopExpressionSocket.isConnected()
-                && _stopExpressionSocket.evaluate()) {
+        boolean stop;
+
+        if (_startAndStopByStartExpression) {
+            stop = _startExpressionSocket.isConnected() && !_startExpressionSocket.evaluate();
+        } else {
+            stop = _stopExpressionSocket.isConnected() && _stopExpressionSocket.evaluate();
+        }
+
+        if (stop) {
             synchronized(this) {
                 if (_timerTask != null) _timerTask.stopTimer();
                 _timerTask = null;
@@ -189,24 +198,27 @@ public class ActionTimer extends AbstractDigitalAction
         }
         return false;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        if (stop()) return;
-        
+        if (stop()) {
+            _startIsActive = false;
+            return;
+        }
+
         if (checkStart()) return;
-        
+
         if (_timerState == TimerState.Off) return;
         if (_timerState == TimerState.Running) return;
-        
+
         int startTimer = _currentTimer;
         while (_timerState == TimerState.Completed) {
             // If the timer has passed full time, execute the action
             if ((_timerState == TimerState.Completed) && _actionEntries.get(_currentTimer)._socket.isConnected()) {
                 _actionEntries.get(_currentTimer)._socket.execute();
             }
-            
+
             // Move to them next timer
             _currentTimer++;
             if (_currentTimer >= _actionEntries.size()) {
@@ -216,13 +228,13 @@ public class ActionTimer extends AbstractDigitalAction
                     return;
                 }
             }
-            
+
             ActionEntry ae = _actionEntries.get(_currentTimer);
             if (ae._delay > 0) {
                 schedule();
                 return;
             }
-            
+
             if (startTimer == _currentTimer) {
                 // If we get here, all timers has a delay of 0 ms
                 _timerState = TimerState.Off;
@@ -238,7 +250,7 @@ public class ActionTimer extends AbstractDigitalAction
     public int getDelay(int actionSocket) {
         return _actionEntries.get(actionSocket)._delay;
     }
-    
+
     /**
      * Set the delay.
      * @param actionSocket the socket
@@ -247,15 +259,15 @@ public class ActionTimer extends AbstractDigitalAction
     public void setDelay(int actionSocket, int delay) {
         _actionEntries.get(actionSocket)._delay = delay;
     }
-    
+
     /**
      * Get if to start immediately
      * @return true if to start immediately
      */
-    public boolean getStartImmediately() {
+    public boolean isStartImmediately() {
         return _startImmediately;
     }
-    
+
     /**
      * Set if to start immediately
      * @param startImmediately true if to start immediately
@@ -263,15 +275,15 @@ public class ActionTimer extends AbstractDigitalAction
     public void setStartImmediately(boolean startImmediately) {
         _startImmediately = startImmediately;
     }
-    
+
     /**
      * Get if run continuously
      * @return true if run continuously
      */
-    public boolean getRunContinuously() {
+    public boolean isRunContinuously() {
         return _runContinuously;
     }
-    
+
     /**
      * Set if run continuously
      * @param runContinuously true if run continuously
@@ -279,7 +291,23 @@ public class ActionTimer extends AbstractDigitalAction
     public void setRunContinuously(boolean runContinuously) {
         _runContinuously = runContinuously;
     }
-    
+
+    /**
+     * Is both start and stop is controlled by the start expression.
+     * @return true if to start immediately
+     */
+    public boolean isStartAndStopByStartExpression() {
+        return _startAndStopByStartExpression;
+    }
+
+    /**
+     * Set if both start and stop is controlled by the start expression.
+     * @param startAndStopByStartExpression true if to start immediately
+     */
+    public void setStartAndStopByStartExpression(boolean startAndStopByStartExpression) {
+        _startAndStopByStartExpression = startAndStopByStartExpression;
+    }
+
     /**
      * Get the unit
      * @return the unit
@@ -287,7 +315,7 @@ public class ActionTimer extends AbstractDigitalAction
     public TimerUnit getUnit() {
         return _unit;
     }
-    
+
     /**
      * Set the unit
      * @param unit the unit
@@ -295,7 +323,7 @@ public class ActionTimer extends AbstractDigitalAction
     public void setUnit(TimerUnit unit) {
         _unit = unit;
     }
-    
+
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         if (index == EXPRESSION_START) return _startExpressionSocket;
@@ -350,7 +378,12 @@ public class ActionTimer extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionTimer_Long");
+        if (_startAndStopByStartExpression) {
+            return Bundle.getMessage(locale, "ActionTimer_Long2",
+                    Bundle.getMessage("ActionTimer_StartAndStopByStartExpression"));
+        } else {
+            return Bundle.getMessage(locale, "ActionTimer_Long");
+        }
     }
 
     public FemaleDigitalExpressionSocket getStartExpressionSocket() {
@@ -380,11 +413,11 @@ public class ActionTimer extends AbstractDigitalAction
     public int getNumActions() {
         return _actionEntries.size();
     }
-    
+
     public void setNumActions(int num) {
         List<FemaleSocket> addList = new ArrayList<>();
         List<FemaleSocket> removeList = new ArrayList<>();
-        
+
         // Is there too many children?
         while (_actionEntries.size() > num) {
             ActionEntry ae = _actionEntries.get(num);
@@ -394,7 +427,7 @@ public class ActionTimer extends AbstractDigitalAction
             removeList.add(_actionEntries.get(_actionEntries.size()-1)._socket);
             _actionEntries.remove(_actionEntries.size()-1);
         }
-        
+
         // Is there not enough children?
         while (_actionEntries.size() < num) {
             FemaleDigitalActionSocket socket =
@@ -405,7 +438,7 @@ public class ActionTimer extends AbstractDigitalAction
         }
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, addList);
     }
-    
+
     public FemaleDigitalActionSocket getActionSocket(int socket) {
         return _actionEntries.get(socket)._socket;
     }
@@ -425,7 +458,7 @@ public class ActionTimer extends AbstractDigitalAction
             if ( !_startExpressionSocket.isConnected()
                     || !_startExpressionSocket.getConnectedSocket().getSystemName()
                             .equals(_startExpressionSocketSystemName)) {
-                
+
                 String socketSystemName = _startExpressionSocketSystemName;
                 _startExpressionSocket.disconnect();
                 if (socketSystemName != null) {
@@ -442,11 +475,11 @@ public class ActionTimer extends AbstractDigitalAction
             } else {
                 _startExpressionSocket.getConnectedSocket().setup();
             }
-            
+
             if ( !_stopExpressionSocket.isConnected()
                     || !_stopExpressionSocket.getConnectedSocket().getSystemName()
                             .equals(_stopExpressionSocketSystemName)) {
-                
+
                 String socketSystemName = _stopExpressionSocketSystemName;
                 _stopExpressionSocket.disconnect();
                 if (socketSystemName != null) {
@@ -464,7 +497,7 @@ public class ActionTimer extends AbstractDigitalAction
             } else {
                 _stopExpressionSocket.getConnectedSocket().setup();
             }
-            
+
             for (ActionEntry ae : _actionEntries) {
                 if ( !ae._socket.isConnected()
                         || !ae._socket.getConnectedSocket().getSystemName()
@@ -493,7 +526,7 @@ public class ActionTimer extends AbstractDigitalAction
             throw new RuntimeException("socket is already connected");
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
@@ -506,7 +539,7 @@ public class ActionTimer extends AbstractDigitalAction
             _listenersAreRegistered = true;
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
@@ -519,7 +552,7 @@ public class ActionTimer extends AbstractDigitalAction
         }
         _listenersAreRegistered = false;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
@@ -528,39 +561,39 @@ public class ActionTimer extends AbstractDigitalAction
             _timerTask = null;
         }
     }
-    
-    
+
+
     private static class ActionEntry {
         private int _delay;
         private String _socketSystemName;
         private final FemaleDigitalActionSocket _socket;
-        
+
         private ActionEntry(int delay, FemaleDigitalActionSocket socket, String socketSystemName) {
             _delay = delay;
             _socketSystemName = socketSystemName;
             _socket = socket;
         }
-        
+
         private ActionEntry(FemaleDigitalActionSocket socket) {
             this._socket = socket;
         }
-        
+
     }
-    
-    
+
+
     public static class ActionData {
         private int _delay;
         private String _socketName;
         private String _socketSystemName;
-        
+
         public ActionData(int delay, String socketName, String socketSystemName) {
             _delay = delay;
             _socketName = socketName;
             _socketSystemName = socketSystemName;
         }
     }
-    
-    
+
+
     private enum TimerState {
         Off,
         RunNow,
@@ -568,8 +601,8 @@ public class ActionTimer extends AbstractDigitalAction
         Running,
         Completed,
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTimer.class);
 
 }

@@ -18,7 +18,7 @@
 
       <div class="noted">
         <span class="since">since 4.23.3</span>
-        <p>Note: The PanelPro main menu is being changed. See <a href=
+        <p>Note: The PanelPro main menu has changed. See <a href=
         "../LoadStoreWork.shtml">Loading and Storing Your Work</a> for details. The menu references
         below are for the new menu structure with the old menu paths in braces.</p>
       </div>
@@ -35,10 +35,11 @@
         <dt>File</dt>
 
         <dd>
-          The PanelPro tables and panels are stored in a XML data file. There are menu entries for
+          The PanelPro tables and panels are stored in an XML data file. There are menu entries for
           loading and storing this content. See <a href="../LoadStoreWork.shtml">Loading and
-          Storing Your Work</a> for details. There are also options for printing decoder
-          information.
+          Storing Your Work</a> for important details.<br>
+          There are also options for <a href="../DecoderPro/Roster.shtml#summary">printing decoder
+          information</a>.
         </dd>
 
         <dt>Edit</dt>
@@ -54,7 +55,7 @@
         <dd>
           Most of the PanelPro features are included in the Tools menu items and sub-menus. See
           <a href="ToolsMenu.shtml">Tools Menu</a>. For an overview of the PanelPro tools, see
-          <a href="../../tools">PanelPro Tools</a>.
+          <a href="../../tools/">PanelPro Tools</a>.
         </dd>
 
         <dt>Roster</dt>
@@ -72,7 +73,7 @@
         <dd>
           JMRI can be extended by using scripting. The Scripting menu has items for creating,
           running and displaying scripts. For details on scripting, see <a href=
-          "../../tools/scripting">Scripting</a>
+          "../../tools/scripting/">Scripting</a>
         </dd>
 
         <dt>Connections</dt>
@@ -182,9 +183,9 @@
         he used Panel Editor and Layout Editor together.
         </li>
 
-        <li>Our <a href="https://jmri.org/community/examples/Gallery.shtml">Gallery page</a> shows
+        <li>Our <a href="https://www.jmri.org/community/examples/Gallery.shtml">Gallery page</a> shows
         examples of how model railroaders have used panels on their own layouts, including using
-        PanelPro for <a href="https://jmri.org/community/examples/Modules.shtml">Modular
+        PanelPro for <a href="https://www.jmri.org/community/examples/Modules.shtml">Modular
         layouts</a>.
         </li>
 
@@ -264,13 +265,11 @@
       program (image above right).</p>
 
       <p>You can use these tools to configure quite complicated panels for even large layouts. The
-      example above is from <a href="http://kc.pennsyrr.com/layouts/kulp/index.html">Nick Kulp's
+      example above is from <a href="https://cornwallrailroad.blogspot.com/">Nick Kulp's
       Cornwall Railroad</a>. There's a <a href=
-      "https://jmri.org/community/examples/Panels-Cornwall/Cornwall.html">page on the main web
-      site</a> that describes this in detail. There's also a <a href=
-      "http://ownry.squarespace.com/blog/2011/4/7/ctc-dispatcher-panel-on-the-ownry.html?SSScrollPosition=0">
-      page describing the panel</a> for Kent Williams's <a href=
-      "http://ownry.squarespace.com/modelrailroad/">Oregon Washington Navigation & Railway</a>.
+      "https://www.jmri.org/community/examples/Panels-Cornwall/Cornwall.html">page on the main web
+      site</a> that describes this in detail.
+
       Robert Bucklew's Quaker Valley Lines is also building a <a href=
       "http://www.quaker-valley.com/CTC/QV_CTCnew.html">CTC panel</a> using PanelPro.</p>
 

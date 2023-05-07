@@ -487,6 +487,10 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                 PickListModel.memoryPickModelInstance());
         addItemTab(itemPanel, "Memory", "BeanNameMemory");
 
+        itemPanel = new GlobalVariableItemPanel(palette, "Global Variable", null,
+                PickListModel.globalVariablePickModelInstance());
+        addItemTab(itemPanel, "GlobalVariable", "BeanNameGlobalVariable");
+
         itemPanel = new ReporterItemPanel(palette, "Reporter", null,
                 PickListModel.reporterPickModelInstance());
         addItemTab(itemPanel, "Reporter", "BeanNameReporter");

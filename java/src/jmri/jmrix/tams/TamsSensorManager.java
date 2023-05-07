@@ -31,7 +31,11 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
 
     public TamsSensorManager(TamsSystemConnectionMemo memo) {
         super(memo);
-        TamsTrafficController tc = memo.getTrafficController();
+        init();
+    }
+
+    private void init() {
+        TamsTrafficController tc = getMemo().getTrafficController();
         //Connect to the TrafficManager
         tc.addTamsListener(this);
         TamsMessage tm = TamsMessage.setXSR();//auto reset after reading S88
@@ -191,10 +195,10 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public void reply(TamsReply r) {
         //log.debug("ReplyType = " + tm.getReplyType() + ", Binary? = " +  tm.isBinary()+ ", OneByteReply = " + tm.getReplyOneByte());
-        if (TamsTrafficController.replyType == 'S') {//Only handle Sensor events
+        if (getMemo().getTrafficController().replyType == 'S') {//Only handle Sensor events
             log.debug("*** Tams Sensor Reply ***");
-            if (TamsTrafficController.replyBinary) {
-                log.debug("Reply to binary command = {}", r.toString());
+            if ( getMemo().getTrafficController().replyBinary ) {
+                log.debug("Reply to binary command = {}", r );
                 if ((r.getNumDataElements() > 1) && (r.getElement(0) > 0x00)) {
                     // Here we break up a long sensor related TamsReply into individual S88 module status'
                     int numberOfReplies = r.getNumDataElements() / 3;
@@ -273,6 +277,13 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             mask = mask / 2;
         }
         log.debug("sensor decoding is done");
+    }
+
+    @Override
+    public void dispose() {
+        getMemo().getTrafficController().removePollMessage(TamsMessage.getXEvtSen(), this);
+        getMemo().getTrafficController().removeTamsListener(this);
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TamsSensorManager.class);

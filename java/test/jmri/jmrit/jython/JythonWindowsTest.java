@@ -77,7 +77,6 @@ public class JythonWindowsTest {
     @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

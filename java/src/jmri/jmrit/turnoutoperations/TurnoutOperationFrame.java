@@ -4,17 +4,16 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Vector;
+
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
 import jmri.*;
 
 /**
@@ -23,78 +22,60 @@ import jmri.*;
  */
 public class TurnoutOperationFrame extends JDialog {
 
-    TurnoutOperationFrame self = this;
     TurnoutOperationConfig currentConfig = null;
     TurnoutOperation currentOperation = null;
     String previousSelectionName = "";
     JTabbedPane tabPane;
+    private JButton deleteButton;
 
     public TurnoutOperationFrame(Frame parent) {
         super(parent, Bundle.getMessage("TurnoutOperationEditorTitle"));
+        init();
+    }
+
+    private void init() {
         Container contentPane = getContentPane();
-        setSize(400, 165);
+        setMinimumSize(new java.awt.Dimension(400, 165));
         Box outerBox = Box.createVerticalBox();
         contentPane.add(outerBox);
         tabPane = new JTabbedPane();
-        tabPane.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                self.changeTab();
-            }
-        });
+        tabPane.addChangeListener(this::changeTab);
+
         outerBox.add(tabPane);
         Box bottomBox = Box.createHorizontalBox();
         bottomBox.add(Box.createHorizontalGlue());
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(new ActionListener() {
-                                           @Override
-                                           public void actionPerformed(ActionEvent a) {
-                                               setVisible(false);
-                                           }
-                                       }
-        );
+        cancelButton.addActionListener((ActionEvent a) -> {
+            this.dispose();
+        });
         bottomBox.add(cancelButton);
         JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                self.doOK();
-            }
-        }
-        );
+        okButton.addActionListener(this::doOK);
         bottomBox.add(okButton);
-        JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                self.doDelete();
-            }
-        }
-        );
-        bottomBox.add(deleteButton);
         outerBox.add(bottomBox);
+
+        deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+        deleteButton.addActionListener(this::doDelete);
+
         populateTabs();
-        InstanceManager.getDefault(TurnoutOperationManager.class).addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("Content")) {
-                    populateTabs();
-                }
-            }
-        });
-        if (tabPane.getTabCount() > 0) {
-            setVisible(true);
-        }
+        InstanceManager.getDefault(TurnoutOperationManager.class).addPropertyChangeListener(pcl);
+        setVisible(tabPane.getTabCount() > 0);
     }
 
-    private void doOK() {
-        if (currentOperation != null) {
-            currentConfig.endConfigure();
+    private final java.beans.PropertyChangeListener pcl = (PropertyChangeEvent e) -> {
+        if (e.getPropertyName().equals("Content")) {
+            populateTabs();
         }
-        setVisible(false);
+    };
+
+    private void doOK(ActionEvent e) {
+        for(Component tab : tabPane.getComponents()) {
+            ((TurnoutOperationConfig)tab).endConfigure();
+        }
+        dispose();
     }
 
-    private void doDelete() {
+    private void doDelete(ActionEvent e) {
         String query = "";
         if (currentOperation != null && !currentOperation.isDefinitive()) {
             if (currentOperation.isInUse()) {
@@ -111,10 +92,12 @@ public class TurnoutOperationFrame extends JDialog {
 
     private void populateTabs() {
         TurnoutOperation[] operations = InstanceManager.getDefault(TurnoutOperationManager.class).getTurnoutOperations();
+        log.debug("found {} turnoutoperations from TurnoutOperationManager", operations.length);
+
         Component firstPane = null;
         tabPane.removeAll();
-        Vector<TurnoutOperation> definitiveOperations = new Vector<TurnoutOperation>(10);
-        Vector<TurnoutOperation> namedOperations = new Vector<TurnoutOperation>(50);
+        Vector<TurnoutOperation> definitiveOperations = new Vector<>(10);
+        Vector<TurnoutOperation> namedOperations = new Vector<>(50);
         for (int i = 0; i < operations.length; ++i) {
             if (operations[i].isDefinitive()) {
                 definitiveOperations.addElement(operations[i]);
@@ -143,6 +126,7 @@ public class TurnoutOperationFrame extends JDialog {
             op = namedOperations.elementAt(k);
             pane = TurnoutOperationConfig.getConfigPanel(op);
             if (pane != null) {
+                pane.add(deleteButton);
                 tabPane.add(op.getName(), pane);
                 if (op.getName().equals(previousSelectionName)) {
                     tabPane.setSelectedComponent(pane);
@@ -152,10 +136,11 @@ public class TurnoutOperationFrame extends JDialog {
         if (tabPane.getSelectedComponent() == null && firstPane != null) {
             tabPane.setSelectedComponent(firstPane);
         }
-        changeTab();
+        changeTab(null);
+        pack();
     }
 
-    private void changeTab() {
+    private void changeTab( ChangeEvent e) {
         currentConfig = (TurnoutOperationConfig) tabPane.getSelectedComponent();
         if (currentConfig == null) {
             currentOperation = null;
@@ -165,5 +150,14 @@ public class TurnoutOperationFrame extends JDialog {
             previousSelectionName = currentOperation.getName();
         }
     }
+
+    @Override
+    public void dispose() {
+        setVisible(false);
+        InstanceManager.getDefault(TurnoutOperationManager.class).removePropertyChangeListener(pcl);
+        super.dispose();
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutOperationFrame.class);
 
 }

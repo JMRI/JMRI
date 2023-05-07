@@ -121,7 +121,7 @@ public class CbusPredefinedMeters implements CanListener, Disposable {
     
     private class UpdateTask extends MeterUpdateTask {
     
-        public UpdateTask(int interval) {
+        protected UpdateTask(int interval) {
             super(interval);
         }
     
@@ -136,7 +136,7 @@ public class CbusPredefinedMeters implements CanListener, Disposable {
             _eventToListenCurrent = 1; // hard coded at present
             _eventToListenVoltage = 2; // hard coded at present
             _eventToListenCurrentExtra = 3; // hard coded at present
-            CbusNodeTableDataModel cs =  jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
+            CbusNodeTableDataModel cs =  _memo.get(CbusNodeTableDataModel.class);
             if (cs != null) {
                 CbusNode csnode = cs.getCsByNum(0);
                 if (csnode!=null) {

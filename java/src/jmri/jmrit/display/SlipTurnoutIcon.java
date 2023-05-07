@@ -3,6 +3,7 @@ package jmri.jmrit.display;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
@@ -12,6 +13,8 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -858,7 +861,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * @param e the click event
      */
     @Override
-    public void doMouseClicked(java.awt.event.MouseEvent e) {
+    public void doMouseClicked(JmriMouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
             return;
         }

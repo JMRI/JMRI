@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
-import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.LevelXingView;
@@ -9,8 +8,6 @@ import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This module handles configuration for display.LevelXing objects for a
@@ -19,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2019
  */
-public class LevelXingViewXml extends AbstractXmlAdapter {
+public class LevelXingViewXml extends LayoutTrackViewXml {
 
     public LevelXingViewXml() {
     }
@@ -33,10 +30,10 @@ public class LevelXingViewXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
 
-        
+
         LevelXingView lv = (LevelXingView) o;
         LevelXing lt = lv.getLevelXing();
-        
+
         Element element = new Element("levelxing");
 
         // include attributes
@@ -112,6 +109,7 @@ public class LevelXingViewXml extends AbstractXmlAdapter {
             element.addContent(new Element("sensorD").addContent(lt.getSensorDName()));
         }
 
+        storeLogixNG_Data(lv, element);
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml"); // temporary // getClass().getName());
         return element;
     }
@@ -268,6 +266,8 @@ public class LevelXingViewXml extends AbstractXmlAdapter {
                 lt.setSensorDName(sensor);
             }
         }
+
+        loadLogixNG_Data(lv, element);
 
         p.addLayoutTrack(lt, lv);
     }

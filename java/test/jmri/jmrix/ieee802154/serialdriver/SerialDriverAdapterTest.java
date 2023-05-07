@@ -2,7 +2,6 @@ package jmri.jmrix.ieee802154.serialdriver;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,9 +12,10 @@ import org.junit.jupiter.api.*;
 public class SerialDriverAdapterTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testCtor(){
        SerialDriverAdapter a = new SerialDriverAdapter();
-       Assert.assertNotNull(a);
+       Assertions.assertNotNull(a);
+       a.dispose();
    }
 
     @BeforeEach

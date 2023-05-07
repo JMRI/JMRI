@@ -69,7 +69,7 @@ public class GcSerialDriverAdapterTest {
         private final MyInputStream _inputStream;
         private final MyOutputStream _outputStream;
 
-        public MySerialPort(MyInputStream inputStream, MyOutputStream outputStream) {
+        MySerialPort(MyInputStream inputStream, MyOutputStream outputStream) {
             this._inputStream = inputStream;
             this._outputStream = outputStream;
         }

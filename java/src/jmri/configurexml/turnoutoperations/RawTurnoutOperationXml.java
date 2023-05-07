@@ -32,10 +32,10 @@ public class RawTurnoutOperationXml extends CommonTurnoutOperationXml {
                     RawTurnoutOperation.getDefaultIntervalStatic(),
                     RawTurnoutOperation.getDefaultMaxTriesStatic());
         } catch (ClassNotFoundException e1) {
-            log.error("while creating NoFeedbackTurnoutOperation", e1);
+            log.error("while creating RawTurnoutOperation", e1);
             return null;
         } catch (NoSuchMethodException e2) {
-            log.error("while creating NoFeedbackTurnoutOperation", e2);
+            log.error("while creating RawTurnoutOperation", e2);
             return null;
         }
     }

@@ -109,7 +109,7 @@ public class SystemInfo {
         if (!GraphicsEnvironment.isHeadless()) {
             addLine(list, "FileSystemView#getDefaultDirectory()", FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
             addLine(list, "FileSystemView#getHomeDirectory()", FileSystemView.getFileSystemView().getHomeDirectory().getPath());
-            addLine(list, "Default JFileChooser()", new JFileChooser().getCurrentDirectory().getPath());
+            addLine(list, "Default JFileChooser()", new jmri.util.swing.JmriJFileChooser().getCurrentDirectory().getPath());
         }
         addDisplayDimensions(list);
 

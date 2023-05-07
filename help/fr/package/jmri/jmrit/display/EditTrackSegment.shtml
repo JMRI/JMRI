@@ -1,37 +1,24 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-23-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-23-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Edit Track Segment Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help Layout Editor Track Segment">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Editer Segment de Voie</h1>
 
       <h2>Tron&ccedil;ons de Voie et de Points de
-      Raccordement</h2>Un <b>segment de voie</b> est un morceau de
+      Raccordement</h2>
+      <p>Un <b>segment de voie</b> est un morceau de
       voie droite s'&eacute;tendant entre deux points de connexion.
       Les points de raccordement sont dessin&eacute;s comme des
       petits carr&eacute;s rouges ou verts. Les points de connexion
@@ -47,9 +34,10 @@
       connexion a sa capacit&eacute; de connexions compl&egrave;te,
       sa couleur est pass&eacute; au vert. Lorsque tous les points
       de connexion sont verts, un sch&eacute;ma de voie est
-      complet, avec toutes les connexions d&eacute;finies.
+      complet, avec toutes les connexions d&eacute;finies.</p>
 
-      <h2>Styles de Lignes</h2>Les segments de voie sont
+      <h2>Styles de Lignes</h2>
+      <p>Les segments de voie sont
       normalement dessin&eacute;s en traits pleins. Mais vous
       pouvez d&eacute;signer un segment de voie en
       <i>pointill&eacute;s</i> pour montrer les tunnels ou les
@@ -70,9 +58,10 @@
       rang&eacute;e se connecte au d&eacute;but de la m&ecirc;me
       rang&eacute;e ou d'une autre. Pour faire un segment de voie
       cach&eacute;, cochez <b>Masquer la Voie</b> dans la
-      bo&icirc;te de dialogue Modifier segment de voie.
+      bo&icirc;te de dialogue Modifier segment de voie.</p>
 
-      <h2>Voie principale et Voie d'&eacute;vitement</h2>En option,
+      <h2>Voie principale et Voie d'&eacute;vitement</h2>
+      <p>En option,
       les segments de voie sont utilis&eacute;s pour
       d&eacute;signer <i>la voie principale</i> ou <i>la voie
       d'&eacute;vitement</i>. Les segments des aiguillages et des
@@ -80,7 +69,7 @@
       principale</i> ou &agrave; la <i>voie d'&eacute;vitement</i>
       selon les d&eacute;signations des itin&eacute;raires continus
       dans la section aiguillages ci-dessus pour des informations
-      sur une ligne principale suivi d'un aiguillage .
+      sur une ligne principale suivi d'un aiguillage.</p>
 
       <p>Si <b>la Voie Principale</b> est coch&eacute;e dans la
       barre d'outils quand un segment de voie est
@@ -96,7 +85,8 @@
       l'option <b>R&eacute;gler Largeur de Voie...</b> dans le menu
       Options.</p>
 
-      <h2>Cantons de Voie</h2>En option, vous pouvez
+      <h2>Cantons de Voie</h2>
+      <p>En option, vous pouvez
       d&eacute;signer dans quel <b>Canton</b> se trouve un segment
       de voie -soit en entrant un nom de canton dans le
       <b>Canton&gt;: Nom</b> de la barre d'outil avant la
@@ -108,9 +98,11 @@
       l'information pour le segment de voie du canton puisse peut
       &ecirc;tre entr&eacute;e ou modifi&eacute;e. Les cantons sont
       discut&eacute;s plus en d&eacute;tail dans la page d'aide de
-      Cr&eacute;er/Modifier Cantons. 
-      <!--#include virtual="/Footer.shtml" -->
+      Cr&eacute;er/Modifier Cantons. </p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -49,8 +49,7 @@
       <p>The LogixNG Editor table lists all of the currently defined ConditionalNGs.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/LogixNGEditor.png"><img src="images/LogixNGEditor.png" alt="LogixNG Editor"
-        width="1001" height="373"></a>
+        <a href="images/LogixNGEditor.png"><img src="images/LogixNGEditor.png" alt="LogixNG Editor"></a>
       </div>
 
       <dl>
@@ -71,7 +70,8 @@
         <dt>Thread</dt>
 
         <dd>The thread field shows the currently assigned thread name. It is changed by using the
-        <strong>Edit threads</strong> button.</dd>
+        <strong>Edit threads</strong> button. This is particular useful when using the
+        <a href="ConditionalNGDebugger.shtml">LogixNG Debugger</a>.</dd>
 
         <dt>Edit</dt>
 
@@ -79,7 +79,8 @@
 
         <dt>Debug</dt>
 
-        <dd>Advanced feature.</dd>
+        <dd>The LogixNG Debugger allows you to walk thru a ConditionalNG step by step to see what it
+        is actually doing. See <a href="ConditionalNGDebugger.shtml">LogixNG Debugger</a></dd>
 
         <dt>Delete</dt>
 
@@ -88,18 +89,48 @@
           ConditionalNG content. A confirmation dialog will be displayed.
           <div style="margin-left: 2em">
             <a href="images/DeleteConditionalNG.png"><img src="images/DeleteConditionalNG.png" alt=
-            "Delete ConditionalNG Confirmation" width="347" height="126"></a>
+            "Delete ConditionalNG Confirmation"></a>
           </div>
         </dd>
 
-        <dt>Edit threads</dt>
+        <dt id="EditThreads">Edit threads</dt>
 
-        <dd>This is an advanced feature.</dd>
+        <dd><p>LogixNG runs the ConditionalNGs in the <strong>LogixNG</strong> Java thread.  This
+        reduces conflicts with other parts of JMRI.</p>
 
-        <dt>Show startup thread checkbox</dt>
+        <p>The thread for a ConditionalNG can be changed to use a different thread.  This makes it
+        possible to isolate long running or complex ConditionalNGs.  Another use is to use the
+        <strong>Debug</strong> thread when using the <strong>Debug</strong> option.  The Debug
+        option stops the thread for each step.  By using the Debug thread, the other LogixNG
+        ConditionalNGs are not affected.</p>
 
-        <dd>This controls the Thread field display. When unchecked, it displays the main LogixNG
-        thread. If checked, it displays the assigned startup thread.</dd>
+        <p>When the <strong>Edit threads</strong> button is selected, the Thread editor opens.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/EditThreads.png"><img src="images/EditThreads.png" alt=
+          "Edit threads dialog"></a>
+        </div>
+
+        <p>The default <strong>LogixNG</strong> and <strong>Debug</strong> threads are displayed.
+        The <strong>Add thread button</strong> can be
+        used to create new threads.  The threads in the dialog can be used by any ConditionalNG.
+        Unused threads can be deleted using the delete button.</p>
+
+        <p>The <strong>Select thread</strong> button is used to assign a different thread to the
+        current ConditionalNG.  This is NOT a real time change.  The thread is assigned during
+        the layout data file load process.  This means that after a different thread is selected,
+        the layout data has to be stored, PanelPro is stopped and restarted and the layout data file
+        is loaded.</p>
+
+        </dd>
+
+        <dt><strong>Show startup thread</strong> checkbox</dt>
+
+        <dd>When unchecked, the <strong>Thread</strong> column displays the thread assignments for
+        the current PanelPro session.  When checked, the column displays the planned thread
+        assignments for the next PanelPro session. If a thread assignment was changed, a layout data
+        file <strong>Store</strong> needs to occur before stopping PanelPro.</dd>
+
       </dl>
 
       <h2 id="addConditionalNG">Add a ConditionalNG</h2>
@@ -109,7 +140,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/AddConditionalNG.png"><img src="images/AddConditionalNG.png" alt=
-        "Add ConditionalNG" width="603" height="171"></a>
+        "Add ConditionalNG"></a>
       </div>
 
       <p>The system name is required. The system name for a ConditionalNG always begins with the

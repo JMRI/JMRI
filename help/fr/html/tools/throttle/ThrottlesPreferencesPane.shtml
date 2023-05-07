@@ -1,29 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233;  2013-10-04-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233;  2013-10-04-->
 <head>
 	<title>Pr&#233;f&#233;rences R&#233;gulateurs</title>
 	<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
-	<meta name="Description" content="Throttle documentation for JMRI project">
-	<meta name="Author" content="Lionel Jeanson">
-
-	<!-- Style -->
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-	<link rel="icon" href="/images/jmri.ico" type="image/png">
-	<link rel="home" title="Home" href="/">
-	<!-- /Style -->
+	<meta name="description" content="Throttle documentation for JMRI project">
+	<meta name="author" content="Lionel Jeanson">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>Pr&#233;f&#233;rences R&#233;gulateurs</h1>
+      <h1>Pr&#233;f&#233;rences R&#233;gulateurs</h1>
 
 <img src="images/ThrottlesPreferencesPane.png" alt="Throttle Pref pane" >
 
@@ -41,7 +34,6 @@ appliqu&#233;e ou sauv&#233;s.
 	les r&#233;glages seront charg&#233;s automatiquement au prochain d&#233;marrage du JMRI.</li>
 	</ul>
 
-
 <h2>Utilisez le R&#233;gulateur &#233;tendu </h2>
 
 Ce r&#233;glage activera/d&#233;sactivera toutes les fonctionnalit&#233;s &#233;tendues des r&#233;gulateurs.
@@ -55,14 +47,14 @@ transparence. <br>
  sur OS X, mais Linux et Windows peuvent aussi fonctionner, cela varie compl&#232;tement
 suivant l'interface actuelle Java (modifiable dans pr&#233;f&#233;rences principales JMRI ) </span>
 
- <h2> Utiliser l'image de l'Inventaire comme fond </h2>
+<h2> Utiliser l'image de l'Inventaire comme fond </h2>
 
 Quand un inventaire est s&#233;lectionn&#233;e, l'image d&#233;finie dans son <a href="RostersMediaPane.shtml"> Panneau des m&#233;dias </a> 
 sera charg&#233;e comme un fond pour la fen&#234;tre du r&#233;gulateur. <br>
 
 Lorsque cette option est activ&#233;e et l'adresse s&#233;lectionn&#233;e est 0 ou 3, une image par d&#233;faut sera charg&#233;e.
 
- <h2>Redimensionner la fen&#234;tre &#224; la taille de l'image </h2>
+<h2>Redimensionner la fen&#234;tre &#224; la taille de l'image </h2>
 
 Quand une image de fond est charg&#233;e pour le r&#233;gulateur actuel, cela va forcer la taille de la Fen&#234;tre du R&#233;gulateur 
 &#224; celle de cette image.
@@ -95,17 +87,20 @@ d&#233;crit.<br>
 Quand une liste est s&#233;lectionn&#233;e, les boutons des panneaux d'adresse sont initialis&#233;s comme
 d&#233;finis dans le panneau de Fonctions dans DecoderPro, si cette option est activ&#233;e,
 les boutons non d&#233;finis (pas de texte) dans PanelPro seront automatiquement cach&#233;s dans le
-<a href="BasicThrottleWindow.shtml">Panneau Fonction </a>. <br>
+<a href="BasicThrottleWindow.shtml">Panneau Fonction </a>.<br>
 
-<span style="font-style: italic;"> Remarque: vous pouvez r&#233;initialiser la visibilit&#233; des Boutons de Fonctions dans une F&#234;tre r&#233;gulateur en allant dans le Menu Afficher <a href="ThrottleWindowMenus.shtml"> et cliquer sur "afficher tous les boutons de fonction" </a>. </span> <br>
+<span style="font-style: italic;"> Remarque: vous pouvez r&#233;initialiser la visibilit&#233; des Boutons de Fonctions
+dans une F&#234;tre r&#233;gulateur en allant dans le Menu Afficher <a href="ThrottleWindowMenus.shtml">
+et cliquer sur "afficher tous les boutons de fonction" </a>.</span>
 
 <h2>Activer la barre d'outils papillon </h2>
 
-Cette option activera une <a  href="ThrottleToolBar.shtml">Barre d'Outils qui
-appara&#238;tra dans toutes les Fen&#234;tres R&#233;gulateurs </a>.
+<p>Cette option activera une <a  href="ThrottleToolBar.shtml">Barre d'Outils qui
+  appara&#238;tra dans toutes les Fen&#234;tres R&#233;gulateurs</a>.</p>
 
-<!--#include virtual="/Footer.shtml" -->
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -2,18 +2,39 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
+<!-- version 1.2 - Ronald Kuhn - extend description for Uncoupler  -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Shunt/Uncouple</name>
   <name xml:lang="it">Manovra/sgancio</name>
   <name xml:lang="cs">Posun/rozpojovač</name>
   <name xml:lang="de">Rangieren/Entkuppeln</name>
   <column>
+    <row>
     <display item="Shunting"/>
+    </row>
     <label>
       <text> </text>
     </label>
+    <row>
     <display item="Shunt Function Key" tooltip="+ 6"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
     <display item="Shunt Function Key Extension"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+     <qualifier>
+      <variableref>Product Number</variableref>
+       <relation>ge</relation>
+        <value>18</value>
+      </qualifier>
+    <display item="Suppression automatic light change"/>
+    </row>
     <label>
       <text> </text>
     </label>
@@ -33,7 +54,22 @@
     </label>
     <row>
       <column>
+       <row>
+       <qualifier>
+        <variableref>Product Number</variableref>
+         <relation>le</relation>
+        <value>5</value>
+       </qualifier>
         <display item="Uncoupler"/>
+       </row>
+       <row>
+       <qualifier>
+        <variableref>Product Number</variableref>
+         <relation>ge</relation>
+        <value>18</value>
+       </qualifier>
+        <display item="Uncoupler gt5"/>
+       </row>
         <label>
           <text> </text>
         </label>
@@ -47,6 +83,17 @@
       <column>
         <label>
           <text> </text>
+        </label>
+        <label>
+    <qualifier>
+      <variableref>Product Number</variableref>
+      <relation>ge</relation>
+      <value>18</value>
+    </qualifier>
+          <text>Hundreds digit defines waiting time between opening the coupling and driving away (0=0,3s / 1=2,5s / 2=1,0s) (if CV#65 ≥ 18)</text>
+          <text xml:lang="it">Le centinaia di cifre definiscono il tempo di attesa tra l'apertura del giunto e la partenza (0=0,3s / 1=2,5s / 2=1,0s) (CV#65 ≥ 18)</text>
+          <text xml:lang="cs">Stovky číslic definují čekací dobu mezi otevřením spojky a rozjezdem (0=0,3s / 1=2,5s / 2=1,0s) (CV#65 ≥ 18)</text>
+          <text xml:lang="de">Hunderterstelle = Wartezeit zwischen Kupplung öffnen und Wegfahren (0=0,3s / 1=2,5s / 2=1,0s) (ab CV#65 ≥ 18)</text>
         </label>
         <label>
           <text>Tens digit = Pull In time (0-9)</text>

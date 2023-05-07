@@ -11,7 +11,7 @@ import org.junit.jupiter.api.*;
  */
 public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
        
-    private EasyDccSystemConnectionMemo memo;
+    private EasyDccSystemConnectionMemo memo = null;
 
     @Override
     @BeforeEach
@@ -60,8 +60,9 @@ public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortCont
     @Override
     @AfterEach
     public void tearDown(){
-       memo.getTrafficController().terminateThreads();
-       JUnitUtil.tearDown();
+        Assertions.assertNotNull(memo);
+        memo.getTrafficController().terminateThreads();
+        JUnitUtil.tearDown();
     }
 
 }

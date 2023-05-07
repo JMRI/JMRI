@@ -97,6 +97,7 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
         try {
             message = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
             result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+            assertNotNull(result);
             fail("Expected exceiton not thrown");
         } catch (JsonException ex) {
             assertEquals("Error code is HTTP 400", 400, ex.getCode());

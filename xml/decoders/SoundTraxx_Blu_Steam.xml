@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2016</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Michael</firstname>
+                <surname>Mosher</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2022-12-01</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>New file, based on TSU2 Steam file with var changed to linked file for both BLU and TSU2</revremark>
+        </revision>
+    </revhistory>
+    <!-- Decoder Model information follows -->
+    <decoder>
+        <family name="Blunami Steam" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" comment="These are the -retail- version Blunami Steam decoders">
+            <model model="BLU-2200 Steam-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="346" comment="Model 884607">
+                <size length="41.9" width="18.8" height="6.8" units="mm"/>
+            </model>
+            <output name="3" label="  FX3  "/>
+            <output name="4" label="  FX4  "/>
+            <output name="5" label="Whistle| ">
+                <label xml:lang="it">Fischio| </label>
+            </output>
+            <output name="6" label="Bell| ">
+                <label xml:lang="it">Campana| </label>
+            </output>
+            <output name="7" label="Dynamo| ">
+                <label xml:lang="it">Dynamo| </label>
+            </output>
+            <output name="8" label="Short|Whistle">
+                <label xml:lang="it">Breve|Tromba</label>
+            </output>
+            <output name="9" label="Cylinder|Cocks">
+                <label xml:lang="it">Cilindro|Cazzi</label>
+            </output>
+            <output name="10" label="Water|Stop">
+                <label xml:lang="it">Acqua|Stop</label>
+            </output>
+            <output name="11" label="Dimming| ">
+                <label xml:lang="it">Smorzam| </label>
+            </output>
+            <output name="12" label="Mute| ">
+                <label xml:lang="it">Silenzio| </label>
+            </output>
+            <output name="13" label="|"/>	<!-- Not used for for this decoder -->
+            <output name="14" label="Brakes| "/>
+            <output name="15" label="Coupler| ">
+                <label xml:lang="it">Accoppiatore| </label>
+            </output>
+            <functionlabels>
+                <functionlabel num="0" lockable="true">Headlight</functionlabel>
+                <functionlabel num="1" lockable="true">Bell</functionlabel>
+                <functionlabel num="2" lockable="false">Whistle</functionlabel>
+                <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
+                <functionlabel num="4" lockable="true">Cylinder Cocks</functionlabel>
+                <functionlabel num="5" lockable="true">Cutoff+</functionlabel>
+                <functionlabel num="6" lockable="true">Cutoff-</functionlabel>
+                <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+                <functionlabel num="8" lockable="true">Mute</functionlabel>
+                <functionlabel num="9" lockable="true">Xing Signal</functionlabel>
+                <functionlabel num="10" lockable="true">Blowdown</functionlabel>
+                <functionlabel num="11" lockable="true">Ind/Train Brake</functionlabel>
+                <functionlabel num="12" lockable="true">Brake Select</functionlabel>
+                <functionlabel num="13" lockable="true">Coupler</functionlabel>
+                <functionlabel num="14" lockable="true">Half Speed</functionlabel>
+                <functionlabel num="15" lockable="true">Wheel Chains</functionlabel>
+                <functionlabel num="16" lockable="true">Water Stop</functionlabel>
+                <functionlabel num="17" lockable="true">Fuel Loading</functionlabel>
+                <functionlabel num="18" lockable="true">Ash Dump</functionlabel>
+                <functionlabel num="19" lockable="true">Wheel Slip</functionlabel>
+                <functionlabel num="20" lockable="true">Injector</functionlabel>
+                <functionlabel num="21" lockable="true">Sander Valve</functionlabel>
+                <functionlabel num="22" lockable="true">Cab Chatter</functionlabel>
+                <functionlabel num="23" lockable="true">All Aboard</functionlabel>
+                <functionlabel num="24" lockable="true">FX3 Output</functionlabel>
+                <functionlabel num="25" lockable="true">FX4 Output</functionlabel>
+                <functionlabel num="26" lockable="true">FX5 Output</functionlabel>
+                <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
+                <functionlabel num="28" lockable="true">FX7,8 Output</functionlabel>
+            </functionlabels>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter>
+                <parameter name="SI">32</parameter>
+                <parameter name="cvFirst">false</parameter>
+            </capability>
+        </programming>
+        <!-- Configuration Variable (CV) information follows -->
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/soundtraxx/SoundTraxx_Blu_Tsu2_Steam_cv.xml"/>
+        </variables>
+        <resets>
+            <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>
+            <factReset label="Reset CVs 1-128 to factory defaults" CV="8" default="9"/>
+            <factReset label="Reset CVs 129-256 to factory defaults" CV="8" default="10"/>
+            <factReset label="Reset CVs 1.257-1.512 to factory defaults" CV="8" default="11"/>
+            <factReset label="Reset CVs 2.257-2.512 to factory defaults" CV="8" default="12"/>
+            <factReset label="Reset CVs 3.257-3.512 to factory defaults" CV="8" default="13"/>
+        </resets>
+    </decoder>
+    <!-- References to external Pane format definitions below -->
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUaltSoundLevelsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneLighting.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneReverb.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneASCsteam.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneID.xml"/>
+</decoder-config>

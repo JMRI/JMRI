@@ -19,6 +19,8 @@ import org.junit.jupiter.api.*;
  * @author Bob Jacobsen Copyright 2001, 2002, 2015
  * @author Dave Heap Copyright 2019
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
+    justification = "passing known null variables for clarity in constructors")
 public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
 
     // Local tests version of makeVar with extra parameters and cvList support.
@@ -28,9 +30,8 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
             HashMap<String, CvValue> v, JLabel status, String item,
             String highCV, int pFactor, int pOffset, String uppermask,
             String extra1, String extra2, String extra3, String extra4) {
-        ProgDebugger p = new ProgDebugger();
 
-        if (!cvNum.equals("")) { // some variables have no CV per se
+        if (!cvNum.isEmpty()) { // some variables have no CV per se
             List<String> cvList = CvUtil.expandCvList(cvNum);
             if (cvList.isEmpty()) {
                 CvValue cvNext = new CvValue(cvNum, p);
@@ -44,7 +45,7 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
                 }
             }
         }
-        if (highCV != null && !highCV.equals("")) {
+        if (highCV != null && !highCV.isEmpty()) {
             CvValue cvNext = new CvValue(highCV, p);
             cvNext.setValue(0);
             v.put(highCV, cvNext);

@@ -3,16 +3,14 @@ package jmri.jmrix.can.cbus.swing;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.junit.jupiter.api.Test;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
@@ -24,10 +22,10 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2020
 */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class CbusSendEventPaneTest  {
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testInitComponents() throws Exception{
         // for now, just makes sure there isn't an exception.
         CbusSendEventPane t = new CbusSendEventPane(mainConsolePane);
@@ -35,7 +33,6 @@ public class CbusSendEventPaneTest  {
     }
     
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testSendEvents() throws Exception{
         // for now, just makes sure there isn't an exception.
         CbusSendEventPane t = new CbusSendEventPane(mainConsolePane);
@@ -52,6 +49,7 @@ public class CbusSendEventPaneTest  {
         
         new JRadioButtonOperator(jfo,Bundle.getMessage("InitialStateOff")).setSelected(true);
         new JButtonOperator(jfo,Bundle.getMessage("ButtonSend")).doClick();
+        Assertions.assertNotNull(tc);
         assertThat( tc.outbound.size()).isEqualTo(1);
         assertEquals("[5f8] 99 00 00 00 01",tc.outbound.get(0).toString());
         
@@ -69,31 +67,30 @@ public class CbusSendEventPaneTest  {
     }
     
     
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold tc;
-    private CbusConsolePane mainConsolePane;
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold tc = null;
+    private CbusConsolePane mainConsolePane = null;
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()){
-            memo = new CanSystemConnectionMemo();
-            tc = new TrafficControllerScaffold();
-            memo.setTrafficController(tc);
-            mainConsolePane = new CbusConsolePane();
-            mainConsolePane.initComponents(memo,false);
-        }
+        memo = new CanSystemConnectionMemo();
+        tc = new TrafficControllerScaffold();
+        memo.setTrafficController(tc);
+        mainConsolePane = new CbusConsolePane();
+        mainConsolePane.initComponents(memo,false);
     }
 
     @AfterEach
     public void tearDown() {
-        if(!GraphicsEnvironment.isHeadless()){
-            mainConsolePane.dispose();
-            tc.terminateThreads();
-            memo.dispose();
-            tc = null;
-            memo = null;
-        }
+        Assertions.assertNotNull(mainConsolePane);
+        mainConsolePane.dispose();
+        Assertions.assertNotNull(tc);
+        tc.terminateThreads();
+        Assertions.assertNotNull(memo);
+        memo.dispose();
+        tc = null;
+        memo = null;
         JUnitUtil.tearDown();
     }
 

@@ -48,7 +48,6 @@ public class ControlPanelEditorTest extends AbstractEditorTestBase<ControlPanelE
             e = null;
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -56,13 +56,14 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     public String getSystemName(String i) {
         return "MR" + i;
     }
-    
+
     @Test
     @Override
     public void testAutoSystemNames() {
+        Assertions.assertNotNull(tcis);
         Assert.assertEquals("No auto system names",0,tcis.numListeners());
     }
-    
+
     @Test
     public void testGetSetDefaultTimeout() {
         Assert.assertEquals("Default timeout",2000,((CbusReporterManager) l).getTimeout());
@@ -80,7 +81,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         Assert.assertEquals("Column Header matches descriptor key",CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY,nbpd.getColumnHeaderText());
         Assert.assertEquals("Editable if CBUS Reporter",true,nbpd.isEditable(l.provideReporter("123")));
         Assert.assertEquals("Not Editable if null",false,nbpd.isEditable(null));
-        Assert.assertEquals("Default reporter type set in properties",CbusReporterManager.CBUS_DEFAULT_REPORTER_TYPE,nbpd.defaultValue);
+        Assert.assertTrue("Default reporter type set in properties",CbusReporterManager.CBUS_DEFAULT_REPORTER_TYPE.equals(nbpd.defaultValue));
         Assert.assertEquals("reporter property key set",CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY,nbpd.propertyKey);
 
         Assert.assertEquals("Currently 2 options",2,((SelectionPropertyDescriptor)nbpd).getOptions().length);
@@ -124,8 +125,8 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         otherMemo.dispose();
     }
     
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold tcis = null;
 
     @BeforeEach
     @Override
@@ -141,8 +142,10 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @AfterEach
     public void tearDown() {
         l = null;
+        Assertions.assertNotNull(tcis);
         tcis.terminateThreads();
         tcis = null;
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         JUnitUtil.tearDown();

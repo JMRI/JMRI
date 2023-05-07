@@ -1,10 +1,12 @@
 package jmri.jmris;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import jmri.InstanceManager;
+import jmri.Turnout;
+import jmri.TurnoutManager;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the jmri.jmris.AbstractTurnoutServer class
@@ -15,8 +17,9 @@ abstract public class AbstractTurnoutServerTestBase {
 
     protected AbstractTurnoutServer ts = null;
 
-    @Test public void testCtor() {
-        assertThat(ts).isNotNull();
+    @Test
+    public void testCtor() {
+        assertNotNull(ts);
     }
 
     // test sending an error message.
@@ -30,53 +33,51 @@ abstract public class AbstractTurnoutServerTestBase {
     @Test 
     public void checkInitTurnout() {
         ts.initTurnout("IT1");
-        assertThat((jmri.InstanceManager.getDefault(jmri.TurnoutManager.class)).getTurnout("IT1")).isNotNull();
+        assertNotNull((InstanceManager.getDefault(TurnoutManager.class)).getTurnout("IT1"));
     }
 
     // test sending an Thrown status message.
     @Test 
-    public void CheckSendThrownStatus() throws java.io.IOException{
+    public void testCheckSendThrownStatus() throws java.io.IOException{
         ts.initTurnout("IT1");
-        ts.sendStatus("IT1",jmri.Turnout.THROWN);
+        ts.sendStatus("IT1",Turnout.THROWN);
         checkTurnoutThrownSent();
     }
 
     // test sending an Closed status message.
     @Test
-    public void CheckSendClosedStatus() throws java.io.IOException {
+    public void testCheckSendClosedStatus() throws java.io.IOException {
         ts.initTurnout("IT1");
-        ts.sendStatus("IT1",jmri.Turnout.CLOSED);
+        ts.sendStatus("IT1",Turnout.CLOSED);
         checkTurnoutClosedSent();
     }
 
     // test sending an UNKNOWN status message.
     @Test
-    public void CheckSendUnkownStatus() throws java.io.IOException {
+    public void testCheckSendUnkownStatus() throws java.io.IOException {
         ts.initTurnout("IT1");
-        ts.sendStatus("IT1",jmri.Turnout.UNKNOWN);
+        ts.sendStatus("IT1",Turnout.UNKNOWN);
         checkTurnoutUnknownSent();
     }
 
     // test the property change sequence for an THROWN property change.
     @Test
-    public void testPropertyChangeThrownStatus() {
-        Throwable thrown = catchThrowable(() -> {
+    public void testPropertyChangeThrownStatus() throws Exception {
+        assertDoesNotThrow ( () -> {
             ts.initTurnout("IT1");
-            jmri.InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT1").setState(jmri.Turnout.THROWN);
-        });
-        assertThat(thrown).withFailMessage("Exception setting Status").isNull();
+            InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1").setState(Turnout.THROWN);
+        },"Exception setting Status");
         checkTurnoutThrownSent();
     }
 
     // test the property change sequence for an CLOSED property change.
     @Test
-    public void testPropertyChangeClosedStatus() {
-        Throwable thrown = catchThrowable( () -> {
+    public void testPropertyChangeClosedStatus() throws Exception {
+        assertDoesNotThrow ( () -> {
             ts.initTurnout("IT1");
-            jmri.InstanceManager.getDefault(jmri.TurnoutManager.class)
-                            .provideTurnout("IT1").setState(jmri.Turnout.CLOSED);
-        });
-        assertThat(thrown).withFailMessage("Exception setting Status").isNull();
+            InstanceManager.getDefault(TurnoutManager.class)
+                            .provideTurnout("IT1").setState(Turnout.CLOSED);
+        },"Exception setting Status");
         checkTurnoutClosedSent();
     }
 

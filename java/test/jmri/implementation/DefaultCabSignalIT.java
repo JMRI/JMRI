@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.JmriException;
@@ -16,9 +17,11 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 
 /**
@@ -30,11 +33,13 @@ public class DefaultCabSignalIT {
 
     protected jmri.CabSignal cs = null;
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testSignalSequence() throws jmri.JmriException {
         runSequence(new DccLocoAddress(1234,true));
     }
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testSignalSequenceIdTag() throws jmri.JmriException {
         runSequence(new DefaultRailCom("ID1234","Test Tag"));
@@ -161,10 +166,12 @@ public class DefaultCabSignalIT {
         Assert.assertEquals("Block set",bm.getBlock(currentBlock),lcs.getBlock());
         Assert.assertEquals("next Block set",bm.getBlock(nextBlock),lcs.getNextBlock());
         Assert.assertEquals("Mast set",smm.getSignalMast(mastName),lcs.getNextMast());
-        if(mastName!="") {
+        if(!mastName.isEmpty()) {
            new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for signal to settle.
            // mast expected, so check the aspect.
-           JUnitUtil.waitFor( () -> { return "Clear".equals(lcs.getNextMast().getAspect().toString());});
+           JUnitUtil.waitFor( () -> {
+               return "Clear".equals(lcs.getNextMast().getAspect());
+           },"Mast " + mastName + " did not go clear");
            Assert.assertEquals("Mast " + mastName + " Aspect clear","Clear",lcs.getNextMast().getAspect());
         }
     }
@@ -189,7 +196,6 @@ public class DefaultCabSignalIT {
         cs.dispose(); // verify no exceptions
         cs = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

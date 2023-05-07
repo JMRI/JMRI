@@ -1,29 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <!-- Updated by Blorec Herv&#233; 2016-09-15-->
   <title>JMRI: Feux de Signalisation</title>
-
-<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20160323"/>
-<meta name="keywords" content="turnout model railroad JMRI decoderpro panelpro">
-
-<!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="Date.Modified" content="20160323"/>
+  <meta name="keywords" content="turnout model railroad JMRI decoderpro panelpro">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
-<h1>JMRI: Feux de Signalisation</h1>
+      <!-- Page Body -->
+      <h1>JMRI: Feux de Signalisation</h1>
 
 			<p>
 			Les Feux de Signalisations sont la mani&#232;re pour JMRI de repr&#233;senter les lampes/LEDs individuelles dans un signal sur votre r&#233;seau. IRM g&#232;re les Feux de Signalisations comme une sorte sp&#233;cifique 
@@ -79,8 +71,9 @@ L'information Feu de Signalisation est sauvegard&#233;e comme une partie de la c
 
 <p>Retour &#224; la <a href="index.shtml#tools">page principale d'aide Signalisation</a>.</p>
 
-<!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

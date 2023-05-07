@@ -5,6 +5,6 @@ package jmri.jmrit.display.layoutEditor;
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
-public class LayoutXOverTest extends LayoutTurnoutTest {
+public abstract class LayoutXOverTest extends LayoutTurnoutTest {
 
 }

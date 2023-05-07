@@ -1,103 +1,111 @@
 package jmri.jmrit.signalling;
 
-import java.awt.GraphicsEnvironment;
+import jmri.util.ThreadingUtil;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@Timeout(10) // This test class was periodically stalling and causing the CI run to time out. Limit its duration.
 public class SignallingGuiToolsTest {
 
-    @Rule
-    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(3);  // allow 3 retries of tests
-
-    @Rule // This test class was periodically stalling and causing the CI run to time out. Limit its duration.
-    public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(10);
-    
     // the class under test is a collection of static methods for dealing with
     // signals in GUIs.
 
     @Test
     public void testShowAndCloseUpdateSignalmastLogicDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SignallingFrame sf = new SignallingFrame();
         jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
         jmri.SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
         jmri.SignalMast sm2 = new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($2)");
         Thread t = new Thread(()-> {
-           // constructor for jdo will wait until the dialog is visible
-           JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("UpdateLogicTitle"));
-           jdo.close();
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("UpdateLogicTitle"));
+            JButtonOperator jbo = new JButtonOperator(jdo,"Update");
+            ThreadingUtil.runOnGUI(() -> jbo.push() );
+            jdo.waitClosed();
         });
         t.setName("Close UpdateSignalMastLogic Thread");
         t.start();
         SignallingGuiTools.updateSignalMastLogic(sf,sm1,sm2);
+        JUnitUtil.waitFor(() -> !t.isAlive(), "Dialogue thread complete");
         sf.dispose();
     }
 
     @Test
     public void testShowAndCloseSwapSignalmastLogicDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SignallingFrame sf = new SignallingFrame();
         jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
         jmri.SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
         jmri.SignalMast sm2 = new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($2)");
         Thread t = new Thread(()-> {
-           // constructor for jdo will wait until the dialog is visible
-           JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("UpdateLogicTitle"));
-           jdo.close();
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("UpdateLogicTitle"));
+            JButtonOperator jbo = new JButtonOperator(jdo,"Update");
+            ThreadingUtil.runOnGUI(() -> jbo.push() );
+            jdo.waitClosed();
         });
         t.setName("Close SwapSignalMastLogic Thread");
         t.start();
         SignallingGuiTools.swapSignalMastLogic(sf,sm1,sm2);
+        JUnitUtil.waitFor(() -> !t.isAlive(), "Dialogue thread complete");
         sf.dispose();
     }
 
     @Test
     public void testShowAndCloseRemoveSignalmastLogicDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SignallingFrame sf = new SignallingFrame();
         jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
         jmri.SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
         Thread t = new Thread(()-> {
-           // constructor for jdo will wait until the dialog is visible
-           JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("RemoveLogicTitle"));
-           jdo.close();
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("RemoveLogicTitle"));
+            JButtonOperator jbo = new JButtonOperator(jdo,"Remove");
+            ThreadingUtil.runOnGUI(() -> jbo.push() );
+            jdo.waitClosed();
         });
         t.setName("Close RemoveSignalMastLogic Thread");
         t.start();
         SignallingGuiTools.removeSignalMastLogic(sf,sm1);
+        JUnitUtil.waitFor(() -> !t.isAlive(), "Dialogue thread complete");
         sf.dispose();
     }
 
     @Test
     public void testShowAndCloseRemoveAlreadyAssignedSignalmastLogicDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SignallingFrame sf = new SignallingFrame();
         jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
         jmri.SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
         Thread t = new Thread(()-> {
-           // constructor for jdo will wait until the dialog is visible
-           JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("RemoveLogicTitle"));
-           jdo.close();
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("RemoveLogicTitle"));
+            JButtonOperator jbo = new JButtonOperator(jdo,"Remove");
+            ThreadingUtil.runOnGUI(() -> jbo.push() );
+            jdo.waitClosed();
         });
         t.setName("Close RemoveAlreadyAssignedSignalMastLogic Thread");
         t.start();
         SignallingGuiTools.removeAlreadyAssignedSignalMastLogic(sf,sm1);
+        JUnitUtil.waitFor(() -> !t.isAlive(), "Dialogue thread complete");
         sf.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultSignalMastManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

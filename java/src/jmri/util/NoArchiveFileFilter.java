@@ -1,9 +1,9 @@
 package jmri.util;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 import javax.swing.filechooser.FileFilter;
+
 import org.apache.commons.io.FilenameUtils;
 
 /**
@@ -51,14 +51,18 @@ public class NoArchiveFileFilter extends FileFilter {
         Arrays.stream(extensions).filter(e -> (e != null)).forEach(e -> this.extensions.add(e));
     }
 
+    /**
+     * Do not display .zip or .jar files in file chooser.
+     * Allows directories to be selected.
+     * {@inheritDoc}
+     */
     @Override
     public boolean accept(java.io.File f) {
-        String extension = FilenameUtils.getExtension(f.getName());
-        if ("zip".equalsIgnoreCase(extension)
-                || "jar".equalsIgnoreCase(extension)) {
+        if (f.getName().toLowerCase(Locale.ROOT).matches(".*\\.zip") // NOI18N
+                || f.getName().toLowerCase(Locale.ROOT).matches(".*\\.jar")) { // NOI18N
             return false;
         }
-        return extensions.isEmpty() || extensions.contains(extension);
+        return f.isDirectory() || extensions.contains(FilenameUtils.getExtension(f.getName()));
     }
 
     @Override

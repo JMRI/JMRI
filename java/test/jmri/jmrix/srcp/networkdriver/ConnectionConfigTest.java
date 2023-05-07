@@ -25,7 +25,6 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
    public void tearDown(){
         cc = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
    }
 

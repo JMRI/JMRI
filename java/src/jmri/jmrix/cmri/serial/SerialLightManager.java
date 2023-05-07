@@ -125,6 +125,11 @@ public class SerialLightManager extends AbstractLightManager {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
+    @Override
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+        return true;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);
 
 }

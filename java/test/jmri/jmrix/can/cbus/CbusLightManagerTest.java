@@ -52,7 +52,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         String name = "ML+5;-7";
         Light t = l.provideLight(name);
         // check
-        Assert.assertNotNull("real object returned ");
+        Assert.assertNotNull("real object returned ", t);
         Assert.assertEquals("system name correct ", t, l.getBySystemName(name));
     }
 
@@ -239,11 +239,11 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     public void testSimpleNext() throws JmriException {
         var t =  l.provideLight("ML+17");
         String next = l.getNextValidSystemName(t);
-        Assert.assertEquals(next, "ML+18");
+        Assert.assertEquals("ML+18", next);
 
         t =  l.provideLight("ML+N45E22");
         next = l.getNextValidSystemName(t);
-        Assert.assertEquals(next, "ML+N45E23");
+        Assert.assertEquals("ML+N45E23", next);
 
     }
 
@@ -251,7 +251,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     public void testDoubleNext() throws JmriException {
         var t =  l.provideLight("ML+18;-21");
         String next = l.getNextValidSystemName(t);
-        Assert.assertEquals(next, "ML+19;-22");
+        Assert.assertEquals("ML+19;-22", next);
     }
 
     @Test
@@ -301,7 +301,9 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     }
 
     @Test
-    public void testgetEntryToolTip() {
+    @Override
+    public void testGetEntryToolTip() {
+        super.testGetEntryToolTip();
         String x = l.getEntryToolTip();
         Assert.assertTrue(x.contains("<html>"));
 
@@ -345,20 +347,21 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     }
 
     @Test
-    public void testcreateNewLightException() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> ((CbusLightManager)l).createNewLight("",null));
+    public void testcreateNewLightException() throws Exception {
+        Exception ex = Assert.assertThrows(IllegalArgumentException.class, () -> ((CbusLightManager)l).createNewLight("",null));
+        Assertions.assertNotNull(ex);
         JUnitAppender.assertErrorMessageStartsWith("Unable to create CbusLight, System name must start with \"ML\"");
 
     }
 
     @Test
-    public void testvalidSystemNameConfig() {
+    public void testValidSystemNameConfig() {
         Assert.assertTrue(l.validSystemNameConfig("ML+123"));
         Assert.assertFalse(l.validSystemNameConfig(""));
     }
 
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold tc;
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold tc = null;
 
     @BeforeEach
     @Override
@@ -373,8 +376,10 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @AfterEach
     public void tearDown() {
         l.dispose();
+        Assertions.assertNotNull(tc);
         tc.terminateThreads();
         tc = null;
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         JUnitUtil.tearDown();

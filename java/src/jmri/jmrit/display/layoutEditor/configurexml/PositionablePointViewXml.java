@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
 import jmri.InstanceManager;
-import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.*;
 import org.jdom2.Attribute;
@@ -17,7 +16,7 @@ import javax.annotation.Nonnull;
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2018
  */
-public class PositionablePointViewXml extends AbstractXmlAdapter {
+public class PositionablePointViewXml extends LayoutTrackViewXml {
 
     static final EnumIO<PositionablePoint.PointType> pTypeEnumMap = new EnumIoNamesNumbers<>(PositionablePoint.PointType.class);
 
@@ -75,6 +74,7 @@ public class PositionablePointViewXml extends AbstractXmlAdapter {
             element.setAttribute("linkpointid", p.getLinkedPointId());
         }
 
+        storeLogixNG_Data(pv, element);
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml");
         return element;
     }
@@ -164,6 +164,7 @@ public class PositionablePointViewXml extends AbstractXmlAdapter {
             }
         }
 
+        loadLogixNG_Data(pv, element);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointViewXml.class);

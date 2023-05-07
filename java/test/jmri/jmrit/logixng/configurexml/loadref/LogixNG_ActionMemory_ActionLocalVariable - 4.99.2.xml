@@ -2,10 +2,10 @@
 <?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
-    <major>4</major>
-    <minor>99</minor>
-    <test>7</test>
-    <modifier>dev</modifier>
+    <major>5</major>
+    <minor>1</minor>
+    <test>2</test>
+    <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -34,7 +34,7 @@
       <id>0</id>
       <name>LogixNG thread</name>
     </Thread>
-    <LogixNG enabled="yes">
+    <LogixNG enabled="yes" inline="no">
       <systemName>IQ:AUTO:0001</systemName>
       <ConditionalNGs>
         <systemName>IQC:AUTO:0001</systemName>
@@ -63,6 +63,7 @@
     <CsvTable class="jmri.jmrit.logixng.implementation.configurexml.DefaultCsvNamedTableXml">
       <systemName>IQT:AUTO:0001</systemName>
       <fileName>program:java/test/jmri/jmrit/logixng/configurexml/LogixNG_ActionMemory_ActionLocalVariable.csv</fileName>
+      <csvType>TABBED</csvType>
     </CsvTable>
   </LogixNGTables>
   <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">
@@ -76,6 +77,7 @@
       </memoryNamedBean>
       <compareTo>Value</compareTo>
       <variableOperation>Equal</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant>C4</constant>
       <regEx />
@@ -111,6 +113,7 @@
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>Equal</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant>D1</constant>
       <regEx />
@@ -190,6 +193,7 @@
       <variableOperation>CopyTableCellToVariable</variableOperation>
       <constant />
       <otherVariable />
+      <reference />
       <formula />
       <table>
         <tableName>
@@ -248,20 +252,24 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </ActionMemory>
-    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="ExecuteOnChange" evaluateType="EvaluateAll">
       <systemName>IQDA:AUTO:0005</systemName>
-      <IfSocket>
-        <socketName>If</socketName>
-        <systemName>IQDE:AUTO:0001</systemName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>Then</socketName>
-        <systemName>IQDA:AUTO:0006</systemName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>Else</socketName>
-        <systemName>IQDA:AUTO:0008</systemName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>If</socketName>
+          <systemName>IQDE:AUTO:0001</systemName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>Then</socketName>
+          <systemName>IQDA:AUTO:0006</systemName>
+        </Socket>
+        <Socket>
+          <socketName>Else</socketName>
+          <systemName>IQDA:AUTO:0008</systemName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -319,20 +327,24 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </ShowDialog>
-    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="ExecuteOnChange" evaluateType="EvaluateAll">
       <systemName>IQDA:AUTO:0009</systemName>
-      <IfSocket>
-        <socketName>If</socketName>
-        <systemName>IQDE:AUTO:0003</systemName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>Then</socketName>
-        <systemName>IQDA:AUTO:0010</systemName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>Else</socketName>
-        <systemName>IQDA:AUTO:0011</systemName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>If</socketName>
+          <systemName>IQDE:AUTO:0003</systemName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>Then</socketName>
+          <systemName>IQDA:AUTO:0010</systemName>
+        </Socket>
+        <Socket>
+          <socketName>Else</socketName>
+          <systemName>IQDA:AUTO:0011</systemName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -394,14 +406,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Mon May 02 01:43:20 CEST 2022</date>
+      <date>Sun Aug 07 01:54:09 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable%20-%204.99.2.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Mon May 02 01:43:20 CEST 2022</date>
+      <date>Sun Aug 07 01:54:09 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.7dev+daniel+2022-05-01T23:42:50Z+R003832a on Mon May 02 01:43:20 CEST 2022-->
+  <!--Written by JMRI version 5.1.2plus+daniel+2022-08-06T23:53:23Z+R7533a8a on Sun Aug 07 01:54:09 CEST 2022-->
 </layout-config>

@@ -178,7 +178,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                                     (si.getShipLoadName().equals(ScheduleItem.NONE) && defaultLoad))) {
                         // is the schedule item valid?
                         String status = spur.checkScheduleValid();
-                        if (!status.equals(Track.SCHEDULE_OKAY)) {
+                        if (!status.equals(Schedule.SCHEDULE_OKAY)) {
                             addItemLeft(locationsPanel, new JLabel("  " + status), 0, x);
                         }
                         addItemLeft(locationsPanel, new JLabel(spur.getName() + " (" + spur.getScheduleName() + ")"), 1,

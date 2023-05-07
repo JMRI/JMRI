@@ -48,10 +48,18 @@
                   <xs:restriction base="xs:token">
                     <xs:enumeration value="On"/>
                     <xs:enumeration value="Off"/>
+                    <xs:enumeration value="Idle"/>
+                    <xs:enumeration value="Unknown"/>
+                    <xs:enumeration value="OnOrOff"/>
+
+					<!-- for backward compatibility before 5.1.6 -->
                     <xs:enumeration value="Other"/>
+					<!-- for backward compatibility before 5.1.6 -->
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+
+              <xs:element name="ignoreUnknownState" type="yesNoType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

@@ -20,7 +20,7 @@ public class ImportExpressionSignalHeadTest extends ImportExpressionComplexTestB
     SignalHead signalHead;
     ConditionalVariable cv;
     
-    private enum SignalHeadEnum {
+    protected enum SignalHeadEnum {
         EqualsDARK(Conditional.Type.SIGNAL_HEAD_DARK, SignalHead.RED, SignalHead.FLASHRED, SignalHead.DARK),
         EqualsRED(Conditional.Type.SIGNAL_HEAD_RED, SignalHead.DARK, SignalHead.DARK, SignalHead.RED),
         EqualsFLASHRED(Conditional.Type.SIGNAL_HEAD_FLASHRED, SignalHead.DARK, SignalHead.RED, SignalHead.FLASHRED),
@@ -33,10 +33,10 @@ public class ImportExpressionSignalHeadTest extends ImportExpressionComplexTestB
         IsLit(Conditional.Type.SIGNAL_HEAD_LIT, -1, -1, -1),
         IsHeld(Conditional.Type.SIGNAL_HEAD_HELD, -1, -1, -1);
         
-        private Conditional.Type type;
-        private int initAppearance;
-        private int failAppearance;
-        private int successAppearance;
+        final Conditional.Type type;
+        final int initAppearance;
+        final int failAppearance;
+        final int successAppearance;
         
         private SignalHeadEnum(Conditional.Type type, int initAppearance, int failAppearance, int successAppearance) {
             this.type = type;
@@ -47,12 +47,12 @@ public class ImportExpressionSignalHeadTest extends ImportExpressionComplexTestB
     }
     
     @Override
-    public Enum[] getEnums() {
+    protected Enum<SignalHeadEnum>[] getEnums() {
         return SignalHeadEnum.values();
     }
     
     @Override
-    public void setNamedBeanState(Enum e, Setup setup) throws JmriException {
+    public void setNamedBeanState(Enum<?> e, Setup setup) throws JmriException {
         SignalHeadEnum me = SignalHeadEnum.valueOf(e.name());
         
         cv.setType(me.type);
@@ -83,7 +83,7 @@ public class ImportExpressionSignalHeadTest extends ImportExpressionComplexTestB
                 
             case IsLit:
                 switch (setup) {
-                    case Init: signalHead.setLit(false); break;
+                    case Init:
                     case Fail1:
                     case Fail2:
                     case Fail3: signalHead.setLit(false); break;
@@ -97,7 +97,7 @@ public class ImportExpressionSignalHeadTest extends ImportExpressionComplexTestB
                 
             case IsHeld:
                 switch (setup) {
-                    case Init: signalHead.setHeld(false); break;
+                    case Init:
                     case Fail1:
                     case Fail2:
                     case Fail3: signalHead.setHeld(false); break;
@@ -127,11 +127,11 @@ public class ImportExpressionSignalHeadTest extends ImportExpressionComplexTestB
     
     private static class MySignalHead extends VirtualSignalHead {
         
-        public MySignalHead(String sys, String user) {
+        MySignalHead(String sys, String user) {
             super(sys, user);
         }
 
-        public MySignalHead(String sys) {
+        MySignalHead(String sys) {
             super(sys);
         }
 

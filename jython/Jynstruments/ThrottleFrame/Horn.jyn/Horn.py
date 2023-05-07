@@ -46,19 +46,19 @@ class Horn(Jynstrument, PropertyChangeListener, AddressListener, MouseListener):
 
     def switchOn(self):      # actually do function value change
         if self.throttle != None :
-            self.throttle.setF2( True )   # HERE!
+            self.throttle.setFunction(2, True )   # HERE!
         self.setIcon()
 
     def switchOff(self):      # actually do function value change
         if self.throttle != None :
-            self.throttle.setF2( False )   # HERE!
+            self.throttle.setFunction(2, False )   # HERE!
         self.setIcon()
 
     def setIcon(self):     # update appearance
         cl = self.getLayout()
         if self.throttle == None :
             cl.show(self, "off")
-        elif self.throttle.getF2() :
+        elif self.throttle.getFunction(2) :
             cl.show(self, "on")
         else :
             cl.show(self, "off")

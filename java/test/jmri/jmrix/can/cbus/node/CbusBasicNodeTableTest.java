@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.node;
 
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -14,7 +15,9 @@ public class CbusBasicNodeTableTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",new CbusBasicNodeTable(null,1,2));
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        Assert.assertNotNull("exists",new CbusBasicNodeTable(memo,1,2));
+        memo.dispose();
     }
     
     @BeforeEach

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II              -->
+<!-- Version 2 - Petr Sidlo - 2022-08-14 - small fix                        -->
+
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>Train-O-Matic (tOm)</name>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Train-O-Matic (tOm) decoders support a decoder locking feature</text>
+        <text xml:lang="cs">Dekodéry Train-O-Matic (tOm) podporují funkci zamykání dekodéru</text>
+      </label>
+      <label>
+        <text>useful when several decoders are used in one loco</text>
+        <text xml:lang="cs">která je užitečná, pokud je v jedné lokomotivě použito více dekodérů</text>
+      </label>
+      <label>
+        <text>on the same address, e.g. for adding sound</text>
+        <text xml:lang="cs">na stejné adrese, např. pro přidání zvuku.</text>
+      </label>
+      <display item="Decoder Lock ID number"/>
+      <label>
+        <text>Set CV15 equal to this number to unlock the decoder for programming</text>
+        <text xml:lang="cs">Nastavte CV15 na toto číslo, abyste odemkli dekodér pro programování.</text>
+      </label>
+      <display item="Programming Key CV15" />
+
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text>Decoder protection </text>
+        <text xml:lang="cs">Ochrana dekodéru</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Error CV" />
+      <display item="Error CV bit 0" />
+      <display item="Error CV bit 1" />
+      <display item="Error CV bit 2" />
+      <display item="Error CV bit 3" />
+     
+      <!-- 
+      <label>
+        <text>Errors: 0-No error, 1-Motor Short Protection, </text>
+        <text xml:lang="cs">Chyba: 0 - Bez chyby, 1 - Ochrana motoru proti zkratu</text>
+      </label>
+      <label>
+        <text>2-Aux Output Short Protection, 4-Overtemperature</text>
+        <text xml:lang="cs">2 - Ochrana pomocného výstupu proti zkratu, 4 - Překročení teploty</text>
+      </label>  
+      <label>
+        <text> </text>
+      </label>
+      -->
+      
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text>Decoder information</text>
+        <text xml:lang="cs">Informace o dekoréru</text>
+      </label>
+      <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+        <griditem>
+        <display item="Firmware Version"/>
+        <display item="Firmware Subversion" label=""/>
+        <display item="Build version" label=""/>
+      </griditem>
+      <griditem>
+        <display item="Product Number"/>
+      </griditem>
+    </grid>
+
+    </column>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Special functions</text>
+        <text xml:lang="cs">Speciální funkce</text>
+      </label>
+      <display item="Special Function" />
+      <display item="Chip Temperature" />
+      <display item="Temperature Limit" />
+      <display item="QoS current value" />
+      <display item="Worst QoS value" />
+
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+
+      <label>
+        <text>Maintenance configuraton</text>
+        <text xml:lang="cs">Konfigurace údržby</text>
+      </label>
+      <display item="Work minutes" />
+      <display item="Work hours" />
+      <display item="Last Maintenance" />
+      <display item="Maintenance Interval" />
+      <display item="Maintenance function" />
+      <display item="MI overrun CV30" />
+      <display item="MI overrun FL" />
+      <display item="Exceeding MI" />
+
+    </column>
+  </pane>

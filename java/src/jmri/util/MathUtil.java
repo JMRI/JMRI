@@ -1154,7 +1154,7 @@ public final class MathUtil {
      * @return the length of the Bezier curve
      */
     public static double drawBezier(
-            @Nullable Graphics2D g2,
+            @CheckForNull Graphics2D g2,
             @Nonnull Point2D p0,
             @Nonnull Point2D p1,
             @Nonnull Point2D p2,
@@ -1246,7 +1246,7 @@ public final class MathUtil {
      * @return the length of the Bezier curve
      */
     private static double plotBezier(
-            @Nullable Graphics2D g2,
+            @CheckForNull Graphics2D g2,
             @Nonnull Point2D p[],
             double displacement,
             boolean fillFlag) {
@@ -1306,7 +1306,7 @@ public final class MathUtil {
      * @return the length of the Bezier curve
      */
     public static double drawBezier(
-            @Nullable Graphics2D g2,
+            @CheckForNull Graphics2D g2,
             @Nonnull Point2D p[],
             double displacement) {
         return plotBezier(g2, p, displacement, false);
@@ -1321,7 +1321,7 @@ public final class MathUtil {
      * @return the length of the Bezier curve
      */
     public static double fillBezier(
-            @Nullable Graphics2D g2,
+            @CheckForNull Graphics2D g2,
             @Nonnull Point2D p[],
             double displacement) {
         return plotBezier(g2, p, displacement, true);
@@ -1334,7 +1334,7 @@ public final class MathUtil {
      * @param p  the control points
      * @return the length of the Bezier curve
      */
-    public static double drawBezier(@Nullable Graphics2D g2, @Nonnull Point2D p[]) {
+    public static double drawBezier(@CheckForNull Graphics2D g2, @Nonnull Point2D p[]) {
         return drawBezier(g2, p, 0.0);
     }
 
@@ -1345,7 +1345,7 @@ public final class MathUtil {
      * @param p  the control points
      * @return the length of the Bezier curve
      */
-    public static double fillBezier(@Nullable Graphics2D g2, @Nonnull Point2D p[]) {
+    public static double fillBezier(@CheckForNull Graphics2D g2, @Nonnull Point2D p[]) {
         return plotBezier(g2, p, 0.0, true);
     }
 

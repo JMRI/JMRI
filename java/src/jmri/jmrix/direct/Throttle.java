@@ -47,7 +47,7 @@ public class Throttle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup1() {
         byte[] result = jmri.NmraPacket.function0Through4Packet(address.getNumber(), address.isLongAddress(),
-                getF0(), getF1(), getF2(), getF3(), getF4());
+                getFunction(0), getFunction(1), getFunction(2), getFunction(3), getFunction(4));
 
         tcl.sendPacket(result, 1);
     }
@@ -59,7 +59,7 @@ public class Throttle extends AbstractThrottle {
     protected void sendFunctionGroup2() {
 
         byte[] result = jmri.NmraPacket.function5Through8Packet(address.getNumber(), address.isLongAddress(),
-                getF5(), getF6(), getF7(), getF8());
+                getFunction(5), getFunction(6), getFunction(7), getFunction(8));
 
         tcl.sendPacket(result, 1);
     }
@@ -71,7 +71,7 @@ public class Throttle extends AbstractThrottle {
     protected void sendFunctionGroup3() {
 
         byte[] result = jmri.NmraPacket.function9Through12Packet(address.getNumber(), address.isLongAddress(),
-                getF9(), getF10(), getF11(), getF12());
+                getFunction(9), getFunction(10), getFunction(11), getFunction(12));
 
         tcl.sendPacket(result, 1);
     }

@@ -618,6 +618,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         Color.lightGray, Color.white, Color.red, Color.pink, Color.orange,
         Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan};
     int numColors = 14;  // number of entries in the above arrays
+
+    JCheckBox useAbsSignalMode = new JCheckBox(Bundle.getMessage("UseAbsSignalMode"));  // NOI18N
     JCheckBox dispatcherUse = new JCheckBox(Bundle.getMessage("DispatcherInt"));  // NOI18N
 
     JComboBox<String> settingTrackColorBox = new JComboBox<>();
@@ -710,9 +712,14 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             optionsPane.add(p3);
 
             JPanel p4 = new JPanel();
-            p4.add(dispatcherUse);
-            dispatcherUse.setSelected(nxPairs.getDispatcherIntegration());
+            p4.add(useAbsSignalMode);
+            useAbsSignalMode.setSelected(nxPairs.isAbsSignalMode());
             optionsPane.add(p4);
+
+            JPanel p5 = new JPanel();
+            p5.add(dispatcherUse);
+            dispatcherUse.setSelected(nxPairs.getDispatcherIntegration());
+            optionsPane.add(p5);
 
             JButton ok = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             optionsPane.add(ok);
@@ -740,6 +747,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         nxPairs.setClearDownOption(clearEntry.getSelectedIndex());
         nxPairs.setOverlapOption(overlapEntry.getSelectedIndex());
         nxPairs.setMemoryClearDelay((int) memoryClearDelay.getValue());
+        nxPairs.setAbsSignalMode(useAbsSignalMode.isSelected());
         nxPairs.setDispatcherIntegration(dispatcherUse.isSelected());
 
         String memoryName = memoryComboBox.getSelectedItemDisplayName();

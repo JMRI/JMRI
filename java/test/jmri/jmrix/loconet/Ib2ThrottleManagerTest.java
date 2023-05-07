@@ -33,7 +33,6 @@ public class Ib2ThrottleManagerTest extends jmri.managers.AbstractThrottleManage
         ((Ib2ThrottleManager)tm).dispose();
         memo.dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

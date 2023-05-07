@@ -5,8 +5,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.acela.AcelaLightManager class.
@@ -33,21 +31,13 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
     public void testAsAbstractFactory() {
         Light tl = l.newLight("AL21", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received light value {}", tl);
-        }
-        Assert.assertTrue(null != (AcelaLight) tl);
+        Assert.assertNotNull( tl);
+        Assert.assertTrue(tl instanceof AcelaLight);
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: {}", l.getBySystemName("AL21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   {}", l.getByUserName("my name"));
-        }
 
-        Assert.assertTrue(null != l.getBySystemName("AL21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assert.assertNotNull( l.getBySystemName("AL21"));
+        Assert.assertNotNull( l.getByUserName("my name"));
 
     }
 
@@ -79,6 +69,6 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaLightManagerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AcelaLightManagerTest.class);
 
 }
