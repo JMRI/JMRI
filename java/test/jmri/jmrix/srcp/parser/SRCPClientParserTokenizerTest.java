@@ -192,7 +192,7 @@ public class SRCPClientParserTokenizerTest{
         Assert.assertTrue("Wrong token kind for OK", SRCPClientParserConstants.OK == t.kind);
     }
 
-    @Test 
+    @Test
     public void testTokenizeSRCP() {
         String cmd = "SRCP\n\r";
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
@@ -207,7 +207,7 @@ public class SRCPClientParserTokenizerTest{
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
         Token t = stm.getNextToken();
-        Assert.assertTrue("Wrong token kind for VERSION", SRCPClientParserConstants.VERSION == t.kind);
+        Assert.assertTrue("Wrong token kind for VERSION", SRCPClientParserConstants.KEY == t.kind);
     }
 
     @Test 

@@ -97,7 +97,6 @@ TOKEN :
 
 // Constants and commands used for handshake mode only.
 | < KEY: (~[" ",";","\n","\r"])+>
-| < VERSION: ((<V>)?["0"-"9"])+"."(["0"-"9"])+"."(["0"-"9"])+>
 | < SEMICOLON: ";">
 
 | <#A:["a","A"]>
