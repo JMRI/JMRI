@@ -33,6 +33,7 @@ import jmri.Light;
 import jmri.LightManager;
 import jmri.MemoryManager;
 import jmri.NamedBean;
+import jmri.NamedBeanHandleManager;
 import jmri.PowerManager;
 import jmri.ReporterManager;
 import jmri.RouteManager;
@@ -141,6 +142,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         bindings.put("warrants", InstanceManager.getNullableDefault(WarrantManager.class));
         bindings.put("sections", InstanceManager.getNullableDefault(SectionManager.class));
         bindings.put("transits", InstanceManager.getNullableDefault(TransitManager.class));
+        bindings.put("beans", InstanceManager.getNullableDefault(NamedBeanHandleManager.class));
         bindings.put("CLOSED", Turnout.CLOSED);
         bindings.put("THROWN", Turnout.THROWN);
         bindings.put("CABLOCKOUT", Turnout.CABLOCKOUT);
