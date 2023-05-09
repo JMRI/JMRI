@@ -559,6 +559,11 @@
                 last seen report.  The relevant code changes are specific to LocoNet
                 Reporters.
                 </li>
+            <li>Fixed a bug in the Reporter Table that was causing the
+                Last Report column to actually display the Current Report.
+                Note that this is just a display bug; the underlying value and
+                property change notifications are correct, so this change won't
+                affect scripts, LogixNG, etc.</li>
         </ul>
 
    <h3>Warrants</h3>
