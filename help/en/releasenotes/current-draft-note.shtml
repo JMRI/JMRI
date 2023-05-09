@@ -553,7 +553,12 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>The definition of "Last Seen" for Id Tags has been
+                clarified to mean "Location where the tag was last seen to be <u>present</u>".
+                Previously, a report that a tag was <u>absent</u> could be marked as the
+                last seen report.  The relevant code changes are specific to LocoNet
+                Reporters.
+                </li>
         </ul>
 
    <h3>Warrants</h3>
