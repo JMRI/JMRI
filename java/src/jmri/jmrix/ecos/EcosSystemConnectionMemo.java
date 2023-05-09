@@ -59,10 +59,6 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
      */
     public void configureManagers() {
 
-        SensorManager sensorManager = new EcosSensorManager(this);
-        InstanceManager.setSensorManager(sensorManager);
-        store(sensorManager, SensorManager.class);
-
         PowerManager powerManager = new EcosPowerManager(getTrafficController());
         InstanceManager.store(powerManager, PowerManager.class);
         store(powerManager, PowerManager.class);
@@ -87,6 +83,10 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
 
         InstanceManager.store(getProgrammerManager(), AddressedProgrammerManager.class);
         store(getProgrammerManager(), AddressedProgrammerManager.class);
+
+        SensorManager sensorManager = new EcosSensorManager(this);
+        InstanceManager.setSensorManager(sensorManager);
+        store(sensorManager, SensorManager.class);
 
         register(); // registers general type
     }
