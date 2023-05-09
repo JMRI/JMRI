@@ -63,10 +63,6 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
         InstanceManager.store(powerManager, PowerManager.class);
         store(powerManager, PowerManager.class);
 
-        TurnoutManager turnoutManager = new EcosTurnoutManager(this);
-        InstanceManager.setTurnoutManager(turnoutManager);
-        store(turnoutManager,TurnoutManager.class);
-
         EcosLocoAddressManager locoManager = new EcosLocoAddressManager(this);
         store(locoManager,EcosLocoAddressManager.class);
 
@@ -87,6 +83,10 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
         SensorManager sensorManager = new EcosSensorManager(this);
         InstanceManager.setSensorManager(sensorManager);
         store(sensorManager, SensorManager.class);
+
+        TurnoutManager turnoutManager = new EcosTurnoutManager(this);
+        InstanceManager.setTurnoutManager(turnoutManager);
+        store(turnoutManager,TurnoutManager.class);
 
         register(); // registers general type
     }
