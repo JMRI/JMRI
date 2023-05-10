@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>LogixNG Reference - Chapter 1.1</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG reference getting started">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Reference - Chapter 1.1 - Map Logix features to LogixNG</h1>
+
+      <p>While LogixNG includes tools to translate Logix to LogixNG, they are not really native
+      LogixNG definitions.  This page describes Logix features and shows how they are implemented
+      in LogixNG.  While this page is an extension to Chapter 1, it includes LogixNG features that
+      are documented in other chapters.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter1_1/logix.png"><img src=
+        "images/chapter1_1/logix.png" alt="Logix dialog"></a>
+      </div>
+
+      <p>This is a simple Logix conditional that sets a turnout closed when a sensor is inactive and
+      the block is not occupied based on its occupancy sensor.</p>
+
+      <p>A second conditional is used to the set the turnout thrown.  The <strong>On Change to False
+      </strong> cannot be used since the occupancy sensor can cause the false state when the lever
+      sensor is changed to inactive and occupancy sensor is active.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter1_1/else_if.png"><img src=
+        "images/chapter1_1/else_if.png" alt="LogixNG else if dialog"></a>
+      </div>
+
+      <p>This LogixNG conditional does the same process.  A separate conditional is not needed since
+      the <strong>else if</strong> provides the separate state checks.</p>
+
+      <h2>Logix Features</h2>
+
+        <h3>Logical Expression</h3>
+
+          <p>The Logix Logical Expression is the <strong><em>if</em></strong> statement.  It has three
+          modes:  <strong>AND</strong>, <strong>OR</strong>, and <strong>Mixed</strong>.  When Mixed
+          is selected, an Antecedent field is shown. The Antecedent field will contain a formula
+          such as <code>R1 and R2</code>.</p>
+
+          <p>The LogixNG <strong>If</strong> socket can have a single expression item, an <strong>
+          And</strong> expression, an <strong>Or</strong> expression, or a <strong>Digital Formula
+          </strong> expression. Except the for single item expression, the others provide a series of
+          child sockets for additional expressions.  The Digital Formula contains a blank field that
+          can contain a formula such as <code>E1 && E2</code>. This is the LogixNG equivalent of the
+          antecedent field for Logix Mixed mode. Note: Formulas use Java syntax.
+
+          <h4>Trigger Calculation</h4>
+
+            <p>When the Logix <strong>Trigger</strong> box is checked, any change will cause the
+            Logix expression state to be recalculated.  When unchecked, changes will not be checked
+            until a trigger event occurs.</p>
+
+            <p>When a LogixNG item expression is added, a <strong>Listen</strong> checkbox is
+            enabled.  This checkbox behaves the same as the trigger checkbox.</p>
+
+            <div style="margin-left: 2em">
+              <a href="images/chapter1_1/listen.png"><img src=
+              "images/chapter1_1/listen.png" alt="LogixNG listen checkbox"></a>
+            </div>
+
+        <h3>Execute Actions</h3>
+
+        <p>Logix has two options that control when the <strong>Actions</strong> will be executed:
+        <strong><em>Execute Actions on change of state only</em></strong> and <strong><em>Execute
+        Actions whenever triggered</em></strong>.  For example, consider an expression such as
+        <code>a or b</code>.  If both are true, the expression is true. If one becomes false, the
+        expression is still true.  If the <strong>on change</strong> option is selected, the actions
+        are not executed.</p>
+
+        <p>When the <strong>If Then Else</strong> LogixNG action is created, the dialog has a drop
+        down selection for <strong>Execute on change</strong> or <strong>Always execute</strong>.
+        This provides the same functionality.</p>
+
+        <h3>Consequent Actions</h3>
+
+        <p>Logix can have true actions, false actions or actions based on a change of state or when
+        triggered regardless of a true or false state. The descriptive text will depend on the
+        Execute Actions setting.</p>
+
+        <p>LogixNG provides a <strong>Then</strong> socket and an <strong>Else</strong> socket. It
+        does not have the third Logix option.  The Then and Else sockets can have a single action
+        item or the <strong>Many</strong> action. The Many action provides a series of child sockets
+        for additional actions.</p>
+
+        <h3>Nested If Then Else</h3>
+
+        <p>There are no compelling reasons to convert existing Logixs.  They will continue to run
+        and since Logix and LogixNG use common data such as sensors and turnouts, they can co-exist.
+        Sometimes it might make sense to create a new LogixNG to make use of its features.  The
+        following is an alternate replacement for the orignal Logix and the first LogixNG approach.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/chapter1_1/nest_if.png"><img src=
+          "images/chapter1_1/nested_if.png" alt="LogixNG nested if dialog"></a>
+        </div>
+
+        <p>This approach uses nested <strong>If Then Else</strong> actions.  The first one checks the
+        occupancy state.  If occupied, there is no need to do anything else.  The second one checks the
+        sensor lever and then sets the turnout.</p>
+
+        <p>One of the challenges in learning to use LogixNG is understanding event processing.  The
+        most common event is when a table entry changes state and a LogixNG has been defined with the
+        <strong>Listen</strong> option enabled.  When event occurs, all of the ConditionalNGs that
+        listen for an event for an object are invoked.  Each ConditionalNG will execute its steps
+        until it finishes.  if there is more than one, the sequence is unpredictable.  Logix
+        conditionals, however run in the listed sequence within a Logix.</p>
+
+        <p>In this example, the occupancy sensor does not listen for change, but the lever sensor does.
+        When the lever sensor changes state, the ConditionalNG starts.  Since the occupancy sensor
+        might not have changed, the if-then-else is defined with always execute. If the current
+        occupancy sensor state is inactive, then the second if-then-else is checked.  This one could
+        be either always execute or execute on change since the lever sensor change started the
+        process.</p>
+
+        <h3>Indirect references using @memory</h3>
+
+        <p>Logix supports indirect references to table entries using @mem_name.  The memory variable
+        contains the the name of a table entry, such as a sensor name, to be used when the conditional
+        is invoked. This makes it possible to create generic logic that will use different objects
+        when invoked.</p>
+
+        <p>For LogixNG dialogs that use a table entry, the normal tab is <strong>Direct</strong>
+        which uses a drop down list for the table.  The <strong>Memory</strong> tab is used to
+        identify a memory variable that will contain the name of an entry in the actual table.
+        There are several other indirect methods within LogixNG.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/chapter1_1/tabs.png"><img src=
+          "images/chapter1_1/tabs.png" alt="LogixNG dialog tabs"></a>
+        </div>
+
+        <h3>Delayed Actions</h3>
+
+        <p>Logix has delayed actions for sensors and turnouts.</p>
+
+        <p>LogicNG has a general purpose <strong>Execute delayed</strong> action. The child action
+        can be anything, including a <strong>Many</strong> which can have a list child actions.
+        Note:  The delayed actions will occur outside of the current ConditionalNG process.</p>
+
+        <h3>Sub Routines</h3>
+
+        <p>Logix has a Conditional state variable.  This is used to call a conditional that has no
+        actions but returns true or false for its set of variables.  This is useful when a group of
+        variables need to be checked from multiple Logix conditionals.</p>
+
+        <p>The LogixNG Module provides this capability along with multiple module types including
+        passing parameters to a module and having values returned.</p>
+
+        <h3>Debugging</h3>
+
+        <p>A common Linux debugging tool is to use the script action.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/chapter1_1/script_action.png"><img src=
+          "images/chapter1_1/script_action.png" alt="LogixNG script action"></a>
+        </div>
+
+        <p>LogixNG has the same script action.  It also has a <strong>Log data</strong> action and
+        an IDE style debugger that can do single step and breakpoint debugging.</p>
+
+      <hr>
+
+      <p><a href="chapter2.shtml">Chapter 2 - The clipboard</a>
+      </p>
+
+      <p><a href="index.shtml">Return to the Reference TOC</a>
+      </p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>
