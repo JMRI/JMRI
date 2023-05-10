@@ -623,7 +623,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager
 
         private TimerTask delay;
 
-        protected void cancelDelay() {
+        synchronized private void cancelDelay() {
             if (this.delay != null) {
                 this.delay.cancel(); // cancel complete before dropping reference
                 this.delay = null;
@@ -638,18 +638,25 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager
          * {@link JmriJTablePersistenceManager#savePreferences(jmri.profile.Profile)} is
          * not subject to this timer.
          */
-        private void saveState() {
+        synchronized private void saveState() {
             cancelDelay();
             jmri.util.TimerUtil.schedule(delay = new TimerTask() {
                 @Override
                 public void run() {
-                    JTableListener.this.manager.cacheState(JTableListener.this.table);
-                    if (!JTableListener.this.manager.isPaused() && JTableListener.this.manager.isDirty()) {
-                        JTableListener.this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+                    try {
+                        JTableListener.this.manager.cacheState(JTableListener.this.table);
+                        if (!JTableListener.this.manager.isPaused() && JTableListener.this.manager.isDirty()) {
+                            JTableListener.this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+                        }
+                        JTableListener.this.cancelDelay();
+                    } catch (Throwable e) { // we want to catch _everything_ that goes wrong to avoid killing the Timer
+                        log.warn("during timer run", e);
                     }
-                    JTableListener.this.cancelDelay();
                 }
             }, 500); // milliseconds
         }
+
+        private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JTableListener.class);
+
     }
 }
