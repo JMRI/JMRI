@@ -39,7 +39,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
     private final CanSystemConnectionMemo _memo;
 
     /**
-     * All CbusReporters should clear themselves after a timeout.
+     * Should all CbusReporters clear themselves after a timeout?
      * <p>
      * Default behavior is to not timeout; this is public access
      * so it can be updated from a script
@@ -47,7 +47,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
     public static boolean eraseOnTimeoutAll = false;
 
     /**
-     * This CbusReporter should clear itself after a timeout.
+     * Should this CbusReporter clear itself after a timeout?
      * <p>
      * Default behavior is to not timeout; this is public access
      * so it can be updated from a script
