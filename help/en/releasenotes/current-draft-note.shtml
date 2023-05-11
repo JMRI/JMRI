@@ -612,6 +612,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improved how window preferences are stored to reduce error messages
+                when JMRI is under high load.</li>
         </ul>
 
