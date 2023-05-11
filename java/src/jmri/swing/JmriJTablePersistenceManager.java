@@ -640,18 +640,20 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager
          */
         synchronized private void saveState() {
             cancelDelay();
-            jmri.util.TimerUtil.schedule(delay = new TimerTask() {
+            jmri.util.TimerUtil.schedule(delay = new TimerTask() { // use schedule instead of scheduleOnGUIThread so we can cancel
                 @Override
                 public void run() {
-                    try {
-                        JTableListener.this.manager.cacheState(JTableListener.this.table);
-                        if (!JTableListener.this.manager.isPaused() && JTableListener.this.manager.isDirty()) {
-                            JTableListener.this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+                    jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+                        try {
+                            JTableListener.this.manager.cacheState(JTableListener.this.table);
+                            if (!JTableListener.this.manager.isPaused() && JTableListener.this.manager.isDirty()) {
+                                JTableListener.this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+                            }
+                            JTableListener.this.cancelDelay();
+                        } catch (Throwable e) { // we want to catch _everything_ that goes wrong to avoid killing the Timer
+                            log.warn("during timer run", e);
                         }
-                        JTableListener.this.cancelDelay();
-                    } catch (Throwable e) { // we want to catch _everything_ that goes wrong to avoid killing the Timer
-                        log.warn("during timer run", e);
-                    }
+                    });
                 }
             }, 500); // milliseconds
         }
