@@ -21,7 +21,12 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>The default behavior for CBus Reporters has been changes to
+                    <u>not</u> clear the report after a timeout. A new
+                    CbusReporterTimeoutControl.py script is provided to
+                    restore the previous behavior:  After a timeout, the
+                    report is cleared.  The script also demonstrates how to
+                    get a more granular control over this behavior.</li>
             </ul>
 
         <h4>C/MRI</h4>
