@@ -160,7 +160,7 @@
 
         <h3>Debugging</h3>
 
-        <p>A common Linux debugging tool is to use the script action.</p>
+        <p>A common Logix debugging tool is to use the script action.</p>
 
         <div style="margin-left: 2em">
           <a href="images/chapter1_1/script_action.png"><img src=
