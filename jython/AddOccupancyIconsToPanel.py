@@ -121,4 +121,3 @@ getBlockCenterPoints(panel)
 addOccupancyIconsAndLabels(panel)
 
 log.info( "AddOccupancyIconsToPanel.py completed" )
-        
