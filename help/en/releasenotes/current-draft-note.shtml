@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>The default behavior for CBus Reporters has been changes to
+                <li>The default behavior for CBus Reporters has been changed to
                     <u>not</u> clear the report after a timeout. A new
                     CbusReporterTimeoutControl.py script is provided to
                     restore the previous behavior:  After a timeout, the
