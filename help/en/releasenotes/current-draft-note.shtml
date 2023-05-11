@@ -82,7 +82,9 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>The handling for LocoNet Reporters (i.e. transponding)
+                    has changed.  See the description
+                    <a href="#TLae">below</a>.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -559,6 +561,17 @@
                 Note that this is just a display bug; the underlying value and
                 property change notifications are correct, so this change won't
                 affect scripts, LogixNG, etc.</li>
+            <li>The definition of "Last Seen" for Id Tags has been
+                clarified to mean "Location where the tag was last seen to be <u>present</u>".
+                Previously, a report that a tag was <u>absent</u> could be marked as the
+                last seen report.  Not all hardware Reporters provide entry/exit reports, as
+                some just indicate that something has been observed in place; their "Last Seen" behavior
+                has not changed.
+                </li>
+            <li>Some Reporters, particularly LocoNet, would improperly clear an "enter" report
+                when an "exits" report for the same tag was seen elsewhere.  This was an
+                error that has been fixed, but if you have scripts or LogixNG that depend on
+                this behavior you might have to update them.
         </ul>
 
    <h3>Warrants</h3>
@@ -600,6 +613,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improved how window preferences are stored to reduce error messages
+                when JMRI is under high load.</li>
         </ul>
 
