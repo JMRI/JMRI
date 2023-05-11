@@ -46,7 +46,8 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Updated how initialization is done to fix a problem where Sensors
+                    where not being properly located and operated.</li>
             </ul>
 
         <h4>Hornby</h4>
