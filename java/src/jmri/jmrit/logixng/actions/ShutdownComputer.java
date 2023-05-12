@@ -76,9 +76,6 @@ public class ShutdownComputer extends AbstractDigitalAction
                     throw new RuntimeException("_operation has invalid value: " + operation.name());
             }
         });
-
-        // If we are here, shutdown has failed
-        log.error("Shutdown failed");  // NOI18N
     }
 
     @Override
