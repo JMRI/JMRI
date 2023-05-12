@@ -434,7 +434,11 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Improved OperationsPro help, paper size, additional links from TOC</li>
+            <li>Many improvements to the traon build report, car divisions, spurs and schedules, track type, etc.</li>
+            <li>A car's wait count is now set to zero if the car's load name is changed</li>
+            <li>Track tools now function as soon as track is added</li>
+            <li>Made "ignore all" the default setting for the car set window</li>
         </ul>
 
    <h3>Panel Editor</h3>
