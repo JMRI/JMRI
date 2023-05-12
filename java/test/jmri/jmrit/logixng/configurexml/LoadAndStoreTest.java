@@ -7,9 +7,13 @@ import java.io.IOException;
 import java.util.stream.Stream;
 
 import jmri.InstanceManager;
+import jmri.SensorManager;
+import jmri.SystemConnectionMemo;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrix.loconet.*;
+import jmri.jmrix.mqtt.MqttSensorManager;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
+import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,13 +63,19 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     public void setUp(@TempDir java.io.File tempDir) throws IOException  {
         super.setUp(tempDir);
 
+        JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initDebugCommandStation();
+
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         SlotManager sm = new SlotManager(lnis);
         LocoNetSystemConnectionMemo locoNetMemo = new LocoNetSystemConnectionMemo(lnis, sm);
+        locoNetMemo.setThrottleManager(new LnThrottleManager(locoNetMemo));
         sm.setSystemConnectionMemo(locoNetMemo);
         InstanceManager.setDefault(LocoNetSystemConnectionMemo.class, locoNetMemo);
+        InstanceManager.setDefault(SystemConnectionMemo.class, locoNetMemo);
 
         MqttSystemConnectionMemo mqttMemo = new MqttSystemConnectionMemo();
+        InstanceManager.store(mqttMemo, SystemConnectionMemo.class);
         InstanceManager.setDefault(MqttSystemConnectionMemo.class, mqttMemo);
     }
 

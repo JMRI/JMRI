@@ -2,6 +2,6 @@
 <?xml-stylesheet href="/xml/XSLT/dispatcheroptions.xsl" type="text/xsl"?>
 <!DOCTYPE dispatcheroptions SYSTEM "/xml/DTD/dispatcher-options.dtd">
 <dispatcheroptions>
-  <!--Written by JMRI version 4.11.8ish+sg+20180613T1134Z+R3790cf9766 on Fri Jun 15 13:49:57 EDT 2018-->
-  <options lename="Test Layout" useconnectivity="yes" trainsfromroster="yes" trainsfromtrains="no" trainsfromuser="no" autoallocate="yes" autoturnouts="yes" trustknownturnouts="yes" minthrottleinterval="100" fullramptime="10000" hasoccupancydetection="yes" shortactivetrainnames="no" shortnameinblock="yes" extracolorforallocated="yes" nameinallocatedblock="no" supportvsdecoder="no" layoutscale="N" usescalemeters="no" userosterentryinblock="no" usesignaltype="signalmast" />
+  <!--Written by JMRI version 5.1.6-ClubBase-2022-NewStopping-202210211338+R3cfb83f on Sat Nov 26 13:56:20 EST 2022-->
+  <options lename="Test Layout" useconnectivity="yes" trainsfrom="TRAINSFROMROSTER" autoallocate="yes" autorelease="yes" autoturnouts="yes" trustknownturnouts="yes" minthrottleinterval="100" fullramptime="10000" hasoccupancydetection="yes" sslcheckdirectionsensors="yes" shortactivetrainnames="no" shortnameinblock="yes" extracolorforallocated="yes" nameinallocatedblock="no" supportvsdecoder="no" layoutscale="N" usescalemeters="no" userosterentryinblock="no" stoppingspeedname="RestrictedSlow" usesignaltype="signalmast" />
 </dispatcheroptions>

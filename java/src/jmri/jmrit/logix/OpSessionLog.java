@@ -25,7 +25,7 @@ class OpSessionLog {
 
     public static synchronized boolean makeLogFile(java.awt.Component parent) {
 
-        JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser fileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         fileChooser.setDialogTitle(Bundle.getMessage("logSession"));
         fileChooser.setFileFilter(new TextFilter());
         int retVal = fileChooser.showDialog(parent, Bundle.getMessage("logFile"));

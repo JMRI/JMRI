@@ -103,6 +103,8 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
             };
             InstanceManager.getDefault(jmri.ShutDownManager.class).register(restoreToLocoNetInterfaceModeTask);
         }
+
+        register();
     }
 
     @Override

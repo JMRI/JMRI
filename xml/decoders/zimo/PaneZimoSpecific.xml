@@ -102,6 +102,25 @@
         <display item="stopping distance rev low" label="" format="hslider">
           <label/>
         </display>
+
+      </column>
+    </row>
+    <label>
+        <text>     </text>
+    </label>
+    <separator/>
+    <row>
+      <column>
+      <label>
+        <text>     </text>
+       </label>
+        <display item="Operating Mode DC Analogue"/>
+        <display  item="Operating Mode DCC" />
+        <display  item="Operating Mode AC Analogue" />
+        <display  item="Operating Mode MM" />
+        <display  item="Operating Mode MFX" />
+
+      
       </column>
     </row>
   </column>

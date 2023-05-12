@@ -33,35 +33,35 @@
       <aspectname>IDDark4</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Indicateur/IDDark_4.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Indicateur/IDDark_4.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Indicateur/IDDark_4.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Indicateur/IDDark_4.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>ID1_4</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Indicateur/ID1_4.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Indicateur/ID1_4.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Indicateur/ID1_4.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Indicateur/ID1_4.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>ID2_4</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Indicateur/ID2_4.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Indicateur/ID2_4.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Indicateur/ID2_4.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Indicateur/ID2_4.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>ID3_4</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Indicateur/ID3_4.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Indicateur/ID3_4.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Indicateur/ID3_4.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Indicateur/ID3_4.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>ID4_4</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/SNCF/Normal/Indicateur/ID4_4.gif</imagelink>
-      <imagelink type="Small">../../../resources/icons/SNCF/Small/Indicateur/ID4_4.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/SNCF/Small/Indicateur/ID4_4.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/SNCF/Small/Indicateur/ID4_4.gif</imagelink>
     </appearance>
 </appearances>

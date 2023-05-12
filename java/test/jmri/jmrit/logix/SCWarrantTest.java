@@ -1,6 +1,8 @@
 package jmri.jmrit.logix;
 
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import jmri.BeanSetting;
@@ -18,6 +20,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -127,8 +130,10 @@ public class SCWarrantTest extends WarrantTest {
 
     @BeforeEach
     @Override
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+    public void setUp(@TempDir File tempDir) throws IOException  {
+        JUnitUtil.setUp();
+
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
 
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initInternalSignalHeadManager();

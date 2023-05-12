@@ -35,18 +35,18 @@ public class LongAddrVariableValue extends VariableValue
         _value.getAccessibleContext().setAccessibleName(label());
 
         _defaultColor = _value.getBackground();
-        _value.setBackground(COLOR_UNKNOWN);
+        _value.setBackground(ValueState.UNKNOWN.getColor());
         // connect to the JTextField value, cv
         _value.addActionListener(this);
         _value.addFocusListener(this);
         // connect for notification
         CvValue cv = (_cvMap.get(getCvNum()));
         cv.addPropertyChangeListener(this);
-        cv.setState(CvValue.FROMFILE);
+        cv.setState(ValueState.FROMFILE);
 
         highCV = mHighCV;
         highCV.addPropertyChangeListener(this);
-        highCV.setState(CvValue.FROMFILE);
+        highCV.setState(ValueState.FROMFILE);
         // simplifyMask(); // not required as mask is ignored
     }
 
@@ -194,7 +194,7 @@ public class LongAddrVariableValue extends VariableValue
         }
         log.debug("setValue with new value {} old value {}", value, oldVal);
         _value.setText("" + value);
-        if (oldVal != value || getState() == VariableValue.UNKNOWN) {
+        if (oldVal != value || getState() == ValueState.UNKNOWN) {
             actionPerformed(null);
         }
         prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(value));
@@ -231,7 +231,7 @@ public class LongAddrVariableValue extends VariableValue
      *
      */
     @Override
-    public void setCvState(int state) {
+    public void setCvState(ValueState state) {
         (_cvMap.get(getCvNum())).setState(state);
     }
 
@@ -328,8 +328,8 @@ public class LongAddrVariableValue extends VariableValue
                 case READING_SECOND:  // finally done, set not busy
                     log.debug("Busy goes false with state READING_SECOND");
                     _progState = IDLE;
-                    (_cvMap.get(getCvNum())).setState(READ);
-                    highCV.setState(READ);
+                    (_cvMap.get(getCvNum())).setState(ValueState.READ);
+                    highCV.setState(ValueState.READ);
                     //super.setState(READ);
                     setBusy(false);
                     return;
@@ -341,7 +341,7 @@ public class LongAddrVariableValue extends VariableValue
                 case WRITING_SECOND:  // now done with complete request
                     log.debug("Busy goes false with state WRITING_SECOND");
                     _progState = IDLE;
-                    super.setState(STORED);
+                    super.setState(ValueState.STORED);
                     setBusy(false);
                     return;
                 default:  // unexpected!

@@ -133,11 +133,13 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ForEach.class);
         classes.add(jmri.jmrit.logixng.actions.IfThenElse.class);
         classes.add(jmri.jmrit.logixng.actions.Return.class);
+        classes.add(jmri.jmrit.logixng.actions.RunOnce.class);
         classes.add(jmri.jmrit.logixng.actions.Sequence.class);
         classes.add(jmri.jmrit.logixng.actions.TableForEach.class);
         map.put(Category.FLOW_CONTROL, classes);
 
         classes = new ArrayList<>();
+        classes.add(jmri.jmrit.display.logixng.ActionLayoutTurnout.class);
         classes.add(jmri.jmrit.display.logixng.ActionPositionable.class);
         map.put(CategoryDisplay.DISPLAY, classes);
 
@@ -156,6 +158,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ShutdownComputer.class);
         classes.add(jmri.jmrit.logixng.actions.SimulateTurnoutFeedback.class);
         classes.add(jmri.jmrit.logixng.actions.WebBrowser.class);
+        classes.add(jmri.jmrit.logixng.actions.WebRequest.class);
         map.put(Category.OTHER, classes);
 
         Assert.assertTrue("maps are equal",
@@ -171,6 +174,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initLogixNGManager();
 
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)

@@ -411,6 +411,10 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     public List<T> getByLastDateList() {
         return getByList(getByIdList(), BY_LAST);
     }
+    
+    public List<T> getByCommentList() {
+        return getByList(getByIdList(), BY_COMMENT);
+    }
 
     /**
      * Sort a specific list of rolling stock last date used
@@ -455,6 +459,9 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     // BY_PICKUP = 19
     // BY_B_UNIT = 20
     // BY_HAZARD = 21
+    // BY_RWL = 22
+    // BY_DIVISION = 23
+    protected static final int BY_COMMENT = 24;
 
     protected java.util.Comparator<T> getComparator(int attribute) {
         switch (attribute) {
@@ -473,8 +480,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
                                 + r2.getTrackName());
             case BY_DESTINATION:
                 return (r1, r2) -> (r1.getDestinationName() + r1.getDestinationTrackName())
-                        .compareToIgnoreCase(r2.getDestinationName()
-                                + r2.getDestinationTrackName());
+                        .compareToIgnoreCase(r2.getDestinationName() + r2.getDestinationTrackName());
             case BY_TRAIN:
                 return (r1, r2) -> (r1.getTrainName().compareToIgnoreCase(r2.getTrainName()));
             case BY_MOVES:
@@ -492,9 +498,11 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
                 return (r1, r2) -> (r1.getLastMoveDate().compareTo(r2.getLastMoveDate()));
             case BY_BLOCKING:
                 return (r1, r2) -> (r1.getBlocking() - r2.getBlocking());
+            case BY_COMMENT:
+                return (r1, r2) -> (r1.getComment().compareToIgnoreCase(r2.getComment()));
             default:
-                return (r1, r2) -> ((r1.getRoadName() + r1.getNumber()).compareToIgnoreCase(r2.getRoadName()
-                        + r2.getNumber()));
+                return (r1, r2) -> ((r1.getRoadName() + r1.getNumber())
+                        .compareToIgnoreCase(r2.getRoadName() + r2.getNumber()));
         }
     }
 

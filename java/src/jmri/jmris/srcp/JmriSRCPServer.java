@@ -76,7 +76,7 @@ public class JmriSRCPServer extends JmriServer {
                     // generate the response.  If this happens, we
                     // need to send the message out.
                     if (v.getOutputString() != null) {
-                        outStream.write((v.getOutputString() + "\n\r").getBytes());
+                        outputStream.write((v.getOutputString() + "\n\r").getBytes());
                     }
                 } catch (ParseException pe) {
                     log.debug("Parse Exception", pe);
@@ -86,11 +86,11 @@ public class JmriSRCPServer extends JmriServer {
                         if (log.isDebugEnabled()) {
                             log.debug("Closing connection due to close of input stream");
                         }
-                        outStream.close();
+                        outputStream.close();
                         inStream.close();
                         return;
                     }
-                    outStream.write("425 ERROR not supported\n\r".getBytes());
+                    outputStream.write("425 ERROR not supported\n\r".getBytes());
                     // recover by consuming tokens in the token stream
                     // until we reach the end of the line.
                     while (t.kind != jmri.jmris.srcp.parser.SRCPParserConstants.EOL) {
@@ -110,7 +110,7 @@ public class JmriSRCPServer extends JmriServer {
                     // generate the response.  If this happens, we
                     // need to send the message out.
                     if (v.getOutputString() != null) {
-                        outStream.write((v.getOutputString() + "\n\r").getBytes());
+                        outputStream.write((v.getOutputString() + "\n\r").getBytes());
                     }
                 } catch (ParseException pe) {
                     log.debug("Parse Exception", pe);
@@ -120,14 +120,14 @@ public class JmriSRCPServer extends JmriServer {
                         // an output string to return (if the client issued
                         // a "TERM 0 SESSION" request).
                         //if(v.getOutputString()!=null)
-                        //   TimeStampedOutput.writeTimestamp(outStream,v.getOutputString()+"\n\r");
+                        //   TimeStampedOutput.writeTimestamp(outputStream,v.getOutputString()+"\n\r");
                         // and we can close the connection.
                         log.debug("Closing connection due to close of input stream");
-                        outStream.close();
+                        outputStream.close();
                         inStream.close();
                         return;
                     }
-                    outStream.write(("425 ERROR not supported\n\r").getBytes());
+                    outputStream.write(("425 ERROR not supported\n\r").getBytes());
                     // recover by consuming tokens in the token stream
                     // until we reach the end of the line.
                     while (t.kind != jmri.jmris.srcp.parser.SRCPParserConstants.EOL) {
@@ -135,7 +135,7 @@ public class JmriSRCPServer extends JmriServer {
                     }
                 } catch (TokenMgrError tme) {
                     log.debug("Token Manager Exception", tme);
-                    outStream.write("410 ERROR unknown command\n\r".getBytes());
+                    outputStream.write("410 ERROR unknown command\n\r".getBytes());
                 }
             } else if (!sh.isCommandMode()) {
                 BufferedReader d  = new BufferedReader(new InputStreamReader(inStream,
@@ -154,8 +154,8 @@ public class JmriSRCPServer extends JmriServer {
                     // we don't care if there is an error on input.
                 }
             } else {
-                outStream.write("500 ERROR out of resources\n\r".getBytes());
-                outStream.close();
+                outputStream.write("500 ERROR out of resources\n\r".getBytes());
+                outputStream.close();
                 inStream.close();
                 return;
             }

@@ -28,7 +28,7 @@
       <p>When combined with <a href="chapter11.shtml">tables</a>, a module could be passed the name
       of a table row. It would then perform the actions based on the table row data.</p>
 
-      <p>The <a href="/help/en/package/jmri/jmrit/beantable/LogixNGModuleTable.shtml">Module
+      <p>The <a href="../../../../package/jmri/jmrit/beantable/LogixNGModuleTable.shtml">Module
       Table</a> provides the details on creating a module.</p>
 
       <p>This is a digital expression socket. It can have inputs and outputs as well as returning
@@ -71,8 +71,8 @@
       <p>The first row is updated to show the inputs and outputs.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter10/definitions.png"><img src="images/chapter10/definitions.png" alt=
-        "Chapter 10 module definitions"></a>
+        <a href="images/chapter10/definitions.png"><img class="image-border"
+         src="images/chapter10/definitions.png" alt="Chapter 10 module definitions"></a>
       </div>
       <a id="DigitalExpressionModule"></a>
       <h3>Calling a Digital Expression Module</h3>
@@ -83,7 +83,7 @@
       <p>Use the <strong>Call module</strong> type in the <strong>Flow Control</strong> category.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter10/add_expression_call.png"><img src=
+        <a href="images/chapter10/add_expression_call.png"><img class="image-border" src=
         "images/chapter10/add_expression_call.png" alt="Chapter 10 add expression call"></a>
       </div>
 
@@ -91,7 +91,7 @@
       list. It only shows expresson modules. Click <strong>OK</strong> to add to the tree.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter10/expression_list.png"><img src=
+        <a href="images/chapter10/expression_list.png"><img class="image-border" src=
         "images/chapter10/expression_list.png" alt="Chapter 10 call expression list"></a>
       </div>
 
@@ -100,7 +100,7 @@
       described in the next section.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter10/call_expression_module.png"><img src=
+        <a href="images/chapter10/call_expression_module.png"><img class="image-border" src=
         "images/chapter10/call_expression_module.png" alt="Chapter 10 call expression module"></a>
       </div>
       <a id="DigitalActionModule"></a>
@@ -109,7 +109,7 @@
       <p>Use the <strong>Call module</strong> type in the <strong>Flow Control</strong> category.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter10/add_action_call.png"><img src=
+        <a href="images/chapter10/add_action_call.png"><img class="image-border" src=
         "images/chapter10/add_action_call.png" alt="Chapter 10 add action call"></a>
       </div>
 
@@ -117,8 +117,8 @@
       list. It only shows action modules. Click <strong>OK</strong> to add to the tree.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter10/action_list.png"><img src="images/chapter10/action_list.png" alt=
-        "Chapter 10 call action list"></a>
+        <a href="images/chapter10/action_list.png"><img class="image-border"
+         src="images/chapter10/action_list.png" alt="Chapter 10 call action list"></a>
       </div>
 
       <p>If there are parameters that need configuration, edit the newly added row and the

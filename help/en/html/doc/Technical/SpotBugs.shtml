@@ -27,7 +27,7 @@
 
       <p>We routinely run SpotBugs as part of our <a href="ContinuousIntegration.shtml">continuous
       integration process</a>. You can see the <a href=
-      "https://builds.jmri.org/jenkins/job/development/job/spotbugs/lastBuild/findbugsResult/">detailed
+      "https://builds.jmri.org/jenkins/job/development/job/spotbugs/lastBuild/spotbugs/">detailed
       results of the most recent (daily) run</a> along with <a href=
       "https://builds.jmri.org/jenkins/job/development/job/spotbugs/">recent progress trend</a>
       online.</p>
@@ -60,7 +60,7 @@ it.
       Sometimes they'll give it enough understanding of e.g. when a variable can be null, that
       it'll no longer make false-positive mistakes. For more on this, see the <a href=
       "https://docs.oracle.com/javase/tutorial/java/annotations/">Java annotations</a> and <a href=
-      "http://findbugs.sourceforge.net/manual/annotations.html">SpotBugs annotation pages</a>.</p>
+      "https://findbugs.sourceforge.net/manual/annotations.html">SpotBugs annotation pages</a>.</p>
 
       <p>The basics of annotations are covered in a <a href=
       "https://docs.oracle.com/javase/tutorial/java/annotations/">Java annotations
@@ -72,11 +72,11 @@ it.
       <ul>
         <li>
           <a href=
-          "http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/Nonnull.html">
+          "https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/Nonnull.html">
           <code>javax.annotation.Nonnull</code></a> - The annotated element must not be null.
           Annotated fields must not be null after construction has completed. Annotated methods
           must have non-null return values. Use <a href=
-          "http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/ParametersAreNonnullByDefault.html">
+          "https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/ParametersAreNonnullByDefault.html">
           javax.annotation.ParametersAreNonnullByDefault</a> on the class declaration (the start of
           the class) to set @Nonnull for an entire class. Note that SpotBugs won't let you compare
           a @Nonnull value to null; that's an error that SpotBugs wants to find via static
@@ -95,7 +95,7 @@ it.
 
         <li>
           <a href=
-          "http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/CheckForNull.html">
+          "https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/CheckForNull.html">
           <code>javax.annotation.CheckForNull</code></a> - the annotated variable, parameter or
           return value may have a null value, so all uses should appropriately handle that. Please
           put this on method definitions to say that the return value should be checked for null.
@@ -103,7 +103,7 @@ it.
 
         <li>
           <a href=
-          "http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/OverridingMethodsMustInvokeSuper.html">
+          "https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/OverridingMethodsMustInvokeSuper.html">
           <code>javax.annotation.OverridingMethodsMustInvokeSuper</code></a> - Used to annotate a
           method that, if overridden, must (or should) invoke super in the overriding method.
           Examples of such methods include <code>finalize()</code> and <code>clone()</code>.
@@ -113,14 +113,14 @@ it.
 
         <li>
           <a href=
-          "http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/CheckReturnValue.html">
+          "https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/CheckReturnValue.html">
           <code>javax.annotation.CheckReturnValue</code></a> - annotates a method to say the method
           has no side effects, so there is no point in calling it without checking its return value.
         </li>
 
         <li>
           <a href=
-          "http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html"><code>net.jcip.annotations.Immutable</code></a>
+          "https://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html"><code>net.jcip.annotations.Immutable</code></a>
           - An object of this class can't be changed after it was created. This allows both better
           checking of logic, and also simplifies use by your colleagues, so it's good to create
           classes that have this property and then annotate them.
@@ -128,7 +128,7 @@ it.
 
         <li>
           <a href=
-          "http://jcip.net/annotations/doc/net/jcip/annotations/NotThreadSafe.html"><code>net.jcip.annotations.NotThreadSafe</code></a>
+          "https://jcip.net/annotations/doc/net/jcip/annotations/NotThreadSafe.html"><code>net.jcip.annotations.NotThreadSafe</code></a>
           - a class that isn't thread-safe, so shouldn't be checked for concurrency issues. Often
           used for Swing-based classes, but note that some Swing components (e.g. monitor windows,
           classes with listeners) do have to accept input from other threads.
@@ -136,7 +136,7 @@ it.
 
         <li>
           <a href=
-          "http://jcip.net/annotations/doc/net/jcip/annotations/ThreadSafe.html"><code>net.jcip.annotations.ThreadSafe</code></a>
+          "https://jcip.net/annotations/doc/net/jcip/annotations/ThreadSafe.html"><code>net.jcip.annotations.ThreadSafe</code></a>
           - classes that do have to be usable for multiple threads. SpotBugs generally assumes
           this, but it's good to put it on a class that's intended to be thread-safe as a reminder
           to future developers.
@@ -144,7 +144,7 @@ it.
 
         <li>
           <a href=
-          "http://jcip.net/annotations/doc/net/jcip/annotations/GuardedBy.html"><code>net.jcip.annotations.GuardedBy</code></a>
+          "https://jcip.net/annotations/doc/net/jcip/annotations/GuardedBy.html"><code>net.jcip.annotations.GuardedBy</code></a>
           - "The field or method to which this annotation is applied can only be accessed when
           holding a particular lock, which may be a built-in (synchronization) lock, or may be an
           explicit java.util.concurrent.Lock."
@@ -154,11 +154,11 @@ it.
       </ul>
       For more information about these annotations, please see links above and
       <ul>
-        <li>The JSR-305 <a href="http://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1">
+        <li>The JSR-305 <a href="https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/index.html">
           code annotations page</a>,
         </li>
 
-        <li>the <a href="http://jcip.net/annotations/doc/index.html">Concurrency API annotations
+        <li>the <a href="https://jcip.net/annotations/doc/index.html">Concurrency API annotations
         page</a>, and
         </li>
 
@@ -188,15 +188,13 @@ it.
       SpotBugs is automatically run by <a href="ContinuousIntegration.shtml#travis">Travis CI</a>
       as part of the <a href="gitdeveloper.shtml">Pull Request</a> process, and by <a href=
       "ContinuousIntegration.shtml#jenkins">Jenkins</a> as part of the <a href=
-      "https://builds.jmri.org/jenkins/job/development/job/spotbugs/lastBuild/findbugsResult/">daily
+      "https://builds.jmri.org/jenkins/job/development/job/spotbugs/lastBuild/">daily
       builds</a>. If new errors appear during CI, the job will (usually) fail. You can look at the
       Jenkins output to see where there are existing errors to work on.
       There's a very nice browser
       that lets you select items by type, by file, by package, etc,
       available by clicking on the "SpotBugs Warnings" button on the left of the
-      <a href="https://builds.jmri.org/jenkins/job/development/job/spotbugs/">Jenkins SpotBugs job</a>
-      (see also the
-      <a href="https://builds.jmri.org/jenkins/job/j11development/job/spotbugs/">Java 11 counterpart</a>)
+      <a href="https://builds.jmri.org/jenkins/job/development/job/spotbugs/">Jenkins SpotBugs job</a>.
 
       <p>To run it locally:</p>
 
@@ -232,7 +230,7 @@ it.
       etc.
       <p>The <a href="https://github.com/JMRI/JMRI/blob/master/.spotbugs.xml">.spotbugs.xml</a>
       file specifies which items in SpotBugs reports are suppressed for the JMRI project's <a href=
-      "https://builds.jmri.org/jenkins/job/development/job/spotbugs/lastBuild/findbugsResult/">usual
+      "https://builds.jmri.org/jenkins/job/development/job/spotbugs/lastBuild/">usual
       reporting via Jenkins</a>. The <a href=
       "https://github.com/JMRI/JMRI/blob/master/.spotbugs-check.xml">.spotbugs-check.xml</a> file
       is a super-set which identifies which are significant enough to fail CI. (This is specified
@@ -250,7 +248,7 @@ it.
       <dl>
         <dt>
           <a href=
-          "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#ri-class-implements-same-interface-as-superclass-ri-redundant-interfaces">
+          "https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#ri-class-implements-same-interface-as-superclass-ri-redundant-interfaces">
           RI_REDUNDANT_INTERFACES</a>
         </dt>
 
@@ -261,9 +259,9 @@ it.
 
         <dt>
           <a href=
-          "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-named-static-inner-class-sic-inner-should-be-static-anon">
+          "https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-named-static-inner-class-sic-inner-should-be-static-anon">
           SIC_INNER_SHOULD_BE_STATIC_ANON</a>, <a href=
-          "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-static-inner-class-sic-inner-should-be-static-needs-this">
+          "https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-static-inner-class-sic-inner-should-be-static-needs-this">
           SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</a>
         </dt>
 

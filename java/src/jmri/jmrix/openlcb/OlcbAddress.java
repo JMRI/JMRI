@@ -2,11 +2,16 @@ package jmri.jmrix.openlcb;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.annotation.CheckReturnValue;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+
 import org.openlcb.EventID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -22,8 +27,8 @@ import javax.annotation.Nonnull;
  * <dt>Full 8 byte ID as pairs separated by "."
  * </dl>
  * Note: the {@link #check()} routine does a full, expensive
- * validity check of the name.  All other operations 
- * assume correctness, diagnose some invalid-format strings, but 
+ * validity check of the name.  All other operations
+ * assume correctness, diagnose some invalid-format strings, but
  * may appear to successfully handle other invalid forms.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010, 2018
@@ -42,14 +47,14 @@ public class OlcbAddress {
         if (hCode == null)  hCode = Pattern.compile("^" + singleAddressPattern + "$").matcher("");
         return hCode;
     }
-    
+
     String aString;
     int[] aFrame = null;
     boolean match = false;
 
     static final int NODEFACTOR = 100000;
 
-    /** 
+    /**
      * Construct from OlcbEvent.
      *
      * @param e the event ID.
@@ -63,22 +68,42 @@ public class OlcbAddress {
         }
         aString = toCanonicalString();
     }
-    
+
     /**
      * Construct from string without leading system or type letters
      * @param s hex coded string of address
      */
     public OlcbAddress(String s) {
-        aString = s;
-        // now parse
         // This is done manually, rather than via regular expressions, for performance reasons.
+
+        // check for leading T, if so convert to numeric form
+        if (s.startsWith("T")) {
+            int from;
+            try {
+                from = Integer.parseInt(s.substring(1));
+            } catch (NumberFormatException e) {
+                from = 0;
+            }
+
+            int DD = (from-1) & 0x3;
+            int aaaaaa = (( (from-1) >> 2)+1 ) & 0x3F;
+            int AAA = ( (from) >> 8) & 0x7;
+            long event = 0x0101020000FF0000L | (AAA << 9) | (aaaaaa << 3) | (DD << 1);
+
+            s = String.format("%016X;%016X", event, event+1);
+            log.debug(" converted to {}", s);
+        }
+
+        aString = s;
+
+        // numeric address string format
         if (aString.contains(";")) {
             // multi-part address; leave match false and aFrame null
         } else if (aString.contains(".")) {
             // dotted form, 7 dots
             String[] terms = s.split("\\.");
             if (terms.length != 8) {
-                log.error("unexpected number of terms: {}", terms.length);
+                log.debug("unexpected number of terms: {}, address is {}", terms.length, s);
             }
             int[] tFrame = new int[terms.length];
             try {
@@ -100,7 +125,7 @@ public class OlcbAddress {
                     String two = aString.substring(2 * i, 2 * i + 2);
                     tFrame[i] = Integer.parseInt(two, 16);
                 }
-            } catch (NumberFormatException ex) { return; }  // leaving the string unparsed  
+            } catch (NumberFormatException ex) { return; }  // leaving the string unparsed
             aFrame = tFrame;
             match = true;
         }
@@ -141,11 +166,11 @@ public class OlcbAddress {
     public int compare(@Nonnull OlcbAddress opp) {
         // if neither matched, just do a lexical sort
         if (!match && !opp.match) return aString.compareTo(opp.aString);
-        
+
         // match sorts before non-matched
         if (match && !opp.match) return -1;
         if (!match && opp.match) return +1;
-        
+
         // usual case: comparing on content
         for (int i = 0; i < Math.min(aFrame.length, opp.aFrame.length); i++) {
             if (aFrame[i] != opp.aFrame[i]) return Integer.signum(aFrame[i] - opp.aFrame[i]);
@@ -153,7 +178,7 @@ public class OlcbAddress {
         // check for different length (shorter sorts first)
         return Integer.signum(aFrame.length - opp.aFrame.length);
     }
-    
+
     public CanMessage makeMessage() {
         CanMessage c = new CanMessage(aFrame, 0x195B4000);
         c.setExtended(true);
@@ -165,7 +190,7 @@ public class OlcbAddress {
      * valid.
      * <p>
      * This is an expensive call. It's complete-compliance done
-     * using a regular expression. It can reject some 
+     * using a regular expression. It can reject some
      * forms that the code will normally handle OK.
      * @return true if valid, else false.
      */
@@ -230,7 +255,7 @@ public class OlcbAddress {
             if (pStrings[i].equals("")) {
                 return null;
             }
-            
+
             // too expensive to do full regex check here, as this is used a lot in e.g. sorts
             // if (!getMatcher().reset(pStrings[i]).matches()) return null;
 
@@ -279,10 +304,10 @@ public class OlcbAddress {
 
     public EventID toEventID() {
         byte[] b = new byte[8];
-        for (int i = 0; i < 8; ++i) b[i] = (byte)aFrame[i];
+        for (int i = 0; i < Math.min(8, aFrame.length); ++i) b[i] = (byte)aFrame[i];
         return new EventID(b);
     }
-    
+
     /**
      * Validates Strings for OpenLCB format.
      * @param name   the system name to validate.
@@ -293,19 +318,11 @@ public class OlcbAddress {
      */
     @Nonnull
     public static String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale, @Nonnull String prefix) throws jmri.NamedBean.BadSystemNameException {
-        //System.err.printf("*** OlcbAddress.validateSystemNameFormat(%s,[locale],%s)\n",name,prefix);
-        //StackTraceElement traceback[] = Thread.currentThread().getStackTrace();
-        //for (int i=1; i < 6 && i < traceback.length; i++) {
-        //    StackTraceElement tb = traceback[i];
-        //    System.err.printf("*** %s.%s (%s at %d)\n",
-        //              tb.getClassName(),tb.getMethodName(),
-        //              tb.getFileName(),tb.getLineNumber());
-        //}
         String oAddr = name.substring(prefix.length());
         OlcbAddress a = new OlcbAddress(oAddr);
         OlcbAddress[] v = a.split();
         if (v == null) {
-            throw new jmri.NamedBean.BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " to a valid Olcb sensor address");
+            throw new jmri.NamedBean.BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " to a valid Olcb address");
         }
         switch (v.length) {
             case 1:
@@ -315,6 +332,31 @@ public class OlcbAddress {
                 throw new jmri.NamedBean.BadSystemNameException(locale,"InvalidSystemNameCustom","Wrong number of events in address: " + name);
         }
         return name;
+    }
+
+    /**
+     * See {@link jmri.NamedBean#compareSystemNameSuffix} for background.
+     * This is a common implementation for OpenLCB Sensors and Turnouts
+     * of the comparison method.
+     *
+     * @param suffix1 1st suffix to compare.
+     * @param suffix2 2nd suffix to compare.
+     * @return true if suffixes match, else false.
+     */
+    @CheckReturnValue
+    public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
+
+        // extract addresses
+        OlcbAddress[] array1 = new OlcbAddress(suffix1).split();
+        OlcbAddress[] array2 = new OlcbAddress(suffix2).split();
+
+        // compare on content
+        for (int i = 0; i < Math.min(array1.length, array2.length); i++) {
+            int c = array1[i].compare(array2[i]);
+            if (c != 0) return c;
+        }
+        // check for different length (shorter sorts first)
+        return Integer.signum(array1.length - array2.length);
     }
 
     private final static Logger log = LoggerFactory.getLogger(OlcbAddress.class);

@@ -676,7 +676,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         y = 0;
         checkBoxes.clear();
         panelCheckBoxes.removeAll();
+        numberOfCheckBoxes = getNumberOfCheckboxesPerLine();
         loadTypes(InstanceManager.getDefault(CarTypes.class).getNames());
+        
+        // add space between car and loco types
+        checkNewLine();
+        
         loadTypes(InstanceManager.getDefault(EngineTypes.class).getNames());
         JPanel p = new JPanel();
         p.add(clearButton);
@@ -701,13 +706,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     int y = 0; // vertical position in panel
 
     private void loadTypes(String[] types) {
-        int numberOfCheckBoxes = getNumberOfCheckboxesPerLine();
         for (String type : types) {
             JCheckBox checkBox = new JCheckBox();
             checkBoxes.add(checkBox);
             checkBox.setText(type);
             addCheckBoxAction(checkBox);
-            addItemLeft(panelCheckBoxes, checkBox, x++, y);
+            addItemLeft(panelCheckBoxes, checkBox, x, y);
             if (_location != null) {
                 if (_location.acceptsTypeName(type)) {
                     checkBox.setSelected(true);
@@ -715,11 +719,16 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             } else {
                 checkBox.setEnabled(false);
             }
-            // default is seven types per row
-            if (x > numberOfCheckBoxes) {
-                y++;
-                x = 0;
-            }
+            checkNewLine();
+        }
+    }
+    
+    int numberOfCheckBoxes;
+    
+    private void checkNewLine() {
+        if (++x > numberOfCheckBoxes) {
+            y++;
+            x = 0;
         }
     }
 

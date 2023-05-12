@@ -163,7 +163,7 @@ public class NamedIcon extends ImageIcon {
 
     static private final String DEFAULTURL = "resources/icons/misc/X-red.gif";
     static private URL substituteDefaultUrl(String pUrl) {
-        URL url = FileUtil.findURL(pUrl);
+        URL url = FileUtil.findURL(pUrl, FileUtil.Location.ALL);
         if (url == null) {
             url = FileUtil.findURL(DEFAULTURL);
             log.error("Did not find \"{}\" for NamedIcon, substitute {}", pUrl, url);

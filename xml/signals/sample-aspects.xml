@@ -12,12 +12,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Sample</firstname><surname>Name</surname></personname>
         <email>name@com.domain</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -26,13 +26,13 @@
         <date>2009-12-28</date>
         <authorinitials>initials</authorinitials>
         <revremark>comment</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>2</revnumber>
         <date>2009-12-29</date>
         <authorinitials>initials</authorinitials>
         <revremark>comment</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
@@ -43,21 +43,19 @@
       <rule></rule>
       <indication></indication>
       <description></description>
-      <reference></reference>
-      <comment></comment>
-      <speed></speed>
-      <speed2></speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
   </aspects>
-  
+
   <imagetypes>
     <imagetype type="large" />
     <imagetype type="small" />
   </imagetypes>
-  
+
   <appearancefiles>
     <appearancefile href="sample-appearance-file.xml"/>
   </appearancefiles>
 </aspecttable>
-  
+

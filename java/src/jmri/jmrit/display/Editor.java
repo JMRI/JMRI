@@ -459,9 +459,11 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
             if (_tooltipTimer != null) {
                 _tooltipTimer.stop();
                 _tooltipTimer = null;
+                _targetPanel.repaint();
             }
 
         } else if (_tooltip == null && _tooltipTimer == null) {
+            log.debug("start :: tt = {}, tooltip = {}, timer = {}", tt, _tooltip, _tooltipTimer);
             _tooltipTimer = new ToolTipTimer(TOOLTIPSHOWDELAY, this, tt);
             _tooltipTimer.setRepeats(false);
             _tooltipTimer.start();
@@ -1087,8 +1089,8 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     public boolean setShowCoordinatesMenu(Positionable p, JPopupMenu popup) {
         //if (showCoordinates()) {
         JMenuItem edit;
-        if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
-            MemoryIcon pm = (MemoryIcon) p;
+        if ((p instanceof MemoryOrGVIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
+            MemoryOrGVIcon pm = (MemoryOrGVIcon) p;
 
             edit = new JMenuItem(Bundle.getMessage(
                 "EditLocationXY", pm.getOriginalX(), pm.getOriginalY()));
@@ -1794,6 +1796,8 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
                 addSignalMastEditor();
             } else if ("Memory".equals(name)) {
                 addMemoryEditor();
+            } else if ("GlobalVariable".equals(name)) {
+                addGlobalVariableEditor();
             } else if ("Reporter".equals(name)) {
                 addReporterEditor();
             } else if ("Light".equals(name)) {
@@ -2026,6 +2030,47 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
         editor.setPickList(PickListModel.memoryPickModelInstance());
         editor.makeIconPanel(true);
         editor.complete(addIconAction, false, true, false);
+        frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
+    }
+
+    protected void addGlobalVariableEditor() {
+        IconAdder editor = new IconAdder("GlobalVariable") {
+            final JButton bSpin = new JButton(Bundle.getMessage("AddSpinner"));
+            final JButton bBox = new JButton(Bundle.getMessage("AddInputBox"));
+            final JSpinner spinner = new JSpinner(_spinCols);
+
+            @Override
+            protected void addAdditionalButtons(JPanel p) {
+                bSpin.addActionListener(a -> addGlobalVariableSpinner());
+                JPanel p1 = new JPanel();
+                //p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+                bBox.addActionListener(a -> addGlobalVariableInputBox());
+                ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setColumns(2);
+                spinner.setMaximumSize(spinner.getPreferredSize());
+                JPanel p2 = new JPanel();
+                p2.add(new JLabel(Bundle.getMessage("NumColsLabel")));
+                p2.add(spinner);
+                p1.add(p2);
+                p1.add(bBox);
+                p.add(p1);
+                p1 = new JPanel();
+                p1.add(bSpin);
+                p.add(p1);
+            }
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                super.valueChanged(e);
+                bSpin.setEnabled(addIconIsEnabled());
+                bBox.setEnabled(addIconIsEnabled());
+            }
+        };
+        ActionListener addIconAction = a -> putGlobalVariable();
+        JFrameItem frame = makeAddIconFrame("GlobalVariable", true, true, editor);
+        _iconEditorFrame.put("GlobalVariable", frame);
+        editor.setPickList(PickListModel.globalVariablePickModelInstance());
+        editor.makeIconPanel(true);
+        editor.complete(addIconAction, false, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
 
@@ -2345,6 +2390,55 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
         return result;
     }
 
+    protected GlobalVariableIcon putGlobalVariable() {
+        GlobalVariableIcon result = new GlobalVariableIcon(new NamedIcon("resources/icons/misc/X-red.gif",
+                "resources/icons/misc/X-red.gif"), this);
+        IconAdder globalVariableIconEditor = getIconEditor("GlobalVariable");
+        result.setGlobalVariable(globalVariableIconEditor.getTableSelection().getDisplayName());
+        result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
+        result.setDisplayLevel(MEMORIES);
+        setNextLocation(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+        return result;
+    }
+
+    protected GlobalVariableSpinnerIcon addGlobalVariableSpinner() {
+        GlobalVariableSpinnerIcon result = new GlobalVariableSpinnerIcon(this);
+        IconAdder globalVariableIconEditor = getIconEditor("GlobalVariable");
+        result.setGlobalVariable(globalVariableIconEditor.getTableSelection().getDisplayName());
+        result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
+        result.setDisplayLevel(MEMORIES);
+        setNextLocation(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+        return result;
+    }
+
+    protected GlobalVariableInputIcon addGlobalVariableInputBox() {
+        GlobalVariableInputIcon result = new GlobalVariableInputIcon(_spinCols.getNumber().intValue(), this);
+        IconAdder globalVariableIconEditor = getIconEditor("GlobalVariable");
+        result.setGlobalVariable(globalVariableIconEditor.getTableSelection().getDisplayName());
+        result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
+        result.setDisplayLevel(MEMORIES);
+        setNextLocation(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+        return result;
+    }
+
     protected BlockContentsIcon putBlockContents() {
         BlockContentsIcon result = new BlockContentsIcon(new NamedIcon("resources/icons/misc/X-red.gif",
                 "resources/icons/misc/X-red.gif"), this);
@@ -2569,6 +2663,8 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
             BundleName = "BeanNameTurnout"; // called by RightTurnout and LeftTurnout objects in TurnoutIcon.java edit() method
         } else if ("Block".equals(name)) {
             BundleName = "BeanNameBlock";
+        } else if ("GlobalVariable".equals(name)) {
+            BundleName = "BeanNameGlobalVariable";
         } else {
             BundleName = name;
         }
@@ -2729,8 +2825,8 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     }
 
     protected int getItemX(Positionable p, int deltaX) {
-        if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
-            MemoryIcon pm = (MemoryIcon) p;
+        if ((p instanceof MemoryOrGVIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
+            MemoryOrGVIcon pm = (MemoryOrGVIcon) p;
             return pm.getOriginalX() + (int) Math.round(deltaX / getPaintScale());
         } else {
             return p.getX() + (int) Math.round(deltaX / getPaintScale());
@@ -2738,8 +2834,8 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     }
 
     protected int getItemY(Positionable p, int deltaY) {
-        if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
-            MemoryIcon pm = (MemoryIcon) p;
+        if ((p instanceof MemoryOrGVIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
+            MemoryOrGVIcon pm = (MemoryOrGVIcon) p;
             return pm.getOriginalY() + (int) Math.round(deltaY / getPaintScale());
         } else {
             return p.getY() + (int) Math.round(deltaY / getPaintScale());

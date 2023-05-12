@@ -136,7 +136,6 @@
       <indication>Proceed on diverging route at prescribed speed.</indication>
       <reference>Page 54</reference>
       <reference>Diverging indication for medium speed route, in route-signaling system</reference>
-      <speed>Limited</speed>
       <speed>Medium</speed>
       <speed2>Maximum</speed2>
       <route>Diverging</route>
@@ -149,7 +148,6 @@
       <reference>Page 54, RULE 240M Fig.4</reference>
       <reference>Diverging indication for lower speed route, in route-signaling system</reference>
       <comment>Alternate Diverging Clear aspect for lower-speed route</comment>
-      <speed>Medium</speed>
       <speed>Slow</speed>
       <speed2>Maximum</speed2>
       <route>Diverging</route>
@@ -180,7 +178,6 @@
       <rule>Rule 240N</rule>
       <indication>Proceed at restricted speed.</indication>
       <reference>Page 55, RULE 240N</reference>
-      <speed>Slow</speed>
       <speed>Restricted</speed>
       <speed2>Restricted</speed2>
       <route>Either</route>

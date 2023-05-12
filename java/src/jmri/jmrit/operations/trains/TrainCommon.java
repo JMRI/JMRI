@@ -1367,6 +1367,9 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.CONSIST)) {
             return padAndTruncateIfNeeded(engine.getConsistName(),
                     InstanceManager.getDefault(ConsistManager.class).getMaxNameLength());
+        } else if (attribute.equals(Setup.DCC_ADDRESS)) {
+            return padAndTruncateIfNeeded(engine.getDccAddress(),
+                    TrainManifestHeaderText.getStringHeader_DCC_Address().length());
         }
         return getRollingStockAttribute(engine, attribute, isPickup, false);
     }
@@ -1770,6 +1773,9 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.CONSIST)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Consist(),
                         InstanceManager.getDefault(ConsistManager.class).getMaxNameLength()) + SPACE);
+            } else if (attribute.equals(Setup.DCC_ADDRESS)) {
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_DCC_Address(),
+                        TrainManifestHeaderText.getStringHeader_DCC_Address().length()) + SPACE);
             } else if (attribute.equals(Setup.KERNEL)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Kernel(),
                         InstanceManager.getDefault(KernelManager.class).getMaxNameLength()) + SPACE);
@@ -2094,7 +2100,7 @@ public class TrainCommon {
     public static String getTextColorString(String string) {
         String text = string;
         if (string.contains(TEXT_COLOR_START)) {
-            text = string.substring(0, string.indexOf(TEXT_COLOR_START)) + string.substring(string.indexOf(">") + 1);
+            text = string.substring(0, string.indexOf(TEXT_COLOR_START)) + string.substring(string.indexOf("\">") + 2);
         }
         if (text.contains(TEXT_COLOR_END)) {
             text = text.substring(0, text.indexOf(TEXT_COLOR_END)) +
@@ -2106,7 +2112,7 @@ public class TrainCommon {
     public static Color getTextColor(String string) {
         Color color = Color.black;
         if (string.contains(TEXT_COLOR_START)) {
-            String c = string.substring(string.indexOf("\"") + 1);
+            String c = string.substring(string.indexOf(TEXT_COLOR_START) + TEXT_COLOR_START.length());
             c = c.substring(0, c.indexOf("\""));
             color = ColorUtil.stringToColor(c);
         }

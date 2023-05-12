@@ -38,7 +38,7 @@ public class MockShutDownManagerTest {
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getCallables().size());
         Assert.assertEquals(1, dsdm.getRunnables().size());
-        
+
         Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
             registerNull(dsdm);
         },"Expected NullPointerException not thrown");
@@ -81,6 +81,7 @@ public class MockShutDownManagerTest {
     @Test
     public void testIsShuttingDown() {
         MockShutDownManager dsdm = new MockShutDownManager();
+        dsdm.setBlockingShutdown(true);
         Frame frame = null;
         if (!GraphicsEnvironment.isHeadless()) {
             frame = new Frame("Shutdown test frame");

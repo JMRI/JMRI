@@ -2,6 +2,7 @@ package jmri.jmrix.cmri.serial.serialdriver.configurexml;
 
 import java.util.List;
 import java.util.StringTokenizer;
+
 import jmri.jmrix.AbstractSerialConnectionConfig;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
@@ -11,8 +12,6 @@ import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsCollector;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of layout connections by persisting the
@@ -33,7 +32,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     public ConnectionConfigXml() {
         super();
     }
-    
+
     CMRInetMetricsCollector metricsCollector;
 
     /**
@@ -257,5 +256,5 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         this.register(new ConnectionConfig(adapter));
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectionConfigXml.class);
 }

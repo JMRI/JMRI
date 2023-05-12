@@ -17,6 +17,8 @@ import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.entryexit.*;
 import jmri.jmrit.logix.*;
+import jmri.jmrit.logixng.GlobalVariable;
+import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.swing.RowSorterUtil;
 import jmri.util.*;
 import jmri.util.swing.XTableColumnModel;
@@ -419,6 +421,17 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
     }
 
     @Nonnull
+    public static PickListModel<GlobalVariable> globalVariablePickModelInstance() {
+        Integer num = _listMap.get("globalVariable");
+        if (num != null) {
+            _listMap.put("globalVariable", num + 1);
+        } else {
+            _listMap.put("globalVariable", 1);
+        }
+        return new GlobalVariablePickModel();
+    }
+
+    @Nonnull
     public static PickListModel<Block> blockPickModelInstance() {
         Integer num = _listMap.get("block");
         if (num != null) {
@@ -702,6 +715,41 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         @Override
         public boolean canAddBean() {
             return true;
+        }
+    }
+
+    static class GlobalVariablePickModel extends PickListModel<GlobalVariable> {
+
+        GlobalVariableManager manager = InstanceManager.getDefault(GlobalVariableManager.class);
+
+        GlobalVariablePickModel() {
+            _name = rb.getString("TitleLogixNGGlobalVariablesTable");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        public Manager<GlobalVariable> getManager() {
+            manager = InstanceManager.getDefault(GlobalVariableManager.class);
+            return manager;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public GlobalVariable addBean(@Nonnull String name) throws IllegalArgumentException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public GlobalVariable addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean canAddBean() {
+            return false;
         }
     }
 

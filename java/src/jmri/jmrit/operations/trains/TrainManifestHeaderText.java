@@ -28,6 +28,7 @@ public class TrainManifestHeaderText {
     private static String final_dest_track = Bundle.getMessage("FD&Track");
     private static String location = Bundle.getMessage("Location");
     private static String consist = Bundle.getMessage("Consist");
+    private static String dcc_address = Bundle.getMessage("DCC_Address");
     private static String kernel = Bundle.getMessage("Kernel");
     private static String owner = Bundle.getMessage("Owner");
     private static String division = Bundle.getMessage("Division");
@@ -236,6 +237,14 @@ public class TrainManifestHeaderText {
     public static void setStringHeader_Hazardous(String s) {
         hazardous = s;
     }
+    
+    public static String getStringHeader_DCC_Address() {
+        return dcc_address;
+    }
+    
+    public static void setStringHeader_DCC_Address(String s) {
+        dcc_address = s;
+    }
 
     // must synchronize changes with operation-config.dtd
     public static Element store() {
@@ -309,6 +318,10 @@ public class TrainManifestHeaderText {
         if (!getStringHeader_Consist().equals(Bundle.getMessage("Consist"))) {
             e.addContent(values = new Element(Xml.CONSIST));
             values.setAttribute(Xml.TEXT, getStringHeader_Consist());
+        }
+        if (!getStringHeader_DCC_Address().equals(Bundle.getMessage("DCC_Address"))) {
+            e.addContent(values = new Element(Xml.DCC_ADDRESS));
+            values.setAttribute(Xml.TEXT, getStringHeader_DCC_Address());
         }
         if (!getStringHeader_Kernel().equals(Bundle.getMessage("Kernel"))) {
             e.addContent(values = new Element(Xml.KERNEL));
@@ -435,6 +448,11 @@ public class TrainManifestHeaderText {
         if (emts.getChild(Xml.CONSIST) != null) {
             if ((a = emts.getChild(Xml.CONSIST).getAttribute(Xml.TEXT)) != null) {
                 setStringHeader_Consist(a.getValue());
+            }
+        }
+        if (emts.getChild(Xml.DCC_ADDRESS) != null) {
+            if ((a = emts.getChild(Xml.DCC_ADDRESS).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_DCC_Address(a.getValue());
             }
         }
         if (emts.getChild(Xml.KERNEL) != null) {

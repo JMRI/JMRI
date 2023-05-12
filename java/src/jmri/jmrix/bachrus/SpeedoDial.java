@@ -1,5 +1,7 @@
 package jmri.jmrix.bachrus;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -93,6 +95,9 @@ public class SpeedoDial extends JPanel {
     }
 
     @Override
+    @SuppressFBWarnings(value = "FL_FLOATS_AS_LOOP_COUNTERS",
+        justification = "Major refactor required to unwind the float in loops."
+        +"Speeds above max speed, along with Mph / Kmph need to be considered.")
     public void paint(Graphics g) {
         super.paint(g);
         if (!(g instanceof Graphics2D) ) {
@@ -274,8 +279,6 @@ public class SpeedoDial extends JPanel {
 
         centreX = panelWidth / 2;
         centreY = panelHeight / 2;
-
-        return;
     }
 
     void update(float speed) {

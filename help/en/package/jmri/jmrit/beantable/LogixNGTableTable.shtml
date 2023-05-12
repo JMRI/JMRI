@@ -75,8 +75,7 @@
 
       <div style="margin-left: 2em">
         <a href="../logixng/images/SelectActionsNoCopy.png"><img src=
-        "../logixng/images/SelectActionsNoCopy.png" alt="Select Actions No Copy"
-         width="147" height="80"></a>
+        "../logixng/images/SelectActionsNoCopy.png" alt="Select Actions No Copy"></a>
       </div>
 
       <dl>
@@ -103,8 +102,7 @@
           confirmation dialog will be displayed.
           <div style="margin-left: 2em">
             <a href="../logixng/images/DeleteTable.png"><img src=
-            "../logixng/images/DeleteTable.png" alt="Delete LogixNG Table Confirmation" width="367"
-            height="126"></a>
+            "../logixng/images/DeleteTable.png" alt="Delete LogixNG Table Confirmation"></a>
           </div>
         </dd>
       </dl>
@@ -128,7 +126,7 @@
 
       <div style="margin-left: 2em">
         <a href="../logixng/images/AddTable.png"><img src="../logixng/images/AddTable.png" alt=
-        "Add LogixNG Table" width="608" height="256"></a>
+        "Add LogixNG Table"></a>
       </div>
 
       <p>The system name is required. The system name for a LogixNG Table always begins with the

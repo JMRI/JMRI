@@ -322,6 +322,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     public void tearDown() {
         _logixNG.setEnabled(false);
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
         _category = null;
         _logixNG = null;

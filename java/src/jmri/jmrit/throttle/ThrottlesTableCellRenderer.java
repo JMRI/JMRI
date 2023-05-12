@@ -1,8 +1,7 @@
 package jmri.jmrit.throttle;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.*;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -11,6 +10,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellRenderer;
+
 import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.jmrit.roster.RosterIconFactory;
@@ -69,7 +69,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
         locoID.setHorizontalAlignment(JLabel.CENTER);
         locoID.setVerticalAlignment(JLabel.CENTER);
         locoID.setIcon(icon);
-        locoID.setText(text);
+        locoID.setText(text);        
         retPanel.add(locoID, BorderLayout.CENTER);
 
         if (tf.getAddressPanel().getThrottle() != null) {
@@ -117,10 +117,15 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
                 }
                 ctrlPanel.add(speedLabel, BorderLayout.CENTER);
             }
+            ctrlPanel.setOpaque(false);
             retPanel.add(ctrlPanel, BorderLayout.EAST);
         }
-
-        retPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        if (tf.isVisible()) {
+            retPanel.setBackground(javax.swing.UIManager.getDefaults().getColor("List.selectionBackground"));
+            retPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        } else {
+            retPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        }
         return retPanel;
     }
 }

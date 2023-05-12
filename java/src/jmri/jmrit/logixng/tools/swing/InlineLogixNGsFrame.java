@@ -9,6 +9,7 @@ import javax.swing.table.TableColumnModel;
 
 import jmri.NamedBean;
 import jmri.jmrit.display.Positionable;
+import jmri.jmrit.logixng.InlineLogixNG;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.util.JmriJFrame;
 
@@ -97,8 +98,8 @@ public class InlineLogixNGsFrame extends JmriJFrame {
         Set<String> panels = new HashSet<>();
         Set<String> icons = new HashSet<>();
         for (LogixNG logixNG : _inlineLogixNGsTableModel.getLogixNGList()) {
-            String editorName = logixNG.getInlineLogixNG().getEditorName();
-            String typeName = logixNG.getInlineLogixNG().getTypeName();
+            String editorName = InlineLogixNGsTableModel.getEditorName(logixNG.getInlineLogixNG());
+            String typeName = InlineLogixNGsTableModel.getTypeName(logixNG.getInlineLogixNG());
             if (editorName != null && !editorName.isBlank()) panels.add(editorName);
             if (typeName != null && !typeName.isBlank()) icons.add(typeName);
         }

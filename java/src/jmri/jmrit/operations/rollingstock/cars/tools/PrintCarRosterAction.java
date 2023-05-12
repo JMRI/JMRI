@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -505,7 +503,7 @@ public class PrintCarRosterAction extends AbstractAction {
 
         private void loadSortByComboBox(JComboBox<String> box) {
             box.removeAllItems();
-            for (int i = panel.carsTableModel.SORTBY_NUMBER; i <= panel.carsTableModel.SORTBY_LAST; i++) {
+            for (int i = panel.carsTableModel.SORTBY_NUMBER; i <= panel.carsTableModel.SORTBY_COMMENT; i++) {
                 box.addItem(panel.carsTableModel.getSortByName(i));
             }
             box.setSelectedItem(panel.carsTableModel.getSortByName());

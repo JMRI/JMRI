@@ -9,9 +9,6 @@ import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.node.*;
 import jmri.jmrix.can.cbus.swing.simulator.NdPane;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
-
 /**
  * Simulating a MERG CBUS Node.
  *
@@ -20,9 +17,9 @@ import jmri.jmrix.can.cbus.swing.simulator.NdPane;
  * @since 4.15.2
  */
 public class CbusDummyNode extends CbusNode {
-    
+
     private NdPane _pane;
-    
+
     /**
      * Create a new CbusDummyNode.
      * @param sysmemo System Connection to use, can be null.
@@ -34,7 +31,7 @@ public class CbusDummyNode extends CbusNode {
         setCanId(sysmemo);
         _pane = null;
     }
-    
+
     /**
      * Uses in-class CanListener
      * {@inheritDoc}
@@ -44,9 +41,9 @@ public class CbusDummyNode extends CbusNode {
         canListener = new CbusDummyNodeCanListener(_memo,this);
         return canListener;
     }
-    
+
     private CbusDummyNodeCanListener canListener;
-    
+
     // total events on module
     protected void sendNUMEV(){
         CanReply r = new CanReply(4);
@@ -82,7 +79,7 @@ public class CbusDummyNode extends CbusNode {
             send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay() + ( extraDelay * i ) );
         }
     }
-    
+
     protected void sendNEVAL( int index, int varIndex ){
         
         CbusNodeEvent _ndEv = getNodeEventManager().getNodeEventByIndex(index);
@@ -112,7 +109,7 @@ public class CbusDummyNode extends CbusNode {
             send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
         }
     }
-    
+
     protected void sendPARAMS() {
         CanReply r = new CanReply(8);
         r.setElement(0, CbusConstants.CBUS_PARAMS);
@@ -125,7 +122,7 @@ public class CbusDummyNode extends CbusNode {
         r.setElement(7, getNodeParamManager().getParameter(7) & 0xff);
         send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
     }
-    
+
     protected void sendPNN() {
         CanReply r = new CanReply(6);
         r.setElement(0, CbusConstants.CBUS_PNN);
@@ -139,7 +136,6 @@ public class CbusDummyNode extends CbusNode {
 
     // Parameter answer
     protected void sendPARAN( int index ){
-        
         try {
             CanReply r = new CanReply(5);
             r.setElement(0, CbusConstants.CBUS_PARAN);
@@ -153,10 +149,9 @@ public class CbusDummyNode extends CbusNode {
             sendCMDERR(9);
         }
     }
-    
+
     // NV Answer
     protected void sendNVANS( int index ) {
-        
         try {
             CanReply r = new CanReply(5);
             r.setElement(0, CbusConstants.CBUS_NVANS);
@@ -172,7 +167,13 @@ public class CbusDummyNode extends CbusNode {
     }
 
     protected void setDummyNV(int index, int newval) {
-        
+
+        // not per CBUS spec. however some modules do this...
+        if ( this.getnvWriteInLearnOnly() && !this.getNodeInLearnMode() ){
+            sendCMDERR(2);
+            return;
+        }
+
         if ( newval<0 || newval > 255 ) {
             sendCMDERR(12);
             return;
@@ -192,7 +193,7 @@ public class CbusDummyNode extends CbusNode {
             sendCMDERR(10);
         }
     }
-    
+
     protected void sendCMDERR(int errorId) {
         CanReply r = new CanReply(4);
         r.setElement(0, CbusConstants.CBUS_CMDERR);
@@ -201,7 +202,7 @@ public class CbusDummyNode extends CbusNode {
         r.setElement(3, errorId & 0xff);
         send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
     }
-    
+
     protected void sendWRACK(){
         CanReply r = new CanReply(3);
         r.setElement(0, CbusConstants.CBUS_WRACK);
@@ -209,7 +210,7 @@ public class CbusDummyNode extends CbusNode {
         r.setElement(2, getNodeNumber() & 0xff);        
         send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
     }
-    
+
     // sim of FiLM Button
     public void flimButton() {
         // send request for node number
@@ -226,7 +227,7 @@ public class CbusDummyNode extends CbusNode {
     public void setPane(NdPane pane) {
         _pane = pane;
     }
-    
+
     protected void setDNN(int nn){
         setNodeNumber(nn);
         setNodeInFLiMMode(true);
@@ -241,6 +242,6 @@ public class CbusDummyNode extends CbusNode {
         send.sendWithDelay(r,canListener.getSendIn(),canListener.getSendOut(),canListener.getDelay());
     }
 
-    // private static final Logger log = LoggerFactory.getLogger(CbusDummyNode.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusDummyNode.class);
 
 }

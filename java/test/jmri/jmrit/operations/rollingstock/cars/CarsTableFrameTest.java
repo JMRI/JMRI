@@ -7,16 +7,11 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
+import org.netbeans.jemmy.operators.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
@@ -263,6 +258,9 @@ public class CarsTableFrameTest extends OperationsTestCase {
         
         JemmyUtil.enterClickAndLeave(ctf.sortByLast);
         //TODO add last moved date
+        
+        JemmyUtil.enterClickAndLeave(ctf.sortByComment);
+        //TODO add comment
 
         // test sort by type
         JemmyUtil.enterClickAndLeave(ctf.sortByType);

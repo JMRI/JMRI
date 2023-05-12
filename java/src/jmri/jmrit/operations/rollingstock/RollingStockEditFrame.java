@@ -572,16 +572,18 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             textRfidSystemName.setText(_rs.getRfid());
         }
         autoTrackCheckBox.setEnabled(true);
-
+    }
+    
+    protected void checkAndSetLocationAndTrack(RollingStock rs) {
         if (locationBox.getSelectedItem() != null && trackLocationBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, getRb().getString("rsFullySelect"), getRb().getString("rsCanNotLoc"),
                     JOptionPane.ERROR_MESSAGE);
             // update location only if it has changed
-        } else if (_rs.getLocation() == null ||
-                !_rs.getLocation().equals(locationBox.getSelectedItem()) ||
-                _rs.getTrack() == null ||
-                !_rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
-            setLocationAndTrack(_rs);
+        } else if (rs.getLocation() == null ||
+                !rs.getLocation().equals(locationBox.getSelectedItem()) ||
+                rs.getTrack() == null ||
+                !rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
+            setLocationAndTrack(rs);
         }
     }
 

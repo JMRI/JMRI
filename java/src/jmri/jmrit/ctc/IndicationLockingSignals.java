@@ -36,21 +36,21 @@ public class IndicationLockingSignals {
         return false;
     }
 
-    public boolean checkSignalHeads() {
+    private boolean checkSignalHeads() {
         for (NBHSignal signal : _mListOfSignals) {
             if (!signal.isDanger()) return true;
         }
         return false;
     }
 
-    public boolean checkSignalMasts() {
+    private boolean checkSignalMasts() {
         for (NBHSignal signal : _mListOfSignals) {
             if (checkMast((SignalMast) signal.getBean(), turnout)) return true;
         }
         return false;
     }
 
-    public boolean checkMast(SignalMast mast, Turnout turnout) {
+    private boolean checkMast(SignalMast mast, Turnout turnout) {
         if (mast.getHeld()) return false;
 
         // Get the SML for the mast and check for an active destination

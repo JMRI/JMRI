@@ -24,10 +24,6 @@
         </li>
 
         <li>
-          <a href="#limitations">Limitations</a>
-        </li>
-
-        <li>
           <a href="#connecting">Connecting</a>
         </li>
 
@@ -45,8 +41,8 @@
       <h3>Computer Interfaces</h3>
       JMRI supports the SPROG both as a Decoder Programmer, and as a mini-Command Station. For more
       information on these capabilities, see the <a href=
-      "http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">SPROG manual</a> on the <a href=
-      "http://www.sprog-dcc.co.uk/">SPROG website</a>.
+      "https://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">SPROG manual</a> on the <a href=
+      "https://www.sprog-dcc.co.uk/">SPROG website</a>.
       <p>Note that there are several different versions of the SPROG hardware, and even more
       versions of the SPROG software.<br>
       The following SPROG models operate with the current version of JMRI:</p>
@@ -88,8 +84,8 @@
 
             <li>On Windows 7 and earlier users may need to have a driver installed. For more
             information on that, see the <a href=
-            "http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">SPROG manual</a> on the
-            <a href="http://www.sprog-dcc.co.uk/">SPROG website</a>.<br>
+            "https://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">SPROG manual</a> on the
+            <a href="https://www.sprog-dcc.co.uk/">SPROG website</a>.<br>
               Windows 7 users may also be interested in <a href=
               "https://www.youtube.com/watch?v=JUG7dsXi2cI">this video</a>.
             </li>
@@ -218,17 +214,17 @@
       "../../../package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml">update tool</a>.<br>
       supports USB SPROG II (from version 2.2), SPROG 3 (all versions) and Pi-SPROG One (from
       version 2.5). For more information contact the manufacturer <a href=
-      "http://www.sprog-dcc.co.uk/">SPROG DCC</a></p>
+      "https://www.sprog-dcc.co.uk/">SPROG DCC</a></p>
 
       <h2 id="documentation">Documentation</h2>
 
       <h3>Third Party info</h3>
 
       <p>For more information on the SPROG, see <a href=
-      "http://www.sprog-dcc.co.uk/index.shtml">the SPROG website</a>.<br>
-      They have a useful <a href="http://www.sprog-dcc.co.uk/faq.shtml#General">FAQ page</a>.</p>
+      "https://www.sprog-dcc.co.uk/">the SPROG website</a>.<br>
+      They have a useful <a href="https://www.sprog-dcc.co.uk/faq#General">FAQ page</a>.</p>
 
-      <p>There's a SPROG User Group at <a href="https://groups.io/g/sprog-dcc/topics"></a>.</p>
+      <p>There's a SPROG User Group at <a href="https://groups.io/g/sprog-dcc/topics">https://groups.io/g/sprog-dcc/topics</a>.</p>
 
       <p>A Dutch-language <a href=
       "https://in03.hostcontrol.com/resources/510743ee26f0d6/cd00fcd9b6/file-object/Handleiding%20Sprog%20v2-2017.pdf">

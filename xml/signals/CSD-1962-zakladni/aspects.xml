@@ -18,7 +18,7 @@
     <author>
         <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
         <email>sidlo64@hotmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -27,30 +27,28 @@
         <date>2016-07-02</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>2</revnumber>
         <date>2018-09-19</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>3</revnumber>
         <date>2019-02-19</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Aspect 26 Unlit</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>4</revnumber>
         <date>2020-08-25</date>
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators JOP, Speed names</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspects>
-  
-<!-- ČSD -->
 
     <aspect>
       <name>Stůj</name>
@@ -395,7 +393,6 @@
       <title>Unlit</title>
       <indication>Traffic locking in opposing direction on a banalized ABS</indication>
       <description>Unlit all lights</description>
-      <reference> </reference>
       <comment>Znasnuté návěstidlo v nesprávném směru</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
@@ -449,7 +446,7 @@
       <description>One white flashing light</description>
       <reference>Aspect 31</reference>
       <comment>Opatrně na přivolávací návěst</comment>
-      <speed>Slowly</speed>
+      <speed>Slow</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
       <dccAspect>30</dccAspect>
@@ -462,7 +459,7 @@
       <description>One white flashing light with red light</description>
       <reference>Aspect 31</reference>
       <comment>Opatrně na přivolávací návěst</comment>
-      <speed>Slowly</speed>
+      <speed>Slow</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
       <dccAspect>31</dccAspect>
@@ -471,9 +468,9 @@
   </aspects>
 
   <imagetypes>
-      
+
 	<imagetype type="prototype"/>
-	
+
         <imagetype type="AŽD z"/>
 	<imagetype type="AŽD zč"/>
 	<imagetype type="AŽD zb"/>
@@ -484,7 +481,7 @@
 	<imagetype type="AŽD žzb"/>
 	<imagetype type="AŽD žzbz"/>
 	<imagetype type="AŽD žčb"/>
-	
+
         <imagetype type="ESP z"/>
 	<imagetype type="ESP zč"/>
 	<imagetype type="ESP zb"/>
@@ -495,10 +492,10 @@
 	<imagetype type="ESP žzb"/>
 	<imagetype type="ESP žzbz"/>
 	<imagetype type="ESP žčb"/>
-	
+
 	<imagetype type="JOP hlavní"/>
 	<imagetype type="JOP seřaďovací"/>
-	
+
   </imagetypes>
 
   <appearancefiles>
@@ -511,10 +508,10 @@
 
     <appearancefile href="appearance-block.xml"/>
     <appearancefile href="appearance-block_distant.xml"/>
-    
+
     <appearancefile href="appearance-abs.xml"/>
     <appearancefile href="appearance-abs4.xml"/>
-    
+
     <appearancefile href="appearance-shunting.xml"/>
 
     <appearancefile href="appearance-test.xml"/>

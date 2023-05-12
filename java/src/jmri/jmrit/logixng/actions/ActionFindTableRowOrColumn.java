@@ -188,7 +188,7 @@ public class ActionFindTableRowOrColumn extends AbstractDigitalAction
                     if ((cell != null) && (cell.equals(value))) {
                         Map<String, Object> columnData = new HashMap<>();
 
-                        for (int colIndex=1; colIndex <= table.numRows(); colIndex++) {
+                        for (int colIndex=1; colIndex <= table.numColumns(); colIndex++) {
                             Object subHeader = table.getCell(0, colIndex);
                             if ((subHeader != null) && (!subHeader.toString().isEmpty())) {
                                 columnData.put(subHeader.toString(), table.getCell(row, colIndex));

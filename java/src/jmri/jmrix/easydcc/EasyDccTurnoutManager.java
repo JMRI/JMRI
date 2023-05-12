@@ -82,6 +82,11 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+        return true;
+    }
+
     /**
      * {@inheritDoc}
      */

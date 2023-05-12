@@ -75,7 +75,7 @@
       <h3>For Linux</h3>
       If your distro doesn't already have a default application that supports the use of the
       &lt;<code>Print Screen&gt;</code>&gt; and &lt;<code>Alt + Print Screen</code>&gt; keys you
-      can install <a href="http://www.kde.org/" target="_blank">KSnapshot</a> or your favorite
+      can install <a href="https://kde.org/" target="_blank">KSnapshot</a> or your favorite
       application to do your screen grabbing.
       <h3>For macOS</h3>
       After setting up your shot, hold down <code>&lt;Apple + Shift + 4&gt;</code> key. When you
@@ -88,14 +88,14 @@
       up screen shots. Here's an example of that style:<br>
       <img src="images/GitHubPencil.png" alt="GitHub Pencil"></p>
 
-      <p>We also love <a href="http://www.irfanview.com" target="_blank">IrFanView</a> for
+      <p>We also love <a href="https://www.irfanview.com/" target="_blank">IrFanView</a> for
       screenshots, and it is free. With it, you can also include your mouse cursor in your
       snapshot. You can also take a series of shots easily, and even make a slideshow of them. You
       can tell it what file format you want the image files to be AND where you want them to be
       saved before you take the shot, and that makes it easier to work with them in a program like
       Paint or Photoshop.</p>
 
-      <h2>id="sizing"&gt;Sizing and Saving the Images</h2>
+      <h2 id="sizing">Sizing and Saving the Images</h2>
       Any changes you make to your image should be done before you use Amaya to insert it into your
       document. Remember that if you change it, it needs to be re-inserted. Make sure you save the
       image as one of the following filetypes: PNG, JPG, or JPEG (not BMP or TIF), and do not use

@@ -3,6 +3,7 @@ package jmri.jmrit.display.palette;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -15,6 +16,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
+
 import jmri.Memory;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
@@ -25,6 +27,7 @@ import jmri.jmrit.display.MemoryInputIcon;
 import jmri.jmrit.display.MemorySpinnerIcon;
 import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.picker.PickListModel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

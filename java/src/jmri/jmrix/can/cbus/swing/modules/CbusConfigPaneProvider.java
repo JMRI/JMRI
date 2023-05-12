@@ -106,7 +106,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
                 return p;
             }
         }
-        log.info("node gets unknown provider: {}", node);
+        jmri.util.LoggingUtil.infoOnce(log,"node gets unknown provider: {}", node);
         return new UnknownPaneProvider();
     }
 

@@ -74,15 +74,15 @@
             'https://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/generate-website' title=
             "generate website" alt=""></a>
             <a href=
-            'https://builds.jmri.org/jenkins/job/WebSite/job/JMRI_repository/'><img src=
+            'https://builds.jmri.org/jenkins/job/WebSite/job/jmri-repository/'><img src=
             'https://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/jmri-repository' title=
             "JMRI repository" alt=""></a>
             <a href=
-            'https://builds.jmri.org/jenkins/job/WebSite/job/website_repository/'><img src=
+            'https://builds.jmri.org/jenkins/job/WebSite/job/website-repository/'><img src=
             'https://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/website-repository'
             title="website repository" alt=""></a>
             <a href=
-            'https://builds.jmri.org/jenkins/job/WebSite/job/website-legal_repository/'><img src=
+            'https://builds.jmri.org/jenkins/job/WebSite/job/website-legal-repository/'><img src=
             'https://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/website-legal-repository'
             title="website-legal" alt=""></a>
           </td>
@@ -154,7 +154,7 @@
 
         <tr>
           <td>
-            <a href="https://builds.jmri.org/jenkins/job/Development/job/separate-tests//">Separate
+            <a href="https://builds.jmri.org/jenkins/job/Development/job/separate-tests/">Separate
             Tests</a> - Runtime Warnings Results<br>
             <a href='https://builds.jmri.org/jenkins/job/development/job/separate-tests/'><img src=
             'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fseparate-tests'
@@ -189,7 +189,7 @@
             'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Falltest' title=
             "AllTest" alt=""></a><br>
             <a href=
-            "https://builds.jmri.org/jenkins/job/development/job/alltest/lastBuild/testReport/"><img src="https://builds.jmri.org/jenkins/job/development/job/alltest/test/trend"
+            "https://builds.jmri.org/jenkins/job/development/job/alltest/lastBuild/"><img src="https://builds.jmri.org/jenkins/job/development/job/alltest/test/trend"
             alt=""></a>
           </td>
           <td>
@@ -199,7 +199,7 @@
             'https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Falltest' title=
             "AllTest" alt=""></a><br>
             <a href=
-            "https://builds.jmri.org/jenkins/job/development/job/alltest/lastBuild/testReport/"><img src="https://builds.jmri.org/jenkins/job/development/job/alltest/test/trend?failureOnly=true"
+            "https://builds.jmri.org/jenkins/job/development/job/alltest/lastBuild/"><img src="https://builds.jmri.org/jenkins/job/development/job/alltest/test/trend?failureOnly=true"
             alt=""></a>
           </td>
         </tr>

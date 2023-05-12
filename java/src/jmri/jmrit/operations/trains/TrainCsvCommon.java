@@ -100,7 +100,7 @@ public class TrainCsvCommon extends TrainCommon {
     }
 
     protected final void printLocationComment(CSVPrinter fileOut, Location location) throws IOException {
-        if (Setup.isPrintLocationCommentsEnabled() && !location.getComment().equals(Location.NONE)) {
+        if (!location.getComment().equals(Location.NONE)) {
             String textColorName = TrainCommon.getTextColorName(location.getCommentWithColor());
             // comment can have multiple lines
             String[] comments = location.getComment().split(NEW_LINE); // NOI18N
@@ -132,9 +132,7 @@ public class TrainCsvCommon extends TrainCommon {
     }
 
     protected final void printRouteComment(CSVPrinter fileOut, Train train) throws IOException {
-        if (Setup.isPrintRouteCommentsEnabled()) {
-            fileOut.printRecord("RC", Bundle.getMessage("csvRouteComment"), train.getRoute().getComment()); // NOI18N
-        }
+        fileOut.printRecord("RC", Bundle.getMessage("csvRouteComment"), train.getRoute().getComment()); // NOI18N
     }
     
     protected void printLogoURL(CSVPrinter fileOut, Train train) throws IOException {
@@ -195,7 +193,8 @@ public class TrainCsvCommon extends TrainCommon {
                 engine.getConsistName(),
                 engine.isLead() ? "Lead loco" : "", // NOI18N
                 engine.getComment(),
-                engine.getRfid());
+                engine.getRfid(),
+                engine.getDccAddress());
     }
 
     protected final void checkForEngineOrCabooseChange(CSVPrinter fileOut, Train train, RouteLocation rl)

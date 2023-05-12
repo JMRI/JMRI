@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2023 All rights reserved -->
+<!-- Panes for solenoid setup -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <name>Setup</name>
+    <column>
+        <display item="recharge" label="Recharge Time (ms)" tooltip="CDU recharge time (ms)"/>
+        <display item="delay" label="Fire Delay (ms) " tooltip="Delay between firing events (ms)"/>
+        <display item="enable" label="Enable delay (ms) " tooltip="Startup enable delay (ms)"/>
+    </column>
+</pane>

@@ -15,7 +15,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Frame for user to place a group of cars on the layout
  *
- * @author Dan Boudreau Copyright (C) 2011, 2013
+ * @author Dan Boudreau Copyright (C) 2011, 2013, 2023
  */
 public class CarsSetFrame extends CarSetFrame {
 
@@ -27,16 +27,16 @@ public class CarsSetFrame extends CarSetFrame {
     }
 
     // Ignore checkbox states
-    private static boolean ignoreStatusCheckBoxSelected = false;
-    private static boolean ignoreLocationCheckBoxSelected = false;
-    private static boolean ignoreDivisionCheckBoxSelected = false;
-    private static boolean ignoreRWECheckBoxSelected = false;
-    private static boolean ignoreRWLCheckBoxSelected = false;
-    private static boolean ignoreLoadCheckBoxSelected = false;
-    private static boolean ignoreKernelCheckBoxSelected = false;
-    private static boolean ignoreDestinationCheckBoxSelected = false;
-    private static boolean ignoreFinalDestinationCheckBoxSelected = false;
-    private static boolean ignoreTrainCheckBoxSelected = false;
+    private static boolean ignoreStatusCheckBoxSelected = true;
+    private static boolean ignoreLocationCheckBoxSelected = true;
+    private static boolean ignoreDivisionCheckBoxSelected = true;
+    private static boolean ignoreRWECheckBoxSelected = true;
+    private static boolean ignoreRWLCheckBoxSelected = true;
+    private static boolean ignoreLoadCheckBoxSelected = true;
+    private static boolean ignoreKernelCheckBoxSelected = true;
+    private static boolean ignoreDestinationCheckBoxSelected = true;
+    private static boolean ignoreFinalDestinationCheckBoxSelected = true;
+    private static boolean ignoreTrainCheckBoxSelected = true;
 
     public void initComponents(JTable carsTable) {
         _carsTable = carsTable;
@@ -91,7 +91,7 @@ public class CarsSetFrame extends CarSetFrame {
         }
     }
 
-    boolean toggle = true;
+    boolean toggle = false;
 
     protected void ignoreAll(boolean b) {
         ignoreStatusCheckBox.setSelected(!locationUnknownCheckBox.isSelected() & b);
@@ -145,13 +145,26 @@ public class CarsSetFrame extends CarSetFrame {
             }
         }
 
-        askKernelChange = true;
+        // don't ask for to change cars in a kernel when giving a selected group of cars a new kernel name
+        askKernelChange = false;
+        
+        // determine if all cars in every kernel are selected
+        for (Car car : cars) {
+            if (car.getKernel() != null) {
+                for (Car c : car.getKernel().getCars()) {
+                    if (!cars.contains(c)) {
+                        askKernelChange = true; // not all selected
+                        break;
+                    }
+                }
+            }
+        }
 
         for (Car car : cars) {
             if (!super.change(car)) {
                 return false;
             } else if (car.getKernel() != null && !ignoreKernelCheckBox.isSelected()) {
-                askKernelChange = false;
+                askKernelChange = false; // changing kernel name
             }
         }
         return true;

@@ -146,6 +146,10 @@ log4j.category.jmri.ClassPathTest = INFO
 # Needed for jmri.util.JUnitAppenderTest
 log4j.category.jmri.util.JUnitAppenderTest = INFO
 
+# Needed for jmri.util.LoggingUtilTest
+log4j.category.jmri.util.LoggingUtilTest = INFO
+log4j.category.LoggingUtilTest-extra-logger = INFO
+
 # INFO is part of application tests
 log4j.category.apps.Apps = INFO
 log4j.category.apps.AppsBase = INFO

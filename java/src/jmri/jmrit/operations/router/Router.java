@@ -2,24 +2,18 @@ package jmri.jmrit.operations.router;
 
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Router for car movement. This code attempts to find a way (a route) to move a
@@ -50,6 +44,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     private final List<Train> _lastLocationTrains = new ArrayList<>();
 
     protected static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
+    public static final String STATUS_NOT_THIS_TRAIN_PREFIX = STATUS_NOT_THIS_TRAIN.substring(0, STATUS_NOT_THIS_TRAIN.indexOf('('));
     protected static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
     protected static final String STATUS_ROUTER_DISABLED = Bundle.getMessage("RouterDisabled");
 
@@ -201,8 +196,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         // first try using 2 trains and an interchange track to route the car
         if (setCarDestinationTwoTrainsInterchange(car)) {
             if (car.getDestination() == null) {
-                log.debug("Was able to find a route via classification/interchange track, but not using train ({})" +
-                        " or car destination not set, try again using yard tracks", _train.getName()); // NOI18N
+                log.debug("Was able to find a route via classification/interchange track, but not using specified train" +
+                        " or car destination not set, try again using yard tracks"); // NOI18N
                 if (setCarDestinationTwoTrainsYard(car)) {
                     log.debug("Was able to find route via yard ({}, {}) for car ({})", car.getDestinationName(),
                             car.getDestinationTrackName(), car);
@@ -444,9 +439,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      */
     private boolean setCarDestinationTwoTrainsStaging(Car car) {
         if (Setup.isCarRoutingViaStagingEnabled()) {
-            addLine(_buildReport, SEVEN, BLANK_LINE);
             addLine(_buildReport, SEVEN,
-                    MessageFormat.format(Bundle.getMessage("RouterAttemptStaging"), new Object[]{car.toString()}));
+                    MessageFormat.format(Bundle.getMessage("RouterAttemptStaging"), new Object[]{car.toString(),
+                            car.getFinalDestinationName(), car.getFinalDestinationTrackName()}));
             return setCarDestinationTwoTrains(car, Track.STAGING);
         }
         return false;
@@ -475,6 +470,12 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         for (Track track : tracks) {
             if (car.getTrack() == track) {
                 continue; // don't use car's current track
+            }
+            // can't use staging if car's load can be modified
+            if (trackType.equals(Track.STAGING) && track.isModifyLoadsEnabled()) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterStagingExcluded"),
+                        new Object[]{track.getLocation().getName(), track.getName()}));
+                continue;
             }
             String status = track.isRollingStockAccepted(testCar);
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
@@ -712,10 +713,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             List<Track> allStaging = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
             tracks.clear();
             for (Track staging : allStaging) {
-                if (staging.isModifyLoadsEnabled()) {
-                    addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterStagingExcluded"),
-                            new Object[]{staging.getLocation().getName(), staging.getName()}));
-                } else {
+                if (!staging.isModifyLoadsEnabled()) {
                     tracks.add(staging);
                 }
             }

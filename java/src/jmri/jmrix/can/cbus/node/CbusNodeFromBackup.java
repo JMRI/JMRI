@@ -281,6 +281,6 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
     
 }
     
-    // private static final Logger log = LoggerFactory.getLogger(CbusNodeFromBackup.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeFromBackup.class);
     
 }

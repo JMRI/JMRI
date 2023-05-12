@@ -109,12 +109,12 @@
       For technical information, see the Javadoc pages for
       <ul>
         <li>
-          <a href="https://jmri.org/JavaDoc/doc/jmri/Block.html">Block</a> - represents each Block
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/Block.html">Block</a> - represents each Block
           and its connections
         </li>
 
         <li>
-          <a href="https://jmri.org/JavaDoc/doc/jmri/Path.html">Path</a> - represents the
+          <a href="https://www.jmri.org/JavaDoc/doc/jmri/Path.html">Path</a> - represents the
           connections to and from another Block, including any Turnout settings, etc, that are
           needed.
         </li>
