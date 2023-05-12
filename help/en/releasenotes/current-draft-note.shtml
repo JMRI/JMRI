@@ -486,7 +486,11 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>New AnyRail/AnyRailExportAdditions.py. For use with AnyRail export. Creates hardware occupancy Sensors and Turnouts,
+                  cleans up the generated Blocks, and does some visual tweaks of the panel.</li>
+            <li>New CreateSectionsFromBlocks.py. For each defined occupancy block, attempts to create a one-block Section</li>
+            <li>New AddOccupancyIconsToPanel.py. Create and place SensorIcons and BlockContents for each occupancy Block on a panel</li>
+            <li>Add binding "beans" for NamedBeanHandleManager</li>
         </ul>
 
     <h3>Signals</h3>
