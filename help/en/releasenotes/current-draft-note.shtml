@@ -46,7 +46,8 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Updated how initialization is done to fix a problem where Sensors
+                    where not being properly located and operated.</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -74,9 +75,16 @@
                 <li></li>
             </ul>
 
-        <h4>LocoNet</h4>
+        <h4>Lenz XPressNet</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>LocoNet</h4>
+            <ul>
+                <li>The handling for LocoNet Reporters (i.e. transponding)
+                    has changed.  See the description
+                    <a href="#TLae">below</a>.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -478,7 +486,11 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>New AnyRail/AnyRailExportAdditions.py. For use with AnyRail export. Creates hardware occupancy Sensors and Turnouts,
+                  cleans up the generated Blocks, and does some visual tweaks of the panel.</li>
+            <li>New CreateSectionsFromBlocks.py. For each defined occupancy block, attempts to create a one-block Section</li>
+            <li>New AddOccupancyIconsToPanel.py. Create and place SensorIcons and BlockContents for each occupancy Block on a panel</li>
+            <li>Add binding "beans" for NamedBeanHandleManager</li>
         </ul>
 
     <h3>Signals</h3>
@@ -498,7 +510,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>CheckForNull annotation added to the getAspect method.</li>
             </ul>
 
     	<h4>Signal Groups</h4>
@@ -548,7 +560,22 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug in the Reporter Table that was causing the
+                Last Report column to actually display the Current Report.
+                Note that this is just a display bug; the underlying value and
+                property change notifications are correct, so this change won't
+                affect scripts, LogixNG, etc.</li>
+            <li>The definition of "Last Seen" for Id Tags has been
+                clarified to mean "Location where the tag was last seen to be <u>present</u>".
+                Previously, a report that a tag was <u>absent</u> could be marked as the
+                last seen report.  Not all hardware Reporters provide entry/exit reports, as
+                some just indicate that something has been observed in place; their "Last Seen" behavior
+                has not changed.
+                </li>
+            <li>Some Reporters, particularly LocoNet, would improperly clear an "enter" report
+                when an "exits" report for the same tag was seen elsewhere.  This was an
+                error that has been fixed, but if you have scripts or LogixNG that depend on
+                this behavior you might have to update them.
         </ul>
 
    <h3>Warrants</h3>
@@ -590,6 +617,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improved how window preferences are stored to reduce error messages
+                when JMRI is under high load.</li>
         </ul>
 
