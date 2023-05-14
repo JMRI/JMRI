@@ -189,24 +189,34 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
                return; // not for us
             }
 
-            int val = -1;
+            int val;
 
             if ((m.getElement(2) & 0x20) != 0) {
                val = (((cvh & LnConstants.CVH_D7) << 6) | (data7 & 0x7f));
+            } else {
+                val = -1;
             }
 
             log.debug("received value {} for cv {} on address {}",val,cvNumber,address);
 
             // successful read if LACK return status is not 0x7F
-            int code = ProgListener.OK;
+            int code;
             if ((m.getElement(2) == 0x7f)) {
                code = ProgListener.UnknownError;
+            } else {
+                code = ProgListener.OK;
             }
 
             progState = NOTPROGRAMMING;
             stopTimer();
-            log.debug("sending code {} val {} to programmer",code,val);
-            notifyProgListenerEnd(progListener, val, code);
+            log.debug("delay to sending code {} val {} to programmer",code,val);
+            jmri.util.ThreadingUtil.runOnLayoutDelayed (() -> {
+                progState = NOTPROGRAMMING;
+                // if this was a read, we cached the value earlier.  If its a
+                // write, we're to return the original write value
+                log.debug("now ending code {} val {} to programmer",code,val);
+                notifyProgListenerEnd(progListener, val, code);
+            }, operationDelay);
         }
     }
 
