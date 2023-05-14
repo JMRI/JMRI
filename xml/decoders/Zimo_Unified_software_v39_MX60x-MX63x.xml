@@ -30,9 +30,11 @@
   <!-- v1.2,  added replacement-options version 40 firmware capabilities,  Ronald Kuhn, 30 November 2021 -->
   <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.3" lastUpdated="2022/10/30"/>
   <!-- v1.3,  add Fade-in and Fade-out for effect 88,89,90 -->
+  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.3.1" lastUpdated="2023/05/13"/>
+  <!-- v1.3.1,  correct highVersionID to "39" -->
   <decoder>
     <family name="Zimo Unified software (version 39+)" mfg="Zimo">
-      <model model="MX600 version 39+" replacementModel="MX600 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166,199">
+      <model model="MX600 version 39+" replacementModel="MX600 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166,199">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -51,7 +53,7 @@
         </output>
         <size length="25" width="11" height="2" units="mm"/>
       </model>
-      <model model="MX600P12 version 39+" replacementModel="MX600P12 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166,199">
+      <model model="MX600P12 version 39+" replacementModel="MX600P12 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166,199">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -70,7 +72,7 @@
         </output>
         <size length="25" width="11" height="2" units="mm"/>
       </model>
-      <model model="MX600R version 39+" replacementModel="MX600R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166,199">
+      <model model="MX600R version 39+" replacementModel="MX600R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166,199">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -90,7 +92,7 @@
         <size length="25" width="11" height="2" units="mm"/>
       </model>
       <model  model="MX605N version 39+" replacementModel="MX605N version 40+" replacementFamily="query:Zimo Unified software (version 40+)"
-              lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A"
+              lowVersionID="39" highVersionID="39" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A"
               formFactor="N" connector="DropIn" numOuts="3" numFns="14" productID="186"
               comment="&lt;html&gt;Non Sound for ICE4 and other Kato train sets.&lt;br&gt;Same form factor as Kato EM13.&lt;br&gt;This definition also contains CVs for&lt;br&gt;- Headlights decoder MX605SL (Kato FL12)&lt;br&gt;- Interior decoder MX605FL (Kato FL11).&lt;/html&gt;">
         <output name="1" label="Front Light|(MX605SL)">
@@ -104,7 +106,7 @@
         </output>
         <size length="27" width="14" height="4" units="mm"/>
       </model>
-      <model model="MX615 version 39+" replacementModel="MX615 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
+      <model model="MX615 version 39+" replacementModel="MX615 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -121,7 +123,7 @@
         </output>
         <size length="8.2" width="5.7" height="2.0" units="mm"/>
       </model>
-      <model model="MX615F version 39+" replacementModel="MX615F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
+      <model model="MX615F version 39+" replacementModel="MX615F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -138,7 +140,7 @@
         </output>
         <size length="8.2" width="5.7" height="2.0" units="mm"/>
       </model>
-      <model model="MX615N version 39+" replacementModel="MX615N version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
+      <model model="MX615N version 39+" replacementModel="MX615N version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -155,7 +157,7 @@
         </output>
         <size length="8.2" width="5.7" height="2.0" units="mm"/>
       </model>
-      <model model="MX615R version 39+" replacementModel="MX615R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
+      <model model="MX615R version 39+" replacementModel="MX615R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -172,7 +174,7 @@
         </output>
         <size length="8.2" width="5.7" height="2.0" units="mm"/>
       </model>
-      <model model="MX616 version 39+" replacementModel="MX616 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="195">
+      <model model="MX616 version 39+" replacementModel="MX616 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="195">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -199,7 +201,7 @@
         </output>
         <size length="8" width="8" height="2.4" units="mm"/>
       </model>
-      <model model="MX616F version 39+" replacementModel="MX616F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="195">
+      <model model="MX616F version 39+" replacementModel="MX616F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="195">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -222,7 +224,7 @@
         </output>
         <size length="8" width="8" height="2.4" units="mm"/>
       </model>
-      <model model="MX616N version 39+" replacementModel="MX616N version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="195">
+      <model model="MX616N version 39+" replacementModel="MX616N version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="195">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -245,7 +247,7 @@
         </output>
         <size length="8" width="8" height="2.4" units="mm"/>
       </model>
-      <model model="MX616R version 39+" replacementModel="MX616R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="195">
+      <model model="MX616R version 39+" replacementModel="MX616R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="195">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -268,7 +270,7 @@
         </output>
         <size length="8" width="8" height="2.4" units="mm"/>
       </model>
-      <model model="MX617 version 39+" replacementModel="MX617 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
+      <model model="MX617 version 39+" replacementModel="MX617 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -291,7 +293,7 @@
         </output>
         <size length="13" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX617F version 39+" replacementModel="MX617F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
+      <model model="MX617F version 39+" replacementModel="MX617F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -314,7 +316,7 @@
         </output>
         <size length="13" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX617N version 39+" replacementModel="MX617N version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
+      <model model="MX617N version 39+" replacementModel="MX617N version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -337,7 +339,7 @@
         </output>
         <size length="13" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX617R version 39+" replacementModel="MX617R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
+      <model model="MX617R version 39+" replacementModel="MX617R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -360,7 +362,7 @@
         </output>
         <size length="13" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX618N18 version 39+" replacementModel="MX618N18 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="181,243">
+      <model model="MX618N18 version 39+" replacementModel="MX618N18 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="181,243">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -389,7 +391,7 @@
         </output>
         <size length="15" width="9.5" height="2.8" units="mm"/>
       </model>
-      <model model="MX620 version 39+" replacementModel="MX620 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="201">
+      <model model="MX620 version 39+" replacementModel="MX620 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -412,7 +414,7 @@
         </output>
         <size length="14" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX620F version 39+" replacementModel="MX620F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
+      <model model="MX620F version 39+" replacementModel="MX620F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -435,7 +437,7 @@
         </output>
         <size length="14" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX620N version 39+" replacementModel="MX620N version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
+      <model model="MX620N version 39+" replacementModel="MX620N version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -458,7 +460,7 @@
         </output>
         <size length="14" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX620R version 39+" replacementModel="MX620R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="201">
+      <model model="MX620R version 39+" replacementModel="MX620R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -481,7 +483,7 @@
         </output>
         <size length="14" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX622 version 39+" replacementModel="MX622 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="192,233">
+      <model model="MX622 version 39+" replacementModel="MX622 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="192,233">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -504,7 +506,7 @@
         </output>
         <size length="16" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX622F version 39+" replacementModel="MX622F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="192,233">
+      <model model="MX622F version 39+" replacementModel="MX622F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="192,233">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -527,7 +529,7 @@
         </output>
         <size length="16" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX622N version 39+" replacementModel="MX622N version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="192,233">
+      <model model="MX622N version 39+" replacementModel="MX622N version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="192,233">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -550,7 +552,7 @@
         </output>
         <size length="16" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX622R version 39+" replacementModel="MX622R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="192,233">
+      <model model="MX622R version 39+" replacementModel="MX622R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="192,233">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -573,7 +575,7 @@
         </output>
         <size length="16" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX623 version 39+" replacementModel="MX623 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="234">
+      <model model="MX623 version 39+" replacementModel="MX623 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="234">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -602,7 +604,7 @@
         </output>
         <size length="20" width="8.5" height="3.5" units="mm"/>
       </model>
-      <model model="MX623F version 39+" replacementModel="MX623F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="234">
+      <model model="MX623F version 39+" replacementModel="MX623F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="234">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -631,7 +633,7 @@
         </output>
         <size length="20" width="8.5" height="3.5" units="mm"/>
       </model>
-      <model model="MX623P12 version 39+" replacementModel="MX623P12 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="234">
+      <model model="MX623P12 version 39+" replacementModel="MX623P12 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="234">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -660,7 +662,7 @@
         </output>
         <size length="20" width="8.5" height="3.5" units="mm"/>
       </model>
-      <model model="MX623R version 39+" replacementModel="MX623R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="234">
+      <model model="MX623R version 39+" replacementModel="MX623R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="234">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -689,7 +691,7 @@
         </output>
         <size length="20" width="8.5" height="3.5" units="mm"/>
       </model>
-      <model model="MX630 version 39+" replacementModel="MX630 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" numOuts="8" numFns="14" productID="130,211,218">
+      <model model="MX630 version 39+" replacementModel="MX630 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" numOuts="8" numFns="14" productID="130,211,218">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -718,7 +720,7 @@
         </output>
         <size length="20" width="11" height="3.5" units="mm"/>
       </model>
-      <model model="MX630F version 39+" replacementModel="MX630F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="130,211,218">
+      <model model="MX630F version 39+" replacementModel="MX630F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="130,211,218">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -747,7 +749,7 @@
         </output>
         <size length="20" width="11" height="3.5" units="mm"/>
       </model>
-      <model model="MX630P16 version 39+" replacementModel="MX630P16 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="PluX16" numOuts="8" numFns="14" productID="130,211,218">
+      <model model="MX630P16 version 39+" replacementModel="MX630P16 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="PluX16" numOuts="8" numFns="14" productID="130,211,218">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -776,7 +778,7 @@
         </output>
         <size length="20" width="11" height="3.5" units="mm"/>
       </model>
-      <model model="MX630R version 39+" replacementModel="MX630R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="130,211,218">
+      <model model="MX630R version 39+" replacementModel="MX630R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="130,211,218">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -805,7 +807,7 @@
         </output>
         <size length="20" width="11" height="3.5" units="mm"/>
       </model>
-      <model model="MX631 version 39+" replacementModel="MX631 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14" productID="213,219">
+      <model model="MX631 version 39+" replacementModel="MX631 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14" productID="213,219">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -816,7 +818,7 @@
         <output name="8" label="FO 6 (+5v)"/>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX631F version 39+" replacementModel="MX631F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="213,219">
+      <model model="MX631F version 39+" replacementModel="MX631F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="213,219">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -827,7 +829,7 @@
         <output name="8" label="FO 6 (+5v)"/>
         <size length="20" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX631R version 39+" replacementModel="MX631R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="213,219">
+      <model model="MX631R version 39+" replacementModel="MX631R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="213,219">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -838,7 +840,7 @@
         <output name="8" label="FO 6 (+5v)"/>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632 version 39+" replacementModel="MX632 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632 version 39+" replacementModel="MX632 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -851,7 +853,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632D version 39+" replacementModel="MX632D version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632D version 39+" replacementModel="MX632D version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -864,7 +866,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632R version 39+" replacementModel="MX632R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632R version 39+" replacementModel="MX632R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -877,7 +879,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632V version 39+" replacementModel="MX632V version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632V version 39+" replacementModel="MX632V version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -890,7 +892,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632VD version 39+" replacementModel="MX632VD version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632VD version 39+" replacementModel="MX632VD version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -903,7 +905,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632W version 39+" replacementModel="MX632W version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632W version 39+" replacementModel="MX632W version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -916,7 +918,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632WD version 39+" replacementModel="MX632WD version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632WD version 39+" replacementModel="MX632WD version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -929,7 +931,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX633 version 39+" replacementModel="MX633 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="133,237">
+      <model model="MX633 version 39+" replacementModel="MX633 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="133,237">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -964,7 +966,7 @@
         </output>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX633F version 39+" replacementModel="MX633F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="133,237">
+      <model model="MX633F version 39+" replacementModel="MX633F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="133,237">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -999,7 +1001,7 @@
         </output>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX633P16 version 39+" replacementModel="MX633P16 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX16" numOuts="10" numFns="14" productID="133,237">
+      <model model="MX633P16 version 39+" replacementModel="MX633P16 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX16" numOuts="10" numFns="14" productID="133,237">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1034,7 +1036,7 @@
         </output>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX633P22 version 39+" replacementModel="MX633P22 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="133,237">
+      <model model="MX633P22 version 39+" replacementModel="MX633P22 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="133,237">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1069,7 +1071,7 @@
         </output>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX633R version 39+" replacementModel="MX633R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="133,237">
+      <model model="MX633R version 39+" replacementModel="MX633R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="133,237">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1104,7 +1106,7 @@
         </output>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX634 version 39+" replacementModel="MX634 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="134,240">
+      <model model="MX634 version 39+" replacementModel="MX634 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="134,240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1139,7 +1141,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX634C version 39+" replacementModel="MX634C version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="134,240">
+      <model model="MX634C version 39+" replacementModel="MX634C version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="134,240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1174,7 +1176,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX634D version 39+" replacementModel="MX634D version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="134,240">
+      <model model="MX634D version 39+" replacementModel="MX634D version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="134,240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1209,7 +1211,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX634F version 39+" replacementModel="MX634F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="134,240">
+      <model model="MX634F version 39+" replacementModel="MX634F version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="134,240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1244,7 +1246,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX634R version 39+" replacementModel="MX634R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="134,240">
+      <model model="MX634R version 39+" replacementModel="MX634R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="134,240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1279,7 +1281,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX635 version 39+" replacementModel="MX635 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" numOuts="10" numFns="14" productID="135">
+      <model model="MX635 version 39+" replacementModel="MX635 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" numOuts="10" numFns="14" productID="135">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1314,7 +1316,7 @@
         </output>
         <size length="26" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX635P22 version 39+" replacementModel="MX635P22 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" numOuts="10" numFns="14" productID="135">
+      <model model="MX635P22 version 39+" replacementModel="MX635P22 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" numOuts="10" numFns="14" productID="135">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1349,7 +1351,7 @@
         </output>
         <size length="26" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX635R version 39+" replacementModel="MX635R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" numOuts="10" numFns="14" productID="135">
+      <model model="MX635R version 39+" replacementModel="MX635R version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" numOuts="10" numFns="14" productID="135">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1384,7 +1386,7 @@
         </output>
         <size length="26" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX635V version 39+" replacementModel="MX635V version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" numOuts="10" numFns="14" productID="135">
+      <model model="MX635V version 39+" replacementModel="MX635V version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" numOuts="10" numFns="14" productID="135">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1419,7 +1421,7 @@
         </output>
         <size length="26" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX635VP version 39+" replacementModel="MX635VP version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" numOuts="10" numFns="14" productID="135">
+      <model model="MX635VP version 39+" replacementModel="MX635VP version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" numOuts="10" numFns="14" productID="135">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1454,7 +1456,7 @@
         </output>
         <size length="26" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX636C version 39+" replacementModel="MX636C version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
+      <model model="MX636C version 39+" replacementModel="MX636C version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1489,7 +1491,7 @@
         </output>
         <size length="26" width="15,5" height="4" units="mm"/>
       </model>
-      <model model="MX636D version 39+" replacementModel="MX636D version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
+      <model model="MX636D version 39+" replacementModel="MX636D version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1524,7 +1526,7 @@
         </output>
         <size length="26" width="15,5" height="4" units="mm"/>
       </model>
-      <model model="MX636VC version 39+" replacementModel="MX636VC version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
+      <model model="MX636VC version 39+" replacementModel="MX636VC version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1559,7 +1561,7 @@
         </output>
         <size length="26" width="15,5" height="4" units="mm"/>
       </model>
-      <model model="MX636VD version 39+" replacementModel="MX636VD version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
+      <model model="MX636VD version 39+" replacementModel="MX636VD version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1594,7 +1596,7 @@
         </output>
         <size length="26" width="15,5" height="4" units="mm"/>
       </model>
-      <model model="MX637P22 version 39+" replacementModel="MX637P22 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="137">
+      <model model="MX637P22 version 39+" replacementModel="MX637P22 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="137">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1629,7 +1631,7 @@
         </output>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX638C version 39+" replacementModel="MX638C version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="193">
+      <model model="MX638C version 39+" replacementModel="MX638C version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="193">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1664,7 +1666,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX638D version 39+" replacementModel="MX638D version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="193">
+      <model model="MX638D version 39+" replacementModel="MX638D version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="193">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1699,7 +1701,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX64D version 39+" replacementModel="MX64D version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="12-24V" maxMotorCurrent="1.2A,  peak=2A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="206">
+      <model model="MX64D version 39+" replacementModel="MX64D version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="39" maxInputVolts="12-24V" maxMotorCurrent="1.2A,  peak=2A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="206">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
