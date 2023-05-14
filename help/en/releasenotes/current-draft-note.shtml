@@ -623,5 +623,6 @@
         <ul>
             <li>Improved how window preferences are stored to reduce error messages
                 when JMRI is under high load.</li>
+            <li>Update the JMRI install process for Raspberry Pi computers running the Raspberry Pi OS.</li>
         </ul>
 
