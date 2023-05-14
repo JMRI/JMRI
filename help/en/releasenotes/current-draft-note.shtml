@@ -287,6 +287,11 @@
                 <li></li>
             </ul>
 
+        <h4>Piko</h4>
+            <ul>
+                <li>Added Decoder Reset and CV for Decoder Test for Piko SUSI Decoder (Light decoder)</li>
+            </ul>
+
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
@@ -344,12 +349,12 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li> Extension with additional CVs for the Extended Function Mapping</li>
             </ul>
 
         <h4>Umelec</h4>
             <ul>
-                <li></li>
+                <li> </li>
             </ul>
 
         <h4>Viessmann</h4>

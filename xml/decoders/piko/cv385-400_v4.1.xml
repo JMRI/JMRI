@@ -31,6 +31,12 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Initial version for Piko SmartDecoder 4.1</revremark>
 		</revision>
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-05-10</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Korrekturen und default Werte</revremark>
+		</revision>
 	</revhistory>
 	<!-- Bank 1 CVs Extended Function Mapping rows 1-16 (Index CV 32 = 0) -->
 	<!-- group hides/shows with CV 32 choice = 0 -->
@@ -165,7 +171,7 @@
 	<variable item="Z9 F4 Cond Off" CV="391.31=8.32=0" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z9 F5 Cond Off" CV="264.31=8.32=0" mask="XXXXXXXV" default="0">
+	<variable item="Z9 F5 Cond Off" CV="392.31=8.32=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable item="Z9 F6 Cond Off" CV="392.31=8.32=0" mask="XXXXXXVX" default="0">
@@ -371,7 +377,7 @@
 	<!-- group hides/shows with CV 31 choice = 0 -->
 	<!-- Mapping Line 25 CV385 - 400 -->
 	<!-- Line 25 Mapping conditions On -->
-	<variable item="Z25 Direction Fw" CV="369.31=8.32=1" mask="VXXXXXXX" default="0">
+	<variable item="Z25 Direction Fw" CV="385.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Forward</label>
 		<label xml:lang="de">Vorwärts</label>
@@ -500,7 +506,7 @@
 	<variable item="Z25 F4 Cond Off" CV="391.31=8.32=1" mask="XXXXVXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Z25 F5 Cond Off" CV="264.31=8.32=1" mask="XXXXXXXV" default="0">
+	<variable item="Z25 F5 Cond Off" CV="392.31=8.32=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable item="Z25 F6 Cond Off" CV="392.31=8.32=1" mask="XXXXXXVX" default="0">
