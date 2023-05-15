@@ -519,6 +519,16 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testMonitorStringThrottleCommandsMsg() {
+        msg = new DCCppMessage("JT");
+        Assert.assertEquals("Monitor string", "Request Turnout ID list", msg.toMonitorString());
+        msg = new DCCppMessage("JT 145");
+        Assert.assertEquals("Monitor string", "Request details for Turnout 145", msg.toMonitorString());
+        msg = new DCCppMessage("T 145 X");
+        Assert.assertEquals("Monitor string", "Request implementation for Turnout 145", msg.toMonitorString());
+    }
+
+    @Test
     public void testGetBitWriteOpsModeCVMsg() {
         msg = DCCppMessage.makeBitWriteOpsModeCVMsg(17, 4, 3, 1);
         log.debug("write ops bit cv message = '{}'", msg);
