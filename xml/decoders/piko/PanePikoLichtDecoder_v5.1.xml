@@ -42,7 +42,7 @@
 	<row>
 		<label>
 			<text>
-				<!--Leerzeile-->
+				<!--empty line-->
 			</text>
 		</label>
 	</row>
@@ -54,14 +54,14 @@
 				<display item="Decoder_Test" format="checkbox"/>
 				<label>
 					<text>
-						<!--Leerzeile-->
+						<!--empty line-->
 					</text>
 				</label>
 			</column>
 		</row>
 		<label>
 			<text>
-				<!--Leerzeile-->
+				<!--empty line-->
 			</text>
 		</label>
 		<label>
@@ -74,7 +74,7 @@
 		</label>
 		<label>
 			<text>
-				<!--Leerzeile-->
+				<!--empty line-->
 			</text>
 		</label>
 		<row>
@@ -83,7 +83,7 @@
 		<row>
 			<label>
 				<text>
-					<!--Leerzeile-->
+					<!--empty line-->
 				</text>
 			</label>
 		</row>
@@ -107,7 +107,7 @@
 			<row>
 				<label>
 					<text>
-						<!--Leerzeile-->
+						<!--empty line-->
 					</text>
 				</label>
 			</row>
@@ -1372,14 +1372,14 @@
 				<display item="Decoder_Test" format="checkbox"/>
 				<label>
 					<text>
-						<!--Leerzeile-->
+						<!-empty line-->
 					</text>
 				</label>
 			</column>
 		</row>
 		<label>
 			<text>
-				<!--Leerzeile-->
+				<!--empty line-->
 			</text>
 		</label>
 		<label>
@@ -1392,7 +1392,7 @@
 		</label>
 		<label>
 			<text>
-				<!--Leerzeile-->
+				<!--empty line-->
 			</text>
 		</label>
 		<row>
@@ -1401,7 +1401,7 @@
 		<row>
 			<label>
 				<text>
-					<!--Leerzeile-->
+					<!--empty line-->
 				</text>
 			</label>
 		</row>
@@ -1425,7 +1425,7 @@
 			<row>
 				<label>
 					<text>
-						<!--Leerzeile-->
+						<!--empty line-->
 					</text>
 				</label>
 			</row>
