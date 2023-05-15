@@ -22,7 +22,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
     private int _cv;
     private LnTrafficController lnTC;
 
-    static public int operationDelay = 250;
+    static public int operationDelay = 50;
 
     public Z21XNetOpsModeProgrammer(int pAddress, XNetTrafficController controller) {
         this(pAddress,controller,null);
