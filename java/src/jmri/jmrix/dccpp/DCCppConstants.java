@@ -251,4 +251,14 @@ public final class DCCppConstants {
     public static final String PROP_IFLAG  =   "IFlag";
     public static final String PROP_PULLUP =   "Pullup";
 
+    //Referred to as Throttle commands for some reason
+    public static final char THROTTLE_COMMANDS         = 'J'; // First char of Jx two-letter commands
+    public static final char THROTTLE_COMMANDS_REPLY   = 'j'; // First char of Jx two-letter responses
+    public static final String TURNOUT_IDS             = "JT"; //Request turnout IDs
+    public static final String TURNOUT_IDS_REGEX       = "^J\\s*T$"; // <JT> or <J T>
+    public static final String TURNOUT_ID_REGEX        = "^J\\s*T\\s*(\\d+)$"; // <JT 123>
+    public static final String TURNOUT_IDS_REPLY_REGEX = "^jT\\s*((?:\\s*\\d+)*)$"; // <jT 123 456 789>
+    public static final String TURNOUT_ID_REPLY_REGEX  = "^j\\s*T\\s+(\\d+)\\s([C|T])\\s\\\"(.*)\\\""; // <jT 123 C "description">   
+    public static final String TURNOUT_IMPL_REGEX      = "^T\\s+(\\d+)\\s+X$"; // <T 123 X> Note: may be dropped from DCC-EX
+
 }
