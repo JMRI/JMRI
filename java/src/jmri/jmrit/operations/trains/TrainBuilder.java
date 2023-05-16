@@ -37,6 +37,23 @@ public class TrainBuilder extends TrainBuilderCars {
      * and loads.
      * <li>Ignore track direction when train is a local (serves one location)
      * </ol>
+     * <p>
+     * History:
+     * <p>
+     * First version of train builder found cars along a train's route and
+     * assigned destinations (tracks) willing to accept the car. This is called
+     * the random method as cars just bounce around the layout without purpose.
+     * Afterwards custom loads and routing was added to the program. Cars with
+     * custom loads or final destinations move with purpose as those cars are
+     * routed. The last major feature added was car divisions. Cars assigned a
+     * division are always routed.
+     * <p>
+     * The program was written around the concept of a build report. The report
+     * provides a description of the train build process and the steps taken to
+     * place rolling stock in a train. The goal was to help users understand why
+     * rolling stock was either assigned to the train or not, and which choices
+     * the program had available when determining an engine's or car's
+     * destination.
      *
      * @param train the train that is to be built
      * @return True if successful.
@@ -61,28 +78,19 @@ public class TrainBuilder extends TrainBuilderCars {
         _train.setBuilt(false);
         _train.setLeadEngine(null);
 
-        createBuildReportFile(); // backup previous build report and create new
-                                 // build report file
+        createBuildReportFile(); // backup build report and create new
         showBuildReportInfo(); // add the build report header information
         setUpRoute(); // load route, departure and terminate locations
         showTrainBuildOptions(); // show the build options
-        showSpecificTrainBuildOptions(); // show the build options for this
-                                         // train
+        showSpecificTrainBuildOptions(); // show the train build options
         showAndInitializeTrainRoute(); // show the train's route and initialize
-                                       // it
-        showIfLocalSwitcher(); // show if this train a switcher, a train that
-                               // works only one location
-        showTrainRequirements(); // show how many engines, caboose, car with
-                                 // FRED and changes in the route
-        showTrainServices(); // show which engine roads, owners, built dates,
-                             // and engine types
+        showIfLocalSwitcher(); // show if this train a switcher
+        showTrainRequirements(); // show how many engines, caboose, FRED changes
+        showTrainServices(); // engine roads, owners, built dates, and types
         getAndRemoveEnginesFromList(); // get a list of available engines
         showEnginesByLocation(); // list available engines by location
-        determineIfTrainTerminatesIntoStaging(); // find a terminus track in
-                                                 // staging for this train
-        determineIfTrainDepartsStagingAndAddEngines(); // assign engines to
-                                                       // train if departing
-                                                       // staging
+        determineIfTrainTerminatesIntoStaging(); // find staging terminus track
+        determineIfTrainDepartsStagingAndAddEngines(); // add engines if staging
         addEnginesToTrain(); // 1st, 2nd and 3rd engine swaps in a train's route
         showTrainCarRoads(); // show car roads that this train will service
         showTrainCarTypes(); // show car types that this train will service
@@ -91,26 +99,17 @@ public class TrainBuilder extends TrainBuilderCars {
         adjustCarsInStaging(); // adjust for cars on one staging track
         showCarsByLocation(); // list available cars by location
         sortCarsOnFifoLifoTracks(); // sort cars on FIFO or LIFO tracks
-        saveCarFinalDestinations(); // save car's final destination and schedule
-                                    // id in case of train reset
-        addCabooseOrFredToTrain(); // do all caboose and FRED changes in the
-                                   // train's route
-        removeCaboosesAndCarsWithFred(); // done assigning cabooses and cars
-                                         // with FRED, remove the rest
-        blockCarsFromStaging(); // optionally block cars from staging by setting
-                                // destinations
+        saveCarFinalDestinations(); // save car's final dest and schedule id
+        addCabooseOrFredToTrain(); // caboose and FRED changes
+        removeCaboosesAndCarsWithFred(); // done with cabooses and FRED
+        blockCarsFromStaging(); // block cars from staging
 
-        addCarsToTrain(); // finds and adds cars to the train, throws
-                          // BuildFailedException
+        addCarsToTrain(); // finds and adds cars to the train (main routine)
 
-        checkStuckCarsInStaging(); // determine if cars are stuck in staging,
-                                   // throws BuildFailedException
-        showTrainBuildStatus(); // show how well the build went with regards to
-                                // cars requested and actual
-        checkEngineHP(); // check that engine assigned to the train has the
-                         // appropriate HP
-        checkNumnberOfEnginesNeededHPT(); // check to see if additional engines
-                                          // are needed for this train
+        checkStuckCarsInStaging(); // determine if cars are stuck in staging
+        showTrainBuildStatus(); // show how well the build went
+        checkEngineHP(); // determine if train has appropriate engine HP 
+        checkNumnberOfEnginesNeededHPT(); // check train engine requirements
         showCarsNotRoutable(); // list cars that couldn't be routed
 
         // done building
@@ -409,9 +408,7 @@ public class TrainBuilder extends TrainBuilderCars {
             if (!checkPickUpTrainDirection(rl)) {
                 continue;
             }
-            _completedMoves = 0; // the number of moves completed for this
-                                 // location
-            _success = true; // true when done with this location
+            _completedMoves = 0; // moves completed for this location
             _reqNumOfMoves = rl.getMaxCarMoves() - rl.getCarMoves();
 
             if (!normal) {
@@ -479,7 +476,7 @@ public class TrainBuilder extends TrainBuilderCars {
                             Integer.toString(_completedMoves), Integer.toString(saveReqMoves), rl.getName(),
                             _train.getName()));
 
-            if (_success && pass == Setup.getNumberPasses()) {
+            if (_reqNumOfMoves <= 0 && pass == Setup.getNumberPasses()) {
                 showCarsNotMoved(rl);
             }
         }
