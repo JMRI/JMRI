@@ -75,11 +75,14 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print 'end setup_graph_vertices"
 
     def setup_graph_edges(self):
+        global le
+
         if self.logLevel > 0: print "*****************************"
         if self.logLevel > 0: print "****setup_graph_edges********"
         if self.logLevel > 0: print "*****************************"
         LayoutBlockConnectivityTools=jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools()
         index = 0
+        if self.logLevel > 0: print "self.station_block_list", self.station_block_list
         for station in self.station_block_list:
             if self.logLevel > 0: print "*********************"
             if self.logLevel > 0: print "station = " ,station
@@ -94,53 +97,62 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "neighbor_name",neighbor_name
                 other_stations = [block for block in self.station_block_list if block not in [station]]
                 if self.logLevel > 0: print "other_stations",other_stations
+                j = 0
                 for destination in other_stations:
                     index +=1
+                    j += 1
                     if self.logLevel > 0: print "--------------------------"
-                    if self.logLevel > 0: print "destination",destination
+                    if self.logLevel > 0: print "destination", j ,destination
                     if self.logLevel > 0: print "--------------------------"
                     sourceLayoutBlock = station_block
                     destinationLayoutBlock  = self.get_layout_block(destination)
                     protectingLayoutBlock = self.get_layout_block(neighbor_name)
-                    validateOnly = True
+                    validateOnly = False
                     pathMethod = LayoutBlockConnectivityTools.Routing.NONE
                     path = []
-                    if self.logLevel > 0: print "got here 1"
+                    success = False
+                    if self.logLevel > 0: print "\nbefore: sourceLayoutBlock", sourceLayoutBlock.getUserName(), \
+                        "destinationLayoutBlock", destinationLayoutBlock.getUserName()
                     try:
-                        if self.logLevel > 0: print "got here 2a"
-                        #sourceBlock = sourceLayoutBlock.getBlock()
-                        #destinationBlock = destinationLayoutBlock.getBlock()
-                        #a = sourceLayoutBlock.getThroughPathIndex(sourceBlock, destinationBlock)
-                        if self.logLevel > 0: print "getThroughPathIndex", a
-                        if self.logLevel > 0: print "printValidThroughPaths()",  printValidThroughPaths()
-                        path = LayoutBlockConnectivityTools.getLayoutBlocks(sourceLayoutBlock, destinationLayoutBlock, protectingLayoutBlock, validateOnly, pathMethod)
-                        if self.logLevel > 0: print path
+                        [path, path_weight] = self.get_optimal_path(sourceLayoutBlock, destinationLayoutBlock, protectingLayoutBlock, validateOnly, pathMethod)    #take account of inhibited directions
+                        path_name = [str(x.getUserName()) for x in path]
+
+                        if self.logLevel > 0: print path, path_name
+                        success = True
+
                     except jmri.JmriException as e:
-                        if self.logLevel > 0: print "got here 2b"
-                        if self.logLevel > 0: print (e)
+                        #print "exception in path"
+                        #print "exception: sourceLayoutBlock", sourceLayoutBlock.getUserName(), \
+                        #   "destinationLayoutBlock", destinationLayoutBlock.getUserName()
+                        # print (e)
+                        # Was not able to find a direct path. This is expected for many stations.
+                        # Continue and find the connected stations
                         continue
                     finally:
-                        if self.logLevel > 0: print "got here 3"
+                        if success:
+                            x = "yes"
+                        else:
+                            x = "no"
+                        if self.logLevel > 0: print "after:  sourceLayoutBlock.getUserName()", sourceLayoutBlock.getUserName(), \
+                              "destinationLayoutBlock.getUserName", destinationLayoutBlock.getUserName() , x
+                        if sourceLayoutBlock.getUserName() == "SidingBottomLHS" and \
+                                destinationLayoutBlock.getUserName() == "SidingMiddlleRHS":
+                            if self.logLevel > 0: print "for SidingBottomLHS path is " , path_name
                         if path != [] and path != None :
-                            if self.logLevel > 0: print "got here 4a"
                             #add an edge for all paths to form the express train graph
                             path_name = [str(x.getUserName()) for x in path]
-                            path_weight = [x.getBlock().getLengthMm() for x in path]
-                            pweight = sum(path_weight) + 1  # add 1 so paths of equal length will have a smaller weiht if the train stops less
-                            path_inhibited = self.is_path_inhibited(path_name)
-                            if path_inhibited: pweight = pweight * 1000
                             edge = le()     # le = LabelledEdge() set up outside CreateGraph.py
                             #edge.setItem(index = index)
                             edge.setItem(path = path)
                             edge.setItem(path_name = path_name)
                             #edge.setItem(neighbor_name = neighbor_name)
                             if self.logLevel > 0: print edge.to_string()
-                            if self.logLevel > 0: print "adding edge ", station_block_name, destination
+                            if self.logLevel > 0: print "\nadding edge ", station_block_name, destination
                             if self.logLevel > 0: print edge.to_string()
                             if self.logLevel > 0: print "got here 4a2"
                             if self.Sufficient_signal_masts_in_edge(edge):
                                 self.g_express.addEdge(station_block_name,destination, edge)
-                                self.g_express.setEdgeWeight(edge, pweight)
+                                self.g_express.setEdgeWeight(edge, path_weight)
                                 #print "edge", edge , "pweight", pweight
                                 if self.logLevel > 0: print "got here 4a"
                                 if self.logLevel > 0: print edge.to_string()
@@ -163,7 +175,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                                 edge.setItem(penultimate_block_name = penultimate_block_name)
                                 #edge.setItem(path_weight = path_weight)
 
-                                if self.logLevel > 0: print "path weight", path_weight, "pweight",pweight
+                                if self.logLevel > 0: print "path weight", path_weight
                                 LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
                                 penultimateLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-2])
                                 penultimate_block_name = penultimateLayoutBlock.getUserName()
@@ -184,9 +196,9 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                                 if not any(path_blocks_are_through_stations):
                                     #add to stopping graph
                                     if self.logLevel > 0: print "adding to stopping graph"
-                                    edge = le()     # l = LabelledEdge() set up outside class
+                                    edge = le()     # le = LabelledEdge() set up outside class
                                     self.g_stopping.addEdge(station_block_name,destination,edge)
-                                    self.g_stopping.setEdgeWeight(edge, pweight)
+                                    self.g_stopping.setEdgeWeight(edge, path_weight)
                                     path_name = [str(x.getUserName()) for x in path]
                                     edge.setItem(index = index)
                                     edge.setItem(path = path)
@@ -206,7 +218,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                                     edge.setItem(penultimate_block_name = penultimate_block_name)
                                     if self.logLevel > 0: print edge.to_string()
                                 else:
-                                    if self.logLevel > 0: print "not adding to stopping graph as insufficient masts", "edge " , edge.path_name()
+                                    if self.logLevel > 0: print "not adding to stopping graph as insufficient masts", "edge " , path_name
                             else:
                                 if self.logLevel > 0: print "not adding to stopping graph"
                                 pass
@@ -253,19 +265,170 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "unable to set opposite direction neighbor_name for edge" , e.to_string()
                 continue
 
+
+                
+    def path_weight(self, path):
+        path_name = [str(x.getUserName()) for x in path]
+        path_weight = [x.getBlock().getLengthMm() for x in path]
+        pweight = sum(path_weight) + 1  # add 1 so paths of equal length will have a smaller weight if the train stops less
+        path_inhibited = self.path_is_inhibited(path_name)
+        if path_inhibited: pweight = pweight + 10000     # allow a very long alternate route
+        return pweight
+
+    def get_optimal_path(self,sourceLayoutBlock, destinationLayoutBlock, protectingLayoutBlock, validateOnly, pathMethod):
+        # print "in get_optimal_patha"
+        self.allow_all_blocks()
+        LayoutBlockConnectivityTools=jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools()
+        # print "in get_optimal_pathb"
+        # print "sourceLayoutBlock", sourceLayoutBlock.getUserName()
+        # print "destinationLayoutBlock", destinationLayoutBlock.getUserName()
+        # print "protectingLayoutBlock", protectingLayoutBlock.getUserName()
+        # get the first path with no inhibited blocks
+        validateOnly = True
+        # print "calculating path"
+        path = LayoutBlockConnectivityTools.getLayoutBlocks(sourceLayoutBlock, destinationLayoutBlock, protectingLayoutBlock, validateOnly, pathMethod)
+        # print "path", path
+        path_name = [str(x.getUserName()) for x in path]
+        # print "path_name", path_name
+        #block_names = [x.getBlock().getUserName() for x in path]
+
+
+        # print "in get_optimal_pathc"
+        weight = self.path_weight(path)
+        # print "weight", weight
+        if self.logLevel > 0: print "*****************"
+        msg = "path is not null" if path != [] else "path is null"
+        if self.logLevel > 0: print sourceLayoutBlock.getUserName(), destinationLayoutBlock.getUserName(), msg
+        # print
+        # print "in get_optimal_path d"
+        # print "first path name", path_name
+        # print "block_names", block_names
+        # print "self.path_is_inhibited(path)", self.path_is_inhibited(path_name)
+        # print
+        paths = []
+        # get an alternate path if the path found is inhibited  `
+        # if sourceLayoutBlock.getUserName() == "SidingMiddlleLHS" \
+        #     and destinationLayoutBlock.getUserName() == "SidingMiddlleRHS":
+        #     # print "bingo"
+        #     # print "first path name", path_name, "weight", weight
+        #     inhibited = self.path_is_inhibited(path_name)
+        #     # print "self.path_is_inhibited(path)", self.path_is_inhibited(path_name)
+
+        paths.append([path,weight])
+        if self.path_is_inhibited(path_name):
+            # print "path is inhibited"
+
+            # print "paths1", paths
+            # get the path and weight with blocks not allowed
+            not_allowed_blocks = self.get_blocks_to_not_allow(path)
+            # print "not_allowed_blocks", not_allowed_blocks
+            self.set_do_not_allow_blocks(not_allowed_blocks)
+            validateOnly = False
+            try:
+                #try calculating a new path without the inhibited blocks
+                new_path = LayoutBlockConnectivityTools.getLayoutBlocks(sourceLayoutBlock, destinationLayoutBlock, protectingLayoutBlock, validateOnly, pathMethod)
+                # if we get this far there is an alternate path which avoids the inhibited blocks.
+                # Use this for the express route
+                # print "calculated new path"
+                # print "new path", new_path
+
+                path_name = [str(x.getUserName()) for x in new_path]
+
+                self.allow_all_blocks()
+                new_weight = self.path_weight(new_path)
+                # print "new path", path
+                # print "new path", path_name, "weight", weight
+                if [new_path, new_weight] not in paths:
+                    paths.append([new_path, new_weight])
+                    # print "paths2", paths
+                # get the best one
+                # print "paths", paths
+                [path, weight] = self.path_with_smallest_weight(paths)
+                # print "path", path, "weight", weight
+                path_name = [str(x.getUserName()) for x in path]
+                # print "best path", path_name, "weight", weight
+            except:
+                # if the try does not work we continue using the original calucated path
+                pass
+
+        return [path, weight]
+
+    def blocks_to_allow(self, path):
+        source_block = path[0].getUserName()
+        protecting_block = path[1].getUserName()
+        destination_block = path[-1].getUserName()
+        protecting_destination_block = path[-2].getUserName()
+        return [source_block,protecting_block,protecting_destination_block,destination_block]
+    
+    def get_blocks_to_not_allow(self, path):
+        # print "+++++++ get_blocks_to_not_allow +++++"
+        path_name = [str(x.getUserName()) for x in path]
+        inhibited_blocks = self.list_inhibited_blocks
+        list_blocks_to_not_allow = []
+        if inhibited_blocks != None:
+            for block_pair in inhibited_blocks:
+                # print "block_pair", block_pair
+                # print "inhibited_blocks", inhibited_blocks
+                if self.sublist_in_list(block_pair, path_name):
+                    # block_pair contains the blocks to inhibit
+                    blocks_to_not_allow = [blk for blk in block_pair if blk not in self.blocks_to_allow(path)]
+                    # print "self.blocks_to_allow(path)", self.blocks_to_allow(path)
+                    # print "blocks_to_not_allow", blocks_to_not_allow
+                    # print "block_pair", block_pair
+                    list_blocks_to_not_allow.extend(blocks_to_not_allow)
+                    # print "list_blocks_to_not_allow", list_blocks_to_not_allow
+        path_name = [str(x.getUserName()) for x in path]
+
+        #print "path_name", path_name
+        # print "list_blocks_to_not_allow", list_blocks_to_not_allow
+        # print "+++++++ end get_blocks_to_not_allow +++++"
+        return list_blocks_to_not_allow
+
+    def set_do_not_allow_blocks(self, inhibited_blocks):
+        #need to set extra color of blocks
+        layoutBlocks = [self.get_layout_block(block_name) for block_name in inhibited_blocks]
+        for layoutBlock in layoutBlocks:
+            if layoutBlock != None:
+                layoutBlock.setUseExtraColor(True)
+
+    def allow_all_blocks(self):
+        layoutBlocks = [self.get_layout_block(block) for block in blocks.getNamedBeanSet()]
+        for layoutBlock in layoutBlocks:
+            if layoutBlock != None:
+                layoutBlock.setUseExtraColor(False)
+
     def get_list_inhibited_blocks(self):
         list_inhibited_blocks = self.read_list()
         self.list_inhibited_blocks = list_inhibited_blocks
         # print "list_inhibited_blocks", list_inhibited_blocks
-    def is_path_inhibited(self, path):
+        
+    def path_is_inhibited(self, path_name):
         existing = self.list_inhibited_blocks
         #print "existing", existing
+        # print "*****path is inhibited *****"
+        ret = False
         if existing != None:
             for check in existing:
-                #print "check", check
-                if self.sublist_in_list(check, path):
-                    return True
-        return False
+                # print "check", check
+                # print "path_name", path_name
+                # print "self.sublist_in_list(check, path_name)", self.sublist_in_list(check, path_name)
+                # print "*****"
+                if self.sublist_in_list(check, path_name):
+                    # print "setting ret True"
+                    ret = True
+        # print "ret", ret
+        # print "***** end path is inhibited *****"
+        return ret
+
+    def path_with_smallest_weight(self, paths):
+        best_path = paths[0][0]
+        best_weight = paths[0][1]
+        # print "path_with_smallest_weight: best_path", best_path, "BEST_WEIGHT", best_weight
+        for [path, weight] in paths:
+            if weight < best_weight:
+                best_path = path
+                best_weight = weight
+        return [best_path, best_weight]
 
     def sublist_in_list(self,sublist, test_list):
         res = False

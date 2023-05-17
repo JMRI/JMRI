@@ -63,7 +63,7 @@ from org.jgrapht.graph import DirectedWeightedMultigraph
 
 logLevel = 0          # for debugging
 trains = {}           # dictionary of trains shared over classes
-instanceList=[]       # instance list of threads shared over classes
+global instanceList       # instance list of threads shared over classes
 global g
 g = None              # graph shared over classes
 
@@ -77,6 +77,10 @@ stopping_sensor_choice = "not_set" # has value
 
 FileResetButtonMaster = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/ResetButtonMaster.py')
 execfile(FileResetButtonMaster)
+
+StopDispatcherSystem = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/StopDispatcherSystem.py')
+execfile(StopDispatcherSystem)
+
 
 # FileMoveTrain has to go before CreateScheduler
 FileMoveTrain = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/MoveTrain.py')
@@ -141,7 +145,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
             options[1])
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
-            return
+            return [None,None]
         index = list.getSelectedIndices()[0]
         return [list_items[index], options[s]]
 
@@ -149,9 +153,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         # list_items = ["list1","list2"]
         # options = ["opt1", "opt2", "opt3"]
         # title = "title"
-        # result = OptionDialog().ListOptions(list_items, title, options)
-        # list= result[0]
-        # option = result[1]
+        # [list, option] = OptionDialog().ListOptions(list_items, title, options)
         # print "option= " ,option, " list = ",list
 
     def variable_combo_box(self, options, default, msg, title = None, type = JOptionPane.QUESTION_MESSAGE):
@@ -318,25 +320,48 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.waitSensorActive(self.stop_master_sensor)
         #stop all threads
         if self.logLevel > 0: print "instancelist", instanceList
-        msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
+        msg = "modify or stop"
         title = "Transits"
-        opt1 = "stop route threads"
-        opt2 = "stop all threads"
-        opt3 = "stop threads and delete transits"
-        requested_action = OptionDialog().customQuestionMessage3str(msg, title, opt1, opt2, opt3)
-        if requested_action == "stop route threads":
-            self.stop_route_threads()
-            self.stop_sensor = sensors.getSensor("stopMasterSensor")
-            self.stop_sensor.setKnownState(INACTIVE)
+        opt1 = "modify"
+        opt2 = "stop"
+        opd = OptionDialog()
+        requested_action = opd.customQuestionMessage2str(msg, title, opt1, opt2)
+        if opd.CLOSED_OPTION == True:
+            self.stop_master_sensor.setKnownState(INACTIVE)
             return True
-        elif requested_action == "stop all threads":
-            self.remove_timebase_listener()
-            self.stop_all_threads()
-        else:  #stop all threads and delete transits
+        if requested_action == opt1:
+            self.stop_via_table()
+            self.stop_master_sensor.setKnownState(INACTIVE)
+            return True
+        else:
             self.remove_timebase_listener()
             self.delete_active_transits()
             self.stop_all_threads()
-        if self.logLevel > 0: print "finished"
+            return
+            msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
+            title = "Transits"
+            opt1 = "stop route threads"
+            opt2 = "stop all threads"
+            opt3 = "stop threads and delete transits"
+            requested_action = OptionDialog().customQuestionMessage3str(msg, title, opt1, opt2, opt3)
+            if requested_action == "stop route threads":
+                self.stop_route_threads()
+                self.stop_sensor = sensors.getSensor("stopMasterSensor")
+                self.stop_sensor.setKnownState(INACTIVE)
+                return True
+            elif requested_action == "stop all threads":
+                self.remove_timebase_listener()
+                self.stop_all_threads()
+            else:  #stop all threads and delete transits
+                self.remove_timebase_listener()
+                self.delete_active_transits()
+                self.stop_all_threads()
+            if self.logLevel > 0: print "finished"
+
+
+    def stop_via_table(self):
+        createandshowGUI3(self)
+
 
     def remove_timebase_listener(self):
         self.new_train_sensor = sensors.getSensor("startDispatcherSensor")
@@ -353,35 +378,40 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             return False
 
     def stop_route_threads(self):
-        #remove the train from the transit
-        msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
-        title = "Transits"
-        opt1 = "just remove the route threads (stops trains at end of current transit)"
-        opt2 = "delete transits as well (stops trains immediately)"
-        requested_delete_transits = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
-        self.remove_train_from_transit
+        # #remove the train from the transit
+        # msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
+        # title = "Transits"
+        # opt1 = "just remove the route threads (stops trains at end of current transit)"
+        # opt2 = "delete transits as well (stops trains immediately)"
+        # requested_delete_transits = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+        # self.remove_train_from_transit
+
+        instance_list = java.util.concurrent.CopyOnWriteArrayList()
+        for train in instanceList:
+            instance_list.add(train)
         #stop all threads
-        for thread in instanceList:
+        for thread in instance_list:
             thread_name = "" + thread.getName()
             if thread_name.startswith("running_route_"):
                 #determine the train nme
                 train_name = self.determine_train_name(thread_name,thread)
                 #remove the train from the transit
-                if requested_delete_transits:
-
-                    #remove the train from the list of trains
-                    self.remove_train_name(train_name)
+                # delete_transits:
+                #remove the train from the list of trains
+                self.remove_train_name(train_name)
                 if thread is not None:
                     if thread.isRunning():
                         if self.logLevel > 0: print 'Stop "{}" thread'.format(thread.getName())
                         thread.stop()
+                        instance_list = [instance for instance in instance_list if instance != thread]
                     else:
                         #need this for scheduler in wait state
                         thread.stop()
+                        instance_list = [instance for instance in instance_list if instance != thread]
 
     def determine_train_name(self,thread_name, thread):
         route = thread
-        train_name = route.train_name
+        train_name = route.train_name_in
         return train_name
 
     def remove_train_from_transit(self, train_name):
@@ -403,21 +433,40 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         #     if self.logLevel > 0: print "train in trains_allocated", train, ": trains_allocated", trains_allocated
         #     if train == train_name:
         #         trains_allocated.remove(train)
+        trains_dispatched_list = java.util.concurrent.CopyOnWriteArrayList()
         for train in trains_dispatched:
+            trains_dispatched_list.add(train)
+
+        for train in trains_dispatched_list:
             #print "train in trains_alloceted", train, ": trains_allocated", trains_allocated
             if train == train_name:
                 trains_dispatched.remove(train)
 
     def stop_all_threads(self):
-        #stop all threads
-        for thread in instanceList:
-            if thread is not None:
-                if thread.isRunning():
-                    if self.logLevel > 0: print 'Stop "{}" thread'.format(thread.getName())
-                    thread.stop()
-                else:
-                    #need this for scheduler in wait state
-                    thread.stop()
+        #stop all
+        # activeThreadList = java.util.concurrent.CopyOnWriteArrayList()
+        # for thread in instanceList:
+        #     activeThreadList.add(thread)
+        #
+        # for thread in activeThreadList:
+        #     if thread is not None:
+        #         if thread.isRunning():
+        #             if self.logLevel > 0: print 'Stop "{}" thread'.format(thread.getName())
+        #             thread.stop()
+        #         else:
+        #             #need this for scheduler in wait state
+        #             thread.stop()
+
+        # stop all thresds even if there are duplications
+        summary = jmri.jmrit.automat.AutomatSummary.instance()
+        automatsList = java.util.concurrent.CopyOnWriteArrayList()
+        for automat in summary.getAutomats():
+            automatsList.add(automat)
+
+        for automat in automatsList:
+            automat.stop()
+
+
 
     def remove_listener(self):
         try:
@@ -436,10 +485,41 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         #DF.setState(DF.ICONIFIED);
         activeTrainsList = DF.getActiveTrainsList()
-        for i in range(0, activeTrainsList.size()) :
-            activeTrain = activeTrainsList.get(i)
+
+        active_trains_list = java.util.concurrent.CopyOnWriteArrayList()
+        for activeTrain in activeTrainsList:
+            active_trains_list.add(activeTrain)
+
+        for activeTrain in active_trains_list:
+            # print "i", i
+            # activeTrain = activeTrainsList.get(i)
+            if self.logLevel > 0: print "active train", activeTrain
             DF.terminateActiveTrain(activeTrain)
         DF = None
+
+        # set the colours of the tracks back to normal
+        LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
+        for block in blocks.getNamedBeanSet():
+            layoutBlock = LayoutBlockManager.getLayoutBlock(block)
+            if layoutBlock != None:
+                layoutBlock.setUseExtraColor(False)
+
+
+        #
+        # TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
+        # #if self.logLevel > 1: print "Section"
+        # TransitList = java.util.concurrent.CopyOnWriteArrayList()
+        # for transit in TransitManager.getNamedBeanSet():
+        #     TransitList.add(transit)
+        #
+        # for transit in TransitList:
+        #     if self.logLevel > 1: print "deleting Transit ", transit.getUserName()
+        #     TransitManager.deleteTransit(transit)
+
+    def remove_values(self, train_name):
+        for block in blocks.getNamedBeanSet():
+            if block.getValue() == train_name:
+                block.setValue(None)
 
 # End of class StopMaster
 
@@ -545,6 +625,14 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
+    # Monitors the Station buttons and perforns actins dependent upon what mode one is in e.g.:
+    # Run Dispatch
+    # Setup Route
+    # Set stopping Length
+    # Set Station Wait Time
+    # Set Station Direction
+    # Restrict Operation of Transit (only run if a block is not occupied)
+
     button_sensors_to_watch = []
     button_dict = {}
 
@@ -584,6 +672,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         #DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         self.od = OptionDialog()
+        self.rbm = ResetButtonMaster()
         return True
 
     def  handle(self):
@@ -620,6 +709,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         modify_stopping_length_sensor = sensors.getSensor("setStoppingDistanceSensor")
         modify_station_wait_time_sensor = sensors.getSensor("setStationWaitTimeSensor")
         modify_station_direction_sensor = sensors.getSensor("setStationDirectionSensor")
+        inhibit_running_transit_if_block_occupied_sensor = sensors.getSensor("setTransitBlockRestrictionSensor")
         if self.logLevel > 0: print "set_route_sensor.getKnownState()",set_route_sensor.getKnownState(),
         self.reset_buttons(button_sensors_to_watch_JavaList)
         if set_route_sensor.getKnownState() == ACTIVE:
@@ -647,11 +737,40 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
         elif modify_station_direction_sensor.getKnownState() == ACTIVE:
             if self.modify_individual_station_direction(sensor_changed, button_sensor_name, button_station_name):
+
+                # The traininfo files for the express routes need to be regenerated
+                # so that the express routes are the shortest path allowed
+
+                ResetButtonMaster().regenerate_traininfo_files("Regenerated TrainInfo Files")
+
+                # print "Creating Transits"
+                # CreateIcons = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateIcons.py')
+                # exec(open (CreateIcons).read())
+                # global dpg
+                # dpg = DisplayProgress()
+                #
+                # CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
+                # exec(open (CreateTransits).read())
+                # print "about to run CreateTransits"
+                # CreateTransits().process_panels()
+                #
+                # g = StationGraph()        # recalculate the weights on the edges
+
                 sensor_changed.setKnownState(INACTIVE)
             else:
                 #cancelled: reset all buttons so we check all of them
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
+        elif inhibit_running_transit_if_block_occupied_sensor.getKnownState() == ACTIVE:
+            if self.restrict_transit_operation(sensor_changed, button_sensor_name, button_station_name):
+                sensor_changed.setKnownState(INACTIVE)
+                self.button_sensors_to_watch = copy.copy(self.button_sensors)
+                #ensure that we can press inhibit_running_transit_if_block_occupied_sensor
+                #self.rbm.switch_sensors_requiring_station_buttons(inhibit_running_transit_if_block_occupied_sensor, "sensor_off")
 
+            else:
+                #cancelled: reset all buttons so we check all of them
+                sensor_changed.setKnownState(INACTIVE)
+                self.button_sensors_to_watch = copy.copy(self.button_sensors)
         else:
             title = "station button error"
             msg = "select one of 'Run Dispatch', 'Setup Route', 'Set Stopping Length', 'Set Station Wait Time' \nfor the station buttons to have effect"
@@ -670,11 +789,14 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def set_route(self, sensor_changed, button_sensor_name, button_station_name):
 
+        no_stations_chosen = 1
+
         RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
         route = RouteManager.newRoute("temp_name")
 
         LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
         location = LocationManager.newLocation(button_station_name)
+        #print "addLocation1", location
         route.addLocation(location)
         msg = "Start of Route Selentiom"
         msg = msg + "\nselected station " + button_station_name + "."
@@ -693,7 +815,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         if s == opt2:
             return
         if s == opt3:
-            what_to_do = self.add_action(route,LocationManager, button_station_name)
+            what_to_do = self.add_action(route,LocationManager, button_station_name, no_stations_chosen)
             if what_to_do == 'continue':
                 pass
             elif what_to_do == 'complete':
@@ -721,6 +843,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         i = 0
         while complete == False:
             i +=1
+            no_stations_chosen = i+1
             if self.logLevel > 0: print ("In loop")
             button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
             self.waitSensorState(button_sensors_to_watch_JavaList, ACTIVE)
@@ -729,6 +852,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             button_station_name = self.get_block_name_from_button_sensor_name(button_sensor_name)
 
             location = LocationManager.newLocation(button_station_name)
+            # print "adding location" , location
             route.addLocation(location)
             last_station = button_station_name
 
@@ -750,7 +874,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             if s == opt2:
                 complete = True
             if s == opt3:
-                what_to_do = self.add_action(route,LocationManager, button_station_name)
+                what_to_do = self.add_action(route,LocationManager, button_station_name, no_stations_chosen)
                 if what_to_do == 'continue':
                     pass
                 elif what_to_do == 'complete':
@@ -786,52 +910,103 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print ("terminated dispatch")
         return True
 
+    def action_directory_in_DispatcherSystem(self):
+        path = jmri.util.FileUtil.getScriptsPath() + "DispatcherSystem" + java.io.File.separator + "actions"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
     def action_directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "pythonfiles"
         if not os.path.exists(path):
             os.makedirs(path)
         return path + java.io.File.separator
 
-    def add_action(self, route, LocationManager, button_station_name):
-        directory = self.action_directory()
+    def add_action(self, route, LocationManager, button_station_name, no_stations_chosen):
+        directory = self.action_directory_in_DispatcherSystem()
         files = os.listdir(directory)
         python_files = [f for f in files if f.endswith(".py")]
+
+
+        directory = self.action_directory()
+        files = os.listdir(directory)
+        python_files2 = [f for f in files if f.endswith(".py")]
+        python_files.extend(python_files2)
         # display the list to select the required python file
         if python_files == []:
             msg =  "no python files in directory " + directory
-            if self.logLevel > 0: print msg
+            self.od.displayMessage((msg))
             return 'cancel'
         else:
-            msg = "select action file \n(must be in deirectory " + directory + " )"
-            python_file = modifiableJComboBox(python_files,msg).return_val()
-            self.add_python_file_to_route(python_file, route, LocationManager)
-            what_to_do = self.check_whether_select_another_station(button_station_name, python_file)
+            select_action_file = True
+            iteration = 1
+            selected_actions = []
+            while select_action_file:
+                if iteration == 0:
+                    msg = "select action file \n(must be in deirectory " + directory + " )"
+                    python_file = modifiableJComboBox(python_files,msg).return_val()
+                    self.add_python_file_to_route(python_file, route, LocationManager)
+                    selected_actions.append(python_file)
+                else:
+                    if selected_actions == []:
+                        selected_actions1 = ["none selected yet"]
+                    else:
+                        selected_actions1 = selected_actions
+                    title = "selected " + ','.join(selected_actions1)
+                    if iteration == 1:
+                        opt1 = "select action file"
+                    else:
+                        opt1 = "select another action file"
+                    opt2 = "finished adding action files"
+                    options = [opt1, opt2]
+                    [python_file, option] = OptionDialog().ListOptions(python_files, title, options)
+                    if option == opt1:
+                        selected_actions.append(python_file)
+                        self.add_python_file_to_route(python_file, route, LocationManager)
+                    if option == opt2:
+                        select_action_file = False
+                iteration += 1
+            what_to_do = self.check_whether_select_another_station(button_station_name, selected_actions, no_stations_chosen)
             return what_to_do
 
     def add_python_file_to_route(self, python_file, route, LocationManager):
         location = LocationManager.newLocation(python_file)
+        print "add_python file", location
         route.addLocation(location)
 
-    def check_whether_select_another_station(self, button_station_name, python_file):
-        msg = "selected station " + button_station_name + ". \n" + \
-              " and action " + python_file + "\n" + \
-              "Have you more stations on route?"
+    def check_whether_select_another_station(self, button_station_name, selected_actions, no_of_stations_chosen):
+        if no_of_stations_chosen == 1:
+            msg = "selected station " + button_station_name + ". \n" + \
+                  " and actions " + ", ".join(selected_actions) + "\n" + \
+                  "Continue with selecting route?"
+        else:
+            msg = "selected station " + button_station_name + ". \n" + \
+                  " and actions " + ", ".join(selected_actions) + "\n" + \
+                  "Have you more stations on route?"
         title = "Continue selecting stations"
 
         opt1 = "Select another station"
         opt2 = "Complete Route"
         opt3 = 'cancel'
 
-        s = self.od.customQuestionMessage3str(msg,title,opt1,opt2,opt3)
+        if no_of_stations_chosen == 1:
+            s = self.od.customQuestionMessage2str(msg,title,opt1,opt3)
+            if s == self.od.CLOSED_OPTION:
+                return 'cancel'
+            if s == opt1:
+                return 'continue'
+            if s == opt3:
+                return 'cancel'
 
-        if s == self.od.CLOSED_OPTION:
-            return 'cancel'
-        if s == opt2:
-            return 'complete'
-        if s == opt3:
-            return 'cancel'
-        if s == opt1:
-            return 'continue'
+        else:
+            s = self.od.customQuestionMessage3str(msg,title,opt1,opt2,opt3)
+            if s == self.od.CLOSED_OPTION:
+                return 'cancel'
+            if s == opt1:
+                return 'continue'
+            if s == opt2:
+                return 'complete'
+            if s == opt3:
+                return 'cancel'
 
     def show_routes(self):
         a = jmri.jmrit.operations.routes.RoutesTableAction()
@@ -919,7 +1094,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.button_sensors_to_watch.remove(sensor_changed)
             sensor_changed.setKnownState(INACTIVE)
 
-        #go to trhis bit when complete == True
+        #go to this bit when complete == True
 
         #get traininfo and stopping fraction
         filename_fwd = self.get_filename(found_edge, "fwd")
@@ -939,12 +1114,12 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         default_value = round(previous_stopping_position,1)
         title = "Stop train before end of section"
         msg = "Transit name: " + str(filename_fwd) + \
-                ".\nStopping fraction is: " + str(round(stopping_fraction,2)) + \
-                "\nLength of last section: " + str(round(length_of_last_section, 1)) + " cm " + \
-                "   (" + str(round(length_of_last_section/2.54, 1)) + " inches)" +\
-                "\nPrevious stopping position: " + str(round(previous_stopping_position,1)) + " cm " + \
-                "   (" + str(round(previous_stopping_position/2.54, 1)) + " inches )" +\
-                "\n\nEnter new stopping position in cm:"
+              ".\nStopping fraction is: " + str(round(stopping_fraction,2)) + \
+              "\nLength of last section: " + str(round(length_of_last_section, 1)) + " cm " + \
+              "   (" + str(round(length_of_last_section/2.54, 1)) + " inches)" + \
+              "\nPrevious stopping position: " + str(round(previous_stopping_position,1)) + " cm " + \
+              "   (" + str(round(previous_stopping_position/2.54, 1)) + " inches )" + \
+              "\n\nEnter new stopping position in cm:"
         new_stopping_position = self.od.input(msg, title, default_value)
         if new_stopping_position == None: return
         # print "new_stopping_position",  new_stopping_position
@@ -1051,7 +1226,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.button_sensors_to_watch.remove(sensor_changed)
             sensor_changed.setKnownState(INACTIVE)
 
-        #go to trhis bit when complete == True
+        #go to this bit when complete == True
 
         #get traininfo and stopping fraction
         filename_fwd = self.get_filename(found_edge, "fwd")
@@ -1117,6 +1292,10 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             button_sensor_name = sensor_changed.getUserName()
             button_station_name = self.get_block_name_from_button_sensor_name(button_sensor_name)
 
+            # We now have the blocks we want to use, provided the station blocks are next to each other.
+            # Probably they are not,
+            # so we need to find the two adjacent blocks on the route between the two station blocks
+
             # location = LocationManager.newLocation(button_station_name)
             # route.addLocation(location)
             last_station = button_station_name
@@ -1164,7 +1343,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             msg = "selected station " + button_station_name + ". \nDo you wish to modify the station direction ?"
             title = "Continue selecting stations"
 
-            #opt1 = "Cancel Station Wait Time modification"
             opt1 = "Allow only the direction from " + from_station_name + " towards " + str(to_station_name)
             opt2 = "Allow only the direction from " + to_station_name + " towards " + from_station_name
             opt3 = "Allow 2-way working "
@@ -1177,44 +1355,26 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 return False
             elif s == opt1:
                 sensor_changed.setKnownState(INACTIVE)
-                first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e)
-                # print "f2b before", first_two_blocks
+                first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e, first_station)
                 first_two_blocks = self.swapPositions(first_two_blocks,0,1)
-                # print "f2b after", first_two_blocks
                 list_of_inhibited_blocks = self.store_the_two_blocks(first_two_blocks)
-                #g.__init__()   # calculate the weights on the edges
                 g = StationGraph()  # recalculate the weights on the edges
                 sensor_changed.setKnownState(INACTIVE)
-                #
-                #
-                # sensor_changed.setKnownState(INACTIVE)
-                # print "allowing"
-                # first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e)
-                # print ""
-                # list_of_inhibited_blocks = self.store_the_two_blocks(first_two_blocks)
-                # if self.logLevel > 0: print list_of_inhibited_blocks
-                # sensors.getSensor("setStationDirectionSensor").setKnownState(INACTIVE)
-                # self.button_sensors_to_watch = copy.copy(self.button_sensors)
                 return True
             if s == opt2:
                 sensor_changed.setKnownState(INACTIVE)
-                first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e)
-                # print "f2b before", first_two_blocks
+                first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e, first_station)
                 list_of_inhibited_blocks = self.store_the_two_blocks(first_two_blocks)
-                # g.__init__()
                 g = StationGraph() # recalculate the weights on the edges
                 sensor_changed.setKnownState(INACTIVE)
-                # print "final2", list_of_inhibited_blocks
                 return True
             if s == opt3:
                 sensor_changed.setKnownState(INACTIVE)
-                first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e)
+                first_two_blocks = self.getFirstTwoBlocksInAllowedDirection(e, first_station)
                 list_of_inhibited_blocks = self.remove_the_two_blocks(first_two_blocks)
                 first_two_blocks = self.swapPositions(first_two_blocks,0,1)
                 list_of_inhibited_blocks = self.remove_the_two_blocks(first_two_blocks)  #remove from file
-                #g.setup_graph_edges()   # calculate the weights on the edges
                 g = StationGraph()      # recalculate the weights on the edges
-                # print "final2", list_of_inhibited_blocks
                 sensor_changed.setKnownState(INACTIVE)
                 return True
             Firstloop = False
@@ -1223,14 +1383,261 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.button_sensors_to_watch.remove(sensor_changed)
             sensor_changed.setKnownState(INACTIVE)
 
+    def restrict_transit_operation(self, sensor_changed, button_sensor_name, button_station_name):
+        msg = "selected station " + button_station_name + ". \nSelect the next station to restrict operation of transit?"
+        title = "Select next Station"
+        opt1 = "Select next station"
+        opt2 = "Cancel station transit restriction"
+        s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
+        if self.od.CLOSED_OPTION == True:
+            return False
+        if s == opt2:
+            return False
+        if self.logLevel > 0: print "button_station_name", button_station_name
+        if self.logLevel > 0: print "button_sensor_name", button_sensor_name
+        #set name of route
+        if self.logLevel > 0: print ("in restrict transit")
+
+        # #modify stopping length
+        # RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
+        # route = RouteManager.newRoute("temp_name")
+        #
+        # LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
+        # #if self.logLevel > 0: print "button_station_name", button_station_name
+        # location = LocationManager.newLocation(button_station_name)
+        first_station = button_station_name
+        last_station = first_station
+        # route.addLocation(location)
+        self.button_sensors_to_watch = copy.copy(self.button_sensors)
+        self.button_sensors_to_watch.remove(sensor_changed)
+        complete = False
+        while complete == False:
+            if self.logLevel > 0: print ("In loop")
+            button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
+            self.waitSensorState(button_sensors_to_watch_JavaList, ACTIVE)
+            sensor_changed1 = [sensor for sensor in self.button_sensors_to_watch if sensor.getKnownState() == ACTIVE][0]
+            button_sensor_name1 = sensor_changed1.getUserName()
+            button_station_name1 = self.get_block_name_from_button_sensor_name(button_sensor_name1)
+
+            last_station = button_station_name1
+
+            #get the transit corresponding to first_station last_station
+            found_edge = None
+            for e in g.g_express.edgeSet():
+                from_station_name = g.g_stopping.getEdgeSource(e)
+                to_station_name = g.g_stopping.getEdgeTarget(e)
+                if from_station_name == first_station and to_station_name == last_station:
+                    found_edge = e
+                    break
+
+            success = True
+            if found_edge == None:
+                msg = "selected station " + first_station + ". \nCannot be reached from " + last_station
+                title = "Error"
+                opt1 = "Try Again: Select second Station Again"
+                opt2 = "Cancel station transit restriction"
+                s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
+                if self.od.CLOSED_OPTION == True:
+                    return False
+                if s == opt2:
+                    return False
+                if s == opt1:
+                    sensors.getSensor(sensor_changed1.getUserName()).setKnownState(INACTIVE)
+                    success = False
+
+            if success:
+                filename_fwd = self.get_filename(found_edge, "fwd")
+                filename_rvs = self.get_filename(found_edge, "rvs")
+
+                msg = "selected station " + button_station_name + ". \nDo you wish to set the block that must be clear for the transit to run ?"
+                title = "Select Option"
+
+                opt2 = "Select Station to Select its Block"
+                opt1 = "Cancel: Choose another transit"
+
+
+                s = self.od.customQuestionMessage2str(msg,title,opt2,opt1)
+                if self.od.CLOSED_OPTION == True :
+                    sensor_changed1.setKnownState(INACTIVE)
+                    sensors.getSensor("setTransitBlockRestrictionSensor").setKnownState(INACTIVE)
+                    self.button_sensors_to_watch = copy.copy(self.button_sensors)
+                    return False
+                elif s == opt1:   #cancel
+                    sensor_changed1.setKnownState(INACTIVE)
+                    sensors.getSensor("setTransitBlockRestrictionSensor").setKnownState(INACTIVE)
+                    self.button_sensors_to_watch = copy.copy(self.button_sensors)
+                    return False
+                if s == opt2:    #proceed
+                    sensor_changed1.setKnownState(INACTIVE)
+                    #choose another station block: the dependent station block. The transit set by the first two station blocks only runs if the last station block is free
+                    [result, sensor_changed, button_sensor_name2, button_station_name2]  = \
+                        self.set_transit_block(sensor_changed, button_sensor_name, button_station_name, \
+                                               sensor_changed1, button_sensor_name1, button_station_name1)
+                    if result == False:
+                        sensor_changed1.setKnownState(INACTIVE)
+                        sensors.getSensor("setTransitBlockRestrictionSensor").setKnownState(INACTIVE)
+                        self.button_sensors_to_watch = copy.copy(self.button_sensors)
+                        return False
+                    else:
+                        complete = True
+                Firstloop = False
+
+            sensor_to_change = sensors.getSensor("setTransitBlockRestrictionSensor")
+            self.rbm.switch_sensors_requiring_station_buttons(sensor_to_change, "sensor_off")
+            self.set_transitblockrestrictionsensor_active()
+            self.get_buttons()
+            self.button_sensors_to_watch = copy.copy(self.button_sensors)
+            #self.button_sensors_to_watch.remove(sensor_changed)
+            sensor_to_change.setKnownState(INACTIVE)
+
+        #go to this bit when complete == True
+
+        # # set transit block
+        filename_fwd = self.get_filename(found_edge, "fwd")
+        filename_rvs = self.get_filename(found_edge, "rvs")
+
+        new_transit_block_name = button_station_name2
+
+        self.write_to_TrainInfo(found_edge, new_transit_block_name)
+
+        if self.logLevel > 0: print "saved new block_name for Transit", new_transit_block_name
+
+        return True
+
+    def set_transitblockrestrictionsensor_active(self):
+        # set the dummy contrtol sensor active which triggers the routine in ResetButtonnMaster
+        # the buttons are reset
+        sensors.getSensor("DummyControlSensor").setKnownState(ACTIVE)
+        self.waitMsec(3000)
+        sensors.getSensor("DummyControlSensor").setKnownState(INACTIVE)
+
+
+    def write_to_TrainInfo(self, edge, new_transit_block_name):
+
+        filename_fwd = self.get_filename(edge, "fwd")
+        filename_rvs = self.get_filename(edge, "rvs")
+
+        trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
+        transit_block_name = trainInfo_fwd.getBlockName()
+        trainInfo_fwd.setBlockName(new_transit_block_name)
+
+        #transit_block_name1 = trainInfo_fwd.getBlockName()
+        # write the newtraininfo back to file
+        jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo_fwd, filename_fwd)
+
+        # do same with reverse
+        # filename_rvs = self.get_filename(found_edge, "rvs")
+        trainInfo_rvs = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_rvs)
+        trainInfo_rvs.setBlockName(new_transit_block_name)
+        # write the newtraininfo back to file
+        jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo_rvs, filename_rvs)
+    def retrieve_from_Traininfo(self, edge):
+        filename_fwd = self.get_filename(edge, "fwd")
+        trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
+        transit_block_name = trainInfo_fwd.getBlockName()
+        return [transit_block_name]
+    def set_transit_block(self, sensor_changed, button_sensor_name, button_station_name,
+                                sensor_changed1, button_sensor_name1, button_station_name1):
+
+
+        # we have the sensor, sensor_name and block name for the first two stations defining the transit
+        # we now wish to specify the triple for the block which needs to be free for the transit to run
+
+        # msg = "selected stations " + button_station_name + " and " + button_station_name1 + \
+        #       "\nSelect the next station to specify the block that has to be free to enabler the transit to run?"
+        # title = "Select next Station"
+        #
+        # opt1 = "Select next station"
+        # opt2 = "Cancel station transit restriction"
+        #
+        # s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
+        # if self.od.CLOSED_OPTION == True:
+        #     return False
+        # if s == opt2:
+        #     return False
+        if self.logLevel > 0: print "button_station_name", button_station_name
+        if self.logLevel > 0: print "button_sensor_name", button_sensor_name
+        #
+        if self.logLevel > 0: print ("in restrict transit: choose 3rd Station")
+
+        first_station = button_station_name
+        last_station = button_station_name1
+        if self.logLevel > 0: print "first_station", first_station, "last_station", last_station
+        transit_block_station = None
+        # route.addLocation(location)
+        self.button_sensors_to_watch = copy.copy(self.button_sensors)
+        self.button_sensors_to_watch.remove(sensor_changed)
+        self.button_sensors_to_watch.remove(sensor_changed1)
+
+        if self.logLevel > 0: print ("In loop")
+        button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
+        self.waitSensorState(button_sensors_to_watch_JavaList, ACTIVE)
+        sensor_changed = [sensor for sensor in self.button_sensors_to_watch if sensor.getKnownState() == ACTIVE][0]
+        button_sensor_name2 = sensor_changed.getUserName()
+        button_station_name2 = self.get_block_name_from_button_sensor_name(button_sensor_name2)
+
+        transit_block_station = button_station_name2
+
+        #get the transit corresponding to first_station last_station
+
+        # for e in g.g_express.edgeSet():
+        #     from_station_name = g.g_stopping.getEdgeSource(e)
+        #     to_station_name = g.g_stopping.getEdgeTarget(e)
+        #     if from_station_name == first_station and to_station_name == last_station:
+        #         found_edge = e
+        #         break
+        # filename_fwd = self.get_filename(found_edge, "fwd")
+        # filename_rvs = self.get_filename(found_edge, "rvs")
+
+
+        msg = "for transit from station" + first_station + "to station " + last_station + \
+            "\nselected station " + transit_block_station + \
+            ". \nDo you wish the transit not to run when this station is occupied ?"
+        title = "Selected stations"
+
+        opt1 = "Cancel and select another transit"
+        opt2 = "restrict this transit"
+
+        s = self.od.customQuestionMessage2str(msg,title,opt2,opt1)
+        if self.od.CLOSED_OPTION == True :
+            sensor_changed.setKnownState(INACTIVE)
+            sensors.getSensor("setTransitBlockRestrictionSensor").setKnownState(INACTIVE)
+            self.button_sensors_to_watch = copy.copy(self.button_sensors)
+            return [False, sensor_changed, button_sensor_name2, button_station_name2]
+        elif s == opt1:
+            sensor_changed.setKnownState(INACTIVE)
+            sensors.getSensor("setTransitBlockRestrictionSensor").setKnownState(INACTIVE)
+            self.button_sensors_to_watch = copy.copy(self.button_sensors)
+            return [False, sensor_changed, button_sensor_name2, button_station_name2]
+        if s == opt2:
+            sensor_changed.setKnownState(INACTIVE)
+            complete = True
+            self.get_buttons()
+            self.button_sensors_to_watch = copy.copy(self.button_sensors)
+            return [True, sensor_changed, button_sensor_name2, button_station_name2]
+
+
     def swapPositions(self, list, pos1, pos2):
         #swap positions of list
         list[pos1], list[pos2] = list[pos2], list[pos1]
         return list
-    def getFirstTwoBlocksInAllowedDirection(self, e):
+
+    def getFirstTwoBlocksInAllowedDirection(self, e, first_station_block):
         path_name =  e.getItem("path_name")
-        # print "path name", path_name
-        return path_name[:2]
+        # get last occurence in path in case path goes through turntable and return
+        index = path_name[::-1].index(first_station_block)
+        position_of_station_block = len(path_name) - index - 1
+        first = path_name[position_of_station_block]
+        second = path_name[position_of_station_block+1]
+        first2blocks = [first,second]
+        return first2blocks
+
+    def delete_block_pair_from_list(self, entry_to_delete):
+        existing = self.read_list()
+        if entry_to_delete != "no inhibited directions":
+            existing.remove(entry_to_delete)
+        self.write_list(existing)
+        return existing
 
     def store_the_two_blocks(self, first_two_blocks):
         list_inhibited_blocks = self.read_list()
@@ -1522,7 +1929,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.button_sensors = [self.get_button_sensor_given_block_name(station_block_name) for station_block_name in g.station_block_list]
         self.button_sensor_states = [self.check_sensor_state(button_sensor) for button_sensor in self.button_sensors]
         # for button_sensor in self.button_sensors:
-            # self.button_dict[button_sensor] = self.check_sensor_state(button_sensor)
+        # self.button_dict[button_sensor] = self.check_sensor_state(button_sensor)
 
 
     def check_sensor_state(self, sensor):
@@ -1593,310 +2000,3 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 # End of class StopMaster
 
-class MonitorTrackMaster(jmri.jmrit.automat.AbstractAutomaton):
-
-    # 1) ensure that the trains in the train list are being displayed on the panel if the block is occupied
-    # 2) ensure that a non allocated train and an allocated train cannot exist in the same edge
-
-    global trains_allocated
-    logLevel = 0
-
-    def setup(self):
-        self.old_train_edge = {}
-        self.moved_under_dispatch = {}
-        return True
-
-    def handle(self):
-
-        # trains is a dictionary, with keys of the train_name
-        # each value is itself a dictionary with 3 items
-        # edge
-        # penultimate_block_name
-        # direction
-
-        # ensure that the trains in the train list are being displayed on the panel if the block is occupied
-        #
-        # if the end block of the route is occupied
-        #   set th end block memname to the train_name
-        if trains != {}:
-            if self.logLevel > 0: print "trains", trains
-            for train_name in trains:      #defaults tothe key which is the train name
-                # if self.logLevel > 0: print "train" , train
-                # train_name = str(train[0])
-                # train_list = train[1]
-                mytrain = trains[train_name]     #mytrain is a dictionary
-                if self.logLevel > 0: print "train_name", train_name, #, "train_list", train_list
-                #edge = train_list("edge")
-                #penultimate_block_name = train_list["penultimate_block_name"]
-                edge = str(mytrain["edge"])
-                if self.logLevel > 0: print "edge",edge,
-
-
-                #if the train is at the start of the dispatch or at the end we
-                #block_name = str(mytrain["edge"].getSource())   #get the destination edge- the edges are reversed
-
-                #block_occupancy = self.check_sensor_state_given_block_name(block_name)
-                #if self.logLevel > 0: print "block_name", block_name,"block_occupancy", block_occupancy,
-                active_train = self.get_active_train(train_name)    #get the active train if one exists (if a dispatch is in progress)
-                if active_train != None:
-                    #[block_list, start_block, end_block] = self.get_occupied_blocks(active_train)
-                    if self.logLevel > 0: print "active train is not None", active_train,
-                else:
-                    if self.logLevel > 0: print "active train is None", active_train,
-                if train_name in self.old_train_edge:
-                    if self.logLevel > 0: print "old edge", self.old_train_edge[train_name]
-                #if the edge for the train has changed we initialise moved_under_dispatch to False
-                if train_name in self.old_train_edge:
-                    if self.old_train_edge[train_name] == edge:
-                        pass
-                    else:
-                        #initialise the moved_under_dispatch variable
-                        self.moved_under_dispatch[train_name] = False
-                if train_name not in self.moved_under_dispatch:
-                    self.moved_under_dispatch[train_name] = False
-
-                if active_train == None:
-                    # train is at the start block or the end block as the dispatch has not started or finished
-                    if train_name in self.moved_under_dispatch:
-                        if self.moved_under_dispatch[train_name] == False:
-                            #block is start block
-                            current_block = str(mytrain["edge"].getTarget())
-                            block_occupancy = self.check_sensor_state_given_block_name(current_block)
-                            if self.logLevel > 0: print "current_block", current_block,"block_occupancy", block_occupancy,
-                            self.set_mem_variable(current_block,train_name,block_occupancy)
-                        else:
-                            #block is end block
-                            current_block = str(mytrain["edge"].getSource())
-                            block_occupancy = self.check_sensor_state_given_block_name(current_block)
-                            if self.logLevel > 0: print "current_block", current_block,"block_occupancy", block_occupancy,
-                            self.set_mem_variable(current_block,train_name,block_occupancy)
-                else:
-                    #trai
-                    # n is moving under dispatch
-                    #we note this
-                    self.moved_under_dispatch[train_name] = True
-
-                if edge != None:
-                    self.old_train_edge[train_name] = edge
-
-        self.waitMsec(500)
-        return True
-
-    def set_mem_variable(self, block_name, train_name, block_occupancy):
-        if block_name != None:
-            #print "block_name", block_name
-            #print "self.check_train_in_block:",self.check_train_in_block(block_name, train_name) ,"xxxx"
-            if block_occupancy == True:
-                #check and set the mem_name
-                if self.check_train_in_block(block_name, train_name) == False:
-                    #print "setting train", train_name, "in block", block_name
-                    self.set_train_in_block(block_name, train_name)
-
-
-    def get_active_train(self, train_name):
-        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        #DF.setState(DF.ICONIFIED);
-        java_active_trains_list = DF.getActiveTrainsList()
-        java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
-        #print "java_active_trains_Arraylist",java_active_trains_Arraylist
-        #print "train_name", train_name
-        for t in java_active_trains_Arraylist:
-            #print "activetrainname=",t.getActiveTrainName()
-            #print "train_name", train_name
-            #print "t.getActiveTrainName().count(train_name)", t.getActiveTrainName().count(train_name)
-            if t.getActiveTrainName().count(train_name) >0:     #check if train_name is contained in
-                return t
-        DF = None
-        return None
-
-    def get_occupied_blocks(self,active_train):
-        block_list = active_train.getBlockList()
-        section_list = active_train.getAllocatedSectionList()
-        start_block = active_train.getStartBlock()
-        end_block = active_train.getEndBlock()
-        seq_no = active_train.getStartBlockSectionSequenceNumber()
-        LastAllocatedSectionSeqNumber = active_train.getLastAllocatedSectionSeqNumber()
-        NextSectionToAllocate = active_train.getNextSectionToAllocate()
-        LastAllocatedSection = active_train.getLastAllocatedSection()
-        LastAllocatedSectionName = active_train.getLastAllocatedSectionName()
-        NextSectionToAllocateName = active_train.getNextSectionToAllocateName()
-        # print "block_list", block_list
-        # print "LastAllocatedSectionSeqNumber",LastAllocatedSectionSeqNumber
-        # print "section_list",section_list
-        # print "start block", start_block
-        # print "end_block", end_block
-        # print "getStartBlockSectionSequenceNumber", seq_no
-        # print "section_list", section_list
-        # print "NextSectionToAllocate", NextSectionToAllocate
-        # print "LastAllocatedSection", LastAllocatedSection
-        # print "LastAllocatedSectionName", LastAllocatedSectionName
-        # print "getNextSectionToAllocateName", NextSectionToAllocateName
-        return [block_list, start_block, end_block]
-
-    def check_train_in_block(self, block_name, train_name):
-        mem_val = self.get_blockcontents(block_name)
-        #print "mem_val", mem_val, "train_name", train_name
-        if train_name == mem_val:
-            #print "return true"
-            return True
-        else:
-            return False
-
-    def set_train_in_block(self, block_name, train_name):
-        self.set_blockcontents(block_name,train_name)
-
-    def get_block_position_of_train(self, train_name):
-            allocated_trains = self.get_allocated_trains()
-
-
-    def get_allocated_trains(self):
-        return trains_allocated
-
-    def get_non_allocated_trains(self):
-        all_trains = self.get_all_roster_entries_with_speed_profile()
-        non_allocated_trains = copy.copy(all_trains)
-        for train in trains_allocated:
-            if train in non_allocated_trains:
-                non_allocated_trains.remove(train)
-        return non_allocated_trains
-
-    def get_all_roster_entries_with_speed_profile(self):
-        roster_entries_with_speed_profile = []
-        r = jmri.jmrit.roster.Roster.getDefault()
-        for roster_entry in jmri.jmrit.roster.Roster.getAllEntries(r):
-            if self.logLevel > 0: print "roster_entry.getSpeedProfile()",roster_entry,roster_entry.getSpeedProfile()
-            if roster_entry.getSpeedProfile() != None:
-                roster_entries_with_speed_profile.append(roster_entry.getId())
-                if self.logLevel > 0: print "roster_entry.getId()",roster_entry.getId()
-        return roster_entries_with_speed_profile
-
-    def get_blockcontents(self, block_name):
-        block = blocks.getBlock(block_name)
-        value =  block.getValue()
-        return value
-
-
-    def set_blockcontents(self, block_name, value):
-        block = blocks.getBlock(block_name)
-        value =  block.setValue(value)
-
-    def get_station_and_occupancy_and_block_value_of_train(self, train_to_move):
-        ## Check the pressed button
-        for station_block_name in g.station_block_list:
-            if self.logLevel > 0: print "station_block_name", station_block_name
-
-            #get a True if the block block_value has the train name in it
-            block_value_state = self.check_train_in_block(station_block_name, train_to_move)
-            block_occupancy_state = self.check_sensor_state_given_block_name(station_block_name)
-            if self.logLevel > 0: print "block_value_state1= ",block_value_state
-            # # do not attempt to move to where you are
-            # button_pressed_in_occupied_station = (button_station_name == station_block_name)
-
-            #check if the block is occupied and has the required train in it
-            if block_occupancy_state:
-                # and button_pressed_in_occupied_station == False:
-                return [station_block_name, block_value_state, block_occupancy_state]
-        return None
-
-    def get_position_of_train(self, train_to_move):
-        ## Check the pressed button
-        for station_block_name in g.station_block_list:
-            if self.logLevel > 0: print "station_block_name", station_block_name
-
-            #get a True if the block block_value has the train name in it
-            block_value_state = self.check_train_in_block(station_block_name, train_to_move)
-            if self.logLevel > 0: print "block_value_state= ",block_value_state
-
-            #get a True if the block is occupied
-            block_occupied_state = self.check_sensor_state_given_block_name(station_block_name)
-            if self.logLevel > 0: print "block_occupied_state= ",block_occupied_state
-            if self.logLevel > 0: print ("station block name {} : {}". format(station_block_name, str(block_occupied_state)))
-
-            # # do not attempt to move to where you are
-            # button_pressed_in_occupied_station = (button_station_name == station_block_name)
-
-            #check if the block is occupied and has the required train in it
-            if block_value_state == True and block_occupied_state == True:
-                # and button_pressed_in_occupied_station == False:
-                return station_block_name
-        return None
-
-    def check_sensor_state_given_block_name(self, station_block_name):
-        #if self.logLevel > 0: print("station block name {}".format(station_block_name))
-        layoutBlock = layoutblocks.getLayoutBlock(station_block_name)
-        station_sensor = layoutBlock.getOccupancySensor()
-        if station_sensor is None:
-            OptionDialog().displayMessage(' Sensor in block {} not found'.format(station_block_name))
-            return
-        currentState = True if station_sensor.getKnownState() == ACTIVE else False
-        return currentState
-
-class RunDispatcherMaster():
-
-    def __init__(self):
-        global g
-        global le
-        import sys
-
-
-        new_train_master = NewTrainMaster()
-        instanceList.append(new_train_master)
-        if new_train_master.setup():
-            new_train_master.setName('New Train Master')
-            new_train_master.start()
-
-        stop_master = StopMaster()
-        if stop_master.setup():
-            stop_master.setName('Stop Master')
-            stop_master.start()
-
-        reset_button_master = ResetButtonMaster()
-        instanceList.append(reset_button_master)
-        if reset_button_master.setup():
-            pass
-            reset_button_master.setName('Reset Button Master')
-            reset_button_master.start()
-
-        dispatch_master = DispatchMaster()
-        instanceList.append(dispatch_master)
-        if dispatch_master.setup():
-            dispatch_master.setName('Dispatch Master')
-            dispatch_master.start()
-
-        simulation_master = SimulationMaster()
-        instanceList.append(simulation_master)
-        if simulation_master.setup():
-            simulation_master.setName('Simulation Master')
-            simulation_master.start()
-
-        scheduler_master = SchedulerMaster()
-        instanceList.append(scheduler_master)
-        if scheduler_master.setup():
-            scheduler_master.setName('Scheduler Master')
-            scheduler_master.start()
-
-        monitorTrack_master = MonitorTrackMaster()
-        instanceList.append(monitorTrack_master)
-        if monitorTrack_master.setup():
-            monitorTrack_master.setName('Monitor Track Master')
-            monitorTrack_master.start()
-
-        off_action_master = OffActionMaster()
-        instanceList.append(off_action_master)
-
-        if off_action_master.setup():
-            off_action_master.setName('Off-Action Master')
-            off_action_master.start()
-        else:
-            if self.logLevel > 0: print("Off-Action Master not started")
-
-        #set default valus of buttons
-        sensors.getSensor("Express").setKnownState(ACTIVE)
-        sensors.getSensor("simulateSensor").setKnownState(INACTIVE)
-        sensors.getSensor("setDispatchSensor").setKnownState(ACTIVE)
-
-
-if __name__ == '__builtin__':
-    RunDispatcherMaster()
-    # NewTrainMaster checksfor the new train in siding. Needs to inform what station we are in
-    #DispatchMaster checks all button sensors
