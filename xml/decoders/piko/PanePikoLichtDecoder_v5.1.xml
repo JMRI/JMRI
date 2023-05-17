@@ -1372,7 +1372,7 @@
 				<display item="Decoder_Test" format="checkbox"/>
 				<label>
 					<text>
-						<!-empty line-->
+						<!--empty line-->
 					</text>
 				</label>
 			</column>
