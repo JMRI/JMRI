@@ -27,6 +27,7 @@
                     restore the previous behavior:  After a timeout, the
                     report is cleared.  The script also demonstrates how to
                     get a more granular control over this behavior.</li>
+                <li>Improved Throttle support for 14 and 28 Speed Steps.</li>
             </ul>
 
         <h4>C/MRI</h4>
