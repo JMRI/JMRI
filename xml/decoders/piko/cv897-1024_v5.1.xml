@@ -33,9 +33,9 @@
 		</revision>
 		<revision>
 			<revnumber>2</revnumber>
-			<date>2023-05-01</date>
+			<date>2023-05-10</date>
 			<authorinitials>UG</authorinitials>
-			<revremark>Extended for all outputs A1 to A6</revremark>
+			<revremark>Extended for all outputs A1 to A6, add CV1018 for output test</revremark>
 		</revision>
 	</revhistory>
 	<!-- Interner Lichtdecoder CVs -->
@@ -75,7 +75,7 @@
 		<tooltip xml:lang="de">Auswahl der zu programmierenden Bank 0 - 3. Zurückstellen nach "Bank 0 - Hersteller" wenn fertig!</tooltip>
 		<tooltip xml:lang="cs">Nastavení programování banky 0 - 3. Po dokončení obnovte na Banka 0!</tooltip>
 	</variable>
-	<!-- Bank 0 variables CV1021 = 0 -->
+	<!-- Bank 0 variables CV1021 = 0 !! name="cvFirst" = true-->
 	<variable item="Bank 0 Manufacturer ID" CV="980.1021=0" readOnly="yes" default="162">
 		<decVal/>
 		<label>Manufacturer ID: </label>
@@ -100,6 +100,11 @@
 		<label xml:lang="de">Slave Nummer (3): </label>
 		<label xml:lang="nl">Slave Nummer (3): </label>
 		<label xml:lang="cs">Slave Nummer (3): </label>
+	</variable>
+	<variable item="Decoder_Test" CV="1018.1021=0" default="0" mask="VXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Decoder Output Test</label>
+		<label xml:lang="de">Decoder Test: Alle Ausgänge einmal ein- und ausschalten (CV1018)</label>
 	</variable>
 	<!-- Bank 0 variables CV1021 = 0 -->
 	<!-- Ausgang 1 Funktion vorwärts ein CV982 - 985 -->
@@ -2808,7 +2813,7 @@
 		<label>A4 Fade out</label>
 		<label xml:lang="de">Ausgang A4 ausblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A4 "Ausblenden"</tooltip>
-	</variable>	
+	</variable>
 	<!-- Bank 2 variables CV1021 = 2 -->
 	<!-- Ausgang 5 Funktion vorwärts ein CV982 - 985 -->
 	<variable item="A5_F0_fw_On" CV="982.1021=2" mask="XXXXXXXV" default="0">
@@ -3485,7 +3490,7 @@
 		<label>A5 Fade out</label>
 		<label xml:lang="de">Ausgang A5 ausblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A5 "Ausblenden"</tooltip>
-	</variable>	
+	</variable>
 	<!-- Bank 2 variables CV1021 = 0 -->
 	<!-- Ausgang 6 Funktion vorwärts ein CV1000 - 1003 -->
 	<variable item="A6_F0_fw_On" CV="1000.1021=2" mask="XXXXXXXV" default="0">
@@ -4162,6 +4167,6 @@
 		<label>A6 Fade out</label>
 		<label xml:lang="de">Ausgang A6 ausblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A6 "Ausblenden"</tooltip>
-	</variable>	
+	</variable>
 </variables>
 
