@@ -587,8 +587,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 return;
             }
         } else if (b.getState() == Block.UNOCCUPIED) {
-            log.debug("{}: handleBlockStateChange to UNOCCUPIED - Section {}, Block {}, speed {}", _activeTrain.getTrainName(),
-                    as.getSection().getDisplayName(USERSYS), b.getDisplayName(USERSYS),getTargetSpeed());
+//            log.debug("{}: handleBlockStateChange to UNOCCUPIED - Section {}, Block {}, speed {}", _activeTrain.getTrainName(),
+//                    as.getSection().getDisplayName(USERSYS), b.getDisplayName(USERSYS),getTargetSpeed());
             if (_stoppingByBlockOccupancy && (b == _stoppingBlock)) {
                 log.trace("{}: setStopNow by block occupancy from Block unoccupied, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                 _stoppingByBlockOccupancy = false;
