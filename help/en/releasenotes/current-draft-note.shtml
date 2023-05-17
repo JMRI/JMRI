@@ -293,6 +293,11 @@
                 <li></li>
             </ul>
 
+        <h4>Piko</h4>
+            <ul>
+                <li>SmartDecoder XP5.1 - updated lowVersionID, changed CV7-8 to use include file</li>
+            </ul>
+	    
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
