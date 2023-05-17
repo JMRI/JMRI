@@ -332,7 +332,24 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         //EEPROM reply
         r = DCCppReply.parseDCCppReply("e 12 34 56");
         Assert.assertTrue(r.isWriteEepromReply());
-    }
+
+        //Throttle Command replies
+        r = DCCppReply.parseDCCppReply("jT 123 456 789");
+        Assert.assertTrue(r.isTurnoutIDsReply());
+        Assert.assertFalse(r.isTurnoutIDReply());
+        Assert.assertEquals(789, (int) r.getTurnoutIDList().get(2));
+        Assert.assertEquals(3, r.getTurnoutIDList().size());
+        r = DCCppReply.parseDCCppReply("jT 123 C \"turnout description\"");
+        Assert.assertTrue(r.isTurnoutIDReply());
+        Assert.assertFalse(r.isTurnoutIDsReply());
+        Assert.assertEquals(123, r.getTOIDInt());
+        Assert.assertEquals("C", r.getTurnoutStateString());
+        Assert.assertEquals("turnout description", r.getTurnoutDescString());
+        r = DCCppReply.parseDCCppReply("jT");
+        Assert.assertTrue(r.isTurnoutIDsReply());
+        Assert.assertEquals(0, r.getTurnoutIDList().size());
+        
+}
 
     @Test
     public void testMonitorStringCurrentReply() {
@@ -556,6 +573,18 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Power Status: OFF", l.toMonitorString());
         l = DCCppReply.parseDCCppReply("p 1");
         Assert.assertEquals("Monitor string", "Power Status: ON", l.toMonitorString());
+    }
+
+    @Test
+    public void testMonitorStringThrottleCommandsReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("jT 3456 C \"turnout desc\"");
+        Assert.assertEquals("Monitor string", "Turnout ID:3456 State:C Desc:'turnout desc'", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("jT 111 222 3456");
+        Assert.assertEquals("Monitor string", "Turnout IDs:[111, 222, 3456]", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("jT"); //no turnouts defined
+        Assert.assertEquals("Monitor string", "Turnout IDs:[]", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("jT 3456 C \"\""); //no description defined
+        Assert.assertEquals("Monitor string", "Turnout ID:3456 State:C Desc:''", l.toMonitorString());
     }
 
     @BeforeEach

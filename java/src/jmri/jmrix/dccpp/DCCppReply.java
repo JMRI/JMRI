@@ -1,6 +1,7 @@
 package jmri.jmrix.dccpp;
 
 import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
@@ -281,6 +282,19 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text += " Speed:" + getSpeedInt();
                 text += " F0-28:" + getFunctionsString();
                 break;
+            case DCCppConstants.THROTTLE_COMMANDS_REPLY:
+                if (isTurnoutIDsReply()) {    
+                    text = "Turnout IDs:" + getTurnoutIDList();
+                    break;
+                } else if (isTurnoutIDReply()) {    
+                    text = "Turnout ID:" + getTOIDString();
+                    text += " State:" + getTurnoutStateString();
+                    text += " Desc:'" + getTurnoutDescString() + "'";
+                    break;
+                }
+                text = "Unknown Message: '" + toString() + "'";
+                break;
+                
             default:
                 text = "Unrecognized reply: '" + toString() + "'";
         }
@@ -540,6 +554,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 return (r);
             case DCCppConstants.LOCO_STATE_REPLY:
                 r.myRegex = DCCppConstants.LOCO_STATE_REGEX;
+                return (r);
+            case DCCppConstants.THROTTLE_COMMANDS_REPLY:
+                if (s.matches(DCCppConstants.TURNOUT_IDS_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.TURNOUT_IDS_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.TURNOUT_ID_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.TURNOUT_ID_REPLY_REGEX;
+                }
+                log.debug("Parsed Reply: '{}' length {}", r.toString(), r._nDataChars);
                 return (r);
             default:
                 return (r);
@@ -888,7 +910,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     // Helper methods for Turnout Replies
 
     public String getTOIDString() {
-        if (this.isTurnoutReply()) {
+        if (this.isTurnoutReply() || this.isTurnoutIDReply()) {
             return (this.getValueString(1));
         } else {
             log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());
@@ -897,7 +919,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getTOIDInt() {
-        if (this.isTurnoutReply()) {
+        if (this.isTurnoutReply() || this.isTurnoutIDReply()) {
             return (this.getValueInt(1));
         } else {
             log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());
@@ -1517,6 +1539,38 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+    public ArrayList<Integer> getTurnoutIDList() {
+        ArrayList<Integer> ids=new ArrayList<Integer>(); 
+        if (this.isTurnoutIDsReply()) {
+            String idList = this.getValueString(1);
+            if (!idList.isEmpty()) {
+                String[] idStrings = idList.split(" ");
+                for (String idString : idStrings) {
+                    ids.add(Integer.parseInt(idString));
+                }
+            }
+        } else {
+            log.error("TurnoutIDsReply Parser called on non-TurnoutIDsReply message type {}", this.getOpCodeChar());
+        }
+        return ids;
+    }
+    public String getTurnoutStateString() {
+        if (this.isTurnoutIDReply()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getTurnoutIDString Parser called on non-getTurnoutIDString message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+    public String getTurnoutDescString() {
+        if (this.isTurnoutIDReply()) {
+            return (this.getValueString(3));
+        } else {
+            log.error("getTurnoutIDString Parser called on non-getTurnoutIDString message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+
     // -------------------------------------------------------------------
 
     // Message Identification functions
@@ -1649,6 +1703,13 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isLocoStateReply() {
         return (this.getOpCodeChar() == DCCppConstants.LOCO_STATE_REPLY);
     }
+    
+    public boolean isTurnoutIDsReply() {
+        return (this.matches(DCCppConstants.TURNOUT_IDS_REPLY_REGEX));
+    }
+    public boolean isTurnoutIDReply() {
+        return (this.matches(DCCppConstants.TURNOUT_ID_REPLY_REGEX));
+    }
 
     public boolean isValidReplyFormat() {
         if ((this.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) ||
@@ -1673,7 +1734,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 (this.matches(DCCppConstants.STATUS_REPLY_BSC_REGEX)) ||
                 (this.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) ||
                 (this.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX)) ||
-                (this.matches(DCCppConstants.LOCO_STATE_REGEX))) {
+                (this.matches(DCCppConstants.LOCO_STATE_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_IDS_REGEX)) ||
+                (this.matches(DCCppConstants.TURNOUT_ID_REGEX))) {
             return (true);
         } else {
             return (false);

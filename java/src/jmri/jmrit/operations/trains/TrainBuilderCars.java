@@ -461,7 +461,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         }
         boolean messageFlag = true;
         boolean foundCar = false;
-        _success = false;
         for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
             Car car = _carList.get(_carIndex);
             // second pass deals with cars that have a final destination equal
@@ -536,7 +535,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             } else {
                 findDestinationAndTrack(car, rl, _routeList.indexOf(rl), _routeList.size());
             }
-            if (_success) {
+            if (_reqNumOfMoves <= 0) {
                 break; // done
             }
             // build failure if car departing staging without a destination and
@@ -602,8 +601,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             return false; // no load generated for this car
         }
         addLine(_buildReport, FIVE,
-                Bundle.getMessage("buildSearchTrackNewLoad", car.toString(), car.getTypeName(), car.getLoadName(),
-                        car.getLocationName(), car.getTrackName(), rld != null ? rld.getLocation().getName() : ""));
+                Bundle.getMessage("buildSearchTrackNewLoad", car.toString(), car.getTypeName(),
+                        car.getLoadType().toLowerCase(), car.getLoadName(), car.getLocationName(), car.getTrackName(),
+                        rld != null ? rld.getLocation().getName() : ""));
         // check to see if car type has custom loads
         if (carLoads.getNames(car.getTypeName()).size() == 2) {
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildCarNoCustomLoad", car.toString(), car.getTypeName()));
@@ -812,6 +812,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
 
         addLine(_buildReport, SEVEN,
                 Bundle.getMessage("buildNoStagingForCarCustom", car.toString()));
+        addLine(_buildReport, SEVEN, BLANK_LINE);
         return false;
     }
 
@@ -1266,9 +1267,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         }
 
         addLine(_buildReport, FIVE,
-                Bundle.getMessage("buildCarRoutingBegins", car.toString(), car.getTypeName(), car.getLoadName(),
-                        car.getTrackType(), car.getLocationName(), car.getTrackName(), car.getFinalDestinationName(),
-                        car.getFinalDestinationTrackName()));
+                Bundle.getMessage("buildCarRoutingBegins", car.toString(), car.getTypeName(),
+                        car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackType(), car.getLocationName(),
+                        car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
 
         // no local moves for this train?
         if (!_train.isAllowLocalMovesEnabled() &&
@@ -1388,7 +1389,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             // by this train. Find buildExcludeCarDestNotPartRoute in
             // loadRemoveAndListCars()
             throw new BuildFailedException(Bundle.getMessage("buildExcludeCarDestNotPartRoute", car.toString(),
-                    car.getDestinationName(), _train.getRoute().getName()));
+                    car.getDestinationName(), car.getDestinationTrackName(), _train.getRoute().getName()));
         }
         // now go through the route and try and find a location with
         // the correct destination name

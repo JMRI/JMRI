@@ -21,7 +21,12 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>The default behavior for CBus Reporters has been changed to
+                    <u>not</u> clear the report after a timeout. A new
+                    CbusReporterTimeoutControl.py script is provided to
+                    restore the previous behavior:  After a timeout, the
+                    report is cleared.  The script also demonstrates how to
+                    get a more granular control over this behavior.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -31,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>Set Turnout userName from Description when defined in myAutomation.h</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -139,7 +144,8 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li></li>
+                <li>Add a delay to read/write programming operations on the main.
+                    This is intended to help when doing reads of indexed CVs.</li>
             </ul>
 
         <h4>Secsi</h4>
@@ -628,5 +634,6 @@
         <ul>
             <li>Improved how window preferences are stored to reduce error messages
                 when JMRI is under high load.</li>
+            <li>Update the JMRI install process for Raspberry Pi computers running the Raspberry Pi OS.</li>
         </ul>
 
