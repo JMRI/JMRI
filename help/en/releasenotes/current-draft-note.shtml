@@ -165,7 +165,7 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li></li>
+                <li>Initial support for TMCC 2 "Legacy" functions.</li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>

@@ -23,7 +23,7 @@ public class SerialThrottle extends AbstractThrottle {
      * @param address Loco ID
      */
     public SerialThrottle(TmccSystemConnectionMemo memo, DccLocoAddress address) {
-        super(memo);
+        super(memo, 69); // supports 69 functions
         tc = memo.getTrafficController();
 
         // cache settings. It would be better to read the
@@ -54,8 +54,14 @@ public class SerialThrottle extends AbstractThrottle {
     @Override
     public void setFunction(int func, boolean value) {
         updateFunction(func, value);
-        if (func>=0 && func<28) {
-            sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 128);
+        if (func>=0 && func <=67) {
+            if ( SERIAL_FUNCTION_CODES[func] > 0xFFFF ) {
+                // TMCC 2 format
+                sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 256);
+            } else {
+                // TMCC 1 format
+                sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 128);
+            }
         }
         else {
             super.setFunction(func, value);
@@ -63,12 +69,25 @@ public class SerialThrottle extends AbstractThrottle {
     }
 
     private final static int[] SERIAL_FUNCTION_CODES = new int[] {
-        0x000D, 0x001D, 0x001C, 0x0005, 0x0006, /* 0-4 */
-        0x0010, 0x0011, 0x0012, 0x0013, 0x0014, /* 5-9 */
-        0x0015, 0x0016, 0x0017, 0x0018, 0x0019, /* 10-14 */
-        0x0009, 0x001E, 0x0000, 0x0003, 0x0001, /* 15-19 */
-        0x0004, 0x0007, 0x0047, 0x0042, 0x0028, /* 20-24 */
-        0x0029, 0x002A, 0x002B, /* 25-27 */
+        0x00000D, 0x00001D, 0x00001C, 0x000005, 0x000006, /* Fn0-4 */
+        0x000010, 0x000011, 0x000012, 0x000013, 0x000014, /* Fn5-9 */
+        0x000015, 0x000016, 0x000017, 0x000018, 0x000019, /* Fn10-14 */
+        0x000009, 0x00001E, 0x000000, 0x000003, 0x000001, /* Fn15-19 */
+        0x000004, 0x000007, 0x000047, 0x000042, 0x000028, /* Fn20-24 */
+        0x000029, 0x00002A, 0x00002B, /* 25-27 */
+        // start of TMCC 2 functions
+        0xF9002D, // Fn28 Locomotive Re-Fueling Sound
+        0xF900F6, // Fn29 Brake Squeal Sound
+        0xF900F7, // FN30 Auger Sound
+        0xF90000, //
+        0xF90000, // Fn32
+        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 33 - 37 */
+        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 38 - 42 */
+        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 43 - 47 */
+        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 48 - 52 */
+        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 53 - 57 */
+        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 58 - 62 */
+        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 63 - 67 */
     };
 
     /**
@@ -130,6 +149,10 @@ public class SerialThrottle extends AbstractThrottle {
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
+    /**
+     * Send these messages to the layout four times
+     * to make sure they're accepted.
+     */
     protected void sendToLayout(int value) {
         tc.sendSerialMessage(new SerialMessage(value), null);
         tc.sendSerialMessage(new SerialMessage(value), null);
