@@ -268,7 +268,7 @@ public class CbusThrottle extends AbstractThrottle {
         }
     }
 
-    private int getCbusSpeedFromFloat(){
+    private synchronized int getCbusSpeedFromFloat(){
         switch (speedStepMode) {
             case NMRA_DCC_28:
                 int ints = intSpeed( this.speedSetting, 29 ); 
