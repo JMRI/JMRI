@@ -709,7 +709,6 @@ public class ImportCars extends ImportRollingStock {
                             if (!status.equals(Track.OKAY)) {
                                 if (autoForceCar) {
                                     car.setLocation(location, track, RollingStock.FORCE); // force
-                                                                                          // car
                                 } else {
                                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                             .getMessage("CanNotSetCarAtLocation"),
@@ -724,8 +723,7 @@ public class ImportCars extends ImportRollingStock {
                                             Bundle.getMessage("OverRide"),
                                             JOptionPane.YES_NO_OPTION);
                                     if (results == JOptionPane.YES_OPTION) {
-                                        car.setLocation(location, track, true); // force
-                                                                                // car
+                                        car.setLocation(location, track, RollingStock.FORCE); // force
                                         if (askAutoForceCar) {
                                             results = JOptionPane.showConfirmDialog(null, Bundle
                                                     .getMessage("DoYouWantToAutoForceCar"),
