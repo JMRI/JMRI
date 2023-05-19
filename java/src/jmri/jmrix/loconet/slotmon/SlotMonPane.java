@@ -168,7 +168,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
 
         memo.getSlotManager().addSlotListener(this);
 
-        // set scroll size
+        // set top panel size
         if (topPanel.getMaximumSize().height > 0 && topPanel.getMaximumSize().width > 0) {
             topPanel.setMaximumSize(topPanel.getPreferredSize());
         }
@@ -312,6 +312,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
                 if (topPanel.getMaximumSize().height > 0 && topPanel.getMaximumSize().width > 0) {
                     topPanel.setMaximumSize(topPanel.getPreferredSize());
                 }
+                topPanel.revalidate();
 
             }
         }
@@ -326,6 +327,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         if (topPanel.getMaximumSize().height > 0 && topPanel.getMaximumSize().width > 0) {
             topPanel.setMaximumSize(topPanel.getPreferredSize());
         }
+        topPanel.revalidate();
     }
 
 
