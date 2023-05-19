@@ -34,14 +34,36 @@
 			<revnumber>2</revnumber>
 			<date>2023-05-01</date>
 			<authorinitials>UG</authorinitials>
-			<revremark>Add SUSI decoder BR 93 TT</revremark>
+			<revremark>Add SUSI decoder BR 93 TT, add CV1018 for output test</revremark>
 		</revision>
 	</revhistory>
 	<name>SUSI LightDecoder</name>
 	<name xml:lang="de">SUSI LichtDecoder</name>
+	<row>
+		<label>
+			<text>
+				<!--empty line-->
+			</text>
+		</label>
+	</row>
 	<group include="PIKO46550-18,PIKO_BR83_SUSI_Decoder">
 		<!--Piko SmartDecoder XP5.1-->
 		<!-- BR83.10 TT -->
+		<row>
+			<column>
+				<display item="Decoder_Test" format="checkbox"/>
+				<label>
+					<text>
+						<!--empty line-->
+					</text>
+				</label>
+			</column>
+		</row>
+		<label>
+			<text>
+				<!--empty line-->
+			</text>
+		</label>
 		<label>
 			<text>Extended Light Function available in this Piko SmartDecoder XP 5.1</text>
 		</label>
@@ -52,7 +74,7 @@
 		</label>
 		<label>
 			<text>
-				<!--Leerzeile-->
+				<!--empty line-->
 			</text>
 		</label>
 		<row>
@@ -61,7 +83,7 @@
 		<row>
 			<label>
 				<text>
-					<!--Leerzeile-->
+					<!--empty line-->
 				</text>
 			</label>
 		</row>
@@ -85,7 +107,7 @@
 			<row>
 				<label>
 					<text>
-						<!--Leerzeile-->
+						<!--empty line-->
 					</text>
 				</label>
 			</row>
@@ -1345,6 +1367,21 @@
 	<group include="PIKO46551-18,PIKO_BR93_SUSI_Decoder">
 		<!-- Piko SmartDecoder XP5.1 -->
 		<!-- BR93 TT -->
+		<row>
+			<column>
+				<display item="Decoder_Test" format="checkbox"/>
+				<label>
+					<text>
+						<!--empty line-->
+					</text>
+				</label>
+			</column>
+		</row>
+		<label>
+			<text>
+				<!--empty line-->
+			</text>
+		</label>
 		<label>
 			<text>Extended Light Function available in this Piko SmartDecoder XP 5.1</text>
 		</label>
@@ -1355,7 +1392,7 @@
 		</label>
 		<label>
 			<text>
-				<!--Leerzeile-->
+				<!--empty line-->
 			</text>
 		</label>
 		<row>
@@ -1364,7 +1401,7 @@
 		<row>
 			<label>
 				<text>
-					<!--Leerzeile-->
+					<!--empty line-->
 				</text>
 			</label>
 		</row>
@@ -1388,7 +1425,7 @@
 			<row>
 				<label>
 					<text>
-						<!--Leerzeile-->
+						<!--empty line-->
 					</text>
 				</label>
 			</row>
