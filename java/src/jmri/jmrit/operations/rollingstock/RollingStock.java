@@ -63,6 +63,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected Division _division = null;
     protected int _moves = 0;
     protected String _lastLocationId = LOCATION_UNKNOWN; // the rollingstock's last location id
+    protected String _lastTrackId = LOCATION_UNKNOWN; // the rollingstock's last track id
     protected int _blocking = DEFAULT_BLOCKING_ORDER;
 
     protected IdTag _tag = null;
@@ -468,6 +469,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                         // don't update rs's previous location if just re-staging
                         if (getTrain() != null && getTrain().getRoute() != null && getTrain().getRoute().size() > 2) {
                             setLastLocationId(oldLocation.getId());
+                            setLastTrackId(oldTrack.getId());
                         }
                     }
                 }
@@ -716,6 +718,33 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     public String getLastLocationId() {
         return _lastLocationId;
+    }
+    
+    public String getLastLocationName() {
+        Location location = locationManager.getLocationById(getLastLocationId());
+        if (location != null) {
+           return location.getName(); 
+        }
+        return NONE;
+    }
+    
+    public void setLastTrackId(String id) {
+        _lastTrackId = id;
+    }
+    
+    public String getLastTrackId() {
+        return _lastTrackId;
+    }
+    
+    public String getLastTrackName() {
+        Location location = locationManager.getLocationById(getLastLocationId());
+        if (location != null) {
+            Track track = location.getTrackById(getLastTrackId());
+            if (track != null) {
+                return track.getName();
+            }
+        }
+        return NONE;
     }
 
     public void setMoves(int moves) {
@@ -1232,7 +1261,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             } else {
                 log.debug("Rolling stock ({}) is in train ({}) leaves location ({}) destination ({})", this,
                         getTrainName(), current.getName(), next.getName());
-                setLocation(next.getLocation(), null, true); // force RS to location
+                setLocation(next.getLocation(), null, RollingStock.FORCE); // force RS to location
                 setRouteLocation(next);
             }
         }
@@ -1337,6 +1366,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         if ((a = e.getAttribute(Xml.LAST_LOCATION_ID)) != null) {
             _lastLocationId = a.getValue();
+        }
+        if ((a = e.getAttribute(Xml.LAST_TRACK_ID)) != null) {
+            _lastTrackId = a.getValue();
         }
         if ((a = e.getAttribute(Xml.TRAIN_ID)) != null) {
             setTrain(InstanceManager.getDefault(TrainManager.class).getTrainById(a.getValue()));
@@ -1450,6 +1482,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         e.setAttribute(Xml.SELECTED, isSelected() ? Xml.TRUE : Xml.FALSE);
         if (!getLastLocationId().equals(LOCATION_UNKNOWN)) {
             e.setAttribute(Xml.LAST_LOCATION_ID, getLastLocationId());
+        }
+        if (!getLastTrackId().equals(LOCATION_UNKNOWN)) {
+            e.setAttribute(Xml.LAST_TRACK_ID, getLastTrackId());
         }
         if (!getTrainName().equals(NONE)) {
             e.setAttribute(Xml.TRAIN, getTrainName());
