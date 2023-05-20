@@ -777,13 +777,32 @@ public class DecoderIndexFile extends XmlFile {
                 family.setAttribute("file", fileName);
 
                 // drop the decoder implementation content
-                family.removeChildren("outputs");
+                family.removeAttribute("comment");
+                // don't remove "outputs" due to use by ESU function map pane
                 family.removeChildren("output");
                 family.removeChildren("functionlabels");
                 family.removeChildren("versionCV");
                 // and drop content of model elements
-                for (Element element : family.getChildren()) {
-                    element.removeContent();
+                for (Element element : family.getChildren()) { // model elements
+                    element.removeAttribute("maxInputVolts");
+                    element.removeAttribute("maxMotorCurrent");
+                    element.removeAttribute("maxTotalCurrent");
+                    element.removeAttribute("formFactor");
+                    element.removeAttribute("connector");
+                    element.removeAttribute("comment");
+                    element.removeAttribute("nmraWarrant");
+                    element.removeAttribute("nmraWarrantStart");
+
+                    // element.removeContent();
+                    element.removeChildren("size");
+                    // don't remove "output" due to use by ESU function map pane
+                    element.removeChildren("functionlabels");
+                    element.removeChildren("versionCV");
+                    for (Element output : element.getChildren()) {
+                        output.removeAttribute("connection");
+                        output.removeAttribute("maxcurrent");
+                        output.removeChildren("label");
+                    }
                 }
 
                 // and store to output
