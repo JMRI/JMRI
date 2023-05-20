@@ -230,7 +230,8 @@
 
 <!ELEMENT manifestHeaderTextStrings (road | number | engineNumber | type | model
 | length | load | color | track | destination | dest_Track | finalDest | fd_Track | location | consist
-| kernel | owner | rwe | comment | setOut_msg | pickUp_msg | hazardous | weight | load_type | dcc_addr)*>
+| kernel | owner | rwe | comment | setOut_msg | pickUp_msg | hazardous | weight | load_type | dcc_addr
+| division)*>
 
 <!ELEMENT road EMPTY>
 <!ELEMENT number EMPTY>
@@ -254,6 +255,7 @@
 <!ELEMENT weight EMPTY>
 <!ELEMENT load_type EMPTY>
 <!ELEMENT dcc_addr EMPTY>
+<!ELEMENT division EMPTY>
 
 <!ATTLIST road text				CDATA #IMPLIED>
 <!ATTLIST number text			CDATA #IMPLIED>
@@ -278,6 +280,7 @@
 <!ATTLIST weight text			CDATA #IMPLIED>
 <!ATTLIST load_type text		CDATA #IMPLIED>
 <!ATTLIST dcc_addr text			CDATA #IMPLIED>
+<!ATTLIST division text			CDATA #IMPLIED>
 
 <!ELEMENT manifestTextStrings (manifestForTrain | valid | scheduledWork 
 | workDepartureTime | workArrivalTime | noScheduledWork | noScheduledWorkRouteComment | departTime 
