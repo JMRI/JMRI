@@ -57,7 +57,7 @@ public class SerialThrottle extends AbstractThrottle {
         if (func>=0 && func <=67) {
             if ( SERIAL_FUNCTION_CODES[func] > 0xFFFF ) {
                 // TMCC 2 format
-                sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 256);
+                sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 512);
             } else {
                 // TMCC 1 format
                 sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 128);
@@ -76,7 +76,7 @@ public class SerialThrottle extends AbstractThrottle {
         0x000004, 0x000007, 0x000047, 0x000042, 0x000028, /* Fn20-24 */
         0x000029, 0x00002A, 0x00002B, /* 25-27 */
         // start of TMCC 2 functions
-        0xF9002D, // Fn28 Locomotive Re-Fueling Sound
+        0xF8012C, // Fn28 Locomotive Re-Fueling Sound
         0xF900F6, // Fn29 Brake Squeal Sound
         0xF900F7, // FN30 Auger Sound
         0xF90000, //
