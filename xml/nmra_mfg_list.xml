@@ -120,13 +120,13 @@
       <manufacturer mfg="KRES GmbH" mfgID="58" />
       <manufacturer mfg="Krois-Modell" mfgID="52" />
       <manufacturer mfg="Kuehn Ing." mfgID="157" />
-      <manufacturer mfg="LaisDCC" mfgID="134" />
-      <manufacturer mfg="Lenz" mfgID="99" />
       <manufacturer mfg="LDH" mfgID="56" />
       <manufacturer mfg="LGB" mfgID="159" />
       <manufacturer mfg="LSdigital" mfgID="112" />
       <manufacturer mfg="LS Models Sprl" mfgID="77" />
+      <manufacturer mfg="LaisDCC" mfgID="134" />
       <manufacturer mfg="Lahti Associates" mfgID="14" />
+      <manufacturer mfg="Lenz" mfgID="99" />
       <manufacturer mfg="Maison de DCC" mfgID="166" />
       <manufacturer mfg="Massoth Elektronik, GmbH" mfgID="123" />
       <manufacturer mfg="MAWE Elektronik" mfgID="68" />
@@ -215,6 +215,6 @@
       <manufacturer mfg="Zimo" mfgID="145" />
       <manufacturer mfg="ZTC" mfgID="132" />
 
-      // we include Lionel as a special case to support TMCC
-      <manufacturer mfg="Lionel" mfgId="1001" />
+      <!-- we include Lionel as a special case to support TMCC -->
+      <manufacturer mfg="Lionel" mfgID="1001" />
 </mfgList>
