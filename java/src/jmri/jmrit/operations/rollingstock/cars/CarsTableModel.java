@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
@@ -47,19 +46,20 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int FINAL_DESTINATION_COLUMN = 14;
     private static final int RWE_DESTINATION_COLUMN = 15;
     private static final int RWL_DESTINATION_COLUMN = 16;
-    private static final int DIVISION_COLUMN = 17;
-    private static final int TRAIN_COLUMN = 18;
-    private static final int MOVES_COLUMN = 19;
-    private static final int BUILT_COLUMN = 20;
-    private static final int OWNER_COLUMN = 21;
-    private static final int VALUE_COLUMN = 22;
-    private static final int RFID_COLUMN = 23;
-    private static final int WAIT_COLUMN = 24;
-    private static final int PICKUP_COLUMN = 25;
-    private static final int LAST_COLUMN = 26;
-    private static final int COMMENT_COLUMN = 27;
-    private static final int SET_COLUMN = 28;
-    private static final int EDIT_COLUMN = 29;
+    private static final int PREVIOUS_LOCATION_COLUMN = 17;
+    private static final int DIVISION_COLUMN = 18;
+    private static final int TRAIN_COLUMN = 19;
+    private static final int MOVES_COLUMN = 20;
+    private static final int BUILT_COLUMN = 21;
+    private static final int OWNER_COLUMN = 22;
+    private static final int VALUE_COLUMN = 23;
+    private static final int RFID_COLUMN = 24;
+    private static final int WAIT_COLUMN = 25;
+    private static final int PICKUP_COLUMN = 26;
+    private static final int LAST_COLUMN = 27;
+    private static final int COMMENT_COLUMN = 28;
+    private static final int SET_COLUMN = 29;
+    private static final int EDIT_COLUMN = 30;
 
     private static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -166,6 +166,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), sort == SORTBY_RFID);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), sort == SORTBY_WAIT);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), sort == SORTBY_PICKUP);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(PREVIOUS_LOCATION_COLUMN), sort == SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), sort == SORTBY_COMMENT);
         }
@@ -427,7 +428,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     // Cars frame table column widths, starts with Select column and ends with Edit
     private final int[] tableColumnWidths = { 60, 60, 60, 65, 35, 75, 75, 75, 75, 65, 190, 190, 140, 190, 190, 190, 190,
-            190, 65, 50, 50, 50, 50, 100, 50, 100, 100, 100, 65, 70 };
+            190, 190, 65, 50, 50, 50, 50, 100, 50, 100, 100, 100, 65, 70 };
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -466,6 +467,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(PREVIOUS_LOCATION_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), false);
 
@@ -524,6 +526,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return Bundle.getMessage("RWLLocation");
             case RWL_LOAD_COLUMN:
                 return Bundle.getMessage("RWLLoad");
+            case PREVIOUS_LOCATION_COLUMN:
+                return Bundle.getMessage("LastLocation");
             case DIVISION_COLUMN:
                 return Bundle.getMessage("HomeDivision");
             case TRAIN_COLUMN:
@@ -627,7 +631,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             }
             case RFID_WHERE_LAST_SEEN_COLUMN: {
                 return car.getWhereLastSeenName() +
-                        (car.getTrackLastSeenName().equals(Engine.NONE) ? "" : " (" + car.getTrackLastSeenName() + ")");
+                        (car.getTrackLastSeenName().equals(Car.NONE) ? "" : " (" + car.getTrackLastSeenName() + ")");
             }
             case RFID_WHEN_LAST_SEEN_COLUMN: {
                 return car.getWhenLastSeenDate();
@@ -661,6 +665,13 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return car.getReturnWhenLoadedLoadName();
             case DIVISION_COLUMN:
                 return car.getDivisionName();
+            case PREVIOUS_LOCATION_COLUMN: {
+                String s = "";
+                if (!car.getLastLocationName().equals(Car.NONE)) {
+                    s = car.getLastLocationName() + " (" + car.getLastTrackName() + ")";
+                }
+                return s;
+            }
             case TRAIN_COLUMN: {
                 // if train was manually set by user add an asterisk
                 if (car.getTrain() != null && car.getRouteLocation() == null) {

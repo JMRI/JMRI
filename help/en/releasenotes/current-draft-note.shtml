@@ -27,6 +27,7 @@
                     restore the previous behavior:  After a timeout, the
                     report is cleared.  The script also demonstrates how to
                     get a more granular control over this behavior.</li>
+                <li>Improved Throttle support for 14 and 28 Speed Steps.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -90,6 +91,9 @@
                 <li>The handling for LocoNet Reporters (i.e. transponding)
                     has changed.  See the description
                     <a href="#TLae">below</a>.</li>
+                <li>Improved the timeout handling in the Strict packetizer.</li>
+                <li>Fixed a problem where sometimes buttons in the Slot Monitor
+                    would disappear.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -295,6 +299,7 @@
 
         <h4>Piko</h4>
             <ul>
+                <li>SmartDecoder XP5.1 - updated lowVersionID, changed CV7-8 to use include file</li>
                 <li>Added Decoder Reset and CV for Decoder Test for Piko SUSI Decoder (Light decoder)</li>
             </ul>
 
