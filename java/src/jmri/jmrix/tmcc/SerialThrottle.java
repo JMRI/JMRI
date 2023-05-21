@@ -76,10 +76,10 @@ public class SerialThrottle extends AbstractThrottle {
         0x000004, 0x000007, 0x000047, 0x000042, 0x000028, /* Fn20-24 */
         0x000029, 0x00002A, 0x00002B, /* 25-27 */
         // start of TMCC 2 functions
-        0xF8012C, // Fn28 Locomotive Re-Fueling Sound
-        0xF900F6, // Fn29 Brake Squeal Sound
-        0xF900F7, // FN30 Auger Sound
-        0xF90000, //
+        0xF801FB, // Fn28 Start Up Sequence 1 (Delayed Prime Mover)
+        0xF801FC, // Fn29 Start Up Sequence 2 (Immediate Start Up)
+        0xF801FD, // FN30 Shut Down Sequence 1 (Delay w/ Announcement)
+        0xF801FE, // Shut down Sequence 2 (Immediate Shut Down)
         0xF90000, // Fn32
         0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 33 - 37 */
         0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 38 - 42 */
