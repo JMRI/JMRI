@@ -91,6 +91,7 @@
                 <li>The handling for LocoNet Reporters (i.e. transponding)
                     has changed.  See the description
                     <a href="#TLae">below</a>.</li>
+                <li>Improved the timeout handling in the Strict packetizer.</li>
                 <li>Fixed a problem where sometimes buttons in the Slot Monitor
                     would disappear.</li>
             </ul>
