@@ -70,7 +70,7 @@
 
       <p>The functions below will take care of all Engine Controls on TMCC and the basic commands
       on Legacy. The Accessory and Route and Train ( multi Lash Ups ) are not implimented. The
-      Switch commands should also work even if you are using CMRI to control the switches.</p>
+      Switch commands should also work.</p>
 
       <p>Listed are the common actions for Railsounds 4, ERR conversion boards, and TAS boards. Any
       Accessory that uses Engine ID commands will also work however the function buttons will have
@@ -193,6 +193,17 @@
         <dt>F27</dt>
 
         <dd>Set</dd>
+      </dl>
+
+      <p>In addition, if you have a TMCC 2 Legacy system and JMRI
+      is connected via a SER2 adapter, you can use additional Legacy
+      functions:</p>
+
+      <dl>
+        <dt>F28</dt><dd>Start Up Sequence 1 (Delayed Prime Mover)</dd>
+        <dt>F29</dt><dd>Start Up Sequence 2 (Immediate Start Up)</dd>
+        <dt>F30</dt><dd>Shut Down Sequence 1 (Delay w/ Announcement)</dd>
+        <dt>F31</dt><dd>Shut down Sequence 2 (Immediate Shut Down)</dd>
       </dl>
 
       <h2 id="tools">JMRI TMCC Tools</h2>
