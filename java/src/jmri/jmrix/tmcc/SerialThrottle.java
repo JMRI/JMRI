@@ -1,6 +1,5 @@
 package jmri.jmrix.tmcc;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
@@ -54,7 +53,7 @@ public class SerialThrottle extends AbstractThrottle {
     @Override
     public void setFunction(int func, boolean value) {
         updateFunction(func, value);
-        if (func>=0 && func <=67) {
+        if (func>=0 && func < SERIAL_FUNCTION_CODES.length) {
             if ( SERIAL_FUNCTION_CODES[func] > 0xFFFF ) {
                 // TMCC 2 format
                 sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 512);
@@ -68,6 +67,11 @@ public class SerialThrottle extends AbstractThrottle {
         }
     }
 
+    // Translate function number to line characters.
+    // If the upper byte is zero, it will be replaces by 0xF8
+    //    and the address will be set in the low position.
+    // If the upper byte is non-zero, that value will be sent,
+    //    and the address will be set in the upper (TMCC2) position.
     private final static int[] SERIAL_FUNCTION_CODES = new int[] {
         0x00000D, 0x00001D, 0x00001C, 0x000005, 0x000006, /* Fn0-4 */
         0x000010, 0x000011, 0x000012, 0x000013, 0x000014, /* Fn5-9 */
@@ -81,13 +85,41 @@ public class SerialThrottle extends AbstractThrottle {
         0xF801FD, // Fn30 Shut Down Sequence 1 (Delay w/ Announcement)
         0xF801FE, // Fn31 Shut down Sequence 2 (Immediate Shut Down)
         0xF90000, // Fn32
-        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 33 - 37 */
-        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 38 - 42 */
-        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 43 - 47 */
-        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 48 - 52 */
-        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 53 - 57 */
-        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 58 - 62 */
-        0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 63 - 67 */
+        0xF90000, // Fn33
+        0xF90000, // Fn34
+        0xF90000, // Fn35
+        0xF90000, // Fn36
+        0xF90000, // Fn37
+        0xF90000, // Fn38
+        0xF90000, // Fn39
+        0xF90000, // Fn40
+        0xF90000, // Fn41
+        0xF90000, // Fn42
+        0xF90000, // Fn43
+        0xF90000, // Fn44
+        0xF90000, // Fn45
+        0xF90000, // Fn46
+        0xF90000, // Fn47
+        0xF90000, // Fn48
+        0xF90000, // Fn49
+        0xF90000, // Fn50
+        0xF90000, // Fn51
+        0xF90000, // Fn52
+        0xF90000, // Fn53
+        0xF90000, // Fn54
+        0xF90000, // Fn55
+        0xF90000, // Fn56
+        0xF90000, // Fn57
+        0xF90000, // Fn58
+        0xF90000, // Fn59
+        0xF90000, // Fn60
+        0xF90000, // Fn61
+        0xF90000, // Fn62
+        0xF90000, // Fn63
+        0xF90000, // Fn64
+        0xF90000, // Fn65
+        0xF90000, // Fn66
+        0xF90000, // Fn67
     };
 
     /**
@@ -95,7 +127,6 @@ public class SerialThrottle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed;
