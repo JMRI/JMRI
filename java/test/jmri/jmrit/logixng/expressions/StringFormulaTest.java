@@ -11,9 +11,7 @@ import jmri.jmrit.logixng.actions.DoStringAction;
 import jmri.jmrit.logixng.actions.StringActionMemory;
 import jmri.jmrit.logixng.expressions.StringFormula.SocketData;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -48,7 +46,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         return logixNG;
     }
 
-    private static int beanID = 901;
+    private int beanID = 901;
 
     @Override
     public MaleSocket getConnectableChild() {

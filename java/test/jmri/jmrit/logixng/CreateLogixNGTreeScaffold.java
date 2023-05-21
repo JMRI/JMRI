@@ -32,6 +32,10 @@ import org.junit.*;
 public class CreateLogixNGTreeScaffold {
 
     private static boolean setupHasBeenCalled = false;
+    
+    private static void setUpCalled(boolean newVal){
+        setupHasBeenCalled = newVal;
+    } 
 
     private LocoNetSystemConnectionMemo _locoNetMemo;
     private MqttSystemConnectionMemo _mqttMemo;
@@ -5090,11 +5094,11 @@ public class CreateLogixNGTreeScaffold {
 
 //        JUnitUtil.initLogixNGManager();
 
-        setupHasBeenCalled = true;
+        CreateLogixNGTreeScaffold.setUpCalled(true);
     }
 
     public void tearDown() {
-        setupHasBeenCalled = false;     // Reset for the next test
+        CreateLogixNGTreeScaffold.setUpCalled(false);     // Reset for the next test
 
         _locoNetMemo = null;
         _mqttMemo = null;
