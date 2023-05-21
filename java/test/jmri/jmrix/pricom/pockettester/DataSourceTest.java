@@ -1,21 +1,21 @@
 package jmri.jmrix.pricom.pockettester;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * JUnit tests for the DataSource class
  *
  * @author Bob Jacobsen Copyright 2005
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class DataSourceTest {
 
     @Test
     public void testCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("no instance before ctor", DataSource.instance() == null);
         DataSource d = new DataSource();
         Assert.assertTrue("no instance after ctor", DataSource.instance() == null);
@@ -27,7 +27,6 @@ public class DataSourceTest {
     // test version handling
     @Test
     public void testVersion() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DataSource f = new DataSource();
         String message;
 
@@ -46,9 +45,8 @@ public class DataSourceTest {
     @BeforeEach
     public void setup() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-
-        DataSource.existingInstance = null;
+        JUnitUtil.resetProfileManager();
+        DataSource.setInstance(null);
     }
 
     @AfterEach
