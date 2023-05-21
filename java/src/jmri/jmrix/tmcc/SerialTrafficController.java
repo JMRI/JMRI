@@ -143,7 +143,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         byte char1;
         char1 = readByteProtected(istream);
         msg.setElement(0, char1 & 0xFE);
-        if ((char1 & 0xFF) != 0xFE) {
+        if ( ((char1 & 0xFF) != 0xFE) && ((char1 & 0xF8) != 0xFE)  && ((char1 & 0xFF) != 0xF9) ) {
             log.warn("return short message as 1st byte is {}", char1 & 0xFF);
             return;
         }
