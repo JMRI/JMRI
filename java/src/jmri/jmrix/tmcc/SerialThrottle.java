@@ -183,6 +183,7 @@ public class SerialThrottle extends AbstractThrottle {
     /**
      * Send these messages to the layout four times
      * to make sure they're accepted.
+     * @param value Content of message to be sent in three bytes
      */
     protected void sendToLayout(int value) {
         tc.sendSerialMessage(new SerialMessage(value), null);
