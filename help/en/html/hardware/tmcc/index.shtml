@@ -206,6 +206,10 @@
         <dt>F31</dt><dd>Shut down Sequence 2 (Immediate Shut Down)</dd>
       </dl>
 
+      If you have suggestions for usage of additional function keys,
+      please make a suggestion via the
+      <a href="https://groups.io/g/jmriusers">JMRIusers list</a>.
+
       <h2 id="tools">JMRI TMCC Tools</h2>
 
       <h3 id="documentation">TMCC New Entry Format Summary</h3>
