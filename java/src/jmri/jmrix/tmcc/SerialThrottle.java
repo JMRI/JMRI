@@ -78,8 +78,8 @@ public class SerialThrottle extends AbstractThrottle {
         // start of TMCC 2 functions
         0xF801FB, // Fn28 Start Up Sequence 1 (Delayed Prime Mover)
         0xF801FC, // Fn29 Start Up Sequence 2 (Immediate Start Up)
-        0xF801FD, // FN30 Shut Down Sequence 1 (Delay w/ Announcement)
-        0xF801FE, // Shut down Sequence 2 (Immediate Shut Down)
+        0xF801FD, // Fn30 Shut Down Sequence 1 (Delay w/ Announcement)
+        0xF801FE, // Fn31 Shut down Sequence 2 (Immediate Shut Down)
         0xF90000, // Fn32
         0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 33 - 37 */
         0xF90000, 0xF90000, 0xF90000, 0xF90000, 0xF90000, /* 38 - 42 */
