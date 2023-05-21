@@ -36,7 +36,7 @@
         <li>In normal use, Git will keep the entire history of your files locally so that you can
         always back up to an earlier configuration.</li>
 
-        <li>Git provides every powerful tools for managing updates when you're making changes on
+        <li>Git provides very powerful tools for managing updates when you're making changes on
         multiple computers, i.e. the main layout computer and some convenient laptoo.</li>
 
         <li>Git can be used with a sneaker-net connection by pushing/pulling from a copy of a
