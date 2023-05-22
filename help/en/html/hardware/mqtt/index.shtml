@@ -520,7 +520,7 @@
 
       <p><a href="https://mosquitto.org/man/mqtt-7.html" target="_blank">MQTT Quality of
       Service</a> indicates to the MQTT message broker how to handle message delivery and receipt.
-      Allowable values are 0, 1, and 2. JMRI uses QoS level 1 (broker will deliver message at least
+      Allowable values are 0, 1, and 2. JMRI uses QoS level 2 (broker will deliver message exactly
       once) by default.</p>
 
       <p><a href="https://www.hivemq.com/blog/mqtt-essentials-part-8-retained-messages/" target=
