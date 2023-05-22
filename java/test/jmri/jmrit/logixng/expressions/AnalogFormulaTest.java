@@ -43,7 +43,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         return logixNG;
     }
 
-    private static int beanID = 901;
+    private int beanID = 901;
 
     @Override
     public MaleSocket getConnectableChild() {
