@@ -35,7 +35,7 @@ public class LnTrafficRouterTest {
         Assert.assertTrue(upstream.outbound.elementAt(0) == m);
     }
 
-    static int count = 0;
+    private int count = 0;
 
     @Test
     public void testReceiveAndForward() {
@@ -46,11 +46,8 @@ public class LnTrafficRouterTest {
 
         count = 0;
         // register a listener
-        LocoNetListener l = new LocoNetListener() {
-            @Override
-            public void message(LocoNetMessage m) {
-                count++;
-            }
+        LocoNetListener l = (LocoNetMessage m) -> {
+            count++;
         };
         router.addLocoNetListener(~0, l);
         // send a message
