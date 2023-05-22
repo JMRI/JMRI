@@ -1,6 +1,5 @@
 package jmri.jmrit.entryexit;
 
-import java.awt.GraphicsEnvironment;
 import java.util.List;
 import java.util.HashMap;
 
@@ -9,14 +8,15 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterAll;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
@@ -24,17 +24,18 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
-+ * @author Dave Sand Copyright (C) 2018
+ * @author Dave Sand Copyright (C) 2018
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class EntryExitPairsTest {
 
-    static EntryExitTestTools tools;
-    static HashMap<String, LayoutEditor> panels = new HashMap<>();
+    private EntryExitTestTools tools;
+    private HashMap<String, LayoutEditor> panels = new HashMap<>();
 
-    static EntryExitPairs eep;
-    static LayoutBlockManager lbm;
-    static SensorManager sm;
-    static TurnoutManager tm;
+    private EntryExitPairs eep;
+    private LayoutBlockManager lbm;
+    private SensorManager sm;
+    private TurnoutManager tm;
 
     @Test
     public void testCTor() {
@@ -62,9 +63,14 @@ public class EntryExitPairsTest {
         eep.setSingleSegmentRoute(dp.getUniqueId());
         new EventTool().waitNoEvent(1000);
 
+        LayoutBlock lb = lbm.getLayoutBlock("B-Alpha-Main");
+        Assertions.assertNotNull(lb);
+        Turnout to = tm.getTurnout("T-AE");
+        Assertions.assertNotNull(to);
+
         // Check the results
-        JUnitUtil.waitFor(()->{return lbm.getLayoutBlock("B-Alpha-Main").getUseExtraColor();}, "Route active");  // NOI18N
-        JUnitUtil.waitFor(()->{return tm.getTurnout("T-AE").getKnownState() == Turnout.CLOSED;}, "Turnout closed");  // NOI18N
+        JUnitUtil.waitFor(()->{return lb.getUseExtraColor();}, "Route active");  // NOI18N
+        JUnitUtil.waitFor(()->{return to.getKnownState() == Turnout.CLOSED;}, "Turnout closed");  // NOI18N
     }
 
     @Test
@@ -99,8 +105,7 @@ public class EntryExitPairsTest {
     @BeforeEach
     public void before() throws Exception {
         JUnitUtil.setUp();
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         tools = new EntryExitTestTools();
         panels = EntryExitTestTools.getPanels();

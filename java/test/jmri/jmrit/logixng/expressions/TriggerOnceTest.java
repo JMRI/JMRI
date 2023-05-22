@@ -227,7 +227,7 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("expression has 1 female socket", 1, expression.getChildCount());
     }
 
-    private static int beanID = 901;
+    private int beanID = 901;
 
     @Test
     public void testGetChild() {

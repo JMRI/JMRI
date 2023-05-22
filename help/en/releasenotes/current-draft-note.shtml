@@ -91,6 +91,7 @@
                 <li>The handling for LocoNet Reporters (i.e. transponding)
                     has changed.  See the description
                     <a href="#TLae">below</a>.</li>
+                <li>Improved the timeout handling in the Strict packetizer.</li>
                 <li>Fixed a problem where sometimes buttons in the Slot Monitor
                     would disappear.</li>
             </ul>
@@ -168,7 +169,9 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li></li>
+                <li>Initial support for TMCC 2 "Legacy" functions. The first
+                    uses are to assign F28 through F31 to
+                    <a href="https://www.jmri.org/help/en/html/hardware/tmcc/index.shtml">loco startup and shutdown sounds</a>.</li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
