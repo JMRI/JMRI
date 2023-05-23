@@ -1022,12 +1022,13 @@ public class TrainBuilderBase extends TrainCommon {
                 continue;
             }
             locationNames.add(rl.getName());
+            int count = countCarsAt(rl, _carList);
             if (rl.getLocation().isStaging()) {
-                addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildCarsInStaging", rl.getName()));
+                addLine(_buildReport, FIVE,
+                        Bundle.getMessage("buildCarsInStaging", count, rl.getName()));
             } else {
-                addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildCarsAtLocation", rl.getName()));
+                addLine(_buildReport, FIVE,
+                        Bundle.getMessage("buildCarsAtLocation", count, rl.getName()));
             }
             // now go through the car list and remove non-lead cars in kernels,
             // destinations
@@ -1089,6 +1090,16 @@ public class TrainBuilderBase extends TrainCommon {
             }
             addLine(_buildReport, SEVEN, BLANK_LINE);
         }
+    }
+    
+    protected int countCarsAt(RouteLocation rl, List<Car> list) {
+        int count = 0;
+        for (RollingStock rs : list) {
+            if (rs.getLocationName().equals(rl.getName())) {
+                count++;
+            }
+        }
+        return count;
     }
 
     protected void sortCarsOnFifoLifoTracks() {
@@ -2951,11 +2962,8 @@ public class TrainBuilderBase extends TrainCommon {
                     // determine if there's enough car pick ups at this point to
                     // reach the max train length
                     if (numberEngines > moves / carDivisor) {
-                        numberEngines = Math.ceil(moves / carDivisor); // no
-                                                                       // reduce
-                                                                       // based
-                                                                       // on
-                                                                       // moves
+                        // no reduce based on moves
+                        numberEngines = Math.ceil(moves / carDivisor);
                     }
                 }
             }
@@ -2995,12 +3003,13 @@ public class TrainBuilderBase extends TrainCommon {
                 continue;
             }
             locationNames.add(rl.getName());
+            int count = countEnginesAt(rl, _engineList);
             if (rl.getLocation().isStaging()) {
-                addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildLocosInStaging", rl.getName()));
+                addLine(_buildReport, FIVE,
+                        Bundle.getMessage("buildLocosInStaging", count, rl.getName()));
             } else {
-                addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildLocosAtLocation", rl.getName()));
+                addLine(_buildReport, FIVE,
+                        Bundle.getMessage("buildLocosAtLocation", count, rl.getName()));
             }
             for (Engine engine : _engineList) {
                 if (engine.getLocationName().equals(rl.getName())) {
@@ -3012,6 +3021,16 @@ public class TrainBuilderBase extends TrainCommon {
             }
             addLine(_buildReport, SEVEN, BLANK_LINE);
         }
+    }
+    
+    protected int countEnginesAt(RouteLocation rl, List<Engine> list) {
+        int count = 0;
+        for (RollingStock rs : list) {
+            if (rs.getLocationName().equals(rl.getName())) {
+                count++;
+            }
+        }
+        return count;
     }
 
     protected boolean getEngines(String requestedEngines, String model, String road, RouteLocation rl,
