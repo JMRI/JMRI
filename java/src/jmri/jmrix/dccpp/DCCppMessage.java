@@ -570,7 +570,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     text = "Request clock update from CS";
                     break;
                 } else if (isClockSetTimeMessage()) {    
-                    text = "Send FastClock Mins:" + getClockTimeInt();
+                    text = "Send FastClock Mins:" + getClockMinutesInt();
                     if (!getClockRateString().isEmpty()) {                    
                         text += ", Rate:" + getClockRateString();
                         if (getClockRateInt()==0) {
@@ -1410,7 +1410,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             return (0);
         }
     }
-    public String getClockTimeString() {
+    public String getClockMinutesString() {
         if (this.isClockSetTimeMessage()) {
             return (this.getValueString(1));
         } else {
@@ -1418,8 +1418,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             return ("0");
         }
     }
-    public int getClockTimeInt() {
-        return (Integer.parseInt(this.getClockTimeString()));
+    public int getClockMinutesInt() {
+        return (Integer.parseInt(this.getClockMinutesString()));
     }
     public String getClockRateString() {
         if (this.isClockSetTimeMessage()) {

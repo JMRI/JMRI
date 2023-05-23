@@ -264,7 +264,5 @@ public final class DCCppConstants {
     public static final String CLOCK_REQUEST_TIME_REGEX= "^J\\s*C$"; // <JC> or <J C>
     public static final String CLOCK_SET_REGEX         = "^J\\s*C\\s+(\\d+)\\s*(\\d*)$"; // <JC 123 4> or <jC 124> outgoing set to 123min past midnight, rate 4
     public static final String CLOCK_REPLY_REGEX       = "^j\\s*C\\s+(\\d+)\\s*(\\d*)$"; // <jC 123 4> or <jC 124> incoming version of above 
-    
-    
 
 }

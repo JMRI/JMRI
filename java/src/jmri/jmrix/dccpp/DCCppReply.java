@@ -292,7 +292,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text += " Desc:'" + getTurnoutDescString() + "'";
                     break;
                 } else if (isClockReply()) {    
-                    text = "Clock Reply: Mins:" + getClockTimeInt();
+                    text = "FastClock Reply: Mins:" + getClockMinutesInt();
                     if (!getClockRateString().isEmpty()) {
                         text += ", Rate:" + getClockRateString();
                     }
@@ -1578,7 +1578,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return ("0");
         }
     }
-    public String getClockTimeString() {
+    public String getClockMinutesString() {
         if (this.isClockReply()) {
             return (this.getValueString(1));
         } else {
@@ -1586,8 +1586,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return ("0");
         }
     }
-    public int getClockTimeInt() {
-        return (Integer.parseInt(this.getClockTimeString()));
+    public int getClockMinutesInt() {
+        return (Integer.parseInt(this.getClockMinutesString()));
     }
     public String getClockRateString() {
         if (this.isClockReply()) {
