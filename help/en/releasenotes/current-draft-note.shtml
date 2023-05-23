@@ -643,5 +643,8 @@
             <li>Improved how window preferences are stored to reduce error messages
                 when JMRI is under high load.</li>
             <li>Update the JMRI install process for Raspberry Pi computers running the Raspberry Pi OS.</li>
+            <li>Updated the roster and locomotive schema and the locomotive DTD to accept current contents.
+                JMRI has been writing extra content in its roster, and the schema and DTD files had not
+                kept up.  This resolves that.
         </ul>
 
