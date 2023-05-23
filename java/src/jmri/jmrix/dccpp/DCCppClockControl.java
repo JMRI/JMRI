@@ -40,7 +40,7 @@ public class DCCppClockControl extends DefaultClockControl {
         };
         timebase.addMinuteChangeListener(minuteChangeListener);
         
-        setRate(); //send current fastclock time and rate to CS (same message)
+//        setRate(); //send current fastclock time and rate to CS (same message)
         
 //        _tc.addTrafficListener(DCCppInterface.CLOCK, this);
 
@@ -122,15 +122,8 @@ public class DCCppClockControl extends DefaultClockControl {
     }
 
     /**
-     * Pause and unpause fast clock
+     * Pause, unpause and initialize fast clock
      */
-    @Override
-    public void initializeHardwareClock(double rate, Date now, boolean getTime) {
-        // on startup, rate already set
-        isRunning = timebase.getRun();
-        setRate(rate);
-        setTime(now);
-    }    
     @Override
     public void startHardwareClock(Date now) {
         log.debug("startHardwareClock()"); // NOI18N
@@ -145,6 +138,12 @@ public class DCCppClockControl extends DefaultClockControl {
         setRate(); //notify the CS
         return;
     }
+    @Override
+    public void initializeHardwareClock(double rate, Date now, boolean getTime) {
+        isRunning = timebase.getRun();
+//        setRate(rate);
+//        setTime(now);
+    }    
 
     /**
      * Prevent user entry of a fractional rate, since DCC-EX only supports integer rates
