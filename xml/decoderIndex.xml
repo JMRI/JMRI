@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.3.6plus+jake+20230521T1833Z+R0b26084ceb on Sun May 21 14:33:08 EDT 2023-->
-  <decoderIndex version="17">
+  <!--Written by JMRI version 5.3.6plus+jake+20230523T1559Z+R5afdd11663 on Tue May 23 12:00:00 EDT 2023-->
+  <decoderIndex version="25">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -394,18 +394,21 @@
       </family>
       <family name="Paragon 2" mfg="Broadway Limited Imports, LLC" file="BLI_Blueline_Paragon2_Diesel.xml">
         <model model="Diesel" numOuts="3" numFns="28">
+          <versionCV lowVersionID="0" highVersionID="31" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
         </model>
       </family>
       <family name="Paragon 2" mfg="Broadway Limited Imports, LLC" file="BLI_Blueline_Paragon2_Steam.xml">
         <model model="Steam" numOuts="3" numFns="30">
+          <versionCV lowVersionID="32" highVersionID="63" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
         </model>
       </family>
       <family name="Blueline" mfg="Broadway Limited Imports, LLC" file="BLI_Blueline_diesel.xml">
         <model model="Diesel" numOuts="3" numFns="14">
+          <versionCV lowVersionID="0" highVersionID="31" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
           <output name="Horn1" />
@@ -425,6 +428,7 @@
       </family>
       <family name="Blueline" mfg="Broadway Limited Imports, LLC" file="BLI_Blueline_steam.xml">
         <model model="Steam" numOuts="3" numFns="14">
+          <versionCV lowVersionID="32" highVersionID="63" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
           <output name="Whistle" />
@@ -444,6 +448,7 @@
       </family>
       <family name="Light Unit" mfg="Broadway Limited Imports, LLC" file="BLI_Light.xml">
         <model model="Light Unit" numOuts="5" numFns="15">
+          <versionCV lowVersionID="1" highVersionID="1" />
           <output name="L1" />
           <output name="L2" />
           <output name="L3" />
@@ -453,35 +458,44 @@
       </family>
       <family name="Paragon 3" mfg="Broadway Limited Imports, LLC" file="BLI_Paragon3_Diesel.xml">
         <model model="Diesel" numOuts="3" numFns="30">
+          <versionCV lowVersionID="0" highVersionID="31" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
         </model>
       </family>
       <family name="Paragon 3" mfg="Broadway Limited Imports, LLC" file="BLI_Paragon3_Steam.xml">
         <model model="Steam" numOuts="3" numFns="30">
+          <versionCV lowVersionID="32" highVersionID="63" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
         </model>
         <model model="Steam w/depleting coal, whistle smoke" numOuts="3" numFns="30">
+          <versionCV lowVersionID="32" highVersionID="63" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
         </model>
       </family>
       <family name="Paragon 4" mfg="Broadway Limited Imports, LLC" file="BLI_Paragon4_Diesel.xml">
         <model model="Diesel" numOuts="3" numFns="30">
+          <versionCV lowVersionID="0" highVersionID="31" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
         </model>
       </family>
       <family name="Paragon 4" mfg="Broadway Limited Imports, LLC" file="BLI_Paragon4_Steam.xml">
         <model model="Steam" numOuts="3" numFns="30">
+          <versionCV lowVersionID="32" highVersionID="63" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
         </model>
       </family>
       <family name="Paragon 3" mfg="Broadway Limited Imports, LLC" file="BLI_Rolling_Thunder.xml">
-        <model model="Rolling Thunder Receiver" />
-        <model show="no" model="Rolling Thunder" />
+        <model model="Rolling Thunder Receiver">
+          <versionCV lowVersionID="0" highVersionID="31" />
+        </model>
+        <model show="no" model="Rolling Thunder">
+          <versionCV lowVersionID="0" highVersionID="31" />
+        </model>
       </family>
       <family name="E-Z Command decoders" mfg="Bachmann Trains" file="Bachmann_EZDCC.xml">
         <model model="N Scale EMD F7A" numOuts="1" lowVersionID="46">
@@ -514,6 +528,7 @@
       </family>
       <family name="Function Decoder" mfg="CT Elektronik" file="CT_Elektronik_DCX_30_V.xml">
         <model model="DCX30" numOuts="8" numFns="6">
+          <versionCV lowVersionID="3" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Brown" />
@@ -526,6 +541,7 @@
           <output name="10" label="Brown" />
         </model>
         <model model="DCX30V" numOuts="10" numFns="8">
+          <versionCV lowVersionID="3" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Brown" />
@@ -653,6 +669,7 @@
       </family>
       <family name="DCX Series (old)" mfg="CT Elektronik" file="CT_Elektronik_DCX_old.xml">
         <model model="DCX50" numOuts="7" numFns="5">
+          <versionCV lowVersionID="3" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Brown" />
@@ -662,6 +679,7 @@
           <output name="7" label="NC-Logic Level" />
         </model>
         <model model="DCX70" numOuts="7" numFns="5">
+          <versionCV lowVersionID="3" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Brown" />
@@ -671,6 +689,7 @@
           <output name="7" label="NC-Logic Level" />
         </model>
         <model model="DCX73" numOuts="2" numFns="2">
+          <versionCV lowVersionID="3" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
         </model>
@@ -684,6 +703,7 @@
       </family>
       <family name="Sound Decoder" mfg="CT Elektronik" file="CT_Elektronik_Sound_GE_70.xml">
         <model model="GE70" numOuts="10" numFns="8">
+          <versionCV lowVersionID="3" />
           <output name="3" label="Riding Sound" />
           <output name="4" label="Soundslot 1" />
           <output name="5" label="Soundslot 2" />
@@ -697,6 +717,7 @@
       </family>
       <family name="Sound Decoder SL (v.26 up)" mfg="CT Elektronik" file="CT_Elektronik_Sound_SL.xml">
         <model model="SL 51" numOuts="10" numFns="8">
+          <versionCV lowVersionID="26" />
           <output name="3" label="Riding Sound" />
           <output name="4" label="Soundslot 1" />
           <output name="5" label="Soundslot 2" />
@@ -708,6 +729,7 @@
           <output name="11" label="Soundslot 8" />
         </model>
         <model model="SL 74" numOuts="15" numFns="13">
+          <versionCV lowVersionID="26" />
           <output name="3" label="Riding Sound" />
           <output name="4" label="Soundslot 1" />
           <output name="5" label="Soundslot 2" />
@@ -721,6 +743,7 @@
       </family>
       <family name="Sound Decoder SL 51" mfg="CT Elektronik" file="CT_Elektronik_Sound_SL_51.xml">
         <model model="SL 51" numOuts="10" numFns="8">
+          <versionCV lowVersionID="3" />
           <output name="3" label="Riding Sound" />
           <output name="4" label="Soundslot 1" />
           <output name="5" label="Soundslot 2" />
@@ -734,6 +757,7 @@
       </family>
       <family name="Sound Decoder SL (v100 up)" mfg="CT Elektronik" file="CT_Elektronik_Sound_SL_v100.xml">
         <model model="SL 51" numOuts="8" numFns="15" productID="SL51">
+          <versionCV lowVersionID="100" highVersionID="125" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -755,6 +779,7 @@
           <output name="G8" label="Slot 8/16" />
         </model>
         <model model="SL 75" numOuts="4" numFns="14" productID="SL75">
+          <versionCV lowVersionID="100" highVersionID="125" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -772,6 +797,7 @@
           <output name="G8" label="Slot 8/16" />
         </model>
         <model model="GE 75" numOuts="2" numFns="14" productID="GE75">
+          <versionCV lowVersionID="100" highVersionID="125" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="Ra" label="Yard Mode" />
@@ -787,6 +813,7 @@
           <output name="G8" label="Slot 8/16" />
         </model>
         <model model="SL 76" numOuts="4" numFns="14" productID="SL76">
+          <versionCV lowVersionID="127" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -804,6 +831,7 @@
           <output name="G8" label="Slot 8/16" />
         </model>
         <model model="GE 76" numOuts="4" numFns="14" productID="GE76">
+          <versionCV lowVersionID="127" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -821,6 +849,7 @@
           <output name="G8" label="Slot 8/16" />
         </model>
         <model model="SL82" numOuts="9" numFns="14" productID="SL82">
+          <versionCV lowVersionID="100" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="F1" />
@@ -845,6 +874,7 @@
       </family>
       <family name="Sound Decoder SL (v.40 up)" mfg="CT Elektronik" file="CT_Elektronik_Sound_SL_v40.xml">
         <model model="SL 51" numOuts="8" numFns="15" productID="SL51">
+          <versionCV lowVersionID="40" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -866,6 +896,7 @@
           <output name="G8" label="Snd Slot 8/16" />
         </model>
         <model model="SL 74" numOuts="4" numFns="15" productID="SL74">
+          <versionCV lowVersionID="40" />
           <output name="3" label="Green" />
           <output name="4" label="Purple" />
           <output name="Ra" label="Yard Mode" />
@@ -881,6 +912,7 @@
           <output name="G8" label="Snd Slot 8/16" />
         </model>
         <model model="SL 75" numOuts="4" numFns="15" productID="SL75">
+          <versionCV lowVersionID="40" highVersionID="112" />
           <output name="3" label="Green" />
           <output name="4" label="Purple" />
           <output name="Ra" label="Yard Mode" />
@@ -898,6 +930,7 @@
       </family>
       <family name="OEM: N Gauge Society" mfg="CT Elektronik" file="CT_NGS_Hunslet.xml">
         <model model="Hunslet" numOuts="3" numFns="10">
+          <versionCV lowVersionID="11" />
           <output name="1" label="Headlight" />
           <output name="2" label="Rearlight" />
           <output name="3" label="Cab Roof light" />
@@ -922,6 +955,7 @@
           <output name="BEMF" />
         </model>
         <model model="Blue Sleeve 4 Function" numOuts="4" numFns="14">
+          <versionCV highVersionID="18" lowVersionID="18" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -1071,16 +1105,23 @@
         </model>
       </family>
       <family name="Booster" mfg="Digikeijs" type="stationary" file="Digikeijs_DR5033.xml">
-        <model model="DR5033" productID="5033" />
+        <model model="DR5033" productID="5033">
+          <versionCV />
+        </model>
       </family>
       <family name="LN-CDE Adapter" mfg="Digikeijs" type="stationary" file="Digikeijs_DR5039.xml">
-        <model model="DR5039" productID="5039" />
+        <model model="DR5039" productID="5039">
+          <versionCV />
+        </model>
       </family>
       <family name="Feedback (Inputs)" mfg="Digikeijs" type="stationary" file="Digikeijs_DR5088.xml">
-        <model model="DR5088RC" productID="5088" />
+        <model model="DR5088RC" productID="5088">
+          <versionCV />
+        </model>
       </family>
       <family name="Locomotive lighting" mfg="Digikeijs" file="Digikeijs_DR80010-15.xml">
         <model model="DR80010" productID="80010" numOuts="8" numFns="18">
+          <versionCV lowVersionID="10" highVersionID="10" />
           <output name="1" label="Head|Light" />
           <output name="2" label="Tail|Light" />
           <output name="3" label="AUX|  1  " />
@@ -1091,6 +1132,7 @@
           <output name="8" label="LED|Grp 4" />
         </model>
         <model model="DR80015" numOuts="3" numFns="18" productID="80015">
+          <versionCV lowVersionID="10" highVersionID="10" />
           <output name="1" label="Head|Light" />
           <output name="2" label="Tail|Light" />
           <output name="3" label="AUX|  1  " />
@@ -1098,6 +1140,7 @@
       </family>
       <family name="Switch (Outputs)" mfg="Digikeijs" file="Digikeijs_Stationary.xml">
         <model model="DR4018" numOuts="16" numFns="0" productID="4018">
+          <versionCV lowVersionID="134" highVersionID="255" />
           <output name="1" label="Out1" />
           <output name="2" label="Out2" />
           <output name="3" label="Out3" />
@@ -1116,6 +1159,7 @@
           <output name="16" label="Out16" />
         </model>
         <model model="DR4024" numOuts="8" numFns="0" productID="4024">
+          <versionCV lowVersionID="134" highVersionID="255" />
           <output name="1" label="Servo|  1  " />
           <output name="2" label="Servo|  2  " />
           <output name="3" label="Servo|  3  " />
@@ -1511,6 +1555,7 @@
           <output name="6" label="Pad (White/Yellow)" />
         </model>
         <model model="DH166MT" numOuts="6" numFns="10">
+          <versionCV lowVersionID="64" highVersionID="64" />
           <output name="1" label="Pin 8 (F0F)" />
           <output name="2" label="Pin 7 (F0R)" />
           <output name="3" label="Pin 15 (Aux 1)" />
@@ -1821,6 +1866,7 @@
           <output name="6" label="F4-Yellow" />
         </model>
         <model model="SDH186MT" numOuts="8" numFns="12" productID="SDH166D">
+          <versionCV lowVersionID="64" highVersionID="64" />
           <output name="1" label="Pin 8 (F0F)" />
           <output name="2" label="Pin 7 (F0R)" />
           <output name="3" label="Pin 15 (Aux 1)" />
@@ -1831,6 +1877,7 @@
           <output name="8" label="Pin 5 (Aux 6)" />
         </model>
         <model model="SDXH186MT" numOuts="8" numFns="12" productID="SDXH166D">
+          <versionCV lowVersionID="64" highVersionID="64" />
           <output name="1" label="Pin 8 (F0F)" />
           <output name="2" label="Pin 7 (F0R)" />
           <output name="3" label="Pin 15 (Aux 1)" />
@@ -6691,6 +6738,7 @@
       </family>
       <family name="Fleischmann Loco Decoders" mfg="Fleischmann" file="Fleischmann_FMZ_DCC.xml">
         <model model="FMZ/Selectrix/DCC decoder" numOuts="2" numFns="8">
+          <versionCV lowVersionID="41" highVersionID="52" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="RA" label="Accel-Decel" />
@@ -6720,6 +6768,7 @@
       </family>
       <family name="Fleischmann Loco Decoders" mfg="Fleischmann" file="Fleischmann_Twin_DCC.xml">
         <model model="DCC Twin mode decoder" numOuts="2" numFns="6">
+          <versionCV lowVersionID="62" highVersionID="73" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="AC" label="Accel-Decel" />
@@ -6746,10 +6795,12 @@
       </family>
       <family name="NFA_HFA_DCC" mfg="Haber and Koenig Electronics GmbH" file="Haber_u_Koenig.xml">
         <model model="NFA" numOuts="8" numFns="10">
+          <versionCV lowVersionID="32" highVersionID="47" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
         </model>
         <model model="HFA" numOuts="8" numFns="10">
+          <versionCV lowVersionID="48" highVersionID="63" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
         </model>
@@ -6859,179 +6910,217 @@
       </family>
       <family name="Hornby TTS Sound Decoder" mfg="Hornby" file="HornbyTTS.xml">
         <model model="Hornby TTS Class 08" numOuts="3" numFns="30" productID="175">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class 20" numOuts="3" numFns="30" productID="159">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class 31" numOuts="3" numFns="30" productID="161">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class 37" numOuts="3" numFns="30" productID="cl37,147">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class 40" numOuts="3" numFns="30" productID="151">
+          <versionCV lowVersionID="120" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class 43 HST (Valenta)" numOuts="3" numFns="30" productID="181">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class 43 HST (MTU)" numOuts="3" numFns="30" productID="157">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class 47" numOuts="3" numFns="30" productID="149">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class 50" numOuts="3" numFns="30" productID="189">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class 60" numOuts="3" numFns="30" productID="163">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class 66" numOuts="3" numFns="30" productID="187">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class 67" numOuts="3" numFns="30" productID="153">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS BR 4-6-2 Class 8 (Duke of Gloucester)" numOuts="3" numFns="30" productID="DoG, 131">
+          <versionCV lowVersionID="90" highVersionID="99" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Duke of Gloucester" show="no" replacementModel="Hornby TTS BR 4-6-2 Class 8 (Duke of Gloucester)" numOuts="3" numFns="30" productID="DoG, 131">
+          <versionCV lowVersionID="90" highVersionID="99" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Flying Scotsman" show="no" replacementModel="Hornby TTS BR 4-6-2 Class 8 (Duke of Gloucester)" numOuts="3" numFns="30" productID="137">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class A1 and A3 4-6-2" numOuts="3" numFns="30" productID="137">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Fowler 2P 4-4-0" numOuts="3" numFns="30" productID="2703">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS P2 2-8-2" numOuts="3" numFns="30" productID="133">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS 9F 2-10-0" numOuts="3" numFns="30" productID="655">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS 4F 0-6-0" numOuts="3" numFns="30" productID="145">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS A4 4-6-0" show="no" replacementModel="Hornby TTS A4 4-6-2" numOuts="3" numFns="30" productID="135">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS A4 4-6-2" numOuts="3" numFns="30" productID="135">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS 5MT Black 5 4-6-0" numOuts="3" numFns="30" productID="171">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Hall Class 4-6-0" numOuts="3" numFns="30" productID="2699">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Castle Class 4-6-0" numOuts="3" numFns="30" productID="165">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS S15 Class 4-6-0" numOuts="3" numFns="30" productID="179">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Coronation Class 4-6-2" numOuts="3" numFns="30" productID="177">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Peppercorn Class A1 4-6-2 (Tornado)" numOuts="3" numFns="30" productID="129">
+          <versionCV lowVersionID="1" highVersionID="1" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Merchant Navy Class 4-6-2" numOuts="3" numFns="30" productID="169">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Rebuilt Merchant Navy Class 4-6-2" numOuts="3" numFns="30" productID="130">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS 6000 King Class 4-6-0" numOuts="3" numFns="30" productID="141">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Lord Nelson Class 4-6-2" numOuts="3" numFns="30" productID="183">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS J36 Class 0-6-0" numOuts="3" numFns="30" productID="185">
+          <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
         <model model="Hornby TTS Class 7 (Britannia)" numOuts="3" numFns="30" productID="173">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
         </model>
       </family>
       <family name="Hornby TTS Accessory Sound Decoder" mfg="Hornby" file="HornbyTTS_NonLoco.xml">
-        <model model="Hornby TTS Vent Van" numOuts="3" numFns="30" productID="2" />
-        <model model="Hornby TTS Vent Van 2" numOuts="3" numFns="30" productID="3" />
+        <model model="Hornby TTS Vent Van" numOuts="3" numFns="30" productID="2">
+          <versionCV lowVersionID="2" highVersionID="120" />
+        </model>
+        <model model="Hornby TTS Vent Van 2" numOuts="3" numFns="30" productID="3">
+          <versionCV lowVersionID="3" highVersionID="120" />
+        </model>
       </family>
       <family name="Ditch Light Decoder" mfg="KATO Precision Models" lowVersionID="49" highVersionID="51" file="Kato_Ditch.xml">
         <model model="Ditch Light Decoder" numOuts="2" numFns="5">
@@ -7052,36 +7141,44 @@
       </family>
       <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing." file="Kuehn_5Moto.xml">
         <model model="N025" numOuts="2" numFns="10">
+          <versionCV lowVersionID="34" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
         </model>
         <model model="N025-P" numOuts="2" numFns="10">
+          <versionCV lowVersionID="34" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
         </model>
         <model model="N025-P8" numOuts="2" numFns="10">
+          <versionCV lowVersionID="34" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
         </model>
         <model model="N025-PA" numOuts="2" numFns="10">
+          <versionCV lowVersionID="34" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
         </model>
         <model model="T125" numOuts="2" numFns="10">
+          <versionCV lowVersionID="34" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
         </model>
         <model model="T125-8" numOuts="2" numFns="10">
+          <versionCV lowVersionID="34" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
         </model>
         <model model="T145" numOuts="4" numFns="10">
+          <versionCV lowVersionID="34" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
           <output name="4" label="Violet" />
         </model>
         <model model="T145-8" numOuts="4" numFns="10">
+          <versionCV lowVersionID="34" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -7090,6 +7187,7 @@
       </family>
       <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing." file="Kuehn_N45.xml">
         <model model="N45" numOuts="6" numFns="14">
+          <versionCV lowVersionID="35" highVersionID="35" />
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="Output|C" />
@@ -7098,6 +7196,7 @@
           <output name="6" label="Output|F" />
         </model>
         <model model="N45-P" numOuts="6" numFns="14">
+          <versionCV lowVersionID="35" highVersionID="35" />
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="Output|C" />
@@ -7106,6 +7205,7 @@
           <output name="6" label="Output|F" />
         </model>
         <model model="N45-P8" numOuts="6" numFns="14">
+          <versionCV lowVersionID="35" highVersionID="35" />
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="Output|C" />
@@ -7618,11 +7718,13 @@
       </family>
       <family name="Lenz Plus decoders released March 2010, updated April 2016" mfg="Lenz" highVersionID="99" lowVersionID="72" file="Lenz_Plus_2010.xml">
         <model model="Standard+ NEM652 10231-01" numOuts="3" numFns="31">
+          <versionCV highVersionID="93" lowVersionID="93" />
           <output name="1" label="A" />
           <output name="2" label="B" />
           <output name="3" label="C" />
         </model>
         <model model="Standard+ V2 NEM652 10231-02" numOuts="4" numFns="31">
+          <versionCV highVersionID="77" lowVersionID="77" />
           <output name="1" label="A" />
           <output name="2" label="B" />
           <output name="3" label="C" />
@@ -7637,14 +7739,17 @@
           <output name="2" label="B" />
         </model>
         <model model="Silver+ mini wired 10310-02" numOuts="2" numFns="31">
+          <versionCV highVersionID="96" lowVersionID="96" />
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
         </model>
         <model model="Silver+ mini NEM651 10311-02" numOuts="2" numFns="31">
+          <versionCV highVersionID="96" lowVersionID="96" />
           <output name="1" label="A" />
           <output name="2" label="B" />
         </model>
         <model model="Silver+ NEM652 10331-01" numOuts="5" numFns="31">
+          <versionCV highVersionID="95" lowVersionID="95" />
           <output name="1" label="A" />
           <output name="2" label="B" />
           <output name="3" label="C" />
@@ -7652,6 +7757,7 @@
           <output name="5" label="E" />
         </model>
         <model model="Silver+ PluX12 10312-01" numOuts="5" numFns="31">
+          <versionCV highVersionID="97" lowVersionID="97" />
           <output name="1" label="A" />
           <output name="2" label="B" />
           <output name="3" label="C" />
@@ -7659,6 +7765,7 @@
           <output name="5" label="E" />
         </model>
         <model model="Silver+ PluX22 10322-01" numOuts="8" numFns="31">
+          <versionCV highVersionID="97" lowVersionID="97" />
           <output name="1" label="A" />
           <output name="2" label="B" />
           <output name="3" label="C" />
@@ -7669,6 +7776,7 @@
           <output name="8" label="H" />
         </model>
         <model model="Silver+ Next18 10312-01" numOuts="5" numFns="31">
+          <versionCV highVersionID="94" lowVersionID="94" />
           <output name="1" label="A" />
           <output name="2" label="B" />
           <output name="3" label="C" />
@@ -7676,6 +7784,7 @@
           <output name="5" label="E" />
         </model>
         <model model="Silver+ 21 10321-01" numOuts="5" numFns="31">
+          <versionCV highVersionID="99" lowVersionID="99" />
           <output name="1" label="A" />
           <output name="2" label="B" />
           <output name="3" label="C" />
@@ -7683,6 +7792,7 @@
           <output name="5" label="E" />
         </model>
         <model model="Silver+ direct 10330-01" numOuts="5" numFns="31">
+          <versionCV highVersionID="98" lowVersionID="98" />
           <output name="1" label="A" />
           <output name="2" label="B" />
           <output name="3" label="C" />
@@ -7698,6 +7808,7 @@
           <output name="2" label="B" />
         </model>
         <model model="Gold+ NEM652 10433-01" numOuts="5" numFns="31">
+          <versionCV highVersionID="91" lowVersionID="91" />
           <output name="1" label="A" />
           <output name="2" label="B" />
           <output name="3" label="C" />
@@ -7705,6 +7816,7 @@
           <output name="5" label="E" />
         </model>
         <model model="Gold maxi 10440" numOuts="8" numFns="31">
+          <versionCV highVersionID="72" lowVersionID="72" />
           <output name="1" label="A" />
           <output name="2" label="B" />
           <output name="3" label="C" />
@@ -7822,11 +7934,17 @@
         </model>
       </family>
       <family name="ACC Decoders" mfg="MERG" file="MERG_ACC4.xml">
-        <model model="DCCACC4" productID="acc4" />
+        <model model="DCCACC4" productID="acc4">
+          <versionCV lowVersionID="4" highVersionID="5" />
+        </model>
       </family>
       <family name="ACC Decoders" mfg="MERG" file="MERG_ACC5.xml">
-        <model model="DCCACC5 to V5.1" productID="51" />
-        <model model="DCCACC5 from V5.2" productID="52" />
+        <model model="DCCACC5 to V5.1" productID="51">
+          <versionCV lowVersionID="4" highVersionID="51" />
+        </model>
+        <model model="DCCACC5 from V5.2" productID="52">
+          <versionCV lowVersionID="52" highVersionID="52" />
+        </model>
       </family>
       <family name="CBUS" mfg="MERG" file="MERG_CBUS_canacc8.xml">
         <model model="CANACC8" lowVersionID="10" highVersionID="10" />
@@ -7876,6 +7994,7 @@
       </family>
       <family name="MRC AD370 Sound decoders" mfg="MRC" lowVersionID="32" file="MRC_AD370.xml">
         <model model="AD370" numOuts="4" numFns="8">
+          <versionCV lowVersionID="32" />
           <output name="Bell" />
           <output name="Horn" />
           <output name="SHorn" />
@@ -10318,12 +10437,14 @@
       </family>
       <family name="Function decoders" mfg="QElectronics GmbH" type="mobile" file="Qdecoder_FStandard.xml">
         <model model="F0-4" numOuts="4" numFns="14" productID="function-4">
+          <versionCV lowVersionID="8" highVersionID="8" />
           <output name="1" label="A0" />
           <output name="2" label="A1" />
           <output name="3" label="A2" />
           <output name="4" label="A3" />
         </model>
         <model model="F0-8" numOuts="8" numFns="14" productID="function-8">
+          <versionCV lowVersionID="8" highVersionID="8" />
           <output name="1" label="A0" />
           <output name="2" label="A1" />
           <output name="3" label="A2" />
@@ -10336,12 +10457,14 @@
       </family>
       <family name="Function decoders" mfg="QElectronics GmbH" type="mobile" file="Qdecoder_Fplus.xml">
         <model model="F0-4+" numOuts="4" numFns="14" productID="function-4plus">
+          <versionCV lowVersionID="8" highVersionID="8" />
           <output name="1" label="A0" />
           <output name="2" label="A1" />
           <output name="3" label="A2" />
           <output name="4" label="A3" />
         </model>
         <model model="F0-8+" numOuts="8" numFns="14" productID="function-8plus">
+          <versionCV lowVersionID="8" highVersionID="8" />
           <output name="1" label="A0" />
           <output name="2" label="A1" />
           <output name="3" label="A2" />
@@ -10354,6 +10477,7 @@
       </family>
       <family name="All-In-One accessory decoders" mfg="QElectronics GmbH" type="stationary" file="Qdecoder_Z1-16plus.xml">
         <model model="Z1-16+" numOuts="16" numFns="14" productID="Z1-16plus">
+          <versionCV lowVersionID="8" highVersionID="8" />
           <output name="1" label="A0" />
           <output name="2" label="A1" />
           <output name="3" label="A2" />
@@ -10374,6 +10498,7 @@
       </family>
       <family name="All-In-One accessory decoders" mfg="QElectronics GmbH" type="stationary" file="Qdecoder_Z2-8plus.xml">
         <model model="Z2-8+" numOuts="8" numFns="14" productID="Z2-8plus">
+          <versionCV lowVersionID="8" highVersionID="8" />
           <output name="1" label="A0" />
           <output name="2" label="A1" />
           <output name="3" label="A2" />
@@ -10386,6 +10511,7 @@
       </family>
       <family name="Standard accessory decoders" mfg="QElectronics GmbH" type="stationary" file="Qdecoder_ZStandard.xml">
         <model model="Z1-16" numOuts="16" numFns="14" productID="Standard">
+          <versionCV lowVersionID="8" highVersionID="8" />
           <output name="1" label="A0" />
           <output name="2" label="A1" />
           <output name="3" label="A2" />
@@ -10404,6 +10530,7 @@
           <output name="16" label="A15" />
         </model>
         <model model="Z2-8" numOuts="8" numFns="14" productID="Standard">
+          <versionCV lowVersionID="8" highVersionID="8" />
           <output name="1" label="A0" />
           <output name="2" label="A1" />
           <output name="3" label="A2" />
@@ -10415,6 +10542,7 @@
       </family>
       <family name="Basic accessory decoders" mfg="QElectronics GmbH" type="stationary" file="Qdecoder_Zbasic.xml">
         <model model="Z1-16N" numOuts="16" numFns="14" productID="Basic">
+          <versionCV lowVersionID="8" highVersionID="8" />
           <output name="1" label="A0" />
           <output name="2" label="A1" />
           <output name="3" label="A2" />
@@ -10433,6 +10561,7 @@
           <output name="16" label="A15" />
         </model>
         <model model="Z2-8N" numOuts="8" numFns="14" productID="Basic">
+          <versionCV lowVersionID="8" highVersionID="8" />
           <output name="1" label="A0" />
           <output name="2" label="A1" />
           <output name="3" label="A2" />
@@ -10521,6 +10650,7 @@
       </family>
       <family name="Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Bachmann_SndVal_Dsl_deprecated.xml">
         <model show="no" model="Alco FA2" replacementModel="Alco FA2" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="Alco_FA2">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10536,6 +10666,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="Alco FB2" replacementModel="Alco FB2" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="Alco_FB2">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10551,6 +10682,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="Alco RS3" replacementModel="Alco RS3" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="Alco_RS3">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10566,6 +10698,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="Alco S2" replacementModel="Alco S2" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="Alco_S2">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10581,6 +10714,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="Alco S4" replacementModel="Alco S4" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="Alco_S4">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10596,6 +10730,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="EMD DD40AX" replacementModel="EMD DD40AX" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="4" numFns="14" productID="EMD_DD40AX">
+          <versionCV lowVersionID="82" />
           <output name="3" label="Flashing|Lights" />
           <output name="4" label="# Board|Lights" />
           <output name="5" label="Air Horn| " />
@@ -10610,6 +10745,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="EMD F7A" replacementModel="EMD F7A" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="EMD_F7A">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10625,6 +10761,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="EMD F7B" replacementModel="EMD F7B" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="EMD_F7B">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10640,6 +10777,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="EMD GP7" replacementModel="EMD GP7" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="EMD_GP7">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10655,6 +10793,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="EMD GP38-2" replacementModel="EMD GP38-2" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="EMD_GP382">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10669,6 +10808,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="EMD GP40" replacementModel="EMD GP40" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="EMD_GP40">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10683,6 +10823,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="EMD SD45" replacementModel="EMD SD45" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="EMD_SD45">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10697,6 +10838,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="EMD SD70ACe" replacementModel="EMD SD70ACe" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="EMD_SD70ACe">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10711,6 +10853,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="GE ES44AC" replacementModel="GE ES44AC" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="GE_ES44AC">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10725,6 +10868,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="GG1" replacementModel="GG1" replacementFamily="Tsunami Diesel Bachmann Sound Value" numOuts="2" numFns="14" productID="GG1">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -10741,6 +10885,7 @@
       </family>
       <family name="Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Bachmann_SndVal_Stm_deprecated.xml">
         <model show="no" model="Alco 2-6-0" replacementModel="2-6-0 Mogul - Alco [HO]" replacementFamily="Tsunami Steam Bachmann Sound Value" numOuts="2" numFns="14" productID="Alco260">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -10756,6 +10901,7 @@
         </model>
         <!-- keep the initial model entry for compatibility purpose as it has already been released -->
         <model show="no" model="2-8-4 Berkshire" replacementModel="2-8-4 Berkshire - Pere Marquette [HO]" replacementFamily="Tsunami Steam Bachmann Sound Value" numOuts="2" numFns="14" productID="Lima284_PM">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -10770,6 +10916,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="2-8-4 Berkshire - Pere Marquette [HO]" replacementModel="2-8-4 Berkshire - Pere Marquette [HO]" replacementFamily="Tsunami Steam Bachmann Sound Value" numOuts="2" numFns="14" productID="Lima284_PM">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -10784,6 +10931,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="2-8-4 Berkshire - Pere Marquette [N]" replacementModel="2-8-4 Berkshire - Pere Marquette [N]" replacementFamily="Tsunami Steam Bachmann Sound Value" numOuts="2" numFns="14" productID="Lima284_PM_N">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -10798,6 +10946,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="2-8-4 Berkshire - Nickel Plate [HO]" replacementModel="2-8-4 Berkshire - Nickel Plate [HO]" replacementFamily="Tsunami Steam Bachmann Sound Value" numOuts="2" numFns="14" productID="Lima284_NKP">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -10812,6 +10961,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="2-8-4 Berkshire - Nickel Plate [N]" replacementModel="2-8-4 Berkshire - Nickel Plate [N]" replacementFamily="Tsunami Steam Bachmann Sound Value" numOuts="2" numFns="14" productID="Lima284_NKP_N">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -10826,6 +10976,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="2-8-4 Berkshire - Chesapeake &amp; Ohio Kanawha [HO]" replacementModel="2-8-4 Berkshire - Chesapeake &amp; Ohio Kanawha [HO]" replacementFamily="Tsunami Steam Bachmann Sound Value" numOuts="2" numFns="14" productID="Lima284_CO">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -10840,6 +10991,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model show="no" model="2-8-4 Berkshire - Chesapeake &amp; Ohio Kanawha [N]" replacementModel="2-8-4 Berkshire - Chesapeake &amp; Ohio Kanawha [N]" replacementFamily="Tsunami Steam Bachmann Sound Value" numOuts="2" numFns="14" productID="Lima284_CO_N">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -10870,6 +11022,8 @@
       </family>
       <family name="DSD diesel" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="10">
+          <versionCV lowVersionID="9" highVersionID="14" />
+          <versionCV lowVersionID="21" />
           <output name="Bell" />
           <output name="Horn" />
           <output name="RPM+" />
@@ -10886,6 +11040,9 @@
       </family>
       <family name="DSD Steam" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_DSD_Steam.xml">
         <model model="DSD Steam" numOuts="4" numFns="10">
+          <versionCV lowVersionID="6" highVersionID="7" />
+          <versionCV lowVersionID="15" highVersionID="16" />
+          <versionCV lowVersionID="20" />
           <output name="3" label="F1/grn" />
           <output name="Whistle" />
           <output name="Bell" />
@@ -10900,6 +11057,7 @@
       </family>
       <family name="DSX Diesel" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_DSX_Diesel.xml">
         <model model="DSX Diesel" numOuts="0" numFns="10">
+          <versionCV lowVersionID="18" highVersionID="19" />
           <output name="Bell" />
           <output name="Horn" />
           <output name="RPM+" />
@@ -10916,6 +11074,7 @@
       </family>
       <family name="DSX Steam" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_DSX_Steam.xml">
         <model model="DSX Steam" numOuts="0" numFns="10">
+          <versionCV lowVersionID="17" />
           <!--output name="3" label="F1/grn" -->
           <output name="Whistle" />
           <output name="Bell" />
@@ -10931,6 +11090,7 @@
       </family>
       <family name="Econami Diesel" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Diesel.xml">
         <model model="ECO-100 Diesel" numOuts="4" numFns="20" productID="258">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Airhorn| " />
@@ -10949,6 +11109,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-200 Diesel" numOuts="6" numFns="30" productID="267">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Airhorn| " />
@@ -10967,6 +11128,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-21P Diesel" numOuts="6" numFns="30" productID="264">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Airhorn| " />
@@ -10985,6 +11147,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-21PNEM Diesel" numOuts="6" numFns="30" productID="309">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Airhorn| " />
@@ -11003,6 +11166,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-400 Diesel" numOuts="6" numFns="30" productID="261">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Airhorn| " />
@@ -11021,6 +11185,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-PNP Diesel" numOuts="6" numFns="30" productID="270">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Airhorn| " />
@@ -11094,6 +11259,7 @@
       </family>
       <family name="Econami Diesel UK" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Diesel_UK.xml">
         <model model="ECO-100 UK Diesel" numOuts="4" numFns="20" productID="301">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Low-Tone|Airhorn" />
@@ -11112,6 +11278,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-200 UK Diesel" numOuts="6" numFns="30" productID="303">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Low-Tone|Airhorn" />
@@ -11130,6 +11297,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-21PNEM UK Diesel" numOuts="6" numFns="30" productID="305">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Low-Tone|Airhorn" />
@@ -11148,6 +11316,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-400 UK Diesel" numOuts="6" numFns="30" productID="307">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Low-Tone|Airhorn" />
@@ -11168,6 +11337,7 @@
       </family>
       <family name="Econami Electric" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Electric.xml">
         <model model="ECO-100 Electric" numOuts="4" numFns="20" productID="259">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Air Horn| " />
@@ -11185,6 +11355,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-200 Electric" numOuts="6" numFns="30" productID="268">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Air Horn| " />
@@ -11202,6 +11373,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-21P Electric" numOuts="6" numFns="30" productID="265">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Air Horn| " />
@@ -11219,6 +11391,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-400 Electric" numOuts="6" numFns="30" productID="262">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Air Horn| " />
@@ -11236,6 +11409,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-PNP Electric" numOuts="6" numFns="30" productID="271">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Air Horn| " />
@@ -11255,6 +11429,7 @@
       </family>
       <family name="Econami Steam" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Steam.xml">
         <model model="ECO-100 Steam" numOuts="4" numFns="30" productID="257">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11271,6 +11446,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-200 Steam" numOuts="6" numFns="30" productID="266">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11287,6 +11463,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-21P Steam" numOuts="6" numFns="30" productID="263">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11303,6 +11480,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-21PNEM Steam" numOuts="6" numFns="30" productID="308">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11319,6 +11497,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-400 Steam" numOuts="6" numFns="30" productID="260">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11335,6 +11514,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-PNP Steam" numOuts="6" numFns="30" productID="269">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11353,6 +11533,7 @@
       </family>
       <family name="Econami Steam OEM Athearn" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Steam_OEM_Athearn.xml">
         <model model="E2100.001 2-6-0 2-8-0" numOuts="6" numFns="30" productID="257">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11371,6 +11552,7 @@
       </family>
       <family name="Econami Steam OEM Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Steam_OEM_Bachmann_SndVal.xml">
         <model model="ECO 2-8-0" numOuts="4" numFns="30" productID="280">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11387,6 +11569,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO 4-6-0" numOuts="4" numFns="30" productID="460">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11403,6 +11586,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO 4-8-4" numOuts="4" numFns="30" productID="484">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11419,6 +11603,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO 4-8-2" numOuts="4" numFns="30" productID="482">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11435,6 +11620,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO 2-8-8-4" numOuts="4" numFns="30" productID="2884">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11451,6 +11637,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO 4-6-4" numOuts="4" numFns="30" productID="464">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Whistle| " />
@@ -11469,6 +11656,7 @@
       </family>
       <family name="Econami Steam UK" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Eco_Steam_UK.xml">
         <model model="ECO-100 UK Steam" numOuts="4" numFns="30" productID="300">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Main|Whistle" />
@@ -11485,6 +11673,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-200 UK Steam" numOuts="6" numFns="30" productID="302">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Main|Whistle" />
@@ -11501,6 +11690,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-21PNEM UK Steam" numOuts="6" numFns="30" productID="304">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Main|Whistle" />
@@ -11517,6 +11707,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="ECO-400 UK Steam" numOuts="6" numFns="30" productID="306">
+          <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
           <output name="5" label="Main|Whistle" />
@@ -11535,6 +11726,7 @@
       </family>
       <family name="LC Diesel decoders" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_LC_Diesel.xml">
         <model model="100LC Diesel" numOuts="4" numFns="10">
+          <versionCV lowVersionID="34" />
           <output name="Horn" />
           <output name="Bell" />
           <output name="3" label="FX1" />
@@ -11554,6 +11746,7 @@
           <!-- note: The LL100LC has a headlight but no backup light -->
           <!-- note: The LL100LC has an FX2 output but no FX1 output -->
           <!-- but the headlight can be set to respond to FX1 mapping -->
+          <versionCV lowVersionID="36" />
           <output name="Horn" />
           <output name="Bell" />
           <output name="3" label="FX1" />
@@ -11567,6 +11760,7 @@
       </family>
       <family name="LC Diesel PNP decoders" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_LC_Diesel_pnp.xml">
         <model model="AT100LC/KT100LC Diesel" numOuts="4" numFns="10">
+          <versionCV lowVersionID="35" />
           <output name="Horn" />
           <output name="Bell" />
           <output name="3" label="FX1" />
@@ -11578,6 +11772,7 @@
           <output name="Mute" />
         </model>
         <model model="LL110LC Diesel" numOuts="4" numFns="10">
+          <versionCV lowVersionID="35" />
           <output name="Horn" />
           <output name="Bell" />
           <output name="3" label="FX1" />
@@ -11589,6 +11784,7 @@
           <output name="Mute" />
         </model>
         <model model="LL090LC Diesel" numOuts="4" numFns="10">
+          <versionCV lowVersionID="35" />
           <output name="Horn" />
           <output name="Bell" />
           <output name="3" label="FX1" />
@@ -11602,6 +11798,7 @@
       </family>
       <family name="LC Diesel PNP + FX decoders" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_LC_Diesel_pnpFX.xml">
         <model model="C628LC Diesel" numOuts="4" numFns="10">
+          <versionCV lowVersionID="37" />
           <output name="Horn" />
           <output name="Bell" />
           <output name="3" label="FX1/grn" />
@@ -11615,6 +11812,7 @@
       </family>
       <family name="LC steam decoders" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_LC_Steam.xml">
         <model model="100LC Steam" numOuts="4" numFns="10">
+          <versionCV lowVersionID="32" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="FX1" />
@@ -11627,6 +11825,7 @@
       </family>
       <family name="LC Steam hyperlight decoders" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_LC_Steam_hylt.xml">
         <model model="090LC Steam" numOuts="4" numFns="10">
+          <versionCV lowVersionID="39" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="FX1" />
@@ -11639,6 +11838,7 @@
       </family>
       <family name="LC Steam PNP decoders" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_LC_Steam_pnp.xml">
         <model model="B280LC Steam" numOuts="4" numFns="10">
+          <versionCV lowVersionID="33" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="FX1" />
@@ -11649,6 +11849,7 @@
           <!-- headlight-->
         </model>
         <model model="B3TSLC Steam" numOuts="4" numFns="10">
+          <versionCV lowVersionID="33" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="FX1" />
@@ -11659,6 +11860,7 @@
           <!-- headlight-->
         </model>
         <model model="B210LC Steam" numOuts="4" numFns="10">
+          <versionCV lowVersionID="33" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="FX1" />
@@ -11669,6 +11871,7 @@
           <!-- headlight-->
         </model>
         <model model="LL080LC Steam" numOuts="4" numFns="10">
+          <versionCV lowVersionID="33" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="FX1" />
@@ -11681,6 +11884,7 @@
       </family>
       <family name="Lighting Decoder" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Lighting_Athearn_Genesis_Caboose.xml">
         <model model="Athearn Genesis Bay-Window Caboose" numOuts="2" numFns="14" productID="???">
+          <versionCV lowVersionID="1" />
           <!-- Function Mapping Table / page 17 -->
           <output name="1" label="  Marker Lamp B  " />
           <!-- FX0F      -->
@@ -11698,6 +11902,7 @@
       </family>
       <family name="MC Motor Decoders" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_MC.xml">
         <model model="MC1Z102P6" numOuts="2" numFns="14" productID="851001">
+          <versionCV lowVersionID="80" />
           <output name="3" label="Xing|Logic" />
           <output name="4" label="FX5|Rule 17" />
           <output name="5" label="FX6|Mode" />
@@ -11705,6 +11910,7 @@
           <output name="7" label="Brakes| " />
         </model>
         <model model="MC1Z102SQ" numOuts="2" numFns="14" productID="851002">
+          <versionCV lowVersionID="80" />
           <output name="3" label="Xing|Logic" />
           <output name="4" label="FX5|Rule 17" />
           <output name="5" label="FX6|Mode" />
@@ -11712,6 +11918,7 @@
           <output name="7" label="Brakes| " />
         </model>
         <model model="MC1H102P8" numOuts="2" numFns="14" productID="852001">
+          <versionCV lowVersionID="80" />
           <output name="3" label="Xing|Logic" />
           <output name="4" label="FX5|Rule 17" />
           <output name="5" label="FX6|Mode" />
@@ -11719,6 +11926,7 @@
           <output name="7" label="Brakes| " />
         </model>
         <model model="MC1H104P21" numOuts="4" numFns="14" productID="852005">
+          <versionCV lowVersionID="65" />
           <output name="3" label="Xing|Logic" />
           <output name="4" label="  FX5  | " />
           <output name="5" label="  FX6  | " />
@@ -11726,6 +11934,7 @@
           <output name="7" label="Brakes| " />
         </model>
         <model model="MC2H104AT" numOuts="4" numFns="14" productID="852002">
+          <versionCV lowVersionID="96" />
           <output name="3" label="Xing|Logic" />
           <output name="4" label="  FX5  | " />
           <output name="5" label="  FX6  | " />
@@ -11733,6 +11942,7 @@
           <output name="7" label="Brakes| " />
         </model>
         <model model="MC2H104OP" numOuts="4" numFns="14" productID="852003">
+          <versionCV lowVersionID="96" />
           <output name="3" label="Xing|Logic" />
           <output name="4" label="  FX5  | " />
           <output name="5" label="  FX6  | " />
@@ -11740,6 +11950,7 @@
           <output name="7" label="Brakes| " />
         </model>
         <model model="MC2H104P9" numOuts="4" numFns="14" productID="852004">
+          <versionCV lowVersionID="96" />
           <output name="3" label="Xing|Logic" />
           <output name="4" label="  FX5  | " />
           <output name="5" label="  FX6  | " />
@@ -11749,41 +11960,49 @@
       </family>
       <family name="MC Intermountain OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_MC_IMRC_OEM.xml">
         <model model="ES44AC" numOuts="4" numFns="14" productID="ES">
+          <versionCV lowVersionID="96" />
           <output name="3" label="  FX5  | " />
           <output name="4" label="  FX6  | " />
           <output name="5" label="Brakes| " />
         </model>
         <model model="ES44DC" numOuts="4" numFns="14" productID="ES">
+          <versionCV lowVersionID="96" />
           <output name="3" label="  FX5  | " />
           <output name="4" label="  FX6  | " />
           <output name="5" label="Brakes| " />
         </model>
         <model model="FT" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="96" />
           <output name="3" label="  FX5  | " />
           <output name="4" label="  FX6  | " />
           <output name="5" label="Brakes| " />
         </model>
         <model model="F3" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="96" />
           <output name="3" label="  FX5  | " />
           <output name="4" label="  FX6  | " />
           <output name="5" label="Brakes| " />
         </model>
         <model model="F7" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="96" />
           <output name="3" label="  FX5  | " />
           <output name="4" label="  FX6  | " />
           <output name="5" label="Brakes| " />
         </model>
         <model model="F9" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="96" />
           <output name="3" label="  FX5  | " />
           <output name="4" label="  FX6  | " />
           <output name="5" label="Brakes| " />
         </model>
         <model model="FP7" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="96" />
           <output name="3" label="  FX5  | " />
           <output name="4" label="  FX6  | " />
           <output name="5" label="Brakes| " />
         </model>
         <model model="SD40-2W" numOuts="4" numFns="14" productID="SD40">
+          <versionCV lowVersionID="96" />
           <output name="3" label="  FX5  | " />
           <output name="4" label="  FX6  | " />
           <output name="5" label="Brakes| " />
@@ -11791,6 +12010,7 @@
       </family>
       <family name="MC Walthers OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_MC_Walthers.xml">
         <model model="Plymouth ML8" numOuts="2" numFns="14">
+          <versionCV lowVersionID="66" />
           <output name="3" label="Xing|Logic" />
           <output name="4" label="FX5|Rule 17" />
           <output name="5" label="FX6|Mode" />
@@ -11799,6 +12019,7 @@
       </family>
       <family name="OEM Bachmann E-Z Command decoders" mfg="SoundTraxx (Throttle-Up)" lowVersionID="141" highVersionID="141" file="SoundTraxx_OEM_36-557_MC1.xml">
         <model model="Bachmann (soundTraxx MC1) 36-557" numOuts="4" numFns="14" productID="MC1H104P21">
+          <versionCV highVersionID="81" lowVersionID="81" />
           <output name="1" label="Front light" />
           <output name="2" label="Rear light " />
           <output name="3" label="   AUX1    " />
@@ -11815,6 +12036,7 @@
       </family>
       <family name="OEM PIKO" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_OEM_PIKO.xml">
         <model model="Mogul" numOuts="2" numFns="14" productID="Mogul">
+          <versionCV lowVersionID="84" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="(Not used)" />
@@ -11832,6 +12054,7 @@
       </family>
       <family name="SHS Diesel decoders" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_SHS_F3.xml">
         <model model="F3 Diesel" numOuts="4" numFns="10">
+          <versionCV lowVersionID="38" />
           <output name="Bell" />
           <output name="Horn" />
           <output name="3" label="#Board" />
@@ -11845,6 +12068,7 @@
       </family>
       <family name="SHS Diesel decoders" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_SHS_F7.xml">
         <model model="F7 Diesel" numOuts="6" numFns="10">
+          <versionCV lowVersionID="40" />
           <output name="Bell" />
           <output name="Horn" />
           <output name="3" label="#Board" />
@@ -11860,6 +12084,7 @@
       </family>
       <family name="Sound Value Diesel Walthers Mainline OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_SndVal_Diesel_Walthers_Mainline.xml">
         <model model="8-40B" numOuts="3" numFns="14" productID="8-40B">
+          <versionCV lowVersionID="82" />
           <output name="3" label="  FX5  " />
           <output name="4" label="FX6|Rule 17" />
           <output name="Air Horn" />
@@ -11873,6 +12098,7 @@
           <output name="RPM" label="-" />
         </model>
         <model model="ALCO PA-PB" numOuts="3" numFns="14" productID="ALCO-PA">
+          <versionCV lowVersionID="82" />
           <output name="3" label="  FX5  " />
           <output name="4" label="FX6|Rule 17" />
           <output name="Air Horn" />
@@ -11886,6 +12112,7 @@
           <output name="RPM" label="-" />
         </model>
         <model model="ES44AC" numOuts="3" numFns="14" productID="ES">
+          <versionCV lowVersionID="82" />
           <output name="3" label="  FX5  " />
           <output name="4" label="FX6|Rule 17" />
           <output name="Air Horn" />
@@ -11899,6 +12126,7 @@
           <output name="RPM" label="-" />
         </model>
         <model model="F7A-B" numOuts="3" numFns="14" productID="F7A-B">
+          <versionCV lowVersionID="82" />
           <output name="3" label="  FX5  " />
           <output name="4" label="FX6|Rule 17" />
           <output name="Air Horn" />
@@ -11912,6 +12140,7 @@
           <output name="RPM" label="-" />
         </model>
         <model model="GP15" numOuts="3" numFns="14" productID="GP15">
+          <versionCV lowVersionID="82" />
           <output name="3" label="  FX5  " />
           <output name="4" label="FX6|Rule 17" />
           <output name="Air Horn" />
@@ -11925,6 +12154,7 @@
           <output name="RPM" label="-" />
         </model>
         <model model="SD60" numOuts="3" numFns="14" productID="SD60">
+          <versionCV lowVersionID="82" />
           <output name="3" label="  FX5  " />
           <output name="4" label="FX6|Rule 17" />
           <output name="Air Horn" />
@@ -11938,6 +12168,7 @@
           <output name="RPM" label="-" />
         </model>
         <model model="SD70ACe" numOuts="3" numFns="14" productID="SD70ACe">
+          <versionCV lowVersionID="82" />
           <output name="3" label="  FX5  " />
           <output name="4" label="FX6|Rule 17" />
           <output name="Air Horn" />
@@ -12160,6 +12391,7 @@
       </family>
       <family name="Tsunami Diesel" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Diesel.xml">
         <model model="TSU-750 Alco 244" numOuts="2" numFns="14" productID="827004">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Air Horn" />
@@ -12175,6 +12407,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 Alco 539 (Non-Turbo)" numOuts="2" numFns="14" productID="827011">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Air Horn" />
@@ -12190,6 +12423,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 Alco 539 (Turbo)" numOuts="2" numFns="14" productID="827012">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Air Horn" />
@@ -12205,6 +12439,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 EMD 567" numOuts="2" numFns="14" productID="827001">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Air Horn" />
@@ -12220,6 +12455,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 EMD 567 (Dual Motors)" numOuts="2" numFns="14" productID="827018">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Air Horn" />
@@ -12235,6 +12471,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 EMD 645 (Turbo)" numOuts="2" numFns="14" productID="827002">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Air Horn" />
@@ -12250,6 +12487,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 EMD 710" numOuts="2" numFns="14" productID="827003">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Air Horn" />
@@ -12265,6 +12503,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 Fairbanks-Morse H-12" numOuts="2" numFns="14" productID="827008">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Air Horn" />
@@ -12280,6 +12519,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 Galloping Goose" numOuts="2" numFns="14" productID="827010">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Air Horn" />
@@ -12295,6 +12535,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 GE Cummins" numOuts="2" numFns="14" productID="827014">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Air Horn" />
@@ -12310,6 +12551,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 UP Gas Turbine" numOuts="2" numFns="14" productID="827015">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Air Horn" />
@@ -12325,6 +12567,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Alco 244" numOuts="4" numFns="14" productID="827104">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12340,6 +12583,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Alco 251 (V12)" numOuts="4" numFns="14" productID="827105">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12355,6 +12599,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Alco 251 (V16)" numOuts="4" numFns="14" productID="827106">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12370,6 +12615,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Baldwin VO" numOuts="4" numFns="14" productID="827111">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12385,6 +12631,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Baldwin 608NA (Non-Turbo)" numOuts="4" numFns="14" productID="827112">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12400,6 +12647,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Baldwin 608A (Turbo)" numOuts="4" numFns="14" productID="827113">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12415,6 +12663,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 EMD 567" numOuts="4" numFns="14" productID="827101">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12430,6 +12679,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 EMD 567 (Dual Motors)" numOuts="4" numFns="14" productID="827118">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12445,6 +12695,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 EMD 567D (Turbo)" numOuts="4" numFns="14" productID="827119">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12460,6 +12711,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 EMD 645" numOuts="4" numFns="14" productID="827102">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12475,6 +12727,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 EMD 645 (Non-Turbo)" numOuts="4" numFns="14" productID="827109">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12490,6 +12743,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 EMD 710" numOuts="4" numFns="14" productID="827103">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12505,6 +12759,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 EMD 710 G3C-T2" numOuts="4" numFns="14" productID="827115">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12520,6 +12775,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Fairbanks-Morse H-12" numOuts="4" numFns="14" productID="827108">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12535,6 +12791,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 GE FDL-16" numOuts="4" numFns="14" productID="827107">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12550,6 +12807,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 GE FDL-16 (Modern)" numOuts="4" numFns="14" productID="827117">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12565,6 +12823,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 GE FDL-16 (Dual Motors)" numOuts="4" numFns="14" productID="827124">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12580,6 +12839,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 GE Gevo-12" numOuts="4" numFns="14" productID="827116">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12595,6 +12855,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Galloping Goose" numOuts="4" numFns="14" productID="827110">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12610,6 +12871,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 UP Gas Turbine" numOuts="4" numFns="14" productID="827114">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12625,6 +12887,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 Alco 244" numOuts="4" numFns="14" productID="828043">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12640,6 +12903,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 Alco 251 (V12)" numOuts="4" numFns="14" productID="828044">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12655,6 +12919,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 Alco 251 (V16)" numOuts="4" numFns="14" productID="828045">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12670,6 +12935,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 Alco 251C (Supercharged)" numOuts="4" numFns="14" productID="828037">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12685,6 +12951,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 Alco 539 (Turbo)" numOuts="4" numFns="14" productID="828049">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12700,6 +12967,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 Cummins QSK19C x3 Genset" numOuts="4" numFns="14" productID="828036">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12715,6 +12983,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 EMD 567" numOuts="4" numFns="14" productID="828040">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12730,6 +12999,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 EMD 567D (Turbo)" numOuts="4" numFns="14" productID="828039">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12745,6 +13015,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 EMD 645" numOuts="4" numFns="14" productID="828041">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12760,6 +13031,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 EMD 645 (Non-Turbo)" numOuts="4" numFns="14" productID="828048">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12775,6 +13047,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 EMD 710" numOuts="4" numFns="14" productID="828042">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12790,6 +13063,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 Fairbanks-Morse H-12" numOuts="4" numFns="14" productID="828047">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12805,6 +13079,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 GE FDL-16" numOuts="4" numFns="14" productID="828046">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12820,6 +13095,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 GE FDL-16 (Modern)" numOuts="4" numFns="14" productID="828038">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12835,6 +13111,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-BW1000 Alco 251 (V16)" numOuts="4" numFns="14" productID="828025">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12850,6 +13127,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-BW1000 Baldwin 608A (Turbo)" numOuts="4" numFns="14" productID="828023">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12865,6 +13143,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-BW1000 EMD 567" numOuts="4" numFns="14" productID="828020">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12880,6 +13159,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-BW1000 GE FDL-16" numOuts="4" numFns="14" productID="828026">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12895,6 +13175,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-GN1000 EMD 567" numOuts="4" numFns="14" productID="828050">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12910,6 +13191,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-GN1000 EMD 645" numOuts="4" numFns="14" productID="828051">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12925,6 +13207,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-GN1000 EMD 645 (Non-Turbo)" numOuts="4" numFns="14" productID="828058">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12940,6 +13223,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-GN1000 EMD 710" numOuts="4" numFns="14" productID="828052">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12955,6 +13239,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-GN1000 EMD 710 G3C-T2" numOuts="4" numFns="14" productID="828053">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12970,6 +13255,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-GN1000 GE FDL-16" numOuts="4" numFns="14" productID="828056">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -12985,6 +13271,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-GN1000 GE FDL-16 (Modern)" numOuts="4" numFns="14" productID="828057">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13000,6 +13287,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-GN1000 GEVO-12" numOuts="4" numFns="14" productID="828059">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13015,6 +13303,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-IM1000 EMD 567" numOuts="4" numFns="14" productID="828070">
+          <versionCV lowVersionID="64" />
           <output name="1" label="Headlight" />
           <output name="2" label="N/A" />
           <output name="3" label="Mars Light" />
@@ -13032,6 +13321,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-IM1000 EMD 645 Turbo" numOuts="4" numFns="14" productID="828071">
+          <versionCV lowVersionID="64" />
           <output name="1" label="Headlight" />
           <output name="2" label="Backlight" />
           <output name="3" label="# Board" />
@@ -13049,6 +13339,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-IM1000 GE GEVO-12" numOuts="4" numFns="14" productID="828074">
+          <versionCV lowVersionID="64" />
           <output name="1" label="Headlight" />
           <output name="2" label="Backlight" />
           <output name="3" label="# Board" />
@@ -13066,6 +13357,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato C44-9W" numOuts="4" numFns="14" productID="828061">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13081,6 +13373,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato F40PH" numOuts="4" numFns="14" productID="828064">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13096,6 +13389,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato GP35" numOuts="4" numFns="14" productID="828067">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13111,6 +13405,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato RS-2" numOuts="4" numFns="14" productID="828065">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13126,6 +13421,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato SD38-2" numOuts="4" numFns="14" productID="828062">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13141,6 +13437,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato SD40-2" numOuts="4" numFns="14" productID="828063">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13156,6 +13453,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato SD45" numOuts="4" numFns="14" productID="828063">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13171,6 +13469,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato SD70" numOuts="4" numFns="14" productID="828060">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13186,6 +13485,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato P42" numOuts="4" numFns="14" productID="828068">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13203,6 +13503,7 @@
       </family>
       <family name="Tsunami Diesel Bachmann OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Diesel_Bachmann.xml">
         <model model="On30 Whitcomb 50-Ton Center-Cab" numOuts="4" numFns="14" productID="Whitcomb">
+          <versionCV lowVersionID="83" />
           <output name="3" label="FX5|Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13222,6 +13523,7 @@
       </family>
       <family name="Tsunami Diesel Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Diesel_Bachmann_SndVal.xml">
         <model model="Alco FA2" numOuts="2" numFns="14" productID="Alco_FA2">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13237,6 +13539,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="Alco FB2" numOuts="2" numFns="14" productID="Alco_FB2">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13252,6 +13555,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="Alco RS3" numOuts="2" numFns="14" productID="Alco_RS3">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13267,6 +13571,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="Alco S2" numOuts="2" numFns="14" productID="Alco_S2">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13282,6 +13587,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="Alco S4" numOuts="2" numFns="14" productID="Alco_S4">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13297,6 +13603,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="EMD DD40AX" numOuts="4" numFns="14" productID="EMD_DD40AX">
+          <versionCV lowVersionID="82" />
           <output name="3" label="Flashing|Lights" />
           <output name="4" label="# Board|Lights" />
           <output name="5" label="Air Horn| " />
@@ -13311,6 +13618,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="EMD E7" numOuts="4" numFns="14" productID="EMD_E7">
+          <versionCV lowVersionID="82" />
           <output name="3" label="Mars|Light" />
           <output name="4" label="# Board|Lights" />
           <output name="5" label="Air Horn| " />
@@ -13325,6 +13633,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="EMD F7A" numOuts="2" numFns="14" productID="EMD_F7A">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13340,6 +13649,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="EMD F7B" numOuts="2" numFns="14" productID="EMD_F7B">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13355,6 +13665,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="EMD GP7" numOuts="2" numFns="14" productID="EMD_GP7">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13370,6 +13681,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="EMD GP30" numOuts="2" numFns="14" productID="EMD_GP30">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13384,6 +13696,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="EMD GP38-2" numOuts="2" numFns="14" productID="EMD_GP382">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13398,6 +13711,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="EMD GP40" numOuts="2" numFns="14" productID="EMD_GP40">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13412,6 +13726,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="EMD SD45" numOuts="2" numFns="14" productID="EMD_SD45">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13426,6 +13741,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="EMD SD70ACe" numOuts="2" numFns="14" productID="EMD_SD70ACe">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13440,6 +13756,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="EMD SD70ACe + dl" numOuts="4" numFns="14" productID="EMD_SD70ACe_dl">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13454,6 +13771,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="GE ES44AC" numOuts="2" numFns="14" productID="GE_ES44AC">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13468,6 +13786,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="GE ES44AC +dl" numOuts="4" numFns="14" productID="GE_ES44AC_dl">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -13484,6 +13803,7 @@
       </family>
       <family name="Tsunami Diesel Bowser OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Diesel_Bowser.xml">
         <model model="Alco C-628" numOuts="4" numFns="14" productID="Century">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13499,6 +13819,7 @@
           <output name="Coupler" />
         </model>
         <model model="Alco C-630" numOuts="4" numFns="14" productID="Century">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13514,6 +13835,7 @@
           <output name="Coupler" />
         </model>
         <model model="Baldwin AS-16" numOuts="4" numFns="14" productID="Baldwin">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13529,6 +13851,7 @@
           <output name="Coupler" />
         </model>
         <model model="Baldwin AS-616" numOuts="4" numFns="14" productID="Baldwin">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13544,6 +13867,7 @@
           <output name="Coupler" />
         </model>
         <model model="Baldwin DS 4-4-1000" numOuts="4" numFns="14" productID="Baldwin">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13559,6 +13883,7 @@
           <output name="Coupler" />
         </model>
         <model model="Baldwin S-8" numOuts="4" numFns="14" productID="Baldwin">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13574,6 +13899,7 @@
           <output name="Coupler" />
         </model>
         <model model="Baldwin S-12" numOuts="4" numFns="14" productID="Baldwin">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13589,6 +13915,7 @@
           <output name="Coupler" />
         </model>
         <model model="Baldwin VO-660" numOuts="4" numFns="14" productID="Baldwin">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13604,6 +13931,7 @@
           <output name="Coupler" />
         </model>
         <model model="Baldwin VO-1000" numOuts="4" numFns="14" productID="Baldwin">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13619,6 +13947,7 @@
           <output name="Coupler" />
         </model>
         <model model="EMD FT" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13634,6 +13963,7 @@
           <output name="Coupler" />
         </model>
         <model model="EMD F3" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13649,6 +13979,7 @@
           <output name="Coupler" />
         </model>
         <model model="EMD F7" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13664,6 +13995,7 @@
           <output name="Coupler" />
         </model>
         <model model="EMD F9" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13679,6 +14011,7 @@
           <output name="Coupler" />
         </model>
         <model model="GE U25B" numOuts="4" numFns="14" productID="GE">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13694,6 +14027,7 @@
           <output name="Coupler" />
         </model>
         <model model="PCC Streetcar" numOuts="4" numFns="14" productID="PCC">
+          <versionCV lowVersionID="64" />
           <output name="3" label="Interior" />
           <output name="4" label="Adv. Light" />
           <output name="Air Horn" label="" />
@@ -13711,6 +14045,7 @@
       </family>
       <family name="Tsunami Diesel Genesis OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Diesel_Genesis.xml">
         <model model="DDA40X" numOuts="4" numFns="14" productID="DD">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13726,6 +14061,7 @@
           <output name="Coupler" />
         </model>
         <model model="ES44AC" numOuts="4" numFns="14" productID="ES">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13741,6 +14077,7 @@
           <output name="Coupler" />
         </model>
         <model model="F2" numOuts="4" numFns="14" productID="F2">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13756,6 +14093,7 @@
           <output name="Coupler" />
         </model>
         <model model="F3" numOuts="4" numFns="14" productID="F2">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13771,6 +14109,7 @@
           <output name="Coupler" />
         </model>
         <model model="F7" numOuts="4" numFns="14" productID="F2">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13786,6 +14125,7 @@
           <output name="Coupler" />
         </model>
         <model model="F9" numOuts="4" numFns="14" productID="F2">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13801,6 +14141,7 @@
           <output name="Coupler" />
         </model>
         <model model="FP7" numOuts="4" numFns="14" productID="F2">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13816,6 +14157,7 @@
           <output name="Coupler" />
         </model>
         <model model="F45" numOuts="4" numFns="14" productID="F45">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13831,6 +14173,7 @@
           <output name="Coupler" />
         </model>
         <model model="FP45" numOuts="4" numFns="14" productID="F45">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13846,6 +14189,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP7" numOuts="4" numFns="14" productID="GP9">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13861,6 +14205,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP9" numOuts="4" numFns="14" productID="GP9">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13876,6 +14221,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP15-1" numOuts="4" numFns="14" productID="GP15">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13891,6 +14237,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP15T" numOuts="4" numFns="14" productID="GP15">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13906,6 +14253,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP38-2" numOuts="4" numFns="14" productID="GP38">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13921,6 +14269,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP40-2" numOuts="4" numFns="14" productID="GP40">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13936,6 +14285,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP50" numOuts="4" numFns="14" productID="SD70">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13951,6 +14301,7 @@
           <output name="Coupler" />
         </model>
         <model model="MP15AC" numOuts="4" numFns="14" productID="MP15">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13966,6 +14317,7 @@
           <output name="Coupler" />
         </model>
         <model model="SD40" numOuts="4" numFns="14" productID="SD40">
+          <versionCV lowVersionID="82" />
           <output name="3" label="Lighting|Effect" />
           <output name="4" label="  FX6  " />
           <output name="5" label="Airhorn| " />
@@ -13982,6 +14334,7 @@
           <output name="15" label="Coupler| " />
         </model>
         <model model="SD45-2" numOuts="4" numFns="14" productID="F45">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -13997,6 +14350,7 @@
           <output name="Coupler" />
         </model>
         <model model="SD60I" numOuts="4" numFns="14" productID="SD60">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14012,6 +14366,7 @@
           <output name="Coupler" />
         </model>
         <model model="SD60M" numOuts="4" numFns="14" productID="SD60">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14027,6 +14382,7 @@
           <output name="Coupler" />
         </model>
         <model model="SD70ACe" numOuts="4" numFns="14" productID="SD70">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14042,6 +14398,7 @@
           <output name="Coupler" />
         </model>
         <model model="SD70M-2" numOuts="4" numFns="14" productID="SD70">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14057,6 +14414,7 @@
           <output name="Coupler" />
         </model>
         <model model="N F45" numOuts="4" numFns="14" productID="N_F45">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14072,6 +14430,7 @@
           <output name="Coupler" />
         </model>
         <model model="N FP45" numOuts="4" numFns="14" productID="N_F45">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14087,6 +14446,7 @@
           <output name="Coupler" />
         </model>
         <model model="N F59PHI" numOuts="4" numFns="14" productID="N_F45">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14104,6 +14464,7 @@
       </family>
       <family name="Tsunami Diesel Intermountain OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Diesel_IMRC.xml">
         <model model="HO ES44AC" numOuts="4" numFns="14" productID="ES">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14119,6 +14480,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO ES44DC" numOuts="4" numFns="14" productID="ES">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14134,6 +14496,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO FT" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14149,6 +14512,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO F3" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14164,6 +14528,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO F7" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14179,6 +14544,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO F9" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14194,6 +14560,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO FP7" numOuts="4" numFns="14" productID="F">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14209,6 +14576,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO SD40-2W" numOuts="4" numFns="14" productID="SD">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14226,6 +14594,7 @@
       </family>
       <family name="Tsunami Diesel Rapido OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Diesel_Rapido.xml">
         <model model="FP9A - CN/VIA" numOuts="4" numFns="14" productID="101">
+          <versionCV lowVersionID="64" />
           <output name="3" label="STR8-2-8" />
           <!-- FX5 -->
           <output name="4" label="Ditch Lites" />
@@ -14243,6 +14612,7 @@
           <output name="Grade" label="Xing" />
         </model>
         <model model="FP9A - CP/VIA-The Canadian" numOuts="4" numFns="14" productID="102">
+          <versionCV lowVersionID="64" />
           <output name="3" label="STR8-2-8" />
           <!-- FX5 -->
           <output name="4" label="Ditch Lites" />
@@ -14262,6 +14632,7 @@
       </family>
       <family name="Tsunami Diesel Walthers OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Diesel_Walthers.xml">
         <model model="Budd Metroliner" numOuts="4" numFns="14" productID="Metro">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" label="N/A" />
           <output name="3" label="# Boards" />
@@ -14278,6 +14649,7 @@
           <output name="Coupler" />
         </model>
         <model model="E7A" numOuts="4" numFns="14" productID="E7A">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14294,6 +14666,7 @@
           <output name="Coupler" />
         </model>
         <model model="E8" numOuts="4" numFns="14" productID="E8">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14310,6 +14683,7 @@
           <output name="Coupler" />
         </model>
         <model model="F7 El Capitan" numOuts="4" numFns="14" productID="F7">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14326,6 +14700,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP7 NYC" numOuts="4" numFns="14" productID="GP7NYC">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14342,6 +14717,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP20" numOuts="4" numFns="14" productID="GP20">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14358,6 +14734,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP30 Chessie" numOuts="4" numFns="14" productID="GP30CO">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14374,6 +14751,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP30 ATSF" numOuts="4" numFns="14" productID="GP30SF">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14390,6 +14768,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP30 MILW" numOuts="4" numFns="14" productID="GP30MIL">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14406,6 +14785,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP35" numOuts="4" numFns="14" productID="GP35">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14421,6 +14801,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP35 EL" numOuts="4" numFns="14" productID="GP35EL">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14436,6 +14817,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP35 RI" numOuts="4" numFns="14" productID="GP35RI">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14451,6 +14833,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP35 SP SOU" numOuts="4" numFns="14" productID="GP35SP">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14466,6 +14849,7 @@
           <output name="Coupler" />
         </model>
         <model model="GP60" numOuts="4" numFns="14" productID="GP60">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14482,6 +14866,7 @@
           <output name="Coupler" />
         </model>
         <model model="SD7 BLE" numOuts="4" numFns="14" productID="SD7BLE">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14498,6 +14883,7 @@
           <output name="Coupler" />
         </model>
         <model model="SD7 CNW" numOuts="4" numFns="14" productID="SD7CNW">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14514,6 +14900,7 @@
           <output name="Coupler" />
         </model>
         <model model="SD9 BNSF" numOuts="4" numFns="14" productID="SD9BNSF">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14530,6 +14917,7 @@
           <output name="Coupler" />
         </model>
         <model model="SD9 SOU" numOuts="4" numFns="14" productID="SD9SOU">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14546,6 +14934,7 @@
           <output name="Coupler" />
         </model>
         <model model="SD9 SP" numOuts="4" numFns="14" productID="SD9SP">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14562,6 +14951,7 @@
           <output name="Coupler" />
         </model>
         <model model="SD9 CR" numOuts="4" numFns="14" productID="SD9SP">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14578,6 +14968,7 @@
           <output name="Coupler" />
         </model>
         <model model="SD45" numOuts="4" numFns="14" productID="SD45">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14594,6 +14985,7 @@
           <output name="Coupler" />
         </model>
         <model model="U28B/U30B" numOuts="4" numFns="14" productID="U28B">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14610,6 +15002,7 @@
           <output name="Coupler" />
         </model>
         <model model="U28B/U30B GN" numOuts="4" numFns="14" productID="U28BGN">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14626,6 +15019,7 @@
           <output name="Coupler" />
         </model>
         <model model="U28B/U30B WP" numOuts="4" numFns="14" productID="U28BWP">
+          <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14644,6 +15038,7 @@
       </family>
       <family name="Tsunami Electric Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Electric_Bachmann_SndVal.xml">
         <model model="PCC Trolley [HO]" numOuts="4" numFns="14" productID="PCC">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| " />
           <output name="4" label="FX6| " />
           <output name="5" label="|" />
@@ -14661,6 +15056,7 @@
           <output name="14" label="Mute| " />
         </model>
         <model model="GG1 [HO][N]" numOuts="2" numFns="14" productID="GG1">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Air Horn| " />
@@ -14680,6 +15076,7 @@
             Will not appear as such in the decoder list, because of having the same name as its family
             However selecting family name in the tree and then opening programmer will lead to this defintion.-->
         <model model="Tsunami SoundCar" numOuts="4" numFns="14" productID="SoundCar101">
+          <versionCV lowVersionID="69" highVersionID="69" />
           <output name="Airhorn" label="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14697,6 +15094,7 @@
         <!-- Model with name "Tsunami SoundCar 1.01" is exactly the same as model with name "Tsunami SoundCar".
             Added to allow a separate and visible listing in the decoder tree. -->
         <model model="Tsunami SoundCar 1.01" numOuts="4" numFns="14" productID="SoundCar101">
+          <versionCV lowVersionID="69" highVersionID="69" />
           <output name="Airhorn" label="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14712,6 +15110,7 @@
           <output name="Coupler" />
         </model>
         <model model="Tsunami SoundCar 1.03" numOuts="4" numFns="14" productID="SoundCar103">
+          <versionCV lowVersionID="69" highVersionID="69" />
           <output name="Airhorn" label="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14729,6 +15128,7 @@
       </family>
       <family name="Tsunami SoundCar Athearn OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_SoundCar_Athearn.xml">
         <model model="Caboose 1" numOuts="6" numFns="14" productID="1">
+          <versionCV lowVersionID="87" highVersionID="87" />
           <output name="Airhorn" label="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14744,6 +15144,7 @@
           <output name="Uncoupling" />
         </model>
         <model model="Caboose 2" numOuts="6" numFns="14" productID="1">
+          <versionCV lowVersionID="87" highVersionID="87" />
           <output name="Airhorn" label="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14761,6 +15162,7 @@
       </family>
       <family name="Tsunami SoundCar Walthers OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_SoundCar_Walthers.xml">
         <model model="ATSF El Capitan Baggage-Dormitory" numOuts="3" numFns="28" productID="24B410DD3">
+          <versionCV lowVersionID="85" highVersionID="85" />
           <output name="3" label="Interior|Lights (FX5)" />
           <!-- All following outputs likely not to used       -->
           <!-- as this decoder used Flex-Map function mapping -->
@@ -14779,6 +15181,7 @@
           <output name="Coupler" />
         </model>
         <model model="ATSF El Capitan Lunch Counter" numOuts="3" numFns="28" productID="24B410DD2">
+          <versionCV lowVersionID="85" highVersionID="85" />
           <output name="3" label="Interior|Lights (FX5)" />
           <!-- All following outputs likely not to used       -->
           <!-- as this decoder used Flex-Map function mapping -->
@@ -14797,6 +15200,7 @@
           <output name="Coupler" />
         </model>
         <model model="PRR 1960's Broadway Limited 4-4-2 Sleeper" numOuts="3" numFns="28" productID="24B410DD1">
+          <versionCV lowVersionID="85" highVersionID="85" />
           <output name="3" label="Interior|Lights (FX5)" />
           <!-- All following outputs likely not to used       -->
           <!-- as this decoder used Flex-Map function mapping -->
@@ -14815,6 +15219,7 @@
           <output name="Coupler" />
         </model>
         <model model="PRR 1960's Broadway Limited Kitchen-Dorm" numOuts="3" numFns="28" productID="24B410DD0">
+          <versionCV lowVersionID="85" highVersionID="85" />
           <output name="3" label="Interior|Lights (FX5)" />
           <!-- All following outputs likely not to used       -->
           <!-- as this decoder used Flex-Map function mapping -->
@@ -14835,6 +15240,7 @@
       </family>
       <family name="Tsunami Steam" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Steam.xml">
         <model model="TSU-750 Light Steam" numOuts="2" numFns="14" productID="826001">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -14850,6 +15256,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 Medium Steam" numOuts="2" numFns="14" productID="826002">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -14865,6 +15272,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 Heavy Steam" numOuts="2" numFns="14" productID="826003">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -14880,6 +15288,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 Lt Logging Steam" numOuts="2" numFns="14" productID="826020">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -14895,6 +15304,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 DRGW C-Class Steam" numOuts="2" numFns="14" productID="826016">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -14910,6 +15320,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 DRGW K-Class Steam" numOuts="2" numFns="14" productID="826004">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -14925,6 +15336,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 SP Cab Forward Steam" numOuts="2" numFns="14" productID="826005">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -14940,6 +15352,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Light Steam" numOuts="4" numFns="14" productID="826101">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14955,6 +15368,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Medium Steam" numOuts="4" numFns="14" productID="826102">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14970,6 +15384,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Heavy Steam" numOuts="4" numFns="14" productID="826103">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -14985,6 +15400,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Lt Logging Steam" numOuts="4" numFns="14" productID="826120">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -15000,6 +15416,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 DRGW C-Class Steam" numOuts="4" numFns="14" productID="826116">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -15015,6 +15432,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 DRGW K-Class Steam" numOuts="4" numFns="14" productID="826104">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -15030,6 +15448,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 SP Cab Forward Steam" numOuts="4" numFns="14" productID="826105">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -15045,6 +15464,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Southern Steam" numOuts="4" numFns="14" productID="826121">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -15060,6 +15480,7 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-4664N Challenger" numOuts="4" numFns="14" productID="826601">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -15077,6 +15498,7 @@
       </family>
       <family name="Tsunami Steam Bachmann OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Steam_Bachmann.xml">
         <model model="HO 2-6-6-2" numOuts="2" numFns="14" productID="2662">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15092,6 +15514,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO 2-8-8-4 EM-1" numOuts="2" numFns="14" productID="2884">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15107,6 +15530,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO 2-8-0" numOuts="2" numFns="14" productID="280">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15122,6 +15546,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO 2-10-0 Russian Decapod" numOuts="2" numFns="14" productID="2100">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15137,6 +15562,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO 2-10-2 USRA Light" numOuts="2" numFns="14" productID="2102">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15152,6 +15578,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO 4-4-0 Low Boiler" numOuts="2" numFns="14" productID="440l">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15167,6 +15594,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO 4-4-0 High Boiler" numOuts="2" numFns="14" productID="440h">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15182,6 +15610,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO 4-6-0" numOuts="2" numFns="14" productID="460">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15197,6 +15626,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO 4-6-2 K4" numOuts="2" numFns="14" productID="462">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15212,6 +15642,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO 4-8-2 USRA Heavy" numOuts="2" numFns="14" productID="482">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15227,6 +15658,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO 4-8-4 J Class" numOuts="2" numFns="14" productID="484">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15242,6 +15674,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO 3 Truck Climax" numOuts="2" numFns="14" productID="3climax">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15257,6 +15690,7 @@
           <output name="Coupler" />
         </model>
         <model model="HO 3 Truck Shay" numOuts="2" numFns="14" productID="3shay">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15272,6 +15706,7 @@
           <output name="Coupler" />
         </model>
         <model model="On30 0-4-0 Porter" numOuts="2" numFns="14" productID="o040">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15287,6 +15722,7 @@
           <output name="Coupler" />
         </model>
         <model model="On30 0-4-2 Porter" numOuts="2" numFns="14" productID="o042">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15302,6 +15738,7 @@
           <output name="Coupler" />
         </model>
         <model model="On30 2-4-4 Forney" numOuts="2" numFns="14" productID="o244">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15317,6 +15754,7 @@
           <output name="Coupler" />
         </model>
         <model model="On30 2-4-4-2" numOuts="2" numFns="14" productID="o2442">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15332,6 +15770,7 @@
           <output name="Coupler" />
         </model>
         <model model="On30 2-6-6-2" numOuts="2" numFns="14" productID="2662">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15347,6 +15786,7 @@
           <output name="Coupler" />
         </model>
         <model model="On30 4-6-0" numOuts="2" numFns="14" productID="o460">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15362,6 +15802,7 @@
           <output name="Coupler" />
         </model>
         <model model="On30 Climax" numOuts="2" numFns="14" productID="o2climax">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15377,6 +15818,7 @@
           <output name="Coupler" />
         </model>
         <model model="On30 Heisler" numOuts="2" numFns="14" productID="oheisler">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15392,6 +15834,7 @@
           <output name="Coupler" />
         </model>
         <model model="On30 2 Truck T Boiler Shay" numOuts="2" numFns="14" productID="o2shay">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15407,6 +15850,7 @@
           <output name="Coupler" />
         </model>
         <model model="Fn3 2 Truck Climax" numOuts="2" numFns="14" productID="f2climax">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15422,6 +15866,7 @@
           <output name="Coupler" />
         </model>
         <model model="Fn3 3 Truck Shay" numOuts="2" numFns="14" productID="f3shay">
+          <versionCV lowVersionID="80" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -15439,6 +15884,7 @@
       </family>
       <family name="Tsunami Steam Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Steam_Bachmann_SndVal.xml">
         <model model="4-4-0 American [HO]" numOuts="2" numFns="14" productID="440">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15453,6 +15899,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="2-6-0 Mogul - Alco [HO]" numOuts="2" numFns="14" productID="Alco260">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15467,6 +15914,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="4-6-0 - Baldwin [HO]" numOuts="2" numFns="14" productID="Baldwin460">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15481,6 +15929,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="4-6-2 Pacific - PRR K4 [N]" numOuts="2" numFns="14" productID="PRRK4_N">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15495,6 +15944,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="2-8-0 Consolidation - [HO]" numOuts="2" numFns="14" productID="Bald280">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15509,6 +15959,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="2-8-2 Mikado - [HO]" numOuts="2" numFns="14" productID="Bald282">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15524,6 +15975,7 @@
         </model>
         <!-- keep the initial model entry for compatibility purpose as it has already been released -->
         <model show="no" model="2-8-4 Berkshire" replacementModel="2-8-4 Berkshire - Pere Marquette [HO]" replacementFamily="Tsunami Steam Bachmann Sound Value" numOuts="2" numFns="14" productID="Lima284_PM">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15538,6 +15990,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="2-8-4 Berkshire - Pere Marquette [HO]" numOuts="2" numFns="14" productID="Lima284_PM">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15552,6 +16005,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="2-8-4 Berkshire - Pere Marquette [N]" numOuts="2" numFns="14" productID="Lima284_PM_N">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15566,6 +16020,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="2-8-4 Berkshire - Nickel Plate [HO]" numOuts="2" numFns="14" productID="Lima284_NKP">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15580,6 +16035,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="2-8-4 Berkshire - Nickel Plate [N]" numOuts="2" numFns="14" productID="Lima284_NKP_N">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15594,6 +16050,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="2-8-4 Berkshire - Chesapeake &amp; Ohio Kanawha [HO]" numOuts="2" numFns="14" productID="Lima284_CO">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15608,6 +16065,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="2-8-4 Berkshire - Chesapeake &amp; Ohio Kanawha [N]" numOuts="2" numFns="14" productID="Lima284_CO_N">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15622,6 +16080,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="4-8-4 Class J - Norfolk &amp; Western [HO]" numOuts="2" numFns="14" productID="CLSJ484">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15636,6 +16095,7 @@
           <output name="12" label="Mute| " />
         </model>
         <model model="4-8-4 GS-4 - Southern Pacific [HO]" numOuts="2" numFns="14" productID="GS4484">
+          <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17" />
           <output name="4" label="FX6|Mode" />
           <output name="5" label="Whistle| " />
@@ -15652,6 +16112,7 @@
       </family>
       <family name="Tsunami Steam Genesis OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Steam_Genesis.xml">
         <model model="Bigboy 4-8-8-4" numOuts="4" numFns="14" productID="BB">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -15667,6 +16128,7 @@
           <output name="Coupler" />
         </model>
         <model model="Challenger 4-6-6-4" numOuts="4" numFns="14" productID="chal">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -15682,6 +16144,7 @@
           <output name="Coupler" />
         </model>
         <model model="FEF-3 4-8-4" numOuts="4" numFns="14" productID="FEF">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -15697,6 +16160,7 @@
           <output name="Coupler" />
         </model>
         <model model="MT-4 4-8-2" numOuts="4" numFns="14" productID="MT4">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -15712,6 +16176,7 @@
           <output name="Coupler" />
         </model>
         <model model="N Challenger" numOuts="4" numFns="14" productID="N_Chal">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -15729,6 +16194,7 @@
       </family>
       <family name="Tsunami Steam Intermountain OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Steam_IMRC.xml">
         <model model="HO SP AC12" numOuts="4" numFns="14" productID="AC12">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
           <output name="3" label="  FX5  " />
@@ -15746,6 +16212,7 @@
       </family>
       <family name="Tsunami Steam Walthers OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_Tsu_Steam_Walthers.xml">
         <model model="USRA 0-8-0" numOuts="2" numFns="14" productID="USRA080">
+          <versionCV lowVersionID="64" />
           <output name="FX5" label=" Rule 17" />
           <output name="FX6" label="Mode" />
           <output name="Whistle" />
@@ -23128,49 +23595,77 @@
         </model>
       </family>
       <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63320.xml">
-        <model model="Feedback Module 2-rail 63320" productID="6332" />
+        <model model="Feedback Module 2-rail 63320" productID="6332">
+          <versionCV />
+        </model>
       </family>
       <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63330.xml">
-        <model model="Feedback Module 3-rail 63330" productID="6333" />
+        <model model="Feedback Module 3-rail 63330" productID="6333">
+          <versionCV />
+        </model>
       </family>
       <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63340.xml">
-        <model model="Feedback Module 2-rail 63340" productID="6334" />
+        <model model="Feedback Module 2-rail 63340" productID="6334">
+          <versionCV />
+        </model>
       </family>
       <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63350.xml">
-        <model model="Feedback Module 3-rail 63350" productID="6335" />
+        <model model="Feedback Module 3-rail 63350" productID="6335">
+          <versionCV />
+        </model>
       </family>
       <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63400.xml">
-        <model model="Switch Control 63400" productID="6340" />
+        <model model="Switch Control 63400" productID="6340">
+          <versionCV />
+        </model>
       </family>
       <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63410.xml">
-        <model model="63410" productID="6341" />
+        <model model="63410" productID="6341">
+          <versionCV />
+        </model>
       </family>
       <family name="Display Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63450.xml">
-        <model model="63450" productID="6345" />
+        <model model="63450" productID="6345">
+          <versionCV />
+        </model>
       </family>
       <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63500.xml">
-        <model model="Ln Servo Module 63500" productID="6350" />
+        <model model="Ln Servo Module 63500" productID="6350">
+          <versionCV />
+        </model>
       </family>
       <family name="Adapter" mfg="Uhlenbrock Elektronik" type="Adapter" file="Uhlenbrock_63810.xml">
-        <model model="mobile station Adapter 63810" productID="6381" />
+        <model model="mobile station Adapter 63810" productID="6381">
+          <versionCV />
+        </model>
       </family>
       <family name="Adapter" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63830.xml">
-        <model model="LocoNet IR Receiver 63830" productID="6383" />
+        <model model="LocoNet IR Receiver 63830" productID="6383">
+          <versionCV />
+        </model>
       </family>
       <family name="Adapter" mfg="Uhlenbrock Elektronik" type="Adapter" file="Uhlenbrock_63880.xml">
-        <model model="s88-Ln Interface 63880" productID="6388" />
+        <model model="s88-Ln Interface 63880" productID="6388">
+          <versionCV />
+        </model>
       </family>
       <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_67800.xml">
         <model model="67800" highVersionID="3" lowVersionID="85" />
       </family>
       <family name="Lissy Receiver" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_68600_Lissy.xml">
-        <model model="Lissy Receiver 68600" productID="6860" />
+        <model model="Lissy Receiver 68600" productID="6860">
+          <versionCV />
+        </model>
       </family>
       <family name="Lissy Receiver" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_68610_Lissy.xml">
-        <model model="Lissy Receiver 68610" productID="6861" />
+        <model model="Lissy Receiver 68610" productID="6861">
+          <versionCV />
+        </model>
       </family>
       <family name="Lissy Receiver" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_68620_Lissy.xml">
-        <model model="Lissy Receiver 68620" productID="6862" />
+        <model model="Lissy Receiver 68620" productID="6862">
+          <versionCV />
+        </model>
       </family>
       <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_73100.xml">
         <model model="73100" numOuts="4" numFns="14" productID="73100">
@@ -23493,41 +23988,65 @@
         </model>
       </family>
       <family name="Command Station" mfg="Uhlenbrock Elektronik" type="Command Station" file="Uhlenbrock_DaisyII.xml">
-        <model model="Daisy II 65200" productID="6520" />
+        <model model="Daisy II 65200" productID="6520">
+          <versionCV />
+        </model>
       </family>
       <family name="Command Station" mfg="Uhlenbrock Elektronik" type="Command Station" file="Uhlenbrock_DaisyII65210.xml">
-        <model model="Daisy II 65210" productID="6521" />
+        <model model="Daisy II 65210" productID="6521">
+          <versionCV />
+        </model>
       </family>
       <family name="Wireless" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_FunkMaster66400.xml">
-        <model model="Funk-Master LN 66400" productID="6640" />
+        <model model="Funk-Master LN 66400" productID="6640">
+          <versionCV />
+        </model>
         <model model="FunkMaster" show="no" replacementModel="Funk-Master LN 66400" replacementFamily="Wireless" productID="6640" />
       </family>
       <family name="Wireless" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_FunkMaster66410.xml">
-        <model model="Funk-Master LN+DCC 66410" productID="6641" />
+        <model model="Funk-Master LN+DCC 66410" productID="6641">
+          <versionCV />
+        </model>
       </family>
       <family name="IntelliLight" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_IntelliLight2800.xml">
-        <model model="Controller" productID="2800" />
+        <model model="Controller" productID="2800">
+          <versionCV />
+        </model>
       </family>
       <family name="IntelliLight" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_IntelliLight2820.xml">
-        <model model="LED Controller" productID="2820" />
+        <model model="LED Controller" productID="2820">
+          <versionCV />
+        </model>
       </family>
       <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power22.xml">
-        <model model="Power22" productID="6321" />
+        <model model="Power22" productID="6321">
+          <versionCV />
+        </model>
       </family>
       <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power4.xml">
-        <model model="Power4" productID="6324" />
+        <model model="Power4" productID="6324">
+          <versionCV />
+        </model>
       </family>
       <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power40.xml">
-        <model model="Power40" productID="6322" />
+        <model model="Power40" productID="6322">
+          <versionCV />
+        </model>
       </family>
       <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power7.xml">
-        <model model="Power7" productID="6327" />
+        <model model="Power7" productID="6327">
+          <versionCV />
+        </model>
       </family>
       <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power70.xml">
-        <model model="Power70" productID="6323" />
+        <model model="Power70" productID="6323">
+          <versionCV />
+        </model>
       </family>
       <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power8.xml">
-        <model model="Power8" productID="6328" />
+        <model model="Power8" productID="6328">
+          <versionCV />
+        </model>
       </family>
       <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_Tillig BR89_73xx5.xml">
         <!-- to be checked by hardware owner -->
@@ -23541,10 +24060,14 @@
         </model>
       </family>
       <family name="Track-Control" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_TrackControl_6922.xml">
-        <model model="Turnout Module" productID="6922" />
+        <model model="Turnout Module" productID="6922">
+          <versionCV />
+        </model>
       </family>
       <family name="Track-Control" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_TrackControl_6923.xml">
-        <model model="Signal Module" productID="6923" />
+        <model model="Signal Module" productID="6923">
+          <versionCV />
+        </model>
       </family>
       <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2051.xml">
         <model model="ATL2051" lowVersionID="57" highVersionID="59" numOuts="2" numFns="4" productID="ATL2051" />
@@ -23745,6 +24268,7 @@
       </family>
       <family name="ZTC Sound" mfg="ZTC" file="ZTC_471_sound.xml">
         <model model="ZTC 471 Small Generic Locomotives" numOuts="4" numFns="15" productID="471">
+          <versionCV lowVersionID="64" />
           <output name="1" label="long whistle" />
           <!-- name="Whistle"  -->
           <output name="2" label="short whistle" />
@@ -23777,6 +24301,7 @@
           <!-- headlight, F5, F6 -->
         </model>
         <model model="ZTC 472 LMS / LNER Locomotives" numOuts="4" numFns="15" productID="472">
+          <versionCV lowVersionID="64" />
           <output name="1" label="long whistle" />
           <!-- name="Whistle"  -->
           <output name="2" label="short whistle" />
@@ -23809,6 +24334,7 @@
           <!-- headlight, F5, F6 -->
         </model>
         <model model="ZTC 473 GWR / SR Locomotives" numOuts="4" numFns="15" productID="473">
+          <versionCV lowVersionID="64" />
           <output name="1" label="long whistle" />
           <!-- name="Whistle"  -->
           <output name="2" label="short whistle" />
@@ -24315,6 +24841,7 @@
       </family>
       <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo" file="Zimo_MX66-2000-11.xml">
         <model model="MX61_2000" numOuts="6" numFns="6">
+          <versionCV lowVersionID="11" highVersionID="15" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Brown" />
@@ -24323,6 +24850,7 @@
           <output name="6" label="NC - Logic Level" />
         </model>
         <model model="MX62_2000" numOuts="4" numFns="6">
+          <versionCV lowVersionID="3" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="NC - Logic Level" />
