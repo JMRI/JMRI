@@ -159,6 +159,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 newKnownState(INCONSISTENT);
                 jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(s); },
                          DELAYED_FEEDBACK_INTERVAL );
+            } else if (_activeFeedbackType == ONESENSOR) {      // required for turntable only
+                newKnownState(INCONSISTENT);
             }
         } else {
             log.debug("myOperator NOT NULL");
