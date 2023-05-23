@@ -724,6 +724,14 @@
             <li><strong>Unnecessary Anchors</strong> - Anchor points are only required at block
             boundaries or changing track geometry, such as entering a curve, using dashes, hidden
             track, etc.</li>
+
+            <li><strong>Linear Bezier Track Segments</strong> - Find bézier curves that are
+            effectively a straight line.  Consider changing the track segment to a <strong>Line
+            </strong>.</li>
+
+            <li><strong>Fixed Radius Bezier Track Segments</strong> - Find bézier curves that are
+            are effectively a circle with a fixed radius.  Consider changing the track segment to
+            a <strong>Circle</strong>.</li>
           </ul>
         </li>
 

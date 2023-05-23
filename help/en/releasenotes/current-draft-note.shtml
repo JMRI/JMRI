@@ -423,7 +423,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>Fix the <strong>Tools &rArr; Check</strong> bézier options.  Remove a bogus error message.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
