@@ -345,9 +345,28 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals(123, r.getTOIDInt());
         Assert.assertEquals("C", r.getTurnoutStateString());
         Assert.assertEquals("turnout description", r.getTurnoutDescString());
+        r = DCCppReply.parseDCCppReply("jT 456 T \"\"");
+        Assert.assertEquals("T", r.getTurnoutStateString());
+        Assert.assertEquals("", r.getTurnoutDescString());
         r = DCCppReply.parseDCCppReply("jT");
         Assert.assertTrue(r.isTurnoutIDsReply());
         Assert.assertEquals(0, r.getTurnoutIDList().size());
+        r = DCCppReply.parseDCCppReply("jC 222 4"); //time and rate
+        Assert.assertTrue(r.isClockReply());
+        Assert.assertEquals(222, r.getClockTimeInt());
+        Assert.assertEquals(4,   r.getClockRateInt());
+        r = DCCppReply.parseDCCppReply("jC 333"); //just time
+        Assert.assertTrue(r.isClockReply());
+        Assert.assertEquals(333, r.getClockTimeInt());
+        //verify bad syntax fails
+        r = DCCppReply.parseDCCppReply("jT 123 456 789 xx");        
+        Assert.assertFalse(r.isTurnoutIDsReply());
+        r = DCCppReply.parseDCCppReply("jT 123 X \"turnout description\"");
+        Assert.assertFalse(r.isTurnoutIDReply());
+        r = DCCppReply.parseDCCppReply("jC 222 4 xx"); //time and rate
+        Assert.assertFalse(r.isClockReply());
+        r = DCCppReply.parseDCCppReply("jC x222 4 xx"); //time and rate
+        Assert.assertFalse(r.isClockReply());
         
 }
 

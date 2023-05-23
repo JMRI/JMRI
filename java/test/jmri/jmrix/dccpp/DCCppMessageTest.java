@@ -522,10 +522,22 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testMonitorStringThrottleCommandsMsg() {
         msg = new DCCppMessage("JT");
         Assert.assertEquals("Monitor string", "Request Turnout ID list", msg.toMonitorString());
+        msg = DCCppMessage.makeTurnoutIDsMsg();
+        Assert.assertEquals("Monitor string", "Request Turnout ID list", msg.toMonitorString());
         msg = new DCCppMessage("JT 145");
+        Assert.assertEquals("Monitor string", "Request details for Turnout 145", msg.toMonitorString());
+        msg = DCCppMessage.makeTurnoutIDMsg(145);
         Assert.assertEquals("Monitor string", "Request details for Turnout 145", msg.toMonitorString());
         msg = new DCCppMessage("T 145 X");
         Assert.assertEquals("Monitor string", "Request implementation for Turnout 145", msg.toMonitorString());
+        msg = new DCCppMessage("JC");
+        Assert.assertEquals("Monitor string", "Request clock update from CS", msg.toMonitorString());
+        msg = DCCppMessage.makeClockRequestTimeMsg();
+        Assert.assertEquals("Monitor string", "Request clock update from CS", msg.toMonitorString());
+        msg = new DCCppMessage("JC 234 12");
+        Assert.assertEquals("Monitor string", "Send FastClock Mins:234, Rate:12", msg.toMonitorString());
+        msg = DCCppMessage.makeClockSetMsg(234, 12);
+        Assert.assertEquals("Monitor string", "Send FastClock Mins:234, Rate:12", msg.toMonitorString());
     }
 
     @Test

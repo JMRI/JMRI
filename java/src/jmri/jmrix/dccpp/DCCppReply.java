@@ -291,6 +291,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text += " State:" + getTurnoutStateString();
                     text += " Desc:'" + getTurnoutDescString() + "'";
                     break;
+                } else if (isClockReply()) {    
+                    text = "Clock Reply: Mins:" + getClockTimeInt();
+                    if (!getClockRateString().isEmpty()) {
+                        text += ", Rate:" + getClockRateString();
+                    }
+                    break;
                 }
                 text = "Unknown Message: '" + toString() + "'";
                 break;
@@ -560,6 +566,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.TURNOUT_IDS_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.TURNOUT_ID_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.TURNOUT_ID_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.CLOCK_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.CLOCK_REPLY_REGEX;
                 }
                 log.debug("Parsed Reply: '{}' length {}", r.toString(), r._nDataChars);
                 return (r);
@@ -1570,6 +1578,28 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return ("0");
         }
     }
+    public String getClockTimeString() {
+        if (this.isClockReply()) {
+            return (this.getValueString(1));
+        } else {
+            log.error("getClockTimeString Parser called on non-getClockTimeString message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+    public int getClockTimeInt() {
+        return (Integer.parseInt(this.getClockTimeString()));
+    }
+    public String getClockRateString() {
+        if (this.isClockReply()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getClockRateString Parser called on non-getClockRateString message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+    public int getClockRateInt() {
+        return (Integer.parseInt(this.getClockRateString()));
+    }
 
     // -------------------------------------------------------------------
 
@@ -1709,6 +1739,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
     public boolean isTurnoutIDReply() {
         return (this.matches(DCCppConstants.TURNOUT_ID_REPLY_REGEX));
+    }
+    public boolean isClockReply() {
+        return (this.matches(DCCppConstants.CLOCK_REPLY_REGEX));
     }
 
     public boolean isValidReplyFormat() {
