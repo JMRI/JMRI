@@ -1013,16 +1013,14 @@ public class TrainBuilderBase extends TrainCommon {
         addLine(_buildReport, FIVE, BLANK_LINE);
         addLine(_buildReport, ONE,
                 Bundle.getMessage("buildFoundCars", Integer.toString(_carList.size()), _train.getName()));
-
-        List<String> locationNames = new ArrayList<>(); // only show cars once
-                                                        // using the train's
-                                                        // route
+        // only show cars once using the train's route
+        List<String> locationNames = new ArrayList<>();
         for (RouteLocation rl : _train.getRoute().getLocationsBySequenceList()) {
             if (locationNames.contains(rl.getName())) {
                 continue;
             }
             locationNames.add(rl.getName());
-            int count = countCarsAt(rl, _carList);
+            int count = countRollingStockAt(rl, new ArrayList<RollingStock>(_carList));
             if (rl.getLocation().isStaging()) {
                 addLine(_buildReport, FIVE,
                         Bundle.getMessage("buildCarsInStaging", count, rl.getName()));
@@ -1090,16 +1088,6 @@ public class TrainBuilderBase extends TrainCommon {
             }
             addLine(_buildReport, SEVEN, BLANK_LINE);
         }
-    }
-    
-    protected int countCarsAt(RouteLocation rl, List<Car> list) {
-        int count = 0;
-        for (RollingStock rs : list) {
-            if (rs.getLocationName().equals(rl.getName())) {
-                count++;
-            }
-        }
-        return count;
     }
 
     protected void sortCarsOnFifoLifoTracks() {
@@ -3003,7 +2991,7 @@ public class TrainBuilderBase extends TrainCommon {
                 continue;
             }
             locationNames.add(rl.getName());
-            int count = countEnginesAt(rl, _engineList);
+            int count = countRollingStockAt(rl, new ArrayList<RollingStock>(_engineList));
             if (rl.getLocation().isStaging()) {
                 addLine(_buildReport, FIVE,
                         Bundle.getMessage("buildLocosInStaging", count, rl.getName()));
@@ -3023,7 +3011,7 @@ public class TrainBuilderBase extends TrainCommon {
         }
     }
     
-    protected int countEnginesAt(RouteLocation rl, List<Engine> list) {
+    protected int countRollingStockAt(RouteLocation rl, List<RollingStock> list) {
         int count = 0;
         for (RollingStock rs : list) {
             if (rs.getLocationName().equals(rl.getName())) {
