@@ -35,16 +35,12 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
 
     public ProgDebugger() {
         mode = ProgrammingMode.PAGEMODE;
-        mValues.put(7, 64);
-        mValues.put(8, 141);
     }
 
     public ProgDebugger(boolean pLongAddress, int pAddress) {
         longAddr = pLongAddress;
         address = pAddress;
         mode = ProgrammingMode.OPSBITMODE;
-        mValues.put(7, 64);
-        mValues.put(8, 141);
     }
 
     // write CV is recorded for later use
