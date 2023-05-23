@@ -874,7 +874,8 @@ public class LayoutTurntableView extends LayoutTrackView {
             if (main == isMain) {
                 g2.draw(new Line2D.Double(pt1, pt2));
             }
-            if (isMain && isTurnoutControlled() && (getPosition() == j)) {
+            if (isMain && isTurnoutControlled() && (getPosition() == j ) &&
+                    getRayTurnout(j).getKnownState() != jmri.Turnout.INCONSISTENT) {
                 if (isBlock) {
                     LayoutBlock lb = getLayoutBlock();
                     if (lb != null) {
@@ -930,7 +931,8 @@ public class LayoutTurntableView extends LayoutTrackView {
                 g2.draw(new Line2D.Double(pt1L, pt2L));
                 g2.draw(new Line2D.Double(pt1R, pt2R));
             }
-            if (isMain && isTurnoutControlled() && (getPosition() == j)) {
+            if (isMain && isTurnoutControlled() && (getPosition() == j ) &&
+                    getRayTurnout(j).getKnownState() != jmri.Turnout.INCONSISTENT) {
 //                LayoutBlock lb = getLayoutBlock();
 //                if (lb != null) {
 //                    c = g2.getColor();
