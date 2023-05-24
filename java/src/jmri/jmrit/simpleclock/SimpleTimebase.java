@@ -312,6 +312,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 hardwareTimeSource = InstanceManager.getDefault(ClockControl.class);
                 masterName = hardwareTimeSource.getHardwareClockName();
             }
+            firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed            
         }
     }
 
@@ -359,6 +360,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 InstanceManager.getDefault(ClockControl.class).initializeHardwareClock(
                    userGetRate(), getTime(), false);
             }
+            firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed
         }
     }
 
@@ -422,7 +424,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setClockInitialRunState(ClockInitialRunState state) {
-        initialState = state;
+        if (initialState != state) {
+            initialState = state;
+            firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed
+        }
     }
 
     /**
@@ -438,7 +443,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setShowStopButton(boolean displayed) {
-        showStopButton = displayed;
+        if (showStopButton != displayed) {
+            showStopButton = displayed;
+            firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed
+        }
     }
 
     /**
@@ -454,8 +462,11 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setStartSetTime(boolean set, Date time) {
-        startSetTime = set;
-        startTime = new Date(time.getTime());
+        if (startSetTime!=set || startTime!=new Date(time.getTime())) {
+            startSetTime = set;
+            startTime = new Date(time.getTime());
+            firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed
+        }
     }
 
     /**
@@ -471,8 +482,11 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setStartRate(double factor) {
-        startupFactor = factor;
-        haveStartupFactor = true;
+        if (startupFactor != factor) {
+            startupFactor = factor;
+            haveStartupFactor = true;
+            firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed
+        }
     }
 
     /**
@@ -492,7 +506,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setSetRateAtStart(boolean set) {
-        startSetRate = set;
+        if (startSetRate != set) {
+            startSetRate = set;
+            firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed
+        }
     }
 
     /**
@@ -516,7 +533,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setStartClockOption(int option) {
-        startClockOption = option;
+        if (startClockOption != option) {
+            startClockOption = option;
+            firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed
+        }
     }
 
     /**

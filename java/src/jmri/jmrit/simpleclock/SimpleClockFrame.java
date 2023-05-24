@@ -729,6 +729,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      */
     @Override
     public void propertyChange(PropertyChangeEvent event) {
+        log.trace("propertyChange({})",event.getPropertyName());
         switch (event.getPropertyName()) {
             case "run":
                 updateRunningButton();
@@ -738,6 +739,44 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                 break;
             case "time":
                 updateTime();
+                break;
+            case "config": //indicates that something in the clock config has changed, so update all
+                synchronizeCheckBox.setSelected(clock.getSynchronize());
+                timeSourceBox.setSelectedIndex(clock.getInternalMaster() ? internalSourceIndex : hardwareSourceIndex);
+                switch (clock.getClockInitialRunState()) {
+                    case DO_STOP:
+                        startRunBox.setSelectedIndex(START_STOPPED);
+                        break;
+                    case DO_START:
+                        startRunBox.setSelectedIndex(START_RUNNING);
+                        break;
+                    case DO_NOTHING:
+                        startRunBox.setSelectedIndex(START_NORUNCHANGE);
+                        break;
+                    default:
+                        jmri.util.LoggingUtil.warnOnce(log, "Unexpected initial run state = {}", clock.getClockInitialRunState());
+                        break;
+                }
+                startSetTimeCheckBox.setSelected(clock.getStartSetTime());
+                displayStartStopButton.setSelected(clock.getShowStopButton());
+                startSetRateCheckBox.setSelected(clock.getSetRateAtStart());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(clock.getStartTime());
+                startHoursField.setText("" + cal.get(Calendar.HOUR_OF_DAY));
+                startMinutesField.setText("" + cal.get(Calendar.MINUTE));
+                startSetRateCheckBox.setSelected(clock.getSetRateAtStart());
+                startFactorField.setText(threeDigits.format(clock.getStartRate()));
+                if (clock.getStartClockOption() == startNone) {
+                    clockStartBox.setSelectedIndex(startNone);
+                } else if (clock.getStartClockOption() == Timebase.NIXIE_CLOCK) {
+                    clockStartBox.setSelectedIndex(startNixieClock);
+                } else if (clock.getStartClockOption() == Timebase.ANALOG_CLOCK) {
+                    clockStartBox.setSelectedIndex(startAnalogClock);
+                } else if (clock.getStartClockOption() == Timebase.LCD_CLOCK) {
+                    clockStartBox.setSelectedIndex(startLcdClock);
+                } else if (clock.getStartClockOption() == Timebase.PRAGOTRON_CLOCK) {
+                    clockStartBox.setSelectedIndex(startPragotronClock);
+                }
                 break;
             default:
                 // ignore all other properties
