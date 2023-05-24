@@ -67,6 +67,7 @@ public class DCCppClockControl extends DefaultClockControl implements DCCppListe
      *   send rate of zero if clock is not running
      *   Note: fastclock rate and time are in a single message
      */
+    @SuppressWarnings("deprecation")
     @Override
     public void setRate(double newRate) {
         log.trace("setRate({})", (int)newRate); // NOI18N
