@@ -107,6 +107,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         pLoad.setLayout(new GridBagLayout());
         pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
         addItemLeft(pLoad, ignoreLoadCheckBox, 1, 0);
+        loadComboBox.setName("loadComboBox");
         addItem(pLoad, loadComboBox, 2, 0);
         addItem(pLoad, editLoadButton, 3, 0);
         pOptional.add(pLoad);
