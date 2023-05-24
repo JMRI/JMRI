@@ -393,7 +393,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Add an "Export Variables to CSV" menu item in the
+                File menu on individual roster entries.</li>
         </ul>
 
     <h3>CTC Tool</h3>
