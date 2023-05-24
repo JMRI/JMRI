@@ -434,6 +434,10 @@
 
         <li>@gitophile, who found the fix for a broken link.</li>
 
+        <li>Qun and Sven G&ouml;thel  of
+        <a href="https://jausoft.com">G&ouml;thel Software</a> who maintain the JOAL library we use
+        for advanced audio.
+
         <li>Joseph Goldstone, who put together the javax.comm implementation for Mac OS X</li>
 
         <li>Martin Gostling, who provided CML and Digitrax decoder definitions</li>
@@ -555,6 +559,9 @@
         <li>Lionel Jeanson, who added images to the roster, updated the throttle to add preferences
         for displaying them, cleaned up some code problems in the throttle, and created
         Jynstruments for improving the GUI</li>
+
+        <li>The good people at JogAmp.org. who maintain a library we use
+        for advanced audio.
 
         <li>Pete Johnson, who provided instructions for use of Operations</li>
 
@@ -1011,7 +1018,7 @@
         <li>Kenneth Tj&oslash;stheim, <!-- SeaU2 -->
             who provided the Norway-2001 signal system</li>
 
-        <li>Walter Thompson, who provided the ID information for the Lionel Challenger decoder and 
+        <li>Walter Thompson, who provided the ID information for the Lionel Challenger decoder and
         DS54 accessory decoder, updated lots of decoder definitions, improved many help pages, and
         was an active jmriusers group moderator.</li>
 
@@ -1032,7 +1039,7 @@
 
         <li>Peter Ulvestad, who created the <a href=
         "html/doc/Technical/XmlEditors.shtml">page on XML editors</a>, has done a large amount of
-        work on decoder definitions, helped solve a problem with the NX entry/exit implementation 
+        work on decoder definitions, helped solve a problem with the NX entry/exit implementation
         and is an active jmriusers group moderator. </li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3msunderwd+">Mark Underwood</a>, <!-- msunderwd -->
