@@ -1,12 +1,11 @@
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 
@@ -23,11 +22,11 @@ import jmri.util.swing.JemmyUtil;
 /**
  * @author Paul Bender Copyright (C) 2017
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class SchedulesTableFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SchedulesTableFrame t = new SchedulesTableFrame();
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
@@ -35,7 +34,6 @@ public class SchedulesTableFrameTest extends OperationsTestCase {
 
     @Test
     public void testFrameId() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SchedulesTableFrame stf = new SchedulesTableFrame();
         Assert.assertNotNull("exists", stf);
 
@@ -67,7 +65,6 @@ public class SchedulesTableFrameTest extends OperationsTestCase {
 
     @Test
     public void testFrameDelete() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SchedulesTableFrame stf = new SchedulesTableFrame();
         Assert.assertNotNull("exists", stf);
 
@@ -93,7 +90,7 @@ public class SchedulesTableFrameTest extends OperationsTestCase {
         delete.setName("Delete schedule"); // NOI18N
         delete.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return delete.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -116,7 +113,6 @@ public class SchedulesTableFrameTest extends OperationsTestCase {
 
     @Test
     public void testFrameEdit() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SchedulesTableFrame stf = new SchedulesTableFrame();
         Assert.assertNotNull("exists", stf);
         
@@ -150,10 +146,10 @@ public class SchedulesTableFrameTest extends OperationsTestCase {
         
         tbl.clickOnCell(1, tbl.findColumn(Bundle.getMessage("ButtonEdit")));
         // confirm edit schedule frame exists
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return JmriJFrame.getFrame(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"),
                     new Object[]{t.getName()})) != null;
-        });
+        },"frame located");
 
         // dispose also closes schedule edit frame
         JUnitUtil.dispose(stf);

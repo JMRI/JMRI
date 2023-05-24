@@ -91,12 +91,10 @@ public class CarsTest extends OperationsTestCase {
         e.setAttribute(Xml.RWE_DEST_ID, "TESTRWEDESTID");
         e.setAttribute(Xml.RWE_LOAD, "TESTRWELOAD");
 
-        try {
+        Assertions.assertDoesNotThrow( () -> {
             Car c1 = new Car(e);
-            Assert.assertNotNull("Xml Element Constructor", c1);
-        } catch (java.lang.NullPointerException npe) {
-            Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
-        }
+            Assertions.assertNotNull(c1, "Xml Element Constructor");
+        } ,"Exception while executing Xml Element Constructor");
 
         jmri.util.JUnitAppender.assertErrorMessage("Kernel TESTKERNEL does not exist");
     }
