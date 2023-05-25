@@ -805,6 +805,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         changed = false;
         setVisible(false);
         super.windowClosing(null);
+        dispose();
     }
 
     protected String getClassName() {
