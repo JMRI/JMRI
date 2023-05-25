@@ -38,6 +38,7 @@
         <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li>Set Turnout userName from Description when defined in myAutomation.h</li>
+                <li>Support fastclock synchronization to DCC-EX</li>
             </ul>
 
         <h4>DCC4pc</h4>

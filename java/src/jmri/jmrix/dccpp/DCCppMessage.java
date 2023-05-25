@@ -291,6 +291,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     myRegex = DCCppConstants.TURNOUT_IDS_REGEX;
                 } else if ((match(toString(), DCCppConstants.TURNOUT_ID_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_ID_REGEX;
+                } else if ((match(toString(), DCCppConstants.CLOCK_REQUEST_TIME_REGEX, "ctor")) != null) { //<JC>
+                    myRegex = DCCppConstants.CLOCK_REQUEST_TIME_REGEX;
+                } else if ((match(toString(), DCCppConstants.CLOCK_SET_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.CLOCK_SET_REGEX;
                 } else {
                     myRegex = "";
                 }
@@ -561,6 +565,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     break;
                 } else if (isTurnoutIDMessage()) {    
                     text = "Request details for Turnout " + getTOIDString();
+                    break;
+                } else if (isClockRequestTimeMessage()) {    
+                    text = "Request clock update from CS";
+                    break;
+                } else if (isClockSetTimeMessage()) {    
+                    text = "Send FastClock Mins:" + getClockMinutesInt();
+                    if (!getClockRateString().isEmpty()) {                    
+                        text += ", Rate:" + getClockRateString();
+                        if (getClockRateInt()==0) {
+                            text += " (paused)";
+                        }
+                    }
                     break;
                 }
                 text = "Unknown Message: '" + toString() + "'";
@@ -899,6 +915,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public boolean isTurnoutIDMessage() {
         return (this.match(DCCppConstants.TURNOUT_ID_REGEX) != null);
     }
+    public boolean isClockRequestTimeMessage() {
+        return (this.match(DCCppConstants.CLOCK_REQUEST_TIME_REGEX) != null);
+    }
+    public boolean isClockSetTimeMessage() {
+        return (this.match(DCCppConstants.CLOCK_SET_REGEX) != null);
+    }
+
     public boolean isTurnoutImplementationMessage() {
         return (this.match(DCCppConstants.TURNOUT_IMPL_REGEX) != null);
     }
@@ -1387,6 +1410,28 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             return (0);
         }
     }
+    public String getClockMinutesString() {
+        if (this.isClockSetTimeMessage()) {
+            return (this.getValueString(1));
+        } else {
+            log.error("getClockTimeString Parser called on non-getClockTimeString message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+    public int getClockMinutesInt() {
+        return (Integer.parseInt(this.getClockMinutesString()));
+    }
+    public String getClockRateString() {
+        if (this.isClockSetTimeMessage()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getClockRateString Parser called on non-getClockRateString message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+    public int getClockRateInt() {
+        return (Integer.parseInt(this.getClockRateString()));
+    }
 
     //------------------------------------------------------
     // Helper methods for Ops Write Byte Commands
@@ -1823,6 +1868,24 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public static DCCppMessage makeTurnoutImplMsg(int id) {
         DCCppMessage m = makeMessage(DCCppConstants.TURNOUT_CMD + " " + id + " X"); //<T id X>
         m.myRegex = DCCppConstants.TURNOUT_IMPL_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+    public static DCCppMessage makeClockRequestTimeMsg() {
+        DCCppMessage m = makeMessage(DCCppConstants.CLOCK_REQUEST_TIME); // <JC>
+        m.myRegex = DCCppConstants.CLOCK_REQUEST_TIME_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+    public static DCCppMessage makeClockSetMsg(int minutes, int rate) {
+        DCCppMessage m = makeMessage(DCCppConstants.CLOCK_REQUEST_TIME + " " + minutes + " " + rate); //<JC 123 12>
+        m.myRegex = DCCppConstants.CLOCK_SET_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+    public static DCCppMessage makeClockSetMsg(int minutes) {
+        DCCppMessage m = makeMessage(DCCppConstants.CLOCK_REQUEST_TIME + " " + minutes); //<JC 123>
+        m.myRegex = DCCppConstants.CLOCK_SET_REGEX;
         m._nDataChars = m.toString().length();
         return (m);
     }
