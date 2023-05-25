@@ -482,7 +482,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setStartRate(double factor) {
-        if (startupFactor != factor) {
+        if (Math.abs(startupFactor - factor) > 0.0001) { //avoid possible float precision errors
             startupFactor = factor;
             haveStartupFactor = true;
             firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed
