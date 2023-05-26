@@ -35,8 +35,6 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     private static final String WEB_REQUEST_URL =
             "https://www.jmri.org/help/en/html/tools/logixng/reference/WebRequestExample/LogixNG_WebRequest_Test.php";
 
-    private static final boolean CAN_ACCESS_JMRI_ORG = tryAccessJmriOrg();
-
     private LogixNG _logixNG;
     private ConditionalNG _conditionalNG;
     private GlobalVariable _responseCodeVariable;
@@ -54,8 +52,9 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
             // If the HTTPS request has response code HTTP 200 OK, assume we can
             // access the test script on the JMRI web server.
             return con.getResponseCode() == 200;
-        } catch (UnknownHostException e) {
+        } catch (UnknownHostException | java.net.ConnectException e) {
             // We couldn't access the web site
+            log.warn("Unable to connect to {} {}",JMRI_ORG_URL,e.getMessage());
             return false;
         } catch (IOException e) {
             throw new RuntimeException("Exception thrown", e);
@@ -163,7 +162,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testThrowTurnouts() throws JmriException {
-        Assume.assumeTrue("We can access " + JMRI_ORG_URL, CAN_ACCESS_JMRI_ORG);
+        Assume.assumeTrue("We can access " + JMRI_ORG_URL, WebRequestTest.tryAccessJmriOrg());
 
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
@@ -291,7 +290,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCookies() throws JmriException {
-        Assume.assumeTrue("We can access " + JMRI_ORG_URL, CAN_ACCESS_JMRI_ORG);
+        Assume.assumeTrue("We can access " + JMRI_ORG_URL, WebRequestTest.tryAccessJmriOrg());
 
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
@@ -417,7 +416,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testPostRequest() throws JmriException {
-        Assume.assumeTrue("We can access " + JMRI_ORG_URL, CAN_ACCESS_JMRI_ORG);
+        Assume.assumeTrue("We can access " + JMRI_ORG_URL, WebRequestTest.tryAccessJmriOrg());
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
 
