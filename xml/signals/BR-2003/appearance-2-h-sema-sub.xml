@@ -65,7 +65,7 @@
       <delay>1500</delay>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeClear(ws).gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
-      <imagelink type="medium">../../../resources/icons/BritishRailSignals/Medium/semaHomeProceed.gif</imagelink>
+      <imagelink type="medium">../../../resources/icons/BritishRailSignals/Medium/semaHomeClear(ws).gif</imagelink>
 
     </appearance>
 
@@ -76,7 +76,7 @@
       <delay>1500</delay>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDanger(ws).gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger.gif</imagelink>
-      <imagelink type="medium">../../../resources/icons/BritishRailSignals/Medium/semaHomeDanger.gif</imagelink>
+      <imagelink type="medium">../../../resources/icons/BritishRailSignals/Medium/semaHomeDanger(ws).gif</imagelink>
     </appearance>
 
     <appearance>
@@ -86,7 +86,7 @@
       <delay>1500</delay>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeCallOn(ws).gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/DangerCallOn.gif</imagelink>
-      <imagelink type="medium">../../../resources/icons/BritishRailSignals/Medium/semaHomeDanger.gif</imagelink>
+      <imagelink type="medium">../../../resources/icons/BritishRailSignals/Medium/semaHomeCallOn(ws).gif</imagelink>
     </appearance>
 
   </appearances>
