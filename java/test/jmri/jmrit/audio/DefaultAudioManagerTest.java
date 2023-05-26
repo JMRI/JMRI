@@ -86,11 +86,13 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
         // First pairing
         AudioSource s = (AudioSource) l.getAudio("IAS1");
         AudioBuffer b = (AudioBuffer) l.getAudio("IAB1");
+        Assertions.assertNotNull(s);
         AudioBuffer ab = s.getAssignedBuffer();
         Assert.assertEquals("Verify AudioSource IAS1 bound to AudioBuffer IAB1", b, ab);
         // Second pairing
         s = (AudioSource) l.getAudio("IAS1");
         b = (AudioBuffer) l.getAudio("IAB1");
+        Assertions.assertNotNull(s);
         ab = s.getAssignedBuffer();
         Assert.assertEquals("Verify AudioSource IAS1 bound to AudioBuffer IAB1", b, ab);
 
@@ -116,13 +118,16 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
         JUnitUtil.setUp();
         l = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         l.init();
-        JUnitUtil.waitFor(()->{return l.isInitialised();});
+        JUnitUtil.waitFor(()-> l.isInitialised(),"Audio Manager Initialised");
+        
+        // Potentially no Audio Device installed
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("Error initialising JOAL");
     }
 
     @AfterEach
     public void tearDown() {
         l.cleanup();
-        JUnitUtil.waitFor(()->{return !l.isInitialised();});
+        JUnitUtil.waitFor(()-> !l.isInitialised(),"Audio Manager UNinitialise");
         l = null;
         JUnitUtil.tearDown();
     }

@@ -27,6 +27,7 @@
                     restore the previous behavior:  After a timeout, the
                     report is cleared.  The script also demonstrates how to
                     get a more granular control over this behavior.</li>
+                <li>Improved Throttle support for 14 and 28 Speed Steps.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -37,6 +38,7 @@
         <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li>Set Turnout userName from Description when defined in myAutomation.h</li>
+                <li>Support fastclock synchronization to DCC-EX</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -90,6 +92,9 @@
                 <li>The handling for LocoNet Reporters (i.e. transponding)
                     has changed.  See the description
                     <a href="#TLae">below</a>.</li>
+                <li>Improved the timeout handling in the Strict packetizer.</li>
+                <li>Fixed a problem where sometimes buttons in the Slot Monitor
+                    would disappear.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -165,7 +170,9 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li></li>
+                <li>Initial support for TMCC 2 "Legacy" functions. The first
+                    uses are to assign F28 through F31 to
+                    <a href="https://www.jmri.org/help/en/html/hardware/tmcc/index.shtml">loco startup and shutdown sounds</a>.</li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
@@ -295,6 +302,7 @@
 
         <h4>Piko</h4>
             <ul>
+                <li>SmartDecoder XP5.1 - updated lowVersionID, changed CV7-8 to use include file</li>
                 <li>Added Decoder Reset and CV for Decoder Test for Piko SUSI Decoder (Light decoder)</li>
             </ul>
 
@@ -386,7 +394,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Add an "Export Variables to CSV" menu item in the
+                File menu on individual roster entries.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -416,7 +425,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>Fix the <strong>Tools &rArr; Check</strong> bezier options.  Remove a bogus error message.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -635,5 +644,9 @@
             <li>Improved how window preferences are stored to reduce error messages
                 when JMRI is under high load.</li>
             <li>Update the JMRI install process for Raspberry Pi computers running the Raspberry Pi OS.</li>
+            <li>Updated the roster and locomotive schema and the locomotive DTD to accept current contents.
+                JMRI has been writing extra content in its roster, and the schema and DTD files had not
+                kept up.  This resolves that.
+            <li>The JOAL library has been updated to run natively on Apple Silicon machines.
         </ul>
 

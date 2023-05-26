@@ -63,10 +63,8 @@ public class CarManagerTest extends OperationsTestCase {
         initializeTest();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<Car> carList = manager.getByIdList();
-
         // now get cars by id
-        carList = manager.getByIdList();
+        List<Car> carList = manager.getByIdList();
         Assert.assertEquals("Number of Cars by id", 6, carList.size());
         Assert.assertEquals("1st car in list by id", c6, carList.get(0));
         Assert.assertEquals("2nd car in list by id", c2, carList.get(1));
@@ -129,9 +127,8 @@ public class CarManagerTest extends OperationsTestCase {
         initializeTest();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<Car> carList = manager.getByIdList();
         // now get cars by owner
-        carList = manager.getByOwnerList();
+        List<Car> carList = manager.getByOwnerList();
         Assert.assertEquals("Number of Cars by owner", 6, carList.size());
         Assert.assertEquals("1st car in list by owner", c3, carList.get(0));
         Assert.assertEquals("2nd car in list by owner", c6, carList.get(1));
@@ -169,9 +166,8 @@ public class CarManagerTest extends OperationsTestCase {
         initializeTest();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<Car> carList = manager.getByIdList();
         // now get cars by road name
-        carList = manager.getByRoadNameList();
+        List<Car> carList = manager.getByRoadNameList();
         Assert.assertEquals("Number of Cars by road name", 6, carList.size());
         Assert.assertEquals("1st car in list by road name", c6, carList.get(0));
         Assert.assertEquals("2nd car in list by road name", c2, carList.get(1));
@@ -186,9 +182,8 @@ public class CarManagerTest extends OperationsTestCase {
         initializeTest();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<Car> carList = manager.getByIdList();
         // now get cars by load
-        carList = manager.getByLoadList();
+        List<Car> carList = manager.getByLoadList();
         Assert.assertEquals("Number of Cars by load", 6, carList.size());
         Assert.assertEquals("1st car in list by load", c5, carList.get(0));
         Assert.assertEquals("2nd car in list by load", c4, carList.get(1));
@@ -252,9 +247,8 @@ public class CarManagerTest extends OperationsTestCase {
         initializeTest();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<Car> carList = manager.getByIdList();
         // now get cars by destination
-        carList = manager.getByDestinationList();
+        List<Car> carList = manager.getByDestinationList();
         Assert.assertEquals("Number of Cars by destination", 6, carList.size());
         Assert.assertEquals("1st car in list by destination", c2, carList.get(0));
         Assert.assertEquals("2nd car in list by destination", c1, carList.get(1));
@@ -853,9 +847,8 @@ public class CarManagerTest extends OperationsTestCase {
         initializeTest();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<Car> carList = manager.getByIdList();
         // now get cars by road number
-        carList = manager.getByNumberList();
+        List<Car> carList = manager.getByNumberList();
         Assert.assertEquals("Number of Cars by number", 6, carList.size());
         Assert.assertEquals("1st car in list by number", c6, carList.get(0));
         Assert.assertEquals("2nd car in list by number", c1, carList.get(1));
@@ -895,9 +888,8 @@ public class CarManagerTest extends OperationsTestCase {
         initializeTest();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<Car> carList = manager.getByIdList();
         // now get cars by RFID
-        carList = manager.getByRfidList();
+        List<Car> carList = manager.getByRfidList();
         Assert.assertEquals("Number of Cars by rfid", 6, carList.size());
         Assert.assertEquals("1st car in list by rfid", c2, carList.get(0));
         Assert.assertEquals("2nd car in list by rfid", c5, carList.get(1));
@@ -927,7 +919,6 @@ public class CarManagerTest extends OperationsTestCase {
         initializeTest();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<Car> carList = manager.getByIdList();
         // change car types so sort will work
         c1.setTypeName("F");
         c2.setTypeName("D");
@@ -937,7 +928,7 @@ public class CarManagerTest extends OperationsTestCase {
         c6.setTypeName("E");
 
         // now get cars by type
-        carList = manager.getByTypeList();
+        List<Car> carList = manager.getByTypeList();
         Assert.assertEquals("Number of Cars by type", 6, carList.size());
         Assert.assertEquals("1st car in list by type", c3, carList.get(0));
         Assert.assertEquals("2nd car in list by type", c4, carList.get(1));
