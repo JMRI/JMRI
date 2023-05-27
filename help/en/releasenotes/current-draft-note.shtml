@@ -650,6 +650,7 @@
                 JMRI has been writing extra content in its roster, and the schema and DTD files had not
                 kept up.  This resolves that.
             <li>The JOAL library has been updated to run natively on Apple Silicon machines.
+            <li>The JInput library has been updated to run natively on Apple Silicon machines.
             <li>Added a new jmri.util.swing.CountingBusyDialog utility class.
         </ul>
 

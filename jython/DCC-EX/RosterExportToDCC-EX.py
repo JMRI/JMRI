@@ -39,12 +39,16 @@ rosterlist = jmri.jmrit.roster.Roster.getDefault().matchingList(None, None, None
 for entry in rosterlist.toArray() :
   da = entry.getDccAddress()
 
-  # EX-CommandStation doesn't support multiple entries with same address (yet)
-  if (da in dups) :   
-    commentOut = "//multiples not supported, skipping: "
-  else : 
-    commentOut = ""
-    dups.append(da)    
+  # EX-CommandStation doesn't support address 0
+  if (int(da)==0) :
+    commentOut = "//address 0 not supported, skipping: "
+  else :
+    # EX-CommandStation doesn't support multiple entries with same address (yet)
+    if (da in dups) :   
+      commentOut = "//duplicate address not supported, skipping: "
+    else : 
+      commentOut = ""
+      dups.append(da)    
 
   # start macro syntax
   rc = commentOut + "ROSTER(" + da + ",\"" + entry.getId() + "\",\"" 
