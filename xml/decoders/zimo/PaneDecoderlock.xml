@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Add Jingle, CV-Read and CV-Prog Locked, Ronald Kuhn, 05.05.2019 -->
+<!-- version 1.2 - Add Decoder Lock for MS- and MN-series, Ronald Kuhn, 26.05.2023 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Decoder Lock</name>
   <name xml:lang="it">Blocco decoder</name>
@@ -24,5 +25,13 @@
       <text> </text>
     </label>
     <display item="CV-Prog Locked" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Decoder Lock 1"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Decoder Lock 2"/>
   </column>
 </pane>

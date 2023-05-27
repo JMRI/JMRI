@@ -4,6 +4,7 @@
 <!-- Version 2 - added additional lighting options to functions 3 and 4	-->
 <!-- Version 3 - added output 7 and 8 behavior 					-->
 <!-- Version 4 - added full items for functions 5 to 8			-->
+<!-- Version 5 - added output effects for more FA               -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>Lights</name>
   <name xml:lang="ca">Llums</name>
@@ -279,5 +280,30 @@
     </label>
     <display item="Output 10 effect generated"/>
     <display item="Output 10 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 11 effect generated"/>
+    <display item="Output 11 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 12 effect generated"/>
+    <display item="Output 12 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 13 effect generated"/>
+    <display item="Output 13 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 14 effect generated"/>
+    <display item="Output 14 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 15 effect generated"/>
+    <display item="Output 15 behavior"/>
   </column>
 </pane>
