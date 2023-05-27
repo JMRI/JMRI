@@ -59,7 +59,7 @@
       <show>red</show>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDanger.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger.gif</imagelink>
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Medium/semaHomeDanger.gif</imagelink>
+      <imagelink type="medium">../../../resources/icons/BritishRailSignals/Medium/semaHomeDanger.gif</imagelink>
     </appearance>
 
   </appearances>
