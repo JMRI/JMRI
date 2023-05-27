@@ -52,7 +52,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
             // If the HTTPS request has response code HTTP 200 OK, assume we can
             // access the test script on the JMRI web server.
             return con.getResponseCode() == 200;
-        } catch (UnknownHostException | java.net.ConnectException e) {
+        } catch (UnknownHostException | java.net.SocketException e) {
             // We couldn't access the web site
             log.warn("Unable to connect to {} {}",JMRI_ORG_URL,e.getMessage());
             return false;
