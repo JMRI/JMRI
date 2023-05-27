@@ -8,19 +8,26 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 
 /**
- * Creates a simple "indeterminate" busy spinner dialog...
+ * Creates a simple counting progress bar.
+ * <p>
+ * After constructing one, call start() to display it.
+ * Then call count(..) to update the progress count, and
+ * finish() when the operation is done.
  *
  * @author   Mark Underwood Copyright (C) 2011
+ * @author   Bob Jacobsen   Copyright (C) 2023
  *
  */
-public class BusyDialog extends JDialog {
+public class CountingBusyDialog extends JDialog {
 
     JFrame frame;
     JProgressBar pbar;
+    int maxCount;
 
-    public BusyDialog(JFrame frame, String title, boolean modal) {
+    public CountingBusyDialog(JFrame frame, String title, boolean modal, int maxCount) {
         super(frame, title, modal);
         this.frame = frame;
+        this.maxCount = maxCount;
         initComponents();
     }
 
@@ -31,8 +38,7 @@ public class BusyDialog extends JDialog {
         setMinimumSize(new Dimension(200, 100));
         setLayout(new BorderLayout(10, 10));
 
-        pbar = new JProgressBar();
-        pbar.setIndeterminate(true);
+        pbar = new JProgressBar(0, maxCount);
         pbar.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         //pbar.setBorderPainted(true);
         this.add(pbar, BorderLayout.CENTER);
@@ -42,6 +48,10 @@ public class BusyDialog extends JDialog {
         this.pack();
         this.setVisible(true);
         this.getContentPane().paintAll(pbar.getGraphics());
+    }
+
+    public void count(int now) {
+        pbar.setValue(now);
     }
 
     public void finish() {
