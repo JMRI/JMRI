@@ -17,8 +17,9 @@
 	<!-- Version 1 - For Piko SmartDecoder XP5.1 Sound. Copied and adapted from PIKO40501-18.xml Uses common parts -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 	<!-- Version 2 - Updated lowVersionID, changed CV7-8 to use include file -->
+	<!-- Version 2.1 - Updated lowVersionID, This decoder definition is valid from VersionID=2 -->
 	<decoder>
-		<family name="PIKO SmartDecoder XP5.1" mfg="PIKO" lowVersionID="1" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
+		<family name="PIKO SmartDecoder XP5.1" mfg="PIKO" lowVersionID="2" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
 			<!-- to be checked by hardware owner -->
 			<model model="PIKO46550-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
