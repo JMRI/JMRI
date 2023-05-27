@@ -86,7 +86,7 @@ public class ExportLocations extends XmlFile {
                     Bundle.getMessage("Restrictions"),
                     Bundle.getMessage("ScheduleName"),
                     Bundle.getMessage("ScheduleMode"),
-                    Bundle.getMessage("PercentageStaging"),
+                    Bundle.getMessage("PercentStaging"),
                     Bundle.getMessage("AlternateTrack"),
                     Bundle.getMessage("PoolName"),
                     Bundle.getMessage("Minimum"),
