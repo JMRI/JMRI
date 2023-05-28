@@ -25,7 +25,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 /**
  * Exports the location roster into a comma delimited file (CSV).
  *
- * @author Daniel Boudreau Copyright (C) 2018
+ * @author Daniel Boudreau Copyright (C) 2018, 2023
  *
  */
 public class ExportLocations extends XmlFile {
@@ -94,6 +94,7 @@ public class ExportLocations extends XmlFile {
                     Bundle.getMessage("MenuItemPlannedPickups"),
                     Bundle.getMessage("MenuItemDestinations"),
                     Bundle.getMessage("Destinations"),
+                    Bundle.getMessage("HoldCarsWithCustomLoads"),
                     Bundle.getMessage("SwapCarLoads"),
                     Bundle.getMessage("EmptyDefaultCarLoads"),
                     Bundle.getMessage("EmptyCarLoads"),
@@ -263,6 +264,7 @@ public class ExportLocations extends XmlFile {
                             track.getIgnoreUsedLengthPercentage(),
                             Bundle.getMessage(track.getDestinationOption().equals(Track.ALL_DESTINATIONS) ? "All" : "Include"),
                             destinationNames.toString(),
+                            (track.isHoldCarsWithCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isLoadSwapEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isLoadEmptyEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isRemoveCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
