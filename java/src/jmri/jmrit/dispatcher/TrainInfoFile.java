@@ -330,6 +330,9 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("waittime") != null) {
                         tInfo.setWaitTime(traininfo.getAttribute("waittime").getFloatValue());
                     }
+                    if (traininfo.getAttribute("blockname") != null) {
+                        tInfo.setBlockName(traininfo.getAttribute("blockname").getValue());
+                    }
 
                     if (version == 1) {
                         String parseArray[];
@@ -536,6 +539,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("stopbyspeedprofile", "" + (tf.getStopBySpeedProfile() ? "yes" : "no"));
         traininfo.setAttribute("stopbyspeedprofileadjust", Float.toString(tf.getStopBySpeedProfileAdjust()));
         traininfo.setAttribute("waittime", Float.toString(tf.getWaitTime()));
+        traininfo.setAttribute("blockname", tf.getBlockName());
 
         root.addContent(traininfo);
 
