@@ -69,8 +69,8 @@ public class ImportLocations extends ImportRollingStock {
     protected static final int FIELD_BLOCK_CARS_BY_PICKUP = 35;
     protected static final int FIELD_COMMENT = 36;
     protected static final int FIELD_COMMENT_BOTH = 37;
-    protected static final int FIELD_COMMENT_PICKUPS = 38;            // not used
-    protected static final int FIELD_COMMENT_SETOUTS = 39;            // not used
+    protected static final int FIELD_COMMENT_PICKUPS = 38;
+    protected static final int FIELD_COMMENT_SETOUTS = 39;
 
     @Override
     public void run() {
