@@ -385,6 +385,7 @@
             <ul>
                 <li>Small correction to the files for FW v39 and v40</li>
                 <li>Added MN Non-Sound Decoders</li>
+                <li>Added new CV's for MS- and MN-Decoders</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -654,4 +655,3 @@
             <li>The JInput library has been updated to run natively on Apple Silicon machines.
             <li>Added a new jmri.util.swing.CountingBusyDialog utility class.
         </ul>
-
