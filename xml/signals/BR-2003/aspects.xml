@@ -12,7 +12,7 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
@@ -31,7 +31,7 @@
         <date>2010-02-02</date>
         <authorinitials>KD</authorinitials>
         <revremark>Change position light signal names to "on" and "off", Remove Call-On and change to On</revremark>
-    </revision> 
+    </revision>
     <revision>
         <revnumber>1.2</revnumber>
         <date>2018-07-05</date>
@@ -122,8 +122,9 @@
   <imagetypes>
     <imagetype type="large"/>
     <imagetype type="aspects"/>
+    <imagetype type="medium"/>
    </imagetypes>
-  
+
  <appearancefiles>
     <appearancefile href="appearance-2-d-sema.xml"/>
     <appearancefile href="appearance-2-d.xml"/>
@@ -147,4 +148,4 @@
     <appearancefile href="appearance-ply.xml"/>
   </appearancefiles>
 </aspecttable>
-  
+
