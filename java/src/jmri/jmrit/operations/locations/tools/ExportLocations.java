@@ -24,6 +24,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  * Exports the location roster into a comma delimited file (CSV).
+ * Keep ImportLocations.java in sync with export
  *
  * @author Daniel Boudreau Copyright (C) 2018, 2023
  *
@@ -272,10 +273,11 @@ public class ExportLocations extends XmlFile {
                             (track.isAddCustomLoadsAnySpurEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isAddCustomLoadsAnyStagingTrackEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isBlockCarsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
-                            track.getComment(),
-                            track.getCommentBoth(),
-                            track.getCommentPickup(),
-                            track.getCommentSetout());
+                            // strip line feeds, parse EOL error when importing
+                            track.getComment().replace('\n', ' '),
+                            track.getCommentBoth().replace('\n', ' '),
+                            track.getCommentPickup().replace('\n', ' '),
+                            track.getCommentSetout().replace('\n', ' '));
                 }
             }
             fileOut.flush();

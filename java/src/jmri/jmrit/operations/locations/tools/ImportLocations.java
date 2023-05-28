@@ -51,24 +51,26 @@ public class ImportLocations extends ImportRollingStock {
     protected static final int FIELD_RESTRICTIONS_2 = 17;
     protected static final int FIELD_SCHEDULE_NAME = 18;
     protected static final int FIELD_SCHEDULE_MODE = 19;
-    protected static final int FIELD_ALTERNATE_TRACK = 20;
-    protected static final int FIELD_POOL_NAME = 21;
-    protected static final int FIELD_IGNORE_MINIMUM = 22;
-    protected static final int FIELD_TRACK_BLOCKING_ORDER = 23;
-    protected static final int FIELD_PLANNED_PICK_UPS = 24;
-    protected static final int FIELD_TRACK_DESTINATIONS = 25;
-    protected static final int FIELD_DESTINATIONS = 26;
-    protected static final int FIELD_SWAP_DEFAULT = 27;
-    protected static final int FIELD_EMPTY_DEFAULT_LOADS = 28;
-    protected static final int FIELD_EMPTY_CUSTOM_LOADS = 29;
-    protected static final int FIELD_GENERATE_SPUR = 30;
-    protected static final int FIELD_GENERATE_ANY_SPUR = 31;
-    protected static final int FIELD_GENERATE_STAGING = 32;
-    protected static final int FIELD_BLOCK_CARS_BY_PICKUP = 33;
-    protected static final int FIELD_COMMENT = 34;
-    protected static final int FIELD_COMMENT_BOTH = 35;
-    protected static final int FIELD_COMMENT_PICKUPS = 36;            // not used
-    protected static final int FIELD_COMMENT_SETOUTS = 37;            // not used
+    protected static final int FIELD_PERCENT_STAGING = 20;
+    protected static final int FIELD_ALTERNATE_TRACK = 21;
+    protected static final int FIELD_POOL_NAME = 22;
+    protected static final int FIELD_IGNORE_MINIMUM = 23;
+    protected static final int FIELD_TRACK_BLOCKING_ORDER = 24;
+    protected static final int FIELD_PLANNED_PICK_UPS = 25;
+    protected static final int FIELD_TRACK_DESTINATIONS = 26;
+    protected static final int FIELD_DESTINATIONS = 27;
+    protected static final int FIELD_HOLD_CARS_CUSTOM_LOADS = 28;
+    protected static final int FIELD_SWAP_DEFAULT = 29;
+    protected static final int FIELD_EMPTY_DEFAULT_LOADS = 30;
+    protected static final int FIELD_EMPTY_CUSTOM_LOADS = 31;
+    protected static final int FIELD_GENERATE_SPUR = 32;
+    protected static final int FIELD_GENERATE_ANY_SPUR = 33;
+    protected static final int FIELD_GENERATE_STAGING = 34;
+    protected static final int FIELD_BLOCK_CARS_BY_PICKUP = 35;
+    protected static final int FIELD_COMMENT = 36;
+    protected static final int FIELD_COMMENT_BOTH = 37;
+    protected static final int FIELD_COMMENT_PICKUPS = 38;            // not used
+    protected static final int FIELD_COMMENT_SETOUTS = 39;            // not used
 
     @Override
     public void run() {
@@ -267,6 +269,7 @@ public class ImportLocations extends ImportRollingStock {
 
             }
 
+            // TODO import fields 12 through 22
 
             if (inputLine.length >= FIELD_IGNORE_MINIMUM) {
                 String ignoreMin = inputLine[FIELD_IGNORE_MINIMUM].trim();
@@ -305,6 +308,8 @@ public class ImportLocations extends ImportRollingStock {
                     }
                 }
             }
+            // TODO import fields 26 though 35
+            
             if (inputLine.length >= FIELD_COMMENT) {
                 String fieldComment = inputLine[FIELD_COMMENT].trim();
                 if (fieldComment.length() > 0) {
