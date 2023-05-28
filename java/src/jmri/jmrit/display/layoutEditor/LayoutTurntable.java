@@ -827,7 +827,11 @@ public class LayoutTurntable extends LayoutTrack {
                 if (disableWhenOccupied && isOccupied()) {
                     log.debug("Can not setPosition of turntable ray when it is occupied");
                 } else {
-                    getTurnout().setCommandedState(turnoutState);
+                    if(getTurnout().getFeedbackMode() == jmri.Turnout.ONESENSOR){
+                        getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+                    }else {
+                        getTurnout().setCommandedState(turnoutState);
+                    }
                 }
             }
         }
