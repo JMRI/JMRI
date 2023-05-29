@@ -192,9 +192,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         fileMenu.add(exportSubMenu);
         exportSubMenu.add(new CsvExportAction(Bundle.getMessage("MenuExportCSV"), cvModel, this));
         exportSubMenu.add(new CsvExportModifiedAction(Bundle.getMessage("MenuExportCSVModified"), cvModel, this));
-        exportSubMenu.add(new CsvExportVariablesAction(Bundle.getMessage("MenuExportVariables"), variableModel, this));
         exportSubMenu.add(new Pr1ExportAction(Bundle.getMessage("MenuExportPr1DOS"), cvModel, this));
         exportSubMenu.add(new Pr1WinExportAction(Bundle.getMessage("MenuExportPr1WIN"), cvModel, this));
+        exportSubMenu.add(new CsvExportVariablesAction(Bundle.getMessage("MenuExportVariables"), variableModel, this));
         exportSubMenu.add(new TcsExportAction(Bundle.getMessage("MenuExportTcsFile"), cvModel, _rosterEntry, this));
         if (TcsDownloadAction.willBeEnabled()) {
             exportSubMenu.add(new TcsUploadAction(Bundle.getMessage("MenuExportTcsCS"), cvModel, _rosterEntry, this));
