@@ -638,7 +638,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>The VSD windows now remember their size and position from one run to another.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
