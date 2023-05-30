@@ -17,7 +17,6 @@
     <div id="mainContent">
       <!-- this was created by running the command `asciidoctorj -a toc NetBeans.adoc`
             and copying the contents of body element in the resultant NetBeans.html file -->
-      <!-- manual clean-up was required to make this shtml responsive -->
       <h1>JMRI Code: Building with Apache NetBeans</h1>
 
       <div id="toc">
