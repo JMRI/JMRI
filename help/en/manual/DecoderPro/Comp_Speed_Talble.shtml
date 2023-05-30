@@ -92,7 +92,7 @@
       tool tip to advantage. By hovering over any of the sliders, the tool tip will reveal the CV
       to which you are pointing .</p>
 
-      <p>The <strong><input name="button2" id="button2" value="Match ends" type="button"></strong>
+      <p>The <strong><span class="textbutton">Match ends</span></strong> button
       will also result in a straight-line graph, but you can offset the beginning and end by any
       amount you wish. The first and last steps are used to set to minimum and maximum values for
       the straight line. The function will then draw a straight line between those two end points.
@@ -163,7 +163,7 @@
       <p class="cp-ctr">
       </p>
 
-      <p>The <input name="button3" id="button3" value="Shift left" type="button"> moves the entire
+      <p>The <span class="textbutton">Shift left</span> button moves the entire
       speed table to the left one space with each click on the button. The example below shows a
       linear 0-255 speed table that has been <strong>Shifted left</strong> three times.</p>
 
@@ -173,7 +173,7 @@
       <p class="dp-ctr"><strong>Curve Shifted Left</strong>
       </p>
 
-      <p>The <input name="button4" id="button4" value="Shft right" type="button"> move the entire
+      <p>The <span class="textbutton">Shft right</span> button moves the entire
       speed table to the right one space with each click on the button. The example below shows a
       linear 0-255 speed table that has been <strong>Shifted right</strong> three times.</p>
 

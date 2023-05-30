@@ -63,20 +63,18 @@
       <p><strong><span class="textbutton">Service Mode (Programming Track) Programmer</span></strong>
       button provides access to the
       decoder programming capability in <a href="Programmer_ServiceMode.shtml"><strong>Service Mode
-      Programmer<br></strong></a> <input name="button2" id="button2" value=
-      "Operations Mode (Main Track) Programmer" type="button"> Provides access to the <a href=
-      "Programmer_OpsMode.shtml"></a><a href="Programmer_OpsMode.shtml"></a><a href=
-      "Programmer_OpsMode.shtml">Operations Mode Programmer.</a><br>
-      <input name="button3" id="button3" value="Help" type="button"> Opens the Help Window<br>
-      <input name="button4" id="button4" value="Quit" type="button"> Exits the program, with
-      confirmation dialog.</p>
+      Programmer<br></strong></a><br>
+      <span class="textbutton">Operations Mode (Main Track) Programmer</span> Provides access to the
+      <a href="Programmer_OpsMode.shtml">Operations Mode Programmer.</a><br>
+      <span class="textbutton">Help</span> Opens the Help Window<br>
+      <span class="textbutton">Quit</span> Exits the program, with confirmation dialog.</p>
 
       <p>The buttons shown at the bottom of the window are not JMRI defaults, but instead are setup
       in your <strong>preference</strong> to open each time you start DecoderPro&reg;. The following
       are samples that could be set in your preferences. (Shown are for a Digitrax LocoNet
       system)</p>
 
-      <p><strong><input name="button5" id="button5" value="New Throttle..." type="button"></strong>
+      <p><strong><span class="textbutton">New Throttle...</span></strong>
       Opens a throttle window which provides a tool to control your trains, you may open more than
       one throttle and position on the computer screen</p>
 
@@ -84,7 +82,7 @@
       "images/Main_02_Thottle.png"><br>
       </p>
 
-      <p><strong><input name="button6" id="button6" value="Monitor LocoNet" type="button"></strong>
+      <p><strong><span class="textbutton">Monitor LocoNet</span></strong>
       Opens the Monitor LocoNet window that allows you to monitor the commands and responses on the
       LocoNet.</p>
 
@@ -92,7 +90,7 @@
       width="800">
       </p>
 
-      <p><strong><input name="button7" id="button7" value="Power Control" type="button"></strong>
+      <p><strong><span class="textbutton">Power Control</span></strong>
       Opens Power Control window, which allows you to turn track power on or off during operations
       when supported by your system.</p>
 
