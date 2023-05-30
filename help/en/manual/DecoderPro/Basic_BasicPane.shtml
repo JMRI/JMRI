@@ -138,7 +138,7 @@
       specific CV being read.</p>
 
       <p>Again, the <span class="textbutton">Read full sheet</span> and
-      <strong><span class="textbutton">Read all sheets</span></strong>
+      <span class="textbutton">Read all sheets</span>
       functions are dependent on your Command Station. If your system does not have the capability
       to read CVs, then these buttons will not be available.</p>
 
@@ -166,7 +166,7 @@
 
       <p id="SaveData">To finish this "basic" programming of a decoder, click once more on the
       <strong>Roster Entry</strong> tab, You will see that the address field has now been filled
-      in, so you can now click on the <strong><span class="textbutton">Save to roster</span></strong>
+      in, so you can now click on the <span class="textbutton">Save to roster</span>
       button. Your new decoder settings have now been written
       not only to the decoder, but also saved to a computer file where they may be recalled in the
       future. .</p>

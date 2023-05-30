@@ -92,7 +92,7 @@
       tool tip to advantage. By hovering over any of the sliders, the tool tip will reveal the CV
       to which you are pointing .</p>
 
-      <p>The <strong><span class="textbutton">Match ends</span></strong> button
+      <p>The <span class="textbutton">Match ends</span> button
       will also result in a straight-line graph, but you can offset the beginning and end by any
       amount you wish. The first and last steps are used to set to minimum and maximum values for
       the straight line. The function will then draw a straight line between those two end points.
