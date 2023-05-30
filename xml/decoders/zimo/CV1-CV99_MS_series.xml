@@ -4,6 +4,7 @@
 <!-- version 1.0 24 Nov 2022  Nigel Cliffe - Merging various MX-series and MS-series files covering CVs 1-99 into single file.   -->
 <!--            Removed CV10, (not in MS series manuals),  -->
 <!-- version 1.1 25 May 2023  Ronald Kuhn - added some german translation and exclude MS490, MS500, MS560, MS590, MN170, MN180 and MN300 from mfx.   -->
+<!-- version 1.2 26 May 2023  Ronald Kuhn - added values specific for MS- an MN-series.   -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
@@ -35,6 +36,31 @@
     <label xml:lang="it">Frequenza Motore e Freq.Campionamento EMF</label>
     <label xml:lang="cs">Frekvence motoru a EMF vzorkovací míra</label>
     <label xml:lang="de">Motoransteuerungsperiode bzw. – frequenz und EMK-Abtastrate</label>
+  </variable>
+
+  <variable item="Motorola Subsequent addresses" CV="10" default="0">
+    <enumVal>
+      <enumChoice choice="No Subsequent address">
+        <choice>No Subsequent address</choice>
+        <choice xml:lang="de">keine Folgeadresse</choice>
+      </enumChoice>
+      <enumChoice choice="One Subsequent address for F5-F8">
+        <choice>One Subsequent address for F5-F8</choice>
+        <choice xml:lang="de">Eine Folgeadresse für F5-F8</choice>
+      </enumChoice>
+      <enumChoice choice="Two Subsequent addresses for F5-F12">
+        <choice>Two Subsequent addresses for F5-F12</choice>
+        <choice xml:lang="de">Zwei Folgeadressen für F5-F12</choice>
+      </enumChoice>
+      <enumChoice choice="Three Subsequent addresses for F5-F16">
+        <choice>Three Subsequent addresses for F5-F16</choice>
+        <choice xml:lang="de">Drei Folgeadressen für F5-F16</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Motorola Subsequent addresses</label>
+    <label xml:lang="de">Motorola Folgeadressen</label>
+    <tooltip>Range 0-3</tooltip>
+    <tooltip xml:lang="de">0 = keine Folgeadresse, 1 = Eine Folgeadresse für F5-F8, 2 = Zwei Folgeadressen für F5-F12, 3 = Drei Folgeadressen für F5-F16.</tooltip>
   </variable>
 
   <variable item="Decoder Operating Mode" CV="12" default="117"/>
@@ -215,6 +241,21 @@
     <label xml:lang="it">Regolazioni in DC</label>
     <label xml:lang="cs">Regulace v DC</label>
     <label xml:lang="de">Motorregelung aktiv</label>
+  </variable>
+
+  <variable item="Decoder Lock 1" CV="15" default="0">
+    <decVal/>
+      <label>Decoder Lock 1</label>
+      <label xml:lang="de">Decoder Sperre 1</label>
+      <tooltip>The decoder lock is used to access the CVs of several decoders with identical address separately.</tooltip>
+      <tooltip xml:lang="de">Die Decoder-Sperre dient dazu, auf die CVs mehrerer Decoder mit identischer Adresse getrennt zuzugreifen.</tooltip>
+  </variable>
+  <variable item="Decoder Lock 2" CV="16" default="0">
+    <decVal/>
+      <label>Decoder Lock 2</label>
+      <label xml:lang="de">Decoder Sperre 2</label>
+      <tooltip>The decoder lock is used to access the CVs of several decoders with identical address separately.</tooltip>
+      <tooltip xml:lang="de">Die Decoder-Sperre dient dazu, auf die CVs mehrerer Decoder mit identischer Adresse getrennt zuzugreifen.</tooltip>
   </variable>
 
   <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
