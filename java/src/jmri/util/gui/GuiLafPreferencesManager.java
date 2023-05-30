@@ -70,7 +70,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private Font currentFont = null;
     private Font defaultFont = null;
     private int fontSize = 0;
-    private int defaultFontSize = 0;
+    private int defaultFontSize = 11; 
     private boolean nonStandardMouseEvent = false;
     private boolean graphicTableState = false;
     private boolean oblockEditTabbed = false;
@@ -272,6 +272,9 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * @return the currently selected font size
      */
     public int getFontSize() {
+        if (fontSize == 0) {
+            return defaultFontSize;
+        }
         return fontSize;
     }
 
