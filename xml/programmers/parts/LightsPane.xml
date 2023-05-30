@@ -280,4 +280,57 @@
     <display item="Output 10 effect generated"/>
     <display item="Output 10 behavior"/>
   </column>
+
+  <column>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 11 effect generated"/>
+    <display item="Output 11 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 12 effect generated"/>
+    <display item="Output 12 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 13 effect generated"/>
+    <display item="Output 13 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 14 effect generated"/>
+    <display item="Output 14 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 15 effect generated"/>
+    <display item="Output 15 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 16 effect generated"/>
+    <display item="Output 16 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 17 effect generated"/>
+    <display item="Output 17 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 18 effect generated"/>
+    <display item="Output 18 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 19 effect generated"/>
+    <display item="Output 19 behavior"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Output 20 effect generated"/>
+    <display item="Output 20 behavior"/>
+  </column>
 </pane>

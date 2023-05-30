@@ -583,6 +583,36 @@
 		<definition item="Output 10 effect generated"/>
 		<definition item="Output 10 behavior"/>
 
+		<definition item="Output 11 effect generated"/>
+		<definition item="Output 11 behavior"/>
+
+		<definition item="Output 12 effect generated"/>
+		<definition item="Output 12 behavior"/>
+
+		<definition item="Output 13 effect generated"/>
+		<definition item="Output 13 behavior"/>
+
+		<definition item="Output 14 effect generated"/>
+		<definition item="Output 14 behavior"/>
+
+		<definition item="Output 15 effect generated"/>
+		<definition item="Output 15 behavior"/>
+
+		<definition item="Output 16 effect generated"/>
+		<definition item="Output 16 behavior"/>
+
+		<definition item="Output 17 effect generated"/>
+		<definition item="Output 17 behavior"/>
+
+		<definition item="Output 18 effect generated"/>
+		<definition item="Output 18 behavior"/>
+
+		<definition item="Output 19 effect generated"/>
+		<definition item="Output 19 behavior"/>
+
+		<definition item="Output 20 effect generated"/>
+		<definition item="Output 20 behavior"/>
+
 	</definitiongroup>
 
 		<!-- Variables for mapping functions to and from outputs -->
