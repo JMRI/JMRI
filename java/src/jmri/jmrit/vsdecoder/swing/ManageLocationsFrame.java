@@ -100,7 +100,7 @@ public class ManageLocationsFrame extends JmriJFrame {
             Object[][] reporters,
             Object[][] ops,
             Object[][] blocks) {
-        super(false, false);
+        super(true, true);
         reporterData = reporters;
         opsData = ops;
         listenerLoc = listener;

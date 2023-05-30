@@ -24,6 +24,10 @@ public class EngineSoundTest {
 
     @AfterEach
     public void tearDown() {
+
+        // Potentially no Audio Device installed
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("Error initialising JOAL");
+
         // this created an audio manager, clean that up
         jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
         JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");

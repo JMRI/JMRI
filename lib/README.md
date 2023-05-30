@@ -192,13 +192,13 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
 - from <https://jinput.dev.java.net/> jinput_dist_20090401
 - (most recent as of 2010-Jan-02)
+- libjinput-osx.jnilib is a custom version lipo'd from the x86 version above and a custom arm64 build from https://shadowfacts.net/2022/lwjgl-arm64/ and https://github.com/shadowfacts/jinput-arm64
 
 ##### JavaMail 1.4.1 (used to validate email address formats)
 - mailapi.jar
 
 ##### Joal 2.4.0-rc-20210111
-- from <https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/jar/>
-- -javadoc at https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/
+- -javadoc at https://jogamp.org/deployment/archive/rc/v2.5.0-rc-20230507/jar/
 - cross-platform .jar files
     joal.jar
     gluegen-rt.jar
@@ -210,6 +210,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
       libopenal.dylib
     extracted from gluegen-rt-natives-macosx-universal.jar
       libgluegen_rt.dylib
+
+Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/jar/>
 
 - for Windows x86
     extracted from joal-natives-windows-i586.jar

@@ -512,6 +512,20 @@ public class SRCPClientParserTest {
         Assertions.assertDoesNotThrow( () ->  p.handshakeresponse() );
     }
 
+    @Test
+    public void testParseWithNewLineOnly(){
+        String code = "12345678910 500 ERROR out of resources\n";
+        SRCPClientParser p = new SRCPClientParser(new StringReader(code));
+        Assertions.assertDoesNotThrow( () ->  p.handshakeresponse() );
+    }
+
+    @Test
+    public void testHandshakeResponseServiceVersionNoTimeStamp() throws ParseException {
+        String code = "srcpd V2.1.6; SRCP 0.8.4; SRCPOTHER 0.8.3\n";
+        SRCPClientParser p = new SRCPClientParser(new StringReader(code));
+        p.handshakeresponse();
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

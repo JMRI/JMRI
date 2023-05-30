@@ -38,6 +38,8 @@ public class LnPacketizerStrict extends LnPacketizer {
     // retry required, lost echo, bad IMM, general busy
     private boolean reTryRequired;
 
+    static public int maxWaitCount = 150; // public for script access
+
     public LnPacketizerStrict(LocoNetSystemConnectionMemo m) {
         super(m);
     }
@@ -282,7 +284,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                 // minimal sleeps so as to exit fast
                                 waitCount = 0;
                                 // echo as really fast
-                                while ((waitForMsg != null) && waitCount < 20) {
+                                while ((waitForMsg != null) && waitCount < maxWaitCount) {
                                     try {
                                         Thread.sleep(1);
                                     } catch (InterruptedException ee) {
@@ -291,7 +293,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     waitCount++;
                                 }
                                 // Oh my lost the echo...
-                                if (waitCount > 19) {
+                                if (waitCount >= maxWaitCount) {
                                     log.warn("Retry Send for Lost Packet [{}] Count[{}]", waitForMsg,
                                                 reTryCount); // NOI18N
                                     if (reTryCount < 5) {
@@ -304,7 +306,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     }
                                 } else {
                                     // LACKs / a response can be slow
-                                    while (waitingOnLack && waitCount < 50) {
+                                    while (waitingOnLack && waitCount < 3*maxWaitCount) {
                                         try {
                                             Thread.sleep(1);
                                         } catch (InterruptedException ee) {
@@ -313,7 +315,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                         waitCount++;
                                     }
                                     // Oh my lost the LACK / response...
-                                    if (waitCount > 49) {
+                                    if (waitCount >= 3*maxWaitCount) {
                                         try {
                                             log.warn("Retry Send for Lost Response Count[{}]", reTryCount); // NOI18N
                                         } catch (NullPointerException npe) {
