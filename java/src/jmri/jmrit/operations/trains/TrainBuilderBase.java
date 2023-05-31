@@ -1094,7 +1094,7 @@ public class TrainBuilderBase extends TrainCommon {
         addLine(_buildReport, SEVEN, Bundle.getMessage("buildSortCarsByLastDate"));
         for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
             Car car = _carList.get(_carIndex);
-            if (car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
+            if (car.getTrack().getServiceOrder().equals(Track.NORMAL) || car.getTrack().isStaging()) {
                 continue;
             }
             addLine(_buildReport, SEVEN,
@@ -1844,8 +1844,79 @@ public class TrainBuilderBase extends TrainCommon {
                     Bundle.getMessage("buildStagingNoCarFRED", departStageTrack.getName(), _train.getCabooseRoad()));
             return false;
         }
+        // determine if staging track is in a pool (multiple trains on one staging track)
+        if (!checkStagingPool(departStageTrack)) {
+            return false;
+        }
         addLine(_buildReport, SEVEN,
                 Bundle.getMessage("buildTrainCanDepartTrack", _train.getName(), departStageTrack.getName()));
+        return true;
+    }
+    
+    /**
+     * Used to determine if staging track in a pool is the appropriated one for
+     * departure. Staging tracks in a pool can operate in one of two ways FIFO
+     * or LIFO. In FIFO mode (First in First out), the program selects a staging
+     * track from the pool that has cars with the earliest arrival date. In LIFO
+     * mode (Last in First out), the program selects a staging track from the
+     * pool that has cars with the latest arrival date.
+     * 
+     * @param departStageTrack the track being tested
+     * @return true if departure on this staging track is possible
+     */
+    protected boolean checkStagingPool(Track departStageTrack) {
+        if (departStageTrack.getPool() == null ||
+                departStageTrack.getServiceOrder().equals(Track.NORMAL) ||
+                departStageTrack.getNumberCars() == 0) {
+            return true;
+        }
+
+        addLine(_buildReport, SEVEN, Bundle.getMessage("buildStagingTrackPool", departStageTrack.getName(),
+                departStageTrack.getPool().getName(), departStageTrack.getPool().getSize(),
+                departStageTrack.getServiceOrder()));
+
+        List<Car> carList = carManager.getAvailableTrainList(_train);
+        Date carDepartStageTrackDate = null;
+        for (Car car : carList) {
+            if (car.getTrack() == departStageTrack) {
+                carDepartStageTrackDate = car.getLastMoveDate();
+                break; // use 1st car found
+            }
+        }
+        if (carDepartStageTrackDate == null) {
+            return true; // no cars with found date
+        }
+
+        for (Track track : departStageTrack.getPool().getTracks()) {
+            if (track == departStageTrack || track.getNumberCars() == 0) {
+                continue;
+            }
+            // determine dates cars arrived into staging
+            Date carOtherStageTrackDate = null;
+
+            for (Car car : carList) {
+                if (car.getTrack() == track) {
+                    carOtherStageTrackDate = car.getLastMoveDate();
+                    break; // use 1st car found
+                }
+            }
+            if (carOtherStageTrackDate != null) {
+                if (departStageTrack.getServiceOrder().equals(Track.LIFO)) {
+                    if (carDepartStageTrackDate.before(carOtherStageTrackDate)) {
+                        addLine(_buildReport, SEVEN,
+                                Bundle.getMessage("buildStagingCarsBefore", departStageTrack.getName(),
+                                        track.getName()));
+                        return false;
+                    }
+                } else {
+                    if (carOtherStageTrackDate.before(carDepartStageTrackDate)) {
+                        addLine(_buildReport, SEVEN, Bundle.getMessage("buildStagingCarsBefore", track.getName(),
+                                departStageTrack.getName()));
+                        return false;
+                    }
+                }
+            }
+        }
         return true;
     }
 

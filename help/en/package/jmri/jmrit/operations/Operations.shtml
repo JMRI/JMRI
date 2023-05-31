@@ -217,6 +217,8 @@
 
             <li><a href="#Staging">Staging Tracks</a>
               <ul>
+                <li><a href="#StagingMultipleTrains">Staging Multiple Trains per Physical
+                    Track</a></li>
                 <li><a href="#StagingAndCarLoads">Staging and Car loads</a></li>
 
                 <li><a href="#BlockingCarsFromStaging">Blocking Cars from Staging</a></li>
@@ -2966,6 +2968,27 @@
         track you want to use when departing from, or arriving into staging.
       </p>
 
+      <h3 id="StagingMultipleTrains">Staging Multiple Trains per Physical Track</h3>
+      The program only allows one train per track in staging, but if you built a large staging track
+      that can fit two or more trains, the program allows you to
+      <a href="#Pools">pool</a> several staging tracks together so multiple trains can reside on one
+      physical track. The program will pull trains off the staging track in the order the trains
+      arrived. If your staging tracks are "double ended", meaning that your trains enter from one
+      side of staging and depart from the other, you would select FIFO (First In First Out) mode in
+      the pool window. In FIFO mode the first train to arrive into staging will be the first
+      to depart. If your staging is "single ended", meaning your trains arrive and depart from the
+      same end, you would select LIFO (Last In First Out) mode in the pool window. In LIFO mode the
+      last train to arrive will be the first to depart.
+
+      <p>When naming the tracks in the pool, it is best to use "same" names using the
+        "hyphen" feature. For example if you had one large staging track and wanted three trains in
+        staging, you might name the staging tracks, Track 1-1, Track 1-2, Track 1-3, and pool the
+        three tracks together. The train Manifest paperwork would show the departure track name as
+        "Track 1" by dropping the hyphen and number. If you wanted all three tracks to hold the same
+        length of trains, you would set the minimum track lengths in the pool window the same for
+        all three track. For example if the staging track was 900 scale feet long, you would set the
+        minimums to 900 divided by 3 or 300 scale feet.</p>
+
       <h3 id="StagingAndCarLoads">Staging and Car loads</h3>
       Staging tracks can optionally swap the car default loads from empty to loaded, and loaded to
       empty. Select the "Swap default loads and empties" if you want your cars loads to change when
@@ -3213,6 +3236,21 @@
         get is three cars. There will always be space available for at least one car at each
         industry. Note that the maximum number of cars in all cases is four. It is only how the cars
         are distributed that changes when entering a minimum.</p>
+
+      <p>
+        Pooling staging tracks allows you to have <a href="#StagingMultipleTrains">multiple
+          trains per physical staging track</a>. The program only allows one train per staging track,
+        but you can pool your staging tracks to have multiple trains residing on one physical track.
+        When pooling tracks in staging, the pool window provides three train departure modes,
+        Normal, FIFO, and LIFO. "Normal" selects a departure track based on usage, tracks with the
+        least use are selected first. You would not use "Normal" when there are two or more trains
+        on one physical track. "FIFO" selects the first train to arrive into staging for departure,
+        and "LIFO" selects the last train to arrive for departure.
+      </p>
+
+      <p>Note that the program normally selects a departure track out of staging
+        by usage. If you prefer to have your trains depart staging based on the order they've
+        arrived, you would use the staging pooling feature for your set of staging tracks.</p>
 
       <p>Another use of a "pool" is with regard to schedules. For the power user, you might find
         that a single schedule assigned to a spur doesn't quite do what you want. But if the track
