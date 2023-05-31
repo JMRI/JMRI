@@ -446,7 +446,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Add "Entry/Exit" to the "For each" action bean list.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

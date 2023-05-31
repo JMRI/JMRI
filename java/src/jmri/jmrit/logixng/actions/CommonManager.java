@@ -20,6 +20,7 @@ public enum CommonManager {
     Memories(() -> InstanceManager.getNullableDefault(MemoryManager.class), Bundle.getMessage("CommonManager_Memories")),
     Audio(() -> InstanceManager.getNullableDefault(AudioManager.class), Bundle.getMessage("CommonManager_Audio")),
     LayoutBlocks(() -> InstanceManager.getNullableDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class), Bundle.getMessage("CommonManager_LayoutBlocks")),
+    EntryExit(() -> InstanceManager.getNullableDefault(jmri.jmrit.entryexit.EntryExitPairs.class), Bundle.getMessage("CommonManager_EntryExit")),
     Warrants(() -> InstanceManager.getNullableDefault(jmri.jmrit.logix.WarrantManager.class), Bundle.getMessage("CommonManager_Warrants")),
     Sections(() -> InstanceManager.getNullableDefault(SectionManager.class), Bundle.getMessage("CommonManager_Sections")),
     Transits(() -> InstanceManager.getNullableDefault(TransitManager.class), Bundle.getMessage("CommonManager_Transits"));
