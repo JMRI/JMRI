@@ -13,10 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
- * @author Lionel Jeanson Copyright (c) 2023
  * 
  * A ListCellRenderer for the ConsistComboBox
+ *
+ * @author Lionel Jeanson Copyright (c) 2023
  * 
  */
 public class ConsistListCellRenderer extends JLabel implements ListCellRenderer<Object> {
