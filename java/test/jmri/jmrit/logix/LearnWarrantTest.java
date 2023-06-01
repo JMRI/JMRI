@@ -122,7 +122,8 @@ public class LearnWarrantTest {
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block0), "Train 111 occupies first block ");
 
 //        (new JRadioButtonOperator(jfo,"ARun")).push();    // start play back
-        frame.runTrain();
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {frame.runTrain();});
+        confirmJOptionPane(jfo, Bundle.getMessage("WarningTitle"), "OK");
 
         sensor = NXFrameTest.runtimes(route, _OBlockMgr);
         assertThat(sensor).withFailMessage("Sensor not null").isNotNull();

@@ -569,8 +569,24 @@
 
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
+            <li>Some minor internal cleanup.</li>
+            <li>If you select a roster entry, the throttle displays functions up to the
+                least of the number of functions available
+                from the layout connection, or the maximum function in the decoder
+                definition.
+                For most decoders, this will be 28,
+                but there are a few definitions that are larger or smaller.</li>
+            <li>Added a consist selector in the address panel</li>
+            <li>Added a "Consist Tool" button in the address panel</li>
+            <li>Behavior with consists enhanced</li>
+        </ul>
+        
+    <h3>Consist Tool</h3>
+        <a id="consist" name="consist"></a>
         <ul>
-            <li></li>
+            <li>The "Consist Control" entry in the "Tools" menu was renamed "Consist Tool"</li>
+            <li>Consist tool now leverages locomotives icons when available</li>
+            <li>A consist selection combo box was introduced</li>
         </ul>
 
     <h3>Timetable</h3>
