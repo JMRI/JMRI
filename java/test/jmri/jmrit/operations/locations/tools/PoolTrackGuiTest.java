@@ -178,8 +178,6 @@ public class PoolTrackGuiTest extends OperationsTestCase {
         f.trackMinLengthTextField.setText("X"); // should be a number
 
         // Now click the Save button error dialog should appear
-        JemmyUtil.enterClickAndLeave(f.saveButton);
- 
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
 
         // error dialog should have appeared
