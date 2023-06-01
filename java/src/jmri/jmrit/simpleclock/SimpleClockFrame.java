@@ -777,7 +777,9 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                 } else if (clock.getStartClockOption() == Timebase.PRAGOTRON_CLOCK) {
                     clockStartBox.setSelectedIndex(startPragotronClock);
                 }
-                correctCheckBox.setSelected(clock.getCorrectHardware());
+                if (correctCheckBox != null) {
+                    correctCheckBox.setSelected(clock.getCorrectHardware());
+                }
                 break;
             default:
                 // ignore all other properties
