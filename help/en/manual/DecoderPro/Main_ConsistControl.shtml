@@ -134,8 +134,8 @@
       consist is traveling forward. Will be grayed out until the lead locomotive is selected.</p>
 
       <p>The <strong><span class="textbutton">DEL</span></strong> button removes the
-      consist. The list of the consist will have a <input type="button" name="button4" id="button4"
-      value="DEL"> for each locomotive, allowing you to remove any locomotive from the consist.</p>
+      consist. The list of the consist will have a <span class="textbutton">DEL</span> button for each locomotive,
+      allowing you to remove any locomotive from the consist.</p>
 
       <p>The <span class="textbutton">Delete</span> button deletes the entire consist.</p>
 

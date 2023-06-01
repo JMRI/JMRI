@@ -171,8 +171,8 @@
         <p><img src="images/Main_Debug02.png" alt="log entry" height="85" width="525">
         </p>
 
-        <p><strong>Message</strong>: Type your message and then click the <input name="button4" id=
-        "button4" value="Add" type="button"> to add the message to the log file.</p>
+        <p><strong>Message</strong>: Type your message and then click the
+        <span class="textbutton">Add</span> button to add the message to the log file.</p>
       </blockquote>
 
       <p><strong>Display Message Log</strong>
