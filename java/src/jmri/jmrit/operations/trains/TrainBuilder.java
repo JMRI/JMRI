@@ -171,13 +171,12 @@ public class TrainBuilder extends TrainBuilderCars {
                     addLine(_buildReport, ONE, Bundle.getMessage("buildStagingReturn", _terminateLocation.getName()));
                 } else {
                     for (Track track : stagingTracksTerminate) {
-                        _terminateStageTrack = track;
-                        if (checkTerminateStagingTrack(_terminateStageTrack)) {
+                        if (checkTerminateStagingTrack(track)) {
+                            _terminateStageTrack = track;
                             addLine(_buildReport, ONE, Bundle.getMessage("buildStagingAvail",
                                     _terminateStageTrack.getName(), _terminateLocation.getName()));
                             break;
                         }
-                        _terminateStageTrack = null;
                     }
                 }
             }

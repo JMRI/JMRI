@@ -1635,13 +1635,13 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Get the service order for this track. Only yards and interchange have this
-     * feature.
+     * Get the service order for this track. Yards and interchange have this
+     * feature for cars.  Staging has this feature for trains.
      *
      * @return Service order: Track.NORMAL, Track.FIFO, Track.LIFO
      */
     public String getServiceOrder() {
-        if (isSpur() || isStaging()) {
+        if (isSpur() || (isStaging() && getPool() == null)) {
             return NORMAL;
         }
         return _order;
