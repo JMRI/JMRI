@@ -5,7 +5,7 @@
   <title>JMRI: Entry/Exit (NX) Documentation</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content=
-  "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+  "hardware layout java model railroad JMRI nx entryexit entry exit routing interlocking">
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -23,8 +23,9 @@
       <h2>Overview</h2>
 
       <p>NX Routing builds a dynamic valid path between two locations on a Layout Editor panel. The
-      path can traverse a number of Turnouts and different Blocks. The Entry and Exit locations on
-      the Layout Editor are defined by the placement of Sensors at various Block boundaries. When
+      path can traverse a number of Turnouts and different <a href="Blocks.shtml">Blocks</a>.
+      The Entry and Exit locations on the Layout Editor are defined by the placement of 
+      <a href="Sensors.shtml">Sensors</a> at various Block boundaries. When
       two Sensors are activated and a clear and valid route is found between them, then the
       Turnouts in the route will automatically be set accordingly. If the path between the two
       sensors was created with the type set to <strong>Full Interlock</strong>, then the blocks
