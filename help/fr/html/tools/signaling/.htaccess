@@ -1,0 +1,5 @@
+RewriteEngine on
+
+# Provide redirects for removed pages
+
+RewriteRule "IntroToSignalingYourMRR.html" "IntroToSignalingYourMRR.shtml" [R=301,L]
