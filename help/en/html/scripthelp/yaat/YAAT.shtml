@@ -184,6 +184,15 @@
         and greater than zero, a wait allows the turnout command to complete, capacitors to
         recharge, etc.</dd>
 
+        <dt>Set turntable &lt;turntable name&gt; on panel &lt;panel name&gt; to ray &lt;#&gt;</dt>
+
+        <dd>Set the turntable position to the ray index using the <code>setPosition(int)</code>
+        method.  The turntable name is the internal name on the layout editor panel, such as
+        <code>TUR1</code>.  The panel name is the panel's title.  The time required to move the
+        turntable bridge is variable. The following statement should be a <strong><em>wait for n
+        seconds</em></strong> or a <strong><em>wait for sensor active</em></strong> if a turntable
+        position sensor is available for each ray.</dd>
+
         <dt>Start when sensor &lt;sensor name&gt; is &lt;active | inactive&gt;</dt>
 
         <dd>An optional action that defers running the train until the condition has been
