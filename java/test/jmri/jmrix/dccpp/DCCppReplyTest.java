@@ -359,11 +359,11 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertTrue(r.isClockReply());
         Assert.assertEquals(222, r.getClockMinutesInt());
         Assert.assertEquals(4,   r.getClockRateInt());
-        Assert.assertEquals("Monitor string", "FastClock Reply: Mins:222, Rate:4", r.toMonitorString());
+        Assert.assertEquals("Monitor string", "FastClock Reply: 03:42, Rate:4", r.toMonitorString());
         r = DCCppReply.parseDCCppReply("jC 333"); //just time
         Assert.assertTrue(r.isClockReply());
         Assert.assertEquals(333, r.getClockMinutesInt());
-        Assert.assertEquals("Monitor string", "FastClock Reply: Mins:333", r.toMonitorString());
+        Assert.assertEquals("Monitor string", "FastClock Reply: 05:33", r.toMonitorString());
         //verify that bad syntax fails
         r = DCCppReply.parseDCCppReply("jT 123 456 789 xx");        
         Assert.assertFalse(r.isTurnoutIDsReply());
@@ -374,7 +374,12 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         r = DCCppReply.parseDCCppReply("jC x222 4 xx"); //time and rate
         Assert.assertFalse(r.isClockReply());
         
-}
+        //TrackManager
+        r = DCCppReply.parseDCCppReply("= B PROG 123");
+        Assert.assertTrue(r.isTrackManagerReply());
+        Assert.assertEquals("Monitor string", "TrackManager:= B PROG 123", r.toMonitorString());
+    
+    }
 
     @Test
     public void testMonitorStringCurrentReply() {
