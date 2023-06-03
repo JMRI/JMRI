@@ -266,6 +266,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             if (!_train.getServiceStatus().equals(Train.NONE)) {
                 addLine(_buildReport, SEVEN, _train.getServiceStatus());
             }
+            addLine(_buildReport, SEVEN,
+                    Bundle.getMessage("RouterStagingTryRouting", car.toString(), clone.getLocationName(),
+                            clone.getDestinationName(), clone.getDestinationTrackName()));
+            // note that testTrain = null, return false
         } else if (!trainServicesCar) {
             testTrain = tmanager.getTrainForCar(clone, _train, _buildReport);
         }
@@ -393,8 +397,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         car.setDestination(null, null);
         if (car.getTrack().isStaging()) {
-            log.debug("Car ({}) departing staging, single train can't deliver car to ({}, {})", car,
-                    clone.getDestinationName(), clone.getDestinationTrackName());
+            addLine(_buildReport, SEVEN,
+                    Bundle.getMessage("RouterStagingTryRouting", car.toString(), clone.getLocationName(),
+                            clone.getDestinationName(), clone.getDestinationTrackName()));
             return false; // try 2 or more trains
         }
         return true; // able to route, but not able to set the car's destination

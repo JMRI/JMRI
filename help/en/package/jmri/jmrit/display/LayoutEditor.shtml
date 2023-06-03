@@ -546,7 +546,8 @@
         <li><strong>Show Icon tooltips</strong> - This submenu allows you to select whether icon
         tooltips are displayed when in Edit Mode and when not in Edit Mode. When the mouse is
         hovered over an icon, and tooltips are on, the name of the icon is displayed while the
-        mouse remains over the icon. Drawn track items do not have tooltips.  See
+        mouse remains over the icon. Except for turnouts and slips, drawn track items do not have
+        tooltips.  Turnouts and slips were added as of JMRI 5.3.6.  See
         <a href="Tooltips.shtml">Tooltips</a> for more information.</li>
 
         <li><strong>Show Help Bar in Edit Mode</strong> - If this item is checked, the help bar is
@@ -723,6 +724,14 @@
             <li><strong>Unnecessary Anchors</strong> - Anchor points are only required at block
             boundaries or changing track geometry, such as entering a curve, using dashes, hidden
             track, etc.</li>
+
+            <li><strong>Linear Bezier Track Segments</strong> - Find bezier curves that are
+            effectively a straight line.  Consider changing the track segment to a <strong>Line
+            </strong>.</li>
+
+            <li><strong>Fixed Radius Bezier Track Segments</strong> - Find bezier curves that are
+            are effectively a circle with a fixed radius.  Consider changing the track segment to
+            a <strong>Circle</strong>.</li>
           </ul>
         </li>
 

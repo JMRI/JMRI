@@ -17,7 +17,7 @@ import org.junit.Assert;
  */
 public class IdentifyDecoderTest {
 
-    static int cvRead = -1;
+    private int cvRead = -1;
     private ProgDebugger p;
 
     /**
@@ -646,7 +646,7 @@ public class IdentifyDecoderTest {
         JUnitUtil.setUp();
         p = new ProgDebugger() {
             @Override
-            public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+            public void readCV(String CV, jmri.ProgListener p) throws ProgrammerException {
                 cvRead = Integer.parseInt(CV);
             }
         };

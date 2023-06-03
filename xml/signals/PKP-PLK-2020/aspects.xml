@@ -12,7 +12,7 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2020</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Damian</firstname><surname>Dąbrowa</surname></personname>
@@ -142,16 +142,16 @@
       <name>Sygnał Ms 1</name>
       <indication>Pojedynczy ciągły sygnał niebieski</indication>
       <description>Jazda manewrowa zabroniona</description>
-      <speed />
-      <speed2 />
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
     </aspect>
 
     <aspect>
       <name>Sygnał Ms 2</name>
       <indication>Pojedynczy ciągły sygnał biały</indication>
       <description>Jazda manewrowa dozwolona</description>
-      <speed>Shunting</speed>
-      <speed2>Shunting</speed2>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
     </aspect>
   </aspects>
 
@@ -160,7 +160,7 @@
     <imagetype type="default"/>
     <imagetype type="small"/>
   </imagetypes>
-  
+
   <appearancefiles>
     <appearancefile href="appearance-sbl2.xml"/>
     <appearancefile href="appearance-sbl3.xml"/>

@@ -89,7 +89,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
         readConsistType(consist, newConsist);
         readConsistId(consist, newConsist);
         readConsistLocoList(consist,newConsist);
-
+        consistMan.notifyConsistListChanged();
     }
 
     public void readConsistLocoList(Element consist, Consist newConsist) {

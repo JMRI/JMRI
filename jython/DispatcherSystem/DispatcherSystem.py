@@ -28,7 +28,6 @@ import time
 import webbrowser
 import os
 
-
 def strip_end(text, suffix):
     if not text.endswith(suffix):
         return text
@@ -70,35 +69,12 @@ def CreateIcons_action(event):
     global f1
     initialPanelFilename = start_file
     finalPanelFilename = icons_file
-
-    # msg = "About to create file " + finalPanelFilename + "\n from " + initialPanelFilename
-    # msg = msg + "\n  *****************************************************"
-    # msg = msg + "\nPanel " + initialPanelFilename + " should be open for this stage to work"
-    # msg = msg + "\n  *****************************************************"
-    # msg = msg + "\nContinue?"
-    # myAnswer = JOptionPane.showConfirmDialog(None, msg)
-    # if myAnswer == JOptionPane.YES_OPTION:
-    #     pass
-    # elif myAnswer == JOptionPane.NO_OPTION:
-    #     msg = 'Stopping'
-    #     JOptionPane.showMessageDialog(None, msg, 'Stopping', JOptionPane.WARNING_MESSAGE)
-    #     return
-    # elif myAnswer == JOptionPane.CANCEL_OPTION:
-    #     msg = 'Stopping'
-    #     JOptionPane.showMessageDialog(None, msg, 'Stopping', JOptionPane.WARNING_MESSAGE)
-    #     return
-    # elif myAnswer == JOptionPane.CLOSED_OPTION:
-    #     #print "You closed the window. How rude!"
-    #     return
-    # print "Processing panels"
-    #stage0
     saveOrigPanel()
-    #stage1
     p = processPanels()
-    print "Processed panels"
+    #print "Processed panels"
     #stage2
     CreateTransits()
-    print "Created Transits"
+    #print "Created Transits"
 
 def saveOrigPanel():
     global backup_file
@@ -227,21 +203,21 @@ def CreateTransits():
     #print "in create_transits"
     global g
     global le
-    global DisplayProgress_global
+    #global DisplayProgress_global
     global logLevel
-
+    global dpg
 
     #the displayProgress is in CreateTransits
-    CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
-    exec(open (CreateTransits).read())
-    DisplayProgress_global = DisplayProgress
-    progress = 5
-    dpg=DisplayProgress_global()
-    dpg.Update("creating transits: " + str(progress)+ "% complete")
+    # CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
+    # exec(open (CreateTransits).read())
+    #DisplayProgress_global = DisplayProgress
+    # progress = 5
+    # DisplayProgress()
+    # dpg.Update("creating transits: " + str(progress)+ "% complete")
 
     # initialPanelFilename = icons_file
     # finalPanelFilename = run_file
-    initialPanelFilename = start_file
+    #initialPanelFilename = start_file
 
     #print "Setting up Graph"
     my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
@@ -252,36 +228,39 @@ def CreateTransits():
     le = LabelledEdge
     g = StationGraph()
 
-    progress = 10
-    dpg.Update("creating transits: " + str(progress)+ "% complete")
+    # progress = 10
+    # dpg.Update("creating transits: " + str(progress)+ "% complete")
 
-    if logLevel > 0: print "updating logic"
+    #if logLevel > 0: print "updating logic"
     #     CreateSignalLogic = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateSignalLogicAndSections.py')
     #     exec(open (CreateSignalLogic).read())
     #     usl = Update_Signal_Logic()
     #print "updating logic stage1"
 
     #     ans = usl.create_autologic_and_sections()
-    ans = True
+    #ans = True
 
-    if ans == True:
-        #print "updating logic stage2"
-        #         usl.update_logic(run_file)
 
-        progress = 15
-        dpg.Update("creating transits: " + str(progress)+ "% complete")
+    #print "updating logic stage2"
+    #         usl.update_logic(run_file)
 
-        #print "Creating Transits"
-        CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
-        exec(open (CreateTransits).read())
+    #progress = 15
+    #dpg.Update("creating transits: " + str(progress)+ "% complete")
 
-        #print "about to run CreateTransits"
-        ct = CreateTransits()
+    #print "Creating Transits"
+    CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
+    exec(open (CreateTransits).read())
 
-        ct.run_transits(start_file, backup_file, backup_filename)
-        #print "ran CreateTransits"
+    global dpg
+    dpg = DisplayProgress()
 
-    dpg.killLabel()
+    #print "about to run CreateTransits"
+    ct = CreateTransits()
+
+    ct.run_transits()
+    #print "ran CreateTransits"
+
+    #dpg.killLabel()
 
 def show_options_message(msg):
     dialog = JDialog(None, 'Confirm Dispatcher Options', False)
@@ -338,11 +317,12 @@ def ChangeOptions_action(event):
 def setAdvancedRouting():
     jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).enableAdvancedRouting(True)
 
-def RunDispatcher_action(event):
-    global DispatchMaster
-    RunDispatch = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/RunDispatch.py')
-    DispatchMaster = DispatchMaster
-    exec(open (RunDispatch).read())
+# def RunDispatcher_action(event):
+#     global DispatchMaster
+#     print "in RunDispatcher_action"
+#     RunDispatch = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/RunDispatch.py')
+#     DispatchMaster = DispatchMaster
+#     exec(open (RunDispatch).read())
 
 def leftJustify( panel ):
     b = Box.createHorizontalBox()
@@ -368,6 +348,8 @@ logLevel = 0
 #*****************
 CreateIcons = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateIcons.py')
 execfile(CreateIcons)
+
+
 
 #*****************
 frame = jmri.util.JmriJFrame('Dispatch System');

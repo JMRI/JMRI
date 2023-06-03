@@ -61,7 +61,7 @@ public class XNetInitializationManagerTest {
         softly.assertThat(memo.getLightManager()).isNull();
         softly.assertThat(memo.getConsistManager()).isNull();
         softly.assertAll();
-        jmri.util.JUnitAppender.assertWarnMessage("Command Station does not support XpressNet Version 3 Command Set");
+        jmri.util.JUnitAppender.assertErrorMessage("Command Station does not support XpressNet Version 3 Command Set");
     }
 
     @Test

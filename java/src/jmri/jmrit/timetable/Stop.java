@@ -50,6 +50,28 @@ public class Stop {
     private int _stagingTrack = 0;
     private String _stopNotes = "";
 
+    /**
+     * Make a copy of the stop.
+     * @param trainId The new train id, if zero use the current train id.
+     * @param stationId The new station id.  If zero use the current station id.
+     * @param seq The sequence for the new stop.
+     * @return a new Stop instance.
+     */
+    public Stop getCopy(int trainId, int stationId, int seq) {
+        if (trainId == 0) trainId = getTrainId();
+        if (stationId == 0) stationId = getStationId();
+
+        Stop copy = new Stop(trainId, seq);
+        copy.setStationId(stationId);
+        copy.setDuration(_duration);
+        copy.setNextSpeed(_nextSpeed);
+        copy.setArriveTime(_arriveTime);
+        copy.setDepartTime(_departTime);
+        copy.setStagingTrack(_stagingTrack);
+        copy.setStopNotes(_stopNotes);
+        return copy;
+    }
+
     public int getStopId() {
         return _stopId;
     }

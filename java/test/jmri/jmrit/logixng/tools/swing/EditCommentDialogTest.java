@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  * Test EditCommentDialog
- * 
+ *
  * @author Daniel Bergqvist 2021
  */
 public class EditCommentDialogTest {
@@ -20,7 +20,7 @@ public class EditCommentDialogTest {
         EditCommentDialog d = new EditCommentDialog();
         Assert.assertNotNull(d);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -34,7 +34,8 @@ public class EditCommentDialogTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

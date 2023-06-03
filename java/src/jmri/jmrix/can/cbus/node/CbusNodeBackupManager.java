@@ -252,7 +252,7 @@ public class CbusNodeBackupManager {
 
                                     // check event variable length matches expected length in parameters
                                     if (nodeBackup.getNodeParamManager().getParameter(5)!=(xmlEvent.getAttributeValue("EvVars").length()/2)) {
-                                        log.error("Incorrect Event Variable Length in Backup");
+                                        jmri.util.LoggingUtil.warnOnce(log, "Incorrect Event Variable Length in Backup for Node {}", nodeBackup.getNodeNumber());
                                         _backupInfoError = true;
                                     }
                                     try {
@@ -261,7 +261,7 @@ public class CbusNodeBackupManager {
                                             Integer.parseInt(xmlEvent.getAttributeValue("EventNum")),
                                             xmlEvent.getAttributeValue("EvVars"));
                                     } catch (java.lang.NumberFormatException ex) {
-                                        log.error("Incorrect Node / Event Number in Backup");
+                                        jmri.util.LoggingUtil.warnOnce(log,"Incorrect Node / Event Number in Backup for Node {}", nodeBackup.getNodeNumber());
                                         _backupInfoError = true;
                                     }
                                 }

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  * Test DefaultLogixNG
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class DefaultAnonymousTableTest {
@@ -18,7 +18,7 @@ public class DefaultAnonymousTableTest {
         Assert.assertNotNull("exists", new DefaultAnonymousTable(5,7));
         Assert.assertNotNull("exists", new DefaultAnonymousTable(new Object[10][15]));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -34,7 +34,8 @@ public class DefaultAnonymousTableTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

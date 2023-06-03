@@ -141,9 +141,9 @@ public class CbusConfigurationManagerTest {
     public void testNodeEventManagerDispose(){
         assertEquals(0, tcis.numListeners(),"no tcis listeners after memo creation");
         ((CbusNodeTableDataModel)t.provide(CbusNodeTableDataModel.class)).setBackgroundAllocateListener(false);
-        assertEquals(1, tcis.numListeners(),"1 tcis listeners");
-        ((CbusEventTableDataModel)t.provide(CbusEventTableDataModel.class)).skipSaveOnDispose();
         assertEquals(2, tcis.numListeners(),"2 tcis listeners");
+        ((CbusEventTableDataModel)t.provide(CbusEventTableDataModel.class)).skipSaveOnDispose();
+        assertEquals(3, tcis.numListeners(),"3 tcis listeners");
         memo.dispose();
         assertEquals(0, tcis.numListeners(),"All listeners removed " + tcis.getListeners());
     }
@@ -154,7 +154,7 @@ public class CbusConfigurationManagerTest {
         ((CbusNodeTableDataModel)t.provide(CbusNodeTableDataModel.class)).setBackgroundAllocateListener(false);
         ((CbusEventTableDataModel)t.provide(CbusEventTableDataModel.class)).skipSaveOnDispose();
 
-        assertEquals(2, tcis.numListeners(),"2 tcis listeners");
+        assertEquals(3, tcis.numListeners(),"3 tcis listeners");
     
         memo.configureManagers();
 

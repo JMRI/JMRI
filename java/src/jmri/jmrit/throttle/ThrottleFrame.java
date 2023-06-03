@@ -55,6 +55,7 @@ import org.slf4j.LoggerFactory;
 public class ThrottleFrame extends JDesktopPane implements ComponentListener, AddressListener {
 
     private final ThrottleManager throttleManager;
+    private final ThrottlesTableModel allThrottlesTableModel = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel();
 
     private final Integer BACKPANEL_LAYER = Integer.MIN_VALUE;
     private final Integer PANEL_LAYER_FRAME = 1;
@@ -105,7 +106,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         throttleManager = tm;
         initGUI();
         applyPreferences();
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().addThrottleFrame(this);
+        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().addThrottleFrame(tw,this);
     }
 
     public ThrottleWindow getThrottleWindow() {
@@ -385,7 +386,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         addressPanel.addAddressListener(functionPanel);
         addressPanel.addAddressListener(speedPanel);
         addressPanel.addAddressListener(this);
-        addressPanel.addAddressListener(new ThrottleAdressListener());
 
         add(controlPanel, PANEL_LAYER_FRAME);
         add(functionPanel, PANEL_LAYER_FRAME);
@@ -412,7 +412,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 Math.max(addressPanel.getHeight() + functionPanel.getHeight(), controlPanel.getHeight())));
 
         // #JYNSTRUMENT# Bellow prepare drag'n drop receptacle:
-        new URIDrop(this, uris -> {
+        new URIDrop(backgroundPanel, uris -> {
                 if (isEditMode) {
                     for (URI uri : uris ) {
                         ynstrument(new File(uri).getPath());
@@ -611,12 +611,14 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
      */
     public void dispose() {
         log.debug("Disposing {}", getTitle());
+        URIDrop.remove(backgroundPanel);
         addressPanel.removeAddressListener(this);
         InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().removeThrottleFrame(this, addressPanel.getCurrentAddress());
         // check for any special disposing in InternalFrames
         controlPanel.destroy();
         functionPanel.destroy();
         speedPanel.destroy();
+        backgroundPanel.destroy();
         // dispose of this last because it will release and destroy throttle.
         addressPanel.destroy();
     }
@@ -988,6 +990,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         setLastUsedSaveFile(null);
         setFrameTitle();
         throttleWindow.updateGUI();
+        throttleManager.removeListener(la, allThrottlesTableModel);
+        allThrottlesTableModel.fireTableDataChanged();
     }
 
     @Override
@@ -1004,18 +1008,25 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         setFrameTitle();
         throttleWindow.updateGUI();
+        throttleManager.attachListener(throttle.getLocoAddress(), allThrottlesTableModel);        
+        allThrottlesTableModel.fireTableDataChanged();
     }
 
+    
     @Override
-    public void notifyConsistAddressChosen(int newAddress, boolean isLong) {
+    public void notifyConsistAddressChosen(LocoAddress l) {
+        notifyAddressChosen(l);
     }
 
+    
     @Override
-    public void notifyConsistAddressReleased(int address, boolean isLong) {
+    public void notifyConsistAddressReleased(LocoAddress la) {
+        notifyAddressReleased(la);
     }
 
     @Override
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
+        notifyAddressThrottleFound(throttle);
     }
 
     public String getLastUsedSaveFile() {
@@ -1069,45 +1080,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             } catch (Exception e) {
                 // Do nothing, just go on
             }
-        }
-    }
-
-
-    private class ThrottleAdressListener implements jmri.jmrit.throttle.AddressListener {
-
-        private final ThrottlesTableModel tableModel =
-                InstanceManager.getDefault(ThrottleFrameManager.class)
-                        .getThrottlesListPanel().getTableModel();
-
-        @Override
-        public void notifyAddressChosen(LocoAddress la) {
-        }
-
-        @Override
-        public void notifyAddressReleased(LocoAddress addr) {
-            if (addr instanceof DccLocoAddress ) {
-               DccLocoAddress la = (DccLocoAddress) addr;
-               tableModel.fireTableDataChanged();
-               throttleManager.removeListener(la, tableModel);
-            }
-        }
-
-        @Override
-        public void notifyAddressThrottleFound(DccThrottle throttle) {
-            tableModel.fireTableDataChanged();
-            throttle.addPropertyChangeListener(tableModel);
-        }
-
-        @Override
-        public void notifyConsistAddressChosen(int newAddress, boolean isLong) {
-        }
-
-        @Override
-        public void notifyConsistAddressReleased(int address, boolean isLong) {
-        }
-
-        @Override
-        public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
         }
     }
 

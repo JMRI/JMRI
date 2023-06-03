@@ -34,6 +34,7 @@ public class DccConsistManager extends AbstractConsistManager {
         DccConsist consist;
         consist = new DccConsist((DccLocoAddress) address,opsProgManager);
         consistTable.put(address, consist);
+        notifyConsistListChanged();
         return consist;
     }
 

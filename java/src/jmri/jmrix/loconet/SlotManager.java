@@ -63,7 +63,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
 
     public boolean pmManagerGotReply = false;  //this is public to allow changes via script and tests
-    
+
     public boolean supportsSlot250;
 
      /**
@@ -850,7 +850,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         log.debug("LACK in state {} message: {}", progState, m.toString()); // NOI18N
         if (checkLackByte1(m.getElement(1)) && progState == 1) {
             // in programming state
-            if (acceptAnyLACK && !okToIgnoreLack(m.getElement(2))) {
+            if (acceptAnyLACK) {
                 log.debug("accepted LACK {} via acceptAnyLACK", m.getElement(2));
                 // Any form of LACK response from CS is accepted here.
                 // Loconet-attached decoders (LOCONETOPSBOARD) receive the program commands
@@ -1091,9 +1091,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             switch (progState) {
                 case 0:   // notProgramming
                     break;
-                case 1:   // commandPending
-                    // we just sit here waiting for a LACK, handled above
-                    break;
+                case 1:   // commandPending: waiting for an (optional) LACK
                 case 2:   // commandExecuting
                     // waiting for slot read, is it present?
                     if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {

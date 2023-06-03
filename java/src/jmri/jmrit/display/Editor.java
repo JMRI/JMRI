@@ -459,9 +459,11 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
             if (_tooltipTimer != null) {
                 _tooltipTimer.stop();
                 _tooltipTimer = null;
+                _targetPanel.repaint();
             }
 
         } else if (_tooltip == null && _tooltipTimer == null) {
+            log.debug("start :: tt = {}, tooltip = {}, timer = {}", tt, _tooltip, _tooltipTimer);
             _tooltipTimer = new ToolTipTimer(TOOLTIPSHOWDELAY, this, tt);
             _tooltipTimer.setRepeats(false);
             _tooltipTimer.start();

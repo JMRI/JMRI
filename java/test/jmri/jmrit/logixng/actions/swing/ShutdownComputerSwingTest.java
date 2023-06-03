@@ -40,7 +40,7 @@ public class ShutdownComputerSwingTest {
         Assert.assertTrue("panel is not null",
             null != new ShutdownComputerSwing(dialog).getConfigPanel(new ShutdownComputer("IQDA1", null), new JPanel()));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -56,6 +56,7 @@ public class ShutdownComputerSwingTest {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

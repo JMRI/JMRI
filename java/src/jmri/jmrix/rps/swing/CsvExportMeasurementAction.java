@@ -79,7 +79,7 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
 
         // initialize chooser
         if (fileChooser == null) {
-            fileChooser = new JFileChooser();
+            fileChooser = new jmri.util.swing.JmriJFileChooser();
         } else {
             fileChooser.rescanCurrentDirectory();
         }

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2023</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Andrew</firstname><surname>Crosland</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2023-03-20</date>
+            <authorinitials>AC</authorinitials>
+            <revremark>New File</revremark>
+        </revision>
+    </revhistory>
+    <decoder>
+        <family name="CBUS" mfg="SPROG DCC" comment="CANISB is an isolated USB-CBUS interface.">
+            <model model="CANISB" lowVersionID="10" highVersionID="10"/>
+        </family>
+        <programming direct="yes" ops="yes" paged="yes" register="yes">
+        </programming>
+        <variables>
+            <variable CV="10007" default="124" item="id">
+                <decVal min="1" max="127"/>
+            </variable>
+            <variable CV="10009,10008" default="65531" item="nodeNumber">
+                <splitVal/>
+            </variable>
+            <variable CV="10035" default="0" item="arbDel">
+                <enumVal>
+                    <enumChoice choice="None"/>
+                    <enumChoice choice="2"/>
+                    <enumChoice choice="4"/>
+                    <enumChoice choice="8"/>
+                    <enumChoice choice="16"/>
+                    <enumChoice choice="32"/>
+                    <enumChoice choice="64"/>
+                    <enumChoice choice="128"/>
+                    <enumChoice choice="256"/>
+                    <enumChoice choice="512"/>
+                    <enumChoice choice="1024"/>
+                    <enumChoice choice="2048"/>
+                    <enumChoice choice="4096"/>
+                </enumVal>
+            </variable>
+            <variable CV="10012" default="0" item="errctl">
+                <decVal/>
+            </variable>
+            <variable CV="10010" default="0" item="errstat1">
+                <decVal/>
+            </variable>
+            <variable CV="10011" default="0" item="errstat2">
+                <decVal/>
+            </variable>
+            <variable CV="10003" default="0" item="txFailCnt">
+                <decVal/>
+            </variable>
+            <variable CV="10004" default="0" item="rxOvCnt">
+                <decVal/>
+            </variable>
+            <variable CV="10013" default="0" item="canNomBitRxCnt">
+                <decVal/>
+            </variable>
+            <variable CV="10014" default="0" item="canNomBitTxCnt">
+                <decVal/>
+            </variable>
+            <variable CV="10018,10017" default="0" item="canDiag">
+                <splitVal/>
+            </variable>
+            <variable CV="10016" default="0" item="canErrFreeCnt">
+                <decVal/>
+            </variable>
+            <variable CV="10001" default="0" item="canRxErrCnt">
+                <decVal/>
+            </variable>
+            <variable CV="10002" default="0" item="canTxErrCnt">
+                <decVal/>
+            </variable>
+            <variable CV="10022,10021,10020,10019" default="0" item="hostTxCnt">
+                <splitVal/>
+            </variable>
+            <variable CV="10026,10025,10024,10023" default="0" item="hostRxCnt">
+                <splitVal/>
+            </variable>
+            <variable CV="10030,10029,10028,10027" default="0" item="canTxCnt">
+                <splitVal/>
+            </variable>
+            <variable CV="10034,10033,10032,10031" default="0" item="canRxCnt">
+                <splitVal/>
+            </variable>
+        </variables>
+    </decoder>
+    <xi:include href="http://jmri.org/xml/decoders/cbus/PaneCbusSetup.xml"/>
+    <pane>
+        <name>Packet Counts</name>
+        <column>
+            <row>
+                <display item="hostTxCnt" layout="above" label="Host Transmit Packet Count" tooltip="Count of packets sent to host" />
+            </row>
+            <row>
+                <display item="hostRxCnt" layout="above" label="Host Receive Packet Count" tooltip="Count of packets received from host" />
+            </row>
+            <row>
+                <display item="canTxCnt" layout="above" label="CAN Transmit Packet Count" tooltip="Count of packets sent to CAN" />
+            </row>
+            <row>
+                <display item="canRxCnt" layout="above" label="CAN Receive Packet Count" tooltip="Count of packets received from CAN" />
+            </row>
+        </column>
+    </pane>
+    <pane>
+        <name>CAN Controiller Diagnostics</name>
+        <column>
+            <row>
+                <display item="errctl" layout="above" label="CAN Error Control" tooltip="CAN error response control - see modeule documentation" />
+            </row>
+            <row>
+                <display item="errstat1" layout="above" label="CAN Error Status 1" tooltip="CAN error status from CAN controller T1TREC register" />
+            </row>
+            <row>
+                <display item="errstat2" layout="above" label="CAN Error Status 2" tooltip="CAN error status - see module documentation" />
+            </row>
+            <row>
+                <display item="txFailCnt" layout="above" label="Tx Fail Count" tooltip="Count of transmit errors on CAN bus" />
+            </row>
+            <row>
+                <display item="rxOvCnt" layout="above" label="Rx Overflow Count" tooltip="Count of CAN recive FIFO overflow errors" />
+            </row>
+            <row>
+                <display item="canNomBitRxCnt" layout="above" label="CAN Rx Count" tooltip="CAN receive error count from CAN controller C1BDIAG0 register" />
+            </row>
+            <row>
+                <display item="canNomBitTxCnt" layout="above" label="CAN Tx Count" tooltip="CAN transmit error count from CAN controller C1BDIAG0 register" />
+            </row>
+            <row>
+                <display item="canDiag" layout="above" label="CAN Diagnostics" tooltip="CAN diagnostics flags from CAN controller C1BDIAG1 register" />
+            </row>
+            <row>
+                <display item="canErrFreeCnt" layout="above" label="CAN Error Free Count" tooltip="CAN diagnostics flags from CAN controller C1BDIAG1 register" />
+            </row>
+            <row>
+                <display item="canRxErrCnt" layout="above" label="CAN Rx Error Count" tooltip="CAN receive error count from CAN controller C1TREC register" />
+            </row>
+            <row>
+                <display item="canTxErrCnt" layout="above" label="CAN Tx Error Count" tooltip="CAN transmit error count from CAN controller C1TREC register" />
+            </row>
+        </column>
+    </pane>
+</decoder-config>

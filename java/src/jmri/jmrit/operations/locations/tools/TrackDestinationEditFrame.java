@@ -57,8 +57,8 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         super(Bundle.getMessage("TitleEditTrackDestinations"));
     }
 
-    public void initComponents(Track track) {
-        _track = track;
+    public void initComponents(TrackEditFrame tef) {
+        _track = tef._track;
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

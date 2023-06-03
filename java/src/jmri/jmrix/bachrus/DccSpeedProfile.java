@@ -162,7 +162,7 @@ public class DccSpeedProfile {
     }
 
     private static File openExportFile() {
-        JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser fileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
             return fileChooser.getSelectedFile();
         }
@@ -205,7 +205,7 @@ public class DccSpeedProfile {
     }
 
     private void openImportFile() {
-        JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser fileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
 
         if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();

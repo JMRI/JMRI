@@ -464,7 +464,7 @@ public final class FnMapPanelESU extends JPanel {
                             } else if (itemName[item][0].matches("F\\d+")) {
                                 try {
                                     int fn = Integer.parseInt(itemName[item][0].substring(1));
-                                    if (fn <= rosterEntry.getMAXFNNUM()) {
+                                    if (fn <= rosterEntry.getMaxFnNumAsInt()) {
                                         itemLabel[item] = rosterEntry.getFunctionLabel(fn);
                                     }
                                 } catch (NumberFormatException e) {

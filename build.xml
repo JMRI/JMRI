@@ -147,7 +147,7 @@
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
         <pathelement location="${libdir}/jackson-core-2.13.4.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.13.4.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.13.4.1.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.13.4.2.jar"/>
         <pathelement location="${libdir}/jetty-http-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-io-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-security-9.4.28.v20200408.jar"/>
@@ -819,6 +819,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -856,6 +857,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1105,6 +1107,7 @@
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
                          value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="apple.awt.graphics.UseQuartz" value="true"/>
             <sysproperty key="apple.awt.graphics.EnableQ2DX" value="true"/>
@@ -1140,6 +1143,7 @@
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
                          value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path"
@@ -1263,6 +1267,7 @@
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
                          value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="apple.awt.graphics.UseQuartz" value="true"/>
             <sysproperty key="apple.awt.graphics.EnableQ2DX" value="true"/>
@@ -1299,6 +1304,7 @@
           fork="yes" >
             <classpath refid="test.class.path"/>
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1414,6 +1420,7 @@
             fork="yes" >
 
               <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+              <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
               <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
               <sysproperty key="log4j.ignoreTCL" path="true/"/>
               <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1440,6 +1447,7 @@
             fork="yes" >
 
               <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+              <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
               <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
               <sysproperty key="log4j.ignoreTCL" path="true/"/>
               <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1470,6 +1478,7 @@
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1495,6 +1504,7 @@
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1526,6 +1536,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1617,6 +1628,7 @@
                 <fileset refid="junitfileset"/>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+                    <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
                     <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
                     <sysproperty key="log4j.ignoreTCL" path="true/"/>
                     <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1644,6 +1656,7 @@
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1672,6 +1685,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -1708,9 +1722,8 @@
                 </fileset>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-
-                   <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
-                    <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+                    <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
+                    <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
                     <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
                     <sysproperty key="log4j.ignoreTCL" path="true/"/>
                     <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
@@ -2026,7 +2039,6 @@
             <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
             <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
-            <!-- <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/> -->
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
             <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
             <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
@@ -2124,7 +2136,6 @@
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
             <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
-            <!-- <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/> -->
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
             <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
             <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
@@ -2608,6 +2619,8 @@
         <!-- do these first, so we can then make everything in the new directory executable -->
         <copy todir="${dist.linux}/JMRI">
             <fileset dir="${dist.scripts}"/>
+            <fileset dir="${scriptdir}/Linux"
+                     includes="CreateJmriApps.sh"/>
         </copy>
         <chmod perm="ugo+rx">
             <fileset dir="${dist.linux}/JMRI"/>
@@ -2648,6 +2661,7 @@
                 <exclude name="JMRI/SoundPro"/>
                 <exclude name="JMRI/InstallTest"/>
                 <exclude name="JMRI/JmriFaceless"/>
+                <exclude name="JMRI/CreateJmriApps.sh"/>
             </tarfileset>
             <tarfileset  dir="${dist.linux}" filemode="755">
                 <include name="JMRI/DecoderPro"/>
@@ -2655,6 +2669,7 @@
                 <include name="JMRI/SoundPro"/>
                 <include name="JMRI/InstallTest"/>
                 <include name="JMRI/JmriFaceless"/>
+                <include name="JMRI/CreateJmriApps.sh"/>
             </tarfileset>
         </tar>
     </target>

@@ -48,7 +48,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         return existingInstance;
     }
 
-    void setInstance(DataSource source) {
+    static void setInstance(DataSource source) {
         if (existingInstance != null) {
             log.error("Setting instance after it has already been set");
         } else {

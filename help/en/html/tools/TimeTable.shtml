@@ -170,6 +170,7 @@
             <th>Layout</th>
             <td>1</td>
             <td>New Layout</td>
+            <td>Duplicate Layout</td>
             <td>Delete Layout</td>
           </tr>
 
@@ -182,6 +183,7 @@
           <tr>
             <th>Train Type</th>
             <td>3</td>
+            <td>Duplicate Train Type</td>
             <td>Delete Train Type</td>
           </tr>
 
@@ -195,6 +197,7 @@
             <th>Segment</th>
             <td>3</td>
             <td>Add Station</td>
+            <td>Duplicate Segment</td>
             <td>Delete Segment</td>
             <td>Graph: Display | Print</td>
           </tr>
@@ -202,6 +205,7 @@
           <tr>
             <th>Station</th>
             <td>4</td>
+            <td>Duplicate Station</td>
             <td>Delete Station</td>
           </tr>
 
@@ -215,6 +219,7 @@
             <th>Schedule</th>
             <td>3</td>
             <td>Add Train</td>
+            <td>Duplicate Schedule</td>
             <td>Delete Schedule</td>
           </tr>
 
@@ -222,6 +227,7 @@
             <th>Train</th>
             <td>4</td>
             <td>Add Stop</td>
+            <td>Duplicate Train</td>
             <td>Copy Stops</td>
             <td>Delete Train</td>
           </tr>
@@ -229,6 +235,7 @@
           <tr>
             <th>Stop</th>
             <td>5</td>
+            <td>Duplicate Stop</td>
             <td>Delete Stop</td>
             <td>Up</td>
             <td>Down</td>
@@ -399,23 +406,23 @@
       data.</p>
 
       <ul>
-        <li>Train name &mdash; This is usually a short name, or symbol, for the train.</li>
+        <li>Train Name &mdash; This is usually a short name, or symbol, for the train.</li>
 
         <li>Description &mdash; This is a more descriptive name for the train.</li>
 
         <li>Type &mdash; The train type is selected from the train type list defined earlier.</li>
 
-        <li>Default speed &mdash; The default speed is used when the next speed for a stop is set to
+        <li>Default Speed &mdash; The default speed is used when the next speed for a stop is set to
         zero.</li>
 
-        <li>Start time &mdash; The start time using hh:mm.</li>
+        <li>Start Time &mdash; The start time using hh:mm.</li>
 
         <li>Throttle &mdash; The assigned throttle if using the throttles feature.</li>
 
         <li>Notes &mdash; Additional information about the train, such as special handling.</li>
       </ul>
 
-      <p>The calculated duration for the train is also displayed.</p>
+      <p>The calculated duration for the train is also displayed as hh:mm.</p>
 
       <p><span class="since">since 4.99.4</span>When a new train is added and before any stops have
       been added, the <strong>Copy Stops</strong> action button can be used to copy the stops from

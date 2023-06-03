@@ -274,6 +274,7 @@ public class ActionsAndExpressionsTest {
                 classes,
                 new String[]{
                     "Bundle",
+                    "CommonManager",
                     "NamedBeanType",
                     "AbstractAnalogAction","AnalogFactory",         // Analog
                     "AbstractDigitalAction","ActionAtomicBoolean","AbstractScriptDigitalAction","DigitalFactory",   // Digital

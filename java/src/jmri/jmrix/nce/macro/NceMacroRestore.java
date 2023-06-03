@@ -82,7 +82,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
     public void run() {
 
         // Get file to read from
-        JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser fc = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         fc.addChoosableFileFilter(new TextFilter());
         int retVal = fc.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {

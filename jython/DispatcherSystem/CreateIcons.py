@@ -38,32 +38,37 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
 
     # row number, user name, label name, x offset, y offset
+    i = 1
     controlSensors = []
-    controlSensors.append([1, 'startDispatcherSensor', 'Run Dispatcher System', 0, 0])
-    controlSensors.append([2, 'stopMasterSensor', 'Stop Dispatcher System', 0, 0])
+    controlSensors.append([i, 'startDispatcherSensor', 'Run Dispatcher System', 0, 0]); i += 1
+    controlSensors.append([i, 'stopMasterSensor', 'Stop/Modify Dispatcher System', 0, 0]); i += 1
 
-    controlSensors.append([3, 'Express', 'Express Train (no stopping)', 10, 5])
-    controlSensors.append([4, 'newTrainSensor', 'Setup Train in Section', 10, 5])
-    controlSensors.append([5, 'soundSensor', 'Enable Announcements', 10, 5])
-    controlSensors.append([6, 'simulateSensor', 'Simulate Dispatched Trains', 10, 5])
+    controlSensors.append([i, 'Express', 'Express Train (no stopping)', 10, 5]); i += 1
+    controlSensors.append([i, 'newTrainSensor', 'Setup Train in Section', 10, 5]); i += 1
+    controlSensors.append([i, 'soundSensor', 'Enable Announcements', 10, 5]); i += 1
+    controlSensors.append([i, 'simulateSensor', 'Simulate Dispatched Trains', 10, 5]); i += 1
+    controlSensors.append([i, 'checkRouteSensor', 'Dispatch Path must be clear', 10, 5]); i += 1
 
-    controlSensors.append([7, 'setDispatchSensor', 'Run Dispatch', 0, 2])
-    controlSensors.append([8, 'setRouteSensor', 'Setup Route', 0, 2])
-    controlSensors.append([9, 'setStoppingDistanceSensor', 'Set Stopping Length', 0, 2])
-    controlSensors.append([10, 'setStationWaitTimeSensor', 'Set Station Wait Time', 0, 2])
-    controlSensors.append([11, 'setStationDirectionSensor', 'Set Station Direction', 0, 2])
+    controlSensors.append([i, 'setDispatchSensor', 'Run Dispatch', 0, 5]); i += 1
+    controlSensors.append([i, 'setRouteSensor', 'Setup Route', 0, 5]); i += 1
+    controlSensors.append([i, 'setStoppingDistanceSensor', 'Set Stopping Length', 0, 5]); i += 1
+    controlSensors.append([i, 'setStationWaitTimeSensor', 'Set Station Wait Time', 0, 5]); i += 1
+    controlSensors.append([i, 'setStationDirectionSensor', 'Set Station Direction', 0, 5]); i += 1
+    controlSensors.append([i, 'setTransitBlockRestrictionSensor', 'Restrict Transit Operation', 0, 5]); i += 1
 
-    controlSensors.append([12, 'runRouteSensor', 'Run Route', 10, 5])
-    controlSensors.append([13, 'editRoutesSensor', 'View/Edit Routes', 10, 5])
-    controlSensors.append([14, 'viewScheduledSensor', 'View/Edit Scheduled Trains', 10, 5])
-    controlSensors.append([15, 'schedulerStartTimeSensor', 'Set Scheduler Start Time', 10, 5])
-    controlSensors.append([16, 'showClockSensor', 'Show Analog Clock', 10, 5])
-    controlSensors.append([17, 'startSchedulerSensor', 'Start Scheduler', 10, 5])
+    controlSensors.append([i, 'runRouteSensor', 'Run Route', 10, 5]); i += 1
+    controlSensors.append([i, 'editRoutesSensor', 'View/Edit Routes', 10, 5]); i += 1
+    controlSensors.append([i, 'viewScheduledSensor', 'View/Edit Scheduled Trains', 10, 5]); i += 1
+    controlSensors.append([i, 'schedulerStartTimeSensor', 'Set Scheduler Start Time', 10, 5]); i += 1
+    controlSensors.append([i, 'showClockSensor', 'Show Analog Clock', 10, 5]); i += 1
+    controlSensors.append([i, 'startSchedulerSensor', 'Start Scheduler', 10, 5]); i += 1
+    controlSensors.append([i, 'helpSensor', 'Help', 0, 5]); i += 1
+
 
     def __init__(self):
         self.define_DisplayProgress_global()
-
         if self.perform_initial_checks():
+            self.waitMsec(5000)
             self.show_progress(0)
             self.removeIconsAndLabels()
             self.removeLogix()
@@ -83,9 +88,20 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.show_progress(80)
             self.addLogix()
             self.addIcons()
+            self.stop_all_threads()
             self.end_show_progress()
+
             # msg = 'The JMRI tables and panels have been updated to support the Dispatcher System\nA store is recommended.'
             # JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
+
+    def stop_all_threads(self):
+        summary = jmri.jmrit.automat.AutomatSummary.instance()
+        automatsList = java.util.concurrent.CopyOnWriteArrayList()
+        for automat in summary.getAutomats():
+            automatsList.add(automat)
+
+        for automat in automatsList:
+            automat.stop()
 
     def define_DisplayProgress_global(self):
         global dpg
@@ -360,9 +376,11 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
     def updatePanels(self):
         for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
-            panel.invalidate()
-            panel.validate()
-            panel.repaint()
+            if panel.getTitle() != 'Dispatcher System':
+                panel.invalidate()
+                panel.validate()
+                panel.repaint()
+            pass
 
     # **************************************************
     # remove icons and labels from panels
@@ -433,6 +451,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         logixManager = jmri.InstanceManager.getDefault(jmri.LogixManager)
         logix = logixManager.getLogix('Run Dispatcher')
         if logix is not None:
+            logix.deActivateLogix()
             logixManager.deleteLogix(logix)
 
     # **************************************************
@@ -529,6 +548,9 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             sensor = sensors.provideSensor('IS:DSCT:' + str(control[0]))
             if sensor is not None:
                 sensor.setUserName(control[1])
+        # Create a dummy sensor
+        sensor = sensors.provideSensor('IS:DSCT:' + str(0))
+        sensor.setUserName("DummyControlSensor")
 
         # Create the stop sensors
         index = 0
@@ -575,7 +597,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 vars.append(jmri.ConditionalVariable(False, jmri.Conditional.Operator.AND, jmri.Conditional.Type.SENSOR_ACTIVE, 'startDispatcherSensor', True))
                 cdl.setStateVariables(vars)
                 actions = []
-                actions.append(jmri.implementation.DefaultConditionalAction(1, jmri.Conditional.Action.RUN_SCRIPT, '', -1, 'program:jython/DispatcherSystem/RunDispatch.py'))
+                actions.append(jmri.implementation.DefaultConditionalAction(1, jmri.Conditional.Action.RUN_SCRIPT, '', -1, 'program:jython/DispatcherSystem/RunDispatchMaster.py'))
                 cdl.setAction(actions)
                 lgx.activateLogix()
 
@@ -684,13 +706,13 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             sensor = sensors.getSensor('IS:DSCT:' + str(control[0]))
             if sensor is not None:
                 x = 20 + control[3]
-                y = (control[0] * 20) + 20 + control[4]
+                y = (control[0]  * 20) + 0 + control[4]
                 self.addMediumIcon(panel, sensor, x, y)
 
                 x += 20
                 self.addTextLabel(panel, control[2], x, y)
 
-        panel.setSize(300, 450)
+        panel.setSize(300, 470)
         panel.setAllEditable(False)
         panel.setVisible(True)
 
@@ -774,8 +796,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 class DisplayProgress:
     def __init__(self):
         #labels don't seem to work. This is the only thing I could get to work. Improvements welcome
-        self.frame1 = JFrame('Hello, World!', defaultCloseOperation=JFrame.DISPOSE_ON_CLOSE, size=(500, 50), locationRelativeTo=None)
-
+        self.frame1 = JFrame('Starting Processing!', defaultCloseOperation=JFrame.DISPOSE_ON_CLOSE, size=(500, 50), locationRelativeTo=None)
         self.frame1.setVisible(True)
 
     def Update(self,msg):
@@ -784,6 +805,7 @@ class DisplayProgress:
     def killLabel(self):
         self.frame1.setVisible(False)
         self.frame1 = None
+
 
 
 class Query:

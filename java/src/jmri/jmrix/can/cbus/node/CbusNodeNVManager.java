@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class to represent a Processing of CAN Frames for a CbusNode.
+ * Class to manage Node Variables for a CbusNode.
  *
  * @author Steve Young Copyright (C) 2019,2020
  */

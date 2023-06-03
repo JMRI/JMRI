@@ -1,11 +1,9 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
@@ -56,7 +54,7 @@ public class CarSetFrameTest extends OperationsTestCase {
 
     @Test
     public void testCarSetFrameSaveButton() {
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"),"Ignoring intermittent test");
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -147,7 +145,7 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
-        });
+        },"car part kernel yes dialogue did not complete");
         JemmyUtil.waitFor(f); // wait for frame to become active
         jfo.requestClose();
         jfo.waitClosed();
@@ -271,10 +269,17 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertEquals("empty loads", 2, f.loadReturnWhenEmptyBox.getItemCount());
         Assert.assertEquals("load loads", 1, f.loadReturnWhenLoadedBox.getItemCount());
         
+        // confirm that wait and schedule id get updated when load changes
+        car.setWait(1);
+        car.setScheduleItemId("someId");
+        
         // Confirm load change
         f.loadComboBox.setSelectedItem("NewLoad");
         JemmyUtil.enterClickAndLeave(f.saveButton);
+        
         Assert.assertEquals("load change", "NewLoad", car.getLoadName());
+        Assert.assertEquals("Wait", 0, car.getWait());
+        Assert.assertEquals("Schedule id", Car.NONE, car.getScheduleItemId());
         
         JUnitUtil.dispose(f);
     }
@@ -291,13 +296,16 @@ public class CarSetFrameTest extends OperationsTestCase {
         f.initComponents();
         f.load(car);
 
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());
+        JComboBoxOperator tlbo = new JComboBoxOperator(jfo,new NameComponentChooser("trackLocationBox"));
+
         // don't allow Boxcar at spur 2
         Track track2 = loc.getTrackByName("Test Location Spur 2", null);
         track2.deleteTypeName("Boxcar");
-        Assert.assertEquals("Items in track combobox", 7, f.trackLocationBox.getItemCount());
+        Assert.assertEquals("Items in track combobox", 7, tlbo.getItemCount());
 
         JemmyUtil.enterClickAndLeave(f.autoTrackCheckBox);
-        Assert.assertEquals("Items in track combobox", 6, f.trackLocationBox.getItemCount());
+        Assert.assertEquals("Items in track combobox", 6, tlbo.getItemCount());
 
         // load destination and track ComboBoxes
         Assert.assertEquals("Items in track combobox", 0, f.trackDestinationBox.getItemCount());
@@ -342,7 +350,6 @@ public class CarSetFrameTest extends OperationsTestCase {
     
     @Test
     public void testCarSetFrameIgnoreCheckBoxes() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
         Car c3 = cManager.getByRoadAndNumber("CP", "888");
@@ -413,15 +420,18 @@ public class CarSetFrameTest extends OperationsTestCase {
         f.initComponents();
         f.load(car);
 
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());
+        JComboBoxOperator tlbo = new JComboBoxOperator(jfo,new NameComponentChooser("trackLocationBox"));
+
         // change car's track to track2
         Track track2 = loc.getTrackByName("Test Location Spur 2", null);
-        f.trackLocationBox.setSelectedItem(track2);
+        tlbo.setSelectedItem(track2);
         JemmyUtil.enterClickAndLeave(f.saveButton);
         Assert.assertEquals("car's track", track2, car.getTrack());
 
         // cause an error by not allowing Boxcar on track 1
         track1.deleteTypeName("Boxcar");
-        f.trackLocationBox.setSelectedItem(track1);
+        tlbo.setSelectedItem(track1);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
         // No
@@ -442,7 +452,7 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testAppySchedule() {
         JUnitOperationsUtil.initOperationsData();
@@ -460,31 +470,67 @@ public class CarSetFrameTest extends OperationsTestCase {
         Track track = car.getTrack();
 
         CarSetFrame f = new CarSetFrame();
-        f.initComponents();
-        f.load(car);
-
+        ThreadingUtil.runOnGUI(() -> {
+            f.initComponents();
+        });
+        Thread load = new Thread(() -> {
+            f.load(car);
+        });
+        load.setName("car set frame"); // NOI18N
+        load.start();
+        JUnitUtil.waitFor(() -> {
+            return !load.isAlive();
+        },"frame load complete");
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());
         // change car's track to Test Spur 1 that has a schedule demanding a boxcar
         // with an "Empty" load
         Track track2 = location.getTrackByName("Test Spur 1", null);
         track2.setLength(200);
-        f.trackLocationBox.setSelectedItem(track2);
+
+        JComboBoxOperator tlb = new JComboBoxOperator(jfo,new NameComponentChooser("trackLocationBox"));
+        tlb.setSelectedItem(track2);
+
+        Thread t1 = JemmyUtil.createModalDialogOperatorThread(MessageFormat.format(Bundle.getMessage("rsSpurHasSchedule"), track2.getName(),
+                track2.getScheduleName()),
+                Bundle.getMessage("ButtonYes"));
+
+        Thread t2 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("rsApplyingScheduleFailed"),
+                Bundle.getMessage("ButtonOK"));
+
         // Save should cause dialog to appear asking to apply schedule
-        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-        JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle.getMessage("rsSpurHasSchedule"), track2.getName(),
-                track2.getScheduleName()), Bundle.getMessage("ButtonYes"));
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        },"rsSpurHasSchedule yes fail dialogue thread complete");
+
         // error message not able to apply schedule
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsApplyingScheduleFailed"), Bundle.getMessage("ButtonOK"));
+        JUnitUtil.waitFor(() -> {
+            return !t2.isAlive();
+        },"fail dialogue thread complete");
         
         // confirm that car's track didn't change
         Assert.assertEquals("car's track", track, car.getTrack());
         
         // Now change car load so applying schedule will work
-        f.loadComboBox.setSelectedItem("Empty");     
-        f.trackLocationBox.setSelectedItem(track2);
-        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-        JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle.getMessage("rsSpurHasSchedule"), track2.getName(),
-                track2.getScheduleName()), Bundle.getMessage("ButtonYes"));
+
+        JComboBoxOperator lcbo = new JComboBoxOperator(jfo,new NameComponentChooser("loadComboBox"));
+        lcbo.setSelectedItem("Empty");     
+        tlb.setSelectedItem(track2);
+        jfo.getQueueTool().waitEmpty();
         
+        Thread t3 = JemmyUtil.createModalDialogOperatorThread(MessageFormat.format(Bundle.getMessage("rsSpurHasSchedule"), track2.getName(),
+                track2.getScheduleName()),
+                Bundle.getMessage("ButtonYes"));
+
+        
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
+
+        JUnitUtil.waitFor(() -> {
+            return !t3.isAlive();
+        },"rsSpurHasSchedule yes dialogue thread complete");
+
+        jfo.getQueueTool().waitEmpty();
+
         Assert.assertEquals("car's track", track2, car.getTrack());
         Assert.assertEquals("car's new load name", "Metal", car.getLoadName());
         Assert.assertEquals("car's new final destination", location, car.getFinalDestination());
@@ -549,10 +595,10 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
-        });
+        },"rs in route ok dialogue thread complete");
         JUnitUtil.waitFor(() -> {
             return !load.isAlive();
-        });
+        },"frame load complete");
 
         jfo.getQueueTool().waitEmpty();
 
@@ -566,7 +612,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
         JUnitUtil.waitFor(() -> {
             return !t2.isAlive();
-        });
+        },"rs in route no dialogue complete");
 
         // Confirm that car's destination is still there
         Assert.assertNotNull("car has destination", c3.getDestination());
@@ -577,7 +623,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
         JUnitUtil.waitFor(() -> {
             return !t3.isAlive();
-        });
+        },"rs in route yes dialogue complete");
 
         jfo.getQueueTool().waitEmpty();
         JemmyUtil.waitFor(f); // wait for frame to become active
@@ -655,10 +701,10 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
-        });
+        },"rs in route ok dialogue complete");
         JUnitUtil.waitFor(() -> {
             return !load.isAlive();
-        });
+        },"frame load complete");
 
         jfo.getQueueTool().waitEmpty();
 
@@ -670,7 +716,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
         JUnitUtil.waitFor(() -> {
             return !t2.isAlive();
-        });
+        },"rsnotmove ok complete");
         jfo.getQueueTool().waitEmpty();
         JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertNull("car has destination removed", c3.getDestination());
@@ -716,10 +762,10 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
-        });
+        },"rs in route ok dialogue complete");
         JUnitUtil.waitFor(() -> {
             return !load.isAlive();
-        });
+        },"car set frame complete");
 
         jfo.getQueueTool().waitEmpty();
 
@@ -732,7 +778,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
         JUnitUtil.waitFor(() -> {
             return !t2.isAlive();
-        });
+        },"rs not move ok dialogue complete");
         jfo.getQueueTool().waitEmpty();
         JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertNull("car has destination removed", c3.getDestination());
@@ -778,10 +824,10 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
-        });
+        },"rs in route ok dialogue complete");
         JUnitUtil.waitFor(() -> {
             return !load.isAlive();
-        });
+        },"car set frame load complete");
 
         jfo.getQueueTool().waitEmpty();
 
@@ -792,7 +838,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
         JUnitUtil.waitFor(() -> {
             return !t2.isAlive();
-        });
+        },"rs not move ok dialogue complete");
         jfo.getQueueTool().waitEmpty();
         JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertNull("car has destination removed", c3.getDestination());
@@ -838,10 +884,10 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
-        });
+        },"rs in route ok dialogue complete");
         JUnitUtil.waitFor(() -> {
             return !load.isAlive();
-        });
+        },"car set frame load complete");
 
         jfo.getQueueTool().waitEmpty();
 
@@ -853,7 +899,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
         JUnitUtil.waitFor(() -> {
             return !t2.isAlive();
-        });
+        },"rs not move ok dialogue complete");
         jfo.getQueueTool().waitEmpty();
         JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertNull("car has destination removed", c3.getDestination());
@@ -898,10 +944,10 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
-        });
+        },"rs in route ok dialogue complete");
         JUnitUtil.waitFor(() -> {
             return !load.isAlive();
-        });
+        },"car set frame load complete");
 
         jfo.getQueueTool().waitEmpty();
 
@@ -915,7 +961,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
         JUnitUtil.waitFor(() -> {
             return !t2.isAlive();
-        });
+        },"rs not move ok dialogue complete");
         jfo.getQueueTool().waitEmpty();
         JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertNull("car has destination removed", c3.getDestination());
@@ -960,10 +1006,10 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
-        });
+        },"rs in route ok dialogue complete");
         JUnitUtil.waitFor(() -> {
             return !load.isAlive();
-        });
+        },"car set frame load complete");
 
         jfo.getQueueTool().waitEmpty();
 
@@ -979,7 +1025,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
         JUnitUtil.waitFor(() -> {
             return !t2.isAlive();
-        });
+        },"rs not move ok dialogue complete");
         jfo.getQueueTool().waitEmpty();
         JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertEquals("car has still has destination", westford, c3.getDestination());

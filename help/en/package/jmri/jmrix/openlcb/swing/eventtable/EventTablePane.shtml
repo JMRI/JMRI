@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!-- Copyright Bob Jacobsen 2008 -->
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: OpenLCB Event Table</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help send loconet packets">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+    <h1>OpenLCB Event Table Frame</h1>
+      <a href="Event_Table.png">
+      This provides a table view of the Events, Producers and Consumers
+      in your OpenLCB network.
+      <p>
+        <img src="Event_Table.png" width="1237" height="425""/></a>
+     <p>
+      The primary purpose of the Event Table is three fold:
+    <ul>
+    <li>Display the Events used on your OpenLCB network along with all of their related
+    Producers and Consumers.
+    This is created initially in real time through a query of the actual nodes on your
+    network and supplemented by any additional information available to JMRI at the time,
+    most usefully open node configuration dialog windows (displaying the node's CDI)
+    and JMRI data such as User names from the Turnout or Sensor tables.
+    As you open and close the configuration dialog windows for additional nodes,
+    these contributions will be added and removed from the Event table in real time.
+    For the most complete view of your network's Events and Consumer/Producer relationships,
+    open the configuration dialog windows for all of your nodes however you may find
+    it more manageable to open just the subset of nodes relevant to your task at hand.
+    If the information from all node configuration dialogs are to be considered,
+    on a large network open these windows prior to the Event Table for the
+    fastest initial response. This information is not retained between sessions.
+    <p>
+    <li>Apply User names to Events.
+    Similar to the use of User defined names in the Turnout or Sensor Tables,
+    the Event Table allows you to apply names to Events that are more meaningful as
+    to their purpose than just the Event ID itself.
+    The Event's user assigned name is retained between sessions and is also shown in the
+    OpenLCB Traffic Monitor as an additional aid when the Event box is checked therein.
+    <p>
+    <li>Provide a document record of your Events and their Consumer and Producer relationships.
+    Exported as a *.csv file and then viewed and manipulated through a suitable program like Excel,
+    this provides a reference or documentation of all of the Event IDs and their associated
+    Consumer/Producer relationships as known by JMRI at the time of the export.
+    This document can also be used as a reference source of Event IDs that
+    may be cut & pasted into a node configuration dialog as you build additional
+    Consumer/Producer relationships on your network.
+    This is the same data as displayed in the Event Table at the time of the export
+    so the more information available, the more complete the export.
+    It is envisioned that the user re-export this reference documentation regularly
+    as the network evolves rather than try to maintain the resulting document independently.
+    </ul>
+      <p>
+      You can resize and sort the columns using the header row.
+      <p>
+      Pressing the "Update from Network" button will load the table from the network.
+      This might take a couple seconds.  You should press it again
+      after changes like adding nodes, changing their configuration, etc.
+      The table cannot detect those changes automatically.
+      <p>
+      If node names (4th and 6th columns) don't show up immediately, press
+      "Update from Network" a second time.
+      <p>
+      If you have a configuration window open on one or more events and
+      click "Update from Network", the right-hand column will show the
+      tree-walking display of where each event is referenced in those
+      configuration windows.  This can help you determine the function of
+      the producers and consumers. You might need to resize the column
+      to see the complete entry.
+      <p>
+      Note that the "Update from Network" button does a "Verify Events" operation
+      on the network.  Some nodes consider this to be a start-of-day, power-up
+      operation and might change the status of their outputs due to that.
+      <p>
+      You can enter names for events in the 2nd column.  Click on the cell
+      to open it for editing. Hit return when done.  These will be
+      saved automatically and loaded when you next start JMRI.
+      <p>
+      Checking the "Require label" box will display only events with labels.
+      This lets you ignore events that you haven't labeled as interesting.
+      <p>
+      Checking the "Require both producer(s) and consumer(s)" box will
+      display only those events that have both at least one producer
+      and at least one consumer.  These are the events that actually do something
+      on your LCC network.
+      <p>
+      Checking the "Popcorn mode" will highlight the producer for every event that
+      JMRI sees being produced.
+      Since the window scrolls to show the event, this can result in the screen
+      jumping around when it's enabled.
+      If there's a lot of traffic, this can slow your
+      computer down significantly, so only enable it when you want to use it.
+      <p>
+      Entering an event ID in the find box and clicking "Find" will highlight every
+      occurrence of that event.  The window will scroll to show the first one if needed.
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

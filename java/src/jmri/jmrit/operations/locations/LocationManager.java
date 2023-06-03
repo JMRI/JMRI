@@ -1,10 +1,7 @@
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -12,10 +9,7 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
-import jmri.Reporter;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -30,6 +24,8 @@ import jmri.jmrit.operations.trains.TrainCommon;
 public class LocationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength"; // NOI18N
+    
+    protected boolean _showId = false; // when true show location ids 
 
     public LocationManager() {
     }
@@ -103,6 +99,14 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
             }
         }
         return false;
+    }
+    
+    public void setShowIdEnabled(boolean showId) {
+        _showId = showId;
+    }
+    
+    public boolean isShowIdEnabled() {
+        return _showId;
     }
 
     /**

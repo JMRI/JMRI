@@ -368,8 +368,9 @@
       JMRI System Console</a> and will set the turnout Known state to "UNKNOWN."
 
       <h4>Lights</h4>
-      The expected message content for lights is "ON"
-      and "OFF". Receiving any other messages will result in a Warning in the <a href=
+      The expected message content for lights is "OFF", "ON"
+      and "INTENSITY dddd" where ddd is a number between 0.00 and 1.00.
+      Receiving any other messages will result in a Warning in the <a href=
       "../../../package/apps/SystemConsole.shtml">JMRI System Console.</a> and cause the Light
       state to be set to "UNKNOWN."
 
@@ -519,7 +520,7 @@
 
       <p><a href="https://mosquitto.org/man/mqtt-7.html" target="_blank">MQTT Quality of
       Service</a> indicates to the MQTT message broker how to handle message delivery and receipt.
-      Allowable values are 0, 1, and 2. JMRI uses QoS level 1 (broker will deliver message at least
+      Allowable values are 0, 1, and 2. JMRI uses QoS level 2 (broker will deliver message exactly
       once) by default.</p>
 
       <p><a href="https://www.hivemq.com/blog/mqtt-essentials-part-8-retained-messages/" target=

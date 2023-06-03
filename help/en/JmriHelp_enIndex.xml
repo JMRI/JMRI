@@ -481,9 +481,18 @@
  <indexitem text="Occupancy Sensor " target="html.tools.Sensors"/>
 
  <indexitem text="OpenLCB - Hardware, Connection, Tools " target="html.hardware.openlcb.index">
-  <indexitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
 
-  <indexitem text="OpenLCB Signal Masts " target="html.hardware.openlcb.OlcbSignalMast"/>
+      <indexitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
+
+      <indexitem text="Event Table" target="package.jmri.jmrix.openlcb.swing.eventtable.EventTablePane"/>
+
+      <indexitem text="Memory Tool" target="package.jmri.jmrix.openlcb.swing.memtool.MemoryToolPane"/>
+
+      <indexitem text="Names " target="html.hardware.openlcb.Names"/>
+
+      <indexitem text="Signal Masts " target="html.hardware.openlcb.OlcbSignalMast"/>
+
+      <indexitem text="Send Frame" target="package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendFrame"/>
 
  </indexitem>
  <indexitem text="OperationsPro " target="html.apps.OperationsPro.index">

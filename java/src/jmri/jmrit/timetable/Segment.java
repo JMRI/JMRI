@@ -33,6 +33,18 @@ public class Segment {
     private final int _layoutId;
     private String _segmentName = Bundle.getMessage("NewSegmentName");  // NOI18N
 
+    /**
+     * Make a copy of the segment.
+     * @param layoutId The new layoutId, if zero use the current layout id.
+     * @return a new segment instance.
+     */
+    public Segment getCopy(int layoutId) {
+        if (layoutId == 0) layoutId = getLayoutId();
+        Segment copy = new Segment(layoutId);
+        copy.setSegmentName(Bundle.getMessage("DuplicateCopyName", _segmentName));
+        return copy;
+    }
+
     public int getSegmentId() {
         return _segmentId;
     }

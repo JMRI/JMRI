@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1.0   24 Nov 2022  Nigel Cliffe.   Merging various MX and MS series files to single file for CVs 100-199.  -->
 <!--                  Removed CV113,150, altered labels on CV147,148,149 -->
+<!-- version 1.1   26 May 2023  Ronald Kuhn.   Added CV133, 192, 195-199 for MS- and MN-series.  -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
@@ -1336,7 +1337,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
-    <label>Functin output 6 effect generated</label>
+    <label>Function output 6 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 6</label>
     <label xml:lang="cs">Generátor efektů funkčního výstupu 6</label>
     <label xml:lang="de">FA6 Effekt</label>
@@ -1368,7 +1369,7 @@
     <label xml:lang="cs">Funkční výstup 2 jako virtuální vačky nebo ventilátor kouře</label>
     <label xml:lang="de">FA2 - Funktionsauswahl</label>
   </variable>
-  <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="6" include="201,203,210,211,212,213,214,215,216,218,219,220,221,222,225,233,237,240,234,243,246,253">
+  <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="6" include="1,2,3,4,5,6,7,8,9,10,125,126,127,201,203,210,211,212,213,214,215,216,218,219,220,221,222,225,233,237,240,234,243,246,253">
     <enumVal>
       <enumChoice choice="Function Output 4 Normal Output">
         <choice>Function Output 4 Normal Output</choice>
@@ -1508,7 +1509,7 @@
     <label xml:lang="cs">Regulace rychlosti km/h, aktivace, řízení a meze</label>
     <label xml:lang="de">km/h–Geschwindigkeitsregelung</label>
   </variable>
-   <variable CV="135" item="CV136Bit9" default="0" mask="XVXXXXXX">
+  <variable CV="135" item="CV136Bit9" default="0" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Supplement to CV#136</label>
     <label xml:lang="de">Ergänzung zu CV#136</label>
@@ -1731,8 +1732,6 @@
     <label>Proportional value of PID regulation</label>
   </variable>
 
-  
-  
   <variable CV="151" item="Advanced Group 1 Option 1" default="0" exclude="">
     <enumVal>
       <enumChoice choice="No Braking">
@@ -2301,7 +2300,7 @@
     <label xml:lang="cs">Rozšíření funkční klávesy MAN (zakázání řízení signálem HLU nebo ABC)</label>
     <label xml:lang="de">Auswahl der MAN-Taste (Abschalten von HLU bzw. ABC)</label>
   </variable>
-    <variable CV="158" item="RailCom speed reporting method" mask="XXXXXVXX" default="0">
+  <variable CV="158" item="RailCom speed reporting method" mask="XXXXXVXX" default="0">
     <enumVal>
       <enumChoice choice="Zimo for MX31ZL" value="0">
       <choice>Zimo for MX31ZL</choice>
@@ -2378,7 +2377,7 @@
     <label xml:lang="cs">Snížení jednoho rychlostního stupně sníží turbodmychadlo</label>
     <label xml:lang="de">Absenkung Diesel-Sound und Turbolader Sound</label>
   </variable>
-    <variable CV="159" mask="VVVVVVXX" item="Output 9 effect generated" minOut="9">
+  <variable CV="159" mask="VVVVVVXX" item="Output 9 effect generated" minOut="9">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
@@ -2419,7 +2418,7 @@
     <label xml:lang="cs">Chování funkční výstup 8</label>
     <label xml:lang="de">FA8 Verhalten</label>
   </variable>
- <variable item="Servo Protocol" CV="161" mask="XXXXXXXV" default="0" exclude="">
+  <variable item="Servo Protocol" CV="161" mask="XXXXXXXV" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NegPosPulse.xml"/>
     <label>Servo Protocol</label>
     <label xml:lang="it">Protocollo Servo</label>
@@ -2626,6 +2625,12 @@
     <decVal min="0" max="9"/>
     <label>Slow Fade, Fade Out Time</label>  
   </variable>  
+  <variable CV="192" item="Output Level 2" default="0">
+    <decVal min="0" max="255"/>
+    <label>Value for effect dimming</label>
+    <label xml:lang="de">Dimmwert bei Effekt "Dimmen"</label>
+    <comment xml:lang="de">Funktionsweise wie CV #60, gilt aber für den Effekt Dimmen</comment>
+  </variable>
   <variable CV="193" item="ABC Shuttle Wait Time" default="0">
     <decVal min="0" max="255"/>
     <label>Shuttle Terminus Wait Time</label>
@@ -2633,5 +2638,110 @@
   <variable CV="194" item="ABC Shuttle Intermediate Wait Time" default="0">
     <decVal min="0" max="255"/>
     <label>Shuttle Intermediate Stops Wait Time (0=no stop)</label>
-  </variable>  
+  </variable> 
+  
+  <variable CV="195" mask="VVVVVVXX" item="Output 11 effect generated" minOut="8" include="6">
+     <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
+    </enumVal>
+    <label>Function output 9 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 9</label>
+    <label xml:lang="cs">Generátor efektů funkčního výstupu 9</label>
+    <label xml:lang="de">FA9 Effekt</label>
+  </variable>
+  <variable CV="195" mask="XXXXXXVV" item="Output 11 behavior" minOut="8" include="6">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
+    <label>Function output 9 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 9</label>
+    <label xml:lang="cs">Chování funkčního výstupu 9</label>
+    <label xml:lang="de">FA9 Verhalten</label>
+  </variable>
+  <variable CV="196" mask="VVVVVVXX" item="Output 12 effect generated" minOut="8" include="6">
+     <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
+    </enumVal>
+    <label>Function output 10 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 10</label>
+    <label xml:lang="cs">Generátor efektů funkčního výstupu 10</label>
+    <label xml:lang="de">FA10 Effekt</label>
+  </variable>
+  <variable CV="196" mask="XXXXXXVV" item="Output 12 behavior" minOut="8" include="6">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
+    <label>Function output 10 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 10</label>
+    <label xml:lang="cs">Chování funkčního výstupu 10</label>
+    <label xml:lang="de">FA10 Verhalten</label>
+  </variable>
+
+<!-- not used at now (2023-05-26) Ronald Kuhn
+  <variable CV="197" mask="VVVVVVXX" item="Output 13 effect generated" minOut="8">
+     <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
+    </enumVal>
+    <label>Function output 11 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 11</label>
+    <label xml:lang="cs">Generátor efektů funkčního výstupu 11</label>
+    <label xml:lang="de">FA11 Effekt</label>
+  </variable>
+  <variable CV="197" mask="XXXXXXVV" item="Output 13 behavior" minOut="8">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
+    <label>Function output 11 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 11</label>
+    <label xml:lang="cs">Chování funkčního výstupu 11</label>
+    <label xml:lang="de">FA11 Verhalten</label>
+  </variable>
+  <variable CV="198" mask="VVVVVVXX" item="Output 14 effect generated" minOut="8">
+     <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
+    </enumVal>
+    <label>Function output 12 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 12</label>
+    <label xml:lang="cs">Generátor efektů funkčního výstupu 12</label>
+    <label xml:lang="de">FA12 Effekt</label>
+  </variable>
+  <variable CV="198" mask="XXXXXXVV" item="Output 14 behavior" minOut="8">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
+    <label>Function output 12 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 12</label>
+    <label xml:lang="cs">Chování funkčního výstupu 12</label>
+    <label xml:lang="de">FA12 Verhalten</label>
+  </variable>
+  <variable CV="199" mask="VVVVVVXX" item="Output 15 effect generated" minOut="8">
+     <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
+    </enumVal>
+    <label>Function output 13 effect generated</label>
+    <label xml:lang="it">Effetti uscita Funzione 13</label>
+    <label xml:lang="cs">Generátor efektů funkčního výstupu 13</label>
+    <label xml:lang="de">FA13 Effekt</label>
+  </variable>
+  <variable CV="199" mask="XXXXXXVV" item="Output 15 behavior" minOut="8">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
+    <label>Function output 13 behavior</label>
+    <label xml:lang="it">Comportamento uscita Funzione 13</label>
+    <label xml:lang="cs">Chování funkčního výstupu 13</label>
+    <label xml:lang="de">FA13 Verhalten</label>
+  </variable>
+-->
+
 </variables>

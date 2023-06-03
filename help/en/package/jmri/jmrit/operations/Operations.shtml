@@ -48,7 +48,7 @@
       </p>
 
       <p>OperationsPro&trade; is included in the JMRI suite of tools and can be found under the
-        main menu heading "Tools-&gt;Operations".</p>
+        main menu heading "Tools-&gt;OperationsPro".</p>
 
       <p>
         <img src="images/MainMenuDecoderPro.png" alt="">
@@ -107,6 +107,8 @@
 
                 <li><a href="#PrintOptions">Manifest Print Options</a>
                   <ul>
+                    <li><a href="#PrintOrientation">Orientation and Paper Size</a></li>
+                  
                     <li><a href="#ManifestComments">Manifests and Switch List Options</a></li>
 
                     <li><a href="#AddLogo">Add Logo</a></li>
@@ -135,8 +137,12 @@
         <li><a href="#Locations">Locations</a>
           <ul>
             <li><a href="#AddLocation">Add or Edit Location</a></li>
+            
+            <li><a href="#LocationServiceDirection">Train Direction Serviced</a></li>
 
             <li><a href="#LocationDivision">Railroad Divisions</a></li>
+            
+            <li><a href="#LocationRollingStock">Rolling Stock Serviced</a></li>
 
             <li><a href="#Yardmaster">Yardmaster</a></li>
 
@@ -166,6 +172,12 @@
 
             <li><a href="#Yards">Yards</a>
               <ul>
+                <li><a href="#TrackServiceDirection">Train Direction Serviced</a></li>
+                
+                <li><a href="#RollingStockServiced">Rolling Stock Serviced</a></li>
+                
+                <li><a href="#RoadAndLoadOptions">Road and Load Options</a></li>
+                
                 <li><a href="#PickUpCarOrder">Pick Up Car Order</a></li>
               </ul></li>
 
@@ -205,6 +217,8 @@
 
             <li><a href="#Staging">Staging Tracks</a>
               <ul>
+                <li><a href="#StagingMultipleTrains">Staging Multiple Trains per Physical
+                    Track</a></li>
                 <li><a href="#StagingAndCarLoads">Staging and Car loads</a></li>
 
                 <li><a href="#BlockingCarsFromStaging">Blocking Cars from Staging</a></li>
@@ -547,7 +561,15 @@
           Instructions</a> are available on the JMRI.org site.
       </p>
 
-      <h3 id="MultipleLayouts">Multiple Layout Support</h3>
+   <h3 id="BritishRailways">British Railways</h3>
+
+   <p>OperationsPro&trade; supports an alternate set of railway terminology for our British
+    modelers. To use British terminologies, change the JMRI Display Locale to English (United
+    Kingdom). With British terminology, trains travel Up/Down and East/West, and some British
+    railway names and wagon types are provided to get you started.</p>
+
+
+   <h3 id="MultipleLayouts">Multiple Layout Support</h3>
       You can create and manage multiple layouts using OperationsPro&trade;. From the main menu bar
       under "Edit" select "Preferences..." then "Config Profiles". Create a new <a
         href="../../../apps/TabbedPreferences.shtml#Profiles">Configuration Profile</a> for each
@@ -696,7 +718,15 @@
         that cars are now assigned to your train.
       </p>
 
-      <p>
+   <p>
+    OperationsPro&trade; when building a train also produces a <a href="#BuildReports">Build Report</a>.
+    The build report provides details on how the program built the train. It shows the available
+    locomotives and cars found along the train's route, and how the program attempted to find
+    destinations for them. When the program fails to build a train due to requirements requested by
+    you, the build report can help determine what the issue was and how to correct.
+   </p>
+
+   <p>
         Now try limiting the car types that the train will service by modifying some of the car
         types checkboxes in the <a href="#TrainEdit">Edit Train</a> window. Use the train <a
           href="#TrainReset">reset</a> to release the cars that were assigned to the train so you
@@ -763,7 +793,12 @@
           Instructions</a> are also available on the JMRI.org site.
       </p>
 
-      <p>
+   <p>
+    If you want to know more on how OperationsPro&trade; builds trains see the section on <a
+     href="#BuildReports">Build Reports</a>.
+   </p>
+
+   <p>
         Help is also available at the <a href="https://groups.io/g/jmriusers">JMRI users</a> which
         is part of the Groups.io. Another good source for help is a series of articles written by
         David Haynes <a
@@ -775,14 +810,7 @@
         you will find many useful functions, like the ability to print the contents of the window.
       </p>
 
-      <h3 id="BritishRailways">British Railways</h3>
-
-      <p>OperationsPro&trade; supports an alternate set of railway terminology for our British
-        modelers. To use British terminologies, change the JMRI Display Locale to English (United
-        Kingdom). With British terminology, trains travel Up/Down and East/West, and some British
-        railway names and wagon types are provided to get you started.</p>
-
-      <h2 id="TroubleShooting">Trouble Shooting</h2>
+      <h3 id="TroubleShooting">Trouble Shooting</h3>
       The best tool for trouble shooting train build problems is the <a href="#BuildReports">Train
         Build Report</a>.
       <p>
@@ -897,7 +925,7 @@
 
       <p>
         OperationsPro&trade; has two sets of car types for you to use. Descriptive provides type
-        names like "Boxcar" and "tank car", and AAR Codes provides type names like "XM" and "T" for
+        names like "Boxcar" and "Tank car", and AAR Codes provides type names like "XM" and "T" for
         boxcars and tank cars respectively. Select the one that you prefer. You can add or delete
         car types by using the <a href="#CarTypeLengthWeight">car type edit</a> window.
       </p>
@@ -1759,12 +1787,13 @@
           Manifests</a> to see examples of Manifests and switch lists using the described options.
       </p>
 
-      <h3>Orientation</h3>
-      There are four options, Portrait, Landscape, 4.25 x 11 and 3.25 x 11. Paper size is determined
-      by the locale in use. To access the JMRI locale, from the main menu bar under "Edit" select
-      "Preferences..." then "Display" and then select the "Locale" tab. Some printers require the
-      English (United States) locale in order to print out a Manifest or switch list with the
-      correct number of lines.
+      <h3 id="PrintOrientation">Orientation and Paper Size</h3>
+      There are four options, Portrait, Landscape, 4.25 x 11 and 3.25 x 11. Paper size ("Letter" or
+      "A4") is determined by the JMRI locale in use. To access the JMRI locale, from the main menu
+      bar under "Edit" select "Preferences..." then "Display" and then select the "Locale" tab. Some
+      printers require the English (United States) locale in order to print out a Manifest or switch
+      list with the correct number of lines for paper size "Letter".
+      
       <h3>Set Out Text Color</h3>
       You can select the text color of your Manifest when the operation is to set out a car or
       locomotive. Select the desired color from the drop down box.
@@ -2012,7 +2041,7 @@
 
       <h3 id="ManageAutoBackups">Manage Auto Backups</h3>
 
-      When "Auto Backup" in the <a href="#Settings">Settings</a> window is enabled, OperationsPro
+      When "Auto Backup" in the <a href="#Settings">Settings</a> window is enabled, OperationsPro&trade;
       will create a backup of the operations files each time the program is started. To delete older
       obsolete files, use this tool.
 
@@ -2082,13 +2111,16 @@
         Therefore a positive value means that track space is going to be consumed by set outs, and a
         negative number means that track space is going to be freed up by pick ups.</p>
 
-      <h4 id="LocationServiceDirection">Location Service Direction</h4>
+      <h4 id="LocationServiceDirection">Train Direction Serviced</h4>
 
-      <p>You can decide which train direction the location can service. For example, if only
-        east bound trains can access the location select "East" and deselect the other directions.
-        This can be useful if you want to only support trailing point switching for a given
-        location. If a location can support multiple directions then select the ones that are
-        appropriate.</p>
+      <p>
+        You can decide which train directions the location can service. For example, if only east
+        bound trains can access the location select "East" and deselect the other directions. This
+        can be useful if you want to only support trailing point switching for a given location. If
+        a location can support multiple directions then select the ones that are appropriate. You
+        can also control the <a href="#TrackServiceDirection">train service direction</a> for each track
+        at a location.
+      </p>
 
       <h4 id="LocationDivision">Railroad Division</h4>
 
@@ -2113,9 +2145,19 @@
           href="#Schedules">schedules</a> are optional unless your cars are using custom loads.
       </p>
 
-      <p>When setting up railroad divisions, it is best if there's at least one division yard
-        for empty cars to migrate to, and at least one industry (spur) to service cars loaded
-        outside of the division. Staging can be used as a substitute for industries.</p>
+      <p>
+        When setting up railroad divisions, it is best if there's at least one division yard for
+        empty cars to migrate to, and at least one industry (spur) to service cars loaded outside of
+        the division. Staging can be used as a substitute for industries. Cars that have been
+        assigned a division are routed and this allows them to perform local moves, for example
+        empty cars from a yard to a spur at the same location. Spur to spur moves are also allowed
+        if the car's load is accepted by the receiving spur. The switcher <a
+          href="#AllowLocalCarMovements">control for local moves</a> does not apply to cars with a
+        division. However the <a href="#TrainLocalMoveOption">train build option</a> to allow local
+        moves for cars with a custom load or final destination (FD) does apply. It is recommended
+        that you leave this option for a train enabled when dealing with cars that have been
+        assigned a division.
+      </p>
 
       <p>Adding divisions to locations and home divisions to cars creates prototypical movement,
         but it can also reduce car movement since the rules for car movement have to be enforced by
@@ -2123,7 +2165,7 @@
         limited number of cars and then determine if the restricted car movements meet your
         expectations. Prototypical car movement doesn't necessarily mean better for model railroads.</p>
 
-      <h4 id="LocationRollingStock">Location Rolling Stock</h4>
+      <h4 id="LocationRollingStock">Rolling Stock Serviced</h4>
 
       <p>
         You can control the rolling stock a location can service. Press the "Clear All" button to
@@ -2282,9 +2324,9 @@
         large yards where track space for switching cars is needed. Press the "Add Yard Track"
         button at the bottom of the window and the disabled fields should now appear.</p>
 
-      <h4 id="TrackServiceDirection">Track Service Direction</h4>
+      <h4 id="TrackServiceDirection">Train Direction Serviced</h4>
 
-      <p>You can decide which train direction the track can service. For example, if only east
+      <p>You can decide which train directions the track can service. For example, if only east
         bound trains can access the track select "East" and deselect the other directions. This can
         be useful if you want to only support trailing point switching for a specific track. If a
         track can support multiple directions then select the ones that are appropriate.</p>
@@ -2926,6 +2968,27 @@
         track you want to use when departing from, or arriving into staging.
       </p>
 
+      <h3 id="StagingMultipleTrains">Staging Multiple Trains per Physical Track</h3>
+      The program only allows one train per track in staging, but if you built a large staging track
+      that can fit two or more trains, the program allows you to
+      <a href="#Pools">pool</a> several staging tracks together so multiple trains can reside on one
+      physical track. The program will pull trains off the staging track in the order the trains
+      arrived. If your staging tracks are "double ended", meaning that your trains enter from one
+      side of staging and depart from the other, you would select FIFO (First In First Out) mode in
+      the pool window. In FIFO mode the first train to arrive into staging will be the first
+      to depart. If your staging is "single ended", meaning your trains arrive and depart from the
+      same end, you would select LIFO (Last In First Out) mode in the pool window. In LIFO mode the
+      last train to arrive will be the first to depart.
+
+      <p>When naming the tracks in the pool, it is best to use "same" names using the
+        "hyphen" feature. For example if you had one large staging track and wanted three trains in
+        staging, you might name the staging tracks, Track 1-1, Track 1-2, Track 1-3, and pool the
+        three tracks together. The train Manifest paperwork would show the departure track name as
+        "Track 1" by dropping the hyphen and number. If you wanted all three tracks to hold the same
+        length of trains, you would set the minimum track lengths in the pool window the same for
+        all three track. For example if the staging track was 900 scale feet long, you would set the
+        minimums to 900 divided by 3 or 300 scale feet.</p>
+
       <h3 id="StagingAndCarLoads">Staging and Car loads</h3>
       Staging tracks can optionally swap the car default loads from empty to loaded, and loaded to
       empty. Select the "Swap default loads and empties" if you want your cars loads to change when
@@ -3173,6 +3236,21 @@
         get is three cars. There will always be space available for at least one car at each
         industry. Note that the maximum number of cars in all cases is four. It is only how the cars
         are distributed that changes when entering a minimum.</p>
+
+      <p>
+        Pooling staging tracks allows you to have <a href="#StagingMultipleTrains">multiple
+          trains per physical staging track</a>. The program only allows one train per staging track,
+        but you can pool your staging tracks to have multiple trains residing on one physical track.
+        When pooling tracks in staging, the pool window provides three train departure modes,
+        Normal, FIFO, and LIFO. "Normal" selects a departure track based on usage, tracks with the
+        least use are selected first. You would not use "Normal" when there are two or more trains
+        on one physical track. "FIFO" selects the first train to arrive into staging for departure,
+        and "LIFO" selects the last train to arrive for departure.
+      </p>
+
+      <p>Note that the program normally selects a departure track out of staging
+        by usage. If you prefer to have your trains depart staging based on the order they've
+        arrived, you would use the staging pooling feature for your set of staging tracks.</p>
 
       <p>Another use of a "pool" is with regard to schedules. For the power user, you might find
         that a single schedule assigned to a spur doesn't quite do what you want. But if the track
@@ -4928,7 +5006,8 @@
 
       <p>To change which day of the week is active, select the appropriate radio button and then
         press the "Activate" button. The day selected is then used by your schedules (Delivery and
-        Pickup) when building trains. You can also add or change the days of the week by using the
+        Pickup) when building trains. For each day of the week, you can add a comment. Enter the
+        comment, then press the "Save" button. You can also add or change the days of the week by using the
         "Edit Train Schedule" window found under "Tools". You can change the order by dragging the
         column with your mouse pointer. Press the "Save" button to complete your changes.</p>
 
@@ -5203,7 +5282,7 @@
       by the needed "Wait for" action.
 
       <h5>Select Start Automation</h5>
-      This tool will allow you to select an automation to run when OperationsPro starts.
+      This tool will allow you to select an automation to run when OperationsPro&trade; starts.
       <p>This is the end of the automation section.</p>
 
       <h4 id="TrainsCopyTrain">Copy Train</h4>
@@ -5793,17 +5872,21 @@
       Manifests for several trains, select the trains you want in the build column and then press
       the "Print" or "Preview" button found at the bottom of the trains window. The program will
       then print or preview Manifests for all of the selected trains. You can modify the look of
-      your Manifests from the <a href="#PrintOptions">Manifest Print Options</a> window.
+      your Manifests from the
+      <a href="#PrintOptions">Manifest Print Options</a> window. Some printers need the JMRI locale
+      set to English (United Stated) to use paper size "Letter". See
+      <a href="#PrintOrientation">Orientation and Paper Size</a> for more details.
       <p>
         You can also access a train's Manifest and <a href="#BuildReports">Build Report</a> from the
         "Tools" menu in the edit train window. The "Tools" menu option allows you to recover the
         Manifest and build report for a train that has been terminated. Useful if you've
-        accidentally terminated a train before printing out the train's Manifest. Below is a train
-        Manifest using the "Standard" format, with blue text for car pick ups, and red text for car
-        set outs.
+        accidentally terminated a train before printing out the train's Manifest.
       </p>
 
-      <p>
+      <p>Below is a train Manifest using the "Standard" format, with blue text for car pick ups,
+    and red text for car set outs.</p>
+
+   <p>
         <img src="images/Manifest.png" alt="">
       </p>
 

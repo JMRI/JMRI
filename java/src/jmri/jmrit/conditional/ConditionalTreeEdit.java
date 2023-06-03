@@ -4169,7 +4169,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         Conditional.Action actionType = action.getType();
         if (actionType == Conditional.Action.PLAY_SOUND) {
             if (sndFileChooser == null) {
-                sndFileChooser = new JFileChooser(System.getProperty("user.dir") // NOI18N
+                sndFileChooser = new jmri.util.swing.JmriJFileChooser(System.getProperty("user.dir") // NOI18N
                         + java.io.File.separator + "resources" // NOI18N
                         + java.io.File.separator + "sounds");  // NOI18N
                 sndFileChooser.setFileFilter(new FileNameExtensionFilter("wav sound files", "wav")); // NOI18N
@@ -4183,7 +4183,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         } else {
             log.warn("Unexpected actionType[{}] = {}", actionType.name(), actionType);  // NOI18N
             if (defaultFileChooser == null) {
-                defaultFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+                defaultFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
                 defaultFileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
             }
             currentChooser = defaultFileChooser;
