@@ -1883,6 +1883,7 @@ public class TrainBuilderBase extends TrainCommon {
                 break; // use 1st car found
             }
         }
+        // next check isn't really necessary, null is never returned
         if (carDepartStageTrackDate == null) {
             return true; // no cars with found date
         }
