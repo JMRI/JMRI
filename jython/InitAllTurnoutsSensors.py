@@ -120,7 +120,7 @@ log4j.category.jmri.jmrit.jython.exec=TRACE
     # Deactivate ALL known physical layout sensors but ignore the JMRI internal ones
     def deacivateSensors(self) :
 
-        self.log.info( "Loopy through all known sensors" )
+        self.log.info( "Loop through all known sensors" )
 
         internalCounter = 0
         physicalCounter = 0
