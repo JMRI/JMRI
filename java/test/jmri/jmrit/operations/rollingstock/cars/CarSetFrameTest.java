@@ -417,37 +417,70 @@ public class CarSetFrameTest extends OperationsTestCase {
         Car car = JUnitOperationsUtil.createAndPlaceCar("DB", "1", "Boxcar", "40", track1, 0);
 
         CarSetFrame f = new CarSetFrame();
-        f.initComponents();
-        f.load(car);
-
+        ThreadingUtil.runOnGUI(() -> {
+            f.initComponents();
+        });
+        Thread load = new Thread(() -> {
+            f.load(car);
+        });
+        load.setName("car set frame"); // NOI18N
+        load.start();
+        JUnitUtil.waitFor(() -> {
+            return !load.isAlive();
+        },"frame load complete");
         JFrameOperator jfo = new JFrameOperator(f.getTitle());
         JComboBoxOperator tlbo = new JComboBoxOperator(jfo,new NameComponentChooser("trackLocationBox"));
 
         // change car's track to track2
         Track track2 = loc.getTrackByName("Test Location Spur 2", null);
         tlbo.setSelectedItem(track2);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
+        jfo.getQueueTool().waitEmpty();
+
         Assert.assertEquals("car's track", track2, car.getTrack());
 
         // cause an error by not allowing Boxcar on track 1
         track1.deleteTypeName("Boxcar");
         tlbo.setSelectedItem(track1);
-        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
-        // No
-        JemmyUtil.pressDialogButton(f,
-                MessageFormat.format(Bundle.getMessage("rsOverride"), new Object[]{"type (Boxcar)"}),
-                Bundle.getMessage("ButtonNo"));
-        
+
+        Thread t1 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("rsCanNotLoc"),
+                Bundle.getMessage("ButtonOK"));
+        Thread t2 = JemmyUtil.createModalDialogOperatorThread(
+            MessageFormat.format(Bundle.getMessage("rsOverride"), new Object[]{"type (Boxcar)"}),
+            Bundle.getMessage("ButtonNo"));
+
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
+        JUnitUtil.waitFor(() -> {
+            return !t1.isAlive();
+        },"rsCanNotLoc yes ok thread complete");
+
+        // error message not able to apply schedule
+        JUnitUtil.waitFor(() -> {
+            return !t2.isAlive();
+        },"rsOverride no dialogue thread complete");
+
         // confirm car's track didn't change
         Assert.assertEquals("car's track", track2, car.getTrack());
         
         // again, but Yes
-        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
-        JemmyUtil.pressDialogButton(f,
-                MessageFormat.format(Bundle.getMessage("rsOverride"), new Object[]{"type (Boxcar)"}),
-                Bundle.getMessage("ButtonYes"));
+        Thread t3 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("rsCanNotLoc"),
+                Bundle.getMessage("ButtonOK"));
+        Thread t4 = JemmyUtil.createModalDialogOperatorThread(
+            MessageFormat.format(Bundle.getMessage("rsOverride"), new Object[]{"type (Boxcar)"}),
+            Bundle.getMessage("ButtonYes"));
+        
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
+        JUnitUtil.waitFor(() -> {
+            return !t3.isAlive();
+        },"rsCanNotLoc yes ok thread 3 complete");
+
+        // error message not able to apply schedule
+        JUnitUtil.waitFor(() -> {
+            return !t4.isAlive();
+        },"rsOverride yes dialogue thread 4 complete");
+        
+
         Assert.assertEquals("car's track", track1, car.getTrack());
 
         JUnitUtil.dispose(f);
