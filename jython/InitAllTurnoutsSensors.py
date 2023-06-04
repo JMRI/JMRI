@@ -82,8 +82,7 @@ log4j.category.jmri.jmrit.jython.exec=TRACE
 
         internalCounter = 0
         physicalCounter = 0
-        self.log.info( "Looping through all known turnouts" )
-        # for turnoutSystemName in turnouts.getSystemNameList().toArray():
+        self.log.info( "Loop through all known turnouts" )
         for turnout in turnouts.getNamedBeanSet() :
 
             turnoutSystemName = turnout.getSystemName()
