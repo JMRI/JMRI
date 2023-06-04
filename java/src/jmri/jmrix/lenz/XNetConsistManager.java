@@ -62,6 +62,7 @@ public class XNetConsistManager extends AbstractConsistManager {
         XNetConsist consist;
         consist = new XNetConsist((DccLocoAddress) address, tc, systemMemo);
         consistTable.put(address, consist);
+        notifyConsistListChanged();
         return (consist);
     }
 

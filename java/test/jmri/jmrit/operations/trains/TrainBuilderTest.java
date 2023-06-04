@@ -17097,6 +17097,197 @@ public class TrainBuilderTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
+    /**
+     * Test staging pool feature. Creates 4 staging tracks, program should
+     * select staging track based on when the car arrived into staging.
+     */
+    @Test
+    public void testStagingPoolFIFO() {
+        // create 4 staging tracks
+        Location staging = lmanager.newLocation("Test Staging");
+        Track staging1 = staging.addTrack("Yard 1-1", Track.STAGING);
+        Track staging2 = staging.addTrack("Yard 1-2", Track.STAGING);
+        Track staging3 = staging.addTrack("Yard 1-3", Track.STAGING);
+        Track staging4 = staging.addTrack("Yard 1-4", Track.STAGING);
+        
+        staging1.setLength(100);
+        staging2.setLength(100);
+        staging3.setLength(100);
+        staging4.setLength(100);
+        
+        // bias track moves
+        staging2.setMoves(2);
+        staging3.setMoves(3);
+        
+        // all 4 in the same pool
+        Pool pool = staging.addPool("Pool for Staging");
+        staging1.setPool(pool);
+        staging2.setPool(pool);
+        staging3.setPool(pool);
+        staging4.setPool(pool);
+        
+        staging1.setServiceOrder(Track.FIFO);
+        staging2.setServiceOrder(Track.FIFO);
+        staging3.setServiceOrder(Track.FIFO);
+        staging4.setServiceOrder(Track.FIFO);
+        
+        // place a car on each staging track, leave one empty
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", staging1, 1);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", staging2, 1);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", staging3, 1);
+        
+        Calendar cal = java.util.Calendar.getInstance();
+        Date date = cal.getTime();
+        
+        // set the cars last moved dates
+        c1.setLastDate(date);
+        cal.add(java.util.Calendar.MINUTE, -2);
+        date = cal.getTime();
+        c2.setLastDate(date);
+        cal.add(java.util.Calendar.MINUTE, -2);
+        date = cal.getTime();
+        c3.setLastDate(date); // First in
+        
+        Location yards = lmanager.newLocation("Test Yard");
+        Track yard = yards.addTrack("Test Yard", Track.YARD);
+        yard.setLength(100);
+        
+        Train t1 = tmanager.newTrain("Test Staging Pool Train");
+        Route route = rmanager.newRoute("Test Staging Pool Route");
+        route.addLocation(staging);
+        route.addLocation(yards);
+        t1.setRoute(route);
+        
+        Assert.assertTrue(new TrainBuilder().build(t1));
+        Assert.assertEquals("C3 assigned to train", t1, c3.getTrain());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Test staging pool feature. Creates 3 staging tracks, program should
+     * select staging track based on when the car arrived into staging.
+     */
+    @Test
+    public void testStagingPoolLIFO() {
+        // create three staging tracks
+        Location staging = lmanager.newLocation("Test Staging");
+        Track staging1 = staging.addTrack("Yard 1-1", Track.STAGING);
+        Track staging2 = staging.addTrack("Yard 1-2", Track.STAGING);
+        Track staging3 = staging.addTrack("Yard 1-3", Track.STAGING);
+        
+        staging1.setLength(100);
+        staging2.setLength(100);
+        staging3.setLength(100);
+        
+        // bias track moves
+        staging2.setMoves(2);
+        staging3.setMoves(3);
+        
+        // all three in the same pool
+        Pool pool = staging.addPool("Pool for Staging");
+        staging1.setPool(pool);
+        staging2.setPool(pool);
+        staging3.setPool(pool);
+        
+        staging1.setServiceOrder(Track.LIFO);
+        staging2.setServiceOrder(Track.LIFO);
+        staging3.setServiceOrder(Track.LIFO);
+        
+        // place a car on each staging track
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", staging1, 1);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", staging2, 1);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", staging3, 1);
+        
+        Calendar cal = java.util.Calendar.getInstance();
+        Date date = cal.getTime();
+        
+        // set the cars last moved dates
+        c1.setLastDate(date);
+        cal.add(java.util.Calendar.MINUTE, +2);
+        date = cal.getTime();
+        c2.setLastDate(date);
+        cal.add(java.util.Calendar.MINUTE, +2);
+        date = cal.getTime();
+        c3.setLastDate(date); // Last in
+        
+        Location yards = lmanager.newLocation("Test Yard");
+        Track yard = yards.addTrack("Test Yard", Track.YARD);
+        yard.setLength(100);
+        
+        Train t1 = tmanager.newTrain("Test Staging Pool Train");
+        Route route = rmanager.newRoute("Test Staging Pool Route");
+        route.addLocation(staging);
+        route.addLocation(yards);
+        t1.setRoute(route);
+        
+        Assert.assertTrue(new TrainBuilder().build(t1));
+        Assert.assertEquals("C3 assigned to train", t1, c3.getTrain());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Test staging pool feature in Normal mode. Creates 3 staging tracks.
+     * Car last moved dates should be ignored.
+     */
+    @Test
+    public void testStagingPoolNormal() {
+        // create three staging tracks
+        Location staging = lmanager.newLocation("Test Staging");
+        Track staging1 = staging.addTrack("Yard 1-1", Track.STAGING);
+        Track staging2 = staging.addTrack("Yard 1-2", Track.STAGING);
+        Track staging3 = staging.addTrack("Yard 1-3", Track.STAGING);
+        
+        staging1.setLength(100);
+        staging2.setLength(100);
+        staging3.setLength(100);
+        
+        // bias track moves
+        staging2.setMoves(2);
+        staging3.setMoves(3);
+        
+        // all three in the same pool
+        Pool pool = staging.addPool("Pool for Staging");
+        staging1.setPool(pool);
+        staging2.setPool(pool);
+        staging3.setPool(pool);
+        
+        // default service mode is NORMAL
+        
+        // place a car on each staging track
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", staging1, 1);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", staging2, 1);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", staging3, 1);
+        
+        Calendar cal = java.util.Calendar.getInstance();
+        Date date = cal.getTime();
+        
+        // set the cars last moved dates
+        c1.setLastDate(date);
+        cal.add(java.util.Calendar.MINUTE, +2);
+        date = cal.getTime();
+        c2.setLastDate(date);
+        cal.add(java.util.Calendar.MINUTE, +2);
+        date = cal.getTime();
+        c3.setLastDate(date); // Last in
+        
+        Location yards = lmanager.newLocation("Test Yard");
+        Track yard = yards.addTrack("Test Yard", Track.YARD);
+        yard.setLength(100);
+        
+        Train t1 = tmanager.newTrain("Test Staging Pool Train");
+        Route route = rmanager.newRoute("Test Staging Pool Route");
+        route.addLocation(staging);
+        route.addLocation(yards);
+        t1.setRoute(route);
+        
+        Assert.assertTrue(new TrainBuilder().build(t1));
+        Assert.assertEquals("C1 assigned to train", t1, c1.getTrain());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
     @Test
     public void testLocalMove() {
         Setup.setBuildAggressive(true);

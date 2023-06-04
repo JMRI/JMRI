@@ -45,8 +45,14 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     }
 
     public void destroy() {
+        for (FunctionButton fb : functionButtons) {
+            fb.destroy();
+            fb.removeFunctionListener(this);
+        }
+        functionButtons = null;
         if (addressPanel != null) {
             addressPanel.removeAddressListener(this);
+            addressPanel = null;
         }
         if (mThrottle != null) {
             mThrottle.removePropertyChangeListener(this);
@@ -91,6 +97,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     public void notifyFunctionStateChanged(int functionNumber, boolean isSet) {
         log.debug("notifyFunctionStateChanged: fNumber={} isSet={} " ,functionNumber, isSet);
         if (mThrottle != null) {
+            log.debug("setting throttle {} function {}", mThrottle.getLocoAddress(), functionNumber);
             mThrottle.setFunction(functionNumber, isSet);
         }
     }
@@ -106,6 +113,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     public void notifyFunctionLockableChanged(int functionNumber, boolean isLockable) {
         log.debug("notifyFnLockableChanged: fNumber={} isLockable={} " ,functionNumber, isLockable);
         if (mThrottle != null) {
+            log.debug("setting throttle {} function momentary {}", mThrottle.getLocoAddress(), functionNumber);
             mThrottle.setFunctionMomentary(functionNumber, !isLockable);
         }
     }
@@ -488,12 +496,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         setEnabled(true);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void notifyAddressReleased(LocoAddress la) {
-        log.debug("Throttle released");
+    private void adressReleased() {
         if (mThrottle != null) {
             mThrottle.removePropertyChangeListener(this);
         }
@@ -501,6 +504,15 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         fnBtnUpdatedFromRoster = false;
         resetFnButtons();
         setEnabled(false);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyAddressReleased(LocoAddress la) {
+        log.debug("Throttle released");
+        adressReleased();
     }
 
     /**
@@ -516,7 +528,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * {@inheritDoc}
      */
     @Override
-    public void notifyConsistAddressChosen(int newAddress, boolean isLong) {
+    public void notifyConsistAddressChosen(LocoAddress l) {
     }
 
     /**
@@ -524,15 +536,21 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * {@inheritDoc}
      */
     @Override
-    public void notifyConsistAddressReleased(int address, boolean isLong) {
+    public void notifyConsistAddressReleased(LocoAddress la) {
+        log.debug("Consist throttle released");
+        adressReleased();
     }
 
-    /**
+   /**
      * Ignored.
      * {@inheritDoc}
      */
     @Override
-    public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
+    public void notifyConsistAddressThrottleFound(DccThrottle t) {
+        log.debug("Consist throttle found");
+        if (mThrottle == null) {
+            notifyAddressThrottleFound(t);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);

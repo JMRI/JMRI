@@ -65,7 +65,7 @@ public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelec
     }
 
     public void setSelectedRosterEntry(RosterEntry re) {
-        entryCombo.setSelectedItem((re != null) ? re.getId() : null);
+        entryCombo.setSelectedItem(re);
     }
 
     public void setSelectedRosterEntryAndGroup(RosterEntry re, String rg) {

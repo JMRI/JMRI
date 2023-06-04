@@ -23,7 +23,7 @@ public class ConsistDataModel extends AbstractTableModel {
 
     private static final int ADDRCOLUMN = 0;    // Locomotive address
     private static final int ROSTERCOLUMN = 1;  // Roster Entry, this exists
-    private static final int DIRECTIONCOLUMN = 2;  // Relative Direction
+    static final int DIRECTIONCOLUMN = 2;  // Relative Direction
     private static final int DELCOLUMN = 3;     // Remove Button
     private static final int NUMCOLUMN = 4;
     // a place holder for a consist and Consist Manager objects.
@@ -42,6 +42,8 @@ public class ConsistDataModel extends AbstractTableModel {
         tcm.getColumn(DELCOLUMN).setCellRenderer(buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new JButton());
         tcm.getColumn(DELCOLUMN).setCellEditor(buttonEditor);
+        ConsistTableRosterEntryColumnCellRenderer rosterEntryRenderer = new ConsistTableRosterEntryColumnCellRenderer();
+        tcm.getColumn(ROSTERCOLUMN).setCellRenderer(rosterEntryRenderer);
     }
 
     public void setConsist(Consist consist) {
@@ -150,12 +152,14 @@ public class ConsistDataModel extends AbstractTableModel {
             case DIRECTIONCOLUMN:
                 _consist.add(_consist.getConsistList().get(row), ((Boolean) value).booleanValue());
                 fireTableDataChanged();
+                consistMan.notifyConsistListChanged();
                 break;
             case DELCOLUMN:
                 log.debug("Delete Called for row {}",row);
                 fireTableRowsDeleted(row, row);
                 _consist.remove(_consist.getConsistList().get(row));
                 fireTableDataChanged();
+                consistMan.notifyConsistListChanged();
                 break;
             default:
                 log.error("Unknown Consist Operation");

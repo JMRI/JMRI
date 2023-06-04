@@ -446,7 +446,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Add "Entry/Exit" to the "For each" action bean list.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -458,6 +458,7 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
+            <li>New staging feature, the ability to have multiple trains on one physical staging track.</li>
             <li>Improved OperationsPro help, paper size, additional links from TOC</li>
             <li>Many improvements to the train build report, car divisions, spurs and schedules, track type, etc.</li>
             <li>A car's wait count is now set to zero if the car's load name is changed</li>
@@ -519,6 +520,7 @@
             <li>New CreateSectionsFromBlocks.py. For each defined occupancy block, attempts to create a one-block Section</li>
             <li>New AddOccupancyIconsToPanel.py. Create and place SensorIcons and BlockContents for each occupancy Block on a panel</li>
             <li>Add binding "beans" for NamedBeanHandleManager</li>
+            <li>Add a <strong>Set turntable position</strong> statement to YAAT.</li>
             <li>New InitAllTurnoutsSensors.py. Sets all physical turnouts to the CLOSED state and all known physical sensors to the INACTIVE state.</li>
         </ul>
 
@@ -570,8 +572,24 @@
 
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
+            <li>Some minor internal cleanup.</li>
+            <li>If you select a roster entry, the throttle displays functions up to the
+                least of the number of functions available
+                from the layout connection, or the maximum function in the decoder
+                definition.
+                For most decoders, this will be 28,
+                but there are a few definitions that are larger or smaller.</li>
+            <li>Added a consist selector in the address panel</li>
+            <li>Added a "Consist Tool" button in the address panel</li>
+            <li>Behavior with consists enhanced</li>
+        </ul>
+
+    <h3>Consist Tool</h3>
+        <a id="consist" name="consist"></a>
         <ul>
-            <li></li>
+            <li>The "Consist Control" entry in the "Tools" menu was renamed "Consist Tool"</li>
+            <li>Consist tool now leverages locomotives icons when available</li>
+            <li>A consist selection combo box was introduced</li>
         </ul>
 
     <h3>Timetable</h3>

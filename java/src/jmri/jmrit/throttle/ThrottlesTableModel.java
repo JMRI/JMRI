@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.swing.table.AbstractTableModel;
 
+import jmri.ConsistListListener;
 import jmri.DccLocoAddress;
 import jmri.Throttle;
 
@@ -15,7 +16,7 @@ import jmri.Throttle;
  *
  */
 
-public class ThrottlesTableModel extends AbstractTableModel implements java.beans.PropertyChangeListener {
+public class ThrottlesTableModel extends AbstractTableModel implements java.beans.PropertyChangeListener, ConsistListListener{
 
     private final List<ThrottleFrame> throttleFrames = new LinkedList<>();
 
@@ -69,6 +70,11 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
                 (e.getPropertyName().equals("ThrottleFrame"))) {
             fireTableDataChanged();
         }
+    }
+
+    @Override
+    public void notifyConsistListChanged() {
+        fireTableDataChanged();
     }
 
 }

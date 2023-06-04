@@ -36,18 +36,16 @@ public interface AddressListener extends EventListener {
     /**
      * Receive notification that a new Consist address has been selected.
      *
-     * @param newAddress The address that is now selected.
-     * @param isLong true if a long address, else false.
+     * @param address The address that is now selected.
      */
-    public void notifyConsistAddressChosen(int newAddress, boolean isLong);
+    public void notifyConsistAddressChosen(jmri.LocoAddress address);
 
     /**
      * Receive notification that a consist address has been released/dispatched.
      *
-     * @param address The address released/dispatched.
-     * @param isLong true if a long address, else false.
+     * @param address The address that is now selected.
      */
-    public void notifyConsistAddressReleased(int address, boolean isLong);
+    public void notifyConsistAddressReleased(jmri.LocoAddress address);
 
     /**
      * Receive notification that a throttle has been found

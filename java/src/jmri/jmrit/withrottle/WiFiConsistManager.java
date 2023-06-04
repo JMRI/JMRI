@@ -46,6 +46,7 @@ public class WiFiConsistManager extends NmraConsistManager {
         WiFiConsist consist;
         consist = new WiFiConsist((DccLocoAddress) address);
         consistTable.put(address, consist);
+        notifyConsistListChanged();
         return consist;
     }
 

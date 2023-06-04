@@ -1,13 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+
   <title>Freeze/Unfreeze in the OpenLCB protocols</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-<body bgcolor="white">
-  The OpenLCB Memory Configuration protocol specification adopted as of January 2015 contained a
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  
+    <div id="mBody">
+    <div id="mainContent">
+      <!-- Page Body -->
+
+  <p>The OpenLCB Memory Configuration protocol specification adopted as of January 2015 contained a
   feature that JMRI uses to provide a safe and reliable firmware downloader for OpenLCB nodes. The
-  original documentation, since removed, was:
+  original documentation, since removed, was:</p>
   <blockquote>
     4.4.7 Lock/Reserve and Freeze/Unfreeze
     <p>An OpenLCB node can, in general, be configured while the network and even the node itself is
@@ -18,7 +26,7 @@
     information. For example, inconsistent configuration memory contents while one section has been
     rewritten and another section not rewritten might drive output to undesired states or cause
     inputs to generate spurious messages. The Freeze/Unfreeze command, if supported, can be used to
-    tell a node that it should &amp;quote;freeze&amp;quote; operation, ignoring inputs and outputs,
+    tell a node that it should &quot;freeze&quot; operation, ignoring inputs and outputs,
     while the configuration is being updated. A reset of the node releases the freeze option, if
     set, so the configuring node can just reset the node being configured at the end of the
     operation. Note that this is not a required protocol: The node being configured is free to
@@ -94,44 +102,52 @@
 
         <p>A node manufacturer can implement a very simple (and not very strong) form of download
         security against download of invalid contents by compiling in some locations at known low
-        memory locations (so they&amp;quote;re written in the 1st write transfer) that have known
-        values. If they&amp;quote;re not there, the downloader code rejects the write with a
+        memory locations (so they are written in the 1st write transfer) that have known
+        values. If they are not there, the downloader code rejects the write with a
         permanent error and the download will stop.</p>
       </li>
     </ul>
   </blockquote>
 
-  <p>&amp;quote;Freeze&amp;quote; is a more general case of &amp;quote;enter
-  bootloader&amp;quote;.</p>
+  <p>&quot;Freeze&quot; is a more general case of &quot;enter
+  bootloader&quot;.</p>
 
-  <p>If the only thing that a node can do is &amp;quote;jump to the bootloader, and accept data for
-  reprogramming&amp;quote;, the &amp;quote;Freeze&amp;quote; and &amp;quote;Enter
-  Bootloader&amp;quote; are the same. Just reboot/restart when done.</p>
+  <p>If the only thing that a node can do is &quot;jump to the bootloader, and accept data for
+  reprogramming&quot;, the &quot;Freeze&quot; and &quot;Enter
+  Bootloader&quot; are the same. Just reboot/restart when done.</p>
 
   <p>If a node can allow configuration memory to be rewritten on the fly, even while doing what it
-  normally does, then neither &amp;quote;Freeze&amp;quote; nor &amp;quote;Enter
-  Bootloader&amp;quote; nor anything else is needed: Just write the memory.</p>
+  normally does, then neither &quot;Freeze&quot; nor &quot;Enter
+  Bootloader&quot; nor anything else is needed: Just write the memory.</p>
 
   <p>Some applications can allow updates of parts of their memory without requiring restart. They
   just need to be
-  &amp;quote;frozen&amp;quote;/&amp;quote;drained&amp;quote;/&amp;quote;quiesced&amp;quote; while
-  the update happens. Technically, you&amp;quote;re saying &amp;quote;keep the PC out of this part
-  of the code for a bit, and later I&amp;quote;ll tell you to go again; I promise that your live
-  data will be OK&amp;quote;. There&amp;quote;s even a model railroad manufacturer who uses this
+  &quot;frozen&quot;/&quot;drained&quot;/&quot;quiesced&quot; while
+  the update happens. Technically, you are saying &quot;keep the PC out of this part
+  of the code for a bit, and later I will tell you to go again. I promise that your live
+  data will be OK. There is even a model railroad manufacturer who uses this
   facility for writing sound information into their products, so that you can mess with the sounds
   in a semi-realtime way without causing the sound processing to crash.</p>
 
   <p>For something as straight-forward as a PIC or Arduino-based node, just map the
-  &amp;quote;Freeze&amp;quote; command to &amp;quote;reply to the datagram and then jump to the
-  bootloader&amp;quote;, and the &amp;quote;unfreeze&amp;quote; to &amp;quote;reply and then do a
-  reset&amp;quote; (or, if need be, just reset)</p>
+  &quot;Freeze&quot; command to &quot;reply to the datagram and then jump to the
+  bootloader&quot;, and the &quot;unfreeze&quot; to &quot;reply and then do a
+  reset&quot; (or, if need be, just reset)</p>
 
-  <p>Note that Freeze is optional; a negative reply to it doesn&amp;quote;t stop the download
+  <p>Note that Freeze is optional; a negative reply to it does not stop the download
   process. (All datagrams must get a reply of some sort)</p>
 
   <p>The JMRI bootloader will continue after a negative reply to Freeze, or a timeout at that
   point. That timeout is the default one, 700 msec, which is long enough to be visible to a person
-  watching. But compared to a 20-30 second download time, perhaps that&amp;quote;s not an
+  watching. But compared to a 20-30 second download time, perhaps that is not an
   issue.</p>
+  
+  <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+
 </body>
 </html>
