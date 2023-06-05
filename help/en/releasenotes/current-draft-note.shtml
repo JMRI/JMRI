@@ -520,6 +520,7 @@
             <li>New CreateSectionsFromBlocks.py. For each defined occupancy block, attempts to create a one-block Section</li>
             <li>New AddOccupancyIconsToPanel.py. Create and place SensorIcons and BlockContents for each occupancy Block on a panel</li>
             <li>Add binding "beans" for NamedBeanHandleManager</li>
+            <li>Add a <strong>Set turntable position</strong> statement to YAAT.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -581,7 +582,7 @@
             <li>Added a "Consist Tool" button in the address panel</li>
             <li>Behavior with consists enhanced</li>
         </ul>
-        
+
     <h3>Consist Tool</h3>
         <a id="consist" name="consist"></a>
         <ul>
