@@ -51,16 +51,16 @@
 
       <p>There are four buttons near the bottom, the first two of which are:</p>
 
-      <p><strong><a href="Programmer_ServiceMode.shtml"><input type="button" name="button" id=
-      "button" value="Service Mode (Programming Track) Programmer"> Service Mode</a></strong> -
+      <p><strong><span class="textbutton"><a href="Programmer_ServiceMode.shtml">Service Mode 
+      (Programming Track) Programmer</a></span> <a href="Programmer_ServiceMode.shtml">Service Mode</a></strong> -
       With this button you select a programmer to program the locomotive(decoder) on the dedicated
       programming track. (Probably because the Locomotive has to be taken to the servicing track to
       be programmed). Not all command stations support a dedicated programming track, and some
       brands will shut down the mainline power when in programming mode (not pleasant when you have
       an ops session in progress.</p>
 
-      <p><strong><a href="Programmer_OpsMode.shtml"><input type="button" name="button2" id=
-      "button2" value="Operations Mode (Main Track ) Programmer"> Operations Mode</a></strong> - or
+      <p><strong><span class="textbutton"><a href="Programmer_OpsMode.shtml">Operations Mode 
+      (Main Track ) Programmer</a></span> <a href="Programmer_OpsMode.shtml">Operations Mode</a></strong> - or
       <strong>[Programming on the main(POM)]</strong>. This lets you program a specific decoder on
       the layout, even while it is operating. However, because it addresses a specific decoder
       address, some decoders will not allow you to change the decoder's address using this method!
@@ -69,10 +69,9 @@
       loco with address zero (or forget to enter an address when you start). If in doubt, check
       your documentation.</p>
 
-      <p><strong><input type="button" name="button3" id="button3" value="Help"></strong> - Accesses
-      the help files<br></p>
+      <p><strong><span class="textbutton">Help</span></strong> - Accesses the help files<br></p>
 
-      <p><input type="button" name="button4" id="button4" value="Quit"> - Exits the program.</p>
+      <p><strong><span class="textbutton">Quit</span></strong> - Exits the program.</p>
 
       <p>Any additional buttons are added in the <strong><a href=
       "Start_Preferences.shtml">preferences</a></strong>.</p>

@@ -50,8 +50,7 @@
       </p>
 
       <p>Opens the Send XpressNet Packet prompt so that you can type in a Packet: and click on the
-      <input type="submit" name="button3" id="button3" value="Send"> to transmit via XpressNet to
-      your system.</p>
+      <span class="textbutton">Send</span> button to transmit via XpressNet to your system.</p>
 
       <p><img src="images/Main_XpressNet_02.png" alt="Send Command" width="256" height="97">
       </p>
@@ -104,7 +103,7 @@
 
       <h4><a id="StackMonitor"></a>Command Station Stack Monitor</h4>
 
-      <p>Click the <input type="submit" name="button4" id="button4" value="Refresh"> to update the
+      <p>Click the <span class="textbutton">Refresh</span> button to update the
       display to the current information.</p>
 
       <p><img src="images/Main_XpressNet_03.png" alt="Database" width="523" height="186">
