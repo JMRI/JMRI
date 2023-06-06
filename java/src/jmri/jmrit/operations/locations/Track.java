@@ -1554,7 +1554,7 @@ public class Track extends PropertyChangeSupport {
                     getLocation().getName(), getName()); // NOI18N
 
             return MessageFormat.format(Bundle.getMessage("lengthIssue"),
-                    new Object[] { LENGTH, length, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace() });
+                    new Object[] { LENGTH, length, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace(), getLength() });
         }
         return OKAY;
     }

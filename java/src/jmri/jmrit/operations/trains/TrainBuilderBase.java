@@ -2194,7 +2194,7 @@ public class TrainBuilderBase extends TrainCommon {
     }
 
     protected void showCarServiceOrder(Car car) {
-        if (!car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
+        if (!car.getTrack().getServiceOrder().equals(Track.NORMAL) && !car.getTrack().isStaging()) {
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildTrackModePriority", car.toString(), car.getTrack().getTrackTypeName(),
                             car.getTrackName(), car.getTrack().getServiceOrder(), car.getLastDate()));
