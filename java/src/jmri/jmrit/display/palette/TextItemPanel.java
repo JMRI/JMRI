@@ -137,6 +137,7 @@ public class TextItemPanel extends ItemPanel {
                 log.debug("end init: TextItemPanel size {}", getPreferredSize());
             }
             super.init();
+            initLinkPanel();
         }
     }
 
@@ -415,6 +416,25 @@ public class TextItemPanel extends ItemPanel {
         JPanel panel = makeTextPanel(type, sample, editText);
         _samplePanel.add(sample);
         return panel;
+    }
+
+    protected void initLinkPanel() {
+        JPanel blurb = new JPanel();
+        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", "Text")));
+        blurb.add(new JLabel(Bundle.getMessage("enterPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("enterURL")));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        blurb.add(new JLabel(Bundle.getMessage("LinkName")));
+        blurb.add(_linkName);
+        _linkName.setToolTipText(Bundle.getMessage("ToolTipLink"));
+        blurb.setToolTipText(Bundle.getMessage("ToolTipLink"));
+        JPanel panel = new JPanel();
+        panel.add(blurb);
+        JPanel linkPanel = new JPanel();
+        linkPanel.add(panel);
+        add(linkPanel);
     }
 
     private void makeColorChooser() {
