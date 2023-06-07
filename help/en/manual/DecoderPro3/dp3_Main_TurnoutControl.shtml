@@ -51,19 +51,18 @@
 
             <p><input name="textfield2" type="text" id="textfield2" size="8"> Enter the accessory
             number or tunout system name for the accessory or turnout you wish to control. For
-            example, entering 678 and by pressing either the <input type="submit" name="button" id=
-            "button" value="Thrown"> or <input type="submit" name="button2" id="button2" value=
-            "closed"> , you should be able to change the state of accessory number 678 on the
-            layout.</p>
+            example, entering 678 and by pressing either the <span class="textbutton">Thrown</span>
+            or <span class="textbutton">closed</span> buttons,
+            you should be able to change the state of accessory number 678 on the layout.</p>
 
             <p>Another example, a valid turnout system name for NCE could be NT456. Then by
-            pressing either the <input type="submit" name="button3" id="button3" value="Thrown"> or
-            <input type="submit" name="button3" id="button4" value="closed"> , you should be able
+            pressing either the <span class="textbutton">Thrown</span> or
+            <span class="textbutton">closed</span> buttons, you should be able
             to change the state of turnout or accessory number 456 on the layout</p>
 
             <p>Another example, a valid turnout name could be IT123 which is internal turnout
-            number 123. Pressing either the <input type="submit" name="button4" id="button5" value=
-            "Thrown"> or <input type="submit" name="button4" id="button6" value="closed"> will only
+            number 123. Pressing either the <span class="textbutton">Thrown</span> or 
+            <span class="textbutton">closed</span> buttons will only
             change the state of the internal turnout and will not change a turnout on the
             layout.</p>
 
