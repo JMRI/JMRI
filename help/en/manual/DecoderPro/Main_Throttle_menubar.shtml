@@ -218,9 +218,8 @@
 
         <li style="list-style: none">
           <blockquote>
-            <p>Resets all the Function buttons to the default settings, <input name="button14" id=
-            "button14" value="F1" type="button"> , <input name="button15" id="button15" value="F2"
-            type="button"> , etc.</p>
+            <p>Resets all the Function buttons to the default settings, <span class="textbutton">F1</span> , 
+            <span class="textbutton">F2</span> , etc.</p>
           </blockquote>
         </li>
 

@@ -111,7 +111,7 @@
       <p>You may also edit the function button text in the <a href=
       "dp3_Main_Throttle.shtml"><strong>JMRI Throttle</strong></a> and save those changes to the
       selected Roster entry. To use these changed entries in the future, make sure you click on the
-      <input name="button" id="button" value="Save to Roster" type="submit"> to save these values
+      <span class="textbutton">Save to Roster</span> button to save these values
       into the Roster entry that is in use.</p>
 
       <hr>
