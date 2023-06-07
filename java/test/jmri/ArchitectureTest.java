@@ -414,8 +414,8 @@ public class ArchitectureTest {
             } else {
                 String fname = file.getAbsolutePath();
                 if (fname.endsWith(deniedsuffix) && notOnAllowList(fname,allowList)) {
-                    System.out.println("Incorrect fileType: "+fname);
-                    // Assertions.fail("filename " +fname+ " should not end with "+deniedsuffix);
+                    // System.out.println("Incorrect fileType: "+fname);
+                    Assertions.fail("filename " +fname+ " should not end with "+deniedsuffix);
                 }
             }
         }
