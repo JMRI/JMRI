@@ -150,7 +150,7 @@
         the images for reference</p>
       </blockquote>
 
-      <p><input name="button" id="button" value="Save to Roster" type="submit"> After adding images
+      <p><span class="textbutton">Save to Roster</span> After adding images
       to the image boxes for main image and icon, click on this button to store images in your
       Roster. Now the image will appear in your roster list in DecoderPro.</p>
 

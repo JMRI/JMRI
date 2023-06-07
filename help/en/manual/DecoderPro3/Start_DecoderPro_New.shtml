@@ -49,14 +49,12 @@
       <p><img src="images/newUser_01.png" alt="new" height="410" width="710">
       </p>
 
-      <p>Press the <input name="Button" id="button" value="Next&gt;" type="button"> starts the
-      wizard.</p>
+      <p>Press the <span class="textbutton">Next &gt;</span> button to start the wizard.</p>
 
       <p><img src="images/newUser_02.png" alt="wizard" height="410" width="710">
       </p>
 
-      <p>Press the <input name="button" id="button2" value="Next&gt;" type="button"> to
-      continue</p>
+      <p>Press the <span class="textbutton">Next &gt;</span> button to continue.</p>
 
       <p><img src="images/newUser_03.png" alt="wizard" height="410" width="710">
       </p>
@@ -78,12 +76,12 @@
 
       <p>Next Connection Prefix and Connection Name, At this time leave as default.</p>
 
-      <p>Press the <input name="button2" id="button3" value="Next&gt;" type="button"></p>
+      <p>Press the <span class="textbutton">Next &gt;</span> button.</p>
 
       <p><img src="images/newUser_07.png" alt="wizard" height="400" width="700">
       </p>
 
-      <p>Press the <input name="button3" id="button4" value="Finish" type="button"></p>
+      <p>Press the <span class="textbutton">Finish</span> button.</p>
 
       <p>The DecoderPro main window is displayed with instructions for Getting Started:</p>
 
