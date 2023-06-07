@@ -299,6 +299,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     myRegex = "";
                 }
                 break;
+            case DCCppConstants.TRACKMANAGER_CMD:
+                myRegex = DCCppConstants.TRACKMANAGER_CMD_REGEX;
+                break;
             default:
                 myRegex = "";
         }
@@ -570,7 +573,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     text = "Request clock update from CS";
                     break;
                 } else if (isClockSetTimeMessage()) {    
-                    text = "Send FastClock Mins:" + getClockMinutesInt();
+                    String hhmm = String.format("%02d:%02d",
+                            getClockMinutesInt() / 60,
+                            getClockMinutesInt() % 60);
+                    text = "FastClock Send: " + hhmm;
                     if (!getClockRateString().isEmpty()) {                    
                         text += ", Rate:" + getClockRateString();
                         if (getClockRateInt()==0) {
@@ -580,6 +586,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     break;
                 }
                 text = "Unknown Message: '" + toString() + "'";
+                break;
+            case DCCppConstants.TRACKMANAGER_CMD:
+                text = "Request TrackManager Config: '" + toString() + "'";
                 break;
             default:
                 text = "Unknown Message: '" + toString() + "'";
@@ -920,6 +929,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
     public boolean isClockSetTimeMessage() {
         return (this.match(DCCppConstants.CLOCK_SET_REGEX) != null);
+    }
+
+    public boolean isTrackManagerRequestMessage() {
+        return (this.match(DCCppConstants.TRACKMANAGER_CMD_REGEX) != null);
     }
 
     public boolean isTurnoutImplementationMessage() {
@@ -1888,6 +1901,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         m.myRegex = DCCppConstants.CLOCK_SET_REGEX;
         m._nDataChars = m.toString().length();
         return (m);
+    }
+
+    public static DCCppMessage makeTrackManagerRequestMsg() {
+        return (new DCCppMessage(DCCppConstants.TRACKMANAGER_CMD, DCCppConstants.TRACKMANAGER_CMD_REGEX));
     }
 
     public static DCCppMessage makeMessage(String msg) {

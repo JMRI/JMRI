@@ -292,13 +292,19 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text += " Desc:'" + getTurnoutDescString() + "'";
                     break;
                 } else if (isClockReply()) {    
-                    text = "FastClock Reply: Mins:" + getClockMinutesInt();
+                    String hhmm = String.format("%02d:%02d",
+                            getClockMinutesInt() / 60,
+                            getClockMinutesInt() % 60);
+                    text = "FastClock Reply: " + hhmm;
                     if (!getClockRateString().isEmpty()) {
                         text += ", Rate:" + getClockRateString();
                     }
                     break;
                 }
                 text = "Unknown Message: '" + toString() + "'";
+                break;
+            case DCCppConstants.TRACKMANAGER_CMD:
+                text = "TrackManager:" + toString();
                 break;
                 
             default:
@@ -570,6 +576,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.CLOCK_REPLY_REGEX;
                 }
                 log.debug("Parsed Reply: '{}' length {}", r.toString(), r._nDataChars);
+                return (r);
+            case DCCppConstants.TRACKMANAGER_CMD:
+                if (s.matches(DCCppConstants.TRACKMANAGER_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.TRACKMANAGER_REPLY_REGEX;
+                }
                 return (r);
             default:
                 return (r);
@@ -1742,6 +1753,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
     public boolean isClockReply() {
         return (this.matches(DCCppConstants.CLOCK_REPLY_REGEX));
+    }
+
+    public boolean isTrackManagerReply() {
+        return (this.matches(DCCppConstants.TRACKMANAGER_REPLY_REGEX));
     }
 
     public boolean isValidReplyFormat() {
