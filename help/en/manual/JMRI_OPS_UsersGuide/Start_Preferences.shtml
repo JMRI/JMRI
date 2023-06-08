@@ -41,9 +41,8 @@
       <p>The <strong>Preferences</strong> panel is split into two panes: on the left side is a list
       of Preference groups that may be set. Clicking on one of the Tabs opens that set of
       Preference options in the right side pane where options may be checked or changed.<br>
-      Note: <strong>Remember to click <input type="button" name="button9" id="button9" value=
-      "Save"> to finalize your settings and then re-start JMRI to have them take
-      effect.</strong></p>
+      Note: <strong>Remember to click <span class="textbutton">Save</span>
+      to finalize your settings and then re-start JMRI to have them take effect.</strong></p>
 
       <p>To a first time user the most important part to start with is the
       <strong>Connections</strong> Tab, where you describe how your computer will talk to the DCC
@@ -115,11 +114,10 @@
           Settings<br>
           if checked:</td>
           <td>
-            <p><input type="submit" name="button2" id="button2" value="Disable Connection"> will
+            <p><span class="textbutton">Disable Connection</span> will
             disable all the connection settings.</p>
 
-            <p><input type="submit" name="button" id="button" value="X"> will delete this
-            connection.</p>
+            <p><span class="textbutton">X</span> will delete this connection.</p>
           </td>
         </tr>
       </table>

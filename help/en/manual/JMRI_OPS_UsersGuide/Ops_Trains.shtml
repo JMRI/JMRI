@@ -88,23 +88,22 @@
       "radio9" type="radio"> Reset</strong>
       </p>
 
-      <p><input name="button8" id="button8" value="Add" type="button"> opens the <strong><a href=
+      <p>The <span class="textbutton">Add</span> button opens the <strong><a href=
       "Ops_AddTrain.shtml">Add Train</a></strong> window.<br>
-      <a id="buildbtn"></a> <input name="button9" id="button9" value="Build" type="button"> the
+      <span id="buildbtn" class="textbutton">Build</span> the
       selected train is <strong><a href="Ops_TrainsBuild.shtml">built</a></strong> and the
       <strong>Function</strong> column button changes to <strong>Preview</strong> when completed,
       messages may be displayed if the Build can not be completed.<br>
-      <input name="button10" id="button10" value="Preview" type="button"> shows the manifest in
+      <span class="textbutton">Preview</span> shows the manifest in
       <strong><a href="Ops_ManifestPreview.shtml">Preview</a></strong> window.<br>
-      <a id="switch"></a> <input name="button11" id="button11" value="Switch Lists" type="button">
+      The <span id="switch" class="textbutton">Switch Lists</span> button
       opens the <strong><a href="Ops_TrainsBuild.shtml">Switch Lists by Location</a></strong>
       window.</p>
 
       <p><br>
-      <input name="button12" id="button12" value="Terminate" type="button"> terminates all trains
+      The <span class="textbutton">Terminate</span> button terminates all trains
       that have a build.<br>
-      <input name="button13" id="button13" value="Save Builds" type="button"> saves the builds to
-      disk.</p>
+      The <span class="textbutton">Save Builds</span> button saves the builds to disk.</p>
 
       <div class="ops-right">
         <p><a href="Ops_Routes.shtml">Previous |</a> <a href=
