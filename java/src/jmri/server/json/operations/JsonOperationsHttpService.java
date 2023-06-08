@@ -35,12 +35,17 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Randall Wood (C) 2016, 2018, 2019, 2020
  */
 public class JsonOperationsHttpService extends JsonHttpService {
 
     private final JsonUtil utilities;
+
+    private static final Logger log = LoggerFactory.getLogger(JsonOperationsHttpService.class);    
 
     public JsonOperationsHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -49,6 +54,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        log.debug("doGet(type='{}', name='{}', data='{}')", type, name, data);
         Locale locale = request.locale;
         int id = request.id;
         ObjectNode result;
@@ -93,6 +99,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        log.debug("doPost(type='{}', name='{}', data='{}')", type, name, data);
         Locale locale = request.locale;
         int id = request.id;
         String newName = name;
@@ -134,6 +141,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     @Override
     public JsonNode doPut(String type, String name, JsonNode data, JsonRequest request)
             throws JsonException {
+        log.debug("doPut(type='{}', name='{}', data='{}')", type, name, data);
         Locale locale = request.locale;
         int id = request.id;
         switch (type) {
@@ -234,6 +242,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doGetList(String type, JsonNode data, JsonRequest request) throws JsonException {
+        log.debug("doGetList(type='{}', data='{}')", type, data);
         Locale locale = request.locale;
         int id = request.id;
         switch (type) {
@@ -263,6 +272,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     @Override
     public void doDelete(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        log.debug("doDelete(type='{}', name='{}', data='{}')", type, name, data);
         Locale locale = request.locale;
         int id = request.id;
         String token = data.path(FORCE_DELETE).asText();
