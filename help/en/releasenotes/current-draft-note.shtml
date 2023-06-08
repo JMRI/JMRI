@@ -673,4 +673,5 @@
             <li>The JOAL library has been updated to run natively on Apple Silicon machines.
             <li>The JInput library has been updated to run natively on Apple Silicon machines.
             <li>Added a new jmri.util.swing.CountingBusyDialog utility class.
+            <li>Fixed the XML Schema for IdTags
         </ul>
