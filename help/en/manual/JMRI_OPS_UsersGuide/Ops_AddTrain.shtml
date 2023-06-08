@@ -42,8 +42,7 @@
 
         <p><strong>Name</strong> <input name="textfield" id="textfield" type="text">
         <strong>Description</strong> <input name="textfield2" id="textfield2" type="text"><br>
-        type in a Train Name and optional description, then press <input name="button" id="button"
-        value="Add Train" type="submit">.</p>
+        type in a Train Name and optional description, then press <span class="textbutton">Add Train</span> .</p>
 
         <p>Both will show up on the train's Manifest. The Train's name will also show up on the
         Train Icon, so short names work best.</p>
@@ -64,7 +63,7 @@
                   </option>
                 </select> Route that this Train will travel.</p>
 
-                <p>Clicking on <input name="button2" id="button2" value="Edit" type="submit"> to
+                <p>Clicking on <span class="textbutton">Edit</span> to
                 the right of the Route allows you to <a href="Ops_AddRoutes.shtml"><strong>directly
                 edit</strong></a> the selected Route. Once a Route is selected a list of Locations
                 that the Train will visit should appear. You can deselect any Location that you
@@ -144,18 +143,17 @@
           </tbody>
         </table>
 
-        <p><input name="button7" id="button7" value="Reset Train" type="submit"> allows you to
+        <p><span class="textbutton">Reset Train</span> allows you to
         remove Locomotives and Cars that have been assigned to a Train. This may be useful when you
         want to try various build options and don't what to physically move locomotive and cars on
         the layout.</p>
 
-        <p>Press <input name="button8" id="button8" value="Save Train" type="submit"> to save your
-        Train. The program will create a file (OperationsTrainRoster.xml) in your JMRI directory in
+        <p>Press <span class="textbutton">Save Train</span> to save your Train.
+        The program will create a file (OperationsTrainRoster.xml) in your JMRI directory in
         a folder called "operations". A backup file with the last settings for all of your trains
-        is also created each time the <input name="button9" id="button9" value="Save Train" type=
-        "submit"> is pressed.</p>
+        is also created each time the <span class="textbutton">Save Train</span> button is pressed.</p>
 
-        <p>Note that the Train is now shown in the<a href="Ops_Trains.shtml">Trains</a> window.</p>
+        <p>Note that the Train is now shown in the <a href="Ops_Trains.shtml">Trains</a> window.</p>
 
         <h3>Add Train menu</h3>
 
