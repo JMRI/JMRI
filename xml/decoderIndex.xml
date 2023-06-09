@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.3.6plus+jake+20230523T1559Z+R5afdd11663 on Tue May 23 12:00:00 EDT 2023-->
-  <decoderIndex version="25">
+  <!--Written by JMRI version 5.3.6plus+jake+20230609T1838Z+R7b59bf42db on Fri Jun 09 14:39:35 EDT 2023-->
+  <decoderIndex version="29">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -9185,7 +9185,7 @@
           <!-- Anfahren/Bremsen -->
         </model>
       </family>
-      <family name="PIKO SmartDecoder XP5.1" mfg="PIKO" lowVersionID="1" highVersionID="15" file="Piko_SmartDecoder_XP5.1_Sound.xml">
+      <family name="PIKO SmartDecoder XP5.1" mfg="PIKO" lowVersionID="2" highVersionID="15" file="Piko_SmartDecoder_XP5.1_Sound.xml">
         <!-- to be checked by hardware owner -->
         <model model="PIKO46550-18" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5">
           <output name="1" label="F0(f)" />
@@ -24416,6 +24416,70 @@
           <output name="2" label="Yellow" />
           <output name="1" label="Green" />
           <output name="2" label="Violet" />
+        </model>
+      </family>
+      <family name="MN Non-Sound (version 4+)" mfg="Zimo" file="Zimo_MN_small_v4.xml">
+        <model model="MN170 version 4+" lowVersionID="4" highVersionID="42" numOuts="8" numFns="14" productID="124">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MN180N18 version 4+" lowVersionID="4" highVersionID="42" numOuts="6" numFns="14" productID="127">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+        </model>
+        <model model="MN300 version 4+" lowVersionID="4" highVersionID="41" numOuts="8" numFns="14" productID="125">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MN330 version 4+" lowVersionID="4" highVersionID="41" numOuts="12" numFns="14" productID="126">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <output name="11" label="FO 9 (+5V)" />
+          <output name="12" label="FO 10 (+5V)" />
+        </model>
+        <model model="MN340C version 4+" lowVersionID="4" highVersionID="41" numOuts="6" numFns="14" productID="123">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+        </model>
+        <model model="MN340D version 4+" lowVersionID="4" highVersionID="41" numOuts="10" numFns="14" productID="123">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7 (+5V)" />
+          <output name="10" label="FO 8 (+5V)" />
         </model>
       </family>
       <family name="MS Sound (version 4+)" mfg="Zimo" file="Zimo_MS_small_v4.xml">
