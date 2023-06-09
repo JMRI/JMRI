@@ -94,7 +94,7 @@
           <p>Look in the "xml/samples" directory within JMRI for a file called
           "ReporterIconExample.xml".</p>
 
-          <p>(It's also available <a href="https://jmri.org/xml/samples/ReporterIconExample.xml">on
+          <p>(It's also available <a href="https://www.jmri.org/xml/samples/ReporterIconExample.xml">on
           the web</a> but many browsers will try to interpret it instead of showing you the text;
           your browser's "View Source" option might help with that)</p>
 

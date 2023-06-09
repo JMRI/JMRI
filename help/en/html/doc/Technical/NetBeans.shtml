@@ -125,21 +125,21 @@
 
       <p>Apache NetBeans is a very powerful Integrated Development Environment (IDE), which
       can make working with the JMRI code pretty easy. But it takes a little getting used
-      to, and reading the <a href="https://netbeans.apache.org/help">tutorials</a> will be
+      to, and reading the <a href="https://netbeans.apache.org/help/">tutorials</a> will be
       helpful.</p>
 
     <h2 id="installation">Installation</h2>
 
       <ol>
         <li>
-          <p>Download and install a Java 11 or newer <a href="https://adoptopenjdk.net">Java
+          <p>Download and install a Java 11 or newer <a href="https://adoptium.net/">Java
           Development Kit (JDK)</a> (It is recommended to use a package manager if possible
           to ensure security updates can be automatically installed)</p>
         </li>
 
         <li>
           <p>Download Apache NetBeans from <a href=
-          "http://netbeans.apache.org/download">netbeans.apache.org</a> (It is recommended
+          "https://netbeans.apache.org/download/">netbeans.apache.org</a> (It is recommended
           to use a package manager if possible to ensure security updates can be
           automatically installed)</p>
         </li>
@@ -185,7 +185,7 @@
     <p>As a first step, as JMRI has adopted <code>LF</code> as a convention for
     Line Endings, it is required to set the <code>core.autocrlf</code> setting
     to <code>true</code> (see <a href=
-    "https://help.github.com/articles/dealing-with-line-endings">"Dealing with
+    "https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings">"Dealing with
     line endings" on GitHub Help)</a></p>
 
     <p class="important">You <strong>must</strong> install and configure the <a href=
@@ -283,7 +283,7 @@
       <p>Once set up, Apache NetBeans provides built-in support for using Git.</p>
 
       <p>For more information on Git and Apache NetBeans, see the <a href=
-      "https://netbeans.org/kb/docs/ide/git.html">NetBeans Git help page</a></p>
+      "https://netbeans.apache.org/kb/docs/ide/git.html">NetBeans Git help page</a></p>
 
     <h3 id="checking_out_code">Checking out code</h3>
 
@@ -340,9 +340,9 @@
 
         <li>
           <p>Tell GitHub to <a href=
-          "https://help.github.com/articles/fork-a-repo/">"fork" JMRI&rsquo;s repository</a>
+          "https://docs.github.com/en/get-started/quickstart/fork-a-repo">"fork" JMRI&rsquo;s repository</a>
           into one of your own. There&rsquo;s a <a href=
-          "https://help.github.com/articles/fork-a-repo/">good help page</a>, but
+          "https://docs.github.com/en/get-started/quickstart/fork-a-repo">good help page</a>, but
           basically you go to the <a href="https://github.com/JMRI/JMRI">JMRI repository
           page</a> and click the "fork" button in the upper right.</p>
         </li>
@@ -533,7 +533,7 @@
         <p>It is possible for Apache NetBeans users to create a release package for use on
         the Windows platform. This requires installation of the Nullsoft Scriptable Install
         System (NSIS), which can be downloaded from <a href=
-        "http://sourceforge.net/projects/nsis">the NSIS project website</a> on
+        "https://sourceforge.net/projects/nsis/">the NSIS project website</a> on
         SourceForge.</p>
 
         <p>Once NSIS is installed on the computer, it is necessary to create a file called
@@ -559,7 +559,7 @@
 
         <p>Apache NetBeans has nice tools for working with XML files, including editing and
         validating them. JMRI uses XInclude to include XML fragments in other XML files via
-        URLs to <a href="https://jmri.org/xml">the JMRI website</a>. JMRI programs convert
+        URLs to <a href="https://www.jmri.org/xml">the JMRI website</a>. JMRI programs convert
         these at run time to local file references; however Apache NetBeans must be
         configured to do this if you want to edit JMRI XML files while offline.</p>
 

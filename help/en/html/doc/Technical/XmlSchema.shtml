@@ -289,7 +289,7 @@ we can certainly switch to it.
       &lt;/xs:appinfo&gt; &lt;/xs:annotation&gt;</code>
       <h3>The Venetian Blinds Pattern</h3>
       We are moving toward structuring our XML using the "<a href=
-      "http://www.xfront.com/GlobalVersusLocal.html#ThirdDesignCharacteristics">Venetian Blinds
+      "https://www.xfront.com/GlobalVersusLocal.html#ThirdDesignCharacteristics">Venetian Blinds
       pattern</a>". In this style, the top level elements that are written by classes have types
       defined for them. Any elements that are within those are defined anonymously, within those
       elements. For an example of this, see the <a href=

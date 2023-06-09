@@ -17,7 +17,7 @@
 
       <h1>JMRI Setup: Sharing Files with GitHub</h1>
 
-      <p><a href="https://www.github.com">GitHub</a> is a free service that lets you share files
+      <p><a href="https://github.com">GitHub</a> is a free service that lets you share files
       between multiple computers across a network by storing a common copy in a Git repository.
       After you've signed up with GitHub and configured your local machine(s), you can configure
       JMRI to use it to share Rosters, layout configuration files and other information between
