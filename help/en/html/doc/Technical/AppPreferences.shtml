@@ -74,7 +74,7 @@
 
       <p>The settings directory is per user account on a single computer.</p>
 
-      <p>There's more information on the <a href="https:ProfileFileStructure.shtml">Profile File
+      <p>There's more information on the <a href="ProfileFileStructure.shtml">Profile File
       Structure page</a>.</p>
 
       <h1 id="preference-formats">Preference Formats</h1>
@@ -91,7 +91,7 @@
 
       <p>A manager for preferences using either of these files manages a type of preference, for
       example, connection configurations or table state. The manager uses the methods in <a href=
-      "http://www.jmri.org/JavaDoc/doc/jmri/profile/AuxiliaryConfiguration.html">AuxiliaryConfiguration</a>
+      "https://www.jmri.org/JavaDoc/doc/jmri/profile/AuxiliaryConfiguration.html">AuxiliaryConfiguration</a>
       to get, put, or remove these XML elements. These methods all require the Element or the
       Element's name and if the Element is shared or private.</p>
 
@@ -153,14 +153,14 @@
       <p>Direct access to the preferences files outlined above is strongly discouraged, as direct
       access could result in one preferences manager overwriting another manager's preferences. Use
       the methods in <a href=
-      "http://www.jmri.org/JavaDoc/doc/jmri/profile/ProfileUtils.html">ProfileUtils</a> to access
+      "https://www.jmri.org/JavaDoc/doc/jmri/profile/ProfileUtils.html">ProfileUtils</a> to access
       the AuxiliaryConfiguration and Java Preferences for a single Profile or the application
       settings (pass null for the profile to get application settings).</p>
 
       <h1 id="preferences-managers">Preferences Managers</h1>
 
       <p><a href=
-      "http://www.jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferenceManagers</a> are
+      "https://www.jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferenceManagers</a> are
       the primary handlers of preference retrieval and storage in JMRI applications.</p>
 
       <p>The JMRI library has a number of Preferences Managers. These managers all provide an
@@ -169,7 +169,7 @@
       "https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">ServiceLoader
       API</a> to create an instance of every preferences manager (this allows third-party JARs to
       implement preferences managers; see the ServiceLoader API docs for details on how this works
-      and the <a href="https://jmri.org/JavaDoc/doc/jmri/spi/package-summary.html">jmri.spi API
+      and the <a href="https://www.jmri.org/JavaDoc/doc/jmri/spi/package-summary.html">jmri.spi API
       docs</a> for details of how JMRI meets the ServiceLoader API requirements).</p>
 
       <p>Because the mechanism by which preferences managers are discovered has no deterministic
@@ -180,7 +180,7 @@
       <h1 id="preferences-panels">Preferences Panels</h1>
 
       <p><a href=
-      "http://www.jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencePanels</a> are
+      "https://www.jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencePanels</a> are
       the user interface for interacting with Preferences Managers within the Preferences window of
       a JMRI application.</p>
 
@@ -201,13 +201,13 @@
       <ul>
         <li>
           <strong><a href=
-          "https://jmri.org/jython/PreferencesExamples.py">PreferencesExamples.py</a></strong> -
+          "https://www.jmri.org/jython/PreferencesExamples.py">PreferencesExamples.py</a></strong> -
           Jython sample code that also demonstrates using another Jython script (<a href=
-          "https://jmri.org/jython/preferences.py">preferences.py</a>) within a script
+          "https://www.jmri.org/jython/preferences.py">preferences.py</a>) within a script
         </li>
 
         <li><strong><a href=
-        "https://jmri.org/jython/zeroconf-preferences.js">zeroconf-preferences.js</a></strong> -
+        "https://www.jmri.org/jython/zeroconf-preferences.js">zeroconf-preferences.js</a></strong> -
         Working JavaScript or ECMAScript script that controls some ZeroConf network
         preferences</li>
       </ul>

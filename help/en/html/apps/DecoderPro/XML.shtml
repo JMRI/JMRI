@@ -77,7 +77,7 @@
       <h2>XML files</h2>
 
       <p>The definitive version of the data is in XML files. These can be obtained from any JMRI
-      distribution, or via the web at <a href="https://jmri.org/xml">https://jmri.org/xml</a>.</p>
+      distribution, or via the web at <a href="https://www.jmri.org/xml">https://www.jmri.org/xml</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- close #mainContent -->
