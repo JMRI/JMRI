@@ -327,7 +327,7 @@ If you're developing any additional (post-5.3.7) changes that you want in the JM
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 5.3.7 release name at the top. Enter the 5.1.6 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 5.3.7 release name at the top. Enter the 5.3.6 most recent release at the bottom.  Click "OK"
 
 - Update
 
@@ -486,10 +486,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.3.7+R7bfd8a5c79.dmg](https://github.com/JMRI/JMRI/releases/download/v5.3.7/JMRI.5.3.7+R7bfd8a5c79.dmg) | 39d57dd1a76e5273cc5d256004a9029d8ea25a66a7b348e47231066f7a3df655
-[JMRI.5.3.7+R7bfd8a5c79.exe](https://github.com/JMRI/JMRI/releases/download/v5.3.7/JMRI.5.3.7+R7bfd8a5c79.exe) | 02db0a0ed29e025dae8ad1f586b6ded50c4d18fe12535e05808d1237356a814e
-[JMRI.5.3.7+R7bfd8a5c79.tgz](https://github.com/JMRI/JMRI/releases/download/v5.3.7/JMRI.5.3.7+R7bfd8a5c79.tgz) | ade44742980b90abb7767f0746a0047fcd182717afc126f8d4c02fc91146e585
-
+[JMRI.5.3.7+Rdeb1a36dce.dmg](https://github.com/JMRI/JMRI/releases/download/v5.3.7/JMRI.5.3.7+Rdeb1a36dce.dmg) | f7319b2f8a83427275886dafc3db2dee17d3f0a2c859c127e4afe31d0a0aec35
+[JMRI.5.3.7+Rdeb1a36dce.exe](https://github.com/JMRI/JMRI/releases/download/v5.3.7/JMRI.5.3.7+Rdeb1a36dce.exe) | 7343dd189cafd2e6e8f0fa6e4d14e7183b7b8cd3fcf4fada87f985ffc70db410
+[JMRI.5.3.7+Rdeb1a36dce.tgz](https://github.com/JMRI/JMRI/releases/download/v5.3.7/JMRI.5.3.7+Rdeb1a36dce.tgz) | 2bde86d05323097fa72af2cd1309b53f4a6b1da60b9c46691810ebbf2d941715
 
 ```
 
