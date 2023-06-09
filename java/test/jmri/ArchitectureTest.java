@@ -397,8 +397,15 @@ public class ArchitectureTest {
     @Test
     public void testHelpFileNamesUseShtml(){
         String path = FileUtil.getExternalFilename(FileUtil.PROGRAM + "help");
+
+        // allow
+        // local/index.html
+        // local/stub_template.html
+        // /local/stub/
+
         String[] allowList = {"local"+File.separator+ "index.html",
-            "local"+File.separator+ "stub_template.html"};
+            "local"+File.separator+ "stub_template.html",
+            File.separator + "local" + File.separator + "stub" + File.separator };
         recursivelyCheckFiles(new File(path), allowList, ".html");
     }
 
