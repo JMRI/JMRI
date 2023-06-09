@@ -1,16 +1,9 @@
 
     <!-- contains new warnings for the release under development -->
-    <li>The definition of "Last Seen" for Id Tags has been
-        clarified to mean "Location where the tag was last seen to be <u>present</u>".
-        Previously, a report that a tag was <u>absent</u> could be remembered as the
-        last seen report.  The relevant code changes are specific to LocoNet
-        Reporters. This might affect your scripts and LogixNG if you were assuming
-        the prior behavior.
-        </li>
-    <li>Some Reporters, particularly LocoNet, would improperly clear an "enter" report
-        when an "exits" report for the same tag was seen elsewhere.  This was an
-        error that has been fixed, but if you have scripts or LogixNG that depend on
-        this behavior you might have to update them.
+    <li>
+        None yet
+    </li>
+    <li>
     </li>
     <li>
     </li>
