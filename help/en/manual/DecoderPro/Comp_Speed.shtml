@@ -10,31 +10,9 @@
     .dp-ctr {
       text-align: center;
     }
-
-    .dp-mid {
-      text-align: middle;
-    }
-
     .dp-right {
       text-align: right;
     }
-
-    .dp-none {
-      list-style-type: none;
-    }
-
-    .dp-sq {
-      list-style-type: square;
-    }
-
-    .dp-ua {
-      list-style-type: upper-alpha
-    }
-
-    .dp-la {
-      list-style-type: lower-alpha
-    }
-
   </style>
 </head>
 <body>

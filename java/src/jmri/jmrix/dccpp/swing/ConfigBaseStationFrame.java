@@ -379,6 +379,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                 _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.SENSOR_CMD)), null); 
                 _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.TURNOUT_CMD)), null); 
                 _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.OUTPUT_CMD)), null); 
+                _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), null); 
             }
         });
         mSend.add(iRequestDefs);
@@ -418,6 +419,15 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             }
         });
         mSend.add(iReadLocoId);
+
+        JMenuItem iTrackManagerCmd = new JMenuItem(Bundle.getMessage("TrackManagerCmd"));       
+        iTrackManagerCmd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                _tc.sendDCCppMessage(DCCppMessage.makeTrackManagerRequestMsg(), null); 
+            }
+        });
+        mSend.add(iTrackManagerCmd);
 
         this.getJMenuBar().add(mSend);
 

@@ -43,6 +43,10 @@
       <p>Each train has its own text file, but they can coordinate actions by using JMRI sensors,
       etc.</p>
 
+      <p class="noted">Note: The JMRI <strong><em>preference:</em></strong> keyword refers to the
+      user files location. See <strong>Help &rArr; File Locations</strong> to see the current path
+      for the user files location.</p>
+
       <h2>Using YAAT</h2>
 
       <p>YAAT works by referencing JMRI objects, such as turnouts, sensors, etc. This means that
@@ -55,7 +59,34 @@
 
       <p>Since the <strong>YetAnotherAutoTrain.py</strong> script needs to be modified, the script
       should be copied from the JMRI install location to the user files location. See <strong>Help
-      &rArr; Locations</strong>.</p>
+      &rArr; File Locations</strong>.</p>
+
+      <div class="noted">
+        <h3>YAAT 3.0 &mdash; YetAnotherAutoTrain3.py</h3>
+
+        <p>The process for managing train definitions has been changed so that the script does not
+        need to be manually changed.  The script can be run from the standard JMRI install location.</p>
+
+        <p>The script options are stored in the <strong>preference:yaat/config.txt</strong> file. If
+        the file does not exist, a file will be created with a default set of options.</p>
+
+        <p>The train definition text files are also stored in the <strong>preference:/yaat</strong>
+        directory.</p>
+
+        <p>When the script is started, the train text file names listed in the
+        <strong>preference:/yaat/LoadTrains.txt</strong> file will be loaded.  Each line in the file
+        is a single file name, such as <strong>Back and Forth.txt</strong>.  Train file names not
+        listed in the <strong>LoadTrains.txt</strong> can be loaded on demand using the memory
+        variable specified by the <strong>yaatMemory</strong> option.</p>
+
+        <p>The support for embedded train definitions has been removed.</p>
+
+        <p>The support for custom extensions has been removed.</p>
+
+        <p>The detail comments in the script have been removed.  The script was approaching the JMRI
+        limit on script file size. The content was previously moved to this help page.</p>
+
+      </div>
 
       <h3>Global Settings</h3>
 
@@ -82,10 +113,19 @@
           If set to True, the train compiles will be retained. See <a href="#CompTrains">Compiled
           Trains</a>.
         </dd>
+
+        <dt>yaatMemory<span class="since">since YAAT 3.0</span></dt>
+
+        <dd>
+          Optional memory variable that contains a filename for starting a train.  This makes it
+          possible to start a train using Logix, LogixNG, scripting or even a YAAT train using
+          the <strong><em>Set &lt;memory name&gt; to &lt;value&gt;</em></strong> YAAT action.
+        </dd>
       </dl>
 
       <h3>Trains</h3>
 
+      <p class="noted">The following applies to YAAT 2.3 and below.  See above for YAAT 3 changes.</p>
       <p>Each train needs a set of actions. The orignal design had the actions included in the
       script file. That feature will be removed in a future release.</p>
 
@@ -137,8 +177,14 @@
         <dt>Assign &lt;long | short&gt; address &lt;dccaddr&gt;[ as &lt;train name&gt;[ in
         &lt;block name&gt;]]</dt>
 
-        <dd>Create a JMRI throttle using the DCC addresss. If a block name is supplied, the
+        <dd>Create a JMRI throttle using the DCC address. If a block name is supplied, the
         optional train name will be used for block tracking.</dd>
+
+        <dt>Halt<span class="since">since YAAT 3.0</span></dt>
+
+        <dd>Do an unconditional stop of the train.  Prior to doing the <strong>Halt</strong> action,
+        the throttle speed should be set to zero and the throttle should be released.  This is
+        generally used when starting another train using the <strong>Set memory</strong> action.</dd>
 
         <dt>Loop</dt>
 
@@ -149,6 +195,11 @@
 
         <dd>Display a message in the script output window or the system console log. Useful for
         debugging.</dd>
+
+        <dt>Release throttle<span class="since">since YAAT 3.0</span></dt>
+
+        <dd>Normally the throttle is released by the Stop action.  This action can be used when
+        preparing to chain train definitions.</dd>
 
         <dt>Repeat if sensor &lt;sensor name&gt; is &lt;active | inactive&gt;</dt>
 
@@ -170,6 +221,11 @@
         than zero, the opposite action will be performed after the number of seconds has
         passed.</dd>
 
+        <dt>Set memory &lt;memory name&gt; to &lt;value&gt;<span class="since">since YAAT 3.0</span></dt>
+
+        <dd>Set the memory value to a constant.  By setting the memory variable to a YAAT train
+        definition, it is possible to chain YAAT trains.</dd>
+
         <dt>Set route &lt;route name&gt;</dt>
 
         <dt>Set sensor &lt;sensor name&gt; &lt;active | inactive&gt;</dt>
@@ -184,7 +240,8 @@
         and greater than zero, a wait allows the turnout command to complete, capacitors to
         recharge, etc.</dd>
 
-        <dt>Set turntable &lt;turntable name&gt; on panel &lt;panel name&gt; to ray &lt;#&gt;</dt>
+        <dt>Set turntable &lt;turntable name&gt; on panel &lt;panel name&gt; to ray &lt;#&gt;
+        <span class="since">since YAAT 2.3</span></dt>
 
         <dd>Set the turntable position to the ray index using the <code>setPosition(int)</code>
         method.  The turntable name is the internal name on the layout editor panel, such as
@@ -319,8 +376,8 @@
       <p>Click on the <strong>Load YAAT</strong> button to start the process. After several seconds
       the button label will change to <strong>Running</strong>. Click on the
       <strong>Paused</strong> button to start a train. The button label will change to
-      <strong>Run</strong>. Cllcking again will pause the train when it finishes a loop. Click on
-      <strong>Stop</strong> to terimnate the train and remove it from the system.</p>
+      <strong>Run</strong>. Clicking again will pause the train when it finishes a loop. Click on
+      <strong>Stop</strong> to terminate the train and remove it from the system.</p>
 
       <p>The <strong>Stop Threads</strong> button will terminate all trains immediately. Active
       trains might continue running at the last throttle setting.</p>
@@ -329,20 +386,21 @@
 
       <h3 id="CompTrains">Compiled Trains</h3>
 
-      <p>The standard YAAT process compiles each train from its text file or from the embedded
-      content. THe result of the compile process is a set of tokens that are interpreted while the
-      train is running. The duration of the compile step depends on the number of trains and the
-      number of actions.</p>
+      <p>The standard YAAT process compiles each train from its text file. The result of the compile
+      process is a set of tokens that are interpreted while the train is running. The duration of
+      the compile step depends on the number of trains and the number of actions.</p>
 
       <p>If the <strong>saveYAATcompiles</strong> option is true, a compiled train will be used
       instead of doing the compile step.</p>
 
-      <p>A compiled train is located at the preference:yaatp/&lt;trainname&gt; directory. When YAAT
-      is started, the date/time for each train source file is checked. If it is greater than the
-      compiled train, if any, the compile will occur. Otherwise the compiled version will be
-      loaded. Embedded trains are always compiled.</p>
+      <p>A compiled train is located in the <strong>preference:yaatp/&lt;trainname&gt;</strong>
+      directory. When YAAT is started, the date/time for each train source file is checked when it
+      is loaded. If it is greater than the compiled train, if any, the compile will occur. Otherwise
+      the compiled version will be loaded.</p>
 
       <h3>Custom Extensions</h3>
+
+      <p class="noted">This feature has been removed from YAAT 3.0.</p>
 
       <p>An extension is a separate Python file that contains additional actions.</p>
 

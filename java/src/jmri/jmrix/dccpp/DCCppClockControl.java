@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ public class DCCppClockControl extends DefaultClockControl implements DCCppListe
     DCCppSystemConnectionMemo _memo = null;
     DCCppTrafficController _tc = null;
     Timebase timebase;
+    Calendar _cal;    
     java.beans.PropertyChangeListener minuteChangeListener;
     boolean isRunning; //track clock's pause state (Note: timebase.isRun() is updated too late) 
     final static long MSECPERHOUR = 3600000;
@@ -35,6 +37,7 @@ public class DCCppClockControl extends DefaultClockControl implements DCCppListe
         _memo = memo;
         _tc = _memo.getDCCppTrafficController();
         _tc.addDCCppListener(DCCppInterface.CS_INFO, this);
+        _cal = Calendar.getInstance();
 
         timebase = InstanceManager.getNullableDefault(jmri.Timebase.class);
         if (timebase == null) {
@@ -67,13 +70,12 @@ public class DCCppClockControl extends DefaultClockControl implements DCCppListe
      *   send rate of zero if clock is not running
      *   Note: fastclock rate and time are in a single message
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void setRate(double newRate) {
         log.trace("setRate({})", (int)newRate); // NOI18N
         if (timebase.getInternalMaster() && timebase.getSynchronize()) {
-            Date currentTimestamp = timebase.getTime();
-            int minutes = currentTimestamp.getHours()*60+currentTimestamp.getMinutes();
+            _cal.setTime(timebase.getTime());
+            int minutes = _cal.get(Calendar.HOUR)*60+_cal.get(Calendar.MINUTE);
             if (!isRunning) newRate = 0; //send rate of zero if clock is not running                
             _tc.sendDCCppMessage(DCCppMessage.makeClockSetMsg(minutes, (int)newRate), null);
         }
@@ -99,8 +101,8 @@ public class DCCppClockControl extends DefaultClockControl implements DCCppListe
     public void setTime(Date newTimestamp) {
         log.trace("setTime({})", newTimestamp); // NOI18N
         if (timebase.getInternalMaster() && timebase.getSynchronize()) {
-            @SuppressWarnings("deprecation")
-            int minutes = newTimestamp.getHours()*60+newTimestamp.getMinutes();
+            _cal.setTime(newTimestamp);
+            int minutes = _cal.get(Calendar.HOUR)*60+_cal.get(Calendar.MINUTE);
             _tc.sendDCCppMessage(DCCppMessage.makeClockSetMsg(minutes, (int)timebase.getRate()), null);
         }
         return;
