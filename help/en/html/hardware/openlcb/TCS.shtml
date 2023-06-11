@@ -32,19 +32,25 @@
             <span class="since">Since <a href="jmri5.3.4.shtml">JMRI 5.3.4</a></span>
 
             To copy the function labels from a DecoderPro
-            roster entry to the CS-105 command station for use
-            on UWT-100 throttles:
+            roster entry to the corresponding locomotive entry in the CS-105 command station
+            for use with UWT-100 throttles:
             <ul>
-                <li>Open the DecoderPro roster entry.
-                <li>In the File -> Export... menu, select "Roster Entry to TCS CS-105"
+                <li>Open the DecoderPro roster entry from which you want to transfer
+                    the function labels.  This must have the same DCC address as the
+                    entry in the CS-105. If you don't yet have a roster entry for the locomotive,
+                    you should create one and fill out its function labels and DCC address.
+                <li>In the File -> Export... menu on the roster entry, select "Roster Entry to TCS CS-105"
                 <li>Wait for the completion dialog.
             </ul>
 
-            To copy the function labels from a CS-105 command
-            station to a DecoderPro roster entry:
+            To copy the function labels from locomotive entry in a CS-105 command
+            station to the corresponding DecoderPro roster entry:
             <ul>
                 <li>Open the corresponding DecoderPro roster entry.
-                <li>In the File -> Import... menu, select "TCS CS-105 Roster Entry"
+                    This must have the same DCC address as the
+                    entry in the CS-105. If you don't yet have a roster entry for the locomotive,
+                    you should create one and fill out its DCC address.
+                <li>In the File -> Import... menu on the roster entry, select "TCS CS-105 Roster Entry"
                 <li>Wait for the completion dialog.
                 <li>Save your DecoderPro roster entry.
             </ul>
