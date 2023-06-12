@@ -579,24 +579,33 @@ public class JsonOperationsHttpService extends JsonHttpService {
         // make changes that can throw an exception first
         JsonNode node = data.path(LOCATION);
         if (!node.isMissingNode()) {
-            Location location = locationManager().getLocationById(node.path(NAME).asText());
-            if (location != null) {
-                String trackId = node.path(TRACK).path(NAME).asText();
-                Track track = location.getTrackById(trackId);
-                if (trackId.isEmpty() || track != null) {
-                    if (!rs.setLocation(location, track).equals(Track.OKAY)) {
-                        throw new JsonException(HttpServletResponse.SC_CONFLICT,
-                                Bundle.getMessage(locale, "ErrorMovingCar",
-                                        rs.getId(), LOCATION, location.getId(), trackId),
-                                id);
+            if (!node.isNull()) {
+                //move car to new location and track
+                Location location = locationManager().getLocationById(node.path(NAME).asText());
+                if (location != null) {
+                    String trackId = node.path(TRACK).path(NAME).asText();
+                    Track track = location.getTrackById(trackId);
+                    if (trackId.isEmpty() || track != null) {
+                        if (!rs.setLocation(location, track).equals(Track.OKAY)) {
+                            throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                                    Bundle.getMessage(locale, "ErrorMovingCar",
+                                            rs.getId(), LOCATION, location.getId(), trackId), id);
+                        }
+                    } else {
+                        throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                                Bundle.getMessage(locale, "ErrorNotFound", TRACK, trackId), id);
                     }
                 } else {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(locale, "ErrorNotFound", TRACK, trackId), id);
+                            Bundle.getMessage(locale, "ErrorNotFound", LOCATION, node.path(NAME).asText()), id);
                 }
-            } else {
-                throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                        Bundle.getMessage(locale, "ErrorNotFound", LOCATION, node.path(NAME).asText()), id);
+            } else { 
+                //if new location is null, remove car from current location
+                if (!rs.setLocation(null, null).equals(Track.OKAY)) {
+                    throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                            Bundle.getMessage(locale, "ErrorMovingCar",
+                                    rs.getId(), LOCATION, null, null), id);
+                }                
             }
         }
         node = data.path(DESTINATION);

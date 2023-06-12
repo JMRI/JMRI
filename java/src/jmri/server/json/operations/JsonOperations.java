@@ -139,6 +139,10 @@ public class JsonOperations {
      * {@value #OUT_OF_SERVICE}
      */
     public static final String OUT_OF_SERVICE = "outOfService"; // NOI18N
+    /**
+     * {@value #NULL}
+     */
+    public static final String NULL = "null"; // NOI18N
 
     /**
      * Prevent instantiation, since this class only contains static values
