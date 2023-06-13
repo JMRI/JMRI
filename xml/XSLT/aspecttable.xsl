@@ -63,7 +63,7 @@
 <xsl:apply-templates select='aspecttable' />
 
 <hr/>
-This page was produced by <a href="http://jmri.org">JMRI</a>.
+This page was produced by <a href="https://www.jmri.org">JMRI</a>.
 <p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
 <p/>JMRI, DecoderPro, PanelPro, SoundPro, SignalPro, DispatcherPro and associated logos are our trademarks.
 <p/><a href="https://www.jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>

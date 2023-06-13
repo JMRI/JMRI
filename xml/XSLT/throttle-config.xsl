@@ -51,7 +51,7 @@
         <xsl:apply-templates/>
         <br/>
         <hr/>
-This page was produced by <a href="http://jmri.org">JMRI</a>.
+This page was produced by <a href="https://www.jmri.org">JMRI</a>.
 <p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear"/> JMRI Community.
 <p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <p/>
