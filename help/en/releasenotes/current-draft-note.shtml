@@ -121,7 +121,10 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fix some minor bugs in DecoderPro's exporting of roster entries
+                    to the CS-105 command station and to backup files.</li>
+                <li>Improved instructions for DecoderPro's import from and
+                    export to TCS CS-105 command stations.</li>
             </ul>
 
         <h4>Powerline</h4>
