@@ -579,7 +579,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         // make changes that can throw an exception first
         JsonNode node = data.path(LOCATION);
         if (!node.isMissingNode()) {
-            if (!node.isNull()) {
+            // if (!node.isNull()) {
                 //move car to new location and track
                 Location location = locationManager().getLocationById(node.path(NAME).asText());
                 if (location != null) {
@@ -599,13 +599,28 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(locale, "ErrorNotFound", LOCATION, node.path(NAME).asText()), id);
                 }
-            } else { 
+            // } else { 
                 //if new location is null, remove car from current location
-                if (!rs.setLocation(null, null).equals(Track.OKAY)) {
-                    throw new JsonException(HttpServletResponse.SC_CONFLICT,
-                            Bundle.getMessage(locale, "ErrorMovingCar",
-                                    rs.getId(), LOCATION, null, null), id);
-                }                
+                // if (!rs.setLocation(null, null).equals(Track.OKAY)) {
+                //     throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                //             Bundle.getMessage(locale, "ErrorMovingCar",
+                //                     rs.getId(), LOCATION, null, null), id);
+                // }                
+            // }
+        }
+        //handle change in LocationUnknown
+        node = data.path(LOCATION_UNKNOWN);
+        if (!node.isMissingNode()) {
+            if (node.path(TRACK).asBoolean()) {
+                //remove car from train, and clear route info
+                rs.setTrain(null);
+                rs.setRouteLocation(null);
+                rs.setRouteDestination(null);
+                //flag car as LocationUnknown
+                rs.setLocationUnknown(true);
+            } else {
+                //clear LocationUnknown flag
+                rs.setLocationUnknown(false);
             }
         }
         node = data.path(DESTINATION);

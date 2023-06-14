@@ -48,6 +48,10 @@ public class JsonOperations {
      */
     public static final String LOCATION_NAME = "locationName"; // NOI18N
     /**
+     * {@value #LOCATION_UNKNOWN}
+     */
+    public static final String LOCATION_UNKNOWN = "locationUnknown"; // NOI18N
+    /**
      * {@value #TRAIN}
      */
     public static final String TRAIN = "train"; // NOI18N
