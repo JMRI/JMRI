@@ -352,7 +352,7 @@ public class ForEach extends AbstractDigitalAction
 
 
     public enum UserSpecifiedSource {
-        Variable(Bundle.getMessage("ForEach_UserSpecifiedSource_Variable")),
+        Variable(Bundle.getMessage("ForEach_UserSpecifiedSource_LocalVariable")),
         Memory(Bundle.getMessage("ForEach_UserSpecifiedSource_Memory")),
         Formula(Bundle.getMessage("ForEach_UserSpecifiedSource_Formula"));
 
