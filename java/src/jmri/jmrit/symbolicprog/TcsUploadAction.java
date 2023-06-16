@@ -19,15 +19,16 @@ import org.openlcb.NodeID;
 import org.openlcb.cdi.CdiRep;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 /**
- * Action to upload the function labels to a TCS CS-105.
+ * Action to upload the function labels from a roster entry to a TCS CS-105.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
 public class TcsUploadAction extends AbstractAction implements PropertyChangeListener {
 
-    public TcsUploadAction(String actionName, CvTableModel pModel, RosterEntry rosterEntry, PaneProgFrame pParent) {
+    public TcsUploadAction(String actionName, CvTableModel pModel, VariableTableModel vModel, RosterEntry rosterEntry, PaneProgFrame pParent) {
         super(actionName);
         cvTable = pModel;
+        this.vModel = vModel;
         frame = pParent;
         this.rosterEntry = rosterEntry;
     }
@@ -52,6 +53,7 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
     PaneProgFrame frame;
     RosterEntry rosterEntry;
     CvTableModel cvTable;
+    VariableTableModel vModel;
     ConfigRepresentation configRep;
 
     @Override

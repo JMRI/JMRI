@@ -32,7 +32,12 @@ public class TcsImporter {
 
     Properties tcsProperties;
 
-    public TcsImporter(File file) throws IOException {
+    /**
+     * The import process starts upon creation of a TcsImporter
+     * @param file The File object to be read
+     * @param model Variable model used to look up function bits
+     */
+    public TcsImporter(File file, VariableTableModel model) throws IOException {
         tcsProperties = new Properties();
         FileInputStream fileStream = new FileInputStream(file);
         try {

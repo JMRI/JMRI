@@ -18,16 +18,17 @@ import org.openlcb.cdi.CdiRep;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 
 /**
- * Action to download the function labels from a TCS CS-105
+ * Action to download the function labels from a TCS CS-105 to a roster entry
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2023
  * @author Dave Heap Copyright (C) 2015
  */
 public class TcsDownloadAction extends AbstractAction implements PropertyChangeListener {
 
-    public TcsDownloadAction(String actionName, CvTableModel pModel, PaneProgFrame pParent, JLabel pStatus, RosterEntry re) {
+    public TcsDownloadAction(String actionName, CvTableModel pModel, VariableTableModel vModel, PaneProgFrame pParent, JLabel pStatus, RosterEntry re) {
         super(actionName);
         this.cvTable = pModel;
+        this.vModel = vModel;
         this.rosterEntry = re;
         this.frame = pParent;
     }
@@ -52,6 +53,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
     PaneProgFrame frame;
     RosterEntry rosterEntry;
     CvTableModel cvTable;
+    VariableTableModel vModel;
     ConfigRepresentation configRep;
 
     @Override

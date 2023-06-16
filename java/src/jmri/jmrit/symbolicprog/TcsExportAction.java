@@ -25,9 +25,10 @@ import org.slf4j.LoggerFactory;
  */
 public class TcsExportAction extends AbstractAction {
 
-    public TcsExportAction(String actionName, CvTableModel pModel, RosterEntry rosterEntry, PaneProgFrame pParent) {
+    public TcsExportAction(String actionName, CvTableModel mModel, VariableTableModel vModel, RosterEntry rosterEntry, PaneProgFrame pParent) {
         super(actionName);
-        mModel = pModel;
+        this.mModel = mModel;
+        this.vModel = vModel;
         frame = pParent;
         this.rosterEntry = rosterEntry;
     }
@@ -40,6 +41,11 @@ public class TcsExportAction extends AbstractAction {
      * CvTableModel to load
      */
     CvTableModel mModel;
+
+    /**
+     * VariableTableModel to load
+     */
+    VariableTableModel vModel;
 
     @Override
     public void actionPerformed(ActionEvent e) {

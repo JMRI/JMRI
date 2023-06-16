@@ -19,6 +19,8 @@ import org.junit.jupiter.api.*;
  */
 public class TcsImporterTest {
 
+    VariableTableModel model = new VariableTableModel(null, new String[0], null);
+
     public File makeTempFile(String contents) throws IOException {
         // create a file
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
@@ -41,7 +43,7 @@ public class TcsImporterTest {
             "Train.User Description=expected comment";
         File f = makeTempFile(s);
 
-        var importer = new TcsImporter(f);
+        var importer = new TcsImporter(f, model);
 
         var rosterEntry = new RosterEntry("no file");
 
@@ -62,7 +64,7 @@ public class TcsImporterTest {
 
         File f = makeTempFile(s);
 
-        var importer = new TcsImporter(f);
+        var importer = new TcsImporter(f, model);
 
         var rosterEntry = new RosterEntry("no file");
 
@@ -84,7 +86,7 @@ public class TcsImporterTest {
 
         File f = makeTempFile(s);
 
-        var importer = new TcsImporter(f);
+        var importer = new TcsImporter(f, model);
 
         var rosterEntry = new RosterEntry("no file");
 
