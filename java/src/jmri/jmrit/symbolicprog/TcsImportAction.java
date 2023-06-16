@@ -36,7 +36,7 @@ public class TcsImportAction extends GenericImportAction {
     boolean launchImporter(File file, CvTableModel tableModel) {
         try {
             // ctor launches operation
-            var importer = new TcsImporter(file, vModel);
+            var importer = new TcsImporter(file, tableModel, vModel);
             importer.setRosterEntry(rosterEntry);
 
             // now update the GUI from the roster entry

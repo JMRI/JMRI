@@ -19,7 +19,9 @@ import org.junit.jupiter.api.*;
  */
 public class TcsImporterTest {
 
-    VariableTableModel model = new VariableTableModel(null, new String[0], null);
+    javax.swing.JLabel status = new javax.swing.JLabel("");
+    CvTableModel cvModel = new CvTableModel(status, null);
+    VariableTableModel model = new VariableTableModel(status, new String[0], cvModel);
 
     public File makeTempFile(String contents) throws IOException {
         // create a file
@@ -43,7 +45,7 @@ public class TcsImporterTest {
             "Train.User Description=expected comment";
         File f = makeTempFile(s);
 
-        var importer = new TcsImporter(f, model);
+        var importer = new TcsImporter(f, cvModel, model);
 
         var rosterEntry = new RosterEntry("no file");
 
@@ -64,7 +66,7 @@ public class TcsImporterTest {
 
         File f = makeTempFile(s);
 
-        var importer = new TcsImporter(f, model);
+        var importer = new TcsImporter(f, cvModel, model);
 
         var rosterEntry = new RosterEntry("no file");
 
@@ -72,6 +74,10 @@ public class TcsImporterTest {
 
         Assert.assertEquals("Short Horn", rosterEntry.getFunctionLabel(3));
         Assert.assertEquals(false, rosterEntry.getFunctionLockable(3));
+
+        var cv = cvModel.getCvByNumber("21");
+        Assert.assertEquals(0, (cv.getValue() >> 2) & 0x01);
+
     }
 
     @Test
@@ -81,12 +87,12 @@ public class TcsImporterTest {
             "Train.User Description=expected comment\n"
            +"Train.Functions(2).Display=14\n"
            +"Train.Functions(2).Momentary=1\n"
-           +"Train.Functions(2).Consist Behavior=1\n"
+           +"Train.Functions(2).Consist Behavior=0\n"
            +"Train.Functions(2).Description=\n";
 
         File f = makeTempFile(s);
 
-        var importer = new TcsImporter(f, model);
+        var importer = new TcsImporter(f, cvModel, model);
 
         var rosterEntry = new RosterEntry("no file");
 
@@ -94,12 +100,23 @@ public class TcsImporterTest {
 
         Assert.assertEquals("Horn", rosterEntry.getFunctionLabel(3));
         Assert.assertEquals(true, rosterEntry.getFunctionLockable(3));
+
+        var cv = cvModel.getCvByNumber("21");
+        Assert.assertEquals(1, (cv.getValue() >> 2) & 0x01);
     }
 
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+
+        // add the needed CV 21, CV22
+        cvModel.addCV("21", false, false, false);
+        cvModel.addCV("22", false, false, false);
+
+        // add the needed VariableTableModel
+        model.newDecVariableValue("Consist Address Active For F3", "21", "Comment", "XXXXXVXX",
+            false, false, false, false);
     }
 
     @AfterEach

@@ -67,7 +67,7 @@ public class TcsExportAction extends AbstractAction {
             frame.getFnLabelPane().update(rosterEntry);
 
             try ( PrintStream str = new PrintStream(new FileOutputStream(file)); ) {
-                formatTcsVirtualNodeDefinition(str, rosterEntry, mModel);
+                formatTcsVirtualNodeDefinition(str, rosterEntry, mModel, vModel);
             } catch (IOException ex) {
                 log.error("Error writing file", ex);
             }
@@ -82,7 +82,7 @@ public class TcsExportAction extends AbstractAction {
      * @param rosterEntry defines the information to store
      * @param model provides CV contents as available
      */
-    public static void formatTcsVirtualNodeDefinition(PrintStream str, RosterEntry rosterEntry, CvTableModel model) {
+    public static void formatTcsVirtualNodeDefinition(PrintStream str, RosterEntry rosterEntry, CvTableModel model, VariableTableModel vModel) {
         str.println("Train.Name="+rosterEntry.getId());
         str.println("Train.User Description="+rosterEntry.getComment());
         str.println("Train.Address="+rosterEntry.getDccAddress());
@@ -99,7 +99,15 @@ public class TcsExportAction extends AbstractAction {
 
             str.println("Train.Functions("+i+").Display="+displayValue);
             str.println("Train.Functions("+i+").Momentary="+(rosterEntry.getFunctionLockable(i+1) ? "0" : "1")); // Momentary == not locking
-            str.println("Train.Functions("+i+").Consist Behavior=1"); // TODO:  Check for a CV21/22 value
+
+            // check for CV21/CV22 variable value, otherwise skip (leave unchanged)
+            var variable = vModel.findVar("Consist Address Active For F"+(i+1));
+            if (variable != null) {
+                var value = 1 - variable.getIntValue(); // invert 1/0 state
+                log.trace("For index {} found consist value {}", i, value);
+                str.println("Train.Functions("+i+").Consist Behavior="+value);
+            }
+
             str.println("Train.Functions("+i+").Description="+(displayValue != 0 ? "" : label) );
         }
 

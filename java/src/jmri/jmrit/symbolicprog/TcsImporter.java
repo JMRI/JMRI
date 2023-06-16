@@ -37,7 +37,8 @@ public class TcsImporter {
      * @param file The File object to be read
      * @param model Variable model used to look up function bits
      */
-    public TcsImporter(File file, VariableTableModel model) throws IOException {
+    public TcsImporter(File file, CvTableModel cvModel, VariableTableModel model) throws IOException {
+        this.model = model;
         tcsProperties = new Properties();
         FileInputStream fileStream = new FileInputStream(file);
         try {
@@ -46,6 +47,8 @@ public class TcsImporter {
             fileStream.close();
         }
     }
+
+    VariableTableModel model;
 
     public TcsImporter(InputStream stream) throws IOException {
         tcsProperties = new Properties();
@@ -90,6 +93,26 @@ public class TcsImporter {
             rosterEntry.setFunctionLabel(i+1, description);
             // and momentary to the "locked" status
             rosterEntry.setFunctionLockable(i+1, momentary.equals("1"));
+
+            // process consist bit
+            // first, see if function variable exists
+            var variable = model.findVar("Consist Address Active For F"+(i+1));
+            if (variable != null) {
+                // it exists, so we can't ignore the consist info.
+                // retrieve it
+                var consistObj = tcsProperties.get("Train.Functions("+i+").Consist");
+                log.debug("Found {} as \'{}\'", "Train.Functions("+i+").Consist", consistObj);
+                if (consistObj != null) {
+                    if (consistObj.equals("Behavior=1")) { // "Current Cab Only"
+                        variable.setIntValue(0);
+                    } else {
+                        variable.setIntValue(1);    // respond to the consist address
+                    }
+                    log.trace("result is value {}", variable.getIntValue());
+                }
+            } else {
+                log.debug("Variable {} not found", "Consist Address Active For F"+(i+1) );
+            }
         }
     }
 
