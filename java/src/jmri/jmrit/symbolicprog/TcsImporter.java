@@ -104,9 +104,9 @@ public class TcsImporter {
                 log.debug("Found {} as \'{}\'", "Train.Functions("+i+").Consist", consistObj);
                 if (consistObj != null) {
                     if (consistObj.equals("Behavior=1")) { // "Current Cab Only"
-                        variable.setIntValue(0);
+                        variable.setIntValue(1);
                     } else {
-                        variable.setIntValue(1);    // respond to the consist address
+                        variable.setIntValue(0);    // respond to the consist address
                     }
                     log.trace("result is value {}", variable.getIntValue());
                 }

@@ -103,7 +103,7 @@ public class TcsExportAction extends AbstractAction {
             // check for CV21/CV22 variable value, otherwise skip (leave unchanged)
             var variable = vModel.findVar("Consist Address Active For F"+(i+1));
             if (variable != null) {
-                var value = 1 - variable.getIntValue(); // invert 1/0 state
+                var value = variable.getIntValue();
                 log.trace("For index {} found consist value {}", i, value);
                 str.println("Train.Functions("+i+").Consist Behavior="+value);
             }

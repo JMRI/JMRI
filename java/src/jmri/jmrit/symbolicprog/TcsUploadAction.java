@@ -161,7 +161,18 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
                         }
                         e.setValue(value);
                     } else if (e.key.endsWith(".Consist Behavior")) {
-                        // TODO: get value from consisting CVs
+
+                        // process consist bit
+                        // first, see if function variable exists
+                        var variable = vModel.findVar("Consist Address Active For F"+(index+1));
+                        if (variable != null) {
+                            // it exists, so we transfer that to the consist info
+                            int value = variable.getIntValue();
+                            e.setValue(value);
+                        } else {
+                            log.debug("Variable {} not found", "Consist Address Active For F"+(index+1) );
+                        }
+
                     } else if (e.key.endsWith(".Display")) {
                         // do a reverse lookup and store
                         int value = TcsExportAction.intFromFunctionString(
