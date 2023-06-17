@@ -76,7 +76,7 @@ public class TcsImporterTest {
         Assert.assertEquals(false, rosterEntry.getFunctionLockable(3));
 
         var cv = cvModel.getCvByNumber("21");
-        Assert.assertEquals(0, (cv.getValue() >> 2) & 0x01);
+        Assert.assertEquals(1, (cv.getValue() >> 2) & 0x01);
 
     }
 
@@ -102,7 +102,7 @@ public class TcsImporterTest {
         Assert.assertEquals(true, rosterEntry.getFunctionLockable(3));
 
         var cv = cvModel.getCvByNumber("21");
-        Assert.assertEquals(1, (cv.getValue() >> 2) & 0x01);
+        Assert.assertEquals(0, (cv.getValue() >> 2) & 0x01);
     }
 
 
