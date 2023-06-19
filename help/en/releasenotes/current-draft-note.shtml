@@ -101,7 +101,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Improve threading on MQTT Reporters to reduce latency.</li>
             </ul>
 
         <h4>MRC</h4>
