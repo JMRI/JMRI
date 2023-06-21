@@ -402,7 +402,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>This a problem that was causing Memory contents to be slow to update.</li>
+	        <li>This a problem that was causing Memory and Block contents to be slow to update.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
