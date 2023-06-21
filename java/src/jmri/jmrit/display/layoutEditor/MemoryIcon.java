@@ -26,8 +26,11 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
     public MemoryIcon(String s, LayoutEditor panel) {
         super(s, panel);
+        this.panel = panel;
         log.debug("MemoryIcon ctor= {}", MemoryIcon.class.getName());
     }
+
+    LayoutEditor panel;
 
     @Override
     public void setText(String text) {
@@ -144,6 +147,13 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
     }
 
     private final JCheckBoxMenuItem updateBlockItem = new JCheckBoxMenuItem("Update Block Details");
+
+    // force a redisplay when content changes
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        super.propertyChange(e);
+        panel.redrawPanel();
+    }
 
     @Override
     public boolean showPopUp(JPopupMenu popup) {
