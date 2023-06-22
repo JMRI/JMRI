@@ -298,7 +298,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             setRunning(false);
             return;
         }
-        log.debug("Start put");
+        log.debug("Start get");
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
@@ -406,7 +406,8 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         };
 
     void pushedPutButton(ActionEvent e) {
-        log.debug("Start get");
+        farID = nodeSelector.getSelectedItem();
+        log.debug("Start put");
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
