@@ -3,6 +3,7 @@
 <!-- version 1.0   24 Nov 2022  Nigel Cliffe.   Merging various MX and MS series files to single file for CVs 100-199.  -->
 <!--                  Removed CV113,150, altered labels on CV147,148,149 -->
 <!-- version 1.1   26 May 2023  Ronald Kuhn.   Added CV133, 192, 195-199 for MS- and MN-series.  -->
+<!-- version 1.2   22 June 2023  Ronald Kuhn.   Added some german translations.  -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
@@ -1722,14 +1723,17 @@
   <variable CV="147" default="0" item="EMF Option 3">
     <decVal min="0" max="255"/>
     <label>Integral Value of PID regulation</label>
+    <label xml:lang="de">Integralwert der PID - Motorregelung</label>
   </variable>
   <variable CV="148" default="0" item="EMF Option 4">
     <decVal min="0" max="255"/>
     <label>Differential value of PID regulation</label>
+    <label xml:lang="de">Differentialwert der PID - Motorregelung</label>
   </variable>
   <variable CV="149" default="0" item="EMF Option 5">
     <decVal min="0" max="255"/>
     <label>Proportional value of PID regulation</label>
+    <label xml:lang="de">Proportionalwert der PID - Motorregelung</label>
   </variable>
 
   <variable CV="151" item="Advanced Group 1 Option 1" default="0" exclude="">
@@ -2634,10 +2638,12 @@
   <variable CV="193" item="ABC Shuttle Wait Time" default="0">
     <decVal min="0" max="255"/>
     <label>Shuttle Terminus Wait Time</label>
+    <label xml:lang="de">ABC-Pendelbetrieb Aufenthaltszeit</label>
   </variable>
   <variable CV="194" item="ABC Shuttle Intermediate Wait Time" default="0">
     <decVal min="0" max="255"/>
     <label>Shuttle Intermediate Stops Wait Time (0=no stop)</label>
+    <label xml:lang="de">ABC-Pendelbetrieb Zwischenhaltzeit (0=kein Halt)</label>
   </variable> 
   
   <variable CV="195" mask="VVVVVVXX" item="Output 11 effect generated" minOut="8" include="6">

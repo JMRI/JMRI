@@ -21,10 +21,12 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
     public BlockContentsIcon(String s, LayoutEditor panel) {
         super(s, panel);
+        this.panel = panel;
         log.debug("BlockContentsIcon ctor= {}", BlockContentsIcon.class.getName());
     }
 
     private LayoutBlock lBlock = null;
+    LayoutEditor panel;
 
     /**
      * {@inheritDoc}
@@ -96,6 +98,13 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
         } else {
             setValue(roster);
         }
+    }
+
+    // force a redisplay when content changes
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        super.propertyChange(e);
+        panel.redrawPanel();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockContentsIcon.class);

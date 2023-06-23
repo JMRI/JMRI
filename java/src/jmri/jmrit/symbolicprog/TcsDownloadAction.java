@@ -18,7 +18,7 @@ import org.openlcb.cdi.CdiRep;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 
 /**
- * Action to download the CV values from a TCS CS-105
+ * Action to download the function labels from a TCS CS-105
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2023
  * @author Dave Heap Copyright (C) 2015
@@ -116,7 +116,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
                 log.trace("String entry {} is {}", e.key, e.getValue());
 
                 if (e.key.startsWith("Train.User Description")) {
-                    log.info("setComment {}", e.getValue());
+                    log.info("setComment \"{}\"", e.getValue());
                     rosterEntry.setComment(e.getValue());
                  } else if (e.key.startsWith("Train.Functions")) {
                     int index = getNumberField(e.key);
@@ -126,6 +126,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
                     }
                     if (e.key.endsWith("Description")) {
                         String value = e.getValue();
+                        log.debug("Found function {} description \"{}\"", index, value);
                         if (value==null) {
                             value = "";
                         }

@@ -11,16 +11,17 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!--  version 1, Mark Waters - for Unified Software version 30, added additional CV313 settings to CV260-CV355sound.xml -->
+<!--  version 1.1, correction to CV354 by Nigel Cliffe -->
+<!--  version 1.2, include statments for CV341 CV342 CV343 edited for new decoders and corrections by Mark Waters -->
+<!--  many additions for v34 firmware,  Nigel Cliffe, 23 Jan 2015, edited with qualifiers to be included in this file instead of a seperate v34 file -->  
+<!--  version 1.3, add german translation by Ronald Kuhn -->
+<!--  version 1.4, corrected CV313 "inverted" output labels, which corrects bug in displayed file. Nigel Cliffe, 27Dec 2016 -->
+<!--  version 1.5, added CV309 and CV349 for brake (function) key control, in decoders from zimo version 33.25.  Nigel Cliffe, 20 Sept 2018 -->
+<!--  version 1.6, for Unified Software version 37, added Brake squel suppressed, Ronald Kuhn, 30 Apr 2019 -->
+<!--  version 1.7, seperate #273, #274, #351 & #352 for Non-Sound-Decoder, Ronald Kuhn, 29 Nov 2021 -->
 <!--  version 1.8, added CV 339 340.  - Nigel Cliffe, 14 Feb 2022 -->
-<!-- version 1.7, seperate #273, #274, #351 & #352 for Non-Sound-Decoder, Ronald Kuhn, 29 Nov 2021 -->
-<!-- version 1.6, for Unified Software version 37, added Brake squel suppressed, Ronald Kuhn, 30 Apr 2019 -->
-<!-- version 1.5, added CV309 and CV349 for brake (function) key control, in decoders from zimo version 33.25.  Nigel Cliffe, 20 Sept 2018 -->
-<!-- version 1.4, corrected CV313 "inverted" output labels, which corrects bug in displayed file. Nigel Cliffe, 27Dec 2016 -->
-<!-- version 1.3, add german translation by Ronald Kuhn -->
-<!-- version 1.2, include statments for CV341 CV342 CV343 edited for new decoders and corrections by Mark Waters -->
-<!-- many additions for v34 firmware,  Nigel Cliffe, 23 Jan 2015, edited with qualifiers to be included in this file instead of a seperate v34 file -->  
-<!-- version 1.1, correction to CV354 by Nigel Cliffe -->
-<!-- version 1, Mark Waters - for Unified Software version 30, added additional CV313 settings to CV260-CV355sound.xml -->
+<!--  version 1.9  add german translation - Ronald Kuhn,  22 Jun 2023 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable item="Load Code 1" CV="260">
     <decVal/>
@@ -1314,9 +1315,11 @@
       </enumChoice>
     </enumVal>
     <label>Function key to raise diesel sound step</label>
+    <label xml:lang="de">Taste zum Anheben der Dieselstufe</label>
   </variable>  
   <variable item="Diesel sound step" CV="340" tooltip="">
     <decVal min="0" max="10"/>
+    <label xml:lang="de">Dieselstufe anheben auf:</label>
   </variable>    
   <variable item="Switch input 1 playback time" CV="341" default="0" include="208,210,214,215,221,222,224,227,230">
     <decVal min="0" max="255"/>
