@@ -19,7 +19,7 @@ import org.openlcb.NodeID;
 import org.openlcb.cdi.CdiRep;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 /**
- * Action to upload the CV values to a TCS CS-105.
+ * Action to upload the function labels to a TCS CS-105.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
@@ -106,82 +106,88 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
      *
      *<p>TODO: Code further up takes initial address from GUI, not RosterEntry.
      */
-    void processValuesFromRosterElement() {
-        configRep.visit(new ConfigRepresentation.Visitor() {
-            @Override
-            public void visitString(ConfigRepresentation.StringEntry e) {
-                log.trace("String entry {} is {}", e.key, e.getValue());
-
-                if (e.key.startsWith("Train.User Description")) {
-                    e.setValue(rosterEntry.getComment());
-                 } else if (e.key.startsWith("Train.Functions")) {
-                    int index = getNumberField(e.key);
-                    if (index == -1) {
-                        log.warn("Unexpected format \"{}\"", e.key);
-                        return;
-                    }
-                    if (e.key.endsWith("Description")) {
-                        String value = rosterEntry.getFunctionLabel(index+1);
-                        if (value==null) {
-                            value = "";
-                        }
-                        if (TcsExportAction.intFromFunctionString(
-                                        rosterEntry.getFunctionLabel(index+1)
-                                    ) != 0) {
-                            e.setValue(value);
-                        }
-                    } else {
-                        log.warn("Unexpected content \"{}\"", e.key);
-                    }
-                }
-            }
-
-            @Override
-            public void visitInt(ConfigRepresentation.IntegerEntry e) {
-                log.trace("Integer entry {} is {}", e.key, e.getValue());
-
-                // is this the last entry?
-                if (e.key.startsWith("Train.Delete From Roster")) {
-                    // TODO: This is firing much too soon
-                    JOptionPane.showMessageDialog(frame, "Upload complete.");
-                } else if (e.key.startsWith("Train.Functions")) {
-                    int index = getNumberField(e.key);
-                    if (index == -1) {
-                        log.warn("Unexpected format \"{}\"", e.key);
-                        return;
-                    }
-                    if (e.key.endsWith(".Momentary")) {
-                        long value = 1;
-                        if (rosterEntry.getFunctionLockable(index+1)) {
-                            value = 0;  // lockable is not Momentary
-                        }
-                        e.setValue(value);
-                    } else if (e.key.endsWith(".Consist Behavior")) {
-                        // TODO: get value from consisting CVs
-                    } else if (e.key.endsWith(".Display")) {
-                        // do a reverse lookup and store
-                        int value = TcsExportAction.intFromFunctionString(
-                                        rosterEntry.getFunctionLabel(index+1)
-                                    );
-                        e.setValue(value);
-                    } else {
-                        log.warn("Unexpected content \"{}\"", e.key);
-                    }
-                }
-            }
-
-            @Override
-            public void visitEvent(ConfigRepresentation.EventEntry e) {
-                log.trace("Event entry {} is {}", e.key, e.getValue());
-            }
-        });
-    }
+//     void processValuesFromRosterElement() {
+//         log.trace("processValuesFromRosterElement");
+//         configRep.visit(new ConfigRepresentation.Visitor() {
+//             @Override
+//             public void visitString(ConfigRepresentation.StringEntry e) {
+//                 log.trace("String entry {} is {}", e.key, e.getValue());
+//
+//                 if (e.key.startsWith("Train.User Description")) {
+//                     e.setValue(rosterEntry.getComment());
+//                  } else if (e.key.startsWith("Train.Functions")) {
+//                     int index = getNumberField(e.key);
+//                     if (index == -1) {
+//                         log.warn("Unexpected format \"{}\"", e.key);
+//                         return;
+//                     }
+//                     if (e.key.endsWith("Description")) {
+//                         String value = rosterEntry.getFunctionLabel(index+1);
+//                         log.debug("Train.Functions found function {} roster description \"{}\"", index, value);
+//                         if (value==null) {
+//                             value = "";
+//                         }
+//                         log.trace("   mapping gives {}", TcsExportAction.intFromFunctionString(
+//                                         rosterEntry.getFunctionLabel(index+1)) );
+//                         if (TcsExportAction.intFromFunctionString(
+//                                         rosterEntry.getFunctionLabel(index+1)
+//                                     ) != 0) {
+//                             e.setValue(value);
+//                         }
+//                     } else {
+//                         log.warn("Unexpected content \"{}\"", e.key);
+//                     }
+//                 }
+//             }
+//
+//             @Override
+//             public void visitInt(ConfigRepresentation.IntegerEntry e) {
+//                 log.trace("Integer entry {} is {}", e.key, e.getValue());
+//
+//                 // is this the last entry?
+//                 if (e.key.startsWith("Train.Delete From Roster")) {
+//                     // TODO: This is firing much too soon
+//                     JOptionPane.showMessageDialog(frame, "Upload complete.");
+//                 } else if (e.key.startsWith("Train.Functions")) {
+//                     int index = getNumberField(e.key);
+//                     if (index == -1) {
+//                         log.warn("Unexpected format \"{}\"", e.key);
+//                         return;
+//                     }
+//                     if (e.key.endsWith(".Momentary")) {
+//                         long value = 1;
+//                         if (rosterEntry.getFunctionLockable(index+1)) {
+//                             value = 0;  // lockable is not Momentary
+//                         }
+//                         e.setValue(value);
+//                     } else if (e.key.endsWith(".Consist Behavior")) {
+//                         // TODO: get value from consisting CVs
+//                     } else if (e.key.endsWith(".Display")) {
+//                         // do a reverse lookup and store
+//                         int value = TcsExportAction.intFromFunctionString(
+//                                         rosterEntry.getFunctionLabel(index+1)
+//                                     );
+//                         e.setValue(value);
+//                         log.debug(".display found function {} roster description \"{}\"", index, value);
+//                     } else {
+//                         log.warn("Unexpected content \"{}\"", e.key);
+//                     }
+//                 }
+//             }
+//
+//             @Override
+//             public void visitEvent(ConfigRepresentation.EventEntry e) {
+//                 log.trace("Event entry {} is {}", e.key, e.getValue());
+//             }
+//         });
+//     }
 
     /**
      * Construct and execute a listener that sets
      * the appropriate values from the GUI elements.
      */
     void processValuesFromGUI() {
+        log.trace("processValuesFromGUI");
         configRep.visit(new ConfigRepresentation.Visitor() {
             @Override
             public void visitString(ConfigRepresentation.StringEntry e) {
@@ -200,9 +206,12 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
                         if (value==null) {
                             value = "";
                         }
+                        log.debug(".Description found function {} roster description \"{}\"", index, value);
+                        log.trace("   mapping gives {}", TcsExportAction.intFromFunctionString(
+                                        rosterEntry.getFunctionLabel(index+1)) );
                         if (TcsExportAction.intFromFunctionString(
                                         frame.getFnLabelPane().getLabel(index+1).getText()
-                                    ) != 0) {
+                                    ) == 0) {
                             e.setValue(value);
                         }
                     } else {
@@ -239,6 +248,7 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
                                         frame.getFnLabelPane().getLabel(index+1).getText()
                                     );
                         e.setValue(value);
+                        log.debug(".display found function {} roster description \"{}\"", index, value);
                     } else {
                         log.warn("Unexpected content \"{}\"", e.key);
                     }

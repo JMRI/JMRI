@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.3.6plus+jake+20230609T1838Z+R7b59bf42db on Fri Jun 09 14:39:35 EDT 2023-->
-  <decoderIndex version="29">
+  <!--Written by JMRI version 5.3.7plus+jake+20230623T1411Z+Ra39c5f7f7d on Fri Jun 23 10:11:45 EDT 2023-->
+  <decoderIndex version="31">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
