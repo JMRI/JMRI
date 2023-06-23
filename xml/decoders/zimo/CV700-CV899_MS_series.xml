@@ -718,25 +718,25 @@
   
   <variable CV="830" item="stopping distance fwd high">
     <decVal/>
-    <label>stopping distance forward high byte</label>
+    <label>Alternative Stopping Distance Fwd High Byte</label>
     <label xml:lang="de">Bremsweg Vorwärts High</label>
     <label xml:lang="cs">Brzdná dráha vpřed horní byte</label>
   </variable>
   <variable CV="831" item="stopping distance fwd low">
     <decVal/>
-    <label>stopping distance forward low byte</label>
+    <label>Alternative Stopping Distance Fwd Low Byte</label>
     <label xml:lang="de">Bremsweg Vorwärts Low</label>
     <label xml:lang="cs">Brzdná dráha vpřed dolní byte</label>
   </variable>
   <variable CV="832" item="stopping distance rev high">
     <decVal/>
-    <label>stopping distance reverse high byte</label>
+    <label>Alternative Stopping Distance Rev High Byte</label>
     <label xml:lang="de">Bremsweg Rückwärts High</label>
     <label xml:lang="cs">Brzdná dráha vzad horní byte</label>
   </variable>
   <variable CV="833" item="stopping distance rev low">
     <decVal/>
-    <label>stopping distance reverse low byte</label>
+    <label>Alternative Stopping Distance Rev Low Byte</label>
     <label xml:lang="de">Bremsweg Rückwärts Low</label>
     <label xml:lang="cs">Brzdná dráha vzad dolní byte</label>
   </variable>

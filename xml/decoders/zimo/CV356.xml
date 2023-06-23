@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--  Version 1.1   22 Jun 2023,  Ronald Kuhn.    add german translation                        -->
+
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
@@ -117,6 +119,7 @@
     </enumVal>
     <label>SpeedLock Feature</label>
     <label xml:lang="cs">Vlastnost Zámek rychlosti</label>
+    <label xml:lang="de">Speedlock-Taste</label>
     <tooltip>If the key is activated, you can control the sound without changing the speed of the locomotive.</tooltip>
     <tooltip xml:lang="de">Wenn Taste aktiv dann kann mit Geschwindigkeitsregler der Sound geregelt werden wobei sich die Geschwindigkeit der Lok nicht ändert.</tooltip>
     <tooltip xml:lang="cs">Pokud je tlačítko aktivní, lze zvuk ovládat regulátorem rychlosti, přičemž rychlost zůstane konstantní.</tooltip>
