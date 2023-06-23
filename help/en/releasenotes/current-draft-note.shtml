@@ -125,6 +125,7 @@
                     to the CS-105 command station and to backup files.</li>
                 <li>Improved instructions for DecoderPro's import from and
                     export to TCS CS-105 command stations.</li>
+                <li>Fix a problem that could cause an upload via the Memory Tool to fail.</li>
             </ul>
 
         <h4>Powerline</h4>
