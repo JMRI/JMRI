@@ -255,13 +255,13 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i .bak s/5.3.6-SNAPSHOT/5.3.8-SNAPSHOT/g pom.xml
+        sed -i .bak s/5.3.7-SNAPSHOT/5.3.8-SNAPSHOT/g pom.xml
         git commit -m"5.3.8 until next release" pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i .bak s/release.build=6/release.build=7/g release.properties
+        sed -i .bak s/release.build=7/release.build=8/g release.properties
         git commit -m"5.3.8 until next release" release.properties
         git push github
 ```
@@ -341,7 +341,7 @@ If you're developing any additional (post-5.3.8) changes that you want in the JM
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
 
-- Check the [signing-wget.log](https://builds.jmri.org/jenkins/job/testreleases/job/5.3.8/ws/%20signing-wget.log) file in the job’s workspace to make sure all the return codes are zero. This is the macOS signing process. A non-zero code indicates a problem with the signature. If there is a non-zero code, resolve that before proceeding!
+- Check the [signing-wget.log](https://builds.jmri.org/jenkins/job/testreleases/job/5.3.8/ws/%20signing-wget.log) file in the job’s workspace to make sure all the return codes are zero. This is the macOS signing process. A non-zero code indicates a problem with the signature. If there is a non-zero code, resolve that and rebuild before proceeding!
 
 ================================================================================
 ## Capture A Profile (Production releases only)
