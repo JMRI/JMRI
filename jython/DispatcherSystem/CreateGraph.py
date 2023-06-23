@@ -142,7 +142,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                             #add an edge for all paths to form the express train graph
                             path_name = [str(x.getUserName()) for x in path]
                             edge = le()     # le = LabelledEdge() set up outside CreateGraph.py
-                            #edge.setItem(index = index)
+                            edge.setItem(index = index)
                             edge.setItem(path = path)
                             edge.setItem(path_name = path_name)
                             #edge.setItem(neighbor_name = neighbor_name)
@@ -157,8 +157,8 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                                 if self.logLevel > 0: print "got here 4a"
                                 if self.logLevel > 0: print edge.to_string()
                                 edge.setItem(index = index)
-                                #edge.setItem(path = path)
-                                #edge.setItem(path_name = path_name)
+                                edge.setItem(path = path)
+                                edge.setItem(path_name = path_name)
                                 edge.setItem(neighbor_name = neighbor_name)
                                 LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
                                 firstLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[0])
