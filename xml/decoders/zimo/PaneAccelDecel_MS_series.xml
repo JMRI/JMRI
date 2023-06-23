@@ -4,6 +4,7 @@
 <!-- version 1.1 - Ronald Kuhn - add german and czech translation and CVs from v37+ -->
 <!-- version 1.2 - 10 Mar 2021, Nigel Cliffe - New layout, to group related features, and bring all motor CVs into the pane  -->
 <!-- version 1.3 -  29 July 2022 Nigel Cliffe.  Fork from MX series.  New MS Series sound decoders have changes to the motor control parameters -->
+<!-- version 1.4 - 22 June 2023 Ronald Kuhn - add some german translation and small corrections -->
 
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Accel/Decel + Motor</name>
@@ -18,6 +19,7 @@
             <label>
               <text>Acceleration / Deceleration</text>
               <text xml:lang="cs">Zrychlení / Zpomalení</text>
+              <text xml:lang="de">Anfahrverzögerung / Bremszeit</text>
             </label>
 
             <display item="Accel"/>   <!-- CV3 -->
@@ -28,6 +30,7 @@
             <label>
               <text>Trim adjusts acceleration for consists or temporary changes</text>
               <text xml:lang="cs">Úprava oříznutí zrychlení pro soupravy nebo dočasné změny</text>
+              <text xml:lang="de">Passt die Beschleunigung an bestehende oder vorübergehende Änderungen an</text>
             </label>
 
             <display item="Acceleration Trim"/>     <!-- CV23 -->
@@ -40,28 +43,34 @@
             <label>
               <text>Function Key to apply braking (key changes deceleration)</text>
               <text xml:lang="cs">Funkční klávesa pro aplikaci brzdy (tlačítko změní zpomalení)</text>
+              <text xml:lang="de">Funktionstaste zum Bremsen (Taste ändert die Verzögerung)</text>
             </label>
             <display item="Brake key"/>   <!-- CV309 -->
             <display item="Brake time" >   <!-- CV349 -->
                 <label>Brake Key Deceleration Rate</label>
                 <label xml:lang="cs">Doba brždění</label>
+                <label xml:lang="de">Bremszeit für Bremstaste</label>
             </display>
             <label> <text>        </text> </label>
             <label>
               <text>Change momentum when driving solo / light engine</text>
               <text xml:lang="cs">Změna hybnosti při strojové jízdě / odlehčený motor</text>
+              <text xml:lang="de">Anpassungen der Beschleunigungs- und Verzögerungszeiten bei Alleinfahrt</text>
             </label>
             <display item="Fn key driving solo">   <!-- CV347 -->
                 <label>Key for solo / light engine</label>
                 <label xml:lang="cs">Klávesa pro strojovou jízdu / odlehčený motor</label>
+                <label xml:lang="de">Alleinfahrt-Taste</label>
             </display>
             <display item="Solo change momentum" >   <!-- CV348 bit1 -->
                 <label>Change Momentum</label>
                 <label xml:lang="cs">Změna hybnosti</label>
+                <label xml:lang="de">Dynamik ändern</label>
             </display>
             <display item="Momentum reduction when driving solo">   <!-- CV390 -->
                 <label>Momentum Reduction</label>
                 <label xml:lang="cs">Snížení hybnosti</label>
+                <label xml:lang="de">Dynamikreduktion</label>
             </display>
             <label> <text>        </text> </label>
             
@@ -77,6 +86,7 @@
             <label>
               <text>Exponential Acceleration and Deceleration</text>
               <text xml:lang="cs">Exponenciální Zrychlení a Zpomalení</text>
+              <text xml:lang="de">Exponentielle Beschleunigung und Verzögerung</text>
             </label>
               <label>
                 <text>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</text>
@@ -108,6 +118,7 @@
               <label>
                <text>Adaptive Acceleration/Deceleration</text>
                <text xml:lang="cs">Adaptivní Zrychlení/Zpomalení</text>
+              <text xml:lang="de">Adaptive Beschleunigung und Verzögerung</text>
               </label>              
               <label>
                 <text>Raising or lowering the speed to the next internal step occurs only if the precedingstep</text>
@@ -170,6 +181,7 @@
        <label>
           <text>Motor Control Settings</text>
           <text xml:lang="cs">Nastavení řízení motoru</text>
+          <text xml:lang="de">Motor-Regelung</text>
        </label>
 
        </column>
@@ -246,7 +258,7 @@
     
     <row>
       <column>
-        <display item="Motor Frequency and EMF sample Rate"/>   <!--  CV9 -->
+        <display item="EMF Option 1"/>   <!--  CV9 -->
       </column>
       <label>
         <text>    </text>
