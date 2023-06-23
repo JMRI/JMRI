@@ -25,7 +25,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 5.3.8 5.4.1 5.4.2
+  ./scripts/update-HOWTO.sh 5.3.8 5.5.1 5.5.2
 ```
 (if you have this file open in an editor, refresh the contents from disk after running the script)
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
@@ -181,16 +181,16 @@ This is the next release in the 5.6 cycle. It's intended to be created from the 
         cd releasenotes
         git checkout master
         git pull
-        cp jmri5.3.8.shtml jmri5.4.1.shtml
-        $EDITOR jmri5.4.1.shtml
+        cp jmri5.3.8.shtml jmri5.5.1.shtml
+        $EDITOR jmri5.5.1.shtml
 
             (edit the new release note accordingly)
                 change numbers throughout
                 move new warnings to old (see below)
                 remove old-version change notes
 
-        git add jmri5.4.1.shtml
-        git commit -m"start new 5.4.1 next release note" jmri5.4.1.shtml
+        git add jmri5.5.1.shtml
+        git commit -m"start new 5.5.1 next release note" jmri5.5.1.shtml
         git push github
         cd ../../JMRI
 ```
@@ -213,9 +213,9 @@ This is the next release in the 5.6 cycle. It's intended to be created from the 
         ${EDITOR} help/en/releasenotes/current-draft-warnings.shtml ../website/releasenotes/jmri5.3.8.shtml
 ```
 
- - Add any new warnings to the old warnings section of the next (5.4.1) release note:
+ - Add any new warnings to the old warnings section of the next (5.5.1) release note:
 ```
-        ${EDITOR} ../website/releasenotes/jmri5.3.8.shtml ../website/releasenotes/jmri5.4.1.shtml
+        ${EDITOR} ../website/releasenotes/jmri5.3.8.shtml ../website/releasenotes/jmri5.5.1.shtml
 ```
 
 - Clean out the unneeded sections from the release note
@@ -225,9 +225,9 @@ This is the next release in the 5.6 cycle. It's intended to be created from the 
 
 - Create the new draft note section
 ```
-        cp help/en/releasenotes/jmri5.3-master.shtml help/en/releasenotes/current-draft-note.shtml
+        cp help/en/releasenotes/jmri5.5-master.shtml help/en/releasenotes/current-draft-note.shtml
         cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
-        git commit -m"start for 5.4.1 release note" help/en/releasenotes/*.shtml
+        git commit -m"start for 5.5.1 release note" help/en/releasenotes/*.shtml
         git push github
         git pull
 ```
@@ -297,7 +297,7 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
 The release-5.3.8 branch has been created.
 
-Maintainers, please set the 5.4.1 milestone on pulls from now on, as that will be the next test release.
+Maintainers, please set the 5.5.1 milestone on pulls from now on, as that will be the next test release.
 
 Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/testreleases/job/5.3.8/)
 ```
@@ -536,11 +536,11 @@ If there are any changes in other files, do both of:
 ====================================================================================
 ## Update GitHub Status items
 
-- Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues/new) to hold discussion with conventional title "Create Test Release 5.4.1". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
+- Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues/new) to hold discussion with conventional title "Create Test Release 5.5.1". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
 This is the next release in the 5.4 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
-- Add the 5.4.1 milestone to the issue.
+- Add the 5.5.1 milestone to the issue.
 
 - Confirm that the tag for the current release (v5.3.8 for release 5.3.8) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-5.3.8) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
 
