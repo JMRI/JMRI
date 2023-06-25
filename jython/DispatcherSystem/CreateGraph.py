@@ -142,6 +142,19 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                             #add an edge for all paths to form the express train graph
                             path_name = [str(x.getUserName()) for x in path]
                             edge = le()     # le = LabelledEdge() set up outside CreateGraph.py
+                            ####################################################################
+                            #
+                            # Nomenclature
+                            #
+                            # In JGraphT items can be associated with edges uaing the notation:
+                            #     edge.setItem(item_name = variable)
+                            #
+                            #  The value can then be retrieved elsewhere in the program using:
+                            #     variable = edge.getItem("item_name")
+                            #
+                            #  in the uses below the item has the same name as the variable
+                            #
+                            ###################################################################
                             edge.setItem(index = index)
                             edge.setItem(path = path)
                             edge.setItem(path_name = path_name)
