@@ -86,7 +86,7 @@ public class TcsExportAction extends AbstractAction {
 
         // Skip Consist, Directional and MU switch to allow round-trip
 
-        for (int i = 0; i < 27; i++) { // TCS sample file went to 27?
+        for (int i = 0; i <= 27; i++) { // TCS sample file went to 27
             String label = rosterEntry.getFunctionLabel(i+1);
             if (label == null) label = "";
             int displayValue = intFromFunctionString(label);
