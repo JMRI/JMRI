@@ -73,52 +73,52 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
         if(event.propertyName == "F0"):
             if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "0", event.newValue, self.panelThrottle) != None):
                 return
-            self.panelThrottle.setF0(event.newValue)
+            self.panelThrottle.setFunction(0,event.newValue)
             return
         if(event.propertyName == "F1"):
             if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", event.newValue, self.panelThrottle) != None):
                 return
-            self.panelThrottle.setF1(event.newValue)
+            self.panelThrottle.setFunction(1,event.newValue)
             return
         if(event.propertyName == "F2"):
             if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", event.newValue, self.panelThrottle) != None):
                 return
-            self.panelThrottle.setF2(event.newValue)
+            self.panelThrottle.setFunction(2,event.newValue)
             return
         if(event.propertyName == "F3"):
             if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "3", event.newValue, self.panelThrottle) != None):
                 return
-            self.panelThrottle.setF3(event.newValue)
+            self.panelThrottle.setFunction(3,event.newValue)
             return
         if(event.propertyName == "F4"):
             if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "4", event.newValue, self.panelThrottle) != None):
                 return
-            self.panelThrottle.setF4(event.newValue)
+            self.panelThrottle.setFunction(4,event.newValue)
             return
         if(event.propertyName == "F5"):
             if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "5", event.newValue, self.panelThrottle) != None):
                 return
-            self.panelThrottle.setF5(event.newValue)
+            self.panelThrottle.setFunction(5,event.newValue)
             return
         if(event.propertyName == "F6"):
             if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "6", event.newValue, self.panelThrottle) != None):
                 return
-            self.panelThrottle.setF6(event.newValue)
+            self.panelThrottle.setFunction(6,event.newValue)
             return
         if(event.propertyName == "F7"):
             if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "7", event.newValue, self.panelThrottle) != None):
                 return
-            self.panelThrottle.setF7(event.newValue)
+            self.panelThrottle.setFunction(7,event.newValue)
             return
         if(event.propertyName == "F8"):
             if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "8", event.newValue, self.panelThrottle) != None):
                 return
-            self.panelThrottle.setF8(event.newValue)
+            self.panelThrottle.setFunction(8,event.newValue)
             return
         if(event.propertyName == "F9"):
             if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "9", event.newValue, self.panelThrottle) != None):
                 return
-            self.panelThrottle.setF9(event.newValue)
+            self.panelThrottle.setFunction(9,event.newValue)
             return
             
     #ThrottleListener part (real dccThrottle)

@@ -142,9 +142,9 @@ understand what you've done.
         <li>Get a <a href="https://github.com/join">GitHub account</a> and login
         </li>
 
-        <li>Tell GitHub to <a href="https://help.github.com/articles/fork-a-repo/">"fork" JMRI's
+        <li>Tell GitHub to <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo">"fork" JMRI's
         repository</a> into one of your own. There's a <a href=
-        "https://help.github.com/articles/fork-a-repo/">good help page</a>, but basically you go to
+        "https://docs.github.com/en/get-started/quickstart/fork-a-repo">good help page</a>, but basically you go to
         the <a href="https://github.com/JMRI/JMRI">JMRI repository page</a> and click the "fork"
         button in the upper right.
         </li>

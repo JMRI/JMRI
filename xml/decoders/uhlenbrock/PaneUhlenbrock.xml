@@ -17,6 +17,18 @@
 <!-- 	Valid for 731x0, 734x0, 764x0 families (non exhaustive list)        -->
 <!-- 																		-->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2019</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<revhistory xmlns="http://docbook.org/ns/docbook"> 
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-01-08</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Added "Tillig 0423x" decoder</revremark>
+		</revision>		
+	</revhistory>
   <name>Uhlenbrock</name>
   <column>
     <separator/>
@@ -220,11 +232,11 @@
                   <griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX1</text></label></griditem>
                   <griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX2</text></label></griditem>
               </group>
-              <group exclude="73105,73115,73145,73405,73415">
+              <group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
                   <griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX3</text></label></griditem>
                   <griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX4</text></label></griditem>
               </group>
-              <group exclude="73105,73115,73145,73405,73415">
+              <group exclude="73105,73115,73145,73405,73415,Tillig 0423x">
                   <griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX5</text></label></griditem>
                   <griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX6</text></label></griditem>
                   <griditem gridx="7" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX7</text></label></griditem>

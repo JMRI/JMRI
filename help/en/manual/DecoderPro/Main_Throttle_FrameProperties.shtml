@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -76,10 +70,9 @@
       be lost behind the rest of the panels. Recovery entails using the view menus to remove and
       then restore the panel in question.</p>
 
-      <p><strong><input name="button" id="button" value="OK" type="submit"></strong> adds the
-      edits</p>
+      <p>The <strong><span class="textbutton">OK</span></strong> button adds the edits.</p>
 
-      <p><input name="button2" id="button2" value="Cancel" type="submit"> aborts the operation</p>
+      <p>The <span class="textbutton">Cancel</span> button aborts the operation.</p>
 
       <hr>
 

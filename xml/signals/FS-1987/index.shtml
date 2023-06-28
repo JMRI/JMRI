@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright ($Author$) 2009 -->
+
+  <title>JMRI: FS - Italian State Railways - Signaling Definition</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
+
+<h1>JMRI: FS - Italian State Railways - Signaling Definition</h1>
+
+<p>This directory contains signaling definitions corresponding to the Italian rules as described in Il Treno Company book “Inserimento in linea dei segnali FS”
+    according to the 1987 Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovie dello Stato”, FS today RFI).</p>
+
+<p>Dispatcher (ACEI) icons.</p>
+
+<p>Wikipedia: <a href="https://it.wikipedia.org/wiki/Segnalamento_ferroviario_in_Italia">link</a></p>
+
+<p>See the <a href="aspects.xml">aspect page</a>.</p>
+
+<p>Signal Mast definitions:</p>
+
+<ul>
+  <li><a href="appearance-ACEIacc.1vela.xml">Single searchlight accoppiato signal</a></li>
+  <li><a href="appearance-ACEIacc.2vele.xml">Double searchlight accoppiato signal</a></li>
+  <li><a href="appearance-ACEIacc.3vele.xml">Triple searchlight accoppiato signal</a></li>
+  <li><a href="appearance-ACEIIcat.1vela.xml">Single searchlight 1. Cat .signal</a></li>
+  <li><a href="appearance-ACEIIcat.2vele.xml">Double searchlight 1. Cat. signal</a></li>
+  <li><a href="appearance-ACEIavv.1vela.xml">Single searchlight avviso signal</a></li>
+  <li><a href="appearance-ACEIavv.2vele.xml">Double searchlight avviso signal</a></li>
+</ul>
+
+<ul>
+  <li><a href="appearance-segnalebasso.xml">Shunting dwarf signal</a></li>
+</ul>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

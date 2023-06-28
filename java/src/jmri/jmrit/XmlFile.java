@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012, 2014
  */
-public abstract class XmlFile {
+public class XmlFile {
 
     /**
      * Define root part of URL for XSLT style page processing instructions.
@@ -658,7 +658,7 @@ public abstract class XmlFile {
      * @return a file chooser
      */
     public static JFileChooser userFileChooser(String filter, String... suffix) {
-        JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser fc = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         fc.setFileFilter(new NoArchiveFileFilter(filter, suffix));
         return fc;
     }
@@ -671,7 +671,7 @@ public abstract class XmlFile {
      * @return a file chooser
      */
     public static JFileChooser userFileChooser() {
-        JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser fc = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
         fc.setFileFilter(new NoArchiveFileFilter());
         return fc;
     }

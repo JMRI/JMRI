@@ -38,7 +38,7 @@
       <aspectname>Kør igennem</aspectname>
       <show>green</show>
       
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/blok2-clear.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/DanishSignals/Large/blok2-clear.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/DanishSignals/Aspects/blok2-clear.gif</imagelink>
     </appearance>
 
@@ -46,7 +46,7 @@
       <aspectname>Kør</aspectname>
       <show>yellow</show>
       
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/blok2-go.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/DanishSignals/Large/blok2-go.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/DanishSignals/Aspects/blok2-go.gif</imagelink>
     </appearance>
     
@@ -54,7 +54,7 @@
       <aspectname>Stop</aspectname>
       <show>red</show>
       
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/blok2-stop.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/DanishSignals/Large/blok2-stop.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/DanishSignals/Aspects/blok2-stop.gif</imagelink>
     </appearance>
     
@@ -62,7 +62,7 @@
       <aspectname>Off</aspectname>
       <show>dark</show>
       
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/blok2-dark.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/DanishSignals/Large/blok2-dark.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/DanishSignals/Aspects/blok2-dark.gif</imagelink>
     </appearance>
 

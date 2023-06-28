@@ -97,7 +97,7 @@
 
       <p>Here there are several trains ready to build. The highlighted train is <strong>LBX from
       Lakeview to Bakersfield</strong>. By putting a check mark in the box in the Build column and
-      then clicking the <input name="button1" id="button1" value="Build" type="button"> button at
+      then clicking the <span class="textbutton">Build</span> button at
       the bottom of the screen we were able to get the manifest built so that we can preview it.
       It's a short run, but still takes more than one page of fine print instructions for the
       crew.</p>

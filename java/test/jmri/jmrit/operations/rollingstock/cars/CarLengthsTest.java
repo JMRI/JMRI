@@ -30,7 +30,7 @@ public class CarLengthsTest extends OperationsTestCase {
     public void testAddAndDeleteCarLengths() {
         CarLengths cl1 = InstanceManager.getDefault(CarLengths.class);
         String[] lengths = cl1.getNames(); // load predefined lengths
-
+        Assert.assertEquals(12, lengths.length);
         cl1.addName("1");
         cl1.deleteName("13"); // en_GB defines a length 13.
         Assert.assertTrue("Car Length Add 1", cl1.containsName("1"));

@@ -335,10 +335,10 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
 
     // to find and remember the input files
     CSVParser readingInput = null;
-    final JFileChooser readingFileChooser = new JFileChooser("rps/readings.csv");
+    final JFileChooser readingFileChooser = new jmri.util.swing.JmriJFileChooser("rps/readings.csv");
 
     CSVParser measurementInput = null;
-    final JFileChooser measurementFileChooser = new JFileChooser("rps/positions.csv");
+    final JFileChooser measurementFileChooser = new jmri.util.swing.JmriJFileChooser("rps/positions.csv");
 
     private final static Logger log = LoggerFactory.getLogger(DebuggerFrame.class);
 

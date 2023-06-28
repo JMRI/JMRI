@@ -1,9 +1,10 @@
 package jmri.jmrit.throttle;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
+import java.util.*;
+
 import javax.swing.table.AbstractTableModel;
+
+import jmri.ConsistListListener;
 import jmri.DccLocoAddress;
 import jmri.Throttle;
 
@@ -15,9 +16,9 @@ import jmri.Throttle;
  *
  */
 
-public class ThrottlesTableModel extends AbstractTableModel implements java.beans.PropertyChangeListener {
+public class ThrottlesTableModel extends AbstractTableModel implements java.beans.PropertyChangeListener, ConsistListListener{
 
-    private final List<ThrottleFrame> throttleFrames = new ArrayList<>(5);
+    private final List<ThrottleFrame> throttleFrames = new LinkedList<>();
 
     @Override
     public int getRowCount() {
@@ -38,8 +39,21 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         return throttleFrames.iterator();
     }
 
-    public void addThrottleFrame(ThrottleFrame tf) {
-        throttleFrames.add(tf);
+    public void addThrottleFrame(ThrottleWindow tw, ThrottleFrame ntf) {
+        int loc = -1;
+        int idx = 0;
+        // insert it after the last one from its containing throttle window
+        for (ThrottleFrame tf: throttleFrames) {
+            if ( tf.getThrottleWindow() == tw) {
+                loc = idx;
+            }
+            idx++;
+        }
+        if (loc != -1) {
+            throttleFrames.add(loc+1, ntf);
+        } else {
+            throttleFrames.add(ntf);
+        }        
         fireTableDataChanged();
     }
 
@@ -52,9 +66,15 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if ((e.getPropertyName().equals(Throttle.SPEEDSETTING)) ||
                 (e.getPropertyName().equals(Throttle.SPEEDSTEPS)) ||
-                (e.getPropertyName().equals(Throttle.ISFORWARD))) {
+                (e.getPropertyName().equals(Throttle.ISFORWARD)) ||
+                (e.getPropertyName().equals("ThrottleFrame"))) {
             fireTableDataChanged();
         }
+    }
+
+    @Override
+    public void notifyConsistListChanged() {
+        fireTableDataChanged();
     }
 
 }

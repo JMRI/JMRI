@@ -136,6 +136,22 @@ public class MemoryTableDataModel extends BeanTableDataModel<Memory> {
         return null;
     }
 
+    /**
+     * Additionally provide Memory value Class in value column.
+     * {@inheritDoc}
+     */
+    @Override
+    public String getCellToolTip(JTable table, int row, int col) {
+        switch (col) {
+            case VALUECOL:
+                Memory m = getBySystemName(sysNameList.get(row));
+                Object o = m.getValue();
+                return (o == null ? null : o.getClass().getName());
+            default:
+                return super.getCellToolTip(table, row, col);
+        }
+    }
+
     private static final Logger log = LoggerFactory.getLogger(MemoryTableDataModel.class);
 
 }

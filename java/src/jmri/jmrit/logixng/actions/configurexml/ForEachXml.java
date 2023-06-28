@@ -8,7 +8,7 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.ForEach;
-import jmri.jmrit.logixng.actions.ForEach.CommonManager;
+import jmri.jmrit.logixng.actions.CommonManager;
 import jmri.jmrit.logixng.actions.ForEach.UserSpecifiedSource;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringXml;

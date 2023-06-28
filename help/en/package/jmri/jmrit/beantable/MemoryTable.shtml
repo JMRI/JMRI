@@ -20,9 +20,13 @@
       <p>Note that you can sort the table by each of the columns, just click on the column
       heading.</p>
 
-      <p>To change the value stored in a particular Memory Variable, just doubleclick on the Value
+      <p>To change the value stored in a particular Memory Variable, just double click on the Value
       column in the desired row. Enter a new value, followed by hitting the Return or Enter key to
-      store the value.</p>
+      store the ( String ) value.
+      <br>Entering an empty value will store an empty String value to the variable.</p>
+
+      <p>The Java class type ( commonly a java.lang.String ) for a Memory Variable value
+      can be viewed by hovering over the Memory value cell.</p>
 
       <h2 id="addMemory">Adding a new Memory</h2>
 

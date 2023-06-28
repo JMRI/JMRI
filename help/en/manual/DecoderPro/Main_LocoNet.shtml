@@ -7,13 +7,7 @@
 
   <style>
     .dp-center {text-align: center;}
-    .dp-middle {text-align: middle;}
     .dp-right {text-align: right;}
-    .dp-none {list-style-type: none;}
-    .dp-square {list-style-type: square;}
-    .dp-upper-alpha {ist-style-type: upper-alpha;}
-    .dp-lower-alpha {list-style-type: lower-alpha;}
-    .dp-border-2 {border: 2px solid;}
   </style>
 </head>
 <body>
@@ -61,13 +55,13 @@
       displayed.</p>
 
       <p style="margin-left: 40px;"><input name="checkbox" id="checkbox" type="checkbox">
-      <strong>Show unused slots</strong></p>
+      <strong>Show unused slots</strong> check box</p>
 
       <p style="margin-left: 40px;"><input name="checkbox2" id="checkbox2" type="checkbox">
-      <strong>Show system slots</strong></p>
+      <strong>Show system slots</strong> check box</p>
 
-      <p style="margin-left: 40px;"><strong><input name="button" id="button" value="estop all"
-      type="submit"></strong> Executes an <strong>Emergency Stop</strong> for all locomotives.</p>
+      <p style="margin-left: 40px;"><strong><span class="textbutton">estop all</span></strong>
+      button executes an <strong>Emergency Stop</strong> for all locomotives.</p>
 
       <p style="margin-left: 40px;">The columns are:</p>
 
@@ -171,7 +165,7 @@
       way to:</p>
 
       <ul style="margin-left: 40px;">
-        <li><input name="button2" id="button2" value="Read" type="submit"> the current contents of
+        <li><span class="textbutton">Read</span> the current contents of
         the LocoNet fast clock</li>
 
         <li>Set the <strong>Day</strong> and <strong>Time</strong></li>
@@ -241,13 +235,12 @@
       options of a DS64 directly from your computer.</p>
 
       <p style="margin-left: 40px;">Type the address of a DS64 board in the text field and click
-      <input name="button3" id="button3" value="Read from DS64" type="submit"> . The tool will read
+      <span class="textbutton">Read from DS64</span> . The tool will read
       back the current state of the various options, and set the check boxes to correspond to their
       current values.</p>
 
       <p style="margin-left: 40px;">You can then, if you wish, change the checkboxes and click
-      <input name="button4" id="button4" value="Write to DS64" type="submit"> to make your changes
-      permanent.</p>
+      <span class="textbutton">Write to DS64</span> to make your changes permanent.</p>
 
       <h4 style="margin-left: 40px;">Limitations</h4>
 
@@ -269,8 +262,8 @@
       </p>
 
       <p style="margin-left: 40px;">Opens the <strong>Configure LocoNet ID</strong> dialog that
-      allows you to <input name="button5" id="button5" value="Read" type="submit"> or <input name=
-      "button6" id="button6" value="Set" type="submit"> the LocoNet ID <strong>Value:</strong></p>
+      allows you to <span class="textbutton">Read</span> or <span class="textbutton">Set</span>
+      the LocoNet ID <strong>Value:</strong></p>
 
       <p style="margin-left: 40px;"><img src="images/Main_Loconet08.png" alt="loconet if" height=
       "145" width="245">
@@ -315,12 +308,12 @@
       Data</strong> option to monitor the packets.</p>
 
       <p style="margin-left: 40px;">The top section lets you send a single LocoNet packet. Type the
-      hexidecimal numbers and click <input name="button7" id="button7" value="Send" type="submit">
+      hexidecimal numbers and click <span class="textbutton">Send</span>
       , you should include the byte for the checksum at the end of the message.</p>
 
       <p style="margin-left: 40px;">The bottom section lets you enter from one to four packets that
       will be repeatedly sent in sequence, with the user-defined delays in between. Press the
-      <input name="button8" id="button8" value="Go" type="submit"> to start transmission sequence,
+      <span class="textbutton">Go</span> to start transmission sequence,
       and press again to stop the sequence.</p>
 
       <p><strong>Select PR3 Mode</strong>
@@ -350,18 +343,18 @@
       <p style="margin-left: 40px;">To use this tool:</p>
 
       <ul style="margin-left: 40px;">
-        <li>Click <input name="button9" id="button9" value="Select" type="submit"> and select the
+        <li>Click <span class="textbutton">Select</span> and select the
         .dmf file you want to download.<br>
         <br></li>
 
-        <li>Click <input name="button10" id="button10" value="Read file" type="submit"> to read the
+        <li>Click <span class="textbutton">Read file</span> to read the
         file into the program and verify its contents.</li>
 
         <li>Only if instructed to by Digitrax, change the various values in the control fields
         (this is usually not needed</li>
 
-        <li>Click <input name="button11" id="button11" value="Download" type="submit"> to load the
-        firmware. This will take a little while.</li>
+        <li>Click <span class="textbutton">Download</span> to load the firmware.
+        This will take a little while.</li>
       </ul>
 
       <p><strong><a id="Sounds"></a>Download Sounds</strong>

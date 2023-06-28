@@ -170,9 +170,9 @@
       <p><input name="checkbox11" id="checkbox11" type="checkbox"> Use Text Editor</p>
 
       <p><strong>Logo</strong><br>
-      <input name="button3" id="button3" value="Add Logo" type="button"> allows you to add a logo
-      in the top right hand corner of your Manifests and Switch Lists. Press <input name="button4"
-      id="button4" value="Add Logo" type="button"> and select a file with the image you want to
+      The <span class="textbutton">Add Logo</span> button allows you to add a logo in the top right hand
+      corner of your Manifests and Switch Lists. Press <span class="textbutton">Add Logo</span>
+      and select a file with the image you want to
       display. Each Train in your Roster may have a different logo; this is set in <strong><a href=
       "Ops_Trains.shtml">Trains Setup</a></strong></p>
 
@@ -201,7 +201,7 @@
       </div>
       <!-- End of New -->
 
-      <p>Be sure to press <input name="button" id="button" value="Save" type="submit"> after
+      <p>Be sure to press <span class="textbutton">Save</span> after
       changing the Manifest Print selections.</p>
 
       <hr>

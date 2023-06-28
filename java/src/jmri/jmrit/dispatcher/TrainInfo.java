@@ -81,6 +81,8 @@ public class TrainInfo {
 
     private float waitTime = 1.0f; //required only by dispatcher system to pause train at beginning of transit (station)
 
+    private String blockName = ""; //required only by Dispatcher System to inhibit running of transit if this block is occupied
+
 
     //
     // Access methods for manual and automatic instance variables
@@ -568,4 +570,9 @@ public class TrainInfo {
     public float getWaitTime() {
         return waitTime;
     }
+
+    public void setBlockName(String s) { blockName = s; }
+
+    public String getBlockName() { return blockName; }
+
 }

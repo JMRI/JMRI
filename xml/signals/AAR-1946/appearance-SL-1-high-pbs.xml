@@ -67,6 +67,12 @@
         <authorinitials>MZ</authorinitials>
         <revremark>Changed Approach aspectMapping and changed ourAspect to Clear</revremark>
      </revision>
+     <revision>
+        <revnumber>3.2</revnumber>
+        <date>2023-02-21</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Added some missing mappings</revremark>
+     </revision>    
 </revhistory>
 
   <aspecttable>AAR 1946</aspecttable>
@@ -115,6 +121,11 @@
   </specificappearances>
 
   <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -182,6 +193,36 @@
 
      <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed Medium</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Permissive</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Permissive Medium</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 

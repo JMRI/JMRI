@@ -2009,56 +2009,56 @@
       <Parameters>
         <Parameter>
           <name>Abc</name>
-          <initalValueType>FloatingNumber</initalValueType>
+          <initialValueType>FloatingNumber</initialValueType>
           <initialValueData>12.32</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Def</name>
-          <initalValueType>Formula</initalValueType>
+          <initialValueType>Formula</initialValueType>
           <initialValueData>12 + 32</initialValueData>
           <returnValueType>Memory</returnValueType>
           <returnValueData>M1</returnValueData>
         </Parameter>
         <Parameter>
           <name>Ghi</name>
-          <initalValueType>Integer</initalValueType>
+          <initialValueType>Integer</initialValueType>
           <initialValueData>21</initialValueData>
           <returnValueType>None</returnValueType>
           <returnValueData />
         </Parameter>
         <Parameter>
           <name>Jkl</name>
-          <initalValueType>LocalVariable</initalValueType>
+          <initialValueType>LocalVariable</initialValueType>
           <initialValueData>MyVar</initialValueData>
           <returnValueType>Memory</returnValueType>
           <returnValueData>M34</returnValueData>
         </Parameter>
         <Parameter>
           <name>Mno</name>
-          <initalValueType>Memory</initalValueType>
+          <initialValueType>Memory</initialValueType>
           <initialValueData>M2</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Pqr</name>
-          <initalValueType>None</initalValueType>
+          <initialValueType>None</initialValueType>
           <initialValueData />
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Stu</name>
-          <initalValueType>Reference</initalValueType>
+          <initialValueType>Reference</initialValueType>
           <initialValueData>{MyVar}</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Vxy</name>
-          <initalValueType>String</initalValueType>
+          <initialValueType>String</initialValueType>
           <initialValueData>Some string</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
@@ -18483,6 +18483,7 @@
       </Actions>
       <startImmediately>no</startImmediately>
       <runContinuously>no</runContinuously>
+      <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18558,6 +18559,7 @@
       </Actions>
       <startImmediately>no</startImmediately>
       <runContinuously>yes</runContinuously>
+      <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -18641,6 +18643,7 @@
       </Actions>
       <startImmediately>yes</startImmediately>
       <runContinuously>no</runContinuously>
+      <startAndStopByStartExpression>no</startAndStopByStartExpression>
       <unit>MilliSeconds</unit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -20767,56 +20770,56 @@
       <Parameters>
         <Parameter>
           <name>Abc</name>
-          <initalValueType>FloatingNumber</initalValueType>
+          <initialValueType>FloatingNumber</initialValueType>
           <initialValueData>12.32</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Def</name>
-          <initalValueType>Formula</initalValueType>
+          <initialValueType>Formula</initialValueType>
           <initialValueData>12 + 32</initialValueData>
           <returnValueType>Memory</returnValueType>
           <returnValueData>M1</returnValueData>
         </Parameter>
         <Parameter>
           <name>Ghi</name>
-          <initalValueType>Integer</initalValueType>
+          <initialValueType>Integer</initialValueType>
           <initialValueData>21</initialValueData>
           <returnValueType>None</returnValueType>
           <returnValueData />
         </Parameter>
         <Parameter>
           <name>Jkl</name>
-          <initalValueType>LocalVariable</initalValueType>
+          <initialValueType>LocalVariable</initialValueType>
           <initialValueData>MyVar</initialValueData>
           <returnValueType>Memory</returnValueType>
           <returnValueData>M34</returnValueData>
         </Parameter>
         <Parameter>
           <name>Mno</name>
-          <initalValueType>Memory</initalValueType>
+          <initialValueType>Memory</initialValueType>
           <initialValueData>M2</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Pqr</name>
-          <initalValueType>None</initalValueType>
+          <initialValueType>None</initialValueType>
           <initialValueData />
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Stu</name>
-          <initalValueType>Reference</initalValueType>
+          <initialValueType>Reference</initialValueType>
           <initialValueData>{MyVar}</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>
         </Parameter>
         <Parameter>
           <name>Vxy</name>
-          <initalValueType>String</initalValueType>
+          <initialValueType>String</initialValueType>
           <initialValueData>Some string</initialValueData>
           <returnValueType>LocalVariable</returnValueType>
           <returnValueData>SomeVar</returnValueData>

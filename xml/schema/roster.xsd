@@ -31,7 +31,7 @@
             "
         >
   <xs:include schemaLocation="http://jmri.org/xml/schema/locomotive-config.xsd"/>
-  
+
   <xs:element name="roster-config">
     <xs:annotation>
         <xs:documentation>
@@ -43,11 +43,11 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-        
+
         <xs:element name="roster" minOccurs="1" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-                <xs:element name="locomotive"  type="LocomotiveType" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="locomotive"  type="LocomotiveType" minOccurs="1" maxOccurs="unbounded">
               </xs:element>
             </xs:sequence>
             <xs:attribute name="filter" type="xs:string" use="optional">
@@ -59,10 +59,10 @@
             </xs:attribute>
           </xs:complexType>
         </xs:element>
-        
+
         <xs:element name="rosterGroup" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType><xs:sequence>
-              
+
               <xs:element name="group" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:simpleContent>
@@ -71,12 +71,12 @@
                   </xs:simpleContent>
                 </xs:complexType>
               </xs:element>
-              
+
           </xs:sequence></xs:complexType>
         </xs:element>
-        
+
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  
+
 </xs:schema>

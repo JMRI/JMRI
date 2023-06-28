@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.commons.lang3.StringUtils;
+import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.python.jline.internal.Log;
 
@@ -615,14 +616,28 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * @param msg the message to assert exists
      */
     public static void assertWarnMessage(String msg) {
-        if (list.isEmpty()) {
-            Assert.fail("No message present: " + msg);
+        assertMessage(msg, Level.WARN);
+    }
+
+    /**
+     * Check that the next queued message has a specific message
+     * and matches the expected severity level.
+     * White space is ignored.<p>
+     * Invokes a JUnit Assertion Fail if the message doesn't match,
+     * or if the Logging Level is different.
+     *
+     * @param msg the message to assert exists
+     * @param level the Logging Level which should match
+     */
+    public static void assertMessage(String msg, Level level) {
+        LoggingEvent evt = checkForMessage(msg);
+        if (evt == null) {
+            Assertions.fail("Looking for message \"" + msg + "\" and didn't find it");
             return;
         }
-        LoggingEvent evt = checkForMessage(msg);
-
-        if (evt == null) {
-            Assert.fail("Looking for message \"" + msg + "\" and didn't find it");
+        if (level != evt.getLevel() ){
+            Assertions.fail("Incorrect logging level for \"" + msg
+                + "\" expecting " + level + " was " + evt.getLevel());
         }
     }
 

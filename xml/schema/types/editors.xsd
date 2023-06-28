@@ -1360,6 +1360,7 @@
       <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
       <xs:attribute name="disabled" type="yesNoType"></xs:attribute>
       <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
+      <xs:attribute name="showtooltip" type="yesNoType"></xs:attribute>
 
       <xs:attribute name="turnoutname" type="beanNameType"></xs:attribute>
       <xs:attribute name="blockname" type="beanNameType"></xs:attribute>
@@ -1472,6 +1473,7 @@
       <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
       <xs:attribute name="disabled" type="yesNoType"></xs:attribute>
       <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
+      <xs:attribute name="showtooltip" type="yesNoType"></xs:attribute>
 
       <xs:attribute name="blockname" type="beanNameType"></xs:attribute>
       <xs:attribute name="blockbname" type="beanNameType"></xs:attribute>

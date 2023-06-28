@@ -332,6 +332,53 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         //EEPROM reply
         r = DCCppReply.parseDCCppReply("e 12 34 56");
         Assert.assertTrue(r.isWriteEepromReply());
+
+        //Throttle Command replies
+        r = DCCppReply.parseDCCppReply("jT 123 456 789");
+        Assert.assertTrue(r.isTurnoutIDsReply());
+        Assert.assertFalse(r.isTurnoutIDReply());
+        Assert.assertEquals(789, (int) r.getTurnoutIDList().get(2));
+        Assert.assertEquals(3, r.getTurnoutIDList().size());
+        Assert.assertEquals("Monitor string", "Turnout IDs:[123, 456, 789]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jT 123 C \"turnout description\"");
+        Assert.assertTrue(r.isTurnoutIDReply());
+        Assert.assertFalse(r.isTurnoutIDsReply());
+        Assert.assertEquals(123, r.getTOIDInt());
+        Assert.assertEquals("C", r.getTurnoutStateString());
+        Assert.assertEquals("turnout description", r.getTurnoutDescString());
+        Assert.assertEquals("Monitor string", "Turnout ID:123 State:C Desc:'turnout description'", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jT 456 T \"\"");
+        Assert.assertEquals("T", r.getTurnoutStateString());
+        Assert.assertEquals("", r.getTurnoutDescString());
+        Assert.assertEquals("Monitor string", "Turnout ID:456 State:T Desc:''", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jT");
+        Assert.assertTrue(r.isTurnoutIDsReply());
+        Assert.assertEquals(0, r.getTurnoutIDList().size());
+        Assert.assertEquals("Monitor string", "Turnout IDs:[]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jC 222 4"); //time and rate
+        Assert.assertTrue(r.isClockReply());
+        Assert.assertEquals(222, r.getClockMinutesInt());
+        Assert.assertEquals(4,   r.getClockRateInt());
+        Assert.assertEquals("Monitor string", "FastClock Reply: 03:42, Rate:4", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jC 333"); //just time
+        Assert.assertTrue(r.isClockReply());
+        Assert.assertEquals(333, r.getClockMinutesInt());
+        Assert.assertEquals("Monitor string", "FastClock Reply: 05:33", r.toMonitorString());
+        //verify that bad syntax fails
+        r = DCCppReply.parseDCCppReply("jT 123 456 789 xx");        
+        Assert.assertFalse(r.isTurnoutIDsReply());
+        r = DCCppReply.parseDCCppReply("jT 123 X \"turnout description\"");
+        Assert.assertFalse(r.isTurnoutIDReply());
+        r = DCCppReply.parseDCCppReply("jC 222 4 xx"); //time and rate
+        Assert.assertFalse(r.isClockReply());
+        r = DCCppReply.parseDCCppReply("jC x222 4 xx"); //time and rate
+        Assert.assertFalse(r.isClockReply());
+        
+        //TrackManager
+        r = DCCppReply.parseDCCppReply("= B PROG 123");
+        Assert.assertTrue(r.isTrackManagerReply());
+        Assert.assertEquals("Monitor string", "TrackManager:= B PROG 123", r.toMonitorString());
+    
     }
 
     @Test
@@ -556,6 +603,18 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Power Status: OFF", l.toMonitorString());
         l = DCCppReply.parseDCCppReply("p 1");
         Assert.assertEquals("Monitor string", "Power Status: ON", l.toMonitorString());
+    }
+
+    @Test
+    public void testMonitorStringThrottleCommandsReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("jT 3456 C \"turnout desc\"");
+        Assert.assertEquals("Monitor string", "Turnout ID:3456 State:C Desc:'turnout desc'", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("jT 111 222 3456");
+        Assert.assertEquals("Monitor string", "Turnout IDs:[111, 222, 3456]", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("jT"); //no turnouts defined
+        Assert.assertEquals("Monitor string", "Turnout IDs:[]", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("jT 3456 C \"\""); //no description defined
+        Assert.assertEquals("Monitor string", "Turnout ID:3456 State:C Desc:''", l.toMonitorString());
     }
 
     @BeforeEach

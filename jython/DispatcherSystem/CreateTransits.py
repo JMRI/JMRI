@@ -20,16 +20,18 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
     def __init__(self):
         pass
 
-    def run_transits(self, filename, backupfile, backupfilename):
+    def run_transits(self):
+
         #self.msg = "About to create all transits and train info files\nrequired for dispatcher operation"
+
 
         self.process_panels()
         #msg = "All Transits and TrainInfo Files produced\n and saved in " + filename_run +"\n - Restart JMRI and \n - load the file " + filename_run + "\n - instead of " + filename_icon + "\nThen run Stage3 to set the dispatcher options\nand run the dispatcher system from the panel"
-        msg = "All Sections, Transits and TrainInfo Files produced.\n\n"
-        msg = msg + "A backup of the original file has been saved in " + backupfilename + "\n\n"
+
+        # msg = msg + "A backup of the original file has been saved in " + backupfilename + "\n\n"
 
         #self.displayMessage(msg)
-
+        msg = "All Sections, Transits and TrainInfo Files produced.\n\n"
         msg = msg + 'The JMRI tables and panels have been updated to support the Dispatcher System\nA store is recommended.'
         self.displayMessage(msg)
         #self.store_panel(filename)
@@ -46,7 +48,6 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 1: print(msg)
 
     def process_panels(self):
-        #self.g = StationGraph()
         EditorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
         if self.logLevel > 1: print "finding panels"
         LayoutPanels = []
@@ -91,7 +92,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
     def create_transits_and_trainTrainInfos(self, layoutPanels):
         if self.logLevel > 1: print "*********************************** producing transit ******************************"
-        #produce all the transits, so use the stopping graph which is more complete than the stopping graph
+        # produce all the transits, so use the stopping graph which is more complete than the stopping graph
 
         self.delete_transits()
         self.delete_train_TrainInfos()
@@ -106,7 +107,8 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "&&&& produce_transits &&&&"
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 
-        self.produce_transits()
+        display_progress = True
+        self.produce_transits(display_progress)
 
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         if self.logLevel > 0: print "&&&& end produce_transits &&&&"
@@ -288,9 +290,6 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                 msg = "there must be signal masts between and beyond each pair of stopping points. "
                 msg = msg + "please insert a signal mast, or remove a station for the station pair: "
                 msg = msg + e.getItem("first_block_name") + " : " + e.getItem("last_block_name")
-               
-                print msg
-                
                 dpg=DisplayProgress_global()
                 dpg.resize()
                 dpg.Update(msg)
@@ -754,8 +753,8 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         else:
             return None
 
-    def produce_transits(self):
-
+    def produce_transits(self, display_progress = False):
+        global dpg
         max_no_transits = 20000       #always produce transists useful for testing
         t = []
 
@@ -777,8 +776,10 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         interval_count = int(no_of_edges/8)
         interval_count_total = interval_count
 
-        dpg=DisplayProgress_global()
-        dpg.Update("creating transits: " + str(progress) + "% complete")
+        if 'dpg' not in globals():
+            dpg=DisplayProgress_global()
+        if display_progress:
+            dpg.Update("creating transits: " + str(progress) + "% complete")
 
 
         for e in g.g_express.edgeSet():
@@ -793,7 +794,8 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                     if self.logLevel > 1: print progress, i
                     p = int(min(progress, 100))
                     if self.logLevel > 1: print "p" , p
-                    dpg.Update("creating transits: " + str(progress)+ "% complete")
+                    if display_progress:
+                        dpg.Update("creating transits: " + str(progress)+ "% complete")
 
                 if self.logLevel > 1: print "creating",i
                 filename_fwd = self.get_filename(e, "fwd")
@@ -813,7 +815,8 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                     if self.logLevel > 1: print "created transits", i, filename_fwd, " & rvs"
 
         self.rename_temp_transits()   #the transits above have _temp put on the end. We need to remove this
-        dpg.killLabel()
+        if display_progress:
+            dpg.killLabel()
 
     def get_existing_transit(self, e):
 
@@ -890,8 +893,8 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         if transit.getUserName() == None:
             JOptionPane.showMessageDialog(None, 'transit name null', "", JOptionPane.WARNING_MESSAGE)
             if self.logLevel > 0: print "transit_section_list",transit_section_list
-        via = e.getItem("first_block_name")
-        temp_name = transit.getUserName() + "_" + via + "_temp"
+        via = e.getItem("second_block_name")
+        temp_name = transit.getUserName() + " via " + via + "_temp"
         TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
         if TransitManager.getTransit(temp_name) == None:
             transit.setUserName(temp_name)

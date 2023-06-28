@@ -1,0 +1,36 @@
+<?xml version="1.0" standalone="yes"?>
+<MergModuleDataSet>
+  <userEvents>
+    <eventId>130</eventId>
+    <ownerNode>256</ownerNode>
+    <nodeName>JMRI Pi</nodeName>
+    <eventName>SOD Request DC CANPAN from JMRI</eventName>
+    <Values>020000000000000000000000FF</Values>
+    <eventNode>127</eventNode>
+    <eventValue>100</eventValue>
+  </userEvents>
+  <userEvents>
+    <eventId>172</eventId>
+    <ownerNode>256</ownerNode>
+    <nodeName>JMRI Pi</nodeName>
+    <eventName>LED DC On</eventName>
+    <Values>0102030405060708090A0B0C0D</Values>
+    <eventNode>127</eventNode>
+    <eventValue>205</eventValue>
+  </userEvents>
+  <userNodes>
+    <moduleId>29</moduleId>
+    <moduleName>CANPAN</moduleName>
+    <nodeNum>256</nodeNum>
+    <nodeName>DC CANPAN</nodeName>
+    <numEvents>57</numEvents>
+    <inUse>true</inUse>
+    <Flim>true</Flim>
+    <NodeVars>01</NodeVars>
+    <maxEvents>128</maxEvents>
+    <Version>1Y</Version>
+    <CanId>1</CanId>
+    <maxNVs>1</maxNVs>
+    <ProcId>P18F25K80</ProcId>
+  </userNodes>
+</MergModuleDataSet>

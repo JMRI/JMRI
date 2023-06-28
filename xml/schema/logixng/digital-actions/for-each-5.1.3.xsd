@@ -34,7 +34,7 @@
             <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ForEachXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-        
+
             <xs:sequence>
 
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
@@ -57,6 +57,7 @@
                     <xs:enumeration value="Memories"/>
                     <xs:enumeration value="Audio"/>
                     <xs:enumeration value="LayoutBlocks"/>
+                    <xs:enumeration value="EntryExit"/>
                     <xs:enumeration value="Warrants"/>
                     <xs:enumeration value="Sections"/>
                     <xs:enumeration value="Transits"/>
@@ -94,9 +95,9 @@
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-            
+
             <xs:attribute name="class" type="classType" use="required"/>
-        
+
     </xs:complexType>
 
 </xs:schema>

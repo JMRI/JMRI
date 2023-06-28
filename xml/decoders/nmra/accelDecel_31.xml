@@ -40,7 +40,7 @@
       <revremark>Revision in original 0NMRA.xml file</revremark>
     </revision>
   </revhistory>
-  <variable CV="3" item="Accel">
+  <variable CV="3" item="Accel" tooltip="sets the Acceleration Rate [range 0-31]">
     <decVal max="31"/>
     <label>Acceleration Rate</label>
     <label xml:lang="it">Accellerazione (0-31)</label>
@@ -50,7 +50,7 @@
     <label xml:lang="nl">Versnelling (0-31)</label>
     <label xml:lang="es">Aceleración (0-31)</label>
   </variable>
-  <variable CV="4" item="Decel">
+  <variable CV="4" item="Decel" tooltip="sets the Deceleration Rate [range 0-31]">
     <decVal max="31"/>
     <label>Deceleration Rate</label>
     <label xml:lang="it">Decellerazione (0-31)</label>

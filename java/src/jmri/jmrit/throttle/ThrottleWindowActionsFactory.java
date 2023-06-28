@@ -192,7 +192,7 @@ public class ThrottleWindowActionsFactory extends ThrottleWindowActions {
         
         @Override
         public void actionPerformed(ActionEvent e) {
-            DccThrottle throttle = tw.getCurrentThrottleFrame().getAddressPanel().getThrottle();
+            DccThrottle throttle = tw.getCurrentThrottleFrame().getAddressPanel().getFunctionThrottle();
             if ((throttle!=null) && (throttle.getFunctionMomentary(fn) || ( !tw.getCurrentThrottleFrame().getFunctionPanel().getFunctionButtons()[fn].getIsLockable()))) {
                 throttle.setFunction(fn, true );
             } 
@@ -208,7 +208,7 @@ public class ThrottleWindowActionsFactory extends ThrottleWindowActions {
         
         @Override
         public void actionPerformed(ActionEvent e) {
-            DccThrottle throttle = tw.getCurrentThrottleFrame().getAddressPanel().getThrottle();
+            DccThrottle throttle = tw.getCurrentThrottleFrame().getAddressPanel().getFunctionThrottle();
             if (throttle!=null) throttle.setFunction(fn, ! throttle.getFunction(fn));
         }                
     }

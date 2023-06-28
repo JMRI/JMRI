@@ -248,7 +248,7 @@ public class ProfileManagerDialog extends JDialog {
     private void btnUseExistingActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnUseExistingActionPerformed
         timer.stop();
         countDownLbl.setVisible(false);
-        JFileChooser chooser = new JFileChooser(FileUtil.getHomePath());
+        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getHomePath());
         chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         chooser.setFileFilter(new ProfileFileFilter());
         chooser.setFileView(new ProfileFileView());

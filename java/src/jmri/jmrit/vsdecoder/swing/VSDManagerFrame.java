@@ -38,14 +38,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
@@ -86,7 +86,7 @@ public class VSDManagerFrame extends JmriJFrame {
      * Constructor
      */
     public VSDManagerFrame() {
-        super(false, false);
+        super(true, true);
         this.addPropertyChangeListener(VSDecoderManager.instance());
         is_auto_loading = VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingDefaultVSDFile();
         is_viewing = VSDecoderManager.instance().getVSDecoderList().isEmpty() ? false : true;
@@ -196,7 +196,7 @@ public class VSDManagerFrame extends JmriJFrame {
                     // Allow <max_decoder> roster entries
                     int entry_counter = 1;
                     for (RosterEntry entry : rosterList) {
-                        if (entry_counter <= VSDecoderManager.max_decoder) { 
+                        if (entry_counter <= VSDecoderManager.max_decoder) {
                             addButton.doClick(); // simulate an Add-button-click
                             cd.setRosterItem(entry); // forward the roster entry
                             entry_counter++;
@@ -238,7 +238,7 @@ public class VSDManagerFrame extends JmriJFrame {
         // If the maximum number of VSDecoders (Controls) is reached, don't create a new Control
         // In Viewing Mode up to 4 existing VSDecoders are possible, so skip the check
         if (! is_viewing && VSDecoderManager.instance().getVSDecoderList().size() >= VSDecoderManager.max_decoder) {
-            JOptionPane.showMessageDialog(null, 
+            JOptionPane.showMessageDialog(null,
                     "VSDecoder cannot be created. Maximal number is " + String.valueOf(VSDecoderManager.max_decoder));
         } else {
             config = new VSDConfig(); // Create a new Config for the new VSDecoder.

@@ -45,6 +45,7 @@ public class RailComTableActionTest extends AbstractTableActionBase<IdTag> {
     @Override
     @AfterEach
     public void tearDown() {
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
         JUnitUtil.tearDown();
     }
 

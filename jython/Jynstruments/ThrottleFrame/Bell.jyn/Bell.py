@@ -46,14 +46,14 @@ class Bell(Jynstrument, PropertyChangeListener, AddressListener, MouseListener):
 
     def switch(self):      # actually do function value change
         if self.throttle != None :
-            self.throttle.setF1( not self.throttle.getF1() )   # HERE!
+            self.throttle.setFunction(1, not self.throttle.getFunction(1) )   # HERE!
         self.setIcon()
 
     def setIcon(self):     # update appearance
         cl = self.getLayout()
         if self.throttle == None :
             cl.show(self, "off")
-        elif self.throttle.getF1() :
+        elif self.throttle.getFunction(1) :
             cl.show(self, "on")
         else :
             cl.show(self, "off")

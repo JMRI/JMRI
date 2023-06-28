@@ -30,7 +30,7 @@
         any HTML tag, such as the header tags. <strong>Preferences &rArr; Help</strong> is used by the
         user to select the whether <strong>Window Help</strong> and <strong>General help</strong>
         references are displayed using the distribution help files or <strong>jmri.org</strong>
-        help files. The later provides fully formatted help pages.</p>
+        help files. The latter provides fully formatted help pages.</p>
 
         <ul class="snav">
           <li>
@@ -95,29 +95,30 @@
 
         <p>Within that, there are several file trees:</p>
 
-        <ul>
-          <li><strong>package</strong> - organized like the source package tree, this contains
+        <dl>
+          <dt>package/</dt>
+          <dd>organized like the source package tree, this contains
           code-specific help files for e.g. a particular window or component. For example, a window
           that's created by the <code>jmri.jmrit.speedometer.SpeedometerFrame</code> class (from
           the <code>src/jmri/jmrit/speedometer/SpeedometerFrame.java</code> file) should have its
           window-specific help in a file at
-          <code>package/jmri/jmrit/speedometer/SpeedometerFrame.shtml</code>.</li>
+          <code>package/jmri/jmrit/speedometer/SpeedometerFrame.shtml</code>.</dd>
 
-          <li><strong>html</strong> - general descriptions, tutorials, etc. This in turn in
-          organized into directories that represent general areas.</li>
+          <dt>html/</dt>
+          <dd>general descriptions, tutorials, etc. This in turn in
+          organized into directories that represent general areas.</dd>
 
-          <li>
-            <strong>manual</strong> - the most recent version of the DecoderPro et al manuals
-            reformatted for use in the help system. (Older ones are stored in the <a href=
-            "WebSite.shtml">main website</a>)
-          </li>
-        </ul>
+          <dt>manual/</dt>
+          <dd>the most recent version of the DecoderPro et al manuals
+          reformatted for use in the help system. (Older ones are stored in the <a href=
+          "WebSite.shtml">main website</a>)</dd>
+        </dl>
 
         <p>While this is how we would LIKE our help files organized, help pages are created by
-        members of the community and sometimes general descriptions are put in the package
+        members of the community and sometimes general descriptions are put in the <code>package</code>
         directory rather than the html directory and vice versa. [If you see something that needs
-        to be moved, please post a note to the jmri-developers online groups.io forum as there are
-        members who occassionally try to do some housekeeping.]</p>
+        to be moved, please post a note to <a href="https://jmri-developers.groups.io">jmri-developers
+        groups.io</a> as there are members who occasionally try to do some housekeeping.]</p>
 
         <p>In the long run, we want only two branches to the help file structure: the
         <strong>package</strong> part of the tree for help information that is specific to a
@@ -142,13 +143,13 @@
 
         <ul>
           <li>Use ".shtml" file extensions so that the main web server will search the files for
-          <a href="https://httpd.apache.org/docs/1.3/howto/ssi.html">server-side includes</a>.
+          <a href="https://httpd.apache.org/docs/current/howto/ssi.html">server-side includes</a>.
           </li>
 
           <li>When you create a new page, start with a copy of either the
           <strong>help/en/template-sidebar.shtml</strong> or
-          <strong>help/en/template-no-sidebar.shtml</strong> template file, depending on whether or
-          not you want to include a "sidebar" (via a file named Sidebar.shtml). This template will
+          <strong>help/en/template-no-sidebar.shtml</strong> template file, depending on whether
+          you want to include a "sidebar" (via a file named Sidebar.shtml). This template will
           put the proper top and bottom content in place to get the page properly displayed.</li>
 
           <li>In general, all help files in the <strong>html</strong> directory tree use a sidebar
@@ -161,7 +162,7 @@
             the format of other Sidebar.shtml files in other subdirectories at the same level or in
             the parent directory. In 2020, there was a major effort to standardize the sidebar
             files, using server-side includes for common parts files in the <a href=
-            "../../../parts">/help/en/parts directory</a>. Typically a Sidebar.shtml file in a
+            "../../../parts">/help/en/parts directory</a>. Typically, a Sidebar.shtml file in a
             terminal subdirectory (one with no lower level) will further reference a <strong>local
             part</strong> in a file in the same subdirectory and named
             <strong>Sidebar[type]LocalPart.shtml</strong>, where [type] would be based on the name
@@ -179,14 +180,14 @@
           <li>All the page formatting on JMRI help and other web pages is done through included CSS
           files, originally created by John Plocher. These are included from "/css" via Server-Side
           Includes (SSI). The main file is at <a href=
-          "../../../../../css/default.css">/css/default.css</a> and works with a few other files in
+          "https://www.jmri.org/css/default.css">/css/default.css</a> and works with a few other files in
           that same directory. Because JmriHelp ignores SSI, the CSS formatting is ignored when
           JmriHelp is displaying the pages. In that case, JmriHelp and the browser's default CSS
           provide the formatting.
           </li>
         </ul>
 
-        <p>Note: The French web pages have not been updated to the new sidebar structure.</p>
+        <p>Note: The French web pages were updated to the new sidebar structure in 2022.</p>
 
         <p><a href="#helpTop">[Go to top of page]</a>
         </p>
@@ -203,18 +204,18 @@
 
         <p>The file name cannot contain an underscore character. The file suffix is .shtml.</p>
 
-        <p>The <strong>id</strong> attribute can assigned to HTML tags and then referenced by
+        <p>The <strong>id</strong> attribute can be assigned to HTML tags and then referenced by
         JmriHelp. This makes it possible to display window specific help information within a
         larger help document.</p>
 
         <p>Do not use spaces or <code>%20</code> in id names. If you must use a phrase for a name,
         use the underscore character: "This_Anchor", not "This Anchor.</p>
 
-        <p>When describing a sequence of user actions or pulldowns, use the double right arrow HTML
+        <p>When describing a sequence of user actions or pull downs, use the double right arrow HTML
         entity <strong>ampersand-rArr-semicolon</strong>, and label the whole sequence as "strong".
         For example:<br>
         <strong>File &rArr; Store Panels</strong><br>
-        A non-blanking space can be used before the right arrow to control line breaks.</p>
+        A non-breaking space can be used before the right arrow to control line breaks.</p>
 
         <p>You cannot count on any particular location for your files on the local machine, so all
         links to other help pages need to be relative. Links to XML contents also need to be
@@ -223,8 +224,8 @@
         <p>Links to web pages outside the help system work and should be specified as fully
         qualified, preferably with https://. These pages may be opened in a new tab or in the same
         tab (overwriting the current page), depending on how the person who wrote the help page
-        coded the reference. As of this writing (2020/04/04), there is an on-going debate as to the
-        prefered method.] The browser preferences might also affect the new tab / replace tab
+        coded the reference. As of this writing (2020/04/04), there is an ongoing debate as to the
+        preferred method.] The browser preferences might also affect the new tab / replace tab
         behavior.</p>
 
         <p><a href="#helpTop">[Go to top of page]</a>
@@ -236,7 +237,7 @@
 
       <div>
         <p>Within the JMRI code, access to the help system comes via the
-        <strong>jmri.util.HelpUtil</strong> class. (For historical reasons, there's a little bit of
+        <strong>jmri.util.HelpUtil</strong> class. (For historical reasons, there's a bit of
         code in apps.Apps, but you should ignore that).</p>
 
         <p>The easiest way to add a help menu to a frame is to have it be a JmriJFrame (which you
@@ -404,7 +405,7 @@
         pages for the help system and the web. There are several steps involved to ensure that your
         new hardware help is integrated into the JMRI Help system and its website. All references
         below to files are to the <a href="https://github.com/JMRI/JMRI">JMRI Repository
-        structure</a> in Github. Note use of capitalization in references to (fictitious) product
+        structure</a> in GitHub. Note use of capitalization in references to (fictitious) product
         "X" from manufacturer "M":</p>
 
         <ol>

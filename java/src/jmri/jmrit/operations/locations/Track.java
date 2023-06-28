@@ -1554,7 +1554,7 @@ public class Track extends PropertyChangeSupport {
                     getLocation().getName(), getName()); // NOI18N
 
             return MessageFormat.format(Bundle.getMessage("lengthIssue"),
-                    new Object[] { LENGTH, length, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace() });
+                    new Object[] { LENGTH, length, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace(), getLength() });
         }
         return OKAY;
     }
@@ -1635,13 +1635,13 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Get the service order for this track. Only yards and interchange have this
-     * feature.
+     * Get the service order for this track. Yards and interchange have this
+     * feature for cars.  Staging has this feature for trains.
      *
      * @return Service order: Track.NORMAL, Track.FIFO, Track.LIFO
      */
     public String getServiceOrder() {
-        if (isSpur() || isStaging()) {
+        if (isSpur() || (isStaging() && getPool() == null)) {
             return NORMAL;
         }
         return _order;
@@ -1871,6 +1871,7 @@ public class Track extends PropertyChangeSupport {
                 getScheduleModeName()); // NOI18N
 
         ScheduleItem si = getCurrentScheduleItem();
+        // code check, should never be null
         if (si == null) {
             log.error("Could not find schedule item id: ({}) for schedule ({})", getScheduleItemId(),
                     getScheduleName()); // NOI18N
@@ -1940,6 +1941,7 @@ public class Track extends PropertyChangeSupport {
                         car.getRoadName().equals(currentSi.getRoadName())) &&
                 (currentSi.getReceiveLoadName().equals(ScheduleItem.NONE) ||
                         car.getLoadName().equals(currentSi.getReceiveLoadName()))) {
+            car.setScheduleItemId(currentSi.getId());
             car.loadNext(currentSi);
             // bump schedule
             bumpSchedule();

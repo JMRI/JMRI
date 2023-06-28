@@ -93,7 +93,11 @@ public class CbusNodeTablePane extends JPanel {
         tcm.getColumn(CbusNodeTableDataModel.NODE_RESYNC_BUTTON_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
         tcm.getColumn(CbusNodeTableDataModel.NODE_RESYNC_BUTTON_COLUMN).setCellRenderer(new ButtonRenderer());
 
+        tcm.getColumn(CbusNodeTableDataModel.NODE_EDIT_BUTTON_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
+        tcm.getColumn(CbusNodeTableDataModel.NODE_EDIT_BUTTON_COLUMN).setCellRenderer(new ButtonRenderer());
+
        ((JComponent) tcm.getColumn(CbusNodeTableDataModel.NODE_RESYNC_BUTTON_COLUMN).getCellRenderer()).setOpaque(false);
+       ((JComponent) tcm.getColumn(CbusNodeTableDataModel.NODE_EDIT_BUTTON_COLUMN).getCellRenderer()).setOpaque(false);
 
         setLayout(new BorderLayout());
         JScrollPane eventScroll = new JScrollPane(nodeTable);

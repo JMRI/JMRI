@@ -698,8 +698,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         if (isEditable()) {
             setAllShowToolTip(tooltipsInEditMode);
+            setAllShowLayoutTurnoutToolTip(tooltipsInEditMode);
         } else {
             setAllShowToolTip(tooltipsWithoutEditMode);
+            setAllShowLayoutTurnoutToolTip(tooltipsWithoutEditMode);
         }
 
         scrollNoneMenuItem.setSelected(_scrollState == Editor.SCROLL_NONE);
@@ -855,6 +857,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             if (isEditable()) {
                 setAllShowToolTip(tooltipsInEditMode);
+                setAllShowLayoutTurnoutToolTip(tooltipsInEditMode);
 
                 // redo using the "Extra" color to highlight the selected block
                 if (highlightSelectedBlockFlag) {
@@ -864,6 +867,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             } else {
                 setAllShowToolTip(tooltipsWithoutEditMode);
+                setAllShowLayoutTurnoutToolTip(tooltipsWithoutEditMode);
 
                 // undo using the "Extra" color to highlight the selected block
                 if (highlightSelectedBlockFlag) {
@@ -983,6 +987,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             tooltipsInEditMode = false;
             tooltipsWithoutEditMode = false;
             setAllShowToolTip(false);
+            setAllShowLayoutTurnoutToolTip(false);
         });
         tooltipAlwaysMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("TooltipAlways"));
         tooltipGroup.add(tooltipAlwaysMenuItem);
@@ -992,6 +997,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             tooltipsInEditMode = true;
             tooltipsWithoutEditMode = true;
             setAllShowToolTip(true);
+            setAllShowLayoutTurnoutToolTip(true);
         });
         tooltipInEditMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("TooltipEdit"));
         tooltipGroup.add(tooltipInEditMenuItem);
@@ -1001,6 +1007,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             tooltipsInEditMode = true;
             tooltipsWithoutEditMode = false;
             setAllShowToolTip(isEditable());
+            setAllShowLayoutTurnoutToolTip(isEditable());
         });
         tooltipNotInEditMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("TooltipNotEdit"));
         tooltipGroup.add(tooltipNotInEditMenuItem);
@@ -1010,6 +1017,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             tooltipsInEditMode = false;
             tooltipsWithoutEditMode = true;
             setAllShowToolTip(!isEditable());
+            setAllShowLayoutTurnoutToolTip(!isEditable());
         });
 
         //
@@ -3852,6 +3860,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 boolean popupSet = false;
                 popupSet |= p.setRotateOrthogonalMenu(popup);
                 popupSet |= p.setRotateMenu(popup);
+                popupSet |= p.setScaleMenu(popup);
                 if (popupSet) {
                     popup.addSeparator();
                     popupSet = false;
@@ -4701,7 +4710,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         if ((selection != null) && (selection.getDisplayLevel() > Editor.BKG) && selection.showToolTip()) {
             showToolTip(selection, event);
-        } else {
+        } else if (_targetPanel.getCursor() != Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)) {
             super.setToolTip(null);
         }
 
@@ -4714,6 +4723,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // log.debug("foundTrack: {}", foundTrack);
             if (HitPointType.isControlHitType(foundHitPointType)) {
                 _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                setTurnoutTooltip();
             } else {
                 _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
             }
@@ -4723,6 +4733,30 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
     }   // mouseMoved
+
+    private void setTurnoutTooltip() {
+        if (foundTrackView instanceof LayoutTurnoutView) {
+            var ltv = (LayoutTurnoutView) foundTrackView;
+            var lt = ltv.getLayoutTurnout();
+            if (lt.showToolTip()) {
+                var tt = lt.getToolTip();
+                if (tt != null) {
+                    tt.setText(lt.getNameString());
+                    var coords = ltv.getCoordsCenter();
+                    int offsetY = (int) (getTurnoutCircleSize() * SIZE);
+                    tt.setLocation((int) coords.getX(), (int) coords.getY() + offsetY);
+                    setToolTip(tt);
+                }
+            }
+        }
+    }
+
+    public void setAllShowLayoutTurnoutToolTip(boolean state) {
+        log.debug("setAllShowLayoutTurnoutToolTip: {}", state);
+        for (LayoutTurnout lt : getLayoutTurnoutsAndSlips()) {
+            lt.setShowToolTip(state);
+        }
+    }
 
     private boolean isDragging = false;
 
@@ -6913,7 +6947,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     public void addBackground() {
         if (inputFileChooser == null) {
-            inputFileChooser = new JFileChooser(
+            inputFileChooser = new jmri.util.swing.JmriJFileChooser(
                     String.format("%s%sresources%sicons",
                             System.getProperty("user.dir"),
                             File.separator,
@@ -8213,6 +8247,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         viewToTrk.put(v, trk);
 
         unionToPanelBounds(v.getBounds()); // temporary - this should probably _not_ be in the topological part
+
     }
 
     /**

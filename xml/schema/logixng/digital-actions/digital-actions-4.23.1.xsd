@@ -89,6 +89,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/throttle-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/trigger-route-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/web-browser-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/web-request-5.3.5.xsd"/>
 
     <xs:complexType name="LogixNG_DigitalActionManagerType">
       <xs:annotation>
@@ -169,6 +170,7 @@
             <xs:element name="Timeout"           type="LogixNG_DigitalAction_TimeoutType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="TriggerRoute"      type="LogixNG_DigitalAction_TriggerRouteType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="WebBrowser"        type="LogixNG_DigitalAction_WebBrowserType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="WebRequest"        type="LogixNG_DigitalAction_WebRequestType" minOccurs="0" maxOccurs="unbounded" />
 
           </xs:choice>
       </xs:sequence>

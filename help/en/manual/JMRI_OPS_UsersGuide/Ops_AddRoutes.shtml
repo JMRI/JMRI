@@ -38,9 +38,8 @@
       </p>
       Type the Route <strong>Name</strong> <input name="textfield" id="textfield" size="30" type=
       "text"> Each route must have a unique Name.
-      <p>Then press <input name="button" id="button" value="Add" type="submit"> located at the
-      bottom of the pane. The <strong>Add Route</strong> window now activates the attributes
-      required to enter the Route.</p>
+      <p>Then press <span class="textbutton">Add</span> located at the bottom of the pane.
+      The <strong>Add Route</strong> window now activates the attributes required to enter the Route.</p>
 
       <p><img src="images/Ops_AddRoute01.png" alt="add route" height="239" width="900">
       </p>
@@ -56,7 +55,7 @@
       location to start <input name="radio2" id="radio2" value="radio2" type="radio"> Add location
       at end</p>
 
-      <p>Press <input name="button2" id="button2" value="Add Location" type="submit"> An updated
+      <p>Press <span class="textbutton">Add Location</span> An updated
       <strong>Add Route</strong> window will be displayed with all the attributes required active.
       Repeat until all stops are entered for the Route.</p>
 
@@ -73,7 +72,7 @@
       train's engineer will know when reading his Manifest the towns he will be traveling
       through.</p>
 
-      <p>Make sure you press <input name="button3" id="button3" value="Save Route" type="submit">
+      <p>Make sure you press <span class="textbutton">Save Route</span>
       when you are done entering the Locations.</p>
 
       <p><img src="images/Ops_AddRoute03.png" alt="route" height="350" width="900">
@@ -99,19 +98,16 @@
       setting the number of moves, maximum length, or coordinates, click on the table to make sure
       it is recognized and stored by the program.</p>
 
-      <p>You may move the selected Location <input name="button10" id="button10" value="Up" type=
-      "button"> or <input name="button11" id="button11" value="Down" type="button"> to change it's
-      position in the list.</p>
+      <p>You may move the selected Location <span class="textbutton">Up</span> or 
+      <span class="textbutton">Down</span> to change its position in the list.</p>
 
-      <p>You may add a comment for each location. In the Comment column press <input name="button9"
-      id="button9" value="Add" type="button"><br>
+      <p>You may add a comment for each location. In the Comment column press <span class="textbutton">Add</span> .<br>
       <img src="images/Ops_AddRoute_comments.png" alt="comments" height="128" width="268"><br></p>
 
-      <p>Press <input name="button4" id="button4" value="Save Route" type="submit"> to save your
+      <p>Press <span class="textbutton">Save Route</span> to save your
       route. The program will create a file (OperationsRouteRoster.xml) in your JMRI directory in a
       folder called "operations". A backup file with the last settings for all of your routes is
-      also created each time <input name="button5" id="button5" value="Save Route" type="submit">
-      pressed.</p>
+      also created each time <span class="textbutton">Save Route</span> is pressed.</p>
 
       <p>Now we have our first Route set up.</p>
 
@@ -126,13 +122,12 @@
       <p><img src="images/Ops_Routes01.png" alt="routes" height="310" width="730">
       </p>
 
-      <p>Note that you may press <input name="button6" id="button6" value="Edit" type="submit"> on
+      <p>Note that you may press <span class="textbutton">Edit</span> on
       any Route and the <strong><a href="Ops_EditRoutes.shtml">Edit Route</a></strong> window
       opens, similar to the <strong>Add Route</strong> window.</p>
 
-      <p>You may now press <input name="button7" id="button7" value="Add" type="submit"> to add
-      another Route, repeating the process just completed, or close the <strong>Route</strong>
-      pane.</p>
+      <p>You may now press <span class="textbutton">Add</span> to add another Route,
+      repeating the process just completed, or close the <strong>Route</strong> pane.</p>
 
       <h3><a href="Ops_Routes_Menu.shtml">Add Route menu</a>
       </h3>

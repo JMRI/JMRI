@@ -376,7 +376,9 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
         } else if (source instanceof AbstractSignalMast) {
             if (e.getPropertyName().equals("Aspect")) { // NOI18N
                 AbstractSignalMast source2 = (AbstractSignalMast)source;
-                return source2.getAspect().equals(source2.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER));
+                String source2Aspect = source2.getAspect();
+                return source2Aspect != null && 
+                    source2Aspect.equals(source2.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER));
             }
         }
         return false;   // If none of the above, don't know, assume not red.

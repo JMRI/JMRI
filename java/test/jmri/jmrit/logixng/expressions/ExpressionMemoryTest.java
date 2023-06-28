@@ -352,7 +352,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
 
         expressionMemory.getSelectNamedBean().setNamedBean("A non existent memory");
         Assert.assertNull("memory handle is null", expressionMemory.getSelectNamedBean().getNamedBean());
-        JUnitAppender.assertWarnMessage("Memory \"A non existent memory\" is not found");
+        JUnitAppender.assertErrorMessage("Memory \"A non existent memory\" is not found");
 
         expressionMemory.getSelectNamedBean().setNamedBean(memory13.getSystemName());
         Assert.assertTrue("memory is correct", memory13 == expressionMemory.getSelectNamedBean().getNamedBean().getBean());
@@ -486,6 +486,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.automation;
 
-import java.awt.GraphicsEnvironment;
-
 import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
@@ -15,11 +13,11 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
 
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class AutomationsTableFrameTest extends OperationsTestCase {
 
     @Test
     public void testFrameCreation() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 
@@ -43,7 +41,6 @@ public class AutomationsTableFrameTest extends OperationsTestCase {
     
     @Test
     public void testTable() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 
@@ -74,7 +71,6 @@ public class AutomationsTableFrameTest extends OperationsTestCase {
     
     @Test
     public void testDeleteButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 
@@ -109,7 +105,6 @@ public class AutomationsTableFrameTest extends OperationsTestCase {
     
     @Test
     public void testEditButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 
@@ -130,9 +125,9 @@ public class AutomationsTableFrameTest extends OperationsTestCase {
         JemmyUtil.clickOnCellThreadSafe(tbl, 0, Bundle.getMessage("ButtonEdit"));
         
         // confirm edit frame exists
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return JmriJFrame.getFrame(Bundle.getMessage("TitleAutomationEdit")) != null;
-        });
+        },"edit frame exists");
 
         // dispose also closes edit frame
         JUnitUtil.dispose(f);
@@ -142,7 +137,6 @@ public class AutomationsTableFrameTest extends OperationsTestCase {
     
     @Test
     public void testRunButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 
@@ -169,7 +163,6 @@ public class AutomationsTableFrameTest extends OperationsTestCase {
     
     @Test
     public void testSortRadioButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 

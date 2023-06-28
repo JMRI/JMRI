@@ -55,7 +55,7 @@ public class RestoreFilesAction extends AbstractAction {
         BackupBase backup = new DefaultBackup();
 
         // get file to write to
-        JFileChooser fc = new JFileChooser(backup.getBackupRoot());
+        JFileChooser fc = new jmri.util.swing.JmriJFileChooser(backup.getBackupRoot());
         fc.addChoosableFileFilter(new FileFilter());
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 

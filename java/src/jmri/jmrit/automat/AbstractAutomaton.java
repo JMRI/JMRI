@@ -313,14 +313,14 @@ public class AbstractAutomaton implements Runnable {
     /**
      * Internal common routine to handle start-of-wait bookkeeping.
      */
-    final private void startWait() {
+    private void startWait() {
         waiting = true;
     }
 
     /**
      * Internal common routine to handle end-of-wait bookkeeping.
      */
-    final private void endWait() {
+    private void endWait() {
         if (promptOnWait) {
             debuggingWait();
         }
@@ -382,9 +382,7 @@ public class AbstractAutomaton implements Runnable {
         if (!inThread) {
             log.warn("waitSensorChange invoked from invalid context");
         }
-        if (log.isDebugEnabled()) {
-            log.debug("waitSensorChange starts: {}", mSensor.getSystemName());
-        }
+        log.debug("waitSensorChange starts: {}", mSensor.getSystemName());
         // register a listener
         PropertyChangeListener l;
         mSensor.addPropertyChangeListener(l = (PropertyChangeEvent e) -> {
@@ -410,9 +408,7 @@ public class AbstractAutomaton implements Runnable {
      * @param mSensor Sensor to watch
      */
     public void waitSensorActive(Sensor mSensor) {
-        if (log.isDebugEnabled()) {
-            log.debug("waitSensorActive starts");
-        }
+        log.debug("waitSensorActive starts");
         waitSensorState(mSensor, Sensor.ACTIVE);
     }
 
@@ -423,9 +419,7 @@ public class AbstractAutomaton implements Runnable {
      * @param mSensor Sensor to watch
      */
     public void waitSensorInactive(Sensor mSensor) {
-        if (log.isDebugEnabled()) {
-            log.debug("waitSensorInActive starts");
-        }
+        log.debug("waitSensorInActive starts");
         waitSensorState(mSensor, Sensor.INACTIVE);
     }
 
@@ -448,9 +442,7 @@ public class AbstractAutomaton implements Runnable {
         if (mSensor.getKnownState() == state) {
             return;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("waitSensorState starts: {} {}", mSensor.getSystemName(), state);
-        }
+        log.debug("waitSensorState starts: {} {}", mSensor.getSystemName(), state);
         // register a listener
         PropertyChangeListener l;
         mSensor.addPropertyChangeListener(l = (PropertyChangeEvent e) -> {
@@ -552,9 +544,7 @@ public class AbstractAutomaton implements Runnable {
         if (mSignalHead.getAppearance() == state) {
             return;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("waitSignalHeadState starts: {} {}", mSignalHead.getSystemName(), state);
-        }
+        log.debug("waitSignalHeadState starts: {} {}", mSignalHead.getSystemName(), state);
         // register a listener
         PropertyChangeListener l;
         mSignalHead.addPropertyChangeListener(l = (PropertyChangeEvent e) -> {
@@ -581,16 +571,14 @@ public class AbstractAutomaton implements Runnable {
      * @param mSignalMast the mast to wait for
      * @param aspect   the expected aspect
      */
-    public synchronized void waitSignalMastState(SignalMast mSignalMast, String aspect) {
+    public synchronized void waitSignalMastState(@Nonnull SignalMast mSignalMast, @Nonnull String aspect) {
         if (!inThread) {
             log.warn("waitSignalMastState invoked from invalid context");
         }
-        if (mSignalMast.getAspect().equals(aspect)) {
+        if (aspect.equals(mSignalMast.getAspect())) {
             return;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("waitSignalMastState starts: {} {}", mSignalMast.getSystemName(), aspect);
-        }
+        log.debug("waitSignalMastState starts: {} {}", mSignalMast.getSystemName(), aspect);
         // register a listener
         PropertyChangeListener l;
         mSignalMast.addPropertyChangeListener(l = (PropertyChangeEvent e) -> {
@@ -599,7 +587,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (! mSignalMast.getAspect().equals(aspect)) {
+        while (! aspect.equals(mSignalMast.getAspect())) {
             wait(-1);  // wait for notification
         }
 
@@ -622,9 +610,7 @@ public class AbstractAutomaton implements Runnable {
         if (!inThread) {
             log.warn("waitWarrantRunState invoked from invalid context");
         }
-        if (log.isDebugEnabled()) {
-            log.debug("waitWarrantRunState {}, {} starts", warrant.getDisplayName(), state);
-        }
+        log.debug("waitWarrantRunState {}, {} starts", warrant.getDisplayName(), state);
 
         // do a quick check first, just in case
         if (warrant.getRunMode() == state) {
@@ -664,9 +650,7 @@ public class AbstractAutomaton implements Runnable {
         if (!inThread) {
             log.warn("waitWarrantBlock invoked from invalid context");
         }
-        if (log.isDebugEnabled()) {
-            log.debug("waitWarrantBlock {}, {} {} starts", warrant.getDisplayName(), block, occupied);
-        }
+        log.debug("waitWarrantBlock {}, {} {} starts", warrant.getDisplayName(), block, occupied);
 
         // do a quick check first, just in case
         if (warrant.getCurrentBlockName().equals(block) == occupied) {
@@ -710,9 +694,7 @@ public class AbstractAutomaton implements Runnable {
         if (!inThread) {
             log.warn("waitWarrantBlockChange invoked from invalid context");
         }
-        if (log.isDebugEnabled()) {
-            log.debug("waitWarrantBlockChange {}", warrant.getDisplayName());
-        }
+        log.debug("waitWarrantBlockChange {}", warrant.getDisplayName());
 
         // do a quick check first, just in case
         if (warrant.getRunMode() != Warrant.MODE_RUN) {
@@ -762,9 +744,7 @@ public class AbstractAutomaton implements Runnable {
         if (!inThread) {
             log.warn("waitTurnoutConsistent invoked from invalid context");
         }
-        if (log.isDebugEnabled()) {
-            log.debug("waitTurnoutConsistent[] starts");
-        }
+        log.debug("waitTurnoutConsistent[] starts");
 
         // do a quick check first, just in case
         if (checkForConsistent(mTurnouts)) {

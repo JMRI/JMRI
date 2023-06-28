@@ -46,7 +46,9 @@
                   <li>
                     <a href="#LocoNetAddressing">LocoNet Device Addressing</a>
                   </li>
-
+                  <li>
+                    <a href="#SE74link">Using the SE74 with JMRI</a>
+                  </li>
                   <li>
                     <a href="#LocoNetTools">LocoNet Tools</a>
                   </li>
@@ -402,7 +404,24 @@
             that by selecting "no flow control".<br>
             This box will be blank if you've selected LocoBuffer-NG, LocoBuffer-USB, PR3, PR4 or MS100.</li>
 
-            <li>Packetizer Type lets you choose Normal (recommended) or Strict.</li>
+            <li>Interrogate Sensors, Turnouts On Start. If set to "No" then JMRI will not attempt
+            to probe DS52s, 64s,74s, BDL16x etc. for the current state of their sensors.</li>
+
+            <li>Expanded Protocol(XP Slots) if set to "No" then JMRI will only use the original LocoNet
+            messages to control locomotives, but, slots greater than 120 in the DCS240 will not be accessed.
+            If set to "Auto" JMRI will use the Expanded LocoNet protocol used by Evolution series Command
+            Stations (DCS52,210,210+,240,240+) if available. If mixing older throttles, such as the UT4 or
+            DT402 without the upgraded firmware, on a DCS240 or DCS240+, attempting to use an address first
+            used on a newer throttle or on JMRI may result in confusion and delay until the slots have been
+            cleared.</li>
+
+            <li>Packetizer Type lets you choose "Normal" (recommended) or "Strict". The strict packetizer places
+            each LocoNet message on the wire and does not send the next one until its "sees" the first one echoed back. It also waits
+            for a response for those packets that are supposed to have a response. It will try 5 attempts
+            before giving up. It "backs off" sending more packets on recieving "Busy" messages.
+            It will help situations where packets appear to get lost during busy moments. When using "Strict"
+            it is best to have the command station powered up with track power "On" before starting JMRI.</li>
+
 
             <li>"Transponding Present" allows you indicate whether certain special hardware is
             present and configured. If you have LocoNet-attached boards that configure in "ops
@@ -477,6 +496,9 @@
       outputs on a DS54, or the individual block detection inputs on a BDL16x. For more information
       on how to find those addresses, see <a href="Addressing.shtml">this page</a>.</p>
 
+      <h3 id="SE74link">Using the SE74 with JMRI</h3>
+      <p>Several aspects of using the SE74 with JMRI are described <a href="SE74.shtml">here</a>. 
+                                                                      
       <h3 id="LocoNetTools">LocoNet Tools</h3>
 
       <p>JMRI provides a variety of LocoNet-related tools. These primarily allow configuration of
@@ -680,7 +702,7 @@
 
             <li>JMRI normally sends an "ON" LocoNet message followed by an "OFF" LocoNet message
             when controlling switches, just like Digitrax throttles do. <span class="since">Since
-            <a href="https://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">JMRI
+            <a href="https://www.jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">JMRI
             4.15.7</a></span>, it is possible to configure JMRI to send only "ON" messages to
             turnouts, without sending "OFF" messages. Many accessory decoders work well when only
             receiving "ON" messages.
@@ -750,7 +772,7 @@
 
                 <li>
                   <span class="since">Since <a href=
-                  "https://jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">JMRI
+                  "https://www.jmri.org/releasenotes/jmri4.15.7.shtml" target="_blank">JMRI
                   4.15.7</a></span>, JMRI provides a feature which "bypasses" the command station's
                   "Bushby" feature and therefore allows JMRI to control those devices which are
                   controlled by turnout control information on the DCC track signal. This requires
@@ -790,7 +812,7 @@
 
                 <li>
                   <span class="since">Since <a href=
-                  "https://jmri.org/releasenotes/jmri4.25.2.shtml" target="_blank">JMRI
+                  "https://www.jmri.org/releasenotes/jmri4.25.2.shtml" target="_blank">JMRI
                   4.25.2</a></span>, JMRI includes a simple script to provide forwarding of
                   "normal" LocoNet turnout control messages, for certain user-defined addresses, as
                   equivalent "special" LocoNet turnout control messages. This can be useful when
@@ -1345,8 +1367,8 @@
         </li>
 
         <li>Support for Digitrax hardware products is available through <a href=
-        "http://www.digitrax.com">Digitrax, Inc.</a> Digitrax product manuals may be found
-          <a href="http://www.digitrax.com/support/manuals/">here</a>. Note that Digitrax generally
+        "https://www.digitrax.com">Digitrax, Inc.</a> Digitrax product manuals may be found
+          <a href="https://www.digitrax.com/support/manuals/">here</a>. Note that Digitrax generally
           does not provide support for JMRI software or third-party LocoNet devices.
         </li>
 
@@ -1358,7 +1380,7 @@
         </li>
       </ul>
 
-      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

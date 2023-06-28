@@ -11,7 +11,7 @@
   <script type="text/javascript">
   /*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/
   </script>
-  <link rel="stylesheet" type="text/css" href="/web/css/faq.css" media="screen"><!-- /FAQ-Head -->
+  <link rel="stylesheet" type="text/css" href="https://www.jmri.org/web/css/faq.css" media="screen"><!-- /FAQ-Head -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -45,7 +45,7 @@
           "https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Getting Started</a>
           guide.
           <ul>
-            <li>Get it from the <a href="http://git-scm.com/downloads" target="_blank">Git download
+            <li>Get it from the <a href="https://git-scm.com/downloads" target="_blank">Git download
             page</a>.
             </li>
 
@@ -55,7 +55,7 @@
             </li>
 
             <li>On the Mac, it's included when you <a href=
-            "https://developer.apple.com/xcode/download/">install Xcode</a>.
+            "https://developer.apple.com/xcode/download/">install Xcode</a> ( requires Apple Developer ID to Sign in ).
             </li>
 
             <li>On Linux you can use your package installer, e.g. <code>sudo yum install git</code>
@@ -68,7 +68,7 @@
         <dd>
           You can set your local repository to pull automatically from the JMRI master on GitHub
           and push to your fork (also on GitHub):<br>
-          <a href="/web/images/GitHubWorkflow.png"><img src="/web/images/GitHubWorkflow.png"
+          <a href="https://www.jmri.org/web/images/GitHubWorkflow.png"><img src="https://www.jmri.org/web/images/GitHubWorkflow.png"
           height="25%" width="25%" alt="GitHub Work Flow"></a>
           <p>That horizontal arrow is the "Pull Request" (and subsequent pull) that records
           information about how things get into the repository.</p>
@@ -93,14 +93,14 @@
           <p>This says that, by default, fetches and pulls come from the main JMRI/JMRI repository. When
           you push, on the other hand, it goes to your own repository.<br>
           Once you have a copy of your changes on GitHub, it is easy to <a href=
-          "https://help.github.com/articles/creating-a-pull-request/">generate a Pull Request</a>
-          (link to GitHub):</p>
+          "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request"
+          >generate a Pull Request</a> (link to GitHub)</p>
 
           <ul>
             <li>In a browser, navigate to your repository on GitHub that has the changes you want
             someone else to pull and</li>
 
-            <li>press the green compare icon <img src="/web/images/GitHubPR1.png" alt=
+            <li>press the green compare icon <img src="https://www.jmri.org/web/images/GitHubPR1.png" alt=
             "GitHub PR1">, then click on Create Pull Request.</li>
 
             <li>After your pull request has been reviewed, it can be merged back in to the main
@@ -295,7 +295,7 @@
               people, the maintainers, can pull your edits into the "real" JMRI:master. Before they
               do that, they study what you've written, maybe even pull it into their own repo to
               test it before merging it for every other JMRI user to see.<br>
-              When your PR is pulled & merged & closed, the PR #123 name will disappear and you may
+              When your PR is pulled &amp; merged &amp; closed, the PR #123 name will disappear and you may
               delete the branch safely.</p>
             </li>
           </ul>
@@ -463,7 +463,7 @@
 
             <li>You can opt to create and delete branches in Github web just as easily. More help
             on <a href=
-            "https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/">
+            "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository">
               Github Web Branching</a>.
             </li>
           </ul>
@@ -568,7 +568,7 @@ to do that command once to define "arnie" as an alias you can use in "git fetch"
           </ul>
           To add these to your own repository:
           <ul>
-            <li>For Travis CI, go to the <a href="https://travis-ci.org">Travis CI web page</a> and
+            <li>For Travis CI, go to the <a href="https://www.travis-ci.com">Travis CI web page</a> and
             "Sign Up". Use your GitHub account and email. At the end of that process, it will ask
             you which of your GitHub repositories to monitor; you can select both the "JMRI" and
             "website" forks.
@@ -741,8 +741,8 @@ can then look at the exact changes in that commit to see what went wrong.
         <dd>
           Sometimes people contribute files via the <a href=
           "https://sourceforge.net/p/jmri/patches/">SF.net issue tracker</a> or a <a href=
-          "https://guides.github.com/features/issues/">GitHub Issue</a>. This discussion talks
-          about how to handle those.
+          "https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues"
+          >GitHub Issue</a>. This discussion talks about how to handle those.
           <ol>
             <li>In your local repository, create a branch to hold the patch:
               <blockquote>
@@ -914,7 +914,7 @@ can then look at the exact changes in that commit to see what went wrong.
   </div>
   <!-- closes #mBody-->
   <!-- FAQ-Tail -->
-  <script type="text/javascript" src="/web/js/faq.js"></script><!-- /FAQ-Tail -->
+  <script type="text/javascript" src="https://www.jmri.org/web/js/faq.js"></script><!-- /FAQ-Tail -->
    
   <script src="/js/main.js"></script>
 </body>

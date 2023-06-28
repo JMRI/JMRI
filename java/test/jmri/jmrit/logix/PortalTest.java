@@ -23,7 +23,7 @@ public class PortalTest {
 
     @Test
     public void testCtor() {
-        Portal p = null;
+        Portal p;
 //        try {
 //            p = _portalMgr.createNewPortal(null); // annotated as nonnull so should not be tested
 //        } catch (NullPointerException ex) {
@@ -170,7 +170,7 @@ public class PortalTest {
         JUnitUtil.setUp();        
         _blkMgr = InstanceManager.getDefault(OBlockManager.class);
         _portalMgr = InstanceManager.getDefault(PortalManager.class);
-        _turnoutMgr = jmri.InstanceManager.turnoutManagerInstance();
+        _turnoutMgr = InstanceManager.turnoutManagerInstance();
     }
 
     @AfterEach

@@ -48,8 +48,8 @@
 
       <p>After importing your Car data, you must save the newly added entries if you want to keep
       them as part of your Roster. Select any Car in the Cars window list by pressing the
-      <strong>Edit</strong> button and then press the <input name="button" id="button" value="Save"
-      type="submit"> that can be found at the bottom right of the <a href=
+      <strong>Edit</strong> button and then press the <span class="textbutton">Save</span> button
+      that can be found at the bottom right of the <a href=
       "Ops_AddCars.shtml"><strong>Edit Car</strong></a> window.</p>
 
       <p>If you already have a list of Cars records in a database, you can import these into the

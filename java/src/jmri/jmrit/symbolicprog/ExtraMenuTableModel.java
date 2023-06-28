@@ -72,7 +72,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
 
     protected void flagIfOpsMode(String mode) {
         log.trace(" flagIfOpsMode {}", mode);
-        if (mode.startsWith("OPS")) {
+        if (mode.contains("OPS")) {
             hasOpsModeFlag = true;
         }
     }
@@ -114,17 +114,17 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
             case "Write":
                 return _writeButtons.get(row);
             case "State":
-                int state = cv.getState();
+                AbstractValue.ValueState state = cv.getState();
                 switch (state) {
-                    case CvValue.UNKNOWN:
+                    case UNKNOWN:
                         return "Unknown";
-                    case CvValue.READ:
+                    case READ:
                         return "Read";
-                    case CvValue.EDITED:
+                    case EDITED:
                         return "Edited";
-                    case CvValue.STORED:
+                    case STORED:
                         return "Stored";
-                    case CvValue.FROMFILE:
+                    case FROMFILE:
                         return "From file";
                     default:
                         return "inconsistent";
@@ -147,7 +147,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
         resetCV.addPropertyChangeListener(this);
         resetCV.setValue(cvVal);
         resetCV.setWriteOnly(true);
-        resetCV.setState(VariableValue.STORED);
+        resetCV.setState(AbstractValue.ValueState.STORED);
         rowVector.add(resetCV);
         labelVector.add(label);
         modeVector.add(getResetModeList(e, p));
@@ -258,7 +258,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
                     }
                 }
 
-                if (mProgrammer.getMode().getStandardName().startsWith("OPS")) {
+                if (mProgrammer.getMode().getStandardName().contains("OPS")) {
                     if (!opsResetOk()) {
                         return;
                     }

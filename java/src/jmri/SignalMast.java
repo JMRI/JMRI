@@ -1,6 +1,7 @@
 package jmri;
 
 import java.util.Vector;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
@@ -62,6 +63,7 @@ public interface SignalMast extends Signal {
      *
      * @return the current aspect or null if not set
      */
+    @CheckForNull
     public String getAspect();
 
     /**

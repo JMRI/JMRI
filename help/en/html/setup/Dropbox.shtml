@@ -66,7 +66,7 @@
 
         <li>Note that neither Dropbox or a shared network drive provide a fully isolated non-live
         off-line copy (external device such as USB drive or CD/DVD) by default. That responsibility
-        is still up to you.</li>
+        is still up to you.
       </ul>
 
       <p>The following approach should also work with other cloud-based file-synchronisation
@@ -74,7 +74,11 @@
       and <a href="https://www.microsoft.com/en-us/microsoft-365/onedrive/online-cloud-storage"
       target="_blank">OneDrive</a>. However the <a href="https://www.dropbox.com" target=
       "_blank">Dropbox</a> solution is well tested, having been used by a number of JMRI developers
-      and users for quite some time.</p>
+      and users for quite some time.
+      You can also use a revision control system like Git;
+      <a href="git.shtml">those instructions</a>
+      are somewhat different.</li>
+      </p>
 
       <h3>Step 1</h3>
 

@@ -793,7 +793,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         condBrowserFrame.setVisible(true);
     }  // makeBrowserWindow
 
-    JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    JFileChooser userFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
 
     /**
      * Save the bean browser window content to a text file.

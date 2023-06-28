@@ -306,8 +306,8 @@
       <indication>Indicateur de Direction éteint</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>15</dccAspect>
  </aspect>
@@ -317,8 +317,8 @@
       <indication>Indicateur de Direction</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>16</dccAspect>
  </aspect>
@@ -328,8 +328,8 @@
       <indication>Indicateur de Direction</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>17</dccAspect>
  </aspect>
@@ -339,8 +339,8 @@
       <indication>Indicateur de Direction</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>18</dccAspect>
  </aspect>
@@ -350,8 +350,8 @@
       <indication>Indicateur de Direction éteint</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>19</dccAspect>
  </aspect>
@@ -361,8 +361,8 @@
       <indication>Indicateur de Direction</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>20</dccAspect>
  </aspect>
@@ -372,8 +372,8 @@
       <indication>Indicateur de Direction</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>21</dccAspect>
  </aspect>
@@ -383,8 +383,8 @@
       <indication>Indicateur de Direction</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>22</dccAspect>
  </aspect>
@@ -394,8 +394,8 @@
       <indication>Indicateur de Direction</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>23</dccAspect>
  </aspect>
@@ -405,8 +405,8 @@
       <indication>Indicateur de Direction éteint</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>32</dccAspect>
  </aspect>
@@ -416,8 +416,8 @@
       <indication>Indicateur de Direction</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>25</dccAspect>
  </aspect>
@@ -427,8 +427,8 @@
       <indication>Indicateur de Direction</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>26</dccAspect>
  </aspect>
@@ -438,8 +438,8 @@
       <indication>Indicateur de Direction</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>27</dccAspect>
  </aspect>
@@ -449,8 +449,8 @@
       <indication>Indicateur de Direction</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>28</dccAspect>
  </aspect>
@@ -460,8 +460,8 @@
       <indication>Indicateur de Direction</indication>
       <description>tableau fixe lumineux.</description>
       <comment>Indique la direction géographique.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>29</dccAspect>
  </aspect>
@@ -582,8 +582,8 @@
       <indication>ouverture guidon d’arrêt-Clear</indication>
       <description>Le guidon d’arrêt ne présente aucune indication particulière en position d’ouverture.</description>
       <comment>celle-ci étant seulement caractérisée en signalisation lumineuse, par l’extinction de la bande rouge. </comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>20</dccAspect>
  </aspect>
@@ -593,8 +593,8 @@
       <indication>ouverture guidon d’arrêt-Clear</indication>
       <description>Le guidon d’arrêt ne présente aucune indication particulière en position d’ouverture</description>
       <comment>en signalisation mécanique, par l’effacement de l’aile qui se trouve alors masquée, et l’extinction du feu rouge associé.</comment>
-      <speed>Clear</speed>
-      <speed2>Clear</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Either</route>
       <dccAspect>21</dccAspect>
  </aspect>

@@ -43,12 +43,12 @@
       <p>
         OperationsPro&trade; lets you create realistic prototypical car movements through the
         optional use of <a href="#LocationDivision">railroad divisions</a>. Cars are returned to
-        their home division when their loads are removed, or when a new load is provided by an
-        industry in a foreign division.
+        their <a href="#HomeDivision">home division</a> when their loads are removed, or when a new
+        load is provided by an industry in a foreign division.
       </p>
 
       <p>OperationsPro&trade; is included in the JMRI suite of tools and can be found under the
-        main menu heading "Tools-&gt;Operations".</p>
+        main menu heading "Tools-&gt;OperationsPro".</p>
 
       <p>
         <img src="images/MainMenuDecoderPro.png" alt="">
@@ -107,6 +107,8 @@
 
                 <li><a href="#PrintOptions">Manifest Print Options</a>
                   <ul>
+                    <li><a href="#PrintOrientation">Orientation and Paper Size</a></li>
+                  
                     <li><a href="#ManifestComments">Manifests and Switch List Options</a></li>
 
                     <li><a href="#AddLogo">Add Logo</a></li>
@@ -135,8 +137,12 @@
         <li><a href="#Locations">Locations</a>
           <ul>
             <li><a href="#AddLocation">Add or Edit Location</a></li>
+            
+            <li><a href="#LocationServiceDirection">Train Direction Serviced</a></li>
 
             <li><a href="#LocationDivision">Railroad Divisions</a></li>
+            
+            <li><a href="#LocationRollingStock">Rolling Stock Serviced</a></li>
 
             <li><a href="#Yardmaster">Yardmaster</a></li>
 
@@ -166,6 +172,12 @@
 
             <li><a href="#Yards">Yards</a>
               <ul>
+                <li><a href="#TrackServiceDirection">Train Direction Serviced</a></li>
+                
+                <li><a href="#RollingStockServiced">Rolling Stock Serviced</a></li>
+                
+                <li><a href="#RoadAndLoadOptions">Road and Load Options</a></li>
+                
                 <li><a href="#PickUpCarOrder">Pick Up Car Order</a></li>
               </ul></li>
 
@@ -205,6 +217,8 @@
 
             <li><a href="#Staging">Staging Tracks</a>
               <ul>
+                <li><a href="#StagingMultipleTrains">Staging Multiple Trains per Physical
+                    Track</a></li>
                 <li><a href="#StagingAndCarLoads">Staging and Car loads</a></li>
 
                 <li><a href="#BlockingCarsFromStaging">Blocking Cars from Staging</a></li>
@@ -547,7 +561,15 @@
           Instructions</a> are available on the JMRI.org site.
       </p>
 
-      <h3 id="MultipleLayouts">Multiple Layout Support</h3>
+   <h3 id="BritishRailways">British Railways</h3>
+
+   <p>OperationsPro&trade; supports an alternate set of railway terminology for our British
+    modelers. To use British terminologies, change the JMRI Display Locale to English (United
+    Kingdom). With British terminology, trains travel Up/Down and East/West, and some British
+    railway names and wagon types are provided to get you started.</p>
+
+
+   <h3 id="MultipleLayouts">Multiple Layout Support</h3>
       You can create and manage multiple layouts using OperationsPro&trade;. From the main menu bar
       under "Edit" select "Preferences..." then "Config Profiles". Create a new <a
         href="../../../apps/TabbedPreferences.shtml#Profiles">Configuration Profile</a> for each
@@ -690,13 +712,21 @@
           Train Requirements</a> for locomotives and caboose area alone for now. Save the train, close
         the window, and return to the Trains window. Press the <a href="#BuildingTrains">Build</a>
         button for the train. It should build. Now pressing the "Print" or "Preview" button will
-        produce a Manifest for your train depending on the state of "Preview" checkbox at the bottom
+        produce a <a href="#PrintingManifests">Manifest</a> for your train depending on the state of "Preview" checkbox at the bottom
         of the <a href="#Trains">Trains</a> window. Review the Manifest and you should see that the
         train serviced all car types. If you examine the <a href="#Cars">Cars</a> window you can see
         that cars are now assigned to your train.
       </p>
 
-      <p>
+   <p>
+    OperationsPro&trade; when building a train also produces a <a href="#BuildReports">Build Report</a>.
+    The build report provides details on how the program built the train. It shows the available
+    locomotives and cars found along the train's route, and how the program attempted to find
+    destinations for them. When the program fails to build a train due to requirements requested by
+    you, the build report can help determine what the issue was and how to correct.
+   </p>
+
+   <p>
         Now try limiting the car types that the train will service by modifying some of the car
         types checkboxes in the <a href="#TrainEdit">Edit Train</a> window. Use the train <a
           href="#TrainReset">reset</a> to release the cars that were assigned to the train so you
@@ -763,7 +793,12 @@
           Instructions</a> are also available on the JMRI.org site.
       </p>
 
-      <p>
+   <p>
+    If you want to know more on how OperationsPro&trade; builds trains see the section on <a
+     href="#BuildReports">Build Reports</a>.
+   </p>
+
+   <p>
         Help is also available at the <a href="https://groups.io/g/jmriusers">JMRI users</a> which
         is part of the Groups.io. Another good source for help is a series of articles written by
         David Haynes <a
@@ -775,14 +810,7 @@
         you will find many useful functions, like the ability to print the contents of the window.
       </p>
 
-      <h3 id="BritishRailways">British Railways</h3>
-
-      <p>OperationsPro&trade; supports an alternate set of railway terminology for our British
-        modelers. To use British terminologies, change the JMRI Display Locale to English (United
-        Kingdom). With British terminology, trains travel Up/Down and East/West, and some British
-        railway names and wagon types are provided to get you started.</p>
-
-      <h2 id="TroubleShooting">Trouble Shooting</h2>
+      <h3 id="TroubleShooting">Trouble Shooting</h3>
       The best tool for trouble shooting train build problems is the <a href="#BuildReports">Train
         Build Report</a>.
       <p>
@@ -897,7 +925,7 @@
 
       <p>
         OperationsPro&trade; has two sets of car types for you to use. Descriptive provides type
-        names like "Boxcar" and "tank car", and AAR Codes provides type names like "XM" and "T" for
+        names like "Boxcar" and "Tank car", and AAR Codes provides type names like "XM" and "T" for
         boxcars and tank cars respectively. Select the one that you prefer. You can add or delete
         car types by using the <a href="#CarTypeLengthWeight">car type edit</a> window.
       </p>
@@ -907,8 +935,10 @@
       The program can convert actual inches into scale feet when entering car, locomotive, or track
       lengths. Just append a double quote (") to any length. The program can also convert from
       actual centimeters to scale meters, just append "cm" to any length.
+      
       <h4>Optional Year Modeled</h4>
       You can optionally enter the year you want printed on your train Manifests.
+      
       <h4>Add Operations Menu to Main Menu</h4>
       When selected, add the operations menu to the main menu bar. The operations menu will appear
       the next time you restart JMRI.
@@ -1336,13 +1366,18 @@
 
       <h3 id="ManifestOptions">Custom Manifests and Switch Lists</h3>
 
-      <h4>Generate CSV Manifests</h4>
-      If you want to create your own <a href="#SetupExcelProgram">Custom Manifest</a> using a comma
-      separated values (.csv) file, select this option. You can use a program like Excel to create a
-      Manifest to your liking. There's also a Java based program written by Tim Mann called <a
-        href="https://mrslamf.com/">Model Railroad Switch List and Manifest Formatter</a> that will
-      create custom Manifests and switch lists for you using the CSV files.
-      <p>You can find the CSV Manifest files created by OperationsPro&trade; in the operations
+   <h4>Generate CSV Manifests</h4>
+   If you want to create your own <a href="#SetupExcelProgram">Custom
+    Manifest</a> using a comma separated values (.csv) file, select this option. You can use a
+   program like Excel to create a Manifest to your liking. Dan Foltz who is a JMRI user/programmer
+   wrote the Excel based "Manifest Creator" and "Switch List Creator". You can find a copies of the
+   programs at
+   <a href="https://manifestcreator.weebly.com/">Manifest Creator - Add on to JMRI.</a> There's also
+   a Java based program written by Tim Mann called
+   <a href="https://mrslamf.com/">Model Railroad Switch List and Manifest Formatter</a> that will
+   create custom Manifests and switch lists for you using the CSV files.
+
+   <p>You can find the CSV Manifest files created by OperationsPro&trade; in the operations
         directory in a directory called "csvManifests". Each line of the file starts with a two to
         five letter code, followed by the code's description, and then any parameters associated
         with the code. Here's a list of the current codes and descriptions:</p>
@@ -1577,11 +1612,6 @@
         model, length, type, hp, location name, track name, destination name, destination track
         name, owner name, consist name, is lead loco in consist, loco comment, IDTag, DCC address.</p>
 
-      <p>
-        You can find some examples of custom manifests at <a
-          href="https://groups.io/g/jmriusers/files/Operations">https://groups.io/g/jmriusers/files/Operations</a>.
-      </p>
-
       <h4 id="GenerateCsvSwitchLists">Generate CSV Switch Lists</h4>
 
       <p>You can also generate custom switch lists using a comma separated values (.csv) files.
@@ -1711,7 +1741,7 @@
       locations by enabling this option.
 
       <h2 id="PrintOptions">Manifest Print Options</h2>
-      You can modify the how OperationsPro&trade; prints the train Manifests and the location switch
+      You can modify the how OperationsPro&trade; prints the train <a href="#PrintingManifests">Manifests</a> and the location switch
       lists. From the "Operations-&gt;Settings-&gt;Tools" menu select "Manifest Print Options" to
       open the window. Press the "Save" button located at the bottom of the window to enable your
       changes. The "Save" button will also cause the program to update the Manifests for all trains
@@ -1757,12 +1787,13 @@
           Manifests</a> to see examples of Manifests and switch lists using the described options.
       </p>
 
-      <h3>Orientation</h3>
-      There are four options, Portrait, Landscape, 4.25 x 11 and 3.25 x 11. Paper size is determined
-      by the locale in use. To access the JMRI locale, from the main menu bar under "Edit" select
-      "Preferences..." then "Display" and then select the "Locale" tab. Some printers require the
-      English (United States) locale in order to print out a Manifest or switch list with the
-      correct number of lines.
+      <h3 id="PrintOrientation">Orientation and Paper Size</h3>
+      There are four options, Portrait, Landscape, 4.25 x 11 and 3.25 x 11. Paper size ("Letter" or
+      "A4") is determined by the JMRI locale in use. To access the JMRI locale, from the main menu
+      bar under "Edit" select "Preferences..." then "Display" and then select the "Locale" tab. Some
+      printers require the English (United States) locale in order to print out a Manifest or switch
+      list with the correct number of lines for paper size "Letter".
+      
       <h3>Set Out Text Color</h3>
       You can select the text color of your Manifest when the operation is to set out a car or
       locomotive. Select the desired color from the drop down box.
@@ -2010,7 +2041,7 @@
 
       <h3 id="ManageAutoBackups">Manage Auto Backups</h3>
 
-      When "Auto Backup" in the <a href="#Settings">Settings</a> window is enabled, OperationsPro
+      When "Auto Backup" in the <a href="#Settings">Settings</a> window is enabled, OperationsPro&trade;
       will create a backup of the operations files each time the program is started. To delete older
       obsolete files, use this tool.
 
@@ -2080,23 +2111,26 @@
         Therefore a positive value means that track space is going to be consumed by set outs, and a
         negative number means that track space is going to be freed up by pick ups.</p>
 
-      <h4 id="LocationServiceDirection">Location Service Direction</h4>
+      <h4 id="LocationServiceDirection">Train Direction Serviced</h4>
 
-      <p>You can decide which train direction the location can service. For example, if only
-        east bound trains can access the location select "East" and deselect the other directions.
-        This can be useful if you want to only support trailing point switching for a given
-        location. If a location can support multiple directions then select the ones that are
-        appropriate.</p>
+      <p>
+        You can decide which train directions the location can service. For example, if only east
+        bound trains can access the location select "East" and deselect the other directions. This
+        can be useful if you want to only support trailing point switching for a given location. If
+        a location can support multiple directions then select the ones that are appropriate. You
+        can also control the <a href="#TrackServiceDirection">train service direction</a> for each track
+        at a location.
+      </p>
 
       <h4 id="LocationDivision">Railroad Division</h4>
 
       <p>
         The railroad divisions feature allows you to create prototypical car movements for your
-        railroad. Cars with a home division are <a href="#CarRouting">routed</a> to their
-        destinations and move with "purpose". To use this feature first create and then select at
-        least one division for your railroad by using the "Add" button in the "Division" section of
-        the "Edit Location" window. You can assign multiple locations to the same division, and you
-        can create several divisions for your railroad. Cars that are assigned a <a
+        railroad. Cars with a <a href="#homeDivision">home division</a> are <a href="#CarRouting">routed</a>
+        to their destinations and move with "purpose". To use this feature first create and then
+        select at least one division for your railroad by using the "Add" button in the "Division"
+        section of the "Edit Location" window. You can assign multiple locations to the same
+        division, and you can create several divisions for your railroad. Cars that are assigned a <a
           href="#HomeDivision">home division</a> will return to the <a href="#Yards">yard</a> or <a
           href="#Staging">staging</a> at their home division when their load state becomes empty. If
         the program can't find a home division yard or staging for the empty car, it will try to
@@ -2111,9 +2145,19 @@
           href="#Schedules">schedules</a> are optional unless your cars are using custom loads.
       </p>
 
-      <p>When setting up railroad divisions, it is best if there's at least one division yard
-        for empty cars to migrate to, and at least one industry (spur) to service cars loaded
-        outside of the division. Staging can be used as a substitute for industries.</p>
+      <p>
+        When setting up railroad divisions, it is best if there's at least one division yard for
+        empty cars to migrate to, and at least one industry (spur) to service cars loaded outside of
+        the division. Staging can be used as a substitute for industries. Cars that have been
+        assigned a division are routed and this allows them to perform local moves, for example
+        empty cars from a yard to a spur at the same location. Spur to spur moves are also allowed
+        if the car's load is accepted by the receiving spur. The switcher <a
+          href="#AllowLocalCarMovements">control for local moves</a> does not apply to cars with a
+        division. However the <a href="#TrainLocalMoveOption">train build option</a> to allow local
+        moves for cars with a custom load or final destination (FD) does apply. It is recommended
+        that you leave this option for a train enabled when dealing with cars that have been
+        assigned a division.
+      </p>
 
       <p>Adding divisions to locations and home divisions to cars creates prototypical movement,
         but it can also reduce car movement since the rules for car movement have to be enforced by
@@ -2121,7 +2165,7 @@
         limited number of cars and then determine if the restricted car movements meet your
         expectations. Prototypical car movement doesn't necessarily mean better for model railroads.</p>
 
-      <h4 id="LocationRollingStock">Location Rolling Stock</h4>
+      <h4 id="LocationRollingStock">Rolling Stock Serviced</h4>
 
       <p>
         You can control the rolling stock a location can service. Press the "Clear All" button to
@@ -2280,9 +2324,9 @@
         large yards where track space for switching cars is needed. Press the "Add Yard Track"
         button at the bottom of the window and the disabled fields should now appear.</p>
 
-      <h4 id="TrackServiceDirection">Track Service Direction</h4>
+      <h4 id="TrackServiceDirection">Train Direction Serviced</h4>
 
-      <p>You can decide which train direction the track can service. For example, if only east
+      <p>You can decide which train directions the track can service. For example, if only east
         bound trains can access the track select "East" and deselect the other directions. This can
         be useful if you want to only support trailing point switching for a specific track. If a
         track can support multiple directions then select the ones that are appropriate.</p>
@@ -2613,7 +2657,7 @@
         and if the spur has an alternate track. The first option, "Percentage of custom loads
         generated by staging", has a default value of 100% which means only generate enough cars to
         fill 100% of the available track space. If you only want half of your car loads to come from
-        staging, set the value to 50%, and if you don't want staging to ever generate a custom load
+        staging, set the value to 50%, and if you want staging to never generate a custom load
         car for the spur, set the value to 0%. Sometimes it is appropriate to overload a spur with
         cars or have cars "en route" to the spur, if you want this, increase the value up to 1000%.
         BTW 1000% means send 10 times the available space in cars to this spur. If you enter this
@@ -2924,6 +2968,27 @@
         track you want to use when departing from, or arriving into staging.
       </p>
 
+      <h3 id="StagingMultipleTrains">Staging Multiple Trains per Physical Track</h3>
+      The program only allows one train per track in staging, but if you built a large staging track
+      that can fit two or more trains, the program allows you to
+      <a href="#Pools">pool</a> several staging tracks together so multiple trains can reside on one
+      physical track. The program will pull trains off the staging track in the order the trains
+      arrived. If your staging tracks are "double ended", meaning that your trains enter from one
+      side of staging and depart from the other, you would select FIFO (First In First Out) mode in
+      the pool window. In FIFO mode the first train to arrive into staging will be the first
+      to depart. If your staging is "single ended", meaning your trains arrive and depart from the
+      same end, you would select LIFO (Last In First Out) mode in the pool window. In LIFO mode the
+      last train to arrive will be the first to depart.
+
+      <p>When naming the tracks in the pool, it is best to use "same" names using the
+        "hyphen" feature. For example if you had one large staging track and wanted three trains in
+        staging, you might name the staging tracks, Track 1-1, Track 1-2, Track 1-3, and pool the
+        three tracks together. The train Manifest paperwork would show the departure track name as
+        "Track 1" by dropping the hyphen and number. If you wanted all three tracks to hold the same
+        length of trains, you would set the minimum track lengths in the pool window the same for
+        all three track. For example if the staging track was 900 scale feet long, you would set the
+        minimums to 900 divided by 3 or 300 scale feet.</p>
+
       <h3 id="StagingAndCarLoads">Staging and Car loads</h3>
       Staging tracks can optionally swap the car default loads from empty to loaded, and loaded to
       empty. Select the "Swap default loads and empties" if you want your cars loads to change when
@@ -2941,7 +3006,7 @@
         request, and try to <a href="#CarRouting">route</a> the car with a custom load to that spur.
         For a spur to request a custom load, the spur must have a <a href="#Schedules">schedule</a>.
         The program when determining how many car loads to generate, will consider the value in the
-        <a href="#Schedules">Percentage of custom loads generated by staging</a>. Also, if the spur
+        <a href="#ControllingCarsToSpur">Percentage of custom loads generated by staging</a>. Also, if the spur
         is full or becomes full, the program will send cars to the spur's <a href="#AlternateTrack">Alternate
           Track</a> if there's one specified, and then to any yard tracks at the spur's location.
       </p>
@@ -3018,7 +3083,8 @@
       not A.
       <p>
         You can automate the restaging of a train by creating a <a href="#TrainScripts">script</a>
-        that is activated when the train is terminated into staging.
+        that is activated when the train is terminated into staging. You can also create an <a
+          href="#Automation">automation</a>.
       </p>
 
       <h3 id="OffLayoutStorage">Off Layout Storage / Staging</h3>
@@ -3171,6 +3237,21 @@
         get is three cars. There will always be space available for at least one car at each
         industry. Note that the maximum number of cars in all cases is four. It is only how the cars
         are distributed that changes when entering a minimum.</p>
+
+      <p>
+        Pooling staging tracks allows you to have <a href="#StagingMultipleTrains">multiple
+          trains per physical staging track</a>. The program only allows one train per staging track,
+        but you can pool your staging tracks to have multiple trains residing on one physical track.
+        When pooling tracks in staging, the pool window provides three train departure modes,
+        Normal, FIFO, and LIFO. "Normal" selects a departure track based on usage, tracks with the
+        least use are selected first. You would not use "Normal" when there are two or more trains
+        on one physical track. "FIFO" selects the first train to arrive into staging for departure,
+        and "LIFO" selects the last train to arrive for departure.
+      </p>
+
+      <p>Note that the program normally selects a departure track out of staging
+        by usage. If you prefer to have your trains depart staging based on the order they've
+        arrived, you would use the staging pooling feature for your set of staging tracks.</p>
 
       <p>Another use of a "pool" is with regard to schedules. For the power user, you might find
         that a single schedule assigned to a spur doesn't quite do what you want. But if the track
@@ -3431,7 +3512,7 @@
       to add a car to your roster. The "Save" button stores the cars roster to a file. The "Find"
       button and the adjacent text window can be used to find a car by its road number. You can use
       the wild card "*" when entering a car number. For example if you want to find all cars with
-      numbers that ended with 345, enter *345, and press find. Each time you press find, the next
+      numbers that end with 345, enter *345, and press find. Each time you press find, the next
       car with a road number ending with "345" will be highlighted.
 
       <h3>Moves, Wait and Last Time Moved</h3>
@@ -3566,8 +3647,9 @@
       train when the "Car Blocking Order" numbers are positive, and at the front of the train if the
       blocking numbers are negative. If the car is a caboose, has a FRED (Flashing Rear End Device),
       or is hazardous independent of the car's load, select the proper checkbox. The program uses
-      the caboose and FRED functions to place the car at the end of a train when the train requires
-      a caboose or car with FRED.
+      the caboose and FRED options to place the car at the end of a train when the train requires
+      a caboose or car with FRED. Note that you can also use the passenger blocking feature to place
+      a caboose or car with FRED anywhere needed in a train.
 
       <p>When the passenger checkbox is selected, a new field called "Car Blocking Order" will
         appear. The text box allows you to enter a number between -100 and 100 and this gives you
@@ -4675,6 +4757,7 @@
       same goes for a car with a final destination that's at the car's current location. So if you
       don't want your train to perform local moves when a car has a custom load or a local final
       destination, deselect this option.
+      
       <h4>Allow cars to travel from origin to terminal</h4>
       Normally the program allows cars to travel from the train's departure location (origin) to its
       last location (terminal). Deselect this option if you don't want the train to carry cars from
@@ -4684,6 +4767,7 @@
       not selected, then cars from Boston can only travel to Worcester or Springfield, and cars from
       Worcester or Springfield could go to New York. But through cars from Boston to New York are
       not allowed.
+      
       <h4>Service all cars with a final destination</h4>
       This option when selected tells the program to pull cars with a final destination even if the
       train being built doesn't provide the most efficient route for the car. Useful if you want the
@@ -4925,7 +5009,8 @@
 
       <p>To change which day of the week is active, select the appropriate radio button and then
         press the "Activate" button. The day selected is then used by your schedules (Delivery and
-        Pickup) when building trains. You can also add or change the days of the week by using the
+        Pickup) when building trains. For each day of the week, you can add a comment. Enter the
+        comment, then press the "Save" button. You can also add or change the days of the week by using the
         "Edit Train Schedule" window found under "Tools". You can change the order by dragging the
         column with your mouse pointer. Press the "Save" button to complete your changes.</p>
 
@@ -5029,6 +5114,7 @@
       will report "Failed" if you haven't selected a train, or if the "Build" checkbox isn't
       selected for the train in the <a href="#Trains">Trains</a> window or if the train fails to
       build.
+      
       <h5>Preview or Print Train Manifest</h5>
       This action's name and function depends on the "Preview" checkbox in the <a href="#Trains">Trains</a>
       window. If the "Preview" checkbox is selected, then the action becomes "Preview Train
@@ -5199,7 +5285,7 @@
       by the needed "Wait for" action.
 
       <h5>Select Start Automation</h5>
-      This tool will allow you to select an automation to run when OperationsPro starts.
+      This tool will allow you to select an automation to run when OperationsPro&trade; starts.
       <p>This is the end of the automation section.</p>
 
       <h4 id="TrainsCopyTrain">Copy Train</h4>
@@ -5217,7 +5303,7 @@
 
       <h4 id="SetupExcelProgram">Setup Excel Program (Manifest Creator)</h4>
       The ability to configure an Excel program to create custom manifests can be found under Trains
-      -&gt; Tools. Dan Foltz who is a JMRI user/programmer has developed the "Manifest Creator" and
+      -&gt; Tools. Dan Foltz who is a JMRI user/programmer wrote the "Manifest Creator" and
       "Switch List Creator". You can find a copies of the programs at <a
         href="https://manifestcreator.weebly.com/">Manifest Creator - Add on to JMRI.</a> Place
       the program "MC4JMRI.xls" or "SWC4JMRI.xlsm" along with any other files needed in the
@@ -5667,7 +5753,7 @@
         incremented. The program uses this count, called "Moves" in the "Cars" and "Locomotives"
         windows, to determine which rolling stock hasn't moved recently and tries to place rolling
         stock with the least number of moves first when building new trains. Each time a car or
-        locomotive sent to a track, the program increments a count associated with that track. The
+        locomotive is sent to a track, the program increments a count associated with that track. The
         program tries to move cars and locos to tracks that have experienced the least use.</p>
 
       <p>
@@ -5681,9 +5767,16 @@
       </p>
 
       <p>
+        Cars assigned to a <a href="#HomeDivision">division</a> are always routed. Divisional cars
+        are assigned a <a href="#FinalDestination">final destination</a> when the program determines
+        that the car is needed by a industry (<a href="#Sidings">spur</a>), or if the car is empty
+        and needs to return to its <a href="#LocationDivision">division's home yard</a>.
+      </p>
+
+      <p>
         Cars that are routed move with a purpose, they will travel from location to location using
         the most efficient route the program can find. Most of the time cars are routed though
-        classification or interchange (C/I) tracks, but the program can <a
+        <a href="#Interchange">classification or interchange (C/I)</a> tracks, but the program can <a
           href="#EnableRoutingYards">optionally</a> use yard tracks if needed.
       </p>
 
@@ -5766,13 +5859,14 @@
 
       <p>
         If a car has a <a href="#EditCarLoads">custom load</a> without a destination, the program
-        will search for a spur with a schedule demanding that car type and load, the program will
-        then <a href="#CarRouting">route</a> the car to that destination. The program will use up to
-        seven trains to route a car to a destination. The program when determining how many cars an
-        industry can serve considers the length of the spur serving the industry, and the length of
-        the alternate track if one is specified. If the car is departing staging with a custom load,
-        the "Percentage of custom loads generated by staging" is used to determine if the car should
-        be sent to that industry. See <a href="#Schedules">Schedules</a> for more details.
+        will search for a <a href="#Sidings">spur</a> with a schedule demanding that car type and
+        load, the program will then <a href="#CarRouting">route</a> the car to that destination. The
+        program will use up to seven trains to route a car to a destination. The program when
+        determining how many cars an industry can serve considers the length of the spur serving the
+        industry, and the length of the alternate track if one is specified. If the car is departing
+        staging with a custom load, the "Percentage of custom loads generated by staging" is used to
+        determine if the car should be sent to that industry. See <a href="#Schedules">Schedules</a>
+        for more details.
       </p>
 
       <p>
@@ -5789,17 +5883,21 @@
       Manifests for several trains, select the trains you want in the build column and then press
       the "Print" or "Preview" button found at the bottom of the trains window. The program will
       then print or preview Manifests for all of the selected trains. You can modify the look of
-      your Manifests from the <a href="#PrintOptions">Manifest Print Options</a> window.
+      your Manifests from the
+      <a href="#PrintOptions">Manifest Print Options</a> window. Some printers need the JMRI locale
+      set to English (United Stated) to use paper size "Letter". See
+      <a href="#PrintOrientation">Orientation and Paper Size</a> for more details.
       <p>
         You can also access a train's Manifest and <a href="#BuildReports">Build Report</a> from the
         "Tools" menu in the edit train window. The "Tools" menu option allows you to recover the
         Manifest and build report for a train that has been terminated. Useful if you've
-        accidentally terminated a train before printing out the train's Manifest. Below is a train
-        Manifest using the "Standard" format, with blue text for car pick ups, and red text for car
-        set outs.
+        accidentally terminated a train before printing out the train's Manifest.
       </p>
 
-      <p>
+      <p>Below is a train Manifest using the "Standard" format, with blue text for car pick ups,
+    and red text for car set outs.</p>
+
+   <p>
         <img src="images/Manifest.png" alt="">
       </p>
 
@@ -5814,30 +5912,36 @@
         <img src="images/ManifestTwoColumnTrack.png" alt="">
       </p>
 
-      <p>
-        An alternative to using the Manifests provided by OperationsPro&trade; is to create a <a
-          href="#ManifestOptions">custom Manifest</a>. Shown below is a train Manifest (LS) and
-        switch list for locations Lakeview and Bakersfield using <a
-          href="https://groups.io/g/jmriusers/files/Operations">Dan Foltz's Switch List Creator
-          version 1.2 (SLC4JMRI.xlsm)</a>. This particular custom format allows you to use a half sheet
-        of paper for your crew. Note that the <a href="#CarTypes">Car Types</a> was changed in the <a
-          href="#Settings">Settings</a> window from "Descriptive" to "AAR Codes" before using Dan's
-        Excel program.
-      </p>
+   <p>
+    An alternative to using the Manifests provided by OperationsPro&trade; is to create a <a
+     href="#ManifestOptions">custom Manifest</a>. Shown below is a train Manifest (LS) and switch
+    list for locations Lakeview and Bakersfield using Dan Foltz's Switch List Creator version 1.2
+    (SLC4JMRI.xlsm). This and other versions may be found at <a
+     href="https://manifestcreator.weebly.com/"> www.ManifestCreator.Weebly.Com</a>. This particular
+    custom format allows you to use a half sheet of paper for your crew. Note that the <a
+     href="#CarTypes">Car Types</a> was changed in the <a href="#Settings">Settings</a> window from
+    "Descriptive" to "AAR Codes" before using Dan's Excel program.
+    </p>
 
-      <p>
-        <img src="images/SLC4JMRI_LS.png" alt="">
-      </p>
+   <p>
+    <img src="images/SLC4JMRI_LS.png" alt="">
+   </p>
 
-      <p>
-        <img src="images/SLC4JMRI_LS_LV.png" alt="">
-      </p>
+   <p>
+    <img src="images/SLC4JMRI_LS_LV.png" alt="">
+   </p>
 
-      <p>
-        <img src="images/SLC4JMRI_LS_BF.png" alt="">
-      </p>
+   <p>
+    <img src="images/SLC4JMRI_LS_BF.png" alt="">
+   </p>
 
-      <h3 id="SwitchList">Switch Lists</h3>
+   <p>
+    There's also a Java based program written by Tim Mann called <a href="https://mrslamf.com/">Model
+     Railroad Switch List and Manifest Formatter</a> that will create custom Manifests and switch lists
+    for you using the CSV files.
+   </p>
+
+   <h3 id="SwitchList">Switch Lists</h3>
       A switch list shows the work required to service all of the trains visiting that location.
       Normally a switch list is given to the person in charge of a yard or a location with many
       spurs or industries. You can modify the look of your switch lists from the <a

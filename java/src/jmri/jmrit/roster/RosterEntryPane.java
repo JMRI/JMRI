@@ -44,6 +44,9 @@ public class RosterEntryPane extends javax.swing.JPanel {
     DccLocoAddressSelector addrSel = new DccLocoAddressSelector();
 
     JTextArea comment = new JTextArea(3, 50);
+    public String getComment() {return comment.getText();}
+    public void setComment(String text) {comment.setText(text);}
+
     // JScrollPanes are defined with scroll bars on always to avoid undesirable resizing behavior
     // Without this the field will shrink to minimum size any time the scroll bars become needed and
     // the scroll bars are inside, not outside the field area, obscuring their contents.
@@ -414,7 +417,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
     }
 
     /**
-     * File GUI from roster contents.
+     * Fill GUI from roster contents.
      *
      * @param r the roster entry to display
      */

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2023</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Andrew</firstname>
+                <surname>Crosland</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2023-03-20</date>
+            <authorinitials>AC</authorinitials>
+            <revremark>New File</revremark>
+        </revision>
+    </revhistory>
+    <decoder>
+        <family name="CBUS" mfg="SPROG DCC" comment="CANSPROG3P is a CBUS command station.">
+            <model model="CANSPROG3P" lowVersionID="10" highVersionID="10"/>
+        </family>
+        <programming direct="yes" ops="yes" paged="yes" register="yes">
+        </programming>
+        <variables>
+            <variable CV="10018" default="124" item="id">
+                <decVal min="1" max="127"/>
+            </variable>
+            <variable CV="10020,10019" default="65531" item="nodeNumber">
+                <splitVal/>
+            </variable>
+            
+            <variable CV="10009" default="2" item="accyRpt">
+                <decVal min="1" max="7"/>
+            </variable>
+            <variable CV="10012,10013" default="0" item="nodeMapDCC">
+                <splitVal/>
+            </variable>
+            <variable CV="10021" default="2" item="preamble">
+                <decVal min="16" max="32"/>
+            </variable>
+
+            <variable CV="10001" default="2" item="cmdSta">
+                <decVal min="1" max="7"/>
+            </variable>
+            <variable CV="10001" default="0" item="progMode">
+                <enumVal>
+                    <enumChoice choice="Programming track off when not programming"/>
+                    <enumChoice choice="Programming track follows main when not programming"/>
+                    <enumChoice choice="Programming track is auto reverse district"/>
+                </enumVal>
+            </variable>
+            <variable CV="10010" default="0" item="meter">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable CV="10013" default="0" item="iLimMain">
+                <decVal/>
+            </variable>
+            <variable CV="10006" default="0" item="iLimProg">
+                <decVal/>
+            </variable>
+            <variable CV="10002" default="110" item="userFlags">
+                <decVal/>
+            </variable>
+            <variable CV="10003" default="0" item="opFlags">
+                <decVal/>
+            </variable>
+            <variable CV="10004" default="0" item="debugFlags">
+                <decVal/>
+            </variable>
+
+
+
+
+        </variables>
+    </decoder>
+    <pane>
+        <name>Command Station</name>
+        <column>
+            <row>
+                <display item="cmdSta" layout="above" label="Command Station Number" tooltip="Multiple command stations not supported yet." />
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <display item="progMode" layout="above" label="Programming Track Mode" tooltip="Select the operation of the programming track." />
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <display item="meter" format="checkbox" label="Multimeter Enable" tooltip="Enable current sense values to be sent to multi-meter" />
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <column>
+                    <row>
+                        <display item="iLimMain" layout="above" label="Main Track Current Limit" tooltip="Main track output current limit." />
+                    </row>
+                </column>
+                <column>
+                    <row>
+                        <label>
+                            <text>           </text>
+                        </label>
+                    </row>
+                </column>
+                <column>
+                    <row>
+                        <display item="iLimProg" layout="above" label="Programming Track Current Limit" tooltip="Programming track output current limit." />
+                    </row>
+                </column>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <column>
+                    <display item="userFlags" layout="above" label="User Flags" tooltip="" />
+                </column>
+                <column>
+                    <display item="opFlags"  layout="above" label="Operations Flags" tooltip="" />
+                </column>
+                <column>
+                    <display item="debugFlags" layout="above" label="Debug Flags" tooltip="" />
+                </column>
+            </row>
+         </column>
+    </pane>
+    <pane>
+        <name>DCC</name>
+        <column>
+            <row>
+                <display item="accyRpt" layout="above" label="Accessory packet repeat count" tooltip="The number of times a DCC accessory packet will be repeated." />
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <separator/>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <display item="nodeMapDCC" layout="above" label="Node number to map to DCC accessory packets" tooltip="Node number to map to DCC accessory packets" />
+            </row>
+            <row>
+                <column>
+                    <label>
+                        <text>Set to zero to map all short events numbers to DCC accessory numbers.</text>
+                    </label>
+                    <label>
+                        <text>Set to non-zero to match a specific node number</text>
+                    </label>
+                    <label>
+                        <text>and map all ong events from that node to DCC accessory commands</text>
+                    </label>
+                    <label>
+                        <text>See module documentation.</text>
+                    </label>
+                </column>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <separator/>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <display item="preamble" layout="above" label="Number of DCC packet preamble bits to send" tooltip="Number of DCC packet preamble bits to send" />
+            </row>
+        </column>
+    </pane>
+    <xi:include href="http://jmri.org/xml/decoders/cbus/PaneCbusSetupSimple.xml"/>
+</decoder-config>

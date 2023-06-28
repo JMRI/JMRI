@@ -14,6 +14,10 @@ spotbugs.xml
 spotbugs-check.xml
 spotbugs.html
 spotbugs-check.html
+tests-spotbugs.xml
+tests-spotbugs-check.xml
+tests-spotbugs.html
+tests-spotbugs-check.html
 jacoco.exec
 jmri-fb.html
 coveragereport

@@ -1,6 +1,6 @@
 package jmri.jmrix.openlcb.swing;
 
-import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -13,7 +13,7 @@ public class OpenLcbComponentFactoryTest {
 
     @Test
     public void testCTor() {
-        OpenLcbComponentFactory t = new OpenLcbComponentFactory(new OlcbSystemConnectionMemo());
+        OpenLcbComponentFactory t = new OpenLcbComponentFactory(new OlcbSystemConnectionMemoScaffold());
         Assert.assertNotNull("exists",t);
     }
 

@@ -68,6 +68,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
             _tabbedPaneEnum = _selectEnumSwing.createPanel(null, LightState.values());
         }
 
+        _selectEnumSwing.addEnumListener(e -> { setDataPanelState(); });
 
         // Right section
         _tabbedPaneData = new JTabbedPane();

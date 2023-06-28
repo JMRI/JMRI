@@ -12,12 +12,14 @@
 
 from javax.swing import JFrame, JPanel, JButton, BoxLayout, Box
 from java.awt import Dimension
+import os
 
 fast_clock_rate = 10
 
 trains_to_be_scheduled = []
 run_train_dict = {}
 scheduled = {}
+RunTrain_instance = {}
 tListener = None
 
 class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
@@ -34,6 +36,8 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.scheduler_edit_routes = sensors.getSensor("editRoutesSensor")
         self.scheduler_start_time_sensor = sensors.getSensor("schedulerStartTimeSensor")
         self.scheduler_show_clock_sensor = sensors.getSensor("showClockSensor")
+        self.help_sensor = sensors.getSensor("helpSensor")
+
 
         if self.logLevel > 0: print "finished SchedulerMaster setup"
 
@@ -79,11 +83,19 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.show_analog_clock()
             self.scheduler_show_clock_sensor.setKnownState(INACTIVE)
 
+        if self.help_sensor.getKnownState() == ACTIVE:
+            self.display_help()
+            self.help_sensor.setKnownState(INACTIVE)
+
         self.waitMsec(500)
         return True
 
+
+
     def set_button_sensors_to_watch(self):
-        button_sensors_to_watch = [self.scheduler_master_sensor, self.scheduler_view_scheduled_trains, self.scheduler_edit_routes, self.scheduler_start_time_sensor, self.scheduler_show_clock_sensor]
+        button_sensors_to_watch = [self.scheduler_master_sensor, self.scheduler_view_scheduled_trains, \
+                                   self.scheduler_edit_routes, self.scheduler_start_time_sensor, \
+                                   self.scheduler_show_clock_sensor, self.help_sensor]
         return button_sensors_to_watch
 
 
@@ -97,10 +109,11 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         for train in trains_to_be_scheduled:
             if scheduled[train] == False:
                 if self.logLevel > 0: print "train",train,"scheduled[train]",scheduled[train]
+                RunTrain_instance[train] = RunTrain()
                 if "stopping" in train.getDescription():
-                    run_train_dict[train] = RunTrain(train, g.g_stopping)
+                    run_train_dict[train] = RunTrain_instance[train].RunTrain(train, g.g_stopping)
                 else:
-                    run_train_dict[train] = RunTrain(train, g.g_express)
+                    run_train_dict[train] = RunTrain_instance[train].RunTrain(train, g.g_express)
                 run_train_dict[train].setName("schedule_" + train.getName())
                 run_train_dict[train].start()
                 scheduled[train] = True
@@ -142,6 +155,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         pass
 
     f = None
+
+    def display_help(self):
+        ref = "html.scripthelp.DispatcherSystem.DispatcherSystem"
+        jmri.util.HelpUtil.displayHelpRef(ref)
 
     def show_analog_clock(self):
         if self.f == None:
@@ -215,7 +232,7 @@ class TimeListener(java.beans.PropertyChangeListener):
 
         if self.logLevel > 0: print "End of process_operations_trains", "trains_to_be_scheduled",trains_to_be_scheduled,"scheduled",scheduled
 
-class RunTrain(MoveTrain):
+class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self, train, graph):
         self.logLevel = 0
@@ -266,7 +283,9 @@ class RunTrain(MoveTrain):
                 if self.logLevel > 0: print "train_to_move", train_to_move
                 if train_to_move != None:
                     if self.logLevel > 0: print "************************************moving train******************",train_to_move
-                    self.move_between_stations(station_from, station_to, train_to_move, self.graph)
+                    move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
+                    move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
+                    move_train = None
                 else:
                     msg = "1No train in block for scheduled train starting from " + station_from
                     title = "Scheduling Error"
@@ -290,11 +309,23 @@ class RunTrain(MoveTrain):
         if self.logLevel > 0:  "!     finished run_train"
 
 
-class RunRoute(MoveTrain):
+class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
-    def __init__(self, route, graph, station_from, station_to, no_repetitions):
-        #note station_to and station_from are strings, while elements of route are locations
+    def __init__(self, route, graph, station_from, station_to, no_repetitions, train_name, delay = 0):
+
+        # station_from is set to the initial position of the train, not necessarily
+        # the start position of the route
+        # station_to is set only if returning to start position
+        # in that case it is set to station_from
+        # the route gives the stations on the route
+
+        # note station_to and station_from are strings, while elements of route are locations
+
+        #print "in init"
+
         self.logLevel = 0
+        #print "loglevel", self.logLevel
+
         if route == None:
             if self.logLevel > 0: print "RunRoute: route == None"
         else:
@@ -305,89 +336,237 @@ class RunRoute(MoveTrain):
             self.station_to = station_to
             self.no_repetitions = no_repetitions
             self.mycount = 0
+            self.train_name_in = train_name
+            self.delay = delay
 
-    def handle(self):    # Need to overload handle
+            # set up station_list
+            station_list_locations = self.route.getLocationsBySequenceList()
+            #convert station_list to strings
+            station_list = [location.getName() for location in station_list_locations]
+            self.initial_station_in_route = station_list[0]
 
-        self.run_route()
-        self.mycount += 1
+            # prepend station_from if required
+            self.prepended = False
+            if self.logLevel > 0: print "station_list before", station_list, "self.station_from",self.station_from,"self.station_to",self.station_to,"station_list[0]",station_list[0]
+            if self.station_from == None:                       #ensure route starts at station_from
+                pass
+            elif self.station_from != station_list[0]:
+                station_list.insert(0,self.station_from)
+                self.prepended = True                           # we have to remove this initial station if we are repeating
+            if self.logLevel > 0: print "station_list",station_list
+
+            # append station_to if required
+            if self.station_to == None:                         #ensure route ends at station_to
+                pass
+            elif self.station_to != station_list[-1]:
+                station_list.append(self.station_to)
+            if self.logLevel > 0: print "station_list",station_list
+
+            # if repeating append initial station in route
+            if self.no_repetitions > 0:                             #ensure route end at start point if repeating
+                if self.station_to != self.initial_station_in_route:
+                    if station_list[-1] != self.initial_station_in_route:
+                        station_list.append(self.initial_station_in_route)
+            if self.logLevel > 0: print "station_list after", station_list
+
+            self.station_list = station_list
+
+            # ignore the number of repetitions if station_to was not set to station_from
+            if self.station_list[0] != self.station_list[-1]:
+                self.no_repetitions = 0
+
+    def handle(self):
+        #print "in handle", self.mycount
+        if self.delay > 0 and self.mycount == 0:  # only delay on the first iteration
+            self.waitMsec(self.delay)
         if int(self.mycount) <= int(self.no_repetitions):
-            if self.logLevel > 0: print "returning true", "mycount", self.mycount, "reps" , self.no_repetitions
+            #print "station_list in handle", self.station_list, "in handle", self.mycount
+            self.run_route()
+            #print "prepended", self.prepended
+            if self.mycount == 0 and self.prepended:
+                if self.logLevel > 0: print "station_list before pop", self.station_list
+                self.station_list.pop(0)
+                if self.logLevel > 0: print "station_list after pop", self.station_list
+            if self.logLevel > 0: print "returning true", "train_name", self.train_name, "mycount", self.mycount, "reps" , self.no_repetitions
+
+            self.mycount += 1     # 0 first time round
             return True
         else:
-            if self.logLevel > 0: print "returning true", "mycount", self.mycount, "reps" , self.no_repetitions
+            if self.logLevel > 0: print "returning true", "train_name", self.train_name, "mycount", self.mycount, "reps" , self.no_repetitions
             return False
 
     def run_route(self):
+        global check_action_route_flag
         if self.logLevel > 0: print "************************************run train******************"
-        if self.logLevel > 0:  "!     start run_route"
-        station_list_locations = self.route.getLocationsBySequenceList()
-        #convert station_list to strings
-        station_list = [location.getName() for location in station_list_locations]
-        if self.logLevel > 0: print "station_list before", station_list, "self.station_from",self.station_from,"self.station_to",self.station_to,"station_list[0]",station_list[0]
-        if self.station_from == None:                       #ensure route starts at station_from
-            pass
-        elif self.station_from != station_list[0]:
-            station_list.insert(0,self.station_from)
-        if self.logLevel > 0: print "station_list",station_list
-        if self.station_to == None:                         #ensure route ends at station_to
-            pass
-        elif self.station_to != station_list[-1]:
+        if self.logLevel > 0:  print "!     start run_route"
 
-            station_list.append(self.station_to)
-        if self.logLevel > 0: print "station_list",station_list
-        if self.no_repetitions > 0:                             #ensure route end at start point if repeating
-            if self.station_to != self.station_from:
-                station_list.append(self.station_to)
-        if self.logLevel > 0: print "station_list after", station_list
         station_from = None
-        for station in station_list:
-            station_to = station  # both now strings
-            if station_from != None:
-                if self.logLevel > 0:  print "!     moving from", station_from, "to", station_to
-                self.station_from_name = station_from
-                self.station_to_name = station_to
-                start_block = blocks.getBlock(station_from)
-                if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
-                train_to_move = start_block.getValue()
-                self.train_name = train_to_move
-                if self.logLevel > 0: print "calling move_between_stations","station_from",station_from,"station_to",station_to,"train_to_move",train_to_move
+        for station in self.station_list:
+            # print "station", station
 
-                doNotRun = False
-                repeat = False
-                if self.logLevel > 0: print "train_to_move", train_to_move
-                if train_to_move != None:
-                    if self.logLevel > 0: print "************************************moving train******************",train_to_move
-                    self.move_between_stations(station_from, station_to, train_to_move, self.graph)
-                    if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
-                    end_block = blocks.getBlock(station_to)  
-                    msg = "finished move between stations station_from = " + station_from + "state of block" + str(end_block.getState())
-                    if self.logLevel > 0: print "state of block" , end_block.getState()
-                    title = "Information after moving"
-                    opt1 = "OK"
+            if self.station_is_action(station):  #if the station_name is a python_file
+                # some of the python files take an argument of the dispatch
+                # make this the default for simplic
+                # [next_station, next_station_index] = self.get_next_item_in_list(station,self.station_list)
+                action = station
+                self.execute_action(action)     # execute the python file
+            else:
+                station_to = station  # both now strings
+                if station_from != None:    # first time round station_from is not set up
+                    if self.logLevel > 0:  print "!     moving from", station_from, "to", station_to
+                    self.station_from_name = station_from
+                    self.station_to_name = station_to
+                    start_block = blocks.getBlock(station_from)
+                    if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
+                    #train_to_move = start_block.getValue()
+                    #self.train_name = train_to_move
+                    self.train_name = self.train_name_in
+                    train_to_move = self.train_name_in
+                    if self.logLevel > 0: print "calling move_between_stations","station_from",station_from,"station_to",station_to,"train_to_move",train_to_move
 
-                    #OptionDialog().customMessage(msg, title, opt1)
-                    #end_block.setValue(train_to_move)
-                else:
-                    msg = "2No train in block for scheduled train starting from " + station_from
-                    title = "Scheduling Error"
-                    opt1 = "Not scheduling train"
-                    if train_to_move == None:
-                        if self.logLevel > 0: print "2No train in block for scheduled train starting from " + station_from
-                        OptionDialog().customMessage(msg, title, opt1)
-                        start_block = blocks.getBlock(station_from)
-                        LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
-                        layoutBlock = LayoutBlockManager.getLayoutBlock(start_block)
-                        if layoutBlock.getOccupancySensor().getKnownState() == INACTIVE:
-                            layoutBlock.getOccupancySensor().setKnownState(ACTIVE)
-                            self.waitMsec(2000)
-                        if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
-                        train_to_move = start_block.getValue()
+                    doNotRun = False
+                    repeat = False
+                    if self.logLevel > 0: print "train_to_move", train_to_move
+                    if train_to_move != None:
+                        if self.logLevel > 0: print "************************************moving train******************",train_to_move
+                        move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
+                        #if self.check_train_in_start_block(train_to_move, station_from)
+                        move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
+                        move_train = None
+                        if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
+                        end_block = blocks.getBlock(station_to)
+                        msg = "finished move between stations station_from = " + station_from + "state of block" + str(end_block.getState())
+                        if self.logLevel > 0: print "state of block" , end_block.getState()
+                        title = "Information after moving"
+                        opt1 = "OK"
 
-                    self.move_between_stations(station_from, station_to, train_to_move, self.graph)
-                    if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
-                    end_block = blocks.getBlock(station_to)  #do following in case the block sensor is a bit dodgy
-                    end_block.setValue(train_to_move)
+                        #OptionDialog().customMessage(msg, title, opt1)
+                        #end_block.setValue(train_to_move)
+                    else:
+                        msg = "2No train in block for scheduled train starting from " + station_from
+                        title = "Scheduling Error"
+                        opt1 = "Not scheduling train"
+                        if train_to_move == None:
+                            if self.logLevel > 0: print "2No train in block for scheduled train starting from " + station_from
+                            OptionDialog().customMessage(msg, title, opt1)
+                            start_block = blocks.getBlock(station_from)
+                            LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
+                            layoutBlock = LayoutBlockManager.getLayoutBlock(start_block)
+                            if layoutBlock.getOccupancySensor().getKnownState() == INACTIVE:
+                                layoutBlock.getOccupancySensor().setKnownState(ACTIVE)
+                                self.waitMsec(2000)
+                            if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
+                            train_to_move = start_block.getValue()
 
-            station_from = station_to
+
+                        move_train = MoveTrain(station_from, station_to, train_to_move, self.graph)
+                        move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
+                        move_train = None
+                        if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
+                        end_block = blocks.getBlock(station_to)  #do following in case the block sensor is a bit dodgy
+                        end_block.setValue(train_to_move)
+
+                    check_action_route_flag = False     # This flag may have been set by the action appearing in the route
+                                                    # before this move. It has to be reset.
+                    # print "check_action_route_flag reset", check_action_route_flag
+                station_from = station_to
+
         self.waitMsec(4000)
+
         if self.logLevel > 0:  "!     finished run_train"
+
+    def get_next_item_in_list(self,elem, li ):
+        if (li.index(elem))+1 != len(li):
+            thiselem = elem
+            nextelem = li[li.index(elem)+1]
+            indexNextElem = li.index(elem)+1
+            # print 'thiselem',thiselem
+            # print 'nextel',nextelem
+        else:
+            thiselem = elem
+            nextelem = elem
+            indexNextElem = li.index(elem)
+            # print 'thiselem',li[li.index(elem)]
+            # print 'nextel',li[li.index(elem)]
+        return [nextelem, indexNextElem]
+
+    def check_train_in_start_block(self, train_to_move, blockName):
+        block = blocks.getBlock(blockName)
+        if self.blockOccupied(block):
+            if block.getValue() == train_to_move:
+                return True
+            else:
+                "blockName" , blockName, "not occupied by", "train_to_move", train_to_move
+                blockName = [block for block in blocks.getNamedBeanSet() if block.getValue() == train_to_move]
+                if blockName != []:
+                    blockName = blockName[0]
+                else:
+                    blockName = "train not in any block"
+                #print "train_to_move", train_to_move, "in" , blockName
+                return False
+        else:
+            #print "train_to_move", train_to_move, "not in" , blockName
+            blockName = [block for block in blocks if block.getValue() == train_to_move]
+            if blockName != []:
+                blockName = blockName[0]
+            else:
+                blockName = "train not in any block"
+            #print "train_to_move", train_to_move, "in" , blockName
+            return False
+
+    def blockOccupied(self, block):
+        if block.getState() == ACTIVE:
+            state = "ACTIVE"
+        else:
+            state ="INACTIVE"
+        return state
+
+    def station_is_action(self, station):
+        if station[-3:] == ".py":
+            return True
+        else:
+            return False
+
+    def action_directory_in_DispatcherSystem(self):
+        path = jmri.util.FileUtil.getScriptsPath() + "DispatcherSystem" + java.io.File.separator + "actions"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
+
+    def action_directory(self):
+        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "pythonfiles"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
+
+    def execute_action(self, action):
+        # execute a python file in the dispatcher directory
+        file = self.action_directory() + action
+        if not os.path.isfile(file):
+            file = self.action_directory_in_DispatcherSystem() + action
+        if not os.path.isfile(file):
+            self.displayMessage("action file " + action + " does not exist, it must have been deleted\n" + \
+                                "should be in directories:\n" + \
+                                self.action_directory_in_DispatcherSystem() + " or\n" + \
+                                self.action_directory())
+        if self.logLevel > 0: print "file", file
+        exec(open(file).read())     # execute the file
+
+    def displayMessage(self, msg, title = ""):
+        self.CLOSED_OPTION = False
+        s = JOptionPane.showOptionDialog(None,
+                                         msg,
+                                         title,
+                                         JOptionPane.YES_NO_OPTION,
+                                         JOptionPane.PLAIN_MESSAGE,
+                                         None,
+                                         ["OK"],
+                                         None)
+        #JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
+        if s == JOptionPane.CLOSED_OPTION:
+            self.CLOSED_OPTION = True
+            return
+        return s
+
+
+

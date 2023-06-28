@@ -17,7 +17,7 @@
 
       <p>You don't need to work with your own copy of the JMRI source code, compilers, etc if you
       just want to run the programs. You can download completely built copies via the <a href=
-      "/download">downloads page</a>. But if you'd like to play with the code, or get a copy of the
+      "https://www.jmri.org/download/">downloads page</a>. But if you'd like to play with the code, or get a copy of the
       program that contains updates since the last downloadable version was published, this section
       of the website will help you get started.</p>
 
@@ -55,7 +55,7 @@
 
       <p>In the short term, we've created several programs based on the JMRI libraries to move the
       project along and demonstrate its capabilities. (<a href=
-      "https://jmri.org/releasenotes/history.html">Why so many programs?...</a>)</p>
+      "https://www.jmri.org/releasenotes/history.shtml">Why so many programs?...</a>)</p>
 
       <p>The most popular is <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a>, a tool for
       programming decoders. It simplifies the job of configuring complicated DCC decoders by
@@ -89,14 +89,14 @@
       JMRI development takes place on the JMRI-Developers mailing list: <a href=
       "https://jmri-developers.groups.io/g/jmri/join">Subscribe</a>, <a href=
       "https://jmri-developers.groups.io/g/jmri/topics">Archive</a>
-      <p><a href="http://GitHub.com">GitHub</a> provides our software repositories via the <a href=
-      "http://GitHub.com/JMRI">GitHub JMRI organization</a>.</p>
+      <p><a href="https://github.com/">GitHub</a> provides our software repositories via the <a href=
+      "https://github.com/JMRI">GitHub JMRI organization</a>.</p>
 
-      <p>SourceForge.net provides project support:</p>
+      <p>SourceForge.net provided project support:</p>
 
       <ul>
         <li>
-          <a href="http://sourceforge.net/projects/jmri/">JMRI project page</a> and <a href=
+          <a href="https://sourceforge.net/projects/jmri/">JMRI project page</a> and <a href=
           "https://sourceforge.net/p/jmri/activity/?page=0&amp;limit=100">project statistics (up to
           2018)</a>.
         </li>
@@ -157,7 +157,7 @@
       assignment form that allows us to register copyright on the code, and gives us
       unlimited-duration license to redistribute it consistent with the <a href="#use">JMRI
       licensing</a>. (We regret this paperwork, but <a href=
-      "https://jmri.org/k/copycomparison.html">Matt Katzer's misuse of copyright</a> makes it
+      "https://www.jmri.org/k/copycomparison.html">Matt Katzer's misuse of copyright</a> makes it
       necessary). If other people also helped with the contribution, please let us know so we can
       add them to the <a href="../../../Acknowledgements.shtml">acknowledgements page</a>.</p>
 
@@ -171,9 +171,9 @@
       "../../../COPYING">the web</a>.</p>
 
       <p>This is both an "open source" and a "free" license. For more information on those
-      definitions, please see the <a href="http://www.opensource.org/">Open Source Initiative</a>
+      definitions, please see the <a href="https://opensource.org/">Open Source Initiative</a>
       web pages, including their <a href=
-      "http://www.opensource.org/docs/definition.php">description of what Open Source means</a>,
+      "https://opensource.org/osd/">description of what Open Source means</a>,
       and the <a href="http://www.gnu.org/">Free Software Foundation</a> web pages, particularly
       their <a href="http://www.gnu.org/licenses/">licensing page</a>.</p>
 
@@ -208,7 +208,7 @@
       <a href="https://github.com/JMRI/JMRI/graphs/contributors">main code repository</a> and
       <a href="https://github.com/JMRI/website/graphs/contributors">the website</a>.</p>
 
-      <p>The <a href="/community/visuals/codeflower.shtml">JMRI CodeFlower</a> provides a dynamic
+      <p>The <a href="https://www.jmri.org/community/visuals/codeflower.shtml">JMRI CodeFlower</a> provides a dynamic
       view of the whole GitHub repository. It shows the relative size of the code in each file and
       the structure in which the files are stored.</p>
 
@@ -217,11 +217,11 @@
       "https://www.openhub.net/p/jmri/contributors/summary">contributors</a> and <a href=
       "https://www.openhub.net/p/jmri/commits/summary">commits</a>.</p>
 
-      <p>Dennis Miller created a <a href="https://jmri.org/community/visuals/codeswarm.shtml">Code
+      <p>Dennis Miller created a <a href="https://www.jmri.org/community/visuals/codeswarm.shtml">Code
       Swarm of JMRI development</a> that represents activity from inception to January 2009. A Code
       Swarm is a fascinating and dynamic visual representation of change as developers come and go
       and make changes to the files that make up a project. More information is available on the
-      <a href="https://jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a> page.</p>
+      <a href="https://www.jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a> page.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

@@ -11,7 +11,7 @@ import java.util.List;
 public class SpecificAppearance {
 
     private String _aspectName;
-    private List<ImageLink> _imageLinks = new ArrayList<>();
+    private final List<ImageLink> _imageLinks = new ArrayList<>();
 
     public SpecificAppearance() {
         this._aspectName = "";

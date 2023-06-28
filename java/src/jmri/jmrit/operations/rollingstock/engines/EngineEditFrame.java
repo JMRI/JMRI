@@ -2,6 +2,7 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -184,6 +185,8 @@ public class EngineEditFrame extends RollingStockEditFrame {
     protected void save(boolean isSave) {
         super.save(engineManager, isSave);
         Engine engine = (Engine) _rs;
+        
+        checkAndSetLocationAndTrack(engine);
 
         engine.setBunit(bUnitCheckBox.isSelected());
 
@@ -210,6 +213,31 @@ public class EngineEditFrame extends RollingStockEditFrame {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("engineHorsepower"),
                         Bundle.getMessage("engineCanNotHp"), JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+        // is this engine part of a consist? Ask if all engines should have the same location and track
+        if (engine.getConsist() != null) {
+            List<Engine> engines = engine.getConsist().getEngines();
+            for (Engine cEngine : engines) {
+                if (cEngine != engine) {
+                    if (cEngine.getLocation() != engine.getLocation() || cEngine.getTrack() != engine.getTrack()) {
+                        int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+                                .getMessage("engineInConsistLocation"),
+                                new Object[]{engine.toString(), engine.getLocationName(), engine.getTrackName()}),
+                                Bundle.getMessage("enginePartConsist"),
+                                JOptionPane.YES_NO_OPTION);
+                        if (results == JOptionPane.YES_OPTION) {
+                            // change the location for all engines in consist
+                            for (Engine cEngine2 : engines) {
+                                if (cEngine2 != engine) {
+                                    setLocationAndTrack(cEngine2);
+                                }
+                            }
+                        }
+                        break; // done
+                    }
+                }
             }
         }
     }

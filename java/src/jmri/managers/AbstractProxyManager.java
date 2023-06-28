@@ -116,12 +116,16 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
 
         Arrays.stream(getPropertyChangeListeners()).forEach(l -> m.addPropertyChangeListener(l));
         Arrays.stream(getVetoableChangeListeners()).forEach(l -> m.addVetoableChangeListener(l));
-        boundPropertyNames
-                .forEach(n -> Arrays.stream(getPropertyChangeListeners(n))
-                .forEach(l -> m.addPropertyChangeListener(n, l)));
-        vetoablePropertyNames
-                .forEach(n -> Arrays.stream(getVetoableChangeListeners(n))
-                .forEach(l -> m.addVetoableChangeListener(n, l)));
+
+        for (String propertyName : boundPropertyNames) {
+            PropertyChangeListener[] pcls = getPropertyChangeListeners(propertyName);
+            Arrays.stream(pcls).forEach( l -> m.addPropertyChangeListener(propertyName, l));
+        }
+        for (String vetoablePropertyName : vetoablePropertyNames) {
+            VetoableChangeListener[] vcls = getVetoableChangeListeners(vetoablePropertyName);
+            Arrays.stream(vcls).forEach( l -> m.addVetoableChangeListener(vetoablePropertyName, l));
+        }
+
         m.addPropertyChangeListener("beans", this);
         m.addDataListener(this);
         recomputeNamedBeanSet();

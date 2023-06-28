@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - OpenLCB on TCS Hardware</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>Hardware Support: OpenLCB on TCS hardware</h1>
+      <em>JMRI support for OpenLCB is rapidly evolving; the actual code might be ahead or behind
+      the documentation on any given day.</em>
+      <p>This page describes JMRI's support for TCS hardware via OpenLCB. It's part of JMRI's
+      <a href="index.shtml">documentation of its OpenLCB support</a>.</p>
+
+      <h2>The TCS CS-105 Command Station</h2>
+
+        <h3>Connections</h3>
+
+        JMRI can connect to a TCS CS-105 command station using OpenLCB/LCC two ways:
+        <ul>
+            <li>Via the CAN bus and a USB-CAN adapter.
+            <li>Via a direct network connection.
+        </ul>
+
+        <h3>Roster Support</h3>
+            <span class="since">Since <a href="jmri5.3.4.shtml">JMRI 5.3.4</a></span>
+
+            To copy the function labels from a DecoderPro
+            roster entry to the corresponding locomotive entry in the CS-105 command station
+            for use with UWT-100 throttles:
+            <ul>
+                <li>Open the DecoderPro roster entry from which you want to transfer
+                    the function labels.  This must have the same DCC address as the
+                    entry in the CS-105. If you don't yet have a roster entry for the locomotive,
+                    you should create one and fill out its function labels and DCC address.
+                <li>In the File -> Export... menu on the roster entry, select "Roster Entry to TCS CS-105"
+                <li>Wait for the completion dialog.
+            </ul>
+
+            To copy the function labels from locomotive entry in a CS-105 command
+            station to the corresponding DecoderPro roster entry:
+            <ul>
+                <li>Open the corresponding DecoderPro roster entry.
+                    This must have the same DCC address as the
+                    entry in the CS-105. If you don't yet have a roster entry for the locomotive,
+                    you should create one and fill out its DCC address.
+                <li>In the File -> Import... menu on the roster entry, select "TCS CS-105 Roster Entry"
+                <li>Wait for the completion dialog.
+                <li>Save your DecoderPro roster entry.
+            </ul>
+
+            With the File -> Export -> "TCS backup file..." menu item, you can also
+            create formatted backup files suitable for
+            restoring to a TCS train node using the "Restore..."
+            button on the Configure Nodes screen.
+            <p>
+            With the File -> Import -> "TCS backup file..." menu item, you can read
+            a file created by the "Backup..." button on the Configure Nodes
+            screen into your roster entry.
+
+
+      <p>Back to the <a href="index.shtml">main OpenLCB Help page</a></p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

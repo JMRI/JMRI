@@ -159,7 +159,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     }
 
     /**
-     * As we have to poll the tams system to get updates we put request into a
+     * As we have to poll the system to get updates we put request into a
      * queue and allow the abstrct traffic controller to handle them when it
      * is free.
      * @param mm marklin message to add.

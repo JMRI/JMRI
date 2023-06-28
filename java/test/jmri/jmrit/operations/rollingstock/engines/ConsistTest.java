@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.util.ArrayList;
 import java.util.List;
 import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
@@ -60,8 +59,7 @@ public class ConsistTest extends OperationsTestCase {
         c1.setLead(e4);
         Assert.assertTrue("Consist Lead Engine 2 after 4c", c1.isLead(e2));
         Assert.assertFalse("Consist Lead Engine 4 after 4c", c1.isLead(e4));
-        List<Engine> tempengines = new ArrayList<>();
-        tempengines = c1.getEngines();
+        List<Engine> tempengines = c1.getEngines();
         Assert.assertTrue("Consist Engine 2 after 4c", tempengines.contains(e2));
         Assert.assertFalse("Consist Engine 4 after 4c", tempengines.contains(e4));
      
