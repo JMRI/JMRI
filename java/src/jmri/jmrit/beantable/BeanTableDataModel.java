@@ -21,8 +21,9 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -742,6 +743,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
         addMouseListenerToHeader(table);
+        table.getTableHeader().setDefaultRenderer(new BeanTableTooltipHeaderRenderer(table.getTableHeader().getDefaultRenderer()));
         return table;
     }
 
@@ -1053,6 +1055,16 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
+     * Get a ToolTip for a Table Column Header.
+     * @param columnModelIndex the model column number.
+     * @return ToolTip, else null.
+     */
+    @OverridingMethodsMustInvokeSuper
+    protected String getHeaderTooltip(int columnModelIndex) {
+        return null;
+    }
+
+    /**
      * Format a comment field as a tool tip string. Multi line comments are supported.
      * @param comment The comment string.
      * @return a html formatted string or null if the comment is empty.
@@ -1079,6 +1091,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             if (columnName != null && !columnName.isEmpty()) {
                 StayOpenCheckBoxItem menuItem = new StayOpenCheckBoxItem(table.getModel().getColumnName(i), tcm.isColumnVisible(tc));
                 menuItem.addActionListener(new HeaderActionListener(tc, tcm));
+                menuItem.setToolTipText(((BeanTableDataModel)table.getModel()).getHeaderTooltip(i));
                 popupMenu.add(menuItem);
             }
 
@@ -1147,6 +1160,28 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 column.setIdentifier(String.format("Column%d", i));
             }
             i += 1;
+        }
+    }
+
+    protected class BeanTableTooltipHeaderRenderer extends DefaultTableCellRenderer  {
+        private final TableCellRenderer _existingRenderer;
+
+        protected BeanTableTooltipHeaderRenderer(TableCellRenderer existingRenderer) {
+            _existingRenderer = existingRenderer;
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            
+            Component rendererComponent = _existingRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            // Set the cell ToolTip
+            if (rendererComponent instanceof JLabel) {
+                int modelIndex = table.getColumnModel().getColumn(column).getModelIndex();
+                String tooltip = ((BeanTableDataModel)table.getModel()).getHeaderTooltip(modelIndex);
+                ((JLabel)rendererComponent).setToolTipText(tooltip);
+            }
+            return rendererComponent;
         }
     }
 
@@ -1457,7 +1492,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Set the filter to select which beans to include in the table.
      * @param filter the filter
      */
-    public void setFilter(Predicate<? super T> filter) {
+    public synchronized void setFilter(Predicate<? super T> filter) {
         this.filter = filter;
         updateNameList();
     }
@@ -1466,7 +1501,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Get the filter to select which beans to include in the table.
      * @return the filter
      */
-    public Predicate<? super T> getFilter() {
+    public synchronized Predicate<? super T> getFilter() {
         return filter;
     }
 
