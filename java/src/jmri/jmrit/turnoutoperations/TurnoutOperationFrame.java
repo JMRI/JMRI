@@ -178,7 +178,7 @@ public class TurnoutOperationFrame extends JDialog {
     }
 
     private void changeTab( ChangeEvent e) {
-        log.debug("tab changed", e);
+        log.debug("tab changed {}", e);
         currentConfig = (TurnoutOperationConfig) tabPane.getSelectedComponent();
         if (currentConfig == null) {
             currentOperation = null;
