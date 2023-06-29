@@ -1091,7 +1091,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             if (columnName != null && !columnName.isEmpty()) {
                 StayOpenCheckBoxItem menuItem = new StayOpenCheckBoxItem(table.getModel().getColumnName(i), tcm.isColumnVisible(tc));
                 menuItem.addActionListener(new HeaderActionListener(tc, tcm));
-                menuItem.setToolTipText(((BeanTableDataModel)table.getModel()).getHeaderTooltip(i));
+                menuItem.setToolTipText(((BeanTableDataModel<T>)table.getModel()).getHeaderTooltip(i));
                 popupMenu.add(menuItem);
             }
 
@@ -1178,7 +1178,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             // Set the cell ToolTip
             if (rendererComponent instanceof JLabel) {
                 int modelIndex = table.getColumnModel().getColumn(column).getModelIndex();
-                String tooltip = ((BeanTableDataModel)table.getModel()).getHeaderTooltip(modelIndex);
+                String tooltip = ((BeanTableDataModel<T>)table.getModel()).getHeaderTooltip(modelIndex);
                 ((JLabel)rendererComponent).setToolTipText(tooltip);
             }
             return rendererComponent;
