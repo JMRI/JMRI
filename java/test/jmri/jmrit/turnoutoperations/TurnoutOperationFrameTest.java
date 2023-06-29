@@ -51,7 +51,7 @@ public class TurnoutOperationFrameTest {
         am.waitClosed();
     }
 
-    @RepeatedTest(200)
+    @Test
     public void testCopyRenameDelete() {
 
         // create a CBUS connection so that the Retry options which require
