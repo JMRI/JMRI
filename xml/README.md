@@ -22,5 +22,5 @@ The JMRI web page is located at http://jmri.org/
 
 More information on these configuration file is available at http://jmri.org/help/en/html/setup/Files.shtml
 
-All the files in this directory are copyrighted (C) by their various authors.  The COPYING file describes the terms under which you can use them.  Note that you MUST give JMRI credit if you use all or part of these files.  For more information, please see http://jmri.org/Copyright.html
+All the files in this directory are copyrighted (C) by their various authors.  The COPYING file describes the terms under which you can use them.  Note that you MUST give JMRI credit if you use all or part of these files.  For more information, please see https://www.jmri.org/Copyright.html
 
