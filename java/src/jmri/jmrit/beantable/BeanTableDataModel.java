@@ -1091,7 +1091,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             if (columnName != null && !columnName.isEmpty()) {
                 StayOpenCheckBoxItem menuItem = new StayOpenCheckBoxItem(table.getModel().getColumnName(i), tcm.isColumnVisible(tc));
                 menuItem.addActionListener(new HeaderActionListener(tc, tcm));
-                menuItem.setToolTipText(((BeanTableDataModel<T>)table.getModel()).getHeaderTooltip(i));
+                TableModel mod = table.getModel();
+                if (mod instanceof BeanTableDataModel<?>) {
+                    menuItem.setToolTipText(((BeanTableDataModel<?>)mod).getHeaderTooltip(i));
+                }
                 popupMenu.add(menuItem);
             }
 
@@ -1174,11 +1177,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             
             Component rendererComponent = _existingRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-            // Set the cell ToolTip
-            if (rendererComponent instanceof JLabel) {
+            TableModel mod = table.getModel();
+            if ( rendererComponent instanceof JLabel && mod instanceof BeanTableDataModel<?> ) { // Set the cell ToolTip
                 int modelIndex = table.getColumnModel().getColumn(column).getModelIndex();
-                String tooltip = ((BeanTableDataModel<T>)table.getModel()).getHeaderTooltip(modelIndex);
+                String tooltip = ((BeanTableDataModel<?>)mod).getHeaderTooltip(modelIndex);
                 ((JLabel)rendererComponent).setToolTipText(tooltip);
             }
             return rendererComponent;
