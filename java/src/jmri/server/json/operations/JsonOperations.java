@@ -54,6 +54,10 @@ public class JsonOperations {
     /**
      * {@value #TRAIN}
      */
+    public static final String TRAIN_ID = "trainId"; // NOI18N
+    /**
+     * {@value #TRAIN_ID}
+     */
     public static final String TRAIN = "train"; // NOI18N
     /**
      * {@value #WEIGHT}

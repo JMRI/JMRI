@@ -575,11 +575,33 @@ public class JsonOperationsHttpService extends JsonHttpService {
      */
     public ObjectNode postRollingStock(@Nonnull RollingStock rs, JsonNode data, Locale locale, int id)
             throws JsonException {
-        String name = rs.getId();
         // make changes that can throw an exception first
-        JsonNode node = data.path(LOCATION);
+        String name = rs.getId();
+        //handle removal (only) from Train
+        JsonNode node = data.path(TRAIN_ID);
         if (!node.isMissingNode()) {
-            // if (!node.isNull()) {
+            //new value must be null, adding or changing train not supported here
+            if (node.isNull()) {
+                if (rs.getTrain() != null) {
+                    rs.setTrain(null);
+                    rs.setDestination(null, null);
+                    rs.setRouteLocation(null);
+                    rs.setRouteDestination(null);
+                }
+            } else {
+                throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                        Bundle.getMessage(locale, "ErrorRemovingTrain", rs.getId()), id);                 
+            }
+        }
+        //handle change in Location
+        node = data.path(LOCATION);
+        if (!node.isMissingNode()) {
+            //can't move a car that is on a train
+            if (rs.getTrain() != null) {
+                throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                        Bundle.getMessage(locale, "ErrorIsOnTrain", rs.getId(), rs.getTrainName()), id);                 
+            }
+            if (!node.isNull()) {
                 //move car to new location and track
                 Location location = locationManager().getLocationById(node.path(NAME).asText());
                 if (location != null) {
@@ -599,30 +621,27 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(locale, "ErrorNotFound", LOCATION, node.path(NAME).asText()), id);
                 }
-            // } else { 
+            } else { 
                 //if new location is null, remove car from current location
-                // if (!rs.setLocation(null, null).equals(Track.OKAY)) {
-                //     throw new JsonException(HttpServletResponse.SC_CONFLICT,
-                //             Bundle.getMessage(locale, "ErrorMovingCar",
-                //                     rs.getId(), LOCATION, null, null), id);
-                // }                
-            // }
+                if (!rs.setLocation(null, null).equals(Track.OKAY)) {
+                    throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                            Bundle.getMessage(locale, "ErrorMovingCar",
+                                    rs.getId(), LOCATION, null, null), id);
+                }                
+            }
         }
         //handle change in LocationUnknown
         node = data.path(LOCATION_UNKNOWN);
         if (!node.isMissingNode()) {
-            if (node.path(TRACK).asBoolean()) {
-                //remove car from train, and clear route info
-                rs.setTrain(null);
-                rs.setRouteLocation(null);
-                rs.setRouteDestination(null);
-                //flag car as LocationUnknown
-                rs.setLocationUnknown(true);
-            } else {
-                //clear LocationUnknown flag
-                rs.setLocationUnknown(false);
-            }
+            //can't move a car that is on a train
+            if (rs.getTrain() != null) {
+                throw new JsonException(HttpServletResponse.SC_CONFLICT,
+                        Bundle.getMessage(locale, "ErrorIsOnTrain", rs.getId(), rs.getTrainName()), id);                 
+            }            
+            //set LocationUnknown flag to new value
+            rs.setLocationUnknown(data.path(LOCATION_UNKNOWN).asBoolean()); 
         }
+        //handle change in DESTINATION
         node = data.path(DESTINATION);
         if (!node.isMissingNode()) {
             Location location = locationManager().getLocationById(node.path(NAME).asText());

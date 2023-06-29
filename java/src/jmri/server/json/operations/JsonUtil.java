@@ -323,6 +323,11 @@ public class JsonUtil {
         } else {
             node.set(JsonOperations.LOCATION, null);
         }
+        if (rs.getTrain() != null) {
+            node.put(JsonOperations.TRAIN_ID, rs.getTrain().getId());
+        } else {
+            node.set(JsonOperations.TRAIN_ID, null);
+        }        
         if (rs.getDestinationTrack() != null) {
             node.set(JsonOperations.DESTINATION,
                     this.getRSLocationAndTrack(rs.getDestinationTrack(), rs.getRouteDestination(), locale));
