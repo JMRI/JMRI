@@ -35,7 +35,9 @@ public class TcsImporter {
     /**
      * The import process starts upon creation of a TcsImporter
      * @param file The File object to be read
-     * @param model Variable model used to look up function bits
+     * @param cvModel Model used to look up CV values (not used)
+     * @param model Variable model used to look up function bits (retained for later use)
+     * @throws IOException from underlying file operations
      */
     public TcsImporter(File file, CvTableModel cvModel, VariableTableModel model) throws IOException {
         this.model = model;

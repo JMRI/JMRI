@@ -81,6 +81,7 @@ public class TcsExportAction extends AbstractAction {
      * @param str receives the formatted definition String
      * @param rosterEntry defines the information to store
      * @param model provides CV contents as available
+     * @param vModel provides variable contents as available
      */
     public static void formatTcsVirtualNodeDefinition(PrintStream str, RosterEntry rosterEntry, CvTableModel model, VariableTableModel vModel) {
         str.println("Train.Name="+rosterEntry.getId());
