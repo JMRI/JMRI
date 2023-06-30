@@ -321,7 +321,7 @@
 
         <h4>TCS</h4>
             <ul>
-                <li></li>
+                <li>FW89 add V2 add highVersionID</li>
             </ul>
 
 	    <h4>Team Digital</h4>
@@ -596,5 +596,6 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>IdTags now request the main IdTagManager instead of requesting a ProxyIdManager to get better initialization.</li>
+            <li>Added JMRI version number to the bottom of generated Javadoc.</li>
         </ul>
 

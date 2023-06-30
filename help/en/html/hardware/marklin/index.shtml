@@ -15,7 +15,7 @@
       <h1>Hardware Support: M&auml;rklin </h1>
       JMRI supports two M&auml;rklin command stations:
       the <a href="#cs2">Command Station 2 (CS2)</a> and
-      the <a href="">CdB CC-Schnitte 2</a>.
+      the <a href="#cdb">CdB CC-Schnitte 2</a>.
 
       <h2 id="cs2">Command Station 2 (CS2)</h2>
 
