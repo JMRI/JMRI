@@ -266,14 +266,14 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 - Version 3.5.5 (2018-12-04)
 - from https://github.com/jmdns/jmdns/releases
 
-##### jna-5.9.0.jar
+##### jna-5.13.0.jar
 - Java Native Access library
-- from https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.9.0
+- from https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.13.0
 - See also https://github.com/java-native-access/jna
 
-##### jna-platform-5.9.0.jar
+##### jna-platform-5.13.0.jar
 - Java Native Access platform-specific utilities library
-- from https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.9.0
+- from https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.13.0
 
 
 ##### pi4j-core-1.2.jar, pi4j-device-1.2.jar, pi4j-gpio-extension-1.2.jar

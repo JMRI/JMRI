@@ -138,8 +138,8 @@
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
         <pathelement location="${libdir}/mailapi.jar"/>
         <pathelement location="${libdir}/xAPlib.jar"/>
-        <pathelement location="${libdir}/jna-5.9.0.jar"/>
-        <pathelement location="${libdir}/jna-platform-5.9.0.jar"/>
+        <pathelement location="${libdir}/jna-5.13.0.jar"/>
+        <pathelement location="${libdir}/jna-platform-5.13.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/commons-net-3.9.0.jar"/>
         <pathelement location="${libdir}/commons-logging-1.2.jar"/>
