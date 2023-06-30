@@ -87,13 +87,14 @@ final public class LayoutEditorAuxTools {
      * 2) and 3) above. For case 1), two track segments, the direction reflects
      * an "average" over the two track segments. See LayoutConnectivity for the
      * allowed values of direction.
+     * <p>
+     * Normally the initialization only occurs once after the panel is loaded.  When edge
+     * connectors are used, an incomplete LayoutConnectivity table can occur due to the
+     * panel loading sequence and the complexity of edge connector relationships.
+     * An additional initialization is allowed to build the final LayoutConnectivity table.
      */
     public void initializeBlockConnectivity() {
-        if (initialized) {
-            log.error("Call to initialize a connectivity list that has already been initialized");  // NOI18N
-            return;
-        }
-        cList.clear(); 
+        cList.clear();
         List<LayoutConnectivity> lcs = null;
 
         for (LayoutTrackView ltv : models.getLayoutTrackViews()) {
@@ -294,7 +295,7 @@ final public class LayoutEditorAuxTools {
                             || ((ltz.getTurnoutType() == LayoutTurnout.TurnoutType.LH_XOVER)
                             && ((lc.getConnectedType() == HitPointType.TURNOUT_A)
                             || (lc.getConnectedType() == HitPointType.TURNOUT_C)))) {
-                            
+
                         Turnout ltzto = ltz.getTurnout();
                         if (ltzto != null) {
                             bs = new BeanSetting(ltzto, ltz.getTurnoutName(), Turnout.CLOSED);

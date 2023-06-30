@@ -519,7 +519,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Request update of all sensors<span class="since">since 5.1.6</span></h4>
+      <h4 id="requestUpdateAll">Request update of all sensors<span class="since">since 5.1.6</span></h4>
 
       <p>Request the current status of sensors.  The request can be limited to specific connections
       or all connections.  The action depends on whether the connection supports sensor state
