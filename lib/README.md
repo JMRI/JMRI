@@ -134,7 +134,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
 ##### purejavacomm-1.0.5.jar
-- version 1.0.5
+- version 1.0.5 plus custom change to the Mac M1 support (only)
 - from https://search.maven.org/artifact/org.opensmarthouse/purejavacomm/1.0.5/jar
 - formerly from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
 - javadoc still at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
