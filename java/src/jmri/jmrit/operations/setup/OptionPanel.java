@@ -263,8 +263,8 @@ public class OptionPanel extends OperationsPreferencesPanel {
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             this.savePreferences();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
+            if (Setup.isCloseWindowOnSaveEnabled() && this.getTopLevelAncestor() instanceof OptionFrame) {
+                ((OptionFrame) this.getTopLevelAncestor()).dispose();
             }
         }
     }

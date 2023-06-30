@@ -271,7 +271,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                             clone.getDestinationName(), clone.getDestinationTrackName()));
             // note that testTrain = null, return false
         } else if (!trainServicesCar) {
-            testTrain = tmanager.getTrainForCar(clone, _train, _buildReport);
+            List<Train> excludeTrains = new ArrayList<>();
+            excludeTrains.add(_train);
+            testTrain = tmanager.getTrainForCar(clone, excludeTrains, _buildReport);
         }
         if (testTrain != null &&
                 _train != null &&
@@ -307,7 +309,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         new Object[]{testTrain.getName(), car.toString(), car.getTrack().getTrackTypeName(),
                                 car.getLocationName(), car.getTrackName(), clone.getDestinationName(),
                                 clone.getDestinationTrackName()}));
-        showRoute(car, new ArrayList<>(Arrays.asList(testTrain)), new ArrayList<>());
+        showRoute(car, new ArrayList<>(Arrays.asList(testTrain)),
+                new ArrayList<>(Arrays.asList(car.getFinalDestinationTrack())));
         // now check to see if specified train can service car directly
         if (_train != null && _train != testTrain) {
             addLine(_buildReport, SEVEN,
@@ -469,8 +472,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         boolean foundRoute = false;
         // now search for a yard or interchange that a train can pick up and
-        // deliver the
-        // car to its destination
+        // deliver the car to its destination
         List<Track> tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(trackType);
         for (Track track : tracks) {
             if (car.getTrack() == track) {
@@ -508,24 +510,32 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             // final location
             testCar.setTrack(track);
             testCar.setDestination(car.getFinalDestination());
-            testCar.setDestinationTrack(car.getFinalDestinationTrack()); // can
-                                                                         // be
-                                                                         // null
-            Train secondTrain = tmanager.getTrainForCar(testCar, _buildReport);
+            // destination track can be null
+            testCar.setDestinationTrack(car.getFinalDestinationTrack());
+            List<Train> excludeTrains = new ArrayList<>();
+            if (track.isInterchange() && track.getPickupOption().equals(Track.ANY)) {
+                log.debug("Interchange track ({}) any train can pull", track.getName());
+                excludeTrains.add(_train);
+            }
+            Train secondTrain = tmanager.getTrainForCar(testCar, excludeTrains, _buildReport);
             if (secondTrain == null) {
-                if (debugFlag) {
-                    log.debug("Could not find a train to service car from {} ({}, {}) to destination ({}, {})",
-                            trackType, track.getLocation().getName(), track.getName(), testCar.getDestinationName(),
-                            testCar.getDestinationTrackName()); // NOI18N
+                // try again, but don't exclude _train.
+                secondTrain = tmanager.getTrainForCar(testCar, null);
+                if (secondTrain == null) {
+                    if (debugFlag) {
+                        log.debug("Could not find a train to service car from {} ({}, {}) to destination ({}, {})",
+                                trackType, track.getLocation().getName(), track.getName(), testCar.getDestinationName(),
+                                testCar.getDestinationTrackName()); // NOI18N
+                    }
+                    if (_addtoReportVeryDetailed) {
+                        addLine(_buildReport, SEVEN,
+                                MessageFormat.format(Bundle.getMessage("RouterNotFindTrain"),
+                                        new Object[]{Track.getTrackTypeName(trackType), track.getLocation().getName(),
+                                                track.getName(), testCar.getDestinationName(),
+                                                testCar.getDestinationTrackName()}));
+                    }
+                    continue;
                 }
-                if (_addtoReportVeryDetailed) {
-                    addLine(_buildReport, SEVEN,
-                            MessageFormat.format(Bundle.getMessage("RouterNotFindTrain"),
-                                    new Object[]{Track.getTrackTypeName(trackType), track.getLocation().getName(),
-                                            track.getName(), testCar.getDestinationName(),
-                                            testCar.getDestinationTrackName()}));
-                }
-                continue;
             }
             if (debugFlag) {
                 log.debug("Train ({}) can service car ({}) from {} ({}, {}) to final destination ({}, {})",
@@ -543,12 +553,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             _lastLocationTracks.add(track);
             _lastLocationTrains.add(secondTrain);
             // now try to forward car to this interim location
-            testCar.setTrack(car.getTrack()); // restore test car's location and
-                                              // track
-            testCar.setDestination(track.getLocation()); // forward test car to
-                                                         // this interim
-                                                         // destination and
-                                                         // track
+            testCar.setTrack(car.getTrack()); // restore test car
+            // forward test car to this interim destination and track
+            testCar.setDestination(track.getLocation()); 
             testCar.setDestinationTrack(track);
             // determine if car can be transported from current location to this
             // interchange, yard, or staging track
@@ -562,10 +569,13 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         MessageFormat.format(Bundle.getMessage("RouterTrainCanNotDueTo"),
                                 new Object[]{_train.getName(), car.toString(), track.getLocation().getName(),
                                         track.getName(), _train.getServiceStatus()}));
-                foundRoute = true; // however, the issue is route moves or train
-                                   // length
+                foundRoute = true; //issue is route moves or train length
             } else {
                 firstTrain = tmanager.getTrainForCar(testCar, _buildReport);
+            }
+            if (firstTrain == secondTrain && track.isInterchange() && track.getPickupOption().equals(Track.ANY)) {
+                log.debug("Same train ({}) can not service interchange ({})", firstTrain.getName(), track.getName());
+                firstTrain = tmanager.getTrainForCar(testCar, excludeTrains, _buildReport);
             }
             if (firstTrain == null && _addtoReportVeryDetailed) {
                 addLine(_buildReport, SEVEN,
@@ -605,7 +615,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 foundRoute = true; // found a route
                 // found a two train route for this car, show the car's route
                 List<Train> trains = new ArrayList<>(Arrays.asList(firstTrain, secondTrain));
-                tracks = new ArrayList<>(Arrays.asList(track));
+                tracks = new ArrayList<>(Arrays.asList(track, car.getFinalDestinationTrack()));
                 showRoute(car, trains, tracks);
 
                 _status = car.checkDestination(track.getLocation(), track);
@@ -787,7 +797,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         for (Track nlt : _nextLocationTracks) {
             for (Track llt : _lastLocationTracks) {
                 // does a train service these two locations?
-                Train middleTrain = getTrainForCar(testCar, nlt, llt);
+                Train middleTrain =
+                        getTrainForCar(testCar, nlt, llt, _nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)),
+                                _lastLocationTrains.get(_lastLocationTracks.indexOf(llt)));
                 if (middleTrain != null) {
                     log.debug("Found 3 train route, setting car destination ({}, {})", nlt.getLocation().getName(),
                             nlt.getName());
@@ -797,7 +809,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     List<Train> trains = new ArrayList<>(
                             Arrays.asList(_nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)), middleTrain,
                                     _lastLocationTrains.get(_lastLocationTracks.indexOf(llt))));
-                    List<Track> tracks = new ArrayList<>(Arrays.asList(nlt, llt));
+                    List<Track> tracks = new ArrayList<>(Arrays.asList(nlt, llt, car.getFinalDestinationTrack()));
                     showRoute(car, trains, tracks);
                     if (finshSettingRouteFor(car, nlt)) {
                         return true; // done 3 train routing
@@ -817,7 +829,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         boolean foundRoute = false;
         for (Track nlt : _nextLocationTracks) {
             otherloop: for (Track mlt : _otherLocationTracks) {
-                Train middleTrain2 = getTrainForCar(testCar, nlt, mlt);
+                Train middleTrain2 = getTrainForCar(testCar, nlt, mlt,
+                        _nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)), null);
                 if (middleTrain2 == null) {
                     continue;
                 }
@@ -833,7 +846,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     }
                 }
                 for (Track llt : _lastLocationTracks) {
-                    Train middleTrain3 = getTrainForCar(testCar, mlt, llt);
+                    Train middleTrain3 = getTrainForCar(testCar, mlt, llt, middleTrain2, _lastLocationTrains.get(_lastLocationTracks.indexOf(llt)));
                     if (middleTrain3 == null) {
                         continue;
                     }
@@ -845,7 +858,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     List<Train> trains = new ArrayList<>(
                             Arrays.asList(_nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)), middleTrain2,
                                     middleTrain3, _lastLocationTrains.get(_lastLocationTracks.indexOf(llt))));
-                    List<Track> tracks = new ArrayList<>(Arrays.asList(nlt, mlt, llt));
+                    List<Track> tracks = new ArrayList<>(Arrays.asList(nlt, mlt, llt, car.getFinalDestinationTrack()));
                     showRoute(car, trains, tracks);
                     if (finshSettingRouteFor(car, nlt)) {
                         return true; // done 4 train routing
@@ -865,7 +878,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         boolean foundRoute = false;
         for (Track nlt : _nextLocationTracks) {
             otherloop: for (Track mlt1 : _next2ndLocationTracks) {
-                Train middleTrain2 = getTrainForCar(testCar, nlt, mlt1);
+                Train middleTrain2 = getTrainForCar(testCar, nlt, mlt1,
+                        _nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)), null);
                 if (middleTrain2 == null) {
                     continue;
                 }
@@ -877,7 +891,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     if (mlt2 == mlt1) {
                         continue;
                     }
-                    Train middleTrain3 = getTrainForCar(testCar, mlt1, mlt2);
+                    Train middleTrain3 = getTrainForCar(testCar, mlt1, mlt2, middleTrain2, null);
                     if (middleTrain3 == null) {
                         continue;
                     }
@@ -898,7 +912,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         }
                     }
                     for (Track llt : _lastLocationTracks) {
-                        Train middleTrain4 = getTrainForCar(testCar, mlt2, llt);
+                        Train middleTrain4 = getTrainForCar(testCar, mlt2, llt, middleTrain3,
+                                _lastLocationTrains.get(_lastLocationTracks.indexOf(llt)));
                         if (middleTrain4 == null) {
                             continue;
                         }
@@ -911,7 +926,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         List<Train> trains = new ArrayList<>(Arrays.asList(
                                 _nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)), middleTrain2, middleTrain3,
                                 middleTrain4, _lastLocationTrains.get(_lastLocationTracks.indexOf(llt))));
-                        List<Track> tracks = new ArrayList<>(Arrays.asList(nlt, mlt1, mlt2, llt));
+                        List<Track> tracks = new ArrayList<>(Arrays.asList(nlt, mlt1, mlt2, llt, car.getFinalDestinationTrack()));
                         showRoute(car, trains, tracks);
                         if (finshSettingRouteFor(car, nlt)) {
                             return true; // done 5 train routing
@@ -932,7 +947,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         boolean foundRoute = false;
         for (Track nlt : _nextLocationTracks) {
             otherloop: for (Track mlt1 : _next2ndLocationTracks) {
-                Train middleTrain2 = getTrainForCar(testCar, nlt, mlt1);
+                Train middleTrain2 = getTrainForCar(testCar, nlt, mlt1, _nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)), null);
                 if (middleTrain2 == null) {
                     continue;
                 }
@@ -940,7 +955,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     if (mlt2 == mlt1) {
                         continue;
                     }
-                    Train middleTrain3 = getTrainForCar(testCar, mlt1, mlt2);
+                    Train middleTrain3 = getTrainForCar(testCar, mlt1, mlt2, middleTrain2, null);
                     if (middleTrain3 == null) {
                         continue;
                     }
@@ -948,7 +963,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         if (mlt3 == mlt1 || mlt3 == mlt2) {
                             continue;
                         }
-                        Train middleTrain4 = getTrainForCar(testCar, mlt2, mlt3);
+                        Train middleTrain4 = getTrainForCar(testCar, mlt2, mlt3, middleTrain3, null);
                         if (middleTrain4 == null) {
                             continue;
                         }
@@ -962,7 +977,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                             }
                         }
                         for (Track llt : _lastLocationTracks) {
-                            Train middleTrain5 = getTrainForCar(testCar, mlt3, llt);
+                            Train middleTrain5 = getTrainForCar(testCar, mlt3, llt, middleTrain4,
+                                    _lastLocationTrains.get(_lastLocationTracks.indexOf(llt)));
                             if (middleTrain5 == null) {
                                 continue;
                             }
@@ -975,7 +991,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                                     Arrays.asList(_nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)),
                                             middleTrain2, middleTrain3, middleTrain4, middleTrain5,
                                             _lastLocationTrains.get(_lastLocationTracks.indexOf(llt))));
-                            List<Track> tracks = new ArrayList<>(Arrays.asList(nlt, mlt1, mlt2, mlt3, llt));
+                            List<Track> tracks = new ArrayList<>(Arrays.asList(nlt, mlt1, mlt2, mlt3, llt, car.getFinalDestinationTrack()));
                             showRoute(car, trains, tracks);
                             // only set car's destination if specified train
                             // can service car
@@ -999,7 +1015,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         boolean foundRoute = false;
         for (Track nlt : _nextLocationTracks) {
             otherloop: for (Track mlt1 : _next2ndLocationTracks) {
-                Train middleTrain2 = getTrainForCar(testCar, nlt, mlt1);
+                Train middleTrain2 = getTrainForCar(testCar, nlt, mlt1, _nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)), null);
                 if (middleTrain2 == null) {
                     continue;
                 }
@@ -1007,7 +1023,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     if (mlt2 == mlt1) {
                         continue;
                     }
-                    Train middleTrain3 = getTrainForCar(testCar, mlt1, mlt2);
+                    Train middleTrain3 = getTrainForCar(testCar, mlt1, mlt2, middleTrain2, null);
                     if (middleTrain3 == null) {
                         continue;
                     }
@@ -1015,7 +1031,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         if (mlt3 == mlt1 || mlt3 == mlt2) {
                             continue;
                         }
-                        Train middleTrain4 = getTrainForCar(testCar, mlt2, mlt3);
+                        Train middleTrain4 = getTrainForCar(testCar, mlt2, mlt3, middleTrain3, null);
                         if (middleTrain4 == null) {
                             continue;
                         }
@@ -1023,12 +1039,13 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                             if (mlt4 == mlt1 || mlt4 == mlt2 || mlt4 == mlt3) {
                                 continue;
                             }
-                            Train middleTrain5 = getTrainForCar(testCar, mlt3, mlt4);
+                            Train middleTrain5 = getTrainForCar(testCar, mlt3, mlt4, middleTrain4, null);
                             if (middleTrain5 == null) {
                                 continue;
                             }
                             for (Track llt : _lastLocationTracks) {
-                                Train middleTrain6 = getTrainForCar(testCar, mlt4, llt);
+                                Train middleTrain6 = getTrainForCar(testCar, mlt4, llt, middleTrain5,
+                                        _lastLocationTrains.get(_lastLocationTracks.indexOf(llt)));
                                 if (middleTrain6 == null) {
                                     continue;
                                 }
@@ -1041,7 +1058,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                                         Arrays.asList(_nextLocationTrains.get(_nextLocationTracks.indexOf(nlt)),
                                                 middleTrain2, middleTrain3, middleTrain4, middleTrain5, middleTrain6,
                                                 _lastLocationTrains.get(_lastLocationTracks.indexOf(llt))));
-                                List<Track> tracks = new ArrayList<>(Arrays.asList(nlt, mlt1, mlt2, mlt3, mlt4, llt));
+                                List<Track> tracks = new ArrayList<>(Arrays.asList(nlt, mlt1, mlt2, mlt3, mlt4, llt, car.getFinalDestinationTrack()));
                                 showRoute(car, trains, tracks);
                                 // only set car's destination if specified train
                                 // can service car
@@ -1059,32 +1076,47 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         return foundRoute;
     }
     
-    private Train getTrainForCar(Car testCar, Track from, Track to) {
-        testCar.setTrack(from); // set car to this location and track
-        testCar.setDestinationTrack(to); // set car to this destination and
-                                         // track
+    /**
+     * This method returns a train that is able to move the test car between the fromTrack
+     * and the toTrack. The default for an interchange track is to not allow the same train to
+     * spot and pull a car.
+     * 
+     * @param testCar   test car
+     * @param fromTrack departure track
+     * @param toTrack   arrival track
+     * @param fromTrain train servicing fromTrack (previous drop to fromTrack)
+     * @param toTrain   train servicing toTrack (pulls from the toTrack)
+     * @return null if no train found, else a train able to move test car
+     *         between fromTrack and toTrack.
+     */
+    private Train getTrainForCar(Car testCar, Track fromTrack, Track toTrack, Train fromTrain, Train toTrain) {
+        testCar.setTrack(fromTrack); // car to this location and track
+        testCar.setDestinationTrack(toTrack); // car to this destination & track
+        List<Train> excludeTrains = new ArrayList<>();
+        if (fromTrack.isInterchange() && fromTrack.getPickupOption().equals(Track.ANY)) {
+            excludeTrains.add(fromTrain);
+        }
+        if (toTrack.isInterchange() && toTrack.getPickupOption().equals(Track.ANY)) {
+            excludeTrains.add(toTrain);
+        }
         // does a train service these two locations?
-        return tmanager.getTrainForCar(testCar, null);
+        return tmanager.getTrainForCar(testCar, excludeTrains, null);
     }
-
+    
     private void showRoute(Car car, List<Train> trains, List<Track> tracks) {
-        StringBuffer buf = new StringBuffer(MessageFormat.format(Bundle.getMessage("RouterRouteForCar"),
-                new Object[]{car.toString(), car.getLocationName(), car.getTrackName()}));
+        StringBuffer buf = new StringBuffer(
+                Bundle.getMessage("RouterRouteForCar", car.toString(), car.getLocationName(), car.getTrackName()));
         for (Track track : tracks) {
             if (_addtoReport) {
-                buf.append(MessageFormat.format(Bundle.getMessage("RouterRouteTrain"),
-                        new Object[]{trains.get(tracks.indexOf(track)).getName()}));
+                buf.append(Bundle.getMessage("RouterRouteTrain", trains.get(tracks.indexOf(track)).getName()));
             }
-            buf.append(MessageFormat.format(Bundle.getMessage("RouterRouteTrack"),
-                    new Object[]{track.getLocation().getName(), track.getName()}));
+            if (track != null) {
+                buf.append(Bundle.getMessage("RouterRouteTrack", track.getLocation().getName(), track.getName()));
+            } else {
+                buf.append(Bundle.getMessage("RouterRouteTrack", car.getFinalDestinationName(),
+                        car.getFinalDestinationTrackName()));
+            }
         }
-        // finish up with car's final destination
-        if (_addtoReport) {
-            buf.append(MessageFormat.format(Bundle.getMessage("RouterRouteTrain"),
-                    new Object[]{trains.get(trains.size() - 1).getName()}));
-        }
-        buf.append(MessageFormat.format(Bundle.getMessage("RouterRouteTrack"),
-                new Object[]{car.getFinalDestinationName(), car.getFinalDestinationTrackName()}));
         addLine(_buildReport, SEVEN, buf.toString());
     }
 

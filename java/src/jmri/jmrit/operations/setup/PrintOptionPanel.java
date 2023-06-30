@@ -3,9 +3,7 @@ package jmri.jmrit.operations.setup;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.*;
 
@@ -464,8 +462,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
 
         if (ae.getSource() == saveButton) {
             this.savePreferences();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
+            if (Setup.isCloseWindowOnSaveEnabled() && this.getTopLevelAncestor() instanceof PrintOptionFrame) {
+                ((PrintOptionFrame) this.getTopLevelAncestor()).dispose();
             }
         }
     }

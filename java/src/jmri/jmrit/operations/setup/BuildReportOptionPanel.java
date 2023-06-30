@@ -126,8 +126,8 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
     public void buttonActionPerformed(ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             this.savePreferences();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
+            if (Setup.isCloseWindowOnSaveEnabled() && this.getTopLevelAncestor() instanceof BuildReportOptionFrame) {
+                ((BuildReportOptionFrame) this.getTopLevelAncestor()).dispose();
             }
         }
     }

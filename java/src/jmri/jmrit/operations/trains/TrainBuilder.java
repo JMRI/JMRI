@@ -351,6 +351,9 @@ public class TrainBuilder extends TrainBuilderCars {
             _train.reset();
             _train.setStatusCode(Train.CODE_BUILDING);
             _train.setLeadEngine(null);
+            // using the same departure and termination tracks
+            _train.setDepartureTrack(_departStageTrack);
+            _train.setTerminationTrack(_terminateStageTrack);
             showAndInitializeTrainRoute();
             getAndRemoveEnginesFromList();
             addEnginesToTrain();

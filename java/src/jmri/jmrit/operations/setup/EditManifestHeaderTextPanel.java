@@ -274,8 +274,8 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         }
         if (ae.getSource() == saveButton) {
             this.savePreferences();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
+            if (Setup.isCloseWindowOnSaveEnabled() && this.getTopLevelAncestor() instanceof EditManifestHeaderTextFrame) {
+                ((EditManifestHeaderTextFrame) this.getTopLevelAncestor()).dispose();
             }
         }
     }

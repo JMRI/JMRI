@@ -264,8 +264,8 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
         }
         if (ae.getSource() == saveButton) {
             this.savePreferences();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
+            if (Setup.isCloseWindowOnSaveEnabled() && this.getTopLevelAncestor() instanceof EditManifestTextFrame) {
+                ((EditManifestTextFrame) this.getTopLevelAncestor()).dispose();
             }
         }
     }

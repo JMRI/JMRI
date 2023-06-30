@@ -4,10 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -17,9 +14,7 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -493,18 +488,18 @@ public class TrainManager extends PropertyChangeSupport
      *         destination.
      */
     public Train getTrainForCar(Car car, PrintWriter buildReport) {
-        return getTrainForCar(car, null, buildReport);
+        return getTrainForCar(car, new ArrayList<>(), buildReport);
     }
 
     /**
      *
      * @param car          The car looking for a train.
-     * @param excludeTrain The only train not to try.
+     * @param excludeTrains The trains not to try.
      * @param buildReport  The build report for logging.
      * @return Train that can service car from its current location to the its
      *         destination.
      */
-    public Train getTrainForCar(Car car, Train excludeTrain, PrintWriter buildReport) {
+    public Train getTrainForCar(Car car, List<Train> excludeTrains, PrintWriter buildReport) {
 //        log.debug("Find train for car ({}) location ({}, {}) destination ({}, {})", car.toString(),
 //                car.getLocationName(), car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()); // NOI18N
         if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
@@ -515,7 +510,7 @@ public class TrainManager extends PropertyChangeSupport
                                     car.getDestinationName(), car.getDestinationTrackName() }));
         }
         for (Train train : getTrainsByIdList()) {
-            if (train == excludeTrain) {
+            if (excludeTrains.contains(train)) {
                 continue;
             }
             if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled()) {
