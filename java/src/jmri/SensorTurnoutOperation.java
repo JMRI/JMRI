@@ -61,4 +61,9 @@ public class SensorTurnoutOperation extends CommonTurnoutOperation {
         return new SensorTurnoutOperator(t, interval, maxTries);
     }
 
+    @Override
+    public String getToolTip(){
+        return Bundle.getMessage("TurnoutOperationSensorTip");
+    }
+
 }
