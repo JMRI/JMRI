@@ -183,12 +183,14 @@ This is the next release in the 5.6 cycle. It's intended to be created from the 
         git pull
         cp jmri5.5.1.shtml jmri5.5.2.shtml
         $EDITOR jmri5.5.2.shtml
+```
 
-            (edit the new release note accordingly)
-                change numbers throughout
-                move new warnings to old (see below)
-                remove old-version change notes
+(edit the new release note accordingly)
+ - change numbers throughout
+ - move new warnings to old (see below)
+ - remove old-version change notes
 
+```
         git add jmri5.5.2.shtml
         git commit -m"start new 5.5.2 next release note" jmri5.5.2.shtml
         git push github
@@ -255,7 +257,7 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i .bak s/5.3.7-SNAPSHOT/5.5.1-SNAPSHOT/g pom.xml
+        sed -i .bak s/5.3.8-SNAPSHOT/5.5.1-SNAPSHOT/g pom.xml
         git commit -m"5.5.1 until next release" pom.xml
 ```
 
@@ -308,7 +310,7 @@ Jenkins will be creating files shortly at the [CI server](https://builds.jmri.or
 ```
 The release-5.5.1 branch has been created.
 
-Maintainers, please set the (next series, i.e. 5.5.2) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the (next series, i.e. 5.7.1) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
 Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/TestReleases/job/5.5.1/)
 
@@ -379,7 +381,7 @@ Note that the purpose of this check is to make sure that the _files_ were built 
 
 ```
 
-- *Wait for some replies about all three platforms* before proceeding
+- *Wait for some replies about all three platforms before proceeding*
 
 ================================================================================
 ## Further Changes to Contents Before Release
@@ -479,16 +481,15 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```
-
 [Release notes](https://jmri.org/releasenotes/jmri5.5.1.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.5.1+Rdeb1a36dce.dmg](https://github.com/JMRI/JMRI/releases/download/v5.5.1/JMRI.5.5.1+Rdeb1a36dce.dmg) | f7319b2f8a83427275886dafc3db2dee17d3f0a2c859c127e4afe31d0a0aec35
-[JMRI.5.5.1+Rdeb1a36dce.exe](https://github.com/JMRI/JMRI/releases/download/v5.5.1/JMRI.5.5.1+Rdeb1a36dce.exe) | 7343dd189cafd2e6e8f0fa6e4d14e7183b7b8cd3fcf4fada87f985ffc70db410
-[JMRI.5.5.1+Rdeb1a36dce.tgz](https://github.com/JMRI/JMRI/releases/download/v5.5.1/JMRI.5.5.1+Rdeb1a36dce.tgz) | 2bde86d05323097fa72af2cd1309b53f4a6b1da60b9c46691810ebbf2d941715
+[JMRI.5.5.1+R196d5a62b6.dmg](https://github.com/JMRI/JMRI/releases/download/v5.5.1/JMRI.5.5.1+R196d5a62b6.dmg) | 426f639b0f9892e67de78c3cf4e637b540f2c962c8563d8626f86d70234e041d
+[JMRI.5.5.1+R196d5a62b6.exe](https://github.com/JMRI/JMRI/releases/download/v5.5.1/JMRI.5.5.1+R196d5a62b6.exe) | 3b6c8cbc87ad4798822158bd9ae24263f00691387ee4e3a28be9eb534dc4d5a6
+[JMRI.5.5.1+R196d5a62b6.tgz](https://github.com/JMRI/JMRI/releases/download/v5.5.1/JMRI.5.5.1+R196d5a62b6.tgz) | e3ffda3bc452a84d27e2b0400ab075c90e287b569ce86349737bce0ab86f17fe
 
 ```
 
@@ -498,9 +499,9 @@ File | SHA256 checksum
 
 - [ ] It's slow to upload from a typical home connection; we wish we had a way to cross-load them from Jenkins (see below)
 
-- Click "Publish Release"
-
 - Wait for completion, which might be a while with big uploads
+
+- Click "Publish Release"
 
 - Reenable the [Jenkins Packages job](https://builds.jmri.org/jenkins/job/development/job/packages/) to restart creation of development releases
 
@@ -538,7 +539,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues/new) to hold discussion with conventional title "Create Test Release 5.5.2". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 5.4 cycle. It's intended to be created from the `HEAD` of the `master` branch.
+This is the next release in the 5.6 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
 - Add the 5.5.2 milestone to the issue.
 
