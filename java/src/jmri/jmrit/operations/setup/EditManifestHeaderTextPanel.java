@@ -4,7 +4,6 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
@@ -242,7 +241,6 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 
     // Save buttons
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of EditManifestHeaderTextFrame")
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == resetButton) {
             road_TextField.setText(Bundle.getMessage("Road"));
@@ -276,8 +274,9 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         }
         if (ae.getSource() == saveButton) {
             this.savePreferences();
-            if (Setup.isCloseWindowOnSaveEnabled() && this.getTopLevelAncestor() instanceof EditManifestHeaderTextFrame) {
-                ((EditManifestHeaderTextFrame) this.getTopLevelAncestor()).dispose();
+            var topLevelAncestor = getTopLevelAncestor();
+            if (Setup.isCloseWindowOnSaveEnabled() && topLevelAncestor instanceof EditManifestHeaderTextFrame) {
+                ((EditManifestHeaderTextFrame) topLevelAncestor).dispose();
             }
         }
     }

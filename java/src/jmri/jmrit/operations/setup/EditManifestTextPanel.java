@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestText;
@@ -237,7 +236,6 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
 
     // Save buttons
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of EditManifestTextFrame")
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == resetButton) {
             manifestForTrainTextField.setText(rb.getString("ManifestForTrain"));
@@ -266,8 +264,9 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
         }
         if (ae.getSource() == saveButton) {
             this.savePreferences();
-            if (Setup.isCloseWindowOnSaveEnabled() && this.getTopLevelAncestor() instanceof EditManifestTextFrame) {
-                ((EditManifestTextFrame) this.getTopLevelAncestor()).dispose();
+            var topLevelAncestor = getTopLevelAncestor();
+            if (Setup.isCloseWindowOnSaveEnabled() && topLevelAncestor instanceof EditManifestTextFrame) {
+                ((EditManifestTextFrame) topLevelAncestor).dispose();
             }
         }
     }
