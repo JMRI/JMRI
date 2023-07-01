@@ -428,13 +428,16 @@
             <li></li>
         </ul>
 
-    <h3>Operations</h3>
-        <a id="Operations" name="Operations"></a>
-        <ul>
-            <li></li>
-        </ul>
+<h3>Operations</h3>
+<a id="Operations" name="Operations"></a>
+<ul>
+  <li>Improvements to the routing code. Program will not use an interchange track if the same
+    train can drop and pull a car.</li>
+  <li>Fixed a bug with export routes.</li>
+  <li>Fixed close on Save for several windows.</li>
+</ul>
 
-   <h3>Panel Editor</h3>
+<h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>

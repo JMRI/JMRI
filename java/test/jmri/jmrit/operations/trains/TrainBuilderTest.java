@@ -17399,7 +17399,82 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    /**
+     * Test interchange track can't be used by the same train for set outs and
+     * pulls. Uses a turn that can set out and pull from the same interchange
+     * track. This only tests two train routing.
+     */
+    @Test
+    public void testInterchangeTwoVisits() {
+        Train train =
+                tmanager.newTrain("Train Acton-Boston-Chelmsford-Danvers-Essex-Essex-Danvers-Chelmsford-Boston-Acton");
+        Route route = JUnitOperationsUtil.createFiveLocationTurnRoute();
+        train.setRoute(route);
 
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", null);
+        Track bostonInterchange2 = boston.getTrackByName("Boston Interchange 2", null);
+
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+
+        Location danvers = lmanager.getLocationByName("Danvers");
+        Track danversSpur1 = danvers.getTrackByName("Danvers Spur 1", null);
+
+        // place car halfway in the train's route
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", "DAB", "1958", chelmsfordSpur1, 0);
+        // send the car to Danvers
+        c1.setFinalDestination(danvers);
+        c1.setFinalDestinationTrack(danversSpur1);
+
+        Assert.assertTrue(train.build());
+
+        // confirm car is assigned to train and destination is Danvers
+        Assert.assertEquals("Train assignment", train, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", danversSpur1, c1.getDestinationTrack());
+
+        // car was pulled on the outbound leg to Danvers, disable pulls from 1st
+        // Chelmsford
+        RouteLocation rlChelmsford = route.getRouteLocationBySequenceNumber(3);
+        // confirm location is Chelmsford
+        Assert.assertEquals("Chelmsford Location", chelmsford, rlChelmsford.getLocation());
+        rlChelmsford.setPickUpAllowed(false);
+
+        // confirm that routing through yard is enabled
+        Assert.assertTrue("Yard routing enabled", Setup.isCarRoutingViaYardsEnabled());
+
+        // routing through yard is enable, and interchanges at Acton and
+        // Boston default is to not allow the same train to service. Program
+        // should select a yard track.
+        train.reset();
+        Assert.assertTrue(train.build());
+        Assert.assertEquals("Train assignment", train, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonYard1, c1.getDestinationTrack());
+
+        // now disable routing through yards
+        Setup.setCarRoutingViaYardsEnabled(false);
+
+        // program will attempt to move stuck car
+        train.reset();
+        Assert.assertTrue(train.build());
+        Assert.assertEquals("Train assignment", train, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonSpur1, c1.getDestinationTrack());
+        
+        // now configure interchange at Boston to allow pulls. This will allow the same train to set out and pull a car from the interchange.
+        bostonInterchange2.setPickupOption(Track.TRAINS);
+        bostonInterchange2.addPickupId(train.getId());
+        
+        train.reset();
+        Assert.assertTrue(train.build());
+        Assert.assertEquals("Train assignment", train, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", bostonInterchange2, c1.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 
     private void setupCustomCarLoad() {
 
