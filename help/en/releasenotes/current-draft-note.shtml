@@ -596,5 +596,8 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Added JMRI version number to the bottom of generated Javadoc.</li>
+            <li>Updated the Java Native Access (JNA) library to version 5.13.0.
+                Updated the Pure Java Comm library to a custom version that should
+                work better on Apple Silicon (M1, M2) Macs.<li>
         </ul>
 

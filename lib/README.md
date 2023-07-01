@@ -134,7 +134,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
 ##### purejavacomm-1.0.5.jar
-- version 1.0.5
+- version 1.0.5 plus custom change to the Mac M1 support (only)
 - from https://search.maven.org/artifact/org.opensmarthouse/purejavacomm/1.0.5/jar
 - formerly from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
 - javadoc still at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
@@ -266,14 +266,14 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 - Version 3.5.5 (2018-12-04)
 - from https://github.com/jmdns/jmdns/releases
 
-##### jna-5.9.0.jar
+##### jna-5.13.0.jar
 - Java Native Access library
-- from https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.9.0
+- from https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.13.0
 - See also https://github.com/java-native-access/jna
 
-##### jna-platform-5.9.0.jar
+##### jna-platform-5.13.0.jar
 - Java Native Access platform-specific utilities library
-- from https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.9.0
+- from https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.13.0
 
 
 ##### pi4j-core-1.2.jar, pi4j-device-1.2.jar, pi4j-gpio-extension-1.2.jar
