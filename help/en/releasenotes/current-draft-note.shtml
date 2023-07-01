@@ -101,7 +101,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Improve threading on MQTT Reporters to reduce latency.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -121,8 +121,6 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Add upload and download of the CS-105 consisting information
-                    to and from the DecoderPro roster entry's consisting bits.</li>
                 <li></li>
             </ul>
 
@@ -323,7 +321,7 @@
 
         <h4>TCS</h4>
             <ul>
-                <li>FW89 add V2 add highVersionID</li>
+                <li></li>
             </ul>
 
 	    <h4>Team Digital</h4>
@@ -555,7 +553,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>UI improvements to the Turnout Table.</li>
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
@@ -597,10 +595,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>IdTags now request the main IdTagManager instead of requesting a ProxyIdManager to get better initialization.</li>
-            <li>Added JMRI version number to the bottom of generated Javadoc.</li>
-            <li>Updated the Java Native Access (JNA) library to version 5.13.0.
-                Updated the Pure Java Comm library to a custom version that should
-                work better on Apple Silicon (M1, M2) Macs.<li>
+            <li></li>
         </ul>
 
