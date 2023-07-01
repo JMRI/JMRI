@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainSwitchListText;
 
@@ -211,6 +212,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
 
     // Save buttons
     @Override
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of EditSwitchListTextFrame")
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == resetButton) {
             switchListForTextField.setText(rb.getString("SwitchListFor"));

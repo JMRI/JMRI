@@ -392,6 +392,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
 
     // Add Remove Logo and Save buttons
     @Override
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of PrintOptionFrame")
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addLogoButton) {
             log.debug("add logo button pressed");

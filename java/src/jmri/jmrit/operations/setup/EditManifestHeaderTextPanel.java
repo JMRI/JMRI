@@ -4,6 +4,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
@@ -241,6 +242,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 
     // Save buttons
     @Override
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of EditManifestHeaderTextFrame")
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == resetButton) {
             road_TextField.setText(Bundle.getMessage("Road"));
