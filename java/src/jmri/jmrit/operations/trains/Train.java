@@ -761,6 +761,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public Track getDepartureTrack() {
         return _departureTrack;
     }
+    
+    public boolean isDepartingStaging() {
+        return getDepartureTrack() != null;
+    }
 
     public void setTerminationTrack(Track track) {
         Track old = _terminationTrack;
@@ -1798,16 +1802,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     if (debugFlag) {
                         log.debug("option send cars to terminal is enabled");
                     }
-                    // check to see if local move allowed
-                    if (!isAllowLocalMovesEnabled() ||
-                            isAllowLocalMovesEnabled() &&
-                                    !TrainCommon.splitString(car.getLocationName())
-                                            .equals(TrainCommon.splitString(car.getDestinationName())))
-                        addLine(buildReport,
-                                MessageFormat.format(Bundle.getMessage("trainCanNotCarryCarOption"),
-                                        new Object[] { getName(), car.toString(), car.getLocationName(),
-                                                car.getTrackName(), car.getDestinationName(),
-                                                car.getDestinationTrackName() }));
+                    addLine(buildReport,
+                            MessageFormat.format(Bundle.getMessage("trainCanNotCarryCarOption"),
+                                    new Object[]{getName(), car.toString(), car.getLocationName(),
+                                            car.getTrackName(), car.getDestinationName(),
+                                            car.getDestinationTrackName()}));
                     continue;
                 }
                 // don't allow local move when car is in staging

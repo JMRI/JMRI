@@ -1411,7 +1411,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             // are drops allows at this location?
             if (!rld.isDropAllowed()) {
                 addLine(_buildReport, FIVE, Bundle.getMessage("buildRouteNoDropLocation", _train.getRoute().getName(),
-                        rld.getName(), rld.getId()));
+                        rld.getId(), rld.getName()));
                 continue;
             }
             if (_train.isLocationSkipped(rld.getId())) {
@@ -1612,9 +1612,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 multiplePickup = true;
             }
             if (rld.isDropAllowed() || car.hasFred() || car.isCaboose()) {
-                addLine(_buildReport, SEVEN, Bundle.getMessage("buildSearchingLocation", rld.getName(), rld.getId()));
+                addLine(_buildReport, FIVE, Bundle.getMessage("buildSearchingLocation", rld.getName(), rld.getId()));
             } else {
-                addLine(_buildReport, SEVEN, Bundle.getMessage("buildRouteNoDropLocation", _train.getRoute().getName(),
+                addLine(_buildReport, FIVE, Bundle.getMessage("buildRouteNoDropLocation", _train.getRoute().getName(),
                         rld.getId(), rld.getName()));
                 continue;
             }

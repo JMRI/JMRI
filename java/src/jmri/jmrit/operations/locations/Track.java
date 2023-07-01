@@ -1318,10 +1318,6 @@ public class Track extends PropertyChangeSupport {
         if (getDropOption().equals(ANY)) {
             return true;
         }
-        // yard tracks accept all trains
-        if (isYard()) {
-            return true;
-        }
         if (getDropOption().equals(TRAINS)) {
             return containsDropId(train.getId());
         }
@@ -1335,10 +1331,6 @@ public class Track extends PropertyChangeSupport {
 
     public boolean isDropRouteAccepted(Route route) {
         if (getDropOption().equals(ANY) || getDropOption().equals(TRAINS) || getDropOption().equals(EXCLUDE_TRAINS)) {
-            return true;
-        }
-        // yard tracks accept all routes
-        if (isYard()) {
             return true;
         }
         if (getDropOption().equals(EXCLUDE_ROUTES)) {
@@ -1393,17 +1385,13 @@ public class Track extends PropertyChangeSupport {
      * @return true if the train can pick up cars from this track.
      */
     public boolean isPickupTrainAccepted(Train train) {
-        if (_pickupOption.equals(ANY)) {
+        if (getPickupOption().equals(ANY)) {
             return true;
         }
-        // yard tracks accept all trains
-        if (isYard()) {
-            return true;
-        }
-        if (_pickupOption.equals(TRAINS)) {
+        if (getPickupOption().equals(TRAINS)) {
             return containsPickupId(train.getId());
         }
-        if (_pickupOption.equals(EXCLUDE_TRAINS)) {
+        if (getPickupOption().equals(EXCLUDE_TRAINS)) {
             return !containsPickupId(train.getId());
         } else if (train.getRoute() == null) {
             return false;
@@ -1412,14 +1400,10 @@ public class Track extends PropertyChangeSupport {
     }
 
     public boolean isPickupRouteAccepted(Route route) {
-        if (_pickupOption.equals(ANY) || _pickupOption.equals(TRAINS) || _pickupOption.equals(EXCLUDE_TRAINS)) {
+        if (getPickupOption().equals(ANY) || getPickupOption().equals(TRAINS) || getPickupOption().equals(EXCLUDE_TRAINS)) {
             return true;
         }
-        // yard tracks accept all routes
-        if (isYard()) {
-            return true;
-        }
-        if (_pickupOption.equals(EXCLUDE_ROUTES)) {
+        if (getPickupOption().equals(EXCLUDE_ROUTES)) {
             return !containsPickupId(route.getId());
         }
         return containsPickupId(route.getId());

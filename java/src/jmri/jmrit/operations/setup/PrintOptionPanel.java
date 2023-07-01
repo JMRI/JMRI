@@ -3,16 +3,13 @@ package jmri.jmrit.operations.setup;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -464,14 +461,14 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
 
         if (ae.getSource() == saveButton) {
             this.savePreferences();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
+            var topLevelAncestor = getTopLevelAncestor();
+            if (Setup.isCloseWindowOnSaveEnabled() && topLevelAncestor instanceof PrintOptionFrame) {
+                ((PrintOptionFrame) topLevelAncestor).dispose();
             }
         }
     }
 
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of PrintOptionFrame") // NOI18N
     public void checkBoxActionPerformed(ActionEvent ae) {
         if (ae.getSource() == tabFormatCheckBox) {
             loadFontComboBox();
@@ -480,8 +477,9 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
             log.debug("Switch list check box activated");
             setSwitchListVisible(!formatSwitchListCheckBox.isSelected());
             setPreferredSize(null);
-            if (this.getTopLevelAncestor() instanceof PrintOptionFrame) {
-                ((PrintOptionFrame) this.getTopLevelAncestor()).pack();
+            var topLevelAncestor = getTopLevelAncestor();
+            if (topLevelAncestor instanceof PrintOptionFrame) {
+                ((PrintOptionFrame) topLevelAncestor).pack();
             }
         }
         if (ae.getSource() == truncateCheckBox && truncateCheckBox.isSelected()) {
@@ -528,14 +526,14 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         return null;
     }
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of PrintOptionFrame") // NOI18N
     private void updateLogoButtons() {
         boolean flag = Setup.getManifestLogoURL().equals(Setup.NONE);
         addLogoButton.setVisible(flag);
         removeLogoButton.setVisible(!flag);
         logoURL.setText(Setup.getManifestLogoURL());
-        if (this.getTopLevelAncestor() instanceof PrintOptionFrame) {
-            ((PrintOptionFrame) this.getTopLevelAncestor()).pack();
+        var topLevelAncestor = getTopLevelAncestor();
+        if (topLevelAncestor instanceof PrintOptionFrame) {
+            ((PrintOptionFrame) topLevelAncestor).pack();
         }
     }
 
