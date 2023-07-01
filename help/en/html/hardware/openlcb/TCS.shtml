@@ -63,7 +63,15 @@
             With the File -> Import -> "TCS backup file..." menu item, you can read
             a file created by the "Backup..." button on the Configure Nodes
             screen into your roster entry.
-
+            <p>
+            When transferring from the DecoderPro roster to the CS-105,
+            DecoderPro will use the contents of the consisting control
+            bits on the Consist pane to set the consisting control in
+            the CS-105 and vice versa.  Please note that, depending
+            on the decoder type, there might not be consist bits defined
+            for all functions. Many decoders only define F1 through F12,
+            for example. In those cases, the undefined consisting
+            bits will have their consist controls in the CS-105 left unchanged.
 
       <p>Back to the <a href="index.shtml">main OpenLCB Help page</a></p>
       <!--#include virtual="/Footer.shtml" -->

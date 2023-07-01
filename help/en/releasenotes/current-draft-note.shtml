@@ -121,6 +121,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
+                <li>Add upload and download of the CS-105 consisting information
+                    to and from the DecoderPro roster entry's consisting bits.</li>
                 <li></li>
             </ul>
 
