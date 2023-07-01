@@ -101,7 +101,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Improve threading on MQTT Reporters to reduce latency.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -595,6 +595,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>IdTags now request the main IdTagManager instead of requesting a ProxyIdManager to get better initialization.</li>
             <li>Added JMRI version number to the bottom of generated Javadoc.</li>
             <li>Updated the Java Native Access (JNA) library to version 5.13.0.
                 Updated the Pure Java Comm library to a custom version that should

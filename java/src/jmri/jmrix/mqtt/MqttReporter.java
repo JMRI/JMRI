@@ -4,6 +4,8 @@ import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.IdTag;
 
+import jmri.util.ThreadingUtil;
+
 import jmri.implementation.AbstractIdTagReporter;
 
 /**
@@ -44,7 +46,9 @@ class MqttReporter extends AbstractIdTagReporter implements MqttEventListener {
 
         if ( terms.length < 1 || terms[0].isEmpty()) {
             log.debug("No loco ID present in ({}), record empty report", message);
-            notify(null);
+            ThreadingUtil.runOnLayout(() -> {
+                notify(null);
+            });
             return;
         }
         // normal condition
@@ -60,9 +64,13 @@ class MqttReporter extends AbstractIdTagReporter implements MqttEventListener {
             IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(loco);
             idTag.setProperty("content", content);
             // always send a null report as workaround for IdTag equality not checking properties
-            notify(null);
+            ThreadingUtil.runOnLayout(() -> {
+                notify(null);
+            });
             // and then send the real report
-            notify(idTag);
+            ThreadingUtil.runOnLayout(() -> {
+                notify(idTag);
+            });
         } catch (IllegalArgumentException e) {
             log.error("Reporter {} cannot make a tag from input ({})", getSystemName(), message);
         }
