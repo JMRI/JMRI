@@ -361,7 +361,8 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Improve the layout of the Uncouple pane, make sure
+                    that it displays the Uncoupler variable (CV 115).</li>
             </ul>
 
         <h4>Miscellaneous</h4>
