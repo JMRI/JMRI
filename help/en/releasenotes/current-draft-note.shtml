@@ -600,7 +600,7 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>A signal handler has been added to the Shutdown manager such that a 
-            "kill -HUP &lt;pid&gt;"</li> command on Mac or Linux will do a normal shutdown.
+            "kill &lt;pid&gt;"</li> command on Mac or Linux will do a normal shutdown.
             This is particularly useful for e.g. running headless on an RPi.
         </ul>
 

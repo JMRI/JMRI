@@ -86,14 +86,21 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             // thrown only if System.exit() has been called, so ignore
         }
         
+        // register a Signal handlers that do shutdown
+        SignalHandler handler = new SignalHandler () {
+            public void handle(Signal sig) {
+                shutdown();
+            }
+        };
         if (SystemType.isMacOSX() || SystemType.isLinux()) {
-            // register an HUP handler that does shutdown
-            SignalHandler handler = new SignalHandler () {
-                public void handle(Signal sig) {
-                    shutdown();
-                }
-            };
             Signal.handle(new Signal("HUP"), handler);
+            Signal.handle(new Signal("TERM"), handler);
+            Signal.handle(new Signal("INT"), handler);
+        } 
+        if (SystemType.isWindows()) {
+            Signal.handle(new Signal("BREAK"), handler);
+            Signal.handle(new Signal("TERM"), handler);
+            Signal.handle(new Signal("INT"), handler);
         } 
     }
 
