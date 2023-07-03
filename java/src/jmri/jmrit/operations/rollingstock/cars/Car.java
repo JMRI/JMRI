@@ -575,7 +575,7 @@ public class Car extends RollingStock {
      * @return true if local move
      */
     public boolean isLocalMove() {
-        if (getTrain() == null) {
+        if (getTrain() == null && getLocation() != null) {
             return TrainCommon.splitString(getLocationName()).equals(TrainCommon.splitString(getDestinationName()));
         }
         if (getRouteLocation() == null || getRouteDestination() == null) {
