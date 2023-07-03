@@ -14,6 +14,7 @@ import java.util.concurrent.*;
 
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
+import jmri.util.SystemType;
 
 import jmri.beans.Bean;
 import jmri.util.ThreadingUtil;
@@ -84,13 +85,16 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         } catch (IllegalStateException ex) {
             // thrown only if System.exit() has been called, so ignore
         }
-        // register an STOP handler that does shutdown
-        SignalHandler handler = new SignalHandler () {
-            public void handle(Signal sig) {
-                shutdown();
-            }
-        };
-        Signal.handle(new Signal("HUP"), handler); 
+        
+        if (SystemType.isMacOSX() || SystemType.isLinux()) {
+            // register an HUP handler that does shutdown
+            SignalHandler handler = new SignalHandler () {
+                public void handle(Signal sig) {
+                    shutdown();
+                }
+            };
+            Signal.handle(new Signal("HUP"), handler);
+        } 
     }
 
     /**
