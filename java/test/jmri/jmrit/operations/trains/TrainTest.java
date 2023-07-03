@@ -4786,6 +4786,7 @@ public class TrainTest extends OperationsTestCase {
         train1.setRoute(route);
 
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", null, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", null, 0);
 
         // place car at start of route
         Location acton = lmanager.getLocationByName("Acton");
@@ -4795,9 +4796,22 @@ public class TrainTest extends OperationsTestCase {
         c1.setDestination(acton, actonYard1);
 
         Assert.assertEquals("Place car on track", Track.OKAY, c1.setLocation(acton, actonSpur1));
+        
+        // place car middle of route
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+        // give the car a destination
+        Track chelmsfordYard1 = chelmsford.getTrackByName("Chelmsford Yard 1", null);
+        c2.setDestination(chelmsford, chelmsfordYard1);
+
+        Assert.assertEquals("Place car on track", Track.OKAY, c2.setLocation(chelmsford, chelmsfordSpur1));
+        
+        // local move should override
+        train1.setSendCarsToTerminalEnabled(true);
 
         // should be serviced by train
         Assert.assertTrue(train1.isServiceable(c1));
+        Assert.assertTrue(train1.isServiceable(c2));
 
         // don't allow local moves
         train1.setAllowLocalMovesEnabled(false);
