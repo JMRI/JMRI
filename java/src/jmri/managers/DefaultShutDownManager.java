@@ -92,16 +92,18 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 shutdown();
             }
         };
-        if (SystemType.isMacOSX() || SystemType.isLinux()) {
-            Signal.handle(new Signal("HUP"), handler);
-            Signal.handle(new Signal("TERM"), handler);
-            Signal.handle(new Signal("INT"), handler);
-        } 
-        if (SystemType.isWindows()) {
-            //Signal.handle(new Signal("BREAK"), handler);
-            Signal.handle(new Signal("TERM"), handler);
-            //Signal.handle(new Signal("INT"), handler);
-        } 
+        try {
+            if (SystemType.isMacOSX() || SystemType.isLinux()) {
+                Signal.handle(new Signal("HUP"), handler);
+                Signal.handle(new Signal("TERM"), handler);
+                Signal.handle(new Signal("INT"), handler);
+            } 
+            if (SystemType.isWindows()) {
+                Signal.handle(new Signal("TERM"), handler);
+            }
+        } catch (NullPointerException e) {
+            log.warn("Failed to add signal handler due to missing signal definition");
+        }
     }
 
     /**
