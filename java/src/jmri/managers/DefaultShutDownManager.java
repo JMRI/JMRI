@@ -2,6 +2,9 @@ package jmri.managers;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import sun.misc.Signal;
+import sun.misc.SignalHandler;
+
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
@@ -81,6 +84,13 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         } catch (IllegalStateException ex) {
             // thrown only if System.exit() has been called, so ignore
         }
+        // register an STOP handler that does shutdown
+        SignalHandler handler = new SignalHandler () {
+            public void handle(Signal sig) {
+                shutdown();
+            }
+        };
+        Signal.handle(new Signal("HUP"), handler); 
     }
 
     /**
@@ -252,6 +262,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     private void doShutdown(int status, boolean exit) {
+        log.debug("shutdown called with {} {}", status, exit);
         if (!shuttingDown) {
             Date start = new Date();
             log.debug("Shutting down with {} callable and {} runnable tasks",
