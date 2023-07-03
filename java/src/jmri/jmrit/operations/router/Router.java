@@ -475,7 +475,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         // deliver the car to its destination
         List<Track> tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(trackType);
         for (Track track : tracks) {
-            if (car.getTrack() == track) {
+            if (car.getTrack() == track || car.getFinalDestinationTrack() == track) {
                 continue; // don't use car's current track
             }
             // can't use staging if car's load can be modified
@@ -574,7 +574,11 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 firstTrain = tmanager.getTrainForCar(testCar, _buildReport);
             }
             if (firstTrain == secondTrain && track.isInterchange() && track.getPickupOption().equals(Track.ANY)) {
-                log.debug("Same train ({}) can not service interchange ({})", firstTrain.getName(), track.getName());
+                if (_addtoReportVeryDetailed) {
+                    addLine(_buildReport, SEVEN, Bundle.getMessage("RouterSameInterchange", firstTrain.getName(),
+                            track.getLocation().getName(), track.getName()));
+                }
+                excludeTrains.add(firstTrain);
                 firstTrain = tmanager.getTrainForCar(testCar, excludeTrains, _buildReport);
             }
             if (firstTrain == null && _addtoReportVeryDetailed) {
@@ -613,6 +617,13 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             }
             if (firstTrain != null) {
                 foundRoute = true; // found a route
+                if (_addtoReportVeryDetailed) {
+                    addLine(_buildReport, SEVEN,
+                            MessageFormat.format(Bundle.getMessage("RouterTrainCanTransport"),
+                                    new Object[]{firstTrain.getName(), car.toString(), Track.getTrackTypeName(trackType),
+                                            testCar.getLocationName(), testCar.getTrackName(), testCar.getDestinationName(),
+                                            testCar.getDestinationTrackName()}));
+                }
                 // found a two train route for this car, show the car's route
                 List<Train> trains = new ArrayList<>(Arrays.asList(firstTrain, secondTrain));
                 tracks = new ArrayList<>(Arrays.asList(track, car.getFinalDestinationTrack()));
