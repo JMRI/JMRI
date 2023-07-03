@@ -98,9 +98,9 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             Signal.handle(new Signal("INT"), handler);
         } 
         if (SystemType.isWindows()) {
-            Signal.handle(new Signal("BREAK"), handler);
+            //Signal.handle(new Signal("BREAK"), handler);
             Signal.handle(new Signal("TERM"), handler);
-            Signal.handle(new Signal("INT"), handler);
+            //Signal.handle(new Signal("INT"), handler);
         } 
     }
 
