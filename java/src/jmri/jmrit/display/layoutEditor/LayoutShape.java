@@ -442,8 +442,17 @@ public class LayoutShape {
                         Bundle.getMessage("LayoutShapeName"),
                         Bundle.getMessage("LayoutShapeName"),
                         name);
-                setName(newValue);
-                layoutEditor.repaint();
+                LayoutEditorFindItems finder = layoutEditor.getFinder();
+                if (finder.findLayoutShapeByName(newValue) == null) {
+                    setName(newValue);
+                    layoutEditor.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("CanNotRename", Bundle.getMessage("Shape")),
+                        Bundle.getMessage("AlreadyExist", Bundle.getMessage("Shape")),
+                        JOptionPane.ERROR_MESSAGE);
+
+                }
             });
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -452,7 +461,8 @@ public class LayoutShape {
 //                jmi = popup.add("hitPointType: " + hitPointType);
 //                jmi.setEnabled(false);
 //            }
-// add "Change Shape Type to..." menu
+
+            // add "Change Shape Type to..." menu
             JMenu shapeTypeMenu = new JMenu(Bundle.getMessage("ChangeShapeTypeFromTo", getType().toString()));
             if (getType() != LayoutShapeType.Open) {
                 jmi = shapeTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapeTypeOpen")) {
@@ -486,7 +496,7 @@ public class LayoutShape {
 
             popup.add(shapeTypeMenu);
 
-// Add "Change Shape Type from {0} to..." menu
+            // Add "Change Shape Type from {0} to..." menu
             if (hitPointType == HitPointType.SHAPE_CENTER) {
                 JMenu shapePointTypeMenu = new JMenu(Bundle.getMessage("ChangeAllShapePointTypesTo"));
                 jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeStraight")) {
@@ -534,7 +544,7 @@ public class LayoutShape {
                 }
             }
 
-// Add "Set Level: x" menu
+            // Add "Set Level: x" menu
             jmi = popup.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ShapeLevelMenuItemTitle")) + level));
             jmi.setToolTipText(Bundle.getMessage("ShapeLevelMenuItemToolTip"));
@@ -574,7 +584,7 @@ public class LayoutShape {
                 jmi.setBackground(ColorUtil.contrast(fillColor));
             }
 
-// add "Set Line Width: x" menu
+            // add "Set Line Width: x" menu
             jmi = popup.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("ShapeLineWidthMenuItemTitle")) + lineWidth));
             jmi.setToolTipText(Bundle.getMessage("ShapeLineWidthMenuItemToolTip"));
@@ -633,7 +643,7 @@ public class LayoutShape {
         }
         return popup;
     }   // showPopup
- 
+
     void removeShape() {
         if (layoutEditor.removeLayoutShape(LayoutShape.this)) {
             // Returned true if user did not cancel

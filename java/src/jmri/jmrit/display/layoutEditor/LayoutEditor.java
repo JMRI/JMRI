@@ -266,7 +266,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private int numLayoutSlips = 0;
     private int numLayoutTurnouts = 0;
     private int numLayoutTurntables = 0;
-    
+
     private LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
     @Nonnull
@@ -1106,9 +1106,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (newName != null) {
                 if (!newName.equals(getLayoutName())) {
                     if (InstanceManager.getDefault(EditorManager.class).contains(newName)) {
-                        JOptionPane.showMessageDialog(
-                                null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
-                                JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("CanNotRename", Bundle.getMessage("Panel")),
+                            Bundle.getMessage("AlreadyExist", Bundle.getMessage("Panel")),
+                            JOptionPane.ERROR_MESSAGE);
                     } else {
                         setTitle(newName);
                         setLayoutName(newName);
