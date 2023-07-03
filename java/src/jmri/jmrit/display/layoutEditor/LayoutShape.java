@@ -304,9 +304,14 @@ public class LayoutShape {
      * @return Rectangle2D as bound of this shape
      */
     public Rectangle2D getBounds() {
-        Rectangle2D result = MathUtil.rectangleAtPoint(shapePoints.get(0).getPoint(), 1.0, 1.0);
+        Rectangle2D result;
 
-        shapePoints.forEach((lsp) -> result.add(lsp.getPoint()));
+        if (!shapePoints.isEmpty()) {
+            result = MathUtil.rectangleAtPoint(shapePoints.get(0).getPoint(), 1.0, 1.0);
+            shapePoints.forEach((lsp) -> result.add(lsp.getPoint()));
+        } else {
+            result = null;  // this should never happen... but just in case
+        }
         return result;
     }
 
@@ -606,19 +611,19 @@ public class LayoutShape {
                 popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (layoutEditor.removeLayoutShape(LayoutShape.this)) {
-                            // Returned true if user did not cancel
-                            remove();
-                            dispose();
-                        }
+                        removeShape();
                     }
                 });
             } else {
                 popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        shapePoints.remove(hitPointType.shapePointIndex());
-                        layoutEditor.repaint();
+                        if (shapePoints.size() == 1) {
+                            removeShape();
+                        } else {
+                            shapePoints.remove(hitPointType.shapePointIndex());
+                            layoutEditor.repaint();
+                        }
                     }
                 });
             }
@@ -628,6 +633,14 @@ public class LayoutShape {
         }
         return popup;
     }   // showPopup
+ 
+    void removeShape() {
+        if (layoutEditor.removeLayoutShape(LayoutShape.this)) {
+            // Returned true if user did not cancel
+            remove();
+            dispose();
+        }
+    }
 
     /**
      * Clean up when this object is no longer needed. Should not be called while
@@ -731,7 +744,7 @@ public class LayoutShape {
         g2.setColor(controlsColor);
 
         shapePoints.forEach((slp) -> g2.draw(layoutEditor.layoutEditorControlRectAt(slp.getPoint())));
-        if (shapePoints.size() > 0) {
+        if (!shapePoints.isEmpty()) {
             Point2D end0 = shapePoints.get(0).getPoint();
             Point2D end1 = end0;
             for (LayoutShapePoint lsp : shapePoints) {
