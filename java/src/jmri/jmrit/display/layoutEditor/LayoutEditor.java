@@ -3561,13 +3561,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 } else if (leToolBarPanel.iconLabelButton.isSelected()) {
                     addIcon();
                 } else if (leToolBarPanel.shapeButton.isSelected()) {
-                    if (selectedObject == null) {
-                        addLayoutShape(currentPoint);
-                        _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                    LayoutShape ls = (LayoutShape) selectedObject;
+                    if (ls == null) {
+                        ls = addLayoutShape(currentPoint);
                     } else {
-                        LayoutShape ls = (LayoutShape) selectedObject;
                         ls.addPoint(currentPoint, selectedHitPointType.shapePointIndex());
                     }
+                    unionToPanelBounds(ls.getBounds());
+                    _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 } else if (leToolBarPanel.signalMastButton.isSelected()) {
                     addSignalMast();
                 } else {

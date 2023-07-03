@@ -10,8 +10,10 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
+
 import javax.annotation.*;
 import javax.swing.*;
+
 import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriMouseEvent;
@@ -424,7 +426,6 @@ public class LayoutShape {
             popup = new JPopupMenu();
         }
         if (layoutEditor.isEditable()) {
-            int pointIndex = hitPointType.shapePointIndex();
 
             // JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutShape")) + getName());
             JMenuItem jmi = popup.add(Bundle.getMessage("ShapeNameMenuItemTitle", getName()));
@@ -505,8 +506,7 @@ public class LayoutShape {
 
                 popup.add(shapePointTypeMenu);
             } else {
-                LayoutShapePoint lsp = shapePoints.get(pointIndex);
-
+                LayoutShapePoint lsp = shapePoints.get(hitPointType.shapePointIndex());
                 if (lsp != null) { // this should never happen... but just in case...
                     String otherPointTypeName = (lsp.getType() == LayoutShapePointType.Straight)
                             ? LayoutShapePointType.Curve.toString() : LayoutShapePointType.Straight.toString();
@@ -617,7 +617,7 @@ public class LayoutShape {
                 popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        shapePoints.remove(pointIndex);
+                        shapePoints.remove(hitPointType.shapePointIndex());
                         layoutEditor.repaint();
                     }
                 });
