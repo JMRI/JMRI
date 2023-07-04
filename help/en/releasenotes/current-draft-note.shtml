@@ -403,7 +403,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+            <li>A number of issues with the Shape tool have been resolved including Java
+            exceptions and the possibility of truncated shape lines.</li>
+            <li>The Layout Editor help page has been updated with details for using Shapes.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
