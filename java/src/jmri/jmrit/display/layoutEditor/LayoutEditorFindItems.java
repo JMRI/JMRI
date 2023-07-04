@@ -558,9 +558,11 @@ final public class LayoutEditorFindItems {
         String result;
         for (int idx = inStartIndex; true; idx++) {
             result = String.format("%s%d", inPrefix, idx);
-            if ((inPrefix.equals("S") // LayoutShape?
-                    && (findLayoutShapeByName(result) == null))
-                    || (findObjectByName(result) == null)) {
+            if (inPrefix.equals("S")) {     // LayoutShape?
+                if (findLayoutShapeByName(result) == null) {
+                    break;
+                }
+            } else if (findObjectByName(result) == null) {
                 break;
             }
         }
